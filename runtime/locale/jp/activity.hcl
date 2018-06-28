@@ -187,7 +187,7 @@ locale {
             finish = "${itemname(_1, 1)}を収穫した(${_2})"
         }
 
-        fish {
+        fishing {
             start = "釣りを始めた。"
             fail = "何も釣れなかった…"
             get = "${itemname(_1, 1)}を釣り上げた！"
@@ -195,7 +195,7 @@ locale {
 
         material {
             start = "採取を始めた。"
-            get = "マテリアル:${_1}を${_2}個${_3}。"
+            get = "マテリアル:${_3}を${_2}個${_1}。"
 
             get_verb {
                 dig_up = "掘り当てた"
@@ -205,9 +205,10 @@ locale {
                 get = "入手した"
             }
 
-            lose = "マテリアル:${_1}を${_2}個失った(残り ${_3}個) "
+            lose = "マテリアル:${_1}を${_2}個失った"
+            lose_total = "(残り ${_1}個) "
 
-            mining {
+            digging {
                 fails = "採掘に失敗した。"
                 no_more = "鉱石を掘りつくした。"
             }
@@ -219,7 +220,7 @@ locale {
                 fails = "採取に失敗した。"
                 no_more = "もう何もない。"
             }
-            plant {
+            harvesting {
                 no_more = "もう目ぼしい植物は見当たらない。"
             }
         }
@@ -246,8 +247,8 @@ locale {
             start {
                 wall = "壁を掘りはじめた。"
                 spot = "鉱石を掘り始めた。"
+                hard = "この壁はとても固そうだ！"
             }
-            hard = "この壁はとても固そうだ！"
 
             finish {
                 wall = "壁を掘り終えた。"

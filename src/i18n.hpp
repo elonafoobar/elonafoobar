@@ -130,6 +130,7 @@ inline bool ident_eq(std::string ident, int count)
 std::string format_builtins_argless(const hil::FunctionCall&);
 std::string format_builtins_bool(const hil::FunctionCall&, bool);
 std::string format_builtins_string(const hil::FunctionCall&, std::string);
+std::string format_builtins_integer(const hil::FunctionCall&, int);
 std::string format_builtins_character(
     const hil::FunctionCall&,
     const character&);
@@ -231,6 +232,10 @@ std::string format_function_type(
     {
         return format_builtins_string(func, object.as<std::string>());
     }
+    else if (object.is<int>())
+    {
+        return format_builtins_integer(func, object.as<int>());
+    }
     else if (object.is<sol::table>())
     {
         sol::table table = object.as<sol::table>();
@@ -255,6 +260,14 @@ std::string format_function_type(
     return format_builtins_bool(func, value);
 }
 
+template <typename Head = int>
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    int const& value)
+{
+    return format_builtins_integer(func, value);
+}
+
 template <typename Head = std::string>
 std::string format_function_type(
     hil::FunctionCall const& func,
@@ -270,7 +283,7 @@ std::string format_function_type(
 {
     UNUSED(head);
 
-    return "<unknown function (" + func.name + ")>";
+    return "<unknown function (" + func.name + ", unknown type)>";
 }
 
 
@@ -325,6 +338,11 @@ void fmt_internal(
             {
                 formatted.at(i) =
                     format_builtins_bool(func, func.args.at(0).as<bool>());
+            }
+            else if (func.args.at(0).is<int>())
+            {
+                formatted.at(i) =
+                    format_builtins_integer(func, func.args.at(0).as<int>());
             }
         }
     }

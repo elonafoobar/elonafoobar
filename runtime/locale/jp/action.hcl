@@ -432,7 +432,7 @@ locale {
             self = "${name(_1)}は${_2}の${_3}"
             other = "${name(_1)}は${_2}"
 
-            silenced =
+            silenced = "沈黙の霧が詠唱を阻止した。"
             fail = "${name(_1)}は詠唱に失敗した。"
         }
 

@@ -423,7 +423,10 @@ void continuous_action_perform()
                         if (is_in_fov(cc))
                         {
                             txtef(9);
-                            txt(i18n::s.get("core.locale.activity.perform.dialog.interest", cdata[tc], cdata[cc]));
+                            txt(i18n::s.get_enum("core.locale.activity.perform.dialog.interest",
+                                                 cdata[tc],
+                                                 cdata[cc],
+                                                 rnd(4)));
                         }
                         cdata[cc].quality_of_performance += cdata[tc].level + 5;
                         if (cc == 0)
@@ -591,7 +594,7 @@ void continuous_action_perform()
         {
             quality = 9;
         }
-        txt(i18n::s.get("core.locale.activity.perform.quality", quality));
+        txt(i18n::s.get_enum("core.locale.activity.perform.quality", quality));
     }
 
     if (cdata[cc].quality_of_performance > 40)
@@ -1406,9 +1409,7 @@ void get_fish()
     inv[ci].subname = fish;
     inv[ci].value = the_fish_db[fish]->value;
     inv[ci].weight = the_fish_db[fish]->weight;
-    txt(lang(
-        itemname(ci, 1) + u8"を釣り上げた！"s,
-        u8"You get "s + itemname(ci, 1) + u8"!"s));
+    txt(i18n::s.get("core.locale.activity.fishing.get", inv[ci]));
     item_stack(0, ci, 1);
     return;
 }
@@ -1421,7 +1422,7 @@ void spot_fishing()
 
     if (cdata[cc].continuous_action_id == 0)
     {
-        txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));
+        txt(i18n::s.get("core.locale.activity.fishing.start"));
         snd(87);
         if (rowactre == 0)
         {
@@ -1565,7 +1566,7 @@ void spot_fishing()
         }
         return;
     }
-    txt(lang(u8"何も釣れなかった…"s, u8"A waste of a time..."s));
+    txt(i18n::s.get("core.locale.activity.fishing.fail"));
     rowactend(cc);
     return;
 }
@@ -1578,7 +1579,7 @@ void spot_material()
     {
         cdata[cc].continuous_action_id = 8;
         cdata[cc].continuous_action_turn = 40;
-        txt(lang(u8"採取を始めた。"s, u8"You start to search the spot."s));
+        txt(i18n::s.get("core.locale.activity.material.start"));
         racount = 0;
         return;
     }
@@ -1601,12 +1602,11 @@ void spot_digging()
         cdata[cc].continuous_action_turn = 20;
         if (rowactre == 0)
         {
-            txt(lang(
-                u8"地面を掘り始めた。"s, u8"You start to dig the ground."s));
+            txt(i18n::s.get("core.locale.activity.dig_spot.start.global"));
         }
         else
         {
-            txt(lang(u8"探索を始めた。"s, u8"You start to dig the spot."s));
+            txt(i18n::s.get("core.locale.activity.dig_spot.start.other"));
         }
         racount = 0;
         return;
@@ -1621,15 +1621,11 @@ void spot_digging()
         if (cdata[cc].turn % 5 == 0)
         {
             txtef(4);
-            txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
-                lang(u8" *カキン* "s, u8"*smash*"s),
-                lang(u8" *ごつっ* "s, u8"*thud*"s),
-                lang(u8" *じゃり* "s, u8"*sing*"s),
-                lang(u8" *♪* "s, u8"*sigh*"s));
+            txt(i18n::s.get_enum("core.locale.activity.dig_spot.sound", rnd(5)));
         }
         return;
     }
-    txt(lang(u8"地面を掘り終えた。"s, u8"You finish digging."s));
+    txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
     if (mdata(6) == 1)
     {
         for (const auto& cnt : items(0))
@@ -1648,9 +1644,7 @@ void spot_digging()
                         {
                             snd(23);
                             txtef(5);
-                            txt(lang(
-                                u8" *ガチッ* …何かがある！"s,
-                                u8"*click* ...something is there!"s));
+                            txt(i18n::s.get("core.locale.activity.dig_spot.something_is_there"));
                             msg_halt();
                             snd(24);
                             flt();
@@ -1720,19 +1714,15 @@ void spot_mining_or_wall()
         cdata[cc].continuous_action_turn = 40;
         if (rowactre == 0)
         {
-            txt(lang(u8"壁を掘りはじめた。"s, u8"You start to dig the wall."s));
+            txt(i18n::s.get("core.locale.activity.dig_mining.start.wall"));
         }
         else
         {
-            txt(lang(
-                u8"鉱石を掘り始めた。"s,
-                u8"You start to dig the mining spot."s));
+            txt(i18n::s.get("core.locale.activity.dig_mining.start.spot"));
         }
         if (chipm(0, map(refx, refy, 0)) == 6)
         {
-            txt(lang(
-                u8"この壁はとても固そうだ！"s,
-                u8"These walls look pretty hard!"s));
+            txt(i18n::s.get("core.locale.activity.dig_mining.start.hard"));
         }
         countdig = 0;
         racount = 0;
@@ -1807,16 +1797,13 @@ void spot_mining_or_wall()
             snd(45);
             aniref = 5;
             play_animation(14);
-            txt(lang(
-                u8"壁を掘り終えた。"s, u8"You finished digging the wall."s));
+            txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2 && gdata_current_map == 7)
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
                 inv[ci].curse_state = curse_state_t::cursed;
-                txt(lang(
-                    u8"何かを見つけた。"s,
-                    u8"You found something out of crushed heaps of rock."s));
+                txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
                 gdata_tutorial_flag = 3;
             }
             else if (rtval != 0 && gdata_current_map != 30)
@@ -1832,9 +1819,7 @@ void spot_mining_or_wall()
                     flttypemajor = 77000;
                     itemcreate(-1, 0, digx, digy, 0);
                 }
-                txt(lang(
-                    u8"何かを見つけた。"s,
-                    u8"You found something out of crushed heaps of rock."s));
+                txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
             }
             gain_digging_experience();
             rowactend(cc);
@@ -1842,17 +1827,11 @@ void spot_mining_or_wall()
         else if (cdata[cc].turn % 5 == 0)
         {
             txtef(4);
-            txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
-                lang(u8" *カキン* "s, u8"*smash*"s),
-                lang(u8" *ごつっ* "s, u8"*thud*"s),
-                lang(u8" *じゃり* "s, u8"*sing*"s),
-                lang(u8" *♪* "s, u8"*sigh*"s));
+            txt(i18n::s.get_enum("core.locale.activity.dig_spot.sound", rnd(5)));
         }
         return;
     }
-    txt(lang(
-        u8"背中が痛い…掘るのを諦めた。"s,
-        u8"Your back hurts...You give up digging."s));
+    txt(i18n::s.get("core.locale.activity.dig_mining.fail"));
     rowactend(cc);
     return;
 }
@@ -1952,9 +1931,7 @@ int search_material_spot()
             {
                 if (sdata(163, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
                 {
-                    txt(lang(
-                        u8"採掘に失敗した。"s,
-                        u8"Your mining attempt fails."s));
+                    txt(i18n::s.get("core.locale.activity.material.digging.fails"));
                     break;
                 }
                 i = 1;
@@ -1964,9 +1941,7 @@ int search_material_spot()
             {
                 if (sdata(185, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
                 {
-                    txt(lang(
-                        u8"釣りに失敗した。"s,
-                        u8"Your fishing attempt fails."s));
+                    txt(i18n::s.get("core.locale.activity.material.fishing.fails"));
                     break;
                 }
                 i = 2;
@@ -1976,9 +1951,7 @@ int search_material_spot()
             {
                 if (sdata(180, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
                 {
-                    txt(lang(
-                        u8"採取に失敗した。"s,
-                        u8"Your searching attempt fails."s));
+                    txt(i18n::s.get("core.locale.activity.material.searching.fails"));
                     break;
                 }
                 i = 3;
@@ -1989,21 +1962,18 @@ int search_material_spot()
     }
     if (rnd(50 + trait(159) * 20) == 0)
     {
-        s = lang(u8"もう何もない。"s, u8"You can't find anything anymore."s);
+        s = i18n::s.get("core.locale.activity.material.searching.no_more");
         if (feat(1) == 26)
         {
-            s = lang(u8"泉は干上がった。"s, u8"The spring dries up."s);
+            s = i18n::s.get("core.locale.activity.material.fishing.no_more");
         }
         if (feat(1) == 25)
         {
-            s = lang(
-                u8"鉱石を掘りつくした。"s, u8"There's no more ore around."s);
+            s = i18n::s.get("core.locale.activity.material.mining.no_more");
         }
         if (feat(1) == 28)
         {
-            s = lang(
-                u8"もう目ぼしい植物は見当たらない。"s,
-                u8"There's no more plant around."s);
+            s = i18n::s.get("core.locale.activity.material.harvesting.no_more");
         }
         txt(s);
         rowactend(cc);
@@ -2012,45 +1982,37 @@ int search_material_spot()
     return 0;
 }
 
-void matgetmain(int material_id, int amount, int prm_1032)
+void matgetmain(int material_id, int amount, int spot_type)
 {
     std::string message;
+    std::string verb = "?";
     if (amount == 0)
     {
         amount = 1;
     }
     mat(material_id) += amount;
     snd(21);
-    if (en)
+    if (spot_type == 1)
     {
-        message =
-            u8"You get "s + amount + u8" "s + matname(material_id) + u8". "s;
+        verb = i18n::s.get("core.locale.activity.material.get_verb.dig_up");
     }
-    else
+    if (spot_type == 2)
     {
-        message = u8"マテリアル:"s + matname(material_id) + u8"を"s + amount
-            + u8"個"s;
-        if (prm_1032 == 1)
-        {
-            message += u8"掘り当てた"s;
-        }
-        if (prm_1032 == 2)
-        {
-            message += u8"釣り上げた。"s;
-        }
-        if (prm_1032 == 3)
-        {
-            message += u8"採取した。"s;
-        }
-        if (prm_1032 == 5)
-        {
-            message += u8"見つけた。"s;
-        }
-        if (prm_1032 == 0)
-        {
-            message += u8"入手した"s;
-        }
+        verb = i18n::s.get("core.locale.activity.material.get_verb.fish_up");
     }
+    if (spot_type == 3)
+    {
+        verb = i18n::s.get("core.locale.activity.material.get_verb.harvest");
+    }
+    if (spot_type == 5)
+    {
+        verb = i18n::s.get("core.locale.activity.material.get_verb.find");
+    }
+    if (spot_type == 0)
+    {
+        verb = i18n::s.get("core.locale.activity.material.get_verb.get");
+    }
+    txt(i18n::s.get("core.locale.activity.material.get", verb, amount, matname(material_id)));
     txtef(4);
     txt(message + u8"("s + mat(material_id) + u8") "s);
     return;
@@ -2066,10 +2028,9 @@ void matdelmain(int material_id, int amount)
         amount = 1;
     }
     mat(material_id) -= amount;
-    message = u8"マテリアル:"s + matname(material_id) + u8"を"s + amount
-        + u8"個失った"s;
+    txt(i18n::s.get("core.locale.activity.material.lose", matname(material_id), amount));
     txtef(4);
-    txt(message + u8"(残り "s + mat(material_id) + u8"個) "s);
+    txt(i18n::s.get("core.locale.activity.material.total", mat(material_id)));
     return;
 }
 

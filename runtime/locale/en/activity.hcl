@@ -190,7 +190,7 @@ locale {
             finish = "You harvest ${itemname(_1, 1)}. (${_2})"
         }
 
-        fish {
+        fishing {
             start = "You start fishing."
             fail = "A waste of a time..."
             get = "You get ${itemname(_1, 1)}!"
@@ -203,14 +203,15 @@ locale {
             get_verb {
                 dig_up = "dig up"
                 fish_up = "fish up"
-                harvest = "harvest" # TODO
+                harvest = "harvest"
                 find = "find"
                 get = "get"
             }
 
-            lose = "You lose ${_1} ${_2}${s(_1)}.(Total:${_3}) " # TODO: s(_1)
+            lose = "You lose ${_1} ${_2}${s(_1)}."
+            lose_total = "(Total:${_1}) "
 
-            mining {
+            digging {
                 fails = "Your mining attempt fails."
                 no_more = "There's no more ore around."
             }
@@ -222,7 +223,7 @@ locale {
                 fails = "Your searching attempt fails."
                 no_more = "You can't find anything anymore."
             }
-            plant {
+            harvesting {
                 no_more = "There's no more plant around."
             }
         }
@@ -249,8 +250,8 @@ locale {
             start {
                 wall = "You start to dig the wall."
                 spot = "You start to dig the mining spot."
+                hard = "These walls look pretty hard!"
             }
-            hard = "These walls look pretty hard!"
 
             finish {
                 wall = "You finished digging the wall."
