@@ -1,7 +1,10 @@
 locale {
     activity {
-        stops = "${name(_1)} stop${s(_1)} ${_2}."
-        cancel = "Do you want to cancel ${_1}? "
+        cancel {
+            prompt = "Do you want to cancel ${_1}? "
+            normal = "${name(_1)} stop${s(_1)} ${_2}."
+            item = "${name(_1)} cancel${s(_1)} ${his(_1)} action."
+        }
 
         eat {
             start {
@@ -17,7 +20,7 @@ locale {
         perform {
             start = "${name(_1)} start${s(_1)} to play ${itemname(_2)}."
 
-            sound { # NOTE
+            sound {
                 _0 = "*Tiki*"
                 _1 = "*Dan*"
                 _2 = "*Lala*"
@@ -25,40 +28,42 @@ locale {
             }
 
             gets_angry = "${name(_1)} get${s(_1)} angry."
-            disinterest_dialog {
-                _0 = "\"Boring.\""
-                _1 = "\"I've heard this before.\""
-                _2 = "\"This song again?\""
-            }
-            angry_dialog {
-                _0 = "\"Boo boo!\""
-                _1 = "\"Shut it!\""
-                _2 = "\"What are you doing!\""
-                _3 = "\"You can't play shit.\""
-            }
-            interest_dialog {
-                _0 = "${name(_1)} clap${s(_1)}."
-                _1 = "${name(_1)} listene${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
-                _2 = "\"Bravo!\""
-                _3 = "\"Nice song.\""
-                _4 = "\"Scut!\""
-                _5 = "${name(_1)} ${is(_1)} excited!"
+
+            dialog {
+                interest {
+                    _0 = "${name(_1)} clap${s(_1)}."
+                    _1 = "${name(_1)} listene${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
+                    _2 = "\"Bravo!\""
+                    _3 = "\"Nice song.\""
+                    _4 = "\"Scut!\""
+                    _5 = "${name(_1)} ${is(_1)} excited!"
+                }
+                disinterest {
+                    _0 = "\"Boring.\""
+                    _1 = "\"I've heard this before.\""
+                    _2 = "\"This song again?\""
+                }
+                angry {
+                    _0 = "\"Boo boo!\""
+                    _1 = "\"Shut it!\""
+                    _2 = "\"What are you doing!\""
+                    _3 = "\"You can't play shit.\""
+                }
             }
 
             throws_rock = "${name(_1)} throw${s(_1)} a rock."
-
-            finish = "You finish your performance."
 
             quality {
                 _0 = "It is a waste of time."
                 _1 = "Almost everyone ignores you."
                 _2 = "You need to practice lot more."
-                _3 = "Not good."
-                _4 = "People seem to like your performance."
-                _5 = "Your performance is successful."
-                _6 = "Wonderful!"
-                _7 = "Great performance. Everyone cheers you."
-                _8 = "A Legendary stage!"
+                _3 = "You finish your performance."
+                _4 = "Not good."
+                _5 = "People seem to like your performance."
+                _6 = "Your performance is successful."
+                _7 = "Wonderful!"
+                _8 = "Great performance. Everyone cheers you."
+                _9 = "A Legendary stage!"
             }
 
             tip = "The audience gives ${name(_1)} total of ${_2} gold pieces."
@@ -174,12 +179,14 @@ locale {
         }
 
         harvest {
-            # NOTE: EN has 5 variants, JP has 4
-            _0 = "*sing*"
-            _1 = "*pull*"
-            _2 = "*thud*"
-            _3 = "*rumble*"
-            _4 = "*gasp*"
+            sound {
+                # NOTE: EN has 5 variants, JP has 4
+                _0 = "*sing*"
+                _1 = "*pull*"
+                _2 = "*thud*"
+                _3 = "*rumble*"
+                _4 = "*gasp*"
+            }
             finish = "You harvest ${itemname(_1, 1)}. (${_2})"
         }
 
