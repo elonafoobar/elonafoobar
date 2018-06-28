@@ -38,10 +38,9 @@ locale {
             default = "Which direction? "
             spell = "Which direction do you want to cast the spell? "
             wand = "Which direction do you want to zap the wand? "
+            cannot_see_location = "You can't see the location."
+            out_of_range = "It's out of range."
         }
-
-        cannot_see_location = "You can't see the location."
-        out_of_range = "It's out of range."
 
 
         exit_map {
@@ -137,7 +136,7 @@ locale {
 
             item_on_cell {
                 item = "You see ${_1} here."
-                construction = "${_1} is constructed here."
+                building = "${_1} is constructed here."
                 not_owned = "You see ${_1} placed here." # TODO correct name?
                 more_than_three = "There are ${_1} items lying here."
             }
@@ -179,6 +178,7 @@ locale {
                     succeed = "You disarm the trap."
                     dismantle = "You dismantle the trap."
                 }
+                evade = "${name(_1)} evade${s(_1)} a trap."
                 activate {
                     text = "${name(_1)} activate${s(_1)} a trap!"
                     blind = "Gallons of ink spreads."
@@ -220,6 +220,7 @@ locale {
                             # TODO: JP has 3 variants, EN has 2
                             _0 = "It's raining heavily. You lose your way."
                             _1 = "You can't see a thing!"
+                            _2 = "It's raining heavily. You lose your way."
                         }
                         sound {
                             # TODO: JP has 4 variants, EN has 5
@@ -272,7 +273,7 @@ locale {
 
         look {
             find_nothing = "You look around and find nothing."
-            cannot_see = "You can't see the location."
+            cannot_see = "You can't see the location." # TODO possible duplicate
             target = "You target ${name(_1)}."
             target_the_ground = "You target the ground."
         }
@@ -305,9 +306,9 @@ locale {
 
         open {
             text = "You open ${itemname(_1)}."
-            goods = "Several quality goods spread out from ${_1}."
+            goods = "Several quality goods spread out from ${itemname(_1)}."
             new_year_gift {
-                jumps_out = "Something jumps out from the pack!"
+                something_jumps_out = "Something jumps out from the pack!"
                 trap = "It's trap! The gift ignites."
                 cursed_letter = "You find a cursed letter inside."
                 ring = "*ring ring ring*"
@@ -333,6 +334,7 @@ locale {
             do_you_want_to_remove = "Do you want to remove ${itemname(_1)}?"
             you_absorb_magic = "You absorb magic from ${itemname(_1)}."
             poison_drips = "Poison drips from your hands."
+            your_inventory_is_full = "Your inventory is full."
             shopkeepers_inventory_is_full = "Shopkeeper's inventory is full."
 
             you_buy = "You buy ${_1}."
@@ -365,11 +367,11 @@ locale {
             discover {
                 trap = "You discover a trap."
                 hidden_path = "You discover a hidden path."
-                small_coin {
-                    find = "You find a small coin!"
-                    far = "You sense something."
-                    close = "You see something shines."
-                }
+            }
+            small_coin {
+                find = "You find a small coin!"
+                far = "You sense something."
+                close = "You see something shines."
             }
         }
 
@@ -383,18 +385,17 @@ locale {
                 not_weak_enough = "You need to weaken the creature to capture it."
                 capture = "You capture ${name(_1)}."
             }
-            hits2 = "It hits ${name(_1)}!"
             snow {
                 hits_snowman = "It hits ${itemname(_1, 1)} and breaks it."
                 melts = "It falls on the ground and melts."
 
                 dialog {
-                    _0 =
-                    _1 =
-                    _2 =
-                    _3 =
-                    _4 =
-                    _5 =
+                    _0 ="\"Hey!\""
+                    _1 ="\"Now you did it.\""
+                    _2 ="*chuckle*"
+                    _3 ="\"Tee-hee-hee!\""
+                    _4 ="\"You'll pay for this.\""
+                    _5 ="*grin*"
                 }
             }
 
@@ -442,7 +443,7 @@ locale {
                 is_dry = "${_1} is dry."
                 draw = "${name(_1)} draw${s(_1)} water from ${_2}."
 
-                event {
+                effect {
                     falls {
                         text = "${name(_1)} falls in the well!"
                         dialog = "${name(_1)} yells, \"G-Give me your hands!\""
@@ -469,6 +470,7 @@ locale {
 
         plant {
             cannot_plant_it_here = "You can't plant it here."
+            in_field = "You plant ${itemname(_1, 1)}."
             execute = "You plant ${itemname(_1, 1)}."
             new_plant_grows = "A new plant grows!"
             harvest = "You harvest ${itemname(_1, 1)}."
@@ -485,8 +487,9 @@ locale {
             claim = "${_1} claims the empty altar."
             take_over {
                 attempt = "Strange fogs surround all over the place. You see shadows of ${_1} and ${_2} make a fierce dance."
+                shadow = "The shadow of your god slowly gets bolder."
                 succeed = "${_1} takes over the altar."
-                fail = "${_2} keeps the altar."
+                fail = "${_1} keeps the altar."
             }
             result {
                 best = "${itemname(_1)} shine${s(_1)} all aruond and dissappear${s(_1)}."
