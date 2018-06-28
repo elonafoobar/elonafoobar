@@ -1031,11 +1031,7 @@ turn_result_t show_message_log()
     wh(1) = 1;
     wh(2) = -1;
     snd(93);
-    showtitle(
-        lang(u8"過去のメッセージ"s, u8"Log"s),
-        lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s),
-        236,
-        1);
+    show_title(lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s));
     drawmenu(2);
     windowanimecorner(wx, wy, ww, wh, 8, 4);
 
@@ -2306,7 +2302,7 @@ label_2034_internal:
         }
     }
     color(0, 0, 0);
-    showtitle(s, s, 236, 1);
+    show_title(s);
 label_2035_internal:
     s = "";
     if (csctrl == 0)
@@ -5047,7 +5043,7 @@ menu_result menu_journal()
     noteadd(""s);
     append_subquest_journal(1);
     listmax = noteinfo();
-    showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
+    show_title(strhint2 + strhint3);
     drawmenu(2);
     wx = (windoww - 736) / 2 + inf_screenx;
     wy = winposy(448);

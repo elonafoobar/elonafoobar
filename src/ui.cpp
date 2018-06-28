@@ -2771,32 +2771,30 @@ void windowanimecorner(
 
 
 
-void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
+void show_title(const std::string& title)
 {
-    int x_at_m106 = 0;
-    int y_at_m106 = 0;
-    font(12 + sizefix - en * 2);
+    int x;
+    int y;
     if (mode != 1)
     {
-        x_at_m106 = prm_740 - 10;
-        y_at_m106 = 0;
+        x = 226;
+        y = 0;
     }
     else
     {
-        x_at_m106 = 240;
-        y_at_m106 = windowh - 16;
+        x = 240;
+        y = windowh - 16;
     }
-    for (int cnt = 0, cnt_end = ((windoww - x_at_m106 - 8) / 192 + 1);
-         cnt < cnt_end;
-         ++cnt)
+    for (int i = 0; i < (windoww - x - 8) / 192 + 1; ++i)
     {
-        pos(x_at_m106 + 8 + cnt * 192, y_at_m106);
+        pos(x + 8 + i * 192, y);
         gcopy(3, 496, 581, 192, 18);
     }
     gmode(2);
-    pos(x_at_m106, y_at_m106 + (mode != 1));
+    pos(x, y + (mode != 1));
     gcopy(3, 96, 360, 24, 16);
-    bmes(prm_739, x_at_m106 + 32, y_at_m106 + 1 + jp, {250, 250, 250});
+    font(12 + sizefix - en * 2);
+    bmes(title, x + 32, y + 1 + jp, {250, 250, 250});
 }
 
 
