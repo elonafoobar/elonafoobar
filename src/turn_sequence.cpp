@@ -1137,44 +1137,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     }
     if (cdata[cc].stops_continuous_action_if_damaged == 1)
     {
-        if (cc == 0)
-        {
-            if (cdata[cc].continuous_action_id != 1
-                && cdata[cc].continuous_action_id != 2
-                && cdata[cc].continuous_action_id != 3)
-            {
-                rtval = 0;
-            }
-            else
-            {
-                screenupdate = -1;
-                update_screen();
-                prompt_stop_continuous_action();
-            }
-        }
-        if (cc != 0 || rtval == 0)
-        {
-            if (is_in_fov(cc))
-            {
-                txt(lang(
-                    name(cc) + u8"は"s
-                        + i18n::_(
-                              u8"ui",
-                              u8"action",
-                              u8"_"s + cdata[cc].continuous_action_id)
-                        + u8"を中断した。"s,
-                    name(cc) + u8" stop"s + _s(cc) + u8" "s
-                        + i18n::_(
-                              u8"ui",
-                              u8"action",
-                              u8"_"s + cdata[cc].continuous_action_id)
-                        + u8"."s));
-            }
-            rowactend(cc);
-        }
-        screenupdate = -1;
-        update_screen();
-        cdata[cc].stops_continuous_action_if_damaged = 0;
+        activity_handle_damage(cdata[cc]);
     }
     if (cdata[cc].turn % 25 == 0)
     {
@@ -1193,96 +1156,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     }
     if (cdata[cc].continuous_action_id != 0)
     {
-        ci = cdata[cc].continuous_action_item;
-        --cdata[cc].continuous_action_turn;
-        if (cdata[cc].continuous_action_id == 7)
-        {
-            auto_turn(config::instance().animewait * 2);
-            spot_fishing();
-        }
-        if (cdata[cc].continuous_action_id == 5)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_mining_or_wall();
-        }
-        if (cdata[cc].continuous_action_id == 8)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_material();
-        }
-        if (cdata[cc].continuous_action_id == 9)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_digging();
-        }
-        if (cdata[cc].continuous_action_id == 4)
-        {
-            auto_turn(config::instance().animewait / 4);
-            do_rest();
-        }
-        if (cdata[cc].continuous_action_id == 1)
-        {
-            auto_turn(config::instance().animewait * 5);
-            return do_eat_command();
-        }
-        if (cdata[cc].continuous_action_id == 2)
-        {
-            auto_turn(config::instance().animewait * 1.25);
-            return do_read_command();
-        }
-        if (cdata[cc].continuous_action_id == 11)
-        {
-            auto_turn(config::instance().animewait * 2.5);
-            continuous_action_sex();
-        }
-        if (cdata[cc].continuous_action_id == 10)
-        {
-            if (gdata(91) == 103)
-            {
-                auto_turn(config::instance().animewait * 2);
-            }
-            else if (gdata(91) == 104)
-            {
-                auto_turn(config::instance().animewait * 2);
-            }
-            else if (gdata(91) == 105)
-            {
-                auto_turn(config::instance().animewait * 2.5);
-            }
-            else
-            {
-                auto_turn(config::instance().animewait);
-            }
-            continuous_action_others();
-        }
-        if (cdata[cc].continuous_action_id == 12)
-        {
-            auto_turn(config::instance().animewait);
-            label_19342();
-        }
-        if (cdata[cc].continuous_action_id == 6)
-        {
-            auto_turn(config::instance().animewait * 2);
-            continuous_action_perform();
-        }
-        if (cdata[cc].continuous_action_id == 3)
-        {
-            label_2153();
-            return proc_movement_event();
-        }
-        if (cdata[cc].continuous_action_turn > 0)
-        {
-            return turn_result_t::turn_end;
-        }
-        rowactend(cc);
-        if (cc == 0)
-        {
-            if (chatteleport == 1)
-            {
-                chatteleport = 0;
-                return turn_result_t::exit_map;
-            }
-        }
+        activity_proc(cdata[cc]);
     }
     if (cdata[cc].needs_refreshing_status())
     {
