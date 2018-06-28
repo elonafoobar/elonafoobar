@@ -415,8 +415,8 @@ void gcopy(
     int window_id,
     int src_x,
     int src_y,
-    int src_width = 0,
-    int src_height = 0,
+    int src_width,
+    int src_height,
     int dst_width = -1,
     int dst_height = -1);
 

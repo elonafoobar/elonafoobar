@@ -1593,7 +1593,7 @@ void render_weather_effect_snow()
             }
         }
         pos(rainx(cnt), rainy(cnt));
-        gcopy(3, rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8);
+        gcopy(3, rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
     }
     weatherbk = gdata_weather;
     gmode(2);
@@ -1620,7 +1620,7 @@ void render_weather_effect_etherwind()
         else
         {
             pos(rainx(cnt), rainy(cnt));
-            gcopy(3, 16 + rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8);
+            gcopy(3, 16 + rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
             rainx(cnt) += rnd(3) - 1;
             rainy(cnt) -= rnd(2) + cnt % 5;
         }
@@ -2618,9 +2618,9 @@ void window2(
     for (int cnt = 0, cnt_end = (x2_at_m93 / 16 - 2); cnt < cnt_end; ++cnt)
     {
         pos(cnt * 16 + prm_656 + 16, prm_657);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, 16, 16);
         pos(cnt * 16 + prm_656 + 16, prm_657 + y2_at_m93 - 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32, 16, 16);
     }
     pos(x3_at_m93, prm_657);
     gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, x2_at_m93 % 16, 16);
@@ -2634,22 +2634,22 @@ void window2(
     for (int cnt = 0, cnt_end = (p_at_m93); cnt < cnt_end; ++cnt)
     {
         pos(prm_656, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, 16);
         pos(prm_656 + x2_at_m93 - 16, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, 16);
     }
     pos(prm_656, y3_at_m93);
     gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, y2_at_m93 % 16);
     pos(prm_656 + x2_at_m93 - 16, y3_at_m93);
     gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, y2_at_m93 % 16);
     pos(prm_656, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93, 16, 16);
     pos(prm_656, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32, 16, 16);
     pos(prm_656 + x2_at_m93 - 16, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93, 16, 16);
     pos(prm_656 + x2_at_m93 - 16, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32, 16, 16);
     if (prm_661 == 5)
     {
         pos(prm_656 + 2, prm_657 + 2);

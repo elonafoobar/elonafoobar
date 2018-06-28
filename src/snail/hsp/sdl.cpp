@@ -526,6 +526,8 @@ void font(int size, font_t::style_t style, const fs::path& filepath)
     }
 }
 
+
+
 void gcopy(
     int window_id,
     int src_x,
@@ -544,9 +546,6 @@ void gcopy(
 
     int dst_x = detail::current_tex_buffer().x;
     int dst_y = detail::current_tex_buffer().y;
-    src_width = src_width == 0 ? detail::current_tex_buffer().width : src_width;
-    src_height =
-        src_height == 0 ? detail::current_tex_buffer().height : src_height;
     dst_width = dst_width == -1 ? src_width : dst_width;
     dst_height = dst_height == -1 ? src_height : dst_height;
 
@@ -577,10 +576,6 @@ void gcopy(
 
     if (window_id == detail::current_buffer)
     {
-        src_width =
-            src_width == 0 ? detail::current_tex_buffer().width : src_width;
-        src_height =
-            src_height == 0 ? detail::current_tex_buffer().height : src_height;
         auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
         renderer.set_render_target(tmp_buffer);
         if (window_id >= 10)
@@ -604,7 +599,6 @@ void gcopy(
         gsel(window_id);
         renderer.render_image(
             tmp_buffer, 0, 0, dst_width, dst_height, dst_x, dst_y);
-        return;
     }
     else
     {
@@ -620,6 +614,8 @@ void gcopy(
             dst_height);
     }
 }
+
+
 
 int ginfo(int type)
 {

@@ -1257,7 +1257,12 @@ label_2181_internal:
                 sx = cnt * inf_tiles + wx + 46;
                 p = map(x, y, 0);
                 pos(sx + 1, sy + 1);
-                gcopy(2, p % 33 * inf_tiles, p / 33 * inf_tiles);
+                gcopy(
+                    2,
+                    p % 33 * inf_tiles,
+                    p / 33 * inf_tiles,
+                    inf_tiles,
+                    inf_tiles);
                 if (x == inv[ci].param1)
                 {
                     if (y == inv[ci].param2)

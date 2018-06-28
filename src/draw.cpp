@@ -827,7 +827,7 @@ void draw_emo(int cc, int x, int y)
 {
     gmode(2, 16, 16);
     pos(x + 16, y);
-    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16);
 }
 
 
