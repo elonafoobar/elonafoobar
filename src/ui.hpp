@@ -49,7 +49,6 @@ void draw_caption();
 void update_scrolling_info();
 void update_slight();
 void label_1433();
-void render_stair_positions_in_minimap();
 void label_1438();
 void label_1439();
 void fade_out();

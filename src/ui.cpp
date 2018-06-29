@@ -283,6 +283,90 @@ void draw_minimap_pixel(int x, int y)
 
 
 
+void highlight_characters_in_pet_arena()
+{
+    for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
+    {
+        if (cdata[cc].state != 1)
+            continue;
+        if (cc == 0)
+            continue;
+        snail::color color{0};
+        if (cdata[cc].relationship == 10)
+        {
+            color = {127, 127, 255, 32};
+        }
+        else if (cdata[cc].relationship == -3)
+        {
+            color = {255, 127, 127, 32};
+        }
+        else
+        {
+            continue;
+        }
+        const int x = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
+        const int y = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+        if (0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles && 0 <= y
+            && y < (inf_screenh - 1) * inf_tiles)
+        {
+            boxf(
+                x,
+                y * (y > 0),
+                inf_tiles,
+                inf_tiles + (y < 0) * inf_screeny,
+                color);
+            if (cc == camera)
+            {
+                gmode(4, -1, -1, 120);
+                pos(x + 36, y + 32);
+                gcopy(3, 240, 410, 24, 16);
+                gmode(2);
+            }
+        }
+    }
+}
+
+
+
+void render_pc_position_in_minimap()
+{
+    const auto x = clamp(120 * cdata[0].position.x / mdata(0), 2, 112);
+    const auto y = clamp(84 * cdata[0].position.y / mdata(1), 2, 76);
+
+    raderx = x;
+    radery = y;
+    pos(inf_radarx + x, inf_radary + y);
+    gcopy(3, 15, 338, 6, 6);
+}
+
+
+
+void render_stair_positions_in_minimap()
+{
+    for (int y = 0; y < mdata(1); ++y)
+    {
+        for (int x = 0; x < mdata(0); ++x)
+        {
+            int sx = clamp(120 * x / mdata(0), 2, 112);
+            int sy = clamp(84 * y / mdata(1), 2, 76);
+            if (map(x, y, 6) / 1000 % 100 == 11)
+            {
+                // Downstairs
+                pos(inf_radarx + sx, inf_radary + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+            else if (map(x, y, 6) / 1000 % 100 == 10)
+            {
+                // Upstairs
+                pos(inf_radarx + sx, inf_radary + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -1550,124 +1634,23 @@ void label_1433()
 
     if (gdata_current_map == 40)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
-        {
-            if (cdata[cnt].state != 1)
-            {
-                continue;
-            }
-            ap = 0;
-            if (cdata[cnt].relationship == 10)
-            {
-                ap(0) = 127;
-                ap(1) = 127;
-                ap(2) = 255;
-            }
-            if (cdata[cnt].relationship == -3)
-            {
-                ap(0) = 255;
-                ap(1) = 127;
-                ap(2) = 127;
-            }
-            if (cnt == 0)
-            {
-                ap = 0;
-            }
-            if (ap != 0)
-            {
-                sx = (cdata[cnt].position.x - scx) * inf_tiles + inf_screenx;
-                sy = (cdata[cnt].position.y - scy) * inf_tiles + inf_screeny;
-                if (sx >= 0)
-                {
-                    if (sy >= 0)
-                    {
-                        if (sx - inf_screenx < (inf_screenw - 1) * inf_tiles)
-                        {
-                            if (sy < (inf_screenh - 1) * inf_tiles)
-                            {
-                                boxf(
-                                    sx,
-                                    sy * (sy > 0),
-                                    inf_tiles,
-                                    inf_tiles + (sy < 0) * inf_screeny,
-                                    {(uint8_t)ap,
-                                     (uint8_t)ap(1),
-                                     (uint8_t)ap(2),
-                                     32});
-                                if (cnt == camera)
-                                {
-                                    gmode(4, -1, -1, 120);
-                                    pos(sx + 36, sy + 32);
-                                    gcopy(3, 240, 410, 24, 16);
-                                    gmode(2);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        highlight_characters_in_pet_arena();
     }
 
-    sy = 84 * cdata[0].position.y / mdata(1);
-    if (sy < 2)
-    {
-        sy = 2;
-    }
-    else if (sy > 76)
-    {
-        sy = 76;
-    }
-    sx = 120 * cdata[0].position.x / mdata(0);
-    if (sx < 2)
-    {
-        sx = 2;
-    }
-    else if (sx > 112)
-    {
-        sx = 112;
-    }
     if (raderx != -1)
     {
         pos(inf_radarx + raderx, inf_radary + radery);
         gcopy(3, 688 + raderx, 528 + radery, 6, 6);
     }
-    raderx = sx;
-    radery = sy;
-    pos(inf_radarx + sx, inf_radary + sy);
-    gcopy(3, 15, 338, 6, 6);
+
+    render_pc_position_in_minimap();
+
     if (debug::voldemort)
     {
         render_stair_positions_in_minimap();
     }
 
     render_weather_effect();
-}
-
-
-
-void render_stair_positions_in_minimap()
-{
-    for (int y = 0; y < mdata(1); ++y)
-    {
-        for (int x = 0; x < mdata(0); ++x)
-        {
-            int sx = clamp(120 * x / mdata(0), 2, 112);
-            int sy = clamp(84 * y / mdata(1), 2, 76);
-            if (map(x, y, 6) / 1000 % 100 == 11)
-            {
-                // Downstairs
-                pos(inf_radarx + sx, inf_radary + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-            else if (map(x, y, 6) / 1000 % 100 == 10)
-            {
-                // Upstairs
-                pos(inf_radarx + sx, inf_radary + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-        }
-    }
 }
 
 
