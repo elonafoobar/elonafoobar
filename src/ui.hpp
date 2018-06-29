@@ -37,9 +37,8 @@ void fillbg(
 
 void drawmenu(int = 0);
 void screen_txtadv();
-void label_1416();
+
 void update_entire_screen();
-void update_screen_hud();
 void update_screen();
 void update_minimap();
 void label_1420();

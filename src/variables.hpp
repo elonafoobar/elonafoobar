@@ -64,7 +64,6 @@ ELONA_EXTERN(int inf_hpx);
 ELONA_EXTERN(int inf_hpy);
 ELONA_EXTERN(int inf_mpx);
 ELONA_EXTERN(int inf_mpy);
-ELONA_EXTERN(int screendrawhack);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp

@@ -20,6 +20,61 @@ int cs_posbk_y{};
 int cs_posbk_w{};
 int cs_posbk_h{};
 
+
+
+void update_screen_hud()
+{
+    gmode(2);
+    ap = windoww / 192;
+    for (int cnt = 0, cnt_end = (ap + 1); cnt < cnt_end; ++cnt)
+    {
+        if (cnt == ap)
+        {
+            sx = windoww % 192;
+        }
+        else
+        {
+            sx = 192;
+        }
+        pos(cnt * 192, inf_bary);
+        gcopy(3, 0, 464 - inf_barh, sx, inf_barh);
+        pos(cnt * 192, inf_msgy);
+        gcopy(3, 496, 528, sx, inf_msgh);
+    }
+    pos(0, inf_msgy);
+    gcopy(3, 120, 504, inf_msgx, inf_verh);
+    pos(inf_raderw + 6, inf_bary);
+    gcopy(3, 208, 376, 16, 16);
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        sx = 0;
+        if (cnt == 8)
+        {
+            sx = 8;
+        }
+        if (cnt == 9)
+        {
+            sx = 14;
+        }
+        pos(inf_raderw + cnt * 47 + 148 + sx, inf_bary + 1);
+        gcopy(3, cnt * 16, 376, 16, 16);
+    }
+    font(12 + sizefix - en * 2);
+    pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
+    if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
+    {
+        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
+    }
+    else
+    {
+        mes(cnven(mdatan(0)));
+    }
+    pos(inf_raderw + 114, inf_bary + 3 + vfix - en);
+    mes(maplevel());
+}
+
+
+
 } // namespace
 
 
@@ -220,27 +275,21 @@ void initialize_ui_constants()
     screenmsgy = inf_screeny + inf_tiles * 2;
     prompty = (windowh - inf_verh - 30) / 2 - 4;
     promptx = (windoww - 10) / 2 + 3;
-    return;
 }
 
-void label_1416()
-{
-    gmode(2);
-    update_screen();
-    return;
-}
+
 
 void update_entire_screen()
 {
     update_screen_hud();
     update_minimap();
     update_screen();
-    return;
 }
+
+
 
 void update_screen()
 {
-    screendrawhack = 1;
     gmode(2);
     if (mode == 9)
     {
@@ -254,7 +303,7 @@ void update_screen()
         update_slight();
         label_1433();
     }
-    screendrawhack = 10;
+
     render_hud();
     if (autoturn == 1)
     {
@@ -270,8 +319,9 @@ void update_screen()
         redraw();
     }
     screenupdate = 0;
-    screendrawhack = 0;
 }
+
+
 
 void screen_txtadv()
 {
@@ -310,57 +360,7 @@ void screen_txtadv()
     txtadvscreenupdate = 1;
 }
 
-void update_screen_hud()
-{
-    gmode(2);
-    ap = windoww / 192;
-    for (int cnt = 0, cnt_end = (ap + 1); cnt < cnt_end; ++cnt)
-    {
-        if (cnt == ap)
-        {
-            sx = windoww % 192;
-        }
-        else
-        {
-            sx = 192;
-        }
-        pos(cnt * 192, inf_bary);
-        gcopy(3, 0, 464 - inf_barh, sx, inf_barh);
-        pos(cnt * 192, inf_msgy);
-        gcopy(3, 496, 528, sx, inf_msgh);
-    }
-    pos(0, inf_msgy);
-    gcopy(3, 120, 504, inf_msgx, inf_verh);
-    pos(inf_raderw + 6, inf_bary);
-    gcopy(3, 208, 376, 16, 16);
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        sx = 0;
-        if (cnt == 8)
-        {
-            sx = 8;
-        }
-        if (cnt == 9)
-        {
-            sx = 14;
-        }
-        pos(inf_raderw + cnt * 47 + 148 + sx, inf_bary + 1);
-        gcopy(3, cnt * 16, 376, 16, 16);
-    }
-    font(12 + sizefix - en * 2);
-    pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
-    if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
-    {
-        mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
-    }
-    else
-    {
-        mes(cnven(mdatan(0)));
-    }
-    pos(inf_raderw + 114, inf_bary + 3 + vfix - en);
-    mes(maplevel());
-    return;
-}
+
 
 void update_minimap()
 {
@@ -376,8 +376,9 @@ void update_minimap()
             }
         }
     }
-    return;
 }
+
+
 
 void label_1420()
 {
@@ -386,8 +387,9 @@ void label_1420()
     render_hud();
     redraw();
     screenupdate = 0;
-    return;
 }
+
+
 
 void render_hud()
 {
@@ -965,6 +967,8 @@ void render_hud()
     show_damage_popups();
 }
 
+
+
 void load_continuous_action_animation()
 {
     gsel(9);
@@ -989,8 +993,9 @@ void load_continuous_action_animation()
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
     gsel(0);
-    return;
 }
+
+
 
 void render_autoturn_animation()
 {
@@ -1094,8 +1099,9 @@ void render_autoturn_animation()
         firstautoturn = 0;
     }
     gmode(2);
-    return;
 }
+
+
 
 void draw_caption()
 {
@@ -1132,8 +1138,9 @@ void draw_caption()
     pos(msgx + 18, msgy + 4);
     mes(s);
     gmode(2);
-    return;
 }
+
+
 
 void update_scrolling_info()
 {
@@ -1208,8 +1215,9 @@ void update_scrolling_info()
     {
         scx = 0;
     }
-    return;
 }
+
+
 
 void update_slight()
 {
@@ -1326,14 +1334,14 @@ void update_slight()
         }
         ++ly;
     }
-    return;
 }
+
+
 
 void label_1433()
 {
-    screendrawhack = 2;
     cell_draw();
-    screendrawhack = 3;
+
     if (gdata_current_map == 40)
     {
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
@@ -1426,7 +1434,7 @@ void label_1433()
     {
         render_stair_positions_in_minimap();
     }
-    screendrawhack = 5;
+
     if (config::instance().env)
     {
         if (gdata_weather == 3)
@@ -1446,8 +1454,9 @@ void label_1433()
             render_weather_effect_etherwind();
         }
     }
-    return;
 }
+
+
 
 void render_stair_positions_in_minimap()
 {
@@ -1472,6 +1481,8 @@ void render_stair_positions_in_minimap()
         }
     }
 }
+
+
 
 void render_weather_effect_rain()
 {
@@ -1515,8 +1526,9 @@ void render_weather_effect_rain()
         }
     }
     weatherbk = gdata_weather;
-    return;
 }
+
+
 
 void render_weather_effect_hard_rain()
 {
@@ -1560,8 +1572,9 @@ void render_weather_effect_hard_rain()
         }
     }
     weatherbk = gdata_weather;
-    return;
 }
+
+
 
 void render_weather_effect_snow()
 {
@@ -1595,8 +1608,9 @@ void render_weather_effect_snow()
     }
     weatherbk = gdata_weather;
     gmode(2);
-    return;
 }
+
+
 
 void render_weather_effect_etherwind()
 {
@@ -1625,8 +1639,9 @@ void render_weather_effect_etherwind()
     }
     weatherbk = gdata_weather;
     gmode(2);
-    return;
 }
+
+
 
 void label_1438()
 {
@@ -1699,8 +1714,9 @@ void label_1438()
         await(40);
     }
     scrollanime = 0;
-    return;
 }
+
+
 
 void label_1439()
 {
@@ -1729,8 +1745,9 @@ void label_1439()
     }
     boxf(688, 528, raderw * mdata(0), raderh * mdata(1), {255, 255, 255, 10});
     gsel(0);
-    return;
 }
+
+
 
 void draw_minimap_pixel()
 {
@@ -1738,8 +1755,9 @@ void draw_minimap_pixel()
     sx(1) = 120 * sx / mdata(0);
     pos(inf_raderx + sx(1), inf_radery + sy(1));
     gcopy(3, 688 + sx(1), 528 + sy(1), raderw, raderh);
-    return;
 }
+
+
 
 void fade_out()
 {
@@ -1764,7 +1782,6 @@ void fade_out()
         redraw();
     }
     gmode(2);
-    return;
 }
 
 
@@ -1792,8 +1809,8 @@ void animation_fade_in()
         redraw();
     }
     gmode(2);
-    return;
 }
+
 
 
 void label_1444()
@@ -1806,8 +1823,8 @@ void label_1444()
     evscrw = windoww / evtiles + 2;
     label_1445();
     redraw();
-    return;
 }
+
 
 
 void label_1445()
@@ -1835,8 +1852,8 @@ void label_1445()
                 2, ap % 33 * inf_tiles, ap / 33 * inf_tiles, evtiles, evtiles);
         }
     }
-    return;
 }
+
 
 
 void render_fishing_animation()
@@ -1947,8 +1964,9 @@ void render_fishing_animation()
         grotate(9, 0, 0, 0.5 * fishdir * 3.14, 48, 48);
     }
     randomize();
-    return;
 }
+
+
 
 void display_window2(
     int prm_662,
@@ -1975,8 +1993,9 @@ void display_window2(
             prm_663 + prm_665 - 24 - prm_665 % 8 + prm_667);
         mes(s);
     }
-    return;
 }
+
+
 
 void display_window(
     int prm_668,
@@ -2040,15 +2059,15 @@ void display_window(
     wy = prm_669;
     ww = prm_670;
     wh = prm_671;
-    return;
 }
+
+
 
 void display_note(const std::string& prm_674, int prm_675)
 {
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
-    return;
 }
 
 
@@ -2079,18 +2098,23 @@ void display_customkey(const std::string& key, int x, int y)
     gcopy(3, 624, 30, 24, 18);
 }
 
+
+
 void display_key(int x, int y, int nth)
 {
     pos(x, y);
     gcopy(3, nth * 24 + 72, 30, 24, 18);
 }
 
+
+
 void display_msg(int prm_680, int prm_681)
 {
     msgkeep = prm_681;
     msgy = prm_680;
-    return;
 }
+
+
 
 void drawmenu(int prm_742)
 {
@@ -2221,6 +2245,8 @@ void load_background_variants(int buffer)
     gsel(buffer_bk);
 }
 
+
+
 void clear_background_in_character_making()
 {
     gsel(4);
@@ -2234,6 +2260,8 @@ void clear_background_in_character_making()
     gmode(2);
 }
 
+
+
 void clear_background_in_continue()
 {
     gsel(4);
@@ -2246,6 +2274,7 @@ void clear_background_in_continue()
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
 }
+
 
 
 void draw_scroll(int x, int y, int width, int height)
