@@ -16,9 +16,18 @@ namespace
 {
 
 
-int inf_radarx;
+int inf_barh;
+int inf_bary;
+int inf_clockarrowx;
+int inf_clockarrowy;
+int inf_hpx;
+int inf_hpy;
+int inf_mpx;
+int inf_mpy;
 int inf_radarw;
+int inf_radarx;
 int inf_radary;
+int scposy;
 
 int cs_posbk_x;
 int cs_posbk_y;

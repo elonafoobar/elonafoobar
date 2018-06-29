@@ -48,19 +48,9 @@ ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
 ELONA_EXTERN(elona_vector2<int> bdref);
 
-
 // ui.cpp
-ELONA_EXTERN(int inf_clockarrowx);
-ELONA_EXTERN(int inf_clockarrowy);
 ELONA_EXTERN(int inf_clocky);
-ELONA_EXTERN(int inf_barh);
 ELONA_EXTERN(int inf_msgh);
-ELONA_EXTERN(int inf_bary);
-ELONA_EXTERN(int scposy);
-ELONA_EXTERN(int inf_hpx);
-ELONA_EXTERN(int inf_hpy);
-ELONA_EXTERN(int inf_mpx);
-ELONA_EXTERN(int inf_mpy);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
