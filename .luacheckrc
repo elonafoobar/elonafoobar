@@ -143,6 +143,11 @@ stds.elona = {
                     "level", "min", "max", "set", "modify"
                  },
               },
+              Input = {
+                 fields = {
+                    "yes_no", "prompt", "prompt_number", "prompt_text"
+                 },
+              },
               GUI = {
                  fields = {
                     "txt", "txt_color"

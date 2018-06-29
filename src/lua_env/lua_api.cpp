@@ -713,7 +713,7 @@ namespace Input
 bool yes_no(const std::string&);
 sol::optional<int> prompt_number(const std::string&, int);
 sol::optional<std::string> prompt_text(const std::string&, bool);
-sol::optional<int> prompt(sol::variadic_args);
+sol::optional<int> prompt_choice(sol::variadic_args);
 
 void bind(sol::table&);
 }; // namespace GUI
@@ -728,6 +728,11 @@ bool Input::yes_no(const std::string& message)
 
 sol::optional<int> Input::prompt_number(const std::string& message, int max)
 {
+    if (max < 0)
+    {
+        return sol::nullopt;
+    }
+
     txt(message + " ");
     input_number_dialog(
         (windoww - 200) / 2 + inf_screenx,
@@ -753,8 +758,13 @@ sol::optional<std::string> Input::prompt_text(const std::string& message, bool i
     return elona::inputlog(0);
 }
 
-sol::optional<int> Input::prompt(sol::variadic_args args)
+sol::optional<int> Input::prompt_choice(sol::variadic_args args)
 {
+    if (args.size() == 0)
+    {
+        return sol::nullopt;
+    }
+
     for (size_t i = 0; i < args.size(); i++)
     {
         ELONA_APPEND_PROMPT(args[i].as<std::string>(), u8"null"s, std::to_string(i));
@@ -766,14 +776,15 @@ sol::optional<int> Input::prompt(sol::variadic_args args)
         return sol::nullopt;
     }
 
-    return rtval;
+    // Lua tables are 1-indexed, so add 1 to the result.
+    return rtval + 1;
 }
 
 void Input::bind(sol::table& Elona)
 {
     sol::table Input = Elona.create_named("Input");
     Input.set_function("yes_no", Input::yes_no);
-    Input.set_function("prompt", Input::prompt);
+    Input.set_function("prompt_choice", Input::prompt_choice);
     Input.set_function("prompt_number", Input::prompt_number);
     Input.set_function("prompt_text", Input::prompt_text);
 }
