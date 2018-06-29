@@ -52,7 +52,6 @@ void label_1433();
 void render_stair_positions_in_minimap();
 void label_1438();
 void label_1439();
-void draw_minimap_pixel();
 void fade_out();
 void label_1442();
 void animation_fade_in();

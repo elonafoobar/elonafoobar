@@ -16,10 +16,14 @@ namespace
 {
 
 
-int cs_posbk_x{};
-int cs_posbk_y{};
-int cs_posbk_w{};
-int cs_posbk_h{};
+int inf_radarx;
+int inf_radarw;
+int inf_radary;
+
+int cs_posbk_x;
+int cs_posbk_y;
+int cs_posbk_w;
+int cs_posbk_h;
 
 
 
@@ -44,7 +48,7 @@ void update_screen_hud()
     }
     pos(0, inf_msgy);
     gcopy(3, 120, 504, inf_msgx, inf_verh);
-    pos(inf_raderw + 6, inf_bary);
+    pos(inf_radarw + 6, inf_bary);
     gcopy(3, 208, 376, 16, 16);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -57,11 +61,11 @@ void update_screen_hud()
         {
             sx = 14;
         }
-        pos(inf_raderw + cnt * 47 + 148 + sx, inf_bary + 1);
+        pos(inf_radarw + cnt * 47 + 148 + sx, inf_bary + 1);
         gcopy(3, cnt * 16, 376, 16, 16);
     }
     font(12 + sizefix - en * 2);
-    pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
+    pos(inf_radarw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
         mes(cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
@@ -70,7 +74,7 @@ void update_screen_hud()
     {
         mes(cnven(mdatan(0)));
     }
-    pos(inf_raderw + 114, inf_bary + 3 + vfix - en);
+    pos(inf_radarw + 114, inf_bary + 3 + vfix - en);
     mes(maplevel());
 }
 
@@ -260,6 +264,16 @@ void render_weather_effect()
 
 
 
+void draw_minimap_pixel(int x, int y)
+{
+    const auto x2 = 120 * x / mdata(0);
+    const auto y2 = 84 * y / mdata(1);
+    pos(inf_radarx + x2, inf_radary + y2);
+    gcopy(3, 688 + x2, 528 + y2, raderw, raderh);
+}
+
+
+
 } // namespace
 
 
@@ -411,8 +425,8 @@ void initialize_ui_constants()
     inf_msgh = 72;
     inf_verh = inf_barh + inf_msgh;
     inf_msgline = 4;
-    inf_raderx = 1;
-    inf_raderw = 136;
+    inf_radarx = 1;
+    inf_radarw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
     if (windowh > 1200)
     {
@@ -430,7 +444,7 @@ void initialize_ui_constants()
         inf_msgy = inf_ver + inf_barh;
         inf_screeny = inf_verh;
         inf_clocky = windowh - inf_clockh;
-        inf_radery = 1;
+        inf_radary = 1;
     }
     else
     {
@@ -443,14 +457,14 @@ void initialize_ui_constants()
         inf_bary = windowh - inf_barh;
         inf_msgy = inf_ver;
         inf_clocky = 0;
-        inf_radery = windowh - 86;
+        inf_radary = windowh - 86;
     }
     scposy = inf_screenh / 2 - 1;
     inf_hpx = (windoww - 84) / 2 - 100;
     inf_hpy = inf_ver - 12;
     inf_mpx = (windoww - 84) / 2 + 40;
     inf_mpy = inf_ver - 12;
-    inf_msgx = inf_raderw;
+    inf_msgx = inf_radarw;
     inf_msgspace = 15;
     int inf_maxmsglen_i =
         std::max((windoww - inf_msgx - 28) / inf_mesfont * 2 - 1, 0);
@@ -549,15 +563,13 @@ void screen_txtadv()
 
 void update_minimap()
 {
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int y = 0; y < mdata(1); ++y)
     {
-        sy = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < mdata(0); ++x)
         {
-            sx = cnt;
-            if (map(sx, sy, 2) == map(sx, sy, 0))
+            if (map(x, y, 2) == map(x, y, 0))
             {
-                draw_minimap_pixel();
+                draw_minimap_pixel(x, y);
             }
         }
     }
@@ -630,7 +642,7 @@ void render_hud()
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        sx = inf_raderw + cnt * 47 + 168 - 2;
+        sx = inf_radarw + cnt * 47 + 168 - 2;
         if (cnt < 8)
         {
             if (cdata[0].attr_adjs[cnt] < 0)
@@ -1497,7 +1509,7 @@ void update_slight()
                         if (map(sx, sy, 2) != map(sx, sy, 0))
                         {
                             map(sx, sy, 2) = map(sx, sy, 0);
-                            draw_minimap_pixel();
+                            draw_minimap_pixel(sx, sy);
                         }
                         map(sx, sy, 5) = map(sx, sy, 4);
                         ++lx;
@@ -1608,12 +1620,12 @@ void label_1433()
     }
     if (raderx != -1)
     {
-        pos(inf_raderx + raderx, inf_radery + radery);
+        pos(inf_radarx + raderx, inf_radary + radery);
         gcopy(3, 688 + raderx, 528 + radery, 6, 6);
     }
     raderx = sx;
     radery = sy;
-    pos(inf_raderx + sx, inf_radery + sy);
+    pos(inf_radarx + sx, inf_radary + sy);
     gcopy(3, 15, 338, 6, 6);
     if (debug::voldemort)
     {
@@ -1636,13 +1648,13 @@ void render_stair_positions_in_minimap()
             if (map(x, y, 6) / 1000 % 100 == 11)
             {
                 // Downstairs
-                pos(inf_raderx + sx, inf_radery + sy);
+                pos(inf_radarx + sx, inf_radary + sy);
                 gcopy(3, 15, 338, 6, 6);
             }
             else if (map(x, y, 6) / 1000 % 100 == 10)
             {
                 // Upstairs
-                pos(inf_raderx + sx, inf_radery + sy);
+                pos(inf_radarx + sx, inf_radary + sy);
                 gcopy(3, 15, 338, 6, 6);
             }
         }
@@ -1753,16 +1765,6 @@ void label_1439()
     }
     boxf(688, 528, raderw * mdata(0), raderh * mdata(1), {255, 255, 255, 10});
     gsel(0);
-}
-
-
-
-void draw_minimap_pixel()
-{
-    sy(1) = 84 * sy / mdata(1);
-    sx(1) = 120 * sx / mdata(0);
-    pos(inf_raderx + sx(1), inf_radery + sy(1));
-    gcopy(3, 688 + sx(1), 528 + sy(1), raderw, raderh);
 }
 
 
