@@ -14,9 +14,10 @@ module "Input"
 -- end
 function yes_or_no(message) end
 
---- Prompts the player to select from a list of choices.
+--- Prompts the player to select from a list of choices. Raises an
+--- error if no arguments are provided.
 -- @treturn[1] num the index of the item chosen, starting from 1
--- @treturn[2] nil if canceled, or no options are provided
+-- @treturn[2] nil if canceled
 -- @usage GUI.txt("Which? ")
 -- local choices = {"First", "Second", "Third"}
 -- local result = Input.prompt_choice(table.unpack(choices))
@@ -28,7 +29,8 @@ function yes_or_no(message) end
 -- end
 function prompt_choice(...) end
 
---- Prompts the player to choose a number.
+--- Prompts the player to choose a number. Raises an error if
+--- <code>max</code> is less than 0.
 -- @tparam string message a message to display
 -- @tparam int max the maximum number choosable
 -- @treturn[1] int the number chosen

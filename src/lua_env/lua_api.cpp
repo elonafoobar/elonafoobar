@@ -730,7 +730,7 @@ sol::optional<int> Input::prompt_number(const std::string& message, int max)
 {
     if (max < 0)
     {
-        return sol::nullopt;
+        throw sol::error("Input.prompt_number called with max < 0");
     }
 
     txt(message + " ");
@@ -762,7 +762,7 @@ sol::optional<int> Input::prompt_choice(sol::variadic_args args)
 {
     if (args.size() == 0)
     {
-        return sol::nullopt;
+        throw sol::error("Input.prompt_choice called with no arguments");
     }
 
     for (size_t i = 0; i < args.size(); i++)
