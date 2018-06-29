@@ -908,7 +908,7 @@ turn_result_t show_chat_history()
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     s = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
     showscroll(s, wx, wy, ww, wh);
     net_read();
@@ -1031,13 +1031,9 @@ turn_result_t show_message_log()
     wh(1) = 1;
     wh(2) = -1;
     snd(93);
-    showtitle(
-        lang(u8"過去のメッセージ"s, u8"Log"s),
-        lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s),
-        236,
-        1);
+    show_title(lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s));
     drawmenu(2);
-    windowanimecorner(wx, wy, ww, wh, 8, 4);
+    window_animation_corner(wx, wy, ww, wh, 8, 4);
 
     p = (windoww - inf_msgx) / 192;
     window2(wx, wy, ww, wh, 1, -1);
@@ -2193,7 +2189,7 @@ label_20331:
     {
         snd(94);
     }
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
@@ -2306,7 +2302,7 @@ label_2034_internal:
         }
     }
     color(0, 0, 0);
-    showtitle(s, s, 236, 1);
+    show_title(s);
 label_2035_internal:
     s = "";
     if (csctrl == 0)
@@ -3084,7 +3080,7 @@ menu_result menu_equipment()
     {
         snd(95);
     }
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_wear.bmp", 1);
@@ -3381,7 +3377,7 @@ menu_result menu_materials()
     wy = winposy(430);
     ww = 600;
     wh = 430;
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     windowshadow = 1;
 label_1860_internal:
     cs_bk = -1;
@@ -3669,7 +3665,7 @@ int change_appearance()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     snd(97);
-    windowanime(wx, wy, ww, wh, 10, 7);
+    window_animation(wx, wy, ww, wh, 9, 7);
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
@@ -4251,7 +4247,7 @@ void deco_traits_menu()
     wh = 400;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
@@ -5047,12 +5043,12 @@ menu_result menu_journal()
     noteadd(""s);
     append_subquest_journal(1);
     listmax = noteinfo();
-    showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
+    show_title(strhint2 + strhint3);
     drawmenu(2);
     wx = (windoww - 736) / 2 + inf_screenx;
     wy = winposy(448);
     snd(59);
-    windowanime(wx, wy, 736, 448, 10, 4);
+    window_animation(wx, wy, 736, 448, 9, 4);
 label_1973_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -5281,7 +5277,7 @@ turn_result_t show_quest_board()
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         y = wy + cnt * 120;
-        window(wx + 4, y + 4, ww, h, 0, -1);
+        window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
         pos(wx + 20, y + 8);
         gcopy(3, 960, 240, 48, 84);

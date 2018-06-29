@@ -48,23 +48,9 @@ ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
 ELONA_EXTERN(elona_vector2<int> bdref);
 
-
 // ui.cpp
-ELONA_EXTERN(int inf_clockarrowx);
-ELONA_EXTERN(int inf_clockarrowy);
 ELONA_EXTERN(int inf_clocky);
-ELONA_EXTERN(int inf_barh);
 ELONA_EXTERN(int inf_msgh);
-ELONA_EXTERN(int inf_raderx);
-ELONA_EXTERN(int inf_raderw);
-ELONA_EXTERN(int inf_bary);
-ELONA_EXTERN(int inf_radery);
-ELONA_EXTERN(int scposy);
-ELONA_EXTERN(int inf_hpx);
-ELONA_EXTERN(int inf_hpy);
-ELONA_EXTERN(int inf_mpx);
-ELONA_EXTERN(int inf_mpy);
-ELONA_EXTERN(int screendrawhack);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
@@ -88,7 +74,6 @@ ELONA_EXTERN(int refreshmode);
 ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
-ELONA_EXTERN(int s_p);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
 
@@ -226,8 +211,6 @@ ELONA_EXTERN(elona_vector1<int> matneed);
 ELONA_EXTERN(elona_vector1<int> mdata);
 ELONA_EXTERN(elona_vector1<int> mdatatmp);
 ELONA_EXTERN(elona_vector1<int> p);
-ELONA_EXTERN(elona_vector1<int> rainx);
-ELONA_EXTERN(elona_vector1<int> rainy);
 ELONA_EXTERN(elona_vector1<int> recipememory);
 ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
@@ -560,7 +543,6 @@ ELONA_EXTERN(int mapupdate);
 ELONA_EXTERN(int marry);
 ELONA_EXTERN(int maxbreath);
 ELONA_EXTERN(int maxitemid);
-ELONA_EXTERN(int maxrain);
 ELONA_EXTERN(int medit);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);

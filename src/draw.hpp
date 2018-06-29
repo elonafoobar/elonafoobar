@@ -83,5 +83,9 @@ void bmes(
     const snail::color& shadow_color = {0, 0, 0, 255});
 
 
+void draw(const std::string& key, int x, int y);
+void draw(const std::string& key, int x, int y, int width, int height);
+
+
 
 } // namespace elona

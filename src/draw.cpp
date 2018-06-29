@@ -1207,4 +1207,44 @@ void bmes(
 
 
 
+struct image_info
+{
+    int window_id;
+    int x;
+    int y;
+    int width;
+    int height;
+};
+
+std::unordered_map<std::string, image_info> images = {};
+
+
+
+void draw(const std::string& key, int x, int y)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Error: Unknown image ID: "s + key};
+    const auto& info = itr->second;
+
+    pos(x, y);
+    gcopy(info.window_id, info.x, info.y, info.width, info.height);
+}
+
+
+
+void draw(const std::string& key, int x, int y, int width, int height)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Error: Unknown image ID: "s + key};
+    const auto& info = itr->second;
+
+    pos(x, y);
+    gcopy(
+        info.window_id, info.x, info.y, info.width, info.height, width, height);
+}
+
+
+
 } // namespace elona

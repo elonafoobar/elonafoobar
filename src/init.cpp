@@ -483,10 +483,6 @@ void initialize_elona()
     DIM2(matneed, 20);
     DIM3(pcc, 30, 20);
 
-    maxrain = windoww * windowh / 3500;
-
-    DIM2(rainx, maxrain * 2);
-    DIM2(rainy, maxrain * 2);
     SDIM1(fltnrace);
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);

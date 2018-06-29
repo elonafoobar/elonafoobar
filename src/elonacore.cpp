@@ -8691,7 +8691,7 @@ int show_random_event_window(const std::string& file)
 label_1897_internal:
     gmode(2);
     window(
-        (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, 0, -1);
+        (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, true);
     window((windoww - dx) / 2 + inf_screenx, winposy(dy) - 16, dx, dy);
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
@@ -10008,7 +10008,8 @@ turn_result_t call_npc()
             ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
     }
-    label_1416();
+    gmode(2);
+    update_screen();
     return turn_result_t::pc_turn_user_error;
 }
 
