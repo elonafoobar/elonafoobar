@@ -76,13 +76,16 @@ void window2(
     int prm_659 = 0,
     int prm_660 = 0,
     int prm_661 = 0);
-void windowanime(
-    int prm_726 = 0,
-    int prm_727 = 0,
-    int prm_728 = 0,
-    int prm_729 = 0,
-    int prm_730 = 0,
-    int prm_731 = 0);
+
+
+
+void window_animation(
+    int x,
+    int y,
+    int width,
+    int height,
+    int duration,
+    int temporary_window_id);
 
 
 

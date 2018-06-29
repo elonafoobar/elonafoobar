@@ -19,8 +19,6 @@ int cs_posbk_x{};
 int cs_posbk_y{};
 int cs_posbk_w{};
 int cs_posbk_h{};
-int x2_at_m105 = 0;
-int y2_at_m105 = 0;
 
 } // namespace
 
@@ -2666,59 +2664,59 @@ void window2(
 
 
 
-void windowanime(
-    int prm_726,
-    int prm_727,
-    int prm_728,
-    int prm_729,
-    int prm_730,
-    int prm_731)
+void window_animation(
+    int x,
+    int y,
+    int width,
+    int height,
+    int duration,
+    int temporary_window_id)
 {
-    int cenx_at_m105 = 0;
-    int ceny_at_m105 = 0;
     if (nowindowanime)
     {
         nowindowanime = 0;
         return;
     }
-    if (config::instance().windowanime == 0)
-    {
+    if (!config::instance().windowanime)
         return;
-    }
-    gsel(prm_731);
+    if (duration == 0)
+        return;
+
+    gsel(temporary_window_id);
     gmode(0);
     pos(0, 0);
-    gcopy(0, prm_726, prm_727, prm_728, prm_729);
+    gcopy(0, x, y, width, height);
     gsel(0);
     gmode(0);
-    x2_at_m105 = prm_728 / 2;
-    y2_at_m105 = prm_729 / 2;
-    cenx_at_m105 = prm_726 + x2_at_m105;
-    ceny_at_m105 = prm_727 + y2_at_m105;
-    for (int cnt = 1, cnt_end = cnt + (prm_730 - 1); cnt < cnt_end; ++cnt)
+
+    const auto w2 = width / 2;
+    const auto h2 = height / 2;
+    for (int i = 0; i < duration; ++i)
     {
+        const auto frame_width = width / (duration + 1) * (i + 1);
+        const auto frame_height = height / (duration + 1) * (i + 1);
         boxl(
-            cenx_at_m105 - x2_at_m105 / prm_730 * cnt,
-            ceny_at_m105 - y2_at_m105 / prm_730 * cnt,
-            2 * x2_at_m105 / prm_730 * cnt,
-            2 * y2_at_m105 / prm_730 * cnt,
+            x + w2 - frame_width / 2,
+            y + h2 - frame_height / 2,
+            frame_width,
+            frame_height,
             {30, 30, 30});
         boxl(
-            cenx_at_m105 - x2_at_m105 / prm_730 * cnt - 1,
-            ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
-            2 * x2_at_m105 / prm_730 * cnt - 1,
-            2 * y2_at_m105 / prm_730 * cnt - 1,
+            x + w2 - frame_width / 2 - 1,
+            y + h2 - frame_height / 2 - 1,
+            frame_width - 1,
+            frame_height - 1,
             {240, 240, 240});
         redraw();
-        if (cnt != prm_730 - 1)
+        if (i != duration - 1)
         {
             await(config::instance().animewait * 0.75);
         }
-        pos(prm_726, prm_727);
-        gcopy(prm_731, 0, 0, prm_728, prm_729);
+        pos(x, y);
+        gcopy(temporary_window_id, 0, 0, width, height);
     }
+
     gmode(2);
-    return;
 }
 
 

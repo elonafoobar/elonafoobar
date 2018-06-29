@@ -30,7 +30,7 @@ void show_card_collection()
     wh = 400;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
