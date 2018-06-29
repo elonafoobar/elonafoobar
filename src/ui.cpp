@@ -2723,50 +2723,50 @@ void windowanime(
 
 
 
-void windowanimecorner(
-    int prm_732,
-    int prm_733,
-    int prm_734,
-    int prm_735,
-    int prm_736,
-    int prm_737)
+void window_animation_corner(
+    int x,
+    int y,
+    int width,
+    int height,
+    int duration,
+    int temporary_window_id)
 {
-    if (config::instance().windowanime == 0)
-    {
+    if (!config::instance().windowanime)
         return;
-    }
-    gsel(prm_737);
+    if (duration == 0)
+        return;
+
+    gsel(temporary_window_id);
     gmode(0);
     pos(0, 0);
-    gcopy(0, prm_732, prm_733, prm_734, prm_735);
+    gcopy(0, x, y, width, height);
     gsel(0);
     gmode(0);
-    x2_at_m105 = prm_734 - prm_732;
-    y2_at_m105 = prm_735 - prm_733;
-    for (int cnt = 1, cnt_end = cnt + (prm_736); cnt < cnt_end; ++cnt)
+
+    for (int i = 0; i < duration; ++i)
     {
         boxl(
-            prm_732 + prm_734,
-            prm_733 + prm_735,
-            (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt,
+            x + width,
+            y + height,
+            (x - width) / duration * (i + 1),
+            (y - height) / duration * (i + 1),
             {30, 30, 30});
         boxl(
-            prm_732 + prm_734 - 1,
-            prm_733 + prm_735 - 1,
-            (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt,
+            x + width - 1,
+            y + height - 1,
+            (x - width) / duration * (i + 1),
+            (y - height) / duration * (i + 1),
             {240, 240, 240});
         redraw();
-        if (cnt != prm_736)
+        if (i != duration - 1)
         {
             await(config::instance().animewait * 0.75);
         }
-        pos(prm_732, prm_733);
-        gcopy(prm_737, 0, 0, prm_734, prm_735);
+        pos(x, y);
+        gcopy(temporary_window_id, 0, 0, width, height);
     }
+
     gmode(2);
-    return;
 }
 
 

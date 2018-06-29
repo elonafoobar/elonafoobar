@@ -83,14 +83,21 @@ void windowanime(
     int prm_729 = 0,
     int prm_730 = 0,
     int prm_731 = 0);
-void windowanimecorner(
-    int prm_732 = 0,
-    int prm_733 = 0,
-    int prm_734 = 0,
-    int prm_735 = 0,
-    int prm_736 = 0,
-    int prm_737 = 0);
+
+
+
+void window_animation_corner(
+    int x,
+    int y,
+    int width,
+    int height,
+    int duration,
+    int temporary_window_id);
+
+
+
 void show_title(const std::string& title);
+
 
 
 } // namespace elona

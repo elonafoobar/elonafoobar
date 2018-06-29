@@ -1033,7 +1033,7 @@ turn_result_t show_message_log()
     snd(93);
     show_title(lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s));
     drawmenu(2);
-    windowanimecorner(wx, wy, ww, wh, 8, 4);
+    window_animation_corner(wx, wy, ww, wh, 8, 4);
 
     p = (windoww - inf_msgx) / 192;
     window2(wx, wy, ww, wh, 1, -1);
