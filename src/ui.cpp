@@ -15,6 +15,7 @@
 namespace
 {
 
+
 int cs_posbk_x{};
 int cs_posbk_y{};
 int cs_posbk_w{};
@@ -71,6 +72,190 @@ void update_screen_hud()
     }
     pos(inf_raderw + 114, inf_bary + 3 + vfix - en);
     mes(maplevel());
+}
+
+
+
+void render_weather_effect_rain()
+{
+    static std::vector<position_t> particles;
+
+    const auto max_particles = windoww * windowh / 3500;
+    if (particles.empty())
+    {
+        particles.resize(max_particles * 2);
+    }
+
+    for (int i = 0; i < max_particles * (1 + (mdata(6) == 1)); ++i)
+    {
+        auto&& particle = particles[i];
+        const auto brightness = rnd(100);
+        line(
+            particle.x,
+            particle.y,
+            particle.x + i % 2 + 1,
+            particle.y + i % 3 + 1,
+            {static_cast<uint8_t>(70 + brightness),
+             static_cast<uint8_t>(100 + brightness),
+             static_cast<uint8_t>(150 + brightness)});
+
+        if (particle == position_t{0, 0})
+        {
+            particle.x = rnd(windoww);
+            particle.y = rnd(windowh - inf_verh) - 6;
+        }
+        else
+        {
+            particle.x += 2;
+            particle.y += 16 + i % 8;
+            if (particle.y > windowh - inf_verh - 4)
+            {
+                particle = {0, 0};
+            }
+        }
+    }
+}
+
+
+
+void render_weather_effect_hard_rain()
+{
+    static std::vector<position_t> particles;
+
+    const auto max_particles = windoww * windowh / 3500;
+    if (particles.empty())
+    {
+        particles.resize(max_particles * 2);
+    }
+
+    for (int i = 0; i < max_particles * (1 + (mdata(6) == 1)); ++i)
+    {
+        auto&& particle = particles[i];
+        const auto brightness = rnd(100);
+        line(
+            particle.x,
+            particle.y,
+            particle.x + i % 2 + 1,
+            particle.y + i % 5 + 4,
+            {static_cast<uint8_t>(70 + brightness),
+             static_cast<uint8_t>(100 + brightness),
+             static_cast<uint8_t>(150 + brightness)});
+
+        if (particle == position_t{0, 0})
+        {
+            particle.x = rnd(windoww);
+            particle.y = rnd(windowh - inf_verh) - 6;
+        }
+        else
+        {
+            ++particle.x;
+            particle.y += 24 + i % 8;
+            if (particle.y > windowh - inf_verh - 9)
+            {
+                particle = {0, 0};
+            }
+        }
+    }
+}
+
+
+
+void render_weather_effect_snow()
+{
+    static std::vector<position_t> particles;
+
+    const auto max_particles = windoww * windowh / 1750;
+    if (particles.empty())
+    {
+        particles.resize(max_particles);
+    }
+
+    for (int i = 0; i < max_particles; ++i)
+    {
+        auto&& particle = particles[i];
+        if (i % 30 == 0)
+        {
+            gmode(4, 8, 8, 100 + i % 150);
+        }
+        pos(particle.x, particle.y);
+        gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+
+        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        {
+            particle.x = rnd(windoww);
+            particle.y = -rnd(windowh / 2);
+        }
+        else
+        {
+            particle.x += rnd(3) - 1;
+            particle.y += rnd(2) + i % 5;
+            if (particle.y > windowh - inf_verh - 10 || rnd(500) == 0)
+            {
+                particle = {0, 0};
+            }
+        }
+    }
+}
+
+
+
+void render_weather_effect_etherwind()
+{
+    static std::vector<position_t> particles;
+
+    const auto max_particles = windoww * windowh / 3500;
+    if (particles.empty())
+    {
+        particles.resize(max_particles);
+    }
+
+    for (int i = 0; i < max_particles; ++i)
+    {
+        auto&& particle = particles[i];
+        if (i % 20 == 0)
+        {
+            gmode(4, 8, 8, 100 + i % 150);
+        }
+        pos(particle.x, particle.y);
+        gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
+
+        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        {
+            particle.x = rnd(windoww);
+            particle.y = windowh - inf_verh - 8 - rnd(100);
+        }
+        else
+        {
+            particle.x += rnd(3) - 1;
+            particle.y -= rnd(2) + i % 5;
+            if (particle.y < 0)
+            {
+                particle = {0, 0};
+            }
+        }
+    }
+}
+
+
+
+void render_weather_effect()
+{
+    if (!config::instance().env)
+        return;
+    if (mdata(14) != 2)
+        return;
+
+    switch (gdata_weather)
+    {
+    case 3: render_weather_effect_rain(); break;
+    case 4: render_weather_effect_hard_rain(); break;
+    case 2: render_weather_effect_snow(); break;
+    case 1: render_weather_effect_etherwind(); break;
+    default: break;
+    }
+
+    weatherbk = gdata_weather;
+    gmode(2);
 }
 
 
@@ -1402,7 +1587,7 @@ void label_1433()
             }
         }
     }
-    screendrawhack = 4;
+
     sy = 84 * cdata[0].position.y / mdata(1);
     if (sy < 2)
     {
@@ -1435,25 +1620,7 @@ void label_1433()
         render_stair_positions_in_minimap();
     }
 
-    if (config::instance().env)
-    {
-        if (gdata_weather == 3)
-        {
-            render_weather_effect_rain();
-        }
-        if (gdata_weather == 4)
-        {
-            render_weather_effect_hard_rain();
-        }
-        if (gdata_weather == 2)
-        {
-            render_weather_effect_snow();
-        }
-        if (gdata_weather == 1)
-        {
-            render_weather_effect_etherwind();
-        }
-    }
+    render_weather_effect();
 }
 
 
@@ -1480,165 +1647,6 @@ void render_stair_positions_in_minimap()
             }
         }
     }
-}
-
-
-
-void render_weather_effect_rain()
-{
-    if (mdata(14) != 2)
-    {
-        return;
-    }
-    for (int cnt = 0, cnt_end = (maxrain * (1 + (mdata(6) == 1)));
-         cnt < cnt_end;
-         ++cnt)
-    {
-        s_p = rnd(100);
-        line(
-            rainx(cnt) - 40,
-            rainy(cnt) - cnt % 3 - 1,
-            rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt),
-            {static_cast<uint8_t>(170 - s_p),
-             static_cast<uint8_t>(200 - s_p),
-             static_cast<uint8_t>(250 - s_p)});
-        if (rainx(cnt) == 0)
-        {
-            rainx(cnt) = rnd(windoww) + 40;
-        }
-        else
-        {
-            rainx(cnt) += 2;
-        }
-        if (rainy(cnt) == 0)
-        {
-            rainy(cnt) = rnd(windowh - inf_verh) - 6;
-        }
-        else
-        {
-            rainy(cnt) += 16 + cnt % 8;
-            if (rainy(cnt) > windowh - inf_verh - 6)
-            {
-                rainy(cnt) = 0;
-                rainx(cnt) = 0;
-            }
-        }
-    }
-    weatherbk = gdata_weather;
-}
-
-
-
-void render_weather_effect_hard_rain()
-{
-    if (mdata(14) != 2)
-    {
-        return;
-    }
-    for (int cnt = 0, cnt_end = (maxrain * (1 + (mdata(6) == 1)));
-         cnt < cnt_end;
-         ++cnt)
-    {
-        s_p = rnd(100);
-        line(
-            rainx(cnt) - 40,
-            rainy(cnt) - cnt % 5 - 4,
-            rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt),
-            {static_cast<uint8_t>(170 - s_p),
-             static_cast<uint8_t>(200 - s_p),
-             static_cast<uint8_t>(250 - s_p)});
-        if (rainx(cnt) == 0)
-        {
-            rainx(cnt) = rnd(windoww) + 40;
-        }
-        else
-        {
-            rainx(cnt) += 1;
-        }
-        if (rainy(cnt) == 0)
-        {
-            rainy(cnt) = rnd(windowh - inf_verh) - 6;
-        }
-        else
-        {
-            rainy(cnt) += 24 + cnt % 8;
-            if (rainy(cnt) > windowh - inf_verh - 10)
-            {
-                rainy(cnt) = 0;
-                rainx(cnt) = 0;
-            }
-        }
-    }
-    weatherbk = gdata_weather;
-}
-
-
-
-void render_weather_effect_snow()
-{
-    if (mdata(14) != 2)
-    {
-        return;
-    }
-    for (int cnt = 0, cnt_end = (maxrain * 2); cnt < cnt_end; ++cnt)
-    {
-        if (cnt % 30 == 0)
-        {
-            gmode(4, 8, 8, 100 + cnt % 150);
-        }
-        if (rainy(cnt) == 0 || weatherbk != gdata_weather)
-        {
-            rainy(cnt) = rnd(windowh / 2) * -1;
-            rainx(cnt) = rnd(windoww);
-        }
-        else
-        {
-            rainx(cnt) += rnd(3) - 1;
-            rainy(cnt) += rnd(2) + cnt % 5;
-            if (rainy(cnt) > windowh - inf_verh - 10 || rnd(500) == 0)
-            {
-                rainy(cnt) = 0;
-                rainx(cnt) = 0;
-            }
-        }
-        pos(rainx(cnt), rainy(cnt));
-        gcopy(3, rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
-    }
-    weatherbk = gdata_weather;
-    gmode(2);
-}
-
-
-
-void render_weather_effect_etherwind()
-{
-    if (mdata(14) != 2)
-    {
-        return;
-    }
-    for (int cnt = 0, cnt_end = (maxrain); cnt < cnt_end; ++cnt)
-    {
-        if (cnt % 20 == 0)
-        {
-            gmode(4, 8, 8, 100 + cnt % 150);
-        }
-        if (rainy(cnt) <= 0 || weatherbk != gdata_weather)
-        {
-            rainy(cnt) = windowh - inf_verh - 8 - rnd(100);
-            rainx(cnt) = rnd(windoww);
-        }
-        else
-        {
-            pos(rainx(cnt), rainy(cnt));
-            gcopy(3, 16 + rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
-            rainx(cnt) += rnd(3) - 1;
-            rainy(cnt) -= rnd(2) + cnt % 5;
-        }
-    }
-    weatherbk = gdata_weather;
-    gmode(2);
 }
 
 
