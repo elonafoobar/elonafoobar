@@ -2053,18 +2053,14 @@ void display_note(const std::string& prm_674, int prm_675)
 
 
 
-void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
+void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
-    pos(prm_677, prm_678 + 7);
+    pos(x, y + 7);
     gcopy(3, 120, 360, 24, 16);
-    pos(prm_677 + 26, prm_678 + 8);
-    mes(prm_676);
-    line(
-        prm_677 + 22,
-        prm_678 + 21,
-        prm_677 + strlen_u(prm_676) * 7 + 36,
-        prm_678 + 21);
+    pos(x + 26, y + 8);
+    mes(topic);
+    line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
 
 

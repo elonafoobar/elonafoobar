@@ -14,7 +14,13 @@ void display_customkey(const std::string&, int, int);
 void display_key(int = 0, int = 0, int = 0);
 void display_msg(int = 0, int = 0);
 void display_note(const std::string&, int = 0);
-void display_topic(const std::string&, int = 0, int = 0, int = 0);
+
+
+
+void display_topic(const std::string& topic, int x, int y);
+
+
+
 void display_window(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void display_window2(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
