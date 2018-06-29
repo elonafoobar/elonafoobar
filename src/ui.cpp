@@ -2188,23 +2188,29 @@ void drawmenu(int prm_742)
 
 
 
-void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
+void fillbg(
+    int tile_window_id,
+    int tile_x,
+    int tile_y,
+    int tile_width,
+    int tile_height)
 {
-    int cnt2_at_m108 = 0;
     gmode(0);
-    for (int cnt = 0, cnt_end = (inf_ver / prm_747 + 1); cnt < cnt_end; ++cnt)
+
+    for (int dy = 0; dy < inf_ver / tile_height + 1; ++dy)
     {
-        cnt2_at_m108 = cnt;
-        for (int cnt = 0, cnt_end = (windoww / prm_746 + 1); cnt < cnt_end;
-             ++cnt)
+        for (int dx = 0; dx < windoww / tile_width + 1; ++dx)
         {
-            pos(windoww - (cnt + 1) * prm_746,
-                inf_ver - (cnt2_at_m108 + 1) * prm_747);
-            gcopy(prm_743, prm_744, prm_745, prm_746, prm_747);
+            pos(windoww - (dx + 1) * tile_width,
+                inf_ver - (dy + 1) * tile_height);
+            gcopy(tile_window_id, tile_x, tile_y, tile_width, tile_height);
         }
     }
+
     gmode(2);
 }
+
+
 
 void load_background_variants(int buffer)
 {

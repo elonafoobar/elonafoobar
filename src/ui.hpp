@@ -17,7 +17,18 @@ void display_note(const std::string&, int = 0);
 void display_topic(const std::string&, int = 0, int = 0, int = 0);
 void display_window(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void display_window2(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void fillbg(int = 0, int = 0, int = 0, int = 0, int = 0);
+
+
+
+void fillbg(
+    int tile_window_id,
+    int tile_x,
+    int tile_y,
+    int tile_width,
+    int tile_height);
+
+
+
 void drawmenu(int = 0);
 void screen_txtadv();
 void label_1416();
