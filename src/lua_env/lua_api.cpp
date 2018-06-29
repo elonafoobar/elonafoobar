@@ -9,6 +9,7 @@
 #include "../fov.hpp"
 #include "../gdata.hpp"
 #include "../i18n.hpp"
+#include "../input.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../log.hpp"
@@ -705,6 +706,77 @@ void Trait::bind(sol::table& Elona)
     Trait.set_function("modify", Trait::modify);
 }
 
+
+
+namespace Input
+{
+bool yes_no(const std::string&);
+sol::optional<int> prompt_number(const std::string&, int);
+sol::optional<std::string> prompt_text(const std::string&, bool);
+sol::optional<int> prompt(sol::variadic_args);
+
+void bind(sol::table&);
+}; // namespace GUI
+
+bool Input::yes_no(const std::string& message)
+{
+    txt(message + " ");
+    ELONA_YES_NO_PROMPT();
+    int rtval = show_prompt(promptx, prompty, 160);
+    return rtval == 0;
+}
+
+sol::optional<int> Input::prompt_number(const std::string& message, int max)
+{
+    txt(message + " ");
+    input_number_dialog(
+        (windoww - 200) / 2 + inf_screenx,
+        winposy(60),
+        max);
+    if (rtval == -1)
+    {
+        return sol::nullopt;
+    }
+
+    return elona::stoi(elona::inputlog(0));
+}
+
+sol::optional<std::string> Input::prompt_text(const std::string& message, bool is_cancelable)
+{
+    txt(message + " ");
+    bool canceled = input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20, is_cancelable, true);
+    if (canceled)
+    {
+        return sol::nullopt;
+    }
+
+    return elona::inputlog(0);
+}
+
+sol::optional<int> Input::prompt(sol::variadic_args args)
+{
+    for (size_t i = 0; i < args.size(); i++)
+    {
+        ELONA_APPEND_PROMPT(args[i].as<std::string>(), u8"null"s, std::to_string(i));
+    }
+
+    int rtval = show_prompt(promptx, prompty, 160);
+    if (rtval == -1)
+    {
+        return sol::nullopt;
+    }
+
+    return rtval;
+}
+
+void Input::bind(sol::table& Elona)
+{
+    sol::table Input = Elona.create_named("Input");
+    Input.set_function("yes_no", Input::yes_no);
+    Input.set_function("prompt", Input::prompt);
+    Input.set_function("prompt_number", Input::prompt_number);
+    Input.set_function("prompt_text", Input::prompt_text);
+}
 
 
 namespace GUI
@@ -1507,6 +1579,7 @@ api_manager::api_manager(lua_env* lua)
     Item::bind(core);
     Skill::bind(core);
     Trait::bind(core);
+    Input::bind(core);
     GUI::bind(core);
     I18N::bind(core);
     Map::bind(core);
