@@ -946,8 +946,8 @@ label_2061_internal:
         y = winposy(432) - 32;
         int w = 200;
         int h = 102;
-        window(x + 4, y + 4, w, h - h % 8, 0, -1);
-        window(x, y, w, h - h % 8, 0, 0);
+        window(x + 4, y + 4, w, h - h % 8, true);
+        window(x, y, w, h - h % 8);
         font(12 + en - en * 2);
         pos(x + 16, y + 17);
         mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);

@@ -62,13 +62,13 @@ void cs_list(
     int color_mode = 0,
     int ci = 0);
 void showscroll(const std::string& title, int x, int y, int width, int height);
-void window(
-    int prm_650 = 0,
-    int prm_651 = 0,
-    int prm_652 = 0,
-    int prm_653 = 0,
-    int = 0,
-    int prm_655 = 0);
+
+
+
+void window(int x, int y, int width, int height, bool shadow = false);
+
+
+
 void window2(
     int prm_656 = 0,
     int prm_657 = 0,

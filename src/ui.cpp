@@ -1988,10 +1988,10 @@ void display_window(
 {
     if (windowshadow == 1)
     {
-        window(prm_668 + 4, prm_669 + 4, prm_670, prm_671 - prm_671 % 8, 0, -1);
+        window(prm_668 + 4, prm_669 + 4, prm_670, prm_671 - prm_671 % 8, true);
         windowshadow = 0;
     }
-    window(prm_668, prm_669, prm_670, prm_671 - prm_671 % 8, 0, 0);
+    window(prm_668, prm_669, prm_670, prm_671 - prm_671 % 8);
     if (s != ""s)
     {
         window2(
@@ -2426,104 +2426,78 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
 
 
 
-void window(
-    int prm_650,
-    int prm_651,
-    int prm_652,
-    int prm_653,
-    int,
-    int prm_655)
+void window(int x, int y, int width, int height, bool shadow)
 {
-    int dx_at_m92 = 0;
-    int dy_at_m92 = 0;
-    int x3_at_m92 = 0;
-    int y3_at_m92 = 0;
-    int p_at_m92 = 0;
-    int cnt2_at_m92 = 0;
-    if (prm_655 == -1)
+    if (shadow)
     {
-        gmode(6, -1, -1, 80);
+        gmode(2, -1, -1, 127);
+        set_color_mod(31, 31, 31, 3);
     }
     else
     {
         gmode(2);
     }
-    dx_at_m92 = 0;
-    dy_at_m92 = 48;
-    x3_at_m92 = prm_652 + prm_650 - prm_652 % 8 - 64;
-    y3_at_m92 = prm_653 + prm_651 - prm_653 % 8 - 64;
-    if (y3_at_m92 < prm_651 + 14)
+
+    int x3 = width + x - width % 8 - 64;
+    int y3 = height + y - height % 8 - 64;
+    if (y3 < y + 14)
     {
-        y3_at_m92 = prm_651 + 14;
+        y3 = y + 14;
     }
-    for (int cnt = 0, cnt_end = (prm_652 / 8); cnt < cnt_end; ++cnt)
+
+    if (!shadow)
     {
-        if (cnt < 8)
+        // Top left
+        pos(x, y);
+        gcopy(3, 0, 48, 64, 48);
+    }
+    // Top right
+    pos(x3, y);
+    gcopy(3, 208, 48, 56, 48);
+    // Bottom left
+    pos(x, y3);
+    gcopy(3, 0, 48 + 144, 64, 48);
+    // Bottom right
+    pos(x3, y3);
+    gcopy(3, 208, 48 + 144, 56, 48);
+
+    for (int dx = 8; dx < width / 8 - 8; ++dx)
+    {
+        if (!shadow)
         {
-            if (cnt == 0)
-            {
-                pos(prm_650, prm_651);
-                gcopy(3, dx_at_m92, dy_at_m92, 64, 48);
-                pos(prm_650, y3_at_m92);
-                gcopy(3, dx_at_m92, dy_at_m92 + 144, 64, 48);
-            }
-            continue;
+            // Top middle
+            pos(dx * 8 + x, y);
+            gcopy(3, (dx - 8) % 18 * 8 + 36, 48, 8, 48);
         }
-        if (cnt < prm_652 / 8 - 8)
-        {
-            pos(cnt * 8 + prm_650, prm_651);
-            gcopy(3, (cnt - 8) % 18 * 8 + dx_at_m92 + 36, dy_at_m92, 8, 48);
-            pos(cnt * 8 + prm_650, y3_at_m92);
-            gcopy(
-                3, (cnt - 8) % 18 * 8 + dx_at_m92 + 54, dy_at_m92 + 144, 8, 48);
-            continue;
-        }
-        pos(x3_at_m92, prm_651);
-        gcopy(3, dx_at_m92 + 208, dy_at_m92, 56, 48);
-        pos(x3_at_m92, y3_at_m92);
-        gcopy(3, dx_at_m92 + 208, dy_at_m92 + 144, 56, 48);
-        break;
+        // Bottom middle
+        pos(dx * 8 + x, y3);
+        gcopy(3, (dx - 8) % 18 * 8 + 54, 48 + 144, 8, 48);
     }
-    p_at_m92 = prm_653 / 8 - 14;
-    if (p_at_m92 < 0)
+
+    for (int dy = 0; dy < height / 8 - 14; ++dy)
     {
-        p_at_m92 = 0;
-    }
-    for (int cnt = 0, cnt_end = (p_at_m92); cnt < cnt_end; ++cnt)
-    {
-        cnt2_at_m92 = cnt;
-        for (int cnt = 0, cnt_end = (prm_652 / 8); cnt < cnt_end; ++cnt)
+        if (!shadow)
         {
-            if (cnt == 0)
+            // Middle left
+            pos(x, dy * 8 + y + 48);
+            gcopy(3, 0, dy % 12 * 8 + 48 + 48, 64, 8);
+            // Middle middle
+            for (int dx = 1; dx < width / 8 - 15; ++dx)
             {
-                pos(prm_650, cnt2_at_m92 * 8 + prm_651 + 48);
-                gcopy(
-                    3, dx_at_m92, cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48, 64, 8);
-                continue;
+                pos(dx * 8 + x + 56, dy * 8 + y + 48);
+                gcopy(3, dx % 18 * 8 + 64, dy % 12 * 8 + 48 + 48, 8, 8);
             }
-            if (cnt < prm_652 / 8 - 15)
-            {
-                pos(cnt * 8 + prm_650 + 56, cnt2_at_m92 * 8 + prm_651 + 48);
-                gcopy(
-                    3,
-                    cnt % 18 * 8 + dx_at_m92 + 64,
-                    cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48,
-                    8,
-                    8);
-                continue;
-            }
-            pos(x3_at_m92, cnt2_at_m92 * 8 + prm_651 + 48);
-            gcopy(
-                3,
-                dx_at_m92 + 208,
-                cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48,
-                56,
-                8);
-            break;
         }
+        // Middle right
+        pos(x3, dy * 8 + y + 48);
+        gcopy(3, 208, dy % 12 * 8 + 48 + 48, 56, 8);
     }
+
     gmode(2);
-    return;
+    if (shadow)
+    {
+        set_color_mod(255, 255, 255, 3);
+    }
 }
 
 

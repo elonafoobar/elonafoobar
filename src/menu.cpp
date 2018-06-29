@@ -5277,7 +5277,7 @@ turn_result_t show_quest_board()
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         y = wy + cnt * 120;
-        window(wx + 4, y + 4, ww, h, 0, -1);
+        window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
         pos(wx + 20, y + 8);
         gcopy(3, 960, 240, 48, 84);

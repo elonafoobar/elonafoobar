@@ -318,12 +318,11 @@ void window_recipe_(
             prm_1052 + 4,
             prm_1053,
             prm_1054 - prm_1054 % 8,
-            0,
-            -1);
+            true);
         boxf(prm_1051 + prm_1053 - 522, 0, 486, 69, {30, 30, 30});
         windowshadow = 0;
     }
-    window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8, 0, 0);
+    window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8);
     window_recipe2();
     gmode(2);
     line(
