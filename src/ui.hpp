@@ -81,12 +81,12 @@ void window(int x, int y, int width, int height, bool shadow = false);
 
 
 void window2(
-    int prm_656 = 0,
-    int prm_657 = 0,
-    int prm_658 = 0,
-    int prm_659 = 0,
-    int prm_660 = 0,
-    int prm_661 = 0);
+    int x,
+    int y,
+    int width,
+    int height,
+    int frame_style,
+    int fill_style);
 
 
 

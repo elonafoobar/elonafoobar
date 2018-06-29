@@ -2553,137 +2553,100 @@ void window(int x, int y, int width, int height, bool shadow)
 
 
 void window2(
-    int prm_656,
-    int prm_657,
-    int prm_658,
-    int prm_659,
-    int prm_660,
-    int prm_661)
+    int x,
+    int y,
+    int width,
+    int height,
+    int frame_style,
+    int fill_style)
 {
-    int dx_at_m93 = 0;
-    int dy_at_m93 = 0;
-    int x2_at_m93 = 0;
-    int y2_at_m93 = 0;
-    int x3_at_m93 = 0;
-    int y3_at_m93 = 0;
-    int p_at_m93 = 0;
-    dx_at_m93 = 0;
-    dy_at_m93 = 240;
-    x2_at_m93 = prm_658;
-    y2_at_m93 = prm_659;
-    if (x2_at_m93 < 32)
+    if (width < 32)
     {
-        x2_at_m93 = 32;
+        width = 32;
     }
-    if (y2_at_m93 < 24)
+    if (height < 24)
     {
-        y2_at_m93 = 24;
+        height = 24;
     }
-    x3_at_m93 = prm_656 + x2_at_m93 / 16 * 16 - 16;
-    y3_at_m93 = prm_657 + y2_at_m93 / 16 * 16 - 16;
-    if (prm_661 == 0)
+
+    switch (fill_style)
     {
-        pos(prm_656 + 4, prm_657 + 4);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-    }
-    if (prm_661 == 1)
-    {
-        pos(prm_656 + 4, prm_657 + 4);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        boxf(
-            prm_656 + 4,
-            prm_657 + 4,
-            x2_at_m93 - 4,
-            y2_at_m93 - 4,
-            {0, 0, 0, 195});
-    }
-    if (prm_661 == 2)
-    {
-        pos(prm_656 + 4, prm_657 + 4);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        boxf(
-            prm_656 + 4,
-            prm_657 + 4,
-            x2_at_m93 - 4,
-            y2_at_m93 - 4,
-            {0, 0, 0, 210});
-    }
-    if (prm_661 == 3)
-    {
-        pos(prm_656 + 4, prm_657 + 4);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        boxf(
-            prm_656 + 4,
-            prm_657 + 4,
-            x2_at_m93 - 4,
-            y2_at_m93 - 4,
-            {0, 0, 0, 10});
-    }
-    if (prm_661 == 4)
-    {
-        pos(prm_656 + 4, prm_657 + 4);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        boxf(
-            prm_656 + 4,
-            prm_657 + 4,
-            x2_at_m93 - 4,
-            y2_at_m93 - 4,
-            {0, 0, 0, 195});
-    }
-    if (prm_661 == 6)
-    {
-        pos(prm_656 + x2_at_m93 / 2, prm_657 + y2_at_m93 / 2);
+    case 0:
+        pos(x + 4, y + 4);
+        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        break;
+    case 1:
+        pos(x + 4, y + 4);
+        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
+        break;
+    case 2:
+        pos(x + 4, y + 4);
+        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 210});
+        break;
+    case 3:
+        pos(x + 4, y + 4);
+        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 10});
+        break;
+    case 4:
+        pos(x + 4, y + 4);
+        gcopy(3, 24, 72, 228, 144, width - 6, height - 8);
+        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
+        break;
+    case 5: break;
+    case 6:
+        pos(x + width / 2, y + height / 2);
         gmode(4, 228, 144, 180);
-        grotate_(3, 24, 72, x2_at_m93 - 4, y2_at_m93 - 4);
+        grotate_(3, 24, 72, width - 4, height - 4);
+        break;
+    default: break;
     }
+
     gmode(2, 16, 16);
-    for (int cnt = 0, cnt_end = (x2_at_m93 / 16 - 2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
-        pos(cnt * 16 + prm_656 + 16, prm_657);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, 16, 16);
-        pos(cnt * 16 + prm_656 + 16, prm_657 + y2_at_m93 - 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32, 16, 16);
+        pos(cnt * 16 + x + 16, y);
+        gcopy(3, frame_style * 48 + 16, 240, 16, 16);
+        pos(cnt * 16 + x + 16, y + height - 16);
+        gcopy(3, frame_style * 48 + 16, 240 + 32, 16, 16);
     }
-    pos(x3_at_m93, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, x2_at_m93 % 16, 16);
-    pos(x3_at_m93, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32, x2_at_m93 % 16, 16);
-    p_at_m93 = y2_at_m93 / 16 - 2;
-    if (p_at_m93 < 0)
+
+    const auto x2 = x + width / 16 * 16 - 16;
+    const auto y2 = y + height / 16 * 16 - 16;
+
+    pos(x2, y);
+    gcopy(3, frame_style * 48 + 16, 240, width % 16, 16);
+    pos(x2, y + height - 16);
+    gcopy(3, frame_style * 48 + 16, 240 + 32, width % 16, 16);
+
+    for (int i = 0; i < height / 16 - 2; ++i)
     {
-        p_at_m93 = 0;
+        pos(x, i * 16 + y + 16);
+        gcopy(3, frame_style * 48, 240 + 16, 16, 16);
+        pos(x + width - 16, i * 16 + y + 16);
+        gcopy(3, frame_style * 48 + 32, 240 + 16, 16, 16);
     }
-    for (int cnt = 0, cnt_end = (p_at_m93); cnt < cnt_end; ++cnt)
+    pos(x, y2);
+    gcopy(3, frame_style * 48, 240 + 16, 16, height % 16);
+    pos(x + width - 16, y2);
+    gcopy(3, frame_style * 48 + 32, 240 + 16, 16, height % 16);
+    pos(x, y);
+    gcopy(3, frame_style * 48, 240, 16, 16);
+    pos(x, y + height - 16);
+    gcopy(3, frame_style * 48, 240 + 32, 16, 16);
+    pos(x + width - 16, y);
+    gcopy(3, frame_style * 48 + 32, 240, 16, 16);
+    pos(x + width - 16, y + height - 16);
+    gcopy(3, frame_style * 48 + 32, 240 + 32, 16, 16);
+
+    if (fill_style == 5)
     {
-        pos(prm_656, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, 16);
-        pos(prm_656 + x2_at_m93 - 16, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, 16);
+        pos(x + 2, y + 2);
+        gcopy(3, 24, 72, 228, 144, width - 4, height - 5);
+        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
     }
-    pos(prm_656, y3_at_m93);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, y2_at_m93 % 16);
-    pos(prm_656 + x2_at_m93 - 16, y3_at_m93);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, y2_at_m93 % 16);
-    pos(prm_656, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93, 16, 16);
-    pos(prm_656, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32, 16, 16);
-    pos(prm_656 + x2_at_m93 - 16, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93, 16, 16);
-    pos(prm_656 + x2_at_m93 - 16, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32, 16, 16);
-    if (prm_661 == 5)
-    {
-        pos(prm_656 + 2, prm_657 + 2);
-        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
-        boxf(
-            prm_656 + 4,
-            prm_657 + 4,
-            x2_at_m93 - 4,
-            y2_at_m93 - 4,
-            {0, 0, 0, 195});
-    }
-    return;
 }
 
 
