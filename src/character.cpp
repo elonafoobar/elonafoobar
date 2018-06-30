@@ -1604,7 +1604,7 @@ void chara_refresh(int cc)
         {
             if (trait(cnt) != 0)
             {
-                apply_trait(1, cnt);
+                trait_get_info(1, cnt);
             }
         }
     }

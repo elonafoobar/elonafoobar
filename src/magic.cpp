@@ -2015,7 +2015,7 @@ label_2181_internal:
             for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(45);
-                int stat = apply_trait(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 1)
                 {
                     continue;
@@ -2106,7 +2106,7 @@ label_2181_internal:
             for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(217);
-                int stat = apply_trait(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 1)
                 {
                     continue;

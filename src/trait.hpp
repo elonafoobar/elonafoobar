@@ -58,7 +58,7 @@ public:
 extern trait_db the_trait_db;
 
 
-int apply_trait(int traitmode, int tid);
+int trait_get_info(int traitmode, int tid);
 
 
 

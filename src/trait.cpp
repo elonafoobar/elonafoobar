@@ -55,9 +55,9 @@ void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, i
 
     if (level < 0)
     {
-        for (int cnt = 0; cnt > min + 1; cnt--)
+        for (int cnt = 0; cnt < (-min); cnt++)
         {
-            int index = (-cnt) + 3;
+            int index = cnt + 3;
             switch (tid)
             {
             case 202:
@@ -73,7 +73,8 @@ void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, i
             case 204:
                 // "You have 4 eyes. [PER+${_1} CHR${_2}]"
                 traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
-                                                      (5 + cdata[0].level / 3) * -1);
+                                                    (5 + cdata[0].level / 3),
+                                                    (5 + cdata[0].level / 3) * -1);
                 break;
             case 205:
                 // "You have grown feather. [SPD+${_1} Weight-20% Can't wear cloaks]"
@@ -145,9 +146,9 @@ void trait_format_other_parameterless(const std::string& i18n_prefix, int tid, i
         {
             traitrefn(2) = *text;
         }
-        for (int cnt = 0; cnt > min + 1; cnt--)
+        for (int cnt = 0; cnt < (-min); cnt++)
         {
-            traitrefn((-cnt) + 3) = i18n::s.get_enum(i18n_prefix + ".negative.levels", (-cnt));
+            traitrefn(cnt + 3) = i18n::s.get_enum(i18n_prefix + ".negative.levels", cnt);
         }
     }
 }
@@ -161,8 +162,22 @@ bool trait_is_obtainable(const std::string& i18n_prefix, int tid)
 
 void trait_format_other(const std::string& i18n_prefix, int tid, int min, int max)
 {
-    traitrefn(0) = i18n::s.get(i18n_prefix + ".positive.gain");
-    traitrefn(1) = i18n::s.get(i18n_prefix + ".negative.gain");
+    if (auto text = i18n::s.get_optional(i18n_prefix + ".positive.gain"))
+    {
+        traitrefn(0) = *text;
+    }
+    else
+    {
+        traitrefn(0) = "";
+    }
+    if (auto text = i18n::s.get_optional(i18n_prefix + ".negative.gain"))
+    {
+        traitrefn(1) = *text;
+    }
+    else
+    {
+        traitrefn(1) = "";
+    }
     traitrefn(2) = "";
 
     if (tid >= 200)
@@ -205,7 +220,7 @@ void trait_format(int tid, int min, int max)
 } // namespace
 
 
-int apply_trait(int traitmode, int tid)
+int trait_get_info(int traitmode, int tid)
 {
     const auto data = the_trait_db[tid];
     if (!data)
