@@ -1,14 +1,14 @@
 locale {
     talk {
-        will_not_listen = "${name(_1)} won't listen."
-        is_sleeping = "${name(_1)} is sleeping."
-        is_busy = "${name(_1)} is in the middle of something."
+        will_not_listen = "${name(_1)}は耳を貸さない。"
+        is_sleeping = "${name(_1)}はぐっすり眠っている…"
+        is_busy = "${name(_1)}はお取り込み中だ…"
 
         window {
-            impress = "Impress"
-            attract = "Attract"
-            fame = " Fame: "
-            shop_rank = " Shop Rank:"
+            impress = "友好"
+            attract = "興味"
+            fame = " 名声 "
+            shop_rank = " 店の規模:"
         }
 
         npc {
@@ -480,112 +480,112 @@ locale {
             }
         }
 
-        # TODO: organize
         visitor {
-            wanted_to_say_hi = "I just wanted to say hi."
+            wanted_to_say_hi = "まあ、とくに用もないんだけど${na()}"
+            receive = "${name(_2)}に${itemname(_1, 1)}をもらった！"
 
             adventurer {
                 new_year {
-                    dialog_1 = "Happy new year!"
-                    dialog_2 = "I've brought you a gift today, here."
-                    throws = "${name(_1)} throws you ${itemname(_1, 1)}."
+                    dialog_1 = "明けましておめでとう${da(2)}"
+                    dialog_2 = "日ごろの感謝の意をこめてこれをあげる${yo()}"
+                    throws = "${name(_1)}は${itemname(_2, 1)}を置いていった。"
                 }
                 hate {
-                    dialog = "You scum! You won't get away from me now!"
-                    text = "\"Eat this!\""
-                    throws = "${name(_1)} throws molotov."
+                    dialog ="貴様！見つけた${yo(2)}"
+                    text ="「これでも食らうがいい${yo(2)}」"
+                    throws = "${name(_1)}は火炎瓶を投げた。"
                 }
                 like {
-                    dialog = "Here, take this!"
-                    receive = "You receive ${itemname(_1, 1)}."
-                    wonder_if = "Wonder if we can reach 100 friends? ♪"
+                    dialog ="これ、あげ${ru(2)}"
+                    wonder_if ="友達100人できるかな♪"
                 }
                 trainer {
+                    choices {
+                        learn ="習得する"
+                        train ="訓練する"
+                        pass = "遠慮しとく"
+                    }
                     learn {
-                        dialog = "I can teach you the art of ${_1} for a friendly price of ${_2} platinum pieces. Do you want me to train you?"
-                        accept = "Teach me the skill."
-                        after = "Fantastic! You've learned the skill in no time. I'm glad I could help."
+                        dialog = "${_1}のスキルを、友達価格の${_2}で教えてあげてもいい${ga(3)}どう${kana(1)}"
+                        after ="新しい技術をどうやら習得できたようだ${na()}"
                     }
                     train {
-                        dialog = "I can train your ${_1} skill for a friendly price of ${_2} platinum pieces. Do you want me to train you?"
-                        accept = "Train me."
-                        after = "Marvelous! The training is now complete. I think you've improved some potential."
+                        dialog = "${_1}のスキルを、友達価格の${_2}で訓練してもいい${ga(3)}どう${kana(1)}"
+                        after ="よし、これで訓練は終わり${da()}かなり潜在能力が伸びた${yo(2)}"
                     }
-                    pass = "I think I'll pass."
-                    ask_again = "I see. I'll ask you again at some time in the future."
+                    pass = "わかった${yo()}またしばらくしてから尋ねてみ${ru()}"
                 }
                 friendship {
-                    dialog = "As a pledge of friendship, here's something for you!"
-                    no_empty_spot = "Your home has no empty spot..."
-                    receive = "You receive ${itemname(_1, 1)}."
+                    dialog ="友達の証としてこれをあげ${ru(2)}大事に使って${yo()}"
+                    no_empty_spot ="部屋が一杯で置けなかった…"
                 }
                 souvenir {
-                    dialog = "I just stopped by to see you. Oh, I happen to have a gift for you too."
-                    inventory_is_full = "Your inventory is full..."
-                    receive = "You receive ${itemname(_1, 1)}."
+                    dialog = "近くまで来たので寄ってみた${nda()}ついでだから、土産にこれをあげ${ru()}"
+                    inventory_is_full ="所持品が一杯で受け取れなかった…"
+                    receive = "${itemname(_1, 1)}を受け取った。"
                 }
                 materials {
-                    dialog = "I found these during my journey. Thought you could find them useful."
-                    receive = "${name(_1)} gives you a bag full of materials."
+                    dialog ="旅の途中にこんなものを拾った${nda()}${kimi(3)}の役に立つと思って持ってきた${yo()}"
+                    receive = "${name(_1)}は色々なものが詰まった袋を、あなたに手渡した。"
                 }
                 favorite_skill {
-                    dialog = "${_1} is one of my favorite skills."
+                    dialog = "${_1}は${ore(3)}の得意なスキルの内の一つ${da()}"
                 }
                 favorite_stat {
-                    dialog = "I'm proud of my good ${_1}."
+                    dialog = "${ore(3)}は${_1}が自慢なの${da()}"
                 }
                 conversation {
-                    dialog = "Hey ${basename(_1)}, how's your journey? I was bored to death so I decided to make a visit to you!"
-                    hold = "You hold an amusing conversation with ${name(_1)}!"
+                    dialog = "やあ。特に用はない${ga(3)}、なんだか暇を持てましていたら、${kimi(3)}と話がしたくなって${na(3)}、寄ってみた${nda()}"
+                    hold = "あなたと${name(_1)}は愉快に語り合った！"
                 }
                 drink {
-                    dialog = "Let's have a drink and deepen our friendship!"
-                    cheers = "\"Cheers!\""
+                    dialog ="酒でも飲んで親睦を深めよう${yo(2)}"
+                    cheers ="あなたと${name(_1)}は乾杯した！"
                 }
             }
             trainer {
-                no_more_this_month = "No more training in this month."
+                no_more_this_month ="今月はもう訓練は終わり${da()}"
                 dialog {
-                    member = "As a member of ${_1} you have to forge your talent to live up to our reputation. For only ${_2} platinum coins, I'll improve the potential of your talent."
-                    nonmember = "Training! Training! At the end, only thing that saves your life is training! For only ${_1} platinum coins, I'll improve the potential of your talent."
+                    member = "${_1}の一員足るもの、ギルドの名に恥じないよう、常に己の技量を磨き続けなければならない${yo()}ギルドの一員である${kimi(3)}には、たったのプラチナ${_2}枚で潜在能力を伸ばす訓練を施してあげる${yo()}"
+                    nonmember = "鍛えている${kana(2)}冒険者として生き残るには、日ごろの鍛錬が大切${da(2)}わずかプラチナ${_1}枚で、潜在能力を伸ばす特別な訓練を施してあげる${yo(2)}"
                 }
 
                 choices {
-                    not_today = "Not today."
-                    improve = "I want to improve ${_1}."
+                    not_today ="訓練しない"
+                    improve = "${_1}を鍛える"
                 }
-                regret = "You'll regret this!"
-                potential_expands = "${name(_1)}${his_owned(_1)} potential of ${_2} greatly expands."
-                after = "Good. You show a lot of potential."
+                regret ="後悔する${yo(2)}"
+                potential_expands = "${name(_1)}の${_2}の潜在能力が大きく上昇した。"
+                after ="うむ、なかなか見所がある${yo()}"
             }
             beggar {
-                no_money = "I got no money to buy food. Will you spare me some coins?"
-                spare = "You spare ${_1} gold pieces"
-                after = "Thanks! I'll never forget this."
-                cheap = "You're so cheap!"
+                no_money ="パンを買う金さえない${nda()}恵んで${kure(3)}、おねがい${da(2)}"
+                spare = "あなたは${_1}goldを乞食に渡した。"
+                after ="${thanks(2)}この恩は一生忘れない${yo()}"
+                cheap ="ケチ！"
             }
             punk {
                 choices {
-                    yes = "Yes."
-                    no = "No."
-                    come_on = "Come on!"
+                    yes ="いい"
+                    no ="だめ"
+                    come_on ="うふふ"
                 }
-                are_you_ready = "So, are you ready?"
-                no_turning_back = "Okay, no turning back now!"
-                hump = "Hump!"
+                are_you_ready ="フッ。よく逃げ出さずに戻ってきた${na()}準備はいいか。"
+                no_turning_back ="いく${yo(2)}"
+                hump ="ふん！"
             }
             mysterious_producer {
-                want_to_be_star = "You want to be a star?"
-                no_turning_back = "Okay, no turning back now!"
+                want_to_be_star ="スターになりたい${kana(1)}"
+                no_turning_back ="よい心がけだ${na(2)}"
             }
             merchant {
                 choices {
-                    buy = "I want to buy something."
-                    sell = "I want to sell something."
-                    not_now = "Not now."
+                    buy ="買いたい"
+                    sell ="売りたい"
+                    not_now ="今はいい"
                 }
-                dialog = "This is your lucky day. I wouldn't normally show my discounted goods to commoners but since I feel so good today..."
-                regret = "I hope you won't regret it later."
+                dialog ="今日は${kimi(3)}の幸運な日${da()}普段は一般の客には売らない格安の品を、特別に見せてあげ${ru()}覚えておいて${kure(3)}、今日だけだ${yo()}"
+                regret ="後になって後悔しても知らない${yo()}"
             }
         }
     }

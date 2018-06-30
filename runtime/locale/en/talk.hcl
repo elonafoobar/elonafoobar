@@ -481,15 +481,15 @@ locale {
             }
         }
 
-        # TODO: organize
         visitor {
             wanted_to_say_hi = "I just wanted to say hi."
+            receive = "You receive ${itemname(_1, 1)}."
 
             adventurer {
                 new_year {
                     dialog_1 = "Happy new year!"
                     dialog_2 = "I've brought you a gift today, here."
-                    throws = "${name(_1)} throws you ${itemname(_1, 1)}."
+                    throws = "${name(_1)} throws you ${itemname(_2, 1)}."
                 }
                 hate {
                     dialog = "You scum! You won't get away from me now!"
@@ -498,27 +498,27 @@ locale {
                 }
                 like {
                     dialog = "Here, take this!"
-                    receive = "You receive ${itemname(_1, 1)}."
                     wonder_if = "Wonder if we can reach 100 friends? ♪"
                 }
                 trainer {
+                    choices {
+                        learn = "Teach me the skill."
+                        train = "Train me."
+                        pass = "I think I'll pass."
+                    }
                     learn {
                         dialog = "I can teach you the art of ${_1} for a friendly price of ${_2} platinum pieces. Do you want me to train you?"
-                        accept = "Teach me the skill."
                         after = "Fantastic! You've learned the skill in no time. I'm glad I could help."
                     }
                     train {
                         dialog = "I can train your ${_1} skill for a friendly price of ${_2} platinum pieces. Do you want me to train you?"
-                        accept = "Train me."
                         after = "Marvelous! The training is now complete. I think you've improved some potential."
                     }
-                    pass = "I think I'll pass."
-                    ask_again = "I see. I'll ask you again at some time in the future."
+                    pass = "I see. I'll ask you again at some time in the future."
                 }
                 friendship {
                     dialog = "As a pledge of friendship, here's something for you!"
                     no_empty_spot = "Your home has no empty spot..."
-                    receive = "You receive ${itemname(_1, 1)}."
                 }
                 souvenir {
                     dialog = "I just stopped by to see you. Oh, I happen to have a gift for you too."
@@ -561,7 +561,7 @@ locale {
             }
             beggar {
                 no_money = "I got no money to buy food. Will you spare me some coins?"
-                spare = "You spare ${_1} gold pieces"
+                spare = "You spare ${him(_2)} ${_1} gold pieces."
                 after = "Thanks! I'll never forget this."
                 cheap = "You're so cheap!"
             }
