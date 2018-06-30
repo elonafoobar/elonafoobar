@@ -226,11 +226,8 @@ class Parser {
 public:
     explicit Parser(std::istream& is) : lexer_(is), token_(TokenType::ILLEGAL)
     {
-        if (!lexer_.skipUTF8BOM()) {
-            token_ = Token(TokenType::ILLEGAL, std::string("Invalid UTF8 BOM"));
-        } else {
-            nextToken(false);
-        }
+        lexer_.skipUTF8BOM();
+        nextToken(false);
     }
 
     // Parses. If failed, value should be invalid value.
@@ -496,11 +493,15 @@ inline bool Lexer::skipUTF8BOM()
     is_.get();
     int x2 = is_.get();
     if (x2 != 0xBB) {
+        is_.clear();
+        is_.seekg(0);
         return false;
     }
 
     int x3 = is_.get();
     if (x3 != 0xBF) {
+        is_.clear();
+        is_.seekg(0);
         return false;
     }
 

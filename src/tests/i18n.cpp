@@ -210,3 +210,15 @@ locale {
         store.get_enum_property(u8"core.locale.foo", "name", 2, "dood")
         == u8"baz: dood");
 }
+
+TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
+{
+    i18n::store store = load(u8"\
+locale {\
+    ether_disease = \"ｴｰﾃﾙ病\"\
+}\
+"s);
+
+    REQUIRE(
+        store.get(u8"core.locale.ether_disease") == u8"ｴｰﾃﾙ病"s);
+}
