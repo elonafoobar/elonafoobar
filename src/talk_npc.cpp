@@ -9,6 +9,7 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
@@ -610,18 +611,18 @@ talk_result_t talk_slave_buy(int chatval)
         break;
     }
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.slave_keeper.buy.cost",
+    buff = i18n::s.get("core.locale.talk.npc.slave_trader.buy.cost",
                        cnven(cdatan(0, 56)), calcslavevalue(56), cdata[tc]);
     if (cdata[0].gold >= calcslavevalue(56))
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.slave_keeper.buy.choices.pay"));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.slave_keeper.buy.choices.go_back"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(i18n::s.get("core.locale.talk.npc.slave_keeper.buy.you_buy", cnven(cdatan(0, 56))));
+        txt(i18n::s.get("core.locale.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
         snd(12);
         cdata[0].gold -= calcslavevalue(56);
         rc = 56;
@@ -2095,7 +2096,7 @@ talk_result_t talk_npc()
                     }
                     else
                     {
-                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.sell" cdata[tc]);
+                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.sell", cdata[tc]);
                     }
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));

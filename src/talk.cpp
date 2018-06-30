@@ -228,7 +228,7 @@ talk_result_t talk_sleeping()
 talk_result_t talk_busy()
 {
     listmax = 0;
-    buff = u8"("s + name(tc)
+    buff = u8"("s
         + i18n::s.get("core.locale.talk.is_busy", cdata[tc])
         + u8")"s;
     tc = tc * 1 + 0;
