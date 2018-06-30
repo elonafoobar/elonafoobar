@@ -62,16 +62,14 @@ talk_result_t talk_inn_eat()
     }
     if (cdata[0].nutrition >= 15000)
     {
-        buff = lang(
-            u8"腹が減っているようにはみえない"s + _yo(),
-            u8"You don't seem that hungry."s);
+        buff = i18n::s.get("core.locale.talk.npc.innkeeper.eat.not_hungry");
         return talk_result_t::talk_npc;
     }
     snd(12);
     cdata[0].gold -= calcmealvalue();
     snd(18);
     cdata[0].nutrition = 15000;
-    buff = lang(_dozo(), u8"Here you are."s);
+    buff = i18n::s.get("core.locale.talk.npc.innkeeper.eat.here_you_are");
     txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
         lang(u8"悪くない。"s, u8"Not bad at all."s),
         lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
@@ -102,9 +100,7 @@ talk_result_t talk_wizard_identify(int chatval)
     }
     if (p == 0)
     {
-        buff = lang(
-            u8"鑑定するアイテムはないみたい"s + _da(),
-            u8"Your items have already been identified."s);
+        buff = i18n::s.get("core.locale.talk.npc.wizard.identify.already");
         return talk_result_t::talk_npc;
     }
     if (chatval == 15)
@@ -132,14 +128,8 @@ talk_result_t talk_wizard_identify(int chatval)
                 }
             }
         }
-        txt(lang(
-                ""s + p(1) + u8"個の未判明のアイテムのうち、"s + p
-                + u8"個のアイテムが完全に判明した。"s,
-                ""s + p + u8" out of "s + p(1)
-                + u8" unknown items are fully identified."s));
-        buff = lang(
-            u8"鑑定結果はこの通り"s + _da(),
-            u8"Here, I have finished identifing your stuff."s);
+        txt(i18n::s.get("core.locale.talk.npc.wizard.identify.count", p(0), p(1)));
+        buff = i18n::s.get("core.locale.talk.npc.wizard.identify.finished");
     }
     else
     {
@@ -155,20 +145,16 @@ talk_result_t talk_wizard_identify(int chatval)
         magic();
         if (efcancel == 1)
         {
-            buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
             return talk_result_t::talk_npc;
         }
         if (idtresult == identification_state_t::completely_identified)
         {
-            buff = lang(
-                u8"鑑定結果はこの通り"s + _da(),
-                u8"Here, I have finished identifing your stuff."s);
+            buff = i18n::s.get("core.locale.talk.npc.wizard.identify.finished");
         }
         else
         {
-            buff = lang(
-                u8"さらなる知識を求めるのなら、調査する必要が"s + _aru(),
-                u8"You need to investigate it to gain more knowledge."s);
+            buff = i18n::s.get("core.locale.talk.npc.wizard.identify.need_investigate");
         }
         cdata[0].gold -= calcidentifyvalue(chatval - 14);
     }
@@ -179,7 +165,7 @@ talk_result_t talk_wizard_identify(int chatval)
 talk_result_t talk_informer_list_adventurers()
 {
     list_adventurers();
-    buff = lang(u8"お目当ての情報は見つかった"s + _kana(), u8"Done?"s);
+    buff = i18n::s.get("core.locale.talk.npc.informer.show_adventurers");
     return talk_result_t::talk_npc;
 }
 
@@ -209,7 +195,7 @@ talk_result_t talk_healer_restore_attributes()
     }
     tc = tcbk;
     talk_start();
-    buff = lang(u8"治療が完了し"s + _ta(), u8"Done treatment. Take care!"s);
+    buff = i18n::s.get("core.locale.talk.npc.healer.restore_attributes");
     return talk_result_t::talk_npc;
 }
 
@@ -229,10 +215,10 @@ talk_result_t talk_trade()
     menu_result result = ctrl_inventory();
     if (!result.succeeded)
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         return talk_result_t::talk_npc;
     }
-    buff = lang(_thanks(2), u8"Thanks!"s);
+    buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     return talk_result_t::talk_npc;
 }
 
@@ -267,9 +253,7 @@ talk_result_t talk_arena_master(int chatval)
         if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
-            buff = lang(
-                u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                u8"The game is over today. Come again tomorrow."s);
+            buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.game_is_over");
             return talk_result_t::talk_npc;
         }
         randomize(adata(24, gdata_current_map));
@@ -305,38 +289,28 @@ talk_result_t talk_arena_master(int chatval)
             break;
         }
         arenaop(1) = cdata[rc].id;
-        buff = lang(
-            u8"今日の対戦相手は"s + chara_refstr(cdata[rc].id, 2) + _da()
-            + u8"挑戦する"s + _noka(1),
-            u8"You got "s + cdatan(0, rc) + u8" today. What'ya say?"s);
+        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.target",
+                           cdata[rc], chara_refstr(cdata[rc].id, 2));
     }
     else
     {
         if (adata(27, gdata_current_map) > gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
-            buff = lang(
-                u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                u8"The game is over today. Come again tomorrow."s);
+            buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.game_is_over");
             return talk_result_t::talk_npc;
         }
         arenaop(0) = 1;
         arenaop(1) = (100 - gdata(120) / 100) / 2 + 1;
-        buff = lang(
-            u8"対戦相手はレベル"s + arenaop(1) + u8"以下の相手複数"s + _da()
-            + u8"挑戦する"s + _noka(1),
-            u8"Your play is a group of monster around level "s + arenaop(1)
-            + u8". Sounds easy huh?"s);
+        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.target", arenaop(1));
     }
-    ELONA_APPEND_RESPONSE(1, lang(u8"挑戦する"s, u8"Alright."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"I'll pass."s));
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.arena_master.choices.leave"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = lang(
-            u8"用があるときは声をかけて"s + _kure(),
-            u8"Alright. Call me if you changed your mind."s);
+        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel");
         return talk_result_t::talk_npc;
     }
     if (arenaop == 0)
@@ -377,11 +351,7 @@ talk_result_t talk_pet_arena_master(int chatval)
         arenaop(0) = 0;
         arenaop(1) = 1;
         arenaop(2) = (100 - gdata(121) / 100) / 3 * 2 + 3;
-        buff = lang(
-            u8"一対一の戦いで、対戦相手はレベル"s + arenaop(2)
-            + u8"ぐらいの相手"s + _da() + u8"挑戦する"s + _noka(1),
-            u8"The opponent is around level "s + arenaop(2)
-            + u8". Want to give it a try? "s);
+        buff = i18n::s.get("core.locale.talk.npc.pet_arena_master.register.target", arenaop(2));
     }
     if (chatval == 41)
     {
@@ -389,22 +359,16 @@ talk_result_t talk_pet_arena_master(int chatval)
         arenaop(1) = 2;
         arenaop(2) = (100 - gdata(121) / 100) / 2 + 1;
         arenaop(1) = rnd(7) + 2;
-        buff = lang(""s + arenaop(1) +
-                    u8"人同士のチームバトルで、対戦相手はレベル"s + arenaop(2) +
-                    u8"以下の相手複数"s + _da() + u8"挑戦する"s + _noka(1),
-                    u8"It's a "s + arenaop(1) + u8" vs "s + arenaop(1) +
-                    u8" match. The opponent's group is formed by the pets less than "s +
-                    arenaop(2) + u8" levels. What you say?"s);
+        buff = i18n::s.get("core.locale.talk.npc.pet_arena_master.register.target_group",
+                           arenaop(1), arenaop(2));
     }
-    ELONA_APPEND_RESPONSE(1, lang(u8"挑戦する"s, u8"I'll send my pet."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"I'll pass."s));
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.pet_arena_master.register.choices.enter"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.pet_arena_master.register.choices.leave"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = lang(
-            u8"用があるときは声をかけて"s + _kure(),
-            u8"Alright. Call me if you changed your mind."s);
+        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel");
         return talk_result_t::talk_npc;
     }
     DIM2(followerexist, 16);
@@ -416,9 +380,7 @@ talk_result_t talk_pet_arena_master(int chatval)
     int stat = ctrl_ally();
     if (stat == -1)
     {
-        buff = lang(
-            u8"用があるときは声をかけて"s + _kure(),
-            u8"Alright. Call me if you changed your mind."s);
+        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel");
         return talk_result_t::talk_npc;
     }
     gdata_executing_immediate_quest_type = 2;
@@ -438,19 +400,13 @@ talk_result_t talk_pet_arena_master(int chatval)
 
 talk_result_t talk_pet_arena_master_score()
 {
-    buff = lang(u8"現在は"s + adata(23, gdata_current_map) + u8"連勝中"s + _da() +
-                u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
-                u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
-                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+    buff = i18n::s.get("core.locale.talk.npc.arena_master.streak", adata(23, gdata_current_map));
     return talk_result_t::talk_npc;
 }
 
 talk_result_t talk_arena_master_score()
 {
-    buff = lang(u8"現在は"s + adata(22, gdata_current_map) + u8"連勝中"s + _da() +
-                u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
-                u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
-                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+    buff = i18n::s.get("core.locale.talk.npc.arena_master.streak", adata(22, gdata_current_map));
     return talk_result_t::talk_npc;
 }
 
@@ -465,9 +421,7 @@ talk_result_t talk_quest_delivery()
     chara_set_item_which_will_be_used();
     rq = deliver;
     --inv[deliver(1)].number;
-    txt(lang(
-            itemname(deliver(1), 1) + u8"を手渡した。"s,
-            u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
+    txt(i18n::s.get("core.locale.talk.npc.quest_giver.hand_over", inv[deliver(1)]));
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
@@ -485,9 +439,7 @@ talk_result_t talk_quest_supply()
     rc = tc;
     chara_set_item_which_will_be_used();
     --inv[supply].number;
-    txt(lang(
-            itemname(supply, 1) + u8"を手渡した。"s,
-            u8"You hand over "s + itemname(supply, 1) + u8"."s));
+    txt(i18n::s.get("core.locale.talk.npc.quest_giver.hand_over", inv[supply]));
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
@@ -497,17 +449,14 @@ talk_result_t talk_quest_supply()
 talk_result_t talk_shop_attack()
 {
     listmax = 0;
-    buff = lang(
-        _rob(2),
-        u8"Oh crap. Another bandit trying to spoil my business! Form up, mercenaries."s);
-    ELONA_APPEND_RESPONSE(1, lang(u8"神に祈れ"s, u8"Pray to your God."s));
-    ELONA_APPEND_RESPONSE(
-        0, lang(u8"いや、冗談です"s, u8"W-Wait! I was just kidding."s));
+    buff = i18n::s.get("core.locale.talk.npc.shop.attack.dialog");
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.shop.attack.choices.attack"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.shop.attack.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         return talk_result_t::talk_npc;
     }
     go_hostile();
@@ -525,20 +474,17 @@ talk_result_t talk_guard_return_item()
     --inv[p].number;
     if (inv[p].param1 == 0)
     {
-        buff = lang(u8"む…中身が空っぽ"s + _dana(2), u8"Hmm! It's empty!"s);
-        ELONA_APPEND_RESPONSE(0, lang(u8"しまった…"s, u8"Oops...!"s));
+        buff = i18n::s.get("core.locale.talk.npc.guard.lost.empty.dialog");
+        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.guard.lost.empty.response"));
         chatesc = 1;
         talk_window_query();
         modify_karma(0, -5);
     }
     else
     {
-        buff = lang(
-            u8"わざわざ落し物を届けてくれた"s + _noka() + _kimi(3)
-            + u8"は市民の模範"s + _da() + _thanks(),
-            u8"How nice of you to take the trouble to bring it. You're a model citizen indeed!"s);
+        buff = i18n::s.get("core.locale.talk.npc.guard.lost.dialog");
         ELONA_APPEND_RESPONSE(
-            0, lang(u8"当然のことだ"s, u8"It's nothing."s));
+            0, i18n::s.get("core.locale.talk.npc.guard.lost.response"));
         chatesc = 1;
         talk_window_query();
         modify_karma(0, 5);
@@ -546,18 +492,14 @@ talk_result_t talk_guard_return_item()
         if (gdata_lost_wallet_count >= 4)
         {
             listmax = 0;
-            buff = lang(
-                u8"む、また"s + _kimi(3) + _ka()
-                + u8"随分と頻繁に財布を見つけられるもの"s + _dana(),
-                u8"Oh, it's you again? How come you find the wallets so often?"s);
+            buff = i18n::s.get_enum("core.locale.talk.npc.guard.lost.found_often.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            buff = lang(u8"（…あやしい）"s, u8"(...suspicious)"s);
+            buff = i18n::s.get_enum("core.locale.talk.npc.guard.lost.found_often.dialog", 1);
             ELONA_APPEND_RESPONSE(
-                0,
-                lang(u8"ぎくっ"s, u8"I really found it on the street!"s));
+                0, i18n::s.get("core.locale.talk.npc.guard.lost.found_often.response"));
             chatesc = 1;
             talk_window_query();
             modify_karma(0, -10);
@@ -577,43 +519,37 @@ talk_result_t talk_bartender_call_ally()
         rc = stat;
         if (cdata[rc].state == 1)
         {
-            buff = lang(
-                u8"そいつは呼び戻す必要はないよう"s + _da(),
-                u8"Huh? You don't need to do that."s);
+            buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.no_need");
             return talk_result_t::talk_npc;
         }
         listmax = 0;
-        buff = lang(
-            u8"そいつを呼び戻すには、"s + calcresurrectvalue(rc)
-            + i18n::_(u8"ui", u8"gold") + u8"必要"s + _da(),
-            u8"Alright. We had taken good care of your pet. It will cost you "s
-            + calcresurrectvalue(rc) + u8" gold pieces."s);
+        buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.cost",
+                           calcresurrectvalue(rc));
         if (cdata[0].gold >= calcresurrectvalue(rc))
         {
-            ELONA_APPEND_RESPONSE(1, lang(u8"呼び戻す"s, u8"I'll pay."s));
+            ELONA_APPEND_RESPONSE(
+                1, i18n::s.get("core.locale.talk.npc.bartender.call_ally.choices.pay"));
         }
-        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind."s));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.npc.bartender.call_ally.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
             snd(12);
             cdata[0].gold -= calcresurrectvalue(rc);
-            buff = lang(
-                u8"(バーテンが店の奥から"s + name(rc) + u8"を連れてきた)"s
-                + _dozo(),
-                u8"("s + name(tc) + u8" brings "s + name(rc)
-                + u8" from the stable.) There you go."s);
+            buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.brings_back",
+                               cdata[tc], cdata[rc]);
             revive_character();
         }
         else
         {
-            buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         }
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -621,9 +557,7 @@ talk_result_t talk_bartender_call_ally()
 talk_result_t talk_ally_order_wait()
 {
     listmax = 0;
-    buff = lang(
-        u8"(あなたは、"s + name(tc) + u8"に街で待っているように指示した)"s,
-        u8"(You order "s + name(tc) + u8" to wait at the town.)"s);
+    buff = i18n::s.get("core.locale.talk.npc.ally.wait_at_town", cdata[tc]);
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -637,20 +571,14 @@ talk_result_t talk_ally_order_wait()
 talk_result_t talk_ally_abandon()
 {
     listmax = 0;
-    buff = lang(
-        u8"("s + name(tc)
-        + u8"は悲しそうな目であなたを見ている。本当に縁を切る？)"s,
-        u8"("s + name(tc) + u8" looks at you sadly. Really abandon "s
-        + him(tc) + u8"? )"s);
-    ELONA_APPEND_RESPONSE(1, lang(u8"切る"s, u8"Yes."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No."s));
+    buff = i18n::s.get("core.locale.talk.npc.ally.abandon.prompt", cdata[tc]);
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.yes"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(lang(
-                ""s + name(tc) + u8"と別れた…"s,
-                u8"You abandoned "s + name(tc) + u8"..."s));
+        txt(i18n::s.get("core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         chara_delete(tc);
         return talk_result_t::talk_end;
@@ -682,34 +610,27 @@ talk_result_t talk_slave_buy(int chatval)
         break;
     }
     listmax = 0;
-    buff = lang(
-        u8"そう"s + _dana() + ""s + cdatan(0, 56) + u8"を"s
-        + calcslavevalue(56) + i18n::_(u8"ui", u8"gold") + u8"でどう"s
-        + _da(1),
-        u8"Okay. Let me check the stable....How about "s
-        + cnven(cdatan(0, 56)) + u8" for "s + calcslavevalue(56)
-        + u8" gold pieces. I'd say it's quite a bargain!"s);
+    buff = i18n::s.get("core.locale.talk.npc.slave_keeper.buy.cost",
+                       cnven(cdatan(0, 56)), calcslavevalue(56));
     if (cdata[0].gold >= calcslavevalue(56))
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"買い取る"s, u8"I'll pay."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.slave_keeper.buy.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind."s));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.slave_keeper.buy.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(lang(
-                cdatan(0, 56) + u8"を買い取った。"s,
-                u8"You buy "s + cnven(cdatan(0, 56)) + u8"."s));
+        txt(i18n::s.get("core.locale.talk.npc.slave_keeper.buy.you_buy", cnven(cdatan(0, 56))));
         snd(12);
         cdata[0].gold -= calcslavevalue(56);
         rc = 56;
         new_ally_joins();
-        buff = lang(_thanks(2), u8"Thanks!"s);
+        buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -722,20 +643,18 @@ talk_result_t talk_slave_sell()
     {
         rc = stat;
         listmax = 0;
-        buff = lang(
-            u8"なかなかの身体つき"s + _dana() + calcslavevalue(rc) * 2 / 3
-            + i18n::_(u8"ui", u8"gold") + u8"でどう"s + _da(1),
-            u8"Let me see....Hmmm, this one got a nice figure. I'll give you "s
-            + calcslavevalue(rc) * 2 / 3 + u8" gold pieces."s);
-        ELONA_APPEND_RESPONSE(1, lang(u8"売る"s, u8"Deal."s));
-        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No way."s));
+        buff = i18n::s.get("core.locale.talk.npc.slave_trader.sell.price",
+                           (calcslavevalue(rc) * 2 / 3));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.npc.slave_trader.sell.choices.deal"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.npc.slave_trader.sell.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
-            txt(lang(
-                    cdatan(0, rc) + u8"を売り飛ばした。"s,
-                    u8"You sell off "s + cnven(cdatan(0, rc)) + u8"."s));
+            txt(i18n::s.get("core.locale.talk.npc.slave_trader.sell.you_sell_off",
+                            cnven(cdatan(0, rc))));
             snd(11);
             cdata[0].gold += calcslavevalue(rc) * 2 / 3;
             if (cdata[rc].state == 1)
@@ -747,16 +666,16 @@ talk_result_t talk_slave_sell()
                 event_add(15, cdata[rc].id);
             }
             chara_delete(rc);
-            buff = lang(_thanks(2), u8"Thanks!"s);
+            buff = i18n::s.get("core.locale.talk.npc.common.thanks");
         }
         else
         {
-            buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         }
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -765,14 +684,12 @@ talk_result_t talk_ally_marriage()
 {
     if (cdata[tc].impression < 200)
     {
-        buff = lang(
-            u8"("s + name(tc) + u8"はやんわりと断った)"s,
-            u8"("s + name(tc) + u8" gently refuses your proposal. )"s);
+        buff = i18n::s.get("core.locale.talk.npc.ally.marriage.refuses", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     cdata[tc].is_married() = true;
     listmax = 0;
-    buff = lang(u8"はい…喜んで。"s, u8"With preasure."s);
+    buff = i18n::s.get("core.locale.talk.npc.ally.marriage.accepts");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -787,7 +704,7 @@ talk_result_t talk_ally_gene()
     if (gdata_current_map == 30)
     {
         listmax = 0;
-        buff = lang(u8"こんな場所では嫌よ"s, u8"Not here!"s);
+        buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.refuses");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -795,7 +712,7 @@ talk_result_t talk_ally_gene()
         return talk_result_t::talk_end;
     }
     listmax = 0;
-    buff = lang(u8"いやん、あなたったら…"s, u8"*blush*"s);
+    buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.accepts");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -811,10 +728,7 @@ talk_result_t talk_ally_gene()
 talk_result_t talk_innkeeper_shelter()
 {
     listmax = 0;
-    buff = lang(
-        u8"悪天候時はシェルターを無料で開放している"s + _nda()
-        + u8"すみやかに避難して"s + _kure(),
-        u8"The shelter is free to use for anyone. Here, come in."s);
+    buff = i18n::s.get("core.locale.talk.npc.innkeeper.go_to_shelter");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -834,20 +748,14 @@ talk_result_t talk_innkeeper_shelter()
 talk_result_t talk_servant_fire()
 {
     listmax = 0;
-    buff = lang(
-        u8"("s + name(tc)
-        + u8"は悲しそうな目であなたを見ている。本当に縁を切る？)"s,
-        u8"("s + name(tc) + u8" looks at you sadly. Really dismiss "s
-        + him(tc) + u8"? )"s);
-    ELONA_APPEND_RESPONSE(1, lang(u8"切る"s, u8"Yes."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No."s));
+    buff = i18n::s.get("core.locale.talk.npc.servant.fire.prompt", cdata[tc]);
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.yes"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(lang(
-                ""s + name(tc) + u8"を解雇した… "s,
-                u8"You dismiss "s + name(tc) + u8"."s));
+        txt(i18n::s.get("core.locale.talk.npc.servant.fire.you_dismiss", cdata[tc]));
         chara_vanquish(tc);
         calccosthire();
         return talk_result_t::talk_end;
@@ -856,52 +764,17 @@ talk_result_t talk_servant_fire()
     return talk_result_t::talk_npc;
 }
 
-talk_result_t talk_servant_think_of_house_name()
+talk_result_t talk_maid_think_of_house_name()
 {
     mdatan(0) = random_title();
-    if (jp)
+    if (rnd(5))
     {
-        s(0) = u8"の家"s;
-        s(1) = u8"邸"s;
-        s(2) = u8"城"s;
-        s(3) = u8"ハーレム"s;
-        s(4) = u8"の巣窟"s;
-        s(5) = u8"ハウス"s;
-        s(6) = u8"ホーム"s;
-        s(7) = u8"の住処"s;
-        s(8) = u8"宅"s;
-        s(9) = u8"の隠れ家"s;
-        s(10) = u8"ドーム"s;
-        if (rnd(5))
-        {
-            mdatan(0) += s(rnd(10));
-        }
-    }
-    else
-    {
-        s(0) = u8"Home"s;
-        s(1) = u8"Mansion"s;
-        s(2) = u8"Shack"s;
-        s(3) = u8"Nest"s;
-        s(4) = u8"Base"s;
-        s(5) = u8"Hideout"s;
-        s(6) = u8"Dome"s;
-        s(7) = u8"Hut"s;
-        s(8) = u8"Cabin"s;
-        s(9) = u8"Hovel"s;
-        s(10) = u8"Shed"s;
-        if (rnd(3))
-        {
-            mdatan(0) += u8" "s + s(rnd(10));
-        }
+        mdatan(0) = i18n::s.get_enum("core.locale.talk.npc.maid.think_of_house_name.suffixes",
+                                     rnd(11), mdatan(0));
     }
     screenupdate = -1;
     update_entire_screen();
-    buff = lang(
-        u8"そう"s + _dana() + u8"これからこの家の名前は"s + mdatan(0)
-        + _da(),
-        u8"Hey, I've come up a good idea! \""s + mdatan(0)
-        + u8"\", doesn't it sound so charming?"s);
+    buff = i18n::s.get("core.locale.talk.npc.maid.think_of_house_name.come_up_with", mdatan(0));
     return talk_result_t::talk_npc;
 }
 
@@ -909,23 +782,17 @@ talk_result_t talk_sister_buy_indulgence()
 {
     if (cdata[0].karma >= -30)
     {
-        buff = lang(
-            u8"その程度の罪なら自分でなんとかしなさい。"s,
-            u8"You karma isn't that low. Come back after you have committed more crimes!"s);
+        buff = i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.karma_is_not_low");
         return talk_result_t::talk_npc;
     }
     listmax = 0;
-    buff = lang(
-        u8"免罪符を希望する"s + _noka(1) + calcguiltvalue()
-        + i18n::_(u8"ui", u8"gold") + u8"かかるけどいいの"s + _kana(1),
-        u8"In the authority of all the saints, I will grant you an indulgence, for money of course. The price is "s
-        + calcguiltvalue() + u8" gold pieces."s);
+    buff = i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.cost", calcguiltvalue());
     if (cdata[0].gold >= calcguiltvalue())
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"買う"s, u8"Deal."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.choices.buy"));
     }
     ELONA_APPEND_RESPONSE(
-        0, lang(u8"やめる"s, u8"The price is too high."s));
+        0, i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -933,11 +800,11 @@ talk_result_t talk_sister_buy_indulgence()
         snd(12);
         cdata[0].gold -= calcguiltvalue();
         modify_karma(0, (cdata[0].karma - -30) * -1 + 1);
-        buff = lang(_thanks(2), u8"Thanks!"s);
+        buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -951,15 +818,14 @@ talk_result_t talk_informer_investigate_ally()
     {
         rc = stat;
         listmax = 0;
-        buff = lang(
-            u8"10000 goldかかるけどいい"s + _ka(1),
-            u8"10000 gold pieces."s);
+        buff = i18n::s.get("core.locale.talk.npc.informer.investigate_ally.cost");
         if (cdata[0].gold >= 10000)
         {
             ELONA_APPEND_RESPONSE(
-                1, lang(u8"調査する"s, u8"Too expensive, but okay."s));
+                1, i18n::s.get("core.locale.talk.npc.informer.investigate_ally.choices.pay"));
         }
-        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No way!"s));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.npc.informer.investigate_ally.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
@@ -976,12 +842,12 @@ talk_result_t talk_informer_investigate_ally()
         }
         else
         {
-            buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         }
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     tc = tcchat;
     return talk_result_t::talk_npc;
@@ -993,15 +859,13 @@ talk_result_t talk_ally_silence()
     {
         cdata[tc].is_silent() = true;
         buff = u8"("s
-            + lang((name(tc) + u8"はしゅんとなった…"s),
-                   (name(tc) + u8" stops talking..."s))
+            + i18n::s.get("core.locale.talk.npc.ally.silence.start", cdata[tc])
             + u8")"s;
     }
     else
     {
         buff = u8"("s
-            + lang((name(tc) + u8"はあなたに抱きついた"s),
-                   (name(tc) + u8" hugs you."s))
+            + i18n::s.get("core.locale.talk.npc.ally.silence.stop", cdata[tc])
             + u8")"s;
         cdata[tc].is_silent() = false;
     }
@@ -1010,17 +874,12 @@ talk_result_t talk_ally_silence()
 
 talk_result_t talk_adventurer_hire()
 {
-    buff = lang(
-        _ore(3) + u8"の剣が必要な"s + _noka(1) + u8"そう"s + _dana(3)
-        + u8"、"s + calchireadv(tc) + i18n::_(u8"ui", u8"gold")
-        + u8"払うならば、7日間護衛を引き受け"s + _ru(),
-        u8"I will take the job for "s + calchireadv(tc)
-        + u8" gold pieces, for seven day."s);
+    buff = i18n::s.get("core.locale.talk.npc.adventurer.hire.cost", calchireadv(tc));
     if (cdata[0].gold >= calchireadv(tc))
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"頼む"s, u8"Sounds fair enough."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Some other time."s));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -1034,14 +893,12 @@ talk_result_t talk_adventurer_hire()
         ++cdata[tc].hire_count;
         snd(64);
         txtef(5);
-        txt(lang(
-                name(tc) + u8"を雇った。"s,
-                u8"You hired "s + name(tc) + u8"."s));
-        buff = lang(_thanks(2), u8"Thanks!"s);
+        txt(i18n::s.get("core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]));
+        buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -1050,18 +907,13 @@ talk_result_t talk_adventurer_join()
 {
     if (cdata[0].level * 3 / 2 + 10 < cdata[tc].level)
     {
-        buff = lang(
-            _kimi(3) + u8"の仲間になれと？あまりにも力の差がありすぎる"s
-            + _na(),
-            u8"Huh? You are no match for me."s);
+        buff = i18n::s.get("core.locale.talk.npc.adventurer.join.too_weak");
         return talk_result_t::talk_npc;
     }
     if (cdata[tc].impression >= 200 && cdata[tc].hire_count > 2)
     {
         listmax = 0;
-        buff = lang(
-            _kimi(3) + u8"となら上手くやっていけそう"s + _da() + _yoro(2),
-            u8"Sure, I guess you and I can make a good team."s);
+        buff = i18n::s.get("core.locale.talk.npc.adventurer.join.accept");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1069,10 +921,7 @@ talk_result_t talk_adventurer_join()
         f = chara_get_free_slot_ally();
         if (f == 0)
         {
-            buff = lang(
-                u8"これ以上仲間を連れて行けないよう"s + _da()
-                + u8"人数を調整してまた来て"s + _kure(),
-                u8"It seems your party is already full. Come see me again when you're ready."s);
+            buff = i18n::s.get("core.locale.talk.npc.adventurer.join.party_full");
             return talk_result_t::talk_npc;
         }
         rc = tc;
@@ -1084,25 +933,21 @@ talk_result_t talk_adventurer_join()
         create_adventurer();
         return talk_result_t::talk_end;
     }
-    buff = lang(
-        _kimi(3) + u8"の仲間になれと？悪い"s + _ga(3) + u8"お断り"s + _da(),
-        u8"Huh? What made you think I'd want to join you? I don't even know you well."s);
+    buff = i18n::s.get("core.locale.talk.npc.adventurer.join.not_known");
     return talk_result_t::talk_npc;
 }
 
 talk_result_t talk_moyer_sell_paels_mom()
 {
     listmax = 0;
-    buff = lang(
-        u8"ほほう、モンスターの顔をした人間か。見世物としてなかなかいけそうだ。金貨50000枚で買い取ろう。"s,
-        u8"Look what we have! A woman who got a monster's face. It'll be a good show. Wanna sell me for 50000 gold coins?"s);
-    ELONA_APPEND_RESPONSE(1, lang(u8"売る"s, u8"Sure, take her."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"You cold bastard."s));
+    buff = i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.prompt");
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.choices.sell"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mom..."s));
+        txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
         modify_karma(0, -20);
         snd(11);
         cdata[0].gold += 50000;
@@ -1113,11 +958,11 @@ talk_result_t talk_moyer_sell_paels_mom()
         cdata[rc].initial_position.x = 48;
         cdata[rc].initial_position.y = 18;
         cell_movechara(rc, 48, 18);
-        buff = lang(_thanks(2), u8"Thanks!"s);
+        buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -1125,10 +970,7 @@ talk_result_t talk_moyer_sell_paels_mom()
 talk_result_t talk_wizard_return()
 {
     listmax = 0;
-    buff = lang(
-        u8"ここからふもとに下りるのは不便だから、ボランティアで帰還サービスをやってい"s
-        + _ru() + _kimi(3) + u8"も帰還サービスを希望"s + _kana(),
-        u8"I'm practicing a spell of return. Would you like to take my service?"s);
+    buff = i18n::s.get("core.locale.talk.npc.wizard.return");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -1141,21 +983,15 @@ talk_result_t talk_shop_reload_ammo()
 {
     if (calccostreload(0) == 0)
     {
-        buff = lang(
-            u8"充填する必要はないみたい"s + _da(),
-            u8"Reload what? You don't have any ammo in your inventory."s);
+        buff = i18n::s.get("core.locale.talk.npc.shop.ammo.no_ammo");
         return talk_result_t::talk_npc;
     }
-    buff = lang(
-        u8"そう"s + _dana(3) + u8"、全ての矢弾を補充すると"s
-        + calccostreload(0) + i18n::_(u8"ui", u8"gold") + _da(),
-        u8"Sure, let me check what type of ammos you need....Okay, reloading all of your ammos will cost "s
-        + calccostreload(0) + u8" gold pieces."s);
+    buff = i18n::s.get("core.locale.talk.npc.shop.ammo.cost", calccostreload(0));
     if (cdata[0].gold >= calccostreload(0))
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"頼む"s, u8"Alright."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Another time."s));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -1163,11 +999,11 @@ talk_result_t talk_shop_reload_ammo()
         snd(12);
         cdata[0].gold -= calccostreload(0);
         p = calccostreload(0, true);
-        buff = lang(_thanks(2), u8"Thanks!"s);
+        buff = i18n::s.get("core.locale.talk.npc.common.thanks");
     }
     else
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
     }
     return talk_result_t::talk_npc;
 }
@@ -1184,32 +1020,30 @@ talk_result_t talk_spell_writer_reserve()
 
 talk_result_t talk_sex()
 {
-    ELONA_APPEND_RESPONSE(1, lang(u8"はじめる"s, u8"Let's do it."s));
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"W-wai.t.."s));
-    buff = lang(
-        u8"なかなかの体つき"s + _dana() + u8"よし、買"s + _u(2),
-        u8"You are...quite attractive. I'll buy you."s);
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
+    buff = i18n::s.get("core.locale.talk.npc.common.sex.prompt");
     talk_window_query();
     if (chatval != 1)
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         return talk_result_t::talk_npc;
     }
     listmax = 0;
-    buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
+    buff = i18n::s.get("core.locale.talk.npc.common.sex.start");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, lang(u8"うふふ"s, u8"Come on!"s));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     continuous_action_sex();
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_result_servant_chase_out()
+talk_result_t talk_result_maid_chase_out()
 {
     --gdata_number_of_waiting_guests;
     listmax = 0;
-    buff = lang(u8"追い返す"s + _yo(), u8"Alright."s);
+    buff = i18n::s.get("core.locale.talk.npc.maid.do_not_meet");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -1223,27 +1057,23 @@ talk_result_t talk_prostitute_buy()
     sexvalue = sdata(17, tc) * 25 + 100 + cdata[0].fame / 10;
     if (cdata[0].gold >= sexvalue)
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"はじめる"s, u8"Let's do it."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
     }
-    ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"W-wai.t.."s));
-    buff = lang(
-        u8"そう"s + _dana() + u8"金貨"s + sexvalue + u8"枚を前払いで"s
-        + _kure(),
-        u8"Okay sweetie, I need "s + sexvalue
-        + u8" gold pieces in front."s);
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
+    buff = i18n::s.get("core.locale.talk.npc.prostitute.buy", sexvalue);
     talk_window_query();
     if (chatval != 1)
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         return talk_result_t::talk_npc;
     }
     snd(12);
     cdata[cc].gold -= sexvalue;
     cdata[tc].gold += sexvalue;
     listmax = 0;
-    buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
+    buff = i18n::s.get("core.locale.talk.npc.common.sex.start");
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, lang(u8"うふふ"s, u8"Come on!"s));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     cc = tc;
@@ -1277,16 +1107,17 @@ talk_result_t talk_caravan_master_hire()
     {
         if (p(cnt) == 0)
         {
-            ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind!"s));
+            ELONA_APPEND_RESPONSE(
+                0, i18n::s.get("core.locale.talk.npc.caravan_master.hire.choices.go_back"));
             break;
         }
         ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
     }
-    buff = lang(u8"つぇｔ"s, u8"tset"s);
+    buff = i18n::s.get("core.locale.talk.npc.caravan_master.hire.tset");
     talk_window_query();
     if (chatval <= 0)
     {
-        buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding");
         return talk_result_t::talk_npc;
     }
     gdata_destination_map = adata(30, chatval);
@@ -1312,19 +1143,19 @@ talk_result_t talk_guard_where_is(int chatval)
         cdata[rc].position.y);
     if (p == 1)
     {
-        s = lang(u8"西"s, u8"west"s);
+        s = i18n::s.get("core.locale.talk.npc.guard.where_is.direction.west");
     }
     else if (p == 2)
     {
-        s = lang(u8"東"s, u8"east"s);
+        s = i18n::s.get("core.locale.talk.npc.guard.where_is.direction.east");
     }
     else if (p == 3)
     {
-        s = lang(u8"北"s, u8"north"s);
+        s = i18n::s.get("core.locale.talk.npc.guard.where_is.direction.north");
     }
     else
     {
-        s = lang(u8"南"s, u8"south"s);
+        s = i18n::s.get("core.locale.talk.npc.guard.where_is.direction.south");
     }
     p = dist(
         cdata[0].position.x,
@@ -1335,56 +1166,35 @@ talk_result_t talk_guard_where_is(int chatval)
     {
         if (rc == tc)
         {
-            s = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+            s = i18n::s.get("core.locale.talk.npc.common.you_kidding");
             break;
         }
         if (cdata[rc].state != 1)
         {
-            s = lang(
-                u8"奴なら今は死んでいる"s + _yo(2),
-                u8"Oh forget it, dead for now."s);
+            s = i18n::s.get("core.locale.talk.npc.guard.where_is.dead");
             break;
         }
         if (p < 6)
         {
-            s = lang(
-                cdatan(0, rc) + u8"ならすぐ近くにいる"s + _yo() + s
-                + u8"の方を向いてごらん。"s,
-                u8"Oh look carefully before asking, just turn "s + s
-                + u8"."s);
+            s = i18n::s.get("core.locale.talk.npc.guard.where_is.very_close", s(0), cdata[rc]);
             break;
         }
         if (p < 12)
         {
-            s = lang(
-                u8"ちょっと前に"s + s + u8"の方で見かけた"s + _yo(),
-                u8"I saw "s + cdatan(0, rc) + u8" just a minute ago. Try "s
-                + s + u8"."s);
+            s = i18n::s.get("core.locale.talk.npc.guard.where_is.close", s(0), cdata[rc]);
             break;
         }
         if (p < 20)
         {
-            s = lang(
-                cdatan(0, rc) + u8"なら"s + s + u8"の方角を探してごらん。"s,
-                u8"Walk to "s + s + u8" for a while, you'll find "s
-                + cdatan(0, rc) + u8"."s);
+            s = i18n::s.get("core.locale.talk.npc.guard.where_is.moderate", s(0), cdata[rc]);
             break;
         }
         if (p < 35)
         {
-            s = lang(
-                cdatan(0, rc) + u8"に会いたいのなら、"s + s
-                + u8"にかなり歩く必要があ"s + _ru(),
-                u8"If you want to meet "s + cdatan(0, rc)
-                + u8", you have to considerably walk to "s + s
-                + u8"."s);
+            s = i18n::s.get("core.locale.talk.npc.guard.where_is.far", s(0), cdata[rc]);
             break;
         }
-        s = lang(
-            cdatan(0, rc) + _ka(3) + u8"、ここから"s + s
-            + u8"の物凄く離れた場所にいるはず"s + _da(),
-            u8"You need to walk long way to "s + s + u8" to meet "s
-            + cdatan(0, rc) + u8"."s);
+        s = i18n::s.get("core.locale.talk.npc.guard.where_is.very_far", s(0), cdata[rc]);
         break;
     }
     buff = s;
@@ -1499,7 +1309,7 @@ talk_result_t talk_npc()
     if (cdata[tc].character_role == 9)
     {
         ELONA_APPEND_RESPONSE(
-            33, i18n::s.get("core.locale.talk.npc.bartender.choices.call_back_allies"));
+            33, i18n::s.get("core.locale.talk.npc.bartender.choices.call_ally"));
     }
     if (cdata[tc].character_role == 17)
     {
@@ -2027,7 +1837,7 @@ talk_result_t talk_npc()
     }
     if (chatval == 45)
     {
-        return talk_servant_think_of_house_name();
+        return talk_maid_think_of_house_name();
     }
     if (chatval == 46)
     {
@@ -2079,7 +1889,7 @@ talk_result_t talk_npc()
     }
     if (chatval == 59)
     {
-        return talk_result_servant_chase_out();
+        return talk_result_maid_chase_out();
     }
     if (chatval == 60)
     {

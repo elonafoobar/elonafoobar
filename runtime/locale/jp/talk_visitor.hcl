@@ -15,61 +15,76 @@ locale {
                     gift = "日ごろの感謝の意をこめてこれをあげる${yo()}"
                     throws = "${name(_1)}は${itemname(_2, 1)}を置いていった。"
                 }
+
                 hate {
                     dialog ="貴様！見つけた${yo(2)}"
                     text ="「これでも食らうがいい${yo(2)}」"
                     throws = "${name(_1)}は火炎瓶を投げた。"
                 }
+
                 like {
                     dialog ="これ、あげ${ru(2)}"
                     wonder_if ="友達100人できるかな♪"
                 }
+
                 train {
                     choices {
                         learn ="習得する"
                         train ="訓練する"
                         pass = "遠慮しとく"
                     }
+
                     learn {
                         dialog = "${_1}のスキルを、友達価格の${_2}で教えてあげてもいい${ga(3)}どう${kana(1)}"
                         after ="新しい技術をどうやら習得できたようだ${na()}"
                     }
+
                     train {
                         dialog = "${_1}のスキルを、友達価格の${_2}で訓練してもいい${ga(3)}どう${kana(1)}"
                         after ="よし、これで訓練は終わり${da()}かなり潜在能力が伸びた${yo(2)}"
                     }
+
                     pass = "わかった${yo()}またしばらくしてから尋ねてみ${ru()}"
                 }
+
                 friendship {
                     dialog ="友達の証としてこれをあげ${ru(2)}大事に使って${yo()}"
                     no_empty_spot ="部屋が一杯で置けなかった…"
                 }
+
                 souvenir {
                     dialog = "近くまで来たので寄ってみた${nda()}ついでだから、土産にこれをあげ${ru()}"
                     inventory_is_full ="所持品が一杯で受け取れなかった…"
                     receive = "${itemname(_1, 1)}を受け取った。"
                 }
+
                 materials {
                     dialog ="旅の途中にこんなものを拾った${nda()}${kimi(3)}の役に立つと思って持ってきた${yo()}"
                     receive = "${name(_1)}は色々なものが詰まった袋を、あなたに手渡した。"
                 }
+
                 favorite_skill {
                     dialog = "${_1}は${ore(3)}の得意なスキルの内の一つ${da()}"
                 }
+
                 favorite_stat {
                     dialog = "${ore(3)}は${_1}が自慢なの${da()}"
                 }
+
                 conversation {
                     dialog = "やあ。特に用はない${ga(3)}、なんだか暇を持てましていたら、${kimi(3)}と話がしたくなって${na(3)}、寄ってみた${nda()}"
                     hold = "あなたと${name(_1)}は愉快に語り合った！"
                 }
+
                 drink {
                     dialog ="酒でも飲んで親睦を深めよう${yo(2)}"
                     cheers ="あなたと${name(_1)}は乾杯した！"
                 }
             }
+
             trainer {
                 no_more_this_month ="今月はもう訓練は終わり${da()}"
+
                 dialog {
                     member = "${_1}の一員足るもの、ギルドの名に恥じないよう、常に己の技量を磨き続けなければならない${yo()}ギルドの一員である${kimi(3)}には、たったのプラチナ${_2}枚で潜在能力を伸ばす訓練を施してあげる${yo()}"
                     nonmember = "鍛えている${kana(2)}冒険者として生き残るには、日ごろの鍛錬が大切${da(2)}わずかプラチナ${_1}枚で、潜在能力を伸ばす特別な訓練を施してあげる${yo(2)}"
@@ -79,34 +94,36 @@ locale {
                     not_today ="訓練しない"
                     improve = "${_1}を鍛える"
                 }
+
                 regret ="後悔する${yo(2)}"
                 potential_expands = "${name(_1)}の${_2}の潜在能力が大きく上昇した。"
                 after ="うむ、なかなか見所がある${yo()}"
             }
+
             beggar {
                 no_money ="パンを買う金さえない${nda()}恵んで${kure(3)}、おねがい${da(2)}"
                 spare = "あなたは${_1}goldを乞食に渡した。"
                 after ="${thanks(2)}この恩は一生忘れない${yo()}"
                 cheap ="ケチ！"
             }
+
             punk {
-                choices {
-                    come_on ="うふふ"
-                }
                 are_you_ready ="フッ。よく逃げ出さずに戻ってきた${na()}準備はいいか。"
-                no_turning_back ="いく${yo(2)}"
                 hump ="ふん！"
             }
+
             mysterious_producer {
                 want_to_be_star ="スターになりたい${kana(1)}"
                 no_turning_back ="よい心がけだ${na(2)}"
             }
+
             merchant {
                 choices {
                     buy ="買いたい"
                     sell ="売りたい"
                     not_now ="今はいい"
                 }
+
                 dialog ="今日は${kimi(3)}の幸運な日${da()}普段は一般の客には売らない格安の品を、特別に見せてあげ${ru()}覚えておいて${kure(3)}、今日だけだ${yo()}"
                 regret ="後になって後悔しても知らない${yo()}"
             }

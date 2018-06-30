@@ -78,12 +78,12 @@ locale {
 
                 marriage {
                     refuses = "(${name(_1)} gently refuses your proposal. )"
-                    with_pleasure = "With preasure."
+                    accepts = "With preasure."
                 }
 
                 make_gene {
-                    refuse = "Not here!"
-                    accept = "*blush*"
+                    refuses = "Not here!"
+                    accepts = "*blush*"
                 }
 
                 silence {
@@ -112,17 +112,17 @@ locale {
 
                 think_of_house_name {
                     suffixes {
-                        _0 = "Home"
-                        _1 = "Mansion"
-                        _2 = "Shack"
-                        _3 = "Nest"
-                        _4 = "Base"
-                        _5 = "Hideout"
-                        _6 = "Dome"
-                        _7 = "Hut"
-                        _8 = "Cabin"
-                        _9 = "Hovel"
-                        _10 = "Shed"
+                        _0 = "${_1} Home"
+                        _1 = "${_1} Mansion"
+                        _2 = "${_1} Shack"
+                        _3 = "${_1} Nest"
+                        _4 = "${_1} Base"
+                        _5 = "${_1} Hideout"
+                        _6 = "${_1} Dome"
+                        _7 = "${_1} Hut"
+                        _8 = "${_1} Cabin"
+                        _9 = "${_1} Hovel"
+                        _10 = "${_1} Shed"
                     }
                     come_up_with = "Hey, I've come up a good idea! \"${_1}\", doesn't it sound so charming?"
                 }
@@ -236,9 +236,7 @@ locale {
                     investigate_ally = "I want you to investigate one of my allies."
                 }
 
-                show_adventurers {
-                    done = "Done?"
-                }
+                show_adventurers = "Done?"
 
                 investigate_ally {
                     cost = "10000 gold pieces."
@@ -261,10 +259,10 @@ locale {
 
             bartender {
                 choices {
-                    call_back_allies = "Call back my allies."
+                    call_ally = "Call back my allies."
                 }
 
-                call_back_allies {
+                call_ally {
                     no_need = "Huh? You don't need to do that."
                     cost = "Alright. We had taken good care of your pet. It will cost you ${_1} gold pieces."
 
@@ -319,7 +317,7 @@ locale {
                         leave = "I'll pass."
                     }
 
-                    leave = "Alright. Call me if you changed your mind."
+                    cancel = "Alright. Call me if you changed your mind."
                 }
 
                 streak = "Your winning streak has reached ${_1} matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."
@@ -348,6 +346,17 @@ locale {
                     sell = "I want to sell a slave."
                 }
 
+                buy {
+                    cost = "Okay. Let me check the stable....How about ${_1} for ${_2} gold pieces. I'd say it's quite a bargain!"
+
+                    choices {
+                        pay = "I'll pay."
+                        go_back = "Never mind."
+                    }
+
+                    you_buy = "You buy ${_1}."
+                }
+
                 sell {
                     price = "Let me see....Hmmm, this one got a nice figure. I'll give you ${_1} gold pieces."
 
@@ -363,17 +372,6 @@ locale {
             horse_keeper {
                 choices {
                     buy = "I want to buy a horse."
-                }
-
-                buy {
-                    cost = "Okay. Let me check the stable....How about ${_1} for ${_2} gold pieces. I'd say it's quite a bargain!"
-
-                    choices {
-                        pay = "I'll pay."
-                        go_back = "Never mind."
-                    }
-
-                    you_buy = "You buy ${_1}."
                 }
             }
 
@@ -410,9 +408,9 @@ locale {
 
                     dead = "Oh forget it, dead for now."
                     very_close = "Oh look carefully before asking, just turn ${_1}."
-                    close = "I saw ${basename(_1)} just a minute ago. Try ${_2}."
+                    close = "I saw ${basename(_2)} just a minute ago. Try ${_1}."
                     moderate = "Walk to ${_1} for a while, you'll find ${basename(_2)}."
-                    far = "If you want to meet ${basename(_1)}, you have to considerably walk to ${_2}."
+                    far = "If you want to meet ${basename(_2)}, you have to considerably walk to ${_1}."
                     very_far = "You need to walk long way to ${_1} to meet ${basename(_2)}."
                 }
 
@@ -446,9 +444,8 @@ locale {
                     buy = "I'll buy you."
                 }
 
-                buy {
-                    price = "Okay sweetie, I need ${_1} gold pieces in front."
-                }
+                buy = "Okay sweetie, I need ${_1} gold pieces in front."
+
             }
 
             caravan_master {

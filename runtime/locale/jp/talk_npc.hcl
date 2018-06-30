@@ -78,12 +78,12 @@ locale {
 
                 marriage {
                     refuses = "(${name(_1)}はやんわりと断った)"
-                    with_pleasure = "はい…喜んで。"
+                    accepts = "はい…喜んで。"
                 }
 
                 make_gene {
-                    refuse = "こんな場所では嫌よ"
-                    accept = "いやん、あなたったら…"
+                    refuses = "こんな場所では嫌よ"
+                    accepts = "いやん、あなたったら…"
                 }
 
                 silence {
@@ -112,17 +112,17 @@ locale {
 
                 think_of_house_name {
                     suffixes {
-                        _0 = "の家"
-                        _1 = "邸"
-                        _2 = "城"
-                        _3 = "ハーレム"
-                        _4 = "の巣窟"
-                        _5 = "ハウス"
-                        _6 = "ホーム"
-                        _7 = "の住処"
-                        _8 = "宅"
-                        _9 = "の隠れ家"
-                        _10 = "ドーム"
+                        _0 = "${_1}の家"
+                        _1 = "${_1}邸"
+                        _2 = "${_1}城"
+                        _3 = "${_1}ハーレム"
+                        _4 = "${_1}の巣窟"
+                        _5 = "${_1}ハウス"
+                        _6 = "${_1}ホーム"
+                        _7 = "${_1}の住処"
+                        _8 = "${_1}宅"
+                        _9 = "${_1}の隠れ家"
+                        _10 = "${_1}ドーム"
                     }
                     come_up_with = "そう${dana()}これからこの家の名前は${_1}${da()}"
                 }
@@ -236,9 +236,7 @@ locale {
                     investigate_ally = "仲間の調査"
                 }
 
-                show_adventurers {
-                    done = "お目当ての情報は見つかった${kana()}"
-                }
+                show_adventurers = "お目当ての情報は見つかった${kana()}"
 
                 investigate_ally {
                     cost = "10000 goldかかるけどいい${ka(1)}"
@@ -260,10 +258,10 @@ locale {
 
             bartender {
                 choices {
-                    call_back_allies = "仲間を呼び戻す"
+                    call_ally = "仲間を呼び戻す"
                 }
 
-                call_back_allies {
+                call_ally {
                     no_need = "そいつは呼び戻す必要はないよう${da()}"
                     cost = "そいつを呼び戻すには、${_1}必要${da()}"
 
@@ -310,7 +308,7 @@ locale {
 
                 enter {
                     game_is_over = "残念だが、今日の試合はもう終了し${ta()}"
-                    target = "今日の対戦相手は${_1}${da()}挑戦する${noka(1)}"
+                    target = "今日の対戦相手は${_2}${da()}挑戦する${noka(1)}"
                     target_group = "対戦相手はレベル${_1}以下の相手複数${da()}挑戦する${noka(1)}"
 
                     choices {
@@ -318,7 +316,7 @@ locale {
                         leave = "やめる"
                     }
 
-                    leave = "用があるときは声をかけて${kure()}"
+                    cancel = "用があるときは声をかけて${kure()}"
                 }
 
                 streak = "現在は${_1}連勝中${da()}5連勝,20連勝毎にボーナスを与え${ru()}"
@@ -347,6 +345,17 @@ locale {
                     sell = "奴隷を売る"
                 }
 
+                buy {
+                    cost = "そう${dana()}${_1}を${_2}でどう${da(1)}"
+
+                    choices {
+                        pay = "買い取る"
+                        go_back = "やめる"
+                    }
+
+                    you_buy = "${_1}を買い取った。"
+                }
+
                 sell {
                     price = "なかなかの身体つき${dana()}${_1}でどう${da(1)}"
 
@@ -362,17 +371,6 @@ locale {
             horse_keeper {
                 choices {
                     buy = "馬を買う"
-                }
-
-                buy {
-                    cost = "そう${dana()}${_1}を${_2}でどう${da(1)}"
-
-                    choices {
-                        pay = "買い取る"
-                        go_back = "やめる"
-                    }
-
-                    you_buy = "${_1}を買い取った。"
                 }
             }
 
@@ -409,9 +407,9 @@ locale {
 
                     dead = "奴なら今は死んでいる${yo(2)}"
                     very_close = "${basename(_2)}ならすぐ近くにいる${yo()}${_1}の方を向いてごらん。"
-                    close = "ちょっと前に${_2}の方で見かけた${yo()}"
+                    close = "ちょっと前に${_1}の方で見かけた${yo()}"
                     moderate = "${basename(_2)}なら${_1}の方角を探してごらん。"
-                    far = "${basename(_1)}に会いたいのなら、${_2}にかなり歩く必要があ${ru()}"
+                    far = "${basename(_2)}に会いたいのなら、${_1}にかなり歩く必要があ${ru()}"
                     very_far = "${basename(_2)}${ka(3)}、ここから${_1}の物凄く離れた場所にいるはず${da()}"
                 }
 
@@ -445,9 +443,8 @@ locale {
                     buy = "暗い場所に移ろう"
                 }
 
-                buy {
-                    price = "そう${dana()}金貨${_1}枚を前払いで${kure()}"
-                }
+                buy = "そう${dana()}金貨${_1}枚を前払いで${kure()}"
+
             }
 
             caravan_master {

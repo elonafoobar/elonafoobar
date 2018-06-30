@@ -931,10 +931,10 @@ talk_result_t talk_house_visitor()
         if (chatval == 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.visitor.punk.no_turning_back");
+            buff = i18n::s.get("core.locale.talk.npc.common.sex.start");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
+            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.common.sex.response");
             ++listmax;
             chatesc = 1;
             talk_window_query();
@@ -979,7 +979,7 @@ talk_result_t talk_house_visitor()
             buff = i18n::s.get("core.locale.talk.visitor.mysterious_producer.no_turning_back");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
+            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.common.sex.response");
             ++listmax;
             chatesc = 1;
             talk_window_query();
