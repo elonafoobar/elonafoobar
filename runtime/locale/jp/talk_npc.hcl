@@ -19,18 +19,18 @@ locale {
                     sex = "気持ちいいことしない？"
                 }
 
-                thanks = "${thanks(2)}"
-                you_kidding = "冷やかし${ka(1)}"
+                thanks = "${thanks(_1, 2)}"
+                you_kidding = "冷やかし${ka(_1, 1)}"
 
                 sex {
-                    prompt = "なかなかの体つき${dana()}よし、買${u(2)}"
+                    prompt = "なかなかの体つき${dana(_1)}よし、買${u(_1, 2)}"
 
                     choices {
                         accept = "はじめる"
                         go_back = "やめる"
                     }
 
-                    start = "いく${yo(2)}"
+                    start = "いく${yo(_1, 2)}"
                     response = "うふふ"
                 }
             }
@@ -124,10 +124,10 @@ locale {
                         _9 = "${_1}の隠れ家"
                         _10 = "${_1}ドーム"
                     }
-                    come_up_with = "そう${dana()}これからこの家の名前は${_1}${da()}"
+                    come_up_with = "そう${dana(_2)}これからこの家の名前は${_1}${da(_2)}"
                 }
 
-                do_not_meet = "追い返す${yo()}"
+                do_not_meet = "追い返す${yo(_1)}"
             }
 
             trainer {
@@ -142,14 +142,14 @@ locale {
                     }
                     go_back = "やめる"
                 }
-                leave = "訓練が必要なときは、声をかけて${kure()}"
+                leave = "訓練が必要なときは、声をかけて${kure(_1)}"
                 cost {
-                    training = "${_1}の能力を訓練するには${_2}かかるけどいい${kana(1)}"
-                    learning = "${_1}の能力を習得するには${_2}かかるけどいい${kana(1)}"
+                    training = "${_1}の能力を訓練するには${_2}かかるけどいい${kana(_3, 1)}"
+                    learning = "${_1}の能力を習得するには${_2}かかるけどいい${kana(_3, 1)}"
                 }
                 finish {
-                    training = "訓練は完了し${ta()}潜在能力が伸びているはずなので、後は自分で鍛えて${kure()}"
-                    learning = "可能な限りの知識は教え${ta()}後は存分に訓練して${kure()}"
+                    training = "訓練は完了し${ta(_1)}潜在能力が伸びているはずなので、後は自分で鍛えて${kure(_1)}"
+                    learning = "可能な限りの知識は教え${ta(_1)}後は存分に訓練して${kure(_1)}"
                 }
             }
 
@@ -163,13 +163,13 @@ locale {
                 }
 
                 criminal {
-                    buy = "犯罪者に売る物はない${yo()}"
-                    sell = "犯罪者から買う物はない${yo()}"
+                    buy = "犯罪者に売る物はない${yo(_1)}"
+                    sell = "犯罪者から買う物はない${yo(_1)}"
                 }
 
                 ammo {
-                    no_ammo = "充填する必要はないみたい${da()}"
-                    cost = "そう${dana(3)}、全ての矢弾を補充すると${_1}${da()}"
+                    no_ammo = "充填する必要はないみたい${da(_1)}"
+                    cost = "そう${dana(_2, 3)}、全ての矢弾を補充すると${_1}${da(_2)}"
 
                     choices {
                         pay = "頼む"
@@ -178,7 +178,7 @@ locale {
                 }
 
                 invest {
-                    ask = "投資をしてくれる${noka(1)}${_2}かかるけどいいの${kana(1)}"
+                    ask = "投資をしてくれる${noka(_2, 1)}${_1}かかるけどいいの${kana(_2, 1)}"
 
                     choices {
                         invest = "投資する"
@@ -187,7 +187,7 @@ locale {
                 }
 
                 attack {
-                    dialog = "${rob(2)}"
+                    dialog = "${rob(_1, 2)}"
 
                     choices {
                         attack = "神に祈れ"
@@ -203,11 +203,11 @@ locale {
                 }
 
                 eat {
-                    not_hungry = "腹が減っているようにはみえない${yo}"
-                    here_you_are = "${dozo()}"
+                    not_hungry = "腹が減っているようにはみえない${yo(_1)}"
+                    here_you_are = "${dozo(_1)}"
                 }
 
-                go_to_shelter = "悪天候時はシェルターを無料で開放している${nda()}すみやかに避難して${kure()}"
+                go_to_shelter = "悪天候時はシェルターを無料で開放している${nda(_1)}すみやかに避難して${kure(_1)}"
             }
 
             wizard {
@@ -219,14 +219,14 @@ locale {
                 }
 
                 identify {
-                    already = "鑑定するアイテムはないみたい${da()}"
-                    finished = "鑑定結果はこの通り${da()}"
-                    need_investigate = "さらなる知識を求めるのなら、調査する必要が${aru()}"
+                    already = "鑑定するアイテムはないみたい${da(_1)}"
+                    finished = "鑑定結果はこの通り${da(_1)}"
+                    need_investigate = "さらなる知識を求めるのなら、調査する必要が${aru(_1)}"
 
                     count = "${_2}個の未判明のアイテムのうち、${_1}個のアイテムが完全に判明した。"
                 }
 
-                return = "ここからふもとに下りるのは不便だから、ボランティアで帰還サービスをやってい${ru()}${kimi(3)}も帰還サービスを希望${kana()}"
+                return = "ここからふもとに下りるのは不便だから、ボランティアで帰還サービスをやってい${ru(_1)}${kimi(_1, 3)}も帰還サービスを希望${kana(_1)}"
 
             }
 
@@ -236,10 +236,10 @@ locale {
                     investigate_ally = "仲間の調査"
                 }
 
-                show_adventurers = "お目当ての情報は見つかった${kana()}"
+                show_adventurers = "お目当ての情報は見つかった${kana(_1)}"
 
                 investigate_ally {
-                    cost = "10000 goldかかるけどいい${ka(1)}"
+                    cost = "10000 goldかかるけどいい${ka(_1, 1)}"
 
                     choices {
                         pay = "調査する"
@@ -253,7 +253,7 @@ locale {
                     restore_attributes = "能力の復元"
                 }
 
-                restore_attributes = "治療が完了し${ta()}"
+                restore_attributes = "治療が完了し${ta(_1)}"
             }
 
             bartender {
@@ -262,15 +262,15 @@ locale {
                 }
 
                 call_ally {
-                    no_need = "そいつは呼び戻す必要はないよう${da()}"
-                    cost = "そいつを呼び戻すには、${_1}必要${da()}"
+                    no_need = "そいつは呼び戻す必要はないよう${da(_1)}"
+                    cost = "そいつを呼び戻すには、${_1}必要${da(_2)}"
 
                     choices {
                         pay = "呼び戻す"
                         go_back = "やめる"
                     }
 
-                    brings_back = "(バーテンが店の奥から${name(_2)}を連れてきた)${dozo()}"
+                    brings_back = "(バーテンが店の奥から${name(_2)}を連れてきた)${dozo(_1)}"
                 }
             }
 
@@ -281,7 +281,7 @@ locale {
                 }
 
                 hire {
-                    cost = "${ore(3)}の剣が必要な${noka(1)}そう${dana(3)}、${_1}払うならば、7日間護衛を引き受け${ru()}"
+                    cost = "${ore(_2, 3)}の剣が必要な${noka(_2, 1)}そう${dana(_2, 3)}、${_1}払うならば、7日間護衛を引き受け${ru(_1)}"
 
                     choices {
                         pay = "頼む"
@@ -292,10 +292,10 @@ locale {
                 }
 
                 join {
-                    too_weak = "${kimi(3)}の仲間になれと？あまりにも力の差がありすぎる${na()}"
-                    not_known = "${kimi(3)}の仲間になれと？悪い${ga(3)}お断り${da()}"
-                    party_full = "これ以上仲間を連れて行けないよう${da()}人数を調整してまた来て${kure()}"
-                    accept = "${kimi(3)}となら上手くやっていけそう${da()}${yoro(2)}"
+                    too_weak = "${kimi(_1, 3)}の仲間になれと？あまりにも力の差がありすぎる${na(_1)}"
+                    not_known = "${kimi(_1, 3)}の仲間になれと？悪い${ga(_1, 3)}お断り${da(_1)}"
+                    party_full = "これ以上仲間を連れて行けないよう${da(_1)}人数を調整してまた来て${kure(_1)}"
+                    accept = "${kimi(_1, 3)}となら上手くやっていけそう${da(_1)}${yoro(_1, 2)}"
                 }
             }
 
@@ -307,19 +307,19 @@ locale {
                 }
 
                 enter {
-                    game_is_over = "残念だが、今日の試合はもう終了し${ta()}"
-                    target = "今日の対戦相手は${_2}${da()}挑戦する${noka(1)}"
-                    target_group = "対戦相手はレベル${_1}以下の相手複数${da()}挑戦する${noka(1)}"
+                    game_is_over = "残念だが、今日の試合はもう終了し${ta(_1)}"
+                    target = "今日の対戦相手は${_2}${da(_3)}挑戦する${noka(_3, 1)}"
+                    target_group = "対戦相手はレベル${_1}以下の相手複数${da(_2)}挑戦する${noka(_2, 1)}"
 
                     choices {
                         enter = "挑戦する"
                         leave = "やめる"
                     }
 
-                    cancel = "用があるときは声をかけて${kure()}"
+                    cancel = "用があるときは声をかけて${kure(_1)}"
                 }
 
-                streak = "現在は${_1}連勝中${da()}5連勝,20連勝毎にボーナスを与え${ru()}"
+                streak = "現在は${_1}連勝中${da(_2)}5連勝,20連勝毎にボーナスを与え${ru(_2)}"
             }
 
             pet_arena_master {
@@ -329,8 +329,8 @@ locale {
                 }
 
                 register {
-                    target = "一対一の戦いで、対戦相手はレベル${_1}ぐらいの相手${da()}挑戦する${noka(1)}"
-                    target_group = "人同士のチームバトルで、対戦相手はレベル${_2}以下の相手複数${da()}挑戦する${noka(1)}"
+                    target = "一対一の戦いで、対戦相手はレベル${_1}ぐらいの相手${da(_2)}挑戦する${noka(_2, 1)}"
+                    target_group = "人同士のチームバトルで、対戦相手はレベル${_2}以下の相手複数${da(_3)}挑戦する${noka(_3, 1)}"
 
                     choices {
                        enter = "挑戦する"
@@ -346,7 +346,7 @@ locale {
                 }
 
                 buy {
-                    cost = "そう${dana()}${_1}を${_2}でどう${da(1)}"
+                    cost = "そう${dana(_3)}${_1}を${_2}でどう${da(_3, 1)}"
 
                     choices {
                         pay = "買い取る"
@@ -357,7 +357,7 @@ locale {
                 }
 
                 sell {
-                    price = "なかなかの身体つき${dana()}${_1}でどう${da(1)}"
+                    price = "なかなかの身体つき${dana(_2)}${_1}でどう${da(_2, 1)}"
 
                     choices {
                         deal = "売る"
@@ -381,7 +381,7 @@ locale {
 
                 buy_indulgence {
                     karma_is_not_low = "その程度の罪なら自分でなんとかしなさい。"
-                    cost = "免罪符を希望する${noka(1)}${_1}かかるけどいいの${kana(1)}"
+                    cost = "免罪符を希望する${noka(_2, 1)}${_1}かかるけどいいの${kana(_2, 1)}"
 
                     choices {
                         buy = "買う"
@@ -405,26 +405,26 @@ locale {
                         west = "西"
                     }
 
-                    dead = "奴なら今は死んでいる${yo(2)}"
-                    very_close = "${basename(_2)}ならすぐ近くにいる${yo()}${_1}の方を向いてごらん。"
-                    close = "ちょっと前に${_1}の方で見かけた${yo()}"
+                    dead = "奴なら今は死んでいる${yo(_1, 2)}"
+                    very_close = "${basename(_2)}ならすぐ近くにいる${yo(_3)}${_1}の方を向いてごらん。"
+                    close = "ちょっと前に${_1}の方で見かけた${yo(_3)}"
                     moderate = "${basename(_2)}なら${_1}の方角を探してごらん。"
-                    far = "${basename(_2)}に会いたいのなら、${_1}にかなり歩く必要があ${ru()}"
-                    very_far = "${basename(_2)}${ka(3)}、ここから${_1}の物凄く離れた場所にいるはず${da()}"
+                    far = "${basename(_2)}に会いたいのなら、${_1}にかなり歩く必要があ${ru(_3)}"
+                    very_far = "${basename(_2)}${ka(_3, 3)}、ここから${_1}の物凄く離れた場所にいるはず${da(_3)}"
                 }
 
                 lost {
                     empty {
-                        dialog = "む…中身が空っぽ${dana(2)}"
+                        dialog = "む…中身が空っぽ${dana(_1, 2)}"
                         response = "しまった…"
 
                     }
-                    dialog = "わざわざ落し物を届けてくれた${noka()}${kimi(3)}は市民の模範${da()}${thanks()}"
+                    dialog = "わざわざ落し物を届けてくれた${noka(_1)}${kimi(_1, 3)}は市民の模範${da(_1)}${thanks(_1)}"
                     response = "当然のことだ"
 
                     found_often {
                         dialog {
-                            _0 = "む、また${kimi(3)}${ka()}随分と頻繁に財布を見つけられるもの${dana()}"
+                            _0 = "む、また${kimi(_1, 3)}${ka(_1)}随分と頻繁に財布を見つけられるもの${dana(_1)}"
                             _1 = "（…あやしい）"
                         }
                         response = "ぎくっ"
@@ -443,7 +443,7 @@ locale {
                     buy = "暗い場所に移ろう"
                 }
 
-                buy = "そう${dana()}金貨${_1}枚を前払いで${kure()}"
+                buy = "そう${dana(_2)}金貨${_1}枚を前払いで${kure(_2)}"
 
             }
 
