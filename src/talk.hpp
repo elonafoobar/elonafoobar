@@ -11,6 +11,7 @@ enum class talk_result_t
     talk_house_visitor,
     talk_sleeping,
     talk_busy,
+    talk_ignored,
     talk_finish_escort,
     talk_game_begin,
     talk_more,
@@ -31,6 +32,7 @@ int talk_guide_quest_client();
 talk_result_t talk_more();
 talk_result_t talk_sleeping();
 talk_result_t talk_busy();
+talk_result_t talk_ignored();
 talk_result_t talk_house_visitor();
 talk_result_t talk_game_begin();
 bool talk_give_potion_of_cure_corruption();
