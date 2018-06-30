@@ -5,8 +5,8 @@ locale {
         is_busy = "${name(_1)} is in the middle of something."
 
         window {
-            impress ="Impress"
-            attract ="Attract"
+            impress = "Impress"
+            attract = "Attract"
             fame = " Fame: "
             shop_rank = " Shop Rank:"
         }
@@ -133,8 +133,15 @@ locale {
 
             trainer {
                 choices {
-                    train = "Train me."
-                    learn = "What skills can you teach me?"
+                    train {
+                        ask = "Train me."
+                        accept = "Train me."
+                    }
+                    learn {
+                        ask = "What skills can you teach me?"
+                        accept = "Teach me the skill."
+                    }
+                    go_back = "Never mind."
                 }
                 leave = "Come see me again when you need more training."
                 cost {
@@ -171,11 +178,11 @@ locale {
 
                 invest {
                     ask = "Oh, do you want to invest in my shop? It will cost you ${_1} golds. I hope you got the money."
+
                     choices {
                         invest = "Invest"
                         reject = "Reject"
                     }
-                    thanks = "Thanks!"
                 }
 
                 attack {
@@ -247,9 +254,8 @@ locale {
                     restore_attributes = "Restore my attributes."
                 }
 
-                restore_attributes {
-                    done = "Done treatment. Take care!"
-                }
+                restore_attributes = "Done treatment. Take care!"
+
             }
 
             bartender {
@@ -303,7 +309,7 @@ locale {
 
                 enter {
                     game_is_over = "The game is over today. Come again tomorrow."
-                    target = "You got ${name(_1)} today. What'ya say?"
+                    target = "You got ${_1} today. What'ya say?"
                     target_group = "Your play is a group of monster around level ${_1}. Sounds easy huh?"
 
                     choices {
@@ -325,14 +331,12 @@ locale {
 
                 register {
                     target = "The opponent is around level ${_1}. Want to give it a try? "
-                    target_group = "It's a ${_1} vs ${_2} match. The opponent's group is formed by the pets less than ${_3} levels. What you say?"
+                    target_group = "It's a ${_1} vs ${_1} match. The opponent's group is formed by the pets less than ${_2} levels. What you say?"
 
                     choices {
                        enter = "I'll send my pet."
                        leave = "I'll pass."
                     }
-
-                    leave = "Alright. Call me if you changed your mind."
                 }
             }
 
@@ -344,6 +348,7 @@ locale {
 
                 sell {
                     price = "Let me see....Hmmm, this one got a nice figure. I'll give you ${_1} gold pieces."
+
                     choices {
                         deal = "Deal."
                         go_back = "No way."
@@ -404,9 +409,9 @@ locale {
                     dead = "Oh forget it, dead for now."
                     very_close = "Oh look carefully before asking, just turn ${_1}."
                     close = "I saw ${basename(_1)} just a minute ago. Try ${_2}."
-                    moderate = "Walk to ${_1} for a while, you'll find ${name(_2)}."
-                    far = "If you want to meet ${name(_1)}, you have to considerably walk to ${2}."
-                    very_far = "You need to walk long way to ${_1} to meet ${name(_2)}."
+                    moderate = "Walk to ${_1} for a while, you'll find ${basename(_2)}."
+                    far = "If you want to meet ${basename(_1)}, you have to considerably walk to ${_2}."
+                    very_far = "You need to walk long way to ${_1} to meet ${basename(_2)}."
                 }
 
                 lost {
@@ -467,7 +472,7 @@ locale {
                     prompt = "Look what we have! A woman who got a monster's face. It'll be a good show. Wanna sell me for 50000 gold coins?"
 
                     choices {
-                        sell ="Sure, take her."
+                        sell = "Sure, take her."
                         go_back = "You cold bastard."
                     }
 
