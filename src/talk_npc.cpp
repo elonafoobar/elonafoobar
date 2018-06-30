@@ -1469,58 +1469,54 @@ talk_result_t talk_npc()
         if (gdata_number_of_waiting_guests > 0)
         {
             ELONA_APPEND_RESPONSE(
-                58, lang(u8"客に会う"s, u8"Yes, I'll meet the guest now."s));
+                58, i18n::s.get("core.locale.talk.npc.maid.choices.meet_guest"));
             ELONA_APPEND_RESPONSE(
-                59, lang(u8"追い返す"s, u8"I don't want to meet anyone."s));
+                59, i18n::s.get("core.locale.talk.npc.maid.choices.do_not_meet"));
         }
     }
     if (cdata[tc].interest > 0 && chatval(1) == 0)
     {
-        ELONA_APPEND_RESPONSE(1, lang(u8"話がしたい"s, u8"Let's Talk."s));
+        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.choices.talk"));
     }
     if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
         ELONA_APPEND_RESPONSE(
-            10, lang(u8"買いたい"s, u8"I want to buy something."s));
+            10, i18n::s.get("core.locale.talk.npc.shop.choices.buy"));
         ELONA_APPEND_RESPONSE(
-            11, lang(u8"売りたい"s, u8"I want to sell something."s));
+            11, i18n::s.get("core.locale.talk.npc.shop.choices.sell"));
         if (cdata[tc].character_role == 1010)
         {
             ELONA_APPEND_RESPONSE(
-                31, lang(u8"襲撃するよ"s, u8"Prepare to die!"s));
+                31, i18n::s.get("core.locale.talk.npc.shop.choices.attack"));
         }
         if (cdata[tc].character_role != 1010
             && cdata[tc].character_role != 1009)
         {
-            ELONA_APPEND_RESPONSE(
-                12,
-                lang(
-                    u8"投資したい"s,
-                    u8"Need someone to invest in your shop?"s));
+            ELONA_APPEND_RESPONSE(12, i18n::s.get("core.locale.talk.npc.shop.choices.invest"));
         }
     }
     if (cdata[tc].character_role == 9)
     {
         ELONA_APPEND_RESPONSE(
-            33, lang(u8"仲間を呼び戻す"s, u8"Call back my allies."s));
+            33, i18n::s.get("core.locale.talk.npc.bartender.choices.call_back_allies"));
     }
     if (cdata[tc].character_role == 17)
     {
         if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
-                36, lang(u8"奴隷を買う"s, u8"I want to buy a slave."s));
+                36, i18n::s.get("core.locale.talk.npc.slave_trader.choices.buy"));
         }
         ELONA_APPEND_RESPONSE(
-            37, lang(u8"奴隷を売る"s, u8"I want to sell a slave."s));
+            37, i18n::s.get("core.locale.talk.npc.slave_trader.choices.sell"));
     }
     if (cdata[tc].character_role == 22)
     {
         if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
-                57, lang(u8"馬を買う"s, u8"I want to buy a horse."s));
+                57, i18n::s.get("core.locale.talk.npc.horse_keeper.choices.buy"));
         }
     }
     if (tc < 16)
@@ -1530,150 +1526,138 @@ talk_result_t talk_npc()
             if (cdata[tc].is_escorted_in_sub_quest() == 0)
             {
                 ELONA_APPEND_RESPONSE(
-                    34, lang(u8"街で待機しろ"s, u8"Wait at the town."s));
+                    34, i18n::s.get("core.locale.talk.npc.ally.choices.wait_at_town"));
                 if (cdata[tc].is_married() == 0)
                 {
                     ELONA_APPEND_RESPONSE(
-                        38,
-                        lang(
-                            u8"婚約を申し込む"s,
-                            u8"May I ask for your hand?"s));
+                        38, i18n::s.get("core.locale.talk.npc.ally.choices.ask_for_marriage"));
                 }
                 else if (gdata_continuous_active_hours >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
-                        39, lang(u8"遺伝子を残す"s, u8"Let's make a gene."s));
+                        39, i18n::s.get("core.locale.talk.npc.ally.choices.make_gene"));
                 }
                 if (cdata[tc].can_talk != 0)
                 {
                     if (cdata[tc].is_silent() == 0)
                     {
                         ELONA_APPEND_RESPONSE(
-                            48, lang(u8"黙らせる"s, u8"Shut up."s));
+                            48, i18n::s.get("core.locale.talk.npc.ally.choices.silence.start"));
                     }
                     else
                     {
                         ELONA_APPEND_RESPONSE(
-                            48, lang(u8"喋らせる"s, u8"You can speak now."s));
+                            48, i18n::s.get("core.locale.talk.npc.ally.choices.silence.stop"));
                     }
                 }
                 ELONA_APPEND_RESPONSE(
-                    35, lang(u8"縁を切る"s, u8"I'm going to abandon you."s));
+                    35, i18n::s.get("core.locale.talk.npc.ally.choices.abandon"));
             }
         }
     }
     if (cdata[tc].character_role == 1000 || cdata[tc].character_role == 1001)
     {
         ELONA_APPEND_RESPONSE(
-            54, lang(u8"矢弾の充填"s, u8"I need ammos for my weapon."s));
+            54, i18n::s.get("core.locale.talk.npc.shop.choices.ammo"));
     }
     if (cdata[tc].character_role == 1005)
     {
         ELONA_APPEND_RESPONSE(
             13,
-            lang(u8"食事をとる"s, u8"Bring me something to eat."s) + u8" ("s
+            i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat")
+             + u8" ("s
                 + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
         if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
         {
             ELONA_APPEND_RESPONSE(
-                43, lang(u8"シェルターに入る"s, u8"Take me to the shelter."s));
+                43, i18n::s.get("core.locale.talk.npc.innkeeper.choices.go_to_shelter"));
         }
     }
     if (cdata[tc].character_role == 5)
     {
         ELONA_APPEND_RESPONSE(
             14,
-            lang(u8"鑑定したい"s, u8"I need you to identify an item."s)
+            i18n::s.get("core.locale.talk.npc.wizard.choices.identify")
                 + u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold")
                 + u8")"s);
         ELONA_APPEND_RESPONSE(
             15,
-            lang(u8"全て鑑定してほしい"s, u8"Identify all of my stuff."s)
+            i18n::s.get("core.locale.talk.npc.wizard.choices.identify_all")
                 + u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold")
                 + u8")"s);
         ELONA_APPEND_RESPONSE(
             16,
-            lang(u8"調査したい"s, u8"Investigate an item."s) + u8" ("s
-                + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold") + u8")"s);
+            i18n::s.get("core.locale.talk.npc.wizard.choices.investigate")
+                + u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold")
+                + u8")"s);
     }
     if (cdata[tc].character_role == 7)
     {
-        ELONA_APPEND_RESPONSE(17, lang(u8"訓練したい"s, u8"Train me."s));
-        ELONA_APPEND_RESPONSE(
-            30,
-            lang(
-                u8"新しい能力を覚えたい"s, u8"What skills can you teach me?"s));
+        ELONA_APPEND_RESPONSE(17, i18n::s.get("core.locale.talk.npc.trainer.choices.train.ask"));
+        ELONA_APPEND_RESPONSE(30, i18n::s.get("core.locale.talk.npc.trainer.choices.learn.ask"));
     }
     if (cdata[tc].character_role == 8)
     {
         ELONA_APPEND_RESPONSE(
-            18, lang(u8"冒険者の情報"s, u8"Show me the list of adventurers."s));
+            18, i18n::s.get("core.locale.talk.npc.informer.choices.show_adventurers"));
         ELONA_APPEND_RESPONSE(
-            47,
-            lang(
-                u8"仲間の調査"s,
-                u8"I want you to investigate one of my allies."s));
+            47, i18n::s.get("core.locale.talk.npc.informer.choices.investigate_ally"));
     }
     if (cdata[tc].character_role == 12)
     {
         ELONA_APPEND_RESPONSE(
             19,
-            lang(u8"能力の復元"s, u8"Restore my attributes."s) + u8"("s
+            i18n::s.get("core.locale.talk.npc.healer.choices.restore_attributes")
+            + u8"("s
                 + calcrestorecost() + i18n::_(u8"ui", u8"gold") + u8")"s);
     }
     if (cdata[tc].character_role == 13)
     {
         ELONA_APPEND_RESPONSE(
-            20, lang(u8"アイテム交換"s, u8"Are you interested in trade?"s));
+            20, i18n::s.get("core.locale.talk.npc.common.choices.trade"));
         if (cdata[tc].is_contracting() == 0)
         {
             ELONA_APPEND_RESPONSE(
-                50, lang(u8"護衛を依頼する"s, u8"I want to hire you."s));
-            ELONA_APPEND_RESPONSE(51, lang(u8"仲間に誘う"s, u8"Join me!"s));
+                50, i18n::s.get("core.locale.talk.npc.adventurer.choices.hire"));
+            ELONA_APPEND_RESPONSE(
+                51, i18n::s.get("core.locale.talk.npc.adventurer.choices.join"));
         }
     }
     if (cdata[tc].character_role == 10)
     {
         ELONA_APPEND_RESPONSE(
-            21,
-            lang(u8"試合に出る[決闘]"s, u8"I'm entering the arena. [Duel]"s));
+            21, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter_duel"));
         ELONA_APPEND_RESPONSE(
-            22,
-            lang(
-                u8"試合に出る[ランブル]"s,
-                u8"I'm entering the arena. [Rumble]"s));
+            22, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter_rumble"));
         ELONA_APPEND_RESPONSE(
-            23, lang(u8"成績を聞く"s, u8"Tell me my scores."s));
+            23, i18n::s.get("core.locale.talk.npc.arena_master.choices.score"));
     }
     if (cdata[tc].character_role == 11)
     {
         ELONA_APPEND_RESPONSE(
             40,
-            lang(u8"ペットデュエル"s, u8"I want to register my pet. [Duel]"s));
+            i18n::s.get("core.locale.talk.npc.pet_arena_master.choices.register_duel"));
         ELONA_APPEND_RESPONSE(
             41,
-            lang(u8"チームバトル"s, u8"I want to register my team. [Team]"s));
+            i18n::s.get("core.locale.talk.npc.pet_arena_master.choices.register_team"));
         ELONA_APPEND_RESPONSE(
-            42, lang(u8"成績を聞く"s, u8"Tell me my scores."s));
+            42, i18n::s.get("core.locale.talk.npc.arena_master.choices.score"));
     }
     if (cdata[tc].character_role == 18)
     {
         ELONA_APPEND_RESPONSE(
-            45,
-            lang(
-                u8"家の名前を考えてくれ"s,
-                u8"Think of a nice name for my house."s));
+            45, i18n::s.get("core.locale.talk.npc.maid.choices.think_of_house_name"));
     }
     if (cdata[tc].character_role == 19)
     {
         ELONA_APPEND_RESPONSE(
-            46, lang(u8"免罪符を買いたい"s, u8"I want to buy an indulgence."s));
+            46, i18n::s.get("core.locale.talk.npc.sister.choices.buy_indulgence"));
     }
     int stat = talk_check_trade(tc);
     if (stat)
     {
         ELONA_APPEND_RESPONSE(
-            20, lang(u8"アイテム交換"s, u8"Are you interested in trade?"s));
+            20, i18n::s.get("core.locale.talk.npc.common.choices.trade"));
     }
     if (cdata[tc].character_role == 14)
     {
@@ -1684,40 +1668,33 @@ talk_result_t talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     10000 + cnt,
-                    lang(
-                        cdatan(0, rtval(cnt)) + u8"の居場所を聞く"s,
-                        u8"Where is "s + cdatan(0, rtval(cnt)) + u8"?"s));
+                    i18n::s.get("core.locale.talk.npc.guard.choices.where_is", cdata[rtval(cnt)]));
             }
         }
         if (itemfind(0, 284) != -1)
         {
             ELONA_APPEND_RESPONSE(
                 32,
-                lang(
-                    u8"落し物の財布を届ける"s,
-                    u8"Here is a lost wallet I found."s));
+                i18n::s.get("core.locale.talk.npc.guard.choices.lost_wallet"));
         }
         else if (itemfind(0, 283) != -1)
         {
             ELONA_APPEND_RESPONSE(
                 32,
-                lang(
-                    u8"落し物のカバンを届ける。"s,
-                    u8"Here is a lost suitcase I found."s));
+                i18n::s.get("core.locale.talk.npc.guard.choices.lost_suitcase"));
         }
     }
     if (cdata[tc].character_role == 21)
     {
         ELONA_APPEND_RESPONSE(
-            53, lang(u8"帰還したい"s, u8"I want to return."s));
+            53, i18n::s.get("core.locale.talk.npc.wizard.choices.return"));
     }
     if (cdata[tc].character_role == 1020)
     {
         if (gdata_belongs_to_mages_guild != 0)
         {
             ELONA_APPEND_RESPONSE(
-                55,
-                lang(u8"魔法書の予約"s, u8"I want to reserve some books."s));
+                55, i18n::s.get("core.locale.talk.npc.spell_writer.choices.reserve"));
         }
     }
     if (cdata[tc].drunk != 0 || 0)
@@ -1730,9 +1707,7 @@ talk_result_t talk_npc()
                 {
                     ELONA_APPEND_RESPONSE(
                         56,
-                        lang(
-                            u8"気持ちいいことしない？"s,
-                            u8"Interested in a little tail t'night?"s));
+                        i18n::s.get("core.locale.talk.npc.common.choices.sex"));
                 }
             }
         }
@@ -1742,13 +1717,13 @@ talk_result_t talk_npc()
         if (event_id() == -1)
         {
             ELONA_APPEND_RESPONSE(
-                60, lang(u8"暗い場所に移ろう"s, u8"I'll buy you."s));
+                60, i18n::s.get("core.locale.talk.npc.prostitute.choices.buy"));
         }
     }
     if (cdata[tc].character_role == 23)
     {
         ELONA_APPEND_RESPONSE(
-            61, lang(u8"キャラバンを雇う"s, u8"Hire caravan."s));
+            61, i18n::s.get("core.locale.talk.npc.caravan_master.choices.hire"));
     }
     f = 0;
     deliver(0) = -1;
@@ -1850,27 +1825,24 @@ talk_result_t talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     26,
-                    lang(
-                        itemname(supply, 1) + u8"を納入する"s,
-                        u8"Here is "s + itemname(supply, 1)
-                            + u8" you asked."s));
+                    i18n::s.get("core.locale.talk.npc.quest_giver.choices.here_is_item", inv[supply]));
             }
             else
             {
                 ELONA_APPEND_RESPONSE(
-                    24, lang(u8"依頼について"s, u8"About the work."s));
+                    24, i18n::s.get("core.locale.talk.npc.quest_giver.choices.about_the_work"));
             }
         }
         else if (qdata(3, rq) != 0)
         {
             ELONA_APPEND_RESPONSE(
-                24, lang(u8"依頼について"s, u8"About the work."s));
+                24, i18n::s.get("core.locale.talk.npc.quest_giver.choices.about_the_work"));
         }
     }
     if (deliver != -1 && deliver(1) != -1)
     {
         ELONA_APPEND_RESPONSE(
-            25, lang(u8"配達物を渡す"s, u8"Here's your delivery."s));
+            25, i18n::s.get("core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
     }
     if (gdata_current_map == 7)
     {
@@ -1883,7 +1855,7 @@ talk_result_t talk_npc()
                     && event_id() == -1)
                 {
                     ELONA_APPEND_RESPONSE(
-                        44, lang(u8"解雇する"s, u8"You are fired."s));
+                        44, i18n::s.get("core.locale.talk.npc.servant.choices.fire"));
                 }
             }
         }
@@ -1898,10 +1870,7 @@ talk_result_t talk_npc()
                 if (cdata[rc].state == 1)
                 {
                     ELONA_APPEND_RESPONSE(
-                        52,
-                        lang(
-                            u8"パエルの母を売る"s,
-                            u8"I want to sell Pael's mom."s));
+                        52, i18n::s.get("core.locale.talk.npc.moyer.choices.sell_paels_mom"));
                 }
             }
         }
@@ -1922,15 +1891,11 @@ talk_result_t talk_npc()
                     listmax = 0;
                     if (chatval == 10)
                     {
-                        buff = lang(
-                            u8"犯罪者に売る物はない"s + _yo(),
-                            u8"I don't have business with criminals."s);
+                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.buy");
                     }
                     else
                     {
-                        buff = lang(
-                            u8"犯罪者から買う物はない"s + _yo(),
-                            u8"I don't have business with criminals."s);
+                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.sell");
                     }
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));

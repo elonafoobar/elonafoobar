@@ -16,7 +16,6 @@ locale {
                 choices {
                     talk = "話がしたい"
                     trade = "アイテム交換"
-                    score = "成績を聞く"
                     sex = "気持ちいいことしない？"
                 }
 
@@ -66,7 +65,7 @@ locale {
             ally {
                 choices {
                     wait_at_town = "街で待機しろ"
-                    ask_for_hand = "婚約を申し込む"
+                    ask_for_marriage = "婚約を申し込む"
                     make_gene = "遺伝子を残す"
                     silence {
                         start = "黙らせる"
@@ -106,12 +105,12 @@ locale {
 
             maid {
                 choices {
-                    think_of_name = "家の名前を考えてくれ"
+                    think_of_house_name = "家の名前を考えてくれ"
                     meet_guest = "客に会う"
                     do_not_meet = "追い返す"
                 }
 
-                think_of_name {
+                think_of_house_name {
                     suffixes {
                         _0 = "の家"
                         _1 = "邸"
@@ -163,8 +162,10 @@ locale {
                     ammo = "矢弾の充填"
                 }
 
-                criminal_buy = "犯罪者に売る物はない${yo()}"
-                criminal_sell = "犯罪者から買う物はない${yo()}"
+                criminal {
+                    buy = "犯罪者に売る物はない${yo()}"
+                    sell = "犯罪者から買う物はない${yo()}"
+                }
 
                 ammo {
                     no_ammo = "充填する必要はないみたい${da()}"
@@ -304,6 +305,7 @@ locale {
                 choices {
                     enter_duel = "試合に出る[決闘]"
                     enter_rumble = "試合に出る[ランブル]"
+                    score = "成績を聞く"
                 }
 
                 enter {
@@ -376,10 +378,10 @@ locale {
 
             sister {
                 choices {
-                    buy = "免罪符を買いたい"
+                    buy_indulgence = "免罪符を買いたい"
                 }
 
-                buy {
+                buy_indulgence {
                     karma_is_not_low = "その程度の罪なら自分でなんとかしなさい。"
                     cost = "免罪符を希望する${noka(1)}${_1}かかるけどいいの${kana(1)}"
 

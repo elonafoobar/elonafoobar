@@ -16,7 +16,6 @@ locale {
                 choices {
                     talk = "Let's Talk."
                     trade = "Are you interested in trade?"
-                    score = "Tell me my scores."
                     sex = "Interested in a little tail t'night?"
                 }
 
@@ -66,7 +65,7 @@ locale {
             ally {
                 choices {
                     wait_at_town = "Wait at the town."
-                    ask_for_hand = "May I ask for your hand?"
+                    ask_for_marriage = "May I ask for your hand?"
                     make_gene = "Let's make a gene."
                     silence {
                         start = "Shut up."
@@ -106,12 +105,12 @@ locale {
 
             maid {
                 choices {
-                    think_of_name = "Think of a nice name for my house."
+                    think_of_house_name = "Think of a nice name for my house."
                     meet_guest = "Yes, I'll meet the guest now."
                     do_not_meet = "I don't want to meet anyone."
                 }
 
-                think_of_name {
+                think_of_house_name {
                     suffixes {
                         _0 = "Home"
                         _1 = "Mansion"
@@ -163,8 +162,10 @@ locale {
                     ammo = "I need ammos for my weapon."
                 }
 
-                criminal_buy = "I don't have business with criminals."
-                criminal_sell = "I don't have business with criminals."
+                criminal {
+                    buy = "I don't have business with criminals."
+                    sell = "I don't have business with criminals."
+                }
 
                 ammo {
                     no_ammo = "Reload what? You don't have any ammo in your inventory."
@@ -305,6 +306,7 @@ locale {
                 choices {
                     enter_duel = "I'm entering the arena. [Duel]"
                     enter_rumble = "I'm entering the arena. [Rumble]"
+                    score = "Tell me my scores."
                 }
 
                 enter {
@@ -377,10 +379,10 @@ locale {
 
             sister {
                 choices {
-                    buy = "I want to buy an indulgence."
+                    buy_indulgence = "I want to buy an indulgence."
                 }
 
-                buy {
+                buy_indulgence {
                     karma_is_not_low = "You karma isn't that low. Come back after you have committed more crimes!"
                     cost = "In the authority of all the saints, I will grant you an indulgence, for money of course. The price is ${_1} gold pieces."
 
