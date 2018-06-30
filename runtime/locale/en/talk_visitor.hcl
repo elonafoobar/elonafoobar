@@ -101,14 +101,14 @@ locale {
             }
 
             beggar {
-                no_money = "I got no money to buy food. Will you spare me some coins?"
+                dialog = "I got no money to buy food. Will you spare me some coins?"
                 spare = "You spare ${him(_2)} ${_1} gold pieces."
                 after = "Thanks! I'll never forget this."
                 cheap = "You're so cheap!"
             }
 
             punk {
-                are_you_ready = "So, are you ready?"
+                dialog = "So, are you ready?"
                 hump = "Hump!"
             }
 
