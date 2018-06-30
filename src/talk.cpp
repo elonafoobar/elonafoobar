@@ -98,9 +98,7 @@ void talk_to_npc()
     {
         if (evnum == 0)
         {
-            txt(lang(
-                name(tc) + u8"は耳を貸さない。"s,
-                name(tc) + u8" won't listen."s));
+            txt(i18n::s.get("core.locale.talk.will_not_listen", cdata[tc]));
             quest_teleport = false;
             update_screen();
             return;
@@ -208,8 +206,9 @@ talk_result_t talk_more()
 talk_result_t talk_sleeping()
 {
     listmax = 0;
-    buff = u8"("s + name(tc)
-        + lang(u8"はぐっすり眠っている…"s, u8" is sleeping."s) + u8")"s;
+    buff = u8"("s +
+        i18n::s.get("core.locale.talk.is_sleeping", cdata[tc])
+        + u8")"s;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"bye");
@@ -230,7 +229,7 @@ talk_result_t talk_busy()
 {
     listmax = 0;
     buff = u8"("s + name(tc)
-        + lang(u8"はお取り込み中だ…"s, u8" is in the middle of something."s)
+        + i18n::s.get("core.locale.talk.is_busy", cdata[tc])
         + u8")"s;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
@@ -259,8 +258,7 @@ talk_result_t talk_house_visitor()
         if (gdata_month == 1 && rnd(4))
         {
             listmax = 0;
-            buff =
-                lang(u8"明けましておめでとう"s + _da(2), u8"Happy new year!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.new_year.happy_new_year");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -275,9 +273,7 @@ talk_result_t talk_house_visitor()
                 }
             }
             listmax = 0;
-            buff = lang(
-                u8"日ごろの感謝の意をこめてこれをあげる"s + _yo(),
-                u8"I've brought you a gift today, here."s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.new_year.gift");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -298,17 +294,14 @@ talk_result_t talk_house_visitor()
             {
                 inv[ci].param3 = cdata[tc].impression + rnd(50);
             }
-            txt(lang(
-                name(tc) + u8"は"s + itemname(ci, 1) + u8"を置いていった。"s,
-                name(tc) + u8" throws you "s + itemname(ci, 1) + u8"."s));
+            txt(i18n::s.get("core.locale.talk.visitor.adventurer.new_year.throws",
+                            cdata[tc], inv[ci]));
             return talk_result_t::talk_end;
         }
         if (cdata[tc].impression < 25)
         {
             listmax = 0;
-            buff = lang(
-                u8"貴様！見つけた"s + _yo(2),
-                u8"You scum! You won't get away from me now!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.hate.dialog");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -322,9 +315,7 @@ talk_result_t talk_house_visitor()
                     return talk_result_t::talk_end;
                 }
             }
-            txt(lang(
-                u8"「これでも食らうがいい"s + _yo(2) + u8"」"s,
-                u8"\"Eat this!\""s));
+            txt(i18n::s.get("core.locale.talk.visitor.adventurer.hate.text"));
             if (rnd(2) == 0)
             {
                 for (int cnt = 0; cnt < 28; ++cnt)
@@ -343,9 +334,7 @@ talk_result_t talk_house_visitor()
                             continue;
                         }
                     }
-                    txt(lang(
-                        name(tc) + u8"は火炎瓶を投げた。"s,
-                        name(tc) + u8" throws molotov."s));
+                    txt(i18n::s.get("core.locale.talk.visitor.adventurer.hate.throws", cdata[tc]));
                     snd(91);
                     ccbk = cc;
                     cc = tc;
@@ -382,7 +371,7 @@ talk_result_t talk_house_visitor()
                 {
                     listmax = 0;
                     buff =
-                        lang(u8"これ、あげ"s + _ru(2), u8"Here, take this!"s);
+                        i18n::s.get("core.locale.talk.visitor.adventurer.like.dialog");
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -400,14 +389,8 @@ talk_result_t talk_house_visitor()
                     flt();
                     itemcreate(
                         -1, 730, cdata[0].position.x, cdata[0].position.y, 0);
-                    txt(lang(
-                        name(tc) + u8"に"s + itemname(ci, 1)
-                            + u8"をもらった！"s,
-                        u8"You receive "s + itemname(ci, 1) + u8"."s));
-                    if (jp)
-                    {
-                        txt(u8"友達100人できるかな♪"s);
-                    }
+                    txt(i18n::s.get("core.locale.talk.visitor.receieve", inv[ci], cdata[tc]));
+                    txt(i18n::s.get("core.locale.talk.visitor.adventurer.like.wonder_if"));
                     listmax = 0;
                 }
             }
@@ -428,44 +411,32 @@ talk_result_t talk_house_visitor()
                 }
                 list(0, listmax) = 0;
                 listn(0, listmax) =
-                    lang(u8"遠慮しとく"s, u8"I think I'll pass."s);
+                    i18n::s.get("core.locale.visitor.adventurer.train.choices.pass");
                 ++listmax;
                 if (sdata.get(csskill, 0).original_level == 0)
                 {
-                    buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
-                            u8"のスキルを、友達価格の"s +
-                            calclearncost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
-                            u8"で教えてあげてもいい"s + _ga(3) + u8"どう"s +
-                            _kana(1),
-                        u8"I can teach you the art of "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
-                            u8" for a friendly price of "s +
-                            calclearncost(csskill, cc, true) +
-                            u8" platinum pieces. Do you want me to train you?"s);
+                    buff = i18n::s.get("core.locale.talk.visitor.adventurer.train.learn.dialog",
+                                       i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+                                       std::to_string(calclearncost(csskill, cc, true)) + i18n::_(u8"ui", u8"platinum"));
                     if (cdata[0].platinum_coin
                         >= calclearncost(csskill, cc, true))
                     {
                         list(0, listmax) = 1;
                         listn(0, listmax) =
-                            lang(u8"習得する"s, u8"Teach me the skill."s);
+                            i18n::s.get("core.locale.talk.visitor.adventurer.train.choices.learn");
                         ++listmax;
                     }
                 }
                 else
                 {
-                    buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
-                            u8"のスキルを、友達価格の"s +
-                            calctraincost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
-                            u8"で訓練してもいい"s + _ga(3) + u8"どう"s +
-                            _kana(1),
-                        u8"I can train your "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
-                            u8" skill for a friendly price of "s +
-                            calctraincost(csskill, cc, true) +
-                            u8" platinum pieces. Do you want me to train you?"s);
+                    buff = i18n::s.get("core.locale.talk.visitor.adventurer.train.train.dialog",
+                                       i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+                                       std::to_string(calclearncost(csskill, cc, true)) + i18n::_(u8"ui", u8"platinum"));
                     if (cdata[0].platinum_coin
                         >= calctraincost(csskill, cc, true))
                     {
                         list(0, listmax) = 2;
-                        listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
+                        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.adventurer.train.choices.train");
                         ++listmax;
                     }
                 }
@@ -474,10 +445,7 @@ talk_result_t talk_house_visitor()
                 if (chatval == 0 || chatval == -1)
                 {
                     listmax = 0;
-                    buff = lang(
-                        u8"わかった"s + _yo()
-                            + u8"またしばらくしてから尋ねてみ"s + _ru(),
-                        u8"I see. I'll ask you again at some time in the future."s);
+                    buff = i18n::s.get("core.locale.talk.visitor.adventurer.train.pass");
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -500,10 +468,7 @@ talk_result_t talk_house_visitor()
                     skillgain(cc, csskill);
                     ++gdata_number_of_learned_skills_by_trainer;
                     listmax = 0;
-                    buff = lang(
-                        u8"新しい技術をどうやら習得できたようだ"s + _na()
-                            + u8"役に立てて嬉しい"s + _yo(),
-                        u8"Fantastic! You've learned the skill in no time. I'm glad I could help."s);
+                    buff = i18n::s.get("core.locale.talk.visitor.adventurer.train.learn.after");
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -529,10 +494,7 @@ talk_result_t talk_house_visitor()
                             2,
                             15 - (csskill < 18) * 10));
                     listmax = 0;
-                    buff = lang(
-                        u8"よし、これで訓練は終わり"s + _da()
-                            + u8"かなり潜在能力が伸びた"s + _yo(2),
-                        u8"Marvelous! The training is now complete. I think you've improved some potential."s);
+                    buff = i18n::s.get("core.locale.talk.visitor.adventurer.train.train.after");
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -555,10 +517,7 @@ talk_result_t talk_house_visitor()
             if (cdata[tc].impression >= 150)
             {
                 listmax = 0;
-                buff = lang(
-                    u8"友達の証としてこれをあげ"s + _ru(2) + u8"大事に使って"s
-                        + _yo(),
-                    u8"As a pledge of friendship, here's something for you!"s);
+                buff = i18n::s.get("core.locale.talk.visitor.adventurer.friendship.dialog");
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -574,9 +533,7 @@ talk_result_t talk_house_visitor()
                 }
                 if (inv_getfreeid(-1) == -1)
                 {
-                    txt(lang(
-                        u8"部屋が一杯で置けなかった…"s,
-                        u8"Your home has no empty spot..."s));
+                    txt(i18n::s.get("core.locale.talk.visitor.adventurer.friendship.no_empty_spot"));
                 }
                 else
                 {
@@ -591,10 +548,7 @@ talk_result_t talk_house_visitor()
                     flt();
                     itemcreate(
                         -1, p, cdata[0].position.x, cdata[0].position.y, 0);
-                    txt(lang(
-                        name(tc) + u8"に"s + itemname(ci, 1)
-                            + u8"をもらった！"s,
-                        u8"You receive "s + itemname(ci, 1) + u8"."s));
+                    txt(i18n::s.get("core.locale.talk.visitor.receive", inv[ci], cdata[tc]));
                     snd(14);
                 }
                 return talk_result_t::talk_end;
@@ -605,10 +559,7 @@ talk_result_t talk_house_visitor()
             if (cdata[tc].impression >= 100)
             {
                 listmax = 0;
-                buff = lang(
-                    u8"近くまで来たので寄ってみた"s + _nda()
-                        + u8"ついでだから、土産にこれをあげ"s + _ru(),
-                    u8"I just stopped by to see you. Oh, I happen to have a gift for you too."s);
+                buff = i18n::s.get("core.locale.talk.visitor.adventurer.souvenir.dialog");
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -624,17 +575,13 @@ talk_result_t talk_house_visitor()
                 }
                 if (inv_getfreeid(0) == -1)
                 {
-                    txt(lang(
-                        u8"所持品が一杯で受け取れなかった…"s,
-                        u8"Your inventory is full..."s));
+                    txt(i18n::s.get("core.locale.talk.visitor.adventurer.souvenir.inventory_is_full"));
                 }
                 else
                 {
                     flt();
                     itemcreate(0, 729, -1, -1, 0);
-                    txt(lang(
-                        itemname(ci, 1) + u8"を受け取った。"s,
-                        u8"You receive "s + itemname(ci, 1) + u8"."s));
+                    txt(i18n::s.get("core.locale.talk.visitor.adventurer.souvenir.receive", inv[ci]));
                     snd(14);
                 }
                 return talk_result_t::talk_end;
@@ -645,10 +592,7 @@ talk_result_t talk_house_visitor()
             if (cdata[tc].impression >= 100)
             {
                 listmax = 0;
-                buff = lang(
-                    u8"旅の途中にこんなものを拾った"s + _nda() + _kimi(3)
-                        + u8"の役に立つと思って持ってきた"s + _yo(),
-                    u8"I found these during my journey. Thought you could find them useful."s);
+                buff = i18n::s.get("core.locale.talk.visitor.adventurer.materials.dialog");
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -662,10 +606,7 @@ talk_result_t talk_house_visitor()
                         return talk_result_t::talk_end;
                     }
                 }
-                txt(lang(
-                    name(tc)
-                        + u8"は色々なものが詰まった袋を、あなたに手渡した。"s,
-                    name(tc) + u8" gives you a bag full of materials."s));
+                txt(i18n::s.get("core.locale.talk.visitor.adventurer.materials.receive", cdata[tc]));
                 efid = 1117;
                 efp = 100;
                 tc = 0;
@@ -678,11 +619,8 @@ talk_result_t talk_house_visitor()
             int stat = advfavoriteskill(tc);
             csskill = rtval(rnd(stat));
             listmax = 0;
-            buff = lang(
-                i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                    + u8"は"s + _ore(3) + u8"の得意なスキルの内の一つ"s + _da(),
-                ""s + i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                    + u8" is one of my favorite skills."s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.favorite_skill.dialog",
+                               i18n::_(u8"ability", std::to_string(csskill), u8"name"));
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -703,13 +641,8 @@ talk_result_t talk_house_visitor()
             int stat = advfavoritestat(tc);
             csskill = stat;
             listmax = 0;
-            buff = lang(
-                _ore(3) + u8"は"s
-                    + i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                    + u8"が自慢なの"s + _da(),
-                u8"I'm proud of my good "s
-                    + i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                    + u8"."s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.favorite_stat.dialog",
+                               i18n::_(u8"ability", std::to_string(csskill), u8"name"));
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -730,12 +663,7 @@ talk_result_t talk_house_visitor()
             if (cdata[tc].impression >= 75)
             {
                 listmax = 0;
-                buff = lang(u8"やあ。特に用はない"s + _ga(3) +
-                        u8"、なんだか暇を持てましていたら、"s + _kimi(3) +
-                        u8"と話がしたくなって"s + _na(3) + u8"、寄ってみた"s +
-                        _nda(),
-                    u8"Hey "s + cdatan(0, 0) +
-                        u8", how's your journey? I was bored to death so I decided to make a visit to you!"s);
+                buff = i18n::s.get("core.locale.talk.visitor.adventurer.conversation.dialog", cdata[0]);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -749,10 +677,7 @@ talk_result_t talk_house_visitor()
                         return talk_result_t::talk_end;
                     }
                 }
-                txt(lang(
-                    u8"あなたと"s + name(tc) + u8"は愉快に語り合った！"s,
-                    u8"You hold an amusing conversation with "s + name(tc)
-                        + u8"!"s));
+                txt(i18n::s.get("core.locale.talk.visitor.adventurer.conversation.hold", cdata[tc]));
                 chara_mod_impression(tc, 10);
                 return talk_result_t::talk_end;
             }
@@ -760,9 +685,7 @@ talk_result_t talk_house_visitor()
         if (rnd(3) == 0)
         {
             listmax = 0;
-            buff = lang(
-                u8"酒でも飲んで親睦を深めよう"s + _yo(2),
-                u8"Let's have a drink and deepen our friendship!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.adventurer.drink.dialog");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -777,9 +700,7 @@ talk_result_t talk_house_visitor()
                 }
             }
             snd(17);
-            txt(lang(
-                u8"あなたと"s + name(tc) + u8"は乾杯した！"s,
-                u8"\"Cheers!\""s));
+            txt(i18n::s.get("core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
             txtef(9);
             txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
                 lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
@@ -794,9 +715,7 @@ talk_result_t talk_house_visitor()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = lang(
-            u8"まあ、とくに用もないんだけど"s + _na(),
-            u8"I just wanted to say hi."s);
+        buff = i18n::s.get("core.locale.talk.visitor.wanted_to_say_hi");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -815,9 +734,7 @@ talk_result_t talk_house_visitor()
         if (gdata_last_month_when_trainer_visited == gdata_month)
         {
             listmax = 0;
-            buff = lang(
-                u8"今月はもう訓練は終わり"s + _da(),
-                u8"No more training in this month."s);
+            buff = i18n::s.get("core.locale.talk.visitor.trainer.no_more_this_month");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -835,15 +752,9 @@ talk_result_t talk_house_visitor()
         }
         plat = 3;
         gdata_last_month_when_trainer_visited = gdata_month;
-        buff = lang(guildname() +
-                u8"の一員足るもの、ギルドの名に恥じないよう、常に己の技量を磨き続けなければならない"s +
-                _yo() + u8"ギルドの一員である"s + _kimi(3) +
-                u8"には、たったのプラチナ"s + plat +
-                u8"枚で潜在能力を伸ばす訓練を施してあげる"s + _yo(),
-            u8"As a member of "s + guildname() +
-                u8" you have to forge your talent to live up to our reputation. For only "s +
-                plat +
-                u8" platinum coins, I'll improve the potential of your talent."s);
+        buff = i18n::s.get("core.locale.talk.visitor.trainer.dialog.member",
+                           guildname(),
+                           plat);
         if (gdata_belongs_to_mages_guild != 0)
         {
             p(0) = 16;
@@ -875,17 +786,10 @@ talk_result_t talk_house_visitor()
             {
                 p(cnt) = 10 + cnt + i;
             }
-            buff = lang(u8"鍛えている"s + _kana(2) +
-                    u8"冒険者として生き残るには、日ごろの鍛錬が大切"s +
-                    _da(2) + u8"わずかプラチナ"s + plat +
-                    u8"枚で、潜在能力を伸ばす特別な訓練を施してあげる"s +
-                    _yo(2),
-                u8"Training! Training! At the end, only thing that saves your life is training! For only "s +
-                    plat +
-                    u8" platinum coins, I'll improve the potential of your talent."s);
+            buff = i18n::s.get("core.locale.talk.visitor.trainer.dialog.nonmember", plat);
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"訓練しない"s, u8"Not today."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.trainer.choices.not_today");
         ++listmax;
         if (cdata[0].platinum_coin >= plat)
         {
@@ -896,12 +800,9 @@ talk_result_t talk_house_visitor()
                     break;
                 }
                 list(0, listmax) = p(cnt);
-                listn(0, listmax) = lang(
-                    i18n::_(u8"ability", std::to_string(p(cnt)), u8"name")
-                        + u8"を鍛える"s,
-                    u8"I want to improve "s
-                        + i18n::_(u8"ability", std::to_string(p(cnt)), u8"name")
-                        + u8"."s);
+                listn(0, listmax) =
+                    i18n::s.get("core.locale.talk.visitor.trainer.choices.improve",
+                                i18n::_(u8"ability", std::to_string(p(cnt)), u8"name"));
                 ++listmax;
             }
         }
@@ -909,7 +810,7 @@ talk_result_t talk_house_visitor()
         if (chatval == 0 || chatval == -1)
         {
             listmax = 0;
-            buff = lang(u8"後悔する"s + _yo(2), u8"You'll regret this!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.trainer.regret");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -928,18 +829,12 @@ talk_result_t talk_house_visitor()
         cdata[0].platinum_coin -= plat;
         snd(61);
         txtef(2);
-        txt(lang(
-            name(0) + u8"の"s
-                + i18n::_(u8"ability", std::to_string(chatval), u8"name")
-                + u8"の潜在能力が大きく上昇した。"s,
-            name(0) + your(0) + u8" potential of "s
-                + i18n::_(u8"ability", std::to_string(chatval), u8"name")
-                + u8" greatly expands."s));
+        txt(i18n::s.get("core.locale.talk.visitor.trainer.potential_expands",
+                        cdata[0],
+                        i18n::_(u8"ability", std::to_string(chatval), u8"name")));
         modify_potential(0, chatval, 10);
         listmax = 0;
-        buff = lang(
-            u8"うむ、なかなか見所がある"s + _yo(),
-            u8"Good. You show a lot of potential."s);
+        buff = i18n::s.get("core.locale.talk.visitor.trainer.after");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -956,9 +851,7 @@ talk_result_t talk_house_visitor()
         return talk_result_t::talk_end;
     case 2002:
         listmax = 0;
-        buff = lang(
-            u8"まあ、とくに用もないんだけど"s + _na(),
-            u8"I just wanted to say hi."s);
+        buff = i18n::s.get("core.locale.talk.visitor.wanted_to_say_hi");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -977,31 +870,24 @@ talk_result_t talk_house_visitor()
         if (cdata[0].gold > 0)
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
+            listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.yes");
             ++listmax;
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"だめ"s, u8"No."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
-        buff = lang(
-            u8"パンを買う金さえない"s + _nda() + u8"恵んで"s + _kure(3)
-                + u8"、おねがい"s + _da(2),
-            u8"I got no money to buy food. Will you spare me some coins?"s);
+        buff = i18n::s.get("core.locale.talk.visitor.beggar.no_money");
         talk_window_query();
         if (chatval == 1)
         {
             p = cdata[0].gold / 20 + 1;
-            txt(lang(
-                u8"あなたは"s + p + u8"goldを乞食に渡した。"s,
-                u8"You spare "s + him(tc) + u8" "s + p + u8" gold pieces."s));
+            txt(i18n::s.get("core.locale.talk.visitor.beggar.spare", p(0), cdata[tc]));
             cdata[0].gold -= p;
             snd(12);
             cdata[tc].gold += p;
             modify_karma(0, 2);
             listmax = 0;
-            buff = lang(
-                _thanks(2) + u8"この恩は一生忘れない"s + _yo(),
-                u8"Thanks! I'll never forget this."s);
+            buff = i18n::s.get("core.locale.talk.visitor.beggar.after");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1018,7 +904,7 @@ talk_result_t talk_house_visitor()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = lang(u8"ケチ！"s, u8"You're so cheap!"s);
+        buff = i18n::s.get("core.locale.talk.visitor.beggar.cheap");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1035,19 +921,17 @@ talk_result_t talk_house_visitor()
         return talk_result_t::talk_end;
     case 2001:
         list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.yes");
         ++listmax;
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"だめ"s, u8"No."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
-        buff = lang(
-            u8"フッ。よく逃げ出さずに戻ってきた"s + _na() + u8"準備はいいか。"s,
-            u8"So, are you ready?"s);
+        buff = i18n::s.get("core.locale.talk.visitor.punk.are_you_ready");
         talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
-            buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.punk.no_turning_back");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
@@ -1065,7 +949,7 @@ talk_result_t talk_house_visitor()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = lang(u8"ふん！"s, u8"Hump!"s);
+        buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1082,19 +966,17 @@ talk_result_t talk_house_visitor()
         return talk_result_t::talk_end;
     case 2006:
         list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.yes");
         ++listmax;
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"だめ"s, u8"No."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
-        buff =
-            lang(u8"スターになりたい"s + _kana(1), u8"You want to be a star?"s);
+        buff = i18n::s.get("core.locale.talk.visitor.mysterious_producer.want_to_be_star");
         talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
-            buff = lang(
-                u8"よい心がけだ"s + _na(2), u8"Okay, no turning back now!"s);
+            buff = i18n::s.get("core.locale.talk.visitor.mysterious_producer.no_turning_back");
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
             listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
@@ -1112,7 +994,7 @@ talk_result_t talk_house_visitor()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = lang(u8"ふん！"s, u8"Hump!"s);
+        buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1129,20 +1011,15 @@ talk_result_t talk_house_visitor()
         return talk_result_t::talk_end;
     case 2003:
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"買いたい"s, u8"I want to buy something."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.merchant.choices.buy");
         ++listmax;
         list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"売りたい"s, u8"I want to sell something."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.merchant.choices.sell");
         ++listmax;
         list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"今はいい"s, u8"Not now."s);
+        listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.merchant.choices.not_now");
         ++listmax;
-        buff = lang(
-            u8"今日は"s + _kimi(3) + u8"の幸運な日"s + _da()
-                + u8"普段は一般の客には売らない格安の品を、特別に見せてあげ"s
-                + _ru() + u8"覚えておいて"s + _kure(3) + u8"、今日だけだ"s
-                + _yo(),
-            u8"This is your lucky day. I wouldn't normally show my discounted goods to commoners but since I feel so good today..."s);
+        buff = i18n::s.get("core.locale.talk.visitor.merchant.dialog");
         talk_window_query();
         if (chatval == 0)
         {
@@ -1168,9 +1045,7 @@ talk_result_t talk_house_visitor()
             return talk_result_t::talk_house_visitor;
         }
         listmax = 0;
-        buff = lang(
-            u8"後になって後悔しても知らない"s + _yo(),
-            u8"I hope you won't regret it later."s);
+        buff = i18n::s.get("core.locale.talk.visitor.merchant.regret");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
