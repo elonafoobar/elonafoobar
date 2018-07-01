@@ -68,7 +68,7 @@ locale {
 
                 quest {
                     dialog {
-                        _0 = "Welcome!〜♪" # NOTE: New dialog
+                        _0 = "Welcome!〜♪" # NOTE: New dialog for EN
                         _1 = "Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."
                     }
 
@@ -86,6 +86,8 @@ locale {
             }
 
             33 {
+                dialog = "I'm glad you got well again. I thought you were a goner until just a few minutes ago."
+
                 choices {
                     mission = "What's your mission?"
                     north_tyris = "Tell me about North Tyris."
@@ -137,7 +139,7 @@ locale {
                             dialog {
                                 _0 = "...err..you really ate that thing? Oh well.."
                                 _1 = "You can also use other items by pressing [x]. For example, if you want to read a book, press [x], hit [9] a few times to select the <Read> menu, then choose a book you want to read."
-                                _2 = "Now, allow me to explain how to act by using the [z] key." # NOTE: New dialog
+                                _2 = "Now, allow me to explain how to act by using the [z] key." # NOTE: New dialog for EN
                             }
                             response = "What!"
                         }
@@ -377,7 +379,7 @@ locale {
                     _5 = "My role in this saga is at an end... I'll never make it out with these injuries... Deliver my message to the capital quickly... and may the gods of fate watch over you..."
                 }
 
-                dies = "${name(_1)} kills himself..."
+                dies = "${basename(_1)} kills himself..."
             }
 
             garokk {
@@ -653,7 +655,11 @@ locale {
                     yes = "Nyowl! Mia trust nyou. Nyo hurting cats!"
                     no = "Nyo? Mia can wait nyou. Mia have goood mannyah!"
                     waiting = "Nyoroon nyoroon. Nyou still look for Mia's cat?"
-                    end = "Nyanya! Nyou bring Mia silver cat! Come come, I nyo hurt nyou, nyo hurt nyou. Mia thank you very much. Nyou can have Mia's precious!"
+                    end {
+                        # NOTE: Before was one sentence in EN, now is two
+                        _0 = "Nyanya! Nyou bring Mia silver cat! Come come, I nyo hurt nyou, nyo hurt nyou."
+                        _1 = "Mia thank you very much. Nyou can have Mia's precious!"
+                    }
                 }
             }
 
