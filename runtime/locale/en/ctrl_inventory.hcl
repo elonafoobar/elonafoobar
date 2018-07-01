@@ -105,7 +105,7 @@ locale {
 
             identify {
                 need_more_power = "You need higher identification to gain new knowledge."
-                half = "The item is half-identified as ${itemname(_1, 1)}."
+                partially = "The item is half-identified as ${itemname(_1, 1)}."
                 fully = "The item is fully identified as ${itemname(_1, 1)}."
             }
 
@@ -118,7 +118,7 @@ locale {
                     dialog = "\"Thank you!\""
                 }
 
-                refuse {
+                refuse_dialog {
                     _0 = "\"Too heavy!\""
                     _1 = "\"No way.\""
                     _2 = "\"I don't want it.\""
@@ -149,7 +149,7 @@ locale {
                 how_many = "How many? (1 to ${_1})"
                 prompt = "Do you really want to buy ${itemname(_1, 1)} for ${_2} gold pieces?"
 
-                need_money {
+                not_enough_money {
                     _0 = "You check your wallet and shake your head."
                     _1 = "You need to earn more money!"
                 }
@@ -163,7 +163,7 @@ locale {
                 how_many = "How many? (1 to ${_1})"
                 prompt = "Do you really want to sell ${itemname(_1, 1)} for ${_2} gold pieces?"
 
-                need_money = "${name(_1)} checks ${his(_1)} wallet and shake ${his(_1)} head."
+                not_enough_money = "${name(_1)} checks ${his(_1)} wallet and shake ${his(_1)} head."
             }
 
             offer {
@@ -190,13 +190,13 @@ locale {
 
                 guild {
                     have_no_quota = "You have no quota for Mages Guild."
-                    you_deliver = "You deliver ${itemname(_1)}. (${_2} Guild Point)"
+                    you_deliver = "You deliver ${itemname(_1)}. "
                     remaining = "${_1}guild points are needed to gain a rank."
                     fulfill = "You fulfill the quota!"
                 }
 
                 tax {
-                    need_money = "You don't have enough money."
+                    not_enough_money = "You don't have enough money."
                     do_not_have_to = "You don't have to pay your tax yet."
                     you_pay ="You pay ${_1}."
                 }
@@ -219,8 +219,8 @@ locale {
                 you_take = "You take ${_1}."
 
                 window {
-                    equip_weight = "EquipWt"
-                    equip = "Equip:"
+                    equip_weight = "EquipWt" # NOTE
+                    equip = "Equip" # NOTE
                 }
             }
 
@@ -236,7 +236,7 @@ locale {
             }
 
             trade_medals {
-                medals = "(Coins: ${_1}"
+                medals = "(Coins: ${_1})"
                 medal_value = "${_1} Coins"
                 inventory_full = "Your inventory is full."
                 not_enough_medals = "You don't have enough coins."
@@ -245,10 +245,6 @@ locale {
                 window {
                     medal = "Medal"
                 }
-            }
-
-            _29 {
-
             }
         }
     }
