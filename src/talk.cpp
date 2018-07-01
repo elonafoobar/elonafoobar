@@ -2234,8 +2234,7 @@ void talk_window_show()
                  cnt < cnt_end;
                  ++cnt)
             {
-                pos(wx + 26 + cnt * 4, wy + 245);
-                gcopy(3, 16, 360, 16, 16);
+                draw("interest_icon", wx + 26 + cnt * 4, wy + 245);
             }
         }
     }

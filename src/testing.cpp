@@ -1,6 +1,7 @@
 #include "testing.hpp"
 #include <sstream>
 #include "config.hpp"
+#include "draw.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
@@ -78,6 +79,7 @@ void pre_init()
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
+    init_assets();
     initialize_config(fs::path("tests/data/config.json"));
 
     config::instance().is_test = true;

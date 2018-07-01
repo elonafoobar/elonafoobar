@@ -35,8 +35,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         {
             promptl(1, i) = key_select(i);
         }
-        pos(i * 24 + 624, 30);
-        gcopy(3, 0, 30, 24, 18);
+        draw("select_key", i * 24 + 624, 30);
         bmes(promptl(1, i), i * 24 + 629, 31, {250, 240, 230}, {50, 60, 80});
     }
 
@@ -67,8 +66,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         if (type == show_prompt_type::with_number)
         {
             window2(dx(1) + sx + 20, dy, dx - 40, 36, 0, 2);
-            pos(dx(1) + sx + dx / 2 - 56, dy - 32);
-            gcopy(3, 128, 288, 128, 32);
+            draw("label_input", dx(1) + sx + dx / 2 - 56, dy - 32);
             pos(dx(1) + sx + 28, dy + 4);
             gcopy(3, 312, 336, 24, 24);
             pos(dx(1) + sx + dx - 51, dy + 4);
@@ -171,8 +169,7 @@ void input_number_dialog(int x, int y, int max_number)
     while (1)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
-        pos(x + dx / 2 - 56, y - 32);
-        gcopy(3, 128, 288, 128, 32);
+        draw("label_input", x + dx / 2 - 56, y - 32);
         pos(x + 28, y + 4);
         gcopy(3, 312, 336, 24, 24);
         pos(x + dx - 51, y + 4);
@@ -306,17 +303,15 @@ bool input_text_dialog(
         }
         await(config::instance().wait1);
         window2(x, y, dx, 36, 0, 2);
-        pos(x + dx / 2 - 60, y - 32);
-        gcopy(3, 128, 288, 128, 32);
+        draw("label_input", x + dx / 2 - 60, y - 32);
 
-        pos(x + 8, y + 4);
         if (imeget() != 0)
         {
-            gcopy(3, 48, 336, 24, 24);
+            draw("ime_status_japanese", x + 8, y + 4);
         }
         else
         {
-            gcopy(3, 24, 336, 24, 24);
+            draw("ime_status_english", x + 8, y + 4);
         }
         apledit(p(2), 2, 0);
         if (p(2) > val2 * (1 + en) - 2)
@@ -391,8 +386,7 @@ bool input_text_dialog(
         }
 
         gmode(4, p(1) / 2 + 50);
-        pos(x + 34 + p(4) * 8, y + 5);
-        gcopy(3, 0, 336, 12, 24);
+        draw("input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
         color(255, 255, 255);
         pos(x + 36, y + 9);

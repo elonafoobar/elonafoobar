@@ -585,8 +585,7 @@ void initialize_elona()
     font(15 - en * 2);
     for (int i = 0; i < 18; ++i)
     {
-        pos(i * 24 + 72, 30);
-        gcopy(3, 0, 30, 24, 18);
+        draw("select_key", i * 24 + 72, 30);
         bmes(key_select(i), i * 24 + 77, 31, {250, 240, 230}, {50, 60, 80});
     }
     gsel(0);
@@ -768,6 +767,7 @@ int run()
         config_get_fullscreen_mode());
 
     initialize_config(config_file);
+    init_assets();
     initialize_elona();
 
     lua::lua.scan_all_mods(filesystem::dir::mods());

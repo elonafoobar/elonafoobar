@@ -57,8 +57,7 @@ void update_screen_hud()
     }
     pos(0, inf_msgy);
     gcopy(3, 120, 504, inf_msgx, inf_verh);
-    pos(inf_radarw + 6, inf_bary);
-    gcopy(3, 208, 376, 16, 16);
+    draw("map_name_icon", inf_radarw + 6, inf_bary);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         sx = 0;
@@ -318,8 +317,7 @@ void highlight_characters_in_pet_arena()
             if (cc == camera)
             {
                 gmode(4, 120);
-                pos(x + 36, y + 32);
-                gcopy(3, 240, 410, 24, 16);
+                draw("camera", x + 36, y + 32);
                 gmode(2);
             }
         }
@@ -335,8 +333,7 @@ void render_pc_position_in_minimap()
 
     raderx = x;
     radery = y;
-    pos(inf_radarx + x, inf_radary + y);
-    gcopy(3, 15, 338, 6, 6);
+    draw("minimap_position", inf_radarx + x, inf_radary + y);
 }
 
 
@@ -347,19 +344,12 @@ void render_stair_positions_in_minimap()
     {
         for (int x = 0; x < mdata(0); ++x)
         {
-            int sx = clamp(120 * x / mdata(0), 2, 112);
-            int sy = clamp(84 * y / mdata(1), 2, 76);
-            if (map(x, y, 6) / 1000 % 100 == 11)
+            const auto n = map(x, y, 6) / 1000 % 100;
+            if (n == 10 || n == 11)
             {
-                // Downstairs
-                pos(inf_radarx + sx, inf_radary + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-            else if (map(x, y, 6) / 1000 % 100 == 10)
-            {
-                // Upstairs
-                pos(inf_radarx + sx, inf_radary + sy);
-                gcopy(3, 15, 338, 6, 6);
+                const auto sx = clamp(120 * x / mdata(0), 2, 112);
+                const auto sy = clamp(84 * y / mdata(1), 2, 76);
+                draw("minimap_position", inf_radarx + sx, inf_radary + sy);
             }
         }
     }
@@ -636,10 +626,8 @@ void screen_txtadv()
         {
             sx = 265;
             sy = 8;
-            pos(sx - 30, 5);
-            gcopy(3, 192, 360, 24, 16);
-            pos(sx + atxinfon(0).size() * 13 / 2 + 14, 5);
-            gcopy(3, 216, 360, 24, 16);
+            draw("casino_title_decoration_left", sx - 30, 5);
+            draw("casino_title_decoration_right", sx + strlen_u(atxinfon(0)) * 13 / 2 + 14, 5);
         }
         else
         {
@@ -686,10 +674,8 @@ void render_hud()
     int ap3 = 0;
     int ap2 = 0;
     font(12 - en * 2, snail::font_t::style_t::bold);
-    pos(inf_hpx, inf_hpy);
-    gcopy(3, 312, 504, 104, 15);
-    pos(inf_mpx, inf_mpy);
-    gcopy(3, 312, 504, 104, 15);
+    draw("hp_bar_frame", inf_hpx, inf_hpy);
+    draw("hp_bar_frame", inf_mpx, inf_mpy);
     if (cdata[0].hp > 0) // TODO coupling
     {
         ap = cdata[0].hp * 84 / cdata[0].max_hp;
@@ -714,8 +700,7 @@ void render_hud()
     {
         if (cdata[gdata_mount].state == 1)
         {
-            pos(inf_hpx - 120, inf_hpy);
-            gcopy(3, 312, 504, 104, 15);
+            draw("hp_bar_frame", inf_hpx - 120, inf_hpy);
             ap = cdata[gdata_mount].hp * 84 / cdata[gdata_mount].max_hp;
             if (ap > 100)
             {
@@ -780,15 +765,12 @@ void render_hud()
     font(13 - en * 2);
     sy = inf_ver - 16;
     sx = windoww - 240;
-    pos(sx, sy);
-    gcopy(3, 0, 392, 24, 24);
+    draw("gold_coin", sx, sy);
     bmes(""s + cdata[0].gold + u8" gp"s, sx + 28, sy + 2);
     sx = windoww - 120;
-    pos(sx, sy);
-    gcopy(3, 24, 392, 24, 24);
+    draw("platinum_coin", sx, sy);
     bmes(""s + cdata[0].platinum_coin + u8" pp"s, sx + 28, sy + 2);
-    pos(4, inf_ver - 16);
-    gcopy(3, 48, 392, 24, 24);
+    draw("character_level_icon", 4, inf_ver - 16);
     bmes(
         u8"Lv"s + cdata[0].level + u8"/"s
             + (cdata[0].required_experience - cdata[0].experience),
@@ -1184,8 +1166,7 @@ void render_hud()
 
     pos(inf_clockx, inf_clocky);
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
-    pos(inf_clockx + 78, inf_clocky + 8);
-    gcopy(3, 448, 376, 128, 24);
+    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
     gmode(4, 180);
     sx = windoww - 40;
     sy = inf_ver - 40;
@@ -2032,8 +2013,7 @@ void display_window(
             1);
     }
     gmode(2);
-    pos(prm_668 + 30 + prm_672, prm_669 + prm_671 - 47 - prm_671 % 8);
-    gcopy(3, 96, 360, 24, 16);
+    draw("tip_icon", prm_668 + 30 + prm_672, prm_669 + prm_671 - 47 - prm_671 % 8);
     line(
         prm_668 + 50 + prm_672,
         prm_669 + prm_671 - 48 - prm_671 % 8,
@@ -2085,8 +2065,7 @@ void display_note(const std::string& prm_674, int prm_675)
 void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
-    pos(x, y + 7);
-    gcopy(3, 120, 360, 24, 16);
+    draw("topic_icon", x, y + 7);
     pos(x + 26, y + 8);
     mes(topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
@@ -2099,8 +2078,7 @@ void display_customkey(const std::string& key, int x, int y)
     gsel(3);
     gmode(0);
     font(15 - en * 2);
-    pos(624, 30);
-    gcopy(3, 0, 30, 24, 18);
+    draw("select_key", 624, 30);
     bmes(key, 629, 31, {250, 240, 230}, {50, 60, 80});
     gmode(2);
     gsel(0);
@@ -2438,8 +2416,7 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
     if (title.empty())
         return;
 
-    pos(x + 40, y + height - 67 - height % 8);
-    gcopy(3, 96, 360, 24, 16);
+    draw("tip_icon", x + 40, y + height - 67 - height % 8);
     line(
         x + 60,
         y + height - 68 - height % 8,
@@ -2763,12 +2740,10 @@ void show_title(const std::string& title)
     }
     for (int i = 0; i < (windoww - x - 8) / 192 + 1; ++i)
     {
-        pos(x + 8 + i * 192, y);
-        gcopy(3, 496, 581, 192, 18);
+        draw("title_label_frame", x + 8 + i * 192, y);
     }
     gmode(2);
-    pos(x, y + (mode != 1));
-    gcopy(3, 96, 360, 24, 16);
+    draw("tip_icon", x, y + (mode != 1));
     font(12 + sizefix - en * 2);
     bmes(title, x + 32, y + 1 + jp, {250, 250, 250});
 }

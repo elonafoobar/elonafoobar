@@ -9,7 +9,9 @@
 #include "map.hpp"
 #include "mef.hpp"
 #include "random.hpp"
+#include "thirdparty/microhcl/hcl.hpp"
 #include "variables.hpp"
+
 
 
 namespace
@@ -505,6 +507,24 @@ void initialize_chara_chips()
     chara_chips[447].height = inf_tiles * 2;
     chara_chips[447].offset_y = inf_tiles + 16;
 }
+
+
+
+struct image_info
+{
+    int window_id;
+    int x;
+    int y;
+    int width;
+    int height;
+};
+
+std::unordered_map<std::string, image_info> images = {};
+
+
+std::unordered_map<std::string, int> window_id_table = {
+    {"interface.bmp", 3},
+};
 
 
 
@@ -1207,16 +1227,38 @@ void bmes(
 
 
 
-struct image_info
+void init_assets()
 {
-    int window_id;
-    int x;
-    int y;
-    int width;
-    int height;
-};
+    const auto filepath = filesystem::dir::exe() / "assets.hcl";
+    std::ifstream in{filepath.native()};
+    if (!in)
+    {
+        throw std::runtime_error{
+            "Failed to open "
+            + filesystem::make_preferred_path_in_utf8(filepath)};
+    }
+    const auto& result = hcl::parse(in);
+    if (!result.valid())
+    {
+        throw std::runtime_error{result.errorReason};
+    }
+    const auto& value = result.value;
+    if (!value.is<hcl::Object>() || !value.has("images"))
+    {
+        throw std::runtime_error{"\"images\" object not found"};
+    }
 
-std::unordered_map<std::string, image_info> images = {};
+    for (const auto& pair : value.get<hcl::Object>("images"))
+    {
+        images[pair.first] = {
+            window_id_table[pair.second.get<std::string>("source")],
+            pair.second.get<int>("x"),
+            pair.second.get<int>("y"),
+            pair.second.get<int>("width"),
+            pair.second.get<int>("height"),
+        };
+    }
+}
 
 
 
@@ -1224,7 +1266,7 @@ void draw(const std::string& key, int x, int y)
 {
     const auto itr = images.find(key);
     if (itr == std::end(images))
-        throw std::runtime_error{u8"Error: Unknown image ID: "s + key};
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
     const auto& info = itr->second;
 
     pos(x, y);
@@ -1237,7 +1279,7 @@ void draw(const std::string& key, int x, int y, int width, int height)
 {
     const auto itr = images.find(key);
     if (itr == std::end(images))
-        throw std::runtime_error{u8"Error: Unknown image ID: "s + key};
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
     const auto& info = itr->second;
 
     pos(x, y);

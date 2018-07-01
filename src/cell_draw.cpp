@@ -529,14 +529,6 @@ void draw_hp_bar(int cc, int x, int y)
 
 
 
-void draw_furious_icon(int x, int y)
-{
-    pos(x, y);
-    gcopy(3, 32, 608, 16, 16);
-}
-
-
-
 void draw_character_sprite_in_world_map(
     int texture_id,
     int x,
@@ -587,8 +579,7 @@ void draw_character_sprite(
 {
     // Shadow
     gmode(6, 110);
-    pos(x + 8, y + 20);
-    gcopy(3, 240, 384, 32, 16);
+    draw("character_shadow", x + 8, y + 20);
 
     // Character sprite
     pos(x + 24, y + dy + 8);
@@ -693,13 +684,11 @@ void draw_map6(int x, int y, int dx, int dy)
             {
                 if (adata(6, q_) == adata(10, q_))
                 {
-                    pos(dx + 16, dy - 16);
-                    gcopy(3, 32, 624, 16, 16);
+                    draw("conquered_nefia_icon", dx + 16, dy - 16);
                 }
                 else if (adata(6, q_) != 0)
                 {
-                    pos(dx + 16, dy - 16);
-                    gcopy(3, 48, 624, 16, 16);
+                    draw("invaded_nefia_icon", dx + 16, dy - 16);
                 }
             }
         }
@@ -976,7 +965,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                 gmode(2);
                 if (cdata[c_].furious != 0)
                 {
-                    draw_furious_icon(dx + 12, dy - 28);
+                    draw("furious_icon", dx + 12, dy - 28);
                 }
                 if (cdata[c_].emotion_icon != 0)
                 {
@@ -1061,8 +1050,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     else
                     {
                         gmode(6, 110);
-                        pos(dx + 8, dy + 20);
-                        gcopy(3, 240, 384, 32, 16);
+                        draw("character_shadow", dx + 8, dy + 20);
                         gmode(2);
                         pos(dx,
                             dy - chara_chips[p_].offset_y
@@ -1076,7 +1064,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     }
                     if (cdata[c_].furious != 0)
                     {
-                        draw_furious_icon(
+                        draw("furious_icon",
                             dx + 12, dy - chara_chips[p_].offset_y - 12);
                     }
                     if (cdata[c_].emotion_icon != 0)
@@ -1281,7 +1269,7 @@ void cell_draw()
                 }
                 if (cdata[0].furious != 0)
                 {
-                    draw_furious_icon(px_, py_ - 24);
+                    draw("furious_icon", px_, py_ - 24);
                 }
                 if (cdata[0].emotion_icon != 0)
                 {
