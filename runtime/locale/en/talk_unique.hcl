@@ -1,5 +1,3 @@
-#TODO cdatan(0, 0)
-
 locale {
     talk {
         unique {
@@ -72,7 +70,7 @@ locale {
                     yes = "Fabulous! The trouble is all in the house just south of here."
                     no = "Okay... but... if you change your mind please come back."
 
-                    begin = "Aggh! My stuffed toys are ruined! Hurry up and kill the Putits!"
+                    waiting = "Aggh! My stuffed toys are ruined! Hurry up and kill the Putits!"
                     end = "Eh? You wiped out the slimes? Thanks so much. My stuffed animals are delighted too. Here, you might find this useful."
                 }
             }
@@ -82,7 +80,7 @@ locale {
 
                 quest {
                     dialog {
-                        _0 = "Welcome!〜♪" # NOTE: New dialog for EN
+                        _0 = "Welcome~!" # NOTE: New dialog for EN
                         _1 = "Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."
                     }
 
@@ -94,7 +92,7 @@ locale {
                     yes = "Really? Thanks, we really appreciate it."
                     no = "Alright, but please... think about it."
 
-                    begin = "Welcome! Welcome! Have you found the bandit's lair yet? It should be near the graveyard."
+                    waiting = "Welcome! Welcome! Have you found the bandit's lair yet? It should be near the graveyard."
                     end = "Yes, I've already gotten wind of your deeds. It's a big relief to be rid of those miscreants. I can't thank you enough. I know it isn't much, but please take this as a token of our thanks."
                 }
             }
@@ -163,20 +161,19 @@ locale {
                             _0 = "You can perform skills or other actions including bashing and digging by pressing [z]. Here's a tip. You can bash doors to break locks and trees to get some fruits. It can be used to wake someone, but surely they won't be happy."
                             _1 = "Also, remember that [space] key is a very useful key. When there's an object under your foot, it automatically chooses a suitable action for you."
                             _2 = "そうだな… 「穴掘り」実際に試してみようか。穴掘りは、道を短縮したり、鉱石を採掘したり、家のレイアウトを変える時に使う。とりあえず適当な壁の前に立ち、zキーを押して穴を掘ってみてくれ。"
-                            response = "Okay."
                         }
+                        response = "Okay."
                     }
 
                     _3 {
-                        dialog {
-                            _0 = "Looks like you found something."
-                        }
+                        dialog = "Looks like you found something."
                     }
+
                     _4 {
                         dialog {
-                            _1 = "Many items need to be identified before you can know what exactly they are. You can identify items by reading some scrolls or asking a wizard in a town. Remember that using unidentified potions or scrolls is very dangerous. "
-                            _2 = "Weapons and armor also need to be identified. If you carry them long enough, you will get a hunch as to how good they are. But to gain full knowledge of the items, you need to identify them."
-                            _3 = "Now I'll give you a scroll of identify. Read it by using [x] and identify the gold bar you just found."
+                            _0 = "Many items need to be identified before you can know what exactly they are. You can identify items by reading some scrolls or asking a wizard in a town. Remember that using unidentified potions or scrolls is very dangerous. "
+                            _1 = "Weapons and armor also need to be identified. If you carry them long enough, you will get a hunch as to how good they are. But to gain full knowledge of the items, you need to identify them."
+                            _2 = "Now I'll give you a scroll of identify. Read it by using [x] and identify the gold bar you just found."
                         }
 
                         choices {
@@ -216,7 +213,7 @@ locale {
                         dialog {
                             _0 = "Let's learn a little history of North Tyris. This sacred land governed by Palmia is known for ancient ruins <<Nefia>>. Occasionally new ruins are found and lost by erratic movements of the earths crust."
                             _1 = "A lord lives at the lowest layer of these ruins, protecting great treasures and therefore attracts numerous adventurers. However, avoid those ruins which exceed your current level. You may gain a lot, but you may lose your life."
-                            _2 = "迷宮に落ちている宝箱の開け方を知っておく必要があるな。足元に宝箱を置くので、xキー、またはスペースキーで開けてみるんだ。"
+                            _2 = "You might find chests containing loot in ruins. There's one nearby, open it."
                         }
                         response = "Okay."
                     }
@@ -229,13 +226,16 @@ locale {
                         }
                     }
                     _99 {
-                        _0 = "Alright, we're finished. You should already know how to survive in North Tyris by now."
-                        _1 = "(You've finished the tutorial!)"
+                        dialog {
+                            _0 = "Alright, we're finished. You should already know how to survive in North Tyris by now."
+                            _1 = "(You've finished the tutorial!)"
+                        }
                     }
                 }
 
                 after {
                     dialog = "What?"
+
                     choices {
                         nothing = "Nothing."
                         get_out = "Get out of my house!"
@@ -276,7 +276,7 @@ locale {
                     _1 = "T-There's no time left for me to explain all....my wounds are... *cough* Listen, Sierre Terre is in danger...this letter..this letter...this is our only hope...."
                     _2 = "I have no choice but to trust you.... *cough* bring the letter to Palmia.... I-I beg you...You can take everything I have on me...so... plea..s.."
                 }
-                you_recieve = "You receive a letter to the king Xabi. Your journal has been updated."
+                you_receive = "You receive a letter to the king Xabi. Your journal has been updated."
                 dies = "${basename(_1)} dies silently..."
             }
 
@@ -293,7 +293,7 @@ locale {
                         _0 = "It looks like you've finally managed to acquire all three of the stones, ${_1}. According to the information we've learned during the excavation, these stones are the key that will unlock the deepest reaches of Lesimas. However, be aware that terrifying monsters lurk in the abyss of Lesimas, and we have no idea how deep those caverns go."
                         _1 = "This will be your last mission. This will be no easy task, but failure is not an option. It's up to you to complete the excavation of Lesimas and find the room where the codex is kept. If you can't retrieve the <Origin of Vice> we will never be able to uncover the conspiracy Zanan has set into motion."
                         _2 = "If what Karam told us is true, the codex will be guarded by the late king Zashim's cousin, Zeome. Zeome was known to have been a very powerful warlock. In his day, he was by far the most powerful sorcerer alive. I wouldn't dare confront him unless you are extremely well prepared."
-                        _3 = ": Words alone are not enough to express our gratitude for all that you have done. This ring is a gift from Queen Stersha. We are praying for your success, "
+                        _3 = ": Words alone are not enough to express our gratitude for all that you have done. This ring is a gift from Queen Stersha. We are praying for your success, ${_1}."
                     }
 
                     you_receive = "You receive a key of Lesimas 25th level. Your journal has been updated."
@@ -347,7 +347,6 @@ locale {
                         _0 = "The <King's Magic Stone>, along with numerous other treasures, sleeps deep in the recesses of the vaults of the Ancient Castle, which was built by a long forgotten generation of the royal family. However, the royal family eventually relocated to Palmia and the former throne of the kingdom fell into disrepair and decay. It has been ages since anyone even set foot in the old castle..."
                         _1 = "After <Lord Wynan> took charge of the castle in the first century, even the thugs of Derphy became too scared to approach the castle. The danger level in the castle is roughly equivalent to the 17th floor of Lesimas."
                         _2 = "It is rumored that <Wynan> still rules the throne along with his personally trained army. Legends tell that the deadly halberd he carries, <Rankis>, can drain the life from his enemies with the greatest of ease. It would be wise to boost your resistance to nether... oh, and bear in mind that unless you can time your actions wisely he'll devour you like a dog."
-                        _3 =
                     }
                     inferno {
                         _0 = "If you head north from Palmia, through the untamed lands, you will eventually see a tower blazing with an aura of flames. The guardian of the tower, a powerful witch named <Quruiza the Red-eyed Deceiver>, watches over the <Sage's magic stone>. "
@@ -396,9 +395,7 @@ locale {
                 dies = "${basename(_1)} kills himself..."
             }
 
-            garokk {
-                dialog = "Don't you see I'm busy!"
-            }
+            garokk = "Don't you see I'm busy!"
 
             miral {
                 dialog = "Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"
@@ -511,6 +508,7 @@ locale {
 
                 bring_wife {
                     dialog = "Which one? Who have you brought for me to inspect?"
+
                     choices {
                         this_one = "How's this one?"
                         go_back = "Forget it."
@@ -524,7 +522,7 @@ locale {
                         come_along = "So... this is your wife eh? ${_1} is her name? Don't be embarrassed, come along!"
                         leaving = "Ick, you're leaving me with him!?"
                         not_human = "She's...she's not--hiii--She's not even hu--huuuuu--human.."
-                        finish = "She's a work of art! Looks like we have the same taste in women. Hey, if you bring me another one as good as this one, I will give you something incredible. "
+                        end = "She's a work of art! Looks like we have the same taste in women. Hey, if you bring me another one as good as this one, I will give you something incredible. "
                     }
                 }
             }
@@ -621,8 +619,9 @@ locale {
 
                         yes = "Hahaha! I pray Opatos' favor be with you!"
                         no = "We're waiting on you."
-                        end = "Muwahahahah! Muwahahahahaha! Mu-mu...wa..! *cough* *cough* My...My apologies. Your heroic figure striding the battlefield was so amazing that even I was shaken. With this, the Liberation Army can pass the borders of Palmia. Please, accept this reward as my thanks."
                     }
+
+                    end = "Muwahahahah! Muwahahahahaha! Mu-mu...wa..! *cough* *cough* My...My apologies. Your heroic figure striding the battlefield was so amazing that even I was shaken. With this, the Liberation Army can pass the borders of Palmia. Please, accept this reward as my thanks."
                 }
             }
 
@@ -650,8 +649,9 @@ locale {
 
                         yes = "I'll guide you to the battlefield then. Whatever you do, don't let them get close! I'll tell the Palmian army to begin a steady retreat."
                         no = "Hurry up!"
-                        end = "Well done. I cannot believe you made it back alive! I've heard my comrades are safe. I can find no words to express my gratitude. Please take this reward."
                     }
+
+                    end = "Well done. I cannot believe you made it back alive! I've heard my comrades are safe. I can find no words to express my gratitude. Please take this reward."
                 }
             }
 
@@ -739,19 +739,22 @@ locale {
                     buy_nuke {
                         dialog = "Here, you need a nuke. Only 12000 gold pieces."
 
-                        choices = {
+                        choices {
                             buy = "I'll buy."
                         }
 
                         buy = "Go, make the brilliant blood red roses bloom."
                         bye = "Then go away."
-                        waiting = "Go, make the brilliant blood red roses bloom."
-                        end = "I can feel it already... the suffering... the misery... the pain... You've killed many people this day, you should be proud. Little kids, girls, women, old men, the sick, the feeble, even those neither born nor conceived yet. My body's hot, excited, I can hardly breathe... I won't be able to sleep tonight. My thanks, these are for you. "
                     }
+
+                    waiting = "Go, make the brilliant blood red roses bloom."
+                    end = "I can feel it already... the suffering... the misery... the pain... You've killed many people this day, you should be proud. Little kids, girls, women, old men, the sick, the feeble, even those neither born nor conceived yet. My body's hot, excited, I can hardly breathe... I won't be able to sleep tonight. My thanks, these are for you. "
                 }
             }
 
             icolle {
+                complete = "I don't have time to talk, I'm busy conducting experiments. Out of the way!"
+
                 quest {
                     dialog = "Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."
                     choices {
@@ -762,7 +765,7 @@ locale {
                     bye = "Then get out of my way you fool!"
 
                     give {
-                        deliver = "You deliver ${_1}." # TODO duplicate
+                        deliver = "You deliver ${itemname(_1)}." # TODO duplicate
                         have = "Oh oh! What a fine batch of samples you've brought me. I can finally proceed with the final stage."
                         do_not_have = "Let's go over this one last time... I need five samples to proceed. FIVE."
                     }
@@ -937,28 +940,26 @@ locale {
             strange_scientist {
                 first = "Please, hear me out. If you should happen to run into any little sisters during your travels, please help them out. They seem to be monsters at first glance, but I'm doing important research that will return these girls to their gentle smiling nature. Please I beg of you... use these balls to bring the little sisters to me. I'd be very grateful, perhaps I'd even reward you."
 
+                dialog = "Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "
+
+                choices {
+                    reward = "What about the reward you promised me?"
+                    replenish = "I need to replenish my supply of little balls."
+                    turn_over = "(Turn over the little sister.)"
+                }
+
+                reward {
+                    not_enough = "You haven't brought me enough sisters yet. Bring me a few more and then we'll discuss your reward."
+                    dialog = "That's right...your reward. The little sisters have been picking things up for you that people have lost in town. Please, take whatever you like. If you like, you can wait until you've lost something valuable."
+                    choose_one = "You can choose 1 item."
+                    find = "Did you find what you were looking for?"
+                }
+
+                replenish = "Well then, take this with you. Be careful though, it's heavy."
+
                 turn_over {
-                    dialog = "Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "
-
-                    choices {
-                        reward = "What about the reward you promised me?"
-                        replenish = "I need to replenish my supply of little balls."
-                        turn_over = "(Turn over the little sister.)"
-                    }
-
-                    reward {
-                        not_enough = "You haven't brought me enough sisters yet. Bring me a few more and then we'll discuss your reward."
-                        dialog = "That's right...your reward. The little sisters have been picking things up for you that people have lost in town. Please, take whatever you like. If you like, you can wait until you've lost something valuable."
-                        choose_one = "You can choose 1 item."
-                        find = "Did you find what you were looking for?"
-                    }
-
-                    replenish = "Well then, take this with you. Be careful though, it's heavy."
-
-                    turn_over {
-                        text = "You turn over the little sister."
-                        dialog = "Thanks, I appreciate what you've done. It won't be long before I can reward you."
-                    }
+                    text = "You turn over the little sister."
+                    dialog = "Thanks, I appreciate what you've done. It won't be long before I can reward you."
                 }
             }
 
@@ -979,7 +980,7 @@ locale {
                     no = "If you say so."
                 }
 
-                have_drug {
+                before_drug {
                     dialog = "That-that's a capsule drug! ...hey, you want to give it to me?"
 
                     choices {
