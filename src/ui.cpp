@@ -1186,9 +1186,8 @@ void render_hud()
         color(0, 0, 0);
         sy -= 32;
     }
-    pos(inf_clockarrowx, inf_clockarrowy);
     gmode(2);
-    grotate(3, 0, 288, 48, 48, 0.0174532925199433 * (gdata_hour * 30));
+    draw_rotated("clock_hand", inf_clockarrowx, inf_clockarrowy, 0.0174532925199433 * (gdata_hour * 30));
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
@@ -1297,9 +1296,8 @@ void render_autoturn_animation()
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::font_t::style_t::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
-    pos(sx + 18, sy + 12);
     gmode(2);
-    grotate(3, 72, 392, 24, 24, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
+    draw_rotated("hourglass", sx + 18, sy + 12, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
 
     if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
         || cdata[0].continuous_action_id == 8

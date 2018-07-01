@@ -1289,4 +1289,54 @@ void draw(const std::string& key, int x, int y, int width, int height)
 
 
 
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    double angle)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
+    const auto& info = itr->second;
+
+    pos(center_x, center_y);
+    grotate(
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        angle);
+}
+
+
+
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    int width,
+    int height,
+    double angle)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
+    const auto& info = itr->second;
+
+    pos(center_x, center_y);
+    grotate(
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        width,
+        height,
+        angle);
+}
+
+
+
 } // namespace elona

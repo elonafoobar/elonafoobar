@@ -202,5 +202,26 @@ images {
         width = 120
         height = 22
     }
+    direction_arrow {
+        source = "interface.bmp"
+        x = 212
+        y = 432
+        width = 28
+        height = 28
+    }
+    clock_hand {
+        source = "interface.bmp"
+        x = 0
+        y = 288
+        width = 48
+        height = 48
+    }
+    hourglass {
+        source = "interface.bmp"
+        x = 72
+        y = 392
+        width = 24
+        height = 24
+    }
 }
 
