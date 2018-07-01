@@ -2611,7 +2611,7 @@ void window2(
     {
         pos(x + 2, y + 2);
         gcopy(3, 24, 72, 228, 144, width - 4, height - 5);
-        boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
+        boxf(x + 2, y + 2, width - 4, height - 4, {0, 0, 0, 195});
     }
 }
 
