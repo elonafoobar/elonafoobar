@@ -420,6 +420,23 @@ void gcopy(
     int dst_width = -1,
     int dst_height = -1);
 
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height);
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height);
+
+
 bool getkey(snail::key);
 
 void getstr(
@@ -433,13 +450,6 @@ int ginfo(int type);
 
 
 void gmode(int mode, int width = -1, int height = -1, int alpha = 255);
-
-void grotate_(
-    int window_id,
-    int src_x,
-    int src_y,
-    int dst_width = 0,
-    int dst_height = 0);
 
 void grotate(
     int window_id,

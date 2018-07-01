@@ -341,6 +341,30 @@ void gcopy(
 
 
 
+void gcopy_c(int window_id, int src_x, int src_y, int src_width, int src_height)
+{
+    gcopy_c(
+        window_id, src_x, src_y, src_width, src_height, src_width, src_height);
+}
+
+
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height)
+{
+    pos(ginfo(22) - dst_width / 2, ginfo(23) - dst_height / 2);
+    snail::hsp::gcopy(
+        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
+}
+
+
+
 bool getkey(snail::key key)
 {
     return snail::input::instance().is_pressed(key);
@@ -398,18 +422,6 @@ template <typename T>
 constexpr T rad2deg(T rad)
 {
     return rad * 180.0 / 3.14159265358979323846264;
-}
-
-
-
-void grotate_(
-    int window_id,
-    int src_x,
-    int src_y,
-    int dst_width,
-    int dst_height)
-{
-    snail::hsp::grotate_(window_id, src_x, src_y, dst_width, dst_height);
 }
 
 

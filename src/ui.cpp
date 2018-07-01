@@ -1847,11 +1847,17 @@ void label_1445()
             {
                 dx = mdata(0);
             }
+            ap = map(dx, dy, 0);
             pos(x * evtiles, y * evtiles);
             gmode(0, inf_tiles, inf_tiles);
-            ap = map(dx, dy, 0);
-            grotate_(
-                2, ap % 33 * inf_tiles, ap / 33 * inf_tiles, evtiles, evtiles);
+            gcopy_c(
+                2,
+                ap % 33 * inf_tiles,
+                ap / 33 * inf_tiles,
+                inf_tiles,
+                inf_tiles,
+                evtiles,
+                evtiles);
         }
     }
 }
@@ -1930,16 +1936,17 @@ void render_fishing_animation()
     {
         sx2 = inf_tiles / 2 + rnd(3) - 1;
         sy2 = inf_tiles / 2 + 12;
-        gmode(2, 48, 48);
         pos(sx + sx2 + 1, sy + sy2 + 40);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 1)
     {
         sx2 = inf_tiles / 2 - 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 - 16, sy + sy2 + 25);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
@@ -1951,7 +1958,8 @@ void render_fishing_animation()
         sx2 = inf_tiles / 2 + 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 + 14, sy + sy2 + 25);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2, 48, 48);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
@@ -2582,7 +2590,7 @@ void window2(
     case 6:
         pos(x + width / 2, y + height / 2);
         gmode(4, 228, 144, 180);
-        grotate_(3, 24, 72, width - 4, height - 4);
+        gcopy_c(3, 24, 72, 228, 144, width - 4, height - 4);
         break;
     default: break;
     }
