@@ -551,26 +551,19 @@ label_20591:
     {
         if (invctrl == 21)
         {
-            txt(lang(
-                itemname(citrade) + u8"に見合う物を所持していない。"s,
-                u8"You don't have stuff that match "s + itemname(citrade)
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.trade.too_low_value", inv[citrade]));
             f = 1;
         }
         if (invctrl == 27)
         {
             if (tc != 0)
             {
-                txt(lang(
-                    name(tc) + u8"は盗めるものを所持していない。"s,
-                    name(tc) + u8" has nothing to steal."s));
+                txt(i18n::s.get("core.locale.ui.inv.steal.has_nothing", cdata[tc]));
                 f = 1;
             }
             else
             {
-                txt(lang(
-                    u8"そこに盗めるものはない。"s,
-                    u8"There's nothing to steal."s));
+                txt(i18n::s.get("core.locale.ui.inv.steal.there_is_nothing"));
                 f = 1;
             }
         }
@@ -581,7 +574,7 @@ label_20591:
         if (stat == -1)
         {
             ++msgdup;
-            txt(lang(u8"ここには祭壇がない。"s, u8"There's no altar here."s));
+            txt(i18n::s.get("core.locale.ui.inv.offer.no_altar"));
             f = 1;
         }
     }
@@ -591,9 +584,7 @@ label_20591:
         {
             if (cdata[tc].relationship == 10)
             {
-                txt(lang(
-                    u8"仲間からは盗みたくない。"s,
-                    u8"You don't want to rob your ally."s));
+                txt(i18n::s.get("core.locale.ui.inv.steal.do_not_rob_ally"));
                 f = 1;
             }
         }
@@ -606,9 +597,7 @@ label_20591:
             {
                 if (gdata_mages_guild_quota <= 0)
                 {
-                    txt(lang(
-                        u8"現在魔術士ギルドのノルマはない。"s,
-                        u8"You have no quota for Mages Guild."s));
+                    txt(i18n::s.get("core.locale.ui.inv.put.guild.have_no_quota"));
                     f = 1;
                 }
             }
@@ -646,49 +635,19 @@ label_20591:
         {
             valn = itemname(citrade);
         }
-        s(0) = "";
-        s(1) = lang(u8"どのアイテムを調べる？ "s, u8"Examine what? "s);
-        s(2) = lang(u8"どのアイテムを置く？ "s, u8"Drop what? "s);
-        s(3) = lang(
-            u8"どのアイテムを拾う？ "s,
-            u8"Which item do you want to pick up? "s);
-        s(4) = lang(u8"何を装備する？"s, u8"Equip what?"s);
-        s(5) = lang(u8"何を食べよう？ "s, u8"Eat what? "s);
-        s(6) = "";
-        s(7) = lang(u8"どれを読む？ "s, u8"Read what? "s);
-        s(8) = lang(u8"どれを飲む？ "s, u8"Drink what? "s);
-        s(9) = lang(u8"どれを振る？ "s, u8"Zap what? "s);
-        s(10) = lang(u8"どれを渡す？ "s, u8"Which item do you want to give? "s);
-        s(11) = lang(u8"どれを購入する？ "s, u8"What do you want to buy? "s);
-        s(12) = lang(u8"どれを売却する？ "s, u8"What do you want to sell? "s);
-        s(13) = lang(
-            u8"どのアイテムを鑑定する？ "s,
-            u8"Which item do you want to identify? "s);
-        s(14) = lang(u8"どのアイテムを使用する？ "s, u8"Use what? "s);
-        s(15) = lang(u8"どれを開ける？ "s, u8"Open what? "s);
-        s(16) = lang(u8"何を料理する？ "s, u8"Cook what? "s);
-        s(17) = lang(u8"何を混ぜる？ "s, u8"Blend what? "s);
-        s(18) = lang(
-            u8"何に混ぜる？("s + valn + u8"の効果を適用するアイテムを選択) "s,
-            u8"Which item do you want to apply the effect of "s + valn
-                + u8"? "s);
-        s(19) = lang(
-            u8"何を神に捧げる？ "s,
-            u8"What do you want to offer to your God? "s);
-        s(20) =
-            lang(u8"何を交換する？ "s, u8"Which item do you want to trade? "s);
-        s(21) = lang(
-            valn + u8"の代わりに何を提示する？ "s,
-            u8"What do you offer for "s + valn + u8"? "s);
-        s(22) = lang(u8"何を取る？ "s, u8"Take what? "s);
-        s(23) = lang(u8"何を対象にする？ "s, u8"Target what? "s);
-        s(24) = lang(u8"何を入れる？ "s, u8"Put what? "s);
-        s(25) = lang(u8"何をもらう？ "s, u8"Which item do you want to take? "s);
-        s(26) = lang(u8"何を投げる？ "s, u8"Throw what? "s);
-        s(27) = lang(u8"何を盗む？ "s, u8"Steal what? "s);
-        s(28) = lang(u8"何と交換する？ "s, u8"Trade what? "s);
-        s(29) =
-            lang(u8"何を予約する？"s, u8"Which item do you want to reserve? "s);
+
+        for (int cnt = 0; cnt < 30; cnt++)
+        {
+            if (auto text = i18n::s.get_enum_optional("core.locale.ui.inv.title", cnt, valn))
+            {
+                s(cnt) = *text;
+            }
+            else
+            {
+                s(cnt) = ""s;
+            }
+        }
+
         if (s(invctrl) != ""s)
         {
             txtnew();
@@ -708,9 +667,7 @@ label_20591:
             {
                 p = 0;
             }
-            txt(lang(
-                u8"(持っているメダル: "s + p + u8"枚)"s,
-                u8"(Coins: "s + p + u8")"s));
+            txt(i18n::s.get("core.locale.ui.inv.trade_medals.medals", p(0)));
         }
         if (invctrl == 24)
         {
@@ -718,10 +675,8 @@ label_20591:
             {
                 if (gdata_current_map == 36)
                 {
-                    txt(lang(
-                        u8"ノルマ残り: "s + gdata_mages_guild_quota + u8"GP"s,
-                        ""s + gdata_mages_guild_quota
-                            + u8"guild points are needed to gain a rank."s));
+                    txt(i18n::s.get("core.locale.ui.inv.put.guild.remaining",
+                                    gdata_mages_guild_quota));
                 }
             }
         }
@@ -762,9 +717,7 @@ label_2060_internal:
             int stat = inv_find(invsc, 0);
             if (stat == -1)
             {
-                txt(lang(
-                    u8"そのアイテムは存在しない。"s,
-                    u8"The item doesn't exist."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.does_not_exist"));
             }
             else
             {
@@ -868,15 +821,13 @@ label_2060_internal:
         }
         bmes(
             ""s + key_prev + u8","s + key_next + u8",Tab "s
-                + lang(u8"[メニュー切替]"s, u8"[Change]"s),
+            + "[" + i18n::s.get("core.locale.ui.inv.window.change") + "]",
             x + 325,
             y + 32);
     }
 label_2061_internal:
-    s = lang(
-        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl)
-            + u8"アイテムの選択"s,
-        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
+    s = i18n::s.get("core.locale.ui.inv.window.select_item",
+                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
     s(1) = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)
@@ -886,14 +837,14 @@ label_2061_internal:
     if (invctrl == 1)
     {
         s(1) += ""s + key_mode2 + u8" "s
-            + lang(u8"[保持指定]"s, u8"[Tag No-Drop]"s);
+            + "[" + i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
     }
     if (invctrl == 2)
     {
         if (dropcontinue == 0)
         {
             s(1) += ""s + key_mode2 + u8" "s
-                + lang(u8"[連続で置く]"s, u8"[Multi Drop]"s);
+                + "[" + i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
         }
     }
     display_window((windoww - 640) / 2 + inf_screenx, winposy(432), 640, 432);
@@ -902,23 +853,21 @@ label_2061_internal:
         pos(wx + 46, wy - 14);
         gcopy(3, 288 + invicon(invctrl) * 48, 48, 48, 48);
     }
-    s = lang(u8"重さ"s, u8"Weight"s);
+    s = i18n::s.get("core.locale.ui.inv.window.weight");
     if (invctrl == 11 || invctrl == 12)
     {
-        s = lang(u8"値段"s, u8"Price"s);
+        s = i18n::s.get("core.locale.ui.inv.buy.window.price");
     }
     if (invctrl == 28)
     {
-        s = lang(u8"メダル"s, u8"Medal"s);
+        s = i18n::s.get("core.locale.ui.inv.trade_medals.window.medal");
     }
-    display_topic(lang(u8"アイテムの名称"s, u8"Name"s), wx + 28, wy + 30);
+    display_topic(i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
     display_topic(s, wx + 526, wy + 30);
     if (showresist)
     {
         pos(wx + 300, wy + 40);
-        mes(lang(
-            u8"火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"s,
-            u8"Fi Co Li Da Mi Po Nt So Nr Ch Ma"s));
+        mes(i18n::s.get("core.locale.ui.inv.window.resist"));
     }
     pos(wx + ww - 136, wy - 6);
     gcopy(3, 960, 96, 144, 48);
@@ -932,9 +881,10 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += u8"  (重さ合計 "s + cnvweight(cdata[0].inventory_weight) + u8"/"s
-        + cnvweight(cdata[0].max_inventory_weight) + u8"  荷車 "s
-        + cnvweight(gdata_cargo_weight) + u8")"s;
+    s += i18n::s.get("core.locale.ui.inv.window.total_weight",
+                     cnvweight(cdata[0].inventory_weight),
+                     cnvweight(cdata[0].max_inventory_weight),
+                     cnvweight(gdata_cargo_weight));
     if (invctrl == 25)
     {
         s = ""s;
@@ -952,13 +902,13 @@ label_2061_internal:
         pos(x + 16, y + 17);
         mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
-        mes(lang(u8"装備重量:"s, u8"EquipWt:"s)
+        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") + ":"
             + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
             + cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         pos(x, y);
-        mes(lang(u8"装備箇所:"s, u8"Equip:"s));
+        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
         x += 60;
         for (int cnt = 100; cnt < 130; ++cnt)
         {
@@ -1022,14 +972,16 @@ label_2061_internal:
         }
         if (invctrl == 28)
         {
-            s(1) = ""s + calcmedalvalue(p) + lang(u8" 枚"s, u8" Coins"s);
+            s(1) = i18n::s.get("core.locale.ui.inv.trade_medals.medal_value", calcmedalvalue(p));
         }
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27
             && invctrl != 28)
         {
             if (p >= 5080)
             {
-                s += lang(u8"(足元)"s, u8" (Ground)"s);
+                s += i18n::space_if_needed() + "("
+                    + i18n::s.get("core.locale.ui.inv.window.ground")
+                    + ")";
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -1057,7 +1009,9 @@ label_2061_internal:
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             if (p == mainweapon)
             {
-                s += lang(u8"(利腕)"s, u8" (Main hand)"s);
+                s += i18n::space_if_needed() + "("
+                    + i18n::s.get("core.locale.ui.inv.window.main_hand")
+                    + ")";
             }
         }
         if (showresist)
@@ -1125,16 +1079,12 @@ label_2061_internal:
             if (ibit(13, ci))
             {
                 snd(27);
-                txt(lang(
-                    u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                    u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             if (!inv_getspace(-1))
             {
-                txt(lang(
-                    u8"これ以上は置けない。"s,
-                    u8"You can't drop items any more."s));
+                txt(i18n::s.get("core.locale.ui.inv.drop.cannot_anymore"));
                 snd(27);
                 goto label_2060_internal;
             }
@@ -1144,9 +1094,7 @@ label_2061_internal:
                 {
                     if (the_item_db[inv[ci].id]->category != 60000)
                     {
-                        txt(lang(
-                            u8"これ以上は置けない。"s,
-                            u8"You can't drop items any more."s));
+                        txt(i18n::s.get("core.locale.ui.inv.drop.cannot_anymore"));
                         snd(27);
                         goto label_2060_internal;
                     }
@@ -1154,10 +1102,8 @@ label_2061_internal:
             }
             if (inv[ci].number > 1)
             {
-                txt(lang(
-                    itemname(ci, 1) + u8"をいくつ落とす？ (1〜"s
-                        + inv[ci].number + u8") "s,
-                    u8"How many? (1 to "s + inv[ci].number + u8")"s));
+                txt(i18n::s.get("core.locale.ui.inv.drop.how_many",
+                                inv[ci].number, inv[ci]));
                 display_msg(screenmsgy, 1);
                 inputlog = ""s + inv[ci].number;
                 input_number_dialog(
@@ -1198,9 +1144,7 @@ label_2061_internal:
                 if (ibit(13, ci))
                 {
                     snd(27);
-                    txt(lang(
-                        u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                        u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                    txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
                 }
             }
@@ -1211,9 +1155,7 @@ label_2061_internal:
                     if (inv_sum(-1) >= invcontainer)
                     {
                         snd(27);
-                        txt(lang(
-                            u8"これ以上入らない。"s,
-                            u8"The container is full."s));
+                        txt(i18n::s.get("core.locale.ui.inv.put.container.full"));
                         goto label_2060_internal;
                     }
                 }
@@ -1222,19 +1164,14 @@ label_2061_internal:
                     if (inv[ci].weight >= efp * 100)
                     {
                         snd(27);
-                        txt(lang(
-                            u8"重さが"s + cnvweight(efp * 100)
-                                + u8"以上の物は入らない。"s,
-                            u8"The container can only hold items weight less than "s
-                                + cnvweight(efp * 100) + u8"."s));
+                        txt(i18n::s.get("core.locale.ui.inv.put.container.too_heavy",
+                                        cnvweight(efp * 100)));
                         goto label_2060_internal;
                     }
                     if (inv[ci].weight <= 0)
                     {
                         snd(27);
-                        txt(lang(
-                            u8"荷物は入らない。"s,
-                            u8"The container cannot hold cargos"s));
+                        txt(i18n::s.get("core.locale.ui.inv.put.container.cannot_hold_cargo"));
                         goto label_2060_internal;
                     }
                 }
@@ -1255,9 +1192,7 @@ label_2061_internal:
                 {
                     if (gdata_rights_to_succeed_to < 1)
                     {
-                        txt(lang(
-                            u8"遺産の相続権を持っていない。"s,
-                            u8"You don't have a claim."s));
+                        txt(i18n::s.get("core.locale.ui.inv.take.no_claim"));
                         goto label_2060_internal;
                     }
                 }
@@ -1278,18 +1213,11 @@ label_2061_internal:
                 ++msgdup;
                 if (inv[ci].own_state == 2)
                 {
-                    txt(lang(
-                        u8"それは持ち運べない。"s, u8"You can't carry it."s));
+                    txt(i18n::s.get("core.locale.ui.inv.pick_up.cannot_carry"));
                 }
                 if (inv[ci].own_state == 1)
                 {
-                    txt(lang(
-                            u8"それはあなたの物ではない。"s,
-                            u8"It's not your property."s),
-                        lang(
-                            u8"盗むなんてとんでもない。"s,
-                            u8"You can't just take it."s),
-                        lang(u8"それは拾えない。"s, u8"It's not yours."s));
+                    txt(i18n::s.get_enum("core.locale.ui.inv.pick_up.not_owned", rnd(3)));
                 }
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1300,17 +1228,13 @@ label_2061_internal:
             {
                 if (invctrl == 11)
                 {
-                    txt(lang(
-                        itemname(ci, 1) + u8"をいくつ買う？ (1〜"s
-                            + inv[ci].number + u8") "s,
-                        u8"How many? (1 to "s + inv[ci].number + u8")"s));
+                    txt(i18n::s.get("core.locale.ui.inv.buy.how_many",
+                                    inv[ci].number, inv[ci]));
                 }
                 if (invctrl == 12)
                 {
-                    txt(lang(
-                        itemname(ci, 1) + u8"をいくつ売る？ (1〜"s
-                            + inv[ci].number + u8") "s,
-                        u8"How many? (1 to "s + inv[ci].number + u8")"s));
+                    txt(i18n::s.get("core.locale.ui.inv.sell.how_many",
+                                    inv[ci].number, inv[ci]));
                 }
                 display_msg(screenmsgy, 2);
                 inputlog = ""s + inv[ci].number;
@@ -1338,21 +1262,13 @@ label_2061_internal:
             {
                 if (invctrl == 11)
                 {
-                    txt(lang(
-                        itemname(ci, in) + u8"を "s + in * calcitemvalue(ci, 0)
-                            + u8" gp で買う？"s,
-                        u8"Do you really want to buy "s + itemname(ci, in)
-                            + u8" for "s + in * calcitemvalue(ci, 0)
-                            + u8" gold pieces?"s));
+                    txt(i18n::s.get("core.locale.ui.inv.buy.prompt",
+                                    itemname(ci, in), (in * calcitemvalue(ci, 0))));
                 }
                 if (invctrl == 12)
                 {
-                    txt(lang(
-                        itemname(ci, in) + u8"を "s + in * calcitemvalue(ci, 1)
-                            + u8" gp で売る？"s,
-                        u8"Do you really want to sell "s + itemname(ci, in)
-                            + u8" for "s + in * calcitemvalue(ci, 1)
-                            + u8" gold pieces?"s));
+                    txt(i18n::s.get("core.locale.ui.inv.sell.prompt",
+                                    itemname(ci, in), (in * calcitemvalue(ci, 0))));
                 }
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
@@ -1368,12 +1284,7 @@ label_2061_internal:
                     {
                         screenupdate = -1;
                         update_screen();
-                        txt(lang(
-                                u8"あなたは財布を開いてがっかりした…"s,
-                                u8"You check your wallet and shake your head."s),
-                            lang(
-                                u8"もっと稼がないと買えない！"s,
-                                u8"You need to earn more money!"s));
+                        txt(i18n::s.get_enum("core.locale.ui.inv.buy.not_enough_money", rnd(2)));
                         msgkeep = 1;
                         goto label_20591;
                     }
@@ -1386,11 +1297,8 @@ label_2061_internal:
                         {
                             screenupdate = -1;
                             update_screen();
-                            txt(lang(
-                                name(tc) + u8"は財布を開いてがっかりした…"s,
-                                name(tc) + u8" checks "s + his(tc)
-                                    + u8" wallet and shake "s + his(tc)
-                                    + u8" head."s));
+                            txt(i18n::s.get("core.locale.ui.inv.sell.not_enough_money",
+                                            cdata[tc]));
                             msgkeep = 1;
                             goto label_20591;
                         }
@@ -1414,12 +1322,8 @@ label_2061_internal:
                     --gdata_rights_to_succeed_to;
                     if (invctrl(1) == 1)
                     {
-                        txt(lang(
-                            u8"残り"s + gdata_rights_to_succeed_to
-                                + u8"個分のアイテムの相続権を持っている。"s,
-                            u8"You can claim "s + gdata_rights_to_succeed_to
-                                + u8" more heirloom"s
-                                + _s2(gdata_rights_to_succeed_to) + u8"."s));
+                        txt(i18n::s.get("core.locale.ui.inv.take.can_claim_more",
+                                        gdata_rights_to_succeed_to));
                     }
                 }
                 if (invctrl(1) == 4)
@@ -1439,9 +1343,7 @@ label_2061_internal:
             if (ibit(13, ci))
             {
                 snd(27);
-                txt(lang(
-                    u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                    u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             screenupdate = -1;
@@ -1449,15 +1351,7 @@ label_2061_internal:
             savecycle();
             if (cdata[0].nutrition > 10000)
             {
-                txt(lang(
-                        u8"今はとても食べられない。"s,
-                        u8"Your are too full to eat."s),
-                    lang(
-                        u8"腹がさける…"s,
-                        u8"You are too bloated to eat any more."s),
-                    lang(
-                        u8"まだ腹は減っていない。"s,
-                        u8"Your stomach can't digest any more."s));
+                txt(i18n::s.get_enum("core.locale.ui.inv.eat.too_bloated", rnd(3)));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -1473,9 +1367,7 @@ label_2061_internal:
                 {
                     if (inv[ci].weight >= 1000)
                     {
-                        txt(lang(
-                            u8"それは重すぎて装備できない。"s,
-                            u8"It's too heavy to equip."s));
+                        txt(i18n::s.get("core.locale.ui.inv.equip.too_heavy"));
                         goto label_2060_internal;
                     }
                 }
@@ -1486,27 +1378,19 @@ label_2061_internal:
             update_screen();
             snd(13);
             txtnew();
-            txt(lang(
-                itemname(ci) + u8"を装備した。"s,
-                u8"You equip "s + itemname(ci) + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.equip.you_equip", inv[ci]));
             gdata(808) = 1;
             switch (inv[ci].curse_state)
             {
             case curse_state_t::doomed:
-                txt(lang(
-                    name(cc) + u8"は破滅への道を歩み始めた。"s,
-                    u8"You are now one step closer to doom."s));
+                txt(i18n::s.get("core.locale.ui.inv.equip.doomed", cdata[cc]));
                 break;
             case curse_state_t::cursed:
-                txt(lang(
-                    name(cc) + u8"は急に寒気がしてふるえた。"s,
-                    u8"You suddenly feel a chill and shudder."s));
+                txt(i18n::s.get("core.locale.ui.inv.equip.cursed", cdata[cc]));
                 break;
             case curse_state_t::none: break;
             case curse_state_t::blessed:
-                txt(lang(
-                    name(cc) + u8"は何かに見守られている感じがした。"s,
-                    u8"You feel as someone is watching you intently."s));
+                txt(i18n::s.get("core.locale.ui.inv.equip.blessed", cdata[cc]));
                 break;
             }
             if (cdata_body_part(cc, body) / 10000 == 5)
@@ -1546,42 +1430,29 @@ label_2061_internal:
             if (ibit(13, ci))
             {
                 snd(27);
-                txt(lang(
-                    u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                    u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             ti = inv_getfreeid(tc);
             if (cdata[tc].sleep)
             {
-                txt(lang(
-                    name(tc) + u8"は眠っている。"s,
-                    name(tc) + u8" "s + is(tc) + u8" sleeping."s));
+                txt(i18n::s.get("core.locale.ui.inv.give.is_sleeping", cdata[tc]));
                 snd(27);
                 goto label_2060_internal;
             }
             if (ti == -1)
             {
-                txt(lang(
-                    name(tc) + u8"はこれ以上持てない。"s,
-                    his(tc) + u8" inventory is full."s));
+                txt(i18n::s.get("core.locale.ui.inv.give.inventory_is_full", cdata[tc]));
                 snd(27);
                 goto label_2060_internal;
             }
             reftype = the_item_db[inv[ci].id]->category;
             if (inv[ci].id == 729)
             {
-                txt(lang(
-                    u8"あなたは"s + name(tc) + u8"に"s + itemname(ci, 1)
-                        + u8"をプレゼントした。"s,
-                    u8"You give "s + name(tc) + u8" "s + itemname(ci, 1)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.ui.inv.give.present.text", cdata[tc], inv[ci]));
                 --inv[ci].number;
                 refresh_burden_state();
-                txt(lang(
-                    u8"「え、これを"s + _ore(3) + u8"にくれるの"s + _ka(1) + ""s
-                        + _thanks(2) + u8"」"s,
-                    u8"\"Thank you!\""s));
+                txt(i18n::s.get("core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
@@ -1617,10 +1488,10 @@ label_2061_internal:
             if (f)
             {
                 s(0) = "";
-                s(1) = lang(u8"「重すぎ」"s, u8"\"Too heavy!\""s);
-                s(2) = lang(u8"「無理」"s, u8"\"No way.\""s);
-                s(3) = lang(u8"「いらん」"s, u8"\"I don't want it.\""s);
-                s(4) = lang(u8"「イヤ！」"s, u8"\"Never!\""s);
+                for (int cnt = 0; cnt < 4; cnt++)
+                {
+                    s(cnt + 1) = i18n::s.get_enum("core.locale.ui.inv.give.refuse_dialog", cnt);
+                }
                 snd(27);
                 txt(lang(name(tc) + s(f), s(f)));
                 goto label_2060_internal;
@@ -1636,18 +1507,13 @@ label_2061_internal:
                     <= identification_state_t::partly_identified)
                 {
                     snd(27);
-                    txt(lang(
-                        u8"「そんな得体の知れないものはいらない"s + _yo()
-                            + u8"」"s,
-                        u8"\"I don't want it. It's too creepy.\""s));
+                    txt(i18n::s.get("core.locale.ui.inv.give.too_creepy", cdata[tc]));
                     goto label_2060_internal;
                 }
                 if (is_cursed(inv[ci].curse_state))
                 {
                     snd(27);
-                    txt(lang(
-                        u8"「それ、呪われてい"s + _ru() + u8"」"s,
-                        u8"\"It's cursed!\""s));
+                    txt(i18n::s.get("core.locale.ui.inv.give.cursed", cdata[tc]));
                     goto label_2060_internal;
                 }
                 if (reftype == 53000)
@@ -1682,9 +1548,7 @@ label_2061_internal:
                         if (cdata[tc].drunk)
                         {
                             snd(27);
-                            txt(lang(
-                                u8"「もう飲めない"s + _yo() + u8"」"s,
-                                u8"\"Enough for me.\""s));
+                            txt(i18n::s.get("core.locale.ui.inv.give.no_more_drink", cdata[tc]));
                             goto label_2060_internal;
                         }
                     }
@@ -1704,7 +1568,7 @@ label_2061_internal:
                             || inv[ci].id == 392)
                         {
                             f = 1;
-                            txt(lang(u8"「おろす…」"s, u8"\"Abortion...\""s));
+                            txt(i18n::s.get("core.locale.ui.inv.give.abortion"));
                         }
                     }
                 }
@@ -1712,37 +1576,23 @@ label_2061_internal:
             if (f)
             {
                 snd(13);
-                txt(lang(
-                    itemname(ci, 1) + u8"を渡した。"s,
-                    u8"You hand "s + itemname(ci, 1) + u8" to "s + name(tc)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
                 if (inv[ci].id == 477 || inv[ci].id == 473)
                 {
                     txtef(2);
-                    txt(lang(
-                        name(tc) + u8"は顔を赤らめた。"s,
-                        name(tc) + u8" blushes."s));
+                    txt(i18n::s.get("core.locale.ui.inv.give.engagement", cdata[tc]));
                     chara_mod_impression(tc, 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
                 {
                     txtef(8);
-                    txt(lang(
-                        name(tc) + u8"は激怒して"s + itemname(ci, 1)
-                            + u8"を叩き割った。"s,
-                        name(tc) + u8" throws it on the ground angrily."s));
+                    txt(i18n::s.get("core.locale.ui.inv.give.love_potion.text",
+                                    cdata[tc], inv[ci]));
                     snd(47);
                     txtef(9);
-                    txt(lang(
-                            name(tc) + u8"「サイテー！！」"s,
-                            u8"\"You scum!\""s),
-                        lang(
-                            name(tc) + u8"「このヘンタイ！」"s,
-                            u8"\"What are you trying to do!\""s),
-                        lang(
-                            name(tc) + u8"「ガード！ガード！ガード！」"s,
-                            u8"\"Guard! Guard! Guard!\""s));
+                    txt(i18n::s.get_enum("core.locale.ui.inv.give.love_potion.dialog", rnd(3),
+                                    cdata[tc]));
                     chara_mod_impression(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
@@ -1772,10 +1622,7 @@ label_2061_internal:
                 return result;
             }
             snd(27);
-            txt(lang(
-                name(tc) + u8"は"s + itemname(ci, 1) + u8"を受け取らない。"s,
-                name(tc) + u8" refuse"s + _s(tc) + u8" to take "s
-                    + itemname(ci, 1) + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.give.refuses", cdata[tc], inv[ci]));
             goto label_2060_internal;
         }
         if (invctrl == 13)
@@ -1785,27 +1632,17 @@ label_2061_internal:
             const auto identify_result = item_identify(inv[ci], efp);
             if (identify_result == identification_state_t::unidentified)
             {
-                txt(lang(
-                    u8"新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"s,
-                    u8"You need higher identification to gain new knowledge."s));
+                txt(i18n::s.get("core.locale.ui.inv.identify.need_more_power"));
             }
             else if (
                 identify_result
                 != identification_state_t::completely_identified)
             {
-                txt(lang(
-                    u8"それは"s + itemname(ci, inv[ci].number)
-                        + u8"だと判明したが、完全には鑑定できなかった。"s,
-                    u8"The item is half-identified as "s + itemname(ci, 1)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.ui.inv.identify.partially", inv[ci]));
             }
             else
             {
-                txt(lang(
-                    u8"それは"s + itemname(ci, inv[ci].number)
-                        + u8"だと完全に判明した。"s,
-                    u8"The item is fully identified as "s + itemname(ci, 1)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.ui.inv.identify.fully", inv[ci]));
             }
             item_stack(0, ci, 1);
             refresh_burden_state();
@@ -1856,9 +1693,7 @@ label_2061_internal:
             if (ibit(13, ci))
             {
                 snd(27);
-                txt(lang(
-                    u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                    u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             screenupdate = -1;
@@ -1879,9 +1714,7 @@ label_2061_internal:
             if (ibit(13, ci))
             {
                 snd(27);
-                txt(lang(
-                    u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                    u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
             if (cdata[tc].continuous_action_id != 0)
@@ -1892,10 +1725,7 @@ label_2061_internal:
             }
             snd(13);
             ibitmod(12, citrade, 0);
-            txt(lang(
-                itemname(ci) + u8"を"s + itemname(citrade) + u8"と交換した。"s,
-                u8"You receive "s + itemname(citrade) + u8" in exchange for "s
-                    + itemname(ci) + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
             if (inv[citrade].body_part != 0)
             {
                 p = inv[citrade].body_part;
@@ -1930,9 +1760,7 @@ label_2061_internal:
                 if (ibit(13, ci))
                 {
                     snd(27);
-                    txt(lang(
-                        u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                        u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                    txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
                 }
             }
@@ -1955,18 +1783,14 @@ label_2061_internal:
                         gdata_mages_guild_quota = 0;
                     }
                     txtef(2);
-                    txt(lang(
-                            itemname(ci) + u8"を納入した"s,
-                            u8"You deliver "s + itemname(ci) + u8". "s)
+                    txt(i18n::s.get("core.locale.ui.inv.put.guild.you_deliver", inv[ci])
                         + u8"("s + (inv[ci].param1 + 1) * inv[ci].number
                         + u8" Guild Point)"s);
                     if (gdata_mages_guild_quota == 0)
                     {
                         snd(51);
                         txtef(2);
-                        txt(lang(
-                            u8"ノルマを達成した！"s,
-                            u8"You fulfill the quota!"s));
+                        txt(i18n::s.get("core.locale.ui.inv.put.guild.you_fulfill"));
                     }
                 }
                 else
@@ -1974,15 +1798,11 @@ label_2061_internal:
                     qdata(13, gdata_executing_immediate_quest) +=
                         inv[ci].weight * inv[ci].number;
                     txtef(2);
-                    txt(lang(
-                            itemname(ci) + u8"を納入した。"s,
-                            u8"You deliver"s + itemname(ci) + u8"."s)
-                        + u8" +"s + cnvweight(inv[ci].weight * inv[ci].number)
-                        + lang(u8"  納入済み"s, u8" Delivered "s) + u8"("s
-                        + cnvweight(qdata(13, gdata_executing_immediate_quest))
-                        + u8") "s + lang(u8"納入ノルマ"s, u8"Quota "s) + u8"("s
-                        + cnvweight(qdata(12, gdata_executing_immediate_quest))
-                        + u8")"s);
+                    txt(i18n::s.get("core.locale.ui.inv.put.harvest",
+                                    inv[ci],
+                                    cnvweight(inv[ci].weight * inv[ci].number),
+                                    cnvweight(qdata(13, gdata_executing_immediate_quest)),
+                                    cnvweight(qdata(12, gdata_executing_immediate_quest))));
                 }
                 item_remove(inv[ci]);
                 refresh_burden_state();
@@ -1993,24 +1813,19 @@ label_2061_internal:
                 if (cdata[0].gold < inv[ci].subname)
                 {
                     snd(27);
-                    txt(lang(
-                        u8"金が足りない…"s, u8"You don't have enough money."s));
+                    txt(i18n::s.get("core.locale.ui.inv.put.tax.not_enough_money"));
                     goto label_2060_internal;
                 }
                 if (gdata_left_bill <= 0)
                 {
                     snd(27);
-                    txt(lang(
-                        u8"まだ納税する必要はない。"s,
-                        u8"You don't have to pay your tax yet."s));
+                    txt(i18n::s.get("core.locale.ui.inv.put.tax.do_not_have_to"));
                     goto label_20591;
                 }
                 cdata[0].gold -= inv[ci].subname;
                 snd(12);
                 txtef(2);
-                txt(lang(
-                    itemname(ci) + u8"を支払った。"s,
-                    u8"You pay "s + itemname(ci) + u8"."s));
+                txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
                 --inv[ci].number;
                 --gdata_left_bill;
                 refresh_burden_state();
@@ -2022,9 +1837,7 @@ label_2061_internal:
             {
                 snd(71);
                 --inv[ci].number;
-                txt(lang(
-                    itemname(ci, 1) + u8"をデッキに加えた。"s,
-                    u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
+                txt(i18n::s.get("core.locale.ui.inv.put.deck", inv[ci]));
                 ++card(0, inv[ci].subname);
                 refresh_burden_state();
                 screenupdate = -1;
@@ -2049,10 +1862,10 @@ label_2061_internal:
             if (f != 0)
             {
                 s(0) = "";
-                s(1) = lang(u8"「やだ」"s, u8"\"No!\""s);
-                s(2) = lang(u8"「あげないよ」"s, u8"\"It's mine.\""s);
-                s(3) = lang(u8"「だめ」"s, u8"\"Get off!\""s);
-                s(4) = lang(u8"「イヤ！」"s, u8"\"Never.\""s);
+                for (int cnt = 0; cnt < 4; cnt++)
+                {
+                    s(cnt + 1) = i18n::s.get_enum("core.locale.ui.inv.take_ally.refuse_dialog", cnt);
+                }
                 snd(27);
                 txtef(4);
                 txt(lang(name(tc) + s(f), s(f)));
@@ -2062,10 +1875,7 @@ label_2061_internal:
             {
                 if (is_cursed(inv[ci].curse_state))
                 {
-                    txt(lang(
-                        itemname(ci) + u8"は呪われていて外せない。"s,
-                        ""s + itemname(ci)
-                            + u8" is cursed and can't be taken off."s));
+                    txt(i18n::s.get("core.locale.ui.inv.cursed", inv[ci]));
                     goto label_20591;
                 }
                 p = inv[ci].body_part;
@@ -2075,11 +1885,7 @@ label_2061_internal:
             if (inv[ci].id == 477 || inv[ci].id == 473)
             {
                 txtef(8);
-                txt(lang(
-                    name(tc) + u8"は激怒して"s + itemname(ci, 1)
-                        + u8"を飲み込んだ。"s,
-                    name(tc) + u8" swallows "s + itemname(ci, 1)
-                        + u8" angrily."s));
+                txt(i18n::s.get("core.locale.ui.inv.swallows_ring", cdata[tc], inv[ci]));
                 snd(65);
                 chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
@@ -2096,9 +1902,7 @@ label_2061_internal:
             {
                 in = 1;
             }
-            txt(lang(
-                itemname(ci, in) + u8"を受け取った。"s,
-                u8"You take "s + itemname(ci, in) + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
                 cdata[0].gold += in;
@@ -2130,9 +1934,7 @@ label_2061_internal:
             {
                 if (stat == 0)
                 {
-                    txt(lang(
-                        u8"その場所は見えない。"s,
-                        u8"You can't see the location."s));
+                    txt(i18n::s.get("core.locale.ui.inv.throw.cannot_see"));
                     update_screen();
                 }
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -2140,9 +1942,7 @@ label_2061_internal:
             }
             if (chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
-                txt(lang(
-                    u8"そこには投げられない。"s,
-                    u8"The location is blocked."s));
+                txt(i18n::s.get("core.locale.ui.inv.throw.location_is_blocked"));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -2163,8 +1963,7 @@ label_2061_internal:
             ti = inv_getfreeid(0);
             if (ti == -1)
             {
-                txt(lang(
-                    u8"これ以上持てない。"s, u8"Your inventory is full."s));
+                txt(i18n::s.get("core.locale.ui.inv.trade_medals.inventory_full"));
                 snd(27);
                 goto label_20591;
             }
@@ -2180,18 +1979,14 @@ label_2061_internal:
             }
             if (p < calcmedalvalue(ci))
             {
-                txt(lang(
-                    u8"メダルの数が足りない…"s,
-                    u8"You don't have enough coins."s));
+                txt(i18n::s.get("core.locale.ui.inv.trade_medals.not_enough_medals"));
                 snd(27);
                 goto label_20591;
             }
             inv[i].number -= calcmedalvalue(ci);
             snd(12);
             item_copy(ci, ti);
-            txt(lang(
-                ""s + itemname(ti, 1) + u8"を受け取った！"s,
-                u8"You receive "s + itemname(ti, 1) + u8"!"s));
+            txt(i18n::s.get("core.locale.ui.inv.trade_medals.you_receive", inv[ti]));
             item_stack(0, ti, 1);
             convertartifact(ti, 1);
             goto label_20591;
@@ -2294,25 +2089,19 @@ label_2061_internal:
             if (ibit(13, ci) == 0)
             {
                 ibitmod(13, ci, 1);
-                txt(lang(
-                    itemname(ci) + u8"を大事なものに指定した。"s,
-                    u8"You set "s + itemname(ci) + u8" as no-drop."s));
+                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.set", inv[ci]));
             }
             else
             {
                 ibitmod(13, ci, 0);
-                txt(lang(
-                    itemname(ci) + u8"はもう大事なものではない。"s,
-                    itemname(ci) + u8" is no longer set as no-drop."s));
+                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.unset", inv[ci]));
             }
         }
         if (invctrl == 2)
         {
             if (dropcontinue == 0)
             {
-                txt(lang(
-                    u8"続けてアイテムを置くことができる。"s,
-                    u8"You can continuously drop items."s));
+                txt(i18n::s.get("core.locale.ui.inv.drop.multi"));
                 dropcontinue = 1;
                 snd(100);
                 screenupdate = -1;
@@ -2344,9 +2133,7 @@ label_2061_internal:
             {
                 if (listmax > 0)
                 {
-                    txt(lang(
-                        u8"まだアイテムが残っているがいい？"s,
-                        u8"Really leave these items?"s));
+                    txt(i18n::s.get("core.locale.ui.inv.take.really_leave"));
                     ELONA_YES_NO_PROMPT();
                     rtval = show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
@@ -2402,9 +2189,7 @@ label_2061_internal:
             if (inv[p].weight < 0)
             {
                 snd(27);
-                txt(lang(
-                    u8"荷車の荷物は登録できない。"s,
-                    u8"You can't make a shortcut for cargo stuff."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.shortcut.cargo"));
                 goto label_20591;
             }
             snd(20);
@@ -2422,9 +2207,7 @@ label_2061_internal:
                 }
             }
             gdata(40 + sc) = p;
-            txt(lang(
-                u8"{"s + sc + u8"}キーにショートカットを割り当てた。"s,
-                u8"You have assigned the shortcut to {"s + sc + u8"} key."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.shortcut.assigned", sc));
             goto label_2060_internal;
         }
     }

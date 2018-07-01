@@ -55,6 +55,8 @@ locale {
 
             common {
                 set_as_no_drop = "それはあなたの大事なものだ。<調べる>メニューから解除できる。"
+                does_not_exist = "そのアイテムは存在しない。"
+
                 invalid = "Invalid Item Id found. Item No:${_1}, Id:${_2} has been removed from your inventory."
 
                 shortcut {
@@ -105,6 +107,8 @@ locale {
 
             identify {
                 need_more_power = "新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"
+
+                # NOTE: previously itemname(ci, inv[ci].number)
                 partially = "それは${itemname(_1, 1)}だと判明したが、完全には鑑定できなかった。"
                 fully = "それは${itemname(_1, 1)}だと完全に判明した。"
             }
@@ -136,9 +140,9 @@ locale {
                 love_potion {
                     text = "${name(_1)}は激怒して${itemname(_2, 1)}を叩き割った。"
                     dialog {
-                        _0 = "「サイテー！！」"
-                        _1 = "「このヘンタイ！」"
-                        _2 = "「ガード！ガード！ガード！」"
+                        _0 = "${name(_1)}「サイテー！！」"
+                        _1 = "${name(_1)}「このヘンタイ！」"
+                        _2 = "${name(_1)}「ガード！ガード！ガード！」"
                     }
                 }
 
@@ -147,7 +151,7 @@ locale {
 
             buy {
                 how_many = "${itemname(_2, 1)}をいくつ買う？ (1〜${_2})"
-                prompt = "${itemname(_1, 1)}を ${_2} gp で買う？"
+                prompt = "${_1}を ${_2} gp で買う？"
 
                 not_enough_money {
                     _0 = "あなたは財布を開いてがっかりした…"
@@ -161,7 +165,7 @@ locale {
 
             sell {
                 how_many = "${itemname(_2, 1)}をいくつ売る？ (1〜${_2})"
-                prompt = "${itemname(_1, 1)}を ${_2} gp で売る？"
+                prompt = "${_1}を ${_2} gp で売る？"
 
                 not_enough_money = "${name(_1)}は財布を開いてがっかりした…"
             }
@@ -184,7 +188,7 @@ locale {
             put {
                 container {
                     full = "これ以上入らない。"
-                    too_heavy = "以上の物は入らない。"
+                    too_heavy = "重さが${_1}以上の物は入らない。"
                     cannot_hold_cargo = "荷物は入らない。"
                 }
 
@@ -192,7 +196,7 @@ locale {
                     have_no_quota = "現在魔術士ギルドのノルマはない。"
                     you_deliver = "${itemname(_1)}を納入した"
                     remaining = "ノルマ残り: ${_1}GP"
-                    fulfill = "ノルマを達成した！"
+                    you_fulfill = "ノルマを達成した！"
                 }
 
                 tax {
@@ -207,7 +211,7 @@ locale {
             }
 
             take_ally {
-                refuse {
+                refuse_dialog {
                     _1 = "「やだ」"
                     _2 = "「あげないよ」"
                     _3 = "「だめ」"

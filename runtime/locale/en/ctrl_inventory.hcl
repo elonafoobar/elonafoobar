@@ -55,6 +55,8 @@ locale {
 
             common {
                 set_as_no_drop = "It's set as no-drop. You can reset it from the <examine> menu."
+                does_not_exist = "The item doesn't exist."
+
                 invalid = "Invalid Item Id found. Item No:${_1}, Id:${_2} has been removed from your inventory."
 
                 shortcut {
@@ -147,7 +149,7 @@ locale {
 
             buy {
                 how_many = "How many? (1 to ${_1})"
-                prompt = "Do you really want to buy ${itemname(_1, 1)} for ${_2} gold pieces?"
+                prompt = "Do you really want to buy ${_1} for ${_2} gold pieces?"
 
                 not_enough_money {
                     _0 = "You check your wallet and shake your head."
@@ -161,7 +163,7 @@ locale {
 
             sell {
                 how_many = "How many? (1 to ${_1})"
-                prompt = "Do you really want to sell ${itemname(_1, 1)} for ${_2} gold pieces?"
+                prompt = "Do you really want to sell ${_1} for ${_2} gold pieces?"
 
                 not_enough_money = "${name(_1)} checks ${his(_1)} wallet and shake ${his(_1)} head."
             }
@@ -184,7 +186,7 @@ locale {
             put {
                 container {
                     full = "The container is full."
-                    too_heavy = "The container can only hold items weight less than "
+                    too_heavy = "The container can only hold items weight less than ${_1}."
                     cannot_hold_cargo = "The container cannot hold cargos"
                 }
 
@@ -192,7 +194,7 @@ locale {
                     have_no_quota = "You have no quota for Mages Guild."
                     you_deliver = "You deliver ${itemname(_1)}. "
                     remaining = "${_1}guild points are needed to gain a rank."
-                    fulfill = "You fulfill the quota!"
+                    you_fulfill = "You fulfill the quota!"
                 }
 
                 tax {
@@ -207,7 +209,7 @@ locale {
             }
 
             take_ally {
-                refuse {
+                refuse_dialog {
                     _1 = "\"No!\""
                     _2 = "\"It's mine.\""
                     _3 = "\"Get off!\""
