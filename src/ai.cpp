@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
@@ -318,12 +319,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 if (sell != 0)
                 {
                     txtef(9);
-                    txt(lang(
-                        name(cc) + u8"は"s + sell
-                            + u8"個のアイテムを売りさばき"s + sell(1)
-                            + u8"goldを稼いだ。"s,
-                        name(cc) + u8" sells "s + sell + u8" items and earns "s
-                            + sell(1) + u8" gold pieces."s));
+                    txt(i18n::s.get("core.locale.ai.ally.sells_items",
+                                    cdata[cc], sell(0), sell(1)));
                 }
             }
             if (rnd(100) == 0)
@@ -333,10 +330,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd(61);
                     txtef(9);
-                    txt(lang(
-                        cdatan(0, cc) + u8"は訓練所に通い潜在能力を伸ばした！"s,
-                        cdatan(0, cc) + u8" visits a trainer and develops "s
-                            + his(cc) + u8" potential!"s));
+                    txt(i18n::s.get("core.locale.ai.ally.visits_trainer",
+                                    cdata[cc]));
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
                         while (1)
@@ -418,10 +413,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 const auto did_swap = cell_swap(cc, tc);
                 if (did_swap && is_in_fov(cc))
                 {
-                    txt(lang(
-                        name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
-                        name(cc) + u8" displace"s + _s(cc) + u8" "s + name(tc)
-                            + u8"."s));
+                    txt(i18n::s.get("core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
                 if (cdata[tc].continuous_action_id == 1)
                 {
@@ -429,11 +421,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                     {
                         if (is_in_fov(cc))
                         {
-                            txt(lang(
-                                name(tc) + u8"は"s + name(cc)
-                                    + u8"を睨み付けた。"s,
-                                name(tc) + u8" glare"s + _s(tc) + u8" "s
-                                    + name(cc) + u8"."s));
+                            txt(i18n::s.get("core.locale.ai.swap.glare", cdata[cc], cdata[tc]));
                         }
                         rowactend(tc);
                     }
@@ -466,11 +454,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cc))
                                         {
-                                            txt(lang(
-                                                name(cc)
-                                                    + u8"は壁を破壊した！"s,
-                                                name(cc) + u8" crush"s + _s(cc)
-                                                    + u8" the wall!"s));
+                                            txt(i18n::s.get("core.locale.ai.swap.crushes_wall",
+                                                            cdata[cc]));
                                         }
                                         return turn_result_t::turn_end;
                                     }
@@ -803,18 +788,7 @@ label_2692_internal:
                                             tlocy = cdata[gdata_fire_giant]
                                                         .position.y;
                                             txtef(9);
-                                            txt(lang(
-                                                    u8"「化け物め！」"s,
-                                                    u8"\"Filthy monster!\""s),
-                                                lang(
-                                                    u8"「くたばれっ」"s,
-                                                    u8"\"Go to hell!\""s),
-                                                lang(
-                                                    u8"「退治してやるぅ！」"s,
-                                                    u8"\"I'll get rid of you.\""s),
-                                                lang(
-                                                    u8"「くらえー！」"s,
-                                                    u8"\"Eat this!\""s));
+                                            txt(i18n::s.get_enum("core.locale.ai.fire_giant", rnd(4)));
                                             return do_throw_command();
                                         }
                                     }
@@ -866,12 +840,8 @@ label_2692_internal:
                                     if (stat == 1)
                                     {
                                         snd(86);
-                                        txt(lang(
-                                            name(cc) + u8"は"s + itemname(ci)
-                                                + u8"を作った！"s,
-                                            name(cc) + u8" make"s + _s(cc)
-                                                + u8" "s + itemname(ci)
-                                                + u8"!"s));
+                                        txt(i18n::s.get("core.locale.ai.makes_snowman",
+                                                        cdata[cc], inv[ci]));
                                         return turn_result_t::turn_end;
                                     }
                                 }
@@ -885,21 +855,7 @@ label_2692_internal:
                                     tlocx = cdata[0].position.x;
                                     tlocy = cdata[0].position.y;
                                     txtef(9);
-                                    txt(lang(u8" *クスクス* "s, u8"*grin*"s),
-                                        lang(
-                                            u8"「えいっ」"s,
-                                            u8"\"Fire in the hole!\""s),
-                                        lang(
-                                            u8"「うりゃ」"s,
-                                            u8"\"Tee-hee-hee!\""s),
-                                        lang(
-                                            u8"「くらえー！」"s,
-                                            u8"\"Eat this!\""s),
-                                        lang(
-                                            u8"「危ないっ！」"s,
-                                            u8"\"Watch out!\""s),
-                                        lang(
-                                            u8"「避けてー」"s, u8"\"Scut!\""s));
+                                    txt(i18n::s.get_enum("core.locale.ai.snowball", rnd(6)));
                                     return do_throw_command();
                                 }
                             }
@@ -997,9 +953,7 @@ label_2692_internal:
                             if (is_in_fov(cc))
                             {
                                 txtef(9);
-                                txt(lang(
-                                        u8"「なめくじだ！」"s, u8"\"Snail!\""s),
-                                    lang(u8"「殺す！」"s, u8"\"Kill!\""s));
+                                txt(i18n::s.get_enum("core.locale.ai.snail", rnd(2)));
                             }
                             return do_throw_command();
                         }
