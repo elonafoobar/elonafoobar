@@ -6574,18 +6574,12 @@ void begin_to_believe_god()
     {
         if (inv[ci].param1 == 0)
         {
-            s = lang(u8"信仰を捨てる"s, u8"Abandon God"s);
+            s = i18n::s.get("core.locale.god.desc.window.abandon");
         }
         else
         {
-            s = lang(
-                i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
-                    + u8"に改宗する"s,
-                u8"Convert to "s
-                    + i18n::_(
-                          u8"god",
-                          core_god::int2godid(inv[ci].param1),
-                          u8"name"));
+            s = i18n::s.get("core.locale.god.desc.window.convert",
+                            i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
         }
         list(0, listmax) = 0;
         listn(0, listmax) = s;
@@ -6594,16 +6588,13 @@ void begin_to_believe_god()
     else
     {
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(
-            i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
-                + u8"を信仰する"s,
-            u8"Believe in "s
-                + i18n::_(
-                      u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
+        listn(0, listmax) =
+            i18n::s.get("core.locale.god.desc.window.believe",
+                        i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
         ++listmax;
     }
     list(0, listmax) = 2;
-    listn(0, listmax) = lang(u8"やめる"s, u8"Cancel"s);
+    listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
     ++listmax;
     snd(62);
     gsel(4);
@@ -6636,13 +6627,11 @@ label_1887_internal:
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
     font(18 - en * 2, snail::font_t::style_t::bold);
-    bmes(
-        lang(u8"《 "s, u8"< "s)
-            + i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
-            + lang(u8" 》"s, u8" >"s),
+    bmes(i18n::s.get("core.locale.god.desc.window.title",
+                     i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")),
         wx + 20,
         wy + 20);
-    get_god_description();
+    buff = get_god_description();
     gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
     font(14 - en * 2);
     cs_listbk();

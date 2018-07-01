@@ -34,6 +34,15 @@ locale {
         }
 
         desc {
+            window {
+                title = "< ${_1} >"
+
+                abandon = "Abandon God"
+                convert = "Convert to ${_1}"
+                believe = "Believe in ${_1}"
+                cancel = "Cancel"
+            }
+
             # NOTE: The extra whitespace is significant. These strings should have the same number
             # of characters each.
             offering = "Offering"

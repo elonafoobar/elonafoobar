@@ -32,6 +32,15 @@ locale {
         }
 
         desc {
+            window {
+                title = "《 ${_1} 》"
+
+                abandon = "信仰を捨てる"
+                convert = "${_1}に改宗する"
+                believe = "${_1}を信仰する"
+                cancel = "やめる"
+            }
+
             # NOTE: The extra whitespace is significant. These strings should have the same number
             # of characters each.
             offering = "　捧げ物"
