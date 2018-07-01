@@ -3,7 +3,21 @@
 locale {
     talk {
         unique {
+            zeome = "So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"
+
             whom_dwell_in_the_vanity = "Leave me alone."
+
+            # TODO
+            orphe {
+                dialog {
+                    _0 = "Most impressive."
+                    _1 = "<This sentence is untranslated.>"
+                    _2 = "<This sentence is untranslated.>"
+                    _3 = "<This sentence is untranslated.>"
+                    _4 = "<This sentence is untranslated.>"
+                    _5 = "<This sentence is untranslated.>"
+                }
+            }
 
             loyter {
                 fame_too_low = "Who the hell are you?"
@@ -63,7 +77,7 @@ locale {
                 }
             }
 
-            31 {
+            shena {
                 complete = "Oh it's you, our hero."
 
                 quest {
@@ -85,7 +99,7 @@ locale {
                 }
             }
 
-            33 {
+            larnneire {
                 dialog = "I'm glad you got well again. I thought you were a goner until just a few minutes ago."
 
                 choices {
@@ -111,7 +125,7 @@ locale {
                 mission = "We are messengers from Vindale. Our journey ends here in North Tyris at the great city of Palmia where we're supposed to have a talk with King Xabi, a man of fairness and compassion."
             }
 
-            34 {
+            lomias {
                 tutorial {
                     _0 {
                         dialog = "It looks like you aren't familiar with this land. Before we leave, I can spare a moment to teach you a few lessons."
@@ -218,36 +232,36 @@ locale {
                         _0 = "Alright, we're finished. You should already know how to survive in North Tyris by now."
                         _1 = "(You've finished the tutorial!)"
                     }
+                }
 
-                    after {
-                        dialog = "What?"
-                        choices {
-                            nothing = "Nothing."
-                            get_out = "Get out of my house!"
+                after {
+                    dialog = "What?"
+                    choices {
+                        nothing = "Nothing."
+                        get_out = "Get out of my house!"
+                    }
+
+                    get_out {
+                        larnneire_died = "You...you scum!"
+
+                        dialog {
+                            _0 = "${_1} is right. The time left for us is scarce. We need to depart, Lomias."
+                            _1 = "Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."
+                            _2 = "Farewell..until we meet again. May the blessing of Lulwy be with you."
                         }
 
-                        get_out {
-                            larnneire_died = "You...you scum!"
-
-                            dialog {
-                                _0 = "${_1} is right. The time left for us is scarce. We need to depart, Lomias."
-                                _1 = "Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."
-                                _2 = "Farewell..until we meet again. May the blessing of Lulwy be with you."
-                            }
-
-                            leave = "Lomias and Larnneire leave the cave."
-                        }
+                        leave = "Lomias and Larnneire leave the cave."
                     }
                 }
             }
 
-            79 {
+            stersha {
                 late = "The tragedy of our king, and the collapse of our world, Palmia is...Sierre Terre is in difficult times."
                 mid = "The whole kingdom is devastated to hear the tragic news of our king. This throne... it feels very cold without him."
                 early = "Palmia is an old and historical kingdom which respects peace and freedom. The royalism has been obsoleted long time ago, but people still carry loyalty to the old kings and my husband, King Xabi."
             }
 
-            80 {
+            xabi {
                 late = "Any assistance you provide to us will be most welcome."
                 mid = "In times like these, we can't afford to let those we can trust sit idly on their swords. If you're willing to serve Palmia, then you should pay a visit to Erystia in the library. We will be sure to reward you with honor and riches commiserate with your sacrifice."
                 early {
@@ -256,7 +270,7 @@ locale {
                 }
             }
 
-            139 {
+            slan {
                 dialog {
                     _0 = "You...you there, listen to me. *cough* *cough* I-I'm a scout of Palmia...I've been investigating on Zanan's strange activities in Lesimas.... *cough* I have a favor to ask..."
                     _1 = "T-There's no time left for me to explain all....my wounds are... *cough* Listen, Sierre Terre is in danger...this letter..this letter...this is our only hope...."
@@ -266,12 +280,12 @@ locale {
                 dies = "${basename(_1)} dies silently..."
             }
 
-            142 {
+            erystia {
                 late {
                     # TODO
                     _0 = "You've done well."
-                    _1 = "<untranslated>"
-                    _2 = "<untranslated>"
+                    _1 = "<This sentence is untranslated.>"
+                    _2 = "<This sentence is untranslated.>"
                 }
 
                 all_stones {
@@ -369,7 +383,7 @@ locale {
                 }
             }
 
-            146 {
+            karam {
                 dialog {
                     _0 = "Who's there? So... Erystia sent you to find me... as you can see I'm badly wounded. I'm pretty much screwed aren't I? But then... now that you're here maybe I won't have to die in vain after all."
                     _1 = "I have something to ask of you. Relay this message to Erystia for me... Tell her that she must believe me when I say that the one guarding the codex in the depths of Lesimas is none other than former King Zashim's brother, Zeome. He's the one controlling the magic of the codex... or... no, not just the codex, but the whole of Lesimas. He's no longer human... he's something... more."
@@ -483,7 +497,7 @@ locale {
                 }
             }
 
-            223 {
+            raphael {
                 quest {
                     dialog = "Don't you know who I am? I am, by far, without question, doubtlessly and unabashedly, the sexiest man in this town -- if not the whole of North Tyris. I can have any woman I desire. I could even take the princess of Palmia if I wanted. Yet, strange as it sounds, lately I've grown tired of the game. Honestly, I want a woman who will serve me unconditionally and never complain. Why don't you let me keep one of your wives? You'd have my thanks. "
                     choices {
@@ -515,7 +529,7 @@ locale {
                 }
             }
 
-            224 {
+            ainc {
                 complete = "Yeeeeck! Yeee-eeeck! Oh, it's you again."
 
                 quest {
@@ -545,7 +559,7 @@ locale {
                 }
             }
 
-            226 {
+            rilian {
                 complete = "Hello there!"
 
                 quest {
@@ -561,7 +575,7 @@ locale {
                 }
             }
 
-            227 {
+            tam {
                 complete = "Well...actually...I found this inn more comfortable than my house."
 
                 quest {
@@ -579,7 +593,7 @@ locale {
                 }
             }
 
-            231 {
+            gilbert {
                 complete = "Ah, the bravest of the brave. Care for a drink? Muwahaha!"
                 fame_too_low = "Be gone. I have no interest in weak soldiers. Muwahahaha!"
 
@@ -612,7 +626,7 @@ locale {
                 }
             }
 
-            243 {
+            arnord {
                 complete = "I hope we can talk again sometime, ${_1}!"
 
                 quest {
@@ -688,7 +702,7 @@ locale {
                 }
             }
 
-            253 {
+            marks {
                 complete = "Heh, don't worry, I won't break in your house."
                 fame_too_low = "Leave me alone, please."
 
@@ -706,7 +720,7 @@ locale {
                 }
             }
 
-            259 {
+            noel {
                 complete = "You're still alive I see. Good luck glorious murderer."
 
                 quest {
@@ -737,7 +751,7 @@ locale {
                 }
             }
 
-            279 {
+            icolle {
                 quest {
                     dialog = "Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."
                     choices {
@@ -779,7 +793,7 @@ locale {
             }
 
 
-            290 {
+            lexus {
                 nonmember {
                     dialog = "Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."
 
@@ -820,7 +834,7 @@ locale {
                 }
             }
 
-            294 {
+            abyss {
                 nonmember {
                     dialog = "Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."
 
@@ -853,7 +867,7 @@ locale {
                 }
             }
 
-            297 {
+            doria {
                 nonmember {
                     dialog = "Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."
 
@@ -886,10 +900,10 @@ locale {
                 }
             }
 
-            301 {
+            conery {
                 complete = "Ahh it's you. I owe you for what you've done for me. What do you say? Why don't you join my unit?"
 
-                quset {
+                quest {
                     dialog = "What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."
 
                     choices {
@@ -911,8 +925,8 @@ locale {
                     dialog = "Halt, halt, traveler. You're a quite fortunate one. Before you is the renowned band of legendary brigands \"${_1}\" that the mere mention of its name is enough to silence a naughty child. Yet we will spare your life for only a toll of ${_2} gold pieces and your cargos. Quite fortunate indeed."
 
                     choices {
-                       try_me = "Try me."
-                       surrender = "I surrender."
+                        try_me = "Try me."
+                        surrender = "I surrender."
                     }
 
                     try_me = "You've got some guts. But your decision sure ain't a wise one. This will be your grave, kid."
@@ -920,7 +934,7 @@ locale {
                 }
             }
 
-            322 {
+            strange_scientist {
                 first = "Please, hear me out. If you should happen to run into any little sisters during your travels, please help them out. They seem to be monsters at first glance, but I'm doing important research that will return these girls to their gentle smiling nature. Please I beg of you... use these balls to bring the little sisters to me. I'd be very grateful, perhaps I'd even reward you."
 
                 turn_over {
@@ -1005,11 +1019,6 @@ locale {
 
                 no = "Shit!"
             }
-
-
-
-
-
         }
     }
 }
