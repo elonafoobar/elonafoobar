@@ -198,8 +198,7 @@ talk_result_t talk_unique_29()
                 -1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -284,8 +283,7 @@ talk_result_t talk_unique_30()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 3000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -376,8 +374,7 @@ talk_result_t talk_unique_31()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 1500);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -745,8 +742,7 @@ talk_result_t talk_unique_34()
         chara_vanquish(chara_find(33));
         chara_vanquish(chara_find(34));
         txt(i18n::s.get("core.locale.talk.unique.lomias.after.get_out.leave"));
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -1645,8 +1641,7 @@ talk_result_t talk_unique_222()
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
         snd(51);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -1909,9 +1904,7 @@ talk_result_t talk_unique_223()
             flt();
             itemcreate(
                     -1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
-            txt(lang(
-                        u8"クエストを達成した！"s,
-                        u8"You have completed the quest!"s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
             txtef(2);
@@ -2002,8 +1995,7 @@ talk_result_t talk_unique_224()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2116,8 +2108,7 @@ talk_result_t talk_unique_226()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 2500);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2198,8 +2189,7 @@ talk_result_t talk_unique_227()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 25500);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2320,8 +2310,7 @@ talk_result_t talk_unique_231()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 10000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2421,8 +2410,7 @@ talk_result_t talk_unique_243()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 7500);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2513,8 +2501,7 @@ talk_result_t talk_unique_247()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2663,7 +2650,7 @@ talk_result_t talk_unique_252()
             ELONA_TALK_SCENE_CUT();
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.renton.quest.brought_all.ehekatl"));
-            txt(lang(u8"エヘカトル「うみゃ〜？」"s, u8"\"Mew?\""s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             listmax = 0;
             buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.brought_all.dialog", 2);
             tc = tc * 1 + 0;
@@ -2681,9 +2668,7 @@ talk_result_t talk_unique_252()
                     -1, 54, cdata[0].position.x, cdata[0].position.y, 20000);
             flt();
             itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
-            txt(lang(
-                        u8"クエストを達成した！"s,
-                        u8"You have completed the quest!"s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             txt(i18n::s.get(
                         "core.locale.common.something_is_put_on_the_ground"));
@@ -2796,8 +2781,7 @@ talk_result_t talk_unique_259()
         inv[ci].param1 = 162;
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 6);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -2989,8 +2973,7 @@ talk_result_t talk_unique_279()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 2500);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -3072,8 +3055,7 @@ talk_result_t talk_unique_280()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 15000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -3170,9 +3152,7 @@ talk_result_t talk_unique_290()
             gdata_fighters_guild_quota2 = 0;
             gdata_mages_guild_quota2 = 0;
             gdata_thieves_guild_quota2 = 0;
-            txt(lang(
-                        u8"クエストを達成した！"s,
-                        u8"You have completed the quest!"s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
             txtef(2);
@@ -3254,8 +3234,7 @@ talk_result_t talk_unique_290()
                 cdata[0].position.x,
                 cdata[0].position.y,
                 clamp(4 - gdata(128) / 2500, 1, 4));
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -3345,9 +3324,7 @@ talk_result_t talk_unique_294()
             gdata_fighters_guild_quota2 = 0;
             gdata_mages_guild_quota2 = 0;
             gdata_thieves_guild_quota2 = 0;
-            txt(lang(
-                        u8"クエストを達成した！"s,
-                        u8"You have completed the quest!"s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
             txtef(2);
@@ -3429,8 +3406,7 @@ talk_result_t talk_unique_294()
                 cdata[0].position.x,
                 cdata[0].position.y,
                 clamp(3 - gdata(128) / 3000, 1, 3));
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -3545,9 +3521,7 @@ talk_result_t talk_unique_297()
             gdata_fighters_guild_quota2 = 0;
             gdata_mages_guild_quota2 = 0;
             gdata_thieves_guild_quota2 = 0;
-            txt(lang(
-                        u8"クエストを達成した！"s,
-                        u8"You have completed the quest!"s));
+            txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
             txtef(2);
@@ -3650,8 +3624,7 @@ talk_result_t talk_unique_297()
                 cdata[0].position.x,
                 cdata[0].position.y,
                 clamp(4 - gdata(128) / 2500, 1, 4));
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
@@ -3738,8 +3711,7 @@ talk_result_t talk_unique_301()
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 50000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
-        txt(lang(
-                    u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get(
                     "core.locale.common.something_is_put_on_the_ground"));
