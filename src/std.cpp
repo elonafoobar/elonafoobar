@@ -430,11 +430,26 @@ void grotate(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
+    int src_width,
+    int src_height,
     int dst_width,
-    int dst_height)
+    int dst_height,
+    double angle)
 {
-    snail::hsp::grotate(window_id, src_x, src_y, angle, dst_width, dst_height);
+    snail::hsp::grotate(window_id, src_x, src_y, src_width, src_height, dst_width, dst_height, angle);
+}
+
+
+
+void grotate(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    double angle)
+{
+    snail::hsp::grotate(window_id, src_x, src_y, src_width, src_height, angle);
 }
 
 

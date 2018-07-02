@@ -250,13 +250,7 @@ void label_1870()
             {
                 p(1) = 5;
             }
-            grotate(
-                p(1),
-                atxpic(1) % 33 * 32,
-                atxpic(1) / 33 * 32,
-                p_double,
-                cnt * (atxpic(2) / 10),
-                cnt * (atxpic(3) / 10));
+            grotate(p(1), atxpic(1) % 33 * 32, atxpic(1) / 33 * 32, inf_tiles, inf_tiles, cnt * (atxpic(2) / 10), cnt * (atxpic(3) / 10), p_double);
         }
         if (mattile != -1)
         {

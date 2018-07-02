@@ -651,13 +651,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         {
             gmode(4, 32, 32, efmap(1, x, y) * 12 + 30);
             pos(dx + 24, dy + 24);
-            grotate(
-                3,
-                mefsubref(0, p_) + efmap(3, x, y) * 32,
-                mefsubref(1, p_),
-                0.785 * efmap(2, x, y),
-                32,
-                32);
+            grotate(3, mefsubref(0, p_) + efmap(3, x, y) * 32, mefsubref(1, p_), 32, 32, 0.785 * efmap(2, x, y));
         }
         else
         {

@@ -2256,7 +2256,7 @@ void animeload(int prm_807, int prm_808)
     {
         gmode(2, 96, 96);
         pos(dx_at_m133 + 24, dy_at_m133 + 8);
-        grotate(7, cnt * 96, 0, r_at_m133 * cnt, 96, 96);
+        grotate(7, cnt * 96, 0, 96, 96, r_at_m133 * cnt);
         gmode(0);
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
@@ -2374,13 +2374,7 @@ void animeblood(int cc, int animation_type, int element)
                         * cnt2_at_m133,
                 dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2
                     - 12 + cnt);
-            grotate(
-                1,
-                0,
-                960,
-                0.2 * cnt,
-                24 - cnt2_at_m133 * 2,
-                24 - cnt2_at_m133 * 2);
+            grotate(1, 0, 960, inf_tiles, inf_tiles, 24 - cnt2_at_m133 * 2, 24 - cnt2_at_m133 * 2, 0.2 * cnt);
         }
         gmode(0);
         redraw();
@@ -12021,22 +12015,22 @@ label_2128_internal:
     if (key_alt == 0)
     {
         pos(x, y - 48);
-        grotate(3, 212, 432, 0, 28, 28);
+        grotate(3, 212, 432, 28, 28, 0);
         pos(x, y + 48);
-        grotate(3, 212, 432, 1.0 * 3.14, 28, 28);
+        grotate(3, 212, 432, 28, 28, 1.0 * 3.14);
         pos(x + 48, y);
-        grotate(3, 212, 432, 0.5 * 3.14, 28, 28);
+        grotate(3, 212, 432, 28, 28, 0.5 * 3.14);
         pos(x - 48, y);
-        grotate(3, 212, 432, 1.5 * 3.14, 28, 28);
+        grotate(3, 212, 432, 28, 28, 1.5 * 3.14);
     }
     pos(x - 48, y - 48);
-    grotate(3, 212, 432, 1.75 * 3.14, 28, 28);
+    grotate(3, 212, 432, 28, 28, 1.75 * 3.14);
     pos(x + 48, y + 48);
-    grotate(3, 212, 432, 0.75 * 3.14, 28, 28);
+    grotate(3, 212, 432, 28, 28, 0.75 * 3.14);
     pos(x + 48, y - 48);
-    grotate(3, 212, 432, 0.25 * 3.14, 28, 28);
+    grotate(3, 212, 432, 28, 28, 0.25 * 3.14);
     pos(x - 48, y + 48);
-    grotate(3, 212, 432, 1.25 * 3.14, 28, 28);
+    grotate(3, 212, 432, 28, 28, 1.25 * 3.14);
     redraw();
     gmode(0);
     pos(x - 48 - 24, y - 48 - 24);

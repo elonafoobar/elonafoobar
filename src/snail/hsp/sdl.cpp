@@ -661,43 +661,51 @@ void gmode(int mode, int width, int height, int alpha)
     detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
 }
 
-void grotate_(
+
+
+void grotate(
     int window_id,
     int src_x,
     int src_y,
-    int dst_width,
-    int dst_height)
+    int src_width,
+    int src_height,
+    double angle)
 {
-    grotate(window_id, src_x, src_y, 0, dst_width, dst_height);
+    grotate(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        src_width,
+        src_height,
+        angle);
 }
 
-void grotate2(
+
+
+void grotate(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
+    int src_width,
+    int src_height,
     int dst_width,
-    int dst_height)
+    int dst_height,
+    double angle)
 {
+    assert(window_id != detail::current_buffer);
+
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
         detail::tex_buffers[window_id].texture,
         detail::current_tex_buffer().color.a));
 
-    if (window_id == detail::current_buffer)
-    {
-        assert(0);
-    }
-
     ::SDL_Rect src_rect{
         src_x,
         src_y,
-        detail::current_tex_buffer().width == -1
-            ? dst_width
-            : detail::current_tex_buffer().width,
-        detail::current_tex_buffer().height == -1
-            ? dst_height
-            : detail::current_tex_buffer().height,
+        src_width,
+        src_height,
     };
     ::SDL_Rect dst_rect{
         detail::current_tex_buffer().x - dst_width / 2,
@@ -731,87 +739,7 @@ void grotate2(
         ::SDL_FLIP_NONE));
 }
 
-void grotate(
-    int window_id,
-    int src_x,
-    int src_y,
-    double angle,
-    int dst_width,
-    int dst_height)
-{
-    if (angle != 0)
-    {
-        grotate2(window_id, src_x, src_y, angle, dst_width, dst_height);
-        return;
-    }
 
-    detail::set_blend_mode();
-    snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
-        detail::tex_buffers[window_id].texture,
-        detail::current_tex_buffer().color.a));
-
-    if (window_id == detail::current_buffer)
-    {
-        auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
-        application::instance().get_renderer().set_render_target(tmp_buffer);
-        if (window_id < 10)
-        {
-            application::instance().get_renderer().set_blend_mode(
-                blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-        }
-        else
-        {
-            const auto save =
-                application::instance().get_renderer().blend_mode();
-            application::instance().get_renderer().set_blend_mode(
-                blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-            application::instance().get_renderer().set_blend_mode(save);
-        }
-        application::instance().get_renderer().clear();
-        application::instance().get_renderer().render_image(
-            detail::tex_buffers[window_id].texture,
-            src_x,
-            src_y,
-            detail::current_tex_buffer().width == -1
-                ? dst_width
-                : detail::current_tex_buffer().width,
-            detail::current_tex_buffer().height == -1
-                ? dst_height
-                : detail::current_tex_buffer().height,
-            0,
-            0,
-            dst_width,
-            dst_height);
-
-        gsel(window_id);
-        application::instance().get_renderer().render_image(
-            tmp_buffer,
-            0,
-            0,
-            dst_width,
-            dst_height,
-            detail::current_tex_buffer().x - dst_width / 2,
-            detail::current_tex_buffer().y - dst_height / 2);
-        return;
-    }
-
-    application::instance().get_renderer().render_image(
-        detail::tex_buffers[window_id].texture,
-        src_x,
-        src_y,
-        detail::current_tex_buffer().width == -1
-            ? dst_width
-            : detail::current_tex_buffer().width,
-        detail::current_tex_buffer().height == -1
-            ? dst_height
-            : detail::current_tex_buffer().height,
-        detail::current_tex_buffer().x - dst_width / 2,
-        detail::current_tex_buffer().y - dst_height / 2,
-        dst_width,
-        dst_height);
-}
 
 void gsel(int window_id)
 {

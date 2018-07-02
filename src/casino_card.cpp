@@ -388,7 +388,7 @@ int trashcard(int prm_430)
         }
         pos(card_at_cardcontrol(3, prm_430) + 32,
             card_at_cardcontrol(4, prm_430) + 48);
-        grotate(3, 736, 216, 0.015 * cnt * cnt, 64 - cnt * 3, 96 - cnt * 4);
+        grotate(3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
         await(10);
         redraw();
     }

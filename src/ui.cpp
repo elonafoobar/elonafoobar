@@ -1207,7 +1207,7 @@ void render_hud()
     }
     pos(inf_clockarrowx, inf_clockarrowy);
     gmode(2, 48, 48);
-    grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
+    grotate(3, 0, 288, 48, 48, 0.0174532925199433 * (gdata_hour * 30));
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
@@ -1318,7 +1318,7 @@ void render_autoturn_animation()
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
-    grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
+    grotate(3, 72, 392, 24, 24, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
 
     if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
         || cdata[0].continuous_action_id == 8
@@ -1965,13 +1965,13 @@ void render_fishing_animation()
     {
         gmode(2, 48, 24);
         pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 24, 0.5 * fishdir * 3.14, 48, 24);
+        grotate(9, 0, 24, 48, 24, 0.5 * fishdir * 3.14);
     }
     else
     {
         gmode(2, 48, 48);
         pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 0, 0.5 * fishdir * 3.14, 48, 48);
+        grotate(9, 0, 0, 48, 48, 0.5 * fishdir * 3.14);
     }
     randomize();
 }
