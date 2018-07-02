@@ -1307,7 +1307,7 @@ void draw_rotated(
         info.y,
         info.width,
         info.height,
-        angle);
+        3.14159265 / 180 * angle);
 }
 
 
@@ -1334,7 +1334,7 @@ void draw_rotated(
         info.height,
         width,
         height,
-        angle);
+        3.14159265 / 180 * angle);
 }
 
 

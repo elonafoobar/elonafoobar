@@ -12013,15 +12013,15 @@ label_2128_internal:
     y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
     {
-        draw_rotated("direction_arrow", x, y + 48, 0);
-        draw_rotated("direction_arrow", x, y + 48, 1.0 * 3.14);
-        draw_rotated("direction_arrow", x + 48, y, 0.5 * 3.14);
-        draw_rotated("direction_arrow", x - 48, y, 1.5 * 3.14);
+        draw_rotated("direction_arrow", x, y - 48, 0);
+        draw_rotated("direction_arrow", x, y + 48, 180);
+        draw_rotated("direction_arrow", x + 48, y, 90);
+        draw_rotated("direction_arrow", x - 48, y, 270);
     }
-    draw_rotated("direction_arrow", x - 48, y - 48, 1.75 * 3.14);
-    draw_rotated("direction_arrow", x + 48, y + 48, 0.75 * 3.14);
-    draw_rotated("direction_arrow", x + 48, y - 48, 0.25 * 3.14);
-    draw_rotated("direction_arrow", x - 48, y + 48, 1.25 * 3.14);
+    draw_rotated("direction_arrow", x - 48, y - 48, 315);
+    draw_rotated("direction_arrow", x + 48, y + 48, 135);
+    draw_rotated("direction_arrow", x + 48, y - 48, 45);
+    draw_rotated("direction_arrow", x - 48, y + 48, 225);
     redraw();
     gmode(0);
     pos(x - 48 - 24, y - 48 - 24);
