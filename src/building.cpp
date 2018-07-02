@@ -558,9 +558,9 @@ void show_home_value()
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + ww / 4, wy + wh / 2);
-    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
+    gmode(4, 50);
+    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     calc_home_rank();
     s(0) = i18n::s.get("core.locale.building.home.rank.type.base");
@@ -603,11 +603,13 @@ void show_home_value()
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, cnt * 16 + wy + 138);
-        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             1,
             0,
             960,
+            item_chips[p(1)].width,
+            item_chips[p(1)].height,
             item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
             inf_tiles);
         pos(wx + 68, cnt * 16 + wy + 138);

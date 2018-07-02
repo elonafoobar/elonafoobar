@@ -73,17 +73,23 @@ int ginfo(int)
     return 0;
 }
 
-void gmode(int, int, int, int)
+void gmode(int, int)
 {
 }
 
-void grotate_(int, int, int, int, int)
+
+
+void grotate(int, int, int, int, int, int, int, double)
 {
 }
 
-void grotate(int, int, int, double, int, int)
+
+
+void grotate(int, int, int, int, int, double)
 {
 }
+
+
 
 void gsel(int)
 {

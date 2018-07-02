@@ -251,7 +251,7 @@ void txt_conv()
             if (config::instance().msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                gmode(4, -1, -1, config::instance().msgtrans * 20);
+                gmode(4, config::instance().msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)

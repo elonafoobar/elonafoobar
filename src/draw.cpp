@@ -604,7 +604,7 @@ void prepare_item_image(int id, int color, int character_image)
             chara_chips[character_id].width - 16,
             chara_chips[character_id].height - 8);
         set_color_mod(255, 255, 255, 5);
-        gmode(4, -1, -1, 192);
+        gmode(4, 192);
         pos(0, 960 + (chara_chips[character_id].height == inf_tiles) * 48);
         set_color_mod(
             255 - c_col(0, color),
@@ -825,7 +825,7 @@ void show_damage_popups()
 
 void draw_emo(int cc, int x, int y)
 {
-    gmode(2, 16, 16);
+    gmode(2);
     pos(x + 16, y);
     gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16);
 }
@@ -842,7 +842,7 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     pos(128, 0);
     picload(filepath, 1);
     boxf(256, 0, 128, 198);
-    gmode(4, -1, -1, 256);
+    gmode(4, 256);
     pget(128, 0);
     pos(256, 0);
     gcopy(10 + cc, 128, 0, 128, 198);

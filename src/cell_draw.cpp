@@ -214,7 +214,7 @@ int shadowmap[] = {
 
 void render_shadow_low(int light)
 {
-    gmode(6, inf_tiles, inf_tiles, light);
+    gmode(6, light);
 
     for (const auto& pos : loop_xy<int>(inf_screenw, inf_screenh))
     {
@@ -396,7 +396,7 @@ void render_shadow(int p_, int dx_, int dy_)
 
 void render_shadow_high(int light, int sxfix_, int syfix_)
 {
-    gmode(6, inf_tiles, inf_tiles, light);
+    gmode(6, light);
 
     if (scrollanime == 0)
     {
@@ -483,7 +483,7 @@ void render_cloud()
 
     for (size_t i = 0; i < clouds.size(); ++i)
     {
-        gmode(5, -1, -1, 7 + i * 2);
+        gmode(5, 7 + i * 2);
         int x = (clouds[i].x0 - cdata[0].position.x * inf_tiles + sxfix) * 100
                 / (40 + i * 5)
             + scrturn * 100 / (50 + i * 20);
@@ -545,14 +545,14 @@ void draw_character_sprite_in_world_map(
     int direction)
 {
     // Shadow
-    gmode(6, 32, 16, 85);
     pos(x + 24, y + 27);
-    grotate_(3, 240, 384, 20, 10);
+    gmode(6, 85);
+    gcopy_c(3, 240, 384, 32, 16, 20, 10);
 
     // Character sprite
-    gmode(2, 32, 48);
     pos(x + 24, y + 14);
-    grotate_(texture_id, frame, direction * 48, 16, 24);
+    gmode(2);
+    gcopy_c(texture_id, frame, direction * 48, 32, 48, 16, 24);
 }
 
 
@@ -565,14 +565,14 @@ void draw_character_sprite_in_water(
     int direction)
 {
     // Upper body
-    gmode(2, 32, 28);
     pos(x + 24, y + 16);
-    grotate_(texture_id, frame, direction * 48, 24, 24);
+    gmode(2);
+    gcopy_c(texture_id, frame, direction * 48, 32, 28, 24, 24);
 
     // Lower body
-    gmode(4, 32, 20, 146);
     pos(x + 24, y + 36);
-    grotate_(texture_id, frame, direction * 48 + 28, 24, 16);
+    gmode(4, 146);
+    gcopy_c(texture_id, frame, direction * 48 + 28, 32, 20, 24, 16);
 }
 
 
@@ -586,14 +586,14 @@ void draw_character_sprite(
     int dy = 0)
 {
     // Shadow
-    gmode(6, -1, -1, 110);
+    gmode(6, 110);
     pos(x + 8, y + 20);
     gcopy(3, 240, 384, 32, 16);
 
     // Character sprite
-    gmode(2, 32, 48);
     pos(x + 24, y + dy + 8);
-    grotate_(texture_id, frame, direction * 48, 24, 40);
+    gmode(2);
+    gcopy_c(texture_id, frame, direction * 48, 32, 48, 24, 40);
 }
 
 
@@ -607,7 +607,7 @@ bool is_night()
 
 void draw_one_map_tile(int x, int y, int tile, int dx = 0)
 {
-    gmode(0, inf_tiles, inf_tiles);
+    gmode(0);
     pos(x, y);
     gcopy(
         2,
@@ -621,7 +621,7 @@ void draw_one_map_tile(int x, int y, int tile, int dx = 0)
 
 void draw_blood_pool_and_fragments(int x, int y)
 {
-    gmode(2, inf_tiles, inf_tiles);
+    gmode(2);
     if (map(x, y, 7) != 0 && mapsync(x, y) == msync)
     {
         if (const auto fragments = map(x, y, 7) / 10)
@@ -649,19 +649,13 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         }
         if (mefsubref(2, p_) == 1)
         {
-            gmode(4, 32, 32, efmap(1, x, y) * 12 + 30);
+            gmode(4, efmap(1, x, y) * 12 + 30);
             pos(dx + 24, dy + 24);
-            grotate(
-                3,
-                mefsubref(0, p_) + efmap(3, x, y) * 32,
-                mefsubref(1, p_),
-                0.785 * efmap(2, x, y),
-                32,
-                32);
+            grotate(3, mefsubref(0, p_) + efmap(3, x, y) * 32, mefsubref(1, p_), 32, 32, 0.785 * efmap(2, x, y));
         }
         else
         {
-            gmode(4, 32, 32, 150);
+            gmode(4, 150);
             pos(dx + 8, dy + 8);
             gcopy(
                 3,
@@ -670,7 +664,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
                 32,
                 32);
         }
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
     }
 }
 
@@ -782,17 +776,23 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                 prepare_item_image(p_, i_, inv[items[i]].param1);
                 if (mdata(6) == 1)
                 {
-                    gmode(2, item_chips[p_].width, item_chips[p_].height);
                     pos(dx + 24, dy + 24 - stack_height / 2);
-                    grotate_(1, 0, 960, 24, 24);
+                    gmode(2);
+                    gcopy_c(
+                        1,
+                        0,
+                        960,
+                        item_chips[p_].width,
+                        item_chips[p_].height,
+                        24,
+                        24);
                 }
                 else
                 {
                     if (config::instance().objectshadow
                         && item_chips[p_].shadow)
                     {
-                        gmode(
-                            2, item_chips[p_].width, item_chips[p_].height, 70);
+                        gmode(2, 70);
                         if (item_chips[p_].height == inf_tiles)
                         {
                             pos(dx + item_chips[p_].width / 2
@@ -871,15 +871,22 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
             }
             if (mdata(6) == 1)
             {
-                gmode(2, item_chips[p_].width, item_chips[p_].height);
                 pos(dx + 24, dy + 24);
-                grotate_(1, 0, 960, 24, 24);
+                gmode(2);
+                gcopy_c(
+                    1,
+                    0,
+                    960,
+                    item_chips[p_].width,
+                    item_chips[p_].height,
+                    24,
+                    24);
             }
             else
             {
                 if (config::instance().objectshadow && item_chips[p_].shadow)
                 {
-                    gmode(2, item_chips[p_].width, item_chips[p_].height, 80);
+                    gmode(2, 80);
                     if (item_chips[p_].height == inf_tiles)
                     {
                         pos(dx + item_chips[p_].width / 2
@@ -982,10 +989,10 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                 p_ = cdata[c_].image % 1000;
                 if (cdata[c_].is_hung_on_sand_bag())
                 {
-                    gmode(2, 48, 96, 80);
+                    gmode(2, 80);
                     pos(dx + 26 - 11, dy - 32 + 11);
                     func_2(1, 96, 816, -80, 48, 96);
-                    gmode(2, -1, -1, 255);
+                    gmode(2, 255);
                     pos(dx, dy - 63);
                     gcopy(1, 96, 816, 48, 96);
                     chara_chips[p_].offset_y += 24;
@@ -1007,12 +1014,19 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                 gsel(0);
                 if (mdata(6) == 1)
                 {
-                    gmode(6, 32, 16, 85);
                     pos(dx + 24, dy + 32);
-                    grotate_(3, 240, 384, 20, 10);
-                    gmode(2, chara_chips[p_].width, chara_chips[p_].height);
+                    gmode(6, 85);
+                    gcopy_c(3, 240, 384, 32, 16, 20, 10);
                     pos(dx + 24, dy + 24 - chara_chips[p_].offset_y / 4);
-                    grotate_(5, 0, 960, 24, chara_chips[p_].height / 2);
+                    gmode(2);
+                    gcopy_c(
+                        5,
+                        0,
+                        960,
+                        chara_chips[p_].width,
+                        chara_chips[p_].height,
+                        24,
+                        chara_chips[p_].height / 2);
                     if (cdata[c_].emotion_icon != 0)
                     {
                         draw_emo(
@@ -1023,7 +1037,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                 {
                     if (chipm(0, ground_) == 3)
                     {
-                        gmode(4, inf_tiles, inf_tiles, 100);
+                        gmode(4, 100);
                         pos(dx,
                             dy + 16 - chara_chips[p_].offset_y
                                 - (chipm(0, ground_) == 3) * -16);
@@ -1033,7 +1047,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                             976,
                             chara_chips[p_].width,
                             chara_chips[p_].height - 16);
-                        gmode(2, inf_tiles, inf_tiles);
+                        gmode(2);
                         pos(dx,
                             dy - chara_chips[p_].offset_y
                                 - (chipm(0, ground_) == 3) * -16);
@@ -1046,10 +1060,10 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     }
                     else
                     {
-                        gmode(6, -1, -1, 110);
+                        gmode(6, 110);
                         pos(dx + 8, dy + 20);
                         gcopy(3, 240, 384, 32, 16);
-                        gmode(2, inf_tiles, inf_tiles);
+                        gmode(2);
                         pos(dx,
                             dy - chara_chips[p_].offset_y
                                 - (chipm(0, ground_) == 3) * -16);
@@ -1200,7 +1214,7 @@ void cell_draw()
                 {
                     py_ -= syfix;
                 }
-                gmode(5, inf_tiles, inf_tiles, 50 + flick_);
+                gmode(5, 50 + flick_);
                 pos(px_, py_);
                 gcopy(3, 800, 208, 144, 48);
             }
@@ -1220,7 +1234,7 @@ void cell_draw()
                 }
 
                 // Spot light for PC (top 2 thirds)
-                gmode(5, inf_tiles, inf_tiles, 50 + flick_);
+                gmode(5, 50 + flick_);
                 pos(px_ - 48, py_ - 48);
                 gcopy(3, 800, 112, 144, 96);
 
@@ -1337,11 +1351,7 @@ void cell_draw()
                                      6))
                         * light.brightness;
                     pos(dx_, dy_ - light.dy);
-                    gmode(
-                        5,
-                        inf_tiles,
-                        inf_tiles,
-                        light.alpha_base + rnd(light.alpha_random + 1));
+                    gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
                     gcopy(
                         3,
                         192 + light.x * 48 + rnd(light.frame + 1) * inf_tiles,

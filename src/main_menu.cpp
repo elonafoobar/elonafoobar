@@ -76,9 +76,9 @@ main_menu_result_t main_title_menu()
     cmbg = 4;
     x = ww / 5 * 4;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + 160, wy + wh / 2);
-    grotate_(2, cmbg / 2 * 180, cmbg % 2 * 300, x, y);
+    gmode(4, 50);
+    gcopy_c(2, cmbg / 2 * 180, cmbg % 2 * 300, 180, 300, x, y);
     gmode(2);
     if (jp)
     {

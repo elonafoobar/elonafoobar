@@ -1220,8 +1220,15 @@ label_1857_internal:
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s(1));
         pos(wx + 37, wy + 69 + cnt * 19 + 2);
-        gmode(2, inf_tiles, inf_tiles);
-        grotate_(1, 0, 960, item_chips[p(1)].width, item_chips[p(1)].height);
+        gmode(2);
+        gcopy_c(
+            1,
+            0,
+            960,
+            inf_tiles,
+            inf_tiles,
+            item_chips[p(1)].width,
+            item_chips[p(1)].height);
     }
     if (keyrange != 0)
     {

@@ -52,20 +52,23 @@ void gcopy(
     int dst_width,
     int dst_height);
 int ginfo(int type);
-void gmode(int mode, int width, int height, int alpha);
-void grotate_(
-    int window_id,
-    int src_x,
-    int src_y,
-    int dst_width,
-    int dst_height);
+void gmode(int mode, int alpha);
 void grotate(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
+    int src_width,
+    int src_height,
+    double angle);
+void grotate(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
     int dst_width,
-    int dst_height);
+    int dst_height,
+    double angle);
 void gsel(int window_id);
 void line(int x1, int y1, int x2, int y2, const snail::color& color);
 void title(

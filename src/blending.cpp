@@ -723,8 +723,15 @@ label_1925_internal:
             boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
         pos(wx + 37, wy + 70 + cnt * 19);
-        gmode(2, item_chips[550].width, item_chips[550].height);
-        grotate_(1, 0, 960, inf_tiles, inf_tiles);
+        gmode(2);
+        gcopy_c(
+            1,
+            0,
+            960,
+            item_chips[550].width,
+            item_chips[550].height,
+            inf_tiles,
+            inf_tiles);
         pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
@@ -871,11 +878,13 @@ label_1928_internal:
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             1,
             0,
             960,
+            item_chips[p(1)].width,
+            item_chips[p(1)].height,
             item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
             inf_tiles);
         if (inv[p].body_part != 0)

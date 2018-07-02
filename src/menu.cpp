@@ -348,13 +348,10 @@ label_2699_internal:
         {
             gcopy(3, 360, 144, 48, 48);
         }
-        gmode(
-            5 - 1,
-            -1,
-            (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
+        gmode(4, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
         if (cs == cnt)
         {
-            gmode(5, -1, -1, 140);
+            gmode(5, 140);
         }
         pos(x(cnt) + tx, y(cnt) + ty);
         if (cnt == 0 || cnt == 4 || cnt == 8)
@@ -663,9 +660,9 @@ label_2705_internal:
     cmbg = page % 5;
     x = ww / 5 * 2;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + ww / 4, wy + wh / 2);
-    grotate_(p, cmbg % 4 * 180, cmbg / 4 % 2 * 300, x, y);
+    gmode(4, 50);
+    gcopy_c(p, cmbg % 4 * 180, cmbg / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -1243,9 +1240,9 @@ label_2729_internal:
     gcopy(4, 0, 0, 736, 448);
     x = 240;
     y = 320;
-    gmode(4, 180, 300, 100);
     pos(wx + 190, wy + 220);
-    grotate_(7, 0, 0, x, y);
+    gmode(4, 100);
+    gcopy_c(7, 0, 0, 180, 300, x, y);
     gmode(2);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -1421,8 +1418,8 @@ label_2029_internal:
         }
         i = list(0, p);
         pos(wx + 40, wy + 74 + cnt * 19);
-        gmode(2, inf_tiles, inf_tiles);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             1,
             (the_ability_db[i]->related_basic_attribute - 10) * inf_tiles,
             672,
@@ -1646,8 +1643,8 @@ label_2009_internal:
         }
         i = list(0, p);
         pos(wx + 40, wy + 74 + cnt * 19);
-        gmode(2, inf_tiles, inf_tiles);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             1,
             (the_ability_db[list(0, p)]->related_basic_attribute - 10)
                 * inf_tiles,
@@ -2209,7 +2206,7 @@ label_20331:
     gsel(0);
     if (returnfromportrait == 0)
     {
-        gmode(6, -1, -1, 80);
+        gmode(6, 80);
         pos(wx + 4, wy + 4);
         gcopy(7, 0, 0, 700, 400);
         gmode(2);
@@ -2357,19 +2354,21 @@ label_2035_internal:
         if (cdata[cc].has_own_sprite() == 1)
         {
             pos(wx + 596 + 22, wy + 86 + 24);
-            gmode(2, 32, 48);
-            grotate_(10 + cc, 32, 0, 24, 40);
+            gmode(2);
+            gcopy_c(10 + cc, 32, 0, 32, 48, 24, 40);
         }
         else
         {
             i = cdata[cc].image % 1000;
             chara_preparepic(cdata[cc]);
             pos(wx + 596 + 22, wy + 86 + 24);
-            gmode(2, chara_chips[i].width, chara_chips[i].height);
-            grotate_(
+            gmode(2);
+            gcopy_c(
                 5,
                 0,
                 960,
+                chara_chips[i].width,
+                chara_chips[i].height,
                 chara_chips[i].width
                     / (1 + (chara_chips[i].height > inf_tiles)),
                 inf_tiles);
@@ -2405,8 +2404,8 @@ label_2035_internal:
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 37, wy + 157 + cnt * 15);
-            gmode(2, inf_tiles, inf_tiles);
-            grotate_(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
+            gmode(2);
+            gcopy_c(1, cnt * inf_tiles, 672, inf_tiles, inf_tiles);
             pos(wx + 54, wy + 151 + cnt * 15);
             color(20, 10, 0);
             mes(i18n::_(u8"ui", u8"attribute", u8"_"s + cnt));
@@ -2616,7 +2615,7 @@ label_2035_internal:
             y = wy + 151 + cnt % 3 * 32;
             if (cdata[cc].buffs[cnt].id == 0)
             {
-                gmode(4, -1, -1, 120);
+                gmode(4, 120);
                 pos(x, y);
                 gcopy(3, 320, 160, 32, 32);
                 gmode(2);
@@ -2732,8 +2731,8 @@ label_2035_internal:
                     p(1) = the_ability_db[i]->related_basic_attribute - 10;
                 }
                 pos(wx + 38, wy + 75 + cnt * 19);
-                gmode(2, inf_tiles, inf_tiles);
-                grotate_(1, p(1) * inf_tiles, 672, inf_tiles, inf_tiles);
+                gmode(2);
+                gcopy_c(1, p(1) * inf_tiles, 672, inf_tiles, inf_tiles);
                 s = i18n::_(u8"ability", std::to_string(i), u8"name");
                 if (i >= 50 && i < 100)
                 {
@@ -3176,9 +3175,15 @@ label_2052_internal:
             p(2) = inv[p(1)].image;
             prepare_item_image(p(2), inv[p(1)].color, inv[p(1)].param1);
             pos(wx + 126, wy + 70 + cnt * 19);
-            gmode(2, inf_tiles, inf_tiles);
-            grotate_(
-                1, 0, 960, item_chips[p(2)].width, item_chips[p(2)].height);
+            gmode(2);
+            gcopy_c(
+                1,
+                0,
+                960,
+                inf_tiles,
+                inf_tiles,
+                item_chips[p(2)].width,
+                item_chips[p(2)].height);
             if (showresist)
             {
                 equipinfo(p(1), wx + 320, wy + 60 + cnt * 19 + 2);
@@ -3430,8 +3435,15 @@ label_1861_internal:
         p(1) = matref(2, i);
         prepare_item_image(p(1), 0);
         pos(wx + 47, wy + 69 + cnt * 19 + 2);
-        gmode(2, inf_tiles, inf_tiles);
-        grotate_(1, 0, 960, item_chips[p(1)].width, item_chips[p(1)].height);
+        gmode(2);
+        gcopy_c(
+            1,
+            0,
+            960,
+            inf_tiles,
+            inf_tiles,
+            item_chips[p(1)].width,
+            item_chips[p(1)].height);
     }
     if (keyrange != 0)
     {
@@ -3813,16 +3825,16 @@ label_2041_internal:
     else if (cdata[cc].has_own_sprite() == 1)
     {
         pos(wx + 280, wy + 130);
-        gmode(2, 32, 48);
-        grotate_(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 48, 80);
+        gmode(2);
+        gcopy_c(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
     }
     else
     {
         i = cdata[cc].image % 1000;
         chara_preparepic(cdata[cc]);
         pos(wx + 280, wy + 130);
-        gmode(2, chara_chips[i].width, chara_chips[i].height);
-        grotate_(5, 0, 960, chara_chips[i].width, chara_chips[i].height);
+        gmode(2);
+        gcopy_c(5, 0, 960, chara_chips[i].width, chara_chips[i].height);
     }
     gmode(2);
     font(14 - en * 2);
@@ -4056,8 +4068,8 @@ int label_2044()
         }
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         pos(wx + 280, wy + 120);
-        gmode(2, 32, 48);
-        grotate_(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 48, 80);
+        gmode(2);
+        gcopy_c(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
         gmode(2);
         font(14 - en * 2);
         cs_listbk();
@@ -5563,11 +5575,13 @@ label_1982_internal:
         i(1) = cdata[list(0, p)].image / 1000;
         chara_preparepic(cdata[list(0, p)]);
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2, chara_chips[i].width, chara_chips[i].height);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             5,
             0,
             960,
+            chara_chips[i].width,
+            chara_chips[i].height,
             chara_chips[i].width / (1 + (chara_chips[i].height > inf_tiles)),
             inf_tiles);
         i = list(0, p);
@@ -5705,8 +5719,8 @@ label_1986_internal:
         i = list(0, p);
         prepare_item_image(429, 0);
         pos(wx + 38, wy + 73 + cnt * 19);
-        gmode(2, inf_tiles, inf_tiles);
-        grotate_(1, 0, 960, inf_tiles, inf_tiles);
+        gmode(2);
+        gcopy_c(1, 0, 960, inf_tiles, inf_tiles);
         s = ioriginalnameref(i);
         cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
         pos(wx + 400, wy + 66 + cnt * 19 + 2);
@@ -5846,11 +5860,13 @@ label_1990_internal:
         i(1) = cdata[list(0, p)].image / 1000;
         chara_preparepic(cdata[list(0, p)]);
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2, chara_chips[i].width, chara_chips[i].height);
-        grotate_(
+        gmode(2);
+        gcopy_c(
             5,
             0,
             960,
+            chara_chips[i].width,
+            chara_chips[i].height,
             chara_chips[i].width / (1 + (chara_chips[i].height > inf_tiles)),
             inf_tiles);
         pos(wx + 84, wy + 66 + cnt * 19 + 2);
@@ -6906,11 +6922,13 @@ label_1961_internal:
             i(1) = cdata[list(0, p)].image / 1000;
             chara_preparepic(cdata[list(0, p)]);
             pos(wx + 40, wy + 74 + cnt * 19 - 8);
-            gmode(2, chara_chips[i].width, chara_chips[i].height);
-            grotate_(
+            gmode(2);
+            gcopy_c(
                 5,
                 0,
                 960,
+                chara_chips[i].width,
+                chara_chips[i].height,
                 chara_chips[i].width
                     / (1 + (chara_chips[i].height > inf_tiles)),
                 inf_tiles);
@@ -7298,9 +7316,9 @@ label_2016_internal:
     display_window((windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400);
     x = ww / 5 * 3;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + ww / 3 * 2, wy + wh / 2);
-    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
+    gmode(4, 50);
+    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     display_topic(lang(u8"題名"s, u8"Title"s), wx + 28, wy + 36);
     keyrange = 0;

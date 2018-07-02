@@ -684,8 +684,8 @@ void proc_event()
         picload(filesystem::dir::graphic() / u8"bg22.bmp");
         gsel(4);
         pos(windoww / 2 - 1, windowh / 2 - 1);
-        gmode(0, 640, 480);
-        grotate_(7, 0, 0, windoww + 4, windowh + 4);
+        gmode(0);
+        gcopy_c(7, 0, 0, 640, 480, windoww + 4, windowh + 4);
         gsel(7);
         picload(filesystem::dir::graphic() / u8"anime9.bmp");
         gsel(0);
@@ -720,12 +720,14 @@ void proc_event()
             {
                 ++p;
             }
-            gmode(4, 192, 48, 255 - p * 5);
             pos(dx, dy);
-            grotate_(
+            gmode(4, 255 - p * 5);
+            gcopy_c(
                 7,
                 i / 2 % 2 * 192,
                 408,
+                192,
+                48,
                 clamp(p * 32, 0, 192),
                 clamp(p * 8, 0, 48));
             if (i > 14)
@@ -740,33 +742,54 @@ void proc_event()
             {
                 p(1) = i % 3;
             }
-            gmode(2, 96, 48);
             pos(dx, dy - clamp(i * 3 / 2, 0, 18) - 16);
-            grotate_(
-                7, p(1) * 96, 288, clamp(i * 12, 0, 144), clamp(i * 6, 0, 72));
+            gmode(2);
+            gcopy_c(
+                7,
+                p(1) * 96,
+                288,
+                96,
+                48,
+                clamp(i * 12, 0, 144),
+                clamp(i * 6, 0, 72));
             if (i > 4)
             {
                 ++p(2);
                 ++p(3);
             }
-            gmode(4, 96, 96, clamp(p(2) * 6, 0, 100));
             pos(dx, dy - clamp(p(2) * 2, 0, 40));
-            grotate_(7, 0, 0, clamp(p(2) * 8, 0, 240), clamp(p(2) * 5, 0, 96));
-            gmode(4, 96, 96, p(3) * 10);
+            gmode(4, clamp(p(2) * 6, 0, 100));
+            gcopy_c(
+                7,
+                0,
+                0,
+                96,
+                96,
+                clamp(p(2) * 8, 0, 240),
+                clamp(p(2) * 5, 0, 96));
             pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
-            grotate_(
-                7, 96, 0, clamp(p(3) * 10, 0, 96), clamp(p(3) * 10, 0, 96));
-            gmode(4, 192, 80, clamp(p(3) * 5, 0, 100));
+            gmode(4, p(3) * 10);
+            gcopy_c(
+                7,
+                96,
+                0,
+                96,
+                96,
+                clamp(p(3) * 10, 0, 96),
+                clamp(p(3) * 10, 0, 96));
             pos(dx, dy - 4);
-            grotate_(
+            gmode(4, clamp(p(3) * 5, 0, 100));
+            gcopy_c(
                 7,
                 i / 4 % 2 * 192,
                 96,
+                192,
+                80,
                 clamp(p(2) * 8, 0, 400),
                 clamp(p(2), 0, 48));
-            gmode(4, 192, 96, p(3) * 10);
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
-            grotate_(7, i / 3 % 2 * 192, 96, 192, 96);
+            gmode(4, p(3) * 10);
+            gcopy_c(7, i / 3 % 2 * 192, 192, 96, 96, 192, 96);
             redraw();
             await(config::instance().animewait * 3.5);
         }

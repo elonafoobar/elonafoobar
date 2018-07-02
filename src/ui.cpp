@@ -188,7 +188,7 @@ void render_weather_effect_snow()
         auto&& particle = particles[i];
         if (i % 30 == 0)
         {
-            gmode(4, 8, 8, 100 + i % 150);
+            gmode(4, 100 + i % 150);
         }
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
@@ -227,7 +227,7 @@ void render_weather_effect_etherwind()
         auto&& particle = particles[i];
         if (i % 20 == 0)
         {
-            gmode(4, 8, 8, 100 + i % 150);
+            gmode(4, 100 + i % 150);
         }
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
@@ -317,7 +317,7 @@ void highlight_characters_in_pet_arena()
                 color);
             if (cc == camera)
             {
-                gmode(4, -1, -1, 120);
+                gmode(4, 120);
                 pos(x + 36, y + 32);
                 gcopy(3, 240, 410, 24, 16);
                 gmode(2);
@@ -802,7 +802,7 @@ void render_hud()
             {
                 if (cdata[0].continuous_action_id == 0)
                 {
-                    gmode(4, -1, -1, 150);
+                    gmode(4, 150);
                 }
             }
         }
@@ -1186,7 +1186,7 @@ void render_hud()
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
     pos(inf_clockx + 78, inf_clocky + 8);
     gcopy(3, 448, 376, 128, 24);
-    gmode(4, -1, -1, 180);
+    gmode(4, 180);
     sx = windoww - 40;
     sy = inf_ver - 40;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -1206,8 +1206,8 @@ void render_hud()
         sy -= 32;
     }
     pos(inf_clockarrowx, inf_clockarrowy);
-    gmode(2, 48, 48);
-    grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
+    gmode(2);
+    grotate(3, 0, 288, 48, 48, 0.0174532925199433 * (gdata_hour * 30));
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
@@ -1317,8 +1317,8 @@ void render_autoturn_animation()
     font(13 - en * 2, snail::font_t::style_t::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     pos(sx + 18, sy + 12);
-    gmode(2, 24, 24);
-    grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
+    gmode(2);
+    grotate(3, 72, 392, 24, 24, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
 
     if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
         || cdata[0].continuous_action_id == 8
@@ -1777,7 +1777,7 @@ void fade_out()
     }
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 0, 0, 10 + cnt * 5);
+        gmode(4, 10 + cnt * 5);
         await(20);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -1804,7 +1804,7 @@ void animation_fade_in()
 {
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        gmode(4, 0, 0, 10 + cnt * 5);
+        gmode(4, 10 + cnt * 5);
         await(20);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -1847,11 +1847,17 @@ void label_1445()
             {
                 dx = mdata(0);
             }
-            pos(x * evtiles, y * evtiles);
-            gmode(0, inf_tiles, inf_tiles);
             ap = map(dx, dy, 0);
-            grotate_(
-                2, ap % 33 * inf_tiles, ap / 33 * inf_tiles, evtiles, evtiles);
+            pos(x * evtiles, y * evtiles);
+            gmode(0);
+            gcopy_c(
+                2,
+                ap % 33 * inf_tiles,
+                ap / 33 * inf_tiles,
+                inf_tiles,
+                inf_tiles,
+                evtiles,
+                evtiles);
         }
     }
 }
@@ -1925,21 +1931,22 @@ void render_fishing_animation()
     gcopy(9, 116, 18, 14, 10 - ap);
     sx = (cdata[0].position.x - scx) * inf_tiles + inf_screenx;
     sy = (cdata[0].position.y - scy) * inf_tiles + inf_screeny;
-    gmode(2, 48, 48);
+    gmode(2);
     if (fishdir == 0)
     {
         sx2 = inf_tiles / 2 + rnd(3) - 1;
         sy2 = inf_tiles / 2 + 12;
-        gmode(2, 48, 48);
         pos(sx + sx2 + 1, sy + sy2 + 40);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 1)
     {
         sx2 = inf_tiles / 2 - 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 - 16, sy + sy2 + 25);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
@@ -1951,19 +1958,20 @@ void render_fishing_animation()
         sx2 = inf_tiles / 2 + 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 + 14, sy + sy2 + 25);
-        grotate_(9, 48, 0, 48, 48);
+        gmode(2);
+        gcopy_c(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
-        gmode(2, 48, 24);
+        gmode(2);
         pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 24, 0.5 * fishdir * 3.14, 48, 24);
+        grotate(9, 0, 24, 48, 24, 0.5 * fishdir * 3.14);
     }
     else
     {
-        gmode(2, 48, 48);
+        gmode(2);
         pos(sx + sx2, sy + sy2);
-        grotate(9, 0, 0, 0.5 * fishdir * 3.14, 48, 48);
+        grotate(9, 0, 0, 48, 48, 0.5 * fishdir * 3.14);
     }
     randomize();
 }
@@ -2094,7 +2102,7 @@ void display_customkey(const std::string& key, int x, int y)
     pos(624, 30);
     gcopy(3, 0, 30, 24, 18);
     bmes(key, 629, 31, {250, 240, 230}, {50, 60, 80});
-    gmode(2, inf_tiles, inf_tiles);
+    gmode(2);
     gsel(0);
     pos(x, y);
     gcopy(3, 624, 30, 24, 18);
@@ -2189,7 +2197,7 @@ void drawmenu(int prm_742)
         gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
         if (curmenu == cnt)
         {
-            gmode(5, -1, -1, 70);
+            gmode(5, 70);
             pos(x_at_m107 + cnt * 50 + 20, y_at_m107 - 24);
             gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
             gmode(2);
@@ -2420,7 +2428,7 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
 {
     if (windowshadow != 0)
     {
-        gmode(6, -1, -1, 80);
+        gmode(6, 80);
         draw_scroll(x + 3, y + 3, width, height);
         windowshadow = 0;
         gmode(2);
@@ -2463,7 +2471,7 @@ void window(int x, int y, int width, int height, bool shadow)
 {
     if (shadow)
     {
-        gmode(2, -1, -1, 127);
+        gmode(2, 127);
         set_color_mod(31, 31, 31, 3);
     }
     else
@@ -2581,13 +2589,13 @@ void window2(
     case 5: break;
     case 6:
         pos(x + width / 2, y + height / 2);
-        gmode(4, 228, 144, 180);
-        grotate_(3, 24, 72, width - 4, height - 4);
+        gmode(4, 180);
+        gcopy_c(3, 24, 72, 228, 144, width - 4, height - 4);
         break;
     default: break;
     }
 
-    gmode(2, 16, 16);
+    gmode(2);
     for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
         pos(cnt * 16 + x + 16, y);

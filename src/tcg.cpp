@@ -443,14 +443,14 @@ void tcgdrawcard(int prm_994, int prm_995)
             }
             x_at_tcg = basex_at_tcg + 20;
             y_at_tcg = basey_at_tcg + 490;
-            gmode(6, -1, -1, 140);
+            gmode(6, 140);
             pos(x_at_tcg - 6, y_at_tcg - 6);
             gcopy(7, 168, 144, 82, 106);
         }
         gmode(2);
         if (card_at_tcg(6, prm_994) == 2)
         {
-            gmode(4, -1, -1, card_at_tcg(7, prm_994) * 15);
+            gmode(4, card_at_tcg(7, prm_994) * 15);
         }
         pos(x_at_tcg, y_at_tcg);
         if (cdbit(1, prm_994) == 1
@@ -685,7 +685,7 @@ void tcgdraw()
             }
             if (chaintime_at_tcg > 5)
             {
-                gmode(5, -1, -1, clamp(chaintime_at_tcg * 3 - 40, 0, 255));
+                gmode(5, clamp(chaintime_at_tcg * 3 - 40, 0, 255));
                 cnt2_at_tcg = 0;
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
@@ -732,7 +732,7 @@ void tcgdraw()
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
                 font(13 - en * 2);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
@@ -753,7 +753,7 @@ void tcgdraw()
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
                 font(13 - en * 2);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
                     7,
@@ -2222,12 +2222,12 @@ void label_1824()
         color(0, 0, 0);
         if (ccf_at_tcg == cnt)
         {
-            gmode(4, -1, -1, 255);
+            gmode(4, 255);
             color(255, 255, 255);
         }
         else
         {
-            gmode(4, -1, -1, 120);
+            gmode(4, 120);
             color(200, 200, 200);
         }
         pos(x_at_tcg, y_at_tcg);
@@ -2426,7 +2426,7 @@ void label_1825()
 
 void label_1826()
 {
-    gmode(4, -1, -1, 180);
+    gmode(4, 180);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
@@ -3103,10 +3103,10 @@ void label_1840()
             {
                 continue;
             }
-            gmode(4, 0, 0, clamp(p_at_tcg * 30 + 20, 0, 255));
+            gmode(4, clamp(p_at_tcg * 30 + 20, 0, 255));
             pos(x_at_tcg(cnt), y_at_tcg(cnt));
             gcopy(7, 192, 96, 36, 36);
-            gmode(4, 0, 0, 50 + i_at_tcg * 2);
+            gmode(4, 50 + i_at_tcg * 2);
             pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
             gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
         }

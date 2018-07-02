@@ -222,9 +222,9 @@ void label_1870()
         {
             break;
         }
-        gmode(4, x(1), y(1), cnt * 25);
         pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        grotate_(2, 0, 0, x(1), y(1));
+        gmode(4, cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1));
         if (atxpic != 0)
         {
             x(0) = 345;
@@ -235,7 +235,7 @@ void label_1870()
             pos(x - atxpic(2) / 2, y - atxpic(3) / 2);
             gcopy(2, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1));
             pos(x, y);
-            gmode(2, inf_tiles, inf_tiles);
+            gmode(2);
             double p_double;
             if (cnt == 10)
             {
@@ -250,13 +250,7 @@ void label_1870()
             {
                 p(1) = 5;
             }
-            grotate(
-                p(1),
-                atxpic(1) % 33 * 32,
-                atxpic(1) / 33 * 32,
-                p_double,
-                cnt * (atxpic(2) / 10),
-                cnt * (atxpic(3) / 10));
+            grotate(p(1), atxpic(1) % 33 * 32, atxpic(1) / 33 * 32, inf_tiles, inf_tiles, cnt * (atxpic(2) / 10), cnt * (atxpic(3) / 10), p_double);
         }
         if (mattile != -1)
         {
@@ -271,11 +265,13 @@ void label_1870()
                 pos(x, y);
                 gcopy(2, x, y, x(1), y(1));
                 pos(x + x(1) / 2, y + y(1) / 2);
-                gmode(2, inf_tiles, inf_tiles);
-                grotate_(
+                gmode(2);
+                gcopy_c(
                     1,
                     mattile % 33 * 32,
                     mattile / 33 * 32,
+                    inf_tiles,
+                    inf_tiles,
                     cnt2 * 9,
                     cnt2 * 9);
             }
@@ -299,9 +295,9 @@ void label_1871()
         gmode(0);
         pos(x - 50, y - 50);
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
-        gmode(4, x(1), y(1), 250 - cnt * 25);
         pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        grotate_(2, 0, 0, x(1), y(1));
+        gmode(4, 250 - cnt * 25);
+        gcopy_c(2, 0, 0, x(1), y(1));
         await(15);
         redraw();
     }

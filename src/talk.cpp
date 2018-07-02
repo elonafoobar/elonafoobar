@@ -2110,7 +2110,7 @@ void talk_window_init()
     wy = winposy(380);
     ww = 600;
     wh = 380;
-    gmode(6, -1, -1, 80);
+    gmode(6, 80);
     pos(wx + 4, wy - 16);
     gcopy(7, 0, 0, 600, 380);
 }
@@ -2142,9 +2142,15 @@ void talk_window_show()
             p(1) = cdata[tc].image / 1000;
             chara_preparepic(cdata[tc]);
             pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
-            gmode(2, chara_chips[p].width, chara_chips[p].height);
-            grotate_(
-                5, 0, 960, chara_chips[p].width * 2, chara_chips[p].height * 2);
+            gmode(2);
+            gcopy_c(
+                5,
+                0,
+                960,
+                chara_chips[p].width,
+                chara_chips[p].height,
+                chara_chips[p].width * 2,
+                chara_chips[p].height * 2);
         }
         else
         {

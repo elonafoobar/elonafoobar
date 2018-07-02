@@ -715,9 +715,9 @@ label_1402_internal:
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     x = ww / 5 * 3;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + ww / 3 * 2, wy + wh / 2);
-    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
+    gmode(4, 50);
+    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     s(0) = lang(u8"投票項目"s, u8"Choice"s);
     s(1) = "";

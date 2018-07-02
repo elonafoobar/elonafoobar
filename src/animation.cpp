@@ -53,7 +53,7 @@ void play_animation_8(int anicol)
         pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
         pos(anidx + inf_tiles / 2, anidy + 16);
-        grotate(1, 0, 960, 5 * i, i + 40, i + 40);
+        grotate(1, 0, 960, i + 40, i + 40, 5 * i);
         redraw();
         await(config::instance().animewait);
     }
@@ -120,13 +120,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
         for (int j = 0; j < 15; ++j)
         {
             pos(ax + ax2(j), ay + ay2(j) + acnt2 / ap(j));
-            grotate(
-                1,
-                0,
-                960,
-                acnt2 * ap(j),
-                inf_tiles - acnt2 * 2,
-                inf_tiles - acnt2 * 2);
+            grotate(1, 0, 960, inf_tiles - acnt2 * 2, inf_tiles - acnt2 * 2, acnt2 * ap(j));
         }
         redraw();
     }
@@ -169,21 +163,13 @@ void play_animation_3(int anicol, int anisound)
                 {
                     pos((anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
                         (anidy - scy) * inf_tiles + inf_screeny + 16);
-                    gmode(2, inf_tiles, inf_tiles);
+                    gmode(2);
                     set_color_mod(
                         255 - c_col(0, anicol),
                         255 - c_col(1, anicol),
                         255 - c_col(2, anicol),
                         7);
-                    grotate(
-                        7,
-                        cnt2 * 48,
-                        0,
-                        std::atan2(
-                            tlocx - cdata[cc].position.x,
-                            cdata[cc].position.y - tlocy),
-                        inf_tiles,
-                        inf_tiles);
+                    grotate(7, cnt2 * 48, 0, inf_tiles, inf_tiles, std::atan2( tlocx - cdata[cc].position.x, cdata[cc].position.y - tlocy));
                     set_color_mod(255, 255, 255, 7);
                 }
             }
@@ -253,7 +239,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
                     {
                         pos(sx * inf_tiles + inf_screenx,
                             sy * inf_tiles + inf_screeny);
-                        gmode(2, 48, 48);
+                        gmode(2);
                         set_color_mod(
                             255 - c_col(0, anicol),
                             255 - c_col(1, anicol),
@@ -272,8 +258,8 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
             if (anidy < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
                 pos(anidx, anidy);
-                gmode(4, 96, 96, 250 - cnt * cnt * 2);
-                grotate_(7, cnt * 96, 0, 96, 96);
+                gmode(4, 250 - cnt * cnt * 2);
+                gcopy_c(7, cnt * 96, 0, 96, 96);
             }
         }
         redraw();
@@ -362,21 +348,13 @@ void play_animation_0(int anicol, int anisound)
                         < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
                     {
                         pos(ax(cnt), ay(cnt));
-                        gmode(2, inf_tiles, inf_tiles);
+                        gmode(2);
                         set_color_mod(
                             255 - c_col(0, anicol),
                             255 - c_col(1, anicol),
                             255 - c_col(2, anicol),
                             7);
-                        grotate(
-                            7,
-                            ap(cnt) * 48,
-                            0,
-                            std::atan2(
-                                tlocx - cdata[cc].position.x,
-                                cdata[cc].position.y - tlocy),
-                            48,
-                            48);
+                        grotate(7, ap(cnt) * 48, 0, inf_tiles, inf_tiles, std::atan2( tlocx - cdata[cc].position.x, cdata[cc].position.y - tlocy));
                         set_color_mod(255, 255, 255, 7);
                     }
                 }
@@ -414,21 +392,13 @@ void play_animation_15()
         gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
         gmode(2);
         gsel(0);
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         if (ax + inf_tiles / 2 < windoww)
         {
             if (ay < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
             {
                 pos(ax + inf_tiles / 2, ay);
-                grotate(
-                    1,
-                    0,
-                    960,
-                    std::atan2(
-                        anix - cdata[cc].position.x,
-                        cdata[cc].position.y - aniy),
-                    inf_tiles,
-                    inf_tiles);
+                grotate(1, 0, 960, inf_tiles, inf_tiles, std::atan2( anix - cdata[cc].position.x, cdata[cc].position.y - aniy));
             }
         }
         redraw();
@@ -505,17 +475,9 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
         gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
         gmode(2);
         gsel(0);
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         pos(ax + inf_tiles / 2, ay);
-        grotate(
-            1,
-            0,
-            960,
-            std::atan2(
-                cdata[tc].position.x - cdata[cc].position.x,
-                cdata[cc].position.y - cdata[tc].position.y),
-            inf_tiles,
-            inf_tiles);
+        grotate(1, 0, 960, inf_tiles, inf_tiles, std::atan2( cdata[tc].position.x - cdata[cc].position.x, cdata[cc].position.y - cdata[tc].position.y));
         redraw();
         gmode(0);
         pos(ax, ay - inf_tiles / 2);
@@ -548,7 +510,7 @@ void play_animation_9()
         pos(anidx - 16, anidy - 16);
         gcopy(4, 0, 0, 64, 64);
         pos(anidx + 16, anidy + 16);
-        grotate(1, 0, 960, 0.5 * cnt - 0.8, cnt * 8 + 18, cnt * 8 + 18);
+        grotate(1, 0, 960, cnt * 8 + 18, cnt * 8 + 18, 0.5 * cnt - 0.8);
         redraw();
         await(config::instance().animewait);
     }
@@ -611,7 +573,7 @@ void play_animation_12()
     {
         gmode(2);
         int cnt2 = cnt * 2;
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         if (critical)
         {
             pos(anidx - 24, anidy - 32);
@@ -623,18 +585,12 @@ void play_animation_12()
                     + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2
                     + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
                 anidy + sy(cnt) + cnt2 * cnt2 / 3);
-            grotate(1, anix1, 0, 0.4 * cnt, 6, 6);
+            grotate(1, anix1, 0, inf_tiles, inf_tiles, 6, 6, 0.4 * cnt);
         }
         if (ap == 0)
         {
             pos(anidx + sx + 24, anidy + sy + 10);
-            grotate(
-                1,
-                0,
-                960,
-                0.5 * cnt - 0.8,
-                cnt * 10 + aniref,
-                cnt * 10 + aniref);
+            grotate(1, 0, 960, inf_tiles, inf_tiles, cnt * 10 + aniref, cnt * 10 + aniref, 0.5 * cnt - 0.8);
         }
         if (ap == 1)
         {
@@ -752,7 +708,7 @@ void play_animation_19()
             af = 1;
             int cnt2 = cnt;
             int anidy = ay(cnt) * clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
-            gmode(2, 96, 96);
+            gmode(2);
             pos(ax(cnt), anidy);
             gcopy(
                 7,
@@ -853,7 +809,7 @@ void play_animation_22()
                 continue;
             }
             af = 1;
-            gmode(2, 96, 96);
+            gmode(2);
             if (ap(cnt) < 9)
             {
                 ax(cnt) -= 16 + cnt % (windoww / 30);
@@ -927,7 +883,7 @@ void play_animation_21()
                 continue;
             }
             af = 1;
-            gmode(2, 96, 96);
+            gmode(2);
             if (ap(cnt) < 10)
             {
                 pos(ax(cnt), ay(cnt));
@@ -997,23 +953,17 @@ void play_animation_14_16(int animeid)
     {
         gmode(2);
         int cnt2 = cnt * 2;
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
         {
             pos(ax + 24 + sx(cnt)
                     + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2
                     + (sx(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2,
                 ay + sy(cnt) + cnt2 * cnt2 / 3);
-            grotate(1, 864, 0, 0.4 * cnt, 24, 24);
+            grotate(1, 864, 0, inf_tiles, inf_tiles, 24, 24, 0.4 * cnt);
         }
         pos(ax + sx + 24, ay + sy + 10);
-        grotate(
-            1,
-            0,
-            960,
-            0.5 * cnt - 0.8,
-            cnt * 10 + aniref * 3,
-            cnt * 10 + aniref * 3);
+        grotate(1, 0, 960, inf_tiles, inf_tiles, cnt * 10 + aniref * 3, cnt * 10 + aniref * 3, 0.5 * cnt - 0.8);
         redraw();
         gmode(0);
         pos(ax - 16, ay - 16);
@@ -1050,7 +1000,7 @@ void play_animation(int animeid)
         update_screen();
     }
 
-    gmode(2, inf_tiles, inf_tiles);
+    gmode(2);
 
     int anicol = 0;
     int anisound = 0;
