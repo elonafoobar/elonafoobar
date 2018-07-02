@@ -52,7 +52,7 @@ void gcopy(
     int dst_width,
     int dst_height);
 int ginfo(int type);
-void gmode(int mode, int width, int height, int alpha);
+void gmode(int mode, int alpha);
 void grotate(
     int window_id,
     int src_x,

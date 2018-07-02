@@ -843,7 +843,7 @@ label_2060_internal:
             gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
             if (invctrl == p)
             {
-                gmode(5, -1, -1, 70);
+                gmode(5, 70);
                 pos(x + cnt * 44 + 20, y - 24);
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                 gmode(2);
@@ -1043,7 +1043,7 @@ label_2061_internal:
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
+        gmode(2);
         gcopy_c(
             1,
             0,

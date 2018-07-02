@@ -82,7 +82,7 @@ void showcard2(int prm_425, int prm_426)
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
     font(43 - en * 2, snail::font_t::style_t::bold);
-    gmode(2, 64, 96);
+    gmode(2);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
     {
@@ -93,12 +93,12 @@ void showcard2(int prm_425, int prm_426)
         gcopy(3, 672, 216, 64, 96);
         if (prm_426 == 0)
         {
-            gmode(4, inf_tiles, inf_tiles, 220);
+            gmode(4, 220);
             if (card_at_cardcontrol(1, prm_425) == 0)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 36);
-                gmode(4, inf_tiles, inf_tiles, 220);
+                gmode(4, 220);
                 gcopy_c(5, 144, 240, inf_tiles, inf_tiles, 64, 104);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 140;
@@ -108,7 +108,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 40);
-                gmode(4, inf_tiles, inf_tiles, 220);
+                gmode(4, 220);
                 gcopy_c(5, 1104, 288, inf_tiles, inf_tiles, 64, 104);
                 col_at_cardcontrol(0) = 255;
                 col_at_cardcontrol(1) = 140;
@@ -118,7 +118,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 50);
-                gmode(4, inf_tiles, inf_tiles, 220);
+                gmode(4, 220);
                 gcopy_c(5, 480, 336, inf_tiles, inf_tiles, 64, 84);
                 col_at_cardcontrol(0) = 240;
                 col_at_cardcontrol(1) = 240;
@@ -128,7 +128,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 48);
-                gmode(4, inf_tiles, inf_tiles, 220);
+                gmode(4, 220);
                 gcopy_c(5, 1200, 288, inf_tiles, inf_tiles, 64, 80);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 255;
@@ -138,7 +138,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 44);
-                gmode(4, inf_tiles, inf_tiles, 220);
+                gmode(4, 220);
                 gcopy_c(5, 1296, 336, inf_tiles, inf_tiles, 72, 86);
                 col_at_cardcontrol(0) = 250;
                 col_at_cardcontrol(1) = 250;
@@ -362,7 +362,7 @@ int opencard2(int prm_428, int prm_429)
         }
         pos(card_at_cardcontrol(3, prm_428) + 32,
             card_at_cardcontrol(4, prm_428) + 48);
-        gmode(2, 64, 96);
+        gmode(2);
         gcopy_c(3, 736, 216, 64, 96, 64 - cnt * 14, 96);
         await(10);
         redraw();
@@ -380,7 +380,7 @@ int trashcard(int prm_430)
         pos(card_at_cardcontrol(3, prm_430) - 8,
             card_at_cardcontrol(4, prm_430) - 8);
         gcopy(3, 528, 216, 80, 112);
-        gmode(2, 64, 96);
+        gmode(2);
         if (cnt == 20)
         {
             redraw();

@@ -390,7 +390,7 @@ bool input_text_dialog(
             }
         }
 
-        gmode(4, -1, -1, p(1) / 2 + 50);
+        gmode(4, p(1) / 2 + 50);
         pos(x + 34 + p(4) * 8, y + 5);
         gcopy(3, 0, 336, 12, 24);
         gmode(2);

@@ -411,9 +411,9 @@ int ginfo(int type)
 
 
 
-void gmode(int mode, int width, int height, int alpha)
+void gmode(int mode, int alpha)
 {
-    snail::hsp::gmode(mode, width, height, alpha);
+    snail::hsp::gmode(mode, alpha);
 }
 
 

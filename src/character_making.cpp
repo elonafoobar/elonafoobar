@@ -112,7 +112,7 @@ main_menu_result_t character_making_select_race()
             x = ww / 5 * 2;
             y = wh - 80;
             pos(wx + ww / 4, wy + wh / 2);
-            gmode(4, 180, 300, 50);
+            gmode(4, 50);
             gcopy_c(
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
@@ -219,7 +219,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
         x = ww / 2;
         y = wh - 60;
         pos(wx + ww / 2, wy + wh / 2);
-        gmode(4, 180, 300, 30);
+        gmode(4, 30);
         gcopy_c(2, 0, 0, 180, 300, x, y);
         gmode(2);
         display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
@@ -323,7 +323,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
             x = ww / 5 * 2;
             y = wh - 80;
             pos(wx + ww / 4, wy + wh / 2);
-            gmode(4, 180, 300, 50);
+            gmode(4, 50);
             gcopy_c(
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
@@ -462,7 +462,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
         x = 150;
         y = 240;
         pos(wx + 85, wy + wh / 2);
-        gmode(4, 180, 300, 30);
+        gmode(4, 30);
         gcopy_c(2, 0, 0, 180, 300, x, y);
         gmode(2);
         display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
@@ -486,7 +486,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             if (cnt >= 2)
             {
                 pos(wx + 198, wy + 76 + cnt * 23);
-                gmode(2, inf_tiles, inf_tiles);
+                gmode(2);
                 gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
                 pos(wx + 210, wy + 66 + cnt * 23);
                 mes(""s + list(0, cnt) / 1000000);
@@ -666,7 +666,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
             x = ww / 3 * 2;
             y = wh - 80;
             pos(wx + ww / 2, wy + wh / 2);
-            gmode(4, 180, 300, 40);
+            gmode(4, 40);
             gcopy_c(
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
@@ -957,7 +957,7 @@ void show_race_or_class_info(int val0)
     {
         chara_preparepic(ref1);
         pos(wx + 480, wy + 96);
-        gmode(4, chara_chips[ref1].width, chara_chips[ref1].height, 40);
+        gmode(4, 40);
         gcopy_c(
             5,
             0,
@@ -968,7 +968,7 @@ void show_race_or_class_info(int val0)
             chara_chips[ref1].height * 2);
         chara_preparepic(ref2);
         pos(wx + 350, wy + 96);
-        gmode(4, chara_chips[ref1].width, chara_chips[ref1].height, 40);
+        gmode(4, 40);
         gcopy_c(
             5,
             0,
@@ -1074,7 +1074,7 @@ void show_race_or_class_info(int val0)
                 color(120, 120, 120);
             }
             pos(cnt * 150 + tx + 13, ty + 7);
-            gmode(2, inf_tiles, inf_tiles);
+            gmode(2);
             gcopy_c(1, (cnt2 * 3 + cnt) * inf_tiles, 672, inf_tiles, inf_tiles);
             pos(cnt * 150 + tx + 32, ty);
             mes(strmid(
@@ -1107,7 +1107,7 @@ void show_race_or_class_info(int val0)
     if (r != 0)
     {
         pos(tx + 13, ty + 6);
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         gcopy_c(1, 0, 672, inf_tiles, inf_tiles);
         pos(tx + 32, ty);
         mes(s);
@@ -1127,7 +1127,7 @@ void show_race_or_class_info(int val0)
                 lenfix(s, 16);
             }
             pos(tx + 13, ty + 6);
-            gmode(2, inf_tiles, inf_tiles);
+            gmode(2);
             gcopy_c(
                 1,
                 (the_ability_db[cnt]->related_basic_attribute - 10) * inf_tiles,

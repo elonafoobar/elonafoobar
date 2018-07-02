@@ -2254,7 +2254,7 @@ void animeload(int prm_807, int prm_808)
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
-        gmode(2, 96, 96);
+        gmode(2);
         pos(dx_at_m133 + 24, dy_at_m133 + 8);
         grotate(7, cnt * 96, 0, 96, 96, r_at_m133 * cnt);
         gmode(0);
@@ -2359,7 +2359,7 @@ void animeblood(int cc, int animation_type, int element)
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         cnt2_at_m133 = cnt * 2;
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         if (ele2_at_m133)
         {
             pos(dx_at_m133 - 24, dy_at_m133 - 32 + dy_at_m133(1));
@@ -6121,7 +6121,7 @@ void label_1746()
     set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
     gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
     set_color_mod(255, 255, 255, 6);
-    gmode(4, -1, -1, 30);
+    gmode(4, 30);
     if (mdata(2) == 0)
     {
         pos(0, 192);
@@ -6139,7 +6139,7 @@ void label_1746()
     }
     gmode(0);
     gsel(0);
-    gmode(2, 24, 24);
+    gmode(2);
     return;
 }
 
@@ -12009,7 +12009,7 @@ int ask_direction()
     t = 0;
 label_2128_internal:
     ++t;
-    gmode(4, 28, 28, 200 - t / 2 % 20 * (t / 2 % 20));
+    gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
     x = (cdata[0].position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
@@ -13886,7 +13886,7 @@ void label_2151()
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        gmode(4, -1, -1, cnt * 10);
+        gmode(4, cnt * 10);
         label_2149();
         await(config::instance().animewait * 10);
     }
@@ -19433,7 +19433,7 @@ label_2682_internal:
         {
             redraw();
             pos(0, 0);
-            gmode(4, -1, -1, cnt * 15);
+            gmode(4, cnt * 15);
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
             gmode(2);
@@ -19562,7 +19562,7 @@ label_2684_internal:
             dx = 0;
         }
         pos(windoww / 2, y + 4);
-        gmode(6, 344, 72, 70);
+        gmode(6, 70);
         gcopy_c(3, 456, 144, 344, 72, dx, 72);
     }
     x = 40;
@@ -19582,7 +19582,7 @@ label_2684_internal:
         {
             scene_cut = 1;
         }
-        gmode(4, -1, -1, cnt * 16);
+        gmode(4, cnt * 16);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
         redraw();
@@ -20168,7 +20168,7 @@ void conquer_lesimas()
     x = ww / 3 - 20;
     y = wh - 140;
     pos(wx + ww - 120, wy + wh / 2);
-    gmode(4, 180, 300, 250);
+    gmode(4, 250);
     gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
@@ -20452,7 +20452,7 @@ void show_game_score_ranking()
         p = elona::stoi(s(1)) % 1000;
         chara_preparepic(elona::stoi(s(1)));
         pos(x - 22, y + 12);
-        gmode(2, chara_chips[p].width, chara_chips[p].height);
+        gmode(2);
         gcopy_c(
             5,
             0,

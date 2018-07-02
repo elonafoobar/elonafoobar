@@ -223,7 +223,7 @@ void label_1870()
             break;
         }
         pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        gmode(4, x(1), y(1), cnt * 25);
+        gmode(4, cnt * 25);
         gcopy_c(2, 0, 0, x(1), y(1));
         if (atxpic != 0)
         {
@@ -235,7 +235,7 @@ void label_1870()
             pos(x - atxpic(2) / 2, y - atxpic(3) / 2);
             gcopy(2, x - atxpic(2) / 2, y - atxpic(3) / 2, x(1), y(1));
             pos(x, y);
-            gmode(2, inf_tiles, inf_tiles);
+            gmode(2);
             double p_double;
             if (cnt == 10)
             {
@@ -265,7 +265,7 @@ void label_1870()
                 pos(x, y);
                 gcopy(2, x, y, x(1), y(1));
                 pos(x + x(1) / 2, y + y(1) / 2);
-                gmode(2, inf_tiles, inf_tiles);
+                gmode(2);
                 gcopy_c(
                     1,
                     mattile % 33 * 32,
@@ -296,7 +296,7 @@ void label_1871()
         pos(x - 50, y - 50);
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
         pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        gmode(4, x(1), y(1), 250 - cnt * 25);
+        gmode(4, 250 - cnt * 25);
         gcopy_c(2, 0, 0, x(1), y(1));
         await(15);
         redraw();

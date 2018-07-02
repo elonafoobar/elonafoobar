@@ -1246,7 +1246,7 @@ label_2181_internal:
         gmode(2);
         pos(wx, wy);
         gcopy(4, 0, 0, ww, wh);
-        gmode(1, inf_tiles, inf_tiles);
+        gmode(1);
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             y = cnt + inv[ci].param2 - 2;

@@ -73,7 +73,7 @@ int ginfo(int)
     return 0;
 }
 
-void gmode(int, int, int, int)
+void gmode(int, int)
 {
 }
 

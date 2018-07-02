@@ -561,7 +561,7 @@ void set_option()
         x = ww / 5 * 3;
         y = wh - 80;
         pos(wx + ww / 3, wy + wh / 2);
-        gmode(4, 180, 300, 50);
+        gmode(4, 50);
         gcopy_c(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
         gmode(2);
         keyrange = 0;

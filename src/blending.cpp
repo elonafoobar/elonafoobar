@@ -723,7 +723,7 @@ label_1925_internal:
             boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
         pos(wx + 37, wy + 70 + cnt * 19);
-        gmode(2, item_chips[550].width, item_chips[550].height);
+        gmode(2);
         gcopy_c(
             1,
             0,
@@ -878,7 +878,7 @@ label_1928_internal:
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
+        gmode(2);
         gcopy_c(
             1,
             0,

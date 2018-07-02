@@ -1220,7 +1220,7 @@ label_1857_internal:
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s(1));
         pos(wx + 37, wy + 69 + cnt * 19 + 2);
-        gmode(2, inf_tiles, inf_tiles);
+        gmode(2);
         gcopy_c(
             1,
             0,

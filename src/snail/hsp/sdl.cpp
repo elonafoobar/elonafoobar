@@ -104,8 +104,6 @@ struct TexBuffer
     snail::color color{0, 0, 0, 255};
     int x = 0;
     int y = 0;
-    int width = 32;
-    int height = 32;
     int mode = 2;
 };
 
@@ -651,13 +649,13 @@ int ginfo(int type)
     }
 }
 
-void gmode(int mode, int width, int height, int alpha)
+
+
+void gmode(int mode, int alpha)
 {
     detail::current_tex_buffer().mode = mode;
     detail::set_blend_mode();
 
-    detail::current_tex_buffer().width = width;
-    detail::current_tex_buffer().height = height;
     detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
 }
 
