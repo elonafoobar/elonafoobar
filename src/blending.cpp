@@ -889,8 +889,7 @@ label_1928_internal:
             inf_tiles);
         if (inv[p].body_part != 0)
         {
-            pos(wx + 46, wy + 72 + cnt * 18 - 3);
-            gcopy(3, 12, 348, 12, 12);
+            draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
         }
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
     }

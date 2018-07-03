@@ -10581,8 +10581,7 @@ label_2070_internal:
         }
         if (list(0, p) > 10000)
         {
-            pos(wx + 15, wy + 63 + cnt * 18);
-            gcopy(3, 384, 360, 24, 24);
+            draw("inheritance_mark", wx + 15, wy + 63 + cnt * 18);
         }
     }
     redraw();
@@ -12014,23 +12013,15 @@ label_2128_internal:
     y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
     {
-        pos(x, y - 48);
-        grotate(3, 212, 432, 28, 28, 0);
-        pos(x, y + 48);
-        grotate(3, 212, 432, 28, 28, 1.0 * 3.14);
-        pos(x + 48, y);
-        grotate(3, 212, 432, 28, 28, 0.5 * 3.14);
-        pos(x - 48, y);
-        grotate(3, 212, 432, 28, 28, 1.5 * 3.14);
+        draw_rotated("direction_arrow", x, y - 48, 0);
+        draw_rotated("direction_arrow", x, y + 48, 180);
+        draw_rotated("direction_arrow", x + 48, y, 90);
+        draw_rotated("direction_arrow", x - 48, y, 270);
     }
-    pos(x - 48, y - 48);
-    grotate(3, 212, 432, 28, 28, 1.75 * 3.14);
-    pos(x + 48, y + 48);
-    grotate(3, 212, 432, 28, 28, 0.75 * 3.14);
-    pos(x + 48, y - 48);
-    grotate(3, 212, 432, 28, 28, 0.25 * 3.14);
-    pos(x - 48, y + 48);
-    grotate(3, 212, 432, 28, 28, 1.25 * 3.14);
+    draw_rotated("direction_arrow", x - 48, y - 48, 315);
+    draw_rotated("direction_arrow", x + 48, y + 48, 135);
+    draw_rotated("direction_arrow", x + 48, y - 48, 45);
+    draw_rotated("direction_arrow", x - 48, y + 48, 225);
     redraw();
     gmode(0);
     pos(x - 48 - 24, y - 48 - 24);

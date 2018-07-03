@@ -83,8 +83,22 @@ void bmes(
     const snail::color& shadow_color = {0, 0, 0, 255});
 
 
+void init_assets();
+
 void draw(const std::string& key, int x, int y);
 void draw(const std::string& key, int x, int y, int width, int height);
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    double angle);
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    int width,
+    int height,
+    double angle);
 
 
 

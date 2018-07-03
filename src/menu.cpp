@@ -339,28 +339,26 @@ label_2699_internal:
         {
             continue;
         }
-        pos(x(cnt) + tx, y(cnt) + ty);
         if (cnt == 0 || cnt == 4 || cnt == 8)
         {
-            gcopy(3, 360, 192, 48, 48);
+            draw("quickmenu_submenu", x(cnt) + tx, y(cnt) + ty);
         }
         else
         {
-            gcopy(3, 360, 144, 48, 48);
+            draw("quickmenu_action", x(cnt) + tx, y(cnt) + ty);
         }
         gmode(4, (t + cnt) % 10 * (t + cnt) % 10 * 12 * ((t + cnt) % 50 < 10));
         if (cs == cnt)
         {
             gmode(5, 140);
         }
-        pos(x(cnt) + tx, y(cnt) + ty);
         if (cnt == 0 || cnt == 4 || cnt == 8)
         {
-            gcopy(3, 360, 192, 48, 48);
+            draw("quickmenu_submenu", x(cnt) + tx, y(cnt) + ty);
         }
         else
         {
-            gcopy(3, 360, 144, 48, 48);
+            draw("quickmenu_action", x(cnt) + tx, y(cnt) + ty);
         }
         gmode(2);
         s = listn(0, p);
@@ -2616,8 +2614,7 @@ label_2035_internal:
             if (cdata[cc].buffs[cnt].id == 0)
             {
                 gmode(4, 120);
-                pos(x, y);
-                gcopy(3, 320, 160, 32, 32);
+                draw("buff_icon_none", x, y);
                 gmode(2);
                 continue;
             }

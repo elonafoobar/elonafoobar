@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "input.hpp"
@@ -102,8 +103,7 @@ void anime_halt()
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         await(config::instance().wait1 / 3);
-        pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-        gcopy(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
+        draw("label_more", x_at_txtfunc, y_at_txtfunc + 12 - cnt, 120, cnt * 2 + 1);
         redraw();
     }
     wait_key_pressed(true);
@@ -115,8 +115,7 @@ void anime_halt()
         gcopy(3, 672, 504, 120, 24);
         if (cnt != 6)
         {
-            pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-            gcopy(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
+            draw("label_more", x_at_txtfunc, y_at_txtfunc + cnt * 2, 120, 22 - cnt * 4);
         }
         redraw();
     }

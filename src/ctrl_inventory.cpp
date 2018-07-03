@@ -1054,8 +1054,7 @@ label_2061_internal:
             inf_tiles);
         if (inv[p].body_part != 0)
         {
-            pos(wx + 46, wy + 72 + cnt * 18 - 3);
-            gcopy(3, 12, 348, 12, 12);
+            draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             if (p == mainweapon)
             {
                 s += lang(u8"(利腕)"s, u8" (Main hand)"s);
@@ -1080,8 +1079,7 @@ label_2061_internal:
         {
             font(13 - en * 2);
             gmode(2);
-            pos(wx + 340, wy + 32);
-            gcopy(3, 0, 392, 24, 24);
+            draw("gold_coin", wx + 340, wy + 32);
             pos(wx + 368, wy + 37 - en * 2);
             mes(""s + cdata[tc].gold + u8" gp"s);
         }
