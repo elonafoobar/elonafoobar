@@ -437,7 +437,7 @@ void switch_religion()
     else
     {
         animode = 100;
-        play_animation(19);
+        miracle_animation().play();
         snd(51);
         txtef(5);
         txt(i18n::s.get("core.locale.god.switch.follower",
@@ -486,7 +486,7 @@ turn_result_t do_pray()
         return turn_result_t::turn_end;
     }
     animode = 100;
-    play_animation(19);
+    miracle_animation().play();
     snd(120);
     efid = 1120;
     efp = 100;

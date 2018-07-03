@@ -27,12 +27,42 @@ elona_vector1<int> ay2;
 
 
 
-void play_animation_8(int anicol)
+} // namespace
+
+
+
+namespace elona
+{
+
+
+int FIXME_dig_animation_x;
+int FIXME_dig_animation_y;
+
+
+
+void abstract_animation::play()
+{
+    if (mode == 9)
+        return;
+    if (config::instance().animewait == 0)
+        return;
+
+    if (updates_screen())
+        update_screen();
+
+    gmode(2);
+    do_play();
+    gmode(2);
+}
+
+
+
+void failure_to_cast_animation::do_play()
 {
     if (is_in_fov(cc) == 0)
         return;
 
-    prepare_item_image(10, anicol);
+    prepare_item_image(10, 0);
     int anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
     int anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
@@ -60,24 +90,25 @@ void play_animation_8(int anicol)
 }
 
 
-void play_animation_6_5_7_11(int animeid, int anicol)
+
+void bright_aura_animation::do_play()
 {
     if (is_in_fov(tc) == 0)
         return;
 
-    if (animeid == 6)
+    if (type == type_t::debuff)
     {
-        prepare_item_image(8, anicol);
+        prepare_item_image(8, 0);
         snd(38);
     }
-    if (animeid == 5 || animeid == 11)
+    if (type == type_t::healing || type == type_t::healing_rain)
     {
-        prepare_item_image(7, anicol);
+        prepare_item_image(7, 0);
         snd(33);
     }
-    if (animeid == 7)
+    if (type == type_t::offering)
     {
-        prepare_item_image(9, anicol);
+        prepare_item_image(9, 0);
     }
     ax = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
     ay = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
@@ -98,7 +129,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
         ax2(i) = rnd(inf_tiles);
         ay2(i) = rnd(inf_tiles) - 8;
         ap(i) = (rnd(4) + 1) * -1;
-        if (animeid == 6)
+        if (type == type_t::debuff)
         {
             ap(i) *= -1;
         }
@@ -106,7 +137,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
 
     for (int i = 0; i < 10; ++i)
     {
-        if (animeid == 11)
+        if (type == type_t::healing_rain)
         {
             await(config::instance().animewait / 4);
         }
@@ -127,8 +158,12 @@ void play_animation_6_5_7_11(int animeid, int anicol)
 }
 
 
-void play_animation_3(int anicol, int anisound)
+
+void breath_animation::do_play()
 {
+    int anicol = eleinfo(element, 0);
+    int anisound = eleinfo(element, 1);
+
     prepare_item_image(5, anicol);
     snd(35);
     gsel(7);
@@ -184,8 +219,17 @@ void play_animation_3(int anicol, int anisound)
 }
 
 
-void play_animation_17_2(int animeid, int anicol, int anisound)
+
+void ball_animation::do_play()
 {
+    int anicol;
+    int anisound;
+    if (type == type_t::ball)
+    {
+        anicol = eleinfo(ele, 0);
+        anisound = eleinfo(ele, 1);
+    }
+
     snd(34);
     gsel(7);
     pos(0, 0);
@@ -225,7 +269,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
                     continue;
                 }
                 anip1 = 48 - (anip - 4) * (anip - 4) * 2;
-                if (animeid == 2)
+                if (type == type_t::ball)
                 {
                     if (fov_los(anix, aniy, anidx, anidy) == 0)
                     {
@@ -276,8 +320,11 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
 
 
 
-void play_animation_0(int anicol, int anisound)
+void bolt_animation::do_play()
 {
+    int anicol = eleinfo(element, 0);
+    int anisound = eleinfo(element, 1);
+
     prepare_item_image(3, anicol);
     snd(37);
     int anidx = cdata[cc].position.x;
@@ -372,7 +419,7 @@ void play_animation_0(int anicol, int anisound)
 
 
 
-void play_animation_15()
+void throwing_object_animation::do_play()
 {
     if (is_in_fov(cc) == 0)
     {
@@ -412,29 +459,37 @@ void play_animation_15()
 
 
 
-void play_animation_ranged_attack(int animeid, int anicol, int anisound)
+void ranged_attack_animation::do_play()
 {
+    int anicol{};
+    int anisound{};
+    if (type == type_t::magic_arrow)
+    {
+        anicol = eleinfo(ele, 0);
+        anisound = eleinfo(ele, 1);
+    }
+
     if (is_in_fov(cc) == 0)
     {
         return;
     }
     prepare_item_image(6, anicol);
-    if (animeid == 18)
+    if (type == type_t::distant_attack)
     {
         prepare_item_image(23, 0);
         snd(29);
     }
-    if (animeid == 108)
+    if (type == type_t::bow)
     {
         prepare_item_image(1, anicol);
         snd(29);
     }
-    if (animeid == 109)
+    if (type == type_t::crossbow)
     {
         prepare_item_image(2, anicol);
         snd(29);
     }
-    if (animeid == 110)
+    if (type == type_t::firearm)
     {
         ap = the_item_db[inv[aniref].id]->subcategory;
         if (ap == 24021)
@@ -448,11 +503,11 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
             snd(30);
         }
     }
-    if (animeid == 111)
+    if (type == type_t::throwing)
     {
         prepare_item_image(inv[aniref].image % 1000, inv[aniref].image / 1000);
     }
-    if (animeid == 1)
+    if (type == type_t::magic_arrow)
     {
         snd(36);
     }
@@ -493,12 +548,12 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
 
 
 
-void play_animation_9()
+void swarm_animation::do_play()
 {
     snd(2);
     prepare_item_image(17, 0);
-    int anidx = (cdata[tc].position.x - scx) * inf_tiles + inf_screenx;
-    int anidy = (cdata[tc].position.y - scy) * inf_tiles + inf_screeny;
+    int anidx = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
+    int anidy = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -518,7 +573,7 @@ void play_animation_9()
 
 
 
-void play_animation_12()
+void melee_attack_animation::do_play()
 {
     int anix1;
     switch (attackskill)
@@ -612,7 +667,8 @@ void play_animation_12()
 }
 
 
-void play_animation_20()
+
+void geen_engineering_animation::do_play()
 {
     snd(107);
     if (is_in_fov(anic) == 0)
@@ -646,7 +702,8 @@ void play_animation_20()
 }
 
 
-void play_animation_19()
+
+void miracle_animation::do_play()
 {
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime12.bmp");
@@ -772,7 +829,8 @@ void play_animation_19()
 }
 
 
-void play_animation_22()
+
+void meteor_animation::do_play()
 {
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime17.bmp");
@@ -853,7 +911,8 @@ void play_animation_22()
 }
 
 
-void play_animation_21()
+
+void ragnarok_animation::do_play()
 {
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime16.bmp");
@@ -927,17 +986,14 @@ void play_animation_21()
 
 
 
-void play_animation_14_16(int animeid)
+void breaking_animation::do_play()
 {
     sx = FIXME_dig_animation_x;
     sy = FIXME_dig_animation_y;
     aniref = 4;
     ax = (sx - scx) * inf_tiles + inf_screenx;
     ay = (sy - scy) * inf_tiles + inf_screeny;
-    if (animeid == 14)
-    {
-        prepare_item_image(17, 0);
-    }
+    prepare_item_image(17, 0);
     for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
     {
         sx(cnt) = rnd(24) - 12;
@@ -972,74 +1028,6 @@ void play_animation_14_16(int animeid)
         gmode(2);
         await(config::instance().animewait);
     }
-}
-
-
-} // namespace
-
-
-
-namespace elona
-{
-
-
-int FIXME_dig_animation_x;
-int FIXME_dig_animation_y;
-
-
-
-void play_animation(int animeid)
-{
-    if (mode == 9)
-        return;
-    if (config::instance().animewait == 0)
-        return;
-
-    if (animeid != 21)
-    {
-        update_screen();
-    }
-
-    gmode(2);
-
-    int anicol = 0;
-    int anisound = 0;
-    if (animeid < 4)
-    {
-        anicol = eleinfo(ele, 0);
-        anisound = eleinfo(ele, 1);
-    }
-
-    switch (animeid)
-    {
-    case 8: play_animation_8(anicol); break;
-    case 6:
-    case 5:
-    case 7:
-    case 11: play_animation_6_5_7_11(animeid, anicol); break;
-    case 3: play_animation_3(anicol, anisound); break;
-    case 17:
-    case 2: play_animation_17_2(animeid, anicol, anisound); break;
-    case 0: play_animation_0(anicol, anisound); break;
-    case 15: play_animation_15(); break;
-    case 111:
-    case 110:
-    case 108:
-    case 109:
-    case 1:
-    case 18: play_animation_ranged_attack(animeid, anicol, anisound); break;
-    case 9: play_animation_9(); break;
-    case 12: play_animation_12(); break;
-    case 20: play_animation_20(); break;
-    case 19: play_animation_19(); break;
-    case 22: play_animation_22(); break;
-    case 21: play_animation_21(); break;
-    case 14:
-    case 16: play_animation_14_16(animeid); break;
-    default: break;
-    }
-
-    gmode(2);
 }
 
 

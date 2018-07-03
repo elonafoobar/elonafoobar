@@ -11010,7 +11010,7 @@ label_21451_internal:
                     aniref = 0;
                     anix = movx;
                     aniy = movy;
-                    play_animation(2);
+                    ball_animation(ball_animation::type_t::ball).play();
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
@@ -11797,7 +11797,7 @@ int label_2168()
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
-            play_animation(8);
+            failure_to_cast_animation(cc).play();
         }
         efsource = 0;
         return 1;
@@ -13196,7 +13196,9 @@ turn_result_t do_bash()
                 snd(73);
                 txt(i18n::s.get("core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
-                play_animation(14);
+                FIXME_dig_animation_x = x;
+                FIXME_dig_animation_y = y;
+                breaking_animation().play();
             }
             return turn_result_t::turn_end;
         }
@@ -14564,7 +14566,9 @@ label_22191_internal:
     if (attackrange == 1)
     {
         aniref = cw;
-        play_animation(attackskill);
+        ranged_attack_animation(
+            static_cast<ranged_attack_animation::type_t>(attackskill))
+            .play();
     }
     if (attacknum > 1 || cc != 0)
     {
@@ -14590,7 +14594,7 @@ label_22191_internal:
             if (config::instance().attackanime)
             {
                 aniref = dmg * 100 / cdata[tc].max_hp;
-                play_animation(12);
+                melee_attack_animation().play();
             }
         }
         if (attackskill != 106)

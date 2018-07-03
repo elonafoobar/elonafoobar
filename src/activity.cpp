@@ -525,7 +525,7 @@ void continuous_action_perform()
                                         aniref(1) = inv[ci].color;
                                         anix = inv[ci].position.x;
                                         aniy = inv[ci].position.y;
-                                        play_animation(15);
+                                        throwing_object_animation().play();
                                         cc = ccbk;
                                         ++inv[ci].number;
                                         cell_refresh(
@@ -1794,11 +1794,11 @@ void spot_mining_or_wall()
             }
             map(refx, refy, 0) = tile_tunnel;
             spillfrag(refx, refy, 2);
-            FIXME_dig_animation_x = refx;
-            FIXME_dig_animation_y = refy;
             snd(45);
             aniref = 5;
-            play_animation(14);
+            FIXME_dig_animation_x = refx;
+            FIXME_dig_animation_y = refy;
+            breaking_animation().play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2 && gdata_current_map == mdata_t::map_id_t::your_home)
             {
