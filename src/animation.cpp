@@ -53,7 +53,7 @@ void play_animation_8(int anicol)
         pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
         pos(anidx + inf_tiles / 2, anidy + 16);
-        grotate(1, 0, 960, i + 40, i + 40, 5 * i);
+        grotate(1, 0, 960, 48, 48, i + 40, i + 40, 5 * i);
         redraw();
         await(config::instance().animewait);
     }
@@ -120,7 +120,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
         for (int j = 0; j < 15; ++j)
         {
             pos(ax + ax2(j), ay + ay2(j) + acnt2 / ap(j));
-            grotate(1, 0, 960, inf_tiles - acnt2 * 2, inf_tiles - acnt2 * 2, acnt2 * ap(j));
+            grotate(1, 0, 960, 48, 48, inf_tiles - acnt2 * 2, inf_tiles - acnt2 * 2, acnt2 * ap(j));
         }
         redraw();
     }
@@ -510,7 +510,7 @@ void play_animation_9()
         pos(anidx - 16, anidy - 16);
         gcopy(4, 0, 0, 64, 64);
         pos(anidx + 16, anidy + 16);
-        grotate(1, 0, 960, cnt * 8 + 18, cnt * 8 + 18, 0.5 * cnt - 0.8);
+        grotate(1, 0, 960, 48, 48, cnt * 8 + 18, cnt * 8 + 18, 0.5 * cnt - 0.8);
         redraw();
         await(config::instance().animewait);
     }
