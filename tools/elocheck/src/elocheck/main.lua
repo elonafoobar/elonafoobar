@@ -6,8 +6,7 @@ local exit_codes = {
    ok = 0,
    warnings = 1,
    errors = 2,
-   fatals = 3,
-   critical = 4
+   critical = 3
 }
 
 local elocheck = {
@@ -72,16 +71,14 @@ local function main()
    end
 
    io.stdout:write(output)
-   --
-   --   if report.fatals > 0 then
-   --      os.exit(exit_codes.fatals)
-   --   elseif report.errors > 0 then
-   --      os.exit(exit_codes.errors)
-   --   elseif report.warnings > 0 then
-   --      os.exit(exit_codes.warnings)
-   --   else
-   --      os.exit(exit_codes.ok)
-   --   end
+
+   if report.errors > 0 then
+      os.exit(exit_codes.errors)
+   elseif report.warnings > 0 then
+      os.exit(exit_codes.warnings)
+   else
+      os.exit(exit_codes.ok)
+   end
 end
 
 main()

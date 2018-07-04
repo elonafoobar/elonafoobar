@@ -65,4 +65,10 @@ luacheck:
 	luacheck runtime/mods/
 	luacheck src/tests/lua
 
+elocheck:
+	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
+	    tools/elocheck/bin/elocheck.lua $(CURDIR) en
+	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
+	    tools/elocheck/bin/elocheck.lua $(CURDIR) jp
+
 rebuild: clean build

@@ -214,6 +214,8 @@ function runner.check(inputs, opts)
    end
 
    local path = fs.join(opts.root_path, "runtime", "locale", opts.source_language)
+   print(opts.root_path)
+   print(path)
    if not fs.is_dir(path) then
       error(("no such locale path: (%s)"):format(path))
    end
