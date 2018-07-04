@@ -525,7 +525,7 @@ void continuous_action_perform()
                                         aniref(1) = inv[ci].color;
                                         anix = inv[ci].position.x;
                                         aniy = inv[ci].position.y;
-                                        throwing_object_animation().play();
+                                        throwing_object_animation(cdata[cc]).play();
                                         cc = ccbk;
                                         ++inv[ci].number;
                                         cell_refresh(

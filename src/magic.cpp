@@ -202,7 +202,7 @@ int magic()
                     goto the_end;
                 }
             }
-                bolt_animation(cc, ele).play();
+                bolt_animation(cdata[cc], ele).play();
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 for (int cnt = 0; cnt < 20; ++cnt)

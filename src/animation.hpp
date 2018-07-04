@@ -128,8 +128,8 @@ private:
 class bolt_animation : public abstract_animation
 {
 public:
-    bolt_animation(int cc, int element)
-        : cc(cc)
+    bolt_animation(const character& attacker, int element)
+        : attacker(attacker)
         , element(element)
     {
     }
@@ -140,7 +140,7 @@ protected:
 
 
 private:
-    int cc;
+    const character& attacker;
     int element;
 };
 
@@ -149,7 +149,8 @@ private:
 class throwing_object_animation : public abstract_animation
 {
 public:
-    throwing_object_animation()
+    throwing_object_animation(const character& target)
+        : target(target)
     {
     }
 
@@ -159,6 +160,7 @@ protected:
 
 
 private:
+    const character& target;
 };
 
 

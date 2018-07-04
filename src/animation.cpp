@@ -22,55 +22,6 @@ namespace
 
 
 
-struct temporary_screen_storage
-{
-    temporary_screen_storage(int x, int y, int width, int height)
-        : x(x)
-        , y(y)
-        , width(width)
-        , height(height)
-    {
-    }
-
-
-    temporary_screen_storage(const position_t& position, int width, int height)
-        : temporary_screen_storage(position.x, position.y, width, height)
-    {
-    }
-
-
-    void store()
-    {
-        gsel(4);
-        gmode(0);
-        pos(0, 0);
-        gcopy(0, x - width / 4, y - height / 4, width, height);
-        gmode(2);
-        gsel(0);
-    }
-
-
-    void restore()
-    {
-        pos(x - width / 4, y - height / 4);
-        gcopy(4, 0, 0, width, height);
-    }
-
-
-private:
-    int x;
-    int y;
-    int width;
-    int height;
-};
-
-
-
-elona_vector1<int> ax;
-elona_vector1<int> ay;
-
-
-
 void set_color_modulator(int color_id, int window_id = -1)
 {
     set_color_mod(
@@ -106,6 +57,23 @@ position_t rendering_base_position(const character& cc)
 
 
 
+position_t rendering_base_position_center(const position_t& position)
+{
+    return {
+        (position.x - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
+        (position.y - scy) * inf_tiles + inf_screeny + inf_tiles / 2,
+    };
+}
+
+
+
+position_t rendering_base_position_center(const character& cc)
+{
+    return rendering_base_position_center(cc.position);
+}
+
+
+
 std::vector<position_t> breath_pos()
 {
     std::vector<position_t> ret(maxbreath);
@@ -118,12 +86,128 @@ std::vector<position_t> breath_pos()
 
 
 
+template <typename F>
+void do_animation(
+    const position_t& center,
+    const std::string& image_key,
+    int duration,
+    F draw)
+{
+    const auto& image_info = get_image_info(image_key);
+    const auto size = std::max(image_info.width, image_info.height) * 2;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    gcopy(0, center.x - size / 2, center.y - size / 2, size, size);
+    gmode(2);
+    gsel(0);
+
+    for (int t = 0; t < duration; ++t)
+    {
+        gmode(0);
+        pos(center.x - size / 2, center.y - size / 2);
+        gcopy(4, 0, 0, size, size);
+        gmode(2);
+        draw(image_key, center, t);
+        redraw();
+        await(config::instance().animewait);
+    }
+}
+
+
+
+template <typename F, typename G>
+void do_particle_animation(
+    const position_t& center,
+    const std::string& image_key,
+    int duration,
+    int max_particles,
+    F create_particle,
+    G draw)
+{
+    const auto& image_info = get_image_info(image_key);
+    const auto size = std::max(image_info.width, image_info.height) * 2;
+
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    gcopy(0, center.x - size / 2, center.y - size / 2, size, size);
+    gmode(2);
+    gsel(0);
+
+    std::vector<position_t> particles(max_particles);
+    for (int i = 0; i < max_particles; ++i)
+    {
+        particles[i] = create_particle(i);
+    }
+
+    for (int t = 0; t < duration; ++t)
+    {
+        gmode(0);
+        pos(center.x - size / 2, center.y - size / 2);
+        gcopy(4, 0, 0, size, size);
+        gmode(2);
+        for (int i = 0; i < max_particles; ++i)
+        {
+            draw(image_key, center, t, particles[i], i);
+        }
+        redraw();
+        await(config::instance().animewait);
+    }
+}
+
+
+
+bool is_in_screen(int x, int y)
+{
+    return x < windoww
+        && y < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2;
+}
+
+
+
 } // namespace
 
 
 
 namespace elona
 {
+
+
+
+void draw_rotated(
+    const std::string& key,
+    int x,
+    int y,
+    double scale,
+    double angle)
+{
+    const auto& image_info = get_image_info(key);
+    draw_rotated(
+        key, x, y, image_info.width * scale, image_info.height * scale, angle);
+}
+
+
+
+int dist(const position_t& p, int x, int y)
+{
+    return dist(p.x, p.y, x, y);
+}
+
+
+
+int dist(int x, int y, const position_t& p)
+{
+    return dist(x, y, p.x, p.y);
+}
+
+
+
+int dist(const position_t& p1, const position_t& p2)
+{
+    return dist(p1.x, p1.y, p2.x, p2.y);
+}
 
 
 
@@ -149,27 +233,20 @@ void failure_to_cast_animation::do_play()
     if (!is_in_fov(caster))
         return;
 
-    const auto base_pos = rendering_base_position(caster);
-
-    temporary_screen_storage screen_storage(
-        base_pos, inf_tiles * 2, inf_tiles * 2);
-    screen_storage.store();
-
     snd(66);
 
-    for (int i = 0; i < 12; ++i)
-    {
-        screen_storage.restore();
-        draw_rotated(
-            "failure_to_cast_effect",
-            base_pos.x + inf_tiles / 2,
-            base_pos.y + inf_tiles / 2 - 8,
-            i + 40,
-            i + 40,
-            75 * i);
-        redraw();
-        await(config::instance().animewait);
-    }
+    do_animation(
+        rendering_base_position_center(caster),
+        "failure_to_cast_effect",
+        12,
+        [](const auto& key, const auto& center, auto t) {
+            draw_rotated(
+                key,
+                center.x,
+                center.y - inf_tiles / 6,
+                double(t + 40) / inf_tiles,
+                75 * t);
+        });
 }
 
 
@@ -199,9 +276,17 @@ void bright_aura_animation::do_play()
     const auto base_pos = rendering_base_position(cc);
 
     // Store part of the previous screen.
-    temporary_screen_storage screen_storage(
-        base_pos, inf_tiles * 2, inf_tiles * 2);
-    screen_storage.store();
+    gsel(4);
+    gmode(0);
+    pos(0, 0);
+    gcopy(
+        0,
+        base_pos.x - inf_tiles / 2,
+        base_pos.y - inf_tiles / 2,
+        inf_tiles * 2,
+        inf_tiles * 2);
+    gmode(2);
+    gsel(0);
 
     // Initialize particles.
     std::vector<position_t> particles_pos(max_particles);
@@ -227,7 +312,8 @@ void bright_aura_animation::do_play()
         {
             await(config::instance().animewait);
         }
-        screen_storage.restore();
+        pos(base_pos.x - inf_tiles / 2, base_pos.y - inf_tiles / 2);
+        gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
         for (int j = 0; j < max_particles; ++j)
         {
             pos(base_pos.x + particles_pos[j].x,
@@ -272,6 +358,7 @@ void breath_animation::do_play()
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
 
+        bool did_draw{};
         for (const auto& position : breath_pos())
         {
             const auto dx = position.x;
@@ -299,10 +386,14 @@ void breath_animation::do_play()
                         tlocx - attacker.position.x,
                         attacker.position.y - tlocy));
                 clear_color_modulator(7);
+                did_draw = true;
             }
         }
-        await(config::instance().animewait);
-        redraw();
+        if (did_draw)
+        {
+            await(config::instance().animewait);
+            redraw();
+        }
     }
 
     // Play sound
@@ -419,48 +510,50 @@ void ball_animation::do_play()
 
 void bolt_animation::do_play()
 {
-    int anicol = eleinfo(element, 0);
-    int anisound = eleinfo(element, 1);
+    elona_vector1<int> ax;
+    elona_vector1<int> ay;
 
-    prepare_item_image(3, anicol);
     snd(37);
-    int anidx = cdata[cc].position.x;
-    int anidy = cdata[cc].position.y;
+
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime6.bmp");
+
     pos(0, 0);
     gsel(4);
     gmode(0);
     pos(0, 0);
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
+
     ap(20) = -1;
-    for (int cnt = 0; cnt < 20; ++cnt)
+    for (int t = 0; t < 20; ++t)
     {
         if (ap(20) == -1)
         {
-            int stat = route_info(anidx, anidy, cnt);
+            int x = attacker.position.x;
+            int y = attacker.position.y;
+            int stat = route_info(x, y, t);
             if (stat == -1)
             {
-                ap(cnt) = -1;
+                ap(t) = -1;
                 continue;
             }
             else if (stat == 0)
             {
-                ap(cnt) = -2;
+                ap(t) = -2;
                 ap(20) = 4;
                 continue;
             }
-            if (dist(anidx, anidy, cdata[cc].position.x, cdata[cc].position.y)
+            if (dist(x, y, attacker.position)
                 > the_ability_db[efid]->sdataref3 % 1000 + 1)
             {
-                ap(cnt) = -2;
+                ap(t) = -2;
                 ap(20) = 4;
                 continue;
             }
-            ax(cnt) = (anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2;
-            ay(cnt) = (anidy - scy) * inf_tiles + inf_screeny + 8;
-            ap(cnt) = 0;
+            ax(t) = (x - scx) * inf_tiles + inf_screenx + inf_tiles / 2;
+            ay(t) = (y - scy) * inf_tiles + inf_screeny + 8;
+            ap(t) = 0;
         }
         else
         {
@@ -470,51 +563,51 @@ void bolt_animation::do_play()
                 break;
             }
         }
+
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
-        int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = (cnt2 + 1); cnt < cnt_end; ++cnt)
+
+        bool did_draw{};
+        for (int u = 0; u < t + 1; ++u)
         {
-            if (ap(cnt) == -1)
+            if (ap(u) == -1)
             {
                 continue;
             }
-            if (ap(cnt) == -2)
+            if (ap(u) == -2)
             {
                 break;
             }
-            if (ap(cnt) < 5)
+            if (ap(u) < 5 && is_in_screen(ax(u), ay(u)))
             {
-                if (ax(cnt) < windoww)
-                {
-                    if (ay(cnt)
-                        < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
-                    {
-                        pos(ax(cnt), ay(cnt));
-                        gmode(2);
-                        set_color_modulator(anicol, 7);
-                        grotate(
-                            7,
-                            ap(cnt) * 48,
-                            0,
-                            inf_tiles,
-                            inf_tiles,
-                            std::atan2(
-                                tlocx - cdata[cc].position.x,
-                                cdata[cc].position.y - tlocy));
-                        clear_color_modulator(7);
-                    }
-                }
+                pos(ax(u), ay(u));
+                gmode(2);
+                set_color_modulator(eleinfo(element, 0), 7);
+                grotate(
+                    7,
+                    ap(u) * 48,
+                    0,
+                    inf_tiles,
+                    inf_tiles,
+                    std::atan2(
+                        tlocx - attacker.position.x,
+                        attacker.position.y - tlocy));
+                clear_color_modulator(7);
+                did_draw = true;
             }
-            ++ap(cnt);
+            ++ap(u);
         }
-        await(config::instance().animewait * 1.75);
-        redraw();
+        if (did_draw)
+        {
+            await(config::instance().animewait * 1.75);
+            redraw();
+        }
     }
-    if (anisound)
+
+    if (const auto sound = eleinfo(element, 1))
     {
-        snd(anisound, false, false);
+        snd(sound, false, false);
     }
 }
 
@@ -522,44 +615,42 @@ void bolt_animation::do_play()
 
 void throwing_object_animation::do_play()
 {
-    if (is_in_fov(cc) == 0)
-    {
+    if (!is_in_fov(target))
         return;
-    }
+
     prepare_item_image(aniref, aniref(1));
-    ax = (cdata[cc].position.x - scx) * inf_tiles;
-    ay = (cdata[cc].position.y - scy) * inf_tiles;
-    ap = dist(cdata[cc].position.x, cdata[cc].position.y, anix, aniy) / 2 + 1;
-    for (int cnt = 0, cnt_end = (ap); cnt < cnt_end; ++cnt)
+    int x = (target.position.x - scx) * inf_tiles;
+    int y = (target.position.y - scy) * inf_tiles;
+    int p = dist(target.position, anix, aniy) / 2 + 1;
+
+    for (int t = 0; t < p; ++t)
     {
-        ax -= (cdata[cc].position.x - anix) * inf_tiles / ap;
-        ay -= (cdata[cc].position.y - aniy) * inf_tiles / ap;
+        x -= (target.position.x - anix) * inf_tiles / p;
+        y -= (target.position.y - aniy) * inf_tiles / p;
+
         gsel(4);
         gmode(0);
         pos(0, 0);
-        gcopy(0, ax, ay - inf_tiles / 2, inf_tiles, inf_tiles);
+        gcopy(0, x, y - inf_tiles / 2, inf_tiles, inf_tiles);
         gmode(2);
         gsel(0);
         gmode(2);
-        if (ax + inf_tiles / 2 < windoww)
+
+        if (is_in_screen(x + inf_tiles / 2, y))
         {
-            if (ay < inf_screenh * inf_tiles + inf_screeny - inf_tiles / 2)
-            {
-                pos(ax + inf_tiles / 2, ay);
-                grotate(
-                    1,
-                    0,
-                    960,
-                    inf_tiles,
-                    inf_tiles,
-                    std::atan2(
-                        anix - cdata[cc].position.x,
-                        cdata[cc].position.y - aniy));
-            }
+            pos(x + inf_tiles / 2, y);
+            grotate(
+                1,
+                0,
+                960,
+                inf_tiles,
+                inf_tiles,
+                std::atan2(
+                    anix - target.position.x, target.position.y - aniy));
         }
         redraw();
         gmode(0);
-        pos(ax, ay - inf_tiles / 2);
+        pos(x, y - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
         await(config::instance().animewait);
@@ -570,17 +661,15 @@ void throwing_object_animation::do_play()
 
 void ranged_attack_animation::do_play()
 {
+    if (!is_in_fov(cc))
+        return;
+
     int anicol{};
     int anisound{};
     if (type == type_t::magic_arrow)
     {
         anicol = eleinfo(ele, 0);
         anisound = eleinfo(ele, 1);
-    }
-
-    if (is_in_fov(cc) == 0)
-    {
-        return;
     }
     prepare_item_image(6, anicol);
     if (type == type_t::distant_attack)
@@ -620,19 +709,16 @@ void ranged_attack_animation::do_play()
     {
         snd(36);
     }
-    ax = (cdata[cc].position.x - scx) * inf_tiles;
-    ay = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny + 8;
-    ap = dist(
-             cdata[cc].position.x,
-             cdata[cc].position.y,
-             cdata[tc].position.x,
-             cdata[tc].position.y)
-            / 2
-        + 1;
-    for (int cnt = 0, cnt_end = (ap); cnt < cnt_end; ++cnt)
+
+    int ax = (cdata[cc].position.x - scx) * inf_tiles;
+    int ay = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny + 8;
+    int ap = dist(cdata[cc].position, cdata[tc].position) / 2 + 1;
+
+    for (int t = 0; t < ap; ++t)
     {
         ax -= (cdata[cc].position.x - cdata[tc].position.x) * inf_tiles / ap;
         ay -= (cdata[cc].position.y - cdata[tc].position.y) * inf_tiles / ap;
+
         gsel(4);
         gmode(0);
         pos(0, 0);
@@ -640,6 +726,7 @@ void ranged_attack_animation::do_play()
         gmode(2);
         gsel(0);
         gmode(2);
+
         pos(ax + inf_tiles / 2, ay);
         grotate(
             1,
@@ -650,6 +737,7 @@ void ranged_attack_animation::do_play()
             std::atan2(
                 cdata[tc].position.x - cdata[cc].position.x,
                 cdata[cc].position.y - cdata[tc].position.y));
+
         redraw();
         gmode(0);
         pos(ax, ay - inf_tiles / 2);
@@ -657,6 +745,7 @@ void ranged_attack_animation::do_play()
         gmode(2);
         await(config::instance().animewait);
     }
+
     if (anisound)
     {
         snd(anisound, false, false);
@@ -668,26 +757,19 @@ void ranged_attack_animation::do_play()
 void swarm_animation::do_play()
 {
     snd(2);
-    prepare_item_image(17, 0);
-    const auto base_pos = rendering_base_position(target);
 
-    // Store part of the previous screen.
-    gsel(4);
-    gmode(0);
-    pos(0, 0);
-    gcopy(0, base_pos.x - 16, base_pos.y - 16, 64, 64);
-    gmode(2);
-    gsel(0);
-
-    for (int i = 0; i < 4; ++i)
-    {
-        pos(base_pos.x - 16, base_pos.y - 16);
-        gcopy(4, 0, 0, 64, 64);
-        pos(base_pos.x + 16, base_pos.y + 16);
-        grotate(1, 0, 960, 48, 48, i * 8 + 18, i * 8 + 18, 0.5 * i - 0.8);
-        redraw();
-        await(config::instance().animewait);
-    }
+    do_animation(
+        rendering_base_position_center(target),
+        "swarm_effect",
+        4,
+        [](const auto& key, const auto& center, auto t) {
+            draw_rotated(
+                key,
+                center.x,
+                center.y,
+                double(t * 8 + 18) / inf_tiles,
+                30 * t - 45);
+        });
 }
 
 
@@ -798,31 +880,33 @@ void melee_attack_animation::do_play()
 void geen_engineering_animation::do_play()
 {
     snd(107);
-    if (is_in_fov(anic) == 0)
-    {
+    if (!is_in_fov(anic))
         return;
-    }
+
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime13.bmp");
+
     gsel(4);
     gmode(0);
     pos(0, 0);
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
+
     int anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
     int anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (int t = 0; t < 10; ++t)
     {
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
-        int cnt2 = cnt;
         gmode(2);
-        for (int cnt = 0, cnt_end = (anidy / 96 + 2); cnt < cnt_end; ++cnt)
+
+        for (int i = 0; i < anidy / 96 + 2; ++i)
         {
-            pos(anidx, anidy - cnt * 96);
-            gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
+            pos(anidx, anidy - i * 96);
+            gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96);
         }
+
         await(config::instance().animewait * 2.25);
         redraw();
     }
@@ -832,6 +916,9 @@ void geen_engineering_animation::do_play()
 
 void miracle_animation::do_play()
 {
+    elona_vector1<int> ax;
+    elona_vector1<int> ay;
+
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime12.bmp");
     gsel(4);
@@ -959,6 +1046,9 @@ void miracle_animation::do_play()
 
 void meteor_animation::do_play()
 {
+    elona_vector1<int> ax;
+    elona_vector1<int> ay;
+
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime17.bmp");
     gsel(4);
@@ -1041,6 +1131,11 @@ void meteor_animation::do_play()
 
 void ragnarok_animation::do_play()
 {
+    constexpr auto TODO = 100;
+
+    elona_vector1<int> ax;
+    elona_vector1<int> ay;
+
     // Load image.
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime16.bmp");
@@ -1052,56 +1147,50 @@ void ragnarok_animation::do_play()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
 
-    am = 0;
-    for (int cnt = 0; cnt < 100; ++cnt)
+    for (int i = 0; i < TODO; ++i)
     {
-        ax(am) = rnd(windoww);
-        ay(am) = rnd(inf_screenh * inf_tiles) - 96 - 24;
-        ap(am) = 0 - rnd(3);
-        ++am;
+        ax(i) = rnd(windoww);
+        ay(i) = rnd(inf_screenh * inf_tiles) - 96 - 24;
+        ap(i) = -rnd(3);
     }
 
-    for (int cnt = 0;; ++cnt)
+    for (int t = 0;; ++t)
     {
-        pos(5 - rnd(10), 5 - rnd(10));
         gmode(0);
+        pos(5 - rnd(10), 5 - rnd(10));
         gcopy(4, 0, 0, windoww, windowh);
-        int af = 0;
-        for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
+        gmode(2);
+
+        bool did_draw{};
+        for (int i = 0; i < TODO; ++i)
         {
-            if (ap(cnt) >= 10)
+            if (ap(i) >= 10)
             {
                 continue;
             }
-            af = 1;
-            gmode(2);
-            if (ap(cnt) < 10)
+            did_draw = true;
+            if (0 <= ap(i) && ap(i) < 10)
             {
-                pos(ax(cnt), ay(cnt));
-                gcopy(7, ap(cnt) * 96, 96, 96, 96);
-                pos(ax(cnt), ay(cnt) - 96);
-                gcopy(7, ap(cnt) * 96, 0, 96, 96);
+                pos(ax(i), ay(i));
+                gcopy(7, ap(i) * 96, 96, 96, 96);
+                pos(ax(i), ay(i) - 96);
+                gcopy(7, ap(i) * 96, 0, 96, 96);
             }
-            if (ap(cnt) < 0)
+            if (ap(i) < 0)
             {
-                ap(cnt) += rnd(2);
+                ap(i) += rnd(2);
             }
             else
             {
-                ++ap(cnt);
+                ++ap(i);
             }
         }
-        if (cnt % 2 == 0)
+
+        if (t % 2 == 0 && t < 8 && t / 3 < TODO)
         {
-            if (cnt < 8)
-            {
-                if (cnt / 3 < am)
-                {
-                    snd(108);
-                }
-            }
+            snd(108);
         }
-        if (af == 0)
+        if (!did_draw)
         {
             break;
         }
@@ -1121,56 +1210,25 @@ void ragnarok_animation::do_play()
 
 void breaking_animation::do_play()
 {
-    constexpr auto max_particles = 4;
-
-    const auto base_pos = rendering_base_position(position);
-    prepare_item_image(17, 0);
-
-    // Store part of the previous screen.
-    gsel(4);
-    gmode(0);
-    pos(0, 0);
-    gcopy(0, base_pos.x - 16, base_pos.y - 16, 64, 64);
-    gmode(2);
-    gsel(0);
-
-    // Initialize particles.
-    std::vector<position_t> particles(max_particles);
-    for (auto&& particle : particles)
-    {
-        particle = {rnd(24) - 12, rnd(8)};
-    }
-
-    // Do animation.
-    for (int i = 0; i < 5; ++i)
-    {
-        gmode(2);
-        for (int j = 0; j < max_particles; ++j)
-        {
-            pos(base_pos.x + 24 + particles[j].x
-                    + (particles[j].x < 4) * ((1 + (j % 2 == 0)) * -1) * i
-                    + (particles[j].x > -4) * (1 + (j % 2 == 0)) * i,
-                base_pos.y + particles[j].y + i * i / 3);
-            grotate(1, 864, 0, inf_tiles, inf_tiles, 24, 24, 0.4 * j);
-        }
-
-        pos(base_pos.x + sx + 24, base_pos.y + sy + 10);
-        grotate(
-            1,
-            0,
-            960,
-            inf_tiles,
-            inf_tiles,
-            i * 10 + 4 * 3,
-            i * 10 + 4 * 3,
-            0.5 * i - 0.8);
-        redraw();
-        gmode(0);
-        pos(base_pos.x - 16, base_pos.y - 16);
-        gcopy(4, 0, 0, 64, 64);
-        gmode(2);
-        await(config::instance().animewait);
-    }
+    do_particle_animation(
+        rendering_base_position_center(position),
+        "breaking_effect",
+        5,
+        4,
+        [](auto) {
+            return position_t{rnd(24) - 12, rnd(8)};
+        },
+        [](const auto& key,
+           const auto& center,
+           auto t,
+           const auto& particle,
+           auto i) {
+            const auto x = center.x + particle.x
+                + (particle.x < 4) * -(1 + (i % 2 == 0)) * t
+                + (particle.x > -4) * (1 + (i % 2 == 0)) * t;
+            const auto y = center.y - inf_tiles / 4 + particle.y + t * t / 3;
+            draw_rotated(key, x, y, 0.5, 23 * i);
+        });
 }
 
 

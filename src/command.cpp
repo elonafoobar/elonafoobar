@@ -577,7 +577,7 @@ turn_result_t do_throw_command()
     aniref(1) = inv[ci].color;
     anix = tlocx;
     aniy = tlocy;
-    throwing_object_animation().play();
+    throwing_object_animation(cdata[cc]).play();
     ti = inv_getfreeid(-1);
     removeitem(ci, 1);
     if (inv[ci].id == 685)
@@ -946,7 +946,8 @@ turn_result_t do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::offering).play();
+    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::offering)
+        .play();
     tc = tcbk;
     int stat = item_find(60002);
     if (stat != -1)
