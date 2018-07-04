@@ -109,7 +109,7 @@ int magic()
                 }
                 else if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
-                    bright_aura_animation(bright_aura_animation::type_t::debuff)
+                    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
                         .play();
                 }
                 if (efid == 625 || efid == 446)
@@ -343,7 +343,7 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                bright_aura_animation(
+                                bright_aura_animation(cdata[tc],
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
                                 if (is_in_fov(tc))
@@ -370,7 +370,7 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                bright_aura_animation(
+                                bright_aura_animation(cdata[tc],
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
                                 txt(i18n::s.get("core.locale.magic.rain_of_sanity", cdata[tc]));
@@ -535,7 +535,7 @@ int magic()
                     healcon(tc, 12, 5 + rnd(5));
                 }
                 sickifcursed(efstatus, tc, 3);
-                bright_aura_animation(bright_aura_animation::type_t::healing)
+                bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
                     .play();
                 goto the_end;
             case 6:
@@ -946,7 +946,7 @@ int magic()
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 breath_list();
-                breath_animation(ele).play();
+                breath_animation(cdata[cc], ele).play();
                 for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
@@ -1679,7 +1679,7 @@ label_2181_internal:
         txtef(5);
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
-        bright_aura_animation(bright_aura_animation::type_t::healing).play();
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing).play();
         break;
     case 1117:
         if (tc >= 16)
@@ -2351,7 +2351,7 @@ label_2181_internal:
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
-        bright_aura_animation(bright_aura_animation::type_t::debuff).play();
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff).play();
         chara_refresh(tc);
         break;
     case 1139:
@@ -2686,7 +2686,7 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
-            bright_aura_animation(bright_aura_animation::type_t::healing)
+            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -2695,7 +2695,7 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
-            bright_aura_animation(bright_aura_animation::type_t::healing)
+            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -3682,7 +3682,7 @@ label_2181_internal:
             {
                 continue;
             }
-            swarm_animation(tc).play();
+            swarm_animation(cdata[tc]).play();
             try_to_melee_attack();
         }
         break;

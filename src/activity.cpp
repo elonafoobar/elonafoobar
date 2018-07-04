@@ -1796,9 +1796,7 @@ void spot_mining_or_wall()
             spillfrag(refx, refy, 2);
             snd(45);
             aniref = 5;
-            FIXME_dig_animation_x = refx;
-            FIXME_dig_animation_y = refy;
-            breaking_animation().play();
+            breaking_animation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2 && gdata_current_map == mdata_t::map_id_t::your_home)
             {

@@ -597,9 +597,7 @@ turn_result_t do_throw_command()
     }
     x = tlocx;
     y = tlocy;
-    FIXME_dig_animation_x = x;
-    FIXME_dig_animation_y = y;
-    breaking_animation().play();
+    breaking_animation({x, y}).play();
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -948,7 +946,7 @@ turn_result_t do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    bright_aura_animation(bright_aura_animation::type_t::offering).play();
+    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::offering).play();
     tc = tcbk;
     int stat = item_find(60002);
     if (stat != -1)

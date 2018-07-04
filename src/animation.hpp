@@ -1,14 +1,11 @@
 #pragma once
 
+#include "position.hpp"
+
 
 
 namespace elona
 {
-
-
-
-extern int FIXME_dig_animation_x;
-extern int FIXME_dig_animation_y;
 
 
 
@@ -30,11 +27,13 @@ protected:
 
 
 
+struct character;
+
 class failure_to_cast_animation : public abstract_animation
 {
 public:
-    failure_to_cast_animation(int cc)
-        : cc(cc)
+    failure_to_cast_animation(const character& caster)
+        : caster(caster)
     {
     }
 
@@ -44,7 +43,7 @@ protected:
 
 
 private:
-    int cc;
+    const character& caster;
 };
 
 
@@ -61,8 +60,9 @@ public:
     };
 
 
-    bright_aura_animation(type_t type)
-        : type(type)
+    bright_aura_animation(const character& cc, type_t type)
+        : cc(cc)
+        , type(type)
     {
     }
 
@@ -72,6 +72,7 @@ protected:
 
 
 private:
+    const character& cc;
     type_t type;
 };
 
@@ -80,8 +81,9 @@ private:
 class breath_animation : public abstract_animation
 {
 public:
-    breath_animation(int element)
-        : element(element)
+    breath_animation(const character& attacker, int element)
+        : attacker(attacker)
+        , element(element)
     {
     }
 
@@ -91,6 +93,7 @@ protected:
 
 
 private:
+    const character& attacker;
     int element;
 };
 
@@ -163,8 +166,8 @@ private:
 class swarm_animation : public abstract_animation
 {
 public:
-    swarm_animation(int cc)
-        : cc(cc)
+    swarm_animation(const character& target)
+        : target(target)
     {
     }
 
@@ -174,7 +177,7 @@ protected:
 
 
 private:
-    int cc;
+    const character& target;
 };
 
 
@@ -288,13 +291,18 @@ protected:
 class breaking_animation : public abstract_animation
 {
 public:
-    breaking_animation()
+    breaking_animation(const position_t& position)
+        : position(position)
     {
     }
 
 
 protected:
     virtual void do_play() override;
+
+
+private:
+    position_t position;
 };
 
 

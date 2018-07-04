@@ -524,6 +524,7 @@ std::unordered_map<std::string, image_info> images = {};
 
 
 std::unordered_map<std::string, int> window_id_table = {
+    {"item.bmp", 1},
     {"interface.bmp", 3},
 };
 

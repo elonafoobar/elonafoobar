@@ -11797,7 +11797,7 @@ int label_2168()
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
-            failure_to_cast_animation(cc).play();
+            failure_to_cast_animation(cdata[cc]).play();
         }
         efsource = 0;
         return 1;
@@ -13196,9 +13196,7 @@ turn_result_t do_bash()
                 snd(73);
                 txt(i18n::s.get("core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
-                FIXME_dig_animation_x = x;
-                FIXME_dig_animation_y = y;
-                breaking_animation().play();
+                breaking_animation({x, y}).play();
             }
             return turn_result_t::turn_end;
         }
