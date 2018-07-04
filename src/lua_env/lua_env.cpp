@@ -28,6 +28,11 @@ lua_env::lua_env()
         sol::lib::string,
         sol::lib::math);
 
+    // Add executable directory to package.path
+    fs::path exe_path = filesystem::dir::exe();
+    lua->safe_script(u8"package.path = \""s + exe_path.string() + u8"/?.lua;\"..package.path"s);
+    lua->safe_script("print(package.path)");
+
     // Create dummy Store table to prevent crashes on access from
     // state outside of an environment
     lua->create_named_table("Store");
