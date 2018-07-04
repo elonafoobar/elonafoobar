@@ -65,16 +65,16 @@ luacheck:
 	luacheck runtime/mods/
 	luacheck src/tests/lua
 
-elocheck:
-	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
-	    tools/elocheck/bin/elocheck.lua $(CURDIR) en
-	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
-	    tools/elocheck/bin/elocheck.lua $(CURDIR) jp
+i18n-check:
+	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
+	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en
+	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
+	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp
 
-elocheck-err:
-	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
-	    tools/elocheck/bin/elocheck.lua $(CURDIR) en --no-warnings
-	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
-	    tools/elocheck/bin/elocheck.lua $(CURDIR) jp --no-warnings
+i18n-check-err:
+	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
+	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) en --no-warnings
+	lua -e 'package.path="tools/i18n_checker/src/?.lua;"..package.path'\
+	    tools/i18n_checker/bin/i18n_checker.lua $(CURDIR) jp --no-warnings
 
 rebuild: clean build

@@ -1,6 +1,6 @@
-local argparse = require "elocheck.argparse"
-local fs = require "elocheck.fs"
-local runner = require "elocheck.runner"
+local argparse = require "i18n_checker.argparse"
+local fs = require "i18n_checker.fs"
+local runner = require "i18n_checker.runner"
 
 local exit_codes = {
    ok = 0,
@@ -9,7 +9,7 @@ local exit_codes = {
    critical = 3
 }
 
-local elocheck = {
+local i18n_checker = {
    _VERSION = "0.1.0"
 }
 
@@ -20,7 +20,7 @@ end
 
 local function get_parser()
    local parser = argparse(
-      "elocheck", "elocheck " .. elocheck._VERSION, "")
+      "i18n_checker", "i18n_checker " .. i18n_checker._VERSION, "")
       :help_max_width(120)
 
    parser:argument "root_path"
@@ -37,7 +37,7 @@ local function get_parser()
       :target("warnings"):action("store_false"):init(true)
 
    parser:flag("-v --version", "Show version info and exit.")
-      :action(function() print(elocheck._VERSION) os.exit(exit_codes.ok) end)
+      :action(function() print(i18n_checker._VERSION) os.exit(exit_codes.ok) end)
 
    return parser
 end

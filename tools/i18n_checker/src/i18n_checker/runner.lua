@@ -1,8 +1,8 @@
-local checker = require "elocheck.checker"
-local format = require "elocheck.format"
-local fs = require "elocheck.fs"
-local locale = require "elocheck.locale"
-local utils = require "elocheck.utils"
+local checker = require "i18n_checker.checker"
+local format = require "i18n_checker.format"
+local fs = require "i18n_checker.fs"
+local locale = require "i18n_checker.locale"
+local utils = require "i18n_checker.utils"
 local inspect = require "inspect"
 
 local sformat = string.format

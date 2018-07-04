@@ -1,4 +1,4 @@
-local scanner = require "elocheck.scanner"
+local scanner = require "i18n_checker.scanner"
 
 local function scan(src, wanted)
    local state = scanner.new(src)

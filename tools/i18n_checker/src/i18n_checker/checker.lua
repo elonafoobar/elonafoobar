@@ -1,5 +1,5 @@
-local scanner = require "elocheck.scanner"
-local utils = require "elocheck.utils"
+local scanner = require "i18n_checker.scanner"
+local utils = require "i18n_checker.utils"
 local inspect = require "inspect"
 
 local sfind = string.find

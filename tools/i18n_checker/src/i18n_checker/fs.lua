@@ -1,4 +1,4 @@
-local utils = require "elocheck.utils"
+local utils = require "i18n_checker.utils"
 local lfs = require "lfs"
 
 local fs = {}
