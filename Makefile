@@ -71,4 +71,10 @@ elocheck:
 	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
 	    tools/elocheck/bin/elocheck.lua $(CURDIR) jp
 
+elocheck-err:
+	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
+	    tools/elocheck/bin/elocheck.lua $(CURDIR) en --no-warnings
+	lua -e 'package.path="tools/elocheck/src/?.lua;"..package.path'\
+	    tools/elocheck/bin/elocheck.lua $(CURDIR) jp --no-warnings
+
 rebuild: clean build

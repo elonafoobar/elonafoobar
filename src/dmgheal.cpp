@@ -724,16 +724,14 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     {
                         txtcontinue();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
-                            "active",
+                            "core.locale.death_by.chara.transformed_into_meat.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
-                            "passive",
+                            "core.locale.death_by.chara.transformed_into_meat.passive",
                             victim,
                             attacker_is_player));
                     }

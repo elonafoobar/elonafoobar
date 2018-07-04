@@ -131,7 +131,7 @@ function format.format(report)
       end
    end
 
-   local total = ("Total: %s warning%s / %s error%s in %d file%s"):format(
+   local total = ("Total: %s warning%s / %s error%s in %d file%s\n"):format(
       format_number(report.warnings, opts.color), plural(report.warnings),
       format_number(report.errors, opts.color), plural(report.errors),
       #report, plural(#report))

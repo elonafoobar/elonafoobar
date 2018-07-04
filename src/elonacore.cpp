@@ -18418,8 +18418,7 @@ label_22191_internal:
                         {
                             txtef(8);
                             txt(i18n::s.get(
-                                "core.locale.damage.reactive_attack.ether_"
-                                "thorns",
+                                "core.locale.damage.reactive_attack.ether_thorns",
                                 cdata[cc]));
                         }
                         dmghp(

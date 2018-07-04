@@ -164,7 +164,7 @@ local function get_reports(inputs, locale_table)
                           column = 0,
                           key = item.key,
                           kind = "error",
-                          msg = "Translation found in store but not in code"})
+                          msg = "Unused translation found in store"})
          end
       end
    end
@@ -214,8 +214,6 @@ function runner.check(inputs, opts)
    end
 
    local path = fs.join(opts.root_path, "runtime", "locale", opts.source_language)
-   print(opts.root_path)
-   print(path)
    if not fs.is_dir(path) then
       error(("no such locale path: (%s)"):format(path))
    end
@@ -226,7 +224,7 @@ function runner.check(inputs, opts)
    local prepared_inputs = prepare_inputs(inputs, "%.[hc]pp$")
    local report = get_reports(prepared_inputs, locale_table)
 
-   if opts.no_warnings then
+   if not opts.warnings then
       filter_warnings(report)
    end
 

@@ -33,7 +33,8 @@ local function get_parser()
       :args(1)
       :argname "<source_language>"
 
-   parser:flag("--no-warnings", "Disable warnings."):target("warnings"):action("store_false")
+   parser:flag("--no-warnings", "Disable warnings.")
+      :target("warnings"):action("store_false"):init(true)
 
    parser:flag("-v --version", "Show version info and exit.")
       :action(function() print(elocheck._VERSION) os.exit(exit_codes.ok) end)

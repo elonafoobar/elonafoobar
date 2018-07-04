@@ -131,6 +131,7 @@ function Scanner:scan_args()
    self:check_char('(')
    local parens = 1
    local start = self.offset + 1
+   local before = start
    local args = {}
 
    local function add(arg_start)
@@ -144,6 +145,7 @@ function Scanner:scan_args()
       local b = self:next_byte()
 
       if b == nil then
+         self.offset = before
          return nil
       end
 
@@ -164,6 +166,7 @@ function Scanner:scan_args()
       end
    end
 
+   self.offset = before
    return args
 end
 

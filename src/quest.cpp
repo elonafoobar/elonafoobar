@@ -326,7 +326,7 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(4) = chara_refstr(qdata(12, rq), 2);
         s(10) = ""s + qdata(5, rq) * 3 / 2;
-        s(6) = i18n::s.get("core.locale.quest.info.hunt.text");
+        s(6) = i18n::s.get("core.locale.quest.info.huntex.text");
     }
     if (qdata(3, rq) == 1011)
     {
@@ -1074,22 +1074,19 @@ void quest_failed(int val0)
                                 if (qdata(4, rq) == 0)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed."
-                                        "assassin");
+                                        "core.locale.quest.escort.failed.assassin");
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed."
-                                        "poison");
+                                        "core.locale.quest.escort.failed.poison");
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed."
-                                        "deadline",
+                                        "core.locale.quest.escort.failed.deadline",
                                         cdata[tc]);
                                     mef_add(
                                         cdata[0].position.x,

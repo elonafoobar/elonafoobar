@@ -137,9 +137,6 @@ local function check_get_property(locale_table, args)
    local locale_key = try_get_key(args)
    local results = {}
    if locale_key then
-         if sfind(locale_key, "death_by") then
-            print(locale_key)
-         end
       if locale_table[locale_key] == nil then
          results[#results+1] = {key = locale_key,
                                 kind = "error",
