@@ -2,6 +2,7 @@
 #include <boost/locale.hpp>
 #include "defines.hpp"
 #include "util.hpp"
+#include <algorithm> 
 
 // For get_executable_path()
 #if defined(ELONA_OS_WINDOWS)
@@ -99,7 +100,7 @@ fs::path save(const std::string& player_id)
 
 
 
-fs::path path(const std::string& str)
+fs::path path(const std::string& str)   
 {
     return get_executable_path() / u8path(str);
 }
@@ -130,6 +131,13 @@ std::string to_utf8_path(const fs::path& path)
     return boost::locale::conv::utf_to_utf<char>(path.native());
 }
 
+
+std::string to_forward_slashes(const fs::path& path)
+{
+    std::string path_str = path.string();
+    std::replace(path_str.begin(), path_str.end(), '\\', '/');
+    return path_str;
+}
 
 
 } // namespace filesystem

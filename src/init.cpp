@@ -395,6 +395,11 @@ void initialize_config(const fs::path& config_file)
 
 void initialize_elona()
 {
+    // Add executable directory to package.path
+    fs::path exe_path = filesystem::dir::exe();
+    std::string normalized = filesystem::to_forward_slashes(exe_path);
+    lua::lua.get_state()->safe_script(u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
+
     i18n::load(jp ? u8"jp" : u8"en");
     i18n::s.init(
         jp ? filesystem::path("locale") / "jp"
