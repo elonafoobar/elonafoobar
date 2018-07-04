@@ -482,7 +482,7 @@ void prompt_hiring()
             cdata[0].gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
             cdata[tc].state = 1;
-            lua::lua.on_chara_loaded(cdata[tc]);
+            lua::lua->on_chara_loaded(cdata[tc]);
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));

@@ -1141,7 +1141,7 @@ int chara_create_internal()
     cdata[rc].index = rc;
     initialize_character();
 
-    lua::lua.on_chara_creation(cdata[rc]);
+    lua::lua->on_chara_creation(cdata[rc]);
 
     rtval = rc;
     return 1;
@@ -1695,10 +1695,10 @@ void chara_refresh(int cc)
     refreshspeed(cc);
     cdata[cc].needs_refreshing_status() = false;
 
-    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
     if (handle != sol::lua_nil)
     {
-        lua::lua.get_event_manager()
+        lua::lua->get_event_manager()
             .run_callbacks<lua::event_kind_t::character_refreshed>(handle);
     }
 }
@@ -2026,8 +2026,8 @@ void chara_killed(character& chara)
 {
     // Regardless of whether or not this character will revive, run
     // the character killed callback.
-    auto handle = lua::lua.get_handle_manager().get_chara_handle(chara);
-    lua::lua.get_event_manager()
+    auto handle = lua::lua->get_handle_manager().get_chara_handle(chara);
+    lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::character_killed>(handle);
 
     if (chara.state == 0)
@@ -2035,7 +2035,7 @@ void chara_killed(character& chara)
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
         // to clean up character things.
-        lua::lua.on_chara_removal(chara);
+        lua::lua->on_chara_removal(chara);
     }
     else if (chara.state == 2 || chara.state == 4 || chara.state == 6)
     {
@@ -2058,7 +2058,7 @@ void chara_delete(int cc)
         // currently valid. If the state were 0, then chara_killed
         // would have been called to run the chara removal handler for
         // the Lua state. We'll have to run it now.
-        lua::lua.on_chara_removal(cdata[cc]);
+        lua::lua->on_chara_removal(cdata[cc]);
     }
     else
     {
@@ -2171,7 +2171,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     }
 
     // TODO handle transferring through Lua robustly
-    // lua::lua.on_chara_removal(cdata[prm_784]);
+    // lua::lua->on_chara_removal(cdata[prm_784]);
 
     sdata.copy(tc_at_m125, prm_784);
     sdata.clear(prm_784);
@@ -2248,7 +2248,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     chara_refresh(tc_at_m125);
 
     // TODO handle transferring through Lua robustly
-    // lua::lua.on_chara_creation(cdata[tc_at_m125]);
+    // lua::lua->on_chara_creation(cdata[tc_at_m125]);
 
     if (tc_at_m125 < 57)
     {

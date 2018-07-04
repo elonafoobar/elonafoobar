@@ -307,7 +307,7 @@ private:
     mod_loading_stage_t stage = mod_loading_stage_t::not_started;
 };
 
-extern lua_env lua;
+extern std::unique_ptr<lua_env> lua;
 
 } // namespace lua
 } // namespace elona

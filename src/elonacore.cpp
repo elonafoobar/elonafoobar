@@ -3377,7 +3377,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua.on_chara_loaded(
+    lua::lua->on_chara_loaded(
         cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
@@ -5643,7 +5643,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
-                lua::lua.on_chara_loaded(
+                lua::lua->on_chara_loaded(
                     cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
@@ -5692,8 +5692,8 @@ turn_result_t exit_map()
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
-        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
-        lua::lua.clear_map_local_data();
+        lua::lua->get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
+        lua::lua->clear_map_local_data();
     }
 
     mode = 2;
@@ -10443,7 +10443,7 @@ void load_save_data(const fs::path& base_save_dir)
     ELONA_LOG("Load save data: " << playerid);
 
     // TODO instead serialize/deserialize data
-    lua::lua.get_handle_manager().clear_map_local_handles();
+    lua::lua->get_handle_manager().clear_map_local_handles();
 
     filemod = "";
     ctrl_file(file_operation_t::_10);
@@ -13302,9 +13302,9 @@ turn_result_t do_bash()
 
 turn_result_t proc_movement_event()
 {
-    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
     if (handle != sol::lua_nil)
-        lua::lua.get_event_manager()
+        lua::lua->get_event_manager()
             .run_callbacks<lua::event_kind_t::character_moved>(handle);
 
     if (cdata[cc].is_ridden())
