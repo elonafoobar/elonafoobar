@@ -6,6 +6,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
@@ -204,7 +205,7 @@ optional<std::pair<int, int>> generate_random_event()
     {
         id = 11;
     }
-label_1894_internal:
+
     if (id == 0)
     {
         return none;
@@ -472,7 +473,7 @@ void run_random_event(int id, int luck_threshold)
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                flttypemajor = fsetremain(rnd(length(fsetremain)));
+                flttypemajor = fsetremain(rnd(fsetremain.size()));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(lang(
@@ -490,11 +491,11 @@ void run_random_event(int id, int luck_threshold)
                 flt(0, calcfixlv(3));
                 if (rnd(3) == 0)
                 {
-                    flttypemajor = fsetwear(rnd(length(fsetwear)));
+                    flttypemajor = fsetwear(rnd(fsetwear.size()));
                 }
                 else
                 {
-                    flttypemajor = fsetremain(rnd(length(fsetremain)));
+                    flttypemajor = fsetremain(rnd(fsetremain.size()));
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
@@ -573,7 +574,7 @@ int show_random_event_window(const std::string& file)
 label_1897_internal:
     gmode(2);
     window(
-        (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, 0, -1);
+        (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, true);
     window((windoww - dx) / 2 + inf_screenx, winposy(dy) - 16, dx, dy);
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
@@ -582,15 +583,11 @@ label_1897_internal:
     gcopy(7, 0, 0, tx, ty);
     gmode(2);
     color(240, 230, 220);
-    boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
+    boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
     color(0, 0, 0);
     font(14 - en * 2);
     q = i18n::s.get("core.locale.event.popup.title", s(0));
-    pos(wx + 40, wy + 16);
-    color(30, 20, 10);
-    bmes(q, 245, 235, 225);
-    color(0, 0, 0);
-    font(14 - en * 2);
+    bmes(q, wx + 40, wy + 16, {245, 235, 225}, {30, 20, 10});
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
     mes(buff);
@@ -641,4 +638,4 @@ label_1897_internal:
     goto label_1897_internal;
 }
 
-} // namespace elona
+} // Namespace elona
