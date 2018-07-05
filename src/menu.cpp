@@ -7857,8 +7857,7 @@ label_2070_internal:
         }
         if (list(0, p) > 10000)
         {
-            pos(wx + 15, wy + 63 + cnt * 18);
-            gcopy(3, 384, 360, 24, 24);
+            draw("inheritance_mark", wx + 15, wy + 63 + cnt * 18);
         }
     }
     redraw();
