@@ -389,7 +389,7 @@ talk_result_t talk_house_visitor()
                     flt();
                     itemcreate(
                         -1, 730, cdata[0].position.x, cdata[0].position.y, 0);
-                    txt(i18n::s.get("core.locale.talk.visitor.receieve", inv[ci], cdata[tc]));
+                    txt(i18n::s.get("core.locale.talk.visitor.receive", inv[ci], cdata[tc]));
                     txt(i18n::s.get("core.locale.talk.visitor.adventurer.like.wonder_if"));
                     listmax = 0;
                 }
@@ -411,7 +411,7 @@ talk_result_t talk_house_visitor()
                 }
                 list(0, listmax) = 0;
                 listn(0, listmax) =
-                    i18n::s.get("core.locale.visitor.adventurer.train.choices.pass");
+                    i18n::s.get("core.locale.talk.visitor.adventurer.train.choices.pass");
                 ++listmax;
                 if (sdata.get(csskill, 0).original_level == 0)
                 {
@@ -1651,8 +1651,8 @@ void talk_window_show()
         }
     }
     font(10 - en * 2);
-    display_topic(lang(u8"友好"s, u8"Impress"s), wx + 28, wy + 170);
-    display_topic(lang(u8"興味"s, u8"Attract"s), wx + 28, wy + 215);
+    display_topic(i18n::s.get("core.locale.talk.window.impress"), wx + 28, wy + 170);
+    display_topic(i18n::s.get("core.locale.talk.window.attract"), wx + 28, wy + 215);
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     if (cdatan(1, tc) == ""s)
     {
@@ -1660,9 +1660,7 @@ void talk_window_show()
     }
     else
     {
-        s = lang(
-            cdatan(1, tc) + u8" "s + cdatan(0, tc) + u8" "s,
-            cdatan(0, tc) + u8" of "s + cdatan(1, tc) + u8" "s);
+        s = i18n::s.get("core.locale.talk.window.of", cdatan(0, tc), cdatan(1, tc)) + " ";
     }
     if (cdata[tc].sex == 0)
     {
@@ -1674,12 +1672,12 @@ void talk_window_show()
     }
     if (cdatan(1, tc) != ""s)
     {
-        s += lang(u8" 名声 "s, u8" Fame: "s) + cdata[tc].fame;
+        s += " " + i18n::s.get("core.locale.talk.window.fame", cdata[tc].fame);
     }
     if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
-        s += lang(u8" 店の規模:"s, u8" Shop Rank:"s) + cdata[tc].shop_rank;
+        s += " " + i18n::s.get("core.locale.talk.window.shop_rank", cdata[tc].shop_rank);
     }
     if (gdata_reveals_religion)
     {

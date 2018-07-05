@@ -7,8 +7,10 @@ locale {
         window {
             impress = "Impress"
             attract = "Attract"
-            fame = " Fame: "
-            shop_rank = " Shop Rank:"
+            fame = "Fame: ${_1}"
+            shop_rank = "Shop Rank:${_1}"
+
+            of = "${_1} of ${_2}"
         }
 
         npc {

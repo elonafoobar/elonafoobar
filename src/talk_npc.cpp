@@ -305,8 +305,8 @@ talk_result_t talk_arena_master(int chatval)
         arenaop(1) = (100 - gdata(120) / 100) / 2 + 1;
         buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.target_group", arenaop(1), cdata[tc]);
     }
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.arena_master.choices.leave"));
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.enter"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.leave"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
@@ -750,8 +750,8 @@ talk_result_t talk_servant_fire()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.servant.fire.prompt", cdata[tc]);
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.yes"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
+    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.servant.fire.choices.yes"));
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.servant.fire.choices.no"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -1292,50 +1292,38 @@ talk_result_t talk_trainer()
     talk_start();
     if (csskill == -1)
     {
-        buff = lang(
-            u8"訓練が必要なときは、声をかけて"s + _kure(),
-            u8"Come see me again when you need more training."s);
+        buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     listmax = 0;
     if (csctrl == 2)
     {
-        buff = lang(
-            i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                + u8"の能力を訓練するには"s + calctraincost(csskill, cc)
-                + i18n::_(u8"ui", u8"platinum") + u8"かかるけどいい"s
-                + _kana(1),
-            u8"Training "s
-                + i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                + u8" will cost you "s + calctraincost(csskill, cc)
-                + u8" platinum pieces."s);
+        buff = i18n::s.get("core.locale.talk.npc.trainer.cost.training",
+                           i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+                           calctraincost(csskill, cc),
+                           cdata[tc]);
         if (cdata[0].platinum_coin >= calctraincost(csskill, cc))
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
+            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.train.accept");
             ++listmax;
         }
     }
     else
     {
-        buff = lang(
-            i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                + u8"の能力を習得するには"s + calclearncost(csskill, cc)
-                + i18n::_(u8"ui", u8"platinum") + u8"かかるけどいい"s
-                + _kana(1),
-            u8"Learning "s
-                + i18n::_(u8"ability", std::to_string(csskill), u8"name")
-                + u8" will cost you "s + calclearncost(csskill, cc)
-                + u8" platinum pieces."s);
+        buff = i18n::s.get("core.locale.talk.npc.trainer.cost.learning",
+                           i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+                           calclearncost(csskill, cc),
+                           cdata[tc]);
         if (cdata[0].platinum_coin >= calclearncost(csskill, cc))
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"習得する"s, u8"Teach me the skill."s);
+            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.learn.accept");
             ++listmax;
         }
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = lang(u8"やめる"s, u8"Never mind."s);
+    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.go_back");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1349,28 +1337,19 @@ talk_result_t talk_trainer()
                 cc,
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
-            buff = lang(
-                u8"訓練は完了し"s + _ta()
-                    + u8"潜在能力が伸びているはずなので、後は自分で鍛えて"s
-                    + _kure(),
-                u8"Well done. You've got more room to develop than anyone else I've ever drilled. Keep training."s);
+            buff = i18n::s.get("core.locale.talk.npc.trainer.finish.training", cdata[tc]);
         }
         else
         {
             cdata[0].platinum_coin -= calclearncost(csskill, cc);
             skillgain(cc, csskill);
             ++gdata_number_of_learned_skills_by_trainer;
-            buff = lang(
-                u8"可能な限りの知識は教え"s + _ta() + u8"後は存分に訓練して"s
-                    + _kure(),
-                u8"I've taught you all that I know of the skill. Now develop it by yourself."s);
+            buff = i18n::s.get("core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
         }
     }
     else
     {
-        buff = lang(
-            u8"訓練が必要なときは、声をかけて"s + _kure(),
-            u8"Come see me again when you need more training."s);
+        buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }

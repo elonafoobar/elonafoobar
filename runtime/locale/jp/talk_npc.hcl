@@ -7,8 +7,10 @@ locale {
         window {
             impress = "友好"
             attract = "興味"
-            fame = " 名声 "
-            shop_rank = " 店の規模:"
+            fame = "名声 ${_1}"
+            shop_rank = "店の規模:${_1}"
+
+            of = "${_2} ${_1}"
         }
 
         npc {
