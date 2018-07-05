@@ -102,6 +102,8 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
 
 TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
 {
+    start_in_map(9999, 2);
+
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
@@ -112,22 +114,23 @@ end
 Event.register(Event.EventKind.AllTurnsFinished, my_hook)
 )"));
 
-    start_in_map(9999, 2);
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.global.val == nil)"));
     elona::lua::lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.global.val == 42)"));
 
-    go_to_map(6, 1);
-    REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.global.val == 42)"));
+    run_in_temporary_map(6, 1, []() {
+                                   REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.global.val == 42)"));
+                               });
 
-    go_to_map(9999, 2);
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.global.val == 42)"));
 }
 
 
-TEST_CASE("Test preservation of local data", "[Lua: Serialization]")
+TEST_CASE("Test preservation of map local data", "[Lua: Serialization]")
 {
+    start_in_map(9999, 2);
+
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
@@ -138,15 +141,16 @@ end
 Event.register(Event.EventKind.AllTurnsFinished, my_hook)
 )"));
 
-    start_in_map(9999, 2);
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == nil)"));
     elona::lua::lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == 42)"));
 
-    go_to_map(6, 1);
-    REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == nil)"));
+    run_in_temporary_map(6, 1, []() {
+                                   REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == nil)"));
+                               });
 
-    go_to_map(9999, 2);
-    REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == 42)"));
+    // TODO after serialization is implemented
+    // run_in_temporary_map(9999, 2);
+    // REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "assert(Store.map_local.val == 42)"));
 }

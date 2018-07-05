@@ -57,7 +57,7 @@ void start_in_debug_map()
     start_in_map(9999, 2);
 }
 
-void go_to_map(int map, int level)
+void run_in_temporary_map(int map, int level, std::function<void()> f)
 {
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
@@ -65,7 +65,12 @@ void go_to_map(int map, int level)
     gdata_previous_y = cdata[0].position.y;
     gdata_destination_map = map;
     gdata_destination_dungeon_level = level;
-    levelexitby = 0;
+    levelexitby = 2;
+    exit_map();
+
+    f();
+
+    levelexitby = 4;
     exit_map();
 }
 

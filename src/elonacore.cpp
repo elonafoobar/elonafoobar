@@ -5397,6 +5397,8 @@ void monster_respawn()
 
 turn_result_t exit_map()
 {
+    int previous_map = gdata_current_map;
+    int previous_dungeon_level = gdata_current_dungeon_level;
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
     gdata(171) = 0;
@@ -5759,8 +5761,8 @@ turn_result_t exit_map()
     }
     else
     {
-        // This is a tempory map, so wipe its data (shelter, special quest
-        // instance)
+        // This is a temporary map, so wipe its data (shelter, special
+        // quest instance)
         prepare_charas_for_map_unload();
 
         // delete all map-local data
@@ -5779,6 +5781,17 @@ turn_result_t exit_map()
             }
         }
     }
+
+    bool map_changed = gdata_current_map != previous_map
+        || gdata_current_dungeon_level != previous_dungeon_level;
+
+    // Only clear map-local data if the map was changed. The map might
+    // not change if access to it is refused (jail, pyramid, etc.).
+    if (map_changed)
+    {
+        lua::lua.clear_map_local_data();
+    }
+
     mode = 2;
     return turn_result_t::initialize_map;
 }

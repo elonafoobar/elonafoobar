@@ -183,6 +183,12 @@ public:
     void on_item_removal(item&);
 
     /***
+     * - Clears all map-local handles and runs their removal callbacks.
+     * - Clears all map-local mod storages.
+     */
+    void clear_map_local_data();
+
+    /***
      * Clears and reset the Lua state to directly after loading the
      * core mod.
      *
@@ -260,6 +266,8 @@ private:
      * Sets the global variables of a mod on the given table.
      */
     void setup_mod_globals(mod_info& mod, sol::table&);
+
+    static void bind_store(sol::state&, mod_info&, sol::table&);
 
     static void setup_sandbox(const sol::state& state, sol::table& metatable)
     {

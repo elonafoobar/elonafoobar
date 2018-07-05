@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 
 namespace elona
 {
@@ -30,7 +31,7 @@ void load_previous_savefile();
 void start_in_debug_map();
 
 void start_in_map(int, int);
-void go_to_map(int, int);
+void run_in_temporary_map(int, int, std::function<void()>);
 
 } // namespace testing
 } // namespace elona

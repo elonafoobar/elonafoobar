@@ -146,6 +146,26 @@ void lua_env::on_item_removal(item& item)
     handle_mgr->remove_item_handle(item);
 }
 
+void lua_env::clear_map_local_data()
+{
+    for (auto&& pair : mods)
+    {
+        auto& mod = pair.second;
+        lua->safe_script(R"(
+function clear(t)
+    for key, _ in pairs(t) do
+        t[key] = nil
+    end
+end
+if Store then
+    clear(Store.map_local)
+end
+)", mod->env);
+    }
+    handle_mgr->clear_map_local_handles();
+}
+
+
 void lua_env::load_mod(const fs::path& path, mod_info& mod)
 {
     setup_and_lock_mod_globals(mod);
@@ -271,8 +291,17 @@ void lua_env::clear_mod_stores()
     for (auto&& pair : mods)
     {
         auto& mod = pair.second;
-        mod->store_local = lua->create_table();
-        mod->store_global = lua->create_table();
+        lua->safe_script(R"(
+function clear(t)
+    for key, _ in pairs(t) do
+        t[key] = nil
+    end
+end
+if Store then
+    clear(Store.map_local)
+    clear(Store.global)
+end
+)", mod->env);
     }
 }
 
@@ -311,7 +340,7 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
-void bind_store(sol::state& lua, mod_info& mod, sol::table table)
+void lua_env::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
 {
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
@@ -411,7 +440,6 @@ void lua_env::load_mod_from_script(
         throw std::runtime_error("Failed initializing mod "s + info->name);
     }
 
-    std::cout << "Emplace " << name << std::endl;
     this->mods[name] = std::move(info);
 }
 
