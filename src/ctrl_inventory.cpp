@@ -136,10 +136,7 @@ label_20591:
             }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
-                dialog(
-                    u8"Invalid Item Id found. Item No:"s + cnt + u8", Id:"s
-                    + inv[cnt].id
-                    + u8" has been removed from your inventory."s);
+                dialog(i18n::s.get("core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
                 item_remove(inv[cnt]);
                 inv[cnt].id = 0;
                 continue;
@@ -1875,7 +1872,7 @@ label_2061_internal:
             {
                 if (is_cursed(inv[ci].curse_state))
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.cursed", inv[ci]));
+                    txt(i18n::s.get("core.locale.ui.inv.take_ally.cursed", inv[ci]));
                     goto label_20591;
                 }
                 p = inv[ci].body_part;
@@ -1885,7 +1882,7 @@ label_2061_internal:
             if (inv[ci].id == 477 || inv[ci].id == 473)
             {
                 txtef(8);
-                txt(i18n::s.get("core.locale.ui.inv.swallows_ring", cdata[tc], inv[ci]));
+                txt(i18n::s.get("core.locale.ui.inv.take_ally.swallows_ring", cdata[tc], inv[ci]));
                 snd(65);
                 chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
@@ -1902,7 +1899,7 @@ label_2061_internal:
             {
                 in = 1;
             }
-            txt(i18n::s.get("core.locale.ui.inv.you_take", itemname(ci, in)));
+            txt(i18n::s.get("core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
                 cdata[0].gold += in;

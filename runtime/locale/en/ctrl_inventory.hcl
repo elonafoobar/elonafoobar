@@ -210,10 +210,10 @@ locale {
 
             take_ally {
                 refuse_dialog {
-                    _1 = "\"No!\""
-                    _2 = "\"It's mine.\""
-                    _3 = "\"Get off!\""
-                    _4 = "\"Never.\""
+                    _0 = "\"No!\""
+                    _1 = "\"It's mine.\""
+                    _2 = "\"Get off!\""
+                    _3 = "\"Never.\""
                 }
 
                 cursed = "${itemname(_1)} is cursed and can't be taken off."
