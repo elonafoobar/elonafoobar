@@ -454,7 +454,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cc))
                                         {
-                                            txt(i18n::s.get("core.locale.ai.swap.crushes_wall",
+                                            txt(i18n::s.get("core.locale.ai.crushes_wall",
                                                             cdata[cc]));
                                         }
                                         return turn_result_t::turn_end;
