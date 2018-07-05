@@ -10,7 +10,7 @@ locale {
             blacksmith = "武具店の${_1}"
             trainer = "ギルドの${_1}"
             fisher = "釣具店の${_1}"
-            blackmarket_vendor = "ブラックマーケットの${_1}"
+            blackmarket = "ブラックマーケットの${_1}"
             food_vendor = "食品店${_1}"
             souvenir_vendor = "おみやげ屋の${_1}"
 

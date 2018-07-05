@@ -10,7 +10,7 @@ locale {
             blacksmith = "${trim_job(_1)}the blacksmith"
             trainer = "${trim_job(_1)}the trainer"
             fisher = "${trim_job(_1)}the fisher"
-            blackmarket_vendor = "${trim_job(_1)}the blackmarket vendor"
+            blackmarket = "${trim_job(_1)}the blackmarket vendor"
             food_vendor = "${trim_job(_1)}the food vendor"
             souvenir_vendor = "${trim_job(_1)}the souvenir vendor"
 

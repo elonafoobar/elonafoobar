@@ -206,7 +206,7 @@ std::string snfish(const std::string& name)
 
 std::string snblack(const std::string& name)
 {
-    return i18n::s.get("core.locale.chara.job.blacksmith", name);
+    return i18n::s.get("core.locale.chara.job.blackmarket", name);
 }
 
 
@@ -387,9 +387,18 @@ std::string txtskillchange(int id, int cc, bool increase)
     }
     else
     {
-        return i18n::s.get("core.locale.skill.default."s + (increase ? "increase"s : "decrease"s),
-                           cdata[cc],
-                           i18n::_(u8"ability", std::to_string(id), u8"name"));
+        if (increase)
+        {
+            return i18n::s.get("core.locale.skill.default.increase",
+                               cdata[cc],
+                               i18n::_(u8"ability", std::to_string(id), u8"name"));
+        }
+        else
+        {
+            return i18n::s.get("core.locale.skill.default.decrease",
+                               cdata[cc],
+                               i18n::_(u8"ability", std::to_string(id), u8"name"));
+        }
     }
 }
 
