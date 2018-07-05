@@ -248,7 +248,7 @@ TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
         elona::lua::lua.load_mod_from_script("test_map_unloading", R"(
 local Event = Elona.require("Event")
 
-local function my_map_unloading_handler(item)
+local function my_map_unloading_handler()
    Store.global.map_unloaded = true
 end
 
@@ -261,5 +261,33 @@ Event.register(Event.EventKind.MapUnloading, my_map_unloading_handler)
                          []() {
                              REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
                                                  "test_map_unloading", R"(assert(Store.global.map_unloaded))"));
+                                 });
+}
+
+TEST_CASE("Test map-local characters becoming unloaded in global state on map transition", "[Lua: Callbacks]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua.load_mod_from_script("test_map_local_chara", R"(
+local Chara = Elona.require("Chara")
+
+Store.global.chara = Chara.create(24, 24, 3)
+Store.global.player = Chara.player()
+Store.global.ally = Chara.create(24, 24, 3)
+Store.global.ally:recruit_as_ally()
+)"));
+
+    REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
+                        "test_map_local_chara", R"(assert(Store.global.chara.is_valid == true))"));
+
+    run_in_temporary_map(6, 1,
+                         []() {
+                             REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
+                                                 "test_map_local_chara", R"(assert(Store.global.chara.is_valid == false))"));
+                             REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
+                                                 "test_map_local_chara", R"(assert(Store.global.player.is_valid == true))"));
+                             REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
+                                                 "test_map_local_chara", R"(assert(Store.global.ally.is_valid == true))"));
                                  });
 }
