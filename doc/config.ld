@@ -1,6 +1,6 @@
 --luacheck: ignore
-project = "elomod"
-title = "elomod"
+project = "Lua API"
+title = "Lua API"
 description = "ElonaFoobar Mod API"
 full_description = [[
   Core API for modding ElonaFoobar

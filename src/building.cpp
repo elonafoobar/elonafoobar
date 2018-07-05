@@ -328,8 +328,7 @@ turn_result_t show_house_board()
         if (gdata_current_dungeon_level == 1)
         {
             ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.recruit_"
-                            "a_servant"),
+                i18n::s.get("core.locale.building.house_board.choices.recruit_a_servant"),
                 u8"null"s,
                 ""s + 6);
         }

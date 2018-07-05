@@ -1,4 +1,4 @@
-# elomod
+# Lua API
 Welcome traveler! This is the documentation for the ElonaFoobar mod API.
 
 Before proceeding, **please note** that the API will almost certainly undergo substantial changes before it is stabilized. If you write anything with the API, expect that it **will** break sometime in the future, until all the serious design/implementation issues and bugs have been worked out.
