@@ -9,7 +9,6 @@
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_api.hpp"
-#include "lua_store.hpp"
 
 namespace elona
 {
