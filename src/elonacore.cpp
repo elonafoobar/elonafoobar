@@ -5789,6 +5789,7 @@ turn_result_t exit_map()
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
         lua::lua.clear_map_local_data();
     }
 

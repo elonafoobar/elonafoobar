@@ -239,3 +239,27 @@ Event.register(Event.EventKind.ItemCreated, my_item_created_handler)
     REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
         "test_item_created", R"(assert(Store.global.items[idx].index == idx))"));
 }
+
+TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua.load_mod_from_script("test_map_unloading", R"(
+local Event = Elona.require("Event")
+
+local function my_map_unloading_handler(item)
+   Store.global.map_unloaded = true
+end
+
+Store.global.map_unloaded = false
+
+Event.register(Event.EventKind.MapUnloading, my_map_unloading_handler)
+)"));
+
+    run_in_temporary_map(6, 1,
+                         []() {
+                             REQUIRE_NOTHROW(elona::lua::lua.run_in_mod(
+                                                 "test_map_unloading", R"(assert(Store.global.map_unloaded))"));
+                                 });
+}

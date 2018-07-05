@@ -30,6 +30,9 @@ enum class event_kind_t : unsigned
     item_initialized,
     game_initialized,
 
+    map_unloading,
+    map_loaded,
+
     // Triggered when this slot becomes invalid (chara.state = 0 or item.number
     // = 0). Doesn't trigger if a character dies but can revive (chara.state !=
     // 0).
