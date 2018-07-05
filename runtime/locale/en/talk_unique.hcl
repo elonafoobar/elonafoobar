@@ -125,7 +125,7 @@ locale {
 
             lomias {
                 tutorial {
-                    _0 {
+                    before {
                         dialog = "It looks like you aren't familiar with this land. Before we leave, I can spare a moment to teach you a few lessons."
                         choices {
                             yes = "I would like to play the tutorial."
@@ -134,7 +134,8 @@ locale {
 
                         yes = "A wise choice. I will start from the beginning."
                     }
-                    _1 {
+
+                    movement {
                         dialog {
                             _0 = "Pray tell me at least you know how to move. Sure, pressing cursor keys will do. But it's better to use a key pad if you have one. By using a key pad, you can easily access keys which are used frequently. Like [0] for picking up stuff, [5] for passing a turn and [*] for targeting."
                             _1 = "Although there're many actions you can perform, basically you can access them by using only 3 keys, [z],[x] and [c]."
@@ -156,20 +157,21 @@ locale {
                             response = "What!"
                         }
                     }
-                    _2 {
+
+                    skills {
                         dialog {
                             _0 = "You can perform skills or other actions including bashing and digging by pressing [z]. Here's a tip. You can bash doors to break locks and trees to get some fruits. It can be used to wake someone, but surely they won't be happy."
                             _1 = "Also, remember that [space] key is a very useful key. When there's an object under your foot, it automatically chooses a suitable action for you."
-                            _2 = "そうだな… 「穴掘り」実際に試してみようか。穴掘りは、道を短縮したり、鉱石を採掘したり、家のレイアウトを変える時に使う。とりあえず適当な壁の前に立ち、zキーを押して穴を掘ってみてくれ。"
+                            _2 = "Let's try it now. Try digging some walls by pressing [z] and choosing <dig>."
                         }
                         response = "Okay."
                     }
 
-                    _3 {
+                    after_dig {
                         dialog = "Looks like you found something."
                     }
 
-                    _4 {
+                    identify {
                         dialog {
                             _0 = "Many items need to be identified before you can know what exactly they are. You can identify items by reading some scrolls or asking a wizard in a town. Remember that using unidentified potions or scrolls is very dangerous. "
                             _1 = "Weapons and armor also need to be identified. If you carry them long enough, you will get a hunch as to how good they are. But to gain full knowledge of the items, you need to identify them."
@@ -188,7 +190,8 @@ locale {
                             }
                         }
                     }
-                    _5 {
+
+                    equip {
                         dialog = "To equip weapons or armor, press [c] and press [9] to select [Wear]. Note that if you wear cursed equipment, they can't be removed normally and cause some unwelcome effects. That bow is cursed. Use this scroll of uncurse to uncurse it."
                         choices {
                             alright = "Will do."
@@ -205,11 +208,13 @@ locale {
                             lomias_releases = "Lomias releases tiny cute creatures."
                         }
                     }
-                    _6 {
+
+                    combat {
                         not_finished = "Kill them all."
                         finished = "Well done."
                     }
-                    _7 {
+
+                    chests {
                         dialog {
                             _0 = "Let's learn a little history of North Tyris. This sacred land governed by Palmia is known for ancient ruins <<Nefia>>. Occasionally new ruins are found and lost by erratic movements of the earths crust."
                             _1 = "A lord lives at the lowest layer of these ruins, protecting great treasures and therefore attracts numerous adventurers. However, avoid those ruins which exceed your current level. You may gain a lot, but you may lose your life."
@@ -217,7 +222,8 @@ locale {
                         }
                         response = "Okay."
                     }
-                    _8 {
+
+                    house {
                         dialog {
                             _0 = "Notice the chest has a lock? Locked chests require sufficient lockpick skill and lockpicks to open. You need to practice to open that chest. Be aware, those chests are heavy and trust me, give up if you can't open them when you're in dungeons. I saw a fool running around with a chest on his back and he got killed."
                             _1 = "As you explore dungeons, your backpack may get heavier. Remember to leave stuff you don't need in your house. Overweight will slow your movement."
@@ -225,7 +231,8 @@ locale {
                             _3 = "You can do several things by using a house board in your house. Try it later."
                         }
                     }
-                    _99 {
+
+                    end {
                         dialog {
                             _0 = "Alright, we're finished. You should already know how to survive in North Tyris by now."
                             _1 = "(You've finished the tutorial!)"

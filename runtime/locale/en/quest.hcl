@@ -2,7 +2,11 @@ locale {
     quest {
         journal_updated = "Your journal has been updated."
         minutes_left = "${_1} min left for the quest."
-        you_have_completed = "You have completed the quest!"
+        completed = "You have completed the quest!"
+        completed_taken_from = "You have completed the quest taken from ${_1}."
+        failed_taken_from = "You have failed the quest taken from ${_1}."
+        gain_fame = "You gain ${_1} fame."
+        lose_fame = "You lose ${_1} fame."
 
         hunt {
             complete = "The area is secured!"
@@ -44,12 +48,6 @@ locale {
         }
 
         you_were_defeated = "You were defeated."
-
-        completed = "You have completed the quest!"
-        completed_taken_from = "You have completed the quest taken from ${_1}."
-        failed_taken_from = "You have failed the quest taken from ${_1}."
-        gain_fame = "You gain ${_1} fame."
-        lose_fame = "You lose ${_1} fame."
 
         giver {
             have_something_to_ask = ""
