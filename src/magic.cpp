@@ -922,7 +922,7 @@ int magic()
                 }
                 else
                 {
-                    valn = i18n::s.get("core.locale.magic.breath.breath");
+                    valn = i18n::s.get("core.locale.magic.breath.no_element");
                 }
                 if (is_in_fov(cc))
                 {
@@ -1233,7 +1233,7 @@ label_2181_internal:
             else
             {
                 txtef(9);
-                txt(i18n::s.get_enum("core.locale.magic.alcohol.cursed", rnd(7)));
+                txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
             }
         }
         dmgcon(tc, status_ailment_t::drunk, efp);
@@ -1428,7 +1428,7 @@ label_2181_internal:
             ride_begin(tc);
             txtef(9);
             txt(name(gdata_mount)
-                + i18n::s.get("core.locale.magic.mount.dismount_dialog", rnd(4)));
+                + i18n::s.get("core.locale.magic.mount.mount_dialog", rnd(4)));
         }
         break;
     case 183:
@@ -1468,7 +1468,7 @@ label_2181_internal:
             {
                 if (cdata[0].sp < rnd(75))
                 {
-                    txt(i18n::s.get("core.locale.magic.common_too_exhausted"));
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                     dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
@@ -1714,7 +1714,7 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txt(i18n::s.get("core.locale.magic.mutation.offensive",
+            txt(i18n::s.get("core.locale.magic.mutation.spell",
                             cdata[cc],
                             cdata[tc]));
             if (rnd(3))
@@ -2381,7 +2381,7 @@ label_2181_internal:
             }
             else
             {
-                txt(i18n::s.get("core.locale.magic.gain_potential.increases",
+                txt(i18n::s.get("core.locale.magic.gain_potential.decreases",
                                 cdata[tc],
                                 valn));
                 modify_potential(
@@ -2930,7 +2930,7 @@ label_2181_internal:
         }
         else
         {
-            txt(i18n::s.get("core.locale.magic.common.cannot_be_charmed", cdata[tc]));
+            txt(i18n::s.get("core.locale.magic.domination.cannot_be_charmed", cdata[tc]));
         }
         break;
     case 436:
