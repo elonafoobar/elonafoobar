@@ -271,7 +271,8 @@ void lua_env::clear_mod_stores()
     for (auto&& pair : mods)
     {
         auto& mod = pair.second;
-        mod->store->clear();
+        mod->store_local = lua->create_table();
+        mod->store_global = lua->create_table();
     }
 }
 
@@ -310,9 +311,23 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
+void bind_store(sol::state& lua, mod_info& mod, sol::table table)
+{
+    sol::table Store = lua.create_table();
+    sol::table metatable = lua.create_table();
+
+    metatable["global"] = mod.store_global;
+    metatable["map_local"] = mod.store_local;
+    metatable[sol::meta_function::new_index] = deny;
+    metatable[sol::meta_function::index] = metatable;
+
+    Store[sol::metatable_key] = metatable;
+    table["Store"] = Store;
+}
+
 void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
 {
-    table["Store"] = mod.store;
+    bind_store(*lua, mod, table);
     table["Elona"] = api_mgr->bind(*this);
     table["_MOD_NAME"] = mod.name;
     setup_sandbox(*this->lua, table);
@@ -396,6 +411,7 @@ void lua_env::load_mod_from_script(
         throw std::runtime_error("Failed initializing mod "s + info->name);
     }
 
+    std::cout << "Emplace " << name << std::endl;
     this->mods[name] = std::move(info);
 }
 

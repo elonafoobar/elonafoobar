@@ -38,7 +38,7 @@ void save_and_reload()
     load_save_data(save_dir);
 }
 
-void start_in_debug_map()
+void start_in_map(int map, int level)
 {
     reset_state();
     initialize_debug_globals();
@@ -46,10 +46,27 @@ void start_in_debug_map()
     elona::playerid = player_id;
     fs::remove_all(save_dir / elona::playerid);
 
-    gdata_current_map = 9999; // Debug map
-    gdata_current_dungeon_level = 2;
+    gdata_current_map = map; // Debug map
+    gdata_current_dungeon_level = level;
     init_fovlist();
     initialize_map();
+}
+
+void start_in_debug_map()
+{
+    start_in_map(9999, 2);
+}
+
+void go_to_map(int map, int level)
+{
+    gdata_previous_map2 = gdata_current_map;
+    gdata_previous_dungeon_level = gdata_current_dungeon_level;
+    gdata_previous_x = cdata[0].position.x;
+    gdata_previous_y = cdata[0].position.y;
+    gdata_destination_map = map;
+    gdata_destination_dungeon_level = level;
+    levelexitby = 0;
+    exit_map();
 }
 
 void load_translations(const std::string& hcl)
@@ -84,6 +101,8 @@ void pre_init()
 
     config::instance().is_test = true;
 
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
     configure_lua();
 }
 

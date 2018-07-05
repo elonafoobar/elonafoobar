@@ -87,12 +87,11 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
     elona::lua::lua_env lua;
     lua.reload();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.thing = 1"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.global.thing = 1"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.thing == 1)"));
-    sol::state_view view(*lua.get_state());
-    int thing = lua.get_mod("test")->store->get("thing", view).as<int>();
-    assert(thing == 1);
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == 1)"));
+    int thing = lua.get_mod("test")->store_global["thing"].get<int>();
+    REQUIRE(thing == 1);
 }
 
 TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
@@ -100,10 +99,10 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
     elona::lua::lua_env lua;
     lua.reload();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.thing = 1"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.global.thing = 1"));
 
     // Accessed from main state, not the mod's environment
-    sol::object obj = (*lua.get_state())["Store"]["thing"];
+    sol::object obj = (*lua.get_state())["Store"]["global"];
     REQUIRE(obj == sol::lua_nil);
 }
 
@@ -116,25 +115,25 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
 local Event = Elona.require("Event")
 
 local function my_turn_handler()
-  Store.thing = Store.thing + 1
+  Store.global.thing = Store.global.thing + 1
 end
 
-Store.thing = 1
+Store.global.thing = 1
 
 Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
 )"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.thing == 1)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == 1)"));
 
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.thing == 2)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == 2)"));
 
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.thing == 4)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == 4)"));
 }
 
 TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
@@ -142,19 +141,19 @@ TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
     elona::lua::lua_env lua;
     lua.reload();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("first", R"(Store.thing = 42)"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script("first", R"(Store.global.thing = 42)"));
     REQUIRE_NOTHROW(
-        lua.load_mod_from_script("second", R"(Store.thing = "dood")"));
+        lua.load_mod_from_script("second", R"(Store.global.thing = "dood")"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("first", R"(assert(Store.thing == 42))"));
+    REQUIRE_NOTHROW(lua.run_in_mod("first", R"(assert(Store.global.thing == 42))"));
     REQUIRE_NOTHROW(
-        lua.run_in_mod("second", R"(assert(Store.thing == "dood"))"));
+        lua.run_in_mod("second", R"(assert(Store.global.thing == "dood"))"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("second", R"(Store.thing = false)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("second", R"(Store.global.thing = false)"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("first", R"(assert(Store.thing == 42))"));
+    REQUIRE_NOTHROW(lua.run_in_mod("first", R"(assert(Store.global.thing == 42))"));
     REQUIRE_NOTHROW(
-        lua.run_in_mod("second", R"(assert(Store.thing == false))"));
+        lua.run_in_mod("second", R"(assert(Store.global.thing == false))"));
 }
 
 
@@ -169,7 +168,7 @@ local Event = Elona.require("Event")
 local function my_turn_handler()
    for x = 1, 20 do
       for y = 1, 20 do
-         Store.grid[x][y] = 1
+         Store.global.grid[x][y] = 1
       end
    end
 end
@@ -183,14 +182,14 @@ for i = 1, 20 do
    end
 end
 
-Store.grid = grid
+Store.global.grid = grid
 
 Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
 )"));
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.grid[1][1] == 0)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.grid[1][1] == 0)"));
 
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.grid[1][1] == 1)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
 }

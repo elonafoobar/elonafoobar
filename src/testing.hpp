@@ -29,5 +29,8 @@ void load_previous_savefile();
  */
 void start_in_debug_map();
 
+void start_in_map(int, int);
+void go_to_map(int, int);
+
 } // namespace testing
 } // namespace elona

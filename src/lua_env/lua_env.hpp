@@ -40,8 +40,8 @@ struct mod_info
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
 
-        store = std::make_shared<lua::store>();
-        store->init_no_attach(*state);
+        store_local = state->create_table();
+        store_global = state->create_table();
     }
     mod_info(const mod_info&) = delete;
     mod_info& operator=(const mod_info&) = delete;
@@ -49,7 +49,8 @@ struct mod_info
 
     std::string name;
     sol::environment env;
-    std::shared_ptr<lua::store> store;
+    sol::table store_local;
+    sol::table store_global;
 };
 
 /***
