@@ -83,9 +83,7 @@ int modpiety(int prm_1035)
     }
     if (sdata(181, 0) * 100 < cdata[0].piety_point)
     {
-        txt(lang(
-            u8"あなたの信仰は既に限界まで高まっている。"s,
-            u8" Your God becomes indifferent to your gift."s));
+        txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
     cdata[0].piety_point += prm_1035 / (1 + (gdata_current_map == 35) * 9);
@@ -367,48 +365,19 @@ void apply_god_blessing(int cc)
 std::string get_god_description()
 {
     std::string buff = u8" "s;
-    std::string god;
-    if (inv[ci].param1 == 1)
-    {
-        god = "mani";
-    }
-    if (inv[ci].param1 == 2)
-    {
-        god = "lulwy";
-    }
-    if (inv[ci].param1 == 3)
-    {
-        god = "itzpalt";
-    }
-    if (inv[ci].param1 == 4)
-    {
-        god = "ehekatl";
-    }
-    if (inv[ci].param1 == 5)
-    {
-        god = "opatos";
-    }
-    if (inv[ci].param1 == 6)
-    {
-        god = "jure";
-    }
-    if (inv[ci].param1 == 7)
-    {
-        god = "kumiromi";
-    }
 
-    if (god != "")
+    if (inv[ci].param1 > 0 && inv[ci].param1 <= 7)
     {
-        buff = i18n::s.get("core.locale.god.desc." + god + ".text");
+        buff = i18n::s.get_enum_property("core.locale.god.desc", "text", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.offering") + u8": ";
-        buff += i18n::s.get("core.locale.god.desc." + god + ".offering");
+        buff += i18n::s.get_enum_property("core.locale.god.desc", "offering", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.bonus") + u8": ";
-        buff += i18n::s.get("core.locale.god.desc." + god + ".bonus");
+        buff += i18n::s.get_enum_property("core.locale.god.desc", "bonus", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.ability") + u8": ";
-        buff += i18n::s.get("core.locale.god.desc." + god + ".ability");
+        buff += i18n::s.get_enum_property("core.locale.god.desc", "ability", inv[ci].param1);
     }
 
     return buff;
@@ -430,10 +399,8 @@ void label_1888()
         {
             mode = 9;
             txtef(8);
-            txt(lang(
-                i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"は激怒した。"s,
-                i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" is enraged."s));
+            txt(i18n::s.get("core.locale.god.enraged",
+                            i18n::_(u8"god", cdata[0].god_id, u8"name")));
             txtgod(cdata[0].god_id, 1);
             redraw();
             efid = 622;
@@ -465,8 +432,7 @@ void switch_religion()
     if (cdata[0].god_id.empty())
     {
         txtef(5);
-        txt(lang(
-            u8"あなたは今や無信仰者だ。"s, u8"You are an unbeliever now."s));
+        txt(i18n::s.get("core.locale.god.switch.unbeliever"));
     }
     else
     {
@@ -474,11 +440,8 @@ void switch_religion()
         play_animation(19);
         snd(51);
         txtef(5);
-        txt(lang(
-            u8"あなたは今や"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
-                + u8"の信者だ！"s,
-            u8"You become a follower of "s
-                + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"!"s));
+        txt(i18n::s.get("core.locale.god.switch.follower",
+                        i18n::_(u8"god", cdata[0].god_id, u8"name")));
         if (cdata[0].god_id == core_god::itzpalt)
         {
             spact(24) = 1;
@@ -502,13 +465,11 @@ turn_result_t do_pray()
 {
     if (cdata[0].god_id.empty())
     {
-        txt(lang(
-            name(0) + u8"は神を信仰していないが、試しに祈ってみた。"s,
-            u8"You don't believe in God."s));
+        txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
         return turn_result_t::turn_end;
     }
     txtnew();
-    txt(lang(u8"あなたの神に祈りを乞う？"s, u8"Really pray to your God?"s));
+    txt(i18n::s.get("core.locale.god.pray.prompt"));
     ELONA_YES_NO_PROMPT();
     rtval = show_prompt(promptx, prompty, 160);
     if (rtval != 0)
@@ -516,17 +477,12 @@ turn_result_t do_pray()
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
-    txt(lang(
-        i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"に祈った。"s,
-        u8"You pray to "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
-            + u8"."s));
+    txt(i18n::s.get("core.locale.god.pray.you_pray_to",
+                    i18n::_(u8"god", cdata[0].god_id, u8"name")));
     if (cdata[0].piety_point < 200 || cdata[0].praying_point < 1000)
     {
-        txt(lang(
-            i18n::_(u8"god", cdata[0].god_id, u8"name")
-                + u8"はあなたに無関心だ。"s,
-            i18n::_(u8"god", cdata[0].god_id, u8"name")
-                + u8" is indifferent to you."s));
+        i18n::s.get("core.locale.god.pray.indifferent",
+                    i18n::_(u8"god", cdata[0].god_id, u8"name"));
         return turn_result_t::turn_end;
     }
     animode = 100;
@@ -559,9 +515,7 @@ turn_result_t do_pray()
                         if (p >= 2)
                         {
                             f = 1;
-                            txt(lang(
-                                u8"神の使徒は2匹までしか仲間にできない。"s,
-                                u8"No more than 2 God's servants are allowed in your party."s));
+                            txt(i18n::s.get("core.locale.god.pray.servant.no_more"));
                             break;
                         }
                     }
@@ -572,16 +526,12 @@ turn_result_t do_pray()
                 if (chara_get_free_slot_ally() == 0)
                 {
                     f = 1;
-                    txt(lang(
-                        u8"仲間が一杯で、神からの贈り物を受け取ることができなかった。"s,
-                        u8"Your party is full. The gift is reserved."s));
+                    txt(i18n::s.get("core.locale.god.pray.servant.party_is_full"));
                 }
             }
             if (f)
             {
-                txt(lang(
-                    u8"この贈り物を諦める？"s,
-                    u8"Do you want to decline this gift?"s));
+                txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
@@ -596,51 +546,37 @@ turn_result_t do_pray()
             if (cdata[0].god_id == core_god::mani)
             {
                 dbid = 262;
-                txt(lang(
-                    u8"このアンドロイドはブーストした時に恐るべき力を発揮するようだ。"s,
-                    u8"This android shows enormous strength when boosting."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.mani"));
             }
             if (cdata[0].god_id == core_god::lulwy)
             {
                 dbid = 263;
-                txt(lang(
-                    u8"この黒天使はブーストした時に恐るべき力を発揮するようだ。"s,
-                    u8"This black angel shows enormous strength when boosting."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.lulwy"));
             }
             if (cdata[0].god_id == core_god::itzpalt)
             {
                 dbid = 264;
-                txt(lang(
-                    u8"この追放者は連続魔法を使えるようだ。"s,
-                    u8"This exile can cast several spells in a row."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.itzpalt"));
             }
             if (cdata[0].god_id == core_god::ehekatl)
             {
                 dbid = 260;
-                txt(lang(
-                    u8"この猫に舐められた武具は、エヘカトルの祝福を授かるようだ。祝福を受けた武具にはエンチャントが一つ付与される。"s,
-                    u8"Weapons and armor licked by this cat receive a blessing of Ehekatl which adds an extra enchantment."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.ehekatl"));
             }
             if (cdata[0].god_id == core_god::opatos)
             {
                 dbid = 265;
-                txt(lang(
-                    u8"この騎士はある程度重いものをもたせても文句をいわないようだ。"s,
-                    u8"This knight can hold really heavy stuff for you."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.opatos"));
             }
             if (cdata[0].god_id == core_god::jure)
             {
                 dbid = 266;
-                txt(lang(
-                    u8"この防衛者は致死ダメージを受けた仲間をレイハンドで回復できるようだ。レイハンドは眠るたびに再使用可能になる。"s,
-                    u8"This defender can use Lay on hand to heal a mortally wounded ally. The ability becomes re-useable after sleeping."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.jure"));
             }
             if (cdata[0].god_id == core_god::kumiromi)
             {
                 dbid = 261;
-                txt(lang(
-                    u8"この妖精は食後に種を吐き出すようだ。"s,
-                    u8"This fairy generates a seed after eating."s));
+                txt(i18n::s.get("core.locale.god.pray.servant.desc.kumiromi"));
             }
             novoidlv = 1;
             chara_create(56, dbid, -3, 0);
