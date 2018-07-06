@@ -43,7 +43,7 @@ std::string cnvrank(int n)
 
 std::string cnvarticle(const std::string& str)
 {
-    return lang(str, '[' + str + ']');
+    return i18n::s.get("core.locale.ui.article", str);
 }
 
 
@@ -110,21 +110,11 @@ std::string cnvdate(int datetime_id, bool show_hour)
         datetime_id -= 8640;
     }
     int year = datetime_id / 24 / 30 / 12;
-    if (jp)
+
+    ret = i18n::s.get("core.locale.ui.date", year, month, day);
+    if (show_hour)
     {
-        ret = ""s + year + u8"年"s + month + u8"月"s + day + u8"日"s;
-        if (show_hour)
-        {
-            ret += std::to_string(hour) + u8"時";
-        }
-    }
-    else
-    {
-        ret = ""s + year + u8" "s + month + u8"/"s + day + u8" "s;
-        if (show_hour)
-        {
-            ret += std::to_string(hour) + u8"h";
-        }
+        ret += i18n::s.get("core.locale.ui.date_hour", hour);
     }
 
     return ret;
@@ -137,9 +127,7 @@ std::string cnvplaytime(int datetime_id)
     const int h = datetime_id / 60 / 60;
     const int m = datetime_id / 60 % 60;
     const int s = datetime_id % 60;
-    return lang(
-        std::to_string(h) + u8"時間" + m + u8"分" + s + u8"秒",
-        std::to_string(h) + u8":" + m + u8":" + s + u8" Sec");
+    return i18n::s.get("core.locale.ui.playtime", h, m, s);
 }
 
 
@@ -155,79 +143,77 @@ std::string sncnv(const std::string& name_with_job)
 
 std::string sngeneral(const std::string& name)
 {
-    return lang(u8"雑貨屋の"s + name, sncnv(name) + u8"the general vendor"s);
+    return i18n::s.get("core.locale.chara.job.general_vendor", name);
 }
 
 
 
 std::string sninn(const std::string& name)
 {
-    return lang(u8"宿屋の"s + name, sncnv(name) + u8"the Innkeeper"s);
+    return i18n::s.get("core.locale.chara.job.innkeeper", name);
 }
 
 
 
 std::string sntrade(const std::string& name)
 {
-    return lang(u8"交易店の"s + name, sncnv(name) + u8"the trader"s);
+    return i18n::s.get("core.locale.chara.job.trader", name);
 }
 
 
 
 std::string sngoods(const std::string& name)
 {
-    return lang(u8"何でも屋の"s + name, sncnv(name) + u8"the goods vendor"s);
+    return i18n::s.get("core.locale.chara.job.goods_vendor", name);
 }
 
 
 
 std::string snbakery(const std::string& name)
 {
-    return lang(u8"パン屋の"s + name, sncnv(name) + u8"the baker"s);
+    return i18n::s.get("core.locale.chara.job.baker", name);
 }
 
 
 
 std::string snmagic(const std::string& name)
 {
-    return lang(u8"魔法店の"s + name, sncnv(name) + u8"the magic vendor"s);
+    return i18n::s.get("core.locale.chara.job.magic_vendor", name);
 }
 
 
 
 std::string snarmor(const std::string& name)
 {
-    return lang(u8"武具店の"s + name, sncnv(name) + u8"the blacksmith"s);
+    return i18n::s.get("core.locale.chara.job.blacksmith", name);
 }
 
 
 
 std::string sntrainer(const std::string& name)
 {
-    return lang(u8"ギルドの"s + name, sncnv(name) + u8"the trainer"s);
+    return i18n::s.get("core.locale.chara.job.trainer", name);
 }
 
 
 
 std::string snfish(const std::string& name)
 {
-    return lang(u8"釣具店の"s + name, sncnv(name) + u8"the fisher"s);
+    return i18n::s.get("core.locale.chara.job.fisher", name);
 }
 
 
 
 std::string snblack(const std::string& name)
 {
-    return lang(
-        u8"ブラックマーケットの"s + name,
-        sncnv(name) + u8"the blackmarket vendor"s);
+    return i18n::s.get("core.locale.chara.job.blackmarket", name);
 }
 
 
 
 std::string snfood(const std::string& name)
 {
-    return lang(u8"食品店"s + name, sncnv(name) + u8"the food vendor"s);
+    return i18n::s.get("core.locale.chara.job.food_vendor", name);
 }
 
 
@@ -247,17 +233,12 @@ void txtsetlastword()
 std::vector<std::string> txtsetwinword(int n)
 {
     std::vector<std::string> ret;
-    sample(
-        std::vector<std::string>{
-            lang(u8"遂に…！", u8"Finally!"),
-            lang(u8"当然の結果だ", u8"It's a matter of course."),
-            lang(u8"おぉぉぉぉ！", u8"Woooooo!"),
-            lang(u8"ふっ", u8"Heh."),
-            lang(u8"今日は眠れないな", u8"I can't sleep tonight."),
-            lang(u8"またそんな冗談を", u8"You're kidding."),
-        },
-        std::back_inserter(ret),
-        n);
+    std::vector<std::string> choices;
+    for (int cnt = 0; cnt < 6; cnt++)
+    {
+        choices.push_back(i18n::s.get_enum("core.locale.scenario.win_words", cnt));
+    }
+    sample(choices, std::back_inserter(ret), n);
     return ret;
 }
 
@@ -266,17 +247,11 @@ std::vector<std::string> txtsetwinword(int n)
 void initialize_nefia_names()
 {
     SDIM4(mapnamerd, 20, 2, 5);
-    mapnamerd(0, 0) = lang(u8"はじまりの"s, u8"Beginner's "s);
-    mapnamerd(1, 0) = lang(u8"安全な"s, u8"Safe "s);
-    mapnamerd(0, 1) = lang(u8"冒険者の"s, u8"Adventurer's"s);
-    mapnamerd(1, 1) = lang(u8"時めきの"s, u8"Exciting "s);
-    mapnamerd(0, 2) = lang(u8"迷いの"s, u8"Dangerous "s);
-    mapnamerd(1, 2) = lang(u8"勇者の"s, u8"Servant's "s);
-    mapnamerd(0, 3) = lang(u8"死の"s, u8"Fearful "s);
-    mapnamerd(1, 3) = lang(u8"闇の"s, u8"Shadow "s);
-    mapnamerd(0, 4) = lang(u8"不帰の"s, u8"King's "s);
-    mapnamerd(1, 4) = lang(u8"混沌の"s, u8"Chaotic "s);
-    return;
+    for (int cnt = 0; cnt < 5; cnt++)
+    {
+        mapnamerd(0, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_a", cnt);
+        mapnamerd(1, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_b", cnt);
+    }
 }
 
 
@@ -308,7 +283,7 @@ std::string maplevel(int)
                 + cnvrank(
                        (gdata_current_dungeon_level
                         - adata(17, gdata_current_map) + 1))
-                + lang(u8"層"s, ""s);
+                + i18n::s.get("core.locale.map.nefia.level");
         }
     }
     return "";
@@ -323,7 +298,7 @@ std::string mapname_dungeon(int id)
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
-        name += i18n::s.get_enum("core.locale.map.dungeon", suffix_id);
+        name += i18n::s.get_enum("core.locale.map.nefia.suffix", suffix_id);
     }
     return name;
 }
@@ -403,189 +378,26 @@ std::string txtbuilding(int prm_368, int prm_369)
 
 std::string txtskillchange(int id, int cc, bool increase)
 {
-    switch (id)
+    if (auto text = i18n::s.get_enum_property_opt("core.locale.skill",
+                                                  increase ? "increase" : "decrease",
+                                                  id,
+                                                  cdata[cc]))
     {
-    case 2:
+        return *text;
+    }
+    else
+    {
         if (increase)
         {
-            return lang(
-                name(cc) + u8"は生命力の上昇を感じた。"s,
-                name(cc) + your(cc) + u8" life force increases."s);
+            return i18n::s.get("core.locale.skill.default.increase",
+                               cdata[cc],
+                               i18n::_(u8"ability", std::to_string(id), u8"name"));
         }
         else
         {
-            return lang(
-                name(cc) + u8"は生命力の衰えを感じた。"s,
-                name(cc) + your(cc) + u8" life force decreases."s);
-        }
-    case 3:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"はマナの向上を感じた。"s,
-                name(cc) + your(cc) + u8" mana increases."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"はマナの衰えを感じた。"s,
-                name(cc) + your(cc) + u8" mana decreases."s);
-        }
-    case 10:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"はより強くなった。"s,
-                name(cc) + your(cc) + u8" muscles feel stronger."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は少し贅肉が増えたような気がした。"s,
-                name(cc) + your(cc) + u8" muscles soften."s);
-        }
-    case 11:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は我慢することの快感を知った。"s,
-                name(cc) + u8" begin"s + _s(cc)
-                    + u8" to feel good when being hit hard."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は我慢ができなくなった。"s,
-                name(cc) + u8" lose"s + _s(cc) + u8" patience."s);
-        }
-    case 12:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は器用になった。"s,
-                name(cc) + u8" become"s + _s(cc) + u8" dexterous."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は不器用になった。"s,
-                name(cc) + u8" become"s + _s(cc) + u8" clumsy."s);
-        }
-    case 13:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は世界をより身近に感じるようになった。"s,
-                name(cc) + u8" feel"s + _s(cc)
-                    + u8" more in touch with the world."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は感覚のずれを感じた。"s,
-                name(cc) + u8" "s + is(cc)
-                    + u8" getting out of touch with the world"s);
-        }
-    case 14:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は急に色々なことを学びたくなった。"s,
-                name(cc) + u8" feel"s + _s(cc) + u8" studious."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"の学習意欲が低下した。"s,
-                name(cc) + u8" lose"s + _s(cc) + u8" curiosity."s);
-        }
-    case 15:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"の意思は固くなった。"s,
-                name(cc) + your(cc) + u8" will hardens."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は何でもすぐ諦める。"s,
-                name(cc) + your(cc) + u8" will softens."s);
-        }
-    case 16:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は魔力の上昇を感じた。"s,
-                name(cc) + your(cc) + u8" magic improves."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は魔力の衰えを感じた。"s,
-                name(cc) + your(cc) + u8" magic degrades."s);
-        }
-    case 17:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は周囲の視線を心地よく感じる。"s,
-                name(cc) + u8" enjoy"s + _s(cc) + u8" showing off "s + his(cc)
-                    + u8" body."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は急に人前に出るのが嫌になった。"s,
-                name(cc) + u8" start"s + _s(cc)
-                    + u8" to avoid eyes of people."s);
-        }
-    case 18:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は周りの動きが遅く見えるようになった。"s,
-                name(cc) + your(cc) + u8" speed increases."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は遅くなった。"s,
-                name(cc) + your(cc) + u8" speed decreases."s);
-        }
-    case 19:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は幸運になった。"s,
-                name(cc) + u8" become"s + _s(cc) + u8" lucky."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は不幸になった。"s,
-                name(cc) + u8" become"s + _s(cc) + u8" unlucky."s);
-        }
-    default:
-        if (increase)
-        {
-            return lang(
-                name(cc) + u8"は"s
-                    + i18n::_(u8"ability", std::to_string(id), u8"name")
-                    + u8"の技術の向上を感じた。"s,
-                name(cc) + your(cc) + u8" "s
-                    + i18n::_(u8"ability", std::to_string(id), u8"name")
-                    + u8" skill increases."s);
-        }
-        else
-        {
-            return lang(
-                name(cc) + u8"は"s
-                    + i18n::_(u8"ability", std::to_string(id), u8"name")
-                    + u8"の技術の衰えを感じた。"s,
-                name(cc) + your(cc) + u8" "s
-                    + i18n::_(u8"ability", std::to_string(id), u8"name")
-                    + u8" skill falls off."s);
+            return i18n::s.get("core.locale.skill.default.decrease",
+                               cdata[cc],
+                               i18n::_(u8"ability", std::to_string(id), u8"name"));
         }
     }
 }
@@ -1242,18 +1054,13 @@ std::string cnvweight(int weight)
 
 std::string fltname(int category)
 {
-    switch (category)
+    if (auto text = i18n::s.get_enum_optional("core.locale.item.filter_name", category))
     {
-    case 60001: return lang(u8"井戸", u8"well");
-    case 57000: return lang(u8"食べ物", u8"food");
-    case 56000: return lang(u8"杖", u8"rods");
-    case 53000: return lang(u8"巻物", u8"scrolls");
-    case 52000: return lang(u8"ポーション", u8"potions");
-    case 64000: return lang(u8"ジャンク", u8"junks");
-    case 77000: return lang(u8"鉱石", u8"ores");
-    case 60000: return lang(u8"家具", u8"furniture");
-    case 25000: return lang(u8"矢弾", u8"ammos");
-    default: return lang(u8"不明", u8"Unknown");
+        return *text;
+    }
+    else
+    {
+        return i18n::s.get("core.locale.item.filter_name.default");
     }
 }
 

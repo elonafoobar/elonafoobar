@@ -5061,16 +5061,14 @@ void proc_pregnant()
             if (stat != 0)
             {
                 if (strlen_u(cdatan(0, cc)) > 10
-                    || instr(cdatan(0, cc), 0, lang(u8"の子供"s, u8"child"s))
+                    || instr(cdatan(0, cc), 0, i18n::s.get("core.locale.chara.job.alien.child"))
                         != -1)
                 {
-                    cdatan(0, rc) = lang(u8"エイリアンの子供"s, u8"alien kid"s);
+                    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.alien.alien_kid");
                 }
                 else
                 {
-                    cdatan(0, rc) = lang(
-                        cdatan(0, cc) + u8"の子供"s,
-                        u8"child of "s + cdatan(0, cc));
+                    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.alien.child_of", cdatan(0, cc));
                 }
             }
         }
@@ -7582,17 +7580,7 @@ void label_1755()
             {
                 cdata[rc].only_christmas() = true;
                 cdata[rc].is_hung_on_sand_bag() = true;
-                cdatan(0, rc) =
-                    lang(u8"オパートスの信者"s, u8"Opatos Fanatic"s);
-                if (rnd(2))
-                {
-                    cdatan(0, rc) = lang(u8"マニの信者"s, u8"Mani Fanatic"s);
-                }
-                else
-                {
-                    cdatan(0, rc) =
-                        lang(u8"エヘカトルの信者"s, u8"Ehekatl Fanatic"s);
-                }
+                cdatan(0, rc) = i18n::s.get_enum("core.locale.chara.job.fanatic", rnd(3));
             }
         }
         {
@@ -7659,9 +7647,7 @@ void label_1755()
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = lang(
-                    u8"おみやげ屋の"s + cdatan(0, rc),
-                    sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7676,9 +7662,7 @@ void label_1755()
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = lang(
-                    u8"おみやげ屋の"s + cdatan(0, rc),
-                    sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7705,9 +7689,7 @@ void label_1755()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = lang(
-                    u8"屋台商人の"s + cdatan(0, rc),
-                    sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.street_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7722,9 +7704,7 @@ void label_1755()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = lang(
-                    u8"屋台商人屋の"s + cdatan(0, rc),
-                    sncnv(cdatan(0, rc)) + u8"the street vendor"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.street_vendor2", cdatan(0, rc));
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)

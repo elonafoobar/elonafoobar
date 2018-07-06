@@ -1138,7 +1138,7 @@ int chara_create_internal()
     }
     if (cmshade)
     {
-        cdatan(0, rc) = lang(u8"シェイド"s, u8"shade"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.shade");
         cdata[rc].image = 280;
     }
     cdata[rc].quality = fixlv;

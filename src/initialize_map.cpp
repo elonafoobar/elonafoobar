@@ -9,6 +9,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -704,16 +705,12 @@ label_1741_internal:
         chara_create(-1, 1, 9, 44);
         cdata[rc].character_role = 1017;
         cdata[rc].shop_rank = 5;
-        cdatan(0, rc) = lang(
-            u8"染色店の"s + cdatan(0, rc),
-            sncnv(cdatan(0, rc)) + u8"the dye vendor"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.dye_vendor", cdatan(0, rc));
         flt();
         chara_create(-1, 1, 13, 37);
         cdata[rc].character_role = 1018;
         cdata[rc].shop_rank = 30;
-        cdatan(0, rc) = lang(
-            u8"おみやげ屋の"s + cdatan(0, rc),
-            sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
         flt();
         chara_create(-1, 70, 24, 48);
         cdata[rc].character_role = 9;
@@ -1061,7 +1058,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 1, 29, 4);
             cdata[rc].character_role = 17;
-            cdatan(0, rc) = lang(u8"謎の奴隷商人"s, u8"The slave master"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.slave_master");
             flt();
             chara_create(-1, 1, 10, 6);
             cdata[rc].character_role = 1001;
@@ -1073,8 +1070,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 9, 18);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = lang(
-                u8"ダルフィ"s + cdatan(0, rc), cdatan(0, rc) + u8" of Derphy"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_derphy", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 13, 18);
             cdata[rc].character_role = 7;
@@ -1137,9 +1133,7 @@ label_1741_internal:
             chara_create(-1, 1, 21, 19);
             cdata[rc].character_role = 1021;
             cdata[rc].shop_rank = 10;
-            cdatan(0, rc) = lang(
-                u8"盗賊店の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the fence"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.fence", cdatan(0, rc));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
@@ -1233,9 +1227,7 @@ label_1741_internal:
         flt();
         chara_create(-1, 38, 49, 11);
         cdata[rc].character_role = 6;
-        cdatan(0, rc) = lang(
-            u8"パルミア市街地の"s + cdatan(0, rc),
-            cdatan(0, rc) + u8" of Palmia city"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_palmia", cdatan(0, rc));
         flt();
         chara_create(-1, 40, 30, 27);
         cdata[rc].character_role = 7;
@@ -1389,9 +1381,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 3, 38);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = lang(
-                u8"ルミエストの"s + cdatan(0, rc),
-                cdatan(0, rc) + u8" of Lumiest"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_lumiest", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 21, 28);
             cdata[rc].character_role = 7;
@@ -1442,9 +1432,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 41, 27, 8);
             cdata[rc].character_role = 1020;
-            cdatan(0, rc) = lang(
-                u8"魔法書作家の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the spell writer"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.spell_writer", cdatan(0, rc));
             flt();
             chara_create(-1, 41, 22, 8);
             cdata[rc].character_role = 1004;
@@ -1525,9 +1513,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 1, 35, 18);
             cdata[rc].character_role = 22;
-            cdatan(0, rc) = lang(
-                u8"馬屋の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the horse master"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.horse_master", cdatan(0, rc));
             flt();
             chara_create(-1, 267, 33, 16);
             cdata[rc].character_role = 3;
@@ -1543,9 +1529,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 3, 4);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = lang(
-                u8"ヨウィンの"s + cdatan(0, rc),
-                cdatan(0, rc) + u8" of Yowyn"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_yowyn", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 20, 14);
             cdata[rc].character_role = 7;
@@ -1715,8 +1699,7 @@ label_1741_internal:
         flt();
         chara_create(-1, 38, 5, 18);
         cdata[rc].character_role = 6;
-        cdatan(0, rc) = lang(
-            u8"ノイエルの"s + cdatan(0, rc), cdatan(0, rc) + u8" of Noyel"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_noyel", cdatan(0, rc));
         flt();
         chara_create(-1, 40, 18, 20);
         cdata[rc].character_role = 7;
@@ -1840,9 +1823,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 8, 12);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = lang(
-                u8"ポート・カプールの"s + cdatan(0, rc),
-                cdatan(0, rc) + u8" of Port Kapul"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_port_kapul", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 16, 4);
             cdata[rc].character_role = 7;
@@ -2032,9 +2013,7 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 10, 7);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = lang(
-                u8"ヴェルニースの"s + cdatan(0, rc),
-                cdatan(0, rc) + u8" of Vernis"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_vernis", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 27, 16);
             cdata[rc].character_role = 7;
@@ -2283,9 +2262,7 @@ label_1741_internal:
             chara_create(-1, 1, 10, 11);
             cdata[rc].character_role = 1010;
             cdata[rc].shop_rank = encounterlv;
-            cdatan(0, rc) = lang(
-                u8"行商人の"s + cdatan(0, rc),
-                sncnv(cdatan(0, rc)) + u8"the wandering vendor"s);
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.wandering_vendor", cdatan(0, rc));
             generatemoney(rc);
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
