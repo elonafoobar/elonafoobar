@@ -7,7 +7,7 @@ locale {
             requirement = "詳細"
             material = "必要素材"
 
-            skill_needed = "必要スキル: "
+            skill_needed = "必要スキル"
 
             skills {
                 _178 = "錬金術"
@@ -21,6 +21,6 @@ locale {
         }
 
         you_do_not_meet_requirements = "生産の条件を満たしてない。"
-        you_produced = "${itemname(_1)}を製造した。" # TODO
+        you_produced = "${itemname(_1, 1)}を製造した。"
     }
 }
