@@ -107,7 +107,7 @@ void txtgod(const god_id_t& id, int type);
 int modpiety(int prm_1035);
 void set_npc_religion();
 void apply_god_blessing(int cc);
-void get_god_description();
+std::string get_god_description();
 void label_1888();
 void switch_religion();
 turn_result_t do_pray();
