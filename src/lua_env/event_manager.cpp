@@ -52,6 +52,8 @@ void init_event_kinds(sol::table& Event)
         "AllTurnsFinished",
         event_kind_t::all_turns_finished,
 
+        "AllModsLoaded",
+        event_kind_t::all_mods_loaded,
         "ScriptLoaded",
         event_kind_t::script_loaded);
 }

@@ -21,7 +21,7 @@ end
 
 Event.register(Event.EventKind.CharaKilled, on_chara_killed)
 Event.register(Event.EventKind.MapInitialized, on_map_initialized)
-Event.register(Event.EventKind.GameInitialized, init_store)
+Event.register(Event.EventKind.AllModsLoaded, init_store)
 
 return {
    Store = Store

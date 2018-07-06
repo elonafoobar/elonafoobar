@@ -269,6 +269,7 @@ void lua_env::load_all_mods()
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
+    event_mgr->run_callbacks<event_kind_t::all_mods_loaded>();
     stage = mod_loading_stage_t::all_mods_loaded;
 }
 
@@ -415,6 +416,7 @@ void lua_env::clear()
             on_chara_unloaded(cdata[i]);
         }
     }
+    event_mgr->clear();
     clear_mod_stores();
     mods.clear();
     lua->collect_garbage();

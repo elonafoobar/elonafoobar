@@ -108,8 +108,12 @@ void pre_init()
     config::instance().is_test = true;
 
     lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+    lua::lua->load_all_mods();
     configure_lua();
+
+    lua::lua->get_event_manager()
+        .run_callbacks<lua::event_kind_t::game_initialized>();
 }
 
 void post_run()
@@ -129,6 +133,9 @@ void reset_state()
     elona::jp = 1;
     elona::en = 0;
     set_item_info();
+
+    lua::lua->get_event_manager()
+        .run_callbacks<lua::event_kind_t::game_initialized>();
 }
 
 } // namespace testing

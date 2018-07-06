@@ -50,6 +50,7 @@ enum class event_kind_t : unsigned
     player_turn,
     all_turns_finished,
 
+    all_mods_loaded,
     script_loaded,
 
     COUNT // for iterating over all event kinds
@@ -161,7 +162,6 @@ public:
             {
                 sol::error err = result;
                 error_handler_(err.what());
-                return;
             }
         }
     }
@@ -178,6 +178,7 @@ public:
             {
                 sol::error err = result;
                 error_handler_(err.what());
+                // TODO: Don't prevent later callbacks from running?
                 return none;
             }
             else

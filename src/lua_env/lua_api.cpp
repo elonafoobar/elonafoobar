@@ -1179,6 +1179,7 @@ void Debug::report_error(const std::string& message)
     }
 
     ELONA_LOG("Script error: " << message);
+    std::cerr << "Script error: " << message << std::endl;
 }
 
 void Debug::dump_characters()
