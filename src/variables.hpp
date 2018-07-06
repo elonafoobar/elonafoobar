@@ -76,6 +76,8 @@ ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
+ELONA_EXTERN(elona_vector1<int> inhlist);
+
 
 // crafting.cpp / blending.cpp
 ELONA_EXTERN(elona_vector1<int> rpsourcelist);
@@ -935,7 +937,6 @@ void load_random_name_table();
 void load_random_title_table();
 std::string cheer_up_message(int);
 void initialize_enchantment_data();
-void get_enchantment_description(int, int, int, bool = false);
 void initialize_ego_data();
 void add_enchantments_depending_on_ego();
 void add_enchantment_by_fixed_ego();
@@ -1063,7 +1064,6 @@ void equip_melee_weapon();
 turn_result_t try_interact_with_npc();
 void sort_list_by_column1();
 void sort_list_and_listn_by_column1();
-void show_item_description();
 void label_2076();
 void prompt_stop_continuous_action();
 void try_to_return();
