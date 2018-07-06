@@ -1261,55 +1261,42 @@ std::string fltname(int category)
 
 void quest_update_main_quest_journal()
 {
-    noteadd(lang(u8"@QM[メインクエスト]"s, u8"@QM[Main Quest]"s));
+    int progress;
+
+    noteadd("@QM[" + i18n::s.get("core.locale.quest.journal.main.title") + "]");
     if (gdata_main_quest_flag >= 0 && gdata_main_quest_flag < 30)
     {
-        s1 = lang(
-            u8"ヴェルニースの南にあるネフィアの迷宮群のひとつ《レシマス》で、何かが見つかるかもしれない。"s,
-            u8"I should check the dungeon called Lesimas. It's located south of Vernis."s);
+        progress = 0;
     }
     if (gdata_main_quest_flag >= 30 && gdata_main_quest_flag < 50)
     {
-        s1 = lang(
-            u8"致命傷を負った斥候に、パルミアのジャビ王へ書簡を渡すよう頼まれた。パルミアには、ヴェルニースから東の街道を進めば辿り着ける。"s,
-            u8"The injured scout asked me to deliver a letter to the king of Palmia. Palmia is located east of Vernis."s);
+        progress = 1;
     }
     if (gdata_main_quest_flag >= 50 && gdata_main_quest_flag < 60)
     {
-        s1 = lang(
-            u8"ジャビ王によると、仕事が欲しい時は城の図書館にいるエリステアを訪ねればいいようだ。"s,
-            u8"Eristia will have some tasks for me if I want to work for Palmia. She's in the library of the castle."s);
+        progress = 2;
     }
     if (gdata_main_quest_flag >= 60 && gdata_main_quest_flag < 100)
     {
-        s1 = lang(
-            u8"レシマスに赴き、冒険者カラムという人物を探すよう依頼された。彼は最低でもレシマスの16階より先の階層にいるらしい。"s,
-            u8"Eristia asked to look for an adventurer called Karam in the dungeon of Lesimas. He was on the 16th level of the dungeon the last time he sent a report. I may have to go deeper if I am to find him."s);
+        progress = 3;
     }
     if (gdata_main_quest_flag >= 100 && gdata_main_quest_flag < 110)
     {
-        s1 = lang(
-            u8"瀕死のカラムから得た情報を、パルミアのエリステアに伝えなければならない。"s,
-            u8"I need to bring information Karam gave me to Eristia at once."s);
+        progress = 4;
     }
     if (gdata_main_quest_flag >= 110 && gdata_main_quest_flag < 125)
     {
-        s1 = lang(
-            u8"レシマス最下層の封印を解く為に必要な三つの魔石の入手を依頼された。賢者の魔石は《灼熱の塔》に、愚者の魔石は《死者の洞窟》に、覇者の魔石は《古城》にある。"s,
-            u8"I need to find 3 magic stones to break the seal of Lesimas. They can be found at the Tower of Fire, the crypt of the damned and the Ancient Castle"s);
+        progress = 5;
     }
     if (gdata_main_quest_flag >= 125 && gdata_main_quest_flag < 180)
     {
-        s1 = lang(
-            u8"三つの魔石の力で最下層の封印を解き、レシマスの秘宝を持ち帰るようエリステアに依頼された。"s,
-            u8"With 3 magic stones I have, I need to get to the deepest level of Lesimas and break the seal. Then bring back an item called Hidden Artifact of Lesimas, whatever it is."s);
+        progress = 6;
     }
     if (gdata_main_quest_flag >= 180 && gdata_main_quest_flag < 1000)
     {
-        s1 = lang(
-            u8"第一部メインクエスト完了"s,
-            u8"You have completed the main quest."s);
+        progress = 7;
     }
+    s1 = i18n::s.get_enum("core.locale.quest.journal.main.progress", progress);
     talk_conv(s1, 40 - en * 4);
     buff += s1;
     noteadd(""s);
@@ -1323,18 +1310,18 @@ void append_subquest_journal(int val0)
     if (val0 == 0)
     {
         noteadd(""s);
-        noteadd(lang(u8"@QM[サブクエスト]"s, u8"@QM[Sub Quest]"s));
+        noteadd("@QM[" + i18n::s.get("core.locale.quest.journal.sub.title") + "]");
     }
     p = 0;
     if (gdata_putit_attacks != 0)
     {
-        s = lang(u8"ぬいぐるみを守れ！ Lv6相当"s, u8"Putit attacks Lv6"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.putit_attacks.title");
         p = gdata_putit_attacks;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1342,9 +1329,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヴェルニースのミシェスに、スライムの退治を頼まれた。スライムの巣窟は、ミシェスの家のすぐ南の家のようだ。"s,
-                u8"Miches of Vernis asked me to investigate the house just south of her home."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.putit_attacks.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1354,9 +1339,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"ヴェルニースのミシェスに頼まれたスライムの退治を完了した。あとは報告するだけだ。"s,
-                u8"I've wiped out the putit's nest. I have to visit Miches of Vernis to report it."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.putit_attacks.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1365,13 +1348,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_thieves_hideout != 0)
     {
-        s = lang(u8"お酒泥棒 Lv2相当"s, u8"Thieves' hideout Lv2"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.thieves_hideout.title");
         p = gdata_thieves_hideout;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1379,9 +1362,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヴェルニースのシーナが勤める酒場に、酒泥棒が頻出しているらしい。盗賊団を壊滅させてシーナに報告しよう。"s,
-                u8"Bandits have been stealing things in Vernis. I need to find and destroy their hideout."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.thieves_hideout.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1391,9 +1372,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"酒樽を盗んでいたごろつき団を殲滅した。あとはヴェルニースのシーナに報告するだけだ。"s,
-                u8"Those bandits are no more. All I have to do now is bring the news to Shena of Vernis."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.thieves_hideout.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1402,13 +1381,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_puppys_cave != 0)
     {
-        s = lang(u8"迷子の子犬 Lv4相当"s, u8"Puppy's cave Lv4"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.puppys_cave.title");
         p = gdata_puppys_cave;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1416,9 +1395,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヴェルニースのリリアンに、迷子の子犬ポピーを捜すよう頼まれた。どうやら子犬はヴェルニースのすぐ東にある洞窟にいるらしい。"s,
-                u8"Rilian of Vernis asked me to find her puppy named Poppy in the puppy's cave located east of Vernis."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.puppys_cave.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1427,13 +1404,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_nightmare != 0)
     {
-        s = lang(u8"実験場のナイトメア Lv50相当"s, u8"Nightmare Lv50"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.nightmare.title");
         p = gdata_nightmare;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1441,9 +1418,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヴェルニースのロイターに金になる仕事を持ちかけられた。何やら危険な仕事のようだ。万全の準備を整えてからロイターに話し掛けよう。"s,
-                u8"Loyter of Vernis has a dangerous, yet highly profitable job for me. I need to prepare well before talking to him again."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1453,9 +1428,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"実験場の全ての敵を殲滅しなければならない。"s,
-                u8"I need to eliminate all of the monsters in the test ground."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1465,9 +1438,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = lang(
-                u8"実験を生き延びて完了させた。ヴェルニースのロイターに報告しよう。"s,
-                u8"I've survived the nightmare. Now to meet Loyer of Vernis to receive the reward."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1476,13 +1447,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_pael_and_her_mom != 0)
     {
-        s = lang(u8"エーテル病を治せ Lv20相当"s, u8"Pael and her mom Lv20"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.pael_and_her_mom.title");
         p = gdata_pael_and_her_mom;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1490,9 +1461,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
-                u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1502,9 +1471,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
-                u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1514,9 +1481,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = lang(
-                u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
-                u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1526,9 +1491,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 4)
         {
-            s1 = lang(
-                u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
-                u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1538,9 +1501,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 5)
         {
-            s1 = lang(
-                u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
-                u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1550,9 +1511,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 6)
         {
-            s1 = lang(
-                u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
-                u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1562,9 +1521,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 7)
         {
-            s1 = lang(
-                u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
-                u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1574,9 +1531,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 8)
         {
-            s1 = lang(
-                u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
-                u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1586,9 +1541,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 9)
         {
-            s1 = lang(
-                u8"ノイエルのパエルにエーテル抗体を渡した。母親の容態に変化があらわれるのを待とう。"s,
-                u8"Pael's mother is suffering from Ether Disease and I gave Pael a potion of cure corruption in Noyel. Let's wait until the condition of her mother changes."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1598,9 +1551,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 10)
         {
-            s1 = lang(
-                u8"ノイエルのパエルの母親の容態が変わったようだ。今度見舞いにいったほうがいいかもしれない。"s,
-                u8"There's a change in the condition of Pael's mother. I should go check her when I have time."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1609,13 +1560,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_wife_collector != 0)
     {
-        s = lang(u8"嫁泥棒 Lv3相当"s, u8"Wife collector Lv3"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.wife_collector.title");
         p = gdata_wife_collector;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1623,9 +1574,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"カプールのラファエロに嫁を持ってくるよう頼まれた。なんという下劣な男だ。"s,
-                u8"I was asked by Raphael of Port Kapul to bring my wife. What a moron."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.wife_collector.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1634,13 +1583,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_cat_house != 0)
     {
-        s = lang(u8"猫退治 Lv25相当"s, u8"Cat house Lv25"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.cat_house.title");
         p = gdata_cat_house;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1648,9 +1597,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヨウィンのタムに、家の猫退治を依頼された。家は南の畑のあたりにあるそうだ。"s,
-                u8"Tam of Yowyn asked me to eliminate the cats in his house. The house is located southern part of Yowyn."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.cat_house.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1660,9 +1607,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"タムの家の中の猫を退治した。あとはヨウィンでタムに報告するだけだ。"s,
-                u8"I've freed Tam's house from the cats. To get the reward, I need to speak Tam again in Yowyn."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.cat_house.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1671,13 +1616,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_defense_line != 0)
     {
-        s = lang(u8"防衛戦線の死闘 Lv17相当"s, u8"Defense line Lv17"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.defense_line.title");
         p = gdata_defense_line;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1685,9 +1630,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヨウィンのギルバート大佐に、ジューア解放軍の援護を求められた。準備が整い次第、大佐に話し掛けよう。"s,
-                u8"Colonel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1697,9 +1640,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"イェルスの防衛軍を殲滅しなければならない。"s,
-                u8"I need to destroy the Yerles Army."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1709,9 +1650,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = lang(
-                u8"防衛線を見事に突破した。ヨウィンのギルバート大佐に報告しよう。"s,
-                u8"I've won the war. Now to bring the good news to colonel Gilbert."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1720,13 +1659,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_novice_knight != 0)
     {
-        s = lang(u8"騎士昇格試験の手伝い Lv8相当"s, u8"Novice knightLv8"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.novice_knight.title");
         p = gdata_novice_knight;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1734,9 +1673,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ヨウィンのアインクに騎士昇格試験の手伝いを頼まれた。ヨウィンの西にあるイークの洞窟に住むイークの首領を倒せばいいそうだ。"s,
-                u8"Ainc of Yowyn asked me to help his promotion task. I need to enter the Yeek's dungeon which is located west of Yowyn and kill the chief."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.novice_knight.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1746,9 +1683,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"イークの首領を無事討伐した。ヨウィンのアインクに報告しよう。"s,
-                u8"I've defeated the chief of Yeek. I should head back to Yowyn and report to Ainc."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.novice_knight.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1757,13 +1692,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_kamikaze_attack != 0)
     {
-        s = lang(u8"カミカゼ特攻隊 Lv14相当"s, u8"Kamikaze attack Lv14"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.kamikaze_attack.title");
         p = gdata_kamikaze_attack;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1771,9 +1706,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"カプールのアーノルドに、カミカゼ特攻隊に耐えるパルミア軍への援軍を頼まれた。準備が整い次第、アーノルドに話し掛けよう。"s,
-                u8"Arnord of Port Kapul asked me to help the isolated Palmian 10th regiment from massive Kamikaze attacks. I should prepare and speak to Arnord when ready."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1783,9 +1716,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"パルミア軍が撤退を完了するまでの間、カミカゼ特攻隊の猛攻に耐えなければならない。パルミア軍が撤退したら、知らせが入るはずだ。"s,
-                u8"I have to hold the battle line to gain time while the Palmian army retreats. A messenger will inform me when it's done."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1795,9 +1726,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = lang(
-                u8"カミカゼ特攻隊の猛攻に耐えきった。カプールのアーノルドに報告しよう。"s,
-                u8"I survived the kamikaze attack. I have to bring the good news to Arnord of Port Kapul."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1806,13 +1735,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_mias_dream != 0)
     {
-        s = lang(u8"ミーアの夢 Lv1相当"s, u8"Mia's dream Lv1"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.mias_dream.title");
         p = gdata_mias_dream;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1820,9 +1749,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"パルミアのミーアは、稀少猫シルバーキャットが欲しいらしい。なんとか捕まえて、ミーアに渡そう。"s,
-                u8"Mia of Palmia wants a silver cat, a very rare cat. If I happen to capture one, I should bring it to Mia."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.mias_dream.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1831,13 +1758,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_rare_books != 0)
     {
-        s = lang(u8"幻の絵本 Lv12相当"s, u8"Rare books Lv12"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.rare_books.title");
         p = gdata_rare_books;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1845,9 +1772,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ルミエストのレントンが、レイチェルという童話作家によって描かれた絵本を探している。絵本は全部で4巻あるらしい。全て見つけたら、レントンに報告しよう。"s,
-                u8"Renton of Lumiest is looking for the fairy tale books written by Rachael. I should bring it to him if I happen to find one. There're total of 4 books in the series."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.rare_books.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1856,13 +1781,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_pyramid_trial != 0)
     {
-        s = lang(u8"ピラミッドからの挑戦状 Lv16相当"s, u8"Pyramid trial Lv16"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.pyramid_trial.title");
         p = gdata_pyramid_trial;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1870,9 +1795,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ピラミッドに出入りする資格を得た。ピラミッドはカプールの北にあり、中には古代の秘宝が眠っているといわれている。"s,
-                u8"I've got a invitation to the pyramid. The pyramid is located north of Port Kapul and it is rumored that it holds great treasure."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pyramid_trial.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1881,14 +1804,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_red_blossom_in_palmia != 0)
     {
-        s = lang(
-            u8"パルミアに赤い花を Lv14相当"s, u8"Red blossom in Palmia Lv14"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.red_blossom_in_palmia.title");
         p = gdata_red_blossom_in_palmia;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1896,9 +1818,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ダルフィのノエルにパルミアの街に爆弾をしかけるように依頼された。爆弾をパルミアの宿屋の部屋にあるぬいぐるみにしかけよう。"s,
-                u8"Noel of Derphy asked me to set up a bomb in Palmia. I need to place it right on the teddy bear in the inn."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.red_blossom_in_palmia.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1908,9 +1828,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"見事にパルミアを壊滅させた。あとはダルフィのノエルの元に戻り、報告するだけだ。"s,
-                u8"I have successfully destroyed Palmia. Now all I need to report back to Noel in Derphy."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.red_blossom_in_palmia.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1919,13 +1837,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_ambitious_scientist != 0)
     {
-        s = lang(u8"生化学者の野望 Lv5相当"s, u8"Ambitious scientist Lv5"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.ambitious_scientist.title");
         p = gdata_ambitious_scientist;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1935,12 +1853,8 @@ void append_subquest_journal(int val0)
             == gdata_ambitious_scientist * (gdata_ambitious_scientist < 6)
                 + (gdata_ambitious_scientist == 0))
         {
-            s1 = lang(
-                u8"カプールのイコールに、実験用の生物5体の捕獲を頼まれた。依頼品、モンスターボールに捕獲したものでなくてはならない。あと"s
-                    + (6 - gdata_ambitious_scientist)
-                    + u8"個の捕獲済みモンスターボールを届ける必要がある。"s,
-                u8"Icolle of Port Kapul asked me to bring 5 filled monster balls. I still need to bring him "s
-                    + (6 - gdata_ambitious_scientist) + u8" of them."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.ambitious_scientist.progress", 0,
+                                  (6 - gdata_ambitious_scientist));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1949,13 +1863,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_sewer_sweeping != 0)
     {
-        s = lang(u8"下水道大作戦 Lv23相当"s, u8"Sewer sweeping Lv23"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.sewer_sweeping.title");
         p = gdata_sewer_sweeping;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -1963,9 +1877,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"ルミエストのバルザックに、下水道の清掃を頼まれた。下水道の入り口は宿屋の近くにあるみたいだ。。"s,
-                u8"Balzak of Lumiest wants me to sweep the entire sewer. I can find the entrance to the sewer around the inn."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.sewer_sweeping.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1975,9 +1887,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"下水道の大掃除を完了した。あとはルミエストのバルザックに報告するだけだ。"s,
-                u8"I've finished sweeping the sewer. I need to report it to Balzak of Lumiest."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.sewer_sweeping.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1986,13 +1896,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_mages_guild != 0)
     {
-        s = lang(u8"魔術士ギルド審査"s, u8"Joining the Mages Guild"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.joining_mages_guild.title");
         p = gdata_joining_mages_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2000,11 +1910,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"魔術士ギルドに加入するには、ルミエストのメイジギルドの納入箱に、解読済みの古書物を納入し、ギルドポイントを貯めた後、ギルドの番人に話しかけなければならない。審査をクリアするには、あと"s +
-                    gdata_mages_guild_quota + u8"ギルドポイントを獲得する必要がある。"s,
-                u8"To join the Mages Guild, I need to gather "s + gdata_mages_guild_quota +
-                    u8" more guild points and talk to the guild guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_mages_guild.progress", 0,
+                                  gdata_mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2013,13 +1920,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_thieves_guild != 0)
     {
-        s = lang(u8"盗賊ギルド審査"s, u8"Joining the Thieves Guild"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.joining_thieves_guild.title");
         p = gdata_joining_thieves_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2027,9 +1934,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"盗賊ギルドに加入するには、税金を4ヶ月以上滞納した状態で、ダルフィのギルドの番人に話しかける必要がある。"s,
-                u8"To join the Thieves Guild, I need to not pay tax for 4 months, that means I'll be a criminal for sure."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_thieves_guild.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2038,13 +1943,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_fighters_guild != 0)
     {
-        s = lang(u8"戦士ギルド審査"s, u8"Joining the Fighters Guild"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.joining_fighters_guild.title");
         p = gdata_joining_fighters_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2052,12 +1957,9 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(u8"戦士ギルドに加入するには、"s +
-                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
-                    u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
-                u8"To join the Fighters Guild, I need to slay "s + gdata_fighters_guild_quota +
-                    u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
-                    u8" and talk to the guild guard in Port Kapul."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_fighters_guild.progress", 0,
+                                  gdata_fighters_guild_quota,
+                                  chara_refstr(gdata_fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2066,13 +1968,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_mages_guild_quota2 != 0)
     {
-        s = lang(u8"魔術士ギルドノルマ"s, u8"The Mages Guild quota"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.quota_mages_guild.title");
         p = gdata_mages_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2080,12 +1982,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"魔術士ギルドのランクを上げるためには、ルミエストのメイジギルドの納入箱に、解読済みの古書物を納入し、ギルドポイントを貯めた後、ギルドの番人に話しかけなければならない。ランク上昇のためには、あと"s +
-                    gdata_mages_guild_quota + u8"ギルドポイントを獲得する必要がある。"s,
-                u8"To raise the rank in the Mages Guild, you need to gather "s +
-                    gdata_mages_guild_quota +
-                    u8" more guild points and talk to the guard in Lumiest. I can earn the guild points by collecting ancients books, decrypt them, and put them into the delivery box near the guild guard."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_mages_guild.progress", 0,
+                                  gdata_mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2094,13 +1992,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_fighters_guild_quota2 != 0)
     {
-        s = lang(u8"戦士ギルドノルマ"s, u8"The Fighters Guild quota"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.quota_fighters_guild.title");
         p = gdata_fighters_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2108,12 +2006,9 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(u8"戦士ギルドのランクを上げるためには、"s +
-                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
-                    u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
-                u8"To raise the rank in the Fighters Guild, I need to slay "s +
-                    gdata_fighters_guild_quota + u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
-                    u8" and talk to the guild guard in Port Kapul."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_fighters_guild.progress", 0,
+                                  gdata_fighters_guild_quota,
+                                  chara_refstr(gdata_fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2122,13 +2017,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_thieves_guild_quota2 != 0)
     {
-        s = lang(u8"盗賊ギルドノルマ"s, u8"The Thieves Guild quota"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.quota_thieves_guild.title");
         p = gdata_thieves_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2136,12 +2031,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(u8"盗賊ギルドのランクを上げるためには、あと金貨"s +
-                    gdata_thieves_guild_quota +
-                    u8"枚分の盗品を売りさばき、ダルフィのギルドの番人に話しかける必要がある。"s,
-                u8"To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of "s +
-                    gdata_thieves_guild_quota +
-                    u8" gold pieces and talk to the guild guard in Derphy."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_thieves_guild.progress", 0,
+                                  gdata_thieves_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2150,13 +2041,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_minotaur_king != 0)
     {
-        s = lang(u8"ミノタウロスの王 Lv24相当"s, u8"Minotaur king Lv24"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.minotaur_king.title");
         p = gdata_minotaur_king;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2164,9 +2055,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"パルミアのコネリー少将に、ミノタウロスの首領の退治を頼まれた。ミノタウロスの巣窟は、ヨウィンの南にあるみたいだ。"s,
-                u8"General Conery wants me to hunt the chief of minotaur. The nest is located south of Yowyn."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.minotaur_king.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2176,9 +2065,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = lang(
-                u8"ミノタウロスの首領を無事討伐した。パルミアのコネリー少将に報告しよう。"s,
-                u8"I've killed the chief of minotaur. I should head back to Palmia and speak to General Conery."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.minotaur_king.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2187,13 +2074,13 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_little_sister != 0)
     {
-        s = lang(u8"リトルシスター Lv30相当"s, u8"Little sister Lv30"s);
+        s = i18n::s.get("core.locale.quest.journal.sub.little_sister.title");
         p = gdata_little_sister;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd(lang(u8"[達成]"s, u8"[Done]"s) + s);
+                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
             }
         }
     }
@@ -2201,9 +2088,7 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = lang(
-                u8"アクリ・テオラの謎の科学者に、リトルシスターを連れてくるよう頼まれた。捕獲するためには、ビッグダディを倒し、捕獲玉をリトルにぶつける必要がある。"s,
-                u8"A strange scientist asked me to bring little sisters to her. To capture a little sister, I need to kill Big Daddy first then throw the little ball at her."s);
+            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.little_sister.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2216,22 +2101,22 @@ void append_subquest_journal(int val0)
 
 void append_quest_item_journal()
 {
-    noteadd(lang(u8"[古びたお守り]"s, u8"[An old talisman]"s));
+    noteadd("[" + i18n::s.get("core.locale.quest.journal.item.old_talisman") + "]");
     if (gdata_main_quest_flag >= 30)
     {
-        noteadd(lang(u8"[ジャビ王への書簡]"s, u8"A letter to the king"s));
+        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.letter_to_the_king") + "]");
     }
     if (gdata_magic_stone_of_fool != 0)
     {
-        noteadd(lang(u8"[愚者の魔石]"s, u8"Fool's magic stone"s));
+        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.fools_magic_stone") + "]");
     }
     if (gdata_magic_stone_of_king != 0)
     {
-        noteadd(lang(u8"[覇者の魔石]"s, u8"King's magic stone"s));
+        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.kings_magic_stone") + "]");
     }
     if (gdata_magic_stone_of_sage != 0)
     {
-        noteadd(lang(u8"[賢者の魔石]"s, u8"Sage's magic stone"s));
+        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.sages_magic_stone") + "]");
     }
     return;
 }
