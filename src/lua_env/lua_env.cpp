@@ -182,8 +182,11 @@ void lua_env::load_mod(mod_info& mod)
             mod.env);
         if (result.valid())
         {
-            sol::table api_table = result.get<sol::table>();
-            api_mgr->add_api(mod.name, api_table);
+            sol::optional<sol::table> api_table = result.get<sol::table>();
+            if (api_table)
+            {
+                api_mgr->add_api(mod.name, *api_table);
+            }
         }
         else
         {

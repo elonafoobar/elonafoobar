@@ -10,6 +10,7 @@ using namespace elona;
 
 void lua_testcase(const std::string& filename)
 {
+    std::cout << "TEST FILE: " << filename << std::endl;
     elona::testing::reset_state();
     elona::fixlv = 0;
     elona::lua::lua->get_state()->open_libraries(sol::lib::io, sol::lib::os);
