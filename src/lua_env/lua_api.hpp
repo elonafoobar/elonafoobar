@@ -65,6 +65,13 @@ public:
         const std::string& module_name);
 
     /***
+     * Adds a new API from the return value of a mod's init.lua file.
+     * It would then be accessable by calling
+     * Elona.require("mod_name", "api_table").
+     */
+    void add_api(const std::string& module_namespace, sol::table& module_table);
+
+    /***
      * Returns the reference to the core API table "Elona" in the API
      * environment. This is so other internal C++ mechanisms can add
      * their own API methods to it.

@@ -771,8 +771,9 @@ int run()
     init_assets();
     initialize_elona();
 
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod();
+    lua::lua.load_all_mods();
 
     start_elona();
 

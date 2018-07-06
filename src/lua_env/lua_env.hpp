@@ -5,6 +5,7 @@
 #include "../character.hpp"
 #include "../filesystem.hpp"
 #include "../item.hpp"
+#include "../optional.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
@@ -33,8 +34,9 @@ struct mod_info
 {
     explicit mod_info(
         const std::string name_,
+        const optional<fs::path> path_,
         std::shared_ptr<sol::state> state)
-        : name(name_)
+        : name(name_), path(path_)
     {
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
@@ -47,6 +49,7 @@ struct mod_info
     ~mod_info() = default;
 
     std::string name;
+    optional<fs::path> path;
     sol::environment env;
     sol::table store_local;
     sol::table store_global;
@@ -86,7 +89,8 @@ public:
      * Builds a list of all available mods in the user's mods/ folder.
      * No mod loading happens here.
      *
-     * Stage before is not_started.
+     * Stage before is not_started or scan_finished (to support
+     * scanning multiple directories).
      * Stage after is scan_finished.
      */
     void scan_all_mods(const fs::path&);
@@ -99,15 +103,15 @@ public:
      * Stage before is scan_finished.
      * Stage after is core_mod_loaded.
      */
-    void load_core_mod(const fs::path&);
+    void load_core_mod();
 
     /***
-     * Loads all other mods in the user's mods/ folder besides the core mod.
+     * Loads all other mods that were scanned besides the core mod.
      *
      * Stage before is core_mod_loaded.
      * Stage after is all_mods_loaded.
      */
-    void load_all_mods(const fs::path&);
+    void load_all_mods();
 
     /***
      * Clears the internal storage for each loaded mod. This is used
@@ -253,7 +257,7 @@ private:
      *
      * Will throw if there was an error on running the script.
      */
-    void load_mod(const fs::path& path, mod_info&);
+    void load_mod(mod_info& mod);
 
     /***
      * Sets up the global variables of a mod and locks them so they
