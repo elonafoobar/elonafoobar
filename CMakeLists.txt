@@ -136,7 +136,6 @@ set(CORE_SOURCES
     src/lua_env/handle_manager.cpp
     src/lua_env/lua_env.cpp
     src/lua_env/lua_api.cpp
-    src/lua_env/lua_store.cpp
     src/version.cpp
 )
 
@@ -159,7 +158,6 @@ if(WITH_TESTS STREQUAL "TESTS")
     src/tests/lua_handles.cpp
     src/tests/lua_mods.cpp
     src/tests/lua_serialization.cpp
-    src/tests/lua_store.cpp
     src/tests/elonacore.cpp
     src/tests/i18n.cpp
     src/tests/i18n_builtins.cpp

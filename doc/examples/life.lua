@@ -50,15 +50,15 @@ end
 
 local function run_life()
    if not Map.is_overworld() then
-      local grid = Store.grid
+      local grid = Store.map_local.grid
       if grid == nil then
-         Store.grid = create_life_grid()
-         grid = Store.grid
+         Store.map_local.grid = create_life_grid()
+         grid = Store.map_local.grid
       end
       for y = 1, Map.width() do
          for x = 1, Map.height() do
             local tile
-            if Store.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
                tile = Map.generate_tile(Enums.TileKind.Wall)
             else
                tile = Map.generate_tile(Enums.TileKind.Room)
@@ -67,7 +67,7 @@ local function run_life()
             Map.set_tile_memory(x, y, tile)
          end
       end
-      Store.grid = evolve(grid)
+      Store.map_local.grid = evolve(grid)
    end
 end
 

@@ -196,7 +196,14 @@ stds.elona = {
         },
         -- @Store@: Mod-local data storage.
         Store = {
-           other_fields = true
+           fields = {
+              map_local = {
+                 other_fields = true
+              },
+              global = {
+                 other_fields = true
+              }
+           }
         },
         -- @LuaCharacter@
         LuaCharacter = { other_fields = true },

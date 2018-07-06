@@ -33,6 +33,7 @@ turn_result_t initialize_map()
     int maxmedal = 0;
     elona_vector2<int> medalbk;
     int noaggrorefresh = 0;
+    bool loaded_from_file = true;
 
     clear_damage_popups();
 
@@ -79,7 +80,6 @@ label_17401:
         ""s + gdata_current_map + u8"_"s + (100 + gdata_current_dungeon_level);
     if (mode == 3)
     {
-        lua::lua.get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::_1);
         ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
@@ -101,7 +101,6 @@ label_17401:
     }
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        lua::lua.get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::_1);
         if (mdata(7) == 0)
         {
@@ -2653,6 +2652,7 @@ label_1741_internal:
     mdata(21) = 1;
     lua::lua.get_event_manager()
         .run_callbacks<lua::event_kind_t::map_created>();
+    loaded_from_file = false;
 label_1742_internal:
     if (gdata_current_map == 4)
     {
@@ -3491,6 +3491,11 @@ label_1744_internal:
                     + u8" within "s + gdata_left_minutes_of_executing_quest
                     + u8" minites."s));
         }
+    }
+
+    if (loaded_from_file)
+    {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_loaded>();
     }
 
     lua::lua.get_event_manager()

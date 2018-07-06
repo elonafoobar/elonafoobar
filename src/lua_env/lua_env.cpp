@@ -146,6 +146,26 @@ void lua_env::on_item_removal(item& item)
     handle_mgr->remove_item_handle(item);
 }
 
+void lua_env::clear_map_local_data()
+{
+    for (auto&& pair : mods)
+    {
+        auto& mod = pair.second;
+        lua->safe_script(R"(
+function clear(t)
+    for key, _ in pairs(t) do
+        t[key] = nil
+    end
+end
+if Store then
+    clear(Store.map_local)
+end
+)", mod->env);
+    }
+    handle_mgr->clear_map_local_handles();
+}
+
+
 void lua_env::load_mod(const fs::path& path, mod_info& mod)
 {
     setup_and_lock_mod_globals(mod);
@@ -271,7 +291,17 @@ void lua_env::clear_mod_stores()
     for (auto&& pair : mods)
     {
         auto& mod = pair.second;
-        mod->store->clear();
+        lua->safe_script(R"(
+function clear(t)
+    for key, _ in pairs(t) do
+        t[key] = nil
+    end
+end
+if Store then
+    clear(Store.map_local)
+    clear(Store.global)
+end
+)", mod->env);
     }
 }
 
@@ -310,9 +340,23 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
+void lua_env::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
+{
+    sol::table Store = lua.create_table();
+    sol::table metatable = lua.create_table();
+
+    metatable["global"] = mod.store_global;
+    metatable["map_local"] = mod.store_local;
+    metatable[sol::meta_function::new_index] = deny;
+    metatable[sol::meta_function::index] = metatable;
+
+    Store[sol::metatable_key] = metatable;
+    table["Store"] = Store;
+}
+
 void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
 {
-    table["Store"] = mod.store;
+    bind_store(*lua, mod, table);
     table["Elona"] = api_mgr->bind(*this);
     table["_MOD_NAME"] = mod.name;
     setup_sandbox(*this->lua, table);

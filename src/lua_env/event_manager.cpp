@@ -25,11 +25,17 @@ void init_event_kinds(sol::table& Event)
         "GameInitialized",
         event_kind_t::game_initialized,
 
+        "MapUnloading",
+        event_kind_t::map_unloading,
+        "MapLoaded",
+        event_kind_t::map_loaded,
+
         "CharaRemoved",
         event_kind_t::character_removed,
 
         // TODO there are many edge cases to work out, like dropping items,
-        // copying items... "ItemRemoved", event_kind_t::item_removed,
+        // copying items...
+        //"ItemRemoved", event_kind_t::item_removed,
 
         "CharaRefreshed",
         event_kind_t::character_refreshed,

@@ -9,7 +9,6 @@
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_api.hpp"
-#include "lua_store.hpp"
 
 namespace elona
 {
@@ -40,8 +39,8 @@ struct mod_info
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
 
-        store = std::make_shared<lua::store>();
-        store->init_no_attach(*state);
+        store_local = state->create_table();
+        store_global = state->create_table();
     }
     mod_info(const mod_info&) = delete;
     mod_info& operator=(const mod_info&) = delete;
@@ -49,7 +48,8 @@ struct mod_info
 
     std::string name;
     sol::environment env;
-    std::shared_ptr<lua::store> store;
+    sol::table store_local;
+    sol::table store_global;
 };
 
 /***
@@ -182,6 +182,12 @@ public:
     void on_item_removal(item&);
 
     /***
+     * - Clears all map-local handles and runs their removal callbacks.
+     * - Clears all map-local mod storages.
+     */
+    void clear_map_local_data();
+
+    /***
      * Clears and reset the Lua state to directly after loading the
      * core mod.
      *
@@ -259,6 +265,8 @@ private:
      * Sets the global variables of a mod on the given table.
      */
     void setup_mod_globals(mod_info& mod, sol::table&);
+
+    static void bind_store(sol::state&, mod_info&, sol::table&);
 
     static void setup_sandbox(const sol::state& state, sol::table& metatable)
     {

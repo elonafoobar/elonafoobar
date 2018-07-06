@@ -54,15 +54,15 @@ This function runs the life simulation. We won't go into the details, but if you
 ```
 local function run_life()
    if not Map.is_overworld() then
-      local grid = Store.grid
+      local grid = Store.map_local.grid
       if grid == nil then
-         Store.grid = create_life_grid()
-         grid = Store.grid
+         Store.map_local.grid = create_life_grid()
+         grid = Store.map_local.grid
       end
       for y = 1, Map.width() do
          for x = 1, Map.height() do
             local tile
-            if Store.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
                tile = Map.generate_tile(Enums.TileKind.Wall)
             else
                tile = Map.generate_tile(Enums.TileKind.Room)
@@ -71,7 +71,7 @@ local function run_life()
             Map.set_tile_memory(x, y, tile)
          end
       end
-      Store.grid = evolve(grid)
+      Store.map_local.grid = evolve(grid)
    end
 end
 ```
@@ -87,14 +87,18 @@ Here is the main part of the script. This function updates the game map based on
 First we need to check if we're traveling in the overworld, where setting tiles on the map wouldn't make sense.
 
 ```
-      local grid = Store.grid
+      local grid = Store.map_local.grid
       if grid == nil then
-         Store.grid = create_life_grid()
-         grid = Store.grid
+         Store.map_local.grid = create_life_grid()
+         grid = Store.map_local.grid
       end
 ```
 
-The table `Store` is for keeping any global data we need inside our script. In this case, we store the state of our life grid. This state will be preserved between subsequent calls to `run_life`. We also check if the store doesn't have our grid and create it if so.
+The table `Store` is for keeping any data we need inside our script.
+- `Store.map_local` holds data that is only relevant to the current map. When the map is changed, it is cleared.
+- `Store.global` holds data that persists throughout the entire game session.
+
+In this case, we store the state of our life grid in `map_local`. This state will be preserved between subsequent calls to `run_life` and will be cleaned up when the map is exited. We also check if the store doesn't have our grid and create it if so.
 
 ```
       for y = 1, Map.width() do
@@ -108,7 +112,7 @@ Next we iterate over every x-y pair in the map. Since there is only ever one map
 
 ```
             local tile
-            if Store.grid[x][y] == 1 and Map.can_access(x, y) then
+            if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
                tile = Map.generate_tile(Enums.TileKind.Wall)
             else
                tile = Map.generate_tile(Enums.TileKind.Room)
@@ -122,7 +126,7 @@ Here is where we make use of the `Map` module to modify the map. You can read th
 We also use the enum type `TileKind` here. Some functions take enums to denote one of several different states an object can be in, like the curse state of an object (`Blessed`, `None`, `Cursed`, or `Doomed`). These will typically be found inside the `Enum` module.
 
 ```
-      Store.grid = evolve(grid)
+      Store.map_local.grid = evolve(grid)
 ```
 
 Lastly, we call our logic function to update the state of our life grid.

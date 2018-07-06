@@ -82,6 +82,12 @@ module "Event.EventKind"
 --
 -- Event.register(Event.EventKind.MapInitialized, place_characters)
 
+--- Fired after a previously existing map has been loaded.
+-- @event MapLoaded
+
+--- Fired before the current map is unloaded.
+-- @event MapUnloading
+
 --- Fired when the startup script finished loading. This is only valid
 --- when the startup script feature is used.
 -- @event ScriptLoaded

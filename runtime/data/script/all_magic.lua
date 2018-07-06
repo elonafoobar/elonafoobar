@@ -47,15 +47,19 @@ local function make_item_variants(x, y, item_id)
 end
 
 local function switch_item_type(chara)
+   if not Store.map_local.potion_chara then
+      return
+   end
+
    local list
    GUI.txt_color(2)
-   if chara.index == Store.potion_chara.index then
+   if chara.index == Store.map_local.potion_chara.index then
       list = potions
       GUI.txt("*potion* ")
-   elseif chara.index == Store.rod_chara.index then
+   elseif chara.index == Store.map_local.rod_chara.index then
       list = rods
       GUI.txt("*rod* ")
-   elseif chara.index == Store.scroll_chara.index then
+   elseif chara.index == Store.map_local.scroll_chara.index then
       list = scrolls
       GUI.txt("*scroll* ")
    else
@@ -94,11 +98,11 @@ local function gain_all_spells()
 end
 
 local function setup()
-   Store.potion_chara = make_sandbag(23, 28, potion_switcher)
-   Store.scroll_chara = make_sandbag(25, 28, scroll_switcher)
-   Store.rod_chara = make_sandbag(27, 28, rod_switcher)
+   Store.map_local.potion_chara = make_sandbag(23, 28, potion_switcher)
+   Store.map_local.scroll_chara = make_sandbag(25, 28, scroll_switcher)
+   Store.map_local.rod_chara = make_sandbag(27, 28, rod_switcher)
 
-   Store.test_chara = make_sandbag(25, 22, 34)
+   Store.map_local.test_chara = make_sandbag(25, 22, 34)
 
    gain_magic_skills()
    gain_all_spells()
