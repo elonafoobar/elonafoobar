@@ -47,10 +47,10 @@ locale {
                 name = "Name"
 
                 resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
-                total_weight = "<untranslated>" # TODO
+                total_weight = "Weight ${_1}/${_2} Cargo ${_3}"
 
-                ground = "Ground" # NOTE space_if_needed
-                main_hand = "Main hand" # NOTE space_if_needed
+                ground = "Ground"
+                main_hand = "Main hand"
             }
 
             common {
@@ -107,8 +107,10 @@ locale {
 
             identify {
                 need_more_power = "You need higher identification to gain new knowledge."
-                partially = "The item is half-identified as ${itemname(_1, 1)}."
-                fully = "The item is fully identified as ${itemname(_1, 1)}."
+
+                # NOTE: previously itemname(ci, 1)
+                partially = "The item is half-identified as ${itemname(_1)}."
+                fully = "The item is fully identified as ${itemname(_1)}."
             }
 
             give {
@@ -221,8 +223,8 @@ locale {
                 you_take = "You take ${_1}."
 
                 window {
-                    equip_weight = "EquipWt" # NOTE
-                    equip = "Equip" # NOTE
+                    equip_weight = "EquipWt"
+                    equip = "Equip"
                 }
             }
 

@@ -47,10 +47,10 @@ locale {
                 name = "アイテムの名称"
 
                 resist = "火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"
-                total_weight = "  (重さ合計 ${_1}/${_1}  荷車 ${_1})"
+                total_weight = "重さ合計 ${_1}/${_2}  荷車 ${_3}"
 
-                ground = "足元" # NOTE space_if_needed
-                main_hand = "利腕" # NOTE space_if_needed
+                ground = "足元"
+                main_hand = "利腕"
             }
 
             common {
@@ -107,10 +107,8 @@ locale {
 
             identify {
                 need_more_power = "新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"
-
-                # NOTE: previously itemname(ci, inv[ci].number)
-                partially = "それは${itemname(_1, 1)}だと判明したが、完全には鑑定できなかった。"
-                fully = "それは${itemname(_1, 1)}だと完全に判明した。"
+                partially = "それは${itemname(_1)}だと判明したが、完全には鑑定できなかった。"
+                fully = "それは${itemname(_1)}だと完全に判明した。"
             }
 
             give {

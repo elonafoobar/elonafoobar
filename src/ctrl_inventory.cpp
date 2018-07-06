@@ -878,10 +878,10 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += i18n::s.get("core.locale.ui.inv.window.total_weight",
+    s += "  ("s + i18n::s.get("core.locale.ui.inv.window.total_weight",
                      cnvweight(cdata[0].inventory_weight),
                      cnvweight(cdata[0].max_inventory_weight),
-                     cnvweight(gdata_cargo_weight));
+                     cnvweight(gdata_cargo_weight)) + ")"s;
     if (invctrl == 25)
     {
         s = ""s;
