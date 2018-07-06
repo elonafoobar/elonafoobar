@@ -43,9 +43,7 @@ main_menu_result_t character_making_select_race()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = lang(
-        u8"やあ、待っていたよ。早速旅の支度をしようか。"s,
-        u8"Welcome traveler, I've been looking for you."s);
+    s = i18n::s.get("core.locale.chara_making.select_race.caption");
     draw_caption();
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
@@ -101,7 +99,7 @@ main_menu_result_t character_making_select_race()
 
         if (cs != cs_bk)
         {
-            s(0) = lang(u8"種族の選択"s, u8"Race Selection"s);
+            s(0) = i18n::s.get("core.locale.chara_making.select_race.title");
             s(1) = strhint3b;
             display_window(
                 (windoww - 680) / 2 + inf_screenx,
@@ -117,9 +115,9 @@ main_menu_result_t character_making_select_race()
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
             display_topic(
-                lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
+                i18n::s.get("core.locale.chara_making.select_race.race"), wx + 28, wy + 30);
             display_topic(
-                lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
+                i18n::s.get("core.locale.chara_making.select_race.detail"), wx + 188, wy + 30);
             font(14 - en * 2);
             for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
             {
@@ -198,7 +196,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = lang(u8"男性と女性に能力の違いはない。"s, u8"What's your gender?"s);
+    s = i18n::s.get("core.locale.chara_making.select_gender.caption");
     draw_caption();
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
@@ -212,7 +210,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
 
     while (true)
     {
-        s(0) = lang(u8"性別の選択"s, u8"Gender Selection"s);
+        s(0) = i18n::s.get("core.locale.chara_making.select_gender.title");
         s(1) = strhint3b;
         display_window(
             (windoww - 370) / 2 + inf_screenx, winposy(168, 1) - 20, 370, 168);
@@ -222,7 +220,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
         gmode(4, 30);
         gcopy_c(2, 0, 0, 180, 300, x, y);
         gmode(2);
-        display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
+        display_topic(i18n::s.get("core.locale.chara_making.select_gender.gender"), wx + 28, wy + 30);
         listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
         listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
         font(14 - en * 2);
@@ -275,9 +273,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = lang(
-        u8"職業や種族は、初期の能力だけでなく、成長の方向性に影響するんだ。"s,
-        u8"Your class and race determine growth rate of your skills and attributes."s);
+    s = i18n::s.get("core.locale.chara_making.select_class.caption");
     draw_caption();
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
@@ -312,7 +308,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
     {
         if (cs != cs_bk)
         {
-            s(0) = lang(u8"職業の選択"s, u8"Class Selection"s);
+            s(0) = i18n::s.get("core.locale.chara_making.select_class.title");
             s(1) = strhint3b;
             display_window(
                 (windoww - 680) / 2 + inf_screenx,
@@ -328,9 +324,9 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
             display_topic(
-                lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
+                i18n::s.get("core.locale.chara_making.select_class.class"), wx + 28, wy + 30);
             display_topic(
-                lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
+                i18n::s.get("core.locale.chara_making.select_class.detail"), wx + 188, wy + 30);
             font(14 - en * 2);
             for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
             {
@@ -400,9 +396,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
             gmode(2);
-            s = lang(
-                u8"死にたくないなら、ある程度の能力は必要だね。"s,
-                u8"You should prepare well, if you want to survive long enough in Irva."s);
+            s = i18n::s.get("core.locale.chara_making.roll_attributes.caption");
             draw_caption();
             font(13 - en * 2, snail::font_t::style_t::bold);
             pos(20, windowh - 20);
@@ -439,10 +433,10 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             minimum = false;
             listmax = 0;
             list(0, 0) = 0;
-            listn(0, 0) = lang(u8"リロール"s, u8"Reroll"s);
+            listn(0, 0) = i18n::s.get("core.locale.chara_making.common.reroll");
             ++listmax;
             list(0, 1) = 0;
-            listn(0, 1) = lang(u8"決定"s, u8"Proceed"s);
+            listn(0, 1) = i18n::s.get("core.locale.chara_making.roll_attributes.proceed");
             ++listmax;
             for (int cnt = 10; cnt < 18; ++cnt)
             {
@@ -454,9 +448,11 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             windowshadow = 1;
             init = false;
         }
-        s(0) = lang(u8"能力のロール"s, u8"Attb Reroll"s);
+        s(0) = i18n::s.get("core.locale.chara_making.roll_attributes.attribute_reroll");
         s(1) =
-            strhint3b + key_mode2 + lang(u8" [最低値ロール]", u8" [Min Roll]");
+            strhint3b + key_mode2 + " ["
+            + i18n::s.get("core.locale.chara_making.roll_attributes.min_roll")
+            + "]";
         display_window(
             (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
         x = 150;
@@ -465,15 +461,13 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
         gmode(4, 30);
         gcopy_c(2, 0, 0, 180, 300, x, y);
         gmode(2);
-        display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
+        display_topic(i18n::s.get("core.locale.chara_making.roll_attributes.title"), wx + 28, wy + 30);
         font(12 + sizefix - en * 2);
         pos(wx + 175, wy + 52);
-        mes(lang(
-            u8"ロックされた能力は\n変化しません"s,
-            u8"Locked items will\nnot change."s));
+        mes(i18n::s.get("core.locale.chara_making.roll_attributes.locked_items_desc"));
         font(13 - en * 2, snail::font_t::style_t::bold);
         pos(wx + 180, wy + 84);
-        mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
+        mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") + u8": "s + cmlock(8));
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
@@ -559,9 +553,7 @@ main_menu_result_t character_making_select_feats()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = lang(
-        u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
-        u8"Choose your feats wisely."s);
+    s = i18n::s.get("core.locale.chara_making.select_feats.caption");
     draw_caption();
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
@@ -601,9 +593,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    s = lang(
-        u8"有名になると、名前とは別の通り名で呼ばれることがあるらしい。"s,
-        u8"Choose your Alias."s);
+    s = i18n::s.get("core.locale.chara_making.select_alias.caption");
     draw_caption();
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
@@ -642,7 +632,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
                 }
                 if (cnt == 0)
                 {
-                    listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
+                    listn(0, cnt) = i18n::s.get("core.locale.chara_making.common.reroll");
                 }
                 else if (restore_previous_alias && cnt == 1 && cmaka != "")
                 {
@@ -654,9 +644,10 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
         }
         if (redraw_aliases)
         {
-            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
-            s(1) = strhint3b + key_mode2
-                + lang(u8" [異名のロック]", u8" [Lock Alias]");
+            s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
+            s(1) = strhint3b + key_mode2 + " ["
+                + i18n::s.get("core.locale.chara_making.select_alias.lock_alias")
+                + "]";
             display_window(
                 (windoww - 400) / 2 + inf_screenx,
                 winposy(458, 1) + 20,
@@ -671,7 +662,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
                 2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
             gmode(2);
             display_topic(
-                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
+                i18n::s.get("core.locale.chara_making.select_alias.alias_list"), wx + 28, wy + 30);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
                 font(14 - en * 2);
@@ -756,9 +747,7 @@ main_menu_result_t character_making_customize_appearance()
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
-        s = lang(
-            u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
-            u8"What you look like? Don't worry, you can change them later."s);
+        s = i18n::s.get("core.locale.chara_making.customize_appearance.caption");
         draw_caption();
         font(13 - en * 2, snail::font_t::style_t::bold);
         pos(20, windowh - 20);
@@ -801,9 +790,7 @@ main_menu_result_t character_making_final_phase()
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
             gmode(2);
-            s = lang(
-                u8"決定ｷｰを押すことで、生い立ちをリロールできる。"s,
-                u8"Hit the enter key to reroll your personal history."s);
+            s = i18n::s.get("core.locale.chara_making.final_screen.caption");
             draw_caption();
             chara_delete(0);
             access_race_info(3, cmrace);
@@ -845,15 +832,24 @@ main_menu_result_t character_making_final_phase()
         gcopy(0, 0, 100, windoww, windowh - 100);
         gsel(0);
         clear_background_in_character_making();
-        s = lang(u8"満足できたかな？"s, u8"Are you satisfied now?"s);
+        s = i18n::s.get("core.locale.chara_making.final_screen.are_you_satisfied.prompt");
         draw_caption();
-        ELONA_APPEND_PROMPT(lang(u8"はい"s, u8"Yes"s), u8"a"s, ""s + promptmax);
         ELONA_APPEND_PROMPT(
-            lang(u8"いいえ"s, u8"No"s), u8"b"s, ""s + promptmax);
+            i18n::s.get("core.locale.chara_making.final_screen.are_you_satisfied.yes"),
+            u8"a"s,
+            ""s + promptmax);
         ELONA_APPEND_PROMPT(
-            lang(u8"最初から"s, u8"Restart"s), u8"c"s, ""s + promptmax);
+            i18n::s.get("core.locale.chara_making.final_screen.are_you_satisfied.no"),
+            u8"b"s,
+            ""s + promptmax);
         ELONA_APPEND_PROMPT(
-            lang(u8"戻る"s, u8"Go back"s), u8"d"s, ""s + promptmax);
+            i18n::s.get("core.locale.chara_making.final_screen.are_you_satisfied.restart"),
+            u8"c"s,
+            ""s + promptmax);
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.chara_making.final_screen.are_you_satisfied.go_back"),
+            u8"d"s,
+            ""s + promptmax);
         rtval = show_prompt(promptx, 240, 160);
         snd(20);
         if (rtval != -1 && rtval != 1)
@@ -877,8 +873,7 @@ main_menu_result_t character_making_final_phase()
     pos(0, 100);
     gcopy(2, 0, 0, windoww, windowh - 100);
     gmode(2);
-    s = lang(
-        u8"最後の質問だ。君の名前は？"s, u8"Last question. What's your name?"s);
+    s = i18n::s.get("core.locale.chara_making.final_screen.what_is_your_name");
     draw_caption();
 
     while (true)
@@ -908,9 +903,7 @@ main_menu_result_t character_making_final_phase()
             pos(0, 100);
             gcopy(2, 0, 0, windoww, windowh - 100);
             gmode(2);
-            s = lang(
-                u8"あいにく、その名前の冒険者はすでに存在する。"s,
-                u8"Sorry, but the name is already taken."s);
+            s = i18n::s.get("core.locale.chara_making.final_screen.name_is_already_taken");
             draw_caption();
         }
         else
@@ -951,7 +944,8 @@ void show_race_or_class_info(int val0)
         pos(wx + 350, wy - chara_chips[ref1].height + 60);
         gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
         pos(wx + 460, wy + 38);
-        mes(lang(u8"種族: "s, u8"Race: "s) + cmrace(1));
+        mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race")
+            + u8": "s + cmrace(1));
     }
     else
     {
@@ -988,30 +982,13 @@ void show_race_or_class_info(int val0)
     font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;
-    display_topic(lang(u8"能力ボーナス"s, u8"Attribute Bonus"s), tx, ty);
+    display_topic(i18n::s.get("core.locale.chara_making.select_race.race_info.attribute_bonus.text"),
+                  tx, ty);
     ty += 34;
     font(14 - en * 2);
-    if (jp)
+    for (int cnt = 0; cnt < 8; cnt++)
     {
-        s(0) = u8"皆無"s;
-        s(1) = u8"最高"s;
-        s(2) = u8"理想的"s;
-        s(3) = u8"高い"s;
-        s(4) = u8"やや高い"s;
-        s(5) = u8"普通"s;
-        s(6) = u8"少し"s;
-        s(7) = u8"微々"s;
-    }
-    if (en)
-    {
-        s(0) = u8"None"s;
-        s(1) = u8"Best"s;
-        s(2) = u8"Great"s;
-        s(3) = u8"Good"s;
-        s(4) = u8"Not bad"s;
-        s(5) = u8"Normal"s;
-        s(6) = u8"Little"s;
-        s(7) = u8"Slight"s;
+        s(cnt) = i18n::s.get_enum("core.locale.chara_making.select_race.race_info.attribute_bonus", cnt);
     }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -1087,11 +1064,12 @@ void show_race_or_class_info(int val0)
         ty += 16;
     }
     ty = wy + 260;
-    display_topic(lang(u8"獲得技能"s, u8"Trained Skill"s), tx, ty);
+    display_topic(i18n::s.get("core.locale.chara_making.select_race.race_info.trained_skill.text"),
+                  tx, ty);
     ty += 34;
     font(14 - en * 2);
     r = 0;
-    s = lang(u8"武器の専門  "s, u8"Proficient in "s);
+    s = i18n::s.get("core.locale.chara_making.select_race.race_info.trained_skill.proficient_in");
     for (int cnt = 100; cnt < 150; ++cnt)
     {
         if (sdata.get(cnt, 0).original_level != 0)
