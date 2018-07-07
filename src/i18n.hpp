@@ -29,7 +29,7 @@ public:
     i18n_error(const std::string& path, std::string str)
     {
         std::ostringstream oss;
-        oss << path << ": Error: ";
+        oss << path << ": ";
         oss << str;
         what_ = oss.str();
     }

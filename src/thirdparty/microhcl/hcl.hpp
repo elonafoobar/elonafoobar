@@ -647,6 +647,7 @@ inline Token Lexer::nextStringDoubleQuote()
         return Token(TokenType::ILLEGAL, std::string("string didn't start with '\"'"));
 
     std::string s;
+    int startLine = lineNo_;
     char c;
     int braces = 0;
     bool dollar = false;
@@ -714,7 +715,7 @@ inline Token Lexer::nextStringDoubleQuote()
                 return Token(TokenType::ILLEGAL, std::string("string has unknown escape sequence"));
             }
         } else if (c == '\n' && braces == 0) {
-            return Token(TokenType::ILLEGAL, std::string("found newline while parsing non-HIL string literal"));
+            return Token(TokenType::ILLEGAL, std::string("found newline while parsing non-HIL string literal (begun on line " + std::to_string(startLine) + ")"));
         } else if (c == '"' && braces == 0) {
             if (hil)
                 return Token(TokenType::HIL, s);
@@ -2048,7 +2049,6 @@ inline bool Parser::parseObjectType(Value& currentValue)
     Value result = parseObjectList(true);
 
     if(!errorReason().empty()) {
-        addError("failed parsing object list");
         return false;
     }
 
