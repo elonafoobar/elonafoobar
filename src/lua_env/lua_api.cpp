@@ -625,7 +625,7 @@ void bind(sol::table& Elona);
 
 sol::optional<int> Trait::level(int trait_id)
 {
-    if (get_trait_info(0, trait_id) == 0)
+    if (trait_get_info(0, trait_id) == 0)
     {
         return sol::nullopt;
     }
@@ -634,7 +634,7 @@ sol::optional<int> Trait::level(int trait_id)
 
 sol::optional<int> Trait::min(int trait_id)
 {
-    if (get_trait_info(0, trait_id) == 0)
+    if (trait_get_info(0, trait_id) == 0)
     {
         return sol::nullopt;
     }
@@ -643,7 +643,7 @@ sol::optional<int> Trait::min(int trait_id)
 
 sol::optional<int> Trait::max(int trait_id)
 {
-    if (get_trait_info(0, trait_id) == 0)
+    if (trait_get_info(0, trait_id) == 0)
     {
         return sol::nullopt;
     }
@@ -652,17 +652,21 @@ sol::optional<int> Trait::max(int trait_id)
 
 void Trait::set(int trait_id, int level)
 {
-    if (get_trait_info(0, trait_id) == 0)
+    if (trait_get_info(0, trait_id) == 0)
     {
         return;
     }
-    if (elona::trait(trait_id) < level)
+    if (elona::trait(trait_id) < level
+        && elona::trait(trait_id) < elona::traitref(2)
+        && traitrefn(0) != "")
     {
         snd(61);
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
-    else if (elona::trait(trait_id) > level)
+    else if (elona::trait(trait_id) > level
+             && elona::trait(trait_id) > elona::traitref(1)
+             && traitrefn(1) != "")
     {
         snd(61);
         elona::txtef(3);
@@ -671,21 +675,26 @@ void Trait::set(int trait_id, int level)
     elona::trait(trait_id) = clamp(level,
                                    elona::traitref(1),
                                    elona::traitref(2));
+    chara_refresh(0);
 }
 
 void Trait::modify(int trait_id, int delta)
 {
-    if (get_trait_info(0, trait_id) == 0)
+    if (trait_get_info(0, trait_id) == 0)
     {
         return;
     }
-    if (delta > 0)
+    if (delta > 0
+        && elona::trait(trait_id) < elona::traitref(2)
+        && traitrefn(0) != "")
     {
         snd(61);
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
-    else if (delta < 0)
+    else if (delta < 0
+             && elona::trait(trait_id) > elona::traitref(1)
+             && traitrefn(1) != "")
     {
         snd(61);
         elona::txtef(3);
@@ -694,6 +703,7 @@ void Trait::modify(int trait_id, int delta)
     elona::trait(trait_id) = clamp(elona::trait(trait_id) + delta,
                                    elona::traitref(1),
                                    elona::traitref(2));
+    chara_refresh(0);
 }
 
 void Trait::bind(sol::table& Elona)

@@ -75,7 +75,7 @@ void modcorrupt(int prm_815)
             for (int cnt = 0; cnt < 100000; ++cnt)
             {
                 int tid = rnd(17) + 200;
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 3)
                 {
                     continue;
@@ -143,7 +143,7 @@ void modcorrupt(int prm_815)
                         tid = gdata(i_at_m134);
                     }
                 }
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 3)
                 {
                     continue;

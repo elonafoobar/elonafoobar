@@ -22,6 +22,7 @@
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include <iostream>
 
 namespace elona
 {
@@ -4282,7 +4283,7 @@ label_196901_internal:
         {
             break;
         }
-        int stat = get_trait_info(0, cnt);
+        int stat = trait_get_info(0, cnt);
         if (stat == 0)
         {
             continue;
@@ -4321,31 +4322,17 @@ label_196901_internal:
         {
             if (i == -1)
             {
-                if (jp)
-                {
-                    s = u8"◆ 取得できるフィート"s;
-                }
-                else
-                {
-                    s = u8"[Available feats]"s;
-                }
+                s = i18n::s.get("core.locale.trait.window.available_feats");
             }
             if (i == -2)
             {
-                if (jp)
-                {
-                    s = u8"◆ 特徴と体質"s;
-                }
-                else
-                {
-                    s = u8"[Feats and traits]"s;
-                }
+                s = i18n::s.get("core.locale.trait.window.feats_and_traits");
             }
             listn(0, cnt) = s;
             continue;
         }
         int tid = i;
-        int stat = get_trait_info(0, tid);
+        int stat = trait_get_info(0, tid);
         featrq = stat;
         s = "";
         if (list(1, cnt) < 10000)
@@ -4360,14 +4347,7 @@ label_196901_internal:
             }
             if (featrq == -1)
             {
-                if (jp)
-                {
-                    s += u8"(条件不足)"s;
-                }
-                else
-                {
-                    s += u8"(requirement)"s;
-                }
+                s += u8"("s + i18n::s.get("core.locale.trait.window.requirement") + u8")"s;
             }
             pos(wx + 30, wy + 61 + cnt * 19);
             x = 84;
@@ -4378,47 +4358,27 @@ label_196901_internal:
             x = 70;
             if (traitref == 0)
             {
-                if (jp)
-                {
-                    s = u8"[フィート]"s;
-                }
-                else
-                {
-                    s = u8"[Feat]"s;
-                }
+                s = u8"["s +
+                    i18n::s.get("core.locale.trait.window.category.feat")
+                + u8"]"s;
             }
             if (traitref == 1)
             {
-                if (jp)
-                {
-                    s = u8"[変異]"s;
-                }
-                else
-                {
-                    s = u8"[Mutation]"s;
-                }
+                s = u8"["s +
+                    i18n::s.get("core.locale.trait.window.category.mutation")
+                + u8"]"s;
             }
             if (traitref == 2)
             {
-                if (jp)
-                {
-                    s = u8"[先天]"s;
-                }
-                else
-                {
-                    s = u8"[Race]"s;
-                }
+                s = u8"["s +
+                    i18n::s.get("core.locale.trait.window.category.race")
+                + u8"]"s;
             }
             if (traitref == 3)
             {
-                if (jp)
-                {
-                    s = u8"[ｴｰﾃﾙ病]"s;
-                }
-                else
-                {
-                    s = u8"[Disease]"s;
-                }
+                s = u8"["s +
+                    i18n::s.get("core.locale.trait.window.category.ether_disease")
+                + u8"]"s;
             }
             s += traitrefn(2 + std::abs(trait(tid)));
         }
@@ -4428,36 +4388,37 @@ label_196901_internal:
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-            + lang(u8"あなたは変装している"s,
-                   u8"You are disguising yourself."s);
+        listn(0, listmax) =
+                u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                    + i18n::s.get("core.locale.trait.incognito");
         ++listmax;
     }
     if (cdata[tc].is_pregnant() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-            + lang(u8"あなたは寄生されている"s, u8"You are pregnant."s);
+        listn(0, listmax) =
+                u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                    + i18n::s.get("core.locale.trait.pregnant");
         ++listmax;
     }
     if (cdata[tc].has_anorexia() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-            + lang(u8"あなたは拒食症だ"s, u8"You have anorexia."s);
+        listn(0, listmax) =
+                u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                    + i18n::s.get("core.locale.trait.anorexia");
         ++listmax;
     }
     if (cdata[tc].speed_correction_value != 0)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-            + lang((u8"あなたは複雑な体をしている[速度-"s
-                    + cdata[tc].speed_correction_value + u8"%]"s),
-                   (u8"Your body is complicated. [SPD-"s
-                    + cdata[tc].speed_correction_value + u8"%]"s));
+        listn(0, listmax) =
+            u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+            + i18n::s.get("core.locale.trait.body_is_complicated",
+                          cdata[tc].speed_correction_value);
         ++listmax;
     }
     if (tc == 0 && gdata_ether_disease_speed != 0)
@@ -4466,18 +4427,18 @@ label_196901_internal:
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
-            listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は早い"s,
-                       u8"Your Ether disease grows fast."s);
+            listn(0, listmax) =
+                u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                + i18n::s.get("core.locale.trait.ether_disease_grows.fast");
             ++listmax;
         }
         else
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
-            listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は遅い"s,
-                       u8"Your Ether disease grows slow."s);
+            listn(0, listmax) =
+                u8"["s + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                + i18n::s.get("core.locale.trait.ether_disease_grows.slow");
             ++listmax;
         }
     }
@@ -4516,9 +4477,9 @@ label_196901_internal:
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) =
-            lang(his(tc, 1) + u8"装備は"s, cnven(his(tc, 1)) + u8" equipment "s)
-            + trait;
+        listn(0, listmax) = i18n::s.get("core.locale.trait.window.his_equipment",
+                                        cnven(his(tc, 1)),
+                                        trait);
         ++listmax;
     }
     if (tc != 0)
@@ -4569,11 +4530,9 @@ label_196901_internal:
         }
     }
 label_1970_internal:
-    s(0) = lang(u8"特徴と体質"s, u8"Feats and Traits"s);
-    s(1) = lang(
-               u8"決定 [フィート取得]  "s + strhint2 + strhint3,
-               u8"Enter [Gain Feat]  "s + strhint2 + strhint3)
-        + u8"z,x ["s + lang(u8"仲間"s, u8"Ally"s) + u8"]"s;
+    s(0) = i18n::s.get("core.locale.trait.window.title");
+    s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2 + strhint3
+        + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally") + u8"]"s;
     if (mode == 1)
     {
         i = 1;
@@ -4589,18 +4548,9 @@ label_1970_internal:
         430,
         55,
         40);
-    if (jp)
-    {
-        s(0) = u8"特徴の名称"s;
-        s(1) = u8"段階"s;
-        s(2) = u8"特徴の効果"s;
-    }
-    else
-    {
-        s(0) = u8"Name"s;
-        s(1) = u8"Level"s;
-        s(2) = u8"Detail"s;
-    }
+    s(0) = i18n::s.get("core.locale.trait.window.name");
+    s(1) = i18n::s.get("core.locale.trait.window.level");
+    s(2) = i18n::s.get("core.locale.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
     pos(wx + 46, wy - 16);
@@ -4639,14 +4589,11 @@ label_1970_internal:
     }
     if (tc == 0)
     {
-        s = lang(
-            u8"残り "s + gdata_acquirable_feat_count
-                + u8"個のフィートを取得できる"s,
-            u8"You can acquire "s + gdata_acquirable_feat_count + u8" feats"s);
+        s = i18n::s.get("core.locale.trait.window.you_can_acquire", gdata_acquirable_feat_count);
     }
     else
     {
-        s = cnven(cdatan(0, tc)) + lang(u8"の特性"s, u8"'s Trait"s);
+        s = i18n::s.get("core.locale.trait.window.your_trait", cnven(cdatan(0, tc)));
     }
     display_note(s, 50);
     font(14 - en * 2);
@@ -4667,7 +4614,7 @@ label_1970_internal:
         int text_color{};
         if (list(1, p) != 99999)
         {
-            int stat = get_trait_info(0, i);
+            int stat = trait_get_info(0, i);
             featrq = stat;
             if (trait(i) == 0)
             {
@@ -4735,14 +4682,12 @@ label_1970_internal:
                 if (list(1, p) < 10000)
                 {
                     int tid = list(0, p);
-                    get_trait_info(0, tid);
+                    trait_get_info(0, tid);
                     if (traitref(2) <= trait(tid))
                     {
                         if (mode != 1)
                         {
-                            txt(lang(
-                                u8"これ以上取得できない。"s,
-                                u8"You already have maxed out the feat."s));
+                            txt(i18n::s.get("core.locale.trait.window.already_maxed"));
                         }
                         goto label_196901_internal;
                     }

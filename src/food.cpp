@@ -1200,7 +1200,7 @@ void apply_general_eating_effect()
                     {
                         if (rnd(5) == 0)
                         {
-                            get_trait_info(0, 41);
+                            trait_get_info(0, 41);
                             txtef(2);
                             txt(traitrefn(0));
                             trait(41) = 1;
