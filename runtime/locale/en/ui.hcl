@@ -257,6 +257,9 @@ locale {
                 pants      = "Pants   "
                 set_detail = "Set Detail"
 
+                custom     = "Custom  "
+                riding     = "Riding  "
+
                 hint = "Right,left [Change]  Shift,Esc [Close]"
             }
             detail {
@@ -279,8 +282,6 @@ locale {
                 belt   = "Belt    "
                 glove  = "Glove   "
                 mantle = "Mantle  "
-
-                hint = "Right,left [Change]  Shift,Esc [Close]"
             }
         }
 
@@ -350,6 +351,8 @@ locale {
 
             unknown = "Unknown"
             hospital = "Hospital"
+
+            rank_counter = ""
         }
 
         alias {
@@ -401,8 +404,6 @@ locale {
             waiting = "Waiting"
             alive = "(Alive)"
 
-            is_dead = "${he(_1)} ${is(_1)} dead."
-
             call {
                 prompt = "Call who?"
                 title = "Ally List"
@@ -422,6 +423,7 @@ locale {
                 in = "In"
 
                 need_at_least_one = "You need at least 1 pet to start the battle."
+                is_dead = "${he(_1)} ${is(_1)} dead."
                 too_many = "Too many participants."
             }
             shop {
@@ -439,7 +441,6 @@ locale {
             stayer {
                 prompt = "Who stays in your home?"
                 title = "Ally List"
-
             }
             gene_engineer {
                 prompt = "Who is the subject?"
