@@ -647,7 +647,8 @@ void continuous_action_sex()
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.activity.sex.spare_life",
-                            i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex)));
+                            i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex),
+                            cdata[tc]));
         }
         rowactend(cc);
         rowactend(tc);
@@ -726,7 +727,7 @@ void continuous_action_sex()
     if (is_in_fov(cc))
     {
         txtef(9);
-        dialog_head = i18n::s.get_enum("core.locale.activity.sex.after_dialog", rnd(5));
+        dialog_head = i18n::s.get_enum("core.locale.activity.sex.after_dialog", rnd(5), cdata[tc]);
         txtef(20);
     }
     if (tc != 0)
@@ -735,14 +736,14 @@ void continuous_action_sex()
         {
             if (is_in_fov(cc))
             {
-                dialog_tail = i18n::s.get("core.locale.activity.sex.take");
+                dialog_tail = i18n::s.get("core.locale.activity.sex.take", cdata[tc]);
             }
         }
         else
         {
             if (is_in_fov(cc))
             {
-                dialog_tail = i18n::s.get("core.locale.activity.sex.take_all_i_have");
+                dialog_tail = i18n::s.get("core.locale.activity.sex.take_all_i_have", cdata[tc]);
                 if (rnd(3) == 0)
                 {
                     if (cc != 0)
