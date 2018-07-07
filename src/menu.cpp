@@ -4376,7 +4376,6 @@ label_196901_internal:
             }
             if (traitref == 3)
             {
-                std::cout << i18n::s.get("core.locale.trait.window.category.ether_disease") << std::endl;
                 s = u8"["s +
                     i18n::s.get("core.locale.trait.window.category.ether_disease")
                 + u8"]"s;

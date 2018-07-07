@@ -166,19 +166,10 @@ void trait_format_other(const std::string& i18n_prefix, int tid, int min, int ma
     {
         traitrefn(0) = *text;
     }
-    else
-    {
-        traitrefn(0) = "";
-    }
     if (auto text = i18n::s.get_optional(i18n_prefix + ".negative.gain"))
     {
         traitrefn(1) = *text;
     }
-    else
-    {
-        traitrefn(1) = "";
-    }
-    traitrefn(2) = "";
 
     if (tid >= 200)
     {
@@ -207,6 +198,10 @@ void trait_format(int tid, int min, int max)
 {
     std::string i18n_prefix = "core.locale.trait._" + std::to_string(tid);
     optional<std::string> text = none;
+
+    traitrefn(0) = "";
+    traitrefn(1) = "";
+    traitrefn(2) = "";
 
     if (trait_is_obtainable(i18n_prefix, tid))
     {
