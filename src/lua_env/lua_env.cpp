@@ -152,7 +152,7 @@ void lua_env::clear_map_local_data()
     {
         auto& mod = pair.second;
         lua->safe_script(R"(
-function clear(t)
+local function clear(t)
     for key, _ in pairs(t) do
         t[key] = nil
     end
@@ -292,7 +292,7 @@ void lua_env::clear_mod_stores()
     {
         auto& mod = pair.second;
         lua->safe_script(R"(
-function clear(t)
+local function clear(t)
     for key, _ in pairs(t) do
         t[key] = nil
     end
