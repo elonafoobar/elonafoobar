@@ -44,10 +44,7 @@ label_19341_internal:
     if (cdata[cc].continuous_action_id == 0)
     {
         txtnew();
-        txt(lang(
-            name(cc) + u8"は"s + rpname(rpid) + u8"の調合をはじめた。"s,
-            name(cc) + u8" start"s + _s(cc) + u8" blending of "s + rpname(rpid)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.blending.started", cdata[cc], rpname(rpid)));
         cdata[cc].continuous_action_id = 12;
         cdata[cc].continuous_action_turn = rpref(2) % 10000;
         return;
@@ -57,8 +54,7 @@ label_19341_internal:
         if (rnd(30) == 0)
         {
             txtef(4);
-            txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                lang(u8" *トントン* "s, u8"*clank*"s));
+            txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
         }
         return;
     }
@@ -74,8 +70,7 @@ label_19341_internal:
             if (cnt % 5 == 0)
             {
                 txtef(4);
-                txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                    lang(u8" *トントン* "s, u8"*clank*"s));
+                txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
             }
             redraw();
             await(config::instance().animewait * 5);
@@ -87,9 +82,7 @@ label_19341_internal:
                 int stat = label_1931();
                 if (stat == 0)
                 {
-                    txt(lang(
-                        u8"調合に必要な材料が見つからない。"s,
-                        u8"A required material cannot be found."s));
+                    txt(i18n::s.get("core.locale.blending.required_material_not_found"));
                     break;
                 }
                 label_1933();
@@ -112,9 +105,7 @@ label_19341_internal:
     int stat = label_1931();
     if (stat == 0)
     {
-        txt(lang(
-            u8"調合に必要な材料が見つからない。"s,
-            u8"A required material cannot be found."s));
+        txt(i18n::s.get("core.locale.blending.required_material_not_found"));
         rowactend(cc);
         return;
     }

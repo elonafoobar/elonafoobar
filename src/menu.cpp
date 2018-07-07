@@ -1813,7 +1813,7 @@ void label_2031()
         }
         else
         {
-            s += i18n::s.get("core.locale.ui.spell.power"); + bonus;
+            s += i18n::s.get("core.locale.ui.spell.power") + bonus;
         }
         s += u8" "s;
     }
@@ -7099,7 +7099,7 @@ int change_npc_tone()
     cc = 0;
     cs_bk = -1;
     list(0, 0) = -999;
-    listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
+    listn(0, 0) = i18n::s.get("core.locale.action.interact.change_tone.default_tone");
     ++listmax;
     const auto base_dir = filesystem::dir::user() / u8"talk";
     for (const auto& entry :
@@ -7125,8 +7125,8 @@ label_2015_internal:
         page = 0;
     }
 label_2016_internal:
-    s(0) = lang(u8"口調一覧"s, u8"Tone of Voice"s);
-    s(1) = lang(u8"決定 [口調の変更]  "s, u8"Enter [Change Tone] "s) + strhint2
+    s(0) = i18n::s.get("core.locale.action.interact.change_tone.title");
+    s(1) = i18n::s.get("core.locale.action.interact.change_tone.hint") + strhint2
         + strhint3;
     display_window((windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400);
     x = ww / 5 * 3;
@@ -7135,7 +7135,7 @@ label_2016_internal:
     gmode(4, 50);
     gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
-    display_topic(lang(u8"題名"s, u8"Title"s), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.action.interact.change_tone.tone_title"), wx + 28, wy + 36);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -7178,9 +7178,8 @@ label_2016_internal:
     if (p != -1)
     {
         snd(20);
-        txt(lang(
-            name(tc) + u8"の口調が変わった気がする。"s,
-            name(tc) + u8" is somewhat different."s));
+        txt(i18n::s.get("core.locale.action.interact.change_tone.is_somewhat_different",
+                        cdata[tc]));
         if (p == -999)
         {
             cdata[tc].has_custom_talk() = false;

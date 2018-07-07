@@ -36,6 +36,7 @@ locale {
 
         which_direction {
             default = "どの方向に？ "
+            ask = "どの方向？"
             spell = "どの方向に唱える？ "
             wand = "どの方向に振る？ "
             cannot_see_location = "その場所は見えない。"
@@ -91,9 +92,9 @@ locale {
             change_tone {
                 prompt = "どんな言葉を教えようか。"
                 default_tone = "デフォルトの口調"
-                tone_of_voice = "口調一覧"
-                enter = "決定 [口調の変更]  "
-                title = "題名"
+                title = "口調一覧"
+                hint = "決定 [口調の変更]  "
+                tone_title = "題名"
                 is_somewhat_different = "${name(_1)}の口調が変わった気がする。"
             }
             name {
@@ -117,7 +118,7 @@ locale {
                 dialog = "「助かったよ！」"
             }
             execute = "${name(_1)}は${name(_2)}に体当たりした。"
-            disturbs_sleep = "${name(_1)}は睡眠を妨害された。"
+            disturbs_sleep = "${name(_2)}は睡眠を妨害された。"
             shatters_pot = "${name(_1)}は壷を割った。"
             door {
                 destroyed = "扉に体当たりして破壊した。"
@@ -180,7 +181,7 @@ locale {
                 }
                 evade = "${name(_1)}は罠を避けた。"
                 activate {
-                    text = "${name(_1)}罠にかかった！"
+                    text = "${kare_wa(_1)}罠にかかった！"
                     blind = "墨が噴き出した。"
                     paralyze = "刺激的な匂いがただよう。"
                     confuse = "臭い匂いがたちこめた。"
@@ -236,7 +237,7 @@ locale {
                 ambush {
                     text = "襲撃だ！"
                     distance_from_nearest_town = "最も近い街までの距離:${_1}" # NOTE
-                    enemy_strength = "敵勢力:${_1}" # NOTE
+                    enemy_strength = "敵勢力:"
 
                     rank {
                         putit = "プチ級"
@@ -273,9 +274,8 @@ locale {
 
         look {
             find_nothing = "視界内にターゲットは存在しない。"
-            cannot_see = "その場所は見えない。"
             target = "${name(_1)}をターゲットにした。"
-            target_the_ground = "地面をターゲットにした。"
+            target_ground = "地面をターゲットにした。"
         }
 
         ranged {
@@ -410,6 +410,7 @@ locale {
                 falls_apart = "${itemname(_1, 1)}は塵となって崩れ落ちた。"
                 not_interested = "この本の内容には興味がない。それでも読む？ "
                 already_decoded = "それは既に解読済みだ。"
+
                 void_permit = "すくつの探索を許可する、という内容の文面が形式的に書いてある。"
                 book_of_rachel = "レイチェルという作家による、心あたたまる童話集だ。"
                 learned_recipe = "${itemname(_1, 1)}を覚えた！"
@@ -437,7 +438,7 @@ locale {
         }
 
         drink {
-            potion = "${kare_wa(_1)}${itemname(_1, 1)}を飲み干した。"
+            potion = "${kare_wa(_1)}${itemname(_2, 1)}を飲み干した。"
             well {
                 is_dry = "${_1}は涸れている。"
                 draw = "${name(_1)}は${_2}の水をすくって飲んだ。"

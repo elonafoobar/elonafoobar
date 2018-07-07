@@ -138,6 +138,10 @@ locale {
             new_gene {
                 title = "Gene"
                 text = "You spent a night with ${name(_1)}. A new gene is created."
+
+                choices {
+                    _0 = "Sweet."
+                }
             }
 
             slept_for = "You have slept for ${_1} hours. You are refreshed."

@@ -1687,8 +1687,7 @@ void spot_digging()
                                     0);
                             }
                             txt(
-                                i18n::s.get("core.locale.common.something_is_"
-                                            "put_on_the_ground"));
+                                i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                             autosave = 1 * (gdata_current_map != 35);
                             --inv[cnt].number;
                             break;
@@ -1841,8 +1840,7 @@ turn_result_t do_dig_after_sp_check()
 {
     if (cdata[cc].sp < 0)
     {
-        txt(lang(
-            u8"疲れ過ぎて無理だ。"s, u8"You are too exhausted to do that."s));
+        txt(i18n::s.get("core.locale.action.dig.too_exhausted"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -1970,7 +1968,7 @@ int search_material_spot()
         }
         if (feat(1) == 25)
         {
-            s = i18n::s.get("core.locale.activity.material.mining.no_more");
+            s = i18n::s.get("core.locale.activity.material.digging.no_more");
         }
         if (feat(1) == 28)
         {
@@ -2031,7 +2029,7 @@ void matdelmain(int material_id, int amount)
     mat(material_id) -= amount;
     txt(i18n::s.get("core.locale.activity.material.lose", matname(material_id), amount));
     txtef(4);
-    txt(i18n::s.get("core.locale.activity.material.total", mat(material_id)));
+    txt(i18n::s.get("core.locale.activity.material.lose_total", mat(material_id)));
     return;
 }
 

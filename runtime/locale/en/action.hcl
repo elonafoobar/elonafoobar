@@ -36,6 +36,7 @@ locale {
 
         which_direction {
             default = "Which direction? "
+            ask = "Which direction?"
             spell = "Which direction do you want to cast the spell? "
             wand = "Which direction do you want to zap the wand? "
             cannot_see_location = "You can't see the location."
@@ -91,9 +92,9 @@ locale {
             change_tone {
                 prompt = "What sentence should ${name(_1)} learn? "
                 default_tone = "Default Tone"
-                tone_of_voice = "Tone of Voice"
-                enter = "Enter [Change Tone] "
-                title = "Title"
+                title = "Tone of Voice"
+                hint = "Enter [Change Tone] "
+                tone_title = "Title"
                 is_somewhat_different = "${name(_1)} is somewhat different."
             }
             name {
@@ -236,7 +237,7 @@ locale {
                 ambush {
                     text = "Ambush!"
                     distance_from_nearest_town = "Distance from nearest town:${_1}" # NOTE
-                    enemy_strength = "Enemy strength:${_1}" # NOTE
+                    enemy_strength = "Enemy strength:"
 
                     rank {
                         putit = "Putit Rank"
@@ -273,9 +274,8 @@ locale {
 
         look {
             find_nothing = "You look around and find nothing."
-            cannot_see = "You can't see the location." # TODO possible duplicate
             target = "You target ${name(_1)}."
-            target_the_ground = "You target the ground."
+            target_ground = "You target the ground."
         }
 
         ranged {
@@ -287,7 +287,7 @@ locale {
             need_to_equip = "You need to equip an ammo."
             is_not_capable = "${itemname(_1)} isn't capable of changing ammos."
 
-            current = "Current Ammo Type" # NOTE
+            current = "Current Ammo Type"
             normal = "Normal"
             unlimited = "Unlimited"
         }
@@ -410,6 +410,7 @@ locale {
                 falls_apart = "${itemname(_1, 1)} falls apart."
                 not_interested = "You are not interested in this book. Do you want to read it anyway? "
                 already_decoded = "You already have decoded the book."
+
                 void_permit = "According to the card, you are permitted to explore the void now."
                 book_of_rachel = "It's a lovely fairy tale written by Rachel."
                 learned_recipe = "You learned the recipe!"

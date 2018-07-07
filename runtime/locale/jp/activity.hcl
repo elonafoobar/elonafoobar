@@ -136,6 +136,10 @@ locale {
             new_gene {
                 title = "遺伝子"
                 text = "${name(_1)}とあなたは熱い一夜を供にした。新たな遺伝子が生成された。"
+
+                choices {
+                    _0 = "ふぅ"
+                }
             }
 
             slept_for = "${_1}時間眠った。あなたはリフレッシュした。"
@@ -173,7 +177,7 @@ locale {
 
         read {
             start = "${kare_wa(_1)}${itemname(_2, 1)}を読み始めた。"
-            finish = "${name(_1)}を読み終えた。"
+            finish = "${kare_wa(_1)}${itemname(_2, 1)}を読み終えた。"
         }
 
         harvest {
