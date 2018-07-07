@@ -2115,10 +2115,10 @@ void drawmenu(int prm_742)
         p(1) = 10;
         p(2) = 11;
         p(3) = 12;
-        s(0) = lang(u8"情報"s, u8"Chara"s);
-        s(1) = lang(u8"装備"s, u8"Wear"s);
-        s(2) = lang(u8"特徴"s, u8"Feat"s);
-        s(3) = lang(u8"ﾏﾃﾘｱﾙ"s, u8"Material"s);
+        s(0) = i18n::s.get("core.locale.ui.menu.chara.chara");
+        s(1) = i18n::s.get("core.locale.ui.menu.chara.wear");
+        s(2) = i18n::s.get("core.locale.ui.menu.chara.feat");
+        s(3) = i18n::s.get("core.locale.ui.menu.chara.material");
         s(4) = "";
     }
     if (prm_742 == 1)
@@ -2127,8 +2127,8 @@ void drawmenu(int prm_742)
         x_at_m107(1) = 140;
         p(0) = 13;
         p(1) = 14;
-        s(0) = lang(u8"魔法"s, u8"Spell"s);
-        s(1) = lang(u8"技能"s, u8"Skill"s);
+        s(0) = i18n::s.get("core.locale.ui.menu.spell.spell");
+        s(1) = i18n::s.get("core.locale.ui.menu.spell.skill");
         s(2) = "";
     }
     if (prm_742 == 2)
@@ -2138,9 +2138,9 @@ void drawmenu(int prm_742)
         p(0) = 15;
         p(1) = 3;
         p(2) = 16;
-        s(0) = lang(u8"ログ"s, u8"Log"s);
-        s(1) = lang(u8"日誌"s, u8"Journal"s);
-        s(2) = lang(u8"チャット"s, u8"Chat"s);
+        s(0) = i18n::s.get("core.locale.ui.menu.log.log");
+        s(1) = i18n::s.get("core.locale.ui.menu.log.journal");
+        s(2) = i18n::s.get("core.locale.ui.menu.log.chat");
         s(3) = "";
     }
     if (prm_742 == 3)
@@ -2150,9 +2150,9 @@ void drawmenu(int prm_742)
         p(0) = 19;
         p(1) = 20;
         p(2) = 21;
-        s(0) = lang(u8"チャート"s, u8"Chart"s);
-        s(1) = lang(u8"街情報"s, u8"City"s);
-        s(2) = lang(u8"法律"s, u8"Law"s);
+        s(0) = i18n::s.get("core.locale.ui.menu.town.chart");
+        s(1) = i18n::s.get("core.locale.ui.menu.town.city");
+        s(2) = i18n::s.get("core.locale.ui.menu.town.law");
         s(3) = "";
     }
     if (menucycle == 0)
@@ -2186,8 +2186,8 @@ void drawmenu(int prm_742)
                            : snail::color{165, 165, 165});
     }
     bmes(
-        ""s + key_prev + u8","s + key_next + u8",Tab "s
-            + lang(u8"[メニュー切替]"s, u8"[Change]"s),
+        ""s + key_prev + u8","s + key_next + u8",Tab ["s
+            + i18n::s.get("core.locale.ui.menu.change") + u8"]"s,
         x_at_m107 + x_at_m107(1) - 150,
         y_at_m107 + 28);
 }

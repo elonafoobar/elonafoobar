@@ -75,7 +75,7 @@ locale {
             drop {
                 multi = "続けてアイテムを置くことができる。"
                 cannot_anymore = "これ以上は置けない。"
-                how_many = "${itemname(_1, 1)}をいくつ落とす？ (1〜${_2}) "
+                how_many = "${itemname(_2, 1)}をいくつ落とす？ (1〜${_1}) "
             }
 
             pick_up {
@@ -148,7 +148,7 @@ locale {
             }
 
             buy {
-                how_many = "${itemname(_2, 1)}をいくつ買う？ (1〜${_2})"
+                how_many = "${itemname(_2, 1)}をいくつ買う？ (1〜${_1})"
                 prompt = "${_1}を ${_2} gp で買う？"
 
                 not_enough_money {
@@ -162,7 +162,7 @@ locale {
             }
 
             sell {
-                how_many = "${itemname(_2, 1)}をいくつ売る？ (1〜${_2})"
+                how_many = "${itemname(_2, 1)}をいくつ売る？ (1〜${_1})"
                 prompt = "${_1}を ${_2} gp で売る？"
 
                 not_enough_money = "${name(_1)}は財布を開いてがっかりした…"
