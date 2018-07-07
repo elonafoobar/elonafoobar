@@ -1862,9 +1862,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1891,9 +1889,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1936,9 +1932,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1965,9 +1959,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1986,9 +1978,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2022,9 +2012,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2040,9 +2028,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2067,9 +2053,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2098,9 +2082,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2122,9 +2104,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2139,9 +2119,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2191,9 +2169,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2212,9 +2188,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2229,9 +2203,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;

@@ -3667,9 +3667,7 @@ turn_result_t do_short_cut_command()
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             return turn_result_t::pc_turn_user_error;
@@ -3692,9 +3690,7 @@ turn_result_t do_short_cut_command()
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             return turn_result_t::pc_turn_user_error;
