@@ -19,6 +19,9 @@
 --- [RW] The number of charges this item holds (for rods, bait, etc.)
 -- @tfield num count
 
+--- [RW] An integer used for indexing a subname of an item, like the ID for a recipe.
+-- @tfield num subname
+
 --- [RW] The curse state of this item.
 -- @tfield Enums.CurseState curse_state
 
