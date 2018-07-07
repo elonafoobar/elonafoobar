@@ -114,13 +114,13 @@ void store::visit(
         return val; \
     }
 
-#define UNKNOWN_FUNCTION "<unknown function(" + func.name + ")>"
+#define UNKNOWN_FUNCTION(type) "<unknown function(" + func.name + ", " + type + ")>"
 
 std::string format_builtins_argless(const hil::FunctionCall& func)
 {
     ELONA_DEFINE_I18N_BUILTIN("you", name(0));
 
-    return UNKNOWN_FUNCTION;
+    return UNKNOWN_FUNCTION("argless");
 }
 
 inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
@@ -185,14 +185,21 @@ std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, value ? 0 : 1));
     ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
 
-    return UNKNOWN_FUNCTION;
+    return UNKNOWN_FUNCTION("bool");
 }
 
 std::string format_builtins_string(const hil::FunctionCall& func, std::string value)
 {
     ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
 
-    return UNKNOWN_FUNCTION;
+    return UNKNOWN_FUNCTION("string");
+}
+
+std::string format_builtins_integer(const hil::FunctionCall& func, int value)
+{
+    ELONA_DEFINE_I18N_BUILTIN("s", value == 1 ? u8""s : u8"s"s);
+
+    return UNKNOWN_FUNCTION("integer");
 }
 
 std::string format_builtins_character(
@@ -240,7 +247,7 @@ std::string format_builtins_character(
     ELONA_DEFINE_I18N_BUILTIN_CHARA("na", _na);
     ELONA_DEFINE_I18N_BUILTIN_CHARA("ta", _ta);
 
-    return UNKNOWN_FUNCTION;
+    return UNKNOWN_FUNCTION("character");
 }
 
 std::string format_builtins_item(
@@ -255,7 +262,7 @@ std::string format_builtins_item(
     ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number));
     ELONA_DEFINE_I18N_BUILTIN("does", does(item.number));
 
-    return UNKNOWN_FUNCTION;
+    return UNKNOWN_FUNCTION("item");
 }
 
 #undef ELONA_DEFINE_I18N_BUILTIN

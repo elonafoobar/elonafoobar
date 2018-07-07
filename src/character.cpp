@@ -1722,13 +1722,6 @@ int relationbetween(int c1, int c2)
     }
     return 0;
 }
-void rowactend(int cc)
-{
-    cdata[cc].continuous_action_id = 0;
-    cdata[cc].continuous_action_turn = 0;
-    cdata[cc].continuous_action_item = 0;
-}
-
 
 
 int chara_custom_talk(int cc, int talk_type)

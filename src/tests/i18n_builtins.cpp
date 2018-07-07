@@ -161,6 +161,18 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
     REQUIRE(
         i18n::fmt_hil("something go${s(_1, true)} to hell.", chara)
         == u8"something goes to hell.");
+    REQUIRE(
+        i18n::fmt_hil("${_1} stone${s(_1)}", 0)
+        == u8"0 stones");
+    REQUIRE(
+        i18n::fmt_hil("${_1} stone${s(_1)}", 1)
+        == u8"1 stone");
+    REQUIRE(
+        i18n::fmt_hil("${_1} stone${s(_1)}", 2)
+        == u8"2 stones");
+    REQUIRE(
+        i18n::fmt_hil("${_1} stone${s(_1)}", 10)
+        == u8"10 stones");
 }
 
 TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")

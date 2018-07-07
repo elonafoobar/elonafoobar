@@ -54,6 +54,7 @@ set(CORE_SOURCES
     src/access_character_info.cpp
     src/access_item_db.cpp
     src/adventurer.cpp
+    src/activity.cpp
     src/ai.cpp
     src/animation.cpp
     src/audio.cpp

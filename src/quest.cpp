@@ -1,5 +1,6 @@
 #include "quest.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"

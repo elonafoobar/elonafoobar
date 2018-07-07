@@ -1,5 +1,6 @@
 #include "blending.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -30,6 +31,102 @@ int rpmode = 0;
 elona_vector1<int> rppage;
 int rpresult = 0;
 elona_vector1<int> inhlist_at_m184;
+
+void continuous_action_blending()
+{
+label_19341_internal:
+    rpid = rpref(0);
+    if (rpid == 0)
+    {
+        rowactend(cc);
+        return;
+    }
+    if (cdata[cc].continuous_action_id == 0)
+    {
+        txtnew();
+        txt(lang(
+            name(cc) + u8"は"s + rpname(rpid) + u8"の調合をはじめた。"s,
+            name(cc) + u8" start"s + _s(cc) + u8" blending of "s + rpname(rpid)
+                + u8"."s));
+        cdata[cc].continuous_action_id = 12;
+        cdata[cc].continuous_action_turn = rpref(2) % 10000;
+        return;
+    }
+    if (cdata[cc].continuous_action_turn > 0)
+    {
+        if (rnd(30) == 0)
+        {
+            txtef(4);
+            txt(lang(u8" *こねこね* "s, u8"*pug*"s),
+                lang(u8" *トントン* "s, u8"*clank*"s));
+        }
+        return;
+    }
+    if (rpref(2) >= 10000)
+    {
+        cdata[cc].continuous_action_turn = rpref(2) / 10000;
+        for (int cnt = 0;; ++cnt)
+        {
+            mode = 12;
+            ++gdata_hour;
+            weather_changes();
+            render_hud();
+            if (cnt % 5 == 0)
+            {
+                txtef(4);
+                txt(lang(u8" *こねこね* "s, u8"*pug*"s),
+                    lang(u8" *トントン* "s, u8"*clank*"s));
+            }
+            redraw();
+            await(config::instance().animewait * 5);
+            gdata_minute = 0;
+            cc = 0;
+            --cdata[cc].continuous_action_turn;
+            if (cdata[cc].continuous_action_turn <= 0)
+            {
+                int stat = label_1931();
+                if (stat == 0)
+                {
+                    txt(lang(
+                        u8"調合に必要な材料が見つからない。"s,
+                        u8"A required material cannot be found."s));
+                    break;
+                }
+                label_1933();
+                if (rpref(1) > 0)
+                {
+                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
+                    cnt = 0 - 1;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        rowactend(cc);
+        mode = 0;
+        return;
+    }
+    int stat = label_1931();
+    if (stat == 0)
+    {
+        txt(lang(
+            u8"調合に必要な材料が見つからない。"s,
+            u8"A required material cannot be found."s));
+        rowactend(cc);
+        return;
+    }
+    label_1933();
+    if (rpref(1) > 0)
+    {
+        cdata[cc].continuous_action_id = 0;
+        goto label_19341_internal;
+    }
+    rowactend(cc);
+    return;
+}
 
 void initialize_recipememory()
 {
@@ -609,7 +706,7 @@ label_1923:
                 rpref(1) = TODO_show_prompt_val;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
-                label_19342();
+                continuous_action_blending();
                 return turn_result_t::turn_end;
             }
             if (rtval == 2)
@@ -1576,93 +1673,6 @@ void label_1933()
     }
     --rpref(1);
     label_1932();
-    return;
-}
-
-void label_19342()
-{
-label_19341_internal:
-    rpid = rpref(0);
-    if (rpid == 0)
-    {
-        rowactend(cc);
-        return;
-    }
-    if (cdata[cc].continuous_action_id == 0)
-    {
-        txtnew();
-        txt(i18n::s.get("core.locale.blending.started", cdata[cc], rpname(rpid)));
-        cdata[cc].continuous_action_id = 12;
-        cdata[cc].continuous_action_turn = rpref(2) % 10000;
-        return;
-    }
-    if (cdata[cc].continuous_action_turn > 0)
-    {
-        if (rnd(30) == 0)
-        {
-            txtef(4);
-            txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
-        }
-        return;
-    }
-    if (rpref(2) >= 10000)
-    {
-        cdata[cc].continuous_action_turn = rpref(2) / 10000;
-        for (int cnt = 0;; ++cnt)
-        {
-            mode = 12;
-            ++gdata_hour;
-            weather_changes();
-            render_hud();
-            if (cnt % 5 == 0)
-            {
-                txtef(4);
-                txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
-            }
-            redraw();
-            await(config::instance().animewait * 5);
-            gdata_minute = 0;
-            cc = 0;
-            --cdata[cc].continuous_action_turn;
-            if (cdata[cc].continuous_action_turn <= 0)
-            {
-                int stat = label_1931();
-                if (stat == 0)
-                {
-                    txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-                    break;
-                }
-                label_1933();
-                if (rpref(1) > 0)
-                {
-                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
-                    cnt = 0 - 1;
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        rowactend(cc);
-        mode = 0;
-        return;
-    }
-    int stat = label_1931();
-    if (stat == 0)
-    {
-        txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-        rowactend(cc);
-        return;
-    }
-    label_1933();
-    if (rpref(1) > 0)
-    {
-        cdata[cc].continuous_action_id = 0;
-        goto label_19341_internal;
-    }
-    rowactend(cc);
     return;
 }
 

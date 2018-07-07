@@ -1,5 +1,6 @@
 #include "ai.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
