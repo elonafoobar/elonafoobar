@@ -3172,7 +3172,7 @@ label_2181_internal:
                 objfix = efp / 100;
                 randomize();
                 change_item_material();
-                txt(i18n::s.get("core.locale.magic.change_material.apply", cdata[cc], inv[ci]));
+                txt(i18n::s.get("core.locale.magic.change_material.apply", cdata[cc], s(0), inv[ci]));
             }
         }
         else
