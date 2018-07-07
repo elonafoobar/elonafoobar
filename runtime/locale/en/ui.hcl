@@ -114,9 +114,11 @@ locale {
                 learning = "Skill Learning"
             }
 
-            skill = "Skill"
-            weapon_proficiency = "Weapon Proficiency"
-            resistance = "Resistance"
+            category {
+                skill = "Skill"
+                weapon_proficiency = "Weapon Proficiency"
+                resistance = "Resistance"
+            }
 
             train_which_skill = "Train which skill?"
             you_can_spend_bonus = "You can spend ${_1} bonus points."
@@ -192,7 +194,7 @@ locale {
             buff {
                 duration = "(${_1}) "
                 is_not_currently = "This character isn't currently blessed or hexed."
-                hint = "Hint" #NOTE
+                hint = "Hint"
             }
 
             skill {
@@ -241,6 +243,8 @@ locale {
         }
 
         appearance {
+            hint = "Right,left [Change]  Shift,Esc [Close]"
+
             # Whitespace is significant.
             # Text is limited to 8~9 halfwidth characters.
             basic {
@@ -259,8 +263,6 @@ locale {
 
                 custom     = "Custom  "
                 riding     = "Riding  "
-
-                hint = "Right,left [Change]  Shift,Esc [Close]"
             }
             detail {
                 body_color  = "Body CL "
@@ -313,6 +315,9 @@ locale {
 
         board {
             title = "Notice Board"
+
+            difficulty = "$"
+            difficulty_counter = "$ x "
 
             no_new_notices = "It seems there are no new notices."
             do_you_meet = "Do you want to meet the client?"

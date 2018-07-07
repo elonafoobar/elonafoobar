@@ -113,9 +113,11 @@ locale {
                 learning = "能力の習得"
             }
 
-            skill = "◆ スキルと特殊能力"
-            weapon_proficiency = "◆ 武器の専門"
-            resistance = "◆ 耐性と抵抗力"
+            category {
+                skill = "◆ スキルと特殊能力"
+                weapon_proficiency = "◆ 武器の専門"
+                resistance = "◆ 耐性と抵抗力"
+            }
 
             train_which_skill = "どの能力を訓練する？"
             you_can_spend_bonus = "残り ${_1} のボーナスをスキルに分配できる"
@@ -240,6 +242,8 @@ locale {
         }
 
         appearance {
+            hint = "左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"
+
             # Whitespace is significant.
             # Text is limited to 8~9 halfwidth characters.
             basic {
@@ -258,8 +262,6 @@ locale {
 
                 custom     = "ｶｽﾀﾑｷｬﾗ "
                 riding     = "乗馬時　"
-
-                hint = "左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"
             }
             detail {
                 body_color  = "体の色　"
@@ -297,14 +299,14 @@ locale {
                 # TODO remove tags
                 salary {
                     title = "◆ 給料(毎月1日と15日に支給)"
-                    sum = "@BL　合計　　 : 約 ${_1}gold"
+                    sum = "@BL　合計　　 : 約 ${_1} gold"
                 }
                 bills {
                     title = "◆ 請求書内訳(毎月1日に発行)"
-                    labor = "@RE　人件費  : 約 ${_1}gold"
-                    maintenance = "@RE　運営費  : 約 ${_1}gold"
-                    tax = "@RE　税金    : 約 ${_1}gold"
-                    sum = "@RE　合計　  : 約 ${_1}gold"
+                    labor = "@RE　人件費  : 約 ${_1} gold"
+                    maintenance = "@RE　運営費  : 約 ${_1} gold"
+                    tax = "@RE　税金    : 約 ${_1} gold"
+                    sum = "@RE　合計　  : 約 ${_1} gold"
                     unpaid = "現在未払いの請求書は${_1}枚"
                 }
             }
@@ -312,6 +314,9 @@ locale {
 
         board {
             title = "掲載されている依頼"
+
+            difficulty = "★"
+            difficulty_counter = "★×"
 
             no_new_notices = "新しい依頼は掲示されていないようだ。"
             do_you_meet = "依頼主に会う？"
@@ -444,7 +449,7 @@ locale {
                 prompt = "対象にする仲間は？"
                 title = "仲間"
 
-                body_skill = "Body/Skill"
+                body_skill = "獲得部位/技能"
                 none = "なし"
 
                 skill_too_low = "遺伝子学のスキルが足りない。"

@@ -31,31 +31,18 @@ std::string strhint6;
 
 void text_set()
 {
-    if (jp)
-    {
-        strhint1 = u8"ｶｰｿﾙ [選択]  "s;
-        strhint2 =
-            ""s + key_pageup + u8","s + key_pagedown + u8" [ページ切替]  "s;
-        strhint3 = u8"Shift,Esc [閉じる]  "s;
-        strhint3b = u8"Shift,Esc [戻る]  "s;
-        strhint4 = u8"決定、"s;
-        strhint5 = ""s + key_identify + u8" [既知の情報]  "s;
-        strhint5b = ""s + key_mode + u8" [情報切替]  "s;
-        strhint6 = u8"p [ポートレイト変更]  "s;
-        strhint7 = u8"0〜9 [ショートカット]  "s;
-    }
-    else
-    {
-        strhint1 = u8"Cursor [Select]  "s;
-        strhint2 = ""s + key_pageup + u8","s + key_pagedown + u8" [Page]  "s;
-        strhint3 = u8"Shift,Esc [Close]  "s;
-        strhint3b = u8"Shift,Esc [Back]  "s;
-        strhint4 = u8"Enter,"s;
-        strhint5 = ""s + key_identify + u8" [Known info]  "s;
-        strhint5b = ""s + key_mode + u8" [Mode]  "s;
-        strhint6 = u8"p [Portrait]  "s;
-        strhint7 = u8"0~9 [Shortcut]  "s;
-    }
+    strhint1 = i18n::s.get("core.locale.ui.hint.cursor");
+    strhint2 =
+        ""s + key_pageup + u8","s + key_pagedown
+        + i18n::s.get("core.locale.ui.hint.page");
+    strhint3 = i18n::s.get("core.locale.ui.hint.close");
+    strhint3b = i18n::s.get("core.locale.ui.hint.back");
+    strhint4 = i18n::s.get("core.locale.ui.hint.enter");
+    strhint5 = ""s + key_identify + i18n::s.get("core.locale.ui.hint.known_info");
+    strhint5b = ""s + key_mode + i18n::s.get("core.locale.ui.hint.mode");
+    strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
+    strhint7 = i18n::s.get("core.locale.ui.hint.shortcut");
+
     SDIM4(_melee, 20, 3, 8);
     if (jp)
     {
@@ -181,15 +168,15 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"ヘルプ"s, u8"Help"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.help");
         listn(1, listmax) = key_help;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"ログ"s, u8"Log"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.log");
         listn(1, listmax) = key_msglog;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"シート"s, u8"Chara"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.chara");
         listn(1, listmax) = key_charainfo;
         ++listmax;
         list(0, listmax) = listmax;
@@ -197,7 +184,7 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"日誌"s, u8"Journal"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.journal");
         listn(1, listmax) = key_journal;
         ++listmax;
         list(0, listmax) = listmax;
@@ -220,15 +207,15 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"装備"s, u8"Wear"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.wear");
         listn(1, listmax) = key_wear;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"休息"s, u8"Rest"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.rest");
         listn(1, listmax) = key_rest;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"魔法"s, u8"Spell"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.spell");
         listn(1, listmax) = key_cast;
         ++listmax;
         list(0, listmax) = listmax;
@@ -236,15 +223,15 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"技能"s, u8"Skill"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.skill");
         listn(1, listmax) = key_skill;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"射撃"s, u8"Fire"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.fire");
         listn(1, listmax) = key_fire;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"掘る"s, u8"Dig"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.dig");
         listn(1, listmax) = key_dig;
         ++listmax;
         list(0, listmax) = listmax;
@@ -259,15 +246,15 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"祈る"s, u8"Pray"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.pray");
         listn(1, listmax) = key_pray;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"装填"s, u8"Ammo"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.ammo");
         listn(1, listmax) = key_ammo;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"干渉"s, u8"Interact"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.interact");
         listn(1, listmax) = key_interact;
         ++listmax;
         list(0, listmax) = listmax;
@@ -275,7 +262,7 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
         list(0, listmax) = listmax;
-        listn(0, listmax) = lang(u8"体当り"s, u8"Bash"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.quick_menu.bash");
         listn(1, listmax) = key_bash;
         ++listmax;
         list(0, listmax) = listmax;
@@ -291,9 +278,9 @@ label_2698:
         listn(1, listmax) = u8"aaa"s;
         ++listmax;
     }
-    s(0) = lang(u8"情報"s, u8"Info"s);
-    s(1) = lang(u8"行動"s, u8"Action"s);
-    s(2) = lang(u8"特殊"s, u8"Etc"s);
+    s(0) = i18n::s.get("core.locale.ui.quick_menu.info");
+    s(1) = i18n::s.get("core.locale.ui.quick_menu.action");
+    s(2) = i18n::s.get("core.locale.ui.quick_menu.etc");
     s(3) = u8"null"s;
     p = page - 1;
     if (p == -1)
@@ -518,7 +505,7 @@ void show_ex_help()
         gcopy(3, 960, 144, 96, 120);
         font(16 - en * 2, snail::font_t::style_t::bold);
         bmes(
-            lang(u8"- ノルンの冒険ガイド -"s, u8"- Norne's travel guide -"s),
+            i18n::s.get("core.locale.ui.exhelp.title"),
             wx + 142,
             wy + 13,
             {255, 245, 235},
@@ -609,7 +596,7 @@ void show_game_help()
         }
     }
     list(0, 0) = 0;
-    listn(0, 0) = lang(u8"キーの一覧"s, u8"Key List"s);
+    listn(0, 0) = i18n::s.get("core.locale.ui.manual.keys.list");
     ++listmax;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
@@ -647,7 +634,7 @@ label_2705_internal:
         display_window(
             (windoww - 780) / 2 + inf_screenx, winposy(496) - 24, 780, 496);
     }
-    display_topic(lang(u8"項目"s, u8"Topic"s), wx + 34, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.manual.topic"), wx + 34, wy + 36);
     if (mode == 1)
     {
         p = 2;
@@ -680,38 +667,38 @@ label_2705_internal:
         x = wx + 188;
         y = wy + 6;
         display_topic(
-            lang(u8"アイテムに関するキー"s, u8"Item Keys"s), x + 18, y + 30);
+            i18n::s.get("core.locale.ui.manual.keys.item.title"), x + 18, y + 30);
         display_topic(
-            lang(u8"行動に関するキー"s, u8"Action Keys"s), x + 18, y + 142);
+            i18n::s.get("core.locale.ui.manual.keys.action.title"), x + 18, y + 142);
         display_topic(
-            lang(u8"情報に関するキー"s, u8"Information Keys"s),
+                      i18n::s.get("core.locale.ui.manual.keys.info.title"),
             x + 18,
             y + 256);
         display_topic(
-            lang(u8"その他のキー"s, u8"Other Keys"s), x + 18, y + 328);
-        s(0) = u8"アイテムを取る(get)"s;
+            i18n::s.get("core.locale.ui.manual.keys.other.title"), x + 18, y + 328);
+        s(0) = i18n::s.get("core.locale.ui.manual.keys.item.get");
         s(1) = key_get;
-        s(2) = u8"アイテムを置く(drop)"s;
+        s(2) = i18n::s.get("core.locale.ui.manual.keys.item.drop");
         s(3) = key_drop;
-        s(4) = u8"アイテムを調べる(examine)"s;
+        s(4) = i18n::s.get("core.locale.ui.manual.keys.item.examine");
         s(5) = key_inventory;
-        s(6) = u8"装備する(wear,wield)"s;
+        s(6) = i18n::s.get("core.locale.ui.manual.keys.item.wear_wield");
         s(7) = key_wear;
-        s(8) = u8"食べる(eat)"s;
+        s(8) = i18n::s.get("core.locale.ui.manual.keys.item.eat");
         s(9) = key_eat;
-        s(10) = u8"飲む(quaff)"s;
+        s(10) = i18n::s.get("core.locale.ui.manual.keys.item.quaff");
         s(11) = key_drink;
-        s(12) = u8"読む(read)"s;
+        s(12) = i18n::s.get("core.locale.ui.manual.keys.item.read");
         s(13) = key_read;
-        s(14) = u8"振る(zap)"s;
+        s(14) = i18n::s.get("core.locale.ui.manual.keys.item.zap");
         s(15) = key_zap;
-        s(16) = u8"道具を使う(tool)"s;
+        s(16) = i18n::s.get("core.locale.ui.manual.keys.item.tool");
         s(17) = key_use;
-        s(18) = u8"調合(blend)"s;
+        s(18) = i18n::s.get("core.locale.ui.manual.keys.item.blend");
         s(19) = key_dip;
-        s(20) = u8"投げる(throw)"s;
+        s(20) = i18n::s.get("core.locale.ui.manual.keys.item.throw");
         s(21) = key_throw;
-        s(22) = u8"装填(ammo)"s;
+        s(22) = i18n::s.get("core.locale.ui.manual.keys.item.ammo");
         s(23) = key_ammo;
         label_2702();
         for (int cnt = 0; cnt < 12; ++cnt)
@@ -723,29 +710,29 @@ label_2705_internal:
             pos(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
-        s(0) = u8"周囲を調べる(search)"s;
+        s(0) = i18n::s.get("core.locale.ui.manual.keys.action.search");
         s(1) = key_search;
-        s(2) = u8"魔法を唱える(cast)"s;
+        s(2) = i18n::s.get("core.locale.ui.manual.keys.action.cast");
         s(3) = key_cast;
-        s(4) = u8"干渉する(interact)"s;
+        s(4) = i18n::s.get("core.locale.ui.manual.keys.action.interact");
         s(5) = key_interact;
-        s(6) = u8"階段を降りる,入る(go down)"s;
+        s(6) = i18n::s.get("core.locale.ui.manual.keys.action.go_down");
         s(7) = key_godown;
-        s(8) = u8"階段を昇る(go up)"s;
+        s(8) = i18n::s.get("core.locale.ui.manual.keys.action.go_up");
         s(9) = key_goup;
-        s(10) = u8"その場で待機(wait)"s;
+        s(10) = i18n::s.get("core.locale.ui.manual.keys.action.wait");
         s(11) = key_wait;
-        s(12) = u8"ターゲットを指定(target)"s;
+        s(12) = i18n::s.get("core.locale.ui.manual.keys.action.target");
         s(13) = key_target;
-        s(14) = u8"射撃する(fire)"s;
+        s(14) = i18n::s.get("core.locale.ui.manual.keys.action.fire");
         s(15) = key_fire;
-        s(16) = u8"能力を使う(apply)"s;
+        s(16) = i18n::s.get("core.locale.ui.manual.keys.action.apply");
         s(17) = key_skill;
-        s(18) = u8"体当たりする(bash)"s;
+        s(18) = i18n::s.get("core.locale.ui.manual.keys.action.bash");
         s(19) = key_bash;
-        s(20) = u8"穴を掘る(dig)"s;
+        s(20) = i18n::s.get("core.locale.ui.manual.keys.action.dig");
         s(21) = key_dig;
-        s(22) = u8"鍵を開ける(open)"s;
+        s(22) = i18n::s.get("core.locale.ui.manual.keys.action.open");
         s(23) = key_open;
         s(24) = "";
         s(25) = "";
@@ -759,17 +746,17 @@ label_2705_internal:
             pos(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
-        s(0) = u8"能力・スキル情報(chara)"s;
+        s(0) = i18n::s.get("core.locale.ui.manual.keys.info.chara");
         s(1) = key_charainfo;
-        s(2) = u8"冒険日誌を表示(journal)"s;
+        s(2) = i18n::s.get("core.locale.ui.manual.keys.info.journal");
         s(3) = key_journal;
-        s(4) = u8"ヘルプを表示(help)"s;
+        s(4) = i18n::s.get("core.locale.ui.manual.keys.info.help");
         s(5) = key_help;
-        s(6) = u8"メッセージログを表示(log)"s;
+        s(6) = i18n::s.get("core.locale.ui.manual.keys.info.log");
         s(7) = key_msglog;
-        s(8) = u8"マテリアル表示(material)"s;
+        s(8) = i18n::s.get("core.locale.ui.manual.keys.info.material");
         s(9) = key_material;
-        s(10) = u8"特徴の表示(feat)"s;
+        s(10) = i18n::s.get("core.locale.ui.manual.keys.info.feat");
         s(11) = key_trait;
         label_2702();
         for (int cnt = 0; cnt < 6; ++cnt)
@@ -781,15 +768,15 @@ label_2705_internal:
             pos(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14);
             mes(s(cnt * 2 + 1));
         }
-        s(0) = u8"セーブして終了(save)"s;
+        s(0) = i18n::s.get("core.locale.ui.manual.keys.other.save");
         s(1) = key_save;
-        s(2) = u8"神に祈る(pray)"s;
+        s(2) = i18n::s.get("core.locale.ui.manual.keys.other.pray");
         s(3) = key_pray;
-        s(4) = u8"神に捧げる(offer)"s;
+        s(4) = i18n::s.get("core.locale.ui.manual.keys.other.offer");
         s(5) = key_offer;
-        s(6) = u8"ドアを閉める(close)"s;
+        s(6) = i18n::s.get("core.locale.ui.manual.keys.other.close");
         s(7) = key_close;
-        s(8) = u8"与える(give)"s;
+        s(8) = i18n::s.get("core.locale.ui.manual.keys.other.give");
         s(9) = key_give;
         s(10) = "";
         s(11) = "";
@@ -806,9 +793,9 @@ label_2705_internal:
         }
         font(13 - en * 2);
         pos(x + 38, y + 408);
-        mes(lang(
-            u8"F9 インタフェース非表示  F11 キャラ情報の出力  F12 コンソールの表示"s,
-            u8"F9 Hide interface  F11 Export chara sheet  F12 Console"s));
+        mes(u8"F9 "s + i18n::s.get("core.locale.ui.manual.keys.other.hide_interface")
+            + u8"F11  " + i18n::s.get("core.locale.ui.manual.keys.other.export_chara_sheet")
+            + u8"F12  " + i18n::s.get("core.locale.ui.manual.keys.other.console"));
     }
     else
     {
@@ -905,7 +892,7 @@ turn_result_t show_chat_history()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    s = lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s);
+    s = i18n::s.get("core.locale.ui.message.hit_any_key");
     showscroll(s, wx, wy, ww, wh);
     net_read();
     buff = "";
@@ -1027,7 +1014,7 @@ turn_result_t show_message_log()
     wh(1) = 1;
     wh(2) = -1;
     snd(93);
-    show_title(lang(u8"何かキーを押すと閉じる"s, u8"Hit any key to close"s));
+    show_title(i18n::s.get("core.locale.ui.message.hit_any_key"));
     drawmenu(2);
     window_animation_corner(wx, wy, ww, wh, 8, 4);
 
@@ -1219,8 +1206,7 @@ turn_result_t play_scene()
             }
         }
     }
-    txt(lang(
-        u8"どのシーンを再生する？"s, u8"Which scene do you want to replay?"s));
+    txt(i18n::s.get("core.locale.ui.scene.which"));
 label_2728_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -1262,9 +1248,7 @@ label_2729_internal:
     mes(u8"Elona - Scene playback"s);
     font(12 - en * 2);
     pos(wx + 390, wy + 50);
-    mes(lang(
-        u8"アンロックされたシーンを再生できます。\nシーンNoは連続していません。"s,
-        u8"You can play the unlocked scenes."s));
+    mes(i18n::s.get("core.locale.ui.scene.you_can_play"));
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -1277,7 +1261,7 @@ label_2729_internal:
         i = list(0, p);
         cs_list(
             cs == cnt,
-            lang(u8"シーン No."s, u8"Scene No. "s) + i,
+            i18n::s.get("core.locale.ui.scene.scene_no") + i,
             wx + 424,
             wy + 91 + cnt * 22 - 1);
     }
@@ -1305,7 +1289,7 @@ label_2729_internal:
         screenupdate = -1;
         update_entire_screen();
         txtnew();
-        txt(lang(u8"シーンの再生を終えた。"s, u8"The scene has been played."s));
+        txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
         return turn_result_t::play_scene;
     }
     if (key == key_pageup)
@@ -1375,15 +1359,17 @@ label_2028_internal:
     }
     drawmenu(1);
 label_2029_internal:
-    s(0) = lang(u8"魔法の詠唱"s, u8"Spell"s);
+    s(0) = i18n::s.get("core.locale.ui.spell.title");
     s(1) = strhint2 + strhint3 + strhint7;
     display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
-    display_topic(lang(u8"魔法の名称"s, u8"Name"s), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.spell.name"), wx + 28, wy + 36);
     display_topic(
-        lang(u8"消費MP(ｽﾄｯｸ) Lv/成功"s, u8"Cost(Stock) Lv/Chance"s),
+        i18n::s.get("core.locale.ui.spell.cost")
+        + "(" + i18n::s.get("core.locale.ui.spell.stock") + ")"
+        + " " +i18n::s.get("core.locale.ui.spell.lv_chance"),
         wx + 220,
         wy + 36);
-    display_topic(lang(u8"効果"s, u8"Effect"s), wx + 400, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.spell.effect"), wx + 400, wy + 36);
     pos(wx + 46, wy - 16);
     gcopy(3, 912, 48, 48, 48);
     pos(wx + ww - 78, wy);
@@ -1602,13 +1588,13 @@ label_2008_internal:
     }
     drawmenu(1);
 label_2009_internal:
-    s(0) = lang(u8"能力の発動"s, u8"Skill"s);
+    s(0) = i18n::s.get("core.locale.ui.skill.title");
     s(1) = strhint2 + strhint3 + strhint7;
     display_window(
         (windoww - 600) / 2 + inf_screenx, winposy(438), 600, 438, 0, 60);
-    display_topic(lang(u8"能力の名称"s, u8"Name"s), wx + 28, wy + 36);
-    display_topic(lang(u8"コスト"s, u8"Cost"s), wx + 220, wy + 36);
-    display_topic(lang(u8"能力の効果"s, u8"Detail"s), wx + 320, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.skill.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.skill.cost"), wx + 220, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.skill.detail"), wx + 320, wy + 36);
     pos(wx + 46, wy - 16);
     gcopy(3, 960, 48, 48, 48);
     pos(wx + ww - 78, wy + wh - 165);
@@ -1785,7 +1771,7 @@ void label_2031()
         p = the_ability_db[i]->sdataref1 % 1000;
         const auto duration = calc_buff_duration(p, calcspellpower(i, cc));
         const auto description = get_buff_description(p, calcspellpower(i, cc));
-        s = ""s + duration + lang(u8"ﾀｰﾝ "s, u8"t "s) + description;
+        s = ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") + description;
         return;
     }
     const auto damage = calc_skill_damage(i, cc, calcspellpower(i, cc));
@@ -1827,7 +1813,7 @@ void label_2031()
         }
         else
         {
-            s += lang(u8"ﾊﾟﾜｰ"s, u8"Power:"s) + bonus;
+            s += i18n::s.get("core.locale.ui.spell.power"); + bonus;
         }
         s += u8" "s;
     }
@@ -2086,7 +2072,7 @@ label_20331:
     }
     list(0, listmax) = -1;
     list(1, listmax) = 20000;
-    listn(0, listmax) = lang(u8"◆ スキルと特殊能力"s, u8"Skill"s);
+    listn(0, listmax) = i18n::s.get("core.locale.ui.chara_sheet.category.skill");
     ++listmax;
     if (csctrl == 3)
     {
@@ -2119,7 +2105,7 @@ label_20331:
     }
     list(0, listmax) = -1;
     list(1, listmax) = 30000;
-    listn(0, listmax) = lang(u8"◆ 武器の専門"s, u8"Weapon Proficiency"s);
+    listn(0, listmax) = i18n::s.get("core.locale.ui.chara_sheet.category.weapon_proficiency");
     ++listmax;
     for (int cnt = 100; cnt < 150; ++cnt)
     {
@@ -2150,7 +2136,7 @@ label_20331:
     {
         list(0, listmax) = -1;
         list(1, listmax) = 40000;
-        listn(0, listmax) = lang(u8"◆ 耐性と抵抗力"s, u8"Resistance"s);
+        listn(0, listmax) = i18n::s.get("core.locale.ui.chara_sheet.category.resistance");
         ++listmax;
         for (int cnt = 50; cnt < 100; ++cnt)
         {
@@ -2171,14 +2157,14 @@ label_20331:
     wy = winposy(400) - 10;
     ww = 700;
     wh = 400;
-    s = lang(u8"キャラクターシート"s, u8"Character Sheet"s);
+    s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
     if (csctrl == 2)
     {
-        s = lang(u8"能力訓練"s, u8"Skill Training"s);
+        s = i18n::s.get("core.locale.ui.chara_sheet.title.training");
     }
     if (csctrl == 3)
     {
-        s = lang(u8"能力の習得"s, u8"Skill Learning"s);
+        s = i18n::s.get("core.locale.ui.chara_sheet.title.learning");
     }
     drawmenu(0);
     if (mode != 1)
@@ -2213,7 +2199,7 @@ label_20331:
     if (csctrl == 2)
     {
         txtnew();
-        txt(lang(u8"どの能力を訓練する？"s, u8"Train which skill?"s));
+        txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
     }
     returnfromportrait = 0;
 label_2034_internal:
@@ -2239,20 +2225,20 @@ label_2034_internal:
     {
         if (page == 0)
         {
-            s = lang(u8"ｶｰｿﾙ [祝福と呪いの情報]  "s, u8"Cursor [Hint]  "s)
+            s = i18n::s.get("core.locale.ui.chara_sheet.hint.hint")
                 + strhint6 + strhint2 + strhint3;
         }
         else
         {
-            s = lang(u8"決定 [ボーナスの分配]  "s, u8"Enter [Spend Bonus]  "s)
+            s = i18n::s.get("core.locale.ui.chara_sheet.hint.spend_bonus")
                 + strhint2 + strhint3;
         }
     }
     if (csctrl == 1)
     {
-        s = lang(
-            u8"決定ｷｰ [リロール]  "s + strhint6 + u8"Shift,Esc [最終確認]"s,
-            u8"Enter Key [Reroll]  "s + strhint6 + u8"Shift,Esc [Confirm]"s);
+        s = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll")
+            + strhint6
+            + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
     }
     if (csctrl == 2)
     {
@@ -2262,7 +2248,7 @@ label_2034_internal:
         }
         else
         {
-            s = lang(u8"決定 [スキルを訓練]  "s, u8"Enter [Train Skill]  "s)
+            s = i18n::s.get("core.locale.ui.chara_sheet.hint.train_skill")
                 + strhint2 + strhint3;
         }
     }
@@ -2274,7 +2260,7 @@ label_2034_internal:
         }
         else
         {
-            s = lang(u8"決定 [スキルを習得]  "s, u8"Enter [Learn Skill]  "s)
+            s = i18n::s.get("core.locale.ui.chara_sheet.hint.learn_skill")
                 + strhint2 + strhint3;
         }
     }
@@ -2282,7 +2268,8 @@ label_2034_internal:
     {
         if (page == 0)
         {
-            s = u8"ｶｰｿﾙ [祝福と呪いの情報] "s + strhint6 + strhint2 + strhint3;
+            s = i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info")
+                + strhint6 + strhint2 + strhint3;
         }
         else
         {
@@ -2294,7 +2281,8 @@ label_2034_internal:
         if (page != 0)
         {
             s += ""s + key_mode2 + u8" ["s
-                + lang(u8"スキルトラック"s, u8"Track Skill"s) + u8"]"s;
+                + i18n::s.get("core.locale.ui.chara_sheet.hint.track_skill")
+                + u8"]"s;
         }
     }
     color(0, 0, 0);
@@ -2305,11 +2293,8 @@ label_2035_internal:
     {
         if (page != 0)
         {
-            s = lang(
-                u8"残り "s + cdata[cc].skill_bonus
-                    + u8" のボーナスをスキルに分配できる"s,
-                u8"You can spend "s + cdata[cc].skill_bonus
-                    + u8" bonus points."s);
+            s = i18n::s.get("core.locale.ui.chara_sheet.you_can_spend_bonus",
+                            cdata[cc].skill_bonus);
         }
     }
     display_window2(
@@ -2319,17 +2304,15 @@ label_2035_internal:
         keyrange = 0;
         key_list = key_enter;
         display_topic(
-            lang(
-                u8"能力(元の値)  - 潜在能力"s,
-                u8"Attributes(Org) - Potential"s),
+                      i18n::s.get("core.locale.ui.chara_sheet.attributes"),
             wx + 28,
             wy + 122);
         display_topic(
-            lang(u8"各種修正"s, u8"Combat Rolls"s), wx + 400, wy + 253);
-        display_topic(lang(u8"冒険の軌跡"s, u8"Trace"s), wx + 28, wy + 273);
+            i18n::s.get("core.locale.ui.chara_sheet.combat_rolls"), wx + 400, wy + 253);
+        display_topic(i18n::s.get("core.locale.ui.chara_sheet.history"), wx + 28, wy + 273);
         display_topic(
-            lang(u8"祝福と呪い"s, u8"Blessing and Hex"s), wx + 400, wy + 122);
-        display_topic(lang(u8"その他"s, u8"Extra Info"s), wx + 220, wy + 273);
+            i18n::s.get("core.locale.ui.chara_sheet.blessing_and_hex"), wx + 400, wy + 122);
+        display_topic(i18n::s.get("core.locale.ui.chara_sheet.extra_info"), wx + 220, wy + 273);
         if (cdata[cc].portrait >= 0)
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
@@ -2373,11 +2356,11 @@ label_2035_internal:
                 inf_tiles);
         }
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
-        s(0) = lang(u8"レベル"s, u8"Level"s);
-        s(1) = lang(u8"経験"s, u8"EXP"s);
-        s(2) = lang(u8"必要値"s, u8"Next Lv"s);
-        s(3) = lang(u8"信仰"s, u8"God"s);
-        s(4) = lang(u8"所属"s, u8"Guild"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.exp.exp");
+        s(2) = i18n::s.get("core.locale.ui.chara_sheet.exp.next_level");
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.exp.god");
+        s(4) = i18n::s.get("core.locale.ui.chara_sheet.exp.guild");
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             pos(wx + 355, wy + 46 + cnt * 15);
@@ -2385,14 +2368,14 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        s(0) = lang(u8"名前"s, u8"Name"s);
-        s(1) = lang(u8"異名"s, u8"Aka"s);
-        s(2) = lang(u8"種族"s, u8"Race"s);
-        s(3) = lang(u8"性別"s, u8"Sex"s);
-        s(4) = lang(u8"職業"s, u8"Class"s);
-        s(5) = lang(u8"年齢"s, u8"Age"s);
-        s(6) = lang(u8"身長"s, u8"Height"s);
-        s(7) = lang(u8"体重"s, u8"Weight"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.personal.name");
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.personal.aka");
+        s(2) = i18n::s.get("core.locale.ui.chara_sheet.personal.race");
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.personal.sex");
+        s(4) = i18n::s.get("core.locale.ui.chara_sheet.personal.class");
+        s(5) = i18n::s.get("core.locale.ui.chara_sheet.personal.age");
+        s(6) = i18n::s.get("core.locale.ui.chara_sheet.personal.height");
+        s(7) = i18n::s.get("core.locale.ui.chara_sheet.personal.weight");
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
@@ -2410,16 +2393,16 @@ label_2035_internal:
             mes(i18n::_(u8"ui", u8"attribute", u8"_"s + cnt));
             color(0, 0, 0);
         }
-        s(0) = lang(u8"生命力"s, u8"Life"s);
-        s(1) = lang(u8"マナ"s, u8"Mana"s);
-        s(2) = lang(u8"狂気度"s, u8"Sanity"s);
-        s(3) = lang(u8"速度"s, u8"Speed"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.attribute.life");
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.attribute.mana");
+        s(2) = i18n::s.get("core.locale.ui.chara_sheet.attribute.sanity");
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.attribute.speed");
         s(4) = "";
-        s(5) = lang(u8"名声"s, u8"Fame"s);
-        s(6) = lang(u8"カルマ"s, u8"Karma"s);
+        s(5) = i18n::s.get("core.locale.ui.chara_sheet.attribute.fame");
+        s(6) = i18n::s.get("core.locale.ui.chara_sheet.attribute.karma");
         s(7) = "";
-        s(8) = lang(u8"打撃修正"s, u8"Melee"s);
-        s(9) = lang(u8"射撃修正"s, u8"Shoot"s);
+        s(8) = i18n::s.get("core.locale.ui.chara_sheet.attribute.melee");
+        s(9) = i18n::s.get("core.locale.ui.chara_sheet.attribute.shoot");
         s(10) = "";
         s(11) = "";
         s(12) = "";
@@ -2433,10 +2416,10 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        s(0) = lang(u8"ターン"s, u8"Turns"s);
-        s(1) = lang(u8"経過日"s, u8"Days"s);
-        s(2) = lang(u8"殺害数"s, u8"Kills"s);
-        s(3) = lang(u8"総時間"s, u8"Time"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.time.turns");
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.time.days");
+        s(2) = i18n::s.get("core.locale.ui.chara_sheet.time.kills");
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.time.time");
         s(4) = "";
         s(5) = "";
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -2446,10 +2429,10 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        s(0) = lang(u8"荷車重量"s, u8"Cargo Wt"s);
-        s(1) = lang(u8"荷車限界"s, u8"Cargo Lmt"s);
-        s(2) = lang(u8"装備重量"s, u8"Equip Wt"s);
-        s(3) = lang(u8"最深到達"s, u8"Deepest Lv"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_weight");
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_limit");
+        s(2) = i18n::s.get("core.locale.ui.chara_sheet.weight.equip_weight");
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.weight.deepest_level");
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             pos(wx + 224, wy + 301 + cnt * 15);
@@ -2484,7 +2467,8 @@ label_2035_internal:
         {
             s(3) = cnven(i18n::_(u8"ui", u8"female"));
         }
-        s(5) = ""s + calcage(cc) + u8" "s + lang(u8"歳"s, ""s);
+        s(5) = ""s + calcage(cc) + u8" "s
+            + i18n::s.get("core.locale.ui.chara_sheet.personal.age_counter");
         s(6) = ""s + cdata[cc].height + u8" cm"s;
         s(7) = ""s + cdata[cc].weight + u8" kg"s;
         for (int cnt = 0; cnt < 8; ++cnt)
@@ -2567,11 +2551,11 @@ label_2035_internal:
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 417, wy + 281 + p(2) * 16);
-        mes(lang(u8"軽減"s, u8"Prot"s));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"));
         color(0, 0, 0);
         color(20, 10, 0);
         pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
-        mes(lang(u8"回避"s, u8"Evade"s));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.evade"));
         color(0, 0, 0);
         attackskill = 106;
         int evade = calc_evasion(tc);
@@ -2583,8 +2567,8 @@ label_2035_internal:
         pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
         mes(""s + evade + u8"%"s);
         ++p(2);
-        s(0) = ""s + gdata_play_turns + ""s + lang(u8"ターン"s, u8" Turns"s);
-        s(1) = ""s + gdata_play_days + ""s + lang(u8"日"s, u8" Days"s);
+        s(0) = i18n::s.get("core.locale.ui.chara_sheet.time.turn_counter", gdata_play_turns);
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.time.days_counter", gdata_play_days);
         s(2) = ""s + gdata_kill_count;
         s(3) = ""s
             + cnvplaytime(
@@ -2600,8 +2584,8 @@ label_2035_internal:
         s(1) = cnvweight(gdata_current_cart_limit);
         s(2) = cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s
             + cnveqweight(cc);
-        s(3) = cnvrank(gdata_deepest_dungeon_level)
-            + lang(u8"階相当"s, u8" Level"s);
+        s(3) = i18n::s.get("core.locale.ui.chara_sheet.weight.level_counter",
+                           cnvrank(gdata_deepest_dungeon_level));
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             pos(wx + 287 + en * 14, wy + 299 + cnt * 15);
@@ -2639,16 +2623,12 @@ label_2035_internal:
                       std::to_string(cdata[cc].buffs[cs_buff].id),
                       u8"name")
                 + u8": "s + cdata[cc].buffs[cs_buff].turns
-                + lang(
-                      (u8"("s + duration + u8")ﾀｰﾝの間、"s),
-                      (u8"("s + duration + u8") "s))
+                + i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration)
                 + description;
         }
         else
         {
-            s = lang(
-                u8"今は持続効果を受けていない"s,
-                u8"This character isn't currently blessed or hexed."s);
+            s = i18n::s.get("core.locale.ui.chara_sheet.buff.is_not_currently");
         }
         font(13 - en * 2);
         pos(wx + 108, wy + 366);
@@ -2656,15 +2636,17 @@ label_2035_internal:
         font(11 + sizefix * 2 - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 70, wy + 369 - en * 3);
-        mes(lang(u8"説明:"s, u8"Hint:"s));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":");
         color(0, 0, 0);
     }
     else
     {
-        display_topic(lang(u8"能力の名称"s, u8"Name"s), wx + 28, wy + 36);
+        display_topic(i18n::s.get("core.locale.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
         display_topic(
-            lang(u8"Lv(潜在)"s, u8"Lv(Potential)"s), wx + 182, wy + 36);
-        display_topic(lang(u8"効果"s, u8"Detail"s), wx + 320, wy + 36);
+                      i18n::s.get("core.locale.ui.chara_sheet.skill.level")
+                      + "(" + i18n::s.get("core.locale.ui.chara_sheet.skill.potential") + ")",
+                      wx + 182, wy + 36);
+        display_topic(i18n::s.get("core.locale.ui.chara_sheet.skill.detail"), wx + 320, wy + 36);
         keyrange = 0;
         p(1) = 0;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -2734,8 +2716,7 @@ label_2035_internal:
                 s = i18n::_(u8"ability", std::to_string(i), u8"name");
                 if (i >= 50 && i < 100)
                 {
-                    s = lang(""s, u8"Resist "s) + cnven(s)
-                        + lang(u8"耐性"s, ""s);
+                    s = i18n::s.get("core.locale.ui.chara_sheet.skill.resist", cnven(s));
                 }
                 for (int cnt = 0; cnt < 3; ++cnt)
                 {
@@ -3094,15 +3075,16 @@ label_2051_internal:
         page = 0;
     }
 label_2052_internal:
-    s(0) = lang(u8"装備品"s, u8"Equipment"s);
+    s(0) = i18n::s.get("core.locale.ui.equip.title");
     s(1) = strhint5 + strhint5b + strhint3;
     display_window(
         (windoww - 690) / 2 + inf_screenx, winposy(428), 690, 428, 64);
     display_topic(
-        lang(u8"部位/装備品名称"s, u8"Category/Name"s), wx + 28, wy + 30);
+        i18n::s.get("core.locale.ui.equip.category")
+        + "/" + i18n::s.get("core.locale.ui.equip.name"), wx + 28, wy + 30);
     if (showresist == 0)
     {
-        display_topic(lang(u8"重さ"s, u8"Weight"s), wx + 524, wy + 30);
+        display_topic(i18n::s.get("core.locale.ui.equip.weight"), wx + 524, wy + 30);
     }
     pos(wx + 46, wy - 16);
     gcopy(3, 768, 48, 48, 48);
@@ -3113,17 +3095,16 @@ label_2052_internal:
     if (showresist)
     {
         pos(wx + 320, wy + 40);
-        mes(lang(
-            u8"火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"s,
-            u8"Fi Co Li Da Mi Po Nt So Nr Ch Ma"s));
+        mes(i18n::s.get("core.locale.ui.equip.resist"));
     }
     display_note(
-        lang(u8"装備重量: "s, u8"Equip weight: "s)
+        i18n::s.get("core.locale.ui.equip.equip_weight") + ": "
         + cnvweight(cdata[cc].sum_of_equipment_weight) + cnveqweight(cc)
-        + lang(u8" 命中修正:"s, u8" Hit Bonus:"s) + cdata[cc].hit_bonus
-        + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
-        + cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s
-        + cdata[cc].pv);
+        + " " + i18n::s.get("core.locale.ui.equip.hit_bonus") + ":"
+        + cdata[cc].hit_bonus
+        + " " + i18n::s.get("core.locale.ui.equip.damage_bonus") + ":"
+        + cdata[cc].damage_bonus
+        + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s + cdata[cc].pv);
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     gmode(2);
     keyrange = 0;
@@ -3144,7 +3125,7 @@ label_2052_internal:
         q = i18n::_(u8"ui", u8"body_part", u8"_"s + list(1, p));
         if (list(0, p) == mainhand)
         {
-            q = lang(u8"利手"s, u8"Hand*"s);
+            q = i18n::s.get("core.locale.ui.equip.main_hand");
         }
         pos(wx + 22, wy + 60 + cnt * 19 - 4);
         gcopy(3, 600 + (list(1, p) - 1) * 24, 336, 24, 24);
@@ -3218,18 +3199,14 @@ label_2052_internal:
             ci = cdata_body_part(cc, body) % 10000 - 1;
             if (is_cursed(inv[ci].curse_state))
             {
-                txt(lang(
-                    itemname(ci) + u8"は外せない。"s,
-                    ""s + itemname(ci) + u8" can't be taken off."s));
+                txt(i18n::s.get("core.locale.ui.equip.cannot_be_taken_off", inv[ci]));
                 goto label_2051_internal;
             }
             unequip_item(cc);
             chara_refresh(cc);
             snd(13);
             txtnew();
-            txt(lang(
-                itemname(ci) + u8"を外した。"s,
-                u8"You unequip "s + itemname(ci) + u8"."s));
+            txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
             if (cdata_body_part(cc, body) / 10000 == 5)
             {
                 equip_melee_weapon();
@@ -3396,8 +3373,8 @@ label_1860_internal:
 label_1861_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
-    display_topic(lang(u8"所持マテリアル"s, u8"Name"s), wx + 38, wy + 36);
-    display_topic(lang(u8"説明"s, u8"Detail"s), wx + 296, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.material.name"), wx + 38, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.material.detail"), wx + 296, wy + 36);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -3424,7 +3401,9 @@ label_1861_internal:
             break;
         }
         i = list(0, p);
-        s = ""s + matname(i) + lang(u8" × "s, u8" x "s) + mat(i);
+        s = ""s + matname(i)
+            + " " + i18n::s.get("core.locale.crafting.menu.x") + " "
+            + mat(i);
         cs_list(cs == cnt, s, wx + 96, wy + 66 + cnt * 19 - 1, 0, 0);
         s = matdesc(i);
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
@@ -3699,64 +3678,35 @@ label_2040_internal:
     listmax = 0;
     if (page == 0)
     {
-        if (jp)
-        {
-            s(0) = u8"決定    "s;
-            s(1) = u8"肖像　　"s;
-            s(2) = u8"髪　　　"s;
-            s(3) = u8"副髪　　"s;
-            s(4) = u8"髪の色　"s;
-            s(5) = u8"体　　　"s;
-            s(6) = u8"服　　　"s;
-            s(7) = u8"ﾊﾟﾝﾂ　　"s;
-            s(8) = u8"詳細設定"s;
-        }
-        if (en)
-        {
-            s(0) = u8"Done    "s;
-            s(1) = u8"Portrait"s;
-            s(2) = u8"Hair    "s;
-            s(3) = u8"Sub Hair"s;
-            s(4) = u8"Hair CL "s;
-            s(5) = u8"Body    "s;
-            s(6) = u8"Cloth   "s;
-            s(7) = u8"Pants   "s;
-            s(8) = u8"Set Detail"s;
-        }
+        s(0) = i18n::s.get("core.locale.ui.appearance.basic.done");
+        s(1) = i18n::s.get("core.locale.ui.appearance.basic.portrait");
+        s(2) = i18n::s.get("core.locale.ui.appearance.basic.hair");
+        s(3) = i18n::s.get("core.locale.ui.appearance.basic.sub_hair");
+        s(4) = i18n::s.get("core.locale.ui.appearance.basic.hair_color");
+        s(5) = i18n::s.get("core.locale.ui.appearance.basic.body");
+        s(6) = i18n::s.get("core.locale.ui.appearance.basic.cloth");
+        s(7) = i18n::s.get("core.locale.ui.appearance.basic.pants");
+        s(8) = i18n::s.get("core.locale.ui.appearance.basic.set_detail");
         if (cc != 0)
         {
-            s(9) = lang(u8"ｶｽﾀﾑｷｬﾗ "s, u8"Custom  "s);
+            s(9) = i18n::s.get("core.locale.ui.appearance.basic.custom");
         }
         else
         {
-            s(9) = lang(u8"乗馬時　"s, u8"Riding  "s);
+            s(9) = i18n::s.get("core.locale.ui.appearance.basic.riding");
         }
         p = 9 + (cc != 0) + (cc == 0) * (gdata_mount != 0);
     }
     else
     {
-        if (jp)
-        {
-            s(0) = u8"体の色　"s;
-            s(1) = u8"服の色　"s;
-            s(2) = u8"ﾊﾟﾝﾂの色"s;
-            s(3) = u8"ｱｸｾｻﾘ1　"s;
-            s(4) = u8"ｱｸｾｻﾘ2　"s;
-            s(5) = u8"ｱｸｾｻﾘ3　"s;
-            s(6) = u8"目　　　"s;
-            s(7) = u8"基本設定"s;
-        }
-        if (en)
-        {
-            s(0) = u8"Body CL "s;
-            s(1) = u8"Cloth CL"s;
-            s(2) = u8"Pants CL"s;
-            s(3) = u8"Etc1    "s;
-            s(4) = u8"Etc2    "s;
-            s(5) = u8"Etc3    "s;
-            s(6) = u8"Eyes    "s;
-            s(7) = u8"Set Basic"s;
-        }
+        s(0) = i18n::s.get("core.locale.ui.appearance.detail.body_color");
+        s(1) = i18n::s.get("core.locale.ui.appearance.detail.cloth_color");
+        s(2) = i18n::s.get("core.locale.ui.appearance.detail.pants_color");
+        s(3) = i18n::s.get("core.locale.ui.appearance.detail.etc_1");
+        s(4) = i18n::s.get("core.locale.ui.appearance.detail.etc_2");
+        s(5) = i18n::s.get("core.locale.ui.appearance.detail.etc_3");
+        s(6) = i18n::s.get("core.locale.ui.appearance.detail.eyes");
+        s(7) = i18n::s.get("core.locale.ui.appearance.detail.set_basic");
         p = 8;
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -3778,14 +3728,12 @@ label_2040_internal:
     }
 label_2041_internal:
     pagesize = 0;
-    s(0) = lang(u8"肖像の変更"s, u8"Appearance"s);
-    s(1) = lang(
-        u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
-        u8"Right,left [Change]  Shift,Esc [Close]"s);
+    s(0) = i18n::s.get("core.locale.ui.appearance.basic.title");
+    s(1) = i18n::s.get("core.locale.ui.appearance.hint");
     display_window(
         (windoww - 380) / 2 + inf_screenx, winposy(340) - 12, 380, 340);
     pagesize = listmax;
-    display_topic(lang(u8"項目"s, u8"Category"s), wx + 34, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.appearance.basic.category"), wx + 34, wy + 36);
     pos(wx + ww - 40, wy);
     gcopy(3, 960, 96, 48, 120);
     ++i;
@@ -4005,24 +3953,12 @@ int label_2044()
     cs_bk = -1;
     windowshadow = 1;
     listmax = 0;
-    if (jp)
-    {
-        s(0) = u8"決定    "s;
-        s(1) = u8"胸部鎧　"s;
-        s(2) = u8"脚部鎧　"s;
-        s(3) = u8"ベルト　"s;
-        s(4) = u8"ｸﾞﾛｰﾌﾞ　"s;
-        s(5) = u8"マント　"s;
-    }
-    if (en)
-    {
-        s(0) = u8"Done    "s;
-        s(1) = u8"Chest   "s;
-        s(2) = u8"Leg     "s;
-        s(3) = u8"Belt    "s;
-        s(4) = u8"Glove   "s;
-        s(5) = u8"Mantle  "s;
-    }
+    s(0) = i18n::s.get("core.locale.ui.appearance.equipment.done");
+    s(1) = i18n::s.get("core.locale.ui.appearance.equipment.chest");
+    s(2) = i18n::s.get("core.locale.ui.appearance.equipment.leg");
+    s(3) = i18n::s.get("core.locale.ui.appearance.equipment.belt");
+    s(4) = i18n::s.get("core.locale.ui.appearance.equipment.glove");
+    s(5) = i18n::s.get("core.locale.ui.appearance.equipment.mantle");
     p = 6;
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
@@ -4045,13 +3981,11 @@ int label_2044()
     while (1)
     {
         pagesize = 0;
-        s(0) = lang(u8"装備表示の変更"s, u8"Parts to hide"s);
-        s(1) = lang(
-            u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
-            u8"Right,left [Change]  Shift,Esc [Close]"s);
+        s(0) = i18n::s.get("core.locale.ui.appearance.equipment.title");
+        s(1) = i18n::s.get("core.locale.ui.appearance.hint");
         display_window(
             (windoww - 360) / 2 + inf_screenx, winposy(289) - 12, 360, 289);
-        s = lang(u8"項目"s, u8"Part"s);
+        s = i18n::s.get("core.locale.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
         ++i;
@@ -4159,21 +4093,21 @@ void append_accuracy_info(int val0)
         {
             attackskill = inv[cw].skill;
             ++p(1);
-            s(1) = lang(u8"武器"s, u8"Melee"s) + p(1);
+            s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
             show_weapon_dice(val0);
         }
     }
     if (attackskill == 106)
     {
-        s(1) = lang(u8"格闘"s, u8"Unarmed"s);
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.unarmed");
         show_weapon_dice(val0);
     }
     attacknum = 0;
     int stat = can_do_ranged_attack();
     if (stat == 1)
     {
-        s(1) = lang(u8"射撃"s, u8"Dist"s);
+        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.dist");
         show_weapon_dice(val0);
     }
     return;
@@ -4187,7 +4121,7 @@ void show_weapon_dice(int val0)
     if (val0 == 0)
     {
         pos(wx + 590, wy + 281 + p(2) * 16);
-        mes(lang(u8"命中"s, u8"Hit"s));
+        mes(i18n::s.get("core.locale.ui.chara_sheet.damage.hit"));
         pos(wx + 417, wy + 281 + p(2) * 16);
         mes(s(1));
     }
@@ -4911,7 +4845,7 @@ menu_result menu_journal()
     gold += p;
     noteadd(u8" - Title & Ranking - "s);
     noteadd(""s);
-    noteadd(lang(u8"名声: "s, u8"Fame: "s) + cdata[0].fame);
+    noteadd(i18n::s.get("core.locale.ui.journal.rank.fame") + ": " + cdata[0].fame);
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
@@ -4919,24 +4853,19 @@ menu_result menu_journal()
         {
             noteadd(
                 ""s + ranktitle(cnt) + u8" Rank."s + gdata((120 + cnt)) / 100);
-            s = lang(
-                u8"給料: 約 "s + calcincome(cnt) + u8" gold  "s,
-                u8"Pay: About "s + calcincome(cnt) + u8" gold pieces "s);
+            s = i18n::s.get("core.locale.ui.journal.rank.pay", calcincome(cnt));
             gold += calcincome(cnt);
             if (cnt != 3 && cnt != 4 && cnt != 5 && cnt != 8)
             {
-                s += lang(u8"ノルマ: "s, u8"\nDeadline: "s) + gdata((140 + cnt))
-                    + lang(u8"日以内"s, u8" Days left"s);
+                s += i18n::s.get("core.locale.ui.journal.rank.deadline",
+                                 gdata(140 + cnt));
             }
             noteadd(s);
             noteadd(""s);
         }
     }
-    noteadd(lang(
-        u8"EXバトル: 勝利 "s + gdata(802) + u8"回 最高Lv"s
-            + gdata_ex_arena_level,
-        u8"EX Arena Wins:"s + gdata(802) + u8"  Highest Level:"s
-            + cnvrank(gdata_ex_arena_level)));
+    noteadd(i18n::s.get("core.locale.ui.journal.rank.arena",
+                        gdata(802), cnvrank(gdata_ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
@@ -4947,44 +4876,21 @@ menu_result menu_journal()
     }
     noteadd(u8" - Income & Expense - "s);
     noteadd(""s);
-    if (jp)
-    {
-        noteadd(u8"◆ 給料(毎月1日と15日に支給)"s);
-        noteadd(u8"@BL　合計　　 : 約 "s + gold + i18n::_(u8"ui", u8"gold"));
-        noteadd(""s);
-        noteadd(u8"◆ 請求書内訳(毎月1日に発行)"s);
-        noteadd(
-            u8"@RE　人件費  : 約 "s + gdata_cost_to_hire
-            + i18n::_(u8"ui", u8"gold"));
-        noteadd(
-            u8"@RE　運営費  : 約 "s + calccostbuilding()
-            + i18n::_(u8"ui", u8"gold"));
-        noteadd(
-            u8"@RE　税金    : 約 "s + calccosttax()
-            + i18n::_(u8"ui", u8"gold"));
-        noteadd(
-            u8"@RE　合計　  : 約 "s
-            + (gdata_cost_to_hire + calccostbuilding() + calccosttax())
-            + i18n::_(u8"ui", u8"gold"));
-        noteadd(""s);
-        noteadd(u8"現在未払いの請求書は"s + gdata_left_bill + u8"枚"s);
-    }
-    else
-    {
-        noteadd(u8"Salary (Paid every 1st and 15th day)"s);
-        noteadd(u8"@BL  Sum    : About "s + gold + u8" GP"s);
-        noteadd(""s);
-        noteadd(u8"Bills  (Issued every 1st day)"s);
-        noteadd(u8"@RE  Labor  : About "s + gdata_cost_to_hire + u8" GP"s);
-        noteadd(u8"@RE  Maint. : About "s + calccostbuilding() + u8" GP"s);
-        noteadd(u8"@RE  Tax    : About "s + calccosttax() + u8" GP"s);
-        noteadd(
-            u8"@RE  Sum    : About "s
-            + (gdata_cost_to_hire + calccostbuilding() + calccosttax())
-            + u8" GP"s);
-        noteadd(""s);
-        noteadd(u8"You have "s + gdata_left_bill + u8" unpaid bills."s);
-    }
+    noteadd(i18n::s.get("core.locale.ui.journal.income.salary.title"));
+    noteadd(i18n::s.get("core.locale.ui.journal.income.salary.sum", gold));
+    noteadd(""s);
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.title"));
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.labor",
+                        gdata_cost_to_hire));
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.maintenance",
+                        calccostbuilding()));
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.tax",
+                        calccosttax()));
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.sum",
+                        (gdata_cost_to_hire + calccostbuilding() + calccosttax())));
+    noteadd(""s);
+    noteadd(i18n::s.get("core.locale.ui.journal.income.bills.unpaid",
+                        gdata_left_bill));
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
@@ -5210,9 +5116,7 @@ turn_result_t show_quest_board()
     }
     if (listmax == 0)
     {
-        txt(lang(
-            u8"新しい依頼は掲示されていないようだ。"s,
-            u8"It seems there are no new notices."s));
+        txt(i18n::s.get("core.locale.ui.board.no_new_notices"));
         return turn_result_t::turn_end;
     }
     sort_list_by_column1();
@@ -5249,7 +5153,7 @@ label_1977_internal:
         page = 0;
     }
 label_1978_internal:
-    s(0) = lang(u8"掲載されている依頼"s, u8"Notice Board"s);
+    s(0) = i18n::s.get("core.locale.ui.board.title");
     s(1) = strhint2 + strhint3b;
     gmode(0);
     pos(0, 0);
@@ -5326,13 +5230,13 @@ label_1978_internal:
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-                mes(lang(u8"★"s, u8"$"s));
+                mes(i18n::s.get("core.locale.ui.board.difficulty"));
             }
         }
         else
         {
             pos(wx + 270, y + 2);
-            mes(lang(u8"★×"s, u8"$ x "s) + p);
+            mes(i18n::s.get("core.locale.ui.board.difficulty_counter") + p);
         }
         color(0, 0, 0);
         font(13 - en * 2);
@@ -5351,7 +5255,7 @@ label_1978_internal:
     if (p != -1)
     {
         txtnew();
-        txt(lang(u8"依頼主に会う？"s, u8"Do you want to meet the client?"s));
+        txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
         ELONA_YES_NO_PROMPT();
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
@@ -5470,19 +5374,19 @@ label_1981_internal:
         page = 0;
     }
 label_1982_internal:
-    s(0) = lang(u8"NPC一覧"s, u8"NPC List"s);
+    s(0) = i18n::s.get("core.locale.ui.npc_list.title");
     s(1) = strhint2 + strhint3;
     display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
     if (allyctrl == 0)
     {
-        s = lang(u8"給料"s, u8"Wage"s);
+        s = i18n::s.get("core.locale.ui.npc_list.wage");
     }
     else
     {
-        s = lang(u8"雇用費(給料)"s, u8"Init. Cost(Wage)"s);
+        s = i18n::s.get("core.locale.ui.npc_list.init_cost");
     }
-    display_topic(lang(u8"NPCの名前"s, u8"Name"s), wx + 28, wy + 36);
-    display_topic(lang(u8"情報"s, u8"Info"s), wx + 350, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.npc_list.info"), wx + 350, wy + 36);
     if (allyctrl != 2)
     {
         display_topic(s, wx + 490, wy + 36);
@@ -5538,7 +5442,7 @@ label_1982_internal:
         {
             s += cnven(i18n::_(u8"ui", u8"female"));
         }
-        s += lang(u8" "s, u8"("s) + calcage(i) + ""s + lang(u8"歳"s, u8")"s);
+        s += i18n::s.get("core.locale.ui.npc_list.age_counter", calcage(i));
         pos(wx + 372, wy + 66 + cnt * 19 + 2);
         mes(s);
         if (allyctrl != 2)
@@ -5553,7 +5457,7 @@ label_1982_internal:
                 s = ""s + calchirecost(i);
             }
             pos(wx + 512, wy + 66 + cnt * 19 + 2);
-            mes(s + lang(u8" gold"s, u8"gp"s));
+            mes(i18n::s.get("core.locale.ui.npc_list.gold_counter", s(0)));
         }
     }
     if (keyrange != 0)
@@ -5627,11 +5531,11 @@ label_1985_internal:
         page = 0;
     }
 label_1986_internal:
-    s(0) = lang(u8"予約リスト"s, u8"Reserve List"s);
+    s(0) = i18n::s.get("core.locale.ui.reserve.title");
     s(1) = strhint2 + strhint3;
     display_window((windoww - 540) / 2 + inf_screenx, winposy(448), 540, 448);
-    display_topic(lang(u8"アイテムの名前"s, u8"Name"s), wx + 28, wy + 36);
-    display_topic(lang(u8"予約状況"s, u8"Status"s), wx + 390, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.reserve.name"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -5668,13 +5572,13 @@ label_1986_internal:
         if (itemmemory(2, i) == 1)
         {
             color(120, 120, 120);
-            mes(lang(u8"入荷なし"s, u8"-"s));
+            mes(i18n::s.get("core.locale.ui.reserve.not_reserved"));
             color(0, 0, 0);
         }
         else
         {
             color(55, 55, 255);
-            mes(lang(u8"入荷予定"s, u8"Reserved"s));
+            mes(i18n::s.get("core.locale.ui.reserve.reserved"));
             color(0, 0, 0);
         }
     }
@@ -5692,9 +5596,7 @@ label_1986_internal:
         if (p == 289 || p == 732)
         {
             snd(27);
-            txt(lang(
-                u8"「その本は入手できないね」"s,
-                u8"\"Ah, that book is unavailable.\""s));
+            txt(i18n::s.get("core.locale.ui.reserve.unavailable"));
             goto label_1985_internal;
         }
         snd(20);
@@ -5765,13 +5667,13 @@ label_1989_internal:
         page = 0;
     }
 label_1990_internal:
-    s(0) = lang(u8"冒険者ランク"s, u8"Adventurer Rank"s);
+    s(0) = i18n::s.get("core.locale.ui.adventurers.title");
     s(1) = strhint2 + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     display_topic(
-        lang(u8"冒険者の名前とランク"s, u8"Name and Rank"s), wx + 28, wy + 36);
-    display_topic(lang(u8"名声(Lv)"s, u8"Fame(Lv)"s), wx + 320, wy + 36);
-    display_topic(lang(u8"現在地"s, u8"Location"s), wx + 420, wy + 36);
+        i18n::s.get("core.locale.ui.adventurers.name_and_rank"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.adventurers.fame_lv"), wx + 320, wy + 36);
+    display_topic(i18n::s.get("core.locale.ui.adventurers.location"), wx + 420, wy + 36);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -5811,7 +5713,7 @@ label_1990_internal:
             chara_chips[i].width / (1 + (chara_chips[i].height > inf_tiles)),
             inf_tiles);
         pos(wx + 84, wy + 66 + cnt * 19 + 2);
-        mes(cnvrank(p + 1) + lang(u8"位"s, ""s));
+        mes(cnvrank(p + 1) + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
         i = list(0, p);
         s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
         cutname(s, 26);
@@ -5822,11 +5724,11 @@ label_1990_internal:
         s = mapname(cdata[i].current_map);
         if (s == ""s)
         {
-            s = lang(u8"不明"s, u8"Unknown"s);
+            s = i18n::s.get("core.locale.ui.adventurers.unknown");
         }
         if (cdata[i].state == 4)
         {
-            s = lang(u8"病院"s, u8"Hospital"s);
+            s = i18n::s.get("core.locale.ui.adventurers.hospital");
         }
         pos(wx + 435, wy + 66 + cnt * 19 + 2);
         mes(s);
@@ -5877,12 +5779,12 @@ int select_alias(int val0)
     {
         if (cs != cs_bk)
         {
-            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
+            s(0) = i18n::s.get("core.locale.ui.alias.title");
             s(1) = strhint3b;
             display_window(
                 (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
             display_topic(
-                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
+                i18n::s.get("core.locale.ui.alias.list"), wx + 28, wy + 30);
             font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
@@ -5899,7 +5801,7 @@ int select_alias(int val0)
                 }
                 if (cnt == 0)
                 {
-                    listn(0, cnt) = lang(u8"別の名前を考える"s, u8"Reroll"s);
+                    listn(0, cnt) = i18n::s.get("core.locale.ui.alias.reroll");
                 }
                 pos(wx + 38, wy + 66 + cnt * 19 - 2);
                 gcopy(3, cnt * 24 + 72, 30, 24, 18);
@@ -5973,7 +5875,7 @@ label_22711:
         page = 0;
     }
 label_2272_internal:
-    s(0) = lang(u8"ポストチャート"s, u8"City Chart"s);
+    s(0) = i18n::s.get("core.locale.ui.city_chart.title");
     s(1) = strhint3b;
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
     keyrange = 0;
@@ -5984,16 +5886,13 @@ label_2272_internal:
     {
         font(14 - en * 2);
         pos(wx + 40, wy + 50);
-        mes(lang(
-            u8"この場所には経済活動がない。"s,
-            u8"There's no economy running in this area."s));
+        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
     }
     else
     {
         display_topic(
-            lang(
-                mapname(adata(16, gdata_current_map)) + u8"のチャート"s,
-                ""s + mapname(adata(16, gdata_current_map)) + u8" City Chart"s),
+            i18n::s.get("core.locale.ui.city_chart.chart",
+                        mapname(adata(16, gdata_current_map))),
             wx + 40,
             wy + 34);
         for (int cnt = 0;; ++cnt)
@@ -6031,7 +5930,7 @@ label_2272_internal:
             font(14 - en * 2);
             if (podata(0 + cnt, city) == 0)
             {
-                s = lang(u8"不在"s, u8"Empty"s);
+                s = i18n::s.get("core.locale.ui.city_chart.empty");
             }
             cs_list(cs == cnt, s, x - 2, y + 20);
             ++j0;
@@ -6189,25 +6088,23 @@ label_2278_internal:
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         pos(wx + 40, wy + 60);
-        mes(lang(
-            u8"この場所には経済活動がない。"s,
-            u8"There's no economy running in this area."s));
+        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
     }
     else
     {
         if (page == 0)
         {
             display_topic(
-                lang(u8"街の概要"s, u8"Town Information"s), wx + 65, wy + 50);
+                i18n::s.get("core.locale.ui.economy.information"), wx + 65, wy + 50);
             display_topic(
-                lang(u8"街の財政"s, u8"Town Finance"s), wx + 65, wy + 150);
+                i18n::s.get("core.locale.ui.economy.finance"), wx + 65, wy + 150);
             font(14 - en * 2);
             x = wx + 50;
             y = wy + 80;
             showeconomy(
                 x,
                 y,
-                lang(u8"人口"s, u8"Population"s),
+                i18n::s.get("core.locale.ui.economy.population"),
                 podata(100, city),
                 podata(101, city));
             x = wx + 50;
@@ -6215,14 +6112,14 @@ label_2278_internal:
             showeconomy(
                 x,
                 y,
-                lang(u8"基本税"s, u8"Basic Tax"s) + u8" ("s + gdata(820)
+                i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s + gdata(820)
                     + u8"%)"s,
                 podata(102, city),
                 podata(103, city));
             showeconomy(
                 x,
                 y + 16,
-                lang(u8"消費税"s, u8"Excise Tax"s) + u8" ("s + podata(150, city)
+                i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s + podata(150, city)
                     + u8"%)"s,
                 podata(104, city),
                 podata(105, city));
@@ -6230,11 +6127,11 @@ label_2278_internal:
         if (page == 1)
         {
             display_topic(
-                lang(u8"人口推移の詳細"s, u8"Population Detail"s),
+                i18n::s.get("core.locale.ui.economy.population_detail"),
                 wx + 65,
                 wy + 50);
             display_topic(
-                lang(u8"収支の詳細"s, u8"Finance Detail"s), wx + 65, wy + 200);
+                i18n::s.get("core.locale.ui.economy.finance_detail"), wx + 65, wy + 200);
             font(14 - en * 2);
         }
     }
@@ -6323,22 +6220,21 @@ void show_politics_window()
     curmenu = 2;
     city = adata(28, gdata_current_map);
     list(0, listmax) = 1;
-    listn(0, listmax) = u8"この国の首都は"s + mapname(gdata(815)) + u8"だ。"s;
+    listn(0, listmax) = i18n::s.get("core.locale.ui.politics.name", mapname(gdata(815)));
     ++listmax;
     if (mdata(6) != 3)
     {
         goto label_2281_internal;
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = u8"この街の消費税は"s + podata(150, city) + u8"%だ。"s;
+    listn(0, listmax) = i18n::s.get("core.locale.ui.politics.taxes", podata(150, city));
     ++listmax;
     p = rnd(1000);
     list(0, listmax) = 0;
-    listn(0, listmax) =
-        u8"この街の井戸水の汚染は深刻だ(死者"s + p + u8"人）。"s;
+    listn(0, listmax) = i18n::s.get("core.locale.ui.politics.well_pollution", p(0));
     ++listmax;
     list(0, listmax) = 0;
-    listn(0, listmax) = u8"この街では殺人が許される。"s;
+    listn(0, listmax) = i18n::s.get("core.locale.ui.politics.lawless");
     ++listmax;
 label_2281_internal:
     gsel(3);
@@ -6373,16 +6269,14 @@ label_2282_internal:
 label_2283_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
-    display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
+    display_topic(i18n::s.get("core.locale.ui.politics.law"), wx + 65, wy + 45);
     font(12 + sizefix - en * 2);
     pos(wx + 185, wy + 52);
-    mes(lang(u8"国法"s, u8"Global"s));
+    mes(i18n::s.get("core.locale.ui.politics.global"));
     if (mdata(6) == 3)
     {
         pos(wx + 285, wy + 52);
-        mes(lang(
-            ""s + mapname(gdata_current_map) + u8"の法"s,
-            u8"Law of "s + mapname(gdata_current_map) + u8")"s));
+        mes(i18n::s.get("core.locale.ui.politics.law_of", mapname(gdata_current_map)));
     }
     pos(wx + 155, wy + 46);
     gmode(2);
@@ -6729,20 +6623,20 @@ label_1960_internal:
     }
     if (allyctrl == 0)
     {
-        txt(lang(u8"誰を呼び戻す？"s, u8"Call who?"s));
-        s(10) = lang(u8"呼び戻す仲間"s, u8"Ally List"s);
+        txt(i18n::s.get("core.locale.ui.ally_list.call.prompt"));
+        s(10) = i18n::s.get("core.locale.ui.ally_list.call.title");
         s(11) = strhint2 + strhint3;
-        s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-        s(13) = lang(u8"状態"s, u8"Status"s);
+        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+        s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         x = 0;
     }
     if (allyctrl == 1)
     {
-        txt(lang(u8"誰を売り飛ばす？"s, u8"Sell who?"s));
-        s(10) = lang(u8"売り飛ばす仲間"s, u8"Ally List"s);
+        txt(i18n::s.get("core.locale.ui.ally_list.sell.prompt"));
+        s(10) = i18n::s.get("core.locale.ui.ally_list.sell.title");
         s(11) = strhint2 + strhint3;
-        s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-        s(13) = lang(u8"値段"s, u8"Value"s);
+        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+        s(13) = i18n::s.get("core.locale.ui.ally_list.sell.value");
         x = 20;
     }
     if (allyctrl == 2)
@@ -6760,57 +6654,54 @@ label_1960_internal:
         {
             txtef(4);
         }
-        txt(lang(u8"試合の規定人数: "s, u8"Participant: "s) + i + u8" / "s
-            + arenaop(1));
-        s(10) = lang(u8"出場する仲間"s, u8"Ally List"s);
+        txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.prompt")
+            + ": " +  i + u8" / "s + arenaop(1));
+        s(10) = i18n::s.get("core.locale.ui.ally_list.pet_arena.title");
         s(11) = strhint2 + strhint3;
-        s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-        s(13) = lang(u8"状態"s, u8"Status"s);
+        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+        s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         x = 20;
     }
     if (allyctrl == 3)
     {
         if (adata(16, gdata_current_map) == 102)
         {
-            txt(lang(
-                u8"誰を店長にする？"s, u8"Who takes the role of shopkeeper?"s));
-            s(10) = lang(u8"店長候補"s, u8"Ally List"s);
+            txt(i18n::s.get("core.locale.ui.ally_list.shop.prompt"));
+            s(10) = i18n::s.get("core.locale.ui.ally_list.shop.title");
             s(11) = strhint2 + strhint3;
-            s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-            s(13) = lang(u8"魅力/交渉"s, u8"CHR/Negotiation"s);
+            s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+            s(13) = i18n::s.get("core.locale.ui.ally_list.shop.chr_negotiation");
         }
         if (adata(16, gdata_current_map) == 31)
         {
-            txt(lang(
-                u8"誰をブリーダーにする？"s,
-                u8"Who takes the role of breeder?"s));
-            s(10) = lang(u8"ブリーダー候補"s, u8"Ally List"s);
+            txt(i18n::s.get("core.locale.ui.ally_list.ranch.prompt"));
+            s(10) = i18n::s.get("core.locale.ui.ally_list.ranch.title");
             s(11) = strhint2 + strhint3;
-            s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-            s(13) = lang(u8"繁殖力"s, u8"Breed Power"s);
+            s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+            s(13) = i18n::s.get("core.locale.ui.ally_list.ranch.breed_power");
         }
         if (gdata_current_map == 7)
         {
-            txt(lang(u8"誰を滞在させる？"s, u8"Who stays in your home?"s));
-            s(10) = lang(u8"滞在状態の変更"s, u8"Ally List"s);
+            txt(i18n::s.get("core.locale.ui.ally_list.stayer.prompt"));
+            s(10) = i18n::s.get("core.locale.ui.ally_list.stayer.title");
             s(11) = strhint2 + strhint3;
-            s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-            s(13) = lang(u8"状態"s, u8"Status"s);
+            s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+            s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         }
         x = 20;
     }
     if (allyctrl == 4 || allyctrl == 5)
     {
-        txt(lang(u8"対象にする仲間は？"s, u8"Who is the subject?"s));
-        s(10) = lang(u8"仲間"s, u8"Ally List"s);
+        txt(i18n::s.get("core.locale.ui.ally_list.gene_engineer.prompt"));
+        s(10) = i18n::s.get("core.locale.ui.ally_list.gene_engineer.title");
         s(11) = strhint2 + strhint3;
-        s(12) = lang(u8"仲間の情報"s, u8"Name"s);
-        s(13) = lang(u8"状態"s, u8"Status"s);
+        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
+        s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         if (allyctrl == 5)
         {
             if (rc != 0)
             {
-                s(13) = lang(u8"獲得部位/技能"s, u8"Body/Skill"s);
+                s(13) = i18n::s.get("core.locale.ui.ally_list.gene_engineer.body_skill");
             }
         }
         x = 0;
@@ -6868,7 +6759,7 @@ label_1961_internal:
         {
             cs_list(
                 cs == cnt,
-                lang(u8"決定"s, u8"Proceed"s),
+                i18n::s.get("core.locale.ui.ally_list.proceed"),
                 wx + 84,
                 wy + 66 + cnt * 19 - 1);
             continue;
@@ -6885,7 +6776,7 @@ label_1961_internal:
             {
                 if (followerin(i) == 1)
                 {
-                    s += lang(u8" *出場* "s, u8" *In* "s);
+                    s += i18n::s.get("core.locale.ui.ally_list.pet_arena.in");
                 }
             }
             int n = 0;
@@ -6902,25 +6793,25 @@ label_1961_internal:
                 s = u8"Lv."s + cdata[i].level + u8" "s;
                 if (cdata[i].state == 6)
                 {
-                    s += lang(u8"(死んでいる)"s, u8"(Dead"s);
+                    s += i18n::s.get("core.locale.ui.ally_list.dead");
                 }
                 if (cdata[i].state == 7)
                 {
                     if (allyctrl == 0)
                     {
-                        s += lang(u8"(待機している)"s, u8"(Waiting)"s);
+                        s += i18n::s.get("core.locale.ui.ally_list.call.waiting");
                     }
                     else
                     {
                         s += u8"(Hp: "s + cdata[i].hp * 100 / cdata[i].max_hp
-                            + u8"%) "s + lang(u8"待機"s, u8"Waiting"s);
+                            + u8"%) "s + i18n::s.get("core.locale.ui.ally_list.waiting");
                     }
                 }
                 if (cdata[i].state == 1)
                 {
                     if (allyctrl == 0)
                     {
-                        s += lang(u8"(生きている)"s, u8"(Alive)"s);
+                        s += i18n::s.get("core.locale.ui.ally_list.alive");
                     }
                     else
                     {
@@ -6949,7 +6840,7 @@ label_1961_internal:
                         int stat = transplant_body_parts();
                         if (stat == -1)
                         {
-                            s = lang(u8"なし"s, u8"None"s);
+                            s = i18n::s.get("core.locale.ui.ally_list.gene_engineer.none");
                         }
                         else
                         {
@@ -6961,7 +6852,7 @@ label_1961_internal:
                         int stat = gain_skills_by_geen_engineering();
                         if (stat == 0)
                         {
-                            s += lang(u8"なし"s, u8"None"s);
+                            s += i18n::s.get("core.locale.ui.ally_list.gene_engineer.none");
                         }
                         else
                         {
@@ -7011,9 +6902,7 @@ label_1961_internal:
             if (cdata[p].level > sdata(151, 0) + 5)
             {
                 snd(27);
-                txt(lang(
-                    u8"遺伝子学のスキルが足りない。"s,
-                    u8"You need to be a better gene engineer."s));
+                txt(i18n::s.get("core.locale.ui.ally_list.gene_engineer.skill_too_low"));
                 goto label_1960_internal;
             }
         }
@@ -7031,9 +6920,7 @@ label_1961_internal:
             {
                 if (i == 0)
                 {
-                    txt(lang(
-                        u8"最低でも一人の参加者が必要だ。"s,
-                        u8"You need at least 1 pet to start the battle."s));
+                    txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.need_at_least_one"));
                     snd(27);
                     goto label_1961_internal;
                 }
@@ -7042,8 +6929,8 @@ label_1961_internal:
             }
             if (cdata[p].state == 6)
             {
-                txt(lang(
-                    u8"死んでいる。"s, he(p) + u8" "s + is(p) + u8" dead."s));
+                txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.is_dead",
+                                cdata[p(0)]));
                 snd(27);
                 goto label_1961_internal;
             }
@@ -7052,9 +6939,7 @@ label_1961_internal:
                 if (i >= arenaop(1))
                 {
                     snd(27);
-                    txt(lang(
-                        u8"参加枠を超えている。"s,
-                        u8"Too many participants."s));
+                    txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.too_many"));
                     goto label_1961_internal;
                 }
                 else
