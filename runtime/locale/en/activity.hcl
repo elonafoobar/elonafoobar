@@ -114,7 +114,6 @@ locale {
             cannot_be_stolen = "It can't be stolen."
             you_lose_the_target = "You lose the target."
             it_is_too_heavy = "It's too heavy."
-            someone_else_is_using = "Someone else is using the item."
             abort = "You abort stealing."
             succeed = "You successfully steal ${itemname(_1)}."
             guilt = "You feel the stings of conscience."

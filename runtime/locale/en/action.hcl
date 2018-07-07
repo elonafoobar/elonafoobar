@@ -3,6 +3,7 @@ locale {
         cannot_do_in_global = "You can't do that while you're in a global area."
         hit_key_for_help = "Hit ? key to display help."
         really_attack = "Really attack ${name(_1)}?"
+        someone_else_is_using = "Someone else is using the item."
 
         backpack_squashing = "Your backpack is squashing you!"
 
@@ -39,6 +40,7 @@ locale {
             ask = "Which direction?"
             spell = "Which direction do you want to cast the spell? "
             wand = "Which direction do you want to zap the wand? "
+            door = "Which door do you want to close? "
             cannot_see_location = "You can't see the location."
             out_of_range = "It's out of range."
         }
@@ -131,6 +133,23 @@ locale {
         }
 
         move {
+            drunk = "*stagger*"
+            confused = "*bump*"
+            interrupt = "${name(_1)} stares in your face."
+            carry_too_much = "You carry too much to move!"
+            displace {
+                text = "You displace ${name(_1)}."
+                dialog {
+                    _0 = "\"Ops, sorry.\""
+                    _1 = "\"Watch it.\""
+                }
+            }
+
+            leave {
+                prompt = "Do you want to leave ${_1}? "
+                abandoning_quest = "Warning! You are going to abandon your current quest."
+            }
+
             sense_something = "You sense something under your foot."
             walk_into = "You walk into ${_1}."
             twinkle = "*twinkle*"
@@ -281,6 +300,27 @@ locale {
         ranged {
             load_normal_ammo = "You load normal ammo."
             no_target = "You find no target."
+
+            equip {
+                need_weapon = "You need to equip a firing weapon."
+                need_ammo = "You need to equip ammos or arrows."
+                wrong_ammo = "You're equipped with wrong type of ammos."
+            }
+        }
+
+        get {
+            plant {
+                dead = "You nip a dead plant."
+                young = "You nip a young plant."
+            }
+
+            building {
+                prompt = "Really remove this building?"
+                remove = "You remove the building."
+            }
+
+            snow = "You rake up a handful of snow."
+            air = "You grasp at the air."
         }
 
         ammo {
@@ -320,6 +360,42 @@ locale {
                 succeed = "${name(_1)} open${s(_1)} the door."
                 fail = "${name(_1)} fail${s(_1)} to open the door."
             }
+            shackle {
+                text = "You unlock the shackle."
+                dialog = "Moyer yells, \"You idiot!\""
+            }
+
+            only_in_home = "You can only use it at your home."
+            only_in_shop = "You can only use it at your shop"
+            empty = "It's empty!"
+        }
+
+        use_stairs {
+            cannot_during_debug = "You can't perform the action while in the debug mode."
+            kotatsu {
+                prompt = "Really get into the Kotatsu?"
+                use = "It's dark here!"
+            }
+            cannot_go {
+                down = "You can't go down any more."
+                up = "You can't go up any more."
+            }
+            no {
+                downstairs = "There're no downstairs here."
+                upstairs = "There're no upstairs here."
+            }
+            blocked_by_barrier = "The path is blocked by a strange barrier."
+
+            unlock {
+                normal = "You unlock the door"
+                stones = "The magic stones shine softly as you approach the sealed door."
+            }
+
+            locked = "The door is locked. It seems you need a specific key to unlock the door."
+
+            prompt_give_up_quest = "Really give up the quest and move over?"
+
+            lost_balance = "Noooo! You lost your step and roll down!"
         }
 
         close {
@@ -390,12 +466,12 @@ locale {
                 melts = "It falls on the ground and melts."
 
                 dialog {
-                    _0 ="\"Hey!\""
-                    _1 ="\"Now you did it.\""
-                    _2 ="*chuckle*"
-                    _3 ="\"Tee-hee-hee!\""
-                    _4 ="\"You'll pay for this.\""
-                    _5 ="*grin*"
+                    _0 = "\"Hey!\""
+                    _1 = "\"Now you did it.\""
+                    _2 = "*chuckle*"
+                    _3 = "\"Tee-hee-hee!\""
+                    _4 = "\"You'll pay for this.\""
+                    _5 = "*grin*"
                 }
             }
 
@@ -413,12 +489,19 @@ locale {
 
                 void_permit = "According to the card, you are permitted to explore the void now."
                 book_of_rachel = "It's a lovely fairy tale written by Rachel."
-                learned_recipe = "You learned the recipe!"
             }
             scroll {
                 dimmed_or_confused = "${name(_1)} stagger${s(_1)}."
                 execute = "${name(_1)} read${s(_1)} ${itemname(_2, 1)}."
             }
+            recipe {
+                info = "You can add a recipe of the item you previously created.(Not implemented yet)"
+                learned = "You learned the recipe!"
+            }
+        }
+
+        eat {
+            snatches = "${name(_1)} snatch${s(_1)} ${name(_2)}${his_owned(_2)} food."
         }
 
         zap {
@@ -464,9 +547,48 @@ locale {
         }
 
         dip {
+            execute = "You dip ${itemname(_1)} into ${itemname(_2, 1)}."
             rots = "${itemname(_1)} rots."
             unchanged = "${itemname(_1)} remains unchanged."
             rusts = "${itemname(_1)} rusts."
+
+            # Also shared with blending results
+            result {
+                love_food {
+                    made = "${itemname(_1)}に${itemname(_2, 1)}を混入した！"
+                    guilty = "あなたはうしろめたさを感じた…"
+                    grin = "あなたはにやりと笑った。"
+                }
+
+                dyeing = "あなたは${itemname(_1)}を染めた。"
+
+                poisoned_food = "あなたはにやりと口元を歪めた。"
+
+                put_on = "${itemname(_1)}に${itemname(_2, 1)}を塗りたくった。"
+                good_idea_but = "いいアイデアだ！しかし…"
+                gains_fireproof = "${itemname(_1)}は熱から守られた。"
+                gains_acidproof = "${itemname(_1)}は酸から守られた。"
+
+                bait_attachment = "${itemname(_2, 1)}を${itemname(_1)}に装着した。"
+
+                blessed_item = "${itemname(_2, 1)}を${itemname(_1)}に降りかけた。"
+                becomes_blessed = "${itemname(_1)}は銀色に輝いた。"
+                becomes_cursed = "${itemname(_1)}は黒いオーラに包まれた。"
+
+                well_refill = "${itemname(_2, 1)}を${itemname(_1)}に放り込んだ。"
+                empty_bottle_shatters = "空き瓶の割れる音がした。"
+                holy_well_polluted = "井戸は汚れた。"
+                well_dry = "${itemname(_1)}は完全に枯れている。"
+                well_refilled = "${itemname(_1)}は一瞬輝いた。"
+                snow_melts {
+                    dip = "こんな量では… "
+                    blending = "しかしこんな量では… "
+                }
+
+                natural_potion = "空き瓶に水をすくった。"
+                natural_potion_dry = "${itemname(_1)}は涸れている。"
+                natural_potion_drop = "あっ！空き瓶を井戸に落としてしまった…"
+            }
         }
 
         plant {
@@ -529,6 +651,20 @@ locale {
             q = "What..."
             y = "No...no..."
             at = "Ahhhhh!!"
+        }
+
+        exit {
+            cannot_save_in_usermap = "You can't save the game in a user made map. Exit anyway?"
+            prompt = "Do you want to save the game and exit?"
+
+            choices {
+                exit = "Exit"
+                cancel = "Cancel"
+                game_setting = "Game Setting"
+            }
+
+            saved = "Your game has been saved successfully."
+            you_close_your_eyes = "You close your eyes and peacefully fade away. (Hit any key to exit)"
         }
 
         npc {

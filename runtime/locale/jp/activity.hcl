@@ -112,7 +112,6 @@ locale {
             cannot_be_stolen = "それは盗めない。"
             you_lose_the_target = "対象が見当たらない。"
             it_is_too_heavy = "重すぎて手に負えない。"
-            someone_else_is_using = "そのアイテムは他の誰かが使用中だ。"
             abort = "行動を中断した。"
             succeed = "${itemname(_1)}を盗んだ。"
             guilt = "あなたは良心の呵責を感じた。"

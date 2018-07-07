@@ -3,6 +3,7 @@ locale {
         cannot_do_in_global = "その行為は、ワールドマップにいる間はできない。"
         hit_key_for_help = "?キーを押すと、コマンドの一覧が見られる。"
         really_attack = "本当に${name(_1)}を攻撃する？ "
+        someone_else_is_using = "そのアイテムは他の誰かが使用中だ。"
 
         backpack_squashing = "${you()}は荷物に圧迫されもがいた。"
 
@@ -39,6 +40,7 @@ locale {
             ask = "どの方向？"
             spell = "どの方向に唱える？ "
             wand = "どの方向に振る？ "
+            door = "何を閉める？"
             cannot_see_location = "その場所は見えない。"
             out_of_range = "射程距離外だ。"
         }
@@ -131,6 +133,23 @@ locale {
         }
 
         move {
+            drunk = " *ふらり* "
+            confused = " *ごつん* "
+            interrupt = "${name(_1)}はあなたを睨み付けた。"
+            carry_too_much = "潰れていて動けない！ "
+            displace {
+                text = "${name(_1)}と入れ替わった。"
+                dialog {
+                    _0 = "「おっと、ごめんよ」"
+                    _1 = "「気をつけな」"
+                }
+            }
+
+            leave {
+                prompt = "${_1}を去る？ "
+                abandoning_quest = "注意！現在のクエストは失敗に終わってしまう。"
+            }
+
             sense_something = "地面に何かがあるようだ。"
             walk_into = "足元には${_1}がある。"
             twinkle = " *キラン* "
@@ -281,13 +300,34 @@ locale {
         ranged {
             load_normal_ammo = "通常弾を装填した。"
             no_target = "ターゲットが見当たらない。"
+
+            equip {
+                need_weapon = "射撃用の道具を装備していない。"
+                need_ammo = "矢/弾丸を装備する必要がある。"
+                wrong_ammo = "矢/弾丸の種類が適していない。"
+            }
+        }
+
+        get {
+            plant {
+                dead = "枯れた草を摘み取った。"
+                young = "芽を摘み取った。"
+            }
+
+            building {
+                prompt = "本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"
+                remove = "建物を撤去した。"
+            }
+
+            snow = "雪をかきあつめた。"
+            air = "あなたは空気をつかんだ。"
         }
 
         ammo {
             need_to_equip = "矢弾を装備していない。"
             is_not_capable = "${itemname(_1)}は切り替えに対応していない。"
 
-            current = "現在の装填弾" # NOTE
+            current = "現在の装填弾"
             normal = "通常弾"
             unlimited = "無限"
         }
@@ -320,6 +360,42 @@ locale {
                 succeed = "${name(_1)}は扉を開けた。"
                 fail = "${kare_wa(_1)}開錠に失敗した。"
             }
+            shackle {
+                text = "足枷を外した。"
+                dialog = "モイアー「馬鹿やろう！！」"
+            }
+
+            only_in_home = "それは家の中でのみ使用できる。"
+            only_in_shop = "それは店の中でのみ使用できる。"
+            empty = "中身は空っぽだ。"
+        }
+
+        use_stairs {
+            cannot_during_debug = "デバッグ中はその操作はできない。"
+            kotatsu {
+                prompt = "本当にこたつの中に入る？"
+                use = "まっくらだ！"
+            }
+            cannot_go {
+                down = "これ以上降りられない。"
+                up = "これ以上昇れない。"
+            }
+            no {
+                downstairs = "降りる階段は見つからない。"
+                upstairs = "昇る階段は見つからない。"
+            }
+            blocked_by_barrier = "階段は不思議なバリアで塞がれている。"
+
+            unlock {
+                normal = "扉の鍵を開けた。"
+                stones = "厳重に封印された扉の前に立つと、三つの魔石が鈍い光を放った。"
+            }
+
+            locked = "鍵のかかった扉が行く手を塞いでいる。"
+
+            prompt_give_up_quest = "クエストを放棄して階を移動する？"
+
+            lost_balance = "うわああ！${you()}は階段から足を踏み外した。"
         }
 
         close {
@@ -413,11 +489,14 @@ locale {
 
                 void_permit = "すくつの探索を許可する、という内容の文面が形式的に書いてある。"
                 book_of_rachel = "レイチェルという作家による、心あたたまる童話集だ。"
-                learned_recipe = "${itemname(_1, 1)}を覚えた！"
             }
             scroll {
                 dimmed_or_confused = "${name(_1)}はふらふらした。"
                 execute = "${kare_wa(_1)}${itemname(_2, 1)}を読んだ。"
+            }
+            recipe {
+                info = "最後に調合したアイテムを、レシピに加えることができる。(まだ未実装)"
+                learned = "${itemname(_1, 1)}を覚えた！"
             }
         }
 
@@ -463,9 +542,48 @@ locale {
         }
 
         dip {
+            execute = "${itemname(_2, 1)}を${itemname(_1)}に浸した。"
+
             rots = "${itemname(_1)}は腐ってしまった…"
             unchanged = "${itemname(_1)}に変化はない。"
             rusts = "${itemname(_1)}は錆びてしまった…"
+
+            result {
+                love_food {
+                    made = "You made aphrodisiac food! "
+                    guilty = "You kind of feel guilty..."
+                    grin = "You grin."
+                }
+
+                dyeing = "You dye ${itemname(_1)}."
+
+                poisoned_food = "You grin."
+
+                put_on = "You put ${itemname(_2, 1)} on ${itemname(_1)}."
+                good_idea_but = "A good idea! But..."
+                gains_fireproof = "${itemname(_1)} gain${s(_1)} fireproof."
+                gains_acidproof = "${itemname(_1)} gain${s(_1)} acidproof."
+
+                bait_attachment = "You bait ${itemname(_1)} with ${itemname(_2, 1)}."
+
+                blessed_item = "You shower ${itemname(_1)} on ${itemname(_2, 1)}."
+                becomes_blessed = "${itemname(_1)} shine${s(_1)} silvery."
+                becomes_cursed = "${itemname(_1)} ${is(_1)} wrapped by a dark aura."
+
+                well_refill = "You throw ${itemname(_1)} into ${itemname(_2, 1)}."
+                empty_bottle_shatters = "You hear the sound of the empty bottle shatters."
+                holy_well_polluted = "The holy well is polluted."
+                well_dry = "${itemname(_1)} is completely dry."
+                well_refilled = "${itemname(_1)} shines for a moment."
+                snow_melts {
+                    dip = "Snow just melts."
+                    blending = "But the snow just melts."
+                }
+
+                natural_potion = "You draw water from the well into the empty bottle."
+                natural_potion_dry = "${itemname(_1)} is dry."
+                natural_potion_drop = "Ops! You drop the empty bottle into the well..."
+            }
         }
 
         plant {
@@ -528,6 +646,20 @@ locale {
             q = "え…"
             y = "まさか…"
             at = "うわぁぁぁ！！"
+        }
+
+        exit {
+            cannot_save_in_usermap = "ユーザーマップの中ではセーブできない。それでも終了する？"
+            prompt = "これまでの冒険を記録して終了する？"
+
+            choices {
+                exit = "はい"
+                cancel = "いいえ"
+                game_setting = "ゲーム設定"
+            }
+
+            saved = "無事に記録された。"
+            you_close_your_eyes = "${name(_1)}は静かに目を閉じた… (キーを押すと自動終了します)"
         }
 
         npc {
