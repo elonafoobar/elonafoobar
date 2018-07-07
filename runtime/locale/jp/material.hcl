@@ -1,10 +1,6 @@
 locale {
     material {
         _0 {
-            name ="Garbage"
-            desc ="Just garbage."
-        }
-        _0 {
             name ="クズ"
             desc = "何の価値もないクズ"
         }
@@ -196,7 +192,7 @@ locale {
             name ="世界樹の樹液"
             desc = "どんな傷も癒す樹液"
         }
-        _34 {
+        _4 {
             name ="鳥の羽"
             desc = "普通の鳥の羽"
         }

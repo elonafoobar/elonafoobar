@@ -192,7 +192,7 @@ locale {
             name ="Sap of Yaggdrasil"
             desc ="It's pretty rare."
         }
-        _34 {
+        _4 {
             name ="Bird's feather"
             desc ="A piece of Feather."
         }
