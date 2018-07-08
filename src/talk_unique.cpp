@@ -38,7 +38,7 @@ talk_result_t talk_unique_zeome()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_23()
+talk_result_t talk_unique_orphe()
 {
     if (event_id() == 1)
     {
@@ -84,7 +84,7 @@ talk_result_t talk_unique_23()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_28()
+talk_result_t talk_unique_whom_dwell_in_the_vanity()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.whom_dwell_in_the_vanity");
@@ -95,7 +95,7 @@ talk_result_t talk_unique_28()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_29()
+talk_result_t talk_unique_loyter()
 {
     if (cdata[0].fame < 20000)
     {
@@ -217,7 +217,7 @@ talk_result_t talk_unique_29()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_30()
+talk_result_t talk_unique_miches()
 {
     if (gdata_putit_attacks == 1000)
     {
@@ -302,7 +302,7 @@ talk_result_t talk_unique_30()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_31()
+talk_result_t talk_unique_shena()
 {
     if (gdata_thieves_hideout == 1000)
     {
@@ -393,7 +393,7 @@ talk_result_t talk_unique_31()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_33()
+talk_result_t talk_unique_larnneire()
 {
     ELONA_APPEND_RESPONSE(
             3, i18n::s.get("core.locale.talk.unique.larnneire.choices.mission"));
@@ -473,7 +473,7 @@ talk_result_t talk_unique_33()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_34()
+talk_result_t talk_unique_lomias()
 {
     if (chatflag == 0)
     {
@@ -846,7 +846,7 @@ talk_result_t talk_unique_34()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_79()
+talk_result_t talk_unique_stersha()
 {
     if (gdata_main_quest_flag == 200)
     {
@@ -879,7 +879,7 @@ talk_result_t talk_unique_79()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_80()
+talk_result_t talk_unique_xabi()
 {
     if (gdata_main_quest_flag >= 60)
     {
@@ -940,7 +940,7 @@ talk_result_t talk_unique_80()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_139()
+talk_result_t talk_unique_slan()
 {
     if (gdata_main_quest_flag == 20)
     {
@@ -992,7 +992,7 @@ talk_result_t talk_unique_139()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_142()
+talk_result_t talk_unique_erystia()
 {
     if (gdata_main_quest_flag == 200)
     {
@@ -1309,7 +1309,7 @@ talk_result_t talk_unique_142()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_146()
+talk_result_t talk_unique_karam()
 {
     if (gdata_main_quest_flag == 90)
     {
@@ -1379,7 +1379,7 @@ talk_result_t talk_unique_146()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_208()
+talk_result_t talk_unique_garokk()
 {
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.garokk");
@@ -1394,7 +1394,7 @@ talk_result_t talk_unique_208()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_209()
+talk_result_t talk_unique_miral()
 {
     ELONA_APPEND_RESPONSE(
             2, i18n::s.get("core.locale.talk.unique.miral.choices.small_medals"));
@@ -1466,7 +1466,7 @@ talk_result_t talk_unique_209()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_221()
+talk_result_t talk_unique_pael()
 {
     if (gdata_pael_and_her_mom == 1000)
     {
@@ -1608,7 +1608,7 @@ talk_result_t talk_unique_221()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_222()
+talk_result_t talk_unique_paels_mom()
 {
     if (gdata_pael_and_her_mom == 1002)
     {
@@ -1791,7 +1791,7 @@ talk_result_t talk_unique_222()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_223()
+talk_result_t talk_unique_raphael()
 {
     if (gdata_wife_collector == 0)
     {
@@ -1930,7 +1930,7 @@ talk_result_t talk_unique_223()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_224()
+talk_result_t talk_unique_ainc()
 {
     if (gdata_novice_knight == 1000)
     {
@@ -2008,7 +2008,7 @@ talk_result_t talk_unique_224()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_225()
+talk_result_t talk_unique_poppy()
 {
     if (gdata_puppys_cave == 1000)
     {
@@ -2043,7 +2043,7 @@ talk_result_t talk_unique_225()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_226()
+talk_result_t talk_unique_rilian()
 {
     if (gdata_puppys_cave == 1000)
     {
@@ -2125,7 +2125,7 @@ talk_result_t talk_unique_226()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_227()
+talk_result_t talk_unique_tam()
 {
     if (gdata_cat_house == 1000)
     {
@@ -2208,7 +2208,7 @@ talk_result_t talk_unique_227()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_231()
+talk_result_t talk_unique_gilbert()
 {
     if (gdata_defense_line == 1000)
     {
@@ -2329,7 +2329,7 @@ talk_result_t talk_unique_231()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_243()
+talk_result_t talk_unique_arnord()
 {
     if (gdata_kamikaze_attack == 1000)
     {
@@ -2429,7 +2429,7 @@ talk_result_t talk_unique_243()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_247()
+talk_result_t talk_unique_mia()
 {
     if (gdata_mias_dream == 1000)
     {
@@ -2518,7 +2518,7 @@ talk_result_t talk_unique_247()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_252()
+talk_result_t talk_unique_renton()
 {
     if (gdata_rare_books == 1000)
     {
@@ -2682,7 +2682,7 @@ talk_result_t talk_unique_252()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_253()
+talk_result_t talk_unique_marks()
 {
     if (gdata_pyramid_trial != 0)
     {
@@ -2753,7 +2753,7 @@ talk_result_t talk_unique_253()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_259()
+talk_result_t talk_unique_noel()
 {
     if (gdata_red_blossom_in_palmia == 1000)
     {
@@ -2862,7 +2862,7 @@ talk_result_t talk_unique_259()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_279()
+talk_result_t talk_unique_icolle()
 {
     if (gdata_ambitious_scientist >= 1000)
     {
@@ -2985,7 +2985,7 @@ talk_result_t talk_unique_279()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_280()
+talk_result_t talk_unique_balzak()
 {
     if (gdata_sewer_sweeping == 1000)
     {
@@ -3074,7 +3074,7 @@ talk_result_t talk_unique_280()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_290()
+talk_result_t talk_unique_lexus()
 {
     if (gdata_belongs_to_mages_guild == 0)
     {
@@ -3253,7 +3253,7 @@ talk_result_t talk_unique_290()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_294()
+talk_result_t talk_unique_abyss()
 {
     if (gdata_belongs_to_thieves_guild == 0)
     {
@@ -3425,7 +3425,7 @@ talk_result_t talk_unique_294()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_297()
+talk_result_t talk_unique_doria()
 {
     if (gdata_belongs_to_fighters_guild == 0)
     {
@@ -3643,7 +3643,7 @@ talk_result_t talk_unique_297()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_301()
+talk_result_t talk_unique_conery()
 {
     if (gdata_minotaur_king == 1000)
     {
@@ -3724,7 +3724,7 @@ talk_result_t talk_unique_301()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_302()
+talk_result_t talk_unique_rogue_boss()
 {
     if (cdata[0].gold <= 10)
     {
@@ -3780,7 +3780,7 @@ talk_result_t talk_unique_302()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_322()
+talk_result_t talk_unique_strange_scientist()
 {
     if (gdata_little_sister == 0)
     {
@@ -3954,7 +3954,7 @@ talk_result_t talk_unique_322()
     return talk_result_t::talk_ignored;
 }
 
-talk_result_t talk_unique_345()
+talk_result_t talk_unique_kaneda_bike()
 {
     if (gdata_blue_capsule_drug >= 3)
     {
@@ -4034,7 +4034,7 @@ talk_result_t talk_unique_345()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_unique_348()
+talk_result_t talk_unique_part_time_worker()
 {
     if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
     {
@@ -4103,79 +4103,79 @@ talk_result_t talk_unique()
         case 2:
             return talk_unique_zeome();
         case 23:
-            return talk_unique_23();
+            return talk_unique_orphe();
         case 28:
-            return talk_unique_28();
+            return talk_unique_whom_dwell_in_the_vanity();
         case 29:
-            return talk_unique_29();
+            return talk_unique_loyter();
         case 30:
-            return talk_unique_30();
+            return talk_unique_miches();
         case 31:
-            return talk_unique_31();
+            return talk_unique_shena();
         case 33:
-            return talk_unique_33();
+            return talk_unique_larnneire();
         case 34:
-            return talk_unique_34();
+            return talk_unique_lomias();
         case 79:
-            return talk_unique_79();
+            return talk_unique_stersha();
         case 80:
-            return talk_unique_80();
+            return talk_unique_xabi();
         case 139:
-            return talk_unique_139();
+            return talk_unique_slan();
         case 142:
-            return talk_unique_142();
+            return talk_unique_erystia();
         case 146:
-            return talk_unique_146();
+            return talk_unique_karam();
         case 208:
-            return talk_unique_208();
+            return talk_unique_garokk();
         case 209:
-            return talk_unique_209();
+            return talk_unique_miral();
         case 221:
-            return talk_unique_221();
+            return talk_unique_pael();
         case 222:
-            return talk_unique_222();
+            return talk_unique_paels_mom();
         case 223:
-            return talk_unique_223();
+            return talk_unique_raphael();
         case 224:
-            return talk_unique_224();
+            return talk_unique_ainc();
         case 225:
-            return talk_unique_225();
+            return talk_unique_poppy();
         case 226:
-            return talk_unique_226();
+            return talk_unique_rilian();
         case 227:
-            return talk_unique_227();
+            return talk_unique_tam();
         case 231:
-            return talk_unique_231();
+            return talk_unique_gilbert();
         case 243:
-            return talk_unique_243();
+            return talk_unique_arnord();
         case 247:
-            return talk_unique_247();
+            return talk_unique_mia();
         case 252:
-            return talk_unique_252();
+            return talk_unique_renton();
         case 253:
-            return talk_unique_253();
+            return talk_unique_marks();
         case 259:
-            return talk_unique_259();
+            return talk_unique_noel();
         case 279:
-            return talk_unique_279();
+            return talk_unique_icolle();
         case 280:
-            return talk_unique_280();
+            return talk_unique_balzak();
         case 290:
-            return talk_unique_290();
+            return talk_unique_lexus();
         case 294:
-            return talk_unique_294();
+            return talk_unique_abyss();
         case 297:
-            return talk_unique_297();
+            return talk_unique_doria();
         case 301:
-            return talk_unique_301();
+            return talk_unique_conery();
         case 302:
-            return talk_unique_302();
+            return talk_unique_rogue_boss();
         case 322:
-            return talk_unique_322();
+            return talk_unique_strange_scientist();
         case 345:
-            return talk_unique_345();
+            return talk_unique_kaneda_bike();
         case 348:
-            return talk_unique_348();
+            return talk_unique_part_time_worker();
     }
     return talk_result_t::talk_ignored;
 }
