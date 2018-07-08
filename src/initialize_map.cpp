@@ -89,9 +89,7 @@ label_17401:
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             int stat = dialog(
-                lang(
-                    u8"マップを初期化しますか？（注：ゲームに影響が出る可能性があります。エラーが出てマップが読み込めない場合のみ、必ず元のセーブのバックアップをとった上で実行してください。）"s,
-                    u8"Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)"s),
+                i18n::s.get("core.locale.map.prompt_initialize"),
                 3);
             if (stat == 6)
             {
@@ -190,9 +188,9 @@ label_1741_internal:
     if (gdata_current_map == 7)
     {
         if (mdatan(0) == ""s
-            || mdatan(0) == lang(u8"ノースティリス"s, u8"North Tyris"s))
+            || mdatan(0) == i18n::s.get_enum_property("core.locale.map.unique", "name", 4);
         {
-            mdatan(0) = lang(u8"わが家"s, u8"Your Home"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "name", 7);
         }
     }
     else
@@ -1106,7 +1104,7 @@ label_1741_internal:
             mdata(10) = 25;
             mdata(13) = 79;
             mdata(17) = 0;
-            mdatan(0) = lang(u8"盗賊ギルド"s, u8"Thieves Guild"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.thieves_guild.name");
             map_placeplayer();
             flt();
             chara_create(-1, 292, 21, 9);
@@ -1423,7 +1421,7 @@ label_1741_internal:
             mdata(10) = 25;
             mdata(13) = 79;
             mdata(17) = 0;
-            mdatan(0) = lang(u8"魔術士ギルド"s, u8"Mages Guild"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.mages_guild.name");
             map_placeplayer();
             flt();
             chara_create(-1, 288, 24, 3);
@@ -1462,7 +1460,7 @@ label_1741_internal:
             mdata(10) = 0;
             mdata(13) = 61;
             mdata(17) = 1;
-            mdatan(0) = lang(u8"ルミエスト下水道"s, u8"The Sewer"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.the_sewer.name");
             quest_place_target();
             gdata_entrance_type = 1;
             map_placeplayer();
@@ -1574,7 +1572,7 @@ label_1741_internal:
             mdata(10) = 0;
             mdata(13) = 61;
             mdata(17) = 1;
-            mdatan(0) = lang(u8"タムの猫屋敷"s, u8"Cat Mansion"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.cat_mansion.name");
             quest_place_target();
             map_placeplayer();
         }
@@ -1588,7 +1586,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdata(7) = 0;
-            mdatan(0) = lang(u8"防衛線"s, u8"Battle Field"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.battle_field.name");
             quest_place_target();
             gdata_entrance_type = 8;
             map_placeplayer();
@@ -1876,7 +1874,7 @@ label_1741_internal:
             mdata(10) = 25;
             mdata(13) = 79;
             mdata(17) = 0;
-            mdatan(0) = lang(u8"戦士ギルド"s, u8"Fighters Guild"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.fighters_guild.name");
             map_placeplayer();
             flt();
             chara_create(-1, 291, 27, 4);
@@ -1912,7 +1910,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdata(7) = 0;
-            mdatan(0) = lang(u8"戦場"s, u8"Doom Ground"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.doom_ground.name");
             gdata_entrance_type = 4;
             gdata_duration_of_kamikaze_attack = 0;
             map_placeplayer();
@@ -2052,7 +2050,7 @@ label_1741_internal:
             mdata(10) = 0;
             mdata(13) = 61;
             mdata(17) = 1;
-            mdatan(0) = lang(u8"スライムの坑道"s, u8"The Mine"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.the_mine.name");
             quest_place_target();
             map_placeplayer();
         }
@@ -2065,7 +2063,7 @@ label_1741_internal:
             mdata(10) = 0;
             mdata(13) = 61;
             mdata(17) = 1;
-            mdatan(0) = lang(u8"盗賊の隠れ家"s, u8"Robber's Hideout"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.robbers_hideout.name");
             quest_place_target();
             map_placeplayer();
         }
@@ -2078,7 +2076,7 @@ label_1741_internal:
             mdata(10) = 0;
             mdata(13) = 61;
             mdata(17) = 1;
-            mdatan(0) = lang(u8"生体兵器実験場"s, u8"Test Site"s);
+            mdatan(0) = i18n::s.get("core.locale.map.unique.test_site.name");
             quest_place_target();
             gdata_entrance_type = 7;
             mapstartx = 6;
@@ -2109,7 +2107,7 @@ label_1741_internal:
         mdatan(0) = "";
         if (4 <= gdata(62) && gdata(62) < 9)
         {
-            mdatan(0) = lang(u8"森"s, u8"Forest"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "forest", 2);
             map_randomtile(8, 25);
             map_randomtile(0, 10);
             map_randomtile(1, 4);
@@ -2125,11 +2123,11 @@ label_1741_internal:
         }
         if (264 <= gdata(62) && gdata(62) < 363)
         {
-            mdatan(0) = lang(u8"水上"s, u8"Sea"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "sea", 2);
         }
         if (9 <= gdata(62) && gdata(62) < 13)
         {
-            mdatan(0) = lang(u8"草原"s, u8"Grassland"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "grassland", 2);
             map_randomtile(9, 10);
             map_randomtile(10, 10);
             map_randomtile(0, 30);
@@ -2148,7 +2146,7 @@ label_1741_internal:
         }
         if (13 <= gdata(62) && gdata(62) < 17)
         {
-            mdatan(0) = lang(u8"荒野"s, u8"Desert"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "desert", 2);
             map_randomtile(18, 25);
             map_randomtile(17, 10);
             map_randomtile(19, 2);
@@ -2163,7 +2161,7 @@ label_1741_internal:
         }
         if (chipm(0, gdata(62)) == 4)
         {
-            mdatan(0) = lang(u8"雪原"s, u8"Snow Field"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "snow_field", 2);
             map_randomtile(57, 4);
             map_randomtile(56, 4);
             map_randomtile(49, 2);
@@ -2182,7 +2180,7 @@ label_1741_internal:
         }
         if (mdatan(0) == ""s)
         {
-            mdatan(0) = lang(u8"平地"s, u8"Plain Field"s);
+            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "plain_field", 2);
             map_randomtile(1, 10);
             map_randomtile(2, 2);
             map_randomtile(3, 2);
@@ -2337,7 +2335,7 @@ label_1741_internal:
                 mdata(10) = 0;
                 mdata(7) = 0;
                 mdata(13) = 66;
-                mdatan(0) = lang(u8"レシマス最深層"s, u8"The Depth"s);
+                mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "the_depth", 3);
                 if (gdata_main_quest_flag < 170)
                 {
                     event_add(3);
@@ -2597,16 +2595,10 @@ label_1741_internal:
                                 {
                                     continue;
                                 }
-                                dialog(lang(
-                                    u8"エリアが再配置されます。"s + mapname(p)
-                                        + u8"の位置は、x"s + adata(1, p)
-                                        + u8":y"s + adata(2, p) + u8"からx"s + x
-                                        + u8":y"s + y + u8"に変更されます。"s,
-                                    u8"The location of "s + mapname(p)
-                                        + u8" has been changed from x"s
-                                        + adata(1, p) + u8":y"s + adata(2, p)
-                                        + u8" to x"s + x + u8":y"s + y
-                                        + u8"."s));
+                                dialog(i18n::s.get("core.locale.map.location_changed",
+                                                   mapname(p),
+                                                   adata(1, p), adata(2, p),
+                                                   x, y));
                                 adata(1, p) = x;
                                 adata(2, p) = y;
                                 ++f;
@@ -2663,9 +2655,7 @@ label_1742_internal:
             gdata(35) = 1;
             gdata(60) = -1;
             msg_newline();
-            msgtemp = lang(
-                u8"  三年の月日が経ち、あなたは再びノースティリスに降り立った。"s,
-                u8"  Three years elapsed and you set foot on cool soil of North Tyris's again."s);
+            msgtemp = "  " + i18n::s.get("core.locale.scenario.three_years_later");
         }
     }
     for (int cnt = 16; cnt < 55; ++cnt)
@@ -2908,8 +2898,7 @@ label_1744_internal:
     {
         if (medit == 0)
         {
-            dialog(lang(
-                u8"マップのロードに失敗しました。"s, u8"Map loading failed."s));
+            dialog(i18n::s.get("core.locale.map.loading_failed"));
             mode = 2;
             gdata_current_map = 7;
             gdata_current_dungeon_level = 1;
@@ -3200,11 +3189,8 @@ label_1744_internal:
         {
             if (adata(20, gdata_current_map) == -1)
             {
-                msgtemp += lang(
-                    u8"辺りからは何の緊張感も感じられない。"s
-                        + mapname(gdata_current_map)
-                        + u8"の主はもういないようだ。"s,
-                    u8"This place is pretty dull. The dungeon master is no longer sighted here."s);
+                msgtemp += i18n::s.get("core.locale.map.no_dungeon_master",
+                                       mapname(gdata_current_map));
             }
         }
     }
@@ -3402,13 +3388,10 @@ label_1744_internal:
         {
             p = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12 - gdata_departure_date;
-            txt(lang(
-                cnvdate(gdata_departure_date, false) + u8"に"s
-                    + mapname(gdata_left_town_map) + u8"を発ってから、"s
-                    + p / 24 + u8"日と"s + p % 24 + u8"時間の旅を終えた。"s,
-                ""s + p / 24 + u8" days and "s + p % 24
-                    + u8" hours have passed since you left "s
-                    + mapname(gdata_left_town_map) + u8"."s));
+            txt(i18n::s.get("core.locale.map.since_leaving.time_passed",
+                            p / 24, p % 24,
+                            mapname(gdata_left_town_map),
+                            cnvdate(gdata_departure_date, false)));
             p = 0;
             exp = cdata[0].level * gdata_distance_between_town * sdata(182, 0)
                     / 100
@@ -3428,17 +3411,14 @@ label_1744_internal:
             }
             if (p == 1)
             {
-                s = u8"あなた"s;
+                txt(i18n::s.get("core.locale.map.since_leaving.walked.you",
+                                gdata_distance_between_town));
             }
             else
             {
-                s = u8"あなたとその仲間"s;
+                txt(i18n::s.get("core.locale.map.since_leaving.walked.you_and_allies",
+                                gdata_distance_between_town));
             }
-            txt(lang(
-                s + u8"は"s + gdata_distance_between_town
-                    + u8"マイルの距離を歩き、経験を積んだ。"s,
-                u8"You've walked about "s + gdata_distance_between_town
-                    + u8" miles and have gained experience."s));
             skillexp(182, 0, 25 + gdata_distance_between_town * 2 / 3, 0, 1000);
             gdata_distance_between_town = 0;
         }
@@ -3448,16 +3428,9 @@ label_1744_internal:
         if (gdata_executing_immediate_quest_type == 1009)
         {
             txtef(9);
-            txt(lang(
-                ""s + gdata_left_minutes_of_executing_quest
-                    + u8"分間の間にパーティーを盛り上げよう。目標は"s
-                    + qdata(12, gdata_executing_immediate_quest)
-                    + u8"ポイント。"s,
-                u8"You have to warm up the party within "s
-                    + gdata_left_minutes_of_executing_quest
-                    + u8" minites. Your target score is "s
-                    + qdata(12, gdata_executing_immediate_quest)
-                    + u8" points."s));
+            txt(i18n::s.get("core.locale.map.quest.on_enter.party",
+                            gdata_left_minutes_of_executing_quest,
+                            qdata(12, gdata_executing_immediate_quest)));
         }
         if (gdata_executing_immediate_quest_type == 1006)
         {
@@ -3467,29 +3440,16 @@ label_1744_internal:
                 qdata(6, gdata_executing_immediate_quest) = 400;
             }
             txtef(9);
-            txt(lang(
-                ""s + gdata_left_minutes_of_executing_quest
-                    + u8"分以内に、納入箱に"s
-                    + cnvweight(qdata(12, gdata_executing_immediate_quest))
-                    + u8"の作物を納入しよう。"s,
-                u8"To complete the quest, you have to harvest "s
-                    + cnvweight(qdata(12, gdata_executing_immediate_quest))
-                    + u8" worth farm products and put them into the delivery chest within "s
-                    + gdata_left_minutes_of_executing_quest + u8" minutes."s));
+            txt(i18n::s.get("core.locale.map.quest.on_enter.harvest",
+                            cnvweight(qdata(12, gdata_executing_immediate_quest)),
+                            gdata_left_minutes_of_executing_quest ));
         }
         if (gdata_executing_immediate_quest_type == 1008)
         {
             txtef(9);
-            txt(lang(
-                ""s + gdata_left_minutes_of_executing_quest + u8"分以内に、"s
-                    + chara_refstr(
-                          qdata(12, gdata_executing_immediate_quest), 2)
-                    + u8"を討伐しなければならない。"s,
-                u8"You have to slay "s
-                    + chara_refstr(
-                          qdata(12, gdata_executing_immediate_quest), 2)
-                    + u8" within "s + gdata_left_minutes_of_executing_quest
-                    + u8" minites."s));
+            txt(i18n::s.get("core.locale.map.quest.on_enter.conquer",
+                            chara_refstr(qdata(12, gdata_executing_immediate_quest), 2),
+                            gdata_left_minutes_of_executing_quest));
         }
     }
 

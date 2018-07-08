@@ -8,5 +8,7 @@ locale {
             _4 = "I can't sleep tonight."
             _5 = "You're kidding."
         }
+
+        three_years_later = "Three years elapsed and you set foot on cool soil of North Tyris's again."
     }
 }
