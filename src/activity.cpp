@@ -658,7 +658,7 @@ void continuous_action_sex()
     {
         if (!actionsp(0, 1 + rnd(2)))
         {
-            txt(lang(u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
+            txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
             rowactend(cc);
             rowactend(tc);
             return;

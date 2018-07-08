@@ -191,11 +191,17 @@ locale {
             ride_self = "You try to ride yourself."
             stays_in_area = "The ally currently stays in this area."
             currently_riding = "${name(_1)} ${is(_1)} currently riding ${name(_2)}."
-            mount_dialog {
-                _0 = "\"Awww.\""
-                _1 = "\"You should go on a diet.\""
-                _2 = "\"Let's roll!\""
-                _3 = "\"Be gentle.\""
+
+            mount {
+                execute = "You ride ${name(_1)}. (${name(_1)}'s speed: ${_2}->"
+                suitable = "You feel comfortable."
+                unsuitable = "This creature is too weak to carry you."
+                dialog {
+                    _0 = "\"Awww.\""
+                    _1 = "\"You should go on a diet.\""
+                    _2 = "\"Let's roll!\""
+                    _3 = "\"Be gentle.\""
+                }
             }
         }
 

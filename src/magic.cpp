@@ -1429,7 +1429,7 @@ label_2181_internal:
             ride_begin(tc);
             txtef(9);
             txt(name(gdata_mount)
-                + i18n::s.get("core.locale.magic.mount.mount_dialog", rnd(4)));
+                + i18n::s.get("core.locale.magic.mount.mount.dialog", rnd(4)));
         }
         break;
     case 183:

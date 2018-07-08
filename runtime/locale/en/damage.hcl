@@ -129,24 +129,6 @@ locale {
             is_severely_hurt = "${name(_1)} ${is(_1)} severely hurt!"
         }
 
-        element {
-            default = "${name(_1)} ${is(_1)} wounded."
-            _50 = "${name(_1)} ${is(_1)} burnt."
-            _51 = "${name(_1)} ${is(_1)} frozen."
-            _52 = "${name(_1)} ${is(_1)} shocked."
-            _53 = "${name(_1)} ${is(_1)} struck by dark force."
-            _54 = "${name(_1)} suffer${s(_1)} a splitting headache."
-            _55 = "${name(_1)} suffer${s(_1)} from venom."
-            _56 = "${name(_1)} ${is(_1)} chilled by infernal squall."
-            _57 = "${name(_1)} ${is(_1)} shocked by a shrill sound."
-            _58 = "${name(_1)}${his_owned(_1)} nerves are hurt."
-            _59 = "${name(_1)} ${is(_1)} hurt by chaotic force."
-            # _60
-            _61 = "${name(_1)} get${s(_1)} a cut."
-            # _62
-            _63 = "${name(_1)} ${is(_1)} burnt by acid."
-        }
-
         sand_bag {
             _0 = "\"Kill me already!\""
             _1 = "\"No..not yet...!\""
