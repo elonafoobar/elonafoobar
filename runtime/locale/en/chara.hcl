@@ -1,5 +1,8 @@
 locale {
     chara {
+        you = "you"
+        something = "something"
+
         job {
             general_vendor = "${trim_job(_1)}the general vendor"
             innkeeper = "${trim_job(_1)}the Innkeeper"

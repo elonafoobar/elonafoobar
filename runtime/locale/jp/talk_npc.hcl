@@ -3,6 +3,7 @@ locale {
         will_not_listen = "${name(_1)}は耳を貸さない。"
         is_sleeping = "${name(_1)}はぐっすり眠っている…"
         is_busy = "${name(_1)}はお取り込み中だ…"
+        ignores_you = "…(あなたを無視している)"
 
         window {
             impress = "友好"

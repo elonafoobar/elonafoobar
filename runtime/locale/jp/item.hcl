@@ -1,5 +1,10 @@
 locale {
     item {
+        chip {
+            dryrock = "日干し岩"
+            field = "畑"
+        }
+
         desc {
             have_to_identify = "このアイテムに関する知識を得るには、鑑定する必要がある。"
             no_information = "特に情報はない"

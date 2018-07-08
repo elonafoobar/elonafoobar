@@ -251,8 +251,7 @@ talk_result_t talk_busy()
 talk_result_t talk_ignored()
 {
     listmax = 0;
-    buff = lang(
-        u8"…(あなたを無視している)"s, u8"("s + he(tc) + u8" ignores you...)"s);
+    buff = i18n::s.get("core.locale.talk.ignores_you", cdata[tc]);
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
@@ -366,8 +365,7 @@ talk_result_t talk_house_visitor()
                 {
                     flt();
                     itemcreate(-1, 704, -1, -1, 0);
-                    txt(lang(
-                        name(tc) + u8"は吐いた。"s, name(tc) + u8" vomits."s));
+                    txt(i18n::s.get("core.locale.food.vomits", cdata[tc]));
                     snd(104);
                     await(config::instance().animewait / 2);
                     update_screen();
@@ -719,13 +717,7 @@ talk_result_t talk_house_visitor()
             snd(17);
             txt(i18n::s.get("core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
             txtef(9);
-            txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
-                lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
-                lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
-                lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
-                lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
-                lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
+            txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
             dmgcon(tc, status_ailment_t::drunk, 1000);
             dmgcon(cc, status_ailment_t::drunk, 1000);
             chara_mod_impression(tc, 15);
@@ -1088,9 +1080,7 @@ talk_result_t talk_house_visitor()
 bool talk_give_potion_of_cure_corruption()
 {
     list(0, listmax) = 1;
-    listn(0, listmax) = lang(
-        u8"エーテル抗体を1本渡す"s,
-        u8"(Hand her a potion of cure corruption.)"s);
+    listn(0, listmax) = i18n::s.get("core.locale.talk.unique.pael.give.choice");
     ++listmax;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"bye");
@@ -1104,7 +1094,7 @@ bool talk_give_potion_of_cure_corruption()
     if (stat == -1)
     {
         listmax = 0;
-        buff = lang(u8"うそつき！"s, u8"Liar!"s);
+        buff = i18n::s.get("core.locale.talk.unique.pael.give.do_not_have");
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1121,13 +1111,10 @@ bool talk_give_potion_of_cure_corruption()
         return false;
     }
     --inv[stat].number;
-    txt(lang(u8"エーテル抗体を1本渡した。"s, u8"You give her a potion."s));
+    txt(i18n::s.get("core.locale.talk.unique.pael.give.you_give"));
     snd(13);
     listmax = 0;
-    buff = lang(
-        u8"え…あ、ありがと〜！！おかあさん…薬だよ。これでよくなるよね？"s,
-        u8"R-Really? Mommy, mommy! "s + cdatan(0, 0)
-            + u8" gave us a cure! Are you gonna be ok now?"s);
+    buff = i18n::s.get("core.locale.talk.unique.pael.give.dialog", cdatan(0, 0));
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1152,9 +1139,7 @@ talk_result_t talk_game_begin()
     {
         cdata[0].blind = 100;
         listmax = 0;
-        buff = lang(
-            u8"この洞窟…雨をしのぐにはちょうどいいわ。ロミアス、危険がないか奥を調べて来て。"s,
-            u8"This cave...it's a good place to keep out the rain. Lomias, check the inner chamber to be sure there is no danger lurking here."s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 0);
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
@@ -1170,7 +1155,7 @@ talk_result_t talk_game_begin()
             }
         }
         listmax = 0;
-        buff = lang(u8"わかった。ここで待っていろ"s, u8"Okay. Wait here."s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 1);
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
@@ -1189,8 +1174,8 @@ talk_result_t talk_game_begin()
         await(3000);
         txtnew();
         txtef(3);
-        txt(lang(u8"何かは殺された。"s, u8"Something is killed."s));
-        txt(lang(u8"「ぐわぁ」"s, u8"\"Uggghhh!\""s));
+        txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg.something_is_killed"));
+        txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg.ugh"));
         snd(8);
         spillblood(28, 6, 10);
         flt();
@@ -1199,9 +1184,7 @@ talk_result_t talk_game_begin()
         await(500);
         await(500);
         listmax = 0;
-        buff = lang(
-            u8"…今の音は？ …ロミアス、大丈夫？"s,
-            u8"...what was that sound? ...Lomias, are you alright?"s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 2);
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
@@ -1217,9 +1200,7 @@ talk_result_t talk_game_begin()
             }
         }
         listmax = 0;
-        buff = lang(
-            u8"ああ、問題ない。どうやらこの洞窟は昔、誰かが住んでいたようだな。奥を見て来たが、今はもう使われていないようだ。"s,
-            u8"It's nothing. Looks like this cave is long abandoned. It's a good place to stay."s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 3);
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
@@ -1235,9 +1216,7 @@ talk_result_t talk_game_begin()
             }
         }
         listmax = 0;
-        buff = lang(
-            u8"そう、ならば都合がいいわ。…あら、あなた何を持っているの？ …キャーッ、プチじゃない！"s,
-            u8"I see, that's convenient for us...wait Lomias, what arey you carrying?...Argh! Putits!"s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 4);
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
@@ -1253,9 +1232,7 @@ talk_result_t talk_game_begin()
             }
         }
         listmax = 0;
-        buff = lang(
-            u8"こいつらか？心配する必要はない。以前、人間にペットとして飼われていたのだろう、ふふ…私によくなついているようだ。"s,
-            u8"Don't worry. It appears these putits had been kept as pets by someone. They are kind of...cute."s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 5);
         tc =
             tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
@@ -1271,9 +1248,7 @@ talk_result_t talk_game_begin()
             }
         }
         listmax = 0;
-        buff = lang(
-            u8"うふ！あなたにも優しいところがあるのね。…来て。どうやら怪我人が意識を取り戻したみたいよ。"s,
-            u8"Huh, sounds like even you have a soft spot...Come here, the injured is about to wake up."s);
+        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin.easter_egg", 6);
         tc =
             tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
@@ -1296,184 +1271,89 @@ talk_result_t talk_game_begin()
         picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         cdata[0].blind = 0;
-        txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
+        txt(i18n::s.get("core.locale.talk.unique.lomias.begin.easter_egg.was_dream"));
     }
     else
     {
         txtnew();
     }
-    txt(lang(
-        u8"あなたは意識をとりもどした。"s, u8"You regain consciousness."s));
-    if (jp)
+    txt(i18n::s.get("core.locale.talk.unique.lomias.begin.regain_consciousness"));
+    listmax = 0;
+    buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 0);
+    tc =
+        tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    ++listmax;
+    chatesc = 1;
+    talk_window_query();
+    if (scenemode)
     {
-        listmax = 0;
-        buff =
-            u8"…意識が…もう戻ったのか？ 驚いたな。君の回復を待つために、我々の急を要する旅がいつまで中断されるのか、気を揉んでいたのだが。"s;
-        tc =
-            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
+        if (scene_cut == 1)
         {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
-        }
-        listmax = 0;
-        buff =
-            u8"君は重傷を負い川辺に倒れていた。宵闇が辺りを覆う前に、癒し手の力を持つ我々に発見されたのは、全くよくできた偶然だ。"s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
-        }
-        listmax = 0;
-        buff =
-            u8" …そんな物珍しげな顔をするな。君の察する通り、我々は異形の森の民だ。エレアは…シエラ・テールの高潔なる異端者は、他種族の詮索に付き合う無駄な時間をあいにく持ち合わせていないが、君は、我々に拾われた幸運をもっと素直に喜ぶべきだな。瀕死の君を回復させることは、ここにいるラーネイレ以外の何者にも不可能だっただろう。なにせ彼女はエレアの…"s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
-        }
-        listmax = 0;
-        buff =
-            u8"ロミアス、喋りすぎよ。たとえ意識の朦朧とした怪我人が相手だとしても。"s;
-        tc =
-            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
-        }
-        listmax = 0;
-        buff = u8"…そうだな。私の悪い癖だ、わかってはいる。…さて、"s
-            + cdatan(0, 0) + u8"といったな、"s;
-        tc =
-            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
+            return talk_result_t::talk_end;
         }
     }
-    else
+    listmax = 0;
+    buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 1);
+    tc = tc * 1 + 0;
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    ++listmax;
+    chatesc = 1;
+    talk_window_query();
+    if (scenemode)
     {
-        listmax = 0;
-        buff =
-            u8"...you...you're awake already? Remarkable. I was beginning to worry that nursing a lowly adventurer would bring our urgent travel to a halt."s;
-        tc =
-            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
+        if (scene_cut == 1)
         {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
+            return talk_result_t::talk_end;
         }
-        listmax = 0;
-        buff =
-            u8"You were badly wounded, passing out on the bank of a river. It was fortunate that we found you before the dark mantle of night enveloped this whole valley, almost as if Ehekatl, the goddess of luck herself had her eyes upon you."s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
+    }
+    listmax = 0;
+    buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 2);
+    tc = tc * 1 + 0;
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    ++listmax;
+    chatesc = 1;
+    talk_window_query();
+    if (scenemode)
+    {
+        if (scene_cut == 1)
         {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
+            return talk_result_t::talk_end;
         }
-        listmax = 0;
-        buff =
-            u8"...stop your curious eyes. Yes, we are sons of Vindale whom they call the irreverent forest. Though we Eleas, noble but blameless \"heretics\", aren't keen to spend idle time responding to every senseless question about our race, you should be more thankful for your fate. If it weren't the lady Larnneire who cured your mortal wound, you wouldn't be hearing my tirade. For the lady is no ordinary Elea and only she can..."s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
+    }
+    listmax = 0;
+    buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 3);
+    tc =
+        tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    ++listmax;
+    chatesc = 1;
+    talk_window_query();
+    if (scenemode)
+    {
+        if (scene_cut == 1)
         {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
+            return talk_result_t::talk_end;
         }
-        listmax = 0;
-        buff =
-            u8"You talk too much Lomias, even though the one injured before you is still dazed."s;
-        tc =
-            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
+    }
+    listmax = 0;
+    buff = i18n::s.get_enum("core.locale.talk.unique.lomias.begin", 4, cdatan(0, 0));
+    tc =
+        tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
+    ++listmax;
+    chatesc = 1;
+    talk_window_query();
+    if (scenemode)
+    {
+        if (scene_cut == 1)
         {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
-        }
-        listmax = 0;
-        buff = u8"...yes, it's a bad habit of mine. Well, "s + cdatan(0, 0)
-            + u8"..."s;
-        tc =
-            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return talk_result_t::talk_end;
-            }
+            return talk_result_t::talk_end;
         }
     }
     mdata(13) = 67;

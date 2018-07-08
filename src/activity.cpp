@@ -1262,9 +1262,7 @@ void continuous_action_others()
         ti = inv_getfreeid(0);
         if (ti == -1)
         {
-            txt(lang(
-                u8"バックパックには、もうアイテムを入れる余裕がない。"s,
-                u8"Your inventory is full."s));
+            txt(i18n::s.get("core.locale.action.pick_up.your_inventory_is_full"));
             return;
         }
         ibitmod(12, ci, 0);

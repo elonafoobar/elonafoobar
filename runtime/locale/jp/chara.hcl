@@ -1,5 +1,8 @@
 locale {
     chara {
+        you = "あなた"
+        something = "何か"
+
         job {
             general_vendor = "雑貨屋の${_1}"
             innkeeper = "宿屋の${_1}"

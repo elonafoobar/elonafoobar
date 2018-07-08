@@ -120,7 +120,7 @@ locale {
                 other = "\"Argh, the milk is cursed!\""
             }
             self = "The taste is very thick, almost addictive."
-            other = "「うまー」"
+            other = "\"Yummy!\""
         }
 
         alcohol {

@@ -124,6 +124,29 @@ locale {
             }
 
             lomias {
+                begin {
+                    easter_egg {
+                        _0 = "This cave...it's a good place to keep out the rain. Lomias, check the inner chamber to be sure there is no danger lurking here."
+                        _1 = "Okay. Wait here."
+                        _2 = "...what was that sound? ...Lomias, are you alright?"
+                        _3 = "It's nothing. Looks like this cave is long abandoned. It's a good place to stay."
+                        _4 = "I see, that's convenient for us...wait Lomias, what arey you carrying?...Argh! Putits!"
+                        _5 = "Don't worry. It appears these putits had been kept as pets by someone. They are kind of...cute."
+                        _6 = "Huh, sounds like even you have a soft spot...Come here, the injured is about to wake up."
+
+                        something_is_killed = "Something is killed."
+                        ugh = "\"Uggghhh!\""
+                        was_dream = "It was...a dream...?"
+                    }
+                    regain_consciousness = "You regain consciousness."
+
+                    _0 ="...you...you're awake already? Remarkable. I was beginning to worry that nursing a lowly adventurer would bring our urgent travel to a halt."
+                    _1 ="You were badly wounded, passing out on the bank of a river. It was fortunate that we found you before the dark mantle of night enveloped this whole valley, almost as if Ehekatl, the goddess of luck herself had her eyes upon you."
+                    _2 ="...stop your curious eyes. Yes, we are sons of Vindale whom they call the irreverent forest. Though we Eleas, noble but blameless \"heretics\", aren't keen to spend idle time responding to every senseless question about our race, you should be more thankful for your fate. If it weren't the lady Larnneire who cured your mortal wound, you wouldn't be hearing my tirade. For the lady is no ordinary Elea and only she can..."
+                    _3 ="You talk too much Lomias, even though the one injured before you is still dazed."
+                    _4 ="...yes, it's a bad habit of mine. Well, ${_1}..."
+                }
+
                 tutorial {
                     before {
                         dialog = "It looks like you aren't familiar with this land. Before we leave, I can spare a moment to teach you a few lessons."
@@ -438,6 +461,14 @@ locale {
                 after_sold = "Mommy... where have you gone mommy?"
 
                 before = "Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."
+
+                give {
+                    choice = "(Hand her a potion of cure corruption.)"
+                    do_not_have = "Liar!"
+                    you_give = "You give her a potion."
+                    dialog = "R-Really? Mommy, mommy! ${_1} gave us a cure! Are you gonna be ok now?"
+                }
+
                 progress {
                     _0 = "I hope mommy gets better soon!"
                     _1 = "Thanks ${_1}, you're the best! Mommy's getting better and better."
@@ -968,6 +999,8 @@ locale {
                     text = "You turn over the little sister."
                     dialog = "Thanks, I appreciate what you've done. It won't be long before I can reward you."
                 }
+
+                saved_count = "You have saved little sister ${_1} times and killed ${_2} times."
             }
 
             kaneda_bike {

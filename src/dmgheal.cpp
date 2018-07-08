@@ -1019,16 +1019,9 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     {
                         ++gdata_kill_count_of_little_sister;
                         txtef(3);
-                        txt(lang(
-                            u8"リトルシスター殺害"s
-                                + gdata_kill_count_of_little_sister
-                                + u8"回、救出"s
-                                + gdata_save_count_of_little_sister + u8"回。"s,
-                            u8"You have saved little sister "s
-                                + gdata_save_count_of_little_sister
-                                + u8" times and killed "s
-                                + gdata_kill_count_of_little_sister
-                                + u8" times."s));
+                        txt(i18n::s.get("core.locale.talk.unique.strange_scientist.saved_count",
+                                        gdata_save_count_of_little_sister,
+                                        gdata_kill_count_of_little_sister));
                     }
                     if (gdata_current_dungeon_level
                             == adata(10, gdata_current_map)

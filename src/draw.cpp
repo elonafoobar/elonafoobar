@@ -1194,8 +1194,8 @@ void initialize_item_chip()
 {
     initialize_mef();
     SDIM3(tname, 16, 11);
-    tname(1) = lang(u8"日干し岩"s, u8"a dryrock"s);
-    tname(2) = lang(u8"畑"s, u8"a field"s);
+    tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
+    tname(2) = i18n::s.get("core.locale.item.chip.field");
     initialize_item_chips();
     initialize_chara_chips();
     initialize_map_chip();

@@ -403,17 +403,17 @@ std::string name(int cc)
 {
     if (cc == 0)
     {
-        return lang(u8"あなた"s, u8"you"s);
+        return i18n::s.get("core.locale.chara.you");
     }
     if (is_in_fov(cc) == 0)
     {
-        return lang(u8"何か"s, u8"something"s);
+        return i18n::s.get("core.locale.chara.something");
     }
     if (cdata[0].blind != 0
         || (cdata[cc].is_invisible() == 1 && cdata[0].can_see_invisible() == 0
             && cdata[cc].wet == 0))
     {
-        return lang(u8"何か"s, u8"something"s);
+        return i18n::s.get("core.locale.chara.something");
     }
     if (en)
     {

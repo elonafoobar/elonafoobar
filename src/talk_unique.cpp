@@ -3752,9 +3752,7 @@ talk_result_t talk_unique_rogue_boss()
             {
                 if (the_item_db[inv[cnt].id]->is_cargo == 1)
                 {
-                    txt(lang(
-                                itemname(cnt) + u8"を渡した。"s,
-                                u8"You hand over "s + itemname(cnt) + u8"."s));
+                    txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[cnt]));
                     item_remove(inv[cnt]);
                 }
             }
@@ -3932,14 +3930,9 @@ talk_result_t talk_unique_strange_scientist()
             txt(i18n::s.get("core.locale.talk.unique.strange_scientist.turn_over.text"));
             ++gdata_save_count_of_little_sister;
             txtef(2);
-            txt(lang(
-                        u8"リトルシスター殺害"s + gdata_kill_count_of_little_sister
-                        + u8"回、救出"s + gdata_save_count_of_little_sister
-                        + u8"回。"s,
-                        u8"You have saved little sister "s
-                        + gdata_save_count_of_little_sister
-                        + u8" times and killed "s
-                        + gdata_kill_count_of_little_sister + u8" times."s));
+            txt(i18n::s.get("core.locale.talk.unique.strange_scientist.saved_count",
+                            gdata_save_count_of_little_sister,
+                            gdata_kill_count_of_little_sister));
             chara_vanquish(chara_find_ally(319));
             snd(51);
             listmax = 0;

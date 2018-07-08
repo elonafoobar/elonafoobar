@@ -3,6 +3,7 @@ locale {
         will_not_listen = "${name(_1)} won't listen."
         is_sleeping = "${name(_1)} is sleeping."
         is_busy = "${name(_1)} is in the middle of something."
+        ignores_you = "(${he(_1)} ignores you...)"
 
         window {
             impress = "Impress"
@@ -27,6 +28,7 @@ locale {
 
                 thanks = "Thanks!"
                 you_kidding = "You kidding? "
+                hand_over = "You hand over ${itemname(_1, 1)}."
 
                 sex {
                     prompt = "You are...quite attractive. I'll buy you."
@@ -47,8 +49,6 @@ locale {
                     here_is_item = "Here is ${itemname(_1, 1)} you asked."
                     here_is_delivery = "Here's your delivery."
                 }
-
-                hand_over = "You hand over ${itemname(_1, 1)}."
 
                 about {
                     during = "What about my contract? Is everything alright? "

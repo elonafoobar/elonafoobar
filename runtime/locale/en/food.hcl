@@ -217,7 +217,7 @@ locale {
                 like = "It's your favorite human flesh!"
                 dislike = "Eeeek! It's human flesh!"
                 would_have_rather_eaten = "You would've rather eaten human flesh."
-                delicious = "ウマイ！"
+                delicious = "Delicious!"
             }
 
             bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2, 1)}."
