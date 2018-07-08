@@ -1,0 +1,18 @@
+[submodule "android/external/lua"]
+	path = android/external/lua
+	url = https://www.github.com/Ruin0x11/lua53-android
+[submodule "android/external/boost"]
+	path = android/external/boost
+	url = https://www.github.com/Ruin0x11/libboost-1.66-android
+[submodule "android/external/SDL2"]
+	path = android/external/SDL2
+	url = https://www.github.com/Ruin0x11/SDL2
+[submodule "android/external/SDL2_mixer"]
+	path = android/external/SDL2_mixer
+	url = https://www.github.com/Ruin0x11/SDL2_mixer
+[submodule "android/external/SDL2_image"]
+	path = android/external/SDL2_image
+	url = https://www.github.com/Ruin0x11/SDL2_image
+[submodule "android/external/SDL2_ttf"]
+	path = android/external/SDL2_ttf
+	url = https://www.github.com/Ruin0x11/SDL2_ttf
