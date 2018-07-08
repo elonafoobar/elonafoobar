@@ -10,6 +10,8 @@ locale {
         day_breaks = "Day breaks."
         new_day = "A day passes and a new day begins."
 
+        playtime_report = "You have been playing Elona for ${_1} hour${s(_1)}."
+
         weather {
             changes = "The weather changes."
             ether_wind {
@@ -402,6 +404,7 @@ locale {
             locked = "The door is locked. It seems you need a specific key to unlock the door."
 
             prompt_give_up_quest = "Really give up the quest and move over?"
+            prompt_give_up_game = "Do you want to give up the game?"
 
             lost_balance = "Noooo! You lost your step and roll down!"
         }
@@ -556,6 +559,8 @@ locale {
 
         dip {
             execute = "You dip ${itemname(_1)} into ${itemname(_2, 1)}."
+            you_get = "You get ${itemname(_1, 1)}."
+
             rots = "${itemname(_1)} rots."
             unchanged = "${itemname(_1)} remains unchanged."
             rusts = "${itemname(_1)} rusts."
@@ -637,6 +642,8 @@ locale {
         }
 
         equip {
+            you_change = "You change your equipment."
+
             two_handed {
                 fits_well = "${itemname(_1)} fits well for two-hand fighting style."
                 too_light = "${itemname(_1)} is too light for two-hand fighting style."
@@ -660,6 +667,8 @@ locale {
             y = "No...no..."
             at = "Ahhhhh!!"
         }
+
+        quicksave = " *Save* "
 
         exit {
             cannot_save_in_usermap = "You can't save the game in a user made map. Exit anyway?"

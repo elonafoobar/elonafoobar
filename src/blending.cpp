@@ -426,7 +426,7 @@ void window_recipe_(
         {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s
-        + lang(u8"[ページ切替]  "s, u8"[Page]  "s);
+        + i18n::s.get("core.locale.blending.recipe.hint");
     if (step == -1)
     {
         s_at_m184(1) += strhint3;
@@ -772,7 +772,7 @@ label_1924_internal:
         blendchecklist(cnt) = blendcheckmat(list(0, p));
     }
 label_1925_internal:
-    s(0) = i18n::s.get("core.locale.blending.recipe.choose");
+    s(0) = i18n::s.get("core.locale.blending.recipe.title");
     s(1) = strhint2;
     windowshadow = windowshadow(1);
     display_window(
@@ -1005,9 +1005,7 @@ label_1928_internal:
         if (ibit(13, ci))
         {
             snd(27);
-            txt(lang(
-                u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
             goto label_1928_internal;
         }
         rpref(10 + step * 2 + 0) = ci;
@@ -1075,8 +1073,8 @@ std::string rpmatname(int prm_1037)
             s_at_m177 += u8"/bugged/"s;
             return s_at_m177;
         }
-        s_at_m177 =
-            chara_refstr(p_at_m177, 2) + lang(u8"の死体"s, u8" corpse"s);
+        s_at_m177 = i18n::s.get("core.locale.blending.ingredient.corpse",
+                                chara_refstr(p_at_m177, 2));
         return s_at_m177;
     }
     return s_at_m177;
@@ -1806,8 +1804,7 @@ void label_1935()
         }
         if (inv_getfreeid(0) == -1)
         {
-            txt(lang(
-                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
             break;
         }
         cibk = ci;
@@ -1830,9 +1827,7 @@ void label_1935()
         }
         txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
         txtef(2);
-        txt(lang(
-            itemname(ci, 1) + u8"を手に入れた。"s,
-            u8"You get "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
         item_stack(0, ci, 1);
         item_stack(0, ci);
         ci = cibk;

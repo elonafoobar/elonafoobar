@@ -61,7 +61,7 @@ reset_page:
 
     while (1)
     {
-        s(0) = lang(u8"カード", u8"Card");
+        s(0) = i18n::s.get("core.locale.action.use.deck.title");
         s(1) = strhint5;
         display_window(
             (windoww - 730) / 2 + inf_screenx,
@@ -71,9 +71,9 @@ reset_page:
             55,
             40);
 
-        display_topic(lang(u8"NPCの名前", u8"NPC name"), wx + 46, wy + 36);
-        display_topic(lang(u8"殺害数", u8"Kill"), wx + 385, wy + 36);
-        display_topic(lang(u8"生成数", u8"Generate"), wx + 475, wy + 36);
+        display_topic(i18n::s.get("core.locale.action.use.deck.npc_name"), wx + 46, wy + 36);
+        display_topic(i18n::s.get("core.locale.action.use.deck.kill"), wx + 385, wy + 36);
+        display_topic(i18n::s.get("core.locale.action.use.deck.generate"), wx + 475, wy + 36);
 
         keyrange = 0;
         for (int i = 0; i < pagesize; ++i)

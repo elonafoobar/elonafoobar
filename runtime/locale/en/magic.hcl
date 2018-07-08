@@ -248,6 +248,9 @@ locale {
         oracle {
             cursed = "You hear a sepulchral whisper but the voice is too small to distinguish a word."
             no_artifacts = "No artifacts have been generated yet."
+
+            was_held_by = "${_1} was held by ${basename(_2)} at ${_3} in ${_4}/${_5}, ${_6}. "
+            was_created_at = "${_1} was created at ${_2} in ${_3}/${_4}, ${_5}. "
         }
 
         gain_knowledge {
@@ -320,6 +323,16 @@ locale {
 
         return {
             cancel = "The air around you gradually loses power."
+
+            prevented {
+                normal = "Strange power prevents you from returning."
+                ally = "One of your allies prevents you from returning."
+                overweight = "Someone shouts, \"Sorry, overweight.\""
+            }
+
+            you_commit_a_crime = "You commit a crime."
+            door_opens = "A dimensional door opens in front of you."
+            destination_changed = "The capricious controller of time has changed your destination!"
         }
 
         harvest_mana = "${name(_1)}${his_owned(_1)} mana is restored."

@@ -220,6 +220,14 @@ locale {
             whistle {
                 use = "*Peeeeeeeeeep* "
             }
+
+            deck {
+                title = "Card"
+
+                npc_name = "NPC name"
+                kill = "Kill"
+                generate = "Generate"
+            }
         }
     }
 }

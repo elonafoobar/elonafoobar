@@ -72,9 +72,8 @@ talk_result_t talk_inn_eat()
     snd(18);
     cdata[0].nutrition = 15000;
     buff = i18n::s.get("core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
-    txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
-        lang(u8"悪くない。"s, u8"Not bad at all."s),
-        lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
+    txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results",
+                         std::to_string(rnd(3))));
     show_eating_message();
     chara_anorexia(0);
     return talk_result_t::talk_npc;
@@ -232,15 +231,11 @@ talk_result_t talk_arena_master(int chatval)
             cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
         if (stat == 0)
         {
-            txt(lang(
-                    u8"降りるスペースがない。"s,
-                    u8"There's no place to get off."s));
+            txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
             return talk_result_t::talk_end;
         }
         cell_setchara(gdata_mount, rtval, rtval(1));
-        txt(lang(
-                name(gdata_mount) + u8"から降りた。"s,
-                u8"You dismount from "s + name(gdata_mount) + u8"."s));
+        txt(i18n::s.get("core.locale.magic.mount.dismount", cdata[gdata_mount]));
         ride_end();
     }
     gdata(74) = calcfame(
@@ -1209,10 +1204,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
     {
         listmax = 0;
-        buff = lang(
-            u8"では、早速案内するので、モンスターを一匹残らず退治して"s
-                + _kure(),
-            u8"Great! I'll guide you to the place, kill them all!"s);
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.hunt",
+                           cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1230,10 +1223,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1006)
     {
         listmax = 0;
-        buff = lang(
-            u8"畑までは案内するから、しっかりと期限内に作物を納入して"s
-                + _kure(),
-            u8"Fine. I'll take you to my farm."s);
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.harvest",
+                           cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1251,9 +1242,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1009)
     {
         listmax = 0;
-        buff = lang(
-            u8"ついて来て"s + _kure() + u8"パーティー会場まで案内する"s + _yo(),
-            u8"Alright, I'll take you to the party now."s);
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.party",
+                           cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1394,9 +1384,7 @@ talk_result_t talk_invest()
 talk_result_t talk_finish_escort()
 {
     listmax = 0;
-    buff = lang(
-        u8"無事に到着できてほっとした"s + _yo() + _thanks(2),
-        u8"We made it! Thank you!"s);
+    buff = i18n::s.get("core.locale.talk.npc.quest_giver.finish.escort");
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1419,18 +1407,17 @@ talk_result_t talk_quest_giver()
 {
     if (qdata(8, rq) == 1)
     {
-        buff = lang(
-            u8"頼んでいた依頼は順調"s + _kana(1),
-            u8"What about my contract? Is everything alright? "s);
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.during.about",
+                           cdata[tc]);
         return talk_result_t::talk_npc;
     }
     quest_set_data(1);
     listmax = 0;
     list(0, listmax) = 1;
-    listn(0, listmax) = lang(u8"受諾する"s, u8"I will take the job."s);
+    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.take");
     ++listmax;
     list(0, listmax) = 0;
-    listn(0, listmax) = lang(u8"やめる"s, u8"Not now."s);
+    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.leave");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1452,10 +1439,8 @@ talk_result_t talk_quest_giver()
         }
         if (p >= 5)
         {
-            buff = lang(
-                u8"未完了の依頼が多すぎじゃない"s + _kana(1)
-                    + u8"この仕事は、安心してまかせられない"s + _yo(),
-                u8"Hey, you've got quite a few unfinished contracts. See me again when you have finished them."s);
+            buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.too_many_unfinished",
+                               cdata[tc]);
             return talk_result_t::talk_npc;
         }
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -1479,10 +1464,8 @@ talk_result_t talk_quest_giver()
         {
             if (inv_getfreeid(0) == -1)
             {
-                buff = lang(
-                    u8"どうやらバックパックが一杯のよう"s + _da()
-                        + u8"持ち物を整理してまた来て"s + _kure(),
-                    u8"It seems your backpack is already full. Come see me again when you're ready."s);
+                buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.backpack_full",
+                                   cdata[tc]);
                 return talk_result_t::talk_npc;
             }
         }
@@ -1491,10 +1474,8 @@ talk_result_t talk_quest_giver()
             f = chara_get_free_slot_ally();
             if (f == 0)
             {
-                buff = lang(
-                    u8"これ以上仲間を連れて行けないよう"s + _da()
-                        + u8"人数を調整してまた来て"s + _kure(),
-                    u8"It seems your party is already full. Come see me again when you're ready."s);
+                buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.party_full",
+                                   cdata[tc]);
                 return talk_result_t::talk_npc;
             }
             for (int cnt = 0;; ++cnt)
@@ -1544,24 +1525,19 @@ talk_result_t talk_quest_giver()
         {
             return talk_accepted_quest();
         }
-        buff = lang(
-            _thanks() + u8"期待してい"s + _ru(),
-            u8"Thanks. I'm counting on you."s);
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.thanks",
+                           cdata[tc]);
         if (qdata(3, rq) == 1002)
         {
             ++qdata(15, qdata(10, rq));
             flt();
             itemcreate(
                 0, qdata(11, rq), cdata[0].position.x, cdata[0].position.y, 0);
-            txt(lang(
-                itemname(ci, 1) + u8"をバックパックに入れた。"s,
-                u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
+            txt(i18n::s.get("core.locale.common.you_put_in_your_backpack", inv[ci]));
             snd(100);
             refresh_burden_state();
-            buff = lang(
-                u8"これが依頼の品物"s + _da() + u8"期限には十分気をつけて"s
-                    + _kure(),
-                u8"Here's the package. Be aware of the deadline. I don't want to report you to the guards."s);
+            buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.here_is_package",
+                               cdata[tc]);
         }
     }
     else

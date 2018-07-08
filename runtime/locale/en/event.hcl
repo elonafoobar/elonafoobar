@@ -59,12 +59,6 @@ locale {
                     _0 = "(Eat)"
                     _1 = "(Leave)"
                 }
-
-                results {
-                    _0 = "It was tasty."
-                    _1 = "Not bad at all."
-                    _2 = "You smack your lips."
-                }
             }
 
             _13 {

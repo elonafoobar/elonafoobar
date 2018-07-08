@@ -243,6 +243,11 @@ locale {
                 }
             }
 
+            ability {
+                develops = "${name(_1)}の${_2}は発達した。"
+                deteriorates = "${name(_1)}の${_2}は衰えた。"
+            }
+
             growth = "${name(_1)}の${_2}は成長期に突入した。"
 
             corpse {

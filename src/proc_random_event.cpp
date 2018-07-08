@@ -460,9 +460,8 @@ void run_random_event(int id, int luck_threshold)
         if (result == 0)
         {
             cdata[0].nutrition = 15000;
-            txt(i18n::s.get_enum_property("core.locale.event.popup",
-                                          "results._" + std::to_string(rnd(3)),
-                                          14));
+            txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results",
+                                 rnd(3)));
             show_eating_message();
             chara_anorexia(0);
         }

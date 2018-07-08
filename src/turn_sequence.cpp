@@ -872,9 +872,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 || gdata_current_map == 41)
             {
                 gdata_is_returning_or_escaping = 0;
-                txt(lang(
-                    u8"不思議な力が帰還を阻止した。"s,
-                    u8"Strange power prevents you from returning."s));
+                txt(i18n::s.get("core.locale.magic.return.prevented.normal"));
                 goto label_2740_internal;
             }
             if (gdata_is_returning_or_escaping <= 0 && !event_was_set())
@@ -893,16 +891,12 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 }
                 if (f)
                 {
-                    txt(lang(
-                        u8"今は帰還できない仲間を連れている。"s,
-                        u8"One of your allies prevents you from returning."s));
+                    txt(i18n::s.get("core.locale.magic.return.prevented.ally"));
                     goto label_2740_internal;
                 }
                 if (1 && cdata[0].inventory_weight_type >= 4)
                 {
-                    txt(lang(
-                        u8"どこからか声が聞こえた。「悪いが重量オーバーだ」"s,
-                        u8"Someone shouts, \"Sorry, overweight.\""s));
+                    txt(i18n::s.get("core.locale.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
                 if (gdata_destination_map == gdata(850))
@@ -916,19 +910,14 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 int stat = quest_is_return_forbidden();
                 if (stat == 1)
                 {
-                    txt(lang(
-                        u8"あなたは法を犯した。"s, u8"You commit a crime."s));
+                    txt(i18n::s.get("core.locale.magic.return.you_commit_a_crime"));
                     modify_karma(0, -10);
                 }
                 snd(72);
-                txt(lang(
-                    u8"あなたは次元の扉を開けた。"s,
-                    u8"A dimensional door opens in front of you."s));
+                txt(i18n::s.get("core.locale.magic.return.door_opens"));
                 if (gdata_destination_map == 41)
                 {
-                    txt(lang(
-                        u8"気まぐれな時の管理者により次元は歪められた！"s,
-                        u8"The capricious controller of time has changed your destination!"s));
+                    txt(i18n::s.get("core.locale.magic.return.destination_changed"));
                 }
                 msg_halt();
                 update_screen();
@@ -1359,7 +1348,7 @@ turn_result_t pc_turn(bool advance_time)
                 snd(44);
                 save_game();
                 txtef(5);
-                txt(lang(u8" *保存* "s, u8"*saving*"s));
+                txt(i18n::s.get("core.locale.ui.save"));
             }
         }
         if (autoturn == 1)
@@ -1470,9 +1459,7 @@ turn_result_t pc_turn(bool advance_time)
             update_screen();
             if (key == key_goup || key_escape == 1)
             {
-                txt(lang(
-                    u8"試合を放棄する？"s,
-                    u8"Do you want to give up the game?"s));
+                txt(i18n::s.get("core.locale.action.use_stairs.prompt_give_up_game"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
@@ -1527,7 +1514,7 @@ label_2747:
 
     if (gdata(808))
     {
-        txt(lang(u8"装備を変更した。"s, u8"You change your equipment."s));
+        txt(i18n::s.get("core.locale.action.equip.you_change"));
         return turn_result_t::turn_end;
     }
     ++t;
@@ -1571,11 +1558,7 @@ label_2747:
         time_warn = timeGetTime() / 1000;
         wishfilter = 0;
         ++hour_played;
-        s = lang(
-            u8"Elonaをはじめてから"s + hour_played
-                + u8"時間が経過しています。"s,
-            u8"You have been playing Elona for "s + hour_played + u8" hour"s
-                + _s2(hour_played) + u8"."s);
+        s = i18n::s.get("core.locale.action.playtime_report", hour_played);
         s += cheer_up_message(hour_played);
         txtef(5);
         txt(s);
@@ -1630,7 +1613,7 @@ label_2747:
     {
         key = "";
         save_game();
-        txt(lang(u8" *保存* "s, u8" *Save* "s));
+        txt(i18n::s.get("core.locale.action.quicksave"));
     }
     if (key == key_quickload)
     {

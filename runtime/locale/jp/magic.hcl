@@ -243,6 +243,9 @@ locale {
         oracle {
             cursed = "何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"
             no_artifacts = "まだ特殊なアイテムは生成されていない。"
+
+            was_held_by = "${_1}は${_6}年${_5}月に${_3}の${basename(_2)}の手に渡った。"
+            was_created_at = "${_1}は${_5}年${_4}月に${_2}で生成された。"
         }
 
         gain_knowledge {
@@ -315,6 +318,16 @@ locale {
 
         return {
             cancel = "帰還を中止した。"
+
+            prevented {
+                normal = "不思議な力が帰還を阻止した。"
+                ally = "今は帰還できない仲間を連れている。"
+                overweight = "どこからか声が聞こえた。「悪いが重量オーバーだ」"
+            }
+
+            you_commit_a_crime = "あなたは法を犯した。"
+            door_opens = "あなたは次元の扉を開けた。"
+            destination_changed = "気まぐれな時の管理者により次元は歪められた！"
         }
 
         harvest_mana = "${name(_1)}のマナが回復した。"

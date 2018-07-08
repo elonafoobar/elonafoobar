@@ -56,6 +56,7 @@ locale {
             common {
                 set_as_no_drop = "It's set as no-drop. You can reset it from the <examine> menu."
                 does_not_exist = "The item doesn't exist."
+                inventory_is_full = "Your inventory is full."
 
                 invalid = "Invalid Item Id found. Item No:${_1}, Id:${_2} has been removed from your inventory."
 

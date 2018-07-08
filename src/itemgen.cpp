@@ -241,16 +241,13 @@ int do_create_item(int slot, int x, int y)
         {
             if (cdata[owner].character_role == 13)
             {
-                artifactlocation.push_back(lang(
-                    iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                        + gdata_month + u8"月に"s
-                        + mapname(cdata[owner].current_map) + u8"の"s
-                        + cdatan(0, owner) + u8"の手に渡った。"s,
-                    cnven(iknownnameref(inv[ci].id)) + u8" was held by "s
-                        + cdatan(0, owner) + u8" at "s
-                        + mapname(cdata[owner].current_map) + u8" in "s
-                        + gdata_day + u8"/"s + gdata_month + u8", "s
-                        + gdata_year + u8". "s));
+                artifactlocation.push_back(i18n::s.get("core.locale.magic.oracle.was_held_by",
+                                                       cnven(iknownnameref(inv[ci].id)),
+                                                       cdata[owner],
+                                                       mapname(cdata[owner].current_map),
+                                                       gdata_day,
+                                                       gdata_month,
+                                                       gdata_year));
             }
             else
             {
@@ -259,12 +256,12 @@ int do_create_item(int slot, int x, int y)
         }
         if (owner == -1)
         {
-            artifactlocation.push_back(lang(
-                iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                    + gdata_month + u8"月に"s + mdatan(0) + u8"で生成された。"s,
-                cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
-                    + mdatan(0) + u8" in "s + gdata_day + u8"/"s + gdata_month
-                    + u8", "s + gdata_year + u8". "s));
+            artifactlocation.push_back(i18n::s.get("core.locale.magic.oracle.was_created_at",
+                                                   iknownnameref(inv[ci].id),
+                                                   mdatan(0),
+                                                   gdata_day,
+                                                   gdata_month,
+                                                   gdata_year));
         }
     }
 

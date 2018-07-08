@@ -1296,9 +1296,7 @@ void apply_general_eating_effect(int cieat)
             if (gdata_left_turns_of_timestop == 0)
             {
                 txtef(9);
-                txt(lang(
-                    name(cc) + u8"は時を止めた。"s,
-                    name(cc) + u8" stop"s + _s(cc) + u8" time."s));
+                txt(i18n::s.get("core.locale.action.time_stop.begins", cdata[cc]));
                 gdata_left_turns_of_timestop =
                     inv[ci].enchantments[cnt].power / 100 + 1 + 1;
                 continue;
@@ -1319,35 +1317,15 @@ void apply_general_eating_effect(int cieat)
                 {
                     if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
                     {
-                        txt(lang(
-                            name(cc) + u8"の"s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(enc),
-                                      u8"name")
-                                + u8"は発達した。"s,
-                            name(cc) + his(cc) + u8" "s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(enc),
-                                      u8"name")
-                                + u8" develops."s));
+                        txt(i18n::s.get("core.locale.food.effect.ability.develops",
+                                        cdata[cc],
+                                        i18n::_(u8"ability", std::to_string(enc), u8"name")));
                     }
                     else
                     {
-                        txt(lang(
-                            name(cc) + u8"の"s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(enc),
-                                      u8"name")
-                                + u8"は衰えた。"s,
-                            name(cc) + his(cc) + u8" "s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(enc),
-                                      u8"name")
-                                + u8" deteriorates."s));
+                        txt(i18n::s.get("core.locale.food.effect.ability.deteriorates",
+                                        cdata[cc],
+                                        i18n::_(u8"ability", std::to_string(enc), u8"name")));
                     }
                 }
                 continue;

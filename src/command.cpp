@@ -1312,9 +1312,7 @@ turn_result_t do_dip_command()
                     itemcreate(0, 0, -1, -1, 0);
                 }
                 txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
-                txt(lang(
-                    itemname(ci, 1) + u8"を手に入れた。"s,
-                    u8"You get "s + itemname(ci, 1) + u8"."s));
+                txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
                 item_stack(0, ci, 1);
                 return turn_result_t::turn_end;
             }

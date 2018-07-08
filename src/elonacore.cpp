@@ -8345,7 +8345,7 @@ turn_result_t step_into_gate()
         snd(44);
         save_game();
         txtef(5);
-        txt(lang(u8" *保存* "s, u8"*saving*"s));
+        txt(i18n::s.get("core.locale.ui.save"));
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
     --inv[ci].number;
@@ -8365,7 +8365,7 @@ label_19431_internal:
         snd(44);
         save_game();
         txtef(5);
-        txt(lang(u8" *保存* "s, u8"*saving*"s));
+        txt(i18n::s.get("core.locale.ui.save"));
     }
     snd(26);
     listmax = 0;
@@ -13626,9 +13626,7 @@ void proc_autopick()
             if (int(op.type) & int(autopick::operation::type_t::no_drop))
             {
                 ibitmod(13, ti, 1);
-                txt(lang(
-                    itemname(ti) + u8"を大事なものに指定した。"s,
-                    u8"You set "s + itemname(ti) + u8" as no-drop."s));
+                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
             if (int(op.type) & int(autopick::operation::type_t::save))
             {
@@ -13637,7 +13635,7 @@ void proc_autopick()
                     snd(44);
                     save_game();
                     txtef(5);
-                    txt(lang(u8" *保存* "s, u8"*saving*"s));
+                    txt(i18n::s.get("core.locale.ui.save"));
                 }
             }
             break;
