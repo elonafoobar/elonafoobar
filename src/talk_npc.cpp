@@ -1407,7 +1407,7 @@ talk_result_t talk_quest_giver()
 {
     if (qdata(8, rq) == 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.during.about",
+        buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.during",
                            cdata[tc]);
         return talk_result_t::talk_npc;
     }

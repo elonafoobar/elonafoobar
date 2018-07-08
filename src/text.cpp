@@ -806,10 +806,7 @@ std::string replace_tag(const std::string source)
 {
     if (source == u8"ref"s && talkref == 1)
     {
-        return lang(
-            ""s + gdata_number_of_waiting_guests,
-            ""s + gdata_number_of_waiting_guests + u8" guest"s
-                + _s2(gdata_number_of_waiting_guests));
+        return i18n::s.get("core.locale.talk.tag.ref", gdata_number_of_waiting_guests);
     }
     if (source == u8"you"s)
     {
