@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "equipment.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
@@ -133,54 +134,43 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
     {
     case 0: addnews2(valn); break;
     case 1:
-        addnewstopic(u8"@01"s, lang(u8"アイテム発見"s, u8"Discovery"s));
+        addnewstopic(u8"@01"s, i18n::s.get("core.locale.news.discovery.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は"s
-                    + mapname(cdata[adventurer].current_map) + u8"にて"s + valn
-                    + u8"を入手した。"s,
-                cdatan(1, adventurer) + u8" has discovered "s + valn + u8" in "s
-                    + mapname(cdata[adventurer].current_map) + u8"."s),
+            i18n::s.get("core.locale.news.discovery.text",
+                        cdatan(1, adventurer),
+                        valn,
+                        mapname(cdata[adventurer].current_map)),
             1);
         break;
     case 2:
-        addnewstopic(u8"@02"s, lang(u8"新たなる力"s, u8"Growth"s));
+        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.growth.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は経験をつみ、レベル"s
-                    + cdata[adventurer].level + u8"になった。"s,
-                cdatan(1, adventurer)
-                    + u8" has gained experience and achieved level "s
-                    + cdata[adventurer].level + u8"."s),
+            i18n::s.get("core.locale.news.growth.text",
+                        cdatan(1, adventurer),
+                        cdata[adventurer].level),
             1);
         break;
     case 3:
         addnewstopic(
-            u8"@02"s, lang(u8"怪我からの復帰"s, u8"Recovery from injury"s));
+            u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は怪我から回復した。"s,
-                cdatan(1, adventurer) + u8" has fully recovered from injury."s),
+            i18n::s.get("core.locale.news.recovery.text",
+                        cdatan(1, adventurer)),
             1);
         break;
     case 4:
-        addnewstopic(u8"@03"s, lang(u8"クエストの達成"s, u8"Accomplishment"s));
+        addnewstopic(u8"@03"s, i18n::s.get("core.locale.news.accomplishment.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"はクエストを達成し、"s + fame
-                    + u8"の名声を手にした。"s,
-                cdatan(1, adventurer) + u8" has finished a quest and gained "s
-                    + fame + u8" fame."s),
+            i18n::s.get("core.locale.news.accomplishment.text",
+                        cdatan(1, adventurer),
+                        fame),
             1);
         break;
     case 5:
-        addnewstopic(u8"@04"s, lang(u8"引退"s, u8"Retirement"s));
+        addnewstopic(u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer)
-                    + u8"は自分の力の限界を悟り、ノースティリスから去っていった。"s,
-                cdatan(1, adventurer)
-                    + u8" realizes the limitations and leaves North Tyris."s),
+            i18n::s.get("core.locale.news.retirement.text",
+                        cdatan(1, adventurer)),
             1);
         break;
     }
@@ -202,10 +192,7 @@ void label_2662()
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
-                txt(lang(
-                    cdatan(0, rc) + u8"との契約期間が切れた。"s,
-                    u8"The period of contract with "s + cdatan(0, rc)
-                        + u8" has been expired."s));
+                txt(i18n::s.get("core.locale.chara.contract_expired", cdata[rc]));
             }
         }
         if (cdata[rc].current_map != gdata_current_map)

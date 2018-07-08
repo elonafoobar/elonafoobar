@@ -3,6 +3,7 @@ locale {
         will_not_listen = "${name(_1)} won't listen."
         is_sleeping = "${name(_1)} is sleeping."
         is_busy = "${name(_1)} is in the middle of something."
+        ignores_you = "(${he(_1)} ignores you...)"
 
         window {
             impress = "Impress"
@@ -11,6 +12,10 @@ locale {
             shop_rank = "Shop Rank:${_1}"
 
             of = "${_1} of ${_2}"
+        }
+
+        tag {
+            ref = "${_1} guest${s(_1)}"
         }
 
         npc {
@@ -23,6 +28,7 @@ locale {
 
                 thanks = "Thanks!"
                 you_kidding = "You kidding? "
+                hand_over = "You hand over ${itemname(_1, 1)}."
 
                 sex {
                     prompt = "You are...quite attractive. I'll buy you."
@@ -44,7 +50,31 @@ locale {
                     here_is_delivery = "Here's your delivery."
                 }
 
-                hand_over = "You hand over ${itemname(_1, 1)}."
+                about {
+                    during = "What about my contract? Is everything alright? "
+
+                    choices {
+                        take = "I will take the job."
+                        leave = "Not now."
+                    }
+
+                    too_many_unfinished = "Hey, you've got quite a few unfinished contracts. See me again when you have finished them."
+                    backpack_full = "It seems your backpack is already full. Come see me again when you're ready."
+                    party_full = "It seems your party is already full. Come see me again when you're ready."
+
+                    thanks = "Thanks. I'm counting on you."
+                    here_is_package = "Here's the package. Be aware of the deadline. I don't want to report you to the guards."
+                }
+
+                accept {
+                    hunt = "Great! I'll guide you to the place, kill them all!"
+                    harvest = "Fine. I'll take you to my farm."
+                    party = "Alright, I'll take you to the party now."
+                }
+
+                finish {
+                    escort = "We made it! Thank you!"
+                }
             }
 
             servant {
@@ -207,6 +237,12 @@ locale {
                 eat {
                     not_hungry = "You don't seem that hungry."
                     here_you_are = "Here you are."
+
+                    results {
+                        _0 = "It was tasty."
+                        _1 = "Not bad at all."
+                        _2 = "You smack your lips."
+                    }
                 }
 
                 go_to_shelter = "The shelter is free to use for anyone. Here, come in."

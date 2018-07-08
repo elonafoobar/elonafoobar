@@ -460,9 +460,8 @@ void run_random_event(int id, int luck_threshold)
         if (result == 0)
         {
             cdata[0].nutrition = 15000;
-            txt(i18n::s.get_enum_property("core.locale.event.popup",
-                                          "results._" + std::to_string(rnd(3)),
-                                          14));
+            txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results",
+                                 rnd(3)));
             show_eating_message();
             chara_anorexia(0);
         }
@@ -476,9 +475,7 @@ void run_random_event(int id, int luck_threshold)
                 flttypemajor = fsetremain(rnd(fsetremain.size()));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         break;
     case 11:
@@ -499,9 +496,7 @@ void run_random_event(int id, int luck_threshold)
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {

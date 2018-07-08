@@ -1,5 +1,7 @@
 locale {
     skill {
+        gained = "You have learned new ability, ${_1}."
+
         default {
             increase = "${name(_1)}${his_owned(_1)} ${_2} skill increases."
             decrease = "${name(_1)}${his_owned(_1)} ${_2} skill falls off."

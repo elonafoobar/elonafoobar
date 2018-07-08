@@ -42,71 +42,27 @@ int randomele()
 
 
 
-std::string elename(int prm_348)
+std::string elename(int ele)
 {
     if (efid == 614)
     {
-        return lang(u8"飢えた"s, u8"starving"s);
+        return i18n::s.get("core.locale.element.name.starving");
     }
     if (efid == 613)
     {
-        return lang(u8"腐った"s, u8"rotten"s);
+        return i18n::s.get("core.locale.element.name.rotten");
     }
     if (efid == 617)
     {
-        return lang(u8"恐ろしい"s, u8"fearful"s);
+        return i18n::s.get("core.locale.element.name.fearful");
     }
     if (efid == 618)
     {
-        return lang(u8"柔らかい"s, u8"silky"s);
+        return i18n::s.get("core.locale.element.name.silky");
     }
-    if (prm_348 == 50)
+    if (auto text = i18n::s.get_enum_optional("core.locale.element.name", ele))
     {
-        return lang(u8"燃える"s, u8"burning"s);
-    }
-    if (prm_348 == 51)
-    {
-        return lang(u8"冷たい"s, u8"icy"s);
-    }
-    if (prm_348 == 52)
-    {
-        return lang(u8"放電する"s, u8"electric"s);
-    }
-    if (prm_348 == 54)
-    {
-        return lang(u8"霊的な"s, u8"psychic"s);
-    }
-    if (prm_348 == 58)
-    {
-        return lang(u8"痺れる"s, u8"numb"s);
-    }
-    if (prm_348 == 57)
-    {
-        return lang(u8"震える"s, u8"shivering"s);
-    }
-    if (prm_348 == 55)
-    {
-        return lang(u8"毒の"s, u8"poisonous"s);
-    }
-    if (prm_348 == 56)
-    {
-        return lang(u8"地獄の"s, u8"infernal"s);
-    }
-    if (prm_348 == 59)
-    {
-        return lang(u8"混沌の"s, u8"chaotic"s);
-    }
-    if (prm_348 == 53)
-    {
-        return lang(u8"暗黒の"s, u8"gloomy"s);
-    }
-    if (prm_348 == 61)
-    {
-        return lang(u8"出血の"s, u8"cut"s);
-    }
-    if (prm_348 == 62)
-    {
-        return lang(u8"エーテルの"s, u8"ether"s);
+        return *text;
     }
     return u8"?"s;
 }
@@ -246,138 +202,29 @@ void resistmod(int cc, int element, int delta)
     if (delta >= 50)
     {
         txtef(2);
-        switch (element)
+        if (auto text = i18n::s.get_enum_optional("core.locale.element.resist.gain",
+                                                  element,
+                                                  cdata[cc]))
         {
-        case 50:
-            txt(lang(
-                name(cc) + u8"の身体は急に火照りだした。"s,
-                u8"Suddenly, "s + name(cc) + u8" feel"s + _s(cc)
-                    + u8" very hot."s));
-            break;
-        case 51:
-            txt(lang(
-                name(cc) + u8"の身体は急に冷たくなった。"s,
-                u8"Suddenly, "s + name(cc) + u8" feel"s + _s(cc)
-                    + u8" cool."s));
-            break;
-        case 52:
-            txt(lang(
-                name(cc) + u8"の身体に電気が走った。"s,
-                name(cc) + u8" "s + is(cc)
-                    + u8" struck by an electric shock."s));
-            break;
-        case 54:
-            txt(lang(
-                name(cc) + u8"は急に明晰になった。"s,
-                u8"Suddenly, "s + name(cc) + your(cc)
-                    + u8" mind becomes very clear."s));
-            break;
-        case 58:
-            txt(lang(
-                name(cc) + u8"は急に神経が図太くなった。"s,
-                name(cc) + your(cc) + u8" nerve is sharpened."s));
-            break;
-        case 53:
-            txt(lang(
-                name(cc) + u8"は急に暗闇が怖くなくなった。"s,
-                name(cc) + u8" no longer fear"s + _s(cc) + u8" darkness."s));
-            break;
-        case 57:
-            txt(lang(
-                name(cc) + u8"は騒音を気にしなくなった。"s,
-                name(cc) + your(cc) + u8" eardrums get thick."s));
-            break;
-        case 59:
-            txt(lang(
-                name(cc) + u8"は急にカオスを理解した。"s,
-                u8"Suddenly, "s + name(cc) + u8" understand"s + _s(cc)
-                    + u8" chaos."s));
-            break;
-        case 55:
-            txt(lang(
-                name(cc) + u8"の毒への耐性は強くなった。"s,
-                name(cc) + u8" now "s + have(cc)
-                    + u8" antibodies to poisons."s));
-            break;
-        case 56:
-            txt(lang(
-                name(cc) + u8"の魂は地獄に近づいた。"s,
-                name(cc) + u8" "s + is(cc) + u8" no longer afraid"s + _s(cc)
-                    + u8" of hell."s));
-            break;
-        case 60:
-            txt(lang(
-                name(cc) + u8"の皮膚は魔力のオーラに包まれた。"s,
-                name(cc) + your(cc)
-                    + u8" body is covered by a magical aura."s));
-            break;
-        default: assert(0);
+            txt(*text);
+        }
+        else
+        {
+            assert(false);
         }
     }
     else if (delta <= 50 * -1)
     {
         txtef(8);
-        switch (element)
+        if (auto text = i18n::s.get_enum_optional("core.locale.element.resist.lose",
+                                                  element,
+                                                  cdata[cc]))
         {
-        case 50:
-            txt(lang(
-                name(cc) + u8"は急に汗をかきだした。"s,
-                name(cc) + u8" sweat"s + _s(cc) + u8"."s));
-            break;
-        case 51:
-            txt(lang(
-                name(cc) + u8"は急に寒気を感じた。"s,
-                name(cc) + u8" shivers"s + _s(cc) + u8"."s));
-            break;
-        case 52:
-            txt(lang(
-                name(cc) + u8"は急に電気に敏感になった。"s,
-                name(cc) + u8" "s + is(cc) + u8" shocked."s));
-            break;
-        case 54:
-            txt(lang(
-                name(cc) + u8"は以前ほど明晰ではなくなった。"s,
-                name(cc) + your(cc) + u8" mind becomes slippery."s));
-            break;
-        case 58:
-            txt(lang(
-                name(cc) + u8"の神経は急に萎縮した。"s,
-                name(cc) + u8" become"s + _s(cc) + u8" dull."s));
-            break;
-        case 53:
-            txt(lang(
-                name(cc) + u8"は急に暗闇が怖くなった。"s,
-                u8"Suddenly, "s + name(cc) + u8" fear"s + _s(cc)
-                    + u8" darkness."s));
-            break;
-        case 57:
-            txt(lang(
-                name(cc) + u8"は急に辺りをうるさく感じた。"s,
-                name(cc) + u8" become"s + _s(cc)
-                    + u8" very sensitive to noises."s));
-            break;
-        case 59:
-            txt(lang(
-                name(cc) + u8"はカオスへの理解を失った。"s,
-                name(cc) + u8" no longer understand"s + _s(cc) + u8" chaos."s));
-            break;
-        case 55:
-            txt(lang(
-                name(cc) + u8"の毒への耐性は薄れた。"s,
-                name(cc) + u8" lose"s + _s(cc, true)
-                    + u8" antibodies to poisons."s));
-            break;
-        case 56:
-            txt(lang(
-                name(cc) + u8"の魂は地獄から遠ざかった。"s,
-                name(cc) + u8" "s + is(cc) + u8" afraid of hell."s));
-            break;
-        case 60:
-            txt(lang(
-                name(cc) + u8"の皮膚から魔力のオーラが消えた。"s,
-                u8"The magical aura disappears from "s + name(cc) + your(cc)
-                    + u8" body."s));
-            break;
+            txt(*text);
+        }
+        else
+        {
+            assert(false);
         }
     }
 
@@ -396,7 +243,7 @@ void txteledmg(int type, int attacker, int target, int element)
     if (type == 0 && is_in_fov(target))
     {
         auto text = i18n::s.get_enum_optional(
-            "core.locale.damage.element"s, element, cdata[target]);
+            "core.locale.element.damage"s, element, cdata[target]);
         if (text)
         {
             txt(*text);
@@ -404,7 +251,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get(
-                "core.locale.damage.element.default", cdata[target]));
+                "core.locale.element.damage.default", cdata[target]));
         }
     }
     else if (type == 1)

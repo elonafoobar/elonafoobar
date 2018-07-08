@@ -3,6 +3,7 @@ locale {
         will_not_listen = "${name(_1)}は耳を貸さない。"
         is_sleeping = "${name(_1)}はぐっすり眠っている…"
         is_busy = "${name(_1)}はお取り込み中だ…"
+        ignores_you = "…(あなたを無視している)"
 
         window {
             impress = "友好"
@@ -11,6 +12,10 @@ locale {
             shop_rank = "店の規模:${_1}"
 
             of = "${_2} ${_1}"
+        }
+
+        tag {
+            ref = "${_1}"
         }
 
         npc {
@@ -23,6 +28,7 @@ locale {
 
                 thanks = "${thanks(_1, 2)}"
                 you_kidding = "冷やかし${ka(_1, 1)}"
+                hand_over = "${itemname(_1, 1)}を手渡した。"
 
                 sex {
                     prompt = "なかなかの体つき${dana(_1)}よし、買${u(_1, 2)}"
@@ -44,7 +50,31 @@ locale {
                     here_is_delivery = "配達物を渡す"
                 }
 
-                hand_over = "${itemname(_1, 1)}を手渡した。"
+                about {
+                    during = "頼んでいた依頼は順調${kana(_1, 1)}"
+
+                    choices {
+                        take = "受諾する"
+                        leave = "やめる"
+                    }
+
+                    too_many_unfinished = "未完了の依頼が多すぎじゃない${kana(_1, 1)}この仕事は、安心してまかせられない${yo(_1)}"
+                    backpack_full = "どうやらバックパックが一杯のよう${da(_1)}持ち物を整理してまた来て${kure(_1)}"
+                    party_full = "これ以上仲間を連れて行けないよう${da(_1)}人数を調整してまた来て${kure(_1)}"
+
+                    thanks = "${thanks(_1)}期待してい${ru(_1)}"
+                    here_is_package = "これが依頼の品物${da(_1)}期限には十分気をつけて${kure(_1)}"
+                }
+
+                accept {
+                    hunt = "では、早速案内するので、モンスターを一匹残らず退治して${kure(_1)}"
+                    harvest = "畑までは案内するから、しっかりと期限内に作物を納入して${kure(_1)}"
+                    party = "ついて来て${kure(_1)}パーティー会場まで案内する"
+                }
+
+                finish {
+                    escort = "無事に到着できてほっとした${yo(_1)}${thanks(_1, 2)}"
+                }
             }
 
             servant {
@@ -207,6 +237,12 @@ locale {
                 eat {
                     not_hungry = "腹が減っているようにはみえない${yo(_1)}"
                     here_you_are = "${dozo(_1)}"
+
+                    results {
+                        _0 = "なかなか美味しかった。"
+                        _1 = "悪くない。"
+                        _2 = "あなたは舌鼓をうった。"
+                    }
                 }
 
                 go_to_shelter = "悪天候時はシェルターを無料で開放している${nda(_1)}すみやかに避難して${kure(_1)}"

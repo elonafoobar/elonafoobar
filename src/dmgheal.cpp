@@ -949,27 +949,21 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     if (victim.id == 141)
                     {
                         txtef(2);
-                        txt(lang(
-                            u8"愚者の魔石を手に入れた！"s,
-                            u8"You obtain the fool's magic stone!"s));
+                        txt(i18n::s.get("core.locale.scenario.obtain_stone.fool"));
                         snd(51);
                         gdata_magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
                     {
                         txtef(2);
-                        txt(lang(
-                            u8"覇者の魔石を手に入れた！"s,
-                            u8"You obtain the king's magic stone!"s));
+                        txt(i18n::s.get("core.locale.scenario.obtain_stone.king"));
                         snd(51);
                         gdata_magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
                     {
                         txtef(2);
-                        txt(lang(
-                            u8"賢者の魔石を手に入れた！"s,
-                            u8"You obtain the sage's magic stone!"s));
+                        txt(i18n::s.get("core.locale.scenario.obtain_stone.sage"));
                         snd(51);
                         gdata_magic_stone_of_sage = 1;
                     }
@@ -1019,16 +1013,9 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     {
                         ++gdata_kill_count_of_little_sister;
                         txtef(3);
-                        txt(lang(
-                            u8"リトルシスター殺害"s
-                                + gdata_kill_count_of_little_sister
-                                + u8"回、救出"s
-                                + gdata_save_count_of_little_sister + u8"回。"s,
-                            u8"You have saved little sister "s
-                                + gdata_save_count_of_little_sister
-                                + u8" times and killed "s
-                                + gdata_kill_count_of_little_sister
-                                + u8" times."s));
+                        txt(i18n::s.get("core.locale.talk.unique.strange_scientist.saved_count",
+                                        gdata_save_count_of_little_sister,
+                                        gdata_kill_count_of_little_sister));
                     }
                     if (gdata_current_dungeon_level
                             == adata(10, gdata_current_map)

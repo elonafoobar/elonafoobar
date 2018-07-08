@@ -1429,7 +1429,7 @@ label_2181_internal:
             ride_begin(tc);
             txtef(9);
             txt(name(gdata_mount)
-                + i18n::s.get("core.locale.magic.mount.mount_dialog", rnd(4)));
+                + i18n::s.get("core.locale.magic.mount.mount.dialog", rnd(4)));
         }
         break;
     case 183:
@@ -1524,8 +1524,7 @@ label_2181_internal:
         }
         if (!inv_getspace(0))
         {
-            txt(lang(
-                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
             return 0;
         }
         if (inv[ci].count == 0)

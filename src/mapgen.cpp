@@ -4,6 +4,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
@@ -1743,7 +1744,7 @@ void generate_debug_map()
         }
     }
 
-    mdatan(0) = lang(u8"デバッグマップ", u8"Debug Map");
+    mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "name", 9999);
     map_converttile();
 
     mapstartx = 25;
@@ -2710,7 +2711,7 @@ int initialize_quest_map_party()
     gdata_left_minutes_of_executing_quest = 60;
     gdata(87) = 9999;
     rdroomsizemin = 5;
-    mdatan(0) = lang(u8"パーティー場"s, u8"Party Room"s);
+    mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
     mdata(14) = 1;
     mdata(12) = 11;
     mdata(0) = 38;
@@ -3034,7 +3035,7 @@ void initialize_quest_map_town()
     mdata(10) = 0;
     mdata(14) = 2;
     map_initcustom(mapfile(gdata_previous_map2));
-    mdatan(0) = lang(u8"市街地"s, u8"Urban Area"s);
+    mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
     randomize();
     gdata_entrance_type = 5;
     map_placeplayer();

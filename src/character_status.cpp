@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "random.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -38,9 +39,7 @@ void modcorrupt(int prm_815)
         if (org_at_m134 == 0)
         {
             txtef(8);
-            txt(lang(
-                u8"エーテルの病が発症した。"s,
-                u8"The symptom of the Ether disease is shown up on you."s));
+            txt(i18n::s.get("core.locale.chara.corruption.symptom"));
             if (config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
@@ -88,9 +87,7 @@ void modcorrupt(int prm_815)
                 i_at_m134 = 700 + org_at_m134 + cnt2_at_m134;
                 gdata(i_at_m134) = tid;
                 txtef(8);
-                txt(lang(
-                    u8"あなたはエーテルに侵食された。"s,
-                    u8"Your disease is getting worse."s));
+                txt(i18n::s.get("core.locale.chara.corruption.add"));
                 txtef(3);
                 txt(traitrefn(1));
                 if (tid == 203)
@@ -154,9 +151,7 @@ void modcorrupt(int prm_815)
                 }
                 ++trait(tid);
                 txtef(2);
-                txt(lang(
-                    u8"あなたのエーテルの侵食はやわらいだ。"s,
-                    u8"The symptoms of the Ether disease seem to calm down."s));
+                txt(i18n::s.get("core.locale.chara.corruption.remove"));
                 txtef(2);
                 txt(traitrefn(0));
                 break;
@@ -200,15 +195,11 @@ void modweight(int cc, int delta, bool force)
     {
         if (delta >= 3)
         {
-            txt(lang(
-                name(cc) + u8"は太った。"s,
-                name(cc) + u8" gain"s + _s(cc) + u8" weight."s));
+            txt(i18n::s.get("core.locale.chara.weight.gain", cdata[cc]));
         }
         if (delta <= -3)
         {
-            txt(lang(
-                name(cc) + u8"は痩せた。"s,
-                name(cc) + u8" lose"s + _s(cc) + u8" weight."s));
+            txt(i18n::s.get("core.locale.chara.weight.lose", cdata[cc]));
         }
     }
 }
@@ -227,15 +218,11 @@ void modheight(int cc, int delta)
     {
         if (delta > 0)
         {
-            txt(lang(
-                name(cc) + u8"の身長は少し伸びた。"s,
-                name(cc) + u8" grow"s + _s(cc) + u8" taller."s));
+            txt(i18n::s.get("core.locale.chara.height.gain", cdata[cc]));
         }
         if (delta < 0)
         {
-            txt(lang(
-                name(cc) + u8"の身長は少し縮んだ。"s,
-                name(cc) + u8" grow"s + _s(cc) + u8" smaller."s));
+            txt(i18n::s.get("core.locale.chara.height.lose", cdata[cc]));
         }
     }
 }
@@ -255,16 +242,13 @@ void gain_level(int cc)
             txtef(2);
             if (cc == 0)
             {
-                txt(lang(
-                    name(cc) + u8"はレベル"s + cdata[cc].level
-                        + u8"になった！"s,
-                    name(cc) + u8" have gained a level."s));
+                txt(i18n::s.get("core.locale.chara.gain_level.self",
+                                cdata[cc],
+                                cdata[cc].level));
             }
             else
             {
-                txt(lang(
-                    name(cc) + u8"は成長した。"s,
-                    name(cc) + u8" "s + have(cc) + u8" grown up."s));
+                txt(i18n::s.get("core.locale.chara.gain_level.other", cdata[cc]));
             }
         }
     }

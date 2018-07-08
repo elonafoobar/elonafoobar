@@ -1,5 +1,7 @@
 locale {
     skill {
+        gained = "あなたは「${_1}」の能力を得た。"
+
         default {
             increase = "${name(_1)}は${_2}の技術の向上を感じた。"
             decrease = "${name(_1)}は${_2}の技術の衰えを感じた。"

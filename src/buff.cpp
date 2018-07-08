@@ -120,9 +120,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
     {
         if (is_in_fov(prm_801))
         {
-            txt(lang(
-                u8"しかし、効果はなかった。"s,
-                u8"But it produces no effect."s));
+            txt(i18n::s.get("core.locale.magic.buff.no_effect"));
             return 0;
         }
     }
@@ -167,9 +165,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
                 || rnd(cdata[prm_801].buffs[buff_find(prm_801, 10)].power + 50)
                     > rnd(prm_803 + 1))
             {
-                txt(lang(
-                    u8"ホーリーヴェイルが呪いを防いだ。"s,
-                    u8"The holy veil repels the hex."s));
+                txt(i18n::s.get("core.locale.magic.buff.holy_veil_repels"));
                 return 0;
             }
         }
@@ -177,10 +173,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
         {
             if (is_in_fov(prm_801))
             {
-                txt(lang(
-                    name(prm_801) + u8"は抵抗した。"s,
-                    name(prm_801) + u8" resist"s + _s(prm_801)
-                        + u8" the hex."s));
+                txt(i18n::s.get("core.locale.magic.buff.resists", cdata[prm_801]));
             }
             return 0;
         }
@@ -214,19 +207,8 @@ void buff_delete(int prm_805, int prm_806)
     if (prm_805 == 0)
     {
         txtef(8);
-        txt(lang(
-            ""s
-                + i18n::_(
-                      u8"buff",
-                      std::to_string(cdata[prm_805].buffs[prm_806].id),
-                      u8"name")
-                + u8"の効果が切れた。"s,
-            u8"The effect of "s
-                + i18n::_(
-                      u8"buff",
-                      std::to_string(cdata[prm_805].buffs[prm_806].id),
-                      u8"name")
-                + u8" ends."s));
+        txt(i18n::s.get("core.locale.magic.buff.ends",
+                        i18n::_(u8"buff", std::to_string(cdata[prm_805].buffs[prm_806].id), u8"name")));
     }
     if (cdata[prm_805].buffs[prm_806].id == 15)
     {

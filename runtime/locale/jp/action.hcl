@@ -10,6 +10,8 @@ locale {
         day_breaks = "夜が明けた。"
         new_day = "一日が終わり、日付が変わった。"
 
+        playtime_report = "Elonaをはじめてから${_1}時間が経過しています。"
+
         weather {
             changes = "天候が変わった。"
             ether_wind {
@@ -402,6 +404,7 @@ locale {
             locked = "鍵のかかった扉が行く手を塞いでいる。"
 
             prompt_give_up_quest = "クエストを放棄して階を移動する？"
+            prompt_give_up_game = "試合を放棄する？"
 
             lost_balance = "うわああ！${you()}は階段から足を踏み外した。"
         }
@@ -508,6 +511,10 @@ locale {
             }
         }
 
+        eat {
+            snatches = "${name(_1)}は${name(_2)}の食べ物を横取りした。"
+        }
+
         zap {
             execute = "${itemname(_1, 1)}を振った。"
             fail = "${name(_1)}は杖をうまく使えなかった。"
@@ -551,6 +558,7 @@ locale {
 
         dip {
             execute = "${itemname(_2, 1)}を${itemname(_1)}に浸した。"
+            you_get = "${itemname(_1, 1)}を手に入れた。"
 
             rots = "${itemname(_1)}は腐ってしまった…"
             unchanged = "${itemname(_1)}に変化はない。"
@@ -632,6 +640,8 @@ locale {
         }
 
         equip {
+            you_change = "装備を変更した。"
+
             two_handed {
                 fits_well = "装備中の${itemname(_1)}は両手にしっくりとおさまる。"
                 too_light = "装備中の${itemname(_1)}は両手持ちにはやや軽すぎる。"
@@ -655,6 +665,8 @@ locale {
             y = "まさか…"
             at = "うわぁぁぁ！！"
         }
+
+        quicksave = " *保存* "
 
         exit {
             cannot_save_in_usermap = "ユーザーマップの中ではセーブできない。それでも終了する？"

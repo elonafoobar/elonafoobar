@@ -1865,11 +1865,9 @@ void refreshspeed(int cc)
 
 void ride_begin(int mount)
 {
-    txt(lang(
-        name(mount) + u8"に騎乗した("s + name(mount) + u8"の速度: "s
-            + cdata[mount].current_speed + u8"→"s,
-        u8"You ride "s + name(mount) + u8". ("s + name(mount) + u8"'s speed: "s
-            + cdata[mount].current_speed + u8"->"s));
+    txt(i18n::s.get("core.locale.magic.mount.mount.execute",
+                    cdata[mount],
+                    cdata[mount].current_speed));
     cdata[mount].is_ridden() = true;
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
@@ -1879,14 +1877,11 @@ void ride_begin(int mount)
     txt(""s + cdata[mount].current_speed + u8") "s);
     if (cdata[gdata_mount].is_suitable_for_mount())
     {
-        txt(lang(
-            u8"この生物は乗馬用にちょうどいい！"s, u8"You feel comfortable."s));
+        txt(i18n::s.get("core.locale.magic.mount.mount.suitable"));
     }
     else if (cdata[gdata_mount].is_unsuitable_for_mount())
     {
-        txt(lang(
-            u8"この生物はあなたを乗せるには非力すぎる。"s,
-            u8"This creature is too weak to carry you."s));
+        txt(i18n::s.get("core.locale.magic.mount.mount.unsuitable"));
     }
 }
 
@@ -8345,7 +8340,7 @@ turn_result_t step_into_gate()
         snd(44);
         save_game();
         txtef(5);
-        txt(lang(u8" *保存* "s, u8"*saving*"s));
+        txt(i18n::s.get("core.locale.ui.save"));
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
     --inv[ci].number;
@@ -8365,7 +8360,7 @@ label_19431_internal:
         snd(44);
         save_game();
         txtef(5);
-        txt(lang(u8" *保存* "s, u8"*saving*"s));
+        txt(i18n::s.get("core.locale.ui.save"));
     }
     snd(26);
     listmax = 0;
@@ -12361,9 +12356,7 @@ int label_2174()
             {
                 if (cdata[0].sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                     dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     return 1;
                 }
@@ -12607,7 +12600,7 @@ int label_2175()
             int stat = ask_direction();
             if (stat == 0)
             {
-                txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+                txt(i18n::s.get("core.locale.common.it_is_impossible"));
                 obvious = 0;
                 return 0;
             }
@@ -12718,9 +12711,7 @@ int pick_up_item()
                 {
                     if (!inv_getspace(0))
                     {
-                        txt(lang(
-                            u8"バックパックが一杯だ。"s,
-                            u8"Your inventory is full."s));
+                        txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                         return 0;
                     }
                     gdata(91) = 103;
@@ -13626,9 +13617,7 @@ void proc_autopick()
             if (int(op.type) & int(autopick::operation::type_t::no_drop))
             {
                 ibitmod(13, ti, 1);
-                txt(lang(
-                    itemname(ti) + u8"を大事なものに指定した。"s,
-                    u8"You set "s + itemname(ti) + u8" as no-drop."s));
+                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
             if (int(op.type) & int(autopick::operation::type_t::save))
             {
@@ -13637,7 +13626,7 @@ void proc_autopick()
                     snd(44);
                     save_game();
                     txtef(5);
-                    txt(lang(u8" *保存* "s, u8"*saving*"s));
+                    txt(i18n::s.get("core.locale.ui.save"));
                 }
             }
             break;
@@ -14393,9 +14382,7 @@ void do_ranged_attack()
                     {
                         if (cdata[0].sp < rnd(75))
                         {
-                            txt(lang(
-                                u8"疲労し過ぎて失敗した！"s,
-                                u8"You are too exhausted!"s));
+                            txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                             dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
                             return;

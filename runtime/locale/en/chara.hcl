@@ -1,5 +1,45 @@
 locale {
     chara {
+        you = "you"
+        something = "something"
+
+        age_unknown = "Unknown"
+
+        name_with_title = "{${basename(_1)}}"
+
+        contract_expired = "The period of contract with ${basename(_1)} has been expired."
+
+        corruption {
+            symptom = "The symptom of the Ether disease is shown up on you."
+            add = "Your disease is getting worse."
+            remove = "The symptoms of the Ether disease seem to calm down."
+        }
+
+        gain_level {
+            self = "${name(_1)} have gained a level."
+            other = "${name(_1)} ${have(_1)} grown up."
+        }
+
+        weight {
+            gain = "${name(_1)} gain${s(_1)} weight."
+            lose = "${name(_1)} lose${s(_1)} weight."
+        }
+
+        height {
+            gain = "${name(_1)} grow${s(_1)} taller."
+            lose = "${name(_1)} grow${s(_1)} smaller."
+        }
+
+        place_failure {
+            ally = "${name(_1)} loses ${his(_1)} way."
+            other = "${name(_1)} is killed."
+        }
+
+        impression {
+            gain = "Your relation with ${basename(_1)} becomes <${_2}>!"
+            lose = "Your relation with ${basename(_1)} becomes <${_2}>..."
+        }
+
         job {
             general_vendor = "${trim_job(_1)}the general vendor"
             innkeeper = "${trim_job(_1)}the Innkeeper"

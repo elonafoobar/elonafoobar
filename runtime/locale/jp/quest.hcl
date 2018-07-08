@@ -17,6 +17,9 @@ locale {
             final_score = "最終得点は${_1}ポイントだった！"
             complete = "パーティーは大盛況だった！"
             fail = "パーティーはぐだぐだになった…"
+
+            is_satisfied = "${basename(_1)}は満足した。"
+            total_bonus = "(合計ボーナス:${_1}%) "
         }
         collect {
             complete = "無事に納入を終えた！"

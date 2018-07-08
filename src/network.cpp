@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
 #include "random.hpp"
@@ -168,9 +169,7 @@ int net_send(const std::string& prm_883, int prm_884)
         {
             sockclose();
             txt(u8"["s + stat + u8"]"s
-                + lang(
-                      u8"ネットに繋がっていない。"s,
-                      u8"You need an internet connection."s));
+                + i18n::s.get("core.locale.network.need_connection"));
             return 0;
         }
     }
@@ -180,7 +179,7 @@ int net_send(const std::string& prm_883, int prm_884)
         if (stat)
         {
             sockclose();
-            txt(lang(u8"送信に失敗した。"s, u8"Failed to send a message."s));
+            txt(i18n::s.get("core.locale.network.failed_to_send"));
             return 0;
         }
     }
@@ -597,9 +596,7 @@ void show_chat_dialog()
         }
         else
         {
-            txt(lang(
-                u8"もう少し待った方がいい気がする。"s,
-                u8"You think you should wait a little more."s));
+            txt(i18n::s.get("core.locale.network.chat.wait_more"));
             return;
         }
     }
@@ -623,9 +620,8 @@ void show_chat_dialog()
         inputlog = u8"\""s + inputlog + u8"\""s;
     }
     txt(inputlog);
-    net_send(
-        u8"chat"s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0)
-        + lang(""s, u8" says, "s) + inputlog);
+    net_send("chat" + i18n::s.get("core.locale.network.chat.says",
+                                  cdatan(1, 0), cdatan(0, 0), inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
     return;
@@ -655,18 +651,15 @@ label_14001_internal:
     list(0, listmax) = -999;
     list(1, listmax) = 0;
     listn(0, listmax) =
-        lang(u8"あなたの異名を登録する"s, u8"Submit your alias."s);
+        i18n::s.get("core.locale.network.alias.submit");
     ++listmax;
     net_read(1);
     if (gdata_next_voting_time > gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
     {
         comctrl = 0;
-        txt(lang(
-            u8"あなたの投票権はまだ復活していない("s
-                + cnvdate(gdata_next_voting_time) + u8"まで)"s,
-            u8"You can't vote until "s + cnvdate(gdata_next_voting_time)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.network.alias.cannot_vote_until",
+                        cnvdate(gdata_next_voting_time)));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             if (cnt == 0)
@@ -680,8 +673,7 @@ label_14001_internal:
     else
     {
         comctrl = 1;
-        txt(lang(
-            u8"どの候補に投票する？"s, u8"Which one do you want to vote?"s));
+        txt(i18n::s.get("core.locale.network.alias.prompt"));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             if (cnt == 0)
@@ -709,8 +701,8 @@ label_1401_internal:
         page = 0;
     }
 label_1402_internal:
-    s(0) = lang(u8"投票箱"s, u8"Voting Box"s);
-    s(1) = lang(u8"決定 [投票する項目を選択]  "s, u8"Enter [Vote] "s) + strhint2
+    s(0) = i18n::s.get("core.locale.network.alias.title");
+    s(1) = i18n::s.get("core.locale.network.alias.hint") + strhint2
         + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     x = ww / 5 * 3;
@@ -719,9 +711,9 @@ label_1402_internal:
     gmode(4, 50);
     gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
-    s(0) = lang(u8"投票項目"s, u8"Choice"s);
+    s(0) = i18n::s.get("core.locale.network.alias.choice");
     s(1) = "";
-    s(2) = lang(u8"備考"s, u8"Vote"s);
+    s(2) = i18n::s.get("core.locale.network.alias.vote");
     display_topic(s, wx + 28, wy + 36);
     display_topic(s(2), wx + 440, wy + 36);
     keyrange = 0;
@@ -758,11 +750,11 @@ label_1402_internal:
             pos(wx + 90, wy + 66 + cnt * 19 + 2);
             if (comctrl == 0)
             {
-                mes(lang(u8"第"s + p + u8"位"s, cnvrank(p)));
+                mes(i18n::s.get("core.locale.network.alias.rank", cnvrank(p), p(0)));
             }
             else
             {
-                mes(lang(u8"候補"s, ""s));
+                mes(i18n::s.get("core.locale.network.alias.selected"));
             }
         }
         cs_list(cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
@@ -785,8 +777,8 @@ label_1402_internal:
     {
         if (p == -999)
         {
-            net_send(""s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0), 1);
-            ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
+            net_send(""s + cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0), 1);
+            ELONA_APPEND_PROMPT(i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
             rtval = show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
@@ -794,20 +786,17 @@ label_1402_internal:
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
             snd(27);
-            txt(lang(
-                u8"まだ投票権が復活していない。"s,
-                u8"You need to wait before submitting a new vote."s));
+            txt(i18n::s.get("core.locale.network.alias.need_to_wait"));
             goto label_1401_internal;
         }
         gdata_next_voting_time = gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
-        txt(lang(
-            u8"「"s + listn(0, (cs + pagesize * page)) + u8"は素敵！」"s,
-            u8"\"I like "s + listn(0, (cs + pagesize * page)) + u8"!\""s));
-        txt(lang(u8"投票した。"s, u8"You vote."s));
+        txt(i18n::s.get("core.locale.network.alias.i_like",
+                        listn(0, (cs + pagesize * page))));
+        txt(i18n::s.get("core.locale.network.alias.you_vote"));
         net_send(""s + p, 2);
         modrank(6, 100, 5);
-        ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
+        ELONA_APPEND_PROMPT(i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
         rtval = show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }

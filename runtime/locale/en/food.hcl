@@ -217,7 +217,7 @@ locale {
                 like = "It's your favorite human flesh!"
                 dislike = "Eeeek! It's human flesh!"
                 would_have_rather_eaten = "You would've rather eaten human flesh."
-                delicious = "ウマイ！"
+                delicious = "Delicious!"
             }
 
             bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2, 1)}."
@@ -241,6 +241,11 @@ locale {
                     _0 = "${name(_1)} gasps, \"I f-feel...strange...\""
                     _1 = "${name(_1)} gasps \"Uh..uh..What is this feeling...\""
                 }
+            }
+
+            ability {
+                develops = "${name(_1)}${his_owned(_1)} ${_2} develops."
+                deteriorates = "${name(_1)}${his_owned(_1)} ${_2} deteriorates."
             }
 
             growth = "${name(_1)}${his_owned(_1)} ${_2} enters a period of rapid growth."

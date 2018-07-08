@@ -1172,9 +1172,7 @@ label_2061_internal:
                 {
                     if (!actionsp(0, 10))
                     {
-                        txt(lang(
-                            u8"疲労し過ぎて失敗した！"s,
-                            u8"You are too exhausted!"s));
+                        txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                         goto label_2063_internal;
                     }
                 }
@@ -1193,9 +1191,7 @@ label_2061_internal:
                 {
                     if (!actionsp(0, 10))
                     {
-                        txt(lang(
-                            u8"疲労し過ぎて失敗した！"s,
-                            u8"You are too exhausted!"s));
+                        txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                         goto label_2063_internal;
                     }
                 }
@@ -1843,8 +1839,7 @@ label_2061_internal:
             ti = inv_getfreeid(0);
             if (ti == -1)
             {
-                txt(lang(
-                    u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                 goto label_2060_internal;
             }
             f = 0;

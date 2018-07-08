@@ -29,10 +29,12 @@ locale {
         }
 
         recipe {
+            title = "Choose a recipe"
+            name = "Name"
+            hint = "[Page]  "
+
             warning = "(*) The feature is not implemented yet."
             which = "Which recipe do you want to use?"
-            choose = "Choose a recipe"
-            name = "Name"
             counter = "${_1} recipes"
             of = "Recipe of ${_1}"
         }
@@ -95,6 +97,7 @@ locale {
             _3 = "something made of wood"
             _4 = "fish"
             _5 = "any item"
+            corpse = "${_1} corpse"
         }
     }
 }

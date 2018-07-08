@@ -1,5 +1,6 @@
 locale {
     ui {
+        save = "*saving*"
         playtime = "${_1}:${_2}:${_3} Sec"
 
         date = "${_1} ${_2}/${_3}"

@@ -29,7 +29,7 @@ enum class element_t
 
 
 int randomele();
-std::string elename(int prm_348);
+std::string elename(int ele);
 int eleinfo(int prm_754, int prm_755);
 void resistmod(int cc, int element, int delta);
 void txteledmg(int type, int attacker, int target, int element);

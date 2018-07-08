@@ -17,6 +17,9 @@ locale {
             final_score = "Your final score is ${_1} points!"
             complete = "People had a hell of a good time!"
             fail = "The party turned out to be a big flop..."
+
+            is_satisfied = "${basename(_1)} ${is(_1)} satisfied."
+            total_bonus = "(Total Bonus:${_1}%)"
         }
         collect {
             complete = "You complete the task!"

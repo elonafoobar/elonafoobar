@@ -1,6 +1,67 @@
 locale {
     map {
+        prompt_initialize = "Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)"
+        loading_failed = "Map loading failed."
+        location_changed = "The location of ${_1} has been changed from x${_2}:y${_3} to x${_4}:y${_5}."
+
+        no_dungeon_master = "This place is pretty dull. The dungeon master is no longer sighted here."
+
+        since_leaving {
+            time_passed = "${_1} day${s(_1)} and ${_2} hour${s(_2)} have passed since you left ${_3}."
+            walked {
+                you = "You've walked about ${_1} miles and have gained experience."
+                # NOTE: new for EN
+                you_and_allies = "You and your allies have walked about ${_1} miles and have gained experience."
+            }
+        }
+
         unique {
+            thieves_guild {
+                name = "Thieves Guild"
+            }
+            mages_guild {
+                name = "Mages Guild"
+            }
+            fighters_guild {
+                name = "Fighters Guild"
+            }
+            the_sewer {
+                name = "The Sewer"
+            }
+            cat_mansion {
+                name = "Cat Mansion"
+            }
+            battle_field {
+                name = "Battle Field"
+            }
+            doom_ground {
+                name = "Doom Ground"
+            }
+            the_mine {
+                name = "The Mine"
+            }
+            robbers_hideout {
+                name = "Robber's Hideout"
+            }
+            test_site {
+                name = "Test Site"
+            }
+
+            # Wilderness
+            _2 {
+                forest = "Forest"
+                sea = "Sea"
+                grassland = "Grassland"
+                desert = "Desert"
+                snow_field = "Snow Field"
+                plain_field = "Plain Field"
+            }
+
+            # Lesimas
+            _3 {
+                the_depth = "The Depth"
+            }
+
             _4 {
                 name = "North Tyris"
             }
@@ -166,6 +227,9 @@ locale {
             _48 {
                 name = "Test World north border"
             }
+            _9999 {
+                name = "Debug Map"
+            }
         }
 
         nefia {
@@ -198,6 +262,13 @@ locale {
         quest {
             outskirts = "The outskirts"
             urban_area = "Urban area"
+            party_room = "Party Room"
+
+            on_enter {
+                party = "You have to warm up the party within ${_1} minites. Your target score is ${_2} points."
+                harvest = "To complete the quest, you have to harvest ${_1} worth farm products and put them into the delivery chest within ${_2} minutes."
+                conquer = "You have to slay ${_1} within ${_2} minites."
+            }
         }
 
         you_see = "You see ${_1}."

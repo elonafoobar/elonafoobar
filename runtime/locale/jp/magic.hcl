@@ -8,6 +8,13 @@ locale {
             cursed = "${name(_1)}は悪魔が笑う声を聞いた。"
         }
 
+        buff {
+            no_effect = "しかし、効果はなかった。"
+            holy_veil_repels = "ホーリーヴェイルが呪いを防いだ。"
+            resists = "${name(_1)}は抵抗した。"
+            ends = "${_1}の効果が切れた。"
+        }
+
         slow = "${name(_1)}の老化は遅くなった。"
         speed = "${name(_1)}の老化は速くなった。"
 
@@ -186,11 +193,17 @@ locale {
             ride_self = "${name(_1)}は自分に乗ろうとした。"
             stays_in_area = "その仲間はこの場所に滞在中だ。"
             currently_riding = "現在${name(_1)}は${name(_2)}に騎乗している。"
-            mount_dialog {
-                _0 = "「うぐぅ」"
-                _1 = "「ダイエットしてよ…」"
-                _2 = "「いくよ！」"
-                _3 = "「やさしくしてね♪」"
+
+            mount {
+                execute = "${name(_1)}に騎乗した(${name(_1)}の速度: ${_2}→"
+                suitable = "この生物は乗馬用にちょうどいい！"
+                unsuitable = "この生物はあなたを乗せるには非力すぎる。"
+                dialog {
+                    _0 = "「うぐぅ」"
+                    _1 = "「ダイエットしてよ…」"
+                    _2 = "「いくよ！」"
+                    _3 = "「やさしくしてね♪」"
+                }
             }
         }
 
@@ -243,6 +256,9 @@ locale {
         oracle {
             cursed = "何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"
             no_artifacts = "まだ特殊なアイテムは生成されていない。"
+
+            was_held_by = "${_1}は${_6}年${_5}月に${_3}の${basename(_2)}の手に渡った。"
+            was_created_at = "${_1}は${_5}年${_4}月に${_2}で生成された。"
         }
 
         gain_knowledge {
@@ -315,6 +331,16 @@ locale {
 
         return {
             cancel = "帰還を中止した。"
+
+            prevented {
+                normal = "不思議な力が帰還を阻止した。"
+                ally = "今は帰還できない仲間を連れている。"
+                overweight = "どこからか声が聞こえた。「悪いが重量オーバーだ」"
+            }
+
+            you_commit_a_crime = "あなたは法を犯した。"
+            door_opens = "あなたは次元の扉を開けた。"
+            destination_changed = "気まぐれな時の管理者により次元は歪められた！"
         }
 
         harvest_mana = "${name(_1)}のマナが回復した。"

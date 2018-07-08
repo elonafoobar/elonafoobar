@@ -56,6 +56,7 @@ locale {
             common {
                 set_as_no_drop = "それはあなたの大事なものだ。<調べる>メニューから解除できる。"
                 does_not_exist = "そのアイテムは存在しない。"
+                inventory_is_full = "バックパックが一杯だ。"
 
                 invalid = "Invalid Item Id found. Item No:${_1}, Id:${_2} has been removed from your inventory."
 
