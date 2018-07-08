@@ -4,6 +4,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
 #include "random.hpp"
@@ -238,29 +239,31 @@ int card_ref(int prm_991)
     if (cardreftype == 10)
     {
         cardrefbg = cardrefdomain;
-        rtvaln += lang(u8" <クリーチャー>"s, u8" <Creature>"s)
-            + lang(u8"  種族:"s, u8"  Race:"s) + cardrefrace + u8"  Hp:"s
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  "
+            + i18n::s.get("core.locale.tcg.card.race") + ":"
+            + cardrefrace + u8"  Hp:"s
             + cardrefhp + u8"  Atk:"s + cardrefattack;
     }
     if (cardreftype == 30)
     {
         cardrefbg = 6;
-        rtvaln += lang(u8" <土地>"s, u8" <Land>"s);
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.land") + ">";
     }
     if (cardreftype == 20)
     {
         cardrefbg = 5;
-        rtvaln += lang(u8" <スペル>"s, u8" <Spell>"s);
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.spell") + ">";
     }
-    rtvaln +=
-        lang(u8"  ドメイン:"s, u8"  Domain:"s) + domname_at_tcg(cardrefdomain);
-    rtvaln += lang(u8"  レア度:"s, u8"  Rare:"s) + cnvrare(cardrefrare);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":"
+        + domname_at_tcg(cardrefdomain);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":"
+        + cnvrare(cardrefrare);
     if (cardrefskill != 0)
     {
         s_at_tcg = "";
         if (cardreftype == 10)
         {
-            s_at_tcg += lang(u8"スキル:"s, u8"Skill:"s);
+            s_at_tcg += i18n::s.get("core.locale.tcg.card.skill") + ":";
         }
         s_at_tcg += cdrefn_at_tcg(cardrefskill);
         talk_conv(s_at_tcg, 95);
@@ -657,13 +660,11 @@ void tcgdraw()
                 {
                     if (selectmode_at_tcg == 0)
                     {
-                        cardhelp(lang(
-                            u8"メインフェイズを終了する。"s,
-                            u8"End your main phase."s));
+                        cardhelp(i18n::s.get("core.locale.tcg.end_main_phase"));
                     }
                     else
                     {
-                        cardhelp(lang(u8"ブロックしない。"s, u8"No blocker."s));
+                        cardhelp(i18n::s.get("core.locale.tcg.no_blocker"));
                     }
                 }
                 pos(holderix_at_tcg - holderspace_at_tcg - 5,
@@ -1224,14 +1225,12 @@ void saccard(int prm_1019, int prm_1020)
     ++sac_at_tcg;
     if (prm_1020 == 0)
     {
-        cardhelp(lang(u8"カードを捧げた。"s, u8"You sacrifice the card."s), 40);
+        cardhelp(i18n::s.get("core.locale.tcg.sacrifice.you"), 40);
     }
     else
     {
         cardhelp(
-            lang(
-                u8"相手はカードを捧げた。"s,
-                u8"The opponent sacrifices the card."s),
+            i18n::s.get("core.locale.tcg.sacrifice.opponent"),
             40);
     }
     for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
@@ -1295,16 +1294,11 @@ void label_1793()
 {
     SDIM3(cdrefn_at_tcg, 50, 4);
     p_at_tcg = 0;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"自分のデッキからカードを1枚選び受け取る。"s,
-        u8"Player chooses and receives 1 card from his deck."s);
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.locale.tcg.ref.choose_one_card");
     p_at_tcg = 2;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"プレイヤーはカードを2枚ドローする。"s, u8"Player draws 2 cards."s);
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.locale.tcg.ref.draws_two_cards");
     p_at_tcg = 3;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"場のクリーチャー1体を選択し、所有者の手札に戻す。"s,
-        u8"Return target creature to its owner's hand."s);
+    cdrefn_at_tcg(p_at_tcg) = i18n::s.get("core.locale.tcg.ref.return_creature");
     return;
 }
 
@@ -1484,7 +1478,7 @@ int putcard(int prm_1024, int prm_1025)
         {
             snd(27);
             cardhelp(
-                lang(u8"これ以上は場に出せない。"s, u8"Your field is full."s),
+                i18n::s.get("core.locale.tcg.put.field_full"),
                 40);
         }
         return -1;
@@ -1495,7 +1489,7 @@ int putcard(int prm_1024, int prm_1025)
         {
             snd(27);
             cardhelp(
-                lang(u8"マナが足りない。"s, u8"You don't have enough mana."s),
+                i18n::s.get("core.locale.tcg.put.not_enough_mana"),
                 40);
         }
         return -3;
@@ -1613,11 +1607,11 @@ void tcginit()
     phasen_at_tcg(2) = u8"Main"s;
     phasen_at_tcg(3) = u8"End"s;
     phasen_at_tcg(4) = "";
-    domname_at_tcg(0) = lang(u8"ルルウィ"s, u8"Lulwy"s);
-    domname_at_tcg(1) = lang(u8"クミロミ"s, u8"Kumiromi"s);
-    domname_at_tcg(2) = lang(u8"ヤカテクト"s, u8"Yacatect"s);
-    domname_at_tcg(3) = lang(u8"ジュア"s, u8"Jure"s);
-    domname_at_tcg(4) = lang(u8"マニ"s, u8"etc"s);
+    domname_at_tcg(0) = i18n::s.get("core.locale.tcg.domain.lulwy");
+    domname_at_tcg(1) = i18n::s.get("core.locale.tcg.domain.kumiromi");
+    domname_at_tcg(2) = i18n::s.get("core.locale.tcg.domain.yacatect");
+    domname_at_tcg(3) = i18n::s.get("core.locale.tcg.domain.jure");
+    domname_at_tcg(4) = i18n::s.get("core.locale.tcg.domain.mani");
     chainx_at_tcg = 0;
     chainy_at_tcg = 0;
     cfg_chaintime = 50;
@@ -1768,19 +1762,19 @@ void tcgdeck()
     while (1)
     {
         tcgdrawbg();
-        s_at_tcg(0) = lang(u8"白"s, u8"White"s);
-        s_at_tcg(1) = lang(u8"青"s, u8"Blue"s);
-        s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
-        s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
-        s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
+        s_at_tcg(0) = i18n::s.get("core.locale.tcg.deck.color.white");
+        s_at_tcg(1) = i18n::s.get("core.locale.tcg.deck.color.blue");
+        s_at_tcg(2) = i18n::s.get("core.locale.tcg.deck.color.silver");
+        s_at_tcg(3) = i18n::s.get("core.locale.tcg.deck.color.red");
+        s_at_tcg(4) = i18n::s.get("core.locale.tcg.deck.color.black");
         for (int cnt = 0; cnt < 5; ++cnt)
         {
-            s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
+            s_at_tcg(cnt) = i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
                 filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
             if (!fs::exists(deck_filepath))
             {
-                s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
+                s_at_tcg(cnt) += " (" + i18n::s.get("core.locale.tcg.deck.new") + ")";
             }
             else
             {
@@ -1807,11 +1801,11 @@ void tcgdeck()
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"デッキの構築"s, u8"Edit Deck"s),
+                i18n::s.get("core.locale.tcg.deck.choices.edit"),
                 u8"null"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s),
+                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(400, basey_at_tcg + 230, 240);
@@ -2286,11 +2280,8 @@ void label_1824()
     font(13 - en * 2);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
-    mes(lang(
-        ""s + key_next + u8","s + key_prev
-            + u8",Tab [フィルター切替]  決定ｷｰ [カード選択]  ｷｬﾝｾﾙｷｰ [終了]"s,
-        ""s + key_next + u8","s + key_prev
-            + u8" [Change Filter]  Enter [Select]  Cancel [Exit]"s));
+    mes(""s + key_next + u8","s + key_prev
+        + i18n::s.get("core.locale.tcg.select.hint"));
     pos(basex_at_tcg + 700, basey_at_tcg + 510);
     mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s
         + (dlistmax_at_tcg - 1) / 8 / 3);
@@ -2470,8 +2461,8 @@ void label_1828()
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
     SDIM3(cfname_at_tcg, 16, 10);
-    cfname_at_tcg(0) = lang(u8"候補"s, u8"List"s);
-    cfname_at_tcg(1) = lang(u8"デッキ"s, u8"Deck"s);
+    cfname_at_tcg(0) = i18n::s.get("core.locale.tcg.menu.list");
+    cfname_at_tcg(1) = i18n::s.get("core.locale.tcg.menu.deck");
     cfname_at_tcg(2) = domname_at_tcg(0);
     cfname_at_tcg(3) = domname_at_tcg(1);
     cfname_at_tcg(4) = domname_at_tcg(2);
@@ -2640,9 +2631,7 @@ label_1830_internal:
                 {
                     snd(27);
                     cardhelp(
-                        lang(
-                            u8"未実装のカード"s,
-                            u8"The card isn't available in this version."s),
+                        i18n::s.get("core.locale.tcg.card_not_available"),
                         40);
                     goto label_1830_internal;
                 }
@@ -2707,11 +2696,11 @@ label_1830_internal:
         if (deckmode_at_tcg == 0)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"セーブして終了"s, u8"Save & Exit"s),
+                i18n::s.get("core.locale.tcg.menu.save_and_exit"),
                 u8"null"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"セーブしないで終了"s, u8"Just Exit"s),
+                i18n::s.get("core.locale.tcg.menu.just_exit"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
@@ -2841,9 +2830,7 @@ void label_1836()
                         || selectmode_at_tcg == 0)
                     {
                         act_at_tcg(0) = 1;
-                        s_at_tcg += lang(
-                            u8"↑   カードを出す。\n"s,
-                            u8"UP: Put the card.\n"s);
+                        s_at_tcg += i18n::s.get("core.locale.tcg.action.put") + "\n";
                     }
                 }
                 if (sac_at_tcg == 0)
@@ -2851,9 +2838,7 @@ void label_1836()
                     if (selectmode_at_tcg == 0)
                     {
                         act_at_tcg(1) = 1;
-                        s_at_tcg += lang(
-                            u8"↓   カードを捧げてマナを得る(1ターンに1回)。\n"s,
-                            u8"Down: Sacrifice the card.\n"s);
+                        s_at_tcg += i18n::s.get("core.locale.tcg.action.sacrifice") + "\n";
                     }
                 }
             }
@@ -2866,9 +2851,7 @@ void label_1836()
                         if (cardcandeclareattack(cc_at_tcg))
                         {
                             act_at_tcg(0) = 1;
-                            s_at_tcg += lang(
-                                u8"↑   攻撃を宣言する。\n"s,
-                                u8"UP: Declare an attack.\n"s);
+                            s_at_tcg += i18n::s.get("core.locale.tcg.action.declare_attack") + "\n";
                         }
                     }
                 }
@@ -2877,16 +2860,13 @@ void label_1836()
                     if (cardcanblock(cc_at_tcg))
                     {
                         act_at_tcg(0) = 1;
-                        s_at_tcg +=
-                            lang(u8"↑   ブロックする。\n"s, u8"UP: Block.\n"s);
+                        s_at_tcg += i18n::s.get("core.locale.tcg.action.block") + "\n";
                     }
                 }
                 if (cardcanuseskill(cc_at_tcg))
                 {
                     act_at_tcg(2) = 1;
-                    s_at_tcg += lang(
-                        u8"決定 スキルを使用する。\n"s,
-                        u8"ENTER: Use the skill.\n"s);
+                    s_at_tcg += i18n::s.get("core.locale.tcg.action.use_skill") + "\n";
                 }
             }
             f_at_tcg = 0;
@@ -2902,9 +2882,7 @@ void label_1836()
             {
                 snd(27);
                 cardhelp(
-                    lang(
-                        u8"可能な行動はない。"s,
-                        u8"There is no action available."s),
+                    i18n::s.get("core.locale.tcg.action.no_action_available"),
                     40);
                 continue;
             }
@@ -3035,7 +3013,7 @@ void label_1836()
         if (key == u8"s"s)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"降参する"s, u8"Surrender"s),
+                i18n::s.get("core.locale.tcg.action.surrender"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
