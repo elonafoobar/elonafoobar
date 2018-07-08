@@ -1,5 +1,10 @@
 locale {
     scenario {
+        obtain_stone {
+            fool = "愚者の魔石を手に入れた！"
+            king = "覇者の魔石を手に入れた！"
+            sage = "賢者の魔石を手に入れた！"
+        }
         win_words {
             _0 = "遂に…！"
             _1 = "当然の結果だ"

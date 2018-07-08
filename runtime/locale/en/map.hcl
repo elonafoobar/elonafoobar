@@ -227,6 +227,9 @@ locale {
             _48 {
                 name = "Test World north border"
             }
+            _9999 {
+                name = "Debug Map"
+            }
         }
 
         nefia {
@@ -259,6 +262,7 @@ locale {
         quest {
             outskirts = "The outskirts"
             urban_area = "Urban area"
+            party_room = "Party Room"
 
             on_enter {
                 party = "You have to warm up the party within ${_1} minites. Your target score is ${_2} points."

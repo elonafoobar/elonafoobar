@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
 #include "random.hpp"
@@ -620,7 +621,7 @@ void show_chat_dialog()
     }
     txt(inputlog);
     net_send("chat" + i18n::s.get("core.locale.network.chat.says",
-                                  cdatan(1, 0), cdatan(0, 0), inputlog));
+                                  cdatan(1, 0), cdatan(0, 0), inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
     return;

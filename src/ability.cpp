@@ -193,25 +193,15 @@ void gain_special_action()
         {
             spact(29) = 1;
             txtef(5);
-            txt(lang(
-                u8"あなたは「"s
-                    + i18n::_(u8"ability", std::to_string(629), u8"name")
-                    + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s
-                    + i18n::_(u8"ability", std::to_string(629), u8"name")
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.skill.gained",
+                            i18n::_(u8"ability", std::to_string(629), u8"name")));
         }
         if (spact(30) == 0)
         {
             spact(30) = 1;
             txtef(5);
-            txt(lang(
-                u8"あなたは「"s
-                    + i18n::_(u8"ability", std::to_string(630), u8"name")
-                    + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s
-                    + i18n::_(u8"ability", std::to_string(630), u8"name")
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.skill.gained",
+                            i18n::_(u8"ability", std::to_string(630), u8"name")));
         }
     }
     if (sdata.get(152, 0).original_level > 15)
@@ -220,13 +210,8 @@ void gain_special_action()
         {
             spact(31) = 1;
             txtef(5);
-            txt(lang(
-                u8"あなたは「"s
-                    + i18n::_(u8"ability", std::to_string(631), u8"name")
-                    + u8"」の能力を得た。"s,
-                u8"You have learned new ability, "s
-                    + i18n::_(u8"ability", std::to_string(631), u8"name")
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.skill.gained",
+                            i18n::_(u8"ability", std::to_string(631), u8"name")));
         }
     }
     return;

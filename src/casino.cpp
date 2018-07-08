@@ -633,7 +633,7 @@ label_1876_internal:
                 atxpic(3) = 96;
                 snd(41);
                 mat(p) += 1;
-                noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p));
+                noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
             }
             atxthrough = 1;
             goto label_1875;
@@ -957,7 +957,7 @@ bool casino_blackjack()
         if (cnt == 0)
         {
             mat(1) -= stake;
-            noteadd(i18n::s.get("core.locale.casino.you_lose", stake, matname(1), mat(1));
+            noteadd(i18n::s.get("core.locale.casino.you_lose", stake, matname(1), mat(1)));
         }
         if (cardround == 0)
         {

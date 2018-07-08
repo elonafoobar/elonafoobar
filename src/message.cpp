@@ -5,6 +5,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "map.hpp"
 #include "ui.hpp"

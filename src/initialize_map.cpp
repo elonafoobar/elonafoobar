@@ -188,7 +188,7 @@ label_1741_internal:
     if (gdata_current_map == 7)
     {
         if (mdatan(0) == ""s
-            || mdatan(0) == i18n::s.get_enum_property("core.locale.map.unique", "name", 4);
+            || mdatan(0) == i18n::s.get_enum_property("core.locale.map.unique", "name", 4))
         {
             mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "name", 7);
         }
@@ -2598,7 +2598,7 @@ label_1741_internal:
                                 dialog(i18n::s.get("core.locale.map.location_changed",
                                                    mapname(p),
                                                    adata(1, p), adata(2, p),
-                                                   x, y));
+                                                   x(0), y(0)));
                                 adata(1, p) = x;
                                 adata(2, p) = y;
                                 ++f;
