@@ -248,6 +248,17 @@ talk_result_t talk_busy()
     return talk_result_t::talk_end;
 }
 
+talk_result_t talk_ignored()
+{
+    listmax = 0;
+    buff = lang(
+        u8"…(あなたを無視している)"s, u8"("s + he(tc) + u8" ignores you...)"s);
+    tc = tc * 1 + 0;
+    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
+    chatesc = 1;
+    ELONA_TALK_SCENE_CUT();
+    return talk_result_t::talk_end;
+}
 
 talk_result_t talk_house_visitor()
 {

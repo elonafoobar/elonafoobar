@@ -1592,6 +1592,7 @@ void talk_wrapper(talk_result_t initial)
             break;
         case talk_result_t::talk_sleeping: result = talk_sleeping(); break;
         case talk_result_t::talk_busy: result = talk_busy(); break;
+        case talk_result_t::talk_ignored: result = talk_ignored(); break;
         case talk_result_t::talk_finish_escort:
             result = talk_finish_escort();
             break;

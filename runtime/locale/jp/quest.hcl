@@ -2,6 +2,11 @@ locale {
     quest {
         journal_updated = "ジャーナルが更新された。"
         minutes_left = "クエスト[残り${_1}分]"
+        completed = "クエストを達成した！"
+        completed_taken_from = "${_1}から受けた依頼を完了した。"
+        failed_taken_from = "${_1}から受けた依頼は失敗に終わった。"
+        gain_fame = "${_1}の名声値を手に入れた。"
+        lose_fame = "名声値を${_1}失った。"
 
         hunt {
             complete = "エリアを制圧した！"
@@ -43,12 +48,6 @@ locale {
         }
 
         you_were_defeated = "あなたは敗北した。"
-
-        completed = "クエストを達成した！"
-        completed_taken_from = "${_1}から受けた依頼を完了した。"
-        failed_taken_from = "${_1}から受けた依頼は失敗に終わった。"
-        gain_fame = "${_1}の名声値を手に入れた。"
-        lose_fame = "名声値を${_1}失った。"
 
         giver {
             have_something_to_ask = "${kimi(_1, 3)}に頼みたいことがある${nda(_1)}"

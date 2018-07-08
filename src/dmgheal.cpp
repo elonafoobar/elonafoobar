@@ -993,9 +993,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                             txtef(2);
                             txt(i18n::s.get(
                                 "core.locale.quest.journal_updated"));
-                            txt(lang(
-                                u8"クエストを達成した！"s,
-                                u8"You have completed the quest!"s));
+                            txt(i18n::s.get("core.locale.quest.completed"));
                             snd(51);
                         }
                     }
