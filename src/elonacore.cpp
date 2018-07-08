@@ -11561,7 +11561,7 @@ int decode_book()
             rowactend(cc);
             return 1;
         }
-        txt(i18n::s.get("core.locale.action.read.book.learned_recipe", inv[ci]));
+        txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
         ++recipememory(inv[ci].subname);
         item_identify(inv[ci], identification_state_t::partly_identified);
         removeitem(ci, 1);

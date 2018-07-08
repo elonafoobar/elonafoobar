@@ -1233,7 +1233,7 @@ void continuous_action_others()
             {
                 if (f != 1)
                 {
-                    txt(i18n::s.get("core.locale.activity.steal.someone_else_is_using"));
+                    txt(i18n::s.get("core.locale.action.someone_else_is_using"));
                     f = 1;
                 }
             }

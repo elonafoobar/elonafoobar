@@ -321,6 +321,14 @@ locale {
 
             snow = "You rake up a handful of snow."
             air = "You grasp at the air."
+
+            cannot_carry = "You can't carry it."
+
+            not_owned {
+                _0 = "It's not your property."
+                _1 = "You can't just take it."
+                _2 = "It's not yours."
+            }
         }
 
         ammo {
@@ -555,39 +563,39 @@ locale {
             # Also shared with blending results
             result {
                 love_food {
-                    made = "${itemname(_1)}に${itemname(_2, 1)}を混入した！"
-                    guilty = "あなたはうしろめたさを感じた…"
-                    grin = "あなたはにやりと笑った。"
+                    made = "You made aphrodisiac food! "
+                    guilty = "You kind of feel guilty..."
+                    grin = "You grin."
                 }
 
-                dyeing = "あなたは${itemname(_1)}を染めた。"
+                dyeing = "You dye ${itemname(_1)}."
 
-                poisoned_food = "あなたはにやりと口元を歪めた。"
+                poisoned_food = "You grin."
 
-                put_on = "${itemname(_1)}に${itemname(_2, 1)}を塗りたくった。"
-                good_idea_but = "いいアイデアだ！しかし…"
-                gains_fireproof = "${itemname(_1)}は熱から守られた。"
-                gains_acidproof = "${itemname(_1)}は酸から守られた。"
+                put_on = "You put ${itemname(_2, 1)} on ${itemname(_1)}."
+                good_idea_but = "A good idea! But..."
+                gains_fireproof = "${itemname(_1)} gain${s(_1)} fireproof."
+                gains_acidproof = "${itemname(_1)} gain${s(_1)} acidproof."
 
-                bait_attachment = "${itemname(_2, 1)}を${itemname(_1)}に装着した。"
+                bait_attachment = "You bait ${itemname(_1)} with ${itemname(_2, 1)}."
 
-                blessed_item = "${itemname(_2, 1)}を${itemname(_1)}に降りかけた。"
-                becomes_blessed = "${itemname(_1)}は銀色に輝いた。"
-                becomes_cursed = "${itemname(_1)}は黒いオーラに包まれた。"
+                blessed_item = "You shower ${itemname(_1)} on ${itemname(_2, 1)}."
+                becomes_blessed = "${itemname(_1)} shine${s(_1)} silvery."
+                becomes_cursed = "${itemname(_1)} ${is(_1)} wrapped by a dark aura."
 
-                well_refill = "${itemname(_2, 1)}を${itemname(_1)}に放り込んだ。"
-                empty_bottle_shatters = "空き瓶の割れる音がした。"
-                holy_well_polluted = "井戸は汚れた。"
-                well_dry = "${itemname(_1)}は完全に枯れている。"
-                well_refilled = "${itemname(_1)}は一瞬輝いた。"
+                well_refill = "You throw ${itemname(_1)} into ${itemname(_2, 1)}."
+                empty_bottle_shatters = "You hear the sound of the empty bottle shatters."
+                holy_well_polluted = "The holy well is polluted."
+                well_dry = "${itemname(_1)} is completely dry."
+                well_refilled = "${itemname(_1)} shines for a moment."
                 snow_melts {
-                    dip = "こんな量では… "
-                    blending = "しかしこんな量では… "
+                    dip = "Snow just melts."
+                    blending = "But the snow just melts."
                 }
 
-                natural_potion = "空き瓶に水をすくった。"
-                natural_potion_dry = "${itemname(_1)}は涸れている。"
-                natural_potion_drop = "あっ！空き瓶を井戸に落としてしまった…"
+                natural_potion = "You draw water from the well into the empty bottle."
+                natural_potion_dry = "${itemname(_1)} is dry."
+                natural_potion_drop = "Ops! You drop the empty bottle into the well..."
             }
         }
 

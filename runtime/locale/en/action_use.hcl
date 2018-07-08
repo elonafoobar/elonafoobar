@@ -2,17 +2,16 @@ locale {
     action {
         use {
             useable_again_at = "This item will be useable again at ${_1}."
-            out_of_charge ="It's out of charge."
-            not_sleepy ="You don't feel sleepy yet."
-            cannot_use_here =
+            out_of_charge = "It's out of charge."
+            not_sleepy = "You don't feel sleepy yet."
 
             living {
-                needs_more_blood ="The weapon needs more blood."
+                needs_more_blood = "The weapon needs more blood."
                 ready_to_grow = "${itemname(_1)} sucked enough blood and ready to grow!"
-                weird ="But you sense something weird."
-                it ="It..."
+                weird = "But you sense something weird."
+                it = "It..."
 
-                bonus ="Bonus+1"
+                bonus = "Bonus+1"
 
                 displeased = "${itemname(_1)} vibrates as if she is displeased."
                 pleased = "${itemname(_1)} vibrates as if she is pleased."
@@ -28,17 +27,17 @@ locale {
             }
 
             chair {
-                needs_place_on_ground ="You need to put it on the ground."
+                needs_place_on_ground = "You need to put it on the ground."
                 you_sit_on = "You sit on ${itemname(_1, 1)}."
 
                 choices {
-                    relax ="Relax."
-                    my_chair ="It's my chair."
-                    guest_chair ="It's for my guest."
-                    free_chair ="It's free to use."
+                    relax = "Relax."
+                    my_chair = "It's my chair."
+                    guest_chair = "It's for my guest."
+                    free_chair = "It's free to use."
                 }
 
-                relax ="You relax as much as you like."
+                relax = "You relax as much as you like."
                 my_chair = "${itemname(_1, 1)} is your seat now."
                 guest_chair = "${itemname(_1, 1)} is used by your guests now."
                 free_chair = "${itemname(_1, 1)} can be used by anyone."
@@ -66,13 +65,14 @@ locale {
                 prompt = "Auscultate who?"
                 self = "You blush."
                 other {
-                    start = "You no longer watch on ${his(_1)} health."
-                    stop = "You start to keep an eye on ${his(_1)} health."
-
-                    female {
-                        text = "${name(_1)} blush${s(_1, true)}."
-                        dialog = "\"Pervert!\""
+                    start {
+                        text = "You no longer watch on ${his(_1)} health."
+                        female {
+                            text = "${name(_1)} blush${s(_1, true)}."
+                            dialog = "\"Pervert!\""
+                        }
                     }
+                    stop = "You start to keep an eye on ${his(_1)} health."
                 }
             }
 
@@ -142,7 +142,7 @@ locale {
                 jure = "A voice echoes, \"I-I'm not doing for you! Silly!\""
                 ehekatl = "A voice echoes, \"Did you call me? Call me?\""
                 lulwy {
-                    during_ether = "A rather angry voice echoes, \"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""
+                    during_etherwind = "A rather angry voice echoes, \"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""
                     normal = "An impish voice echoes, \"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""
                 }
 
