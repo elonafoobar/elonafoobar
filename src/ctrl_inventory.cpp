@@ -719,9 +719,7 @@ label_2060_internal:
             else
             {
                 txtnew();
-                txt(lang(
-                    u8"その行為は、ワールドマップにいる間はできない。"s,
-                    u8"You can't do that while you're in a global area."s));
+                txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             }
             invsc = 0;
             update_screen();
@@ -734,9 +732,7 @@ label_2060_internal:
             if (invctrl == 9 || invctrl == 15 || invctrl == 26)
             {
                 txtnew();
-                txt(lang(
-                    u8"その行為は、ワールドマップにいる間はできない。"s,
-                    u8"You can't do that while you're in a global area."s));
+                txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -1210,11 +1206,11 @@ label_2061_internal:
                 ++msgdup;
                 if (inv[ci].own_state == 2)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.pick_up.cannot_carry"));
+                    txt(i18n::s.get("core.locale.action.get.cannot_carry"));
                 }
                 if (inv[ci].own_state == 1)
                 {
-                    txt(i18n::s.get_enum("core.locale.ui.inv.pick_up.not_owned", rnd(3)));
+                    txt(i18n::s.get_enum("core.locale.action.get.not_owned", rnd(3)));
                 }
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;

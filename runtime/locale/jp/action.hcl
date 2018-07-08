@@ -3,6 +3,7 @@ locale {
         cannot_do_in_global = "その行為は、ワールドマップにいる間はできない。"
         hit_key_for_help = "?キーを押すと、コマンドの一覧が見られる。"
         really_attack = "本当に${name(_1)}を攻撃する？ "
+        someone_else_is_using = "そのアイテムは他の誰かが使用中だ。"
 
         backpack_squashing = "${you()}は荷物に圧迫されもがいた。"
 
@@ -36,8 +37,10 @@ locale {
 
         which_direction {
             default = "どの方向に？ "
+            ask = "どの方向？"
             spell = "どの方向に唱える？ "
             wand = "どの方向に振る？ "
+            door = "何を閉める？"
             cannot_see_location = "その場所は見えない。"
             out_of_range = "射程距離外だ。"
         }
@@ -91,9 +94,9 @@ locale {
             change_tone {
                 prompt = "どんな言葉を教えようか。"
                 default_tone = "デフォルトの口調"
-                tone_of_voice = "口調一覧"
-                enter = "決定 [口調の変更]  "
-                title = "題名"
+                title = "口調一覧"
+                hint = "決定 [口調の変更]  "
+                tone_title = "題名"
                 is_somewhat_different = "${name(_1)}の口調が変わった気がする。"
             }
             name {
@@ -117,7 +120,7 @@ locale {
                 dialog = "「助かったよ！」"
             }
             execute = "${name(_1)}は${name(_2)}に体当たりした。"
-            disturbs_sleep = "${name(_1)}は睡眠を妨害された。"
+            disturbs_sleep = "${name(_2)}は睡眠を妨害された。"
             shatters_pot = "${name(_1)}は壷を割った。"
             door {
                 destroyed = "扉に体当たりして破壊した。"
@@ -130,6 +133,23 @@ locale {
         }
 
         move {
+            drunk = " *ふらり* "
+            confused = " *ごつん* "
+            interrupt = "${name(_1)}はあなたを睨み付けた。"
+            carry_too_much = "潰れていて動けない！ "
+            displace {
+                text = "${name(_1)}と入れ替わった。"
+                dialog {
+                    _0 = "「おっと、ごめんよ」"
+                    _1 = "「気をつけな」"
+                }
+            }
+
+            leave {
+                prompt = "${_1}を去る？ "
+                abandoning_quest = "注意！現在のクエストは失敗に終わってしまう。"
+            }
+
             sense_something = "地面に何かがあるようだ。"
             walk_into = "足元には${_1}がある。"
             twinkle = " *キラン* "
@@ -180,7 +200,7 @@ locale {
                 }
                 evade = "${name(_1)}は罠を避けた。"
                 activate {
-                    text = "${name(_1)}罠にかかった！"
+                    text = "${kare_wa(_1)}罠にかかった！"
                     blind = "墨が噴き出した。"
                     paralyze = "刺激的な匂いがただよう。"
                     confuse = "臭い匂いがたちこめた。"
@@ -236,7 +256,7 @@ locale {
                 ambush {
                     text = "襲撃だ！"
                     distance_from_nearest_town = "最も近い街までの距離:${_1}" # NOTE
-                    enemy_strength = "敵勢力:${_1}" # NOTE
+                    enemy_strength = "敵勢力:"
 
                     rank {
                         putit = "プチ級"
@@ -273,21 +293,49 @@ locale {
 
         look {
             find_nothing = "視界内にターゲットは存在しない。"
-            cannot_see = "その場所は見えない。"
             target = "${name(_1)}をターゲットにした。"
-            target_the_ground = "地面をターゲットにした。"
+            target_ground = "地面をターゲットにした。"
         }
 
         ranged {
             load_normal_ammo = "通常弾を装填した。"
             no_target = "ターゲットが見当たらない。"
+
+            equip {
+                need_weapon = "射撃用の道具を装備していない。"
+                need_ammo = "矢/弾丸を装備する必要がある。"
+                wrong_ammo = "矢/弾丸の種類が適していない。"
+            }
+        }
+
+        get {
+            plant {
+                dead = "枯れた草を摘み取った。"
+                young = "芽を摘み取った。"
+            }
+
+            building {
+                prompt = "本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"
+                remove = "建物を撤去した。"
+            }
+
+            snow = "雪をかきあつめた。"
+            air = "あなたは空気をつかんだ。"
+
+            cannot_carry = "それは持ち運べない。"
+
+            not_owned {
+                _0 = "それはあなたの物ではない。"
+                _1 = "盗むなんてとんでもない。"
+                _2 = "それは拾えない。"
+            }
         }
 
         ammo {
             need_to_equip = "矢弾を装備していない。"
             is_not_capable = "${itemname(_1)}は切り替えに対応していない。"
 
-            current = "現在の装填弾" # NOTE
+            current = "現在の装填弾"
             normal = "通常弾"
             unlimited = "無限"
         }
@@ -320,6 +368,42 @@ locale {
                 succeed = "${name(_1)}は扉を開けた。"
                 fail = "${kare_wa(_1)}開錠に失敗した。"
             }
+            shackle {
+                text = "足枷を外した。"
+                dialog = "モイアー「馬鹿やろう！！」"
+            }
+
+            only_in_home = "それは家の中でのみ使用できる。"
+            only_in_shop = "それは店の中でのみ使用できる。"
+            empty = "中身は空っぽだ。"
+        }
+
+        use_stairs {
+            cannot_during_debug = "デバッグ中はその操作はできない。"
+            kotatsu {
+                prompt = "本当にこたつの中に入る？"
+                use = "まっくらだ！"
+            }
+            cannot_go {
+                down = "これ以上降りられない。"
+                up = "これ以上昇れない。"
+            }
+            no {
+                downstairs = "降りる階段は見つからない。"
+                upstairs = "昇る階段は見つからない。"
+            }
+            blocked_by_barrier = "階段は不思議なバリアで塞がれている。"
+
+            unlock {
+                normal = "扉の鍵を開けた。"
+                stones = "厳重に封印された扉の前に立つと、三つの魔石が鈍い光を放った。"
+            }
+
+            locked = "鍵のかかった扉が行く手を塞いでいる。"
+
+            prompt_give_up_quest = "クエストを放棄して階を移動する？"
+
+            lost_balance = "うわああ！${you()}は階段から足を踏み外した。"
         }
 
         close {
@@ -410,13 +494,17 @@ locale {
                 falls_apart = "${itemname(_1, 1)}は塵となって崩れ落ちた。"
                 not_interested = "この本の内容には興味がない。それでも読む？ "
                 already_decoded = "それは既に解読済みだ。"
+
                 void_permit = "すくつの探索を許可する、という内容の文面が形式的に書いてある。"
                 book_of_rachel = "レイチェルという作家による、心あたたまる童話集だ。"
-                learned_recipe = "${itemname(_1, 1)}を覚えた！"
             }
             scroll {
                 dimmed_or_confused = "${name(_1)}はふらふらした。"
                 execute = "${kare_wa(_1)}${itemname(_2, 1)}を読んだ。"
+            }
+            recipe {
+                info = "最後に調合したアイテムを、レシピに加えることができる。(まだ未実装)"
+                learned = "${itemname(_1, 1)}を覚えた！"
             }
         }
 
@@ -437,7 +525,7 @@ locale {
         }
 
         drink {
-            potion = "${kare_wa(_1)}${itemname(_1, 1)}を飲み干した。"
+            potion = "${kare_wa(_1)}${itemname(_2, 1)}を飲み干した。"
             well {
                 is_dry = "${_1}は涸れている。"
                 draw = "${name(_1)}は${_2}の水をすくって飲んだ。"
@@ -462,9 +550,48 @@ locale {
         }
 
         dip {
+            execute = "${itemname(_2, 1)}を${itemname(_1)}に浸した。"
+
             rots = "${itemname(_1)}は腐ってしまった…"
             unchanged = "${itemname(_1)}に変化はない。"
             rusts = "${itemname(_1)}は錆びてしまった…"
+
+            result {
+                love_food {
+                    made = "${itemname(_1)}に${itemname(_2, 1)}を混入した！"
+                    guilty = "あなたはうしろめたさを感じた…"
+                    grin = "あなたはにやりと笑った。"
+                }
+
+                dyeing = "あなたは${itemname(_1)}を染めた。"
+
+                poisoned_food = "あなたはにやりと口元を歪めた。"
+
+                put_on = "${itemname(_1)}に${itemname(_2, 1)}を塗りたくった。"
+                good_idea_but = "いいアイデアだ！しかし…"
+                gains_fireproof = "${itemname(_1)}は熱から守られた。"
+                gains_acidproof = "${itemname(_1)}は酸から守られた。"
+
+                bait_attachment = "${itemname(_2, 1)}を${itemname(_1)}に装着した。"
+
+                blessed_item = "${itemname(_2, 1)}を${itemname(_1)}に降りかけた。"
+                becomes_blessed = "${itemname(_1)}は銀色に輝いた。"
+                becomes_cursed = "${itemname(_1)}は黒いオーラに包まれた。"
+
+                well_refill = "${itemname(_2, 1)}を${itemname(_1)}に放り込んだ。"
+                empty_bottle_shatters = "空き瓶の割れる音がした。"
+                holy_well_polluted = "井戸は汚れた。"
+                well_dry = "${itemname(_1)}は完全に枯れている。"
+                well_refilled = "${itemname(_1)}は一瞬輝いた。"
+                snow_melts {
+                    dip = "こんな量では… "
+                    blending = "しかしこんな量では… "
+                }
+
+                natural_potion = "空き瓶に水をすくった。"
+                natural_potion_dry = "${itemname(_1)}は涸れている。"
+                natural_potion_drop = "あっ！空き瓶を井戸に落としてしまった…"
+            }
         }
 
         plant {
@@ -529,12 +656,26 @@ locale {
             at = "うわぁぁぁ！！"
         }
 
+        exit {
+            cannot_save_in_usermap = "ユーザーマップの中ではセーブできない。それでも終了する？"
+            prompt = "これまでの冒険を記録して終了する？"
+
+            choices {
+                exit = "はい"
+                cancel = "いいえ"
+                game_setting = "ゲーム設定"
+            }
+
+            saved = "無事に記録された。"
+            you_close_your_eyes = "${name(_1)}は静かに目を閉じた… (キーを押すと自動終了します)"
+        }
+
         npc {
             is_busy_now = "${name(_1)}は忙しい。"
             sand_bag {
-                _0 = "「もっとぶって${yo(2)}」"
-                _1 = "「こんなことして、許さない${yo()}」"
-                _2 = "「何をする${nda(2)}」"
+                _0 = "「もっとぶって${yo(_1, 2)}」"
+                _1 = "「こんなことして、許さない${yo(_1)}」"
+                _2 = "「何をする${nda(_1, 2)}」"
             }
             leash {
                 dialog {

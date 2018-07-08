@@ -71,7 +71,7 @@ locale {
 
         sex {
             take_clothes_off = "${name(_1)}は服を脱ぎ始めた。"
-            spare_life = "「そ、その${_1}とは体だけの関係${da()}${ore(3)}は何も知らないから、命だけは…！」"
+            spare_life = "「そ、その${_1}とは体だけの関係${da(_2)}${ore(_2, 3)}は何も知らないから、命だけは…！」"
 
             dialog {
                 _0 = "「きくぅ」"
@@ -82,15 +82,15 @@ locale {
             }
 
             after_dialog {
-                _0 = "よかった${yo(3)}"
-                _1 = "す、すごい${yo(3)}"
-                _2 = "も、もうだめ${da(3)}"
-                _3 = "は、激しかった${yo(3)}"
-                _4 = "か、完敗${da(3)}"
+                _0 = "よかった${yo(_1, 3)}"
+                _1 = "す、すごい${yo(_1, 3)}"
+                _2 = "も、もうだめ${da(_1, 3)}"
+                _3 = "は、激しかった${yo(_1, 3)}"
+                _4 = "か、完敗${da(_1, 3)}"
             }
 
-            take = "！さあ、小遣いを受け取って${kure(3)}"
-            take_all_i_have = "！これが${ore(3)}の財布の中身の全て${da()}"
+            take = "！さあ、小遣いを受け取って${kure(_1, 3)}"
+            take_all_i_have = "！これが${ore(_1, 3)}の財布の中身の全て${da(_1)}"
             gets_furious = "${name(_1)}は激怒した。「なめてんの？」"
 
             # 「(after_dialog)(take/take_all_i_have)」
@@ -112,7 +112,6 @@ locale {
             cannot_be_stolen = "それは盗めない。"
             you_lose_the_target = "対象が見当たらない。"
             it_is_too_heavy = "重すぎて手に負えない。"
-            someone_else_is_using = "そのアイテムは他の誰かが使用中だ。"
             abort = "行動を中断した。"
             succeed = "${itemname(_1)}を盗んだ。"
             guilt = "あなたは良心の呵責を感じた。"
@@ -136,6 +135,10 @@ locale {
             new_gene {
                 title = "遺伝子"
                 text = "${name(_1)}とあなたは熱い一夜を供にした。新たな遺伝子が生成された。"
+
+                choices {
+                    _0 = "ふぅ"
+                }
             }
 
             slept_for = "${_1}時間眠った。あなたはリフレッシュした。"
@@ -173,7 +176,7 @@ locale {
 
         read {
             start = "${kare_wa(_1)}${itemname(_2, 1)}を読み始めた。"
-            finish = "${name(_1)}を読み終えた。"
+            finish = "${kare_wa(_1)}${itemname(_2, 1)}を読み終えた。"
         }
 
         harvest {

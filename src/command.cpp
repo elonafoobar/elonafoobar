@@ -41,7 +41,7 @@ namespace elona
 
 turn_result_t do_give_command()
 {
-    txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
+    txt(i18n::s.get("core.locale.action.which_direction.default"));
     update_screen();
     int stat = ask_direction();
     if (stat == 0)
@@ -89,8 +89,7 @@ turn_result_t do_give_command()
 
 turn_result_t do_interact_command()
 {
-    txt(lang(
-        u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
+    txt(i18n::s.get("core.locale.action.interact.choose"));
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -106,18 +105,16 @@ turn_result_t do_interact_command()
         return turn_result_t::pc_turn_user_error;
     }
     tc -= 1;
-    txt(lang(
-        name(tc) + u8"に何をする？ "s,
-        u8"What action do you want to perform to "s + him(tc) + u8"? "s));
+    txt(i18n::s.get("core.locale.action.interact.prompt", cdata[tc]));
     p = 0;
     if (tc != 0)
     {
         if (cdata[0].confused == 0)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"話しかける"s, u8"Talk"s), u8"null"s, ""s + 0);
+                i18n::s.get("core.locale.action.interact.choices.talk"), u8"null"s, ""s + 0);
             ELONA_APPEND_PROMPT(
-                lang(u8"攻撃する"s, u8"Attack"s), u8"null"s, ""s + 1);
+                i18n::s.get("core.locale.action.interact.choices.attack"), u8"null"s, ""s + 1);
         }
         if (cdata[tc].is_escorted() == 0)
         {
@@ -126,46 +123,46 @@ turn_result_t do_interact_command()
                 if (tc < 16)
                 {
                     ELONA_APPEND_PROMPT(
-                        lang(u8"所持品"s, u8"Inventory"s), u8"null"s, ""s + 4);
+                        i18n::s.get("core.locale.action.interact.choices.inventory"), u8"null"s, ""s + 4);
                 }
                 else
                 {
                     ELONA_APPEND_PROMPT(
-                        lang(u8"何かを渡す"s, u8"Give"s), u8"null"s, ""s + 2);
+                        i18n::s.get("core.locale.action.interact.choices.give"), u8"null"s, ""s + 2);
                 }
                 if (cdata[tc].is_livestock() == 1)
                 {
                     ELONA_APPEND_PROMPT(
-                        lang(u8"連れ出す"s, u8"Bring Out"s),
+                        i18n::s.get("core.locale.action.interact.choices.bring_out"),
                         u8"null"s,
                         ""s + 5);
                 }
                 if (tc < 16)
                 {
                     ELONA_APPEND_PROMPT(
-                        lang(u8"着替えさせる"s, u8"Appearance"s),
+                        i18n::s.get("core.locale.action.interact.choices.appearance"),
                         u8"null"s,
                         ""s + 8);
                 }
             }
         }
         ELONA_APPEND_PROMPT(
-            lang(u8"言葉を教える"s, u8"Teach Words"s), u8"null"s, ""s + 7);
+            i18n::s.get("core.locale.action.interact.choices.teach_words"), u8"null"s, ""s + 7);
         ELONA_APPEND_PROMPT(
-            lang(u8"口調を変える"s, u8"Change Tone"s), u8"null"s, ""s + 10);
+            i18n::s.get("core.locale.action.interact.choices.change_tone"), u8"null"s, ""s + 10);
         if (gdata_current_map != 35)
         {
             if (cdata[tc].is_hung_on_sand_bag())
             {
                 ELONA_APPEND_PROMPT(
-                    lang(u8"縄を解く"s, u8"Release"s), u8"null"s, ""s + 9);
+                    i18n::s.get("core.locale.action.interact.choices.release"), u8"null"s, ""s + 9);
             }
         }
     }
-    ELONA_APPEND_PROMPT(lang(u8"名前をつける"s, u8"Name"s), u8"null"s, ""s + 3);
+    ELONA_APPEND_PROMPT(i18n::s.get("core.locale.action.interact.choices.name"), u8"null"s, ""s + 3);
     if (0 || gdata_wizard)
     {
-        ELONA_APPEND_PROMPT(lang(u8"情報"s, u8"Info"s), u8"null"s, ""s + 6);
+        ELONA_APPEND_PROMPT(i18n::s.get("core.locale.action.interact.choices.info"), u8"null"s, ""s + 6);
     }
     {
         int stat = show_prompt(promptx, prompty, 200);
@@ -234,9 +231,7 @@ turn_result_t do_interact_command()
     }
     if (p == 7)
     {
-        txt(lang(
-            u8"どんな言葉を教えようか。"s,
-            u8"What sentence should "s + name(tc) + u8" learn? "s));
+        txt(i18n::s.get("core.locale.action.interact.change_tone.prompt", cdata[tc]));
         inputlog = "";
         input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
         cdata[tc].has_custom_talk() = false;
@@ -270,9 +265,7 @@ turn_result_t do_interact_command()
     {
         snd(58);
         cdata[tc].is_hung_on_sand_bag() = false;
-        txt(lang(
-            name(tc) + u8"の縄を解いた。"s,
-            u8"You release "s + name(tc) + u8"."s));
+        txt(i18n::s.get("core.locale.action.interact.release", cdata[tc]));
         flt();
         itemcreate(-1, 733, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -287,22 +280,18 @@ turn_result_t do_interact_command()
 
 turn_result_t call_npc()
 {
-    txt(lang(
-        name(tc) + u8"を何と呼ぶ？ "s,
-        u8"What do you want to call "s + him(tc) + u8"? "s));
+    txt(i18n::s.get("core.locale.action.interact.name.prompt", cdata[tc]));
     inputlog = "";
     input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
     {
-        txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
+        txt(i18n::s.get("core.locale.action.interact.name.cancel"));
     }
     else
     {
         cdatan(0, tc) = ""s + inputlog;
         cdata[tc].has_own_name() = true;
-        txt(lang(
-            ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
-            u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
+        txt(i18n::s.get("core.locale.action.interact.name.you_named", cdata[tc]));
     }
     gmode(2);
     update_screen();
@@ -312,9 +301,7 @@ turn_result_t call_npc()
 
 turn_result_t do_bash_command()
 {
-    txt(lang(
-        u8"どの方向に体当たりする？ "s,
-        u8"Which direction do you want to bash? "s));
+    txt(i18n::s.get("core.locale.action.bash.prompt"));
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -327,8 +314,7 @@ turn_result_t do_bash_command()
 
 turn_result_t do_dig_command()
 {
-    txt(lang(
-        u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
+    txt(i18n::s.get("core.locale.action.dig.prompt"));
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -364,9 +350,7 @@ turn_result_t do_dig_command()
 turn_result_t do_search_command()
 {
     ++msgdup;
-    txt(lang(
-        u8"周囲を注意深く調べた。"s,
-        u8"You search the surroundings carefully."s));
+    txt(i18n::s.get("core.locale.action.search.execute"));
     if (gdata_current_map == 35)
     {
         p = 9999;
@@ -403,27 +387,19 @@ turn_result_t do_search_command()
             {
                 if (p <= 3)
                 {
-                    txt(lang(
-                        u8"辺りの空気は息苦しいほどの緊張に包まれている。"s,
-                        u8"The air around you is filled with strained silence."s));
+                    txt(i18n::s.get("core.locale.action.search.crystal.close"));
                 }
                 if (p <= 9)
                 {
-                    txt(lang(
-                        u8"微かだが、あなたの心臓はトクンと脈打った。"s,
-                        u8"Your heart starts beating in your chest."s));
+                    txt(i18n::s.get("core.locale.action.search.crystal.normal"));
                     break;
                 }
                 if (p <= 16)
                 {
-                    txt(lang(
-                        u8"まだだ、まだ遠い…"s,
-                        u8"Still, still lying far ahead."s));
+                    txt(i18n::s.get("core.locale.action.search.crystal.far"));
                     break;
                 }
-                txt(lang(
-                    u8"あなたは青い水晶の存在を感じた。"s,
-                    u8"You sense a blue crystal lying somewhere in this area."s));
+                txt(i18n::s.get("core.locale.action.search.crystal.sense"));
                 break;
             }
         }
@@ -458,9 +434,7 @@ turn_result_t do_search_command()
                             if (stat == 1)
                             {
                                 discover_trap();
-                                txt(lang(
-                                    u8"罠を発見した。"s,
-                                    u8"You discover a trap."s));
+                                txt(i18n::s.get("core.locale.action.search.discover.trap"));
                             }
                         }
                     }
@@ -470,9 +444,7 @@ turn_result_t do_search_command()
                         if (stat == 1 || 0)
                         {
                             discover_hidden_path();
-                            txt(lang(
-                                u8"隠れた通路を発見した。"s,
-                                u8"You discover a hidden path."s));
+                            txt(i18n::s.get("core.locale.action.search.discover.hidden_path"));
                         }
                     }
                 }
@@ -484,9 +456,7 @@ turn_result_t do_search_command()
                             && cdata[cc].position.y == y)
                         {
                             snd(24);
-                            txt(lang(
-                                u8"なんと小さなメダルを見つけた！"s,
-                                u8"You find a small coin!"s));
+                            txt(i18n::s.get("core.locale.action.search.small_coin.find"));
                             map(x, y, 6) = 0;
                             flt();
                             itemcreate(-1, 622, x, y, 0);
@@ -500,15 +470,11 @@ turn_result_t do_search_command()
                                     y)
                                 > 2)
                             {
-                                txt(lang(
-                                    u8"この辺りには何かがありそうな予感がする…"s,
-                                    u8"You sense something."s));
+                                txt(i18n::s.get("core.locale.action.search.small_coin.far"));
                             }
                             else
                             {
-                                txt(lang(
-                                    u8"あなたは何かが輝くのを目にした。"s,
-                                    u8"You see something shines."s));
+                                txt(i18n::s.get("core.locale.action.search.small_coin.close"));
                             }
                         }
                     }
@@ -581,10 +547,7 @@ turn_result_t do_throw_command()
     int ccthrowpotion = 0;
     if (is_in_fov(cc))
     {
-        txt(lang(
-            name(cc) + u8"は"s + itemname(ci, 1) + u8"を投げた。"s,
-            name(cc) + u8" throw"s + _s(cc) + u8" "s + itemname(ci, 1)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.action.throw.execute", cdata[cc], inv[ci]));
     }
     if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4
             > rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4
@@ -642,38 +605,28 @@ turn_result_t do_throw_command()
         if (map(tlocx, tlocy, 1) != 0)
         {
             tc = map(tlocx, tlocy, 1) - 1;
-            txt(lang(
-                name(tc) + u8"に見事に命中した！"s,
-                u8"It hits "s + name(tc) + u8"!"s));
+            txt(i18n::s.get("core.locale.action.throw.hits", cdata[tc]));
             if (inv[ci].id == 685)
             {
                 if (tc < ELONA_MAX_PARTY_CHARACTERS
                     || cdata[tc].character_role != 0 || cdata[tc].quality == 6
                     || cdata[tc].is_lord_of_dungeon() == 1)
                 {
-                    txt(lang(
-                        u8"その生物には無効だ。"s,
-                        u8"The creature can't be captured."s));
+                    txt(i18n::s.get("core.locale.action.throw.monster_ball.cannot_be_captured"));
                     return turn_result_t::turn_end;
                 }
                 if (cdata[tc].level > inv[ci].param2)
                 {
-                    txt(lang(
-                        u8"その生物を捕獲するには、より高レベルのモンスターボールが必要だ。"s,
-                        u8"Power level of the ball is not enough to capture the creature."s));
+                    txt(i18n::s.get("core.locale.action.throw.monster_ball.not_enough_power"));
                     return turn_result_t::turn_end;
                 }
                 if (cdata[tc].hp > cdata[tc].max_hp / 10)
                 {
-                    txt(lang(
-                        u8"捕獲するためにはもっと弱らせる必要がある。"s,
-                        u8"You need to weaken the creature to capture it."s));
+                    txt(i18n::s.get("core.locale.action.throw.monster_ball.not_weak_enough"));
                     return turn_result_t::turn_end;
                 }
                 txtef(2);
-                txt(lang(
-                    name(tc) + u8"をモンスターボールに捕獲した。"s,
-                    u8"You capture "s + name(tc) + u8"."s));
+                txt(i18n::s.get("core.locale.action.throw.monster_ball.capture", cdata[tc]));
                 animeload(8, tc);
                 inv[ci].subname = cdata[tc].id;
                 inv[ci].param3 = cdata[tc].level;
@@ -690,9 +643,7 @@ turn_result_t do_throw_command()
                 if (gdata_current_map == 6 || gdata_current_map == 40
                     || gdata_current_map == 35)
                 {
-                    txt(lang(
-                        u8"この場所では効果がない。"s,
-                        u8"This doesn't work in this area."s));
+                    txt(i18n::s.get("core.locale.action.throw.monster_ball.does_not_work"));
                     return turn_result_t::turn_end;
                 }
                 rc = tc;
@@ -723,9 +674,7 @@ turn_result_t do_throw_command()
                 tc = map(tlocx, tlocy, 1) - 1;
                 if (is_in_fov(tc))
                 {
-                    txt(lang(
-                        name(tc) + u8"に見事に命中した！"s,
-                        u8"It hits "s + name(tc) + u8"!"s));
+                    txt(i18n::s.get("core.locale.action.throw.hits", cdata[tc]));
                     wet(tc, 25);
                 }
                 rowact_check(tc);
@@ -736,16 +685,7 @@ turn_result_t do_throw_command()
                         if (tc != 0)
                         {
                             txtef(9);
-                            txt(lang(u8"「いてー！」"s, u8"\"Hey!\""s),
-                                lang(
-                                    u8"「やったな」"s,
-                                    u8"\"Now you did it.\""s),
-                                lang(u8" *クスクス* "s, u8"*chuckle*"s),
-                                lang(u8"「キャハハ」"s, u8"\"Tee-hee-hee!\""s),
-                                lang(
-                                    u8"「こやつめ」"s,
-                                    u8"\"You'll pay for this.\""s),
-                                lang(u8"「むむっ」"s, u8"*grin*"s));
+                            txt(i18n::s.get_enum("core.locale.action.throw.snow.dialog", rnd(6)));
                         }
                     }
                     return turn_result_t::turn_end;
@@ -755,17 +695,14 @@ turn_result_t do_throw_command()
                     if (is_in_fov(tc))
                     {
                         txtef(4);
-                        txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
+                        txt(i18n::s.get("core.locale.action.throw.tomato"));
                     }
                     if (inv[ci].param3 == -1)
                     {
                         if (is_in_fov(tc))
                         {
                             txtef(4);
-                            txt(lang(
-                                name(tc) + u8"は怒りに体を奮わせた！"s,
-                                name(tc) + u8" "s + is(tc)
-                                    + u8" engulfed in fury!"s));
+                            txt(i18n::s.get("core.locale.damage.is_engulfed_in_fury", cdata[tc]));
                         }
                         cdata[tc].furious += rnd(10) + 5;
                     }
@@ -796,11 +733,8 @@ turn_result_t do_throw_command()
                         {
                             if (is_in_fov({tlocx, tlocy}))
                             {
-                                txt(lang(
-                                    itemname(p, 1)
-                                        + u8"に命中して、雪だるまは崩れた。"s,
-                                    u8"It hits "s + itemname(p, 1)
-                                        + u8" and breaks it."s));
+                                txt(i18n::s.get("core.locale.action.throw.snow.hits_snowman",
+                                                inv[p(0)]));
                             }
                             --inv[p].number;
                             f = 1;
@@ -822,23 +756,19 @@ turn_result_t do_throw_command()
                 }
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    txt(lang(
-                        u8"それは地面に落ちて溶けた。"s,
-                        u8"It falls on the ground and melts."s));
+                    txt(i18n::s.get("core.locale.action.throw.snow.melts"));
                 }
             }
             else if (is_in_fov({tlocx, tlocy}))
             {
-                txt(lang(
-                    u8"それは地面に落ちて砕けた。"s,
-                    u8"It falls on the ground and shatters."s));
+                txt(i18n::s.get("core.locale.action.throw.shatters"));
             }
             if (inv[ci].id == 772)
             {
                 if (is_in_fov({tlocx, tlocy}))
                 {
                     txtef(4);
-                    txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
+                    txt(i18n::s.get("core.locale.action.throw.tomato"));
                 }
                 return turn_result_t::turn_end;
             }
@@ -870,9 +800,7 @@ turn_result_t do_throw_command()
     }
     if (is_in_fov({tlocx, tlocy}))
     {
-        txt(lang(
-            u8"それは地面に落ちて砕けた。"s,
-            u8"It falls on the ground and shatters."s));
+        txt(i18n::s.get("core.locale.action.throw.shatters"));
         snd(47);
     }
     if (inv[ci].id == 578)
@@ -895,22 +823,18 @@ turn_result_t do_close_command()
     cell_featread(x, y);
     if (feat(1) != 20)
     {
-        txt(lang(
-            u8"その方向に閉められるものはない。"s,
-            u8"There's nothing to close."s));
+        txt(i18n::s.get("core.locale.action.close.nothing_to_close"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
     if (map(x, y, 1) != 0)
     {
-        txt(lang(
-            u8"何かが邪魔で閉められない。"s,
-            u8"There's something on the floor."s));
+        txt(i18n::s.get("core.locale.action.close.blocked"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
-    txt(lang(name(cc) + u8"は扉を閉めた。"s, name(cc) + u8" close the door."s));
+    txt(i18n::s.get("core.locale.action.close.execute", cdata[cc]));
     return turn_result_t::turn_end;
 }
 
@@ -933,7 +857,7 @@ turn_result_t do_change_ammo_command()
     }
     if (f == 0)
     {
-        txt(lang(u8"矢弾を装備していない。"s, u8"You need to equip an ammo."s));
+        txt(i18n::s.get("core.locale.action.ammo.need_to_equip"));
         return turn_result_t::pc_turn_user_error;
     }
     listmax = 0;
@@ -964,9 +888,7 @@ turn_result_t do_change_ammo_command()
     if (listmax == 0)
     {
         inv[ci].count = -1;
-        txt(lang(
-            itemname(ci) + u8"は切り替えに対応していない。"s,
-            itemname(ci) + u8" isn't capable of changing ammos."s));
+        txt(i18n::s.get("core.locale.action.ammo.is_not_capable", inv[ci]));
         return turn_result_t::pc_turn_user_error;
     }
     snd(90);
@@ -979,13 +901,13 @@ turn_result_t do_change_ammo_command()
     {
         inv[ci].count = list(0, cs);
     }
-    txt(lang(u8"現在の装填弾:"s, u8"Current Ammo Type:"s));
+    txt(i18n::s.get("core.locale.action.ammo.current") + ":");
     for (int cnt = 0, cnt_end = (listmax + 1); cnt < cnt_end; ++cnt)
     {
         if (cnt == 0)
         {
-            s(0) = lang(u8"通常弾"s, u8"Normal"s);
-            s(1) = lang(u8"無限"s, u8"Unlimited"s);
+            s(0) = i18n::s.get("core.locale.action.ammo.normal");
+            s(1) = i18n::s.get("core.locale.action.ammo.unlimited");
         }
         else
         {
@@ -1014,20 +936,13 @@ turn_result_t do_offer_command()
 {
     if (cdata[0].god_id.empty())
     {
-        txt(lang(
-            u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
-            u8"You don't believe in God."s));
+        txt(i18n::s.get("core.locale.action.offer.do_not_believe"));
         return turn_result_t::turn_end;
     }
     rowact_item(ci);
     item_separate(ci);
-    txt(lang(
-        u8"あなたは"s + itemname(ci) + u8"を"s
-            + i18n::_(u8"god", cdata[0].god_id, u8"name")
-            + u8"に捧げ、その名を唱えた。"s,
-        u8"You put "s + itemname(ci)
-            + u8" on the altar and mutter the name of "s
-            + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"."s));
+    txt(i18n::s.get("core.locale.action.offer.execute",
+                    inv[ci], i18n::_(u8"god", cdata[0].god_id, u8"name")));
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
@@ -1060,29 +975,14 @@ turn_result_t do_offer_command()
         if (inv[ti].param1 == 0)
         {
             f = 1;
-            txt(lang(
-                u8"異世界で、"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8"が空白の祭壇の権利を主張した。"s,
-                i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" claims the empty altar."s));
+            txt(i18n::s.get("core.locale.action.offer.claim",
+                            i18n::_(u8"god", cdata[0].god_id, u8"name")));
         }
         else
         {
-            txt(lang(
-                u8"異様な霧が現れ、"s
-                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"と"s
-                    + i18n::_(
-                          u8"god",
-                          core_god::int2godid(inv[ti].param1),
-                          u8"name")
-                    + u8"の幻影がせめぎあった。"s,
-                u8"Strange fogs surround all over the place. You see shadows of "s
-                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8" and "s
-                    + i18n::_(
-                          u8"god",
-                          core_god::int2godid(inv[ti].param1),
-                          u8"name")
-                    + u8" make a fierce dance."s));
+            txt(i18n::s.get("core.locale.action.offer.take_over.attempt",
+                            i18n::_(u8"god", cdata[0].god_id, u8"name"),
+                            i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1101,26 +1001,19 @@ turn_result_t do_offer_command()
             snd(120);
             if (inv[ti].param1 != 0)
             {
-                txt(lang(
-                    u8"あなたの神の幻影は、次第に色濃くなった。"s,
-                    u8"The shadow of your god slowly gets bolder."s));
+                txt(i18n::s.get("core.locale.action.offer.take_over.shadow"));
             }
             txtef(5);
-            txt(lang(
-                i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"は"s
-                    + itemname(ti) + u8"を支配した。"s,
-                i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" takes over the altar."s));
+            txt(i18n::s.get("core.locale.action.offer.take_over.succeed",
+                            i18n::_(u8"god", cdata[0].god_id, u8"name"),
+                            inv[ti]));
             txtgod(cdata[0].god_id, 2);
             inv[ti].param1 = core_god::godid2int(cdata[0].god_id);
         }
         else
         {
-            txt(lang(
-                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
-                    + u8"は祭壇を守りきった。"s,
-                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
-                    + u8" keeps the altar."s));
+            txt(i18n::s.get("core.locale.action.offer.take_over.fail",
+                            i18n::_(u8"god", core_god::int2godid(inv[ti].param1))));
             txtgod(core_god::int2godid(inv[ti].param1), 3);
             label_1892();
         }
@@ -1132,39 +1025,23 @@ turn_result_t do_offer_command()
         {
             if (i >= 15)
             {
-                txt(lang(
-                    itemname(ci) + u8"はまばゆく輝いて消えた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" all around and disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.action.offer.result.best", inv[ci]));
                 txtgod(cdata[0].god_id, 4);
                 break;
             }
             if (i >= 10)
             {
-                txt(lang(
-                    itemname(ci)
-                        + u8"は輝いて消え、三つ葉のクローバーがふってきた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" for a moment and disappear"s + _s2(inv[ci].number)
-                        + u8". A three-leaved falls from the altar."s));
+                txt(i18n::s.get("core.locale.action.offer.result.good", inv[ci]));
                 break;
             }
             if (i >= 5)
             {
-                txt(lang(
-                    itemname(ci) + u8"は一瞬輝いて消えた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" for a moment and disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.action.offer.result.okay", inv[ci]));
                 break;
             }
             if (i >= 1)
             {
-                txt(lang(
-                    itemname(ci) + u8"は消えた。"s,
-                    itemname(ci) + u8" disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.action.offer.result.poor", inv[ci]));
                 break;
             }
         }
@@ -1184,9 +1061,7 @@ turn_result_t do_look_command()
     if (listmax == 0)
     {
         ++msgdup;
-        txt(lang(
-            u8"視界内にターゲットは存在しない。"s,
-            u8"You look around and find nothing."s));
+        txt(i18n::s.get("core.locale.action.look.find_nothing"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -1323,9 +1198,7 @@ label_1953_internal:
     {
         cdata[0].enemy_id = p;
         snd(20);
-        txt(lang(
-            name(p) + u8"をターゲットにした。"s,
-            u8"You target "s + name(p) + u8"."s));
+        txt(i18n::s.get("core.locale.action.look.target", cdata[p(0)]));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -1362,10 +1235,7 @@ turn_result_t do_dip_command()
         item_separate(ci);
         item_num(cidip, -1);
         snd(13);
-        txt(lang(
-            itemname(cidip, 1) + u8"を"s + itemname(ci) + u8"に装着した。"s,
-            u8"You bait "s + itemname(ci) + u8" with "s + itemname(cidip, 1)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.result.bait_attachment", inv[ci], inv[cidip]));
         if (inv[ci].param4 == inv[cidip].param1)
         {
             inv[ci].count += rnd(10) + 15;
@@ -1386,30 +1256,21 @@ turn_result_t do_dip_command()
             item_num(cidip, -1);
             if (inv[cidip].id != 601)
             {
-                txt(lang(
-                    itemname(cidip, 1) + u8"を"s + itemname(ci)
-                        + u8"に浸した。"s,
-                    u8"You dip "s + itemname(ci) + u8" into "s
-                        + itemname(cidip, 1) + u8"."s));
+                txt(i18n::s.get("core.locale.action.dip.execute", inv[ci], inv[cidip]));
                 if (inv[ci].id == 602)
                 {
-                    txt(lang(
-                        u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
+                    txt(i18n::s.get("core.locale.action.dip.result.holy_well_polluted"));
                     return turn_result_t::turn_end;
                 }
                 if (inv[ci].param3 >= 20)
                 {
-                    txt(lang(
-                        itemname(ci) + u8"は完全に枯れている。"s,
-                        itemname(ci) + u8" is completely dry."s));
+                    txt(i18n::s.get("core.locale.action.dip.result.well_dry", inv[ci]));
                     return turn_result_t::turn_end;
                 }
-                txt(lang(
-                    itemname(ci) + u8"は一瞬輝いた。"s,
-                    itemname(ci) + u8" shines for a moment."s));
+                txt(i18n::s.get("core.locale.action.dip.result.well_refilled", inv[ci]));
                 if (inv[cidip].id == 587)
                 {
-                    txt(lang(u8"こんな量では… "s, u8"Snow just melts."s));
+                    i18n::s.get("core.locale.action.dip.result.snow_melts.dip");
                 }
                 else
                 {
@@ -1422,11 +1283,8 @@ turn_result_t do_dip_command()
                 if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
                     || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
                 {
-                    const auto valn = itemname(ci);
-                    txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
-                    txt(lang(
-                        u8"あっ！空き瓶を井戸に落としてしまった…"s,
-                        u8"Ops! You drop the empty bottle into the well..."s));
+                    txt(i18n::s.get("core.locale.action.dip.result.natural_potion_dry", inv[ci]));
+                    txt(i18n::s.get("core.locale.action.dip.result.natural_potion_drop"));
                     return turn_result_t::turn_end;
                 }
                 if (inv_getfreeid(0) == -1)
@@ -1453,9 +1311,7 @@ turn_result_t do_dip_command()
                     flttypemajor = 52000;
                     itemcreate(0, 0, -1, -1, 0);
                 }
-                txt(lang(
-                    u8"空き瓶に水をすくった。"s,
-                    u8"You draw water from the well into the empty bottle."s));
+                txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
                 txt(lang(
                     itemname(ci, 1) + u8"を手に入れた。"s,
                     u8"You get "s + itemname(ci, 1) + u8"."s));
@@ -1470,10 +1326,8 @@ turn_result_t do_dip_command()
         {
             item_num(cidip, -1);
             item_separate(ci);
-            txt(lang(
-                itemname(ci) + u8"に"s + itemname(cidip, 1)
-                    + u8"を混入した！あなたはにやりと笑った。"s,
-                u8"You made aphrodisiac food! You grin."s));
+            txt(i18n::s.get("core.locale.action.dip.result.love_food.made", inv[ci], inv[cidip])
+                + i18n::s.get("core.locale.action.dip.result.love_food.grin"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1488,10 +1342,8 @@ turn_result_t do_dip_command()
         {
             item_num(cidip, -1);
             item_separate(ci);
-            txt(lang(
-                itemname(ci) + u8"に"s + itemname(cidip, 1)
-                    + u8"を混入した！あなたはうしろめたさを感じた…"s,
-                u8"You made aphrodisiac food! You kind of feel guilty..."s));
+            txt(i18n::s.get("core.locale.action.dip.result.love_food.made", inv[ci], inv[cidip])
+                + i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1513,9 +1365,7 @@ turn_result_t do_dip_command()
         }
         item_num(cidip, -1);
         inv[ci].color = inv[cidip].color;
-        txt(lang(
-            u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
-            u8"You dye "s + itemname(ci) + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
         if (inv_getowner(ci) == -1)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -1537,10 +1387,7 @@ turn_result_t do_dip_command()
             in = 1;
             item_separate(ci);
         }
-        txt(lang(
-            itemname(ci) + u8"に"s + itemname(cidip, 1) + u8"を塗りたくった。"s,
-            u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[cidip]));
         if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
@@ -1548,9 +1395,7 @@ turn_result_t do_dip_command()
         else
         {
             ibitmod(1, ci, 1);
-            txt(lang(
-                itemname(ci) + u8"は酸から守られた。"s,
-                itemname(ci) + u8" gain"s + _s2(in) + u8" acidproof."s));
+            txt(i18n::s.get("core.locale.action.dip.result.gains_acidproof", inv[ci]));
         }
         item_num(cidip, -1);
         return turn_result_t::turn_end;
@@ -1566,25 +1411,19 @@ turn_result_t do_dip_command()
             in = 1;
             item_separate(ci);
         }
-        txt(lang(
-            itemname(ci, in) + u8"に"s + itemname(cidip, 1)
-                + u8"を塗りたくった。"s,
-            u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci, in)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[cidip]));
         if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
         }
         else if (inv[ci].id == 567)
         {
-            txt(lang(u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
+            txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
         }
         else
         {
             ibitmod(2, ci, 1);
-            txt(lang(
-                itemname(ci) + u8"は熱から守られた。"s,
-                itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
+            txt(i18n::s.get("core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
         item_num(cidip, -1);
         return turn_result_t::turn_end;
@@ -1595,10 +1434,7 @@ turn_result_t do_dip_command()
         if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             txtef(2);
-            txt(lang(
-                itemname(ci) + u8"は銀色に輝いた。"s,
-                itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                    + u8" silvery."s));
+            txt(i18n::s.get("core.locale.action.dip.result.becomes_blessed", inv[ci]));
             inv[ci].curse_state = curse_state_t::blessed;
             chara_refresh(cc);
             return turn_result_t::turn_end;
@@ -1606,10 +1442,7 @@ turn_result_t do_dip_command()
         if (is_cursed(inv[cidip].curse_state))
         {
             txtef(8);
-            txt(lang(
-                itemname(ci) + u8"は黒いオーラに包まれた。"s,
-                itemname(ci) + u8" "s + is2(inv[ci].number)
-                    + u8" wrapped by a dark aura."s));
+            txt(i18n::s.get("core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = curse_state_t::cursed;
             chara_refresh(cc);
             return turn_result_t::turn_end;
@@ -1632,11 +1465,7 @@ turn_result_t do_use_command()
                 + gdata_year * 24 * 30 * 12
             < inv[ci].count)
         {
-            txt(lang(
-                u8"そのアイテムが次に使用できるのは"s + cnvdate(inv[ci].count)
-                    + u8"だ。"s,
-                u8"This item will be useable again at "s
-                    + cnvdate(inv[ci].count) + u8"."s));
+            txt(i18n::s.get("core.locale.action.use.useable_again_at", cnvdate(inv[ci].count)));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -1648,7 +1477,7 @@ turn_result_t do_use_command()
     {
         if (inv[ci].count <= 0)
         {
-            txt(lang(u8"それはもう使えない。"s, u8"It's out of charge."s));
+            txt(i18n::s.get("core.locale.action.use.out_of_charge"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -1667,7 +1496,7 @@ turn_result_t do_use_command()
     {
         if (gdata_continuous_active_hours < 15)
         {
-            txt(lang(u8"まだ眠たくない。"s, u8"You don't feel sleepy yet."s));
+            txt(i18n::s.get("core.locale.action.use.not_sleepy"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -1699,24 +1528,18 @@ turn_result_t do_use_command()
     {
         if (inv[ci].param2 < calcexpalive(inv[ci].param1))
         {
-            txt(lang(
-                u8"この武器はまだ血を吸い足りない。"s,
-                u8"The weapon needs more blood."s));
+            txt(i18n::s.get("core.locale.action.use.living.needs_more_blood"));
         }
         else
         {
             txtnew();
-            txt(lang(
-                itemname(ci) + u8"は十分に血を吸い成長できる！"s,
-                itemname(ci) + u8" sucked enough blood and ready to grow!"s));
+            txt(i18n::s.get("core.locale.action.use.living.ready_to_grow", inv[ci]));
             randomize(inv[ci].subname);
             if (inv[ci].param1 >= 4 + rnd(12))
             {
-                txt(lang(
-                    u8"しかし、なんだか様子がおかしい…"s,
-                    u8"But you sense something weird."s));
+                txt(i18n::s.get("core.locale.action.use.living.weird"));
             }
-            txt(lang(u8"それは…"s, u8"It..."s));
+            txt(i18n::s.get("core.locale.action.use.living.it"));
             reftype = the_item_db[inv[ci].id]->category;
             listmax = 0;
             for (int cnt = 0; cnt < 3; ++cnt)
@@ -1747,15 +1570,13 @@ turn_result_t do_use_command()
             }
             list(0, listmax) = -1;
             ++listmax;
-            s = lang(u8"ボーナス+1"s, u8"Bonus+1"s);
+            s = i18n::s.get("core.locale.action.use.living.bonus");
             ELONA_APPEND_PROMPT(s, u8"null"s, ""s + promptmax);
             rtval = show_prompt(promptx, prompty, 400);
             txtnew();
             if (rtval == -1)
             {
-                txt(lang(
-                    itemname(ci) + u8"は不満そうに震えた。"s,
-                    itemname(ci) + u8" vibrates as if she is displeased."s));
+                txt(i18n::s.get("core.locale.action.use.living.displeased", inv[ci]));
             }
             else
             {
@@ -1768,21 +1589,15 @@ turn_result_t do_use_command()
                     enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
                 txtef(2);
-                txt(lang(
-                    itemname(ci) + u8"は嬉しげに震えた。"s,
-                    itemname(ci) + u8" vibrates as if she is pleased."s));
+                txt(i18n::s.get("core.locale.action.use.living.pleased", inv[ci]));
                 randomize(inv[ci].subname);
                 if (inv[ci].param1 >= 4 + rnd(12))
                 {
-                    txt(lang(
-                        u8"その力は次第に脅威になっている。"s,
-                        u8"Its power is becoming a threat."s));
+                    txt(i18n::s.get("core.locale.action.use.living.becoming_a_threat"));
                     if (enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
-                        txt(lang(
-                            itemname(ci) + u8"はエンチャントを消した。"s,
-                            itemname(ci) + u8" removes an enchantment."s));
+                        txt(i18n::s.get("core.locale.action.use.living.removes_enchantment", inv[ci]));
                     }
                 }
                 inv[ci].param2 = 0;
@@ -1801,53 +1616,49 @@ turn_result_t do_use_command()
         y = cdata[cc].position.y;
         if (mdata(6) == 1)
         {
-            txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
+            txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
         if (map(x, y, 6) != 0)
         {
-            txt(lang(u8"ここには置けない。"s, u8"You can't place it here."s));
+            txt(i18n::s.get("core.locale.action.use.mine.cannot_place_here"));
             return turn_result_t::pc_turn_user_error;
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         cell_featset(x, y, 0, 14, 7, cc);
-        txt(lang(u8"地雷を設置した。"s, u8"You set up the mine."s));
+        txt(i18n::s.get("core.locale.action.use.mine.you_set_up"));
         snd(58);
         goto label_2229_internal;
     case 44:
         if (inv_getowner(ci) != -1)
         {
-            txt(lang(
-                u8"床に置かないと使えない。"s,
-                u8"You need to put it on the ground."s));
+            txt(i18n::s.get("core.locale.action.use.chair.needs_place_on_ground"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
-        txt(lang(
-            u8"あなたは"s + itemname(ci, 1) + u8"に座った。"s,
-            u8"You sit on "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.chair.you_sit_on", inv[ci]));
         ELONA_APPEND_PROMPT(
-            lang(u8"くつろぐ"s, u8"Relax."s), u8"null"s, ""s + 0);
+            i18n::s.get("core.locale.action.use.chair.choices.relax"), u8"null"s, ""s + 0);
         if (inv[ci].param1 != 1)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"マイチェアにする"s, u8"It's my chair."s),
+                i18n::s.get("core.locale.action.use.chair.choices.my_chair"),
                 u8"null"s,
                 ""s + 1);
         }
         if (inv[ci].param1 != 2)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"お客用のチェアにする"s, u8"It's for my guest."s),
+                i18n::s.get("core.locale.action.use.chair.choices.guest_chair"),
                 u8"null"s,
                 ""s + 2);
         }
         if (inv[ci].param1 != 0)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"誰でも座っていい"s, u8"It's free to use."s),
+                i18n::s.get("core.locale.action.use.chair.choices.free_chair"),
                 u8"null"s,
                 ""s + 3);
         }
@@ -1861,32 +1672,24 @@ turn_result_t do_use_command()
         }
         if (rtval == 0)
         {
-            txt(lang(
-                u8"あなたは存分にくつろいだ。"s,
-                u8"You relax as much as you like."s));
+            i18n::s.get("core.locale.action.use.chair.relax");
             goto label_2229_internal;
         }
         if (rtval == 1)
         {
-            txt(lang(
-                itemname(ci, 1) + u8"はあなた専用の席になった！"s,
-                itemname(ci, 1) + u8" is your seat now."s));
+            i18n::s.get("core.locale.action.use.chair.my_chair", inv[ci]);
             inv[ci].param1 = 1;
             goto label_2229_internal;
         }
         if (rtval == 2)
         {
-            txt(lang(
-                itemname(ci, 1) + u8"は訪問者の席になった！"s,
-                itemname(ci, 1) + u8" is used by your guests now."s));
+            i18n::s.get("core.locale.action.use.chair.guest_chair", inv[ci]);
             inv[ci].param1 = 2;
             goto label_2229_internal;
         }
         if (rtval == 3)
         {
-            txt(lang(
-                itemname(ci, 1) + u8"は誰でも座っていい席になった！"s,
-                itemname(ci, 1) + u8" can be used by anyone."s));
+            i18n::s.get("core.locale.action.use.chair.free_chair", inv[ci]);
             inv[ci].param1 = 0;
             goto label_2229_internal;
         }
@@ -1894,8 +1697,7 @@ turn_result_t do_use_command()
     case 8:
         if (mdata(6) != 5)
         {
-            txt(lang(
-                u8"それはここでは使えない。"s, u8"You can't use it here."s));
+            txt(i18n::s.get("core.locale.action.use.house_board.cannot_use_it_here"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -1903,7 +1705,7 @@ turn_result_t do_use_command()
         update_screen();
         return turn_result_t::show_house_board;
     case 19:
-        txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
+        txt(i18n::s.get("core.locale.action.use.dresser.prompt"));
         {
             int stat = ask_direction();
             f = 0;
@@ -1949,7 +1751,7 @@ turn_result_t do_use_command()
         {
             if (inv[ci].number < 5)
             {
-                txt(lang(u8"雪が足りない…"s, u8"You need more snow."s));
+                txt(i18n::s.get("core.locale.action.use.snow.need_more"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -1960,9 +1762,7 @@ turn_result_t do_use_command()
         if (is_in_fov(cc))
         {
             snd(86);
-            txt(lang(
-                name(cc) + u8"は雪だるまを作った！"s,
-                name(cc) + u8" make"s + _s(cc) + u8" a snow man!"s));
+            txt(i18n::s.get("core.locale.action.use.snow.make_snowman", cdata[cc]));
         }
         goto label_2229_internal;
     case 13:
@@ -1970,12 +1770,12 @@ turn_result_t do_use_command()
         if (gdata_torch == 0)
         {
             gdata_torch = 1;
-            txt(lang(u8"松明を灯した。"s, u8"You light up the torch."s));
+            txt(i18n::s.get("core.locale.action.use.torch.light"));
         }
         else
         {
             gdata_torch = 0;
-            txt(lang(u8"松明を消した。"s, u8"You put out the fire."s));
+            txt(i18n::s.get("core.locale.action.use.torch.put_out"));
         }
         chara_refresh(0);
         goto label_2229_internal;
@@ -1994,7 +1794,7 @@ turn_result_t do_use_command()
     }
         goto label_2229_internal;
     case 5:
-        txt(lang(u8"何に聴診器を当てる？"s, u8"Auscultate who?"s));
+        txt(i18n::s.get("core.locale.action.use.stethoscope.prompt"));
         update_screen();
         {
             int stat = ask_direction();
@@ -2008,7 +1808,7 @@ turn_result_t do_use_command()
         tc = map(x, y, 1) - 1;
         if (tc == 0)
         {
-            txt(lang(u8" *ドクン ドクン* "s, u8"You blush."s));
+            txt(i18n::s.get("core.locale.action.use.stethoscope.self"));
             gdata(94) = 0;
             return turn_result_t::turn_end;
         }
@@ -2020,23 +1820,17 @@ turn_result_t do_use_command()
                 if (cdata[tc].has_been_used_stethoscope() == 1)
                 {
                     cdata[tc].has_been_used_stethoscope() = false;
-                    txt(lang(
-                        name(tc) + u8"から聴診器を外した。"s,
-                        u8"You no longer watch on "s + his(tc)
-                            + u8" health."s));
+                    txt(i18n::s.get("core.locale.action.use.stethoscope.other.stop", cdata[tc]));
                     return turn_result_t::turn_end;
                 }
-                txt(lang(
-                    u8"あなたは"s + name(tc) + u8"に聴診器を当てた。"s,
-                    u8"You start to keep an eye on "s + his(tc)
-                        + u8" health."s));
+                    txt(i18n::s.get("core.locale.action.use.stethoscope.other.start.text", cdata[tc]));
                 if (cdata[tc].sex == 1)
                 {
-                    txt(lang(
-                        ""s + name(tc) + u8"は顔を赤らめた。"s,
-                        name(tc) + u8" blush"s + _s(tc, true) + u8"."s));
+                    txt(i18n::s.get("core.locale.action.use.stethoscope.other.start.female.text",
+                                    cdata[tc]));
                     txtef(4);
-                    txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
+                    txt(i18n::s.get("core.locale.action.use.stethoscope.other.start.female.dialog",
+                                    cdata[tc]));
                 }
                 cdata[tc].has_been_used_stethoscope() = true;
                 return turn_result_t::turn_end;
@@ -2047,7 +1841,7 @@ turn_result_t do_use_command()
         return turn_result_t::pc_turn_user_error;
         break;
     case 23:
-        txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
+        txt(i18n::s.get("core.locale.action.use.leash.prompt"));
         update_screen();
         {
             int stat = ask_direction();
@@ -2059,9 +1853,7 @@ turn_result_t do_use_command()
                     tc = map(x, y, 1) - 1;
                     if (tc == 0)
                     {
-                        txt(lang(
-                            u8"あなたは自分を紐でくくってみた…"s,
-                            u8"You leash yourself..."s));
+                        txt(i18n::s.get("core.locale.action.use.leash.self"));
                     }
                     else if (cdata[tc].is_leashed() == 0)
                     {
@@ -2069,11 +1861,8 @@ turn_result_t do_use_command()
                         {
                             if (rnd(5) == 0)
                             {
-                                txt(lang(
-                                    name(tc)
-                                        + u8"が激しく抵抗したため紐は切れた。"s,
-                                    u8"The leash is cut as "s + name(tc)
-                                        + u8" resists."s));
+                                txt(i18n::s.get("core.locale.action.use.leash.other.start.resists",
+                                        cdata[tc]));
                                 --inv[ci].number;
                                 cell_refresh(
                                     inv[ci].position.x, inv[ci].position.y);
@@ -2082,28 +1871,20 @@ turn_result_t do_use_command()
                             }
                         }
                         cdata[tc].is_leashed() = true;
-                        txt(lang(
-                            u8"あなたは"s + name(tc)
-                                + u8"を紐でくくりつけた。"s,
-                            u8"You leash "s + name(tc) + u8"."s));
+                        txt(i18n::s.get("core.locale.action.use.leash.other.start.text",
+                                        cdata[tc]));
                         txtef(9);
-                        txt(lang(
-                            name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
-                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + u8"\"Pervert!\""s));
+                        txt(i18n::s.get("core.locale.action.use.leash.other.start.dialog",
+                                        cdata[tc]));
                     }
                     else
                     {
                         cdata[tc].is_leashed() = false;
-                        txt(lang(
-                            u8"あなたは"s + name(tc)
-                                + u8"にくくりつけた紐をほどいた。"s,
-                            u8"You unleash "s + name(tc) + u8"."s));
+                        txt(i18n::s.get("core.locale.action.use.leash.other.stop.text",
+                                        cdata[tc]));
                         txtef(9);
-                        txt(lang(
-                            name(tc) + u8"は呻き声を洩らした。「はぁはぁ…」"s,
-                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + u8"\"D-don't sto....N-nothing!\""s));
+                        txt(i18n::s.get("core.locale.action.use.leash.other.stop.dialog",
+                                        cdata[tc]));
                     }
                     animeload(8, tc);
                     f = 1;
@@ -2118,13 +1899,11 @@ turn_result_t do_use_command()
     case 45:
         if (gdata_current_map == 35)
         {
-            txt(lang(
-                u8"このエリアでは使えない。"s,
-                u8"You cant use it in this area."s));
+            txt(i18n::s.get("core.locale.action.use.sandbag.cannot_use_here"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
-        txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
+        txt(i18n::s.get("core.locale.action.use.sandbag.prompt"));
         update_screen();
         {
             int stat = ask_direction();
@@ -2136,45 +1915,33 @@ turn_result_t do_use_command()
                     tc = map(x, y, 1) - 1;
                     if (cdata[tc].hp >= cdata[tc].max_hp / 5)
                     {
-                        txt(lang(
-                            u8"もっと弱らせないと吊るせない。"s,
-                            u8"The target needs to be weakened."s));
+                        txt(i18n::s.get("core.locale.action.use.sandbag.not_weak_enough"));
                         return turn_result_t::pc_turn_user_error;
                     }
                     if (tc != 0)
                     {
                         if (tc < 16)
                         {
-                            txt(lang(
-                                u8"仲間を吊るすなんてとんでもない！"s,
-                                u8"Hanging your ally is a brutal idea!"s));
+                            txt(i18n::s.get("core.locale.action.use.sandbag.ally"));
                             return turn_result_t::pc_turn_user_error;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
                     {
-                        txt(lang(
-                            u8"それは既に吊るされている。"s,
-                            u8"It's already hanged up."s));
+                        txt(i18n::s.get("core.locale.action.use.sandbag.already"));
                         return turn_result_t::pc_turn_user_error;
                     }
                     if (tc == 0)
                     {
-                        txt(lang(
-                            u8"あなたは自分を吊るそうと思ったがやめた…"s,
-                            u8"You try to hang yourself but rethink..."s));
+                        txt(i18n::s.get("core.locale.action.use.sandbag.self"));
                     }
                     else
                     {
                         snd(58);
                         cdata[tc].is_hung_on_sand_bag() = true;
-                        txt(lang(
-                            u8"あなたは"s + name(tc) + u8"を吊るした。"s,
-                            u8"You hang up "s + name(tc) + u8"."s));
-                        txt(lang(
-                            name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
-                            name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + u8"\"Pervert!\""s));
+                        txt(i18n::s.get("core.locale.action.use.sandbag.start", cdata[tc]));
+                        txt(i18n::s.get("core.locale.action.use.leash.other.start.dialog",
+                                        cdata[tc]));
                         animeload(8, tc);
                         --inv[ci].number;
                         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -2191,9 +1958,7 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 6:
     {
-        txt(lang(
-            itemname(ci, 1) + u8"を再生した。"s,
-            u8"You play "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.music_disc.play", inv[ci]));
         auto music = inv[ci].param1 + 50 + 1;
         if (music > 90)
         {
@@ -2215,15 +1980,11 @@ turn_result_t do_use_command()
             {
                 if (gdata_current_map == 2)
                 {
-                    txt(lang(
-                        u8"ワールドマップで建設するべきだ。"s,
-                        u8"You can only build it in the world map."s));
+                    txt(i18n::s.get("core.locale.action.use.shelter.only_in_world_map"));
                 }
                 else
                 {
-                    txt(lang(
-                        u8"ここには建てられない。"s,
-                        u8"You can't build it here."s));
+                    txt(i18n::s.get("core.locale.action.use.shelter.cannot_build_it_here"));
                 }
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
@@ -2238,9 +1999,7 @@ turn_result_t do_use_command()
             {
                 if (adata(20, gdata_current_map) != -1)
                 {
-                    txt(lang(
-                        u8"クエストを放棄してシェルターに避難する？"s,
-                        u8"Really give up the quest and evacuate to the shelter?"s));
+                    txt(i18n::s.get("core.locale.action.use.shelter.during_quest"));
                     ELONA_YES_NO_PROMPT();
                     rtval = show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
@@ -2257,14 +2016,13 @@ turn_result_t do_use_command()
     case 11:
         if (moneybox(inv[ci].param2) > cdata[0].gold)
         {
-            txt(lang(
-                u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
+            txt(i18n::s.get("core.locale.action.use.money_box.not_enough_gold"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
         if (inv[ci].param1 >= 1000000000)
         {
-            txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
+            txt(i18n::s.get("core.locale.action.use.money_box.full"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -2280,22 +2038,18 @@ turn_result_t do_use_command()
         magic();
         goto label_2229_internal;
     case 47:
-        txt(lang(u8"それは鈍く輝いた。"s, u8"It glows dully."s));
+        txt(i18n::s.get("core.locale.action.use.summoning_crystal.use"));
         goto label_2229_internal;
     case 22:
         snd(118);
         if (mdata(6) != 3 && mdata(6) != 2)
         {
-            txt(lang(
-                u8"それは街でしか使えない。"s,
-                u8"You can only use it in a town."s));
+            txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(lang(
-            u8"突然、あなたの目の前に異次元へのゲートが現れた。"s,
-            u8"Suddenly, a strange gate opens."s));
+        txt(i18n::s.get("core.locale.action.use.rune.use"));
         comctrl = 2;
         {
             int stat = label_19432();
@@ -2306,18 +2060,14 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 49:
-        txt(lang(
-            itemname(ci, 1) + u8"を振った。"s,
-            u8"You swing "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
         snd(58);
         efid = 49;
         efp = 100;
         magic();
         goto label_2229_internal;
     case 21:
-        txt(lang(
-            itemname(ci, 1) + u8"を振った。"s,
-            u8"You swing "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
         snd(58);
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -2327,9 +2077,7 @@ turn_result_t do_use_command()
         magic();
         goto label_2229_internal;
     case 25:
-        txt(lang(
-            itemname(ci, 1) + u8"を使った。"s,
-            u8"You hold "s + itemname(ci, 1) + u8" up high."s));
+        txt(i18n::s.get("core.locale.action.use.unicorn_horn.use", inv[ci]));
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         efid = 637;
@@ -2337,52 +2085,34 @@ turn_result_t do_use_command()
         magic();
         goto label_2229_internal;
     case 26:
-        txt(lang(
-            itemname(ci, 1) + u8"を始動させた。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         gdata_diastrophism_flag = 1;
         snd(64);
         txtef(5);
-        txt(lang(
-            u8"オパートス「フハハハ！間もなく、この地に変動が起こるであろう！」"s,
-            u8"A voice echoes, "s
-                + u8"\"Muwahahaha! I shall shake the land for you!\""s));
+        txt(i18n::s.get("core.locale.action.use.statue.opatos"));
         goto label_2229_internal;
     case 34:
-        txt(lang(
-            itemname(ci, 1) + u8"を始動させた。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         txtef(5);
-        txt(lang(
-            u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
-            u8"A voice echoes, "s + u8"\"I-I'm not doing for you! Silly!\""s));
+        txt(i18n::s.get("core.locale.action.use.statue.jure"));
         efid = 637;
         efp = 5000;
         magic();
         goto label_2229_internal;
     case 43:
-        txt(lang(
-            itemname(ci, 1) + u8"を始動させた。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd(64);
         txtef(5);
-        txt(lang(
-            u8"エヘカトル「呼んだ？呼んだ？」"s,
-            u8"A voice echoes, "s + u8"\"Did you call me? Call me?\""s));
+        txt(i18n::s.get("core.locale.action.use.statue.ehekatl"));
         buff_add(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
-        txt(lang(
-            itemname(ci, 1) + u8"を始動させた。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd(64);
         txtef(5);
         if (gdata_weather == 1)
         {
-            txt(lang(
-                u8"ルルウィ「あさはかね。エーテルの風を止めてあげるとでも思ったの？」"s,
-                u8"A rather angry voice echoes, "s
-                u8"\"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""s));
+            txt(i18n::s.get("core.locale.action.use.statue.lulwy.during_etherwind"));
             goto label_2229_internal;
         }
         p = gdata_weather;
@@ -2409,10 +2139,7 @@ turn_result_t do_use_command()
                 break;
             }
         }
-        txt(lang(
-            u8"ルルウィ「あらあら、定命の分際でそんなおねだりするの？ウフフ…今回は特別よ」"s,
-            u8"An impish voice echoes, "s
-            u8"\"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""s));
+        txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"));
         txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
         envonly = 1;
         play_music();
@@ -2420,7 +2147,7 @@ turn_result_t do_use_command()
     case 28:
         if (mdata(6) == 1)
         {
-            txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
+            txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -2428,9 +2155,7 @@ turn_result_t do_use_command()
         {
             if (gdata_red_blossom_in_palmia == 1)
             {
-                txt(lang(
-                    u8"ここはクエストの目標位置ではない。本当にここに設置する？"s,
-                    u8"This location is not your quest goal. Really place it here?"s));
+                txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
@@ -2442,9 +2167,7 @@ turn_result_t do_use_command()
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(lang(
-            u8"原子爆弾を設置した。逃げろォー！"s,
-            u8"You set up the nuke...now run!!"s));
+        txt(i18n::s.get("core.locale.action.use.nuke.set_up"));
         snd(58);
         mef_add(
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
@@ -2452,14 +2175,10 @@ turn_result_t do_use_command()
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)
         {
-            txt(lang(
-                u8"それはこの場所ではみすぼらしく見える。"s,
-                u8"It looks so dumb here."s));
+            txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
             goto label_2229_internal;
         }
-        txt(lang(
-            u8"この石像を見つめていると、何かを投げつけたくなってうずうずしてきた！"s,
-            u8"Watching this strange statue makes you want to throw something at it!"s));
+        txt(i18n::s.get("core.locale.action.use.statue.creator.in_usermap"));
         goto label_2229_internal;
     case 29:
         trait(inv[ci].param1) = 1;
@@ -2473,16 +2192,12 @@ turn_result_t do_use_command()
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(lang(
-            u8"あなたは新たなフィートを獲得した！"s,
-            u8"You gain a new feat."s));
+        txt(i18n::s.get("core.locale.action.use.secret_treasure.use"));
         animeload(10, 0);
         chara_refresh(cc);
         goto label_2229_internal;
     case 30:
-        txt(lang(
-            itemname(ci, 1) + u8"を始動させた。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         efid = inv[ci].param1;
         efp = inv[ci].param2;
         tc = cc;
@@ -2493,10 +2208,7 @@ turn_result_t do_use_command()
         if (gdata_next_level_minus_one_kumiromis_experience_becomes_available
             > cdata[0].level)
         {
-            txt(lang(
-                u8"クミロミの声がした。「ダメ…経験…足りない…」"s,
-                u8"Kumiromi talks to you, "s
-                u8"\"No...you aren't...experienced enough...for this...\""s));
+            txt(i18n::s.get("core.locale.action.use.secret_experience.kumiromi.not_enough_exp"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -2505,24 +2217,18 @@ turn_result_t do_use_command()
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         ++gdata_acquirable_feat_count;
-        txt(lang(
-            u8"「…よく…経験をつんだね…酬いてあげる…」"s,
-            u8"\"...You have acquired enough...experience...I shall reward you...\""s));
+        txt(i18n::s.get("core.locale.action.use.secret_experience.kumiromi.use.dialog"));
         txtef(5);
-        txt(lang(
-            u8"クミロミはあなたを祝福した。あなたは新たなフィートを取得できるようになった！"s,
-            u8"Kumiromi blesses you. You can obtain one more feat now!"s));
+        txt(i18n::s.get("core.locale.action.use.secret_experience.kumiromi.use.text"));
         goto label_2229_internal;
     case 42:
         snd(38);
         txtef(8);
-        txt(lang(
-            u8"何だか嫌な予感がする…"s,
-            u8"You have a bad feeling about this..."s));
+        txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"));
         goto label_2229_internal;
     case 46:
         txtnew();
-        txt(lang(u8"本当に首を吊る？"s, u8"Really hang yourself?"s));
+        txt(i18n::s.get("core.locale.action.use.rope.prompt"));
         ELONA_YES_NO_PROMPT();
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
@@ -2534,19 +2240,15 @@ turn_result_t do_use_command()
     case 33:
         if (inv[ci].subname == 0)
         {
-            txt(lang(
-                u8"モンスターボールは空っぽだ。"s, u8"This ball is empty."s));
+            txt(i18n::s.get("core.locale.action.use.monster_ball.empty"));
             goto label_2229_internal;
         }
         if (chara_get_free_slot_ally() == 0)
         {
-            txt(lang(
-                u8"仲間はこれ以上増やせない。"s, u8"Your party is full."s));
+            txt(i18n::s.get("core.locale.action.use.monster_ball.party_is_full"));
             goto label_2229_internal;
         }
-        txt(lang(
-            itemname(ci, 1) + u8"を使用した。"s,
-            u8"You activate "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.use.monster_ball.use", inv[ci]));
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         flt();
@@ -2561,37 +2263,31 @@ turn_result_t do_use_command()
         cell_featread(x, y);
         if (feat(1) != 29)
         {
-            txt(lang(
-                u8"それは種を植えた場所で使わなければならない。"s,
-                u8"You don't see any plant on the ground."s));
+            txt(i18n::s.get("core.locale.action.use.gem_stone.kumiromi.no_plant"));
             goto label_2229_internal;
         }
         if (feat == tile_plant + 2)
         {
-            txt(lang(
-                u8"この作物は既に成長しきっている。"s,
-                u8"The plant has already grown full."s));
+            txt(i18n::s.get("core.locale.action.use.gem_stone.kumiromi.already_grown"));
             goto label_2229_internal;
         }
         if (feat == tile_plant + 3)
         {
             feat = tile_plant + 1;
             try_to_grow_plant();
-            txt(lang(u8"枯れた植物に生命が宿った。"s, u8"The plant revives."s));
+            txt(i18n::s.get("core.locale.action.use.gem_stone.kumiromi.revives"));
         }
         else
         {
             ++feat;
-            txt(lang(u8"植物は成長した。"s, u8"The plant grows."s));
+            txt(i18n::s.get("core.locale.action.use.gem_stone.kumiromi.grows"));
         }
         cell_featset(x, y, feat, feat(1), feat(2), feat(3));
         animeload(8, 0);
         goto label_2229_internal;
     case 32:
         txtnew();
-        txt(lang(
-            u8"まずは素体となる仲間を選ぶ必要がある。"s,
-            u8"Choose an original body."s));
+        txt(i18n::s.get("core.locale.action.use.gene_machine.choose_original"));
         rc = 0;
         allyctrl = 5;
         {
@@ -2603,9 +2299,7 @@ turn_result_t do_use_command()
             rc = stat;
         }
         txtnew();
-        txt(lang(
-            u8"遺伝子を取り出す仲間を選ぶ必要がある。この仲間は合成後、永久に失われる。"s,
-            u8"Choose a gene. Once you extract a gene, the subject will be lost forever."s));
+        txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
         allyctrl = 5;
         {
             int stat = ctrl_ally();
@@ -2617,11 +2311,7 @@ turn_result_t do_use_command()
         }
         update_screen();
         txtnew();
-        txt(lang(
-            u8"本当に"s + cdatan(0, rc) + u8"に"s + cdatan(0, tc)
-                + u8"の遺伝子を組み込む？"s,
-            u8"Really add "s + cdatan(0, tc) + u8"'s gene to "s + cdatan(0, rc)
-                + u8"?"s));
+        txt(i18n::s.get("core.locale.action.use.gene_machine.prompt", cdata[tc], cdata[rc]));
         ELONA_YES_NO_PROMPT();
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
@@ -2630,11 +2320,7 @@ turn_result_t do_use_command()
         }
         txtnew();
         txtef(5);
-        txt(lang(
-            ""s + cdatan(0, rc) + u8"は"s + cdatan(0, tc)
-                + u8"の遺伝子を受けついだ！"s,
-            ""s + cdatan(0, rc) + u8" has inherited "s + cdatan(0, tc)
-                + u8"'s gene!"s));
+        txt(i18n::s.get("core.locale.action.use.gene_machine.has_inherited", cdata[rc], cdata[tc]));
         anic = rc;
         play_animation(20);
         {
@@ -2643,13 +2329,9 @@ turn_result_t do_use_command()
             {
                 cdata_body_part(rc, stat) = rtval * 10000;
                 txtef(2);
-                txt(lang(
-                    cdatan(0, rc) + u8"は新しい"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
-                        + u8"を得た！"s,
-                    cdatan(0, rc) + u8" gains new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
-                        + u8"!"s));
+                txt(i18n::s.get("core.locale.action.use.gene_machine.gains.body_part",
+                                cdata[rc],
+                                i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)));
                 refresh_speed_correction_value(rc);
             }
         }
@@ -2665,19 +2347,9 @@ turn_result_t do_use_command()
                     }
                     skillgain(rc, rtval(cnt), 1);
                     txtef(2);
-                    txt(lang(
-                        cdatan(0, rc) + u8"は"s
-                            + i18n::_(
-                                  u8"ability",
-                                  std::to_string(rtval(cnt)),
-                                  u8"name")
-                            + u8"の技術を覚えた！"s,
-                        cdatan(0, rc) + u8" learns "s
-                            + i18n::_(
-                                  u8"ability",
-                                  std::to_string(rtval(cnt)),
-                                  u8"name")
-                            + u8" skill!"s));
+                    txt(i18n::s.get("core.locale.action.use.gene_machine.gains.ability",
+                                    cdata[rc],
+                                    i18n::_(u8"ability", std::to_string(rtval(cnt)), u8"name")));
                 }
             }
         }
@@ -2690,11 +2362,9 @@ turn_result_t do_use_command()
                 gain_level(rc);
             }
             txtef(2);
-            txt(lang(
-                cdatan(0, rc) + u8"はレベル"s + cdata[rc].level
-                    + u8"になった！"s,
-                cdatan(0, rc) + u8" is now level "s + cdata[rc].level
-                    + u8"!"s));
+            txt(i18n::s.get("core.locale.action.use.gene_machine.gains.level",
+                            cdata[rc],
+                            cdata[rc].level));
             listmax = 0;
             for (int cnt = 10; cnt < 18; ++cnt)
             {
@@ -2728,34 +2398,26 @@ turn_result_t do_use_command()
         cc = 0;
         goto label_2229_internal;
     case 35:
-        txt(lang(
-            u8"あなたはアイアンメイデンの中に入った。"s,
-            u8"You enter the iron maiden."s));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.use"));
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
-        txt(lang(
-            u8"突然誰かが蓋を閉めた。"s,
-            u8"Suddenly, someone closes the door."s));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.someone_activates"));
         txtef(9);
-        txt(lang(u8"「ニヤリ」"s, u8"*Grin*"s));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
         dmghp(0, 9999, -18);
         goto label_2229_internal;
     case 36:
-        txt(lang(
-            u8"あなたはギロチンに首をつっこんでみた。"s,
-            u8"You set your head on the guillotine."s));
+        txt(i18n::s.get("core.locale.action.use.guillotine.use"));
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
-        txt(lang(
-            u8"突然誰かがギロチンの刃を落とした。"s,
-            u8"Suddenly, someone activates the guillotine."s));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"));
+        txt(i18n::s.get("core.locale.action.use.guillotine.someone_activates"));
         txtef(9);
-        txt(lang(u8"「ニヤリ」"s, u8"*Grin*"s));
+        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
         dmghp(0, 9999, -19);
         goto label_2229_internal;
     case 39:
         txtef(9);
-        txt(lang(u8" *ピーーーー* "s, u8"*Peeeeeeeeeep* "s));
+        txt(i18n::s.get("core.locale.action.use.whistle.use"));
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         goto label_2229_internal;
     case 37: show_card_collection(); goto label_2229_internal;
@@ -2809,7 +2471,7 @@ turn_result_t do_open_command()
     if (inv[ci].id == 600)
     {
         snd(22);
-        txt(lang(u8"足枷を外した。"s, u8"You unlock the shackle."s));
+        txt(i18n::s.get("core.locale.action.open.shackle.text"));
         if (gdata_current_map == 33)
         {
             if (gdata_current_dungeon_level == 1)
@@ -2822,9 +2484,7 @@ turn_result_t do_open_command()
                         if (tc != 0)
                         {
                             txtef(9);
-                            txt(lang(
-                                u8"モイアー「馬鹿やろう！！」"s,
-                                u8"Moyer yells, "s + u8"\"You idiot!\""s));
+                            txt(i18n::s.get("core.locale.action.open.shackle.dialog"));
                             cdata[gdata_fire_giant].enemy_id = tc;
                             cdata[gdata_fire_giant].hate = 1000;
                         }
@@ -2852,9 +2512,7 @@ turn_result_t do_open_command()
         {
             if (gdata_current_map != 7)
             {
-                txt(lang(
-                    u8"それは家の中でのみ使用できる。"s,
-                    u8"You can only use it at your home."s));
+                txt(i18n::s.get("core.locale.action.open.only_in_home"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -2863,9 +2521,7 @@ turn_result_t do_open_command()
         {
             if (adata(16, gdata_current_map) != 102)
             {
-                txt(lang(
-                    u8"それは店の中でのみ使用できる。"s,
-                    u8"You can only use it at your shop"s));
+                txt(i18n::s.get("core.locale.action.open.only_in_shop"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -2889,12 +2545,8 @@ turn_result_t do_open_command()
         invctrl(1) = 2;
         if (invfile == 3)
         {
-            txt(lang(
-                u8"残り"s + gdata_rights_to_succeed_to
-                    + u8"個分のアイテムの相続権を持っている。"s,
-                u8"You can claim "s + gdata_rights_to_succeed_to
-                    + u8" more heirloom"s + _s2(gdata_rights_to_succeed_to)
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.ui.inv.take.can_claim_more",
+                            gdata_rights_to_succeed_to));
             invctrl(1) = 1;
         }
         if (invfile == 6 || invcontainer(1) == 641)
@@ -2945,7 +2597,7 @@ turn_result_t do_open_command()
     }
     if (inv[ci].param1 == 0)
     {
-        txt(lang(u8"中身は空っぽだ。"s, u8"It's empty!"s));
+        txt(i18n::s.get("core.locale.action.open.empty"));
     }
     else
     {
@@ -2969,9 +2621,7 @@ turn_result_t do_use_stairs_command(int val0)
     int movelevelbystairs = 0;
     if (dbg_freemove)
     {
-        txt(lang(
-            u8"デバッグ中はその操作はできない。"s,
-            u8"You can't perform the action while in the debug mode."s));
+        txt(i18n::s.get("core.locale.action.use_stairs.cannot_during_debug"));
         return turn_result_t::pc_turn_user_error;
     }
     int stat = item_find(631, 3, -1);
@@ -2989,9 +2639,7 @@ turn_result_t do_use_stairs_command(int val0)
     {
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
-            txt(lang(
-                u8"本当にこたつの中に入る？"s,
-                u8"Really get into the Kotatsu?"s));
+            txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.prompt"));
             ELONA_YES_NO_PROMPT();
             rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
@@ -2999,7 +2647,7 @@ turn_result_t do_use_stairs_command(int val0)
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
-            txt(lang(u8"まっくらだ！"s, u8"It's dark here!"s));
+            txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.use"));
             cdata[0].blind += 2;
             return turn_result_t::turn_end;
         }
@@ -3013,9 +2661,7 @@ turn_result_t do_use_stairs_command(int val0)
             {
                 if (gdata_current_dungeon_level >= adata(10, gdata_current_map))
                 {
-                    txt(lang(
-                        u8"これ以上降りられない。"s,
-                        u8"You can't go down any more."s));
+                    txt(i18n::s.get("core.locale.action.use_stairs.cannot_go.down"));
                     return turn_result_t::pc_turn_user_error;
                 }
                 else
@@ -3031,9 +2677,7 @@ turn_result_t do_use_stairs_command(int val0)
             {
                 if (gdata_current_dungeon_level <= adata(17, gdata_current_map))
                 {
-                    txt(lang(
-                        u8"これ以上昇れない。"s,
-                        u8"You can't go up any more."s));
+                    txt(i18n::s.get("core.locale.action.use_stairs.cannot_go.up"));
                     return turn_result_t::pc_turn_user_error;
                 }
                 else
@@ -3051,9 +2695,7 @@ turn_result_t do_use_stairs_command(int val0)
             {
                 if (feat(1) != 11)
                 {
-                    txt(lang(
-                        u8"降りる階段は見つからない。"s,
-                        u8"There're no downstairs here."s));
+                    txt(i18n::s.get("core.locale.action.use_stairs.no.downstairs"));
                     update_screen();
                     return turn_result_t::pc_turn_user_error;
                 }
@@ -3063,9 +2705,7 @@ turn_result_t do_use_stairs_command(int val0)
                     if (gdata_current_map == 42
                         && gdata_current_dungeon_level >= gdata(186))
                     {
-                        txt(lang(
-                            u8"階段は不思議なバリアで塞がれている。"s,
-                            u8"The path is blocked by a strange barrier."s));
+                        txt(i18n::s.get("core.locale.action.use_stairs.blocked_by_barrier"));
                         return turn_result_t::pc_turn_user_error;
                     }
                 }
@@ -3074,9 +2714,7 @@ turn_result_t do_use_stairs_command(int val0)
             {
                 if (feat(1) != 10)
                 {
-                    txt(lang(
-                        u8"昇る階段は見つからない。"s,
-                        u8"There're no upstairs here."s));
+                    txt(i18n::s.get("core.locale.action.use_stairs.no.upstairs"));
                     update_screen();
                     return turn_result_t::pc_turn_user_error;
                 }
@@ -3122,13 +2760,11 @@ turn_result_t do_use_stairs_command(int val0)
         {
             if (gdata_current_dungeon_level == 44)
             {
-                txt(lang(
-                    u8"厳重に封印された扉の前に立つと、三つの魔石が鈍い光を放った。"s,
-                    u8"The magic stones shine softly as you approach the sealed door."s));
+                txt(i18n::s.get("core.locale.action.use_stairs.unlock.stones"));
             }
             else
             {
-                txt(lang(u8"扉の鍵を開けた。"s, u8"You unlock the door"s));
+                txt(i18n::s.get("core.locale.action.use_stairs.unlock.normal"));
             }
             snd(23);
             cell_featset(
@@ -3139,9 +2775,7 @@ turn_result_t do_use_stairs_command(int val0)
             return turn_result_t::turn_end;
         }
         snd(22);
-        txt(lang(
-            u8"鍵のかかった扉が行く手を塞いでいる。"s,
-            u8"The door is locked. It seems you need a specific key to unlock the door."s));
+        txt(i18n::s.get("core.locale.action.use_stairs.locked"));
         return turn_result_t::turn_end;
     }
     if (adata(16, gdata_current_map) == 8)
@@ -3150,9 +2784,7 @@ turn_result_t do_use_stairs_command(int val0)
         {
             if (adata(20, gdata_current_map) != -1)
             {
-                txt(lang(
-                    u8"クエストを放棄して階を移動する？"s,
-                    u8"Really give up the quest and move over?"s));
+                txt(i18n::s.get("core.locale.action.use_stairs.prompt_give_up_quest"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
@@ -3170,9 +2802,7 @@ turn_result_t do_use_stairs_command(int val0)
         {
             if (!ok || rnd(5 - cdata[0].inventory_weight_type) == 0)
             {
-                txt(lang(
-                    u8"うわああ！"s + name(0) + u8"は階段から足を踏み外した。"s,
-                    u8"Noooo! You lost your step and roll down!"s));
+                txt(i18n::s.get("core.locale.action.use_stairs.lost_balance"));
                 dmghp(
                     cc,
                     cdata[cc].max_hp
@@ -3226,7 +2856,7 @@ turn_result_t do_movement_command()
         if (rnd(5) == 0)
         {
             txtef(9);
-            txt(lang(u8" *ふらり* "s, u8"*stagger*"s));
+            txt(i18n::s.get("core.locale.action.move.drunk"));
             f = 1;
         }
     }
@@ -3241,9 +2871,7 @@ turn_result_t do_movement_command()
         {
             if (cdata[gdata_mount].continuous_action_turn > 0)
             {
-                txt(lang(
-                    name(gdata_mount) + u8"はあなたを睨み付けた。"s,
-                    name(gdata_mount) + u8" stares in your face."s));
+                txt(i18n::s.get("core.locale.action.move.interrupt", cdata[gdata_mount]));
                 cdata[gdata_mount].continuous_action_id = 0;
                 cdata[gdata_mount].continuous_action_turn = 0;
             }
@@ -3253,7 +2881,7 @@ turn_result_t do_movement_command()
     if (cdata[0].inventory_weight_type >= 4)
     {
         ++msgdup;
-        txt(lang(u8"潰れていて動けない！ "s, u8"You carry too much to move!"s));
+        txt(i18n::s.get("core.locale.action.move.carry_too_much"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -3280,9 +2908,7 @@ turn_result_t do_movement_command()
                     label_1438();
                 }
                 cell_swap(cc, tc);
-                txt(lang(
-                    name(tc) + u8"と入れ替わった。"s,
-                    u8"You displace "s + name(tc) + u8"."s));
+                txt(i18n::s.get("core.locale.action.move.displace.text", cdata[tc]));
                 if (cdata[tc].id == 271)
                 {
                     if (rnd(5) == 0)
@@ -3299,12 +2925,7 @@ turn_result_t do_movement_command()
                                 snd(11);
                                 cdata[cc].gold -= p;
                                 cdata[tc].gold += p;
-                                txt(lang(
-                                        u8"「おっと、ごめんよ」"s,
-                                        u8"\"Ops, sorry.\""s),
-                                    lang(
-                                        u8"「気をつけな」"s,
-                                        u8"\"Watch it.\""s));
+                                txt(i18n::s.get_enum("core.locale.action.move.displace.dialog", rnd(2)));
                             }
                         }
                     }
@@ -3313,9 +2934,7 @@ turn_result_t do_movement_command()
                 {
                     if (cdata[tc].continuous_action_turn > 0)
                     {
-                        txt(lang(
-                            name(tc) + u8"はあなたを睨み付けた。"s,
-                            name(tc) + u8" stares in your face."s));
+                        txt(i18n::s.get("core.locale.action.move.interrupt", cdata[tc]));
                         cdata[tc].continuous_action_id = 0;
                         cdata[tc].continuous_action_turn = 0;
                     }
@@ -3404,16 +3023,12 @@ turn_result_t do_movement_command()
             || cdata[cc].next_position.y < 0
             || cdata[cc].next_position.y > mdata(1) - 1)
         {
-            txt(lang(
-                mdatan(0) + u8"を去る？ "s,
-                u8"Do you want to leave "s + mdatan(0) + u8"? "s));
+            txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
             if (mdata(6) == 7)
             {
                 if (gdata(73) != 3)
                 {
-                    txt(lang(
-                        u8"注意！現在のクエストは失敗に終わってしまう。"s,
-                        u8"Warning! You are going to abandon your current quest."s));
+                    txt(i18n::s.get("core.locale.action.move.leave.abandoning_quest"));
                 }
             }
             ELONA_YES_NO_PROMPT();
@@ -3459,7 +3074,7 @@ turn_result_t do_movement_command()
     if (cdata[0].confused != 0)
     {
         ++msgdup;
-        txt(lang(u8" *ごつん* "s, u8"*bump*"s));
+        txt(i18n::s.get("core.locale.action.move.confused"));
         update_screen();
     }
     return turn_result_t::pc_turn_user_error;
@@ -3471,9 +3086,7 @@ turn_result_t do_read_command()
     {
         if (inv[ci].subname == 0)
         {
-            txt(lang(
-                u8"最後に調合したアイテムを、レシピに加えることができる。(まだ未実装)"s,
-                u8"You can add a recipe of the item you previously created.(Not implemented yet)"s));
+            txt(i18n::s.get("core.locale.action.read.recipe.info"));
             return turn_result_t::turn_end;
         }
     }
@@ -3499,9 +3112,7 @@ turn_result_t do_eat_command()
         }
         if (itemusingfind(ci) > 0)
         {
-            txt(lang(
-                u8"そのアイテムは他の誰かが使用中だ。"s,
-                u8"Someone else is using the item."s));
+            txt(i18n::s.get("core.locale.action.someone_else_is_using"));
             return turn_result_t::pc_turn_user_error;
         }
     }
@@ -3513,10 +3124,7 @@ turn_result_t do_eat_command()
             rowactend(tc);
             if (is_in_fov(cc))
             {
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"の食べ物を横取りした。"s,
-                    name(cc) + u8" snatch"s + _s(cc) + u8" "s + name(tc)
-                        + your(tc) + u8" food."s));
+                txt(i18n::s.get("core.locale.action.eat.snatches", cdata[cc], cdata[tc]));
             }
         }
     }
@@ -3573,27 +3181,21 @@ turn_result_t do_fire_command()
         if (stat == -1)
         {
             ++msgdup;
-            txt(lang(
-                u8"射撃用の道具を装備していない。"s,
-                u8"You need to equip a firing weapon."s));
+            txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
         if (stat == -2)
         {
             ++msgdup;
-            txt(lang(
-                u8"矢/弾丸を装備する必要がある。"s,
-                u8"You need to equip ammos or arrows."s));
+            txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
         if (stat == -3)
         {
             ++msgdup;
-            txt(lang(
-                u8"矢/弾丸の種類が適していない。"s,
-                u8"You're equipped with wrong type of ammos."s));
+            txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -3616,14 +3218,13 @@ turn_result_t do_get_command()
         {
             if (feat < tile_plant + 2)
             {
-                txt(lang(u8"芽を摘み取った。"s, u8"You nip a young plant."s));
+                txt(i18n::s.get("core.locale.action.get.plant.young"));
                 map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
                 return turn_result_t::turn_end;
             }
             if (feat == tile_plant + 3)
             {
-                txt(lang(
-                    u8"枯れた草を摘み取った。"s, u8"You nip a dead plant."s));
+                txt(i18n::s.get("core.locale.action.get.plant.dead"));
                 map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
                 return turn_result_t::turn_end;
             }
@@ -3649,9 +3250,7 @@ turn_result_t do_get_command()
         if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
             && feat(2) + feat(3) * 100 < 450)
         {
-            txt(lang(
-                u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
-                u8"Really remove this building?"s));
+            txt(i18n::s.get("core.locale.action.get.building.prompt"));
             ELONA_YES_NO_PROMPT();
             rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
@@ -3666,7 +3265,7 @@ turn_result_t do_get_command()
             label_1749();
             ctrl_file(file_operation_t::_13);
             snd(58);
-            txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
+            txt(i18n::s.get("core.locale.action.get.building.remove"));
             return turn_result_t::turn_end;
         }
     }
@@ -3677,8 +3276,7 @@ turn_result_t do_get_command()
             && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
         {
             snd(83);
-            txt(lang(
-                u8"雪をかきあつめた。"s, u8"You rake up a handful of snow."s));
+            txt(i18n::s.get("core.locale.action.get.snow"));
             if (!actionsp(0, 10))
             {
                 txt(lang(
@@ -3699,7 +3297,7 @@ turn_result_t do_get_command()
             return turn_result_t::turn_end;
         }
         ++msgdup;
-        txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
+        txt(i18n::s.get("core.locale.action.get.air"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -3720,17 +3318,11 @@ turn_result_t do_get_command()
         ++msgdup;
         if (inv[ci].own_state == 2)
         {
-            txt(lang(u8"それは持ち運べない。"s, u8"You can't carry it."s));
+            txt(i18n::s.get("core.locale.action.get.cannot_carry"));
         }
         if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
-            txt(lang(
-                    u8"それはあなたの物ではない。"s,
-                    u8"It's not your property."s),
-                lang(
-                    u8"盗むなんてとんでもない。"s,
-                    u8"You can't just take it."s),
-                lang(u8"それは拾えない。"s, u8"It's not yours."s));
+            txt(i18n::s.get_enum("core.locale.action.get.not_owned", rnd(3)));
         }
         update_screen();
         return turn_result_t::pc_turn_user_error;
@@ -3766,9 +3358,7 @@ turn_result_t do_short_cut_command()
     if (gdata(40 + sc) == 0)
     {
         ++msgdup;
-        txt(lang(
-            u8"そのキーにはショートカットが割り当てられていない。"s,
-            u8"The key is unassigned."s));
+        txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -3791,9 +3381,7 @@ turn_result_t do_short_cut_command()
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             return turn_result_t::pc_turn_user_error;
@@ -3802,9 +3390,7 @@ turn_result_t do_short_cut_command()
         {
             if (spact(efid - 600) == 0)
             {
-                txt(lang(
-                    u8"もうその行動はできない。"s,
-                    u8"You can't use this shortcut any more."s));
+                txt(i18n::s.get("core.locale.action.shortcut.cannot_use_anymore"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -3816,9 +3402,7 @@ turn_result_t do_short_cut_command()
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             return turn_result_t::pc_turn_user_error;
@@ -3826,9 +3410,7 @@ turn_result_t do_short_cut_command()
         if (spell(efid - 400) <= 0)
         {
             ++msgdup;
-            txt(lang(
-                u8"その魔法はもう使えない。"s,
-                u8"You can't use that spell anymore."s));
+            txt(i18n::s.get("core.locale.action.shortcut.cannot_use_spell_anymore"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -3843,21 +3425,18 @@ turn_result_t do_exit_command()
     if (gdata_current_map == 35)
     {
         txtef(3);
-        txt(lang(
-            u8"ユーザーマップの中ではセーブできない。それでも終了する？"s,
-            u8"You can't save the game in a user made map. Exit anyway?"s));
+        txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"));
     }
     else
     {
-        txt(lang(
-            u8"これまでの冒険を記録して終了する？"s,
-            u8"Do you want to save the game and exit?"s));
+        txt(i18n::s.get("core.locale.action.exit.prompt"));
     }
-    ELONA_APPEND_PROMPT(lang(u8"はい"s, u8"Exit"s), u8"a"s, ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        lang(u8"いいえ"s, u8"Cancel"s), u8"b"s, ""s + promptmax);
-    ELONA_APPEND_PROMPT(
-        lang(u8"ゲーム設定"s, u8"Game Setting"s), u8"c"s, ""s + promptmax);
+    ELONA_APPEND_PROMPT(i18n::s.get("core.locale.action.exit.choices.exit"),
+                        u8"a"s, ""s + promptmax);
+    ELONA_APPEND_PROMPT(i18n::s.get("core.locale.action.exit.choices.cancel"),
+                        u8"b"s, ""s + promptmax);
+    ELONA_APPEND_PROMPT(i18n::s.get("core.locale.action.exit.choices.game_setting"),
+                        u8"c"s, ""s + promptmax);
     rtval = show_prompt(promptx, prompty, 190);
     if (rtval == 0)
     {
@@ -3865,13 +3444,8 @@ turn_result_t do_exit_command()
         {
             snd(44);
             save_game();
-            txt(lang(
-                u8"無事に記録された。"s,
-                u8"Your game has been saved successfully."s));
-            txt(lang(
-                name(cc)
-                    + u8"は静かに目を閉じた… (キーを押すと自動終了します)"s,
-                u8"You close your eyes and peacefully fade away. (Hit any key to exit)"s));
+            txt(i18n::s.get("core.locale.action.exit.saved"));
+            txt(i18n::s.get("core.locale.action.exit.you_close_your_eyes", cdata[cc]));
             msg_halt();
             update_screen();
         }
@@ -3914,7 +3488,7 @@ int ask_direction_to_close()
         return 1;
     }
 
-    txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
+    txt(i18n::s.get("core.locale.action.which_direction.door"));
     update_screen();
     return ask_direction();
 }

@@ -1172,7 +1172,7 @@ void end_dmghp(const character& victim)
             if (rnd(20) == 0)
             {
                 int picked = rnd(6);
-                txt(i18n::s.get_enum("core.locale.damage.sand_bag", picked));
+                txt(i18n::s.get_enum("core.locale.damage.sand_bag", picked, victim));
             }
         }
     }

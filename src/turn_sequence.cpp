@@ -54,14 +54,7 @@ turn_result_t npc_turn()
             if (rnd(30) == 0)
             {
                 tc = cc;
-                txt(lang(
-                        u8"「もっとぶって"s + _yo(2) + u8"」"s,
-                        u8"\"Release me now.\""s),
-                    lang(
-                        u8"「こんなことして、許さない"s + _yo() + u8"」"s,
-                        u8"\"I won't forget this.\""s),
-                    lang(
-                        u8"「何をする"s + _nda(2) + u8"」"s, u8"\"Hit me!\""s));
+                txt(i18n::s.get_enum("core.locale.action.npc.sand_bag", rnd(3), cdata[tc]));
             }
         }
         cdata[cc].hate = 0;
@@ -88,21 +81,15 @@ turn_result_t npc_turn()
                             {
                                 if (rnd(2))
                                 {
-                                    txt(lang(u8"「痛っ！」"s, u8"\"Ouch!\""s),
-                                        lang(
-                                            u8"「やめて！」"s,
-                                            u8"\"Stop it!\""s));
+                                    txt(i18n::s.get_enum("core.locale.action.npc.leash.dialog", rnd(2)));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
                                 {
                                     cdata[cc].is_leashed() = false;
                                     txtef(9);
-                                    txt(lang(
-                                        name(cc)
-                                            + u8"は巻きついていた紐をほどいた。"s,
-                                        name(cc) + u8" untangle"s + _s(cc)
-                                            + u8" the leash."s));
+                                    txt(i18n::s.get("core.locale.action.npc.leash.untangle",
+                                                    cdata[cc]));
                                 }
                             }
                             tc = 0;
@@ -200,14 +187,7 @@ turn_result_t npc_turn()
                 if (rnd(40) == 0)
                 {
                     txtef(4);
-                    txt(lang(u8"「いいぞ！」"s, u8"\"Come on!\""s),
-                        lang(u8"「もっとやれー」"s, u8"\"More blood!\""s),
-                        lang(u8"「血をみせろー」"s, u8"\"Beat'em!\""s),
-                        lang(u8"「頑張って！」"s, u8"\"Use your brain!\""s),
-                        lang(u8"「うぉぉぉぉ！」"s, u8"\"Wooooo!\""s),
-                        lang(u8"「行けぇ！」"s, u8"\"Go go!\""s),
-                        lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
-                        lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
+                    txt(i18n::s.get_enum("core.locale.action.npc.arena", rnd(8)));
                 }
                 return ai_proc_misc_map_events();
             }
@@ -799,12 +779,8 @@ turn_result_t turn_begin()
             if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
-                txt(lang(
-                    u8"クエスト[残り"s
-                        + (gdata_left_minutes_of_executing_quest + 1)
-                        + u8"分]"s,
-                    ""s + (gdata_left_minutes_of_executing_quest + 1)
-                        + u8" min left for the quest."s));
+                txt(i18n::s.get("core.locale.quest.minutes_left",
+                                (gdata_left_minutes_of_executing_quest + 1)));
                 gdata(87) = gdata_left_minutes_of_executing_quest / 10;
             }
             if (gdata_left_minutes_of_executing_quest <= 0)
@@ -1082,26 +1058,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     if (is_in_fov(cc) || is_in_fov(tc))
                     {
                         txtef(9);
-                        txt(lang(
-                            name(cc) + u8"は酔っ払って"s + name(tc)
-                                + u8"にからんだ。"s,
-                            name(cc)
-                                + u8" gets the worse for drink and catches "s
-                                + name(tc) + u8"."s));
-                        if (jp)
-                        {
-                            txt(u8"「一杯どうだい？」"s,
-                                u8"「飲んでないよ」"s,
-                                u8"「何見てるのさ」"s,
-                                u8"「遊ぼうぜ」"s);
-                        }
-                        if (en)
-                        {
-                            txt(u8"\"Have a drink baby.\""s,
-                                u8"\"What are you looking at?\""s,
-                                u8"\"I ain't drunk.\""s,
-                                u8"\"Let's have fun.\""s);
-                        }
+                        txt(i18n::s.get("core.locale.action.npc.drunk.gets_the_worse",
+                                        cdata[cc], cdata[tc]));
+                        txt(i18n::s.get_enum("core.locale.action.npc.drunk.dialog", rnd(4)));
                     }
                     if (rnd(4) == 0)
                     {
@@ -1110,13 +1069,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                             if (is_in_fov(cc) || is_in_fov(tc))
                             {
                                 txtef(9);
-                                txt(lang(
-                                    name(tc) + u8"はカチンときた。"s,
-                                    name(tc)
-                                        + u8" is pretty annoyed with the drunkard."s));
-                                txt(lang(
-                                    u8"「酔っ払いにはうんざり！」"s,
-                                    u8"\"Your time is over, drunk!\""s));
+                                txt(i18n::s.get("core.locale.action.npc.drunk.annoyed.text",
+                                                cdata[tc]));
+                                txt(i18n::s.get("core.locale.action.npc.drunk.annoyed.dialog"));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;
@@ -1237,9 +1192,7 @@ turn_result_t turn_end()
         {
             if (rnd(20) == 0)
             {
-                txt(lang(
-                    name(0) + u8"は荷物に圧迫されもがいた。"s,
-                    u8"Your backpack is squashing you!"s));
+                txt(i18n::s.get("core.locale.action.backpack_squashing"));
                 dmghp(
                     cc,
                     cdata[cc].max_hp
@@ -1271,8 +1224,7 @@ turn_result_t turn_end()
         if (cdata[cc].state != 1 || gdata_left_turns_of_timestop == 0)
         {
             txtef(9);
-            txt(lang(
-                u8"時は再び動き出した。"s, u8"Time starts to run again."s));
+            txt(i18n::s.get("core.locale.action.time_stop.ends"));
         }
         else
         {
@@ -1910,9 +1862,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1939,9 +1889,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -1984,9 +1932,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2013,9 +1959,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2034,9 +1978,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2070,9 +2012,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2088,9 +2028,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2115,9 +2053,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2146,9 +2082,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2170,9 +2104,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2187,9 +2119,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2239,9 +2169,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2260,9 +2188,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2277,9 +2203,7 @@ label_2747:
         if (mdata(6) == 1)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2407,9 +2331,7 @@ label_2747:
     if (key != ""s && key != key_cancel && key != key_alter)
     {
         ++msgdup;
-        txt(lang(
-            u8"?キーを押すと、コマンドの一覧が見られる。"s,
-            u8"Hit ? key to display help."s));
+        txt(i18n::s.get("core.locale.action.hit_key_for_help"));
         update_screen();
     }
 

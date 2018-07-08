@@ -75,36 +75,6 @@ locale {
             goes_down = "The success rate goes down."
         }
 
-        result {
-            love_food = "You kind of feel guilty..."
-
-            dyeing = "You dye ${itemname(_1)}."
-
-            poisoned_food = "You grin."
-
-            put_on = "You put ${itemname(_2, 1)} on ${itemname(_1)}."
-            good_idea_but = "A good idea! But..."
-            gains_fireproof = "${itemname(_1)} gain${s(_1)} fireproof."
-            gains_acidproof = "${itemname(_1)} gain${s(_1)} acidproof."
-
-            bait_attachment = "You bait ${itemname(_1)} with ${itemname(_2, 1)}."
-
-            blessed_item = "You shower ${itemname(_1)} on ${itemname(_2, 1)}."
-            becomes_blessed = "${itemname(_1)} shine${s(_1)} silvery."
-            becomes_cursed = "${itemname(_1)} ${is(_1)} wrapped by a dark aura."
-
-            well_refill = "You throw ${itemname(_1)} into ${itemname(_2, 1)}."
-            empty_bottle_shatters = "You hear the sound of the empty bottle shatters."
-            holy_well_polluted = "The holy well is polluted."
-            well_dry = "${itemname(_1)} is completely dry."
-            well_refilled = "${itemname(_1)} shines for a moment."
-            snow_melts = "But the snow just melts."
-
-            natural_potion = "You draw water from the well into the empty bottle."
-            natural_potion_dry = "${itemname(_1)} is dry."
-            natural_potion_drop = "Ops! You drop the empty bottle into the well..."
-        }
-
         recipe {
             _200 = "love food"
             _201 = "dyeing"

@@ -75,36 +75,6 @@ locale {
             goes_down = "調合の成功率が下がった。"
         }
 
-        result {
-            love_food = "あなたはうしろめたさを感じた…"
-
-            dyeing = "あなたは${itemname(_1)}を染めた。"
-
-            poisoned_food = "あなたはにやりと口元を歪めた。"
-
-            put_on = "${itemname(_1)}に${itemname(_2, 1)}を塗りたくった。"
-            good_idea_but = "いいアイデアだ！しかし…"
-            gains_fireproof = "${itemname(_1)}は熱から守られた。"
-            gains_acidproof = "${itemname(_1)}は酸から守られた。"
-
-            bait_attachment = "${itemname(_2, 1)}を${itemname(_1)}に装着した。"
-
-            blessed_item = "${itemname(_2, 1)}を${itemname(_1)}に降りかけた。"
-            becomes_blessed = "${itemname(_1)}は銀色に輝いた。"
-            becomes_cursed = "${itemname(_1)}は黒いオーラに包まれた。"
-
-            well_refill = "${itemname(_2, 1)}を${itemname(_1)}に放り込んだ。"
-            empty_bottle_shatters = "空き瓶の割れる音がした。"
-            holy_well_polluted = "井戸は汚れた。"
-            well_dry = "${itemname(_1)}は完全に枯れている。"
-            well_refilled = "${itemname(_1)}は一瞬輝いた。"
-            snow_melts = "しかしこんな量では… "
-
-            natural_potion = "空き瓶に水をすくった。"
-            natural_potion_dry = "${itemname(_1)}は涸れている。"
-            natural_potion_drop = "あっ！空き瓶を井戸に落としてしまった…"
-        }
-
         recipe {
             _200 = "媚薬混入食品"
             _201 = "染色"

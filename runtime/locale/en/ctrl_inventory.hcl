@@ -78,16 +78,6 @@ locale {
                 how_many = "How many? (1 to ${_1})"
             }
 
-            pick_up {
-                cannot_carry = "You can't carry it."
-
-                not_owned {
-                    _0 = "It's not your property."
-                    _1 = "You can't just take it."
-                    _2 = "It's not yours."
-                }
-            }
-
             eat {
                 too_bloated {
                     _0 = "Your are too full to eat."

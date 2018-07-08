@@ -44,10 +44,7 @@ label_19341_internal:
     if (cdata[cc].continuous_action_id == 0)
     {
         txtnew();
-        txt(lang(
-            name(cc) + u8"は"s + rpname(rpid) + u8"の調合をはじめた。"s,
-            name(cc) + u8" start"s + _s(cc) + u8" blending of "s + rpname(rpid)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.blending.started", cdata[cc], rpname(rpid)));
         cdata[cc].continuous_action_id = 12;
         cdata[cc].continuous_action_turn = rpref(2) % 10000;
         return;
@@ -57,8 +54,7 @@ label_19341_internal:
         if (rnd(30) == 0)
         {
             txtef(4);
-            txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                lang(u8" *トントン* "s, u8"*clank*"s));
+            txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
         }
         return;
     }
@@ -74,8 +70,7 @@ label_19341_internal:
             if (cnt % 5 == 0)
             {
                 txtef(4);
-                txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                    lang(u8" *トントン* "s, u8"*clank*"s));
+                txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
             }
             redraw();
             await(config::instance().animewait * 5);
@@ -87,9 +82,7 @@ label_19341_internal:
                 int stat = label_1931();
                 if (stat == 0)
                 {
-                    txt(lang(
-                        u8"調合に必要な材料が見つからない。"s,
-                        u8"A required material cannot be found."s));
+                    txt(i18n::s.get("core.locale.blending.required_material_not_found"));
                     break;
                 }
                 label_1933();
@@ -112,9 +105,7 @@ label_19341_internal:
     int stat = label_1931();
     if (stat == 0)
     {
-        txt(lang(
-            u8"調合に必要な材料が見つからない。"s,
-            u8"A required material cannot be found."s));
+        txt(i18n::s.get("core.locale.blending.required_material_not_found"));
         rowactend(cc);
         return;
     }
@@ -1676,6 +1667,7 @@ void label_1933()
     return;
 }
 
+// TODO: Much duplication with do_dip_command()
 void label_1935()
 {
     int cibk = ci;
@@ -1707,46 +1699,46 @@ void label_1935()
         ibitmod(6, ci, 1);
         txtef(2);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
-        txt(i18n::s.get("core.locale.blending.result.love_food"));
+        txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
         snd(65);
         break;
     case 10001:
         inv[ci].color = inv[ti].color;
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.dyeing", inv[ci]));
+        txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
         snd(17);
         break;
     case 10002:
         ibitmod(14, ci, 1);
         txtef(2);
         txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
-        txt(i18n::s.get("core.locale.blending.result.poisoned_food"));
+        txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
         snd(65);
         break;
     case 10003:
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.put_on", inv[ci], inv[ti]));
+        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         if (inv[ci].id == 567)
         {
-            txt(i18n::s.get("core.locale.blending.result.good_idea_but"));
+            txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
         }
         else
         {
             ibitmod(2, ci, 1);
-            txt(i18n::s.get("core.locale.blending.result.gains_fireproof", inv[ci]));
+            txt(i18n::s.get("core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
         snd(17);
         break;
     case 10004:
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.put_on", inv[ci], inv[ti]));
+        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         ibitmod(1, ci, 1);
-        txt(i18n::s.get("core.locale.blending.result.gains_acidproof", inv[ci]));
+        txt(i18n::s.get("core.locale.action.dip.result.gains_acidproof", inv[ci]));
         snd(17);
         break;
     case 10005:
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.bait_attachment", inv[ci], inv[ti]));
+        txt(i18n::s.get("core.locale.action.dip.result.bait_attachment", inv[ci], inv[ti]));
         if (inv[ci].param4 == inv[ti].param1)
         {
             inv[ci].count += rnd(10) + 15;
@@ -1760,44 +1752,44 @@ void label_1935()
         break;
     case 10006:
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.blessed_item", inv[ci], inv[ti]));
+        txt(i18n::s.get("core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]));
         if (inv[ti].curse_state == curse_state_t::blessed)
         {
             txtef(5);
-            txt(i18n::s.get("core.locale.blending.result.becomes_blessed", inv[ci]));
+            txt(i18n::s.get("core.locale.action.dip.result.becomes_blessed", inv[ci]));
             inv[ci].curse_state = curse_state_t::blessed;
         }
         if (is_cursed(inv[ti].curse_state))
         {
             txtef(8);
-            txt(i18n::s.get("core.locale.blending.result.becomes_cursed", inv[ci]));
+            txt(i18n::s.get("core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = curse_state_t::cursed;
         }
         snd(17);
         break;
     case 10007:
-        txt(i18n::s.get("core.locale.blending.result.well_refill", inv[ci], inv[ti]));
+        txt(i18n::s.get("core.locale.action.dip.result.well_refill", inv[ci], inv[ti]));
         if (inv[ti].id == 601)
         {
-            txt(i18n::s.get("core.locale.blending.result.empty_bottle_shatters"));
+            txt(i18n::s.get("core.locale.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd(17);
         if (inv[ci].id == 602)
         {
-            txt(i18n::s.get("core.locale.blending.result.holy_well_polluted"));
+            txt(i18n::s.get("core.locale.action.dip.result.holy_well_polluted"));
             break;
         }
         if (inv[ci].param3 >= 20)
         {
-            txt(i18n::s.get("core.locale.blending.result.well_dry", inv[ci]));
+            txt(i18n::s.get("core.locale.action.dip.result.well_dry", inv[ci]));
             break;
         }
         txtef(2);
-        txt(i18n::s.get("core.locale.blending.result.well_refilled", inv[ci]));
+        txt(i18n::s.get("core.locale.action.dip.result.well_refilled", inv[ci]));
         if (inv[ti].id == 587)
         {
-            txt(i18n::s.get("core.locale.blending.result.snow_melts"));
+            txt(i18n::s.get("core.locale.action.dip.result.snow_melts.blending"));
         }
         else
         {
@@ -1808,8 +1800,8 @@ void label_1935()
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
         {
-            txt(i18n::s.get("core.locale.blending.result.natural_potion_dry", inv[ci]));
-            txt(i18n::s.get("core.locale.blending.result.natural_potion_drop"));
+            txt(i18n::s.get("core.locale.action.dip.result.natural_potion_dry", inv[ci]));
+            txt(i18n::s.get("core.locale.action.dip.result.natural_potion_drop"));
             break;
         }
         if (inv_getfreeid(0) == -1)
@@ -1836,7 +1828,7 @@ void label_1935()
             flttypemajor = 52000;
             itemcreate(0, 0, -1, -1, 0);
         }
-        txt(i18n::s.get("core.locale.blending.result.natural_potion"));
+        txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
         txtef(2);
         txt(lang(
             itemname(ci, 1) + u8"を手に入れた。"s,
