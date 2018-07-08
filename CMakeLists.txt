@@ -132,13 +132,21 @@ set(CORE_SOURCES
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+# If a CMake prefix was not provided, assume dependencies are in "./deps"
+if("${CMAKE_PREFIX_PATH}" STREQUAL "")
+  get_filename_component(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/deps" ABSOLUTE)
+  message("No dependency prefix provided, using ${CMAKE_PREFIX_PATH}")
+else()
+  message("Using provided dependency prefix ${CMAKE_PREFIX_PATH}")
+endif()
+
 if(ANDROID)
   set(ANDROID_ASSETS_DIRECTORIES "${CMAKE_SOURCE_DIR}/android/assets")
 
   string(TOLOWER ${CMAKE_BUILD_TYPE} ANDROID_BUILD_DIR)
   set(DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/android/distribution/android/SDL2/intermediates/ndkBuild)
 
-  set(SDL_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
+  set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
   add_library( SDL2 SHARED IMPORTED )
   add_library( SDL2_image SHARED IMPORTED )
@@ -162,25 +170,26 @@ if(ANDROID)
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/liblua.so)
   set_target_properties(snail PROPERTIES IMPORTED_LOCATION
     ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libsnail.so)
+
   set_target_properties(boost_filesystem PROPERTIES IMPORTED_LOCATION
-    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libboost_filesystem.so)
+    ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_filesystem.so)
   set_target_properties(boost_system PROPERTIES IMPORTED_LOCATION
-    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libboost_system.so)
+    ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_system.so)
   set_target_properties(boost_iostreams PROPERTIES IMPORTED_LOCATION
-    ${DISTRIBUTION_DIR}/${ANDROID_BUILD_DIR}/obj/local/${ANDROID_ABI}/libboost_iostreams.so)
+    ${CMAKE_SOURCE_DIR}/android/app/src/main/jniLibs/${ANDROID_ABI}/libboost_iostreams.so)
 
-  include_directories(${SDL_LOCATION}/SDL2/include)
-  include_directories(${SDL_LOCATION}/SDL2_image)
-  include_directories(${SDL_LOCATION}/SDL2_ttf)
-  include_directories(${SDL_LOCATION}/SDL2_mixer)
-  include_directories(${SDL_LOCATION}/lua/src)
-  include_directories(${SDL_LOCATION}/src/snail)
-  include_directories(${SDL_LOCATION}/boost/1.66.0/include)
-  link_directories(${SDL_LOCATION}/boost/1.66.0/libs/llvm/armeabi-v7a)
+  include_directories(${EXTERNAL_LIB_LOCATION}/SDL2/include)
+  include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_image)
+  include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_ttf)
+  include_directories(${EXTERNAL_LIB_LOCATION}/SDL2_mixer)
+  include_directories(${EXTERNAL_LIB_LOCATION}/lua/src)
+  include_directories(${EXTERNAL_LIB_LOCATION}/snail)
+  include_directories(${EXTERNAL_LIB_LOCATION}/boost/1.66.0/include)
+  link_directories(${EXTERNAL_LIB_LOCATION}/boost/1.66.0/libs/llvm/armeabi-v7a)
 
-  add_library( main SHARED ${SOURCE_FILES} )
+  add_library( ${PROJECT_NAME} SHARED ${CORE_SOURCES} )
 
-  target_link_libraries( main android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
+  target_link_libraries( ${PROJECT_NAME} android log SDL2 SDL2_image SDL2_ttf SDL2_mixer lua boost_filesystem boost_system boost_iostreams snail )
 else()
   # Options
   option(WITH_TESTS "Build test executable (TESTS or BENCH)" "NONE")
@@ -240,15 +249,6 @@ else()
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
   else()
     add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} src/main.cpp)
-  endif()
-
-
-  # If a CMake prefix was not provided, assume dependencies are in "./deps"
-  if("${CMAKE_PREFIX_PATH}" STREQUAL "")
-    get_filename_component(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/deps" ABSOLUTE)
-    message("No dependency prefix provided, using ${CMAKE_PREFIX_PATH}")
-  else()
-    message("Using provided dependency prefix ${CMAKE_PREFIX_PATH}")
   endif()
 
   if(WIN32)

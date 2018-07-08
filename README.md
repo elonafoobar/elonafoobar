@@ -70,6 +70,14 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 
 To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
+
+### Android
+```
+cd android
+./gradlew assembleDebug
+./gradlew installDebug
+```
+
 # How To Play
 
 1. Copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.

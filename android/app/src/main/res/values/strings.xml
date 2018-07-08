@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ElonaFoobar</string>
+    <string name="upgrading">upgrading</string>
+    <string name="installing">installing</string>
+</resources>
