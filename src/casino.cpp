@@ -43,7 +43,7 @@ void casino_dealer()
     }
     if (atxid == 1)
     {
-        txt(lang(u8"ディーラーに話しかけた。"s, u8"You talk to the dealer."s));
+        txt(i18n::s.get("core.locale.casino.talk_to_dealer"));
         play_music(77);
         casino_wrapper();
         return;
@@ -362,9 +362,7 @@ void casino_acquire_items()
     {
         if (cdata[0].hp >= 0)
         {
-            txt(lang(
-                u8"幾つかの戦利品がある。"s,
-                u8"There're some items you can acquire."s));
+            txt(i18n::s.get("core.locale.casino.can_acquire"));
             screenupdate = -1;
             update_screen();
             invsubroutine = 1;
@@ -635,11 +633,7 @@ label_1876_internal:
                 atxpic(3) = 96;
                 snd(41);
                 mat(p) += 1;
-                noteadd(lang(
-                    u8"@BL"s + matname(p) + u8"を"s + 1
-                        + u8"個手に入れた！(所持数:"s + mat(p) + u8"個)"s,
-                    u8"@BLYou get "s + 1 + u8" "s + matname(p)
-                        + u8"(s)! (Total:"s + mat(p) + u8")"s));
+                noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p));
             }
             atxthrough = 1;
             goto label_1875;
@@ -806,11 +800,7 @@ label_1876_internal:
         atxpic(3) = 96;
         snd(41);
         mat(p) += 1;
-        noteadd(lang(
-            u8"@BL"s + matname(p) + u8"を"s + 1 + u8"個手に入れた！(所持数:"s
-                + mat(p) + u8"個)"s,
-            u8"@BLYou get "s + 1 + u8" "s + matname(p) + u8"(s)! (Total:"s
-                + mat(p) + u8")"s));
+        noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
         atxthrough = 1;
         goto label_1875;
     }
@@ -865,44 +855,28 @@ bool casino_start()
     bool finished = false;
     atxbg = u8"bg14"s;
     mattile = -1;
-    atxinfon(0) = lang(
-        u8"カジノ《フォーチュンクッキー》"s, u8"Casino <<Fortune Cookie>>"s);
+    atxinfon(0) = i18n::s.get("core.locale.casino.window.title");
     atxinit();
-    noteadd(lang(
-        u8"カジノ《フォーチュンクッキー》へようこそ。"s,
-        u8"Welcome to the casino, Fortune cookie!"s));
-    noteadd(lang(
-        u8"チップマテリアルと引き換えにゲームをすることができます。"s,
-        u8"You can bet the casino chips you have and play some games."s));
-    noteadd(lang(u8"ごゆっくりお楽しみ下さい。"s, u8"Enjoy your stay."s));
+    noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 0));
+    noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 1));
+    noteadd(i18n::s.get_enum("core.locale.casino.window.desc", 2));
     if (gdata_used_casino_once == 0)
     {
         noteadd(""s);
-        noteadd(lang(
-            u8"お客様は初めてのご利用のようですね。"s,
-            u8"Looks like you play for the first time, sir."s));
-        noteadd(lang(
-            u8"当店からチップマテリアルを10枚進呈します。"s,
-            u8"We're offering you 10 free casino chips to try our games."s));
+        noteadd(i18n::s.get_enum("core.locale.casino.window.first", 0));
+        noteadd(i18n::s.get_enum("core.locale.casino.window.first", 1));
         gdata_used_casino_once = 1;
         snd(41);
         mat(1) += 10;
-        noteadd(lang(
-            u8"@BL"s + matname(1) + u8"を"s + 10 + u8"個手に入れた！(所持数:"s
-                + mat(1) + u8"個)"s,
-            u8"@BLYou get "s + 10 + u8" "s + matname(1) + u8"(s)! (Total:"s
-                + mat(1) + u8")"s));
+        noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 10, matname(1), mat(1)));
     }
-    atxinfon(1) = lang(
-        u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-        u8"Casino chips left: "s + mat(1) + u8"\n"s);
+    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
     atxinfon(2) = "";
     list(0, listmax) = 0;
-    listn(0, listmax) = lang(u8"店を出る"s, u8"Later."s);
+    listn(0, listmax) = i18n::s.get("core.locale.casino.window.choices.leave");
     ++listmax;
     list(0, listmax) = 1;
-    listn(0, listmax) =
-        lang(u8"ブラックジャック"s, u8"I want to play Blackjack."s);
+    listn(0, listmax) = i18n::s.get("core.locale.casino.window.choices.blackjack");
     ++listmax;
     chatesc = 0;
     txtadvmsgfix = 0;
@@ -931,51 +905,36 @@ bool casino_blackjack()
     int cardround = 0;
     int winner = 0;
     atxinit();
-    noteadd(lang(
-        u8"ブラックジャックは、カードの合計を21に近づけるゲームです。"s,
-        u8"In Blackjack, the hand with the highest total wins as long as it"s));
-    noteadd(lang(
-        u8"J,Q,Kは10に、Aは1または11に数えられます。21を越えると負けです。"s,
-        u8"doesn't exceed 21. J,Q,K are counted as 10 and A is counted as 1 or 11."s));
-    noteadd(lang(
-        u8"では、賭けるチップを宣言してください。"s,
-        u8"More bets means better rewards."s));
-    noteadd(lang(
-        u8"チップが多いほど、景品の質があがります。"s,
-        u8"How many tips would you like to bet?"s));
-    atxinfon(1) = lang(
-        u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-        u8"Casino chips left: "s + mat(1) + u8"\n"s);
+    noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 0));
+    noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 1));
+    noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 2));
+    noteadd(i18n::s.get_enum("core.locale.casino.blackjack.desc", 3));
+    atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
     atxinfon(2) = "";
     if (mat(1) <= 0)
     {
         noteadd(""s);
-        noteadd(lang(
-            u8"お客様はチップをもっていません。"s,
-            u8"Sorry sir, you don't seem to have casino chips."s));
+        noteadd(i18n::s.get("core.locale.casino.blackjack.no_chips"));
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = lang(u8"やめる"s, u8"I quit."s);
+    listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.quit");
     ++listmax;
     if (mat(1) >= 1)
     {
         list(0, listmax) = 1;
-        listn(0, listmax) =
-            lang(""s + 1 + u8"枚賭ける"s, u8"Bet "s + 1 + u8" chips."s);
+        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 1);
         ++listmax;
     }
     if (mat(1) >= 5)
     {
         list(0, listmax) = 5;
-        listn(0, listmax) =
-            lang(""s + 5 + u8"枚賭ける"s, u8"Bet "s + 5 + u8" chips."s);
+        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 5);
         ++listmax;
     }
     if (mat(1) >= 20)
     {
         list(0, listmax) = 20;
-        listn(0, listmax) =
-            lang(""s + 20 + u8"枚賭ける"s, u8"Bet "s + 20 + u8" chips."s);
+        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 20);
         ++listmax;
     }
     chatesc = 0;
@@ -998,11 +957,7 @@ bool casino_blackjack()
         if (cnt == 0)
         {
             mat(1) -= stake;
-            noteadd(lang(
-                matname(1) + u8"を"s + stake + u8"個失った(残り:"s + mat(1)
-                    + u8"個)"s,
-                u8"You lose "s + stake + u8" "s + matname(1) + u8"(s). (Total:"s
-                    + mat(1) + u8")"s));
+            noteadd(i18n::s.get("core.locale.casino.you_lose", stake, matname(1), mat(1));
         }
         if (cardround == 0)
         {
@@ -1015,9 +970,9 @@ bool casino_blackjack()
         font(14 - en * 2, snail::font_t::style_t::bold);
         color(255, 255, 255);
         pos(152, 154);
-        mes(lang(u8"　親"s, u8"Dealer"s));
+        mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"));
         pos(152, 270);
-        mes(lang(u8"あなた"s, u8"   You"s));
+        mes(i18n::s.get("core.locale.casino.blackjack.game.you"));
         color(0, 0, 0);
         showcardpile();
         showcardholder();
@@ -1047,14 +1002,10 @@ bool casino_blackjack()
                 }
             }
         }
-        noteadd(lang(
-            u8"あなたの合計は"s + cpscore(1) + u8"です。"s,
-            u8"Your hand is "s + cpscore(1) + u8"."s));
+        noteadd(i18n::s.get("core.locale.casino.blackjack.game.your_hand", cpscore(1)));
         if (cardround == -1)
         {
-            noteadd(lang(
-                u8"親の合計は"s + cpscore(0) + u8"です。"s,
-                u8"The dealer's hand is "s + cpscore(0) + u8"."s));
+            noteadd(i18n::s.get("core.locale.casino.blackjack.game.dealers_hand", cpscore(0)));
             winner = -1;
             if (cpscore(0) <= 21)
             {
@@ -1073,25 +1024,22 @@ bool casino_blackjack()
             if (winner == -1)
             {
                 noteadd(
-                    lang(u8"勝負は引き分けです。"s, u8"The match is a draw."s));
+                    i18n::s.get("core.locale.casino.blackjack.game.result.draw"));
             }
             if (winner == 0)
             {
-                noteadd(lang(u8"あなたの負けです。"s, u8"You lose."s));
+                noteadd(
+                    i18n::s.get("core.locale.casino.blackjack.game.result.lose"));
             }
             if (winner == 1)
             {
-                noteadd(lang(
-                    u8"おめでとうございます。あなたの勝ちです。"s,
-                    u8"Congratulations, you win."s));
+                noteadd(
+                    i18n::s.get("core.locale.casino.blackjack.game.result.win"));
             }
         }
-        atxinfon(1) = lang(
-            u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-            u8"Casino chips left: "s + mat(1) + u8"\n"s);
-        atxinfon(2) = lang(
-            u8"賭けチップ "s + stake + u8"枚 現在"s + winrow + u8"連勝中"s,
-            u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
+        atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+        atxinfon(2) = i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
+            + i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
         if (cardround == -1)
         {
             if (winner == 1)
@@ -1102,13 +1050,14 @@ bool casino_blackjack()
             {
                 list(0, listmax) = 0;
                 listn(0, listmax) =
-                    lang(u8"次の勝負へ"s, u8"To the next round."s);
+                    i18n::s.get("core.locale.casino.blackjack.game.result.choices.next_round");
                 ++listmax;
             }
             if (winner == 0)
             {
                 list(0, listmax) = 0;
-                listn(0, listmax) = lang(u8"戻る"s, u8"Bah...!"s);
+                listn(0, listmax) =
+                    i18n::s.get("core.locale.casino.blackjack.game.result.choices.leave");
                 ++listmax;
             }
             chatesc = -1;
@@ -1123,7 +1072,7 @@ bool casino_blackjack()
             continue;
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"これに決める"s, u8"Stay."s);
+        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.choices.stay");
         ++listmax;
         if (pileremain() > 10)
         {
@@ -1131,12 +1080,13 @@ bool casino_blackjack()
             {
                 list(0, listmax) = 1;
                 listn(0, listmax) =
-                    lang(u8"もう一枚引く(運)"s, u8"Hit me. (Luck)"s);
+                    i18n::s.get("core.locale.casino.blackjack.game.choices.hit");
                 ++listmax;
             }
             list(0, listmax) = 2;
-            listn(0, listmax) = lang(u8"イカサマ(器用"s, u8"Cheat. (Dex:"s)
-                + sdata(12, 0) + u8")"s;
+            listn(0, listmax) =
+                i18n::s.get("core.locale.casino.blackjack.game.choices.cheat",
+                            sdata(12, 0));
             ++listmax;
         }
         chatesc = -1;
@@ -1161,9 +1111,7 @@ bool casino_blackjack()
                     {
                         if (rnd(sdata(19, 0)) > 40)
                         {
-                            txt(lang(
-                                u8"このカードは悪い予感がする…"s,
-                                u8"I have a bad feeling about this card..."s));
+                            txt(i18n::s.get("core.locale.casino.blackjack.game.bad_feeling"));
                             trashcard(p);
                             int stat = servecard(1);
                             p = stat;
@@ -1190,21 +1138,15 @@ bool casino_blackjack()
             if (rnd(sdata(12, 0)) < rnd(p))
             {
                 atxinit();
-                noteadd(lang(u8"イカサマだ！"s, u8"Cheater!"s));
-                atxinfon(1) = lang(
-                    u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-                    u8"Casino chips left: "s + mat(1) + u8"\n"s);
-                atxinfon(2) = lang(
-                    u8"賭けチップ "s + stake + u8"枚 現在"s + winrow
-                        + u8"連勝中"s,
-                    u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
+                noteadd(i18n::s.get("core.locale.casino.blackjack.game.cheat.dialog"));
+                atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+                atxinfon(2) = i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
+                    + i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
                 winrow = 0;
-                txt(lang(
-                    u8"イカサマが見つかってしまった…"s,
-                    u8"You are caught in cheating..."s));
+                txt(i18n::s.get("core.locale.casino.blackjack.game.cheat.text"));
                 modify_karma(0, -5);
                 list(0, listmax) = 0;
-                listn(0, listmax) = lang(u8"濡れ衣だ！"s, u8"I didn't do it!"s);
+                listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.cheat.response");
                 ++listmax;
                 chatesc = -1;
                 txtadvmsgfix = 0;
@@ -1218,10 +1160,7 @@ bool casino_blackjack()
     if (winrow > 0)
     {
         atxinit();
-        noteadd(lang(
-            u8"おめでとうございます。あなたは"s + winrow + u8"連勝しました。"s,
-            u8"Congratulations! You've won "s + winrow
-                + u8" times in a row."s));
+        noteadd(i18n::s.get("core.locale.casino.blackjack.game.total_wins", winrow));
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             i = 2;
@@ -1254,27 +1193,20 @@ bool casino_blackjack()
             }
         }
         snd(41);
-        noteadd(lang(
-            u8"@GRアイテム："s + itemname(ci, inv[ci].number)
-                + u8"を戦利品に加えた！"s,
-            u8"@GR"s + itemname(ci, inv[ci].number)
-                + u8" has been added to your loot list!"s));
+        noteadd("@GR" + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
         if (winrow > 3)
         {
+            // Potion of cure corruption
             if (winrow + 1 > rnd(10))
             {
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);
                 snd(41);
-                noteadd(lang(
-                    u8"@GRアイテム："s + itemname(ci, inv[ci].number)
-                        + u8"を戦利品に加えた！"s,
-                    u8"@GR"s + itemname(ci, inv[ci].number)
-                        + u8" has been added to your loot list!"s));
+                noteadd("@GR" + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
             }
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"戻る"s, u8"Great."s);
+        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.leave");
         ++listmax;
         chatesc = 0;
         txtadvmsgfix = 0;

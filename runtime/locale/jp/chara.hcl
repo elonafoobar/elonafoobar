@@ -3,6 +3,43 @@ locale {
         you = "あなた"
         something = "何か"
 
+        age_unknown = "不明"
+
+        name_with_title = "《${basename(_1)}》"
+
+        contract_expired = "${basename(_1)}との契約期間が切れた。"
+
+        corruption {
+            symptom = "エーテルの病が発症した。"
+            add = "あなたはエーテルに侵食された。"
+            remove = "あなたのエーテルの侵食はやわらいだ。"
+        }
+
+        gain_level {
+            self = "${name(_1)}はレベル${_2}になった！"
+            other = "${name(_1)}は成長した。"
+        }
+
+        weight {
+            gain = "${name(_1)}は太った。"
+            lose = "${name(_1)}は痩せた。"
+        }
+
+        height {
+            gain = "${name(_1)}の身長は少し伸びた。"
+            lose = "${name(_1)}の身長は少し伸びた。"
+        }
+
+        place_failure {
+            ally = "${name(_1)}とはぐれた。"
+            other = "${name(_1)}は何かに潰されて息絶えた。"
+        }
+
+        impression {
+            gain = "${basename(_1)}との関係が<${_2}>になった！"
+            lose = "${basename(_1)}との関係が<${_2}>になった…"
+        }
+
         job {
             general_vendor = "雑貨屋の${_1}"
             innkeeper = "宿屋の${_1}"

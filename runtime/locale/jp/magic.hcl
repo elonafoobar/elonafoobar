@@ -8,6 +8,13 @@ locale {
             cursed = "${name(_1)}は悪魔が笑う声を聞いた。"
         }
 
+        buff {
+            no_effect = "しかし、効果はなかった。"
+            holy_veil_repels = "ホーリーヴェイルが呪いを防いだ。"
+            resists = "${name(_1)}は抵抗した。"
+            ends = "${_1}の効果が切れた。"
+        }
+
         slow = "${name(_1)}の老化は遅くなった。"
         speed = "${name(_1)}の老化は速くなった。"
 

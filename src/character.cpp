@@ -177,15 +177,11 @@ void failed_to_place_character(character& cc)
     if (cc.index < 16)
     {
         cc.state = 8;
-        txt(lang(
-            name(cc.index) + u8"とはぐれた。"s,
-            name(cc.index) + u8" loses "s + his(cc.index) + u8" way."s));
+        txt(i18n::s.get("core.locale.chara.place_failure.ally", cc));
     }
     else
     {
-        txt(lang(
-            name(cc.index) + u8"は何かに潰されて息絶えた。"s,
-            name(cc.index) + u8" is killed."s));
+        txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
         cc.state = 0;
         chara_killed(cc);
         // Exclude town residents because they occupy character slots even
@@ -1912,26 +1908,14 @@ void chara_mod_impression(int cc, int delta)
     if (level1 > level2)
     {
         txtef(8);
-        txt(lang(
-            cdatan(0, cc) + u8"との関係が<"s
-                + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
-                + u8">になった…"s,
-            u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
-                + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
-                + u8">..."s));
+        txt(i18n::s.get("core.locale.chara.impression.lose", cdata[cc], level2));
     }
     else if (level2 > level1)
     {
         if (cdata[cc].relationship != -3)
         {
             txtef(2);
-            txt(lang(
-                cdatan(0, cc) + u8"との関係が<"s
-                    + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
-                    + u8">になった！"s,
-                u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
-                    + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
-                    + u8">!"s));
+            txt(i18n::s.get("core.locale.chara.impression.gain", cdata[cc], level2));
         }
     }
 }
@@ -2336,13 +2320,11 @@ void chara_add_quality_parens()
             + i18n::_(u8"ui", u8"bracket_right");
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
-    if (fixlv == 5)
+    else if (fixlv == 5)
     {
-        cdatan(0, rc) =
-            lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
+        cdatan(0, rc) = i18n::s.get("core.locale.chara.name_with_title", cdata[rc]);
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
-    return;
 }
 
 } // namespace elona

@@ -129,6 +129,11 @@ locale {
             is_severely_hurt = "${name(_1)} ${is(_1)} severely hurt!"
         }
 
+        vorpal {
+            melee = " *シャキーン* "
+            ranged = " *ズバシュッ* "
+        }
+
         sand_bag {
             _0 = "\"Kill me already!\""
             _1 = "\"No..not yet...!\""

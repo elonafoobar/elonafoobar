@@ -305,7 +305,7 @@ turn_result_t do_bash_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+        txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -318,7 +318,7 @@ turn_result_t do_dig_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+        txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -338,7 +338,7 @@ turn_result_t do_dig_command()
     if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
         || mdata(6) == 1)
     {
-        txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+        txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -816,7 +816,7 @@ turn_result_t do_close_command()
     int stat = ask_direction_to_close();
     if (stat == 0)
     {
-        txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+        txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -1289,9 +1289,7 @@ turn_result_t do_dip_command()
                 }
                 if (inv_getfreeid(0) == -1)
                 {
-                    txt(lang(
-                        u8"バックパックが一杯だ。"s,
-                        u8"Your inventory is full."s));
+                    txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                     return turn_result_t::turn_end;
                 }
                 if (inv[ci].id == 602)
@@ -1727,7 +1725,7 @@ turn_result_t do_use_command()
         }
         if (f == 0)
         {
-            txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+            txt(i18n::s.get("core.locale.common.it_is_impossible"));
         }
         update_screen();
         return turn_result_t::pc_turn_user_error;
@@ -1798,7 +1796,7 @@ turn_result_t do_use_command()
             int stat = ask_direction();
             if (stat == 0)
             {
-                txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+                txt(i18n::s.get("core.locale.common.it_is_impossible"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -1834,7 +1832,7 @@ turn_result_t do_use_command()
                 return turn_result_t::turn_end;
             }
         }
-        txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+        txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
         break;
@@ -1891,7 +1889,7 @@ turn_result_t do_use_command()
         }
         if (f == 0)
         {
-            txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+            txt(i18n::s.get("core.locale.common.it_is_impossible"));
         }
         goto label_2229_internal;
     case 45:
@@ -1951,7 +1949,7 @@ turn_result_t do_use_command()
         }
         if (f == 0)
         {
-            txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+            txt(i18n::s.get("core.locale.common.it_is_impossible"));
         }
         goto label_2229_internal;
     case 6:
@@ -2138,7 +2136,7 @@ turn_result_t do_use_command()
             }
         }
         txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"));
-        txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
+        txt(i18n::s.get("core.locale.action.weather.changes"));
         envonly = 1;
         play_music();
         goto label_2229_internal;
@@ -3228,8 +3226,7 @@ turn_result_t do_get_command()
             }
             if (!inv_getspace(0))
             {
-                txt(lang(
-                    u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+                txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -3277,8 +3274,7 @@ turn_result_t do_get_command()
             txt(i18n::s.get("core.locale.action.get.snow"));
             if (!actionsp(0, 10))
             {
-                txt(lang(
-                    u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
+                txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                 return turn_result_t::turn_end;
             }
             flt();

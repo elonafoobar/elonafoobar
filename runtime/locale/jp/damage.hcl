@@ -117,6 +117,11 @@ locale {
             is_severely_hurt = "${name(_1)}は悲痛な叫び声をあげた。"
         }
 
+        vorpal {
+            melee = "*vopal*"
+            ranged = "*vopal*"
+        }
+
         sand_bag {
             _0 = "「くっ！」"
             _1 = "「まだまだ！」"

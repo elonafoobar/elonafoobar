@@ -28,6 +28,7 @@ locale {
 
                 thanks = "${thanks(_1, 2)}"
                 you_kidding = "冷やかし${ka(_1, 1)}"
+                hand_over = "${itemname(_1, 1)}を手渡した。"
 
                 sex {
                     prompt = "なかなかの体つき${dana(_1)}よし、買${u(_1, 2)}"
@@ -48,8 +49,6 @@ locale {
                     here_is_item = "${itemname(_1, 1)}を納入する"
                     here_is_delivery = "配達物を渡す"
                 }
-
-                hand_over = "${itemname(_1, 1)}を手渡した。"
 
                 about {
                     during = "頼んでいた依頼は順調${kana(_1, 1)}"

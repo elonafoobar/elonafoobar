@@ -511,6 +511,10 @@ locale {
             }
         }
 
+        eat {
+            snatches = "${name(_1)}は${name(_2)}の食べ物を横取りした。"
+        }
+
         zap {
             execute = "${itemname(_1, 1)}を振った。"
             fail = "${name(_1)}は杖をうまく使えなかった。"

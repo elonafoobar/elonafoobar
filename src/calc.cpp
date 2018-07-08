@@ -379,7 +379,7 @@ int calc_rate_to_pierce(int id)
 std::string calcage(int cc)
 {
     int n = gdata_year - cdata[cc].birth_year;
-    return n >= 0 ? std::to_string(n) : lang(u8"不明", u8"Unknown");
+    return n >= 0 ? std::to_string(n) : i18n::s.get("core.locale.chara.age_unknown");
 }
 
 
@@ -753,7 +753,7 @@ int calcattackdmg(int prm_894)
             if (is_in_fov(cc))
             {
                 txtef(5);
-                txt(lang(u8" *シャキーン* "s, u8"*vopal*"s));
+                txt(i18n::s.get("core.locale.damage.vorpal.melee"));
             }
         }
     }
@@ -765,7 +765,7 @@ int calcattackdmg(int prm_894)
             if (is_in_fov(cc))
             {
                 txtef(5);
-                txt(lang(u8" *ズバシュッ* "s, u8"*vopal*"s));
+                txt(i18n::s.get("core.locale.damage.vorpal.ranged"));
             }
         }
         if (ammoprocbk == 0)
@@ -1538,16 +1538,12 @@ void calcpartyscore2()
         if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
         {
             score += 20 + cdata[cnt].level / 2;
-            txt(lang(
-                cdatan(0, cnt) + u8"は満足した。"s,
-                cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
+            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cdata[cnt]));
         }
     }
     if (score != 0)
     {
-        txt(lang(
-            u8"(合計ボーナス:"s + score + u8"%) "s,
-            u8"(Total Bonus:"s + score + u8"%)"s));
+        txt(i18n::s.get("core.locale.quest.party.total_bonus", score));
     }
     qdata(13, gdata_executing_immediate_quest) =
         qdata(13, gdata_executing_immediate_quest) * (100 + score) / 100;

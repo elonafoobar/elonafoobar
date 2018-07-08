@@ -8,6 +8,13 @@ locale {
             cursed = "${name(_1)} hear${s(_1)} devils laugh."
         }
 
+        buff {
+            no_effect = "But it produces no effect."
+            holy_veil_repels = "The holy veil repels the hex."
+            resists = "${name(_1)} resist${s(_1)} the hex."
+            ends = "The effect of ${_1} ends."
+        }
+
         # By convention, if the magic text contains both the name of the target and caster, the
         # caster will be argument _1, and the target will be argument _2.
 

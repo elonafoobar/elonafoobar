@@ -12600,7 +12600,7 @@ int label_2175()
             int stat = ask_direction();
             if (stat == 0)
             {
-                txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+                txt(i18n::s.get("core.locale.common.it_is_impossible"));
                 obvious = 0;
                 return 0;
             }
@@ -12711,9 +12711,7 @@ int pick_up_item()
                 {
                     if (!inv_getspace(0))
                     {
-                        txt(lang(
-                            u8"バックパックが一杯だ。"s,
-                            u8"Your inventory is full."s));
+                        txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                         return 0;
                     }
                     gdata(91) = 103;
