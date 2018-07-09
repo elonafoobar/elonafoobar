@@ -2,7 +2,6 @@
 #include "../color.hpp"
 #include "../font.hpp"
 #include "../input.hpp"
-// TODO: this dependency is not good.
 #include <iostream>
 #include <unordered_map>
 #include "../detail/sdl.hpp"

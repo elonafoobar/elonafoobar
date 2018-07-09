@@ -13,6 +13,8 @@
 #elif defined(ELONA_OS_LINUX)
 #include <limits.h> // PATH_MAX
 #include <unistd.h> // readlink
+#elif defined(ELONA_OS_ANDROID)
+#include "SDL_system.h" // SDL_AndroidGetExternalStoragePath
 #else
 #error Unsupported OS
 #endif
@@ -47,6 +49,11 @@ fs::path get_executable_path()
         {
             throw std::runtime_error(u8"Error: fail to get excutable path");
         }
+#elif defined(ELONA_OS_ANDROID)
+        std::string external_storage_path(SDL_AndroidGetExternalStoragePath());
+        if (external_storage_path.back() != '/')
+            external_storage_path += '/';
+        const char *buf = external_storage_path.c_str();
 #else
 #error Unsupported OS
 #endif

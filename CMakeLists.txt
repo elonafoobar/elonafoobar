@@ -148,6 +148,9 @@ if(ANDROID)
 
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
+  SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
+  add_definitions(-DSNAIL_RENDERER_HEADLESS)
+
   add_library( SDL2 SHARED IMPORTED )
   add_library( SDL2_image SHARED IMPORTED )
   add_library( SDL2_ttf SHARED IMPORTED )
@@ -381,23 +384,32 @@ endif()
 
 # Kludgy function to work around the lack of directory support in copy_if_different
 function(copy_nonexisting src rel final_dir final)
-  file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
+  if(ANDROID)
+    # Asset directory is wiped on each rebuild anyway.
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_directory
+      "${rel}"
+      "${final_dir}/${final}")
+  else()
+    file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
 
-  foreach( each_file ${allfiles} )
-    set(destinationfile "${final_dir}/${final}/${each_file}")
-    set(sourcefile "${rel}/${each_file}")
-    add_custom_command(TARGET ${PROJECT_NAME}
-      POST_BUILD
-      COMMAND ${CMAKE_COMMAND}
-      -Ddestinationfile=${destinationfile}
-      -Dsourcefile=${sourcefile}
-      -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake
-      )
-  endforeach(each_file)
+    foreach( each_file ${allfiles} )
+      set(destinationfile "${final_dir}/${final}/${each_file}")
+      set(sourcefile "${rel}/${each_file}")
+      add_custom_command(TARGET ${PROJECT_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+        -Ddestinationfile=${destinationfile}
+        -Dsourcefile=${sourcefile}
+        -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake)
+    endforeach(each_file)
+  endif()
 endfunction()
 
 if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
+  FILE(REMOVE_RECURSE ASSET_DIR)
+  FILE(MAKE_DIRECTORY ASSET_DIR)
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 endif()
