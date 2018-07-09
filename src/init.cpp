@@ -51,7 +51,7 @@ namespace
 
 void main_loop()
 {
-    lua::lua.get_event_manager()
+    lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();
 
     while (true)
@@ -756,6 +756,7 @@ void initialize_elona()
 
 int run()
 {
+    lua::lua = std::make_unique<lua::lua_env>();
     const fs::path config_file = filesystem::dir::exe() / u8"config.json";
     initialize_cat_db();
 
@@ -770,8 +771,8 @@ int run()
     init_assets();
     initialize_elona();
 
-    lua::lua.scan_all_mods(filesystem::dir::mods());
-    lua::lua.load_core_mod(filesystem::dir::mods());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod(filesystem::dir::mods());
 
     start_elona();
 
@@ -1150,7 +1151,7 @@ void initialize_game()
         initialize_testbed();
         if (config::instance().startup_script != ""s)
         {
-            lua::lua.run_startup_script(config::instance().startup_script);
+            lua::lua->run_startup_script(config::instance().startup_script);
             script_loaded = true;
         }
         mode = 2;
@@ -1171,7 +1172,7 @@ void initialize_game()
 
     if (script_loaded)
     {
-        lua::lua.get_event_manager()
+        lua::lua->get_event_manager()
             .run_callbacks<lua::event_kind_t::script_loaded>();
     }
 }

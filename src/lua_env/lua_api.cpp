@@ -156,7 +156,7 @@ sol::optional<lua_character_handle> Chara::player()
     else
     {
         lua_character_handle handle =
-            lua::lua.get_handle_manager().get_chara_handle(elona::cdata[0]);
+            lua::lua->get_handle_manager().get_chara_handle(elona::cdata[0]);
         return handle;
     }
 }
@@ -174,7 +174,7 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
     if (elona::chara_create(-1, id, x, y) != 0)
     {
         lua_character_handle handle =
-            lua::lua.get_handle_manager().get_chara_handle(
+            lua::lua->get_handle_manager().get_chara_handle(
                 elona::cdata[elona::rc]);
         return handle;
     }
@@ -559,7 +559,7 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
     elona::flt();
     if (elona::itemcreate(-1, id, x, y, number) != 0)
     {
-        lua_item_handle handle = lua::lua.get_handle_manager().get_item_handle(
+        lua_item_handle handle = lua::lua->get_handle_manager().get_item_handle(
             elona::inv[elona::ci]); // TODO deglobalize ci
         return handle;
     }

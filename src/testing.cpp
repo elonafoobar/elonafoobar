@@ -84,7 +84,7 @@ void load_translations(const std::string& hcl)
 
 void configure_lua()
 {
-    sol::table Testing = lua::lua.get_state()->create_named_table("Testing");
+    sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
     Testing.set_function("load_translations", load_translations);
@@ -92,6 +92,7 @@ void configure_lua()
 
 void pre_init()
 {
+    lua::lua = std::make_unique<lua::lua_env>();
     log::initialize();
 
     initialize_cat_db();
@@ -106,8 +107,8 @@ void pre_init()
 
     config::instance().is_test = true;
 
-    lua::lua.scan_all_mods(filesystem::dir::mods());
-    lua::lua.load_core_mod(filesystem::dir::mods());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod(filesystem::dir::mods());
     configure_lua();
 }
 
@@ -120,7 +121,7 @@ void post_run()
 void reset_state()
 {
     config::instance().is_test = true;
-    lua::lua.reload();
+    lua::lua->reload();
     configure_lua();
     initialize_elona();
 

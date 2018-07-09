@@ -15,7 +15,7 @@ namespace elona
 namespace lua
 {
 
-lua_env lua;
+std::unique_ptr<lua_env> lua;
 
 lua_env::lua_env()
 {
@@ -27,6 +27,11 @@ lua_env::lua_env()
         sol::lib::debug,
         sol::lib::string,
         sol::lib::math);
+
+    // Add executable directory to package.path
+    fs::path exe_path = filesystem::dir::exe();
+    std::string normalized = filesystem::to_forward_slashes(exe_path);
+    lua->safe_script(u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
 
     // Create dummy Store table to prevent crashes on access from
     // state outside of an environment

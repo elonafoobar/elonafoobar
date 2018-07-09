@@ -688,8 +688,8 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
 
     {
         auto handle =
-            lua::lua.get_handle_manager().get_chara_handle(victim);
-        lua::lua.get_event_manager()
+            lua::lua->get_handle_manager().get_chara_handle(victim);
+        lua::lua->get_event_manager()
             .run_callbacks<lua::event_kind_t::character_damaged>(
                 handle, dmg_at_m141);
     }
