@@ -10,7 +10,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/SDL2/include \
 $(LOCAL_PATH)/$(SDL_PATH)/SDL2_mixer \
 $(LOCAL_PATH)/$(SDL_PATH)/SDL2_image \
 $(LOCAL_PATH)/$(SDL_PATH)/SDL2_ttf \
-$(LOCAL_PATH)/$(SDL_PATH)/boost/1.66.0/include
+$(LOCAL_PATH)/$(SDL_PATH)/boost/include
 
 LOCAL_CPP_FEATURES := exceptions rtti
 

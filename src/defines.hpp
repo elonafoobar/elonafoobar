@@ -16,7 +16,7 @@
 #define ELONA_OS_OTHERS
 #endif
 
-#if defined(ANDROID)
+#ifdef ELONA_OS_ANDROID
 #undef bcopy
 #include <android/log.h>
 
