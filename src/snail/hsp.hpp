@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "../filesystem.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "font.hpp"
@@ -9,6 +8,10 @@
 #include "rect.hpp"
 #include "size.hpp"
 #include "window.hpp"
+
+#define BOOST_FILESYSTEM_NO_DEPRECATED
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
 
 namespace elona
 {
@@ -31,7 +34,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 
 int timeGetTime();
 void mes(const std::string& text);
-void mesbox(std::string& buffer, bool text);
+void mesbox(std::string& buffer, int keywait, bool text);
 void picload(basic_image& img, int mode);
 void pos(int x, int y);
 void redraw();

@@ -1,3 +1,7 @@
+#ifdef ANDROID
+#include "sdl.hpp"
+#endif
+
 namespace elona
 {
 namespace snail

@@ -2,11 +2,14 @@
 
 #include <memory>
 #include <string>
-#include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
+
+#define BOOST_FILESYSTEM_NO_DEPRECATED
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
 
 
 namespace elona

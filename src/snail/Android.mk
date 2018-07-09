@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := snail
 
-SDL_PATH := ..
+SDL_PATH := ../../android/external
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/SDL2/include \
 $(LOCAL_PATH)/$(SDL_PATH)/SDL2_mixer \

@@ -1,3 +1,6 @@
+#ifdef ANDROID
+#include "../renderer.hpp"
+#endif
 #include "../detail/sdl.hpp"
 #include <iostream>
 #include <sstream>

@@ -1,3 +1,6 @@
+#ifdef ANDROID
+#include "../application.hpp"
+#endif
 #include <algorithm>
 #include <map>
 #include <sstream>

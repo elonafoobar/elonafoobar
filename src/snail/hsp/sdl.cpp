@@ -5,7 +5,6 @@
 // TODO: this dependency is not good.
 #include <iostream>
 #include <unordered_map>
-#include "../../config.hpp"
 #include "../detail/sdl.hpp"
 #include "../window.hpp"
 
@@ -201,8 +200,9 @@ namespace mesbox_detail
 
 struct MessageBox
 {
-    MessageBox(std::string& buffer, bool text)
+    MessageBox(std::string& buffer, int keywait, bool text)
         : buffer(buffer)
+        , keywait(keywait)
         , text(text)
     {
     }
@@ -265,9 +265,8 @@ struct MessageBox
         }
         else
         {
-            if (input.is_pressed(key::enter, config::instance().keywait)
-                || input.is_pressed(
-                       key::keypad_enter, config::instance().keywait))
+            if (input.is_pressed(key::enter, keywait)
+                || input.is_pressed(key::keypad_enter, keywait))
             {
                 // New line.
                 buffer += '\n';
@@ -278,6 +277,7 @@ struct MessageBox
 
 private:
     std::string& buffer;
+    int keywait;
     bool text;
     int backspace_held_frames{};
 };
@@ -326,10 +326,10 @@ void mes(const std::string& text)
     }
 }
 
-void mesbox(std::string& buffer, bool text)
+void mesbox(std::string& buffer, int keywait, bool text)
 {
     mesbox_detail::message_boxes.emplace_back(
-        std::make_unique<mesbox_detail::MessageBox>(buffer, text));
+        std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 }
 
 void picload(basic_image& img, int mode)

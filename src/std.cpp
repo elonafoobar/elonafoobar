@@ -514,7 +514,7 @@ void mes(int n)
 
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, text);
+    snail::hsp::mesbox(buffer, config::instance().keywait, text);
 }
 
 

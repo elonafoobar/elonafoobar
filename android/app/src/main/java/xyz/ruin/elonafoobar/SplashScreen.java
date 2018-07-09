@@ -1,4 +1,4 @@
-package xyz.ruin.ElonaFoobar;
+package xyz.ruin.elonafoobar;
 
 import java.io.File;
 import java.io.FileOutputStream;
