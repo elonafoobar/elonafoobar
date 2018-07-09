@@ -1257,7 +1257,7 @@ label_2061_internal:
                 if (invctrl == 12)
                 {
                     txt(i18n::s.get("core.locale.ui.inv.sell.prompt",
-                                    itemname(ci, in), (in * calcitemvalue(ci, 0))));
+                                    itemname(ci, in), (in * calcitemvalue(ci, 1))));
                 }
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
