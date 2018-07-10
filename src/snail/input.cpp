@@ -10,6 +10,10 @@
 
 using namespace elona::snail;
 
+#include <android/log.h>
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOG_TAG    "ElonaFoobar"
+
 
 namespace
 {
@@ -293,6 +297,9 @@ x         x         x         x         x
 */
 bool input::is_pressed(key k, int key_wait) const
 {
+    if (key_wait <= 0)
+        key_wait = 1;
+
     const auto& key = _keys[static_cast<size_t>(k)];
     return key.is_pressed() && key.repeat() % key_wait == 0;
 }
@@ -427,16 +434,19 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 
     if (key)
     {
+        LOGD("KEY");
         if (last_key && *last_key != *key)
         {
             _keys[static_cast<size_t>(*last_key)]._release();
         }
         if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
         {
+            LOGD("down");
             _keys[static_cast<size_t>(*key)]._press();
         }
         else
         {
+            LOGD("up");
             _keys[static_cast<size_t>(*key)]._release();
         }
     }

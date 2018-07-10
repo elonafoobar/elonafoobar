@@ -55,6 +55,7 @@ private:
     touch_input() = default;
     void draw_quick_action(const quick_action&);
     std::vector<quick_action> quick_actions_;
+    bool initialized_ = false;
 
     std::unique_ptr<basic_image> quick_action_image_ = nullptr;
     std::unique_ptr<basic_image> joystick_image_ = nullptr;

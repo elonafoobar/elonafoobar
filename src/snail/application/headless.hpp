@@ -21,7 +21,7 @@ public:
 
     int width() const noexcept
     {
-        return 801;
+        return 800;
     }
 
 
@@ -32,11 +32,7 @@ public:
 
     bool is_android() const noexcept
     {
-#ifdef ANDROID
-        return true;
-#else
         return false;
-#endif
     }
 
     const std::string& title() const noexcept

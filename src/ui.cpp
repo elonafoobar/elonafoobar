@@ -9,7 +9,6 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "random.hpp"
-#include "snail/touch_input.hpp"
 #include "variables.hpp"
 
 
@@ -602,12 +601,6 @@ void update_screen()
         redraw();
     }
     screenupdate = 0;
-
-    // TODO cleanup
-    if(snail::application::instance().is_android())
-    {
-        snail::touch_input::instance().draw_quick_actions();
-    }
 }
 
 

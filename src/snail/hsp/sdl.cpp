@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "../detail/sdl.hpp"
 #include "../window.hpp"
+#include "../touch_input.hpp"
 
 #include <android/log.h>
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -267,6 +268,8 @@ struct MessageBox
         }
         else
         {
+            //TODO remove
+            keywait = 10;
             if (input.is_pressed(key::enter, keywait)
                 || input.is_pressed(key::keypad_enter, keywait))
             {
@@ -356,6 +359,12 @@ void pos(int x, int y)
 
 void redraw()
 {
+    // TODO cleanup
+    if(application::instance().is_android())
+    {
+        touch_input::instance().draw_quick_actions();
+    }
+
     auto& renderer = application::instance().get_renderer();
     const auto save = renderer.render_target();
     renderer.set_render_target(nullptr);

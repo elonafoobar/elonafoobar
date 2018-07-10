@@ -151,8 +151,8 @@ if(ANDROID)
 
   set(EXTERNAL_LIB_LOCATION ${CMAKE_SOURCE_DIR}/android/external)
 
-  SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
-  add_definitions(-DSNAIL_RENDERER_HEADLESS)
+  SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  add_definitions(-DSNAIL_RENDERER_SDL)
 
   add_library( SDL2 SHARED IMPORTED )
   add_library( SDL2_image SHARED IMPORTED )
