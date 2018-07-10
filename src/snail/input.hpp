@@ -299,6 +299,7 @@ public:
     void _handle_event(const ::SDL_KeyboardEvent& event);
     void _handle_event(const ::SDL_TextInputEvent& event);
     void _handle_event(const ::SDL_TextEditingEvent& event);
+    void _handle_event(const ::SDL_TouchFingerEvent& event);
 
 
 private:

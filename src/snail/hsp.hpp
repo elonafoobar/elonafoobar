@@ -8,10 +8,7 @@
 #include "rect.hpp"
 #include "size.hpp"
 #include "window.hpp"
-
-#define BOOST_FILESYSTEM_NO_DEPRECATED
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
+#include "filesystem.hpp"
 
 namespace elona
 {

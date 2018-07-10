@@ -140,29 +140,23 @@ public class SplashScreen extends Activity {
 				// Clear out the old data if it exists (but preserve custom folders + files)
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/data"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/graphic"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/lang"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/map"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/original"));
+				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/lang"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/sound"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/tmp"));
 				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/user"));
 
 				// Install the new data over the top
 				copyAssetFolder(assetManager, "data", externalFilesDir + "/data");
-				copyAssetFolder(assetManager, "font", externalFilesDir + "/font");
 				copyAssetFolder(assetManager, "graphic", externalFilesDir + "/graphic");
-				copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
-				copyAssetFolder(assetManager, "locale", externalFilesDir + "/locale");
 				copyAssetFolder(assetManager, "map", externalFilesDir + "/map");
-				copyAssetFolder(assetManager, "mods", externalFilesDir + "/mods");
 				copyAssetFolder(assetManager, "original", externalFilesDir + "/original");
+				copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
 				copyAssetFolder(assetManager, "runtime", externalFilesDir);
 				copyAssetFolder(assetManager, "sound", externalFilesDir + "/sound");
 				copyAssetFolder(assetManager, "tmp", externalFilesDir + "/tmp");
 				copyAssetFolder(assetManager, "user", externalFilesDir + "/user");
-				copyAssetFolder(assetManager, "assets.hcl", externalFilesDir);
-				copyAssetFolder(assetManager, "config.json", externalFilesDir);
-				copyAssetFolder(assetManager, "__init__.lua", externalFilesDir);
             } catch(Exception e) {
 				alert.setMessage(e.getMessage());
 				return false;

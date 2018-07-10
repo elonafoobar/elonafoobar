@@ -6,10 +6,7 @@
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
-
-#define BOOST_FILESYSTEM_NO_DEPRECATED
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
+#include "filesystem.hpp"
 
 
 namespace elona

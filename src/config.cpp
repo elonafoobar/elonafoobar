@@ -407,7 +407,15 @@ void load_config(const fs::path& hcl_file)
     }
     if (config::instance().language == spec::unknown_enum_variant)
     {
-        config_query_language();
+        // TODO cleanup
+        if (snail::application::instance().is_android())
+        {
+            config::instance().language = 0;
+        }
+        else
+        {
+            config_query_language();
+        }
     }
     if (config::instance().language == "jp")
     {

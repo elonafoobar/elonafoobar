@@ -21,13 +21,22 @@ public:
 
     int width() const noexcept
     {
-        return 800;
+        return 801;
     }
 
 
     int height() const noexcept
     {
         return 600;
+    }
+
+    bool is_android() const noexcept
+    {
+#ifdef ANDROID
+        return true;
+#else
+        return false;
+#endif
     }
 
     const std::string& title() const noexcept

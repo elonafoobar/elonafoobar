@@ -16,12 +16,13 @@ set(SNAIL_SOURCES
     detail/sdl.cpp
     font.cpp
     fpsmanager.cpp
+    hsp.cpp
     image.cpp
     input.cpp
     messagebox.cpp
     renderer.cpp
     scene.cpp
-    hsp.cpp
+    touch_input.cpp
     window.cpp
 )
 

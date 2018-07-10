@@ -14,6 +14,10 @@ namespace snail
 
 
 
+#include <android/log.h>
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOG_TAG    "ElonaFoobar"
+
 application& application::instance()
 {
     static application the_instance;
@@ -164,6 +168,11 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
     case SDL_TEXTINPUT: input::instance()._handle_event(event.text); break;
     case SDL_TEXTEDITING: input::instance()._handle_event(event.edit); break;
+    case SDL_FINGERMOTION:
+    case SDL_FINGERDOWN:
+    case SDL_FINGERUP:
+        input::instance()._handle_event(event.tfinger);
+        break;
     default: break;
     }
 }

@@ -1,4 +1,5 @@
 #include "input.hpp"
+#include "touch_input.hpp"
 #include <cassert>
 #include <algorithm>
 #include <iostream>
@@ -416,6 +417,36 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
     _is_ime_active = true;
 }
 
+
+void input::_handle_event(const ::SDL_TouchFingerEvent& event)
+{
+    (void)event;
+
+    static optional<snail::key> last_key = none;
+    optional<snail::key> key = touch_input::instance().get_touched_quick_action(event);
+
+    if (key)
+    {
+        if (last_key && *last_key != *key)
+        {
+            _keys[static_cast<size_t>(*last_key)]._release();
+        }
+        if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
+        {
+            _keys[static_cast<size_t>(*key)]._press();
+        }
+        else
+        {
+            _keys[static_cast<size_t>(*key)]._release();
+        }
+    }
+    else if (last_key)
+    {
+        _keys[static_cast<size_t>(*last_key)]._release();
+    }
+
+    last_key = key;
+}
 
 
 } // namespace snail

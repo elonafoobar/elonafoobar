@@ -413,12 +413,11 @@ if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
   FILE(REMOVE_RECURSE ${ASSET_DIR})
   FILE(MAKE_DIRECTORY ${ASSET_DIR})
+  copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} "runtime")
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+  copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} ".")
 endif()
-
-# Copy folders
-copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} ".")
 
 # Copy assets from Elona 1.22 if they are present
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")

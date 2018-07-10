@@ -44,10 +44,6 @@ int main(int argc, char** argv)
     {
         report_error(e.what());
     }
-    catch (...)
-    {
-        report_error("Unknown error happened.");
-    }
 
     return 0;
 }

@@ -7,6 +7,9 @@
 #include "../detail/sdl.hpp"
 #include "../window.hpp"
 
+#include <android/log.h>
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOG_TAG    "ElonaFoobar"
 
 namespace
 {
@@ -764,11 +767,19 @@ void title(
 {
     application::instance().initialize(title_str);
 
-    if (display_mode != "__unknown__")
+    if (application::instance().is_android())
     {
-        application::instance().set_display_mode(display_mode);
+        application::instance().set_display_mode(application::instance().get_default_display_mode());
+        application::instance().set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);
     }
-    application::instance().set_fullscreen_mode(fullscreen_mode);
+    else if (display_mode != "__unknown__")
+    {
+        if (display_mode != "")
+        {
+            application::instance().set_display_mode(display_mode);
+        }
+        application::instance().set_fullscreen_mode(fullscreen_mode);
+    }
 
     detail::setup_tmp_buffers();
     application::instance().register_finalizer(
