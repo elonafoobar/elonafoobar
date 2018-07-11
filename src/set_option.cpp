@@ -30,6 +30,9 @@ public:
     }
 
     virtual ~config_menu_item_base() noexcept = default;
+
+    virtual void change(int p) = 0;
+    virtual std::string get_message() = 0;
 };
 
 
@@ -63,7 +66,10 @@ public:
         {
             variable = false;
         }
+
+        config::instance().set(ptr->key, ptr->variable);
     }
+    std::string get_message() { return variable ? yes : no; }
 
     virtual ~config_menu_item_yesno() noexcept = default;
 };
@@ -83,6 +89,9 @@ public:
     }
 
     virtual ~config_menu_item_info() noexcept = default;
+
+    void change(int p) {}
+    std::string get_message() { return info; }
 };
 
 
@@ -112,9 +121,10 @@ public:
     void change(int p)
     {
         variable = clamp(variable + p, min, max);
+        config::instance().set(ptr->key, ptr->variable);
     }
 
-    std::string get_text()
+    std::string get_message()
     {
         return i18n::fmt_hil(text, variable);
     }
@@ -155,9 +165,10 @@ public:
         {
             variable = static_cast<int>(texts.size() - 1);
         }
+        config::instance().set(ptr->key, ptr->variable);
     }
 
-    std::string get_text()
+    std::string get_message()
     {
         return texts[variable];
     }
@@ -180,7 +191,39 @@ public:
         , height(height)
     {
     }
+
+    virtual void draw()
+    {
+        pos(wx + 40, wy + wh - 70);
+        font(12 + sizefix - en * 2);
+        if (jp)
+        {
+            mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
+        }
+        else
+        {
+            mes(u8"Items marked with * require restart to apply changes."s);
+        }
+    }
 };
+
+class config_menu_joystick : public config_menu
+{
+public:
+    void draw()
+    {
+        pos(wx + 40, wy + wh - 110);
+        font(12 + sizefix - en * 2);
+        if (jp)
+        {
+            mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
+        }
+        else
+        {
+            mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
+        }
+    }
+}
 
 
 #define ELONA_CONFIG_ITEM(def_key, locale_key)                                  \
@@ -218,15 +261,25 @@ void visit_toplevel(config& conf, std::vector<config_menu>& ret)
     int w = 370;
     int h = 165 + ((font_size + 1) * children.size());
 
-    ret.emplace_back(i18n::s.get(conf.get_def().get_locale_root() + ".name"), w, h);
+    std::string menu_name_key = conf.get_def().get_locale_root() + ".name";
+    ret.emplace_back(i18n::s.get(menu_name_key), w, h);
 
+    // Add the names of top-level config menu sections if they are visible.
     for (const auto& child : conf.get_def().get_children(def_key))
     {
-        if (conf.get_def().is_visible(def_key + "." + child))
+        // EX: "core.config.language"
+        std::string section_key = def_key + "." + child;
+
+        if (conf.get_def().is_visible(section_key))
         {
-            ELONA_CONFIG_ITEM(def_key + "." + child, conf.get_def().get_locale_root() + "." + child);
+            // EX: "core.locale.config.menu.language"
+            std::string locale_key = conf.get_def().get_locale_root() + "." + child;
+
+            ELONA_CONFIG_ITEM(section_key, locale_key);
         }
     }
+
+    // Add all sections and their config items.
     for (const auto& child : conf.get_def().get_children(def_key))
     {
         visit_section(conf, child, ret);
@@ -235,13 +288,18 @@ void visit_toplevel(config& conf, std::vector<config_menu>& ret)
 
 void visit_section(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
 {
+    // EX: "core.config.language"
     std::string def_key = "core.config." + current_key;
+
+    // EX: "core.locale.config.menu.language"
     std::string locale_key = conf.get_def().get_locale_root() + "." + current_key;
+
     auto children = conf.get_def().get_children(def_key);
     int font_size = 14;
     int w = 440;
     int h = 165 + ((font_size + 1) * children.size());
 
+    // Ensure the section exists in the config definition.
     if (!conf.get_def().exists(def_key))
     {
         throw std::runtime_error("No such config option \"" + current_key + "\".");
@@ -251,9 +309,11 @@ void visit_section(config& conf, const std::string& current_key, std::vector<con
         return;
     }
 
+    // Add the translated name to the menu.
     std::cout << locale_key << std::endl;
     ret.emplace_back(i18n::s.get(locale_key + ".name"), w, h);
 
+    // Visit child config items of this section.
     for (const auto& child : conf.get_def().get_children(def_key))
     {
         visit_config_item(conf, current_key + "." + child, ret);
@@ -276,14 +336,29 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
 
     if (conf.get_def().is<config_def::config_bool_def>(def_key))
     {
-        ELONA_CONFIG_ITEM_YESNO(def_key, locale_key, "asd", "zxc");
+        // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
+        std::string yes_no = "core.locale.config.common_yes_no.default";
+        if (auto text = i18n::s.get(locale_key + ".yes_no"))
+        {
+            yes_no = *text;
+        }
+        ELONA_CONFIG_ITEM_YESNO(def_key, locale_key,
+                                i18n::s.get(yes_no + ".yes"),
+                                i18n::s.get(yes_no + ".no"));
     }
     else if (conf.get_def().is<config_def::config_int_def>(def_key))
     {
-        ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, "${_1} asd");
+        // TODO move to lua
+        std::string formatter = "${_1}";
+        if (auto text = i18n::s.get(locale_key + ".formatter"))
+        {
+            formatter = *text;
+        }
+        ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter);
     }
     else if (conf.get_def().is<config_def::config_enum_def>(def_key))
     {
+        // Add the translated names of all variants.
         const auto& variants = conf.get_def().get_variants(def_key);
         std::vector<std::string> choices;
 
@@ -297,6 +372,7 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     else if (conf.get_def().is<config_def::config_string_def>(def_key))
     {
         // ignore
+        // TODO: don't ignore, allow text input
     }
     else if (conf.get_def().is<config_def::config_list_def>(def_key))
     {
@@ -308,7 +384,7 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     }
     else
     {
-        throw std::runtime_error("asdf");
+        throw std::runtime_error("unknown config def item");
     }
 }
 
@@ -794,29 +870,9 @@ set_option_begin:
                 gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
-            if (auto ptr = dynamic_cast<config_menu_item_yesno*>(
-                    config_menu_definitions[submenu].items[cnt].get()))
-            {
-                mes(ptr->variable ? ptr->yes : ptr->no);
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_info*>(
-                    config_menu_definitions[submenu].items[cnt].get()))
-            {
-                mes(ptr->info);
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_integer*>(
-                    config_menu_definitions[submenu].items[cnt].get()))
-            {
-                mes(ptr->get_text());
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_choice*>(
-                    config_menu_definitions[submenu].items[cnt].get()))
-            {
-                mes(ptr->get_text());
-            }
+
+            mes(config_menu_definitions[submenu].items[cnt].get()->get_message());
+
             // else if (submenu == 1)
             // {
             //     if (cnt == 6)
@@ -903,35 +959,8 @@ set_option_begin:
             //     }
             // }
         }
-        // if (submenu != 0)
-        // {
-        //     if (submenu != 5)
-        //     {
-        //         pos(wx + 40, wy + wh - 70);
-        //         font(12 + sizefix - en * 2);
-        //         if (jp)
-        //         {
-        //             mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
-        //         }
-        //         else
-        //         {
-        //             mes(u8"Items marked with * require restart to apply changes."s);
-        //         }
-        //     }
-        // }
-        // if (submenu == 5)
-        // {
-        //     pos(wx + 40, wy + wh - 110);
-        //     font(12 + sizefix - en * 2);
-        //     if (jp)
-        //     {
-        //         mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
-        //     }
-        //     else
-        //     {
-        //         mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
-        //     }
-        // }
+
+        config_menu_definitions[submenu].draw();
         if (keyrange != 0)
         {
             cs_bk = cs;
@@ -1031,763 +1060,11 @@ set_option_begin:
             {
                 p = -1;
             }
-            if (auto ptr = dynamic_cast<config_menu_item_yesno*>(
-                    config_menu_definitions[submenu].items[cs].get()))
-            {
-                ptr->change(p);
-                config::instance().set(ptr->key, ptr->variable);
-                snd(20);
-                reset_page = true;
-                continue;
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_info*>(
-                    config_menu_definitions[submenu].items[cs].get()))
-            {
-                // ignore
-                snd(20);
-                reset_page = true;
-                continue;
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_integer*>(
-                    config_menu_definitions[submenu].items[cs].get()))
-            {
-                ptr->change(p);
-                config::instance().set(ptr->key, ptr->variable);
-                snd(20);
-                reset_page = true;
-                continue;
-            }
-            else if (
-                auto ptr = dynamic_cast<config_menu_item_choice*>(
-                    config_menu_definitions[submenu].items[cs].get()))
-            {
-                ptr->change(p);
-                config::instance().set(ptr->key, ptr->variable);
-                snd(20);
-                reset_page = true;
-                continue;
-            }
-            // if (submenu == 1)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().extrahelp += p;
-            //         if (config::instance().extrahelp > 1)
-            //         {
-            //             config::instance().extrahelp = 1;
-            //         }
-            //         else if (config::instance().extrahelp < 0)
-            //         {
-            //             config::instance().extrahelp = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"extraHelp", config::instance().extrahelp);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         config::instance().extrarace += p;
-            //         if (config::instance().extrarace > 1)
-            //         {
-            //             config::instance().extrarace = 1;
-            //         }
-            //         else if (config::instance().extrarace < 0)
-            //         {
-            //             config::instance().extrarace = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"extraRace", config::instance().extrarace);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 2)
-            //     {
-            //         config::instance().extraclass += p;
-            //         if (config::instance().extraclass > 1)
-            //         {
-            //             config::instance().extraclass = 1;
-            //         }
-            //         else if (config::instance().extraclass < 0)
-            //         {
-            //             config::instance().extraclass = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"extraClass", config::instance().extraclass);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 3)
-            //     {
-            //         config::instance().ignoredislike += p;
-            //         if (config::instance().ignoredislike > 1)
-            //         {
-            //             config::instance().ignoredislike = 1;
-            //         }
-            //         else if (config::instance().ignoredislike < 0)
-            //         {
-            //             config::instance().ignoredislike = 0;
-            //         }
-            //         snd(20);
-            //         set_config(
-            //             u8"ignoreDislike", config::instance().ignoredislike);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 4)
-            //     {
-            //         config::instance().zkey += p;
-            //         if (config::instance().zkey > 2)
-            //         {
-            //             config::instance().zkey = 2;
-            //         }
-            //         else if (config::instance().zkey < 0)
-            //         {
-            //             config::instance().zkey = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"zkey", config::instance().zkey);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 5)
-            //     {
-            //         config::instance().xkey += p;
-            //         if (config::instance().xkey > 2)
-            //         {
-            //             config::instance().xkey = 2;
-            //         }
-            //         else if (config::instance().xkey < 0)
-            //         {
-            //             config::instance().xkey = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"xkey", config::instance().xkey);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 6)
-            //     {
-            //         config::instance().startrun += p;
-            //         if (config::instance().startrun > 20)
-            //         {
-            //             config::instance().startrun = 20;
-            //         }
-            //         else if (config::instance().startrun < 0)
-            //         {
-            //             config::instance().startrun = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"startRun", config::instance().startrun);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 7)
-            //     {
-            //         config::instance().walkwait += p;
-            //         if (config::instance().walkwait > 10)
-            //         {
-            //             config::instance().walkwait = 10;
-            //         }
-            //         else if (config::instance().walkwait < 1)
-            //         {
-            //             config::instance().walkwait = 1;
-            //         }
-            //         snd(20);
-            //         set_config(u8"walkWait", config::instance().walkwait);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 8)
-            //     {
-            //         config::instance().attackwait += p;
-            //         if (config::instance().attackwait > 20)
-            //         {
-            //             config::instance().attackwait = 20;
-            //         }
-            //         else if (config::instance().attackwait < 1)
-            //         {
-            //             config::instance().attackwait = 1;
-            //         }
-            //         snd(20);
-            //         set_config(u8"attackWait", config::instance().attackwait);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 9)
-            //     {
-            //         config::instance().animewait += p;
-            //         if (config::instance().animewait > 30)
-            //         {
-            //             config::instance().animewait = 30;
-            //         }
-            //         else if (config::instance().animewait < 0)
-            //         {
-            //             config::instance().animewait = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"anime_wait", config::instance().animewait);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 10)
-            //     {
-            //         config::instance().alert += p;
-            //         if (config::instance().alert > 50)
-            //         {
-            //             config::instance().alert = 50;
-            //         }
-            //         else if (config::instance().alert < 0)
-            //         {
-            //             config::instance().alert = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"alert_wait", config::instance().alert);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 11)
-            //     {
-            //         config::instance().keywait += p;
-            //         if (config::instance().keywait > 10)
-            //         {
-            //             config::instance().keywait = 10;
-            //         }
-            //         else if (config::instance().keywait < 1)
-            //         {
-            //             config::instance().keywait = 1;
-            //         }
-            //         snd(20);
-            //         set_config(u8"keyWait", config::instance().keywait);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 2)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         cfg_sound2 += p;
-            //         if (cfg_sound2 > 1)
-            //         {
-            //             cfg_sound2 = 1;
-            //         }
-            //         else if (cfg_sound2 < 0)
-            //         {
-            //             cfg_sound2 = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"sound", cfg_sound2);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         cfg_music2 += p;
-            //         if (cfg_music2 > 2)
-            //         {
-            //             cfg_music2 = 2;
-            //         }
-            //         else if (cfg_music2 < 0)
-            //         {
-            //             cfg_music2 = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"music", cfg_music2);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 2)
-            //     {
-            //         cfg_fullscreen2 += p;
-            //         if (cfg_fullscreen2 > 2)
-            //         {
-            //             cfg_fullscreen2 = 2;
-            //         }
-            //         else if (cfg_fullscreen2 < 0)
-            //         {
-            //             cfg_fullscreen2 = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"fullscreen", cfg_fullscreen2);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 4)
-            //     {
-            //         config::instance().scroll += p;
-            //         if (config::instance().scroll > 1)
-            //         {
-            //             config::instance().scroll = 1;
-            //         }
-            //         else if (config::instance().scroll < 0)
-            //         {
-            //             config::instance().scroll = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"scroll", config::instance().scroll);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 5)
-            //     {
-            //         config::instance().alwayscenter += p;
-            //         if (config::instance().alwayscenter > 1)
-            //         {
-            //             config::instance().alwayscenter = 1;
-            //         }
-            //         else if (config::instance().alwayscenter < 0)
-            //         {
-            //             config::instance().alwayscenter = 0;
-            //         }
-            //         snd(20);
-            //         set_config(
-            //             u8"alwaysCenter", config::instance().alwayscenter);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 6)
-            //     {
-            //         config::instance().heart += p;
-            //         if (config::instance().heart > 1)
-            //         {
-            //             config::instance().heart = 1;
-            //         }
-            //         else if (config::instance().heart < 0)
-            //         {
-            //             config::instance().heart = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"heartbeat", config::instance().heart);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 7)
-            //     {
-            //         config::instance().attackanime += p;
-            //         if (config::instance().attackanime > 1)
-            //         {
-            //             config::instance().attackanime = 1;
-            //         }
-            //         else if (config::instance().attackanime < 0)
-            //         {
-            //             config::instance().attackanime = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"attackAnime", config::instance().attackanime);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 8)
-            //     {
-            //         config::instance().env += p;
-            //         if (config::instance().env > 1)
-            //         {
-            //             config::instance().env = 1;
-            //         }
-            //         else if (config::instance().env < 0)
-            //         {
-            //             config::instance().env = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"envEffect", config::instance().env);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 9)
-            //     {
-            //         config::instance().shadow += p;
-            //         if (config::instance().shadow > 1)
-            //         {
-            //             config::instance().shadow = 1;
-            //         }
-            //         else if (config::instance().shadow < 0)
-            //         {
-            //             config::instance().shadow = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"shadow", config::instance().shadow);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 10)
-            //     {
-            //         config::instance().objectshadow += p;
-            //         if (config::instance().objectshadow > 1)
-            //         {
-            //             config::instance().objectshadow = 1;
-            //         }
-            //         else if (config::instance().objectshadow < 0)
-            //         {
-            //             config::instance().objectshadow = 0;
-            //         }
-            //         snd(20);
-            //         set_config(
-            //             u8"objectShadow", config::instance().objectshadow);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 3)
-            //     {
-            //         display_mode_index += p;
-            //         if (display_mode_index < 0)
-            //         {
-            //             display_mode_index = 0;
-            //         }
-            //         else if (display_mode_index > static_cast<int>(display_mode_names.size()) - 1)
-            //         {
-            //             display_mode_index = static_cast<int>(display_mode_names.size()) - 1;
-            //         }
-            //         cfg_display_mode = display_mode_names[display_mode_index];
-            //         auto display_mode = display_modes.at(cfg_display_mode);
-            //         windoww2 = display_mode.w;
-            //         windowh2 = display_mode.h;
-            //         set_config(u8"display_mode", cfg_display_mode);
-            //         snd(20);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 3)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().net += p;
-            //         if (config::instance().net > 1)
-            //         {
-            //             config::instance().net = 1;
-            //         }
-            //         else if (config::instance().net < 0)
-            //         {
-            //             config::instance().net = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"net", config::instance().net);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         config::instance().netwish += p;
-            //         if (config::instance().netwish > 1)
-            //         {
-            //             config::instance().netwish = 1;
-            //         }
-            //         else if (config::instance().netwish < 0)
-            //         {
-            //             config::instance().netwish = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"netWish", config::instance().netwish);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 2)
-            //     {
-            //         config::instance().netchat += p;
-            //         if (config::instance().netchat > 1)
-            //         {
-            //             config::instance().netchat = 1;
-            //         }
-            //         else if (config::instance().netchat < 0)
-            //         {
-            //             config::instance().netchat = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"netChat", config::instance().netchat);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 4)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().runwait += p;
-            //         if (config::instance().runwait > 5)
-            //         {
-            //             config::instance().runwait = 5;
-            //         }
-            //         else if (config::instance().runwait < 2)
-            //         {
-            //             config::instance().runwait = 2;
-            //         }
-            //         snd(20);
-            //         set_config(u8"runWait", config::instance().runwait);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         config::instance().autonumlock += p;
-            //         if (config::instance().autonumlock > 1)
-            //         {
-            //             config::instance().autonumlock = 1;
-            //         }
-            //         else if (config::instance().autonumlock < 0)
-            //         {
-            //             config::instance().autonumlock = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"autoNumlock", config::instance().autonumlock);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 2)
-            //     {
-            //         snd(20);
-            //         set_config(u8"titleEffect", 0);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 3)
-            //     {
-            //         config::instance().scrsync += p;
-            //         if (config::instance().scrsync > 25)
-            //         {
-            //             config::instance().scrsync = 25;
-            //         }
-            //         else if (config::instance().scrsync < 2)
-            //         {
-            //             config::instance().scrsync = 2;
-            //         }
-            //         snd(20);
-            //         set_config(u8"scr_sync", config::instance().scrsync);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 4)
-            //     {
-            //         config::instance().runscroll += p;
-            //         if (config::instance().runscroll > 1)
-            //         {
-            //             config::instance().runscroll = 1;
-            //         }
-            //         else if (config::instance().runscroll < 0)
-            //         {
-            //             config::instance().runscroll = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"scroll_run", config::instance().runscroll);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 5)
-            //     {
-            //         config::instance().autoturn += p;
-            //         if (config::instance().autoturn > 2)
-            //         {
-            //             config::instance().autoturn = 2;
-            //         }
-            //         else if (config::instance().autoturn < 0)
-            //         {
-            //             config::instance().autoturn = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"autoTurnType", config::instance().autoturn);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 6)
-            //     {
-            //         config::instance().skiprandevents += p;
-            //         if (config::instance().skiprandevents > 1)
-            //         {
-            //             config::instance().skiprandevents = 1;
-            //         }
-            //         else if (config::instance().skiprandevents < 0)
-            //         {
-            //             config::instance().skiprandevents = 0;
-            //         }
-            //         snd(20);
-            //         set_config(
-            //             u8"skipRandEvents", config::instance().skiprandevents);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 5)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().joypad += p;
-            //         if (config::instance().joypad > 1)
-            //         {
-            //             config::instance().joypad = 1;
-            //         }
-            //         else if (config::instance().joypad < 0)
-            //         {
-            //             config::instance().joypad = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"joypad", config::instance().joypad);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 6)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().msgaddtime += p;
-            //         if (config::instance().msgaddtime > 1)
-            //         {
-            //             config::instance().msgaddtime = 1;
-            //         }
-            //         else if (config::instance().msgaddtime < 0)
-            //         {
-            //             config::instance().msgaddtime = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"msg_addTime", config::instance().msgaddtime);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         config::instance().msgtrans += p;
-            //         if (config::instance().msgtrans > 5)
-            //         {
-            //             config::instance().msgtrans = 5;
-            //         }
-            //         else if (config::instance().msgtrans < 0)
-            //         {
-            //             config::instance().msgtrans = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"msg_trans", config::instance().msgtrans);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 7)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().language += p;
-            //         if (config::instance().language > 1)
-            //         {
-            //             config::instance().language = 1;
-            //         }
-            //         else if (config::instance().language < 0)
-            //         {
-            //             config::instance().language = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"language", config::instance().language);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            // }
-            // if (submenu == 8)
-            // {
-            //     if (cs == 0)
-            //     {
-            //         config::instance().hp_bar += p;
-            //         if (config::instance().hp_bar > 2)
-            //         {
-            //             config::instance().hp_bar = 2;
-            //         }
-            //         else if (config::instance().hp_bar < 0)
-            //         {
-            //             config::instance().hp_bar = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"hpBar", config::instance().hp_bar);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 1)
-            //     {
-            //         config::instance().leash_icon += p;
-            //         if (config::instance().leash_icon > 1)
-            //         {
-            //             config::instance().leash_icon = 1;
-            //         }
-            //         else if (config::instance().leash_icon < 0)
-            //         {
-            //             config::instance().leash_icon = 0;
-            //         }
-            //         snd(20);
-            //         set_config(u8"leashIcon", config::instance().leash_icon);
-            //         reset_page = true;
-            //         continue;
-            //     }
-            //     if (cs == 2)
-            //     {
-            //         config::instance().use_autopick += p;
-            //         if (config::instance().use_autopick > 1)
-            //         {
-            //             config::instance().use_autopick = 1;
-            //         }
-            //         else if (config::instance().use_autopick < 0)
-            //         {
-            //            config::instance().use_autopick = 0;
-            //        }
-            //        snd(20);
-            //        set_config(
-            //            u8"use_autopick", config::instance().use_autopick);
-            //        reset_page = true;
-            //        continue;
-            //    }
-            //    if (cs == 3)
-            //    {
-            //        config::instance().autosave += p;
-            //        if (config::instance().autosave > 1)
-            //        {
-            //            config::instance().autosave = 1;
-            //        }
-            //        else if (config::instance().autosave < 0)
-            //        {
-            //            config::instance().autosave = 0;
-            //        }
-            //        snd(20);
-            //        set_config(u8"autosave", config::instance().autosave);
-            //        reset_page = true;
-            //        continue;
-            //    }
-            //    if (cs == 4)
-            //    {
-            //        config::instance().restock_interval += p;
-            //        if (config::instance().restock_interval > 10)
-            //        {
-            //            config::instance().restock_interval = 10;
-            //        }
-            //        else if (config::instance().restock_interval < 0)
-            //        {
-            //            config::instance().restock_interval = 0;
-            //        }
-            //        snd(20);
-            //        set_config(
-            //            u8"restock_interval",
-            //            config::instance().restock_interval);
-            //        reset_page = true;
-            //        continue;
-            //    }
-            //    if (cs == 5)
-            //    {
-            //        config::instance().damage_popup += p;
-            //        if (config::instance().damage_popup > 1)
-            //        {
-            //            config::instance().damage_popup = 1;
-            //        }
-            //        else if (config::instance().damage_popup < 0)
-            //        {
-            //            config::instance().damage_popup = 0;
-            //        }
-            //        snd(20);
-            //        set_config(
-            //            u8"damage_popup", config::instance().damage_popup);
-            //        if (!config::instance().damage_popup)
-            //        {
-            //            clear_damage_popups();
-            //        }
-            //        reset_page = true;
-            //        continue;
-            //    }
-            //}
+
+            config_menu_definitions[submenu].items[cs].get()->change(p);
+            snd(20);
+            reset_page = true;
+            continue;
         }
         if (key == key_cancel)
         {

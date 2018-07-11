@@ -16,7 +16,7 @@ locale {
                     no = "Don't play"
                 }
 
-                # "Slow" and "Fast" were originally the opposite in English.
+                # NOTE: "Slow" and "Fast" were originally the opposite in English.
                 slow_fast {
                     yes = "Yes(Slow)"
                     no = "No(Fast)"
@@ -37,7 +37,7 @@ locale {
                     no = "Disable"
                 }
 
-                is_isnt {
+                on_off {
                     yes = "On"
                     no = "Off"
                 }
@@ -80,18 +80,20 @@ locale {
                 }
                 sound {
                     name = "Sound*"
+                    yesno = core.locale.config.common.yes_no.on_off
+                }
+                music {
+                    name = "Music*"
                     variants {
                         none = "None"
                         direct_music = "Direct music"
                         mci = "MCI"
                     }
                 }
-                music {
-                    name = "Music*"
-                }
                 high_quality_shadows {
                     name = "Shadow Quality"
                     doc = "Render shadows at higher quality."
+                    yesno = core.locale.config.common.yes_no.high_low
                 }
                 object_shadow {
                     name = "object Shadow"
@@ -250,7 +252,7 @@ DOC
                 transparency {
                     name = "Transparency"
                     doc = "Message box transparency."
-                    formatter = "${_1}*10 %"#TODO
+                    formatter = "${_1}*10 %"#TODO export?
                 }
             }
 
@@ -310,7 +312,7 @@ DOC
                 doc = "These settings affect game balance."
                 restock_interval {
                     name = "Restock Interval"
-                    formatter = "${_1} day${s(_1)}" # TODO
+                    formatter = "${_1} day${s(_1)}" # TODO export?
                     doc = <<DOC
 Interval in days it takes shops to restock items.
 If 0, the item selection will change each time you interact with a shopkeeper.
@@ -355,7 +357,7 @@ DOC
                 damage_popup {
                     name = "Damage popup"
                     doc = "Show damage popups."
-                    yesno = core.locale.config.common.yes_no.is_isnt
+                    yesno = core.locale.config.common.yes_no.on_off
                 }
                 startup_script {
                     doc = <<DOC
