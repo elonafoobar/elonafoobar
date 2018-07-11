@@ -155,7 +155,7 @@ if(WITH_TESTS STREQUAL "TESTS")
     src/tests/tests.cpp
     src/tests/util.cpp
     src/tests/config.cpp
-    src/tests/config_def.cpp
+    src/tests/spec.cpp
     src/tests/lua_api.cpp
     src/tests/lua_callbacks.cpp
     src/tests/lua_events.cpp

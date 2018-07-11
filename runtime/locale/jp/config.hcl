@@ -16,6 +16,11 @@ locale {
                     no = "なし"
                 }
 
+                shiyou_suru_shinai {
+                    yes = "使用する"
+                    no = "使用しない"
+                }
+
                 kougashitsu_teigatshitsu {
                     yes = "高画質"
                     no = "低画質"
@@ -216,7 +221,7 @@ locale {
                 name = "Input Setting"
                 joypad {
                     name = "ゲームパッド"
-                    yes_no = core.locale.config.common.yes_no.use_dont_use
+                    yes_no = core.locale.config.common.yes_no.shiyou_suru_shinai
                 }
                 autodisable_numlock {
                     name = "numlockを自動制御"

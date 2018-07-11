@@ -31,8 +31,8 @@ public:
 
     virtual ~config_menu_item_base() noexcept = default;
 
-    virtual void change(int p) = 0;
-    virtual std::string get_message() = 0;
+    virtual void change(int) {}
+    virtual std::string get_message() { return ""; }
 };
 
 
@@ -67,7 +67,7 @@ public:
             variable = false;
         }
 
-        config::instance().set(ptr->key, ptr->variable);
+        config::instance().set(key, variable);
     }
     std::string get_message() { return variable ? yes : no; }
 
@@ -90,7 +90,6 @@ public:
 
     virtual ~config_menu_item_info() noexcept = default;
 
-    void change(int p) {}
     std::string get_message() { return info; }
 };
 
@@ -121,7 +120,7 @@ public:
     void change(int p)
     {
         variable = clamp(variable + p, min, max);
-        config::instance().set(ptr->key, ptr->variable);
+        config::instance().set(key, variable);
     }
 
     std::string get_message()
@@ -165,7 +164,7 @@ public:
         {
             variable = static_cast<int>(texts.size() - 1);
         }
-        config::instance().set(ptr->key, ptr->variable);
+        config::instance().set(key, variable);
     }
 
     std::string get_message()
@@ -192,7 +191,7 @@ public:
     {
     }
 
-    virtual void draw()
+    virtual void draw() const
     {
         pos(wx + 40, wy + wh - 70);
         font(12 + sizefix - en * 2);
@@ -210,7 +209,7 @@ public:
 class config_menu_joystick : public config_menu
 {
 public:
-    void draw()
+    void draw() const
     {
         pos(wx + 40, wy + wh - 110);
         font(12 + sizefix - en * 2);
@@ -223,7 +222,7 @@ public:
             mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
         }
     }
-}
+};
 
 
 #define ELONA_CONFIG_ITEM(def_key, locale_key)                                  \
@@ -334,11 +333,11 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
         return;
     }
 
-    if (conf.get_def().is<config_def::config_bool_def>(def_key))
+    if (conf.get_def().is<spec::bool_def>(def_key))
     {
         // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
         std::string yes_no = "core.locale.config.common_yes_no.default";
-        if (auto text = i18n::s.get(locale_key + ".yes_no"))
+        if (auto text = i18n::s.get_optional(locale_key + ".yes_no"))
         {
             yes_no = *text;
         }
@@ -346,17 +345,17 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
                                 i18n::s.get(yes_no + ".yes"),
                                 i18n::s.get(yes_no + ".no"));
     }
-    else if (conf.get_def().is<config_def::config_int_def>(def_key))
+    else if (conf.get_def().is<spec::int_def>(def_key))
     {
         // TODO move to lua
         std::string formatter = "${_1}";
-        if (auto text = i18n::s.get(locale_key + ".formatter"))
+        if (auto text = i18n::s.get_optional(locale_key + ".formatter"))
         {
             formatter = *text;
         }
         ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter);
     }
-    else if (conf.get_def().is<config_def::config_enum_def>(def_key))
+    else if (conf.get_def().is<spec::enum_def>(def_key))
     {
         // Add the translated names of all variants.
         const auto& variants = conf.get_def().get_variants(def_key);
@@ -369,16 +368,16 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
 
         ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices);
     }
-    else if (conf.get_def().is<config_def::config_string_def>(def_key))
+    else if (conf.get_def().is<spec::string_def>(def_key))
     {
         // ignore
         // TODO: don't ignore, allow text input
     }
-    else if (conf.get_def().is<config_def::config_list_def>(def_key))
+    else if (conf.get_def().is<spec::list_def>(def_key))
     {
         // ignore
     }
-    else if (conf.get_def().is<config_def::config_section_def>(def_key))
+    else if (conf.get_def().is<spec::section_def>(def_key))
     {
         throw std::runtime_error("You cannot currently define nested sections.");
     }
@@ -634,10 +633,6 @@ int submenu = 0;
 
 void set_option()
 {
-    int cfg_sound2 = config::instance().sound;
-    int cfg_music2 = config::instance().music;
-    int cfg_fullscreen2 = config::instance().fullscreen;
-
     const auto display_modes =
         snail::application::instance().get_display_modes();
     std::string default_display_mode =
@@ -777,7 +772,7 @@ set_option_begin:
                 height);
         }
         pagesize = listmax;
-        display_topic(lang(u8"項目"s, u8"Menu"s), wx + 34, wy + 36);
+        display_topic(i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
         if (mode == 10)
         {
             p = 2;

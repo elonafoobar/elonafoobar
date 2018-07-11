@@ -541,7 +541,7 @@ void config::load_defaults(bool preload)
 
         // Sections don't have defaults, so trying to set them would
         // cause an error.
-        if (!def.is<config_def::config_section_def>(key))
+        if (!def.is<spec::section_def>(key))
         {
             if (preload == def.is_preload(key))
             {
@@ -593,7 +593,7 @@ void config::visit(const hcl::Value& value,
 {
     if (value.is<hcl::Object>())
     {
-        if (!def.is<config_def::config_section_def>(current_key))
+        if (!def.is<spec::section_def>(current_key))
         {
             throw config_loading_error(hcl_file + ": No such config section \"" + current_key + "\".");
         }
@@ -614,27 +614,28 @@ void config::visit(const hcl::Value& value,
 
 bool config::verify_types(const hcl::Value& value, const std::string& current_key)
 {
-    if (def.is<config_def::config_section_def>(current_key))
+    if (def.is<spec::section_def>(current_key))
     {
         // It doesn't make sense to set a section as a value.
         return false;
     }
     if (value.is<bool>())
     {
-        return def.is<config_def::config_bool_def>(current_key);
+        return def.is<spec::bool_def>(current_key);
     }
     if (value.is<int>())
     {
-        return def.is<config_def::config_enum_def>(current_key)
-            || def.is<config_def::config_int_def>(current_key);
+        return def.is<spec::int_def>(current_key);
     }
     if (value.is<hcl::List>())
     {
-        return def.is<config_def::config_list_def>(current_key);
+        return def.is<spec::list_def>(current_key);
     }
     if (value.is<std::string>())
     {
-        return def.is<config_def::config_string_def>(current_key);
+        return def.is<spec::string_def>(current_key)
+            || (def.is<spec::enum_def>(current_key)
+                && def.is_valid_enum_variant(current_key, value.as<std::string>()));
     }
 
     return false;

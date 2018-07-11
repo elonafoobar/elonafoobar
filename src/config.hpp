@@ -172,8 +172,8 @@ public:
         {
             throw std::runtime_error("No such config key " + key);
         }
-        if (def.is<config_def::config_enum_def>(key)
-            && def.get<config_def::config_enum_def>(key).pending)
+        if (def.is<spec::enum_def>(key)
+            && def.get<spec::enum_def>(key).pending)
         {
             // The values need to be injected at runtime, but they aren't known yet.
             return;
