@@ -56,6 +56,8 @@ private:
     void draw_quick_action(const quick_action&);
     std::vector<quick_action> quick_actions_;
     bool initialized_ = false;
+    optional<int> last_touch_x_ = none;
+    optional<int> last_touch_y_ = none;
 
     std::unique_ptr<basic_image> quick_action_image_ = nullptr;
     std::unique_ptr<basic_image> joystick_image_ = nullptr;

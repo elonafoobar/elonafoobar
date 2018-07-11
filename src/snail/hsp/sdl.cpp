@@ -114,13 +114,14 @@ int current_buffer;
 std::vector<TexBuffer> tex_buffers;
 ::SDL_Texture* tmp_buffer;
 ::SDL_Texture* tmp_buffer_slow;
+::SDL_Texture* android_display_region;
 
 TexBuffer& current_tex_buffer()
 {
     return tex_buffers[current_buffer];
 }
 
-void setup_tmp_buffers()
+void setup_buffers()
 {
     // Default buffer for high-frequency texture copies.
     detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
@@ -144,6 +145,18 @@ void setup_tmp_buffers()
         // powerful GPUs.
         std::max(1024, application::instance().width()),
         std::max(1024, application::instance().height())));
+
+    if (application::instance().is_android()) {
+        // Output texture for Android. This is so the game window can
+        // be placed such that it covers only part of the actual
+        // screen, or scaled up and down.
+    detail::android_display_region = snail::detail::enforce_sdl(::SDL_CreateTexture(
+        application::instance().get_renderer().ptr(),
+        SDL_PIXELFORMAT_ARGB8888,
+        SDL_TEXTUREACCESS_TARGET,
+        application::instance().width(),
+        application::instance().height()));
+    }
 
     application::instance().register_finalizer([]() {
         ::SDL_DestroyTexture(detail::tmp_buffer);
@@ -335,6 +348,11 @@ void mesbox(std::string& buffer, int keywait, bool text)
 {
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
+
+    if (application::instance().is_android()) {
+        // Pop up the soft keyboard.
+        ::SDL_StartTextInput();
+    }
 }
 
 void picload(basic_image& img, int mode)
@@ -359,18 +377,32 @@ void pos(int x, int y)
 
 void redraw()
 {
-    // TODO cleanup
-    if(application::instance().is_android())
+    ::SDL_Texture* target = nullptr;
+    if (application::instance().is_android())
     {
-        touch_input::instance().draw_quick_actions();
+        target = detail::android_display_region;
     }
 
     auto& renderer = application::instance().get_renderer();
     const auto save = renderer.render_target();
-    renderer.set_render_target(nullptr);
+    renderer.set_render_target(target);
     renderer.set_draw_color(snail::color{0, 0, 0, 255});
     renderer.clear();
     renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
+
+    if (application::instance().is_android())
+    {
+        int target_width = application::instance().actual_width();
+        double ratio = (static_cast<double>(target_width) /
+                        static_cast<double>(application::instance().width()));
+        int target_height = static_cast<int>(
+            static_cast<double>(application::instance().height()) * ratio);
+        renderer.set_render_target(nullptr);
+        renderer.clear();
+        renderer.render_image(detail::android_display_region, 0, 0, target_width, target_height);
+        touch_input::instance().draw_quick_actions();
+    }
+
     renderer.present();
     renderer.set_render_target(save);
 }
@@ -393,6 +425,11 @@ void onkey_0()
 {
     mesbox_detail::message_boxes.erase(
         std::end(mesbox_detail::message_boxes) - 1);
+
+    if (application::instance().is_android()) {
+        // Hide the soft keyboard.
+        ::SDL_StopTextInput();
+    }
 }
 
 namespace await_detail
@@ -790,7 +827,7 @@ void title(
         application::instance().set_fullscreen_mode(fullscreen_mode);
     }
 
-    detail::setup_tmp_buffers();
+    detail::setup_buffers();
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(

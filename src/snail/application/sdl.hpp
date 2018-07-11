@@ -41,6 +41,16 @@ public:
         return _height;
     }
 
+    int actual_width() const noexcept
+    {
+        return _actual_width;
+    }
+
+    int actual_height() const noexcept
+    {
+        return _actual_height;
+    }
+
     bool is_android() const noexcept
     {
 #ifdef ANDROID
@@ -66,6 +76,7 @@ public:
 
 
     void initialize(const std::string& title);
+    void initialize_actual_size();
     void run(std::shared_ptr<scene_base> initial_scene);
 
     void quit();
@@ -140,6 +151,8 @@ private:
     detail::sdl_mixer _sdl_mixer;
     int _width;
     int _height;
+    int _actual_width;
+    int _actual_height;
     std::string _title;
     size_t _frame = 0;
     bool _will_quit = false;

@@ -2,6 +2,7 @@ BIN_DIR := bin
 PROGRAM := $(BIN_DIR)/ElonaFoobar
 TEST_RUNNER := $(BIN_DIR)/test_runner
 BENCH_RUNNER := $(BIN_DIR)/bench_runner
+APK := $(BIN_DIR)/app-debug.apk
 
 FORMAT := clang-format
 FIND := find
@@ -24,6 +25,9 @@ tests: $(BIN_DIR) $(TEST_RUNNER)
 bench: $(BIN_DIR) $(BENCH_RUNNER)
 
 
+android: $(BIN_DIR) $(APK)
+
+
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
@@ -40,8 +44,14 @@ $(BENCH_RUNNER):
 	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
 
 
+$(APK):
+	cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk $(BIN_DIR)
+
+
 clean: FORCE
 	-@$(RM) -rf $(BIN_DIR)
+        -@$(RM) -rf android/distribution android/app/.externalNativeBuild android/SDL2/.externalNativeBuild
+        ./android/gradlew clean
 
 
 # Format src/*.{hpp,cpp} except under src/thirdparty.

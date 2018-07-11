@@ -166,6 +166,7 @@ key sdlkey2key(::SDL_Keycode k)
     case SDLK_KP_PLUSMINUS: return key::keypad_plusminus;
     case SDLK_KP_ENTER: return key::keypad_enter;
     case SDLK_KP_EQUALS: return key::keypad_equal;
+    case SDLK_AC_BACK: return key::android_back;
     default: return key::none;
     }
 }
@@ -381,6 +382,14 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
     else
     {
         _keys[static_cast<size_t>(k)]._release();
+
+        if (k == key::android_back)
+        {
+            if (::SDL_IsTextInputActive())
+                ::SDL_StopTextInput();
+            else
+                ::SDL_StartTextInput();
+        }
     }
 
     using tuples_t = std::tuple<key, key, key>[];
@@ -434,19 +443,16 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 
     if (key)
     {
-        LOGD("KEY");
         if (last_key && *last_key != *key)
         {
             _keys[static_cast<size_t>(*last_key)]._release();
         }
         if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
         {
-            LOGD("down");
             _keys[static_cast<size_t>(*key)]._press();
         }
         else
         {
-            LOGD("up");
             _keys[static_cast<size_t>(*key)]._release();
         }
     }

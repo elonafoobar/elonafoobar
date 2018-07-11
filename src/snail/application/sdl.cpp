@@ -40,6 +40,8 @@ void application::initialize(const std::string& title)
 {
     _width = 800;
     _height = 600;
+    _actual_width = _width;
+    _actual_height = _height;
     _title = title;
     _window.reset(new window(
         title,
@@ -50,9 +52,24 @@ void application::initialize(const std::string& title)
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
-    ::SDL_StartTextInput();
+    if (!is_android())
+    {
+        ::SDL_StartTextInput();
+    }
+
+    initialize_actual_size();
 
     set_display_mode(get_default_display_mode());
+}
+
+
+
+void application::initialize_actual_size()
+{
+    ::SDL_DisplayMode display_mode;
+    ::SDL_GetCurrentDisplayMode(0, &display_mode);
+    _actual_width = display_mode.w;
+    _actual_height = display_mode.h;
 }
 
 
@@ -276,8 +293,14 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
         (*_window).set_size(display_mode.w, display_mode.h);
     }
 
-    _width = display_mode.w;
-    _height = display_mode.h;
+    // We want the actual rendered size kept separate from the
+    // device's size on Android.
+    if (!is_android())
+    {
+        _width = display_mode.w;
+        _height = display_mode.h;
+    }
+
     (*_window).move_to_center();
 }
 

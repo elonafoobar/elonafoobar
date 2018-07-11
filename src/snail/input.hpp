@@ -228,6 +228,8 @@ enum class key
     keypad_enter,
     keypad_equal,
 
+    android_back,
+
     _size,
 };
 

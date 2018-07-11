@@ -72,6 +72,12 @@ public:
     }
 
 
+    bool has_font()
+    {
+        return _font.ptr() != nullptr;
+    }
+
+
     const font_t& font() const noexcept
     {
         return _font;
@@ -112,13 +118,15 @@ public:
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::black);
+        const color& text_color = palette::black,
+        double scale = 1.0);
     rect render_text_with_shadow(
         const std::string& text,
         int x,
         int y,
         const color& text_color = palette::white,
-        const color& shadow_color = palette::black);
+        const color& shadow_color = palette::black,
+        double scale = 1.0);
     rect render_multiline_text(
         const std::string& text,
         int x,
