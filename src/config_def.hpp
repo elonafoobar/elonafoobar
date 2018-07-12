@@ -15,10 +15,19 @@ namespace elona
 class config_def : public spec::object
 {
 public:
-    struct config_def_item_data
+    struct metadata
     {
+        // True if the config section/option is visible in the options menu.
         bool visible = true;
+
+        // True if the config option is loaded before application is
+        // initialized (screen size, language...)
         bool preload = false;
+
+        // True if runtime enum variants should cause errors on
+        // missing translations. Set to false when enum variants are
+        // human-readable themselves.
+        bool translate_variants = true;
     };
 
     config_def() : spec::object("config")
@@ -34,8 +43,7 @@ public:
         data.clear();
     }
 
-    bool is_preload(const std::string& key) const { return data.at(key).preload; }
-    bool is_visible(const std::string& key) const { return data.at(key).visible; }
+    const metadata& get_metadata(const std::string& key) const { return data.at(key); }
 
     const std::string& get_locale_root() const { return locale_root; }
 
@@ -45,6 +53,6 @@ public:
 
 private:
     std::string locale_root;
-    std::map<std::string, config_def_item_data> data;
+    std::map<std::string, metadata> data;
 };
 }

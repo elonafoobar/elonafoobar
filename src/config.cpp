@@ -7,6 +7,7 @@
 #include "elona.hpp"
 #include "json.hpp"
 #include "range.hpp"
+#include "snail/application.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
@@ -193,6 +194,108 @@ private:
 
 
 
+/***
+ * Initializes the list of available display modes. To be called after
+ * the application has been initialized by calling title().
+ */
+static void inject_display_modes(config& conf)
+{
+    const auto display_modes =
+        snail::application::instance().get_display_modes();
+    std::string default_display_mode =
+        snail::application::instance().get_default_display_mode();
+    std::vector<std::string> display_mode_names;
+    std::string cfg_display_mode = config::instance().display_mode;
+
+    int display_mode_index = -1;
+    int index = 0;
+    int default_index = 0;
+
+    for (const auto pair : display_modes)
+    {
+        std::cout << pair.first << std::endl;
+        display_mode_names.emplace_back(pair.first);
+        if (pair.first == cfg_display_mode)
+        {
+            display_mode_index = index;
+        }
+        else if (pair.first == default_display_mode)
+        {
+            default_index = index;
+        }
+        index++;
+    }
+    if (display_mode_index == -1 || config::instance().display_mode == "")
+    {
+        cfg_display_mode = default_display_mode;
+        display_mode_index = default_index;
+    }
+
+    std::cout << "Def " << default_display_mode << std::endl;
+    if (cfg_display_mode != "")
+    {
+        conf.inject_enum("core.config.screen.display_mode", display_mode_names, default_display_mode);
+
+        if (config::instance().display_mode == spec::unknown_enum_variant)
+        {
+            config::instance().set(u8"core.config.screen.display_mode", default_display_mode);
+        }
+    }
+}
+
+/***
+ * Initializes the list of save files that can be chosen at startup.
+ */
+static void inject_save_files(config& conf)
+{
+    std::vector<std::string> saves;
+    saves.push_back("");
+
+    for (const auto& entry : filesystem::dir_entries{
+            filesystem::dir::save(), filesystem::dir_entries::type::dir})
+    {
+        std::string folder = filesystem::to_utf8_path(entry.path().filename());
+        saves.push_back(folder);
+    }
+
+    conf.inject_enum("core.config.game.default_save", saves, "");
+}
+
+/***
+ * Initializes the list of languages by adding the names of folders in
+ * the locale/ directory.
+ *
+ * TODO: Support mods which add their own languages.
+ */
+static void inject_languages(config& conf)
+{
+    std::vector<std::string> locales;
+    bool has_jp = false;
+    bool has_en = false;
+    for (const auto& entry : filesystem::dir_entries{
+            filesystem::dir::locale(), filesystem::dir_entries::type::dir})
+    {
+        std::string identifier = filesystem::to_utf8_path(entry.path().filename());
+        locales.push_back(identifier);
+
+        if (identifier == "en")
+        {
+            has_en = true;
+        }
+        if (identifier == "jp")
+        {
+            has_jp = true;
+        }
+    }
+
+    if (!has_en || !has_jp)
+    {
+        throw config_loading_error("Locale for English or Japanese is missing in locale/ folder.");
+    }
+
+    conf.inject_enum("core.config.language.language", locales, spec::unknown_enum_variant);
+}
+
 } // namespace
 
 
@@ -248,8 +351,16 @@ void config_query_language()
         }
     }
 
-    //config::instance().language = p;
-    //config::instance().set(u8"language", p(0));
+    std::string locale = spec::unknown_enum_variant;
+    if (p == 0)
+    {
+        locale = "jp";
+    }
+    else
+    {
+        locale = "en";
+    }
+    config::instance().set(u8"core.config.language.language", locale);
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
@@ -262,6 +373,9 @@ void config_query_language()
 void load_config(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
+
+    inject_display_modes(conf);
+    inject_save_files(conf);
 
     // TODO do inversions
     CONFIG_OPTION("anime.alert_wait"s,                int,         config::instance().alert);
@@ -433,7 +547,7 @@ void load_config(const fs::path& hcl_file)
     {
         config::instance().startrun = 1000;
     }
-    if (config::instance().language == "unknown")
+    if (config::instance().language == spec::unknown_enum_variant)
     {
         config_query_language();
     }
@@ -464,15 +578,11 @@ void load_config(const fs::path& hcl_file)
     }
 }
 
-
-
 void load_config2(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
-    conf.inject_enum("core.config.language.language", {"unknown", "jp", "en"}, "unknown");
-    //conf.inject_enum("core.config.screen.display_mode", {""}, 0);
-    // conf.inject_enum("core.config.game.default_save", {""}, 0);
+    inject_languages(conf);
 
     CONFIG_OPTION("language.language"s,   std::string, config::instance().language);
     CONFIG_OPTION("screen.fullscreen"s,   std::string, config::instance().fullscreen);
@@ -545,7 +655,7 @@ void config::load_defaults(bool preload)
         // cause an error.
         if (!def.is<spec::section_def>(key))
         {
-            if (preload == def.is_preload(key))
+            if (preload == def.get_metadata(key).preload)
             {
                 set(key, def.get_default(key));
             }
@@ -614,7 +724,7 @@ void config::visit(const hcl::Value& value,
         {
             throw config_loading_error(hcl_file + ": No such config value \"" + current_key + "\".");
         }
-        if (preload == def.is_preload(current_key))
+        if (preload == def.get_metadata(current_key).preload)
         {
             set(current_key, value);
         }
@@ -642,9 +752,24 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
     }
     if (value.is<std::string>())
     {
-        return def.is<spec::string_def>(current_key)
-            || (def.is<spec::enum_def>(current_key)
-                && def.get<spec::enum_def>(current_key).get_index_of(value.as<std::string>()));
+        if (def.is<spec::enum_def>(current_key))
+        {
+            auto enum_def = def.get<spec::enum_def>(current_key);
+            if (enum_def.pending)
+            {
+                // The key could be anything because the values are
+                // not known yet, so don't attempt to check anything.
+                return true;
+            }
+            else
+            {
+                return static_cast<bool>(enum_def.get_index_of(value.as<std::string>()));
+            }
+        }
+        else
+        {
+            return def.is<spec::string_def>(current_key);
+        }
     }
 
     return false;
@@ -672,6 +797,15 @@ void config::write()
         std::string key = pair.first;
         hcl::Value value = pair.second;
         hcl::Value* current = parent;
+
+        // Don't save injected enum values that are still unknown
+        // (though this should never happen)
+        if (def.is<spec::enum_def>(key)
+            && value.as<std::string>() == spec::unknown_enum_variant)
+        {
+            ELONA_LOG("Injected enum value was unknown on save: " << key);
+            continue;
+        }
 
         size_t pos = 0;
         std::string token;

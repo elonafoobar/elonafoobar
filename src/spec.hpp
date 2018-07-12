@@ -12,6 +12,9 @@ using namespace std::literals::string_literals;
 
 namespace elona
 {
+
+typedef std::string spec_key;
+
 namespace spec
 {
 
@@ -64,13 +67,18 @@ struct enum_def
         return ss.str();
     }
 
-    optional<int> get_index_of(std::string variant)
+    optional<int> get_index_of(std::string variant) const
     {
         auto it = std::find(variants.begin(), variants.end(), variant);
         if (it == variants.end())
             return none;
 
         return std::distance(variants.begin(), it);
+    }
+
+    std::string get_default() const
+    {
+        return variants.at(default_index);
     }
 };
 
@@ -80,6 +88,7 @@ typedef boost::variant<section_def,
                        string_def,
                        list_def,
                        enum_def> item;
+static const constexpr char* unknown_enum_variant = "__unknown__";
 
 class spec_error : public std::exception
 {
@@ -140,6 +149,7 @@ public:
 
         auto& def = get<enum_def>(key);
         def.variants = std::move(variants);
+        def.variants.insert(def.variants.begin(), unknown_enum_variant);
 
         optional<int> index = def.get_index_of(default_variant);
         if (!index)
@@ -218,8 +228,7 @@ public:
         }
         else
         {
-            auto def = get<enum_def>(key);
-            return def.variants.at(def.default_index);
+            return get<enum_def>(key).get_default();
         }
     }
 

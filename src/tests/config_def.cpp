@@ -21,7 +21,7 @@ config_def load(const std::string& str)
 }
 } // namespace
 
-TEST_CASE("Test is_visible", "[Config: Definition]")
+TEST_CASE("Test metadata: visible", "[Config: Definition]")
 {
     config_def def = load(R"(
 config def {
@@ -37,12 +37,12 @@ config def {
 }
 )");
 
-    REQUIRE(def.is_visible("core.config.foo") == true);
-    REQUIRE(def.is_visible("core.config.baz") == true);
-    REQUIRE(def.is_visible("core.config.hoge") == false);
+    REQUIRE(def.get_metadata("core.config.foo").preload == true);
+    REQUIRE(def.get_metadata("core.config.baz").preload == true);
+    REQUIRE(def.get_metadata("core.config.hoge").preload == false);
 }
 
-TEST_CASE("Test is_preload", "[Config: Definition]")
+TEST_CASE("Test metadata: preload", "[Config: Definition]")
 {
     config_def def = load(R"(
 config def {
@@ -58,7 +58,28 @@ config def {
 }
 )");
 
-    REQUIRE(def.is_preload("core.config.foo") == false);
-    REQUIRE(def.is_preload("core.config.baz") == true);
-    REQUIRE(def.is_preload("core.config.hoge") == false);
+    REQUIRE(def.get_metadata("core.config.foo").preload == false);
+    REQUIRE(def.get_metadata("core.config.baz").preload == true);
+    REQUIRE(def.get_metadata("core.config.hoge").preload == false);
+}
+
+TEST_CASE("Test metadata: translate_variants", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config def {
+    foo = "bar"
+    baz = {
+        default = "quux"
+        translate_variants = true
+    }
+    hoge = {
+        default = "piyo"
+        translate_variants = false
+    }
+}
+)");
+
+    REQUIRE(def.get_metadata("core.config.foo").translate_variants == true);
+    REQUIRE(def.get_metadata("core.config.baz").translate_variants == true);
+    REQUIRE(def.get_metadata("core.config.hoge").translate_variants == false);
 }

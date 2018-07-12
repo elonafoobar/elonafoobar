@@ -2,7 +2,7 @@
 #include <boost/locale.hpp>
 #include "defines.hpp"
 #include "util.hpp"
-#include <algorithm> 
+#include <algorithm>
 
 // For get_executable_path()
 #if defined(ELONA_OS_WINDOWS)
@@ -80,6 +80,7 @@ namespace dir
 ELONA_DEFINE_PREDEFINED_DIR(exe, "")
 ELONA_DEFINE_PREDEFINED_DIR(data, "data")
 ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
+ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(mods, "mods")
 ELONA_DEFINE_PREDEFINED_DIR(save, "save")
@@ -100,7 +101,7 @@ fs::path save(const std::string& player_id)
 
 
 
-fs::path path(const std::string& str)   
+fs::path path(const std::string& str)
 {
     return get_executable_path() / u8path(str);
 }

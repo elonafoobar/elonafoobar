@@ -12,18 +12,18 @@ namespace elona
 
 void config_def::post_visit(const std::string& current_key, const spec::section_def&)
 {
-    data.emplace(current_key, config_def_item_data{});
+    data.emplace(current_key, metadata{});
 }
 
 void config_def::post_visit_bare_value(const std::string& current_key, const spec::item&)
 {
     std::cout << current_key << std::endl;
-    data.emplace(current_key, config_def_item_data{});
+    data.emplace(current_key, metadata{});
 }
 
 void config_def::post_visit_item(const std::string& current_key, const hcl::Object& item)
 {
-    config_def_item_data dat{};
+    metadata dat{};
 
     if (item.find("visible") != item.end())
     {
@@ -32,6 +32,10 @@ void config_def::post_visit_item(const std::string& current_key, const hcl::Obje
     if (item.find("preload") != item.end())
     {
         dat.preload = item.at("preload").as<bool>();
+    }
+    if (item.find("translate_variants") != item.end())
+    {
+        dat.translate_variants = item.at("translate_variants").as<bool>();
     }
 
     std::cout << current_key << std::endl;

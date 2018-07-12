@@ -397,8 +397,8 @@ void initialize_elona()
 {
     i18n::load(jp ? u8"jp" : u8"en");
     i18n::s.init(
-        jp ? filesystem::path("locale") / "jp"
-           : filesystem::path("locale") / "en");
+        jp ? filesystem::dir::locale() / "jp"
+           : filesystem::dir::locale() / "en");
 
     initialize_ui_constants();
     gsel(0);

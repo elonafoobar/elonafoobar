@@ -10,8 +10,8 @@ config def {
             }
 
             display_mode = {
-                #type = "runtime_enum" # TODO
-                default = "800x600@60Hz"
+                type = "runtime_enum"
+                translate_variants = false
                 preload = true
             }
 
@@ -110,8 +110,10 @@ config def {
         type = "section"
         options = {
             default_save = {
+                type = "runtime_enum"
                 default = ""
                 preload = true
+                translate_variants = false
             }
 
             attack_neutral_npcs = false

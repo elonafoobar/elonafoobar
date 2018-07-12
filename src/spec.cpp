@@ -132,7 +132,7 @@ void object::visit_item(const hcl::Object& item,
         }
         else if (type == "runtime_enum")
         {
-            i = enum_def{0, {"__unknown__"}, true};
+            i = enum_def{0, {spec::unknown_enum_variant}, true};
         }
         else
         {

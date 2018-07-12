@@ -4,6 +4,7 @@
 #include "lib/noncopyable.hpp"
 #include "config_def.hpp"
 #include "elona.hpp"
+#include "log.hpp"
 #include "snail/window.hpp"
 #include <map>
 #include <string>
@@ -129,10 +130,25 @@ public:
         setters[key] = [setter](const hcl::Value& value){ setter(value.as<T>()); };
     }
 
-    void inject_enum(const std::string& key, std::vector<std::string> variants, std::string default_variant)
+    void inject_enum(const std::string& key,
+                     std::vector<std::string> variants,
+                     std::string default_variant)
     {
-        // TODO
         def.inject_enum(key, variants, default_variant);
+
+        if (storage.find(key) != storage.end())
+        {
+            // Check if this enum has an invalid value. If so, set it to the default.
+            auto enum_def = def.get<spec::enum_def>(key);
+            std::string current = get<std::string>(key);
+            if (!enum_def.get_index_of(current))
+            {
+                ELONA_LOG("Config key "s << key + " had invalid variant "s << current << ". "s <<
+                          "("s << def.type_to_string(key) << ")"s <<
+                          "Setting to "s << enum_def.get_default() << "."s);
+                set(key, enum_def.get_default());
+            }
+        }
     }
 
     template <typename T>
@@ -171,12 +187,6 @@ public:
         if (!def.exists(key))
         {
             throw std::runtime_error("No such config key " + key);
-        }
-        if (def.is<spec::enum_def>(key)
-            && def.get<spec::enum_def>(key).pending)
-        {
-            // The values need to be injected at runtime, but they aren't known yet.
-            return;
         }
         if (verify_types(value, key))
         {

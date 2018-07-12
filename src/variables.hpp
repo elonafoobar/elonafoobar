@@ -1137,7 +1137,6 @@ turn_result_t show_chat_history();
 turn_result_t show_message_log();
 void initialize_jkey();
 void label_2720();
-void set_option();
 turn_result_t play_scene();
 bool turn_wrapper();
 turn_result_t pass_turns(bool);

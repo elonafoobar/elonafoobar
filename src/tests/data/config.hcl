@@ -1,5 +1,7 @@
 config {
-    language {
-        language = "jp"
+    core {
+        language {
+            language = "jp"
+        }
     }
 }
