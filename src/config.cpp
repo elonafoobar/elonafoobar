@@ -1,4 +1,5 @@
 #include "config.hpp"
+#include <cassert>
 #include <fstream>
 #include <functional>
 #include <string>
@@ -573,7 +574,14 @@ void config::load(std::istream& is, const std::string& hcl_file, bool preload)
 
     const hcl::Value conf = value["config"];
 
-    visit_object(conf.as<hcl::Object>(), "core.config", hcl_file, preload);
+    // TODO mod support
+    if (!conf.is<hcl::Object>() || !conf.has("core"))
+    {
+        throw config_loading_error(hcl_file + ": \"core\" object not found after \"config\"");
+    }
+
+    const hcl::Value core = conf["core"];
+    visit_object(core.as<hcl::Object>(), "core.config", hcl_file, preload);
 }
 
 void config::visit_object(const hcl::Object& object,
@@ -644,24 +652,75 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
 
 void config::write()
 {
+    std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
+                       std::ios::binary};
+    if (!file)
     {
-        std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.hcl")};
+        throw config_loading_error{
+            u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                    filesystem::dir::exe() / u8"config.hcl")};
+    }
+
+    hcl::Value out = hcl::Value(hcl::Object());
+    out.set("config", hcl::Object());
+    hcl::Value* parent = out.find("config");
+    assert(parent);
+
+    for (auto&& pair : storage)
+    {
+        std::string key = pair.first;
+        hcl::Value value = pair.second;
+        hcl::Value* current = parent;
+
+        size_t pos = 0;
+        std::string token;
+
+        auto advance = [&pos, &key, &token]()
+                           {
+                               pos = key.find(".");
+                               if (pos == std::string::npos)
+                               {
+                                   return false;
+                               }
+                               token = key.substr(0, pos);
+                               key.erase(0, pos + 1);
+                               return true;
+                           };
+
+        auto set = [&current](std::string key)
+                       {
+                           hcl::Value* existing = current->find(key);
+                           if (existing)
+                           {
+                               current = existing;
+                           }
+                           else
+                           {
+                               current->set(key, hcl::Object());
+                               current = current->find(key);
+                               assert(current);
+                           }
+                       };
+
+        // get mod-level scope
+        assert(advance());
+        std::string scope = token;
+        set(token);
+
+        // skip "config"
+        assert(advance());
+        assert(token == "config");
+
+        while (advance()) {
+            set(token);
         }
 
-        hcl::Value value = hcl::Value(hcl::Object());
-        for (auto&& pair : storage)
-        {
-            value[pair.first] = pair.second;
-        }
-        file << value;
+        current->set(key, value);
     }
+
+    file << out;
+
 }
 
 } // namespace elona

@@ -756,12 +756,13 @@ void initialize_elona()
 
 int run()
 {
-    fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
-
-    initialize_cat_db();
-
+    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+
+    lua::lua = std::make_unique<lua::lua_env>();
+    initialize_cat_db();
+
     config::instance().init(config_def_file);
     load_config2(config_file);
 
@@ -770,6 +771,7 @@ int run()
           config_get_fullscreen_mode());
 
     initialize_config(config_file);
+    init_assets();
     initialize_elona();
 
     lua::lua->scan_all_mods(filesystem::dir::mods());

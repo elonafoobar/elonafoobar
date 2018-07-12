@@ -10,6 +10,8 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include <sstream>
+
 using namespace elona;
 
 
@@ -129,52 +131,70 @@ public:
     }
 
     virtual ~config_menu_item_integer() noexcept = default;
-
-
-private:
-    static constexpr const char* marker = u8"{}";
 };
 
 
 class config_menu_item_choice : public config_menu_item_base
 {
 public:
-    int variable;
-    std::vector<std::string> texts;
+    struct choice
+    {
+        choice(std::string value, std::string message)
+            : value(value)
+            , message(message) {}
+
+        std::string value;
+        std::string message;
+    };
+
+    int index;
+    std::vector<choice> variants;
 
     config_menu_item_choice(
         const std::string& key,
         const std::string& locale_key,
-        int variable,
-        const std::vector<std::string>& texts)
+        std::string default_choice,
+        const std::vector<choice>& variants)
         : config_menu_item_base(key, locale_key)
-        , variable(variable)
-        , texts(texts)
+        , variants(variants)
     {
+        index = -1;
+        int i = 0;
+        for (auto it = variants.begin(); it != variants.end(); ++it)
+        {
+            if (it->value == default_choice)
+            {
+                index = i;
+            }
+            i++;
+        }
+        if (index == -1)
+        {
+            throw std::runtime_error("No such enum variant \"" + default_choice + "\" in \"" + key + "\".");
+        }
     }
 
     void change(int p)
     {
-        variable += p;
-        if (variable < 0)
+        index += p;
+        if (index < 0)
         {
-            variable = 0;
+            index = 0;
         }
-        if (variable > static_cast<int>(texts.size() - 1))
+        if (index > static_cast<int>(variants.size() - 1))
         {
-            variable = static_cast<int>(texts.size() - 1);
+            index = static_cast<int>(variants.size() - 1);
         }
-        config::instance().set(key, variable);
+        config::instance().set(key, variants.at(index).value);
     }
 
     std::string get_message()
     {
-        return texts[variable];
+        return variants.at(index).message;
     }
 
     virtual ~config_menu_item_choice() noexcept = default;
 };
-
 
 class config_menu
 {
@@ -193,51 +213,50 @@ public:
 
     virtual void draw() const
     {
-        pos(wx + 40, wy + wh - 70);
-        font(12 + sizefix - en * 2);
-        if (jp)
-        {
-            mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
-        }
-        else
-        {
-            mes(u8"Items marked with * require restart to apply changes."s);
-        }
     }
 };
 
-class config_menu_joystick : public config_menu
+class config_menu_submenu : public config_menu
+{
+public:
+    config_menu_submenu(const std::string& title, int width, int height)
+        : config_menu(title, width, height) {}
+
+    void draw() const
+    {
+        pos(wx + 40, wy + wh - 70);
+        font(12 + sizefix - en * 2);
+        mes(i18n::s.get("core.locale.config.common.require_restart"));
+    }
+};
+
+class config_menu_joypad : public config_menu
 {
 public:
     void draw() const
     {
         pos(wx + 40, wy + wh - 110);
         font(12 + sizefix - en * 2);
-        if (jp)
-        {
-            mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
-        }
-        else
-        {
-            mes(u8"To assign a button, move the cursor to\nan item and press the button."s);
-        }
+        mes(i18n::s.get("core.locale.config.common.assign_button"));
     }
 };
 
+typedef std::vector<std::unique_ptr<config_menu>> config_screen;
+
 
 #define ELONA_CONFIG_ITEM(def_key, locale_key)                                  \
-    ret.back().items.emplace_back(std::make_unique<config_menu_item_base>(def_key, locale_key))
+    ret.back()->items.emplace_back(std::make_unique<config_menu_item_base>(def_key, locale_key))
 
 #define ELONA_CONFIG_ITEM_YESNO(def_key, locale_key, yes, no)   \
-    ret.back().items.emplace_back( \
+    ret.back()->items.emplace_back( \
         std::make_unique<config_menu_item_yesno>(def_key, locale_key, conf.get<bool>(def_key), yes, no))
 
 #define ELONA_CONFIG_ITEM_INFO(def_key, locale_key, info)       \
-    ret.back().items.emplace_back( \
+    ret.back()->items.emplace_back( \
         std::make_unique<config_menu_item_info>(def_key, locale_key, info))
 
 #define ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter)       \
-    ret.back().items.emplace_back( \
+    ret.back()->items.emplace_back( \
         std::make_unique<config_menu_item_integer>(def_key, locale_key, \
                                                    conf.get<int>(def_key), \
                                                    conf.get_def().get_min(def_key), \
@@ -245,14 +264,14 @@ public:
                                                    formatter))
 
 #define ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices)                  \
-    ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>(def_key, locale_key, conf.get<int>(def_key), choices))
+    ret.back()->items.emplace_back(std::make_unique<config_menu_item_choice>(def_key, locale_key, conf.get<std::string>(def_key), choices))
 
 
-void visit_section(config&, const std::string&, std::vector<config_menu>&);
-void visit_config_item(config&, const std::string&, std::vector<config_menu>&);
+void visit_section(config&, const std::string&, config_screen&);
+void visit_config_item(config&, const std::string&, config_screen&);
 
 
-void visit_toplevel(config& conf, std::vector<config_menu>& ret)
+void visit_toplevel(config& conf, config_screen& ret)
 {
     std::string def_key = "core.config";
     auto children = conf.get_def().get_children(def_key);
@@ -261,7 +280,7 @@ void visit_toplevel(config& conf, std::vector<config_menu>& ret)
     int h = 165 + ((font_size + 1) * children.size());
 
     std::string menu_name_key = conf.get_def().get_locale_root() + ".name";
-    ret.emplace_back(i18n::s.get(menu_name_key), w, h);
+    ret.emplace_back(std::make_unique<config_menu>(i18n::s.get(menu_name_key), w, h));
 
     // Add the names of top-level config menu sections if they are visible.
     for (const auto& child : conf.get_def().get_children(def_key))
@@ -285,7 +304,7 @@ void visit_toplevel(config& conf, std::vector<config_menu>& ret)
     }
 }
 
-void visit_section(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
+void visit_section(config& conf, const std::string& current_key, config_screen& ret)
 {
     // EX: "core.config.language"
     std::string def_key = "core.config." + current_key;
@@ -310,7 +329,7 @@ void visit_section(config& conf, const std::string& current_key, std::vector<con
 
     // Add the translated name to the menu.
     std::cout << locale_key << std::endl;
-    ret.emplace_back(i18n::s.get(locale_key + ".name"), w, h);
+    ret.emplace_back(std::make_unique<config_menu_submenu>(i18n::s.get(locale_key + ".name"), w, h));
 
     // Visit child config items of this section.
     for (const auto& child : conf.get_def().get_children(def_key))
@@ -319,7 +338,7 @@ void visit_section(config& conf, const std::string& current_key, std::vector<con
     }
 }
 
-void visit_config_item(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
+void visit_config_item(config& conf, const std::string& current_key, config_screen& ret)
 {
     std::string def_key = "core.config." + current_key;
     std::string locale_key = conf.get_def().get_locale_root() + "." + current_key;
@@ -336,7 +355,7 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     if (conf.get_def().is<spec::bool_def>(def_key))
     {
         // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
-        std::string yes_no = "core.locale.config.common_yes_no.default";
+        std::string yes_no = "core.locale.config.common.yes_no.default";
         if (auto text = i18n::s.get_optional(locale_key + ".yes_no"))
         {
             yes_no = *text;
@@ -349,21 +368,19 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     {
         // TODO move to lua
         std::string formatter = "${_1}";
-        if (auto text = i18n::s.get_optional(locale_key + ".formatter"))
-        {
-            formatter = *text;
-        }
         ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter);
     }
     else if (conf.get_def().is<spec::enum_def>(def_key))
     {
         // Add the translated names of all variants.
         const auto& variants = conf.get_def().get_variants(def_key);
-        std::vector<std::string> choices;
+        std::vector<config_menu_item_choice::choice> choices;
 
         for (const auto& variant : variants)
         {
-            choices.emplace_back(i18n::s.get(locale_key + ".variants." + variant));
+            choices.emplace_back(config_menu_item_choice::choice{
+                        variant,
+                        i18n::s.get(locale_key + ".variants." + variant)});
         }
 
         ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices);
@@ -387,9 +404,9 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     }
 }
 
-std::vector<config_menu> create_config_menu()
+config_screen create_config_screen()
 {
-    std::vector<config_menu> ret;
+    config_screen ret;
     auto& conf = config::instance();
 
     visit_toplevel(conf, ret);
@@ -663,7 +680,7 @@ void set_option()
         display_mode_index = default_index;
     }
 
-    const auto config_menu_definitions = create_config_menu();
+    const auto config_screen = create_config_screen();
 
 set_option_begin:
     listmax = 0;
@@ -698,12 +715,12 @@ set_option_begin:
         gmode(2);
     }
 
-    auto& menu_def = config_menu_definitions[submenu];
-    auto menu_title = menu_def.title;
-    auto width = menu_def.width;
-    auto height = menu_def.height;
+    auto& menu_def = config_screen[submenu];
+    auto menu_title = menu_def->title;
+    auto width = menu_def->width;
+    auto height = menu_def->height;
 
-    for (const auto& menu_item : menu_def.items)
+    for (const auto& menu_item : menu_def->items)
     {
         list(0, listmax) = listmax;
         listn(0, listmax) = menu_item->name;
@@ -866,7 +883,7 @@ set_option_begin:
             }
             pos(wx + 250, wy + 66 + cnt * 19);
 
-            mes(config_menu_definitions[submenu].items[cnt].get()->get_message());
+            mes(config_screen[submenu]->items[cnt].get()->get_message());
 
             // else if (submenu == 1)
             // {
@@ -955,7 +972,7 @@ set_option_begin:
             // }
         }
 
-        config_menu_definitions[submenu].draw();
+        config_screen[submenu]->draw();
         if (keyrange != 0)
         {
             cs_bk = cs;
@@ -1056,7 +1073,7 @@ set_option_begin:
                 p = -1;
             }
 
-            config_menu_definitions[submenu].items[cs].get()->change(p);
+            config_screen[submenu]->items[cs].get()->change(p);
             snd(20);
             reset_page = true;
             continue;

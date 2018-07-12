@@ -24,6 +24,7 @@ void object::init(const fs::path& path)
 void object::load(std::istream& is, const std::string& hcl_file)
 {
     hcl::ParseResult parseResult = hcl::parse(is);
+    std::string top_level_key = "core." + name;
 
     if (!parseResult.valid()) {
         std::cerr << parseResult.errorReason << std::endl;
@@ -45,7 +46,10 @@ void object::load(std::istream& is, const std::string& hcl_file)
     }
 
     const hcl::Value def = top_level["def"];
-    visit_object(def.as<hcl::Object>(), "core." + name, hcl_file);
+    auto result = visit_object(def.as<hcl::Object>(), top_level_key, hcl_file);
+
+    post_visit(top_level_key, result);
+    items.emplace(top_level_key, result);
 }
 
 section_def object::visit_object(const hcl::Object& object,

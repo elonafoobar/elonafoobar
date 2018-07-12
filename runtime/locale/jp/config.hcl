@@ -2,6 +2,8 @@ locale {
     config {
         common {
             menu = "項目"
+            require_restart = "* 印のついた項目は、ゲームの再起動後に適用されます"
+            assign_button = "ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"
 
             yes_no {
                 # NOTE: This text is implicitly chosen for boolean values without an explicit
@@ -102,7 +104,7 @@ locale {
                     name = "光源の描写"
                     yesno = core.locale.config.common.yes_no.kougashitsu_teigashitsu
                 }
-                object_shadow {
+                object_shadows {
                     name = "アイテムの影描写"
                     yesno = core.locale.config.common.yes_no.ari_nashi_slow_fast
                 }

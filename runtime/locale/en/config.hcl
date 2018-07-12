@@ -2,6 +2,8 @@ locale {
     config {
         common {
             menu = "Menu"
+            require_restart = "Items marked with * require restart to apply changes."
+            assign_button = "To assign a button, move the cursor to\nan item and press the button."
 
             yes_no {
                 # NOTE: This text is implicitly chosen for boolean values without an explicit
@@ -59,12 +61,14 @@ locale {
 
                 language {
                     name = "Language*"
-                    # Variants are injected at runtime.
+                    variants {
+                        jp = "Japanese"
+                        en = "English"
+                    }
                 }
             }
             screen {
                 name = "Screen & Sound"
-                warning = "TODO"
                 fullscreen {
                     name = "Screen Mode*"
                     variants {
@@ -95,7 +99,7 @@ locale {
                     doc = "Render shadows at higher quality."
                     yesno = core.locale.config.common.yes_no.high_low
                 }
-                object_shadow {
+                object_shadows {
                     name = "object Shadow"
                     doc = "Display shadows under items on the ground."
                     yesno = core.locale.config.common.yes_no.slow_fast

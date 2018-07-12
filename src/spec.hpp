@@ -50,7 +50,7 @@ struct enum_def
 
     std::string to_string() const
     {
-        std::stringstream ss;
+        std::ostringstream ss;
         ss << "[";
         for (auto it = variants.begin(); it != variants.end(); ++it)
         {
@@ -150,6 +150,7 @@ public:
 
         def.default_index = *index;
         def.pending = false;
+        std::cout << key << ": inject " << def.to_string() << std::endl;
     }
 
     template <typename T>
@@ -268,6 +269,7 @@ public:
 
     const std::string& get_locale_root() const { return locale_root; }
 
+    virtual void post_visit(const std::string&, const section_def&) {}
     virtual void post_visit_item(const std::string&, const hcl::Object&) {}
     virtual void post_visit_bare_value(const std::string&, const item&) {}
 

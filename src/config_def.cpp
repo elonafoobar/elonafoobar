@@ -10,6 +10,11 @@
 namespace elona
 {
 
+void config_def::post_visit(const std::string& current_key, const spec::section_def&)
+{
+    data.emplace(current_key, config_def_item_data{});
+}
+
 void config_def::post_visit_bare_value(const std::string& current_key, const spec::item&)
 {
     std::cout << current_key << std::endl;
@@ -19,6 +24,7 @@ void config_def::post_visit_bare_value(const std::string& current_key, const spe
 void config_def::post_visit_item(const std::string& current_key, const hcl::Object& item)
 {
     config_def_item_data dat{};
+
     if (item.find("visible") != item.end())
     {
         dat.visible = item.at("visible").as<bool>();

@@ -11,6 +11,7 @@
 #include "character.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
+#include "log.hpp"
 #include "lua_env/lua_api.hpp"
 #include "macro.hpp"
 #include "optional.hpp"
@@ -471,6 +472,11 @@ public:
         }
         else
         {
+            if (unknown_keys.find(key) == unknown_keys.end())
+            {
+                ELONA_LOG("Unknown I18N ID: " << key);
+                unknown_keys.insert(key);
+            }
             return u8"<Unknown ID: " + key + ">";
         }
     }
@@ -484,6 +490,11 @@ public:
         }
         else
         {
+            if (unknown_keys.find(key) == unknown_keys.end())
+            {
+                ELONA_LOG("Unknown I18N ID: " << key);
+                unknown_keys.insert(key);
+            }
             return u8"<Unknown ID: " + key + ">";
         }
     }
@@ -590,6 +601,7 @@ private:
     visit_object(const hcl::Object&, const std::string&, const std::string&);
 
     std::unordered_map<std::string, hil::Context> storage;
+    std::set<std::string> unknown_keys;
 };
 
 extern i18n::store s;
