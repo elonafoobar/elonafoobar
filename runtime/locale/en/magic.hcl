@@ -92,8 +92,8 @@ locale {
             no_element = "breath"
             named = "${_1} breath"
             bellows = "${name(_1)} bellow${s(_1)} ${_2} from ${his(_1)} mouth."
-            ally = "The breath hits ${_1}."
-            other = "The breath hits ${_1} and"
+            ally = "The breath hits ${name(_1)}."
+            other = "The breath hits ${name(_1)} and"
         }
 
         insanity {
