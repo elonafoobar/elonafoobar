@@ -24,7 +24,7 @@ config_def load(const std::string& str)
 TEST_CASE("Test is_visible", "[Config: Definition]")
 {
     config_def def = load(R"(
-test {
+config def {
     foo = "bar"
     baz = {
         default = "quux"
@@ -45,7 +45,7 @@ test {
 TEST_CASE("Test is_preload", "[Config: Definition]")
 {
     config_def def = load(R"(
-test {
+config def {
     foo = "bar"
     baz = {
         default = "quux"

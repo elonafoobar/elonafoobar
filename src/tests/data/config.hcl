@@ -1,1 +1,5 @@
-config {}
+config {
+    language {
+        language = "jp"
+    }
+}

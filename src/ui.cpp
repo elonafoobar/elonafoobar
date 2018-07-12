@@ -1226,11 +1226,11 @@ void render_hud()
             inf_clocky + 155 - ap3 * 16);
         ++ap3;
     }
-    if (config::instance().hp_bar)
+    if (config::instance().hp_bar != "hide")
     {
         show_hp_bar(
-            config::instance().hp_bar == 1 ? show_hp_bar_side::left_side
-                                           : show_hp_bar_side::right_side,
+            config::instance().hp_bar == "left" ? show_hp_bar_side::left_side
+                                                : show_hp_bar_side::right_side,
             inf_clocky);
     }
 

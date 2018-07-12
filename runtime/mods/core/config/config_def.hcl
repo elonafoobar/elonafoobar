@@ -1,4 +1,4 @@
-config_def {
+config def {
     screen = {
         type = "section"
         options = {

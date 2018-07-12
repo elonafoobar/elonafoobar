@@ -247,8 +247,8 @@ void config_query_language()
         }
     }
 
-    config::instance().language = p;
-    config::instance().set(u8"language", p(0));
+    //config::instance().language = p;
+    //config::instance().set(u8"language", p(0));
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
@@ -266,7 +266,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("anime.alert_wait"s,                int,         config::instance().alert);
     CONFIG_OPTION("anime.anime_wait"s,                int,         config::instance().animewait);
     CONFIG_OPTION("anime.attack_anime"s,              bool,        config::instance().attackanime);
-    CONFIG_OPTION("anime.auto_turn_speed"s,           int,         config::instance().autoturn);
+    CONFIG_OPTION("anime.auto_turn_speed"s,           std::string, config::instance().autoturn);
     CONFIG_OPTION("anime.general_wait"s,              int,         config::instance().wait1);
     CONFIG_OPTION("anime.screen_refresh"s,            int,         config::instance().scrsync);
     CONFIG_OPTION("anime.scroll"s,                    bool,        config::instance().scroll);
@@ -283,7 +283,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.autopick"s,                 bool,        config::instance().use_autopick);
     CONFIG_OPTION("foobar.autosave"s,                 bool,        config::instance().autosave);
     CONFIG_OPTION("foobar.damage_popup"s,             bool,        config::instance().damage_popup);
-    CONFIG_OPTION("foobar.hp_bar_position"s,          int,         config::instance().hp_bar);
+    CONFIG_OPTION("foobar.hp_bar_position"s,          std::string, config::instance().hp_bar);
     CONFIG_OPTION("foobar.leash_icon"s,               bool,        config::instance().leash_icon);
     CONFIG_OPTION("foobar.startup_script"s,           std::string, config::instance().startup_script);
     CONFIG_OPTION("game.attack_neutral_npcs"s,        bool,        config::instance().attack_neutral_npcs);
@@ -306,7 +306,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("net.server_list"s,                 bool,        config::instance().serverlist);
     CONFIG_OPTION("net.wish"s,                        bool,        config::instance().netwish);
     CONFIG_OPTION("anime.always_center"s,             bool,        config::instance().alwayscenter);
-    CONFIG_OPTION("screen.music"s,                    int,         config::instance().music);
+    CONFIG_OPTION("screen.music"s,                    std::string, config::instance().music);
     CONFIG_OPTION("screen.sound"s,                    bool,        config::instance().sound);
     CONFIG_OPTION("screen.heartbeat"s,                bool,        config::instance().heart);
     CONFIG_OPTION("screen.high_quality_shadows"s,     bool,        config::instance().shadow);
@@ -432,11 +432,11 @@ void load_config(const fs::path& hcl_file)
     {
         config::instance().startrun = 1000;
     }
-    if (config::instance().language == -1)
+    if (config::instance().language == "unknown")
     {
         config_query_language();
     }
-    if (config::instance().language == 0)
+    if (config::instance().language == "jp")
     {
         jp = 1;
         vfix = 0;
@@ -469,13 +469,13 @@ void load_config2(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
-    conf.inject_enum("core.config.language.language", {"jp", "en"}, 1);
+    conf.inject_enum("core.config.language.language", {"unknown", "jp", "en"}, "unknown");
     //conf.inject_enum("core.config.screen.display_mode", {""}, 0);
     // conf.inject_enum("core.config.game.default_save", {""}, 0);
 
-    CONFIG_OPTION("language.language"s,   int,         config::instance().language);
-    CONFIG_OPTION("screen.fullscreen"s,   int,         config::instance().fullscreen);
-    CONFIG_OPTION("screen.music"s,        int,         config::instance().music);
+    CONFIG_OPTION("language.language"s,   std::string, config::instance().language);
+    CONFIG_OPTION("screen.fullscreen"s,   std::string, config::instance().fullscreen);
+    CONFIG_OPTION("screen.music"s,        std::string, config::instance().music);
     CONFIG_OPTION("screen.sound"s,        bool,        config::instance().sound);
     CONFIG_OPTION("balance.extra_race"s,  bool,        config::instance().extrarace);
     CONFIG_OPTION("balance.extra_class"s, bool,        config::instance().extraclass);
@@ -502,17 +502,18 @@ void load_config2(const fs::path& hcl_file)
 
 snail::window::fullscreen_mode_t config_get_fullscreen_mode()
 {
-    snail::window::fullscreen_mode_t mode;
-
-    switch (config::instance().fullscreen)
+    if (config::instance().fullscreen == "fullscreen")
     {
-    case 0: mode = snail::window::fullscreen_mode_t::windowed; break;
-    case 1: mode = snail::window::fullscreen_mode_t::fullscreen; break;
-    case 2: mode = snail::window::fullscreen_mode_t::fullscreen_desktop; break;
-    default: throw std::runtime_error("Invalid fullscreen mode");
+        return snail::window::fullscreen_mode_t::fullscreen;
     }
-
-    return mode;
+    else if (config::instance().fullscreen == "desktop_fullscreen")
+    {
+        return snail::window::fullscreen_mode_t::fullscreen_desktop;
+    }
+    else
+    {
+        return snail::window::fullscreen_mode_t::windowed;
+    }
 }
 
 config& config::instance()
@@ -635,7 +636,7 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
     {
         return def.is<spec::string_def>(current_key)
             || (def.is<spec::enum_def>(current_key)
-                && def.is_valid_enum_variant(current_key, value.as<std::string>()));
+                && def.get<spec::enum_def>(current_key).get_index_of(value.as<std::string>()));
     }
 
     return false;

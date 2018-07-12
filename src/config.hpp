@@ -44,7 +44,7 @@ public:
     int attackwait;
     bool autonumlock;
     bool autosave;
-    int autoturn;
+    std::string autoturn;
     bool damage_popup;
     std::string display_mode;
     bool env;
@@ -53,19 +53,19 @@ public:
     bool extrarace;
     std::string font1;
     std::string font2;
-    int fullscreen;
+    std::string fullscreen;
     bool heart;
     bool hideautoidentify;
     bool hideshopresult;
-    int hp_bar;
+    std::string hp_bar;
     bool attack_neutral_npcs;
     bool joypad;
     int keywait;
-    int language;
+    std::string language;
     bool leash_icon;
     bool msgaddtime;
     int msgtrans;
-    int music;
+    std::string music;
     bool net;
     bool netchat;
     bool netwish;
@@ -129,10 +129,10 @@ public:
         setters[key] = [setter](const hcl::Value& value){ setter(value.as<T>()); };
     }
 
-    void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
+    void inject_enum(const std::string& key, std::vector<std::string> variants, std::string default_variant)
     {
         // TODO
-        def.inject_enum(key, variants, default_index);
+        def.inject_enum(key, variants, default_variant);
     }
 
     template <typename T>

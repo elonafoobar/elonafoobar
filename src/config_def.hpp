@@ -21,7 +21,7 @@ public:
         bool preload = false;
     };
 
-    config_def() : spec::object("config_def")
+    config_def() : spec::object("config")
     {
         locale_root = "core.locale.config.menu";
     }

@@ -12,6 +12,7 @@ namespace elona
 
 void config_def::post_visit_bare_value(const std::string& current_key, const spec::item&)
 {
+    std::cout << current_key << std::endl;
     data.emplace(current_key, config_def_item_data{});
 }
 
@@ -27,6 +28,7 @@ void config_def::post_visit_item(const std::string& current_key, const hcl::Obje
         dat.preload = item.at("preload").as<bool>();
     }
 
+    std::cout << current_key << std::endl;
     data.emplace(current_key, dat);
 }
 

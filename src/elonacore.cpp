@@ -700,17 +700,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (config::instance().autoturn == 0)
+    if (config::instance().autoturn == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (config::instance().autoturn != 2 || firstautoturn == 1)
+    if (config::instance().autoturn != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (config::instance().autoturn == 0)
+    if (config::instance().autoturn == "normal")
     {
         redraw();
     }
