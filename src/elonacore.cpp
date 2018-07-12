@@ -5152,7 +5152,7 @@ void auto_identify()
             item_identify(
                 inv[ci], identification_state_t::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (config::instance().hideautoidentify <= 1)
+            if (!config::instance().hideautoidentify)
             {
                 txt(lang(
                     u8"バックパックの中の"s + s + u8"は"s + itemname(ci)
@@ -5167,7 +5167,7 @@ void auto_identify()
         {
             if (p > rnd(p(1)))
             {
-                if (config::instance().hideautoidentify == 0)
+                if (!config::instance().hideautoidentify)
                 {
                     txt(lang(
                         u8"バックパックの中の"s + itemname(ci) + u8"は"s

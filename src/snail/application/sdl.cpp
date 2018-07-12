@@ -239,6 +239,7 @@ std::string application::get_default_display_mode()
 
 void application::set_display_mode(const std::string& display_mode_str)
 {
+    std::string display_mode = display_mode_str;
     auto display_modes = get_display_modes();
     if (display_modes.size() == 0)
     {
@@ -246,10 +247,10 @@ void application::set_display_mode(const std::string& display_mode_str)
     }
     if (display_modes.find(display_mode_str) == display_modes.end())
     {
-        throw detail::sdl_error("No such display mode: " + display_mode_str);
+        display_mode = get_default_display_mode();
     }
 
-    set_display_mode(display_modes[display_mode_str]);
+    set_display_mode(display_modes[display_mode]);
 }
 
 void application::set_display_mode(::SDL_DisplayMode display_mode)

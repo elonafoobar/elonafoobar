@@ -265,10 +265,11 @@ test def {
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
     REQUIRE(def.get_default("core.test.foo").as<std::string>() == "baz");
     auto variants = def.get_variants("core.test.foo");
-    REQUIRE(variants.size() == 3);
-    REQUIRE(variants.at(0) == "foo");
-    REQUIRE(variants.at(1) == "bar");
-    REQUIRE(variants.at(2) == "baz");
+    REQUIRE(variants.size() == 4);
+    REQUIRE(variants.at(0) == "__unknown__");
+    REQUIRE(variants.at(1) == "foo");
+    REQUIRE(variants.at(2) == "bar");
+    REQUIRE(variants.at(3) == "baz");
 
     REQUIRE_THROWS(def.inject_enum("core.test.bar", {"foo", "bar", "baz"}, "bar"));
 }

@@ -89,7 +89,6 @@ contents in this repository. Note that images, sounds and fonts are not included
 
 ## Thirdparty libraries
 
-* picojson: see thirdparty/picojson/LICENSE.
 * Catch2: see thirdparty/catch2/LICENSE.
 * hayai: see thirdparty/hayai/LICENSE.
 * sol2: see thirdparty/sol2/LICENSE.

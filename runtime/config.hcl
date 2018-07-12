@@ -1,9 +1,5 @@
 config {
     core {
-        language {
-            language = "en"
-        }
-
         screen {
             # Fullscreen mode.
             fullscreen = "windowed"

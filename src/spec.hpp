@@ -3,8 +3,9 @@
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include <cassert>
-#include <vector>
+#include <map>
 #include <sstream>
+#include <vector>
 #include <boost/variant.hpp>
 #include <boost/variant/get.hpp>
 

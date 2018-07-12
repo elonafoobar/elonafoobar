@@ -37,9 +37,9 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").preload == true);
-    REQUIRE(def.get_metadata("core.config.baz").preload == true);
-    REQUIRE(def.get_metadata("core.config.hoge").preload == false);
+    REQUIRE(def.get_metadata("core.config.foo").visible == true);
+    REQUIRE(def.get_metadata("core.config.baz").visible == true);
+    REQUIRE(def.get_metadata("core.config.hoge").visible == false);
 }
 
 TEST_CASE("Test metadata: preload", "[Config: Definition]")
