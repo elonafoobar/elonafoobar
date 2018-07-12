@@ -23,7 +23,7 @@ locale {
                     no = "使用しない"
                 }
 
-                kougashitsu_teigatshitsu {
+                kougashitsu_teigashitsu {
                     yes = "高画質"
                     no = "低画質"
                 }
@@ -70,12 +70,14 @@ locale {
 
                 language {
                     name = "言語*"
-                    # Variants are injected at runtime.
+                    variants {
+                        jp = "Japanese"
+                        en = "English"
+                    }
                 }
             }
             screen {
                 name = "画面と音の設定"
-                warning = "TODO"
                 fullscreen {
                     name = "画面モード*"
                     variants {
@@ -90,7 +92,7 @@ locale {
                 }
                 sound {
                     name = "サウンドの再生*"
-                    yesno = core.locale.config.common.yes_no.ari_nashi
+                    yes_no = core.locale.config.common.yes_no.ari_nashi
                 }
                 music {
                     name = "midiの再生*"
@@ -102,14 +104,15 @@ locale {
                 }
                 high_quality_shadows {
                     name = "光源の描写"
-                    yesno = core.locale.config.common.yes_no.kougashitsu_teigashitsu
+                    yes_no = core.locale.config.common.yes_no.kougashitsu_teigashitsu
                 }
                 object_shadows {
                     name = "アイテムの影描写"
-                    yesno = core.locale.config.common.yes_no.ari_nashi_slow_fast
+                    yes_no = core.locale.config.common.yes_no.ari_nashi_slow_fast
                 }
                 heartbeat {
                     name = "心臓の音"
+                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
                 }
                 skip_random_event_popups {
                     name = "イベントの短縮"
@@ -127,7 +130,8 @@ locale {
                     name = "チャットをフィルタ"
                 }
                 server_list {
-                    name = "Use Custom Server"
+                    name = "カスタムサーバー"
+                    yes_no = core.locale.config.common.yes_no.shiyou_suru_shinai
                 }
             }
             anime {
@@ -142,7 +146,7 @@ locale {
                     name = "走り時スクロール"
                 }
                 general_wait {
-                    name = "General Wait"
+                    name = "通常ウェイト"
                     formatter = core.locale.config.common.formatter.wait
                 }
                 anime_wait {
@@ -171,7 +175,7 @@ locale {
                     yes_no = core.locale.config.common.yes_no.unsupported
                 }
                 window_anime {
-                    name = "Window Animation"
+                    name = "ウィンドウアニメ"
                 }
                 screen_refresh {
                     name = "画面の更新頻度"
@@ -180,31 +184,38 @@ locale {
             }
 
             font {
-                name = "Font Setting"
+                name = "フォント設定"
                 vertical_offset {
-                    name = "Vertical Offset"
+                    name = "垂直オフセット"
                 }
                 size_adjustment {
-                    name = "Size Adjustment"
+                    name = "サイズの調整"
                 }
             }
 
             game {
-                name = "Game Setting"
+                name = "ゲーム設定"
+                default_save {
+                    name = "デフォルトセーブ"
+                    variants {
+                        "" = "使用しない"
+                    }
+                }
                 attack_neutral_npcs {
-                    name = "Attack Netural NPCs"
+                    name = "非好戦的NPCを攻撃"
                 }
                 story {
-                    name = "Enable Cutscenes"
+                    name = "シーンの再生"
+                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
                 }
                 extra_help {
                     name = "ノルンの冒険ガイド"
                 }
                 hide_autoidentify {
-                    name = "Hide Auto-Identify"
+                    name = "自然鑑定ﾒｯｾｰｼﾞの非表示"
                 }
                 hide_shop_updates {
-                    name = "Hide Show Updates"
+                    name = "店ﾒｯｾｰｼﾞの非表示"
                 }
             }
 
@@ -215,15 +226,15 @@ locale {
                 }
                 transparency {
                     name = "過去のﾒｯｾｰｼﾞの透過"
-                    formatter = "${_1}*10 %"#TODO export?
+                    formatter = "${_1}*10 %" #TODO
                 }
             }
 
             input {
-                name = "Input Setting"
+                name = "入力設定"
                 joypad {
                     name = "ゲームパッド"
-                    yes_no = core.locale.config.common.yes_no.shiyou_suru_shinai
+                    yes_no = core.locale.config.common.yes_no.unsupported # core.locale.config.common.yes_no.shiyou_suru_shinai
                 }
                 autodisable_numlock {
                     name = "numlockを自動制御"
@@ -237,7 +248,7 @@ locale {
                     formatter = core.locale.config.common.formatter.wait
                 }
                 start_run_wait {
-                    name = "Run Start Wait"
+                    name = "走り開始の速さ"
                     formatter = "${After } ${_1}+1 steps" # TODO
                 }
                 attack_wait {
@@ -249,24 +260,24 @@ locale {
                     formatter = core.locale.config.common.formatter.wait
                 }
                 select_wait {
-                    name = "Select Wait"
+                    name = "選択ウェイト"
                     formatter = core.locale.config.common.formatter.wait
                 }
                 select_fast_start_wait {
-                    name = "Select Fast Start Wait"
+                    name = "選択ウェイト(早い,開始)"
                     formatter = core.locale.config.common.formatter.wait
                 }
                 select_fast_wait {
-                    name = "Select Fast Wait"
+                    name = "選択ウェイト(早い)"
                     formatter = core.locale.config.common.formatter.wait
                 }
             }
 
             balance {
-                name = "Game Balance Setting"
+                name = "ゲームバランス設定"
                 restock_interval {
                     name = "入荷頻度"
-                    formatter = "${_1}日" # TODO export?
+                    formatter = "${_1}日" # TODO
                 }
                 extra_race {
                     name = "Extra種族"
@@ -292,15 +303,15 @@ locale {
                 }
                 autopick {
                     name = "Autopick"
-                    yesno = core.locale.config.common.yes_no.tsukau_tsukawanai
+                    yes_no = core.locale.config.common.yes_no.tsukau_tsukawanai
                 }
                 autosave {
                     name = "オートセーブ"
-                    yesno = core.locale.config.common.yes_no.yuukou_mukou
+                    yes_no = core.locale.config.common.yes_no.yuukou_mukou
                 }
                 damage_popup {
                     name = "ダメージポップアップ"
-                    yesno = core.locale.config.common.yes_no.ari_nashi
+                    yes_no = core.locale.config.common.yes_no.ari_nashi
                 }
                 startup_script {
                 }

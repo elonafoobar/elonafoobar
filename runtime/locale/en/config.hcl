@@ -24,6 +24,11 @@ locale {
                     no = "No(Fast)"
                 }
 
+                high_low {
+                    yes = "High"
+                    no = "Low"
+                }
+
                 show_dont_show {
                     yes = "Show"
                     no = "Don't show"
@@ -84,7 +89,7 @@ locale {
                 }
                 sound {
                     name = "Sound*"
-                    yesno = core.locale.config.common.yes_no.on_off
+                    yes_no = core.locale.config.common.yes_no.on_off
                 }
                 music {
                     name = "Music*"
@@ -97,12 +102,12 @@ locale {
                 high_quality_shadows {
                     name = "Shadow Quality"
                     doc = "Render shadows at higher quality."
-                    yesno = core.locale.config.common.yes_no.high_low
+                    yes_no = core.locale.config.common.yes_no.high_low
                 }
                 object_shadows {
                     name = "object Shadow"
                     doc = "Display shadows under items on the ground."
-                    yesno = core.locale.config.common.yes_no.slow_fast
+                    yes_no = core.locale.config.common.yes_no.slow_fast
                 }
                 heartbeat {
                     name = "Heartbeat Sound"
@@ -226,6 +231,13 @@ DOC
 
             game {
                 name = "Game Setting"
+                default_save {
+                    name = "Default Save"
+                    doc = "Saved game to be loaded on startup."
+                    variants {
+                        "" = "None"
+                    }
+                }
                 attack_neutral_npcs {
                     name = "Attack Netural NPCs"
                     doc = "Attack non-hostile, non-ally NPCs when running into them."
@@ -243,7 +255,7 @@ DOC
                     doc = "Hide identify status updates from Sense Quality."
                 }
                 hide_shop_updates {
-                    name = "Hide Show Updates"
+                    name = "Hide Shop Updates"
                     doc = "Hide daily shop reports of items sold for shops you own."
                 }
             }
@@ -256,7 +268,7 @@ DOC
                 transparency {
                     name = "Transparency"
                     doc = "Message box transparency."
-                    formatter = "${_1}*10 %"#TODO export?
+                    formatter = "${_1}*10 %"#TODO
                 }
             }
 
@@ -264,7 +276,7 @@ DOC
                 name = "Input Setting"
                 joypad {
                     name = "Game Pad"
-                    yes_no = core.locale.config.common.yes_no.use_dont_use
+                    yes_no = core.locale.config.common.yes_no.unsupported #core.locale.config.common.yes_no.use_dont_use
                 }
                 autodisable_numlock {
                     name = "Auto-Disable Numlock"
@@ -316,7 +328,7 @@ DOC
                 doc = "These settings affect game balance."
                 restock_interval {
                     name = "Restock Interval"
-                    formatter = "${_1} day${s(_1)}" # TODO export?
+                    formatter = "${_1} day${s(_1)}" # TODO
                     doc = <<DOC
 Interval in days it takes shops to restock items.
 If 0, the item selection will change each time you interact with a shopkeeper.
@@ -346,22 +358,22 @@ DOC
                 }
                 leash_icon {
                     name = "Leash icon"
-                    yesno = core.locale.config.common.yes_no.show_dont_show
+                    yes_no = core.locale.config.common.yes_no.show_dont_show
                 }
                 autopick {
                     name = "Autopick"
                     doc = "Automatically pick up items you pass over."
-                    yesno = core.locale.config.common.yes_no.use_dont_use
+                    yes_no = core.locale.config.common.yes_no.use_dont_use
                 }
                 autosave {
                     name = "Autosave"
                     doc = "Automatically save the game at certain intervals."
-                    yesno = core.locale.config.common.yes_no.enable_disable
+                    yes_no = core.locale.config.common.yes_no.enable_disable
                 }
                 damage_popup {
                     name = "Damage popup"
                     doc = "Show damage popups."
-                    yesno = core.locale.config.common.yes_no.on_off
+                    yes_no = core.locale.config.common.yes_no.on_off
                 }
                 startup_script {
                     doc = <<DOC
