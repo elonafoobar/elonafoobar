@@ -136,10 +136,10 @@ public:
     {
         def.inject_enum(key, variants, default_variant);
 
+        auto enum_def = def.get<spec::enum_def>(key);
         if (storage.find(key) != storage.end())
         {
             // Check if this enum has an invalid value. If so, set it to the default.
-            auto enum_def = def.get<spec::enum_def>(key);
             std::string current = get<std::string>(key);
             if (!enum_def.get_index_of(current))
             {
@@ -148,6 +148,10 @@ public:
                           "Setting to "s << enum_def.get_default() << "."s);
                 set(key, enum_def.get_default());
             }
+        }
+        else
+        {
+            set(key, enum_def.get_default()); // Set the enum to its default value.
         }
     }
 

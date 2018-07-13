@@ -232,9 +232,6 @@ void load_config(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
-    inject_display_modes(conf);
-    inject_save_files(conf);
-
     // TODO do inversions
     CONFIG_OPTION("anime.alert_wait"s,                int,         config::instance().alert);
     CONFIG_OPTION("anime.anime_wait"s,                int,         config::instance().animewait);
@@ -440,7 +437,9 @@ void load_config2(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
+    inject_display_modes(conf);
     inject_languages(conf);
+    inject_save_files(conf);
 
     CONFIG_OPTION("language.language"s,   std::string, config::instance().language);
     CONFIG_OPTION("screen.fullscreen"s,   std::string, config::instance().fullscreen);
