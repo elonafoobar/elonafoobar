@@ -12,6 +12,40 @@ namespace elona
 namespace spec
 {
 
+namespace
+{
+
+static hcl::Value& skip_sections(hcl::Value& object,
+                                 const std::vector<std::string> section_names,
+                                 const std::string& hcl_file)
+{
+    std::string sections;
+    hcl::Value* value = &object;
+
+    for (auto it = section_names.begin(); it < section_names.end(); it++)
+    {
+        std::string name = *it;
+        if (!value->is<hcl::Object>() || !value->has(name))
+        {
+            throw spec_error(hcl_file, "\"" + sections + "\" object not found at top level"s);
+        }
+
+        if (sections == "")
+        {
+            sections = name;
+        }
+        else
+        {
+            sections += "." + name;
+        }
+        value = value->find(name);
+    }
+
+    return *value;
+}
+
+}
+
 void object::init(const fs::path& path)
 {
     clear();
@@ -32,20 +66,8 @@ void object::load(std::istream& is, const std::string& hcl_file)
                          + parseResult.errorReason);
     }
 
-    const hcl::Value& value = parseResult.value;
-
-    if (!value.is<hcl::Object>() || !value.has(name))
-    {
-        throw spec_error(hcl_file, "\"" + name + "\" object not found at top level"s);
-    }
-
-    const hcl::Value top_level = value[name];
-    if (!top_level.is<hcl::Object>() || !top_level.has("def"))
-    {
-        throw spec_error(hcl_file, "\"def\" object not found at top level after \"" + name + "\""s);
-    }
-
-    const hcl::Value def = top_level["def"];
+    hcl::Value& value = parseResult.value;
+    const hcl::Value& def = skip_sections(value, {name, "def"}, hcl_file);
     auto result = visit_object(def.as<hcl::Object>(), top_level_key, hcl_file);
 
     post_visit(top_level_key, result);
@@ -89,6 +111,7 @@ item object::visit_bare_value(const hcl::Value& default_value,
                             const std::string& hcl_file)
 {
     item i;
+
     if (default_value.is<bool>())
     {
         i = visit_bool(default_value.as<bool>());

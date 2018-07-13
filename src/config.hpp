@@ -143,7 +143,7 @@ public:
             std::string current = get<std::string>(key);
             if (!enum_def.get_index_of(current))
             {
-                ELONA_LOG("Config key "s << key + " had invalid variant "s << current << ". "s <<
+                ELONA_LOG("Config key "s << key << " had invalid variant "s << current << ". "s <<
                           "("s << def.type_to_string(key) << ")"s <<
                           "Setting to "s << enum_def.get_default() << "."s);
                 set(key, enum_def.get_default());
@@ -183,7 +183,8 @@ public:
 
     void set(const std::string& key, const hcl::Value value)
     {
-        std::cout << "set: " << key << " to " << value << std::endl;
+        ELONA_LOG("Set config option: " << key << " to " << value);
+
         if (!def.exists(key))
         {
             throw std::runtime_error("No such config key " + key);
@@ -194,7 +195,6 @@ public:
             {
                 int temp = value.as<int>();
                 temp = clamp(temp, def.get_min(key), def.get_max(key));
-                std::cout << "zxc " << temp << std::endl;
                 storage[key] = temp;
             }
             else
@@ -204,7 +204,6 @@ public:
 
             if (setters.find(key) != setters.end())
             {
-                std::cout << "SET " << key << " to " << storage.at(key) << std::endl;
                 setters[key](storage.at(key));
             }
         }

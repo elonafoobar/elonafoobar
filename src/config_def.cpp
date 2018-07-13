@@ -17,7 +17,6 @@ void config_def::post_visit(const std::string& current_key, const spec::section_
 
 void config_def::post_visit_bare_value(const std::string& current_key, const spec::item&)
 {
-    std::cout << current_key << std::endl;
     data.emplace(current_key, metadata{});
 }
 
@@ -38,7 +37,6 @@ void config_def::post_visit_item(const std::string& current_key, const hcl::Obje
         dat.translate_variants = item.at("translate_variants").as<bool>();
     }
 
-    std::cout << current_key << std::endl;
     data.emplace(current_key, dat);
 }
 

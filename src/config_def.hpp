@@ -1,17 +1,14 @@
 #pragma once
 #include "spec.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
-#include "filesystem.hpp"
-#include "optional.hpp"
-#include <cassert>
-#include <vector>
-#include <sstream>
-#include <boost/variant.hpp>
-#include <boost/variant/get.hpp>
 
 namespace elona
 {
 
+/***
+ * Contains a layout of valid config options, to be used by the config
+ * class for validating values set on it.
+ */
 class config_def : public spec::object
 {
 public:

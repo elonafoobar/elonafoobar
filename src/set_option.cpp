@@ -18,7 +18,6 @@ using namespace elona;
 namespace
 {
 
-
 class config_menu_item_base
 {
 public:
@@ -58,13 +57,13 @@ public:
     {
     }
 
-    void change(int p)
+    void change(int delta)
     {
-        if (!variable && p == 1)
+        if (!variable && delta == 1)
         {
             variable = true;
         }
-        else if (variable && p == -1)
+        else if (variable && delta == -1)
         {
             variable = false;
         }
@@ -119,9 +118,9 @@ public:
     {
     }
 
-    void change(int p)
+    void change(int delta)
     {
-        variable = clamp(variable + p, min, max);
+        variable = clamp(variable + delta, min, max);
         config::instance().set(key, variable);
     }
 
@@ -175,7 +174,9 @@ public:
         {
             throw std::runtime_error("No such enum variant \"" + default_choice + "\" in \"" + key + "\".");
         }
-
+        // If the enum variant is injected, but the selected value is
+        // still unknown, try to set its index to the first known
+        // value if there is one.
         if (variants.size() >= 2 && index == 0
             && variants.at(index).value == spec::unknown_enum_variant)
         {
@@ -195,13 +196,7 @@ public:
         {
             index = static_cast<int>(variants.size() - 1);
         }
-        // Special case for injected enums. If the enum is marked as
-        // runtime but there is no value set, there needs to be a
-        // special "unknown" value that is set only at the first
-        // startup and hidden in config menus. For example, the screen
-        // resolution needs to be set before the application loads,
-        // but in order to get the list of resolutions the application
-        // needs to be loaded in the first place.
+        // See above.
         if (variants.size() >= 2 && index == 0
             && variants.at(index).value == spec::unknown_enum_variant)
         {
@@ -280,34 +275,120 @@ public:
     }
 };
 
+
 typedef std::vector<std::unique_ptr<config_menu>> config_screen;
 
 
-#define ELONA_CONFIG_ITEM(def_key, locale_key)                                  \
-    ret.back()->items.emplace_back(std::make_unique<config_menu_item_base>(def_key, locale_key))
+// Functions for adding items to the config screen.
 
-#define ELONA_CONFIG_ITEM_YESNO(def_key, locale_key, yes, no)   \
-    ret.back()->items.emplace_back( \
-        std::make_unique<config_menu_item_yesno>(def_key, locale_key, conf.get<bool>(def_key), yes, no))
+static void add_config_menu(const spec_key& key,
+                            const i18n_key& menu_name_key,
+                            const config_def& def,
+                            int width,
+                            config_screen& ret)
+{
+    auto children = def.get_children(key);
+    int w = width;
+    int h = 165 + (19 * children.size());
+    ret.emplace_back(std::make_unique<config_menu>(i18n::s.get(menu_name_key), w, h));
+}
 
-#define ELONA_CONFIG_ITEM_INFO(def_key, locale_key, info)       \
-    ret.back()->items.emplace_back( \
-        std::make_unique<config_menu_item_info>(def_key, locale_key, info))
 
-#define ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter)       \
-    ret.back()->items.emplace_back( \
-        std::make_unique<config_menu_item_integer>(def_key, locale_key, \
-                                                   conf.get<int>(def_key), \
-                                                   conf.get_def().get_min(def_key), \
-                                                   conf.get_def().get_max(def_key), \
-                                                   formatter))
+static void add_config_item_yesno(const spec_key& key,
+                                  const i18n_key& locale_key,
+                                  bool default_value,
+                                  config_screen& ret)
+{
+    i18n_key yes_no;
 
-#define ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices)                  \
-    ret.back()->items.emplace_back(std::make_unique<config_menu_item_choice>(\
-                                       def_key, locale_key,             \
-                                       conf.get<std::string>(def_key), choices, \
-                                       conf.get_def().get_metadata(def_key).translate_variants))
+    // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
+    if (auto text = i18n::s.get_optional(locale_key + ".yes_no"))
+    {
+        yes_no = *text;
+    }
+    else
+    {
+        // Fall back to a hardcoded default.
+        yes_no = "core.locale.config.common.yes_no.default";
+    }
 
+    std::string yes_text = i18n::s.get(yes_no + ".yes");
+    std::string no_text = i18n::s.get(yes_no + ".no");
+
+    ret.back()->items.emplace_back(
+        std::make_unique<config_menu_item_yesno>(
+            key, locale_key,
+            default_value,
+            yes_text, no_text)
+        );
+}
+
+static void add_config_item_integer(const spec_key& key,
+                                    const i18n_key& locale_key,
+                                    int default_value,
+                                    const config_def& def,
+                                    config_screen& ret)
+{
+    int min = def.get_min(key);
+    int max = def.get_max(key);
+
+    ret.back()->items.emplace_back(
+        std::make_unique<config_menu_item_integer>(
+            key, locale_key,
+            default_value,
+            min, max, "${_1}")
+        );
+}
+
+static void add_config_item_choice(const spec_key& key,
+                                   const i18n_key& locale_key,
+                                   const std::string& default_value,
+                                   const config_def& def,
+                                   config_screen& ret)
+{
+    // Add the translated names of all variants.
+    const auto& variants = def.get_variants(key);
+    std::vector<config_menu_item_choice::choice> choices;
+
+    for (const auto& variant : variants)
+    {
+        auto choice = config_menu_item_choice::choice{
+            variant, locale_key + ".variants." + variant
+        };
+        choices.emplace_back(choice);
+    }
+
+    bool translate_variants = def.get_metadata(key).translate_variants;
+
+    ret.back()->items.emplace_back(
+        std::make_unique<config_menu_item_choice>(
+            key, locale_key,
+            default_value, choices,
+            translate_variants)
+        );
+}
+
+static void add_config_item_section(const spec_key& key,
+                                    const i18n_key& locale_key,
+                                    const std::string section_name,
+                                    const config_def& def,
+                                    config_screen& ret)
+{
+    // EX: "<core.config>.<language>"
+    spec_key section_key = key + "." + section_name;
+
+    if (def.get_metadata(section_key).visible)
+    {
+        // EX: "<core.locale.config.menu>.<language>"
+        i18n_key section_locale_key = locale_key + "." + section_name;
+
+        ret.back()->items.emplace_back(
+            std::make_unique<config_menu_item_base>(section_key, section_locale_key));
+    }
+}
+
+
+// Functions for visiting the parsed config structure.
 
 void visit_section(config&, const spec_key&, config_screen&);
 void visit_config_item(config&, const spec_key&, config_screen&);
@@ -315,32 +396,21 @@ void visit_config_item(config&, const spec_key&, config_screen&);
 
 void visit_toplevel(config& conf, config_screen& ret)
 {
-    spec_key def_key = "core.config";
-    i18n_key menu_name_key = conf.get_def().get_locale_root() + ".name";
+    spec_key key = "core.config";
+    i18n_key locale_key = conf.get_def().get_locale_root();
+    i18n_key menu_name_key = locale_key + ".name";
 
     // Add the top level menu.
-    auto children = conf.get_def().get_children(def_key);
-    int w = 370;
-    int h = 165 + (19 * children.size());
-    ret.emplace_back(std::make_unique<config_menu>(i18n::s.get(menu_name_key), w, h));
+    add_config_menu(key, menu_name_key, conf.get_def(), 370, ret);
 
     // Add the names of top-level config menu sections if they are visible.
-    for (const auto& child : conf.get_def().get_children(def_key))
+    for (const auto& section_name : conf.get_def().get_children(key))
     {
-        // EX: "core.config.language"
-        spec_key section_key = def_key + "." + child;
-
-        if (conf.get_def().get_metadata(section_key).visible)
-        {
-            // EX: "core.locale.config.menu.language"
-            i18n_key locale_key = conf.get_def().get_locale_root() + "." + child;
-
-            ELONA_CONFIG_ITEM(section_key, locale_key);
-        }
+        add_config_item_section(key, locale_key, section_name, conf.get_def(), ret);
     }
 
     // Add all sections and their config items.
-    for (const auto& child : conf.get_def().get_children(def_key))
+    for (const auto& child : conf.get_def().get_children(key))
     {
         visit_section(conf, child, ret);
     }
@@ -348,30 +418,29 @@ void visit_toplevel(config& conf, config_screen& ret)
 
 void visit_section(config& conf, const spec_key& current_key, config_screen& ret)
 {
-    // EX: "core.config.language"
-    spec_key def_key = "core.config." + current_key;
+    // EX: "<core.config>.<language>"
+    spec_key key = "core.config." + current_key;
 
-    // EX: "core.locale.config.menu.language"
+    // EX: "<core.locale.config.menu>.language"
     i18n_key locale_key = conf.get_def().get_locale_root() + "." + current_key;
+    i18n_key menu_name_key = locale_key + ".name";
 
     // Ensure the section exists in the config definition.
-    if (!conf.get_def().exists(def_key))
+    if (!conf.get_def().exists(key))
     {
         throw std::runtime_error("No such config option \"" + current_key + "\".");
     }
-    if (!conf.get_def().get_metadata(def_key).visible)
+    // Ignore this section if it is not user-visible.
+    if (!conf.get_def().get_metadata(key).visible)
     {
         return;
     }
 
-    // Add the translated name to the menu.
-    auto children = conf.get_def().get_children(def_key);
-    int w = 440;
-    int h = 165 + (18 * children.size());
-    ret.emplace_back(std::make_unique<config_menu_submenu>(i18n::s.get(locale_key + ".name"), w, h));
+    // Add the submenu.
+    add_config_menu(key, menu_name_key, conf.get_def(), 440, ret);
 
     // Visit child config items of this section.
-    for (const auto& child : conf.get_def().get_children(def_key))
+    for (const auto& child : conf.get_def().get_children(key))
     {
         visit_config_item(conf, current_key + "." + child, ret);
     }
@@ -379,62 +448,40 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
 
 void visit_config_item(config& conf, const spec_key& current_key, config_screen& ret)
 {
-    spec_key def_key = "core.config." + current_key;
+    spec_key key = "core.config." + current_key;
     i18n_key locale_key = conf.get_def().get_locale_root() + "." + current_key;
 
-    if (!conf.get_def().exists(def_key))
+    if (!conf.get_def().exists(key))
     {
         throw std::runtime_error("No such config option \"" + current_key + "\".");
     }
-    if (!conf.get_def().get_metadata(def_key).visible)
+    if (!conf.get_def().get_metadata(key).visible)
     {
         return;
     }
 
-    if (conf.get_def().is<spec::bool_def>(def_key))
+    if (conf.get_def().is<spec::bool_def>(key))
     {
-        // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
-        i18n_key yes_no = "core.locale.config.common.yes_no.default";
-        std::cout << "yesno " << locale_key << std::endl;
-        if (auto text = i18n::s.get_optional(locale_key + ".yes_no"))
-        {
-            yes_no = *text;
-        }
-        ELONA_CONFIG_ITEM_YESNO(def_key, locale_key,
-                                i18n::s.get(yes_no + ".yes"),
-                                i18n::s.get(yes_no + ".no"));
+        add_config_item_yesno(key, locale_key, conf.get<bool>(key), ret);
     }
-    else if (conf.get_def().is<spec::int_def>(def_key))
+    else if (conf.get_def().is<spec::int_def>(key))
     {
-        // TODO move to lua
-        std::string formatter = "${_1}";
-        ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter);
+        add_config_item_integer(key, locale_key, conf.get<int>(key), conf.get_def(), ret);
     }
-    else if (conf.get_def().is<spec::enum_def>(def_key))
+    else if (conf.get_def().is<spec::enum_def>(key))
     {
-        // Add the translated names of all variants.
-        const auto& variants = conf.get_def().get_variants(def_key);
-        std::vector<config_menu_item_choice::choice> choices;
-
-        for (const auto& variant : variants)
-        {
-            choices.emplace_back(config_menu_item_choice::choice{
-                        variant,
-                        locale_key + ".variants." + variant});
-        }
-
-        ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices);
+        add_config_item_choice(key, locale_key, conf.get<std::string>(key), conf.get_def(), ret);
     }
-    else if (conf.get_def().is<spec::string_def>(def_key))
+    else if (conf.get_def().is<spec::string_def>(key))
     {
         // ignore
         // TODO: don't ignore, allow text input
     }
-    else if (conf.get_def().is<spec::list_def>(def_key))
+    else if (conf.get_def().is<spec::list_def>(key))
     {
         // ignore
     }
-    else if (conf.get_def().is<spec::section_def>(def_key))
+    else if (conf.get_def().is<spec::section_def>(key))
     {
         throw std::runtime_error("You cannot currently define nested sections.");
     }
@@ -444,11 +491,6 @@ void visit_config_item(config& conf, const spec_key& current_key, config_screen&
     }
 }
 
-#undef ELONA_CONFIG_ITEM
-#undef ELONA_CONFIG_ITEM_YESNO
-#undef ELONA_CONFIG_ITEM_INFO
-#undef ELONA_CONFIG_ITEM_INTEGER
-#undef ELONA_CONFIG_ITEM_CHOICE
 
 config_screen create_config_screen()
 {
@@ -658,6 +700,7 @@ set_option_begin:
         }
 
         config_screen[submenu]->draw();
+
         if (keyrange != 0)
         {
             cs_bk = cs;

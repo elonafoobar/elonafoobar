@@ -14,10 +14,39 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
+class spec_error : public std::exception
+{
+public:
+    spec_error(const std::string& key, std::string str)
+        {
+            std::ostringstream oss;
+            oss << key << ": Config definition loading error: ";
+            oss << str;
+            what_ = oss.str();
+        }
+    spec_error(const std::string& file, const std::string& key, std::string str)
+        {
+            std::ostringstream oss;
+            oss << file << ": Config definition loading error at " << key << ": ";
+            oss << str;
+            what_ = oss.str();
+        }
+
+    const char* what() const noexcept {
+        return what_.c_str();
+    }
+private:
+    std::string what_;
+};
+
+
 typedef std::string spec_key;
+
 
 namespace spec
 {
+
+// Valid types a spec can have.
 
 struct section_def
 {
@@ -68,6 +97,10 @@ struct enum_def
         return ss.str();
     }
 
+    /***
+     * Given a string, return its index in the enum's variants, if
+     * found.
+     */
     optional<int> get_index_of(std::string variant) const
     {
         auto it = std::find(variants.begin(), variants.end(), variant);
@@ -89,33 +122,15 @@ typedef boost::variant<section_def,
                        string_def,
                        list_def,
                        enum_def> item;
+
 static const constexpr char* unknown_enum_variant = "__unknown__";
 
-class spec_error : public std::exception
-{
-public:
-    spec_error(const std::string& key, std::string str)
-        {
-            std::ostringstream oss;
-            oss << key << ": Config definition loading error: ";
-            oss << str;
-            what_ = oss.str();
-        }
-    spec_error(const std::string& file, const std::string& key, std::string str)
-        {
-            std::ostringstream oss;
-            oss << file << ": Config definition loading error at " << key << ": ";
-            oss << str;
-            what_ = oss.str();
-        }
 
-    const char* what() const noexcept {
-        return what_.c_str();
-    }
-private:
-    std::string what_;
-};
-
+/***
+ * A schema-like object that holds a definition of valid values for an
+ * HCL document. Used for validating the correctness of user-inputted
+ * HCL files. For an example, see runtime/mods/core/config/config_def.hcl.
+ */
 class object
 {
 public:
@@ -136,6 +151,14 @@ public:
         return items.find(key) != items.end();
     };
 
+    /***
+     * Adds values to an enum declared with type "runtime_enum".
+     *
+     * In some cases, it won't be possible to validate certain HCL
+     * values with a list of variants because those variants are not
+     * known until runtime. Some examples are screen resolution and
+     * available languages.
+     */
     void inject_enum(const std::string& key, std::vector<std::string> variants, std::string default_variant)
     {
         if (!exists(key) || !is<enum_def>(key))
@@ -152,6 +175,8 @@ public:
         def.variants = std::move(variants);
         def.variants.insert(def.variants.begin(), unknown_enum_variant);
 
+        // The default variant provided must be contained in the list
+        // of provided variants.
         optional<int> index = def.get_index_of(default_variant);
         if (!index)
         {
@@ -161,7 +186,6 @@ public:
 
         def.default_index = *index;
         def.pending = false;
-        std::cout << key << ": inject " << def.to_string() << std::endl;
     }
 
     template <typename T>
@@ -233,6 +257,9 @@ public:
         }
     }
 
+    /***
+     * Gets the children of a section. Only useable on section values.
+     */
     std::vector<std::string> get_children(const std::string& key) const
     {
         if (!is<section_def>(key))
@@ -242,6 +269,9 @@ public:
         return get<section_def>(key).children;
     }
 
+    /***
+     * Gets the variants of an enum. Only useable on enum values.
+     */
     std::vector<std::string> get_variants(const std::string& key) const
     {
         if (!is<enum_def>(key))
@@ -251,6 +281,9 @@ public:
         return get<enum_def>(key).variants;
     }
 
+    /***
+     * Gets the maximum value/index of an integer or enum.
+     */
     int get_max(const std::string& key) const
     {
         if (is<enum_def>(key))
@@ -264,6 +297,9 @@ public:
         return get<int_def>(key).max;
     }
 
+    /***
+     * Gets the minumum value/index of an integer or enum.
+     */
     int get_min(const std::string& key) const
     {
         if (is<enum_def>(key))
@@ -277,18 +313,21 @@ public:
         return get<int_def>(key).min;
     }
 
-    const std::string& get_locale_root() const { return locale_root; }
-
+    // These functions allow for injecting more specific validations
+    // or data in subclasses, like config option visibility based on
+    // object properties.
     virtual void post_visit(const std::string&, const section_def&) {}
     virtual void post_visit_item(const std::string&, const hcl::Object&) {}
     virtual void post_visit_bare_value(const std::string&, const item&) {}
 
 private:
+    // Visitor methods for general object types
     section_def visit_object(const hcl::Object&, const std::string&, const std::string&);
     void visit(const hcl::Value&, const std::string&, const std::string&);
     item visit_bare_value(const hcl::Value&, const std::string&, const std::string&);
     void visit_item(const hcl::Object&, const std::string&, const std::string&);
 
+    // Visitor methods for specific object types
     section_def visit_section(const hcl::Object&, const std::string&, const std::string&);
     int_def visit_int(int, const hcl::Object&, const std::string&, const std::string&);
     bool_def visit_bool(bool);
@@ -297,7 +336,6 @@ private:
     enum_def visit_enum(const std::string&, const hcl::Object&, const std::string&, const std::string&);
 
     std::string name;
-    std::string locale_root;
     std::map<std::string, item> items;
 };
 }

@@ -48,34 +48,44 @@ static void inject_display_modes(config& conf)
     std::string default_display_mode =
         snail::application::instance().get_default_display_mode();
     std::vector<std::string> display_mode_names;
-    std::string cfg_display_mode = config::instance().display_mode;
+    std::string current_display_mode = config::instance().display_mode;
 
-    int display_mode_index = -1;
+    bool config_display_mode_found = false;
     int index = 0;
-    int default_index = 0;
+    int default_display_mode_index = 0;
 
     for (const auto pair : display_modes)
     {
-        std::cout << pair.first << std::endl;
+        // First pair member contains identifier string, second is SDL
+        // display mode struct.
         display_mode_names.emplace_back(pair.first);
-        if (pair.first == cfg_display_mode)
+
+        // If this is the display mode currently selected in the
+        // config, mark that it's been found.
+        if (pair.first == current_display_mode)
         {
-            display_mode_index = index;
+            config_display_mode_found = true;
         }
+        // If this is the default display mode the application
+        // requested, mark its index for later.
         else if (pair.first == default_display_mode)
         {
-            default_index = index;
+            default_display_mode_index = index;
         }
         index++;
     }
-    if (display_mode_index == -1 || config::instance().display_mode == "")
+
+    // If the display mode in the config was not found, reconfigure it to
+    // the application's default.
+    if (!config_display_mode_found || current_display_mode == "")
     {
-        cfg_display_mode = default_display_mode;
-        display_mode_index = default_index;
+        current_display_mode = default_display_mode;
     }
 
-    std::cout << "Def " << default_display_mode << std::endl;
-    if (cfg_display_mode != "")
+    // If the display_mode is still unknown, we're probably in
+    // headless mode, so don't try to set any config options (or
+    // "invalid enum variant" will be generated).
+    if (current_display_mode != "")
     {
         conf.inject_enum("core.config.screen.display_mode", display_mode_names, default_display_mode);
 
@@ -115,6 +125,7 @@ static void inject_languages(config& conf)
     std::vector<std::string> locales;
     bool has_jp = false;
     bool has_en = false;
+
     for (const auto& entry : filesystem::dir_entries{
             filesystem::dir::locale(), filesystem::dir_entries::type::dir})
     {
@@ -131,6 +142,10 @@ static void inject_languages(config& conf)
         }
     }
 
+    // Not having English or Japanese loaded will cause weird things
+    // to happen, since many parts of the code depend on one or the
+    // other being loaded. This can be removed after those parts of
+    // the code are refactored.
     if (!has_en || !has_jp)
     {
         throw config_loading_error("Locale for English or Japanese is missing in locale/ folder.");
@@ -518,6 +533,8 @@ void config::load(std::istream& is, const std::string& hcl_file, bool preload)
                                    + parseResult.errorReason);
     }
 
+    // TODO: This pattern seems to be shared in various places in the
+    // code.
     const hcl::Value& value = parseResult.value;
 
     if (!value.is<hcl::Object>() || !value.has("config"))
@@ -630,11 +647,15 @@ void config::write()
                     filesystem::dir::exe() / u8"config.hcl")};
     }
 
+    // Create a top level "config" section.
     hcl::Value out = hcl::Value(hcl::Object());
     out.set("config", hcl::Object());
     hcl::Value* parent = out.find("config");
     assert(parent);
 
+    // Create sections under the top-level "config" section for each
+    // mod that has config options (for now, only "core"), then write
+    // their individual config sections.
     for (auto&& pair : storage)
     {
         std::string key = pair.first;
@@ -653,6 +674,9 @@ void config::write()
         size_t pos = 0;
         std::string token;
 
+        // Function to split the flat key ("core.config.some.option")
+        // on the next period and set the token to the split section
+        // name ("some" or "option").
         auto advance = [&pos, &key, &token]()
                            {
                                pos = key.find(".");
@@ -665,6 +689,8 @@ void config::write()
                                return true;
                            };
 
+        // Function that either creates a new object for holding the
+        // nested config value or finds an existing one.
         auto set = [&current](std::string key)
                        {
                            hcl::Value* existing = current->find(key);
@@ -680,12 +706,12 @@ void config::write()
                            }
                        };
 
-        // get mod-level scope
+        // Get the mod-level scope ("core").
         assert(advance());
         std::string scope = token;
         set(token);
 
-        // skip "config"
+        // Skip the "config" section name.
         assert(advance());
         assert(token == "config");
 
