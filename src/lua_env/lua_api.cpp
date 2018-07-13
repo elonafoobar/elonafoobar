@@ -738,9 +738,9 @@ bool Input::yes_no(const std::string& message)
 
 sol::optional<int> Input::prompt_number(const std::string& message, int max)
 {
-    if (max < 0)
+    if (max < 1)
     {
-        throw sol::error("Input.prompt_number called with max < 0");
+        throw sol::error("Input.prompt_number called with max < 1");
     }
 
     txt(message + " ");
