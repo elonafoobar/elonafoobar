@@ -803,6 +803,7 @@ void Input::bind(sol::table& Elona)
 namespace GUI
 {
 void txt(const std::string&);
+void txtnew();
 void txt_color(int);
 
 void bind(sol::table&);
@@ -811,6 +812,11 @@ void bind(sol::table&);
 void GUI::txt(const std::string& message)
 {
     elona::txt(message);
+}
+
+void GUI::txtnew()
+{
+    elona::txtnew();
 }
 
 void GUI::txt_color(int color)
@@ -826,6 +832,7 @@ void GUI::bind(sol::table& Elona)
 {
     sol::table GUI = Elona.create_named("GUI");
     GUI.set_function("txt", GUI::txt);
+    GUI.set_function("txtnew", GUI::txtnew);
     GUI.set_function("txt_color", GUI::txt_color);
 }
 

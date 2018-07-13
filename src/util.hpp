@@ -110,6 +110,28 @@ inline size_t byte_count(char c)
 
 
 
+inline std::pair<size_t, size_t>
+find_widthwise(std::string str, std::string pattern)
+{
+    size_t w{};
+    auto pos = str.find(pattern);
+    if (pos == std::string::npos)
+        return std::pair<size_t, size_t>(std::string::npos, std::string::npos);
+
+    for (size_t i = 0; i < pos;)
+    {
+        const auto byte = byte_count(str[i]);
+        const auto char_width = byte == 1 ? 1 : 2;
+
+        i += byte;
+        w += char_width;
+    }
+
+    return std::pair<size_t, size_t>(pos, w);
+}
+
+
+
 inline std::string take_by_width(const std::string& str, size_t width)
 {
     size_t w{};
