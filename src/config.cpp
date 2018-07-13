@@ -104,11 +104,14 @@ static void inject_save_files(config& conf)
     std::vector<std::string> saves;
     saves.push_back("");
 
-    for (const auto& entry : filesystem::dir_entries{
-            filesystem::dir::save(), filesystem::dir_entries::type::dir})
+    if (fs::exists(filesystem::dir::save()))
     {
-        std::string folder = filesystem::to_utf8_path(entry.path().filename());
-        saves.push_back(folder);
+        for (const auto& entry : filesystem::dir_entries{
+                filesystem::dir::save(), filesystem::dir_entries::type::dir})
+        {
+            std::string folder = filesystem::to_utf8_path(entry.path().filename());
+            saves.push_back(folder);
+        }
     }
 
     conf.inject_enum("core.config.game.default_save", saves, "");
