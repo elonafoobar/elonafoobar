@@ -118,8 +118,8 @@ locale {
         }
 
         vorpal {
-            melee = "*vopal*"
-            ranged = "*vopal*"
+            melee = " *シャキーン* "
+            ranged = " *ズバシュッ* "
         }
 
         sand_bag {
