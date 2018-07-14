@@ -11,6 +11,17 @@
 namespace
 {
 
+
+#include <android/log.h>
+
+#define  LOG_TAG    "ElonaFoobar"
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
+
 struct font_cache_key
 {
     font_cache_key(int size, elona::snail::font_t::style_t style)
@@ -142,7 +153,7 @@ void setup_buffers()
         std::max(1024, application::instance().width()),
         std::max(1024, application::instance().height())));
 
-    if (application::is_android()) {
+    if (application::is_android) {
         // Output texture for Android. This is so the game window can
         // be placed such that it covers only part of the actual
         // screen, or scaled up and down.
@@ -223,7 +234,7 @@ struct MessageBox
     void update()
     {
         auto& input = input::instance();
-        buffer += input.get_text();
+        buffer += input.pop_text();
 
         if (text)
         {
@@ -277,13 +288,18 @@ struct MessageBox
         }
         else
         {
-            //TODO remove
+            // TODO remove
             keywait = 10;
             if (input.is_pressed(key::enter, keywait)
                 || input.is_pressed(key::keypad_enter, keywait))
             {
                 // New line.
                 buffer += '\n';
+            }
+
+            if (buffer.size() > 0)
+            {
+                LOGD("BUF %s", buffer.c_str());
             }
         }
     }
@@ -345,7 +361,7 @@ void mesbox(std::string& buffer, int keywait, bool text)
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
-    if (application::is_android()) {
+    if (application::is_android) {
         input::instance().show_soft_keyboard();
     }
 }
@@ -392,7 +408,7 @@ static void redraw_android()
 void redraw()
 {
     ::SDL_Texture* target = nullptr;
-    if (application::is_android())
+    if (application::is_android)
     {
         target = detail::android_display_region;
     }
@@ -404,7 +420,7 @@ void redraw()
     renderer.clear();
     renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
 
-    if (application::is_android())
+    if (application::is_android)
     {
         redraw_android();
     }
@@ -432,7 +448,7 @@ void onkey_0()
     mesbox_detail::message_boxes.erase(
         std::end(mesbox_detail::message_boxes) - 1);
 
-    if (application::is_android()) {
+    if (application::is_android) {
         input::instance().hide_soft_keyboard();
     }
 }
@@ -818,7 +834,7 @@ void title(
 {
     application::instance().initialize(title_str);
 
-    if (application::is_android())
+    if (application::is_android)
     {
         application::instance().set_display_mode(application::instance().get_default_display_mode());
         application::instance().set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);

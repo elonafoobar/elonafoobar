@@ -30,6 +30,13 @@ public:
         landscape
     };
 
+    static const constexpr bool is_android =
+#ifdef ANDROID
+        true;
+#else
+        false;
+#endif
+
     size_t frame() const noexcept
     {
         return _frame;
@@ -55,15 +62,6 @@ public:
     int physical_height() const noexcept
     {
         return _physical_height;
-    }
-
-    static bool is_android()
-    {
-#ifdef ANDROID
-        return true;
-#else
-        return false;
-#endif
     }
 
     screen_orientation orientation() const noexcept

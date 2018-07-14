@@ -2,6 +2,7 @@
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
+#include "snail/application.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -12,6 +13,7 @@ namespace elona
 
 namespace
 {
+
 
 static void add_platform(config_def::metadata& dat, const hcl::Object& item)
 {
@@ -28,6 +30,20 @@ static void add_platform(config_def::metadata& dat, const hcl::Object& item)
     else
     {
         dat.platform = config_def::option_platform::all;
+    }
+}
+
+static void set_default_from_platform(config_def::metadata& dat, const hcl::Object& item)
+{
+    // NOTE: Could be generalized, if it were neeed.
+    const constexpr char* platform =
+        snail::application::is_android ? "android" : "desktop";
+    auto platform_default = item.at("platform_default");
+
+    hcl::Value* value = platform_default.find(platform);
+    if (value)
+    {
+        dat.default_value = *value;
     }
 }
 
@@ -75,6 +91,10 @@ void config_def::pre_visit_item(const spec_key& current_key, const hcl::Object& 
     if (item.find("platform") != item.end())
     {
         add_platform(dat, item);
+    }
+    if (item.find("platform_default") != item.end())
+    {
+        set_default_from_platform(dat, item);
     }
 
     dat.visible = dat.visible && is_child_visible(current_key);

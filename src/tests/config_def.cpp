@@ -83,3 +83,18 @@ config def {
     REQUIRE(def.get_metadata("core.config.baz").translate_variants == true);
     REQUIRE(def.get_metadata("core.config.hoge").translate_variants == false);
 }
+
+TEST_CASE("Test metadata: platform", "[Config: Definition]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")
+{
+    REQUIRE(false);
+}

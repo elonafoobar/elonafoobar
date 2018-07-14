@@ -83,7 +83,13 @@ config def {
     anime = {
         type = "section"
         options = {
-            scroll = true
+            scroll = {
+                default = true
+
+                platform_default {
+                    android = false
+                }
+            }
             always_center = true
             scroll_when_run = true
 
@@ -97,12 +103,20 @@ config def {
                 default = 20
                 min = 0
                 max = 20
+
+                platform_default {
+                    android = 10
+                }
             }
 
             alert_wait = {
                 default = 50
                 min = 0
                 max = 50
+
+                platform_default {
+                    android = 25
+                }
             }
 
             auto_turn_speed = {
@@ -120,6 +134,10 @@ config def {
                 default = 2
                 min = 0
                 max = 15
+
+                platform_default {
+                    android = 10
+                }
             }
         }
     }

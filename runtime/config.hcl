@@ -27,7 +27,6 @@ config {
 
             # Show scrolling animations when running.
             # Turning this off can speed up running somewhat.
-            # TODO
             scroll_when_run = true
 
             # Always center the screen.

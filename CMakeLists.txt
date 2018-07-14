@@ -411,9 +411,14 @@ endfunction()
 
 if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
-  FILE(REMOVE_RECURSE ${ASSET_DIR})
-  FILE(MAKE_DIRECTORY ${ASSET_DIR})
+  file(REMOVE_RECURSE ${ASSET_DIR})
+  file(MAKE_DIRECTORY ${ASSET_DIR})
   copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} "runtime")
+
+  # Remove default config, in order to use Android-specific defaults.
+  add_custom_command(TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove "${ASSET_DIR}/runtime/config.hcl")
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
   copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} ".")

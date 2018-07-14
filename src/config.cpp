@@ -461,6 +461,8 @@ void load_config(const fs::path& hcl_file)
         key_ammo = u8"A"s;
         conf.set("core.config.key.ammo", key_ammo);
     }
+
+    conf.write();
 }
 
 void load_config2(const fs::path& hcl_file)

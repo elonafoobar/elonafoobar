@@ -72,6 +72,9 @@ To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
 
 ### Android
+
+Building has only been tested on Linux so far.
+1. Copy `android/local.properties.sample` to `android/local.properties` and edit it to point to your Android SDK and NDK installation paths.
 ```
 cd android
 ./gradlew assembleDebug

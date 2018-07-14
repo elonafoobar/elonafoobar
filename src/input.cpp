@@ -14,6 +14,16 @@ namespace elona
 {
 
 
+#include <android/log.h>
+
+#define  LOG_TAG    "ElonaFoobar"
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
+
 int TODO_show_prompt_val;
 
 
@@ -448,6 +458,7 @@ void key_check(key_wait_delay_t delay_type)
     key = "";
     if (keylog != ""s)
     {
+        LOGD("KEYLOG %s", keylog(0).c_str());
         keylog = strmid(keylog, 0, 1);
         if (keylog(0)[0] == '\n')
         {

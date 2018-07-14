@@ -229,7 +229,7 @@ public:
         }
     }
 
-    hcl::Value get_default(const std::string& key) const
+    virtual hcl::Value get_default(const std::string& key) const
     {
         if (is<section_def>(key))
         {

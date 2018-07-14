@@ -107,6 +107,7 @@ rect renderer::render_text(
         _font.ptr(), text.c_str(), detail::to_sdl_color(color)));
     auto texture =
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr(), surface));
+    detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));
 
     int x_;
     int y_;

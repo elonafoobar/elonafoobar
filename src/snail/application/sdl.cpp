@@ -47,14 +47,16 @@ void application::initialize(const std::string& title)
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
-    if (!is_android())
-    {
-        ::SDL_StartTextInput();
-    }
+    ::SDL_StartTextInput();
 
     initialize_actual_size();
 
     set_display_mode(get_default_display_mode());
+
+    if (is_android)
+    {
+        input::instance().hide_soft_keyboard();
+    }
 }
 
 
@@ -204,7 +206,7 @@ void application::handle_window_event(const ::SDL_WindowEvent& event)
         _physical_width = new_width;
         _physical_height = new_height;
 
-        if (!is_android())
+        if (!is_android)
         {
             _width = new_width;
             _height = new_height;
@@ -212,7 +214,7 @@ void application::handle_window_event(const ::SDL_WindowEvent& event)
 
         update_orientation();
 
-        if (is_android())
+        if (is_android)
         {
             touch_input::instance().initialize_quick_actions();
         }
@@ -321,7 +323,7 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
 
     // We want the actual rendered size kept separate from the
     // device's size on Android.
-    if (!is_android())
+    if (!is_android)
     {
         _width = display_mode.w;
         _height = display_mode.h;

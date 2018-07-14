@@ -369,7 +369,7 @@ void initialize_config(const fs::path& config_file)
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
 
-    if(snail::application::is_android())
+    if(snail::application::is_android)
     {
         snail::touch_input::instance().initialize(filesystem::dir::graphic());
     }

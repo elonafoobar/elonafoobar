@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include "../lib/noncopyable.hpp"
+#include "../optional.hpp"
 #include "detail/sdl.hpp"
 
 
@@ -298,7 +299,7 @@ public:
      */
     void restore_numlock();
 
-    std::string get_text()
+    std::string pop_text()
     {
         std::string ret = _text;
         _text.clear();
@@ -322,6 +323,15 @@ public:
 private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
     std::string _text;
+
+    // Members for handling text input of on-screen quick action
+    // buttons on Android.
+    optional<std::string> _last_touch_input_text = none;
+    int _touch_input_text_repeat = -1;
+    // TODO allow configuration
+    int _touch_input_text_init_wait = 10;
+    int _touch_input_text_wait = 2;
+
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
 

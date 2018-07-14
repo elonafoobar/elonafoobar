@@ -40,14 +40,18 @@ public:
         // be hidden.
         option_platform platform = option_platform::all;
 
+        // Overridden default value from platform_default field if the
+        // specified platform matches ("android" or "desktop").
+        optional<hcl::Value> default_value = none;
+
         bool is_visible() const
         {
             switch(platform)
             {
             case option_platform::desktop:
-                return visible && !snail::application::is_android();
+                return visible && !snail::application::is_android;
             case option_platform::android:
-                return visible && snail::application::is_android();
+                return visible && snail::application::is_android;
             case option_platform::all:
             default:
                 return visible;
@@ -67,6 +71,20 @@ public:
     {
         spec::object::clear();
         data.clear();
+    }
+
+    hcl::Value get_default(const std::string& key) const
+    {
+        if (data.find(key) != data.end())
+        {
+            auto value = data.at(key).default_value;
+            if (value)
+            {
+                return *value;
+            }
+        }
+
+        return spec::object::get_default(key);
     }
 
     const metadata& get_metadata(const spec_key& key) const { return data.at(key); }

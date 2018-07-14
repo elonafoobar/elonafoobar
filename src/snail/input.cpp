@@ -13,6 +13,7 @@ using namespace elona::snail;
 namespace
 {
 
+
 #include <android/log.h>
 
 #define  LOG_TAG    "ElonaFoobar"
@@ -21,6 +22,7 @@ namespace
 #define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
 
 key sdlkey2key(::SDL_Keycode k)
 {
@@ -375,7 +377,6 @@ void input::restore_numlock()
 
 void input::_update()
 {
-    LOGD("UPDATE");
     for (auto&& key : _keys)
     {
         if (key.was_released_immediately() && key.repeat() == 0)
@@ -385,6 +386,24 @@ void input::_update()
         if (key.is_pressed())
         {
             key._increase_repeat();
+        }
+    }
+
+    // Check for touched Android quick actions that send text inputs
+    // instead of key presses.
+    if (_last_touch_input_text)
+    {
+        // Keywait has to be emulated here because SDL_TextInputEvent
+        // would usually be spaced apart for the specified text input
+        // delay at the OS level, but there is no such setting for
+        // on-screen quick actions.
+        _touch_input_text_repeat++;
+
+        if (_touch_input_text_repeat == 0 ||
+            (_touch_input_text_repeat > _touch_input_text_init_wait
+                && _touch_input_text_repeat % _touch_input_text_wait))
+        {
+            _text = *_last_touch_input_text;
         }
     }
 }
@@ -418,12 +437,10 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
         // input::update().
         if (the_key.is_pressed() && the_key.repeat() == -1)
         {
-            LOGD("IMMREL %d %d", the_key.is_pressed(), the_key.repeat());
             the_key._release_immediately();
         }
         else
         {
-            LOGD("RELEASE %d %d", the_key.is_pressed(), the_key.repeat());
             the_key._release();
 
             if (k == key::android_back)
@@ -478,32 +495,57 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
 void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 {
     static optional<snail::key> last_key = none;
+    bool release_key = false;
+    bool stop_text = false;
 
     touch_input::instance().on_touch_event(event);
 
-    auto key = touch_input::instance().last_touched_key();
+    auto action = touch_input::instance().last_touched_quick_action();
 
-    if (key)
+    if (action)
     {
-        if (last_key && *last_key != *key)
+        if (action->key)
         {
-            _keys[static_cast<size_t>(*last_key)]._release();
-        }
-        if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
-        {
-            _keys[static_cast<size_t>(*key)]._press();
+            // Keypress action
+            if (last_key && *last_key != action->key)
+            {
+                _keys[static_cast<size_t>(*last_key)]._release();
+            }
+            if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
+            {
+                _keys[static_cast<size_t>(*action->key)]._press();
+            }
+            else
+            {
+                _keys[static_cast<size_t>(*action->key)]._release();
+            }
+
+            last_key = action->key;
+            stop_text = true;
         }
         else
         {
-            _keys[static_cast<size_t>(*key)]._release();
+            // Text input action (for alphanumeric key detection)
+            _last_touch_input_text = action->text;
+            release_key = true;
         }
     }
-    else if (last_key)
+    else
     {
-        _keys[static_cast<size_t>(*last_key)]._release();
+        stop_text = true;
+        release_key = true;
     }
 
-    last_key = key;
+    if (release_key && last_key)
+    {
+        _keys[static_cast<size_t>(*last_key)]._release();
+        last_key = none;
+    }
+    if (stop_text)
+    {
+        _last_touch_input_text = none;
+        _touch_input_text_repeat = -1;
+    }
 }
 
 
