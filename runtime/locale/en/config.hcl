@@ -87,9 +87,17 @@ locale {
                     name = "Screen Resolution*"
                     # Variants are injected at runtime.
                 }
-                sound {
-                    name = "Sound*"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                orientation {
+                    name = "Screen Orientation"
+                    variants {
+                        sensor_landscape = "Landscape (Auto)"
+                        sensor_portrait = "Portrait (Auto)"
+                        sensor = "Any"
+                        landscape = "Landscape"
+                        portrait = "Portrait"
+                        reverse_landscape = "Reverse Landscape"
+                        reverse_portrait = "Reverse Portrait"
+                    }
                 }
                 music {
                     name = "Music*"
@@ -98,6 +106,10 @@ locale {
                         direct_music = "Direct music"
                         mci = "MCI"
                     }
+                }
+                sound {
+                    name = "Sound*"
+                    yes_no = core.locale.config.common.yes_no.on_off
                 }
                 high_quality_shadows {
                     name = "Shadow Quality"

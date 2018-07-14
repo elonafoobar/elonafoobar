@@ -90,9 +90,17 @@ locale {
                     name = "画面の大きさ*"
                     # Variants are injected at runtime.
                 }
-                sound {
-                    name = "サウンドの再生*"
-                    yes_no = core.locale.config.common.yes_no.ari_nashi
+                orientation {
+                    name = "ローテーション"
+                    variants {
+                        sensor_landscape = "横向き (自動)"
+                        sensor_portrait = "縦向き (自動)"
+                        sensor = "自動回転"
+                        landscape = "横向き"
+                        portrait = "縦向き"
+                        reverse_landscape = "横向き (反転)"
+                        reverse_portrait = "縦向き (反転)"
+                    }
                 }
                 music {
                     name = "midiの再生*"
@@ -101,6 +109,10 @@ locale {
                         direct_music = "direct music"
                         mci = "MCI"
                     }
+                }
+                sound {
+                    name = "サウンドの再生*"
+                    yes_no = core.locale.config.common.yes_no.ari_nashi
                 }
                 high_quality_shadows {
                     name = "光源の描写"

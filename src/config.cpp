@@ -7,6 +7,7 @@
 #include "elona.hpp"
 #include "range.hpp"
 #include "snail/application.hpp"
+#include "snail/android.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
@@ -158,6 +159,27 @@ static void inject_languages(config& conf)
 
     conf.inject_enum("core.config.language.language", locales, spec::unknown_enum_variant);
 }
+
+static std::map<std::string, snail::android::orientation> orientations =
+{
+    {"sensor_landscape",   snail::android::orientation::sensor_landscape},
+    {"sensor_portait",     snail::android::orientation::sensor_portrait},
+    {"sensor",             snail::android::orientation::sensor},
+    {"landscape",          snail::android::orientation::landscape},
+    {"portrait",           snail::android::orientation::portrait},
+    {"reverse_landscape",  snail::android::orientation::reverse_landscape},
+    {"reverse_portrait",   snail::android::orientation::reverse_portrait}
+};
+
+static void convert_and_set_requested_orientation(std::string variant)
+{
+    auto it = orientations.find(variant);
+    if (it == orientations.end())
+        return;
+
+    snail::android::set_requested_orientation(it->second);
+}
+
 
 } // namespace
 
@@ -350,25 +372,22 @@ void load_config(const fs::path& hcl_file)
     CONFIG_KEY("key.message_log"s,      key_msglog);
 
     conf.bind_setter<hcl::List>("core.config.key.key_set",
-                    [&](auto values)
-                        {
-                            for_each_with_index(
-                                std::begin(values),
-                                std::end(values),
-                                [&](auto index, hcl::Value value) {
-                                    std::string s = value.as<std::string>();
-                                    key_select(index) = s;
-                                });
-                        });
+        [&](auto values)
+        {
+            for_each_with_index(
+                std::begin(values),
+                std::end(values),
+                [&](auto index, hcl::Value value) {
+                    std::string s = value.as<std::string>();
+                    key_select(index) = s;
+                });
+        });
+
+    conf.bind_setter<std::string>("core.config.screen.orientation",
+                                  &convert_and_set_requested_orientation);
 
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
-
-    if (snail::application::is_android())
-    {
-        // Load font for on-screen controls.
-        font(14);
-    }
 
     key_prev = key_northwest;
     key_next = key_northeast;

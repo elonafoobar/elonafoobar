@@ -7,7 +7,7 @@ namespace snail
 namespace android
 {
 
-void set_screen_orientation(requested_screen_orientation)
+void set_requested_orientation(orientation)
 {
 }
 

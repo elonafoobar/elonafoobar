@@ -41,6 +41,16 @@ config def {
                 default = "800x600"
             }
 
+            orientation = {
+                platform = "android"
+
+                type = "enum"
+                variants = ["sensor_landscape", "sensor_portrait", "sensor",
+                    "landscape", "portrait",
+                    "reverse_landscape", "reverse_portrait"]
+                default = "sensor_landscape"
+            }
+
             music = {
                 type = "enum"
                 variants = ["none", "direct_music", "mci"]

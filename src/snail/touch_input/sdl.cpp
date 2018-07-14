@@ -43,6 +43,8 @@ void touch_input::initialize_quick_actions()
     const constexpr int size = 300;
     int space_between = size * 0.75;
 
+    quick_actions_.clear();
+
     std::vector<std::pair<std::string, snail::key>> keys =
         {{"7", snail::key::keypad_7},
          {"8", snail::key::keypad_8},
@@ -53,6 +55,7 @@ void touch_input::initialize_quick_actions()
          {"1", snail::key::keypad_1},
          {"2", snail::key::keypad_2},
          {"3", snail::key::keypad_3}};
+
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)

@@ -5,6 +5,7 @@
 #include <map>
 #include <sstream>
 #include "../input.hpp"
+#include "../touch_input.hpp"
 
 
 namespace elona
@@ -210,6 +211,11 @@ void application::handle_window_event(const ::SDL_WindowEvent& event)
         }
 
         update_orientation();
+
+        if (is_android())
+        {
+            touch_input::instance().initialize_quick_actions();
+        }
     }
 }
 
@@ -398,7 +404,6 @@ static rect calculate_android_window_pos_landscape(
 rect application::calculate_android_window_pos()
 {
     int x, y, width, height;
-    float ratio;
 
     x = 0;
     y = 0;

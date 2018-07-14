@@ -9,7 +9,7 @@ namespace snail
 namespace android
 {
 
-void set_screen_orientation(requested_screen_orientation orientation)
+void set_requested_orientation(orientation orientation)
 {
     JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
     jobject activity = (jobject)SDL_AndroidGetActivity();
