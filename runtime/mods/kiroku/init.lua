@@ -9,14 +9,16 @@ local function on_chara_killed()
 end
 
 local function on_map_initialized()
-   GUI.txt("You've killed " .. Store.global.killed .. " things so far. ")
+   if Store.global.report then
+      GUI.txt("You've killed " .. Store.global.killed .. " things so far. ")
+   end
 end
 
 local function init_store()
-   if not Store.killed then
+   if not Store.global.killed then
       Store.global.killed = 0
    end
-   Store.global.report = true
+   Store.global.report = false
 end
 
 Event.register(Event.EventKind.CharaKilled, on_chara_killed)
