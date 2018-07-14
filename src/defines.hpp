@@ -27,3 +27,16 @@
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #endif
+
+namespace elona
+{
+namespace defines
+{
+static const constexpr bool is_android =
+   #ifdef ELONA_OS_ANDROID
+    true;
+#else
+    false;
+#endif
+}
+}

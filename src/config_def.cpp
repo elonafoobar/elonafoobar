@@ -1,4 +1,5 @@
 #include "config_def.hpp"
+#include "defines.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
@@ -37,7 +38,7 @@ static void set_default_from_platform(config_def::metadata& dat, const hcl::Obje
 {
     // NOTE: Could be generalized, if it were neeed.
     const constexpr char* platform =
-        snail::application::is_android ? "android" : "desktop";
+        defines::is_android ? "android" : "desktop";
     auto platform_default = item.at("platform_default");
 
     hcl::Value* value = platform_default.find(platform);

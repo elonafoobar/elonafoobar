@@ -51,8 +51,8 @@ inline bool operator!=(const color& x, const color& y)
 
 namespace palette
 {
-constexpr color black = {0, 0, 0};
-constexpr color white = {255, 255, 255};
+constexpr color black = {0, 0, 0, 255};
+constexpr color white = {255, 255, 255, 255};
 } // namespace palette
 
 

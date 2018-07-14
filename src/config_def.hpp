@@ -1,6 +1,6 @@
 #pragma once
+#include "defines.hpp"
 #include "spec.hpp"
-#include "snail/application.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
 
 #include <iostream>
@@ -49,9 +49,9 @@ public:
             switch(platform)
             {
             case option_platform::desktop:
-                return visible && !snail::application::is_android;
+                return visible && !defines::is_android;
             case option_platform::android:
-                return visible && snail::application::is_android;
+                return visible && defines::is_android;
             case option_platform::all:
             default:
                 return visible;

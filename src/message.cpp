@@ -53,6 +53,7 @@ void msg_write(std::string& message)
         message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
     font(inf_mesfont - en * 2);
+    gmode(0, 255);
     mes(message);
     elona::color(0, 0, 0);
 }

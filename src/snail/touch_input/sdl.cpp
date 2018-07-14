@@ -70,8 +70,8 @@ void touch_input::initialize_quick_actions()
 
     quick_actions_.emplace_back("Back",  snail::key::shift,  width - space_between * 2, height - space_between * 1);
     quick_actions_.emplace_back("OK",    snail::key::enter,  width - space_between * 1, height - space_between * 1);
-    quick_actions_.emplace_back("z",     none,               width - space_between * 2, height - space_between * 2);
-    quick_actions_.emplace_back("x",     none,               width - space_between * 1, height - space_between * 2);
+    quick_actions_.emplace_back("x",     none,               width - space_between * 2, height - space_between * 2);
+    quick_actions_.emplace_back("z",     none,               width - space_between * 1, height - space_between * 2);
     quick_actions_.emplace_back("Esc",   snail::key::escape, width - space_between * 1, height - space_between * 4);
 }
 
@@ -82,6 +82,7 @@ void touch_input::draw_quick_actions()
     }
 
     auto& renderer = application::instance().get_renderer();
+    renderer.set_blend_mode(snail::blend_mode_t::blend);
     renderer.set_text_alignment(renderer::text_alignment_t::center);
     renderer.set_text_baseline(renderer::text_baseline_t::middle);
 
@@ -90,6 +91,7 @@ void touch_input::draw_quick_actions()
         draw_quick_action(*it);
     }
 
+    renderer.set_blend_mode(snail::blend_mode_t::none);
     renderer.set_text_alignment(renderer::text_alignment_t::left);
     renderer.set_text_baseline(renderer::text_baseline_t::top);
 }
@@ -126,7 +128,6 @@ void touch_input::draw_quick_action(const quick_action& action)
 
     if (action.touched)
     {
-        renderer.set_blend_mode(snail::blend_mode_t::blend);
         renderer.set_draw_color({192, 192, 192, 128});
         renderer.fill_rect(x, y, size * 1.5, size * 1.5);
     }

@@ -12,6 +12,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -369,7 +370,7 @@ void initialize_config(const fs::path& config_file)
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
 
-    if(snail::application::is_android)
+    if(defines::is_android)
     {
         snail::touch_input::instance().initialize(filesystem::dir::graphic());
     }
