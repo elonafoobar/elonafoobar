@@ -13,11 +13,16 @@ namespace snail
 
 
 
-struct button
+struct button : public lib::noncopyable
 {
     bool is_pressed() const noexcept
     {
         return _is_pressed;
+    }
+
+    bool was_released_immediately() const noexcept
+    {
+        return _was_released_immediately;
     }
 
     int repeat() const noexcept
@@ -39,6 +44,12 @@ struct button
     }
 
 
+    void _release_immediately()
+    {
+        _was_released_immediately = true;
+    }
+
+
     void _increase_repeat()
     {
         ++_repeat;
@@ -47,6 +58,7 @@ struct button
 
 private:
     bool _is_pressed = false;
+    bool _was_released_immediately = false;
     int _repeat = -1;
 };
 
@@ -262,6 +274,9 @@ public:
 
     bool is_ime_active() const;
 
+    void show_soft_keyboard();
+    void hide_soft_keyboard();
+    void toggle_soft_keyboard();
 
     /***
      * Disables NumLock to prevent strange Windows-specific behavior when

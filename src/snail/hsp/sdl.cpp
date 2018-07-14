@@ -346,8 +346,7 @@ void mesbox(std::string& buffer, int keywait, bool text)
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
     if (application::is_android()) {
-        // Pop up the soft keyboard.
-        ::SDL_StartTextInput();
+        input::instance().show_soft_keyboard();
     }
 }
 
@@ -423,8 +422,7 @@ void onkey_0()
         std::end(mesbox_detail::message_boxes) - 1);
 
     if (application::is_android()) {
-        // Hide the soft keyboard.
-        ::SDL_StopTextInput();
+        input::instance().hide_soft_keyboard();
     }
 }
 

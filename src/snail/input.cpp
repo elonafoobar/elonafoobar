@@ -13,7 +13,6 @@ using namespace elona::snail;
 namespace
 {
 
-
 key sdlkey2key(::SDL_Keycode k)
 {
     switch (k)
@@ -293,9 +292,6 @@ x         x         x         x         x
 */
 bool input::is_pressed(key k, int key_wait) const
 {
-    if (key_wait <= 0)
-        key_wait = 1;
-
     const auto& key = _keys[static_cast<size_t>(k)];
     return key.is_pressed() && key.repeat() % key_wait == 0;
 }
@@ -312,6 +308,28 @@ bool input::was_pressed_just_now(key k) const
 bool input::is_ime_active() const
 {
     return _is_ime_active;
+}
+
+
+
+void input::show_soft_keyboard()
+{
+    _is_ime_active = true;
+    ::SDL_StartTextInput();
+}
+
+void input::hide_soft_keyboard()
+{
+    ::SDL_StopTextInput();
+    _is_ime_active = false;
+}
+
+void input::toggle_soft_keyboard()
+{
+    if (::SDL_IsTextInputActive())
+        hide_soft_keyboard();
+    else
+        show_soft_keyboard();
 }
 
 
@@ -350,10 +368,19 @@ void input::_update()
 {
     for (auto&& key : _keys)
     {
+        if (key.was_released_immediately() && key.repeat() == 0)
+        {
+            key._release();
+        }
         if (key.is_pressed())
         {
             key._increase_repeat();
         }
+    }
+
+    if (was_pressed_just_now(key::android_back))
+    {
+        toggle_soft_keyboard();
     }
 }
 
@@ -370,20 +397,26 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
     if (k == key::none)
         return;
 
+    auto& the_key = _keys[static_cast<size_t>(k)];
     if (event.state == SDL_PRESSED)
     {
-        _keys[static_cast<size_t>(k)]._press();
+        the_key._press();
     }
     else
     {
-        _keys[static_cast<size_t>(k)]._release();
-
-        if (k == key::android_back)
+        // On Android, certain keys seem to be pressed then released
+        // immediately after (backspace/return), such that the press
+        // and release events come in the same event polling cycle. In
+        // that case, mark the key as pressed but immediately
+        // released, and allow it it be detected for a single frame
+        // before releasing it in input::update().
+        if (the_key.is_pressed() && the_key.repeat() == -1)
         {
-            if (::SDL_IsTextInputActive())
-                ::SDL_StopTextInput();
-            else
-                ::SDL_StartTextInput();
+            the_key._release_immediately();
+        }
+        else
+        {
+            the_key._release();
         }
     }
 
@@ -431,10 +464,11 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
 
 void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 {
-    (void)event;
-
     static optional<snail::key> last_key = none;
-    optional<snail::key> key = touch_input::instance().get_touched_quick_action(event);
+
+    touch_input::instance().on_touch_event(event);
+
+    auto key = touch_input::instance().last_touched_key();
 
     if (key)
     {

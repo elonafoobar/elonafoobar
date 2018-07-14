@@ -28,6 +28,7 @@ struct quick_action
     int center_y;
     snail::key key;
     std::string name;
+    bool touched = false;
 };
 
 // portrait(classic), portrait(fullscreen), landscape(classic), landscape(fullscreen)
@@ -43,21 +44,28 @@ struct quick_action
 
 class touch_input : public lib::noncopyable
 {
+    enum event_type {
+        motion = SDL_FINGERMOTION,
+        down = SDL_FINGERDOWN,
+        up = SDL_FINGERUP,
+    };
 
 public:
     virtual ~touch_input() override = default;
     static touch_input& instance();
+
+    optional<snail::key> last_touched_key() const { return last_touched_key_; }
+
     void initialize(const fs::path&);
     void draw_quick_actions();
-    optional<snail::key> get_touched_quick_action(::SDL_TouchFingerEvent event);
+    void on_touch_event(::SDL_TouchFingerEvent);
 
 private:
     touch_input() = default;
     void draw_quick_action(const quick_action&);
     std::vector<quick_action> quick_actions_;
     bool initialized_ = false;
-    optional<int> last_touch_x_ = none;
-    optional<int> last_touch_y_ = none;
+    optional<snail::key> last_touched_key_ = none;
 
     std::unique_ptr<basic_image> quick_action_image_ = nullptr;
     std::unique_ptr<basic_image> joystick_image_ = nullptr;

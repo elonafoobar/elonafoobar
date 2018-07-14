@@ -44,8 +44,8 @@ $(BENCH_RUNNER):
 	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
 
 
-$(APK):
-	cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk $(BIN_DIR)
+$(APK): FORCE
+	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../$(BIN_DIR)
 
 
 clean: FORCE
