@@ -111,18 +111,6 @@ public:
 
     bool is_visible(const std::string& key) const
     {
-        // Hide options if their (boolean) dependencies are not satisfied.
-        for (auto& pair : def.get_metadata(key).dependencies)
-        {
-            auto dependency = pair.first;
-            auto value = pair.second;
-            if (def.is<spec::bool_def>(dependency)
-                && get<bool>(dependency) != value)
-            {
-                return false;
-            }
-        }
-
         return def.get_metadata(key).is_visible();
     }
 

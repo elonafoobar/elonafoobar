@@ -40,11 +40,6 @@ public:
         // be hidden.
         option_platform platform = option_platform::all;
 
-        // Boolean config options that need to be the specified value
-        // for this option to be visible in the config menu.
-        // Non-boolean options are ignored.
-        std::map<std::string, bool> dependencies;
-
         bool is_visible() const
         {
             switch(platform)

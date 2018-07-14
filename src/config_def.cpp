@@ -31,18 +31,6 @@ static void add_platform(config_def::metadata& dat, const hcl::Object& item)
     }
 }
 
-static void add_dependencies(config_def::metadata& dat, const hcl::Object item)
-{
-    auto dependencies = item.at("dependencies").as<hcl::Object>();
-    for (auto& pair : dependencies)
-    {
-        std::string key = pair.first;
-        bool value = pair.second.as<bool>();
-
-        dat.dependencies[key] = value;
-    }
-}
-
 }
 
 #define CONFIG_DEF_METADATA(item, name)  \
@@ -87,10 +75,6 @@ void config_def::pre_visit_item(const spec_key& current_key, const hcl::Object& 
     if (item.find("platform") != item.end())
     {
         add_platform(dat, item);
-    }
-    if (item.find("dependencies") != item.end())
-    {
-        add_dependencies(dat, item);
     }
 
     dat.visible = dat.visible && is_child_visible(current_key);

@@ -24,9 +24,6 @@ config def {
 
             fullscreen_scale = {
                 platform = "android"
-                dependencies = {
-                    "core.config.screen.fullscreen_android" = true
-                }
 
                 default = 4
                 min = 4 # * 0.25 = 1.00
@@ -35,9 +32,6 @@ config def {
 
             classic_display_mode = {
                 platform = "android"
-                dependencies = {
-                    "core.config.screen.fullscreen_android" = false
-                }
 
                 type = "enum"
                 preload = true
@@ -70,24 +64,9 @@ config def {
         type = "section"
         options = {
             enabled = false
-            wish = {
-                dependencies = {
-                    "core.config.net.enabled" = true
-                }
-                default = false
-            }
-            chat = {
-                dependencies = {
-                    "core.config.net.enabled" = true
-                }
-                default = false
-            }
-            server_list = {
-                dependencies = {
-                    "core.config.net.enabled" = true
-                }
-                default = false
-            }
+            wish = false
+            chat = false
+            server_list = false
         }
     }
 
