@@ -74,6 +74,7 @@ set(CORE_SOURCES
     src/class.cpp
     src/command.cpp
     src/config.cpp
+    src/config_def.cpp
     src/ctrl_file.cpp
     src/ctrl_inventory.cpp
     src/crafting.cpp
@@ -120,6 +121,7 @@ set(CORE_SOURCES
     src/set_item_info.cpp
     src/set_option.cpp
     src/shop.cpp
+    src/spec.cpp
     src/status_ailment.cpp
     src/std.cpp
     src/talk.cpp
@@ -153,6 +155,9 @@ if(WITH_TESTS STREQUAL "TESTS")
   set(TEST_SOURCES
     src/tests/tests.cpp
     src/tests/util.cpp
+    src/tests/config.cpp
+    src/tests/config_def.cpp
+    src/tests/spec.cpp
     src/tests/lua_api.cpp
     src/tests/lua_callbacks.cpp
     src/tests/lua_events.cpp

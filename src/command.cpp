@@ -2886,7 +2886,7 @@ turn_result_t do_movement_command()
         tc = cellchara;
         if (cdata[tc].relationship >= 10
             || (cdata[tc].relationship == -1
-                && config::instance().ignoredislike != 0)
+                && !config::instance().attack_neutral_npcs)
             || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == 101
                     || adata(16, gdata_current_map) == 102 || key_shift)))

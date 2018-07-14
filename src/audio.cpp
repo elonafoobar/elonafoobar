@@ -324,7 +324,7 @@ void play_music(int music_id)
         envonly = 0;
         return;
     }
-    if (config::instance().music == 0)
+    if (config::instance().music == "none")
     {
         return;
     }
@@ -437,7 +437,7 @@ void play_music(int music_id)
     {
         musicprev = music_id;
         mmstop();
-        if (config::instance().music == 1)
+        if (config::instance().music == "direct_music")
         {
             DMSTOP();
             DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
@@ -458,7 +458,7 @@ void play_music(int music_id)
             const auto is_mp3 =
                 strutil::contains(musicfile(music_id), u8".mp3");
 
-            if (config::instance().music == 2 || is_mp3)
+            if (config::instance().music == "mci" || is_mp3)
             {
                 mmload(music_dir / musicfile(music_id), 0, musicloop == 65535);
                 mmplay(0);

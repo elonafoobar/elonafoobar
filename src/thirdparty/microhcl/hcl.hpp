@@ -1752,7 +1752,7 @@ inline const Value& Value::operator[](size_t index) const
     if (const Value* v = find(index))
         return *v;
 
-    failwith("no such key");
+    failwith("no such index: " + std::to_string(index));
 }
 
 inline const Value& Value::operator[](const std::string& key) const
@@ -1763,7 +1763,7 @@ inline const Value& Value::operator[](const std::string& key) const
     if (const Value* v = findChild(key))
         return *v;
 
-    failwith("no such key");
+    failwith("no such key: " + key);
 }
 
 template<typename T>

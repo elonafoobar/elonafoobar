@@ -20,7 +20,7 @@ namespace i18n
 
 i18n::store s;
 
-void store::init(fs::path path)
+void store::init(const fs::path& path)
 {
     storage.clear();
     for (const auto& entry :

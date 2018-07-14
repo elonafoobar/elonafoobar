@@ -1079,7 +1079,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (config::instance().hideshopresult == 0)
+        if (!config::instance().hideshopresult)
         {
             txt(shop_mark
                 + i18n::s.get(
@@ -1090,7 +1090,7 @@ void show_shop_log()
     }
     else
     {
-        if (config::instance().hideshopresult <= 1)
+        if (!config::instance().hideshopresult)
         {
             s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
             if (income(1) != 0)

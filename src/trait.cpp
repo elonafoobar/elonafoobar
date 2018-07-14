@@ -41,10 +41,10 @@ void trait_db::define(lua_State* L)
 
 namespace
 {
-void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, int min)
+void trait_format_other_parameterized(const i18n_key& i18n_prefix, int tid, int min)
 {
     optional<std::string> text = none;
-    std::string full_prefix = i18n_prefix + ".negative.levels";
+    i18n_key full_prefix = i18n_prefix + ".negative.levels";
     int level = trait(tid);
 
     // Assumptions:
@@ -125,7 +125,7 @@ void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, i
     }
 }
 
-void trait_format_other_parameterless(const std::string& i18n_prefix, int tid, int min, int max)
+void trait_format_other_parameterless(const i18n_key& i18n_prefix, int tid, int min, int max)
 {
     // Change in positive direction
     if (trait(tid) >= 0)
@@ -153,14 +153,14 @@ void trait_format_other_parameterless(const std::string& i18n_prefix, int tid, i
     }
 }
 
-bool trait_is_obtainable(const std::string& i18n_prefix, int tid)
+bool trait_is_obtainable(const i18n_key& i18n_prefix, int tid)
 {
     return trait(tid) >= 0
         && i18n::s.get_enum_property_opt(i18n_prefix + ".levels", "name", 0);
 }
 
 
-void trait_format_other(const std::string& i18n_prefix, int tid, int min, int max)
+void trait_format_other(const i18n_key& i18n_prefix, int tid, int min, int max)
 {
     if (auto text = i18n::s.get_optional(i18n_prefix + ".positive.gain"))
     {
@@ -183,7 +183,7 @@ void trait_format_other(const std::string& i18n_prefix, int tid, int min, int ma
     }
 }
 
-void trait_format_obtainable(const std::string& i18n_prefix, int max)
+void trait_format_obtainable(const i18n_key& i18n_prefix, int max)
 {
     traitrefn(2) = i18n::s.get(i18n_prefix + ".desc");
 
@@ -196,7 +196,7 @@ void trait_format_obtainable(const std::string& i18n_prefix, int max)
 
 void trait_format(int tid, int min, int max)
 {
-    std::string i18n_prefix = "core.locale.trait._" + std::to_string(tid);
+    i18n_key i18n_prefix = "core.locale.trait._" + std::to_string(tid);
     optional<std::string> text = none;
 
     traitrefn(0) = "";

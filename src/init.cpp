@@ -397,8 +397,8 @@ void initialize_elona()
 {
     i18n::load(jp ? u8"jp" : u8"en");
     i18n::s.init(
-        jp ? filesystem::path("locale") / "jp"
-           : filesystem::path("locale") / "en");
+        jp ? filesystem::dir::locale() / "jp"
+           : filesystem::dir::locale() / "en");
 
     initialize_ui_constants();
     gsel(0);
@@ -642,9 +642,9 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (config::instance().music == 1 && DMINIT() == 0)
+    if (config::instance().music == "direct_music" && DMINIT() == 0)
     {
-        config::instance().music = 2;
+        config::instance().music = "mci";
     }
     DSINIT();
     if (config::instance().joypad == 1)
@@ -756,16 +756,19 @@ void initialize_elona()
 
 int run()
 {
+    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+
     lua::lua = std::make_unique<lua::lua_env>();
-    const fs::path config_file = filesystem::dir::exe() / u8"config.json";
     initialize_cat_db();
 
+    config::instance().init(config_def_file);
     load_config2(config_file);
 
-    title(
-        u8"Elona Foobar version "s + latest_version.short_string(),
-        config::instance().display_mode,
-        config_get_fullscreen_mode());
+    title(u8"Elona Foobar version "s + latest_version.short_string(),
+          config::instance().display_mode,
+          config_get_fullscreen_mode());
 
     initialize_config(config_file);
     init_assets();

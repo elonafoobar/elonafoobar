@@ -1412,13 +1412,13 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (config::instance().shadow != 0)
+    if (config::instance().shadow)
     {
-        render_shadow_low(light_);
+        render_shadow_high(light_, sxfix_, syfix_);
     }
     else
     {
-        render_shadow_high(light_, sxfix_, syfix_);
+        render_shadow_low(light_);
     }
 
     gmode(2);

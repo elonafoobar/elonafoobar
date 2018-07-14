@@ -765,7 +765,7 @@ void title(
 {
     application::instance().initialize(title_str);
 
-    if (display_mode != "")
+    if (display_mode != "__unknown__")
     {
         application::instance().set_display_mode(display_mode);
     }

@@ -26,6 +26,7 @@ namespace dir
 fs::path exe();
 fs::path data();
 fs::path graphic();
+fs::path locale();
 fs::path map();
 fs::path mods();
 fs::path save();
