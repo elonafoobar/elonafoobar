@@ -34,8 +34,8 @@ void application::initialize(const std::string& title)
 {
     _width = 800;
     _height = 600;
-    _actual_width = _width;
-    _actual_height = _height;
+    _physical_width = _width;
+    _physical_height = _height;
     _title = title;
     _window.reset(new window(
         title,
@@ -62,8 +62,8 @@ void application::initialize_actual_size()
 {
     ::SDL_DisplayMode display_mode;
     ::SDL_GetCurrentDisplayMode(0, &display_mode);
-    _actual_width = display_mode.w;
-    _actual_height = display_mode.h;
+    _physical_width = display_mode.w;
+    _physical_height = display_mode.h;
 }
 
 
@@ -184,9 +184,35 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_FINGERUP:
         input::instance()._handle_event(event.tfinger);
         break;
+    case SDL_WINDOWEVENT:
+        handle_window_event(event.window);
+        break;
     default: break;
     }
 }
+
+
+
+void application::handle_window_event(const ::SDL_WindowEvent& event)
+{
+    if (event.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+    {
+        int new_width = event.data1;
+        int new_height = event.data2;
+
+        _physical_width = new_width;
+        _physical_height = new_height;
+
+        if (!is_android())
+        {
+            _width = new_width;
+            _height = new_height;
+        }
+
+        update_orientation();
+    }
+}
+
 
 
 void application::proc_event()
@@ -280,11 +306,11 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
 {
     if (is_fullscreen())
     {
-        (*_window).set_display_mode(display_mode);
+        _window->set_display_mode(display_mode);
     }
     else
     {
-        (*_window).set_size(display_mode.w, display_mode.h);
+        _window->set_size(display_mode.w, display_mode.h);
     }
 
     // We want the actual rendered size kept separate from the
@@ -293,9 +319,105 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
     {
         _width = display_mode.w;
         _height = display_mode.h;
+        _physical_width = _width;
+        _physical_height = _height;
     }
 
-    (*_window).move_to_center();
+    _window->move_to_center();
+
+    update_orientation();
+}
+
+void application::update_orientation()
+{
+    if (_physical_width < _physical_height)
+    {
+        _orientation = screen_orientation::portrait;
+    }
+    else
+    {
+        _orientation = screen_orientation::landscape;
+    }
+
+    _window_pos = calculate_android_window_pos();
+}
+
+static rect calculate_android_window_pos_portrait(
+    int window_width,
+    int window_height,
+    int physical_width)
+{
+    // Put the output window at the top of the screen, so the
+    // touch controls have space at the bottom.
+    float ratio = (float)physical_width / (float)window_width;
+    int height = (int)((float)window_height * ratio);
+
+    return {0, 0, physical_width, height};
+}
+
+static rect calculate_android_window_pos_landscape(
+    int window_width,
+    int window_height,
+    int physical_width,
+    int physical_height)
+{
+    int x, y, width, height;
+
+    // Fit the output window to the screen.
+    float ww = (float)window_width;
+    float wh = (float)window_height;
+    float pw = (float)physical_width;
+    float ph = (float)physical_height;
+
+    // Does the new window height exceed the physical screen height?
+    bool exceeds_physical_height = (ww / wh) <= (pw / ph);
+
+    if (ww > wh && !exceeds_physical_height)
+    {
+        width = physical_width;
+        height = (int)((wh * (float)width) / ww);
+        x = 0;
+        y = (physical_height - height) / 2;
+    }
+    else
+    {
+        height = physical_height;
+        width = (int)((ww * (float)height) / wh);
+        y = 0;
+        x = (physical_width - width) / 2;
+    }
+
+    width = std::min(width, physical_width);
+    height = std::min(height, physical_height);
+    x = std::max(x, 0);
+    y = std::max(y, 0);
+
+    return {x, y, width, height};
+}
+
+rect application::calculate_android_window_pos()
+{
+    int x, y, width, height;
+    float ratio;
+
+    x = 0;
+    y = 0;
+
+    if (_orientation == screen_orientation::portrait)
+    {
+        return calculate_android_window_pos_portrait(_width,
+                                                     _height,
+                                                     _physical_width);
+    }
+    else
+    {
+        return calculate_android_window_pos_landscape(_width,
+                                                      _height,
+                                                      _physical_width,
+                                                      _physical_height);
+    }
+
+    return {x, y, width, height};
 }
 
 

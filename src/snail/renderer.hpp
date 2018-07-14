@@ -9,6 +9,7 @@
 #include "rect.hpp"
 #include "size.hpp"
 #include "window.hpp"
+#include "../lib/noncopyable.hpp"
 
 
 namespace elona
@@ -18,7 +19,7 @@ namespace snail
 
 
 
-class renderer
+class renderer : public lib::noncopyable
 {
 public:
     enum flag_t

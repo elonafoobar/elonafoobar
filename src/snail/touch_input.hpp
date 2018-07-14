@@ -16,18 +16,17 @@ namespace snail
 
 struct quick_action
 {
-    quick_action(int center_x, int center_y, snail::key key)
-        : center_x(center_x)
-        , center_y(center_y)
+    quick_action(std::string name, snail::key key, int center_x, int center_y)
+        : name(name)
         , key(key)
-    {
-        name = "k";
-    }
+        , center_x(center_x)
+        , center_y(center_y) {}
 
     int center_x;
     int center_y;
     snail::key key;
     std::string name;
+
     bool touched = false;
 };
 
@@ -57,6 +56,7 @@ public:
     optional<snail::key> last_touched_key() const { return last_touched_key_; }
 
     void initialize(const fs::path&);
+    void initialize_quick_actions();
     void draw_quick_actions();
     void on_touch_event(::SDL_TouchFingerEvent);
 

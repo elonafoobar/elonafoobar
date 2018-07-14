@@ -24,6 +24,7 @@ set(SNAIL_SOURCES
     scene.cpp
     touch_input.cpp
     window.cpp
+    android.cpp
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SNAIL_SOURCES})

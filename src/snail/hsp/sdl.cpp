@@ -370,6 +370,25 @@ void pos(int x, int y)
     detail::current_tex_buffer().y = y;
 }
 
+static void redraw_android()
+{
+    auto& renderer = application::instance().get_renderer();
+    rect pos = application::instance().window_pos();
+
+    renderer.set_render_target(nullptr);
+    renderer.clear();
+    renderer.render_image(detail::android_display_region,
+                          pos.x, pos.y,
+                          pos.width, pos.height);
+
+    auto itr = font_detail::font_cache.find({14, font_t::style_t::regular});
+    if (itr != std::end(font_detail::font_cache))
+    {
+        renderer.set_font(itr->second);
+    }
+    touch_input::instance().draw_quick_actions();
+}
+
 void redraw()
 {
     ::SDL_Texture* target = nullptr;
@@ -387,15 +406,7 @@ void redraw()
 
     if (application::is_android())
     {
-        int target_width = application::instance().actual_width();
-        double ratio = (static_cast<double>(target_width) /
-                        static_cast<double>(application::instance().width()));
-        int target_height = static_cast<int>(
-            static_cast<double>(application::instance().height()) * ratio);
-        renderer.set_render_target(nullptr);
-        renderer.clear();
-        renderer.render_image(detail::android_display_region, 0, 0, target_width, target_height);
-        touch_input::instance().draw_quick_actions();
+        redraw_android();
     }
 
     renderer.present();

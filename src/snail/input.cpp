@@ -13,6 +13,15 @@ using namespace elona::snail;
 namespace
 {
 
+#include <android/log.h>
+
+#define  LOG_TAG    "ElonaFoobar"
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
 key sdlkey2key(::SDL_Keycode k)
 {
     switch (k)
@@ -366,6 +375,7 @@ void input::restore_numlock()
 
 void input::_update()
 {
+    LOGD("UPDATE");
     for (auto&& key : _keys)
     {
         if (key.was_released_immediately() && key.repeat() == 0)
@@ -376,11 +386,6 @@ void input::_update()
         {
             key._increase_repeat();
         }
-    }
-
-    if (was_pressed_just_now(key::android_back))
-    {
-        toggle_soft_keyboard();
     }
 }
 
@@ -404,19 +409,27 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
     }
     else
     {
-        // On Android, certain keys seem to be pressed then released
-        // immediately after (backspace/return), such that the press
-        // and release events come in the same event polling cycle. In
-        // that case, mark the key as pressed but immediately
-        // released, and allow it it be detected for a single frame
-        // before releasing it in input::update().
+        // On Android, certain keys in the software keyboard seem to
+        // be pressed then released immediately after (backspace,
+        // return) such that the press and release events come in the
+        // same event polling cycle. In that case, mark the key as
+        // pressed but immediately released, and allow it it be
+        // detected for a single frame before releasing it in
+        // input::update().
         if (the_key.is_pressed() && the_key.repeat() == -1)
         {
+            LOGD("IMMREL %d %d", the_key.is_pressed(), the_key.repeat());
             the_key._release_immediately();
         }
         else
         {
+            LOGD("RELEASE %d %d", the_key.is_pressed(), the_key.repeat());
             the_key._release();
+
+            if (k == key::android_back)
+            {
+                toggle_soft_keyboard();
+            }
         }
     }
 

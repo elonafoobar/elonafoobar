@@ -6,8 +6,7 @@
                  android:allowBackup="true"
                  android:theme="@style/AppTheme"
                  android:hardwareAccelerated="true"
-                 android:isGame="true"
-                 >
+                 android:isGame="true">
         <activity android:name="SplashScreen"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance"

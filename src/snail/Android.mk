@@ -16,6 +16,7 @@ LOCAL_CPP_FEATURES := exceptions rtti
 
 # Add your application source files here...
 LOCAL_SRC_FILES := \
+android.cpp \
 application/sdl.cpp \
 audio/sdl.cpp \
 detail/sdl_impl.cpp \

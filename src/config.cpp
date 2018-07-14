@@ -364,6 +364,12 @@ void load_config(const fs::path& hcl_file)
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
 
+    if (snail::application::is_android())
+    {
+        // Load font for on-screen controls.
+        font(14);
+    }
+
     key_prev = key_northwest;
     key_next = key_northeast;
 

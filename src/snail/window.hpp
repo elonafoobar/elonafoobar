@@ -63,6 +63,8 @@ public:
     }
 
 
+    std::pair<int, int> get_size();
+
     void move_to_center();
 
     void set_size(int width, int height);

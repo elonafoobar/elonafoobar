@@ -24,6 +24,12 @@ namespace snail
 class application final : public lib::noncopyable
 {
 public:
+    enum class screen_orientation
+    {
+        portrait,
+        landscape
+    };
+
     size_t frame() const noexcept
     {
         return _frame;
@@ -41,14 +47,14 @@ public:
         return _height;
     }
 
-    int actual_width() const noexcept
+    int physical_width() const noexcept
     {
-        return _actual_width;
+        return _physical_width;
     }
 
-    int actual_height() const noexcept
+    int physical_height() const noexcept
     {
-        return _actual_height;
+        return _physical_height;
     }
 
     static bool is_android()
@@ -58,6 +64,16 @@ public:
 #else
         return false;
 #endif
+    }
+
+    screen_orientation orientation() const noexcept
+    {
+        return _orientation;
+    }
+
+    rect window_pos() const noexcept
+    {
+        return _window_pos;
     }
 
     const std::string& title() const noexcept
@@ -149,11 +165,15 @@ private:
     detail::sdl_ttf _sdl_ttf;
     detail::sdl_image _sdl_image;
     detail::sdl_mixer _sdl_mixer;
+
     int _width;
     int _height;
-    int _actual_width;
-    int _actual_height;
+    int _physical_width;
+    int _physical_height;
     std::string _title;
+    screen_orientation _orientation;
+    rect _window_pos; // Window draw position for Android
+
     size_t _frame = 0;
     bool _will_quit = false;
     std::unique_ptr<window> _window;
@@ -170,6 +190,10 @@ private:
     void main_loop();
     void render_scene(std::shared_ptr<scene_base> scene);
     void handle_event(const ::SDL_Event& event);
+    void handle_window_event(const ::SDL_WindowEvent& event);
+    void update_orientation();
+
+    rect calculate_android_window_pos();
 };
 
 

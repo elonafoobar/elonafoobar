@@ -13,6 +13,12 @@ namespace snail
 class application final
 {
 public:
+    enum class orientation
+    {
+        portrait,
+        landscape
+    };
+
     size_t frame() const noexcept
     {
         return 1;
@@ -33,6 +39,11 @@ public:
     static bool is_android()
     {
         return false;
+    }
+
+    orientation orientation() const noexcept
+    {
+        return orientation::landscape;
     }
 
     const std::string& title() const noexcept
