@@ -30,7 +30,7 @@ public:
         return 600;
     }
 
-    bool is_android() const noexcept
+    static bool is_android()
     {
         return false;
     }

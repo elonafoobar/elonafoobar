@@ -50,8 +50,7 @@ $(APK):
 
 clean: FORCE
 	-@$(RM) -rf $(BIN_DIR)
-        -@$(RM) -rf android/distribution android/app/.externalNativeBuild android/SDL2/.externalNativeBuild
-        ./android/gradlew clean
+	-@$(RM) -rf android/distribution android/app/.externalNativeBuild android/SDL2/.externalNativeBuild
 
 
 # Format src/*.{hpp,cpp} except under src/thirdparty.

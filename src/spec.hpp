@@ -197,7 +197,7 @@ public:
     template <typename T>
     const T& get(const std::string& key) const { return boost::get<T>(items.at(key)); }
 
-    inline std::string type_to_string(const std::string& key)
+    inline std::string type_to_string(const std::string& key) const
     {
         if (is<section_def>(key))
         {
@@ -229,7 +229,7 @@ public:
         }
     }
 
-    hcl::Value get_default(const std::string& key)
+    hcl::Value get_default(const std::string& key) const
     {
         if (is<section_def>(key))
         {

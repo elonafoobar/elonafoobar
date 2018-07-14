@@ -3,6 +3,7 @@ config def {
         type = "section"
         options = {
             fullscreen = {
+                platform = "desktop"
                 type = "enum"
                 preload = true
                 variants = ["windowed", "fullscreen", "desktop_fullscreen"]
@@ -10,9 +11,41 @@ config def {
             }
 
             display_mode = {
+                platform = "desktop"
                 type = "runtime_enum"
                 translate_variants = false
                 preload = true
+            }
+
+            fullscreen_android = {
+                platform = "android"
+                default = false
+            }
+
+            fullscreen_scale = {
+                platform = "android"
+                dependencies = {
+                    "core.config.screen.fullscreen_android" = true
+                }
+
+                default = 2.0
+                min = 1.0
+                max = 2.0
+                interval = 0.25
+            }
+
+            classic_display_mode = {
+                platform = "android"
+                dependencies = {
+                    "core.config.screen.fullscreen_android" = false
+                }
+
+                type = "enum"
+                preload = true
+                # These are the screen resolutions that are supported by vanilla Elona.
+                variants = ["800x600", "800x696", "1024x768",
+                    "1152x864", "1280x768", "1280x1024"]
+                default = "800x600"
             }
 
             music = {
@@ -21,10 +54,12 @@ config def {
                 default = "direct_music"
                 preload = true
             }
+
             sound = {
                 default = true
                 preload = true
             }
+
             high_quality_shadows = true
             object_shadows = true
             heartbeat = true
@@ -36,9 +71,24 @@ config def {
         type = "section"
         options = {
             enabled = false
-            wish = false
-            chat = false
-            server_list = false
+            wish = {
+                dependencies = {
+                    "core.config.net.enabled" = true
+                }
+                default = false
+            }
+            chat = {
+                dependencies = {
+                    "core.config.net.enabled" = true
+                }
+                default = false
+            }
+            server_list = {
+                dependencies = {
+                    "core.config.net.enabled" = true
+                }
+                default = false
+            }
         }
     }
 
@@ -397,6 +447,18 @@ DOC
                 "f", "g", "h", "i", "j",
                 "k", "l", "m", "n", "o",
                 "p", "q", "r", "s"]
+        }
+    }
+
+    android = {
+        type = "section"
+        platform = "android"
+        options = {
+            quick_action_scale = {
+                default = 100
+                min = 10
+                max = 500
+            }
         }
     }
 }

@@ -7,11 +7,6 @@ namespace elona
 namespace snail
 {
 
-
-#include <android/log.h>
-#define  LOG_TAG    "ElonaFoobar"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-
 touch_input& touch_input::instance()
 {
     static touch_input the_instance;

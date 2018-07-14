@@ -10,6 +10,40 @@
 namespace elona
 {
 
+namespace
+{
+
+static void add_platform(config_def::metadata& dat, const hcl::Object& item)
+{
+    std::string platform = item.at("platform").as<std::string>();
+    if (platform == "desktop")
+    {
+        dat.platform = config_def::option_platform::desktop;
+    }
+    else if (platform == "desktop")
+    {
+        dat.platform = config_def::option_platform::android;
+    }
+    else
+    {
+        dat.platform = config_def::option_platform::all;
+    }
+}
+
+static void add_dependencies(config_def::metadata& dat, const hcl::Object item)
+{
+    auto dependencies = item.at("dependencies").as<hcl::Object>();
+    for (auto& pair : dependencies)
+    {
+        std::string key = pair.first;
+        bool value = pair.second.as<bool>();
+
+        dat.dependencies[key] = value;
+    }
+}
+
+}
+
 void config_def::post_visit(const std::string& current_key, const spec::section_def&)
 {
     data.emplace(current_key, metadata{});
@@ -20,24 +54,32 @@ void config_def::post_visit_bare_value(const std::string& current_key, const spe
     data.emplace(current_key, metadata{});
 }
 
+#define CONFIG_DEF_METADATA(name) \
+    if (item.find(#name) != item.end()) \
+    { \
+        dat.name = item.at(#name).as<bool>(); \
+    } \
+
 void config_def::post_visit_item(const std::string& current_key, const hcl::Object& item)
 {
     metadata dat{};
 
-    if (item.find("visible") != item.end())
+    CONFIG_DEF_METADATA(visible);
+    CONFIG_DEF_METADATA(preload);
+    CONFIG_DEF_METADATA(translate_variants);
+
+    if (item.find("platform") != item.end())
     {
-        dat.visible = item.at("visible").as<bool>();
+        add_platform(dat, item);
     }
-    if (item.find("preload") != item.end())
+    if (item.find("dependencies") != item.end())
     {
-        dat.preload = item.at("preload").as<bool>();
-    }
-    if (item.find("translate_variants") != item.end())
-    {
-        dat.translate_variants = item.at("translate_variants").as<bool>();
+        add_dependencies(dat, item);
     }
 
     data.emplace(current_key, dat);
 }
+
+#undef CONFIG_DEF_METADATA
 
 } // namespace elona

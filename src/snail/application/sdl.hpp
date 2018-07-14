@@ -51,7 +51,7 @@ public:
         return _actual_height;
     }
 
-    bool is_android() const noexcept
+    static bool is_android()
     {
 #ifdef ANDROID
         return true;

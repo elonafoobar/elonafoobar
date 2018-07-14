@@ -109,6 +109,23 @@ public:
 
     bool is_test = false; // testing use only
 
+    bool is_visible(const std::string& key) const
+    {
+        // Hide options if their (boolean) dependencies are not satisfied.
+        for (auto& pair : def.get_metadata(key).dependencies)
+        {
+            auto dependency = pair.first;
+            auto value = pair.second;
+            if (def.is<spec::bool_def>(dependency)
+                && get<bool>(dependency) != value)
+            {
+                return false;
+            }
+        }
+
+        return def.get_metadata(key).is_visible();
+    }
+
     void bind_getter(const std::string& key,
                      std::function<hcl::Value(void)> getter)
     {
@@ -156,14 +173,14 @@ public:
     }
 
     template <typename T>
-    T get(const std::string& key)
+    T get(const std::string& key) const
     {
         if (storage.find(key) == storage.end())
         {
             // TODO fallback to default specified in config definition instead
             throw std::runtime_error("No such config value " + key);
         }
-        if (!storage[key].is<T>())
+        if (!storage.at(key).is<T>())
         {
             throw std::runtime_error("Expected type \"" + def.type_to_string(key) + "\" for key " + key);
         }
@@ -172,11 +189,11 @@ public:
         {
             if (getters.find(key) != getters.end())
             {
-                return getters[key]().as<T>();
+                return getters.at(key)().as<T>();
             }
             else
             {
-                return storage[key].as<T>();
+                return storage.at(key).as<T>();
             }
         }
         catch (std::exception& e)

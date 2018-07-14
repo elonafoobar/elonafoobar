@@ -43,10 +43,6 @@
 
 using namespace elona;
 
-#include <android/log.h>
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOG_TAG    "ElonaFoobar"
-
 namespace
 {
 
@@ -370,17 +366,11 @@ void initialize_cat_db()
 
 void initialize_config(const fs::path& config_file)
 {
-    LOGD("INIT CONFIG");
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
 
-    // TODO cleanup
-    if(snail::application::instance().is_android())
+    if(snail::application::is_android())
     {
-        LOGD("SETUP touch");
-        LOGD("%d x %d",
-             snail::application::instance().width(),
-             snail::application::instance().height());
         snail::touch_input::instance().initialize(filesystem::dir::graphic());
     }
 

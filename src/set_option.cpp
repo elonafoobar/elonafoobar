@@ -7,6 +7,7 @@
 #include "macro.hpp"
 #include "menu.hpp"
 #include "network.hpp"
+#include "snail/application.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -377,7 +378,7 @@ static void add_config_item_section(const spec_key& key,
     // EX: "<core.config>.<language>"
     spec_key section_key = key + "." + section_name;
 
-    if (def.get_metadata(section_key).visible)
+    if (def.get_metadata(section_key).is_visible())
     {
         // EX: "<core.locale.config.menu>.<language>"
         i18n_key section_locale_key = locale_key + "." + section_name;
@@ -431,7 +432,7 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
         throw std::runtime_error("No such config option \"" + current_key + "\".");
     }
     // Ignore this section if it is not user-visible.
-    if (!conf.get_def().get_metadata(key).visible)
+    if (!conf.get_def().get_metadata(key).is_visible())
     {
         return;
     }
@@ -455,7 +456,7 @@ void visit_config_item(config& conf, const spec_key& current_key, config_screen&
     {
         throw std::runtime_error("No such config option \"" + current_key + "\".");
     }
-    if (!conf.get_def().get_metadata(key).visible)
+    if (!conf.get_def().get_metadata(key).is_visible())
     {
         return;
     }
@@ -659,8 +660,28 @@ set_option_begin:
         }
         font(14 - en * 2);
         cs_listbk();
+
+        if (!config::instance().is_visible(menu_def->items[cs]->key))
+        {
+            for (; cs > 0; cs--)
+            {
+                if (config::instance().is_visible(menu_def->items[cs]->key))
+                {
+                    break;
+                }
+            }
+        }
+
+        int item_pos = 0;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
+            auto item = config_screen[submenu]->items[cnt].get();
+            if (!config::instance().is_visible(item->key))
+            {
+                // Don't increment item_pos.
+                continue;
+            }
+
             p = pagesize * page + cnt;
             if (p >= listmax)
             {
@@ -686,17 +707,19 @@ set_option_begin:
             //         }
             //     }
             // }
-            cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
+            cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
             if ((true || cnt <= 0) && submenu != 0)
             {
-                pos(wx + 220, wy + 66 + cnt * 19 - 5);
+                pos(wx + 220, wy + 66 + item_pos * 19 - 5);
                 gcopy(3, 312, 336, 24, 24);
-                pos(wx + 358, wy + 66 + cnt * 19 - 5);
+                pos(wx + 358, wy + 66 + item_pos * 19 - 5);
                 gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
 
-            mes(config_screen[submenu]->items[cnt].get()->get_message());
+            mes(item->get_message());
+
+            item_pos++;
         }
 
         config_screen[submenu]->draw();

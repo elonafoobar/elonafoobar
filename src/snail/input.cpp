@@ -10,11 +10,6 @@
 
 using namespace elona::snail;
 
-#include <android/log.h>
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOG_TAG    "ElonaFoobar"
-
-
 namespace
 {
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "spec.hpp"
+#include "snail/application.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
 
 namespace elona
@@ -12,6 +13,13 @@ namespace elona
 class config_def : public spec::object
 {
 public:
+    enum class option_platform
+    {
+        all,
+        desktop,
+        android,
+    };
+
     struct metadata
     {
         // True if the config section/option is visible in the options menu.
@@ -25,6 +33,30 @@ public:
         // missing translations. Set to false when enum variants are
         // human-readable themselves.
         bool translate_variants = true;
+
+        // Platform this option applies to. On other platforms it will
+        // be hidden.
+        option_platform platform = option_platform::all;
+
+        // Boolean config options that need to be the specified value
+        // for this option to be visible in the config menu.
+        // Non-boolean options are ignored.
+        std::map<std::string, bool> dependencies;
+
+        bool is_visible() const
+        {
+            switch(platform)
+            {
+            case option_platform::desktop:
+                return visible && !snail::application::is_android();
+            case option_platform::android:
+                return visible && snail::application::is_android();
+            case option_platform::all:
+            default:
+                return visible;
+            }
+
+        }
     };
 
     config_def() : spec::object("config")

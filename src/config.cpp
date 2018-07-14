@@ -407,15 +407,7 @@ void load_config(const fs::path& hcl_file)
     }
     if (config::instance().language == spec::unknown_enum_variant)
     {
-        // TODO cleanup
-        if (snail::application::instance().is_android())
-        {
-            config::instance().language = 0;
-        }
-        else
-        {
-            config_query_language();
-        }
+        config_query_language();
     }
     if (config::instance().language == "jp")
     {
@@ -670,7 +662,12 @@ void config::write()
     {
         std::string key = pair.first;
         hcl::Value value = pair.second;
-        hcl::Value* current = parent;
+
+        // Don't save hidden options.
+        if (!def.get_metadata(key).is_visible())
+        {
+            continue;
+        }
 
         // Don't save injected enum values that are still unknown
         // (though this should never happen)
@@ -683,6 +680,7 @@ void config::write()
 
         size_t pos = 0;
         std::string token;
+        hcl::Value* current = parent;
 
         // Function to split the flat key ("core.config.some.option")
         // on the next period and set the token to the split section

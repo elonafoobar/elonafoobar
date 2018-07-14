@@ -8,10 +8,6 @@
 #include "../window.hpp"
 #include "../touch_input.hpp"
 
-#include <android/log.h>
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOG_TAG    "ElonaFoobar"
-
 namespace
 {
 
@@ -146,7 +142,7 @@ void setup_buffers()
         std::max(1024, application::instance().width()),
         std::max(1024, application::instance().height())));
 
-    if (application::instance().is_android()) {
+    if (application::is_android()) {
         // Output texture for Android. This is so the game window can
         // be placed such that it covers only part of the actual
         // screen, or scaled up and down.
@@ -349,7 +345,7 @@ void mesbox(std::string& buffer, int keywait, bool text)
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
-    if (application::instance().is_android()) {
+    if (application::is_android()) {
         // Pop up the soft keyboard.
         ::SDL_StartTextInput();
     }
@@ -378,7 +374,7 @@ void pos(int x, int y)
 void redraw()
 {
     ::SDL_Texture* target = nullptr;
-    if (application::instance().is_android())
+    if (application::is_android())
     {
         target = detail::android_display_region;
     }
@@ -390,7 +386,7 @@ void redraw()
     renderer.clear();
     renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
 
-    if (application::instance().is_android())
+    if (application::is_android())
     {
         int target_width = application::instance().actual_width();
         double ratio = (static_cast<double>(target_width) /
@@ -426,7 +422,7 @@ void onkey_0()
     mesbox_detail::message_boxes.erase(
         std::end(mesbox_detail::message_boxes) - 1);
 
-    if (application::instance().is_android()) {
+    if (application::is_android()) {
         // Hide the soft keyboard.
         ::SDL_StopTextInput();
     }
@@ -813,7 +809,7 @@ void title(
 {
     application::instance().initialize(title_str);
 
-    if (application::instance().is_android())
+    if (application::is_android())
     {
         application::instance().set_display_mode(application::instance().get_default_display_mode());
         application::instance().set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);
