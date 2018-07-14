@@ -574,7 +574,7 @@ void gcopy(
 
     if (window_id == detail::current_buffer)
     {
-        auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
+        auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
         renderer.set_render_target(tmp_buffer);
         if (window_id >= 10)
         {
