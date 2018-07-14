@@ -16,11 +16,12 @@ namespace
 static void add_platform(config_def::metadata& dat, const hcl::Object& item)
 {
     std::string platform = item.at("platform").as<std::string>();
+
     if (platform == "desktop")
     {
         dat.platform = config_def::option_platform::desktop;
     }
-    else if (platform == "desktop")
+    else if (platform == "android")
     {
         dat.platform = config_def::option_platform::android;
     }
@@ -44,29 +45,44 @@ static void add_dependencies(config_def::metadata& dat, const hcl::Object item)
 
 }
 
-void config_def::post_visit(const std::string& current_key, const spec::section_def&)
-{
-    data.emplace(current_key, metadata{});
-}
-
-void config_def::post_visit_bare_value(const std::string& current_key, const spec::item&)
-{
-    data.emplace(current_key, metadata{});
-}
-
-#define CONFIG_DEF_METADATA(name) \
+#define CONFIG_DEF_METADATA(item, name)  \
     if (item.find(#name) != item.end()) \
     { \
         dat.name = item.at(#name).as<bool>(); \
     } \
 
-void config_def::post_visit_item(const std::string& current_key, const hcl::Object& item)
+void config_def::post_visit(const spec_key& current_key, const spec::section_def&)
+{
+    data.emplace(current_key, metadata{});
+}
+
+void config_def::pre_visit_section(const spec_key& current_key, const hcl::Object& section)
 {
     metadata dat{};
 
-    CONFIG_DEF_METADATA(visible);
-    CONFIG_DEF_METADATA(preload);
-    CONFIG_DEF_METADATA(translate_variants);
+    CONFIG_DEF_METADATA(section, visible);
+    if (section.find("platform") != section.end())
+    {
+        add_platform(dat, section);
+    }
+
+    dat.visible = dat.visible && is_child_visible(current_key);
+
+    data.emplace(current_key, dat);
+}
+
+void config_def::pre_visit_bare_value(const spec_key& current_key, const hcl::Value&)
+{
+    data.emplace(current_key, metadata{});
+}
+
+void config_def::pre_visit_item(const spec_key& current_key, const hcl::Object& item)
+{
+    metadata dat{};
+
+    CONFIG_DEF_METADATA(item, visible);
+    CONFIG_DEF_METADATA(item, preload);
+    CONFIG_DEF_METADATA(item, translate_variants);
 
     if (item.find("platform") != item.end())
     {
@@ -77,7 +93,34 @@ void config_def::post_visit_item(const std::string& current_key, const hcl::Obje
         add_dependencies(dat, item);
     }
 
+    dat.visible = dat.visible && is_child_visible(current_key);
+
     data.emplace(current_key, dat);
+}
+
+
+bool config_def::is_child_visible(const spec_key& child_key)
+{
+    spec_key parent_key = child_key;
+    for (size_t i = parent_key.size() - 1; i > 0; i--)
+    {
+        if (parent_key[i] == '.')
+        {
+            // Break string at furthest period.
+            parent_key = parent_key.substr(0, i);
+
+            if (data.find(parent_key) == data.end())
+            {
+                continue;
+            }
+            else if (!data.at(parent_key).is_visible())
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 #undef CONFIG_DEF_METADATA

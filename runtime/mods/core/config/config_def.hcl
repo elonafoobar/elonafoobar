@@ -28,10 +28,9 @@ config def {
                     "core.config.screen.fullscreen_android" = true
                 }
 
-                default = 2.0
-                min = 1.0
-                max = 2.0
-                interval = 0.25
+                default = 4
+                min = 4 # * 0.25 = 1.00
+                max = 8 # * 0.25 = 2.00
             }
 
             classic_display_mode = {

@@ -316,9 +316,10 @@ public:
     // These functions allow for injecting more specific validations
     // or data in subclasses, like config option visibility based on
     // object properties.
-    virtual void post_visit(const std::string&, const section_def&) {}
-    virtual void post_visit_item(const std::string&, const hcl::Object&) {}
-    virtual void post_visit_bare_value(const std::string&, const item&) {}
+    virtual void post_visit(const spec_key&, const section_def&) {}
+    virtual void pre_visit_section(const spec_key&, const hcl::Object&) {}
+    virtual void pre_visit_item(const spec_key&, const hcl::Object&) {}
+    virtual void pre_visit_bare_value(const spec_key&, const hcl::Value&) {}
 
 private:
     // Visitor methods for general object types

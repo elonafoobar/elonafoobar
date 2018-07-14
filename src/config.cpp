@@ -36,6 +36,15 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 }
 
 
+static void write_default_config(const fs::path& location)
+{
+    std::ofstream out{location.native(), std::ios::binary};
+    hcl::Object object;
+    object["config"] = hcl::Object();
+    object["config"]["core"] = hcl::Object();
+    out << object << std::endl;
+}
+
 
 /***
  * Initializes the list of available display modes. To be called after
@@ -52,7 +61,6 @@ static void inject_display_modes(config& conf)
 
     bool config_display_mode_found = false;
     int index = 0;
-    int default_display_mode_index = 0;
 
     for (const auto pair : display_modes)
     {
@@ -65,12 +73,6 @@ static void inject_display_modes(config& conf)
         if (pair.first == current_display_mode)
         {
             config_display_mode_found = true;
-        }
-        // If this is the default display mode the application
-        // requested, mark its index for later.
-        else if (pair.first == default_display_mode)
-        {
-            default_display_mode_index = index;
         }
         index++;
     }
@@ -464,6 +466,11 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
 
+    if (!fs::exists(hcl_file))
+    {
+        write_default_config(hcl_file);
+    }
+
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), true);
 }
@@ -663,8 +670,8 @@ void config::write()
         std::string key = pair.first;
         hcl::Value value = pair.second;
 
-        // Don't save hidden options.
-        if (!def.get_metadata(key).is_visible())
+        // Don't save hidden options if their value is the same as the default.
+        if (!def.get_metadata(key).is_visible() && value == def.get_default(key))
         {
             continue;
         }
@@ -674,7 +681,6 @@ void config::write()
         if (def.is<spec::enum_def>(key)
             && value.as<std::string>() == spec::unknown_enum_variant)
         {
-            ELONA_LOG("Injected enum value was unknown on save: " << key);
             continue;
         }
 

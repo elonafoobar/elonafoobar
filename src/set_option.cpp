@@ -563,11 +563,26 @@ set_option_begin:
 
     windowshadow = 1;
 
+    std::set<int> hidden;
+
     bool reset_page = true;
     while (true)
     {
         if (reset_page)
         {
+            hidden.clear();
+
+            // Memoize hidden menu items.
+            int i = 0;
+            for (const auto& menu_item : menu_def->items)
+            {
+                if (!config::instance().is_visible(menu_item->key))
+                {
+                    hidden.insert(i);
+                }
+                i++;
+            }
+
             if (config::instance().zkey == 0)
             {
                 key_quick = u8"z"s;
@@ -661,11 +676,11 @@ set_option_begin:
         font(14 - en * 2);
         cs_listbk();
 
-        if (!config::instance().is_visible(menu_def->items[cs]->key))
+        if (hidden.find(cs) != hidden.end())
         {
             for (; cs > 0; cs--)
             {
-                if (config::instance().is_visible(menu_def->items[cs]->key))
+                if (hidden.find(cs) == hidden.end())
                 {
                     break;
                 }
@@ -675,9 +690,10 @@ set_option_begin:
         int item_pos = 0;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
-            auto item = config_screen[submenu]->items[cnt].get();
-            if (!config::instance().is_visible(item->key))
+            auto item = menu_def->items[cnt].get();
+            if (hidden.find(cs) != hidden.end())
             {
+                // Hide this item.
                 // Don't increment item_pos.
                 continue;
             }

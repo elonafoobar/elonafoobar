@@ -3,6 +3,8 @@
 #include "snail/application.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
 
+#include <iostream>
+
 namespace elona
 {
 
@@ -72,15 +74,23 @@ public:
         data.clear();
     }
 
-    const metadata& get_metadata(const std::string& key) const { return data.at(key); }
+    const metadata& get_metadata(const spec_key& key) const { return data.at(key); }
 
     const std::string& get_locale_root() const { return locale_root; }
 
-    void post_visit(const std::string&, const spec::section_def&);
-    void post_visit_item(const std::string&, const hcl::Object&);
-    void post_visit_bare_value(const std::string&, const spec::item&);
+    void post_visit(const spec_key&, const spec::section_def&);
+    void pre_visit_section(const spec_key&, const hcl::Object&);
+    void pre_visit_item(const spec_key&, const hcl::Object&);
+    void pre_visit_bare_value(const spec_key&, const hcl::Value&);
 
 private:
+    /***
+    * Gets the visibility of a config item considering the visibility
+    * of its parent sections. This is needed for determining whether
+    * or not to save certain items based on visibility.
+    */
+    bool is_child_visible(const spec_key&);
+
     std::string locale_root;
     std::map<std::string, metadata> data;
 };
