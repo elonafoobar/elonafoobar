@@ -137,7 +137,6 @@ void touch_input::on_touch_event(::SDL_TouchFingerEvent event)
 {
     int norm_x = application::instance().physical_width() * event.x;
     int norm_y = application::instance().physical_height() * event.y;
-    const constexpr int size = 300;
     last_touched_quick_action_idx_ = none;
 
     for (auto it = quick_actions_.begin(); it < quick_actions_.end(); it++)

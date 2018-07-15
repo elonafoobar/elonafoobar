@@ -74,6 +74,13 @@ public:
         return _window_pos;
     }
 
+    bool was_focus_lost_just_now() noexcept
+    {
+        bool result = _focus_lost_just_now;
+        _focus_lost_just_now = false;
+        return result;
+    }
+
     const std::string& title() const noexcept
     {
         return _title;
@@ -174,6 +181,7 @@ private:
 
     size_t _frame = 0;
     bool _will_quit = false;
+    bool _focus_lost_just_now = false;
     std::unique_ptr<window> _window;
     std::unique_ptr<renderer> _renderer;
     scene_manager _scene_manager;
@@ -187,9 +195,11 @@ private:
 
     void main_loop();
     void render_scene(std::shared_ptr<scene_base> scene);
-    void handle_event(const ::SDL_Event& event);
-    void handle_window_event(const ::SDL_WindowEvent& event);
     void update_orientation();
+    void handle_event(const ::SDL_Event& event);
+
+    void handle_window_event(const ::SDL_WindowEvent& event);
+    void on_size_changed(const ::SDL_WindowEvent& event);
 
     rect calculate_android_window_pos();
 };

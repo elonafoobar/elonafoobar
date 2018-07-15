@@ -361,7 +361,7 @@ void mesbox(std::string& buffer, int keywait, bool text)
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
-    if (application::is_android) {
+    if (application::is_android && text) {
         input::instance().show_soft_keyboard();
     }
 }

@@ -47,15 +47,14 @@ void application::initialize(const std::string& title)
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
-    ::SDL_StartTextInput();
 
     initialize_actual_size();
 
     set_display_mode(get_default_display_mode());
 
-    if (is_android)
+    if (!is_android)
     {
-        input::instance().hide_soft_keyboard();
+        ::SDL_StartTextInput();
     }
 }
 
@@ -196,28 +195,48 @@ void application::handle_event(const ::SDL_Event& event)
 
 
 
+void application::on_size_changed(const ::SDL_WindowEvent& event)
+{
+    int new_width = event.data1;
+    int new_height = event.data2;
+
+    _physical_width = new_width;
+    _physical_height = new_height;
+
+    if (!is_android)
+    {
+        _width = new_width;
+        _height = new_height;
+    }
+
+    update_orientation();
+
+    if (is_android)
+    {
+        touch_input::instance().initialize_quick_actions();
+    }
+}
+
+
+
 void application::handle_window_event(const ::SDL_WindowEvent& event)
 {
-    if (event.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+    switch (event.event)
     {
-        int new_width = event.data1;
-        int new_height = event.data2;
-
-        _physical_width = new_width;
-        _physical_height = new_height;
-
-        if (!is_android)
-        {
-            _width = new_width;
-            _height = new_height;
-        }
-
-        update_orientation();
-
-        if (is_android)
-        {
-            touch_input::instance().initialize_quick_actions();
-        }
+    case SDL_WINDOWEVENT_FOCUS_LOST:
+        _focus_lost_just_now = true;
+        break;
+    case SDL_WINDOWEVENT_SIZE_CHANGED:
+        // Handle device rotation.
+        on_size_changed(event);
+        break;
+    case SDL_WINDOWEVENT_SHOWN:
+    case SDL_WINDOWEVENT_EXPOSED:
+    case SDL_WINDOWEVENT_RESTORED:
+        hsp::redraw();
+        break;
+    default:
+        break;
     }
 }
 

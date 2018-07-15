@@ -394,6 +394,16 @@ Provide a script's name, like "my_script.lua" for "data/script/my_script.lua".
 DOC
                 }
             }
+
+            android {
+                name = "Android Setting"
+
+                quicksave {
+                    doc = <<DOC
+Quicksave the game if you're being queried for input and app focus is lost.
+DOC
+                }
+            }
         }
     }
 }

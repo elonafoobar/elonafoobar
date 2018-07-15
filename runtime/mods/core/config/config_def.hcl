@@ -136,7 +136,7 @@ config def {
                 max = 15
 
                 platform_default {
-                    android = 10
+                    android = 5
                 }
             }
         }
@@ -296,7 +296,7 @@ config def {
 
             leash_icon = true
             autopick = true
-            autosave = true
+            autosave = false
             damage_popup = true
 
             startup_script = {
@@ -460,11 +460,7 @@ DOC
         type = "section"
         platform = "android"
         options = {
-            quick_action_scale = {
-                default = 100
-                min = 10
-                max = 500
-            }
+            quicksave = true
         }
     }
 }

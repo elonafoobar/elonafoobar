@@ -103,6 +103,21 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 void await(int msec)
 {
     snail::hsp::await(msec);
+
+    // Potentially quicksave if SDL detects that the app's focus was
+    // lost and the player is being queried for input at pc_turn().
+    if (defines::is_android
+        && snail::application::instance().was_focus_lost_just_now())
+    {
+        if (player_queried_for_input
+            && config::instance().get<bool>("core.config.android.quicksave")
+            && !std::uncaught_exception())
+        {
+            LOGD("QUICKSAVE");
+            ELONA_LOG("Focus lost, quicksaving game.");
+            save_game();
+        }
+    }
 }
 
 

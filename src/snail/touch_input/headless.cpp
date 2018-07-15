@@ -13,11 +13,17 @@ void touch_input::initialize(const fs::path& asset_path)
 {
 }
 
+void touch_input::initialize_quick_actions()
+{
+}
+
 void touch_input::draw_quick_actions()
 {
 }
 
-void touch_input::draw_quick_action(const quick_action& action)
+void touch_input::draw_quick_action(const quick_action&)
+
+void touch_input::on_touch_event(::SDL_TouchFingerEvent)
 {
 }
 
