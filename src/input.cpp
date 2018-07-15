@@ -458,7 +458,6 @@ void key_check(key_wait_delay_t delay_type)
     key = "";
     if (keylog != ""s)
     {
-        LOGD("KEYLOG %s", keylog(0).c_str());
         keylog = strmid(keylog, 0, 1);
         if (keylog(0)[0] == '\n')
         {

@@ -296,11 +296,6 @@ struct MessageBox
                 // New line.
                 buffer += '\n';
             }
-
-            if (buffer.size() > 0)
-            {
-                LOGD("BUF %s", buffer.c_str());
-            }
         }
     }
 
@@ -827,6 +822,17 @@ void line(int x1, int y1, int x2, int y2, const snail::color& color)
 
 
 
+static void title_android(const std::string& display_mode)
+{
+    application::instance()
+        .set_display_mode(application::instance().get_default_display_mode());
+    application::instance()
+        .set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);
+    application::instance().set_subwindow_display_mode(display_mode);
+}
+
+
+
 void title(
     const std::string& title_str,
     const std::string& display_mode,
@@ -836,8 +842,7 @@ void title(
 
     if (application::is_android)
     {
-        application::instance().set_display_mode(application::instance().get_default_display_mode());
-        application::instance().set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);
+        title_android(display_mode);
     }
     else if (display_mode != "__unknown__")
     {

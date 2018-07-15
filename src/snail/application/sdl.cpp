@@ -6,12 +6,23 @@
 #include <sstream>
 #include "../input.hpp"
 #include "../touch_input.hpp"
+#include <boost/lexical_cast.hpp>
 
 
 namespace elona
 {
 namespace snail
 {
+
+#include <android/log.h>
+
+#define  LOG_TAG    "ElonaFoobar"
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
 
 application& application::instance()
 {
@@ -340,14 +351,17 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
         _window->set_size(display_mode.w, display_mode.h);
     }
 
-    // We want the actual rendered size kept separate from the
-    // device's size on Android.
-    if (!is_android)
+    // Keep the actual rendered size separate from the device's size
+    // on Android.
+    if (is_android)
+    {
+        _physical_width = display_mode.w;
+        _physical_height = display_mode.h;
+    }
+    else
     {
         _width = display_mode.w;
         _height = display_mode.h;
-        _physical_width = _width;
-        _physical_height = _height;
     }
 
     _window->move_to_center();
@@ -355,14 +369,50 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
     update_orientation();
 }
 
+void application::set_subwindow_display_mode(const std::string& mode)
+{
+    size_t found;
+
+    // Parse a string like "800x600" for width and height
+    if ((found = mode.find("x")) != std::string::npos)
+    {
+        std::string width_s = mode.substr(0, found);
+        std::string height_s = mode.substr(found+1);
+
+        try
+        {
+            int width = boost::lexical_cast<int>(width_s);
+            int height = boost::lexical_cast<int>(height_s);
+
+            if (width < 800 || height < 600)
+            {
+                throw std::logic_error("Subwindow resolution too small: " + mode);
+            }
+
+            _width = width;
+            _height = height;
+        }
+        catch (boost::bad_lexical_cast)
+        {
+            throw std::logic_error("Invalid subwindow mode string: " + mode);
+        }
+    }
+    else
+    {
+        throw std::logic_error("Invalid subwindow mode string: " + mode);
+    }
+}
+
 void application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
+        LOGD("PORTRAIT");
         _orientation = screen_orientation::portrait;
     }
     else
     {
+        LOGD("LANDSCAPE");
         _orientation = screen_orientation::landscape;
     }
 

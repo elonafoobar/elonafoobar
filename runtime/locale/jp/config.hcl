@@ -102,6 +102,9 @@ locale {
                         reverse_portrait = "縦向き (反転)"
                     }
                 }
+                window_mode {
+                    name = "ウィンドウの大きさ*"
+                }
                 music {
                     name = "midiの再生*"
                     variants {

@@ -17,32 +17,22 @@ config def {
                 preload = true
             }
 
-            fullscreen_android = {
+            window_mode = {
                 platform = "android"
-                default = false
-            }
-
-            fullscreen_scale = {
-                platform = "android"
-
-                default = 4
-                min = 4 # * 0.25 = 1.00
-                max = 8 # * 0.25 = 2.00
-            }
-
-            classic_display_mode = {
-                platform = "android"
+                preload = true
 
                 type = "enum"
-                preload = true
-                # These are the screen resolutions that are supported by vanilla Elona.
-                variants = ["800x600", "800x696", "1024x768",
-                    "1152x864", "1280x768", "1280x1024"]
-                default = "800x600"
+                translate_variants = false
+                variants = ["800x600", "1024x600", "1280x720",
+                    "800x696", "1024x768", "1152x864",
+                    "1280x768", "1280x1024", "1366×768",
+                    "1600×900", "1600x1200"]
+                default = "1024x600"
             }
 
             orientation = {
                 platform = "android"
+                preload = true
 
                 type = "enum"
                 variants = ["sensor_landscape", "sensor_portrait", "sensor",
@@ -66,7 +56,7 @@ config def {
             high_quality_shadows = true
             object_shadows = true
             heartbeat = true
-            skip_random_event_popups = true
+            skip_random_event_popups = false
         }
     }
 
@@ -248,6 +238,10 @@ config def {
                 default = 10
                 min = 1
                 max = 20
+
+                platform_default {
+                    android = 4
+                }
             }
 
             select_fast_start_wait = {
@@ -260,6 +254,10 @@ config def {
                 default = 2
                 min = 1
                 max = 20
+
+                platform_default {
+                    android = 1
+                }
             }
         }
     }
@@ -297,7 +295,13 @@ config def {
             leash_icon = true
             autopick = true
             autosave = false
-            damage_popup = true
+            damage_popup = {
+                default = true
+
+                platform_default {
+                    android = false
+                }
+            }
 
             startup_script = {
                 default = ""
@@ -461,6 +465,18 @@ DOC
         platform = "android"
         options = {
             quicksave = true
+
+            quick_action_transparency = {
+                default = 5
+                min = 1
+                max = 10
+            }
+
+            quick_action_size = {
+                default = 30
+                min = 20
+                max = 50
+            }
         }
     }
 }

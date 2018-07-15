@@ -68,6 +68,37 @@ void touch_input::initialize_quick_actions()
         }
     }
 
+    using tuples_t = std::tuple<std::string, optional<snail::key>, int, int, bool>[];
+    for (const auto& tuple : tuples_t{
+        {"OK",    snail::key::enter,  1, 1, true},
+        {"Back",  snail::key::shift,  2, 1, true},
+        {"z",     none,               1, 2, true},
+        {"x",     none,               2, 2, true},
+        {"g",     none,               1, 3, true},
+        {"d",     none,               2, 3, true},
+        {"f",     none,               2, 4, true},
+        {"Esc",   snail::key::escape, 1, 4, true},
+        {"b",     none,               1, 4, false},
+        {"/",     none,               2, 4, false},
+        {"*",     none,               3, 4, false},
+        })
+    {
+        std::string text = std::get<0>(tuple);
+        optional<snail::key> key = std::get<1>(tuple);
+        int w;
+        if (std::get<4>(tuple))
+        {
+            w = width - space_between * std::get<2>(tuple);
+        }
+        else
+        {
+            w = space_between * std::get<2>(tuple);
+        }
+        int h = height - space_between * std::get<3>(tuple);
+
+        quick_actions_.emplace_back(text, key, w, h);
+    }
+
     quick_actions_.emplace_back("Back",  snail::key::shift,  width - space_between * 2, height - space_between * 1);
     quick_actions_.emplace_back("OK",    snail::key::enter,  width - space_between * 1, height - space_between * 1);
     quick_actions_.emplace_back("x",     none,               width - space_between * 2, height - space_between * 2);

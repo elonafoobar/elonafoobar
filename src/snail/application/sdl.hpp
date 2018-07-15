@@ -164,6 +164,9 @@ public:
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
 
+    // For Android
+    void set_subwindow_display_mode(const std::string&);
+
 
 private:
     detail::sdl_core _sdl_core;

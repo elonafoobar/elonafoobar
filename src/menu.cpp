@@ -155,7 +155,7 @@ void show_quick_menu()
     // mode.
     if (defines::is_android)
     {
-        tx = (windoww / 2);
+        tx = (windoww / 2) - 100;
         ty = (windowh / 2) - 100;
     }
     else

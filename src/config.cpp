@@ -489,7 +489,7 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("ui.clock_x"s,          int,         inf_clockx);
     CONFIG_OPTION("ui.clock_w"s,          int,         inf_clockw);
     CONFIG_OPTION("ui.clock_h"s,          int,         inf_clockh);
-    CONFIG_OPTION("game.default_save"s,   std::string, defload);    // TODO runtime enum
+    CONFIG_OPTION("game.default_save"s,   std::string, defload);
     CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
 

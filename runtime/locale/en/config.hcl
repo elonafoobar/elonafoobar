@@ -99,6 +99,9 @@ locale {
                         reverse_portrait = "Reverse Portrait"
                     }
                 }
+                window_mode {
+                    name = "Window Size*"
+                }
                 music {
                     name = "Music*"
                     variants {

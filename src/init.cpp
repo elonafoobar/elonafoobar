@@ -758,6 +758,21 @@ void initialize_elona()
     }
 }
 
+static void initialize_screen()
+{
+    std::string display_mode = config::instance().display_mode;
+
+    if (defines::is_android)
+    {
+        display_mode = config::instance()
+            .get<std::string>("core.config.screen.window_mode");
+    }
+
+    title(u8"Elona Foobar version "s + latest_version.short_string(),
+          display_mode,
+          config_get_fullscreen_mode());
+}
+
 int run()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
@@ -770,9 +785,7 @@ int run()
     config::instance().init(config_def_file);
     load_config2(config_file);
 
-    title(u8"Elona Foobar version "s + latest_version.short_string(),
-          config::instance().display_mode,
-          config_get_fullscreen_mode());
+    initialize_screen();
 
     initialize_config(config_file);
     init_assets();

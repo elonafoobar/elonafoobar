@@ -104,8 +104,9 @@ void await(int msec)
 {
     snail::hsp::await(msec);
 
-    // Potentially quicksave if SDL detects that the app's focus was
-    // lost and the player is being queried for input at pc_turn().
+    // On Android, potentially quicksave if SDL detects that the app's
+    // focus was lost and the player is being queried for input in
+    // pc_turn().
     if (defines::is_android
         && snail::application::instance().was_focus_lost_just_now())
     {
