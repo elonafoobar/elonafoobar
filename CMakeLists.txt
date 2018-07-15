@@ -6,6 +6,10 @@ cmake_minimum_required(VERSION 3.0)
 project(ElonaFoobar VERSION 0.2.6)
 
 
+# Options
+option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
+
+
 # Versioning
 
 # Get commit hash from Git
@@ -425,15 +429,17 @@ else()
 endif()
 
 # Copy assets from Elona 1.22 if they are present
-if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" ${ASSET_DIR} "graphic")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" ${ASSET_DIR} "map")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" ${ASSET_DIR} "original")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" ${ASSET_DIR} "sound")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" ${ASSET_DIR} "user")
-  message("Elona 1.22 distribution found.")
-else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
+if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)
+    if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
+    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" ${ASSET_DIR} "graphic")
+    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" ${ASSET_DIR} "map")
+    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" ${ASSET_DIR} "original")
+    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" ${ASSET_DIR} "sound")
+    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" ${ASSET_DIR} "user")
+    message("Elona 1.22 distribution found.")
+    else()
+    message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
+    endif()
 endif()
 
 if(NOT ANDROID)

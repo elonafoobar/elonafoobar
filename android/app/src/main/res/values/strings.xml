@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">ElonaFoobar</string>
-    <string name="upgrading">upgrading</string>
-    <string name="installing">installing</string>
+    <string name="upgrading">Upgrading</string>
+    <string name="installing">Installing</string>
+
+    <string name="installation_failed">Installation Failed</string>
+    <string name="ok">OK</string>
 </resources>

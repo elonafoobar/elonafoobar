@@ -1,13 +1,9 @@
 package xyz.ki.elonafoobar;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,28 +26,47 @@ import android.view.*;
 import android.widget.ImageView;
 
 public class SplashScreen extends Activity {
-    private static final String TAG = "Splash";
+    private static final String TAG = "SplashScreen";
+    private static final String INSTALLED = "installed";
     private static final int INSTALL_DIALOG_ID = 0;
+    private static final int SCREEN_WAIT_MS = 1500;
+
     private ProgressDialog installDialog;
 
     private String getVersionName() {
         try {
             Context context = getApplicationContext();
-            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo pInfo = context.getPackageManager()
+                .getPackageInfo(context.getPackageName(), 0);
             return pInfo.versionName;
         } catch (Exception e) {
+            Log.e(TAG, e.toString(), e);
             e.printStackTrace();
             return "error";
         }
     }
 
+    private boolean isGameInstalled() {
+        Context context = getApplicationContext();
+        String installed = PreferenceManager
+            .getDefaultSharedPreferences(context).getString(INSTALLED, "");
+        return getVersionName().equals(installed);
+    }
+
+    private void setInstalledVersion(String name) {
+        Context context = getApplicationContext();
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .edit()
+            .putString(INSTALLED, name)
+            .commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(TAG, "onCreate()");
+        Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
 
-        // Start the game if already installed, otherwise start installing...
-        if (getVersionName().equals(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("installed", ""))) {
+        if (isGameInstalled()) {
             startGameActivity(false);
         }
         else {
@@ -59,19 +74,26 @@ public class SplashScreen extends Activity {
         }
     }
 
+    private ProgressDialog createInstallDialog()
+    {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        boolean alreadyInstalled = isGameInstalled();
+        dialog.setTitle(getString(alreadyInstalled ? R.string.upgrading : R.string.installing));
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        return dialog;
+    }
+
     @Override
     public Dialog onCreateDialog(int id) {
         switch (id) {
-            case INSTALL_DIALOG_ID:
-                installDialog = new ProgressDialog(this);
-                installDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                boolean clean_install = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("installed", "").isEmpty();
-                installDialog.setTitle(getString(clean_install ? R.string.installing : R.string.upgrading));
-                installDialog.setIndeterminate(true);
-                installDialog.setCancelable(false);
-                return installDialog;
-            default:
-                return null;
+        case INSTALL_DIALOG_ID:
+            ProgressDialog dialog = createInstallDialog();
+            installDialog = dialog;
+            return installDialog;
+        default:
+            return null;
         }
     }
 
@@ -83,12 +105,12 @@ public class SplashScreen extends Activity {
             // Wait 1.5 seconds, then start game
             Timer timer = new Timer();
             TimerTask gameStartTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(new StartGameRunnable());
-                }
-            };
-            timer.schedule(gameStartTask, 1500);
+                    @Override
+                    public void run() {
+                        runOnUiThread(new StartGameRunnable());
+                    }
+                };
+            timer.schedule(gameStartTask, SCREEN_WAIT_MS);
         }
     }
 
@@ -104,165 +126,159 @@ public class SplashScreen extends Activity {
     }
 
     private class InstallProgramTask extends AsyncTask<Void, Integer, Boolean> {
-        private static final int TOTAL_FILES = 1438;
-        private final List<String> PRESERVE_SUBFOLDERS = Arrays.asList("asd"); // don't delete custom subfolders under these folders
-        private final List<String> PRESERVE_FOLDERS = Arrays.asList("asd"); // don't delete this folder
-        private final List<String> PRESERVE_FILES = Arrays.asList("asd"); // don't delete this file
+        private final List<FolderInfo> folders = Arrays.asList(
+            new FolderInfo[] {
+                new FolderInfo("data"),
+                new FolderInfo("graphic"),
+                new FolderInfo("map"),
+                new FolderInfo("original"),
+                new FolderInfo("lang"),
+                new FolderInfo("runtime", ".", false),
+                new FolderInfo("sound"),
+                new FolderInfo("tmp"),
+                new FolderInfo("user", true)
+            }
+        );
+
+        private int totalFiles = 0;
         private int installedFiles = 0;
         private AlertDialog alert;
+
+
+        private class FolderInfo {
+            public FolderInfo(String path) {
+                this(path, false);
+            }
+            public FolderInfo(String path, boolean preserve) {
+                this(path, path, preserve);
+            }
+            public FolderInfo(String sourcePath, String destPath, boolean preserve) {
+                this.sourcePath = sourcePath;
+                this.destPath = destPath;
+                this.preserve = preserve;
+            }
+
+            public String sourcePath;
+            public String destPath;
+            public boolean preserve;
+        }
+
 
         @Override
         protected void onPreExecute() {
             showDialog(INSTALL_DIALOG_ID);
             alert = new AlertDialog.Builder(SplashScreen.this)
-				.setTitle("Installation Failed")
-				.setCancelable(false)
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						SplashScreen.this.finish();
-						return;
-					}
-				}).create();
+                .setTitle(R.string.installation_failed)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            SplashScreen.this.finish();
+                            return;
+                        }
+                    }).create();
+        }
+
+        private List<String> getAssetFolders(String externalFilesDir) {
+            List<String> result = new ArrayList<String>();
+            for (FolderInfo folder : folders) {
+                result.add(new File(externalFilesDir, folder.sourcePath).toString());
+            }
+            return result;
+        }
+
+        private void clearExistingData(AssetManager assetManager,
+                                       String externalFilesDir) throws Exception
+        {
+            // Clear out the old data if it exists (but preserve
+            // custom folders + files)
+            for (FolderInfo folder : folders) {
+                if (!folder.preserve) {
+                    AssetUtils.deleteRecursive(assetManager,
+                                               new File(externalFilesDir, folder.destPath));
+                }
+            }
+        }
+
+        private void copyNewData(AssetManager assetManager,
+                                 String externalFilesDir) throws Exception
+        {
+            // Install the new data over the top
+            for (FolderInfo folder : folders) {
+                copyAssetFolder(assetManager,
+                                folder.sourcePath,
+                                new File(externalFilesDir, folder.destPath));
+            }
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            if (installDialog != null) {
-                installDialog.setIndeterminate(false);
-                installDialog.setMax(TOTAL_FILES);
-            }
-            publishProgress(installedFiles);
 
             AssetManager assetManager = getAssets();
             String externalFilesDir = getExternalFilesDir(null).getPath();
 
-			try {
-				// Clear out the old data if it exists (but preserve custom folders + files)
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/data"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/graphic"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/map"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/original"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/lang"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/sound"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/tmp"));
-				deleteRecursive(assetManager, externalFilesDir, new File(externalFilesDir + "/user"));
-
-				// Install the new data over the top
-				copyAssetFolder(assetManager, "data", externalFilesDir + "/data");
-				copyAssetFolder(assetManager, "graphic", externalFilesDir + "/graphic");
-				copyAssetFolder(assetManager, "map", externalFilesDir + "/map");
-				copyAssetFolder(assetManager, "original", externalFilesDir + "/original");
-				copyAssetFolder(assetManager, "lang", externalFilesDir + "/lang");
-				copyAssetFolder(assetManager, "runtime", externalFilesDir);
-				copyAssetFolder(assetManager, "sound", externalFilesDir + "/sound");
-				copyAssetFolder(assetManager, "tmp", externalFilesDir + "/tmp");
-				copyAssetFolder(assetManager, "user", externalFilesDir + "/user");
+            try {
+                totalFiles = AssetUtils.tallyFiles(assetManager,
+                                                   getAssetFolders(externalFilesDir));
             } catch(Exception e) {
-				alert.setMessage(e.getMessage());
-				return false;
+                Log.e(TAG, e.toString(), e);
+                alert.setMessage(e.toString());
+                return false;
+            }
+
+            if (installDialog != null) {
+                installDialog.setIndeterminate(false);
+                installDialog.setMax(totalFiles);
+            }
+            publishProgress(installedFiles);
+
+            try {
+                clearExistingData(assetManager, externalFilesDir);
+                copyNewData(assetManager, externalFilesDir);
+            } catch(Exception e) {
+                Log.e(TAG, e.toString(), e);
+                alert.setMessage(e.toString());
+                return false;
             }
 
             // Remember which version the installed data is
-            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("installed", getVersionName()).commit();
+            setInstalledVersion(getVersionName());
 
             publishProgress(++installedFiles);
             Log.d(TAG, "Total number of files copied: " + installedFiles);
             return true;
         }
 
-        void deleteRecursive(AssetManager assetManager, String externalFilesDir, File fileOrDirectory) {
-            String parentFolder = fileOrDirectory.getParentFile().getName().toLowerCase();
-            String fileOrDirectoryName = fileOrDirectory.getName().toLowerCase();
-            if (fileOrDirectory.isDirectory()) {
-                // Don't delete the folder if it is in the preserve folders list
-                if (PRESERVE_FOLDERS.contains(fileOrDirectoryName))
-                    return;
-
-                // Don't delete the folder if its parent is in the preserve subfolders list, and it doesn't exist in the APK assets (so must be custom data)
-                if (PRESERVE_SUBFOLDERS.contains(parentFolder) && !assetExists(assetManager, fileOrDirectory.getPath().substring(externalFilesDir.length()+1)))
-                    return;
-
-                for (File child : fileOrDirectory.listFiles())
-                    deleteRecursive(assetManager, externalFilesDir, child);
-            }
-            else {
-                // Don't delete the file if it's in the preserve files list
-                if (PRESERVE_FILES.contains(fileOrDirectoryName))
-                    return;
-            }
-
-            fileOrDirectory.delete();
-        }
-
-        // Returns true if an asset exists in the APK (either a directory or a file)
-        // eg. assetExists("data/sound") or assetExists("data/font", "unifont.ttf") would both return true
-        private boolean assetExists(AssetManager assetManager, String assetPath) {
-		    return assetExists(assetManager, assetPath, "");
-        }
-
-        private boolean assetExists(AssetManager assetManager, String assetPath, String assetName) {
-            try {
-                String[] files = assetManager.list(assetPath);
-                if (assetName.isEmpty())
-                    return files.length > 0; // folder exists
-                for (String file : files) {
-                    if (file.equalsIgnoreCase(assetName))
-                        return true; // file exists
-                }
-                return false;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-
         // Pinched from http://stackoverflow.com/questions/16983989/copy-directory-from-assets-to-data-folder
-        private boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) throws Exception {
+        private boolean copyAssetFolder(AssetManager assetManager,
+                                        String fromAssetPath,
+                                        File toPath) throws Exception {
             try {
-                String[] files = assetManager.list(fromAssetPath);
-                new File(toPath).mkdirs();
-                boolean res = true;
-                for (String file : files)
-                {
-                    if (file.contains("."))
-                        res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
-                    else
-                        res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                String[] files = assetManager.list(fromAssetPath.toString());
+                toPath.mkdirs();
+                boolean success = true;
+                for (String filename : files) {
+                    String sourceFilePath = fromAssetPath + "/" + filename;
+                    File destFile = new File(toPath, filename);
+
+                    if (filename.contains(".")) {
+                        success &= copyAsset(assetManager, sourceFilePath, destFile);
+                    } else {
+                        success &= copyAssetFolder(assetManager, sourceFilePath, destFile);
+                    }
                 }
-                return res;
+                return success;
             } catch (Exception e) {
+                Log.e(TAG, e.toString(), e);
                 e.printStackTrace();
                 throw e;
             }
         }
 
-        private boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) throws Exception {
-            publishProgress(++installedFiles, TOTAL_FILES);
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-              in = assetManager.open(fromAssetPath);
-              new File(toPath).createNewFile();
-              out = new FileOutputStream(toPath);
-              copyFile(in, out);
-              in.close();
-              in = null;
-              out.flush();
-              out.close();
-              out = null;
-              return true;
-            } catch(Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
-        }
-
-        private void copyFile(InputStream in, OutputStream out) throws IOException {
-            byte[] buffer = new byte[1024];
-            int read;
-            while((read = in.read(buffer)) != -1) {
-              out.write(buffer, 0, read);
-            }
+        private boolean copyAsset(AssetManager assetManager,
+                                  String fromAssetPath,
+                                  File toPath) throws Exception {
+            publishProgress(++installedFiles, totalFiles);
+            return AssetUtils.copyAsset(assetManager, fromAssetPath, toPath);
         }
 
         @Override
@@ -276,11 +292,11 @@ public class SplashScreen extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
             removeDialog(INSTALL_DIALOG_ID);
-			if(result) {
-			    startGameActivity(true);
-			} else {
-				alert.show();
-			}
+            if(result) {
+                startGameActivity(true);
+            } else {
+                alert.show();
+            }
         }
     }
 }

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ElonaFoobar</string>
+    <string name="upgrading">アップグレード中</string>
+    <string name="installing">インストール中</string>
+
+    <string name="installation_failed">インストール失敗</string>
+    <string name="ok">OK</string>
+</resources>
