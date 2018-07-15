@@ -235,6 +235,7 @@ config def {
             }
 
             key_wait = {
+                preload = true # Needs to be available for language selection screen
                 default = 5
                 min = 1
                 max = 10

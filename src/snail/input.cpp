@@ -377,6 +377,19 @@ void input::restore_numlock()
 
 void input::_update()
 {
+    // Check for touched Android quick actions that send keypresses.
+    if (_last_quick_action_key)
+    {
+        _quick_action_key_repeat++;
+
+        if (_quick_action_key_repeat == 0 ||
+            (_quick_action_key_repeat > _quick_action_repeat_start_wait
+                && _quick_action_key_repeat % _quick_action_repeat_wait))
+        {
+            _keys[static_cast<size_t>(*_last_quick_action_key)]._press();
+        }
+    }
+
     for (auto&& key : _keys)
     {
         if (key.was_released_immediately() && key.repeat() == 0)
@@ -494,7 +507,6 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
 
 void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 {
-    static optional<snail::key> last_key = none;
     bool release_key = false;
     bool stop_text = false;
 
@@ -507,14 +519,14 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
         if (action->key)
         {
             // Keypress action
-            if (last_key && *last_key != action->key)
+            if (_last_quick_action_key && *_last_quick_action_key != action->key)
             {
-                _keys[static_cast<size_t>(*last_key)]._release();
+                _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
             }
 
             _keys[static_cast<size_t>(*action->key)]._press();
 
-            last_key = action->key;
+            _last_quick_action_key = action->key;
             stop_text = true;
         }
         else
@@ -529,10 +541,11 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
         release_key = true;
     }
 
-    if (release_key && last_key)
+    if (release_key && _last_quick_action_key)
     {
-        _keys[static_cast<size_t>(*last_key)]._release();
-        last_key = none;
+        _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
+        _last_quick_action_key = none;
+        _quick_action_key_repeat = -1;
     }
     if (stop_text)
     {

@@ -82,7 +82,7 @@ void touch_input::initialize_quick_actions()
         {"d",     none,               2, 3, true},
         {"f",     none,               2, 4, true},
         {"Esc",   snail::key::escape, 1, 4, true},
-        {"c",     none,               1, 4, false},
+        {"v",     none,               1, 4, false},
         {"/",     none,               2, 4, false},
         {"*",     none,               3, 4, false},
         })

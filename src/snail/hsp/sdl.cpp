@@ -288,8 +288,6 @@ struct MessageBox
         }
         else
         {
-            // TODO remove
-            keywait = 10;
             if (input.is_pressed(key::enter, keywait)
                 || input.is_pressed(key::keypad_enter, keywait))
             {

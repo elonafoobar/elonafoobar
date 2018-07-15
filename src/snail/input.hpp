@@ -338,7 +338,9 @@ private:
     // Members for handling text input of on-screen quick action
     // buttons on Android. They need to be here since quick actions
     // can modify inputted text.
+    optional<snail::key> _last_quick_action_key = none;
     optional<std::string> _last_quick_action_text = none;
+    int _quick_action_key_repeat = -1;
     int _quick_action_text_repeat = -1;
     int _quick_action_repeat_start_wait = 10;
     int _quick_action_repeat_wait = 2;

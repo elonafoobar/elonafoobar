@@ -316,7 +316,6 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("game.story"s,                      bool,        config::instance().story);
     CONFIG_OPTION("input.attack_wait"s,               int,         config::instance().attackwait);
     CONFIG_OPTION("input.autodisable_numlock"s,       bool,        config::instance().autonumlock);
-    CONFIG_OPTION("input.key_wait"s,                  int,         config::instance().keywait);
     CONFIG_OPTION("input.run_wait"s,                  int,         config::instance().runwait);
     CONFIG_OPTION("input.start_run_wait"s,            int,         config::instance().startrun);
     CONFIG_OPTION("input.select_wait"s,               int,         config::instance().select_wait);
@@ -516,6 +515,7 @@ void load_config_pre_app_init(const fs::path& hcl_file)
     CONFIG_OPTION("balance.extra_race"s,  bool,        config::instance().extrarace);
     CONFIG_OPTION("balance.extra_class"s, bool,        config::instance().extraclass);
     CONFIG_OPTION("input.joypad"s,        bool,        config::instance().joypad);
+    CONFIG_OPTION("input.key_wait"s,      int,         config::instance().keywait);
     CONFIG_OPTION("ui.msg_line"s,         int,         inf_msgline);
     CONFIG_OPTION("ui.tile_size"s,        int,         inf_tiles);
     CONFIG_OPTION("ui.font_size"s,        int,         inf_mesfont);
