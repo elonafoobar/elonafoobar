@@ -25,8 +25,8 @@ config def {
                 translate_variants = false
                 variants = ["800x600", "1024x600", "1280x720",
                     "800x696", "1024x768", "1152x864",
-                    "1280x768", "1280x1024", "1366×768",
-                    "1600×900", "1600x1200"]
+                    "1280x768", "1280x1024", "1366x768",
+                    "1600x900", "1600x1200"]
                 default = "1024x600"
             }
 
@@ -467,15 +467,27 @@ DOC
             quicksave = true
 
             quick_action_transparency = {
-                default = 5
+                default = 10
                 min = 1
-                max = 10
+                max = 20
             }
 
             quick_action_size = {
-                default = 30
+                default = 24
                 min = 20
-                max = 50
+                max = 40
+            }
+
+            quick_action_start_wait = {
+                default = 10
+                min = 1
+                max = 20
+            }
+
+            quick_action_wait = {
+                default = 2
+                min = 1
+                max = 20
             }
         }
     }

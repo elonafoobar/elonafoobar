@@ -38,6 +38,21 @@ public:
         return 600;
     }
 
+    int physical_width() const noexcept
+    {
+        return 800;
+    }
+
+    int physical_height() const noexcept
+    {
+        return 600;
+    }
+
+    float dpi() const noexcept
+    {
+        return 96.0f;
+    }
+
     orientation orientation() const noexcept
     {
         return orientation::landscape;

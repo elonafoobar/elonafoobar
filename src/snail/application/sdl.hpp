@@ -64,6 +64,11 @@ public:
         return _physical_height;
     }
 
+    float dpi() const noexcept
+    {
+        return _dpi;
+    }
+
     screen_orientation orientation() const noexcept
     {
         return _orientation;
@@ -97,7 +102,6 @@ public:
 
 
     void initialize(const std::string& title);
-    void initialize_actual_size();
     void run(std::shared_ptr<scene_base> initial_scene);
 
     void quit();
@@ -178,6 +182,7 @@ private:
     int _height;
     int _physical_width;
     int _physical_height;
+    float _dpi;
     std::string _title;
     screen_orientation _orientation;
     rect _window_pos; // Window draw position for Android
@@ -195,6 +200,8 @@ private:
         window::fullscreen_mode_t::windowed;
 
     application() = default;
+
+    void initialize_dpi();
 
     void main_loop();
     void render_scene(std::shared_ptr<scene_base> scene);

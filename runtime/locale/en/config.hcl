@@ -402,9 +402,18 @@ DOC
                 name = "Android Setting"
 
                 quicksave {
+                    name = "Save On Suspend"
                     doc = <<DOC
 Quicksave the game if you're being queried for input and app focus is lost.
 DOC
+                }
+
+                quick_action_transparency {
+                    name = "Quick Action Transp."
+                }
+
+                quick_action_size {
+                    name = "Quick Action Size"
                 }
             }
         }

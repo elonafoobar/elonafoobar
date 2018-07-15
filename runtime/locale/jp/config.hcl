@@ -331,6 +331,22 @@ locale {
                 startup_script {
                 }
             }
+
+            android {
+                name = "アンドロイド設定"
+
+                quicksave {
+                    name = "中断した時のセーブ"
+                }
+
+                quick_action_transparency {
+                    name = "ボタンの透明度"
+                }
+
+                quick_action_size {
+                    name = "ボタンのサイズ"
+                }
+            }
         }
     }
 }

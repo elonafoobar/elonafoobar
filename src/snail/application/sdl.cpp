@@ -41,6 +41,22 @@ void application::set_title(const std::string& title)
 }
 
 
+void application::initialize_dpi()
+{
+    const constexpr int display_in_use = 0; // Assume the first display is being used.
+    const constexpr float default_dpi =
+#ifdef __APPLE__
+        72.0f;
+#else
+        96.0f;
+#endif
+
+    if (::SDL_GetDisplayDPI(display_in_use, NULL, &_dpi, NULL) != 0)
+    {
+        _dpi = default_dpi;
+    }
+}
+
 
 void application::initialize(const std::string& title)
 {
@@ -53,13 +69,13 @@ void application::initialize(const std::string& title)
         title,
         window::position_undefined,
         window::position_undefined,
-        800,
-        600,
+        _width,
+        _height,
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
 
-    initialize_actual_size();
+    initialize_dpi();
 
     set_display_mode(get_default_display_mode());
 
@@ -67,16 +83,6 @@ void application::initialize(const std::string& title)
     {
         ::SDL_StartTextInput();
     }
-}
-
-
-
-void application::initialize_actual_size()
-{
-    ::SDL_DisplayMode display_mode;
-    ::SDL_GetCurrentDisplayMode(0, &display_mode);
-    _physical_width = display_mode.w;
-    _physical_height = display_mode.h;
 }
 
 
@@ -277,7 +283,7 @@ void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
 
 std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
 {
-    static int display_in_use = 0; // Assume the first display is being used.
+    const constexpr int display_in_use = 0; // Assume the first display is being used.
     std::map<std::string, ::SDL_DisplayMode> display_modes;
 
     int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
@@ -353,12 +359,10 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
 
     // Keep the actual rendered size separate from the device's size
     // on Android.
-    if (is_android)
-    {
-        _physical_width = display_mode.w;
-        _physical_height = display_mode.h;
-    }
-    else
+    _physical_width = display_mode.w;
+    _physical_height = display_mode.h;
+
+    if (!is_android)
     {
         _width = display_mode.w;
         _height = display_mode.h;
@@ -407,12 +411,10 @@ void application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
-        LOGD("PORTRAIT");
         _orientation = screen_orientation::portrait;
     }
     else
     {
-        LOGD("LANDSCAPE");
         _orientation = screen_orientation::landscape;
     }
 

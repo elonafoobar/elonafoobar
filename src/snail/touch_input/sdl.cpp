@@ -23,10 +23,14 @@ touch_input& touch_input::instance()
     return the_instance;
 }
 
+int touch_input::quick_action_size() const noexcept
+{
+    return static_cast<int>(base_quick_action_size_ * application::instance().dpi());
+}
+
 void touch_input::initialize(const fs::path& asset_path)
 {
     quick_action_image_ = std::make_unique<basic_image>(asset_path / "quick_action.png");
-    quick_action_image_->set_alpha(128);
 
     initialize_quick_actions();
 
@@ -37,9 +41,10 @@ void touch_input::initialize_quick_actions()
 {
     int width = application::instance().physical_width();
     int height = application::instance().physical_height();
-    const constexpr int size = 300;
+    int size = quick_action_size();
     int space_between = size * 0.75;
 
+    quick_action_image_->set_alpha(quick_action_alpha());
     quick_actions_.clear();
 
     std::vector<std::pair<std::string, snail::key>> keys =
@@ -78,7 +83,7 @@ void touch_input::initialize_quick_actions()
         {"d",     none,               2, 3, true},
         {"f",     none,               2, 4, true},
         {"Esc",   snail::key::escape, 1, 4, true},
-        {"b",     none,               1, 4, false},
+        {"c",     none,               1, 4, false},
         {"/",     none,               2, 4, false},
         {"*",     none,               3, 4, false},
         })
@@ -98,12 +103,6 @@ void touch_input::initialize_quick_actions()
 
         quick_actions_.emplace_back(text, key, w, h);
     }
-
-    quick_actions_.emplace_back("Back",  snail::key::shift,  width - space_between * 2, height - space_between * 1);
-    quick_actions_.emplace_back("OK",    snail::key::enter,  width - space_between * 1, height - space_between * 1);
-    quick_actions_.emplace_back("x",     none,               width - space_between * 2, height - space_between * 2);
-    quick_actions_.emplace_back("z",     none,               width - space_between * 1, height - space_between * 2);
-    quick_actions_.emplace_back("Esc",   snail::key::escape, width - space_between * 1, height - space_between * 4);
 }
 
 void touch_input::draw_quick_actions()
@@ -127,10 +126,10 @@ void touch_input::draw_quick_actions()
     renderer.set_text_baseline(renderer::text_baseline_t::top);
 }
 
-static bool is_touched(int x, int y, const quick_action& action)
+bool touch_input::is_touched(int x, int y, const quick_action& action)
 {
-    const constexpr int size = 300/2;
-    int deadzone = (size * 0.75);
+    int size = quick_action_size() / 2;
+    int deadzone = ((float)size * 0.75);
 
     return x >  action.center_x - deadzone
         && y >  action.center_y - deadzone
@@ -140,27 +139,29 @@ static bool is_touched(int x, int y, const quick_action& action)
 
 void touch_input::draw_quick_action(const quick_action& action)
 {
-    const constexpr int size = 300/2;
-    int deadzone = (size * 0.75);
+    int size = quick_action_size() / 2;
+    int deadzone = ((float)size * 0.75);
+    float dpi = application::instance().dpi();
     int x = action.center_x - deadzone;
     int y = action.center_y - deadzone;
     auto& renderer = application::instance().get_renderer();
 
-    renderer.render_image(*quick_action_image_.get(), x, y, size * 1.5, size * 1.5);
+    renderer.render_image(*quick_action_image_.get(), x, y, deadzone * 2, deadzone * 2);
 
     if (renderer.has_font())
     {
         renderer.render_text(action.text,
                              action.center_x,
                              action.center_y,
-                             {255, 255, 255, 128},
-                             5.0);
+                             {255, 255, 255, quick_action_alpha()},
+                             base_font_size * dpi);
     }
 
     if (action.touched)
     {
-        renderer.set_draw_color({192, 192, 192, 128});
-        renderer.fill_rect(x, y, size * 1.5, size * 1.5);
+        renderer.set_draw_color({192, 192, 192,
+                                 static_cast<uint8_t>(quick_action_alpha() / 2)});
+        renderer.fill_rect(x, y, deadzone * 2, deadzone * 2);
     }
 }
 
@@ -188,5 +189,5 @@ void touch_input::on_touch_event(::SDL_TouchFingerEvent event)
     }
 }
 
-}
-}
+} // namespace snail
+} // namespace elona

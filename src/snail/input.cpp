@@ -395,7 +395,7 @@ void input::_update()
     {
         // Keywait has to be emulated here because SDL_TextInputEvent
         // would usually be spaced apart for the specified text input
-        // delay at the OS level, but there is no such setting for
+        // delay at the OS level, but there is no such mechanism for
         // on-screen quick actions.
         _touch_input_text_repeat++;
 
@@ -432,7 +432,7 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
         // be pressed then released immediately after (backspace,
         // return) such that the press and release events come in the
         // same event polling cycle. In that case, mark the key as
-        // pressed but immediately released, and allow it it be
+        // pressed but immediately released, and allow it to be
         // detected for a single frame before releasing it in
         // input::update().
         if (the_key.is_pressed() && the_key.repeat() == -1)
@@ -511,21 +511,14 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
             {
                 _keys[static_cast<size_t>(*last_key)]._release();
             }
-            if (event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION)
-            {
-                _keys[static_cast<size_t>(*action->key)]._press();
-            }
-            else
-            {
-                _keys[static_cast<size_t>(*action->key)]._release();
-            }
+
+            _keys[static_cast<size_t>(*action->key)]._press();
 
             last_key = action->key;
             stop_text = true;
         }
         else
         {
-            // Text input action (for alphanumeric key detection)
             _last_touch_input_text = action->text;
             release_key = true;
         }

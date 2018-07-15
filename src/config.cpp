@@ -8,6 +8,7 @@
 #include "range.hpp"
 #include "snail/application.hpp"
 #include "snail/android.hpp"
+#include "snail/touch_input.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
@@ -178,6 +179,20 @@ static void convert_and_set_requested_orientation(std::string variant)
         return;
 
     snail::android::set_requested_orientation(it->second);
+}
+
+static void set_touch_quick_action_transparency(int factor)
+{
+    float amount = (float)factor * 0.05f;
+    snail::touch_input::instance().set_quick_action_transparency(amount);
+    snail::touch_input::instance().initialize_quick_actions();
+}
+
+static void set_touch_quick_action_size(int factor)
+{
+    float size = (float)factor * 0.025f;
+    snail::touch_input::instance().set_base_quick_action_size(size);
+    snail::touch_input::instance().initialize_quick_actions();
 }
 
 
@@ -383,9 +398,6 @@ void load_config(const fs::path& hcl_file)
                 });
         });
 
-    conf.bind_setter<std::string>("core.config.screen.orientation",
-                                  &convert_and_set_requested_orientation);
-
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
 
@@ -489,9 +501,18 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("ui.clock_x"s,          int,         inf_clockx);
     CONFIG_OPTION("ui.clock_w"s,          int,         inf_clockw);
     CONFIG_OPTION("ui.clock_h"s,          int,         inf_clockh);
-    CONFIG_OPTION("game.default_save"s,   std::string, defload);
+    CONFIG_OPTION("game.default_save"s,   std::string, defload);    // TODO runtime enum
     CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
+
+    conf.bind_setter<std::string>("core.config.screen.orientation",
+                                  &convert_and_set_requested_orientation);
+
+    conf.bind_setter<int>("core.config.android.quick_action_size",
+                          &set_touch_quick_action_size);
+
+    conf.bind_setter<int>("core.config.android.quick_action_transparency",
+                          &set_touch_quick_action_transparency);
 
     if (!fs::exists(hcl_file))
     {
