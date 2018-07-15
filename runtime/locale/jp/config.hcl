@@ -347,7 +347,7 @@ locale {
                 }
 
                 hide_navigation {
-                    name = "ナビゲーションのの非表示*"
+                    name = "ナビーバーの非表示*"
                 }
 
                 quicksave {
