@@ -20,6 +20,9 @@ enum orientation
 };
 
 void set_requested_orientation(orientation);
+void set_navigation_bar_visibility(bool);
+void vibrate(long);
+void vibrate_pulse(int);
 
 }
 }

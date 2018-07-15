@@ -391,19 +391,19 @@ void input::_update()
 
     // Check for touched Android quick actions that send text inputs
     // instead of key presses.
-    if (_last_touch_input_text)
+    if (_last_quick_action_text)
     {
         // Keywait has to be emulated here because SDL_TextInputEvent
         // would usually be spaced apart for the specified text input
         // delay at the OS level, but there is no such mechanism for
         // on-screen quick actions.
-        _touch_input_text_repeat++;
+        _quick_action_text_repeat++;
 
-        if (_touch_input_text_repeat == 0 ||
-            (_touch_input_text_repeat > _touch_input_text_init_wait
-                && _touch_input_text_repeat % _touch_input_text_wait))
+        if (_quick_action_text_repeat == 0 ||
+            (_quick_action_text_repeat > _quick_action_repeat_start_wait
+                && _quick_action_text_repeat % _quick_action_repeat_wait))
         {
-            _text = *_last_touch_input_text;
+            _text = *_last_quick_action_text;
         }
     }
 }
@@ -519,7 +519,7 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
         }
         else
         {
-            _last_touch_input_text = action->text;
+            _last_quick_action_text = action->text;
             release_key = true;
         }
     }
@@ -536,8 +536,8 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
     }
     if (stop_text)
     {
-        _last_touch_input_text = none;
-        _touch_input_text_repeat = -1;
+        _last_quick_action_text = none;
+        _quick_action_text_repeat = -1;
     }
 }
 

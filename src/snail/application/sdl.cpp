@@ -232,6 +232,7 @@ void application::on_size_changed(const ::SDL_WindowEvent& event)
     {
         touch_input::instance().initialize_quick_actions();
     }
+    LOGD("SIZE CHANGED %d %d %d %d", _physical_width, _physical_height, _width, _height);
 }
 
 
@@ -411,10 +412,12 @@ void application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
+        LOGD("CHANG PORTRAI");
         _orientation = screen_orientation::portrait;
     }
     else
     {
+        LOGD("CHANG LANDSCAP");
         _orientation = screen_orientation::landscape;
     }
 

@@ -39,18 +39,6 @@ struct quick_action
     bool touched = false;
 };
 
-// TODO
-// portrait(classic), portrait(fullscreen), landscape(classic), landscape(fullscreen)
-// screen magni for fullscreen (x1, x2, x3, x4)
-// screen resolution for classic (800x600, 1024x768, etc.)
-// show/hide on-screen buttons
-// joystick or tenkey buttons
-// toggle or hold shift(/alt?)
-// quick action functions/positions
-// quick action sizes
-// vibration
-// automatic saving/loading of quick action buttons (needs custom config value type)
-
 class touch_input : public lib::noncopyable
 {
     enum event_type {
@@ -80,6 +68,7 @@ public:
     void set_quick_action_transparency(float amount) noexcept
     {
         quick_action_transparency_ = amount;
+        quick_action_image_->set_alpha(quick_action_alpha());
     }
 
     void initialize(const fs::path&);
@@ -103,9 +92,10 @@ private:
     optional<size_t> last_touched_quick_action_idx_ = none;
     float base_quick_action_size_ = 0.5;
     float quick_action_transparency_ = 0.5;
+
     bool initialized_ = false;
 
-    const constexpr float base_font_size = 0.0089f;
+    static const constexpr float base_font_size = 0.0089f;
 
     std::unique_ptr<basic_image> quick_action_image_;
 };

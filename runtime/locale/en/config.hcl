@@ -128,6 +128,10 @@ locale {
                     name = "Heartbeat Sound"
                     doc = "Play heartbeat sound when health is low."
                 }
+                heartbeat_threshold {
+                    name = "Heartbeat Threshold"
+                    doc = "% of HP remaining to play heartbeat sound at."
+                }
                 skip_random_event_popups {
                     name = "Skip Random Events"
                     doc = <<DOC
@@ -401,6 +405,24 @@ DOC
             android {
                 name = "Android Setting"
 
+                vibrate {
+                    name = "Vibrate"
+                    doc = <<DOC
+Vibrate on important events/low health.
+DOC
+                }
+
+                vibrate_duration {
+                    name = "Vibrate Duration"
+                }
+
+                hide_navigation {
+                    name = "Hide Nav Buttons*"
+                    doc = <<DOC
+Hides the software navigation buttons for handsets without hardware navigation buttons.
+DOC
+                }
+
                 quicksave {
                     name = "Save On Suspend"
                     doc = <<DOC
@@ -414,6 +436,14 @@ DOC
 
                 quick_action_size {
                     name = "Quick Action Size"
+                }
+
+                quick_action_repeat_start_wait {
+                    name = "Quick Action Repeat Wait"
+                }
+
+                quick_action_repeat_wait {
+                    name = "Quick Action Wait"
                 }
             }
         }

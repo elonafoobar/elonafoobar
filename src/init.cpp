@@ -783,7 +783,7 @@ int run()
     initialize_cat_db();
 
     config::instance().init(config_def_file);
-    load_config2(config_file);
+    load_config_pre_app_init(config_file);
 
     initialize_screen();
 

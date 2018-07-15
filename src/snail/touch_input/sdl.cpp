@@ -44,7 +44,6 @@ void touch_input::initialize_quick_actions()
     int size = quick_action_size();
     int space_between = size * 0.75;
 
-    quick_action_image_->set_alpha(quick_action_alpha());
     quick_actions_.clear();
 
     std::vector<std::pair<std::string, snail::key>> keys =

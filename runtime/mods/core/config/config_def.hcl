@@ -32,7 +32,6 @@ config def {
 
             orientation = {
                 platform = "android"
-                preload = true
 
                 type = "enum"
                 variants = ["sensor_landscape", "sensor_portrait", "sensor",
@@ -56,6 +55,13 @@ config def {
             high_quality_shadows = true
             object_shadows = true
             heartbeat = true
+
+            heartbeat_threshold {
+                default = 25
+                min = 1
+                max = 50
+            }
+
             skip_random_event_popups = false
         }
     }
@@ -240,7 +246,7 @@ config def {
                 max = 20
 
                 platform_default {
-                    android = 4
+                    android = 8
                 }
             }
 
@@ -256,7 +262,7 @@ config def {
                 max = 20
 
                 platform_default {
-                    android = 1
+                    android = 2
                 }
             }
         }
@@ -465,6 +471,18 @@ DOC
         platform = "android"
         options = {
             quicksave = true
+            vibrate = true
+
+            vibrate_duration = {
+                default = 2
+                min = 1
+                max = 20
+            }
+
+            hide_navigation = {
+                preload = true
+                default = false
+            }
 
             quick_action_transparency = {
                 default = 10
@@ -478,13 +496,13 @@ DOC
                 max = 40
             }
 
-            quick_action_start_wait = {
+            quick_action_repeat_start_wait = {
                 default = 10
                 min = 1
                 max = 20
             }
 
-            quick_action_wait = {
+            quick_action_repeat_wait = {
                 default = 2
                 min = 1
                 max = 20

@@ -1,4 +1,4 @@
-package xyz.ruin.elonafoobar;
+package xyz.ki.elonafoobar;
 
 import java.io.File;
 import java.io.FileOutputStream;

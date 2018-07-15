@@ -129,6 +129,9 @@ locale {
                     name = "心臓の音"
                     yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
                 }
+                heartbeat_threshold {
+                    name = "心臓の音の敷居"
+                }
                 skip_random_event_popups {
                     name = "イベントの短縮"
                 }
@@ -335,6 +338,18 @@ locale {
             android {
                 name = "アンドロイド設定"
 
+                vibrate {
+                    name = "振動"
+                }
+
+                vibrate_duration {
+                    name = "振動の期間"
+                }
+
+                hide_navigation {
+                    name = "ナビゲーションのの非表示*"
+                }
+
                 quicksave {
                     name = "中断した時のセーブ"
                 }
@@ -345,6 +360,14 @@ locale {
 
                 quick_action_size {
                     name = "ボタンのサイズ"
+                }
+
+                quick_action_repeat_start_wait {
+                    name = "ボタンウェイト(開始)"
+                }
+
+                quick_action_repeat_wait {
+                    name = "ボタンウェイト"
                 }
             }
         }

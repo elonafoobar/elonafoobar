@@ -14,6 +14,17 @@
 #include "thirdparty/microhcl/hcl.hpp"
 
 
+#include <android/log.h>
+
+#define  LOG_TAG    "ElonaFoobar"
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
+
+
 namespace
 {
 
@@ -174,6 +185,7 @@ static std::map<std::string, snail::android::orientation> orientations =
 
 static void convert_and_set_requested_orientation(std::string variant)
 {
+    LOGD("SET ORIENT %s", variant.c_str());
     auto it = orientations.find(variant);
     if (it == orientations.end())
         return;
@@ -185,7 +197,6 @@ static void set_touch_quick_action_transparency(int factor)
 {
     float amount = (float)factor * 0.05f;
     snail::touch_input::instance().set_quick_action_transparency(amount);
-    snail::touch_input::instance().initialize_quick_actions();
 }
 
 static void set_touch_quick_action_size(int factor)
@@ -398,6 +409,19 @@ void load_config(const fs::path& hcl_file)
                 });
         });
 
+    conf.bind_setter<std::string>("core.config.screen.orientation",
+                                  &convert_and_set_requested_orientation);
+
+    conf.bind_setter<int>("core.config.android.quick_action_repeat_start_wait",
+        [](auto value){
+            snail::input::instance().set_quick_action_repeat_start_wait(value);
+        });
+
+    conf.bind_setter<int>("core.config.android.quick_action_repeat_wait",
+        [](auto value){
+            snail::input::instance().set_quick_action_repeat_wait(value);
+        });
+
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
 
@@ -477,7 +501,7 @@ void load_config(const fs::path& hcl_file)
     conf.write();
 }
 
-void load_config2(const fs::path& hcl_file)
+void load_config_pre_app_init(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
@@ -505,9 +529,6 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
 
-    conf.bind_setter<std::string>("core.config.screen.orientation",
-                                  &convert_and_set_requested_orientation);
-
     conf.bind_setter<int>("core.config.android.quick_action_size",
                           &set_touch_quick_action_size);
 
@@ -521,6 +542,9 @@ void load_config2(const fs::path& hcl_file)
 
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), true);
+
+    snail::android::set_navigation_bar_visibility(
+        !conf.get<bool>("core.config.android.hide_navigation"));
 }
 
 #undef CONFIG_OPTION

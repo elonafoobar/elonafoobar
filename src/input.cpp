@@ -5,6 +5,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "snail/android.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -12,16 +13,6 @@
 
 namespace elona
 {
-
-
-#include <android/log.h>
-
-#define  LOG_TAG    "ElonaFoobar"
-
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 
 
 int TODO_show_prompt_val;
@@ -446,6 +437,13 @@ void key_check(key_wait_delay_t delay_type)
     {
         if (config::instance().alert > 1)
         {
+            if (config::instance().get<bool>("core.config.android.vibrate"))
+            {
+                int duration =
+                    config::instance().get<int>("core.config.android.vibrate_duration");
+                snail::android::vibrate((long)duration * 100L);
+            }
+
             for (int i = 0; i < config::instance().alert; ++i)
             {
                 await(config::instance().wait1);
