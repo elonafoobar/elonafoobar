@@ -568,7 +568,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                             if (config::instance()
                                 .get<bool>("core.config.android.vibrate"));
                             {
-                                snail::android::vibrate_pulse(2);
+                                snail::android::vibrate_pulse();
                             }
                         }
                     }

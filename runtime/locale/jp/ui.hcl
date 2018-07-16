@@ -2,6 +2,7 @@ locale {
     ui {
         save = " *保存* "
         playtime = "${_1}時間${_2}分${_3}秒"
+        save_on_suspend = "アプリが中断された。セーブします。"
 
         date = "${_1}年${_2}月${_3}日"
         date_hour = "${_1}時"

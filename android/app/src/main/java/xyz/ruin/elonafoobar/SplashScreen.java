@@ -80,6 +80,7 @@ public class SplashScreen extends Activity {
     private void fail(int messageId)
     {
         AlertDialog failAlert = new AlertDialog.Builder(SplashScreen.this)
+            .setTitle(R.string.installationFailed)
             .setMessage(getString(messageId))
             .setCancelable(false)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -124,7 +125,6 @@ public class SplashScreen extends Activity {
     private boolean verifyArchiveFile(File file) throws Exception
     {
         Path path = file.toPath();
-        Log.d(TAG, "Path: " + path.toString());
         ZipInputStream zip = new ZipInputStream(Files.newInputStream(
                 path, StandardOpenOption.READ));
         ZipEntry entry = null;
@@ -147,14 +147,12 @@ public class SplashScreen extends Activity {
         {
             AssetUtils.copyUriData(uri, zipFile, SplashScreen.this);
             if (verifyArchiveFile(zipFile)) {
-                Log.d(TAG, "Verified");
                 new ExtractZipTask(zipFile,
                                    externalFilesDir,
                                    ELONA_FOLDER_NAME,
                                    SplashScreen.this)
                     .execute();
             } else {
-                Log.d(TAG, "Unverified");
                 return false;
             }
         }
@@ -191,7 +189,9 @@ public class SplashScreen extends Activity {
                 fail(R.string.invalidArchiveFile);
             }
             else {
-                new InstallProgramTask(isGameInstalled(), SplashScreen.this)
+                // BUG: Installer's dialog will overlap while zip
+                // extraction task's dialog is still up.
+                new InstallProgramTask(isGameInstalled(), false, SplashScreen.this)
                     .execute();
             }
         }
@@ -214,7 +214,7 @@ public class SplashScreen extends Activity {
             boolean assetsBundled = areOriginalAssetsBundled();
             if (assetsBundled)
             {
-                new InstallProgramTask(isGameInstalled(), getApplicationContext())
+                new InstallProgramTask(isGameInstalled(), true, getApplicationContext())
                     .execute();
             }
             else
@@ -268,6 +268,7 @@ public class SplashScreen extends Activity {
         );
 
         private boolean alreadyInstalled;
+        private boolean showDialog;
         private int totalFiles = 0;
         private int installedFiles = 0;
         private Context context;
@@ -293,7 +294,7 @@ public class SplashScreen extends Activity {
             public boolean preserve;
         }
 
-        public InstallProgramTask(boolean alreadyInstalled, Context context) {
+        public InstallProgramTask(boolean alreadyInstalled, boolean showDialog, Context context) {
             this.alreadyInstalled = alreadyInstalled;
 
             if (context != null) {
@@ -307,7 +308,7 @@ public class SplashScreen extends Activity {
 
         @Override
         protected void onPreExecute() {
-            if (installDialog != null) {
+            if (installDialog != null && showDialog) {
                 installDialog = new ProgressDialog(context);
                 installDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 installDialog.setTitle(getString(alreadyInstalled ? R.string.upgrading : R.string.installing));

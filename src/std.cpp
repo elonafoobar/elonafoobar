@@ -7,6 +7,7 @@
 #include <sstream>
 
 
+#include "snail/android.hpp"
 #include "snail/application.hpp"
 #include "snail/hsp.hpp"
 #include "snail/window.hpp"
@@ -14,6 +15,7 @@
 #include "config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "log.hpp"
 #include "macro.hpp"
 #include "util.hpp"
@@ -114,8 +116,9 @@ void await(int msec)
             && config::instance().get<bool>("core.config.android.quicksave")
             && !std::uncaught_exception())
         {
-            LOGD("QUICKSAVE");
             ELONA_LOG("Focus lost, quicksaving game.");
+            snail::android::toast(i18n::s.get("core.locale.ui.save_on_suspend"),
+                                  snail::android::toast_length::long_length);
             save_game();
         }
     }

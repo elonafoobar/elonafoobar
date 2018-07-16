@@ -475,9 +475,9 @@ DOC
             vibrate = true
 
             vibrate_duration = {
-                default = 2
+                default = 8
                 min = 1
-                max = 20
+                max = 40
             }
 
             hide_navigation = {

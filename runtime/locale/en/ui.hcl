@@ -2,6 +2,7 @@ locale {
     ui {
         save = "*saving*"
         playtime = "${_1}:${_2}:${_3} Sec"
+        save_on_suspend = "App focus was lost. Quicksaving game."
 
         date = "${_1} ${_2}/${_3}"
         date_hour = "${_1}h"

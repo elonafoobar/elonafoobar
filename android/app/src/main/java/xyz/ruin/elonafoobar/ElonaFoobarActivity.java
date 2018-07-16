@@ -8,13 +8,14 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 import org.libsdl.app.SDLActivity;
 
 public class ElonaFoobarActivity extends SDLActivity
 {
     private static final String TAG = "ElonaFoobar";
-    private static final long[] VIBRATION_TIMINGS    = {100, 100, 150, 150, 350};
-    private static final int[]  VIBRATION_AMPLITUDES = {0,   50, 0,   100, 0};
+    private static final long[] VIBRATION_TIMINGS    = {100, 100, 150, 150, 350, 100, 150, 150};
+    private static final int[]  VIBRATION_AMPLITUDES = {0,   80,  0,   140, 0,   80,  0,   140};
 
     private boolean navBarEnabled = true;
 
@@ -56,6 +57,59 @@ public class ElonaFoobarActivity extends SDLActivity
         }
     }
 
+    public void toast(final String message, final int length) {
+        try {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(getApplicationContext(), message, length).show();
+                }
+            });
+        } catch(Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    public void vibrate(int duration) {
+        try {
+            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.cancel();
+
+            Log.d(TAG, "VIbrate " + duration);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                VibrationEffect vibeEffect =
+                    VibrationEffect.createOneShot((int)duration,
+                                                  VibrationEffect.DEFAULT_AMPLITUDE);
+                vibrator.vibrate(vibeEffect);
+                Log.d(TAG, "VIbrate new");
+            } else {
+                vibrator.vibrate((int)duration);
+                Log.d(TAG, "VIbrate old");
+            }
+        } catch(Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    public void vibratePulse() {
+        try {
+            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.cancel();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                VibrationEffect vibeEffect =
+                    VibrationEffect.createWaveform(VIBRATION_TIMINGS,
+                                                   VIBRATION_AMPLITUDES,
+                                                   -1);
+                vibrator.vibrate(vibeEffect);
+            } else {
+                vibrator.vibrate(VIBRATION_TIMINGS, -1);
+            }
+        } catch(Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+
     // The setup below is for preventing the soft keyboard from
     // disabling immersive mode.
     @Override
@@ -88,41 +142,4 @@ public class ElonaFoobarActivity extends SDLActivity
         mHideHandler.sendEmptyMessageDelayed(0, delayMillis);
     }
 
-
-    public void vibrate(long duration) {
-        try {
-            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.cancel();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                VibrationEffect vibeEffect =
-                    VibrationEffect.createOneShot(duration,
-                                                  VibrationEffect.DEFAULT_AMPLITUDE);
-                vibrator.vibrate(vibeEffect);
-            } else {
-                vibrator.vibrate(duration);
-            }
-        } catch(Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }
-
-    public void vibratePulse(int repeat) {
-        try {
-            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.cancel();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                VibrationEffect vibeEffect =
-                    VibrationEffect.createWaveform(VIBRATION_TIMINGS,
-                                                   VIBRATION_AMPLITUDES,
-                                                   repeat);
-                vibrator.vibrate(vibeEffect);
-            } else {
-                vibrator.vibrate(VIBRATION_TIMINGS, repeat);
-            }
-        } catch(Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-    }
 }

@@ -441,7 +441,7 @@ void key_check(key_wait_delay_t delay_type)
             {
                 int duration =
                     config::instance().get<int>("core.config.android.vibrate_duration");
-                snail::android::vibrate((long)duration * 100L);
+                snail::android::vibrate(static_cast<long>(duration * 25));
             }
 
             for (int i = 0; i < config::instance().alert; ++i)
