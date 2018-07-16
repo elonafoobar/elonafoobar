@@ -53,22 +53,22 @@ public:
 
     optional<quick_action> last_touched_quick_action() const
     {
-        if (last_touched_quick_action_idx_)
+        if (_last_touched_quick_action_idx)
         {
-            return quick_actions_.at(*last_touched_quick_action_idx_);
+            return _quick_actions.at(*_last_touched_quick_action_idx);
         }
         return none;
     }
 
     void set_base_quick_action_size(float size) noexcept
     {
-        base_quick_action_size_ = size;
+        _base_quick_action_size = size;
     }
 
     void set_quick_action_transparency(float amount) noexcept
     {
-        quick_action_transparency_ = amount;
-        quick_action_image_->set_alpha(quick_action_alpha());
+        _quick_action_transparency = amount;
+        _quick_action_image->set_alpha(quick_action_alpha());
     }
 
     void initialize(const fs::path&);
@@ -85,19 +85,19 @@ private:
 
     uint8_t quick_action_alpha() const noexcept
     {
-        return static_cast<uint8_t>(quick_action_transparency_ * 255);
+        return static_cast<uint8_t>(_quick_action_transparency * 255);
     }
 
-    std::vector<quick_action> quick_actions_;
-    optional<size_t> last_touched_quick_action_idx_ = none;
-    float base_quick_action_size_ = 0.5;
-    float quick_action_transparency_ = 0.5;
+    std::vector<quick_action> _quick_actions;
+    optional<size_t> _last_touched_quick_action_idx = none;
+    float _base_quick_action_size = 0.5;
+    float _quick_action_transparency = 0.5;
 
-    bool initialized_ = false;
+    bool _initialized = false;
 
-    static const constexpr float base_font_size = 0.0089f;
+    static const constexpr float _base_font_size = 0.0089f;
 
-    std::unique_ptr<basic_image> quick_action_image_;
+    std::unique_ptr<basic_image> _quick_action_image;
 };
 
 } // namespace snail

@@ -16,14 +16,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -41,6 +41,7 @@ public class SplashScreen extends Activity {
     private static final String MIME_TYPE_ZIP = "application/zip";
     private static final String ZIP_FILESYSTEM_PROTOCOL = "jar";
     private static final String ELONA_FOLDER_NAME = "elona";
+    private static final String ELONA_ZIP_FOLDER_NAME = "elona122.zip";
     private static final String ELONA_ASSET_FILENAME = "original";
     private static final int INSTALL_DIALOG_ID = 0;
     private static final int FILE_SELECT_CODE = 42;
@@ -77,11 +78,11 @@ public class SplashScreen extends Activity {
             .commit();
     }
 
-    private void fail(int messageId)
+    private void fail(String message)
     {
         AlertDialog failAlert = new AlertDialog.Builder(SplashScreen.this)
             .setTitle(R.string.installationFailed)
-            .setMessage(getString(messageId))
+            .setMessage(message)
             .setCancelable(false)
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -118,7 +119,7 @@ public class SplashScreen extends Activity {
         } catch (android.content.ActivityNotFoundException ex) {
             // No file manager was installed.
             Toast.makeText(this, R.string.installFileManager, Toast.LENGTH_SHORT).show();
-            fail(R.string.archiveNotFound);
+            fail(getString(R.string.archiveNotFound));
         }
     }
 
@@ -138,10 +139,10 @@ public class SplashScreen extends Activity {
         return false;
     }
 
-    private boolean extractArchiveFile(Uri uri)
+    private String extractArchiveFile(Uri uri)
     {
         File externalFilesDir = getExternalFilesDir(null);
-        File zipFile = new File(externalFilesDir, "elona122.zip");
+        File zipFile = new File(externalFilesDir, ELONA_ZIP_FOLDER_NAME);
 
         try
         {
@@ -153,16 +154,16 @@ public class SplashScreen extends Activity {
                                    SplashScreen.this)
                     .execute();
             } else {
-                return false;
+                return getString(R.string.dirNotFound, ELONA_FOLDER_NAME, zipFile.toString());
             }
         }
         catch (Exception e)
         {
             Log.e(TAG, e.toString(), e);
-            return false;
+            return e.toString();
         }
 
-        return true;
+        return null;
     }
 
     @Override
@@ -184,21 +185,24 @@ public class SplashScreen extends Activity {
 
         if (afterActivity) {
             if (zipUri == null) {
-                fail(R.string.archiveNotFound);
-            } else if (!extractArchiveFile(zipUri)) {
-                fail(R.string.invalidArchiveFile);
-            }
-            else {
-                // BUG: Installer's dialog will overlap while zip
-                // extraction task's dialog is still up.
-                new InstallProgramTask(isGameInstalled(), false, SplashScreen.this)
-                    .execute();
+                fail(getString(R.string.archiveNotFound));
+            } else {
+                String errorMessage = extractArchiveFile(zipUri);
+                if (errorMessage != null) {
+                    fail(errorMessage);
+                } else {
+                    // BUG: Installer's dialog will be overlapped while
+                    // zip extraction task's dialog is still up. For now,
+                    // specify whether or not to display the installer's
+                    // dialog in InstallProgramTask.
+                    new InstallProgramTask(isGameInstalled(), false, SplashScreen.this)
+                        .execute();
+                }
             }
         }
     }
 
-    private boolean areOriginalAssetsBundled()
-    {
+    private boolean areOriginalAssetsBundled() {
         return AssetUtils.assetExists(getAssets(), ELONA_ASSET_FILENAME);
     }
 
@@ -212,13 +216,10 @@ public class SplashScreen extends Activity {
         }
         else {
             boolean assetsBundled = areOriginalAssetsBundled();
-            if (assetsBundled)
-            {
+            if (assetsBundled) {
                 new InstallProgramTask(isGameInstalled(), true, getApplicationContext())
                     .execute();
-            }
-            else
-            {
+            } else {
                 promptForOriginalAssetArchive();
             }
         }
@@ -293,6 +294,7 @@ public class SplashScreen extends Activity {
             public String destPath;
             public boolean preserve;
         }
+
 
         public InstallProgramTask(boolean alreadyInstalled, boolean showDialog, Context context) {
             this.alreadyInstalled = alreadyInstalled;
@@ -371,7 +373,7 @@ public class SplashScreen extends Activity {
                                                    getAssetFolders(externalFilesDir));
             } catch(Exception e) {
                 Log.e(TAG, e.toString(), e);
-                alert.setMessage(e.toString());
+                alert.setMessage(getString(R.string.errorTallyingFiles, e.toString()));
                 return false;
             }
 
@@ -388,7 +390,7 @@ public class SplashScreen extends Activity {
                 copyNewData(assetManager, externalFilesDir);
             } catch(Exception e) {
                 Log.e(TAG, e.toString(), e);
-                alert.setMessage(e.toString());
+                alert.setMessage(getString(R.string.errorCopyingFiles, externalFilesDir, e.toString()));
                 return false;
             }
 

@@ -2,7 +2,8 @@ BIN_DIR := bin
 PROGRAM := $(BIN_DIR)/ElonaFoobar
 TEST_RUNNER := $(BIN_DIR)/test_runner
 BENCH_RUNNER := $(BIN_DIR)/bench_runner
-APK := $(BIN_DIR)/app-debug.apk
+APK := $(BIN_DIR)/ElonaFoobar-debug.apk
+APK_RELEASE := $(BIN_DIR)/ElonaFoobar-release.apk
 
 FORMAT := clang-format
 FIND := find
@@ -28,6 +29,9 @@ bench: $(BIN_DIR) $(BENCH_RUNNER)
 android: $(BIN_DIR) $(APK)
 
 
+android_release: $(BIN_DIR) $(APK_RELEASE)
+
+
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
@@ -45,7 +49,13 @@ $(BENCH_RUNNER):
 
 
 $(APK): FORCE
-	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../$(BIN_DIR)
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../${APK}
+
+
+$(APK_RELEASE): FORCE
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/debug/app-release.apk ../${APK}
 
 
 clean: FORCE

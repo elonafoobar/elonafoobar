@@ -334,6 +334,8 @@ public:
 private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
     std::string _text;
+    bool _is_ime_active{};
+    bool _needs_restore_numlock{};
 
     // Members for handling text input of on-screen quick action
     // buttons on Android. They need to be here since quick actions
@@ -344,9 +346,6 @@ private:
     int _quick_action_text_repeat = -1;
     int _quick_action_repeat_start_wait = 10;
     int _quick_action_repeat_wait = 2;
-
-    bool _is_ime_active{};
-    bool _needs_restore_numlock{};
 
     input() = default;
 };

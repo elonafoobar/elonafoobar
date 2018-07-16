@@ -14,6 +14,8 @@ import org.libsdl.app.SDLActivity;
 public class ElonaFoobarActivity extends SDLActivity
 {
     private static final String TAG = "ElonaFoobar";
+
+    // *ドクン ドクン*
     private static final long[] VIBRATION_TIMINGS    = {100, 100, 150, 150, 350, 100, 150, 150};
     private static final int[]  VIBRATION_AMPLITUDES = {0,   80,  0,   140, 0,   80,  0,   140};
 
@@ -35,8 +37,7 @@ public class ElonaFoobarActivity extends SDLActivity
         };
     }
 
-    public void setNavigationBarVisibility(final boolean enable)
-    {
+    public void setNavigationBarVisibility(final boolean enable) {
         navBarEnabled = enable;
 
         if (!navBarEnabled)

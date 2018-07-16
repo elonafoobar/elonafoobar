@@ -8,15 +8,6 @@ namespace elona
 namespace snail
 {
 
-#include <android/log.h>
-
-#define  LOG_TAG    "ElonaFoobar"
-
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-
 touch_input& touch_input::instance()
 {
     static touch_input the_instance;
@@ -25,16 +16,16 @@ touch_input& touch_input::instance()
 
 int touch_input::quick_action_size() const noexcept
 {
-    return static_cast<int>(base_quick_action_size_ * application::instance().dpi());
+    return static_cast<int>(_base_quick_action_size * application::instance().dpi());
 }
 
 void touch_input::initialize(const fs::path& asset_path)
 {
-    quick_action_image_ = std::make_unique<basic_image>(asset_path / "quick_action.png");
+    _quick_action_image = std::make_unique<basic_image>(asset_path / "quick_action.png");
 
     initialize_quick_actions();
 
-    initialized_ = true;
+    _initialized = true;
 }
 
 void touch_input::initialize_quick_actions()
@@ -44,7 +35,7 @@ void touch_input::initialize_quick_actions()
     int size = quick_action_size();
     int space_between = size * 0.75;
 
-    quick_actions_.clear();
+    _quick_actions.clear();
 
     std::vector<std::pair<std::string, snail::key>> keys =
         {{"7", snail::key::keypad_7},
@@ -68,7 +59,7 @@ void touch_input::initialize_quick_actions()
             int x = space_between + (j * space_between);
             int y = height - space_between - (i * space_between);
 
-            quick_actions_.emplace_back(name, key, x, y);
+            _quick_actions.emplace_back(name, key, x, y);
         }
     }
 
@@ -100,13 +91,13 @@ void touch_input::initialize_quick_actions()
         }
         int h = height - space_between * std::get<3>(tuple);
 
-        quick_actions_.emplace_back(text, key, w, h);
+        _quick_actions.emplace_back(text, key, w, h);
     }
 }
 
 void touch_input::draw_quick_actions()
 {
-    if (!initialized_) {
+    if (!_initialized) {
         return;
     }
 
@@ -115,7 +106,7 @@ void touch_input::draw_quick_actions()
     renderer.set_text_alignment(renderer::text_alignment_t::center);
     renderer.set_text_baseline(renderer::text_baseline_t::middle);
 
-    for (auto it = quick_actions_.begin(); it < quick_actions_.end(); it++)
+    for (auto it = _quick_actions.begin(); it < _quick_actions.end(); it++)
     {
         draw_quick_action(*it);
     }
@@ -145,7 +136,7 @@ void touch_input::draw_quick_action(const quick_action& action)
     int y = action.center_y - deadzone;
     auto& renderer = application::instance().get_renderer();
 
-    renderer.render_image(*quick_action_image_.get(), x, y, deadzone * 2, deadzone * 2);
+    renderer.render_image(*_quick_action_image.get(), x, y, deadzone * 2, deadzone * 2);
 
     if (renderer.has_font())
     {
@@ -153,7 +144,7 @@ void touch_input::draw_quick_action(const quick_action& action)
                              action.center_x,
                              action.center_y,
                              {255, 255, 255, quick_action_alpha()},
-                             base_font_size * dpi);
+                             _base_font_size * dpi);
     }
 
     if (action.touched)
@@ -168,18 +159,18 @@ void touch_input::on_touch_event(::SDL_TouchFingerEvent event)
 {
     int norm_x = application::instance().physical_width() * event.x;
     int norm_y = application::instance().physical_height() * event.y;
-    last_touched_quick_action_idx_ = none;
+    _last_touched_quick_action_idx = none;
 
-    for (auto it = quick_actions_.begin(); it < quick_actions_.end(); it++)
+    for (auto it = _quick_actions.begin(); it < _quick_actions.end(); it++)
     {
         quick_action& action = *it;
 
-        if (last_touched_quick_action_idx_ == none
+        if (_last_touched_quick_action_idx == none
             && event.type != event_type::up
             && is_touched(norm_x, norm_y, action))
         {
             action.touched = true;
-            last_touched_quick_action_idx_ = it - quick_actions_.begin();
+            _last_touched_quick_action_idx = it - _quick_actions.begin();
         }
         else
         {

@@ -8,6 +8,8 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -83,6 +85,15 @@ public class ExtractZipTask extends AsyncTask<Void, Integer, Long> {
 
         if (exception != null) {
             Log.e(TAG, "Extraction failed", exception);
+
+            if (context != null) {
+                AlertDialog alert = new AlertDialog.Builder(context)
+                    .setTitle(R.string.installationFailed)
+                    .setMessage(context.getString(R.string.extractionFailed, inputFile.toString(), exception.toString()))
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.ok, new DialogOnClickListenerWithContext(context)).create();
+                alert.show();
+            }
         }
     }
 
@@ -134,5 +145,20 @@ public class ExtractZipTask extends AsyncTask<Void, Integer, Long> {
             }
         }
         return originalSize;
+    }
+
+    private class DialogOnClickListenerWithContext implements DialogInterface.OnClickListener {
+        private Context context;
+
+        public DialogOnClickListenerWithContext(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int id) {
+            if (this.context instanceof Activity) {
+                ((Activity)this.context).finish();
+            }
+        }
     }
 }

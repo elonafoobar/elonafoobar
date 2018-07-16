@@ -14,14 +14,6 @@ namespace elona
 namespace snail
 {
 
-#include <android/log.h>
-
-#define  LOG_TAG    "ElonaFoobar"
-
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 
 
 application& application::instance()
@@ -232,7 +224,6 @@ void application::on_size_changed(const ::SDL_WindowEvent& event)
     {
         touch_input::instance().initialize_quick_actions();
     }
-    LOGD("SIZE CHANGED %d %d %d %d", _physical_width, _physical_height, _width, _height);
 }
 
 
@@ -412,12 +403,10 @@ void application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
-        LOGD("CHANG PORTRAI");
         _orientation = screen_orientation::portrait;
     }
     else
     {
-        LOGD("CHANG LANDSCAP");
         _orientation = screen_orientation::landscape;
     }
 

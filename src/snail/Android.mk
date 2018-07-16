@@ -34,12 +34,12 @@ window.cpp \
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
 
-LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem
+LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system
 
 LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
 
 LOCAL_CFLAGS += -DSNAIL_RENDERER_SDL -Wextra -Wall -ffast-math $(LTO)
 
-LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO)
+LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
 
 include $(BUILD_SHARED_LIBRARY)

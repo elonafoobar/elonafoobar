@@ -36,8 +36,10 @@ GTAGS
 /build
 /captures
 .externalNativeBuild
+android/.idea
 android/distribution
 android/app/src/main/assets
+android/gradle.properties
 android/external/SDL2
 android/external/SDL2_mixer
 android/external/SDL2_ttf

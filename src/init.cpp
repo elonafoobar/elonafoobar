@@ -42,7 +42,9 @@
 #include "variables.hpp"
 #include "version.hpp"
 
+
 using namespace elona;
+
 
 namespace
 {

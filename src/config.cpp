@@ -14,17 +14,6 @@
 #include "thirdparty/microhcl/hcl.hpp"
 
 
-#include <android/log.h>
-
-#define  LOG_TAG    "ElonaFoobar"
-
-#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
-#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN,LOG_TAG,__VA_ARGS__)
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
-#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-
-
-
 namespace
 {
 
@@ -185,7 +174,6 @@ static std::map<std::string, snail::android::orientation> orientations =
 
 static void convert_and_set_requested_orientation(std::string variant)
 {
-    LOGD("SET ORIENT %s", variant.c_str());
     auto it = orientations.find(variant);
     if (it == orientations.end())
         return;

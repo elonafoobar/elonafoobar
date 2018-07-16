@@ -8,6 +8,7 @@ project(ElonaFoobar VERSION 0.2.6)
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
+option(ANDROID_GENERATE_PROPERTIES "Generate android/app/gradle.properties" OFF)
 
 
 # Versioning
@@ -31,8 +32,18 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 # Get platform
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 
+# Android version code. Increment on every distinct release.
+set(PROJECT_VERSION_CODE 1)
+
 # Versioning file
 configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
+
+# CMake is run last in the Android build process, so gradle.properties
+# has to be generated beforehand.
+if(ANDROID_GENERATE_PROPERTIES)
+  configure_file("${PROJECT_SOURCE_DIR}/android/gradle.properties.in" "${PROJECT_SOURCE_DIR}/android/gradle.properties")
+  return()
+endif()
 
 
 # C++14 or later
@@ -149,6 +160,7 @@ if(ANDROID)
   set(ANDROID_STL c++_shared)
   set(ANDROID_ASSETS_DIRECTORIES "${CMAKE_SOURCE_DIR}/android/assets")
   set(ANDROID_CPP_FEATURES exceptions)
+  set(ANDROID_PLATFORM android-21)
 
   string(TOLOWER ${CMAKE_BUILD_TYPE} ANDROID_BUILD_DIR)
   set(DISTRIBUTION_DIR ${CMAKE_SOURCE_DIR}/android/distribution/android/SDL2/intermediates/ndkBuild)

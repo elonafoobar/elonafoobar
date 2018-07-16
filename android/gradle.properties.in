@@ -16,5 +16,5 @@ org.gradle.jvmargs=-Xmx1536m
 # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
 # org.gradle.parallel=true
 
-VERSION_NAME 0.2.6-b1af3c7-2018-07-16T19:40:09Z
-VERSION_CODE 1
+VERSION_NAME @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@-@PROJECT_VERSION_REVISION@-@PROJECT_VERSION_TIMESTAMP@
+VERSION_CODE @PROJECT_VERSION_CODE@
