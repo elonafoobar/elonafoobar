@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">ElonaFoobar</string>
+    <string name="appName">ElonaFoobar</string>
     <string name="upgrading">Upgrading</string>
     <string name="installing">Installing</string>
 
-    <string name="installation_failed">Installation Failed</string>
+    <string name="chooseArchiveFile">Select the location of elona122.zip.</string>
+    <string name="installFileManager">Please install a file manager.</string>
+    <string name="archiveNotFound">elona122.zip not found. Please download it from http://ylvania.org.</string>
+    <string name="invalidArchiveFile">Invalid archive.</string>
+
+    <string name="installationFailed">Installation Failed</string>
     <string name="ok">OK</string>
+
+    <string name="extracting">Extracting</string>
 </resources>

@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <application android:label="@string/app_name"
+    <application android:label="@string/appName"
                  android:icon="@drawable/ic_launcher"
                  android:allowBackup="true"
                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -11,7 +11,7 @@
                  android:isGame="true"
                  >
         <activity android:name="SplashScreen"
-                  android:label="@string/app_name"
+                  android:label="@string/appName"
                   android:launchMode="singleInstance"
                   android:keepScreenOn="true"
                   android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ElonaFoobarActivity"
-                  android:label="@string/app_name"
+                  android:label="@string/appName"
                   android:launchMode="singleInstance"
                   android:keepScreenOn="true"
                   android:configChanges="keyboardHidden|keyboard|orientation|screenSize"

@@ -2,7 +2,7 @@
 
     package="xyz.ruin.sdl2">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
+    <application android:allowBackup="true" android:label="@string/appName"
         android:supportsRtl="true">
 
     </application>

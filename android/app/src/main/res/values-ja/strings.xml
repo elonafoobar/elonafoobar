@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">ElonaFoobar</string>
+    <string name="appName">ElonaFoobar</string>
     <string name="upgrading">アップグレード中</string>
     <string name="installing">インストール中</string>
 
-    <string name="installation_failed">インストール失敗</string>
+    <string name="chooseArchiveFile">elona122.zipの場所を選んでください。</string>
+    <string name="installFileManager">ファイルマネージャをインストールしてください。</string>
+    <string name="archiveNotFound">elona122.zipが見つかりませんでした。http://ylvania.orgからダウンロードしてください。</string>
+    <string name="invalidArchiveFile">無効なアーカイブです。</string>
+
+    <string name="installationFailed">インストール失敗</string>
     <string name="ok">OK</string>
+
+    <string name="extracting">解凍中</string>
 </resources>

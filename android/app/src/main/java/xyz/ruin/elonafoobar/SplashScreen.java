@@ -1,11 +1,19 @@
 package xyz.ki.elonafoobar;
 
 import java.io.File;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import android.app.Activity;
 import android.app.Application;
@@ -19,19 +27,27 @@ import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class SplashScreen extends Activity {
-    private static final String TAG = "SplashScreen";
+    private static final String TAG = SplashScreen.class.getName();
     private static final String INSTALLED = "installed";
+    private static final String MIME_TYPE_ZIP = "application/zip";
+    private static final String ZIP_FILESYSTEM_PROTOCOL = "jar";
+    private static final String ELONA_FOLDER_NAME = "elona";
+    private static final String ELONA_ASSET_FILENAME = "original";
     private static final int INSTALL_DIALOG_ID = 0;
+    private static final int FILE_SELECT_CODE = 42;
     private static final int SCREEN_WAIT_MS = 1500;
 
-    private ProgressDialog installDialog;
+    private boolean afterActivity = false;
+    private Uri zipUri;
 
     private String getVersionName() {
         try {
@@ -61,6 +77,131 @@ public class SplashScreen extends Activity {
             .commit();
     }
 
+    private void fail(int messageId)
+    {
+        AlertDialog failAlert = new AlertDialog.Builder(SplashScreen.this)
+            .setMessage(getString(messageId))
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SplashScreen.this.finish();
+                        return;
+                    }
+                }).create();
+        failAlert.show();
+    }
+
+    private void promptForOriginalAssetArchive()
+    {
+        AlertDialog alert = new AlertDialog.Builder(SplashScreen.this)
+            .setMessage(R.string.chooseArchiveFile)
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        promptForZipFile();
+                    }
+                }).create();
+        alert.show();
+    }
+
+    private void promptForZipFile()
+    {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType(MIME_TYPE_ZIP);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(Intent.createChooser(intent,
+                                                        getString(R.string.chooseArchiveFile)),
+                                   FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // No file manager was installed.
+            Toast.makeText(this, R.string.installFileManager, Toast.LENGTH_SHORT).show();
+            fail(R.string.archiveNotFound);
+        }
+    }
+
+    private boolean verifyArchiveFile(File file) throws Exception
+    {
+        Path path = file.toPath();
+        Log.d(TAG, "Path: " + path.toString());
+        ZipInputStream zip = new ZipInputStream(Files.newInputStream(
+                path, StandardOpenOption.READ));
+        ZipEntry entry = null;
+
+        while((entry = zip.getNextEntry()) != null) {
+            if (entry.getName().startsWith(ELONA_FOLDER_NAME)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean extractArchiveFile(Uri uri)
+    {
+        File externalFilesDir = getExternalFilesDir(null);
+        File zipFile = new File(externalFilesDir, "elona122.zip");
+
+        try
+        {
+            AssetUtils.copyUriData(uri, zipFile, SplashScreen.this);
+            if (verifyArchiveFile(zipFile)) {
+                Log.d(TAG, "Verified");
+                new ExtractZipTask(zipFile,
+                                   externalFilesDir,
+                                   ELONA_FOLDER_NAME,
+                                   SplashScreen.this)
+                    .execute();
+            } else {
+                Log.d(TAG, "Unverified");
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e(TAG, e.toString(), e);
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        afterActivity = true;
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == FILE_SELECT_CODE)
+        {
+            zipUri = data.getData();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (afterActivity) {
+            if (zipUri == null) {
+                fail(R.string.archiveNotFound);
+            } else if (!extractArchiveFile(zipUri)) {
+                fail(R.string.invalidArchiveFile);
+            }
+            else {
+                new InstallProgramTask(isGameInstalled(), SplashScreen.this)
+                    .execute();
+            }
+        }
+    }
+
+    private boolean areOriginalAssetsBundled()
+    {
+        return AssetUtils.assetExists(getAssets(), ELONA_ASSET_FILENAME);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
@@ -70,30 +211,16 @@ public class SplashScreen extends Activity {
             startGameActivity(false);
         }
         else {
-            new InstallProgramTask().execute();
-        }
-    }
-
-    private ProgressDialog createInstallDialog()
-    {
-        ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        boolean alreadyInstalled = isGameInstalled();
-        dialog.setTitle(getString(alreadyInstalled ? R.string.upgrading : R.string.installing));
-        dialog.setIndeterminate(true);
-        dialog.setCancelable(false);
-        return dialog;
-    }
-
-    @Override
-    public Dialog onCreateDialog(int id) {
-        switch (id) {
-        case INSTALL_DIALOG_ID:
-            ProgressDialog dialog = createInstallDialog();
-            installDialog = dialog;
-            return installDialog;
-        default:
-            return null;
+            boolean assetsBundled = areOriginalAssetsBundled();
+            if (assetsBundled)
+            {
+                new InstallProgramTask(isGameInstalled(), getApplicationContext())
+                    .execute();
+            }
+            else
+            {
+                promptForOriginalAssetArchive();
+            }
         }
     }
 
@@ -140,8 +267,11 @@ public class SplashScreen extends Activity {
             }
         );
 
+        private boolean alreadyInstalled;
         private int totalFiles = 0;
         private int installedFiles = 0;
+        private Context context;
+        private ProgressDialog installDialog;
         private AlertDialog alert;
 
 
@@ -163,12 +293,31 @@ public class SplashScreen extends Activity {
             public boolean preserve;
         }
 
+        public InstallProgramTask(boolean alreadyInstalled, Context context) {
+            this.alreadyInstalled = alreadyInstalled;
+
+            if (context != null) {
+                installDialog = new ProgressDialog(context);
+            } else {
+                installDialog = null;
+            }
+
+            this.context = context;
+        }
 
         @Override
         protected void onPreExecute() {
-            showDialog(INSTALL_DIALOG_ID);
+            if (installDialog != null) {
+                installDialog = new ProgressDialog(context);
+                installDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                installDialog.setTitle(getString(alreadyInstalled ? R.string.upgrading : R.string.installing));
+                installDialog.setIndeterminate(true);
+                installDialog.setCancelable(false);
+                installDialog.show();
+            }
+
             alert = new AlertDialog.Builder(SplashScreen.this)
-                .setTitle(R.string.installation_failed)
+                .setTitle(R.string.installationFailed)
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -181,7 +330,7 @@ public class SplashScreen extends Activity {
         private List<String> getAssetFolders(String externalFilesDir) {
             List<String> result = new ArrayList<String>();
             for (FolderInfo folder : folders) {
-                result.add(new File(externalFilesDir, folder.sourcePath).toString());
+                result.add(folder.sourcePath);
             }
             return result;
         }
@@ -217,7 +366,7 @@ public class SplashScreen extends Activity {
             String externalFilesDir = getExternalFilesDir(null).getPath();
 
             try {
-                totalFiles = AssetUtils.tallyFiles(assetManager,
+                totalFiles = AssetUtils.countFiles(assetManager,
                                                    getAssetFolders(externalFilesDir));
             } catch(Exception e) {
                 Log.e(TAG, e.toString(), e);
@@ -229,10 +378,12 @@ public class SplashScreen extends Activity {
                 installDialog.setIndeterminate(false);
                 installDialog.setMax(totalFiles);
             }
+
             publishProgress(installedFiles);
 
             try {
-                clearExistingData(assetManager, externalFilesDir);
+                // TODO: This would clear copied assets from elona122.zip.
+                //clearExistingData(assetManager, externalFilesDir);
                 copyNewData(assetManager, externalFilesDir);
             } catch(Exception e) {
                 Log.e(TAG, e.toString(), e);
@@ -291,7 +442,10 @@ public class SplashScreen extends Activity {
 
         @Override
         protected void onPostExecute(Boolean result) {
-            removeDialog(INSTALL_DIALOG_ID);
+            if (installDialog != null && installDialog.isShowing()) {
+                installDialog.dismiss();
+            }
+
             if(result) {
                 startGameActivity(true);
             } else {
