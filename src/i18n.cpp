@@ -1,4 +1,4 @@
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 #include "thirdparty/microhil/hil.hpp"
 
 #include <fstream>

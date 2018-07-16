@@ -10,7 +10,7 @@
 #include "map.hpp"
 #include "mef.hpp"
 #include "random.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 #include "variables.hpp"
 
 

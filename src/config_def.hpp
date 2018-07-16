@@ -1,6 +1,6 @@
 #pragma once
 #include "spec.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 
 namespace elona
 {

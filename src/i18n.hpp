@@ -1,6 +1,5 @@
 #pragma once
 
-#include "thirdparty/microhcl/hcl.hpp"
 #include "thirdparty/microhil/hil.hpp"
 #include "thirdparty/sol2/sol.hpp"
 
@@ -10,6 +9,7 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "filesystem.hpp"
+#include "hcl.hpp"
 #include "item.hpp"
 #include "log.hpp"
 #include "lua_env/lua_api.hpp"

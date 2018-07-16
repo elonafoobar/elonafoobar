@@ -9,7 +9,7 @@
 #include "snail/application.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 
 
 namespace

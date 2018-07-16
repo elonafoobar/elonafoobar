@@ -1,7 +1,7 @@
 #include "config_def.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>

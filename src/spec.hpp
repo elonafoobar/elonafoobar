@@ -1,5 +1,5 @@
 #pragma once
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include <cassert>
