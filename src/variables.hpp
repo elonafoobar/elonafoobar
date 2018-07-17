@@ -1080,6 +1080,7 @@ void create_cnpc();
 void create_new_cnpc();
 void label_2109(int);
 void load_save_data(const fs::path&);
+void do_save_game();
 void save_game();
 void save_game(const fs::path&);
 turn_result_t do_enter_strange_gate();
