@@ -12,12 +12,12 @@ matrix:
                     retries: true
                   update: true
                   sources:
-                      - ubuntu-toolchain-r-test
+                    - ubuntu-toolchain-r-test
                   packages:
-                      - g++-7
-                      - cmake
-                      - zlib1g-dev
-                        # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
+                    - g++-7
+                    - cmake
+                    - zlib1g-dev
+                      # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
           env: BUILD_TYPE=osx
           compiler: clang
@@ -55,9 +55,9 @@ before_install:
        gcc -v && g++ -v;
     fi
   - if [[ "$BUILD_TYPE" == "android" ]]; then
-       echo y | sdkmanager "ndk-bundle";
-       echo y | sdkmanager "cmake;3.6.4111459";
-       echo y | sdkmanager "lldb;3.1";
+       yes | sdkmanager "ndk-bundle";
+       yes | sdkmanager "cmake;3.6.4111459";
+       yes | sdkmanager "lldb;3.1";
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi
 
@@ -71,9 +71,8 @@ install:
 
 before_script:
   - if [[ "$BUILD_TYPE" == "android" ]]; then
-       export $ANDROID_HOME=$HOME/android/sdk;
-       export $ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle;
-       echo -e "ndk.dir=$ANDROID_NDK_HOME\nsdk.dir=$ANDROID_HOME" > $TRAVIS_BUILD_DIR/android/local.properties
+       export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle;
+       (echo -e "ndk.dir=$ANDROID_NDK_HOME\nsdk.dir=$ANDROID_HOME" > "$TRAVIS_BUILD_DIR/android/local.properties");
     fi
 
 script:
@@ -94,12 +93,12 @@ script:
   - cd "$TRAVIS_BUILD_DIR"
   - make clean
   - if [[ "$BUILD_TYPE" != "android" ]]; then
-       make tests VERBOSE=1
-       cd bin
-       ./ElonaFoobar
+       make tests VERBOSE=1;
+       cd bin;
+       ./ElonaFoobar;
        if [[ "$BUILD_TYPE" == "linux" ]]; then ccache --show-stats; fi
     elif [[ "$BUILD_TYPE" == "android" ]]; then
-       make android-release
+       make android;
     fi
 
 notifications:

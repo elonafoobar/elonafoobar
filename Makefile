@@ -55,7 +55,7 @@ $(APK): FORCE
 
 $(APK_RELEASE): FORCE
 	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
-	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/debug/app-release.apk ../${APK}
+	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../${APK_RELEASE}
 	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
 	echo "Something is placed at $(BIN_DIR)."
 
