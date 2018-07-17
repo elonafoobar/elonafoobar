@@ -6,7 +6,7 @@
 #include "elona.hpp"
 #include "log.hpp"
 #include "snail/window.hpp"
-#include <map>
+#include "thirdparty/ordered_map/ordered_map.h"
 #include <string>
 #include <iostream>
 
@@ -241,9 +241,9 @@ private:
     bool verify_types(const hcl::Value&, const std::string&);
 
     config_def def;
-    std::map<std::string, hcl::Value> storage;
-    std::map<std::string, std::function<hcl::Value(void)>> getters;
-    std::map<std::string, std::function<void(const hcl::Value&)>> setters;
+    tsl::ordered_map<std::string, hcl::Value> storage;
+    tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
+    tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>> setters;
 };
 
 
