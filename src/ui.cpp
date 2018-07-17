@@ -1987,66 +1987,66 @@ void display_window2(
 
 
 void display_window(
-    int prm_668,
-    int prm_669,
-    int prm_670,
-    int prm_671,
+    int window_x,
+    int window_y,
+    int window_width,
+    int window_height,
     int prm_672,
     int prm_673)
 {
     if (windowshadow == 1)
     {
-        window(prm_668 + 4, prm_669 + 4, prm_670, prm_671 - prm_671 % 8, true);
+        window(window_x + 4, window_y + 4, window_width, window_height - window_height % 8, true);
         windowshadow = 0;
     }
-    window(prm_668, prm_669, prm_670, prm_671 - prm_671 % 8);
+    window(window_x, window_y, window_width, window_height - window_height % 8);
     if (s != ""s)
     {
         window2(
-            prm_668 + 34,
-            prm_669 - 4,
-            45 * prm_670 / 100 + clamp(int(strlen_u(s) * 8 - 120), 0, 200),
+            window_x + 34,
+            window_y - 4,
+            45 * window_width / 100 + clamp(int(strlen_u(s) * 8 - 120), 0, 200),
             32,
             1,
             1);
     }
     gmode(2);
-    draw("tip_icon", prm_668 + 30 + prm_672, prm_669 + prm_671 - 47 - prm_671 % 8);
+    draw("tip_icon", window_x + 30 + prm_672, window_y + window_height - 47 - window_height % 8);
     line(
-        prm_668 + 50 + prm_672,
-        prm_669 + prm_671 - 48 - prm_671 % 8,
-        prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 48 - prm_671 % 8,
+        window_x + 50 + prm_672,
+        window_y + window_height - 48 - window_height % 8,
+        window_x + window_width - 40,
+        window_y + window_height - 48 - window_height % 8,
         {194, 170, 146});
     line(
-        prm_668 + 50 + prm_672,
-        prm_669 + prm_671 - 49 - prm_671 % 8,
-        prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 49 - prm_671 % 8,
+        window_x + 50 + prm_672,
+        window_y + window_height - 49 - window_height % 8,
+        window_x + window_width - 40,
+        window_y + window_height - 49 - window_height % 8,
         {234, 220, 188});
     font(15 + en - en * 2);
     bmes(
         s,
-        prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
-            + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
-        prm_669 + 4 + vfix,
+        window_x + 45 * window_width / 200 + 34 - strlen_u(s) * 4
+            + clamp(int(strlen_u(s) * 8 - 120), 0, 200) / 2,
+        window_y + 4 + vfix,
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(prm_668 + 58 + prm_672, prm_669 + prm_671 - 43 - prm_671 % 8);
+    pos(window_x + 58 + prm_672, window_y + window_height - 43 - window_height % 8);
     mes(s(1));
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
-        pos(prm_668 + prm_670 - strlen_u(s) * 7 - 40 - prm_673,
-            prm_669 + prm_671 - 65 - prm_671 % 8);
+        pos(window_x + window_width - strlen_u(s) * 7 - 40 - prm_673,
+            window_y + window_height - 65 - window_height % 8);
         mes(s);
     }
-    wx = prm_668;
-    wy = prm_669;
-    ww = prm_670;
-    wh = prm_671;
+    wx = window_x;
+    wy = window_y;
+    ww = window_width;
+    wh = window_height;
 }
 
 
