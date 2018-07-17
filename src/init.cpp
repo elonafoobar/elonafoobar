@@ -12,6 +12,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -35,12 +36,12 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "range.hpp"
+#include "snail/touch_input.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
-#include <iostream>
 
 using namespace elona;
 
@@ -370,6 +371,11 @@ void initialize_config(const fs::path& config_file)
 {
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
+
+    if(defines::is_android)
+    {
+        snail::touch_input::instance().initialize(filesystem::dir::graphic());
+    }
 
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
@@ -754,6 +760,21 @@ void initialize_elona()
     }
 }
 
+static void initialize_screen()
+{
+    std::string display_mode = config::instance().display_mode;
+
+    if (defines::is_android)
+    {
+        display_mode = config::instance()
+            .get<std::string>("core.config.screen.window_mode");
+    }
+
+    title(u8"Elona Foobar version "s + latest_version.short_string(),
+          display_mode,
+          config_get_fullscreen_mode());
+}
+
 int run()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
@@ -764,11 +785,9 @@ int run()
     initialize_cat_db();
 
     config::instance().init(config_def_file);
-    load_config2(config_file);
+    load_config_pre_app_init(config_file);
 
-    title(u8"Elona Foobar version "s + latest_version.short_string(),
-          config::instance().display_mode,
-          config_get_fullscreen_mode());
+    initialize_screen();
 
     initialize_config(config_file);
     init_assets();

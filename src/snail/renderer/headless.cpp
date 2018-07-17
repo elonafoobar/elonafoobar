@@ -58,7 +58,7 @@ void renderer::fill_rect(int, int, int, int)
 }
 
 
-rect renderer::render_text(const std::string&, int, int, const color&)
+rect renderer::render_text(const std::string&, int, int, const color&, double)
 {
     return rect{0, 0, 0, 0};
 }
@@ -70,7 +70,8 @@ rect renderer::render_text_with_shadow(
     int,
     int,
     const color&,
-    const color&)
+    const color&,
+    double)
 {
     return rect{0, 0, 0, 0};
 }

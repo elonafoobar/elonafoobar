@@ -70,6 +70,17 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 
 To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
+
+### Android
+
+Building has only been tested on Linux so far.
+1. Copy `android/local.properties.sample` to `android/local.properties` and edit it to point to your Android SDK and NDK installation paths.
+2. `cd path/to/ElonaFoobar; make android` (for release, run `make android_release`)
+
+A standalone APK will be output in `bin/`.
+
+By default, assets from vanilla Elona in `deps/` are not bundled with the APK, to respect the original content authors. To bundle these assets, pass the flag `-DANDROID_BUNDLE_ASSETS` to `cmake`. If original assets are not detected on startup, the app will prompt for the location of `elona122.zip`.
+
 # How To Play
 
 1. Copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.

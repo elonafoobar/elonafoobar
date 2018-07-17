@@ -1,9 +1,9 @@
-
 language: cpp
 
 matrix:
     include:
         - os: linux
+          env: BUILD_TYPE=linux
           sudo: required
           compiler: gcc-7
           addons:
@@ -12,14 +12,25 @@ matrix:
                     retries: true
                   update: true
                   sources:
-                      - ubuntu-toolchain-r-test
+                    - ubuntu-toolchain-r-test
                   packages:
-                      - g++-7
-                      - cmake
-                      - zlib1g-dev
-                        # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
+                    - g++-7
+                    - cmake
+                    - zlib1g-dev
+                      # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
+          env: BUILD_TYPE=osx
           compiler: clang
+        - os: linux
+          env: BUILD_TYPE=android
+          language: android
+          jdk: oraclejdk8
+          android:
+            components:
+              - tools
+              - platform-tools
+              - extra-google-m2repository
+              - extra-android-m2repository
 
 env:
   global:
@@ -33,29 +44,39 @@ cache:
         - $HOME/download
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  - if [[ "$BUILD_TYPE" == "osx" ]]; then
       brew update &&
       brew upgrade cmake boost &&
       brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  - if [[ "$BUILD_TYPE" == "linux" ]]; then
        export CC="gcc-7";
        export CXX="g++-7";
        gcc -v && g++ -v;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi
+  - if [[ "$BUILD_TYPE" == "android" ]]; then
+       yes | sdkmanager "ndk-bundle";
+       yes | sdkmanager "cmake;3.6.4111459";
+       yes | sdkmanager "lldb;3.1";
+    fi
+  - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi
 
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  - if [[ "$BUILD_TYPE" == "linux" ]]; then
        export CC="gcc-7";
        export CXX="g++-7";
        gcc -v && g++ -v;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/install.sh"; fi
+  - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/install.sh"; fi
+
+before_script:
+  - if [[ "$BUILD_TYPE" == "android" ]]; then
+       export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle;
+       (echo -e "ndk.dir=$ANDROID_NDK_HOME\nsdk.dir=$ANDROID_HOME" > "$TRAVIS_BUILD_DIR/android/local.properties");
+    fi
 
 script:
-  - cd "$TRAVIS_BUILD_DIR"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+  - if [[ "$BUILD_TYPE" == "linux" ]]; then
        export CC="gcc-7";
        export CXX="g++-7";
        export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH";
@@ -65,16 +86,20 @@ script:
        export AUDIODEV=null;
     fi
   - env
-  - cd deps
+  - cd "$TRAVIS_BUILD_DIR/deps"
   - wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
   - unzip -qq elona122.zip
   - rm elona122.zip
   - cd "$TRAVIS_BUILD_DIR"
   - make clean
-  - make tests VERBOSE=1
-  - cd bin
-  - ./ElonaFoobar
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
+  - if [[ "$BUILD_TYPE" != "android" ]]; then
+       make tests VERBOSE=1;
+       cd bin;
+       ./ElonaFoobar;
+       if [[ "$BUILD_TYPE" == "linux" ]]; then ccache --show-stats; fi
+    elif [[ "$BUILD_TYPE" == "android" ]]; then
+       make android;
+    fi
 
 notifications:
     email: false

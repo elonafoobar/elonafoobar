@@ -5,6 +5,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "snail/android.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -441,6 +442,13 @@ void key_check(key_wait_delay_t delay_type)
     {
         if (config::instance().alert > 1)
         {
+            if (config::instance().get<bool>("core.config.android.vibrate"))
+            {
+                int duration =
+                    config::instance().get<int>("core.config.android.vibrate_duration");
+                snail::android::vibrate(static_cast<long>(duration * 25));
+            }
+
             for (int i = 0; i < config::instance().alert; ++i)
             {
                 await(config::instance().wait1);

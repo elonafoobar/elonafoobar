@@ -2,6 +2,8 @@ BIN_DIR := bin
 PROGRAM := $(BIN_DIR)/ElonaFoobar
 TEST_RUNNER := $(BIN_DIR)/test_runner
 BENCH_RUNNER := $(BIN_DIR)/bench_runner
+APK := $(BIN_DIR)/ElonaFoobar-debug.apk
+APK_RELEASE := $(BIN_DIR)/ElonaFoobar-release.apk
 
 FORMAT := clang-format
 FIND := find
@@ -24,6 +26,12 @@ tests: $(BIN_DIR) $(TEST_RUNNER)
 bench: $(BIN_DIR) $(BENCH_RUNNER)
 
 
+android: $(BIN_DIR) $(APK)
+
+
+android_release: $(BIN_DIR) $(APK_RELEASE)
+
+
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
@@ -40,8 +48,21 @@ $(BENCH_RUNNER):
 	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
 
 
+$(APK): FORCE
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	export TERM=xterm-color; cd android; ./gradlew assembleDebug; cp distribution/android/app/outputs/apk/debug/app-debug.apk ../${APK}
+
+
+$(APK_RELEASE): FORCE
+	cd $(BIN_DIR); cmake .. -DANDROID_GENERATE_PROPERTIES=ON
+	export TERM=xterm-color; cd android; ./gradlew assembleRelease; cp distribution/android/app/outputs/apk/release/app-release-unsigned.apk ../${APK_RELEASE}
+	echo -e "\e[93m\"You've been a faithful servant of me. Here, use it wisely.\""
+	echo "Something is placed at $(BIN_DIR)."
+
+
 clean: FORCE
 	-@$(RM) -rf $(BIN_DIR)
+	-@$(RM) -rf android/distribution android/app/.externalNativeBuild android/SDL2/.externalNativeBuild
 
 
 # Format src/*.{hpp,cpp} except under src/thirdparty.

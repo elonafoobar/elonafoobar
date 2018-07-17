@@ -107,6 +107,11 @@ public:
 
     bool is_test = false; // testing use only
 
+    bool is_visible(const std::string& key) const
+    {
+        return def.get_metadata(key).is_visible();
+    }
+
     void bind_getter(const std::string& key,
                      std::function<hcl::Value(void)> getter)
     {
@@ -154,14 +159,14 @@ public:
     }
 
     template <typename T>
-    T get(const std::string& key)
+    T get(const std::string& key) const
     {
         if (storage.find(key) == storage.end())
         {
             // TODO fallback to default specified in config definition instead
             throw std::runtime_error("No such config value " + key);
         }
-        if (!storage[key].is<T>())
+        if (!storage.at(key).is<T>())
         {
             throw std::runtime_error("Expected type \"" + def.type_to_string(key) + "\" for key " + key);
         }
@@ -170,11 +175,11 @@ public:
         {
             if (getters.find(key) != getters.end())
             {
-                return getters[key]().as<T>();
+                return getters.at(key)().as<T>();
             }
             else
             {
-                return storage[key].as<T>();
+                return storage.at(key).as<T>();
             }
         }
         catch (std::exception& e)
@@ -248,7 +253,12 @@ private:
 
 
 
-void load_config2(const fs::path& hcl_file);
+/***
+ * Loads config options that are marked to be loaded before the
+ * application instance is initialized, like screen size.
+ */
+void load_config_pre_app_init(const fs::path& hcl_file);
+
 void load_config(const fs::path& hcl_file);
 
 void set_config(const std::string& key, int value);

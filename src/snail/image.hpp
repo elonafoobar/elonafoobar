@@ -2,11 +2,11 @@
 
 #include <memory>
 #include <string>
-#include "../filesystem.hpp"
 #include "../optional.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
+#include "filesystem.hpp"
 
 
 namespace elona

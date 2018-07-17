@@ -35,6 +35,7 @@ config def {
 
             fullscreen = {
                 type = "enum"
+                platform = "desktop"
                 preload = true
                 variants = ["windowed", "fullscreen", "desktop_fullscreen"]
                 default = "windowed"
@@ -42,14 +43,45 @@ config def {
 
             display_mode = {
                 type = "runtime_enum"
+                platform = "desktop"
                 translate_variants = false
                 preload = true
+            }
+
+            window_mode = {
+                platform = "android"
+                preload = true
+
+                type = "enum"
+                translate_variants = false
+                variants = ["800x600", "1024x600", "1280x720",
+                    "800x696", "1024x768", "1152x864",
+                    "1280x768", "1280x1024", "1366x768",
+                    "1600x900", "1600x1200"]
+                default = "1024x600"
+            }
+
+            orientation = {
+                platform = "android"
+
+                type = "enum"
+                variants = ["sensor_landscape", "sensor_portrait", "sensor",
+                    "landscape", "portrait",
+                    "reverse_landscape", "reverse_portrait"]
+                default = "sensor_landscape"
             }
 
             high_quality_shadows = true
             object_shadows = true
             heartbeat = true
-            skip_random_event_popups = true
+
+            heartbeat_threshold {
+                default = 25
+                min = 1
+                max = 50
+            }
+
+            skip_random_event_popups = false
         }
     }
 
@@ -66,7 +98,13 @@ config def {
     anime = {
         type = "section"
         options = {
-            scroll = true
+            scroll = {
+                default = true
+
+                platform_default {
+                    android = false
+                }
+            }
             always_center = true
             scroll_when_run = true
 
@@ -80,12 +118,20 @@ config def {
                 default = 20
                 min = 0
                 max = 20
+
+                platform_default {
+                    android = 10
+                }
             }
 
             alert_wait = {
                 default = 50
                 min = 0
                 max = 50
+
+                platform_default {
+                    android = 25
+                }
             }
 
             auto_turn_speed = {
@@ -103,6 +149,10 @@ config def {
                 default = 3
                 min = 1
                 max = 15
+
+                platform_default {
+                    android = 5
+                }
             }
         }
     }
@@ -149,6 +199,7 @@ config def {
             }
 
             key_wait = {
+                preload = true # Needs to be available for language selection screen
                 default = 5
                 min = 1
                 max = 10
@@ -158,6 +209,10 @@ config def {
                 default = 10
                 min = 1
                 max = 20
+
+                platform_default {
+                    android = 8
+                }
             }
 
             select_fast_start_wait = {
@@ -170,6 +225,10 @@ config def {
                 default = 2
                 min = 1
                 max = 20
+
+                platform_default {
+                    android = 2
+                }
             }
 
             joypad = {
@@ -253,8 +312,14 @@ config def {
 
             leash_icon = true
             autopick = true
-            autosave = true
-            damage_popup = true
+            autosave = false
+            damage_popup = {
+                default = true
+
+                platform_default {
+                    android = false
+                }
+            }
 
             startup_script = {
                 default = ""
@@ -402,6 +467,50 @@ DOC
                 "f", "g", "h", "i", "j",
                 "k", "l", "m", "n", "o",
                 "p", "q", "r", "s"]
+        }
+    }
+
+    android = {
+        type = "section"
+        platform = "android"
+        options = {
+            quicksave = true
+            vibrate = true
+
+            vibrate_duration = {
+                default = 8
+                min = 1
+                max = 40
+            }
+
+            hide_navigation = {
+                preload = true
+                default = false
+            }
+
+            quick_action_transparency = {
+                default = 10
+                min = 1
+                max = 20
+            }
+
+            quick_action_size = {
+                default = 24
+                min = 20
+                max = 40
+            }
+
+            quick_action_repeat_start_wait = {
+                default = 10
+                min = 1
+                max = 20
+            }
+
+            quick_action_repeat_wait = {
+                default = 2
+                min = 1
+                max = 20
+            }
         }
     }
 

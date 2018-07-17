@@ -7,6 +7,7 @@
 #include "class.hpp"
 #include "command.hpp"
 #include "config.hpp"
+#include "defines.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "equipment.hpp"
@@ -147,6 +148,22 @@ void text_set()
 
 void show_quick_menu()
 {
+    int tx, ty;
+
+    // On Android, draw the menu in the center of the screen.
+    // Otherwise, it would be obscured by the keypad in landscape
+    // mode.
+    if (defines::is_android)
+    {
+        tx = (windoww / 2) - 100;
+        ty = (windowh / 2) - 100;
+    }
+    else
+    {
+        tx = 50;
+        ty = windowh - 255;
+    }
+
     page = quickpage;
     listmax = 0;
     snd(5);
@@ -298,8 +315,6 @@ label_2698:
     t = 0;
 label_2699_internal:
     font(12 + sizefix - en * 2);
-    tx = 50;
-    ty = windowh - 255;
     x(0) = 25;
     x(1) = 50;
     x(2) = 50;

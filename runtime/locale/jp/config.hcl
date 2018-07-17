@@ -119,6 +119,21 @@ locale {
                     name = "画面の大きさ*"
                     # Variants are injected at runtime.
                 }
+                orientation {
+                    name = "ローテーション"
+                    variants {
+                        sensor_landscape = "横向き (自動)"
+                        sensor_portrait = "縦向き (自動)"
+                        sensor = "自動回転"
+                        landscape = "横向き"
+                        portrait = "縦向き"
+                        reverse_landscape = "横向き (反転)"
+                        reverse_portrait = "縦向き (反転)"
+                    }
+                }
+                window_mode {
+                    name = "ウィンドウの大きさ*"
+                }
                 high_quality_shadows {
                     name = "光源の描写"
                     yes_no = core.locale.config.common.yes_no.kougashitsu_teigashitsu
@@ -130,6 +145,9 @@ locale {
                 heartbeat {
                     name = "心臓の音"
                     yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
+                }
+                heartbeat_threshold {
+                    name = "心臓の音の敷居"
                 }
                 skip_random_event_popups {
                     name = "イベントの短縮"
@@ -335,6 +353,42 @@ locale {
                     yes_no = core.locale.config.common.yes_no.ari_nashi
                 }
                 startup_script {
+                }
+            }
+
+            android {
+                name = "アンドロイド設定"
+
+                vibrate {
+                    name = "振動"
+                }
+
+                vibrate_duration {
+                    name = "振動の期間"
+                }
+
+                hide_navigation {
+                    name = "ナビーバーの非表示*"
+                }
+
+                quicksave {
+                    name = "中断した時のセーブ"
+                }
+
+                quick_action_transparency {
+                    name = "ボタンの透明度"
+                }
+
+                quick_action_size {
+                    name = "ボタンのサイズ"
+                }
+
+                quick_action_repeat_start_wait {
+                    name = "ボタンウェイト(開始)"
+                }
+
+                quick_action_repeat_wait {
+                    name = "ボタンウェイト"
                 }
             }
         }

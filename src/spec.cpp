@@ -101,7 +101,6 @@ void object::visit(const hcl::Value& value,
     else
     {
         item i = visit_bare_value(value, current_key, hcl_file);
-        post_visit_bare_value(current_key, i);
         items.emplace(current_key, i);
     }
 }
@@ -111,6 +110,8 @@ item object::visit_bare_value(const hcl::Value& default_value,
                             const std::string& hcl_file)
 {
     item i;
+
+    pre_visit_bare_value(current_key, default_value);
 
     if (default_value.is<bool>())
     {
@@ -137,6 +138,8 @@ void object::visit_item(const hcl::Object& item,
                       const std::string& hcl_file)
 {
     optional<spec::item> i;
+
+    pre_visit_item(current_key, item);
 
     if (item.find("type") != item.end())
     {
@@ -185,7 +188,6 @@ void object::visit_item(const hcl::Object& item,
         throw spec_error(hcl_file, current_key, "Could not parse value.");
     }
 
-    post_visit_item(current_key, item);
     items.emplace(current_key, *i);
 }
 
@@ -193,11 +195,14 @@ section_def object::visit_section(const hcl::Object& section,
                                 const std::string& current_key,
                                 const std::string& hcl_file)
 {
+    pre_visit_section(current_key, section);
+
     if (section.find("options") == section.end())
     {
         throw spec_error(hcl_file, current_key, "Section has no field named \"options\".");
     }
     const hcl::Object& options = section.at("options").as<hcl::Object>();
+
     return visit_object(options, current_key, hcl_file);
 }
 

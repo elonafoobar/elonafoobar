@@ -1,4 +1,5 @@
 #include "input.hpp"
+#include "touch_input.hpp"
 #include <cassert>
 #include <algorithm>
 #include <iostream>
@@ -161,6 +162,7 @@ key sdlkey2key(::SDL_Keycode k)
     case SDLK_KP_PLUSMINUS: return key::keypad_plusminus;
     case SDLK_KP_ENTER: return key::keypad_enter;
     case SDLK_KP_EQUALS: return key::keypad_equal;
+    case SDLK_AC_BACK: return key::android_back;
     default: return key::none;
     }
 }
@@ -311,6 +313,28 @@ bool input::is_ime_active() const
 }
 
 
+
+void input::show_soft_keyboard()
+{
+    _is_ime_active = true;
+    ::SDL_StartTextInput();
+}
+
+void input::hide_soft_keyboard()
+{
+    ::SDL_StopTextInput();
+    _is_ime_active = false;
+}
+
+void input::toggle_soft_keyboard()
+{
+    if (::SDL_IsTextInputActive())
+        hide_soft_keyboard();
+    else
+        show_soft_keyboard();
+}
+
+
 void input::disable_numlock()
 {
     // SDL always reports numlock as being off when the program
@@ -344,11 +368,46 @@ void input::restore_numlock()
 
 void input::_update()
 {
+    // Check for touched Android quick actions that send keypresses.
+    if (_last_quick_action_key)
+    {
+        _quick_action_key_repeat++;
+
+        if (_quick_action_key_repeat == 0 ||
+            (_quick_action_key_repeat > _quick_action_repeat_start_wait
+                && _quick_action_key_repeat % _quick_action_repeat_wait))
+        {
+            _keys[static_cast<size_t>(*_last_quick_action_key)]._press();
+        }
+    }
+
     for (auto&& key : _keys)
     {
+        if (key.was_released_immediately() && key.repeat() == 0)
+        {
+            key._release();
+        }
         if (key.is_pressed())
         {
             key._increase_repeat();
+        }
+    }
+
+    // Check for touched Android quick actions that send text inputs
+    // instead of key presses.
+    if (_last_quick_action_text)
+    {
+        // Keywait has to be emulated here because SDL_TextInputEvent
+        // would usually be spaced apart for the specified text input
+        // delay at the OS level, but there is no such mechanism for
+        // on-screen quick actions.
+        _quick_action_text_repeat++;
+
+        if (_quick_action_text_repeat == 0 ||
+            (_quick_action_text_repeat > _quick_action_repeat_start_wait
+                && _quick_action_text_repeat % _quick_action_repeat_wait))
+        {
+            _text = *_last_quick_action_text;
         }
     }
 }
@@ -366,13 +425,33 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
     if (k == key::none)
         return;
 
+    auto& the_key = _keys[static_cast<size_t>(k)];
     if (event.state == SDL_PRESSED)
     {
-        _keys[static_cast<size_t>(k)]._press();
+        the_key._press();
     }
     else
     {
-        _keys[static_cast<size_t>(k)]._release();
+        // On Android, certain keys in the software keyboard seem to
+        // be pressed then released immediately after (backspace,
+        // return) such that the press and release events come in the
+        // same event polling cycle. In that case, mark the key as
+        // pressed but immediately released, and allow it to be
+        // detected for a single frame before releasing it in
+        // input::update().
+        if (the_key.is_pressed() && the_key.repeat() == -1)
+        {
+            the_key._release_immediately();
+        }
+        else
+        {
+            the_key._release();
+
+            if (k == key::android_back)
+            {
+                toggle_soft_keyboard();
+            }
+        }
     }
 
     using tuples_t = std::tuple<key, key, key>[];
@@ -416,6 +495,55 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
     _is_ime_active = true;
 }
 
+
+void input::_handle_event(const ::SDL_TouchFingerEvent& event)
+{
+    bool release_key = false;
+    bool stop_text = false;
+
+    touch_input::instance().on_touch_event(event);
+
+    auto action = touch_input::instance().last_touched_quick_action();
+
+    if (action)
+    {
+        if (action->key)
+        {
+            // Keypress action
+            if (_last_quick_action_key && *_last_quick_action_key != action->key)
+            {
+                _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
+            }
+
+            _keys[static_cast<size_t>(*action->key)]._press();
+
+            _last_quick_action_key = action->key;
+            stop_text = true;
+        }
+        else
+        {
+            _last_quick_action_text = action->text;
+            release_key = true;
+        }
+    }
+    else
+    {
+        stop_text = true;
+        release_key = true;
+    }
+
+    if (release_key && _last_quick_action_key)
+    {
+        _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
+        _last_quick_action_key = none;
+        _quick_action_key_repeat = -1;
+    }
+    if (stop_text)
+    {
+        _last_quick_action_text = none;
+        _quick_action_text_repeat = -1;
+    }
+}
 
 
 } // namespace snail

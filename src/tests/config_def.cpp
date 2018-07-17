@@ -83,3 +83,79 @@ config def {
     REQUIRE(def.get_metadata("core.config.baz").translate_variants == true);
     REQUIRE(def.get_metadata("core.config.hoge").translate_variants == false);
 }
+
+TEST_CASE("Test metadata: platform", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config def {
+    foo = "bar"
+    baz = {
+        default = "quux"
+        platform = "desktop"
+    }
+    hoge = {
+        default = "piyo"
+        platform = "android"
+    }
+    fuga = {
+        default = "hogera"
+        platform = "blah"
+    }
+}
+)");
+
+    REQUIRE(def.get_metadata("core.config.foo").platform == config_def::option_platform::all);
+    REQUIRE(def.get_metadata("core.config.baz").platform == config_def::option_platform::desktop);
+    REQUIRE(def.get_metadata("core.config.hoge").platform == config_def::option_platform::android);
+    REQUIRE(def.get_metadata("core.config.fuga").platform == config_def::option_platform::all);
+}
+
+TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config def {
+    foo = false
+    bar = {
+        default = "baz"
+        platform_default {
+            desktop = "hoge"
+        }
+    }
+    baz = {
+        default = "quux"
+        platform_default {
+            android = "fuga"
+        }
+    }
+}
+)");
+
+    REQUIRE(static_cast<bool>(def.get_metadata("core.config.foo").default_value) == false);
+    REQUIRE(def.get_metadata("core.config.bar").default_value->as<std::string>() == "hoge");
+    REQUIRE(static_cast<bool>(def.get_metadata("core.config.baz").default_value) == false);
+}
+
+TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config def {
+    foo = "bar"
+    baz = {
+        default = "quux"
+        platform = "desktop"
+    }
+    hoge = {
+        default = "piyo"
+        platform = "android"
+    }
+    fuga = {
+        default = "hogera"
+        platform = "blah"
+    }
+}
+)");
+
+    REQUIRE(def.get_metadata("core.config.foo").is_visible() == true);
+    REQUIRE(def.get_metadata("core.config.hoge").is_visible() == false);
+    REQUIRE(def.get_metadata("core.config.baz").is_visible() == true);
+}

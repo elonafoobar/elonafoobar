@@ -7,6 +7,8 @@
 #include "elona.hpp"
 #include "range.hpp"
 #include "snail/application.hpp"
+#include "snail/android.hpp"
+#include "snail/touch_input.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
 #include "hcl.hpp"
@@ -36,6 +38,15 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 }
 
 
+static void write_default_config(const fs::path& location)
+{
+    std::ofstream out{location.native(), std::ios::binary};
+    hcl::Object object;
+    object["config"] = hcl::Object();
+    object["config"]["core"] = hcl::Object();
+    out << object << std::endl;
+}
+
 
 /***
  * Initializes the list of available display modes. To be called after
@@ -52,7 +63,6 @@ static void inject_display_modes(config& conf)
 
     bool config_display_mode_found = false;
     int index = 0;
-    int default_display_mode_index = 0;
 
     for (const auto pair : display_modes)
     {
@@ -65,12 +75,6 @@ static void inject_display_modes(config& conf)
         if (pair.first == current_display_mode)
         {
             config_display_mode_found = true;
-        }
-        // If this is the default display mode the application
-        // requested, mark its index for later.
-        else if (pair.first == default_display_mode)
-        {
-            default_display_mode_index = index;
         }
         index++;
     }
@@ -156,6 +160,40 @@ static void inject_languages(config& conf)
 
     conf.inject_enum("core.config.language.language", locales, spec::unknown_enum_variant);
 }
+
+static std::map<std::string, snail::android::orientation> orientations =
+{
+    {"sensor_landscape",   snail::android::orientation::sensor_landscape},
+    {"sensor_portait",     snail::android::orientation::sensor_portrait},
+    {"sensor",             snail::android::orientation::sensor},
+    {"landscape",          snail::android::orientation::landscape},
+    {"portrait",           snail::android::orientation::portrait},
+    {"reverse_landscape",  snail::android::orientation::reverse_landscape},
+    {"reverse_portrait",   snail::android::orientation::reverse_portrait}
+};
+
+static void convert_and_set_requested_orientation(std::string variant)
+{
+    auto it = orientations.find(variant);
+    if (it == orientations.end())
+        return;
+
+    snail::android::set_requested_orientation(it->second);
+}
+
+static void set_touch_quick_action_transparency(int factor)
+{
+    float amount = (float)factor * 0.05f;
+    snail::touch_input::instance().set_quick_action_transparency(amount);
+}
+
+static void set_touch_quick_action_size(int factor)
+{
+    float size = (float)factor * 0.025f;
+    snail::touch_input::instance().set_base_quick_action_size(size);
+    snail::touch_input::instance().initialize_quick_actions();
+}
+
 
 } // namespace
 
@@ -349,15 +387,16 @@ void load_config(const fs::path& hcl_file)
     CONFIG_KEY("key.message_log"s,      key_msglog);
 
     conf.bind_setter<hcl::List>("core.config.key.key_set",
-        [&](auto values) {
-                for_each_with_index(
-                    std::begin(values),
-                    std::end(values),
-                    [&](auto index, hcl::Value value) {
-                        std::string s = value.as<std::string>();
-                        key_select(index) = s;
-                    });
-            });
+        [&](auto values)
+        {
+            for_each_with_index(
+                std::begin(values),
+                std::end(values),
+                [&](auto index, hcl::Value value) {
+                    std::string s = value.as<std::string>();
+                    key_select(index) = s;
+                });
+        });
 
     conf.bind_setter<std::string>("core.config.input.assign_z_key",
         [&](auto value) {
@@ -385,6 +424,19 @@ void load_config(const fs::path& hcl_file)
                 key_inventory = u8"x"s;
                 key_quickinv = u8"X"s;
             }
+        });
+
+    conf.bind_setter<std::string>("core.config.screen.orientation",
+                                  &convert_and_set_requested_orientation);
+
+    conf.bind_setter<int>("core.config.android.quick_action_repeat_start_wait",
+        [](auto value){
+            snail::input::instance().set_quick_action_repeat_start_wait(value);
+        });
+
+    conf.bind_setter<int>("core.config.android.quick_action_repeat_wait",
+        [](auto value){
+            snail::input::instance().set_quick_action_repeat_wait(value);
         });
 
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
@@ -442,9 +494,11 @@ void load_config(const fs::path& hcl_file)
         key_ammo = u8"A"s;
         conf.set("core.config.key.ammo", key_ammo);
     }
+
+    conf.write();
 }
 
-void load_config2(const fs::path& hcl_file)
+void load_config_pre_app_init(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 
@@ -459,6 +513,7 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("balance.extra_race"s,  bool,        config::instance().extrarace);
     CONFIG_OPTION("balance.extra_class"s, bool,        config::instance().extraclass);
     CONFIG_OPTION("input.joypad"s,        bool,        config::instance().joypad);
+    CONFIG_OPTION("input.key_wait"s,      int,         config::instance().keywait);
     CONFIG_OPTION("ui.msg_line"s,         int,         inf_msgline);
     CONFIG_OPTION("ui.tile_size"s,        int,         inf_tiles);
     CONFIG_OPTION("ui.font_size"s,        int,         inf_mesfont);
@@ -472,8 +527,22 @@ void load_config2(const fs::path& hcl_file)
     CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
 
+    conf.bind_setter<int>("core.config.android.quick_action_size",
+                          &set_touch_quick_action_size);
+
+    conf.bind_setter<int>("core.config.android.quick_action_transparency",
+                          &set_touch_quick_action_transparency);
+
+    if (!fs::exists(hcl_file))
+    {
+        write_default_config(hcl_file);
+    }
+
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), true);
+
+    snail::android::set_navigation_bar_visibility(
+        !conf.get<bool>("core.config.android.hide_navigation"));
 }
 
 #undef CONFIG_OPTION
@@ -670,19 +739,24 @@ void config::write()
     {
         std::string key = pair.first;
         hcl::Value value = pair.second;
-        hcl::Value* current = parent;
+
+        // Don't save hidden options if their value is the same as the default.
+        if (!def.get_metadata(key).is_visible() && value == def.get_default(key))
+        {
+            continue;
+        }
 
         // Don't save injected enum values that are still unknown
         // (though this should never happen)
         if (def.is<spec::enum_def>(key)
             && value.as<std::string>() == spec::unknown_enum_variant)
         {
-            ELONA_LOG("Injected enum value was unknown on save: " << key);
             continue;
         }
 
         size_t pos = 0;
         std::string token;
+        hcl::Value* current = parent;
 
         // Function to split the flat key ("core.config.some.option")
         // on the next period and set the token to the split section

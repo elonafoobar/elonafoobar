@@ -15,12 +15,13 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "optional.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "optional.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "snail/android.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -552,15 +553,23 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         }
         if (victim == 0)
         {
-            if (victim.max_hp / 4 > victim.hp)
+            if (config::instance().sound)
             {
-                if (config::instance().sound)
+                if (config::instance().heart)
                 {
-                    if (config::instance().heart == 1)
+                    int threshold =
+                        config::instance().get<int>("core.config.screen.heartbeat_threshold");
+                    if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
                         {
                             snd(32);
+
+                            if (config::instance()
+                                .get<bool>("core.config.android.vibrate"))
+                            {
+                                snail::android::vibrate_pulse();
+                            }
                         }
                     }
                 }

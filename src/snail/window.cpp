@@ -15,6 +15,13 @@ void window::move_to_center()
         initial_position::position_centered);
 }
 
+std::pair<int, int> window::get_size()
+{
+    int width, height;
+    ::SDL_GetWindowSize(ptr(), &width, &height);
+    return {width, height};
+}
+
 void window::set_size(int width, int height)
 {
     ::SDL_SetWindowSize(ptr(), width, height);

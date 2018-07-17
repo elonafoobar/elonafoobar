@@ -1,3 +1,6 @@
+#ifdef ANDROID
+#include "../renderer.hpp"
+#endif
 #include "../detail/sdl.hpp"
 #include <iostream>
 #include <sstream>
@@ -94,7 +97,8 @@ rect renderer::render_text(
     const std::string& text,
     int x,
     int y,
-    const color& color)
+    const color& color,
+    double scale)
 {
     if (text.empty())
         return rect{x, y, 0, 0};
@@ -103,11 +107,12 @@ rect renderer::render_text(
         _font.ptr(), text.c_str(), detail::to_sdl_color(color)));
     auto texture =
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr(), surface));
+    detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));
 
     int x_;
     int y_;
-    auto width = surface->w;
-    auto height = surface->h;
+    int width = static_cast<int>(static_cast<double>(surface->w) * scale);
+    int height = static_cast<int>(static_cast<double>(surface->h) * scale);
 
     switch (_text_alignment)
     {
@@ -137,7 +142,8 @@ rect renderer::render_text_with_shadow(
     int x,
     int y,
     const color& text_color,
-    const color& shadow_color)
+    const color& shadow_color,
+    double scale)
 {
     // Render shadow.
     for (int dy : {-1, 0, 1})
@@ -146,12 +152,12 @@ rect renderer::render_text_with_shadow(
         {
             if (dx == 0 && dy == 0)
                 continue;
-            render_text(text, x + dx, y + dy, shadow_color);
+            render_text(text, x + dx, y + dy, shadow_color, scale);
         }
     }
 
     // Render text.
-    return render_text(text, x, y, text_color);
+    return render_text(text, x, y, text_color, scale);
 }
 
 

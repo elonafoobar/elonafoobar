@@ -121,6 +121,21 @@ locale {
                     name = "Screen Resolution*"
                     # Variants are injected at runtime.
                 }
+                orientation {
+                    name = "Screen Orientation"
+                    variants {
+                        sensor_landscape = "Landscape (Auto)"
+                        sensor_portrait = "Portrait (Auto)"
+                        sensor = "Any"
+                        landscape = "Landscape"
+                        portrait = "Portrait"
+                        reverse_landscape = "Reverse Landscape"
+                        reverse_portrait = "Reverse Portrait"
+                    }
+                }
+                window_mode {
+                    name = "Window Size*"
+                }
                 high_quality_shadows {
                     name = "Shadow Quality"
                     doc = "Render shadows at higher quality."
@@ -134,6 +149,10 @@ locale {
                 heartbeat {
                     name = "Heartbeat Sound"
                     doc = "Play heartbeat sound when health is low."
+                }
+                heartbeat_threshold {
+                    name = "Heartbeat Threshold"
+                    doc = "% of HP remaining to play heartbeat sound at."
                 }
                 skip_random_event_popups {
                     name = "Skip Random Events"
@@ -401,6 +420,51 @@ DOC
 Run a script in the data/script/ folder at startup.
 Provide a script's name, like "my_script.lua" for "data/script/my_script.lua".
 DOC
+                }
+            }
+
+            android {
+                name = "Android Setting"
+
+                vibrate {
+                    name = "Vibrate"
+                    doc = <<DOC
+Vibrate on important events/low health.
+DOC
+                }
+
+                vibrate_duration {
+                    name = "Vibrate Duration"
+                }
+
+                hide_navigation {
+                    name = "Hide Nav Buttons*"
+                    doc = <<DOC
+Hides the software navigation buttons for handsets without hardware navigation buttons.
+DOC
+                }
+
+                quicksave {
+                    name = "Save On Suspend"
+                    doc = <<DOC
+Quicksave the game if you're being queried for input and app focus is lost.
+DOC
+                }
+
+                quick_action_transparency {
+                    name = "Quick Action Transp."
+                }
+
+                quick_action_size {
+                    name = "Quick Action Size"
+                }
+
+                quick_action_repeat_start_wait {
+                    name = "Quick Action Repeat Wait"
+                }
+
+                quick_action_repeat_wait {
+                    name = "Quick Action Wait"
                 }
             }
         }

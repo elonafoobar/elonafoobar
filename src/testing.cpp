@@ -103,7 +103,7 @@ void pre_init()
     const fs::path config_file = filesystem::dir::exe() / "tests/data/config.hcl";
 
     config::instance().init(config_def_file);
-    load_config2(config_file);
+    load_config_pre_app_init(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 

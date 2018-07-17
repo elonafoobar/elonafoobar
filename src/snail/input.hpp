@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include "../lib/noncopyable.hpp"
+#include "../optional.hpp"
 #include "detail/sdl.hpp"
 
 
@@ -13,11 +14,16 @@ namespace snail
 
 
 
-struct button
+struct button : public lib::noncopyable
 {
     bool is_pressed() const noexcept
     {
         return _is_pressed;
+    }
+
+    bool was_released_immediately() const noexcept
+    {
+        return _was_released_immediately;
     }
 
     int repeat() const noexcept
@@ -39,6 +45,12 @@ struct button
     }
 
 
+    void _release_immediately()
+    {
+        _was_released_immediately = true;
+    }
+
+
     void _increase_repeat()
     {
         ++_repeat;
@@ -47,6 +59,7 @@ struct button
 
 private:
     bool _is_pressed = false;
+    bool _was_released_immediately = false;
     int _repeat = -1;
 };
 
@@ -228,6 +241,8 @@ enum class key
     keypad_enter,
     keypad_equal,
 
+    android_back,
+
     _size,
 };
 
@@ -260,6 +275,9 @@ public:
 
     bool is_ime_active() const;
 
+    void show_soft_keyboard();
+    void hide_soft_keyboard();
+    void toggle_soft_keyboard();
 
     /***
      * Disables NumLock to prevent strange Windows-specific behavior when
@@ -281,11 +299,22 @@ public:
      */
     void restore_numlock();
 
-    std::string get_text()
+    std::string pop_text()
     {
         std::string ret = _text;
         _text.clear();
         return ret;
+    }
+
+
+    void set_quick_action_repeat_start_wait(int wait) noexcept
+    {
+        _quick_action_repeat_start_wait = wait;
+    }
+
+    void set_quick_action_repeat_wait(int wait) noexcept
+    {
+        _quick_action_repeat_wait = wait;
     }
 
 
@@ -299,6 +328,7 @@ public:
     void _handle_event(const ::SDL_KeyboardEvent& event);
     void _handle_event(const ::SDL_TextInputEvent& event);
     void _handle_event(const ::SDL_TextEditingEvent& event);
+    void _handle_event(const ::SDL_TouchFingerEvent& event);
 
 
 private:
@@ -306,6 +336,16 @@ private:
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
+
+    // Members for handling text input of on-screen quick action
+    // buttons on Android. They need to be here since quick actions
+    // can modify inputted text.
+    optional<snail::key> _last_quick_action_key = none;
+    optional<std::string> _last_quick_action_text = none;
+    int _quick_action_key_repeat = -1;
+    int _quick_action_text_repeat = -1;
+    int _quick_action_repeat_start_wait = 10;
+    int _quick_action_repeat_wait = 2;
 
     input() = default;
 };

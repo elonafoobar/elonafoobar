@@ -24,6 +24,19 @@ namespace snail
 class application final : public lib::noncopyable
 {
 public:
+    enum class screen_orientation
+    {
+        portrait,
+        landscape
+    };
+
+    static const constexpr bool is_android =
+#ifdef ANDROID
+        true;
+#else
+        false;
+#endif
+
     size_t frame() const noexcept
     {
         return _frame;
@@ -39,6 +52,38 @@ public:
     int height() const noexcept
     {
         return _height;
+    }
+
+    int physical_width() const noexcept
+    {
+        return _physical_width;
+    }
+
+    int physical_height() const noexcept
+    {
+        return _physical_height;
+    }
+
+    float dpi() const noexcept
+    {
+        return _dpi;
+    }
+
+    screen_orientation orientation() const noexcept
+    {
+        return _orientation;
+    }
+
+    rect window_pos() const noexcept
+    {
+        return _window_pos;
+    }
+
+    bool was_focus_lost_just_now() noexcept
+    {
+        bool result = _focus_lost_just_now;
+        _focus_lost_just_now = false;
+        return result;
     }
 
     const std::string& title() const noexcept
@@ -123,17 +168,28 @@ public:
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
 
+    // For Android
+    void set_subwindow_display_mode(const std::string&);
+
 
 private:
     detail::sdl_core _sdl_core;
     detail::sdl_ttf _sdl_ttf;
     detail::sdl_image _sdl_image;
     detail::sdl_mixer _sdl_mixer;
+
     int _width;
     int _height;
+    int _physical_width;
+    int _physical_height;
+    float _dpi;
     std::string _title;
+    screen_orientation _orientation;
+    rect _window_pos; // Window draw position for Android
+
     size_t _frame = 0;
     bool _will_quit = false;
+    bool _focus_lost_just_now = false;
     std::unique_ptr<window> _window;
     std::unique_ptr<renderer> _renderer;
     scene_manager _scene_manager;
@@ -145,9 +201,17 @@ private:
 
     application() = default;
 
+    void initialize_dpi();
+
     void main_loop();
     void render_scene(std::shared_ptr<scene_base> scene);
+    void update_orientation();
     void handle_event(const ::SDL_Event& event);
+
+    void handle_window_event(const ::SDL_WindowEvent& event);
+    void on_size_changed(const ::SDL_WindowEvent& event);
+
+    rect calculate_android_window_pos();
 };
 
 
