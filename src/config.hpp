@@ -6,7 +6,7 @@
 #include "elona.hpp"
 #include "log.hpp"
 #include "snail/window.hpp"
-#include <map>
+#include "thirdparty/ordered_map/ordered_map.h"
 #include <string>
 #include <iostream>
 
@@ -92,8 +92,6 @@ public:
     int walkwait;
     bool windowanime;
     bool wizard;
-    bool xkey;
-    bool zkey;
 
     bool use_autopick;
     bool use_autopick_in_home;
@@ -226,6 +224,18 @@ public:
         }
     }
 
+    void run_setter(const std::string& key)
+    {
+        if (storage.find(key) == storage.end())
+        {
+            return;
+        }
+        if (setters.find(key) != setters.end())
+        {
+            setters[key](storage.at(key));
+        }
+    }
+
     const config_def& get_def() const { return def; }
 
 private:
@@ -236,9 +246,9 @@ private:
     bool verify_types(const hcl::Value&, const std::string&);
 
     config_def def;
-    std::map<std::string, hcl::Value> storage;
-    std::map<std::string, std::function<hcl::Value(void)>> getters;
-    std::map<std::string, std::function<void(const hcl::Value&)>> setters;
+    tsl::ordered_map<std::string, hcl::Value> storage;
+    tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
+    tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>> setters;
 };
 
 

@@ -2,8 +2,8 @@
 #include "defines.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
 #include "snail/application.hpp"
+#include "hcl.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>

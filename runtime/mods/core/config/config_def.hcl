@@ -1,9 +1,39 @@
 config def {
+    game = {
+        type = "section"
+        options = {
+            extra_help = true
+            attack_neutral_npcs = false
+
+            default_save = {
+                type = "runtime_enum"
+                default = ""
+                preload = true
+                translate_variants = false
+            }
+
+            story = true
+            hide_autoidentify = false
+            hide_shop_updates = false
+        }
+    }
+
     screen = {
         type = "section"
         options = {
+            sound = {
+                default = true
+                preload = true
+            }
+
+            music = {
+                type = "enum"
+                variants = ["none", "direct_music", "mci"]
+                default = "direct_music"
+                preload = true
+            }
+          
             fullscreen = {
-                platform = "desktop"
                 type = "enum"
                 preload = true
                 variants = ["windowed", "fullscreen", "desktop_fullscreen"]
@@ -11,7 +41,6 @@ config def {
             }
 
             display_mode = {
-                platform = "desktop"
                 type = "runtime_enum"
                 translate_variants = false
                 preload = true
@@ -38,18 +67,6 @@ config def {
                     "landscape", "portrait",
                     "reverse_landscape", "reverse_portrait"]
                 default = "sensor_landscape"
-            }
-
-            music = {
-                type = "enum"
-                variants = ["none", "direct_music", "mci"]
-                default = "direct_music"
-                preload = true
-            }
-
-            sound = {
-                default = true
-                preload = true
             }
 
             high_quality_shadows = true
@@ -127,8 +144,8 @@ config def {
             window_anime = false
 
             screen_refresh = {
-                default = 2
-                min = 0
+                default = 3
+                min = 1
                 max = 15
 
                 platform_default {
@@ -138,81 +155,26 @@ config def {
         }
     }
 
-
-    font = {
-        type = "section"
-        options = {
-            japanese = "Kochi Gothic.ttf"
-            english = "Bitstream Sans Vera Mono.ttf"
-
-            vertical_offset = {
-                default = -1
-                min = -10
-                max = 10
-            }
-            size_adjustment = {
-                default = 1
-                min = -5
-                max = 5
-            }
-        }
-    }
-
-    game = {
-        type = "section"
-        options = {
-            default_save = {
-                type = "runtime_enum"
-                default = ""
-                preload = true
-                translate_variants = false
-            }
-
-            attack_neutral_npcs = false
-            story = true
-            extra_help = true
-            hide_autoidentify = false
-            hide_shop_updates = false
-        }
-    }
-
-    debug = {
-        type = "section"
-        visible = false
-        options = {
-            wizard = {
-                default = false
-                preload = true
-            }
-            noa_debug = false
-        }
-    }
-
-    message = {
-        type = "section"
-        options = {
-            add_timestamps = false
-
-            transparency = {
-                default = 4
-                min = 0
-                max = 10
-            }
-        }
-    }
-
     input = {
         type = "section"
         options = {
-            joypad = {
-                default = false
-                preload = true
-            }
             autodisable_numlock = true
+
+            assign_z_key = {
+                type = "enum"
+                default = "quick_menu"
+                variants = ["quick_menu", "zap", "none"]
+            }
+
+            assign_x_key = {
+                type = "enum"
+                default = "quick_inv"
+                variants = ["quick_inv", "identify", "none"]
+            }
 
             walk_wait = {
                 default = 5
-                min = 0
+                min = 1
                 max = 10
             }
 
@@ -224,13 +186,13 @@ config def {
 
             run_wait = {
                 default = 2
-                min = 0
+                min = 1
                 max = 10
             }
 
             attack_wait = {
                 default = 4
-                min = 0
+                min = 1
                 max = 10
             }
 
@@ -266,6 +228,43 @@ config def {
                     android = 2
                 }
             }
+
+            joypad = {
+                default = false
+                preload = true
+            }
+        }
+    }
+
+    font = {
+        type = "section"
+        options = {
+            japanese = "Kochi Gothic.ttf"
+            english = "Bitstream Sans Vera Mono.ttf"
+
+            vertical_offset = {
+                default = -1
+                min = -10
+                max = 10
+            }
+            size_adjustment = {
+                default = 1
+                min = -5
+                max = 5
+            }
+        }
+    }
+
+    message = {
+        type = "section"
+        options = {
+            add_timestamps = false
+
+            transparency = {
+                default = 4
+                min = 0
+                max = 10
+            }
         }
     }
 
@@ -285,6 +284,16 @@ config def {
 
             extra_class = {
                 default = false
+                preload = true
+            }
+        }
+    }
+
+    language = {
+        type = "section"
+        options = {
+            language = {
+                type = "runtime_enum"
                 preload = true
             }
         }
@@ -317,15 +326,7 @@ config def {
         }
     }
 
-    language = {
-        type = "section"
-        options = {
-            language = {
-                type = "runtime_enum"
-                preload = true
-            }
-        }
-    }
+    ### Hidden sections
 
     ui = {
         type = "section"
@@ -384,7 +385,7 @@ DOC
                 preload = true
             }
             clock_h = {
-                default = 120
+                default = 96
                 min = 0
                 max = 600
                 preload = true
@@ -508,6 +509,18 @@ DOC
                 min = 1
                 max = 20
             }
+        }
+    }
+
+    debug = {
+        type = "section"
+        visible = false
+        options = {
+            wizard = {
+                default = false
+                preload = true
+            }
+            noa_debug = false
         }
     }
 }

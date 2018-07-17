@@ -282,6 +282,7 @@ typedef std::vector<std::unique_ptr<config_menu>> config_screen;
 
 // Functions for adding items to the config screen.
 
+template <class M>
 static void add_config_menu(const spec_key& key,
                             const i18n_key& menu_name_key,
                             const config_def& def,
@@ -291,7 +292,7 @@ static void add_config_menu(const spec_key& key,
     auto children = def.get_children(key);
     int w = width;
     int h = 165 + (19 * children.size());
-    ret.emplace_back(std::make_unique<config_menu>(i18n::s.get(menu_name_key), w, h));
+    ret.emplace_back(std::make_unique<M>(i18n::s.get(menu_name_key), w, h));
 }
 
 
@@ -402,7 +403,7 @@ void visit_toplevel(config& conf, config_screen& ret)
     i18n_key menu_name_key = locale_key + ".name";
 
     // Add the top level menu.
-    add_config_menu(key, menu_name_key, conf.get_def(), 370, ret);
+    add_config_menu<config_menu>(key, menu_name_key, conf.get_def(), 370, ret);
 
     // Add the names of top-level config menu sections if they are visible.
     for (const auto& section_name : conf.get_def().get_children(key))
@@ -438,7 +439,7 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
     }
 
     // Add the submenu.
-    add_config_menu(key, menu_name_key, conf.get_def(), 440, ret);
+    add_config_menu<config_menu_submenu>(key, menu_name_key, conf.get_def(), 440, ret);
 
     // Visit child config items of this section.
     for (const auto& child : conf.get_def().get_children(key))
@@ -568,28 +569,6 @@ set_option_begin:
     {
         if (reset_page)
         {
-            if (config::instance().zkey == 0)
-            {
-                key_quick = u8"z"s;
-                key_zap = u8"Z"s;
-            }
-            else
-            {
-                key_zap = u8"z"s;
-                key_quick = u8"Z"s;
-            }
-
-            if (config::instance().xkey == 0)
-            {
-                key_quickinv = u8"x"s;
-                key_inventory = u8"X"s;
-            }
-            else
-            {
-                key_inventory = u8"x"s;
-                key_quickinv = u8"X"s;
-            }
-
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
 

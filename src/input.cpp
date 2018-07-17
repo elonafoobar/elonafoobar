@@ -161,13 +161,18 @@ void input_number_dialog(int x, int y, int max_number)
     dx = 8 * 16 + 60;
     font(16 - en * 2);
 
+    if (max_number < 1)
+    {
+        max_number = 1;
+    }
     int number = max_number;
     if (strlen_u(std::to_string(max_number)) >= 3)
     {
         dx += strlen_u(std::to_string(max_number)) * 8;
     }
     boxf(x + 24, y + 4, dx - 42, 35, {0, 0, 0, 127});
-    while (1)
+    inputlog = std::to_string(number);
+    while (true)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
         draw("label_input", x + dx / 2 - 56, y - 32);
@@ -175,7 +180,7 @@ void input_number_dialog(int x, int y, int max_number)
         gcopy(3, 312, 336, 24, 24);
         pos(x + dx - 51, y + 4);
         gcopy(3, 336, 336, 24, 24);
-        const auto inputlog2 = inputlog + u8"(" + max_number + u8")";
+        const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
         pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
         color(255, 255, 255);
         mes(inputlog2);
@@ -225,39 +230,39 @@ void input_number_dialog(int x, int y, int max_number)
         {
             snd(5);
             number -= 100;
-            if (number < 1)
+            while (number < 1)
             {
-                number = 1;
+                number += max_number;
             }
         }
         if (key == key_northeast)
         {
             snd(5);
             number += 100;
-            if (number > max_number)
+            while (number > max_number)
             {
-                number = max_number;
+                number -= max_number;
             }
         }
         if (key == key_southwest)
         {
             snd(5);
             number -= 10;
-            if (number < 1)
+            while (number < 1)
             {
-                number = 1;
+                number += max_number;
             }
         }
         if (key == key_southeast)
         {
             snd(5);
             number += 10;
-            if (number > max_number)
+            while (number > max_number)
             {
-                number = max_number;
+                number -= max_number;
             }
         }
-        inputlog = ""s + number;
+        inputlog = std::to_string(number);
     }
     if (f == -1)
     {

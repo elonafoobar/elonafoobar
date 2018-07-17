@@ -1,5 +1,5 @@
 #pragma once
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include <cassert>
@@ -8,6 +8,7 @@
 #include <vector>
 #include <boost/variant.hpp>
 #include <boost/variant/get.hpp>
+#include "thirdparty/ordered_map/ordered_map.h"
 
 using namespace std::literals::string_literals;
 
@@ -134,7 +135,7 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
 class object
 {
 public:
-    typedef std::map<std::string, item>::const_iterator const_iterator;
+    typedef tsl::ordered_map<std::string, item>::const_iterator const_iterator;
 
     object(std::string name_) : name(name_) {}
     ~object() = default;
@@ -337,7 +338,7 @@ private:
     enum_def visit_enum(const std::string&, const hcl::Object&, const std::string&, const std::string&);
 
     std::string name;
-    std::map<std::string, item> items;
+    tsl::ordered_map<std::string, item> items;
 };
 }
 }

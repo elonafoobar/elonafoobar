@@ -8337,10 +8337,7 @@ turn_result_t step_into_gate()
     }
     if (1 && gdata_wizard == 0)
     {
-        snd(44);
-        save_game();
-        txtef(5);
-        txt(i18n::s.get("core.locale.ui.save"));
+        do_save_game();
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
     --inv[ci].number;
@@ -8357,10 +8354,7 @@ int label_19432()
 label_19431_internal:
     if (1 && gdata_wizard == 0)
     {
-        snd(44);
-        save_game();
-        txtef(5);
-        txt(i18n::s.get("core.locale.ui.save"));
+        do_save_game();
     }
     snd(26);
     listmax = 0;
@@ -10504,6 +10498,15 @@ void load_save_data(const fs::path& base_save_dir)
     refreshspeed(0);
     time_begin = timeGetTime() / 1000;
     return;
+}
+
+
+void do_save_game()
+{
+    snd(44);
+    save_game();
+    txtef(5);
+    txt(i18n::s.get("core.locale.ui.save"));
 }
 
 
@@ -13623,10 +13626,7 @@ void proc_autopick()
             {
                 if (gdata_wizard == 0)
                 {
-                    snd(44);
-                    save_game();
-                    txtef(5);
-                    txt(i18n::s.get("core.locale.ui.save"));
+                    do_save_game();
                 }
             }
             break;

@@ -1345,10 +1345,7 @@ turn_result_t pc_turn(bool advance_time)
             if (gdata_wizard == 0 && gdata_current_map != 40
                 && config::instance().autosave)
             {
-                snd(44);
-                save_game();
-                txtef(5);
-                txt(i18n::s.get("core.locale.ui.save"));
+                do_save_game();
             }
         }
         if (autoturn == 1)

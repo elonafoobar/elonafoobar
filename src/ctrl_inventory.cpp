@@ -1098,7 +1098,6 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.drop.how_many",
                                 inv[ci].number, inv[ci]));
                 display_msg(screenmsgy, 1);
-                inputlog = ""s + inv[ci].number;
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
@@ -1226,7 +1225,6 @@ label_2061_internal:
                                     inv[ci].number, inv[ci]));
                 }
                 display_msg(screenmsgy, 2);
-                inputlog = ""s + inv[ci].number;
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),

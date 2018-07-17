@@ -29,20 +29,24 @@ void msg_write(std::string& message)
 {
     constexpr const auto musical_note = u8"♪";
 
-    for (auto pos = message.find(musical_note); pos != std::string::npos;
-         pos = message.find(musical_note))
+    for (auto pos = strutil::find_widthwise(message, musical_note);
+         pos.first != std::string::npos;
+         pos = strutil::find_widthwise(message, musical_note))
     {
+        auto bytewise_pos = pos.first;
+        auto widthwise_pos = pos.second;
+
         const auto symbol_type =
-            elona::stoi(message.substr(pos + std::strlen(musical_note), 1));
+            elona::stoi(message.substr(bytewise_pos + std::strlen(musical_note), 1));
         if (jp && symbol_type == 0)
         {
             break;
         }
-        message = message.substr(0, pos) + u8"  "
+        message = message.substr(0, bytewise_pos) + u8"  "
             + message.substr(
-                  pos + std::strlen(musical_note) + (symbol_type != 0));
+                  bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
         elona::pos(
-            (message_width + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
         gmode(2);
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);

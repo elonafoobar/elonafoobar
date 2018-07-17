@@ -1,7 +1,7 @@
 #pragma once
 #include "defines.hpp"
 #include "spec.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 
 #include <iostream>
 
