@@ -6,6 +6,9 @@ module "GUI"
 -- @tparam string message the message to print
 function txt(message) end
 
+--- Starts a new message line in the HUD message window.
+function txtnew() end
+
 --- Sets the color of the text printed with GUI.txt.
 --- Valid colors are 0 - 20.
 --- 0 - white
