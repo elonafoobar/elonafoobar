@@ -437,6 +437,7 @@ void load_config(const fs::path& hcl_file)
     conf.bind_setter<int>("core.config.android.quick_action_repeat_wait",
         [](auto value){
             snail::input::instance().set_quick_action_repeat_wait(value);
+        });
 
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);

@@ -32,9 +32,10 @@ config def {
                 default = "direct_music"
                 preload = true
             }
-          
+
             fullscreen = {
                 type = "enum"
+                platform = "desktop"
                 preload = true
                 variants = ["windowed", "fullscreen", "desktop_fullscreen"]
                 default = "windowed"
@@ -42,6 +43,7 @@ config def {
 
             display_mode = {
                 type = "runtime_enum"
+                platform = "desktop"
                 translate_variants = false
                 preload = true
             }
