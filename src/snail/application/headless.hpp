@@ -58,6 +58,11 @@ public:
         return orientation::landscape;
     }
 
+    bool was_focus_lost_just_now() noexcept
+    {
+        return false;
+    }
+
     const std::string& title() const noexcept
     {
         return _title;

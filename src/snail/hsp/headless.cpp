@@ -16,7 +16,7 @@ void mes(const std::string&)
 {
 }
 
-void mesbox(std::string&, bool)
+void mesbox(std::string&, int, bool)
 {
 }
 

@@ -68,7 +68,10 @@ public:
     void set_quick_action_transparency(float amount) noexcept
     {
         _quick_action_transparency = amount;
-        _quick_action_image->set_alpha(quick_action_alpha());
+        if (_quick_action_image)
+        {
+            _quick_action_image->set_alpha(quick_action_alpha());
+        }
     }
 
     void initialize(const fs::path&);

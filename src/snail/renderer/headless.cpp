@@ -70,7 +70,8 @@ rect renderer::render_text_with_shadow(
     int,
     int,
     const color&,
-    const color&)
+    const color&,
+    double)
 {
     return rect{0, 0, 0, 0};
 }
