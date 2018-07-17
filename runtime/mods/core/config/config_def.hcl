@@ -100,8 +100,8 @@ config def {
             window_anime = false
 
             screen_refresh = {
-                default = 2
-                min = 0
+                default = 3
+                min = 1
                 max = 15
             }
         }
@@ -112,9 +112,21 @@ config def {
         options = {
             autodisable_numlock = true
 
+            assign_z_key = {
+                type = "enum"
+                default = "quick_menu"
+                variants = ["quick_menu", "zap", "none"]
+            }
+
+            assign_x_key = {
+                type = "enum"
+                default = "quick_inv"
+                variants = ["quick_inv", "identify", "none"]
+            }
+
             walk_wait = {
                 default = 5
-                min = 0
+                min = 1
                 max = 10
             }
 
@@ -126,13 +138,13 @@ config def {
 
             run_wait = {
                 default = 2
-                min = 0
+                min = 1
                 max = 10
             }
 
             attack_wait = {
                 default = 4
-                min = 0
+                min = 1
                 max = 10
             }
 

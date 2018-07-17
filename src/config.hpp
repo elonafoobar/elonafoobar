@@ -92,8 +92,6 @@ public:
     int walkwait;
     bool windowanime;
     bool wizard;
-    bool xkey;
-    bool zkey;
 
     bool use_autopick;
     bool use_autopick_in_home;
@@ -218,6 +216,18 @@ public:
             ss << def.type_to_string(key) << " expected, got ";
             ss << value;
             throw std::runtime_error(ss.str());
+        }
+    }
+
+    void run_setter(const std::string& key)
+    {
+        if (storage.find(key) == storage.end())
+        {
+            return;
+        }
+        if (setters.find(key) != setters.end())
+        {
+            setters[key](storage.at(key));
         }
     }
 

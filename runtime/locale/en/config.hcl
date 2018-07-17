@@ -244,6 +244,22 @@ DOC
                 autodisable_numlock {
                     name = "Auto-Disable Numlock"
                 }
+                assign_z_key {
+                    name = "Assign z key"
+                    variants {
+                        quick_menu = "Quick menu"
+                        zap = "Zap"
+                        none = "Don't assign"
+                    }
+                }
+                assign_x_key {
+                    name = "Assign x key"
+                    variants {
+                        quick_inv = "Quick Inv"
+                        identify = "Identify"
+                        none = "Don't assign"
+                    }
+                }
                 walk_wait {
                     name = "Walk Speed"
                     doc = "Number of frames to wait between movement commands when walking."

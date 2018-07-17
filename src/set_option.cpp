@@ -568,28 +568,6 @@ set_option_begin:
     {
         if (reset_page)
         {
-            if (config::instance().zkey == 0)
-            {
-                key_quick = u8"z"s;
-                key_zap = u8"Z"s;
-            }
-            else
-            {
-                key_zap = u8"z"s;
-                key_quick = u8"Z"s;
-            }
-
-            if (config::instance().xkey == 0)
-            {
-                key_quickinv = u8"x"s;
-                key_inventory = u8"X"s;
-            }
-            else
-            {
-                key_inventory = u8"x"s;
-                key_quickinv = u8"X"s;
-            }
-
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
 

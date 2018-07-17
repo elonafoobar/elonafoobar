@@ -207,6 +207,22 @@ locale {
                 autodisable_numlock {
                     name = "numlockを自動制御"
                 }
+                assign_z_key {
+                    name = "zキーの割当て"
+                    variants {
+                        quick_menu = "ｸｨｯｸﾒﾆｭｰ"
+                        zap = "道具を振る"
+                        none = "割当なし"
+                    }
+                }
+                assign_x_key {
+                    name = "xキーの割当て"
+                    variants {
+                        quick_inv = "ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"
+                        identify = "道具を調べる"
+                        none = "割当なし"
+                    }
+                }
                 walk_wait {
                     name = "歩きの速さ"
                     formatter = core.locale.config.common.formatter.wait
