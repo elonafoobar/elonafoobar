@@ -63,33 +63,38 @@ locale {
                 wait = "${_1} wait"
             }
         }
+
         menu {
             name = "オプション"
-            language {
-                name = "言語(Language)"
 
-                language {
-                    name = "言語*"
+            game {
+                name = "ゲーム設定"
+                extra_help {
+                    name = "ノルンの冒険ガイド"
+                }
+                attack_neutral_npcs {
+                    name = "非好戦的NPCを攻撃"
+                }
+                default_save {
+                    name = "デフォルトセーブ"
                     variants {
-                        jp = "Japanese"
-                        en = "English"
+                        "" = "使用しない"
                     }
+                }
+                story {
+                    name = "シーンの再生"
+                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
+                }
+                hide_autoidentify {
+                    name = "自然鑑定ﾒｯｾｰｼﾞの非表示"
+                }
+                hide_shop_updates {
+                    name = "店ﾒｯｾｰｼﾞの非表示"
                 }
             }
+
             screen {
                 name = "画面と音の設定"
-                fullscreen {
-                    name = "画面モード*"
-                    variants {
-                        windowed = "ウィンドウ"
-                        fullscreen = "フルスクリーン"
-                        desktop_fullscreen = "フルスクリーン2"
-                    }
-                }
-                display_mode {
-                    name = "画面の大きさ*"
-                    # Variants are injected at runtime.
-                }
                 sound {
                     name = "サウンドの再生*"
                     yes_no = core.locale.config.common.yes_no.ari_nashi
@@ -101,6 +106,18 @@ locale {
                         direct_music = "direct music"
                         mci = "MCI"
                     }
+                }
+                fullscreen {
+                    name = "画面モード*"
+                    variants {
+                        windowed = "ウィンドウ"
+                        fullscreen = "フルスクリーン"
+                        desktop_fullscreen = "フルスクリーン2"
+                    }
+                }
+                display_mode {
+                    name = "画面の大きさ*"
+                    # Variants are injected at runtime.
                 }
                 high_quality_shadows {
                     name = "光源の描写"
@@ -118,6 +135,7 @@ locale {
                     name = "イベントの短縮"
                 }
             }
+
             net {
                 name = "ネット機能の設定"
                 enabled {
@@ -134,6 +152,7 @@ locale {
                     yes_no = core.locale.config.common.yes_no.shiyou_suru_shinai
                 }
             }
+
             anime {
                 name = "アニメ設定"
                 scroll {
@@ -183,61 +202,26 @@ locale {
                 }
             }
 
-            font {
-                name = "フォント設定"
-                vertical_offset {
-                    name = "垂直オフセット"
-                }
-                size_adjustment {
-                    name = "サイズの調整"
-                }
-            }
-
-            game {
-                name = "ゲーム設定"
-                default_save {
-                    name = "デフォルトセーブ"
-                    variants {
-                        "" = "使用しない"
-                    }
-                }
-                attack_neutral_npcs {
-                    name = "非好戦的NPCを攻撃"
-                }
-                story {
-                    name = "シーンの再生"
-                    yes_no = core.locale.config.common.yes_no.saisei_suru_shinai
-                }
-                extra_help {
-                    name = "ノルンの冒険ガイド"
-                }
-                hide_autoidentify {
-                    name = "自然鑑定ﾒｯｾｰｼﾞの非表示"
-                }
-                hide_shop_updates {
-                    name = "店ﾒｯｾｰｼﾞの非表示"
-                }
-            }
-
-            message {
-                name = "メッセージとログ"
-                add_timestamps {
-                    name = "ﾒｯｾｰｼﾞに分表示追加"
-                }
-                transparency {
-                    name = "過去のﾒｯｾｰｼﾞの透過"
-                    formatter = "${_1}*10 %" #TODO
-                }
-            }
-
             input {
                 name = "入力設定"
-                joypad {
-                    name = "ゲームパッド"
-                    yes_no = core.locale.config.common.yes_no.unsupported # core.locale.config.common.yes_no.shiyou_suru_shinai
-                }
                 autodisable_numlock {
                     name = "numlockを自動制御"
+                }
+                assign_z_key {
+                    name = "zキーの割当て"
+                    variants {
+                        quick_menu = "ｸｨｯｸﾒﾆｭｰ"
+                        zap = "道具を振る"
+                        none = "割当なし"
+                    }
+                }
+                assign_x_key {
+                    name = "xキーの割当て"
+                    variants {
+                        quick_inv = "ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"
+                        identify = "道具を調べる"
+                        none = "割当なし"
+                    }
                 }
                 walk_wait {
                     name = "歩きの速さ"
@@ -271,6 +255,31 @@ locale {
                     name = "選択ウェイト(早い)"
                     formatter = core.locale.config.common.formatter.wait
                 }
+                joypad {
+                    name = "ゲームパッド"
+                    yes_no = core.locale.config.common.yes_no.unsupported # core.locale.config.common.yes_no.shiyou_suru_shinai
+                }
+            }
+
+            font {
+                name = "フォント設定"
+                vertical_offset {
+                    name = "垂直オフセット"
+                }
+                size_adjustment {
+                    name = "サイズの調整"
+                }
+            }
+
+            message {
+                name = "メッセージとログ"
+                add_timestamps {
+                    name = "ﾒｯｾｰｼﾞに分表示追加"
+                }
+                transparency {
+                    name = "過去のﾒｯｾｰｼﾞの透過"
+                    formatter = "${_1}*10 %" #TODO
+                }
             }
 
             balance {
@@ -284,6 +293,18 @@ locale {
                 }
                 extra_class {
                     name = "Extra職業"
+                }
+            }
+
+            language {
+                name = "言語(Language)"
+
+                language {
+                    name = "言語*"
+                    variants {
+                        jp = "Japanese"
+                        en = "English"
+                    }
                 }
             }
 

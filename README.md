@@ -89,9 +89,10 @@ contents in this repository. Note that images, sounds and fonts are not included
 
 ## Thirdparty libraries
 
-* Catch2: see thirdparty/catch2/LICENSE.
-* hayai: see thirdparty/hayai/LICENSE.
-* sol2: see thirdparty/sol2/LICENSE.
+* Catch2: see src/thirdparty/catch2/LICENSE.
+* hayai: see src/thirdparty/hayai/LICENSE.
+* sol2: see src/thirdparty/sol2/LICENSE.
+* ordered_map: see src/thirdparty/ordered_map/LICENSE.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
 
 ## Lua libraries

@@ -9,7 +9,7 @@
 #include "snail/application.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
-#include "thirdparty/microhcl/hcl.hpp"
+#include "hcl.hpp"
 
 
 namespace
@@ -267,6 +267,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("input.attack_wait"s,               int,         config::instance().attackwait);
     CONFIG_OPTION("input.autodisable_numlock"s,       bool,        config::instance().autonumlock);
     CONFIG_OPTION("input.key_wait"s,                  int,         config::instance().keywait);
+    CONFIG_OPTION("input.walk_wait"s,                 int,         config::instance().walkwait);
     CONFIG_OPTION("input.run_wait"s,                  int,         config::instance().runwait);
     CONFIG_OPTION("input.start_run_wait"s,            int,         config::instance().startrun);
     CONFIG_OPTION("input.select_wait"s,               int,         config::instance().select_wait);
@@ -348,16 +349,43 @@ void load_config(const fs::path& hcl_file)
     CONFIG_KEY("key.message_log"s,      key_msglog);
 
     conf.bind_setter<hcl::List>("core.config.key.key_set",
-                    [&](auto values)
-                        {
-                            for_each_with_index(
-                                std::begin(values),
-                                std::end(values),
-                                [&](auto index, hcl::Value value) {
-                                    std::string s = value.as<std::string>();
-                                    key_select(index) = s;
-                                });
-                        });
+        [&](auto values) {
+                for_each_with_index(
+                    std::begin(values),
+                    std::end(values),
+                    [&](auto index, hcl::Value value) {
+                        std::string s = value.as<std::string>();
+                        key_select(index) = s;
+                    });
+            });
+
+    conf.bind_setter<std::string>("core.config.input.assign_z_key",
+        [&](auto value) {
+            if (value == "quick_menu")
+            {
+                key_quick = u8"z"s;
+                key_zap = u8"Z"s;
+            }
+            else if (value == "zap")
+            {
+                key_zap = u8"z"s;
+                key_quick = u8"Z"s;
+            }
+        });
+
+    conf.bind_setter<std::string>("core.config.input.assign_x_key",
+        [&](auto value) {
+            if (value == "quick_inv")
+            {
+                key_quickinv = u8"x"s;
+                key_inventory = u8"X"s;
+            }
+            else if (value == "identify")
+            {
+                key_inventory = u8"x"s;
+                key_quickinv = u8"X"s;
+            }
+        });
 
     std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
@@ -365,34 +393,14 @@ void load_config(const fs::path& hcl_file)
     key_prev = key_northwest;
     key_next = key_northeast;
 
-    if (config::instance().zkey == 0)
-    {
-        key_quick = u8"z"s;
-        key_zap = u8"Z"s;
-    }
-    else if (config::instance().zkey == 1)
-    {
-        key_zap = u8"z"s;
-        key_quick = u8"Z"s;
-    }
-    if (config::instance().xkey == 0)
-    {
-        key_quickinv = u8"x"s;
-        key_inventory = u8"X"s;
-    }
-    else if (config::instance().xkey == 1)
-    {
-        key_inventory = u8"x"s;
-        key_quickinv = u8"X"s;
-    }
-    if (config::instance().scrsync == 0)
-    {
-        config::instance().scrsync = 3;
-    }
-    if (config::instance().walkwait == 0)
-    {
-        config::instance().walkwait = 5;
-    }
+    // Keys set in assign_<...>_key may have been overwritten by other
+    // config values in the "key" section. To account for this, run
+    // the setters for assign_<...>_key again. This will do nothing if
+    // either option is "none", so the keys can stil be set to
+    // something else.
+    conf.run_setter("core.config.input.assign_x_key");
+    conf.run_setter("core.config.input.assign_z_key");
+
     if (config::instance().runwait < 1)
     {
         config::instance().runwait = 1;

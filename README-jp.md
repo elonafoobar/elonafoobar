@@ -90,9 +90,10 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 
 ## サードパーティーライブラリ
 
-* Catch2: thirdparty/catch2/LICENSEを参照してください。
-* hayai: thirdparty/hayai/LICENSEを参照してください。
-* sol2: thirdparty/sol2/LICENSEを参照してください。
+* Catch2: src/thirdparty/catch2/LICENSEを参照してください。
+* hayai: src/thirdparty/hayai/LICENSEを参照してください。
+* sol2: src/thirdparty/sol2/LICENSEを参照してください。
+* ordered_map: src/thirdparty/ordered_map/LICENSEを参照してください。
 * cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
 
 ## Luaライブラリ

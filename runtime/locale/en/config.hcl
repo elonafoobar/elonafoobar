@@ -59,21 +59,55 @@ locale {
                 wait = "${_1} wait"
             }
         }
+
         menu {
             name = "Option"
-            language {
-                name = "Language"
 
-                language {
-                    name = "Language*"
+            game {
+                name = "Game Setting"
+                extra_help {
+                    name = "Extra Help"
+                    doc = "Show extra help popups for new players."
+                }
+                attack_neutral_npcs {
+                    name = "Attack Netural NPCs"
+                    doc = "Attack non-hostile, non-ally NPCs when running into them."
+                }
+                default_save {
+                    name = "Default Save"
+                    doc = "Saved game to be loaded on startup."
                     variants {
-                        jp = "Japanese"
-                        en = "English"
+                        "" = "None"
                     }
                 }
+                story {
+                    name = "Enable Cutscenes"
+                    doc = "Enable playback of the story cutscenes."
+                }
+                hide_autoidentify {
+                    name = "Hide Auto-Identify"
+                    doc = "Hide identify status updates from Sense Quality."
+                }
+                hide_shop_updates {
+                    name = "Hide Shop Updates"
+                    doc = "Hide daily shop reports of items sold for shops you own."
+                }
             }
+
             screen {
                 name = "Screen & Sound"
+                sound {
+                    name = "Sound*"
+                    yes_no = core.locale.config.common.yes_no.on_off
+                }
+                music {
+                    name = "Music*"
+                    variants {
+                        none = "None"
+                        direct_music = "Direct music"
+                        mci = "MCI"
+                    }
+                }
                 fullscreen {
                     name = "Screen Mode*"
                     variants {
@@ -86,18 +120,6 @@ locale {
                 display_mode {
                     name = "Screen Resolution*"
                     # Variants are injected at runtime.
-                }
-                sound {
-                    name = "Sound*"
-                    yes_no = core.locale.config.common.yes_no.on_off
-                }
-                music {
-                    name = "Music*"
-                    variants {
-                        none = "None"
-                        direct_music = "Direct music"
-                        mci = "MCI"
-                    }
                 }
                 high_quality_shadows {
                     name = "Shadow Quality"
@@ -121,6 +143,7 @@ Random events will still occur.
 DOC
                 }
             }
+
             net {
                 name = "Network Setting"
                 enabled {
@@ -136,6 +159,7 @@ DOC
                     name = "Use Custom Server"
                 }
             }
+
             anime {
                 name = "Animation Setting"
                 scroll {
@@ -215,71 +239,26 @@ DOC
                 }
             }
 
-            font {
-                name = "Font Setting"
-                doc = <<DOC
-Font-related settings.
-Place fonts (TTF format) in data/font. Please ensure the fonts are monospaced to avoid issues.
-DOC
-                vertical_offset {
-                    name = "Vertical Offset"
-                }
-                size_adjustment {
-                    name = "Size Adjustment"
-                }
-            }
-
-            game {
-                name = "Game Setting"
-                default_save {
-                    name = "Default Save"
-                    doc = "Saved game to be loaded on startup."
-                    variants {
-                        "" = "None"
-                    }
-                }
-                attack_neutral_npcs {
-                    name = "Attack Netural NPCs"
-                    doc = "Attack non-hostile, non-ally NPCs when running into them."
-                }
-                story {
-                    name = "Enable Cutscenes"
-                    doc = "Enable playback of the story cutscenes."
-                }
-                extra_help {
-                    name = "Extra Help"
-                    doc = "Show extra help popups for new players."
-                }
-                hide_autoidentify {
-                    name = "Hide Auto-Identify"
-                    doc = "Hide identify status updates from Sense Quality."
-                }
-                hide_shop_updates {
-                    name = "Hide Shop Updates"
-                    doc = "Hide daily shop reports of items sold for shops you own."
-                }
-            }
-
-            message {
-                name = "Message&Log"
-                add_timestamps {
-                    name = "Add time info"
-                }
-                transparency {
-                    name = "Transparency"
-                    doc = "Message box transparency."
-                    formatter = "${_1}*10 %"#TODO
-                }
-            }
-
             input {
                 name = "Input Setting"
-                joypad {
-                    name = "Game Pad"
-                    yes_no = core.locale.config.common.yes_no.unsupported #core.locale.config.common.yes_no.use_dont_use
-                }
                 autodisable_numlock {
                     name = "Auto-Disable Numlock"
+                }
+                assign_z_key {
+                    name = "Assign z key"
+                    variants {
+                        quick_menu = "Quick menu"
+                        zap = "Zap"
+                        none = "Don't assign"
+                    }
+                }
+                assign_x_key {
+                    name = "Assign x key"
+                    variants {
+                        quick_inv = "Quick Inv"
+                        identify = "Identify"
+                        none = "Don't assign"
+                    }
                 }
                 walk_wait {
                     name = "Walk Speed"
@@ -321,6 +300,36 @@ DOC
                     doc = "Number of frames to wait between item selection when selecting quickly."
                     formatter = core.locale.config.common.formatter.wait
                 }
+                joypad {
+                    name = "Game Pad"
+                    yes_no = core.locale.config.common.yes_no.unsupported #core.locale.config.common.yes_no.use_dont_use
+                }
+            }
+
+            font {
+                name = "Font Setting"
+                doc = <<DOC
+Font-related settings.
+Place fonts (TTF format) in data/font. Please ensure the fonts are monospaced to avoid issues.
+DOC
+                vertical_offset {
+                    name = "Vertical Offset"
+                }
+                size_adjustment {
+                    name = "Size Adjustment"
+                }
+            }
+
+            message {
+                name = "Message&Log"
+                add_timestamps {
+                    name = "Add time info"
+                }
+                transparency {
+                    name = "Transparency"
+                    doc = "Message box transparency."
+                    formatter = "${_1}*10 %"#TODO
+                }
             }
 
             balance {
@@ -341,6 +350,18 @@ DOC
                 extra_class {
                     name = "Extra Class"
                     doc = "Enable extra classes in character creation."
+                }
+            }
+
+            language {
+                name = "Language"
+
+                language {
+                    name = "Language*"
+                    variants {
+                        jp = "Japanese"
+                        en = "English"
+                    }
                 }
             }
 

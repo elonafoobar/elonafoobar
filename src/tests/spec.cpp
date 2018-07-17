@@ -1,6 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include "../spec.hpp"
+#include <iostream>
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -381,20 +382,23 @@ TEST_CASE("Test get_children", "[Spec: Definition]")
 {
     test_spec def = load(R"(
 test def {
-    foo = {
+    foo {
         type = "section"
         options = {
             bar = false
             baz = "quux"
+            hoge = "fuga"
+            piyo = true
         }
     }
-    hoge = "piyo"
 }
 )");
     auto children = def.get_children("core.test.foo");
-    REQUIRE(children.size() == 2);
-    REQUIRE(children.at(0) == "baz");
-    REQUIRE(children.at(1) == "bar");
+    REQUIRE(children.size() == 4);
+    REQUIRE(children.at(0) == "bar");
+    REQUIRE(children.at(1) == "baz");
+    REQUIRE(children.at(2) == "hoge");
+    REQUIRE(children.at(3) == "piyo");
 
     REQUIRE_THROWS(def.get_children("core.test.hoge"));
 }
