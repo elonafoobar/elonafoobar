@@ -317,7 +317,7 @@ DOC
                 preload = true
             }
             clock_h = {
-                default = 120
+                default = 96
                 min = 0
                 max = 600
                 preload = true
