@@ -1670,8 +1670,7 @@ void api_manager::load_core(lua_env& lua)
 
 sol::table api_manager::bind(lua_env& lua)
 {
-    return lua.get_state()->create_named_table(
-        "Elona",
+    return lua.get_state()->create_table(
         "require",
         sol::overload(
             [&lua](const std::string& parent, const std::string& module) {

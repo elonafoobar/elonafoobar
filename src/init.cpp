@@ -774,7 +774,19 @@ static void initialize_screen()
           config_get_fullscreen_mode());
 }
 
+static void initialize_lua()
+{
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod(filesystem::dir::mods());
 
+    // NOTE: Registering new datatypes uses dummy filenames for now,
+    // until validation of user-created data is coded.
+    lua::lua->get_registry_manager()
+        .register_datatype("core", "chara_def.hcl");
+    lua::lua->get_registry_manager()
+        .register_data("core", "chara",
+                       filesystem::dir::mods() / "core" / "data" / "chara.hcl");
+}
 
 int run()
 {
@@ -794,8 +806,7 @@ int run()
     initialize_config(config_file);
     init_assets();
     initialize_elona();
-
-    lua::lua->scan_all_mods(filesystem::dir::mods());
+    initialize_lua();
 
     start_elona();
 

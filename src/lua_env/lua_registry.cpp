@@ -14,16 +14,36 @@ registry_manager::registry_manager(lua_env* lua_)
         sol::create,
         lua->get_state()->globals());
 
-    // Load the HCL parser.
+    registry_env.set("Registry", lua->get_state()->create_table());
+    registry_env.set("Elona", lua->get_api_manager().bind(*lua));
+
     lua->get_state()->safe_script(
         R"(
 HCL = require "hclua"
-inspect = require "inspect"
+Enums = Elona.require("Enums")
 )", registry_env);
-
-    registry_env.set("Registry", lua->get_state()->create_table());
 }
 
+void registry_manager::bind(lua_env& lua)
+{
+    sol::table core = lua.get_api_manager().get_api_table();
+
+    sol::table Registry = core.create_named("Registry");
+
+    // "add_datatype", "add_data"
+
+    Registry.set_function(
+        "get",
+        sol::overload(
+            [&lua](const std::string& parent, const std::string& module) {
+                return lua.get_registry_manager().get_table(parent, module);
+            },
+
+            // If no mod name is provided, assume it is "core".
+            [&lua](const std::string& datatype) {
+                return lua.get_registry_manager().get_table("core", datatype);
+            }));
+}
 
 void registry_manager::register_datatype(const std::string& mod_name,
                                          const fs::path& spec_file)
@@ -66,7 +86,6 @@ void registry_manager::register_data(const std::string& mod_name,
     auto result = lua->get_state()->safe_script(R"(
 local parsed = HCL.parse_file(_FILEPATH)
 local data = parsed[_DATATYPE_NAME]
-print(inspect(parsed))
 
 if data == nil then
     return
@@ -77,9 +96,10 @@ if data[1] ~= nil then
 end
 
 for key, value in pairs(data) do
-    print(key)
+    -- if validate(spec, value) then
     value._id = key
     Registry[_MOD_NAME][_DATATYPE_NAME][key] = value
+    -- end
 end
 )", registry_env);
 
@@ -105,6 +125,20 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     }
 
     return (*mod_data_table)[datatype_name];
+}
+
+int registry_manager::get_enum_value(const std::string& enum_name, const std::string& variant, int default_value)
+{
+    sol::optional<sol::table> enum_table = registry_env["Enums"][enum_name];
+    if (!enum_table)
+        return default_value;
+
+    sol::optional<sol::object> enum_value = (*enum_table)[variant];
+
+    if (!enum_value)
+        return default_value;
+
+    return enum_value->as<int>();
 }
 
 } // namespace lua
