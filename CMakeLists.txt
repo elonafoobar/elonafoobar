@@ -142,6 +142,7 @@ set(CORE_SOURCES
   src/lua_env/handle_manager.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/lua_api.cpp
+  src/lua_env/lua_registry.cpp
   src/version.cpp
   )
 
@@ -242,6 +243,7 @@ else()
       src/tests/lua_events.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
+      src/tests/lua_registry.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/i18n.cpp

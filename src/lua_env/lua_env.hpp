@@ -10,6 +10,7 @@
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_api.hpp"
+#include "lua_registry.hpp"
 
 namespace elona
 {
@@ -21,6 +22,7 @@ using namespace std::literals::string_literals;
 class api_manager;
 class event_manager;
 class handle_manager;
+class registry_manager;
 
 /***
  * Stores the Lua environment and internal storage for a single mod.
@@ -205,6 +207,7 @@ public:
     api_manager& get_api_manager();
     event_manager& get_event_manager();
     handle_manager& get_handle_manager();
+    registry_manager& get_registry_manager();
 
 
     //****************** Methods for testing use *******************//
@@ -301,6 +304,7 @@ private:
     std::unique_ptr<api_manager> api_mgr;
     std::unique_ptr<event_manager> event_mgr;
     std::unique_ptr<handle_manager> handle_mgr;
+    std::unique_ptr<registry_manager> registry_mgr;
     std::unordered_map<std::string, std::unique_ptr<mod_info>> mods;
 
     /***

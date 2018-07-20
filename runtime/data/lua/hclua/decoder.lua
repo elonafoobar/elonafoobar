@@ -161,8 +161,35 @@ local function is_object(state)
    return type(state) == "table" and not is_list(state)
 end
 
--- Only checks the root level, not nested.
-local function objects_share_keys(a, b)
+local function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
+local function recurse_objects(a, b, keys)
+   local a_child = deepcopy(a)
+   local b_child = deepcopy(b)
+
+   for _, key in pairs(keys) do
+      a_child = a_child[key]
+      b_child = b_child[key]
+   end
+
+   return a_child, b_child
+end
+
+-- Checks down the list of keys provided in nested fashion.
+local function objects_share_keys(a, b, keys)
    for key, value in pairs(b) do
       if a[key] then
          return true
@@ -172,7 +199,26 @@ local function objects_share_keys(a, b)
    return false
 end
 
-local function merge_objects(this, other)
+local function set_object_nested(this, value, keys)
+   local key
+
+   assert(#keys > 0)
+
+   if #keys == 1 then
+      this[keys[#keys]] = value
+      return
+   end
+
+   local this_parent = this[keys[1]]
+
+   for i=2, #keys-1 do
+     this_parent = this_parent[keys[i]]
+   end
+
+   this_parent[keys[#keys]] = value
+end
+
+local function merge_objects(this, other, keys)
    if this == other then
       decode_error("merge_objects was called on the same object: " .. tostring(this))
    end
@@ -193,6 +239,78 @@ local function merge_objects(this, other)
       else
          this[key] = value
       end
+   end
+end
+
+local function object_length(object)
+  local count = 0
+  for _ in pairs(object) do count = count + 1 end
+  return count
+end
+
+local function object_common_nested_keys(a, b)
+   local a_child = deepcopy(a)
+   local b_child = deepcopy(b)
+   local keys = {}
+   local finished = false
+
+   while not finished do
+      if object_length(a_child) ~= 1 or object_length(b_child) ~= 1 then
+         break
+      end
+
+      for k, v in pairs(a_child) do
+         if b_child[k] == nil then
+            finished = true
+            break
+         end
+         if type(a_child[k]) ~= "table" or type(b_child[k]) ~= "table" then
+            finished = true
+            break
+         end
+
+         keys[#keys+1] = k
+         a_child = a_child[k]
+         b_child = b_child[k]
+         break
+      end
+   end
+
+   return keys, a_child, b_child
+end
+
+local function expand_objects(this, other, keys)
+   local this_child, other_child = recurse_objects(this, other, keys)
+
+   local list = {}
+   list[1] = this_child
+   list[2] = other_child
+   set_object_nested(this, list, keys)
+end
+
+local function merge_object_lists(this, other, keys)
+   local this_child, other_child = recurse_objects(this, other, keys)
+   local list, object
+
+   if is_object(this_child) and is_list(other_child) then
+      object = this_child
+      list = other_child
+   elseif is_list(this_child) and is_object(other_child) then
+      object = other_child
+      list = this_child
+   else
+      assert(is_list(this_child) and is_list(other_child))
+   end
+
+   if list == nil then
+      for _, v in pairs(this_child) do
+         other_child[#other_child+1] = v
+      end
+
+      set_object_nested(this, other_child, keys)
+   else
+      list[#list+1] = object
+      set_object_nested(this, list, keys)
    end
 end
 
@@ -219,8 +337,8 @@ local function decode_object_pair(ast_node, object)
    local expand = false
 
    if existing then
-      -- This is an object list. Add the object.
       if is_list(existing) then
+         -- This is an object list. Add the object.
          existing[#existing+1] = value
       else
          -- We tried assigning to a value that exists already.
@@ -232,13 +350,22 @@ local function decode_object_pair(ast_node, object)
                -- list.
                expand = true;
             else
-               -- If the objects share any keys (not nested),
-               -- expand into a list. Else, merge the two
-               -- objects.
-               if objects_share_keys(existing, value) then
-                  expand = true
+               -- If the objects share any keys at some nested level
+               -- of size 1, see if those two levels share any keys.
+               -- If they do, expand into a list at that level. Else,
+               -- merge the objects at that level.
+               local keys, a, b = object_common_nested_keys(existing, value)
+               if a[1] ~= nil or b[1] ~= nil then
+                  merge_object_lists(existing, value, keys)
+               elseif objects_share_keys(a, b, keys) then
+                  if #keys == 0 then
+                     expand = true
+                  else
+                     expand_objects(existing, value, keys)
+                  end
                else
-                  merge_objects(existing, value)
+                  merge_objects(existing, value, keys)
+                  object[first_key] = existing
                end
             end
          else

@@ -49,7 +49,7 @@ public:
      * more mods can be loaded, because they all implicitly depend on
      * the core mod..
      */
-    void load_core(lua_env&, const fs::path&);
+    void load_core(lua_env&);
 
     /***
      * Attempts to locate an API module under a namespace. For

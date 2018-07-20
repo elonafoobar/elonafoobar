@@ -26,7 +26,8 @@ lua_env::lua_env()
         sol::lib::table,
         sol::lib::debug,
         sol::lib::string,
-        sol::lib::math);
+        sol::lib::math,
+        sol::lib::io);
 
     // Add executable directory to package.path
     fs::path exe_path = filesystem::dir::exe();
@@ -46,6 +47,8 @@ lua_env::lua_env()
     event_manager::init(*this);
 
     handle_mgr = std::make_unique<handle_manager>(this);
+
+    registry_mgr = std::make_unique<registry_manager>(this);
 }
 
 api_manager& lua_env::get_api_manager()
@@ -61,6 +64,11 @@ event_manager& lua_env::get_event_manager()
 handle_manager& lua_env::get_handle_manager()
 {
     return *handle_mgr;
+}
+
+registry_manager& lua_env::get_registry_manager()
+{
+    return *registry_mgr;
 }
 
 void report_error(sol::error err)
@@ -243,9 +251,9 @@ void lua_env::load_core_mod()
             "Core mod was not found. Does \"mods/core\" exist?");
     }
 
-    // Load the core mod before any others. The core API table will be
-    // modified in-place by the Lua API code.
-    api_mgr->load_core(*this, *val->second->path);
+    // Add special API tables from data/lua to the core mod. The core
+    // API table will be modified in-place by the Lua API code.
+    api_mgr->load_core(*this);
     stage = mod_loading_stage_t::core_mod_loaded;
 }
 
@@ -260,6 +268,7 @@ void lua_env::load_all_mods()
         auto& mod = pair.second;
         if (mod->name == "core" || mod->name == "script")
         {
+            // TODO
             continue;
         }
         else
