@@ -1,5 +1,5 @@
-local Parser = require 'data/lua/hclua.parser'
-local Decoder = require 'data/lua/hclua.decoder'
+local Parser = require 'hclua.parser'
+local Decoder = require 'hclua.decoder'
 local open = io.open
 
 local function parse(source)
@@ -20,7 +20,9 @@ local function parse_file(filepath)
       return content
    end
 
-   return parse(read_file(filepath))
+   local content = read_file(filepath)
+
+   return parse(content)
 end
 
 return {

@@ -23,7 +23,7 @@ handle_manager::handle_manager(lua_env* lua_)
 
     // Load the Lua chunk for storing handles.
     lua->get_state()->safe_script(
-        R"(Handle = require "data/lua/handle")", handle_env);
+        R"(Handle = require "handle")", handle_env);
 
     bind(*lua);
 }

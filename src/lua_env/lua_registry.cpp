@@ -16,7 +16,10 @@ registry_manager::registry_manager(lua_env* lua_)
 
     // Load the HCL parser.
     lua->get_state()->safe_script(
-        R"(HCL = require "data/lua/hclua")", registry_env);
+        R"(
+HCL = require "hclua"
+inspect = require "inspect"
+)", registry_env);
 
     registry_env.set("Registry", lua->get_state()->create_table());
 }
@@ -63,7 +66,8 @@ void registry_manager::register_data(const std::string& mod_name,
     auto result = lua->get_state()->safe_script(R"(
 local parsed = HCL.parse_file(_FILEPATH)
 local data = parsed[_DATATYPE_NAME]
-print("asd")
+print(inspect(parsed))
+
 if data == nil then
     return
 end
@@ -72,7 +76,6 @@ if data[1] ~= nil then
     error("Datatype object was list, are there duplicate IDs?")
 end
 
-print("asfter2")
 for key, value in pairs(data) do
     print(key)
     value._id = key

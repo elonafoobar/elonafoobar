@@ -8,7 +8,7 @@
 
 TEST_CASE("test registering datatype", "[Lua: Registry]")
 {
-    fs::path data = "tests/data/putit.hcl";
+    fs::path data = "tests/data/registry/putit.hcl";
 
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());

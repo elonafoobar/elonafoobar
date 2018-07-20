@@ -1,11 +1,11 @@
 --- WARNING: This file is always implicitly loaded by C++.
 --- Don't change anything here unless you know what you're doing!
 
-Elona.core.Debug.inspect = require "data/lua/inspect"
-Elona.core.Iter = require "data/lua/iter"
-Elona.core.ReadOnly = require "data/lua/readonly"
-Elona.core.HCL = require "data/lua/hclua"
-Elona.core.table = require "data/lua/table"
+Elona.core.Debug.inspect = require "inspect"
+Elona.core.Iter = require "iter"
+Elona.core.ReadOnly = require "readonly"
+Elona.core.HCL = require "hclua"
+Elona.core.table = require "table"
 
 -- All the core API tables should be loaded by now, so we can make
 -- them all read-only to prevent user code from modifying them.
