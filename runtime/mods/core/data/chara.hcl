@@ -1,4 +1,4 @@
-chara 0 {
+chara bug {
     id = 0
     item_type = 3
     tags = []
@@ -20,7 +20,7 @@ chara 0 {
     coefficient = 400
 }
 
-chara 343 {
+chara user {
     id = 343
     item_type = 6
     tags = []
@@ -45,7 +45,7 @@ chara 343 {
     coefficient = 400
 }
 
-chara 1 {
+chara shopkeeper {
     id = 1
     item_type = 3
     tags = ["man"]
@@ -71,7 +71,7 @@ chara 1 {
     coefficient = 400
 }
 
-chara 353 {
+chara caravan_master {
     id = 353
     item_type = 3
     tags = ["man"]
@@ -95,7 +95,7 @@ chara 353 {
     coefficient = 400
 }
 
-chara 70 {
+chara bartender {
     id = 70
     item_type = 3
     tags = ["man"]
@@ -121,7 +121,7 @@ chara 70 {
     coefficient = 400
 }
 
-chara 69 {
+chara informer {
     id = 69
     item_type = 3
     tags = ["man"]
@@ -147,7 +147,7 @@ chara 69 {
     coefficient = 400
 }
 
-chara 73 {
+chara arena_master {
     id = 73
     item_type = 3
     tags = ["man"]
@@ -173,7 +173,7 @@ chara 73 {
     coefficient = 400
 }
 
-chara 74 {
+chara healer {
     id = 74
     item_type = 3
     tags = ["man"]
@@ -199,7 +199,7 @@ chara 74 {
     coefficient = 400
 }
 
-chara 206 {
+chara nun {
     id = 206
     item_type = 3
     tags = ["man"]
@@ -225,7 +225,7 @@ chara 206 {
     coefficient = 400
 }
 
-chara 38 {
+chara elder {
     id = 38
     item_type = 3
     tags = ["man"]
@@ -251,7 +251,7 @@ chara 38 {
     coefficient = 400
 }
 
-chara 40 {
+chara trainer {
     id = 40
     item_type = 3
     tags = ["man"]
@@ -277,7 +277,7 @@ chara 40 {
     coefficient = 400
 }
 
-chara 333 {
+chara guild_trainer {
     id = 333
     item_type = 3
     tags = ["man"]
@@ -303,7 +303,7 @@ chara 333 {
     coefficient = 400
 }
 
-chara 76 {
+chara guard_port_kapul {
     id = 76
     item_type = 3
     tags = ["man"]
@@ -328,7 +328,7 @@ chara 76 {
     coefficient = 400
 }
 
-chara 77 {
+chara guard {
     id = 77
     item_type = 3
     tags = ["man"]
@@ -353,7 +353,7 @@ chara 77 {
     coefficient = 400
 }
 
-chara 204 {
+chara palmian_elite_soldier {
     id = 204
     item_type = 3
     tags = ["man"]
@@ -379,7 +379,7 @@ chara 204 {
     coefficient = 400
 }
 
-chara 2 {
+chara zeome {
     id = 2
     item_type = 3
     tags = ["man"]
@@ -408,7 +408,7 @@ chara 2 {
     coefficient = 400
 }
 
-chara 37 {
+chara at {
     id = 37
     item_type = 3
     tags = ["man"]
@@ -433,7 +433,7 @@ chara 37 {
     coefficient = 400
 }
 
-chara 23 {
+chara orphe {
     id = 23
     item_type = 3
     tags = ["man", "god"]
@@ -460,7 +460,7 @@ chara 23 {
     coefficient = 400
 }
 
-chara 26 {
+chara mad_scientist {
     id = 26
     item_type = 3
     tags = ["man"]
@@ -485,7 +485,7 @@ chara 26 {
     coefficient = 400
 }
 
-chara 27 {
+chara isca {
     id = 27
     item_type = 3
     tags = ["man", "god"]
@@ -510,7 +510,7 @@ chara 27 {
     coefficient = 400
 }
 
-chara 28 {
+chara whom_dwell_in_the_vanity {
     id = 28
     item_type = 3
     tags = ["man"]
@@ -537,7 +537,7 @@ chara 28 {
     coefficient = 400
 }
 
-chara 29 {
+chara loyter {
     id = 29
     item_type = 3
     tags = ["man"]
@@ -563,7 +563,7 @@ chara 29 {
     coefficient = 400
 }
 
-chara 140 {
+chara vesda {
     id = 140
     item_type = 5
     tags = ["dragon"]
@@ -589,7 +589,7 @@ chara 140 {
     coefficient = 400
 }
 
-chara 30 {
+chara miches {
     id = 30
     item_type = 3
     tags = ["man"]
@@ -615,7 +615,7 @@ chara 30 {
     coefficient = 400
 }
 
-chara 31 {
+chara shena {
     id = 31
     item_type = 3
     tags = ["man"]
@@ -641,7 +641,7 @@ chara 31 {
     coefficient = 400
 }
 
-chara 351 {
+chara the_leopard_warrior {
     id = 351
     item_type = 3
     tags = ["man"]
@@ -671,7 +671,7 @@ chara 351 {
     flags = [IsQuickTempered]
 }
 
-chara 352 {
+chara silvia {
     id = 352
     item_type = 3
     tags = ["man"]
@@ -697,7 +697,7 @@ chara 352 {
     coefficient = 400
 }
 
-chara 32 {
+chara dungeon_cleaner {
     id = 32
     item_type = 3
     tags = []
@@ -723,7 +723,7 @@ chara 32 {
     coefficient = 400
 }
 
-chara 33 {
+chara larnneire {
     id = 33
     item_type = 3
     tags = ["man"]
@@ -751,7 +751,7 @@ chara 33 {
     coefficient = 400
 }
 
-chara 34 {
+chara lomias {
     id = 34
     item_type = 3
     tags = ["man"]
@@ -782,7 +782,7 @@ chara 34 {
     coefficient = 400
 }
 
-chara 139 {
+chara slan {
     id = 139
     item_type = 3
     tags = ["man"]
@@ -808,7 +808,7 @@ chara 139 {
     coefficient = 400
 }
 
-chara 146 {
+chara karam {
     id = 146
     item_type = 3
     tags = ["man"]
@@ -834,7 +834,7 @@ chara 146 {
     coefficient = 400
 }
 
-chara 142 {
+chara erystia {
     id = 142
     item_type = 3
     tags = ["man"]
@@ -860,7 +860,7 @@ chara 142 {
     coefficient = 400
 }
 
-chara 141 {
+chara issizzle {
     id = 141
     item_type = 6
     tags = ["undead", "god"]
@@ -886,7 +886,7 @@ chara 141 {
     coefficient = 400
 }
 
-chara 143 {
+chara wynan {
     id = 143
     item_type = 3
     tags = []
@@ -912,7 +912,7 @@ chara 143 {
     coefficient = 400
 }
 
-chara 144 {
+chara quruiza {
     id = 144
     item_type = 6
     tags = []
@@ -939,7 +939,7 @@ chara 144 {
     coefficient = 400
 }
 
-chara 145 {
+chara corgon {
     id = 145
     item_type = 5
     tags = []
@@ -964,7 +964,7 @@ chara 145 {
     coefficient = 400
 }
 
-chara 306 {
+chara lulwy {
     id = 306
     item_type = 6
     tags = ["god"]
@@ -990,7 +990,7 @@ chara 306 {
     coefficient = 400
 }
 
-chara 331 {
+chara ehekatl {
     id = 331
     item_type = 6
     tags = ["god"]
@@ -1016,7 +1016,7 @@ chara 331 {
     coefficient = 400
 }
 
-chara 336 {
+chara god_inside_ehekatl {
     id = 336
     item_type = 6
     tags = ["god"]
@@ -1044,7 +1044,7 @@ chara 336 {
     coefficient = 400
 }
 
-chara 338 {
+chara opatos {
     id = 338
     item_type = 6
     tags = ["god"]
@@ -1072,7 +1072,7 @@ chara 338 {
     coefficient = 400
 }
 
-chara 339 {
+chara kumiromi {
     id = 339
     item_type = 6
     tags = ["god"]
@@ -1100,7 +1100,7 @@ chara 339 {
     coefficient = 400
 }
 
-chara 342 {
+chara mani {
     id = 342
     item_type = 6
     tags = ["god"]
@@ -1128,7 +1128,7 @@ chara 342 {
     coefficient = 400
 }
 
-chara 340 {
+chara _test {
     id = 340
     item_type = 6
     tags = []
@@ -1156,7 +1156,7 @@ chara 340 {
     coefficient = 400
 }
 
-chara 3 {
+chara putit {
     id = 3
     item_type = 1
     tags = ["slime"]
@@ -1181,7 +1181,7 @@ chara 3 {
     flags = [IsSuitableForMount]
 }
 
-chara 4 {
+chara red_putit {
     id = 4
     item_type = 1
     tags = ["fire", "slime"]
@@ -1197,7 +1197,7 @@ chara 4 {
     original_relationship = Aggressive
     race = "slime"
     resistances = {_63 = 500}
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 3
@@ -1206,7 +1206,7 @@ chara 4 {
     flags = [IsSuitableForMount]
 }
 
-chara 169 {
+chara slime {
     id = 169
     item_type = 1
     tags = ["slime"]
@@ -1224,7 +1224,7 @@ chara 169 {
     class_ = "predator"
     resistances = {_63 = 500}
     image = 257
-    color = 4
+    color = Orange
     cspecialeq = 0
     damage_reaction_info = 100063
     fltselect = 0
@@ -1233,7 +1233,7 @@ chara 169 {
     coefficient = 400
 }
 
-chara 194 {
+chara acid_slime {
     id = 194
     item_type = 1
     tags = ["slime"]
@@ -1253,7 +1253,7 @@ chara 194 {
     element_of_unarmed_attack = 6300100
     resistances = {_63 = 500}
     image = 257
-    color = 2
+    color = Red
     cspecialeq = 0
     damage_reaction_info = 200063
     fltselect = 0
@@ -1262,7 +1262,7 @@ chara 194 {
     coefficient = 400
 }
 
-chara 286 {
+chara bubble {
     id = 286
     item_type = 1
     tags = ["slime"]
@@ -1287,7 +1287,7 @@ chara 286 {
     flags = [Splits]
 }
 
-chara 285 {
+chara blue_bubble {
     id = 285
     item_type = 1
     tags = ["slime"]
@@ -1304,7 +1304,7 @@ chara 285 {
     race = "slime"
     resistances = {_63 = 500}
     image = 400
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -1313,7 +1313,7 @@ chara 285 {
     flags = [Splits]
 }
 
-chara 287 {
+chara mass_monster {
     id = 287
     item_type = 1
     tags = []
@@ -1337,7 +1337,7 @@ chara 287 {
     flags = [Splits]
 }
 
-chara 327 {
+chara cube {
     id = 327
     item_type = 1
     tags = []
@@ -1361,7 +1361,7 @@ chara 327 {
     flags = [Splits2, IsImmuneToElementalDamage]
 }
 
-chara 5 {
+chara rabbit {
     id = 5
     item_type = 1
     tags = ["wild"]
@@ -1383,7 +1383,7 @@ chara 5 {
     coefficient = 400
 }
 
-chara 6 {
+chara snail {
     id = 6
     item_type = 1
     tags = ["wild"]
@@ -1406,7 +1406,7 @@ chara 6 {
     coefficient = 400
 }
 
-chara 7 {
+chara fallen_soldier {
     id = 7
     item_type = 0
     tags = ["man"]
@@ -1430,7 +1430,7 @@ chara 7 {
     coefficient = 400
 }
 
-chara 8 {
+chara mercenary {
     id = 8
     item_type = 0
     tags = ["man"]
@@ -1455,7 +1455,7 @@ chara 8 {
     coefficient = 400
 }
 
-chara 9 {
+chara beggar {
     id = 9
     item_type = 0
     tags = ["man"]
@@ -1482,7 +1482,7 @@ chara 9 {
     flags = [DropsGold]
 }
 
-chara 269 {
+chara farmer {
     id = 269
     item_type = 0
     tags = ["man"]
@@ -1508,7 +1508,7 @@ chara 269 {
     coefficient = 400
 }
 
-chara 320 {
+chara cleaner {
     id = 320
     item_type = 0
     tags = ["man"]
@@ -1535,7 +1535,7 @@ chara 320 {
     coefficient = 100
 }
 
-chara 273 {
+chara miner {
     id = 273
     item_type = 0
     tags = ["man"]
@@ -1561,7 +1561,7 @@ chara 273 {
     coefficient = 400
 }
 
-chara 326 {
+chara bard {
     id = 326
     item_type = 0
     tags = ["man"]
@@ -1586,7 +1586,7 @@ chara 326 {
     coefficient = 400
 }
 
-chara 270 {
+chara sister {
     id = 270
     item_type = 0
     tags = ["man"]
@@ -1612,7 +1612,7 @@ chara 270 {
     coefficient = 400
 }
 
-chara 349 {
+chara holy_beast {
     id = 349
     item_type = 0
     tags = ["man", "god"]
@@ -1637,7 +1637,7 @@ chara 349 {
     flags = [IsQuickTempered]
 }
 
-chara 348 {
+chara part_time_worker {
     id = 348
     item_type = 0
     tags = ["man"]
@@ -1663,7 +1663,7 @@ chara 348 {
     flags = [IsQuickTempered]
 }
 
-chara 347 {
+chara fanatic {
     id = 347
     item_type = 0
     tags = ["man"]
@@ -1691,7 +1691,7 @@ chara 347 {
     flags = [IsQuickTempered]
 }
 
-chara 271 {
+chara rogue {
     id = 271
     item_type = 0
     tags = ["man"]
@@ -1718,7 +1718,7 @@ chara 271 {
     coefficient = 400
 }
 
-chara 335 {
+chara prostitute {
     id = 335
     item_type = 0
     tags = ["man"]
@@ -1744,7 +1744,7 @@ chara 335 {
     coefficient = 400
 }
 
-chara 337 {
+chara prisoner {
     id = 337
     item_type = 0
     tags = ["man"]
@@ -1770,7 +1770,7 @@ chara 337 {
     coefficient = 400
 }
 
-chara 272 {
+chara artist {
     id = 272
     item_type = 0
     tags = ["man"]
@@ -1796,7 +1796,7 @@ chara 272 {
     coefficient = 400
 }
 
-chara 274 {
+chara noble {
     id = 274
     item_type = 0
     tags = ["man"]
@@ -1822,7 +1822,7 @@ chara 274 {
     coefficient = 400
 }
 
-chara 289 {
+chara mage_guild_member {
     id = 289
     item_type = 3
     tags = ["man"]
@@ -1848,7 +1848,7 @@ chara 289 {
     coefficient = 400
 }
 
-chara 293 {
+chara thief_guild_member {
     id = 293
     item_type = 3
     tags = ["man"]
@@ -1874,7 +1874,7 @@ chara 293 {
     coefficient = 400
 }
 
-chara 295 {
+chara fighter_guild_member {
     id = 295
     item_type = 3
     tags = ["man"]
@@ -1900,7 +1900,7 @@ chara 295 {
     coefficient = 400
 }
 
-chara 35 {
+chara town_child {
     id = 35
     item_type = 0
     tags = ["man"]
@@ -1926,7 +1926,7 @@ chara 35 {
     coefficient = 400
 }
 
-chara 36 {
+chara old_person {
     id = 36
     item_type = 0
     tags = ["man"]
@@ -1952,7 +1952,7 @@ chara 36 {
     coefficient = 400
 }
 
-chara 174 {
+chara punk {
     id = 174
     item_type = 0
     tags = ["man", "sf"]
@@ -1977,7 +1977,7 @@ chara 174 {
     coefficient = 400
 }
 
-chara 10 {
+chara wild_sheep {
     id = 10
     item_type = 1
     tags = ["wild"]
@@ -1999,7 +1999,7 @@ chara 10 {
     coefficient = 400
 }
 
-chara 11 {
+chara flying_frog {
     id = 11
     item_type = 1
     tags = ["wild"]
@@ -2022,7 +2022,7 @@ chara 11 {
     flags = [IsFloating]
 }
 
-chara 12 {
+chara gangster {
     id = 12
     item_type = 3
     tags = ["man"]
@@ -2047,7 +2047,7 @@ chara 12 {
     coefficient = 400
 }
 
-chara 13 {
+chara kobold {
     id = 13
     item_type = 3
     tags = []
@@ -2069,7 +2069,7 @@ chara 13 {
     coefficient = 400
 }
 
-chara 236 {
+chara yeek {
     id = 236
     item_type = 3
     tags = ["yeek"]
@@ -2090,7 +2090,7 @@ chara 236 {
     coefficient = 400
 }
 
-chara 238 {
+chara yeek_warrior {
     id = 238
     item_type = 3
     tags = ["yeek"]
@@ -2104,7 +2104,7 @@ chara 238 {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "yeek"
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2112,7 +2112,7 @@ chara 238 {
     coefficient = 400
 }
 
-chara 241 {
+chara yeek_archer {
     id = 241
     item_type = 3
     tags = ["yeek"]
@@ -2127,7 +2127,7 @@ chara 241 {
     original_relationship = Aggressive
     race = "yeek"
     class_ = "archer"
-    color = 2
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2135,7 +2135,7 @@ chara 241 {
     coefficient = 400
 }
 
-chara 240 {
+chara master_yeek {
     id = 240
     item_type = 3
     tags = ["yeek"]
@@ -2150,7 +2150,7 @@ chara 240 {
     special_actions = [640]
     original_relationship = Aggressive
     race = "yeek"
-    color = 8
+    color = Cyan
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2158,7 +2158,7 @@ chara 240 {
     coefficient = 400
 }
 
-chara 237 {
+chara kamikaze_yeek {
     id = 237
     item_type = 3
     tags = ["yeek"]
@@ -2172,7 +2172,7 @@ chara 237 {
     normal_actions = [644]
     original_relationship = Aggressive
     race = "yeek"
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 12
@@ -2181,7 +2181,7 @@ chara 237 {
     flags = [Explodes]
 }
 
-chara 244 {
+chara kamikaze_samurai {
     id = 244
     item_type = 3
     tags = []
@@ -2206,7 +2206,7 @@ chara 244 {
     flags = [Explodes]
 }
 
-chara 245 {
+chara bomb_rock {
     id = 245
     item_type = 1
     tags = []
@@ -2231,7 +2231,7 @@ chara 245 {
     flags = [Explodes]
 }
 
-chara 321 {
+chara hard_gay {
     id = 321
     item_type = 3
     tags = []
@@ -2257,7 +2257,8 @@ chara 321 {
     flags = [Explodes]
 }
 
-chara 242 {
+# called "yeek" in EN, but 『ルードルボ』 in JP
+chara rudorbo {
     id = 242
     item_type = 3
     tags = ["yeek"]
@@ -2284,7 +2285,7 @@ chara 242 {
     coefficient = 400
 }
 
-chara 239 {
+chara hot_spring_maniac {
     id = 239
     item_type = 3
     tags = ["man"]
@@ -2309,7 +2310,7 @@ chara 239 {
     coefficient = 400
 }
 
-chara 14 {
+chara centipede {
     id = 14
     item_type = 2
     tags = []
@@ -2330,7 +2331,7 @@ chara 14 {
     coefficient = 400
 }
 
-chara 15 {
+chara mushroom {
     id = 15
     item_type = 2
     tags = []
@@ -2351,7 +2352,7 @@ chara 15 {
     coefficient = 400
 }
 
-chara 283 {
+chara spore_mushroom {
     id = 283
     item_type = 2
     tags = []
@@ -2374,7 +2375,7 @@ chara 283 {
     coefficient = 400
 }
 
-chara 284 {
+chara chaos_mushroom {
     id = 284
     item_type = 2
     tags = []
@@ -2390,7 +2391,7 @@ chara 284 {
     race = "mushroom"
     element_of_unarmed_attack = 5900250
     image = 399
-    color = 8
+    color = Cyan
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2398,7 +2399,7 @@ chara 284 {
     coefficient = 400
 }
 
-chara 16 {
+chara citizen {
     id = 16
     item_type = 3
     tags = ["man"]
@@ -2424,7 +2425,7 @@ chara 16 {
     coefficient = 400
 }
 
-chara 39 {
+chara citizen2 {
     id = 39
     item_type = 3
     tags = ["man"]
@@ -2450,7 +2451,7 @@ chara 39 {
     coefficient = 400
 }
 
-chara 171 {
+chara citizen_of_cyber_dome {
     id = 171
     item_type = 3
     tags = ["man"]
@@ -2476,7 +2477,7 @@ chara 171 {
     coefficient = 400
 }
 
-chara 172 {
+chara citizen_of_cyber_dome2 {
     id = 172
     item_type = 3
     tags = ["man"]
@@ -2502,7 +2503,7 @@ chara 172 {
     coefficient = 400
 }
 
-chara 173 {
+chara sales_person {
     id = 173
     item_type = 3
     tags = ["man"]
@@ -2528,7 +2529,7 @@ chara 173 {
     coefficient = 400
 }
 
-chara 71 {
+chara sailor {
     id = 71
     item_type = 3
     tags = ["man"]
@@ -2554,7 +2555,7 @@ chara 71 {
     coefficient = 400
 }
 
-chara 72 {
+chara captain {
     id = 72
     item_type = 3
     tags = ["man"]
@@ -2580,7 +2581,7 @@ chara 72 {
     coefficient = 400
 }
 
-chara 79 {
+chara stersha {
     id = 79
     item_type = 3
     tags = ["man"]
@@ -2606,7 +2607,7 @@ chara 79 {
     coefficient = 400
 }
 
-chara 80 {
+chara xabi {
     id = 80
     item_type = 3
     tags = ["man"]
@@ -2632,7 +2633,7 @@ chara 80 {
     coefficient = 400
 }
 
-chara 17 {
+chara orc {
     id = 17
     item_type = 3
     tags = []
@@ -2646,7 +2647,7 @@ chara 17 {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "orc"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 2
@@ -2654,7 +2655,7 @@ chara 17 {
     coefficient = 400
 }
 
-chara 281 {
+chara lizard_man {
     id = 281
     item_type = 3
     tags = ["dragon"]
@@ -2677,7 +2678,7 @@ chara 281 {
     flags = [IsQuickTempered]
 }
 
-chara 282 {
+chara minotaur {
     id = 282
     item_type = 3
     tags = ["mino"]
@@ -2699,7 +2700,7 @@ chara 282 {
     coefficient = 400
 }
 
-chara 296 {
+chara minotaur_magician {
     id = 296
     item_type = 3
     tags = ["mino"]
@@ -2715,7 +2716,7 @@ chara 296 {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "priest"
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2723,7 +2724,7 @@ chara 296 {
     coefficient = 400
 }
 
-chara 298 {
+chara minotaur_boxer {
     id = 298
     item_type = 3
     tags = ["mino"]
@@ -2738,7 +2739,7 @@ chara 298 {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "predator"
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2747,7 +2748,7 @@ chara 298 {
     flags = [IsQuickTempered]
 }
 
-chara 299 {
+chara minotaur_king {
     id = 299
     item_type = 3
     tags = ["mino"]
@@ -2762,7 +2763,7 @@ chara 299 {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "warrior"
-    color = 8
+    color = Cyan
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -2771,7 +2772,7 @@ chara 299 {
     coefficient = 400
 }
 
-chara 300 {
+chara ungaga {
     id = 300
     item_type = 3
     tags = ["mino"]
@@ -2787,7 +2788,7 @@ chara 300 {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "warrior"
-    color = 10
+    color = Gold
     fixlv = 6
     cspecialeq = 1
     eqweapon1 = 695
@@ -2798,7 +2799,7 @@ chara 300 {
     coefficient = 400
 }
 
-chara 251 {
+chara troll {
     id = 251
     item_type = 3
     tags = []
@@ -2820,7 +2821,7 @@ chara 251 {
     coefficient = 400
 }
 
-chara 18 {
+chara warrior_of_elea {
     id = 18
     item_type = 3
     tags = ["man"]
@@ -2843,7 +2844,7 @@ chara 18 {
     coefficient = 400
 }
 
-chara 24 {
+chara wizard_of_elea {
     id = 24
     item_type = 3
     tags = ["man"]
@@ -2868,7 +2869,7 @@ chara 24 {
     coefficient = 400
 }
 
-chara 309 {
+chara asura {
     id = 309
     item_type = 3
     tags = ["god"]
@@ -2891,7 +2892,7 @@ chara 309 {
     coefficient = 400
 }
 
-chara 310 {
+chara mitra {
     id = 310
     item_type = 3
     tags = ["god"]
@@ -2906,7 +2907,7 @@ chara 310 {
     original_relationship = Aggressive
     race = "asura"
     class_ = "warrior"
-    color = 2
+    color = Red
     cspecialeq = 1
     eqmultiweapon = 266
     fltselect = 0
@@ -2915,7 +2916,7 @@ chara 310 {
     coefficient = 400
 }
 
-chara 311 {
+chara varuna {
     id = 311
     item_type = 3
     tags = ["god"]
@@ -2930,7 +2931,7 @@ chara 311 {
     original_relationship = Aggressive
     race = "asura"
     class_ = "warrior"
-    color = 3
+    color = Blue
     cspecialeq = 1
     eqmultiweapon = 224
     fltselect = 0
@@ -2939,7 +2940,7 @@ chara 311 {
     coefficient = 400
 }
 
-chara 41 {
+chara wizard {
     id = 41
     item_type = 3
     tags = ["man"]
@@ -2965,7 +2966,7 @@ chara 41 {
     coefficient = 400
 }
 
-chara 75 {
+chara warrior {
     id = 75
     item_type = 3
     tags = ["man"]
@@ -2990,7 +2991,7 @@ chara 75 {
     coefficient = 400
 }
 
-chara 19 {
+chara mandrake {
     id = 19
     item_type = 2
     tags = []
@@ -3011,7 +3012,7 @@ chara 19 {
     coefficient = 400
 }
 
-chara 22 {
+chara beetle {
     id = 22
     item_type = 2
     tags = []
@@ -3033,7 +3034,7 @@ chara 22 {
     coefficient = 400
 }
 
-chara 20 {
+chara orc_warrior {
     id = 20
     item_type = 3
     tags = []
@@ -3055,7 +3056,7 @@ chara 20 {
     coefficient = 400
 }
 
-chara 25 {
+chara goda {
     id = 25
     item_type = 3
     tags = []
@@ -3070,7 +3071,7 @@ chara 25 {
     original_relationship = Aggressive
     race = "orc"
     class_ = "warrior"
-    color = 3
+    color = Blue
     fixlv = 6
     cspecialeq = 0
     fltselect = 2
@@ -3080,7 +3081,7 @@ chara 25 {
     flags = [IsQuickTempered]
 }
 
-chara 21 {
+chara zombie {
     id = 21
     item_type = 3
     tags = ["undead"]
@@ -3102,7 +3103,7 @@ chara 21 {
     coefficient = 400
 }
 
-chara 42 {
+chara bat {
     id = 42
     item_type = 1
     tags = ["wild"]
@@ -3124,7 +3125,7 @@ chara 42 {
     flags = [IsFloating]
 }
 
-chara 43 {
+chara vampire_bat {
     id = 43
     item_type = 1
     tags = ["wild"]
@@ -3140,7 +3141,7 @@ chara 43 {
     race = "bat"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3149,7 +3150,7 @@ chara 43 {
     flags = [IsFloating]
 }
 
-chara 44 {
+chara dragon_bat {
     id = 44
     item_type = 1
     tags = ["wild", "fire", "dragon"]
@@ -3164,7 +3165,7 @@ chara 44 {
     original_relationship = Aggressive
     race = "bat"
     class_ = "predator"
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3173,7 +3174,7 @@ chara 44 {
     flags = [IsFloating]
 }
 
-chara 45 {
+chara fire_ent {
     id = 45
     item_type = 1
     tags = ["fire"]
@@ -3193,7 +3194,7 @@ chara 45 {
         _51 = 50
         _50 = 500
     }
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3201,7 +3202,7 @@ chara 45 {
     coefficient = 400
 }
 
-chara 46 {
+chara ice_ent {
     id = 46
     item_type = 1
     tags = []
@@ -3221,7 +3222,7 @@ chara 46 {
         _50 = 50
         _51 = 500
     }
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3229,7 +3230,7 @@ chara 46 {
     coefficient = 400
 }
 
-chara 47 {
+chara lich {
     id = 47
     item_type = 6
     tags = ["undead"]
@@ -3252,7 +3253,7 @@ chara 47 {
     coefficient = 400
 }
 
-chara 48 {
+chara master_lich {
     id = 48
     item_type = 6
     tags = ["undead"]
@@ -3268,7 +3269,7 @@ chara 48 {
     original_relationship = Aggressive
     race = "lich"
     class_ = "wizard"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3276,7 +3277,7 @@ chara 48 {
     coefficient = 400
 }
 
-chara 49 {
+chara demi_lich {
     id = 49
     item_type = 6
     tags = ["undead"]
@@ -3292,7 +3293,7 @@ chara 49 {
     original_relationship = Aggressive
     race = "lich"
     class_ = "wizard"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3300,7 +3301,7 @@ chara 49 {
     coefficient = 400
 }
 
-chara 307 {
+chara executioner {
     id = 307
     item_type = 6
     tags = ["undead"]
@@ -3327,7 +3328,7 @@ chara 307 {
     flags = [IsDeathMaster]
 }
 
-chara 308 {
+chara messenger_of_death {
     id = 308
     item_type = 6
     tags = ["undead"]
@@ -3344,7 +3345,7 @@ chara 308 {
     race = "lich"
     class_ = "warrior"
     image = 404
-    color = 4
+    color = Orange
     cspecialeq = 1
     eqweapon1 = 735
     fltselect = 0
@@ -3354,7 +3355,7 @@ chara 308 {
     flags = [IsDeathMaster]
 }
 
-chara 50 {
+chara hound {
     id = 50
     item_type = 1
     tags = ["wild"]
@@ -3369,7 +3370,7 @@ chara 50 {
     original_relationship = Aggressive
     race = "hound"
     class_ = "predator"
-    color = 6
+    color = Grey
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -3379,7 +3380,7 @@ chara 50 {
     flags = [IsSuitableForMount]
 }
 
-chara 51 {
+chara fire_hound {
     id = 51
     item_type = 1
     tags = ["wild", "fire"]
@@ -3399,7 +3400,7 @@ chara 51 {
         _51 = 50
         _50 = 500
     }
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 14
@@ -3408,7 +3409,7 @@ chara 51 {
     flags = [IsSuitableForMount]
 }
 
-chara 52 {
+chara ice_hound {
     id = 52
     item_type = 1
     tags = ["wild"]
@@ -3428,7 +3429,7 @@ chara 52 {
         _50 = 50
         _51 = 500
     }
-    color = 12
+    color = LightBrown
     cspecialeq = 0
     fltselect = 0
     category = 15
@@ -3437,7 +3438,7 @@ chara 52 {
     flags = [IsSuitableForMount]
 }
 
-chara 53 {
+chara lightning_hound {
     id = 53
     item_type = 1
     tags = ["wild"]
@@ -3454,7 +3455,7 @@ chara 53 {
     race = "hound"
     class_ = "predator"
     resistances = {_52 = 500}
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 16
@@ -3463,7 +3464,7 @@ chara 53 {
     flags = [IsSuitableForMount]
 }
 
-chara 54 {
+chara dark_hound {
     id = 54
     item_type = 1
     tags = ["wild"]
@@ -3480,7 +3481,7 @@ chara 54 {
     race = "hound"
     class_ = "predator"
     resistances = {_53 = 500}
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 17
@@ -3489,7 +3490,7 @@ chara 54 {
     flags = [IsSuitableForMount]
 }
 
-chara 55 {
+chara illusion_hound {
     id = 55
     item_type = 1
     tags = ["wild"]
@@ -3506,7 +3507,7 @@ chara 55 {
     race = "hound"
     class_ = "predator"
     resistances = {_54 = 500}
-    color = 10
+    color = Gold
     cspecialeq = 0
     fltselect = 0
     category = 18
@@ -3515,7 +3516,7 @@ chara 55 {
     flags = [IsSuitableForMount]
 }
 
-chara 56 {
+chara nerve_hound {
     id = 56
     item_type = 1
     tags = ["wild"]
@@ -3532,7 +3533,7 @@ chara 56 {
     race = "hound"
     class_ = "predator"
     resistances = {_58 = 500}
-    color = 9
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 19
@@ -3541,7 +3542,7 @@ chara 56 {
     flags = [IsSuitableForMount]
 }
 
-chara 57 {
+chara poison_hound {
     id = 57
     item_type = 1
     tags = ["wild"]
@@ -3558,7 +3559,7 @@ chara 57 {
     race = "hound"
     class_ = "predator"
     resistances = {_55 = 500}
-    color = 2
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 20
@@ -3567,7 +3568,7 @@ chara 57 {
     flags = [IsSuitableForMount]
 }
 
-chara 58 {
+chara sound_hound {
     id = 58
     item_type = 1
     tags = ["wild"]
@@ -3584,7 +3585,7 @@ chara 58 {
     race = "hound"
     class_ = "predator"
     resistances = {_57 = 500}
-    color = 11
+    color = White
     cspecialeq = 0
     fltselect = 0
     category = 21
@@ -3593,7 +3594,7 @@ chara 58 {
     flags = [IsSuitableForMount]
 }
 
-chara 59 {
+chara nether_hound {
     id = 59
     item_type = 1
     tags = ["wild"]
@@ -3610,7 +3611,7 @@ chara 59 {
     race = "hound"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = 15
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 22
@@ -3619,7 +3620,7 @@ chara 59 {
     flags = [IsSuitableForMount]
 }
 
-chara 60 {
+chara chaos_hound {
     id = 60
     item_type = 1
     tags = ["wild"]
@@ -3636,7 +3637,7 @@ chara 60 {
     race = "hound"
     class_ = "predator"
     resistances = {_59 = 500}
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 23
@@ -3645,7 +3646,7 @@ chara 60 {
     flags = [IsSuitableForMount]
 }
 
-chara 61 {
+chara giant_squirrel {
     id = 61
     item_type = 1
     tags = ["wild"]
@@ -3661,7 +3662,7 @@ chara 61 {
     race = "rabbit"
     class_ = "predator"
     image = 204
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3669,7 +3670,7 @@ chara 61 {
     coefficient = 400
 }
 
-chara 62 {
+chara killer_squirrel {
     id = 62
     item_type = 1
     tags = ["wild"]
@@ -3685,7 +3686,7 @@ chara 62 {
     race = "rabbit"
     class_ = "predator"
     image = 204
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3693,7 +3694,7 @@ chara 62 {
     coefficient = 400
 }
 
-chara 63 {
+chara grudge {
     id = 63
     item_type = 3
     tags = ["undead"]
@@ -3716,7 +3717,7 @@ chara 63 {
     flags = [IsFloating]
 }
 
-chara 64 {
+chara hungry_demon {
     id = 64
     item_type = 3
     tags = ["undead"]
@@ -3730,7 +3731,7 @@ chara 64 {
     normal_actions = [-1, 614]
     original_relationship = Aggressive
     race = "ghost"
-    color = 2
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3739,7 +3740,7 @@ chara 64 {
     flags = [IsFloating]
 }
 
-chara 312 {
+chara hungry_sea_lion {
     id = 312
     item_type = 3
     tags = []
@@ -3764,7 +3765,7 @@ chara 312 {
     flags = [IsFloating]
 }
 
-chara 313 {
+chara super_hungry_sea_lion {
     id = 313
     item_type = 3
     tags = []
@@ -3781,7 +3782,7 @@ chara 313 {
     race = "ent"
     class_ = "predator"
     image = 406
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3790,7 +3791,7 @@ chara 313 {
     flags = [IsFloating]
 }
 
-chara 65 {
+chara electric_cloud {
     id = 65
     item_type = 1
     tags = []
@@ -3805,7 +3806,7 @@ chara 65 {
     original_relationship = Aggressive
     race = "spirit"
     resistances = {_52 = 500}
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3814,7 +3815,7 @@ chara 65 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 66 {
+chara chaos_cloud {
     id = 66
     item_type = 1
     tags = []
@@ -3830,7 +3831,7 @@ chara 66 {
     race = "spirit"
     element_of_unarmed_attack = 5900300
     resistances = {_59 = 500}
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3839,7 +3840,7 @@ chara 66 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 67 {
+chara floating_eye {
     id = 67
     item_type = 1
     tags = []
@@ -3866,7 +3867,7 @@ chara 67 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 315 {
+chara chaos_eye {
     id = 315
     item_type = 1
     tags = []
@@ -3887,7 +3888,7 @@ chara 315 {
         _54 = 500
         _58 = 500
     }
-    color = 8
+    color = Cyan
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3896,7 +3897,7 @@ chara 315 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 316 {
+chara mad_gaze {
     id = 316
     item_type = 1
     tags = []
@@ -3917,7 +3918,7 @@ chara 316 {
         _58 = 500
     }
     image = 407
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3926,7 +3927,7 @@ chara 316 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 314 {
+chara death_gaze {
     id = 314
     item_type = 1
     tags = []
@@ -3948,7 +3949,7 @@ chara 314 {
         _58 = 500
     }
     image = 407
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3957,7 +3958,7 @@ chara 314 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 68 {
+chara wyvern {
     id = 68
     item_type = 4
     tags = ["dragon"]
@@ -3982,7 +3983,7 @@ chara 68 {
     flags = [IsFloating]
 }
 
-chara 78 {
+chara puppet {
     id = 78
     item_type = 3
     tags = []
@@ -4006,7 +4007,7 @@ chara 78 {
     coefficient = 400
 }
 
-chara 81 {
+chara wasp {
     id = 81
     item_type = 2
     tags = []
@@ -4029,7 +4030,7 @@ chara 81 {
     flags = [IsFloating]
 }
 
-chara 82 {
+chara red_wasp {
     id = 82
     item_type = 2
     tags = ["fire"]
@@ -4044,7 +4045,7 @@ chara 82 {
     special_actions = [616]
     original_relationship = Aggressive
     race = "wasp"
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4053,7 +4054,7 @@ chara 82 {
     flags = [IsFloating]
 }
 
-chara 83 {
+chara cyclops {
     id = 83
     item_type = 3
     tags = []
@@ -4076,7 +4077,7 @@ chara 83 {
     flags = [IsQuickTempered]
 }
 
-chara 84 {
+chara titan {
     id = 84
     item_type = 3
     tags = []
@@ -4092,7 +4093,7 @@ chara 84 {
     original_relationship = Aggressive
     race = "giant"
     class_ = "warrior"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4101,7 +4102,7 @@ chara 84 {
     flags = [IsQuickTempered]
 }
 
-chara 85 {
+chara imp {
     id = 85
     item_type = 3
     tags = ["fire"]
@@ -4116,7 +4117,7 @@ chara 85 {
     special_actions = [410, 450]
     original_relationship = Aggressive
     race = "imp"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4125,7 +4126,7 @@ chara 85 {
     flags = [IsFloating]
 }
 
-chara 86 {
+chara nether_imp {
     id = 86
     item_type = 3
     tags = ["god"]
@@ -4140,7 +4141,7 @@ chara 86 {
     special_actions = [410]
     original_relationship = Aggressive
     race = "imp"
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4149,7 +4150,7 @@ chara 86 {
     flags = [IsFloating]
 }
 
-chara 87 {
+chara chaos_imp {
     id = 87
     item_type = 3
     tags = []
@@ -4164,7 +4165,7 @@ chara 87 {
     special_actions = [410]
     original_relationship = Aggressive
     race = "imp"
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4173,7 +4174,7 @@ chara 87 {
     flags = [IsFloating]
 }
 
-chara 88 {
+chara hand_of_the_dead {
     id = 88
     item_type = 3
     tags = ["undead"]
@@ -4196,7 +4197,7 @@ chara 88 {
     coefficient = 400
 }
 
-chara 89 {
+chara hand_of_the_chaos {
     id = 89
     item_type = 3
     tags = ["undead"]
@@ -4212,7 +4213,7 @@ chara 89 {
     original_relationship = Aggressive
     race = "hand"
     element_of_unarmed_attack = 5900180
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4220,7 +4221,7 @@ chara 89 {
     coefficient = 400
 }
 
-chara 90 {
+chara hand_of_the_murderer {
     id = 90
     item_type = 3
     tags = ["undead"]
@@ -4236,7 +4237,7 @@ chara 90 {
     original_relationship = Aggressive
     race = "hand"
     class_ = "warrior"
-    color = 16
+    color = LightBlue
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -4245,7 +4246,7 @@ chara 90 {
     coefficient = 400
 }
 
-chara 91 {
+chara ghost {
     id = 91
     item_type = 3
     tags = ["undead"]
@@ -4269,7 +4270,7 @@ chara 91 {
     flags = [IsFloating]
 }
 
-chara 92 {
+chara nymph {
     id = 92
     item_type = 3
     tags = ["undead"]
@@ -4286,7 +4287,7 @@ chara 92 {
     element_of_unarmed_attack = 5400200
     resistances = {_51 = 500}
     image = 214
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4295,7 +4296,7 @@ chara 92 {
     flags = [IsFloating]
 }
 
-chara 93 {
+chara man_eater_flower {
     id = 93
     item_type = 2
     tags = []
@@ -4318,7 +4319,7 @@ chara 93 {
     coefficient = 400
 }
 
-chara 94 {
+chara chaos_flower {
     id = 94
     item_type = 2
     tags = []
@@ -4334,7 +4335,7 @@ chara 94 {
     race = "mandrake"
     element_of_unarmed_attack = 5900250
     image = 215
-    color = 10
+    color = Gold
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4342,7 +4343,7 @@ chara 94 {
     coefficient = 400
 }
 
-chara 95 {
+chara cobra {
     id = 95
     item_type = 1
     tags = ["wild"]
@@ -4357,7 +4358,7 @@ chara 95 {
     special_actions = [615]
     original_relationship = Aggressive
     race = "snake"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4365,7 +4366,7 @@ chara 95 {
     coefficient = 400
 }
 
-chara 96 {
+chara king_cobra {
     id = 96
     item_type = 1
     tags = ["wild"]
@@ -4380,7 +4381,7 @@ chara 96 {
     special_actions = [615]
     original_relationship = Aggressive
     race = "snake"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4388,7 +4389,7 @@ chara 96 {
     coefficient = 400
 }
 
-chara 97 {
+chara fire_drake {
     id = 97
     item_type = 4
     tags = ["fire", "dragon"]
@@ -4404,7 +4405,7 @@ chara 97 {
     original_relationship = Aggressive
     race = "drake"
     resistances = {_50 = 500}
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4412,7 +4413,7 @@ chara 97 {
     coefficient = 400
 }
 
-chara 98 {
+chara ice_drake {
     id = 98
     item_type = 4
     tags = ["dragon"]
@@ -4435,7 +4436,7 @@ chara 98 {
     coefficient = 400
 }
 
-chara 99 {
+chara lesser_mummy {
     id = 99
     item_type = 3
     tags = ["undead"]
@@ -4458,7 +4459,7 @@ chara 99 {
     coefficient = 400
 }
 
-chara 100 {
+chara mummy {
     id = 100
     item_type = 3
     tags = ["undead"]
@@ -4475,7 +4476,7 @@ chara 100 {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = 10
+    color = Gold
     cspecialeq = 0
     fltselect = 0
     category = 13
@@ -4483,7 +4484,7 @@ chara 100 {
     coefficient = 400
 }
 
-chara 101 {
+chara greater_mummy {
     id = 101
     item_type = 3
     tags = ["undead"]
@@ -4500,7 +4501,7 @@ chara 101 {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 13
@@ -4508,7 +4509,7 @@ chara 101 {
     coefficient = 400
 }
 
-chara 257 {
+chara tuwen {
     id = 257
     item_type = 3
     tags = ["undead"]
@@ -4525,7 +4526,7 @@ chara 257 {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = 8
+    color = Cyan
     fixlv = 6
     cspecialeq = 0
     fltselect = 3
@@ -4535,7 +4536,7 @@ chara 257 {
     flags = [IsDeathMaster]
 }
 
-chara 254 {
+chara ancient_coffin {
     id = 254
     item_type = 3
     tags = ["undead"]
@@ -4558,7 +4559,7 @@ chara 254 {
     coefficient = 400
 }
 
-chara 102 {
+chara goblin {
     id = 102
     item_type = 3
     tags = []
@@ -4572,7 +4573,7 @@ chara 102 {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "goblin"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4580,7 +4581,7 @@ chara 102 {
     coefficient = 400
 }
 
-chara 103 {
+chara goblin_warrior {
     id = 103
     item_type = 3
     tags = []
@@ -4595,7 +4596,7 @@ chara 103 {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "warrior"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4603,7 +4604,7 @@ chara 103 {
     coefficient = 400
 }
 
-chara 104 {
+chara goblin_shaman {
     id = 104
     item_type = 3
     tags = []
@@ -4620,7 +4621,7 @@ chara 104 {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "warmage"
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4628,7 +4629,7 @@ chara 104 {
     coefficient = 400
 }
 
-chara 105 {
+chara goblin_wizard {
     id = 105
     item_type = 3
     tags = []
@@ -4643,7 +4644,7 @@ chara 105 {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "wizard"
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4651,7 +4652,7 @@ chara 105 {
     coefficient = 400
 }
 
-chara 106 {
+chara red_baptist {
     id = 106
     item_type = 3
     tags = ["undead", "fire"]
@@ -4669,7 +4670,7 @@ chara 106 {
     class_ = "wizard"
     resistances = {_50 = 500}
     image = 221
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4678,7 +4679,7 @@ chara 106 {
     flags = [IsImmuneToFear]
 }
 
-chara 107 {
+chara blue_baptist {
     id = 107
     item_type = 3
     tags = ["undead"]
@@ -4696,7 +4697,7 @@ chara 107 {
     class_ = "wizard"
     resistances = {_51 = 500}
     image = 221
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4705,7 +4706,7 @@ chara 107 {
     flags = [IsImmuneToFear]
 }
 
-chara 108 {
+chara brown_bear {
     id = 108
     item_type = 1
     tags = ["wild"]
@@ -4728,7 +4729,7 @@ chara 108 {
     coefficient = 400
 }
 
-chara 109 {
+chara grizzly {
     id = 109
     item_type = 1
     tags = ["wild"]
@@ -4742,7 +4743,7 @@ chara 109 {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "bear"
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 11
@@ -4751,7 +4752,7 @@ chara 109 {
     flags = [IsQuickTempered]
 }
 
-chara 344 {
+chara mammoth {
     id = 344
     item_type = 1
     tags = ["wild"]
@@ -4773,7 +4774,7 @@ chara 344 {
     coefficient = 400
 }
 
-chara 110 {
+chara living_armor {
     id = 110
     item_type = 3
     tags = ["undead"]
@@ -4796,7 +4797,7 @@ chara 110 {
     flags = [IsImmuneToFear]
 }
 
-chara 111 {
+chara steel_mass {
     id = 111
     item_type = 3
     tags = ["undead"]
@@ -4811,7 +4812,7 @@ chara 111 {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4820,7 +4821,7 @@ chara 111 {
     flags = [IsImmuneToFear]
 }
 
-chara 112 {
+chara golden_armor {
     id = 112
     item_type = 3
     tags = ["undead"]
@@ -4835,7 +4836,7 @@ chara 112 {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4844,7 +4845,7 @@ chara 112 {
     flags = [IsImmuneToFear]
 }
 
-chara 113 {
+chara death_armor {
     id = 113
     item_type = 3
     tags = []
@@ -4860,7 +4861,7 @@ chara 113 {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4869,7 +4870,7 @@ chara 113 {
     flags = [IsImmuneToFear]
 }
 
-chara 114 {
+chara medusa {
     id = 114
     item_type = 3
     tags = ["god"]
@@ -4891,7 +4892,7 @@ chara 114 {
     coefficient = 400
 }
 
-chara 115 {
+chara euryale {
     id = 115
     item_type = 3
     tags = ["god"]
@@ -4906,7 +4907,7 @@ chara 115 {
     original_relationship = Aggressive
     race = "medusa"
     class_ = "warmage"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4914,7 +4915,7 @@ chara 115 {
     coefficient = 400
 }
 
-chara 116 {
+chara stheno {
     id = 116
     item_type = 3
     tags = ["god"]
@@ -4929,7 +4930,7 @@ chara 116 {
     original_relationship = Aggressive
     race = "medusa"
     class_ = "warmage"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4937,7 +4938,7 @@ chara 116 {
     coefficient = 400
 }
 
-chara 117 {
+chara cupid_of_love {
     id = 117
     item_type = 3
     tags = ["god"]
@@ -4961,7 +4962,7 @@ chara 117 {
     flags = [IsFloating]
 }
 
-chara 118 {
+chara lesser_phantom {
     id = 118
     item_type = 3
     tags = ["undead"]
@@ -4985,7 +4986,7 @@ chara 118 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 248 {
+chara tyrannosaurus {
     id = 248
     item_type = 1
     tags = ["dragon"]
@@ -5007,7 +5008,7 @@ chara 248 {
     coefficient = 400
 }
 
-chara 119 {
+chara harpy {
     id = 119
     item_type = 3
     tags = []
@@ -5028,7 +5029,7 @@ chara 119 {
     coefficient = 400
 }
 
-chara 120 {
+chara green_dragon {
     id = 120
     item_type = 5
     tags = ["dragon"]
@@ -5044,7 +5045,7 @@ chara 120 {
     original_relationship = Aggressive
     race = "dragon"
     class_ = "predator"
-    color = 19
+    color = YellowGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5052,7 +5053,7 @@ chara 120 {
     coefficient = 400
 }
 
-chara 121 {
+chara red_dragon {
     id = 121
     item_type = 5
     tags = ["fire", "dragon"]
@@ -5069,7 +5070,7 @@ chara 121 {
     race = "dragon"
     class_ = "predator"
     resistances = {_50 = 500}
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5077,7 +5078,7 @@ chara 121 {
     coefficient = 400
 }
 
-chara 122 {
+chara white_dragon {
     id = 122
     item_type = 5
     tags = ["dragon"]
@@ -5101,7 +5102,7 @@ chara 122 {
     coefficient = 400
 }
 
-chara 123 {
+chara elec_dragon {
     id = 123
     item_type = 5
     tags = ["dragon"]
@@ -5118,7 +5119,7 @@ chara 123 {
     race = "dragon"
     class_ = "predator"
     resistances = {_52 = 500}
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5126,7 +5127,7 @@ chara 123 {
     coefficient = 400
 }
 
-chara 124 {
+chara nether_dragon {
     id = 124
     item_type = 5
     tags = ["undead", "dragon"]
@@ -5143,7 +5144,7 @@ chara 124 {
     race = "dragon"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5151,7 +5152,7 @@ chara 124 {
     coefficient = 400
 }
 
-chara 125 {
+chara chaos_dragon {
     id = 125
     item_type = 5
     tags = ["dragon"]
@@ -5168,7 +5169,7 @@ chara 125 {
     race = "dragon"
     class_ = "predator"
     resistances = {_59 = 500}
-    color = 18
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5176,7 +5177,7 @@ chara 125 {
     coefficient = 400
 }
 
-chara 126 {
+chara cerberus {
     id = 126
     item_type = 4
     tags = ["fire"]
@@ -5200,7 +5201,7 @@ chara 126 {
     coefficient = 400
 }
 
-chara 255 {
+chara scorpion {
     id = 255
     item_type = 2
     tags = ["wild"]
@@ -5224,7 +5225,7 @@ chara 255 {
     coefficient = 400
 }
 
-chara 256 {
+chara king_scorpion {
     id = 256
     item_type = 2
     tags = ["wild"]
@@ -5241,7 +5242,7 @@ chara 256 {
     element_of_unarmed_attack = 5500350
     resistances = {_55 = 500}
     image = 396
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5249,7 +5250,7 @@ chara 256 {
     coefficient = 400
 }
 
-chara 127 {
+chara spider {
     id = 127
     item_type = 2
     tags = ["wild"]
@@ -5273,7 +5274,7 @@ chara 127 {
     coefficient = 400
 }
 
-chara 128 {
+chara black_widow {
     id = 128
     item_type = 2
     tags = ["wild"]
@@ -5291,7 +5292,7 @@ chara 128 {
     race = "spider"
     element_of_unarmed_attack = 5500150
     resistances = {_55 = 500}
-    color = 19
+    color = YellowGreen
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5299,7 +5300,7 @@ chara 128 {
     coefficient = 400
 }
 
-chara 129 {
+chara paralyzer {
     id = 129
     item_type = 2
     tags = ["wild"]
@@ -5317,7 +5318,7 @@ chara 129 {
     race = "spider"
     element_of_unarmed_attack = 5800150
     resistances = {_55 = 500}
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5325,7 +5326,7 @@ chara 129 {
     coefficient = 400
 }
 
-chara 130 {
+chara tarantula {
     id = 130
     item_type = 2
     tags = ["wild"]
@@ -5343,7 +5344,7 @@ chara 130 {
     race = "spider"
     element_of_unarmed_attack = 5500200
     resistances = {_55 = 500}
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5351,7 +5352,7 @@ chara 130 {
     coefficient = 400
 }
 
-chara 131 {
+chara blood_spider {
     id = 131
     item_type = 2
     tags = ["undead"]
@@ -5369,7 +5370,7 @@ chara 131 {
     race = "spider"
     element_of_unarmed_attack = 5600100
     resistances = {_55 = 500}
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5377,7 +5378,7 @@ chara 131 {
     coefficient = 400
 }
 
-chara 132 {
+chara wooden_golem {
     id = 132
     item_type = 3
     tags = []
@@ -5392,7 +5393,7 @@ chara 132 {
     can_talk = 1
     original_relationship = Aggressive
     race = "golem"
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5401,7 +5402,7 @@ chara 132 {
     flags = [IsImmuneToFear]
 }
 
-chara 133 {
+chara stone_golem {
     id = 133
     item_type = 3
     tags = ["fire"]
@@ -5424,7 +5425,7 @@ chara 133 {
     flags = [IsImmuneToFear]
 }
 
-chara 134 {
+chara steel_golem {
     id = 134
     item_type = 3
     tags = ["fire"]
@@ -5440,7 +5441,7 @@ chara 134 {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = 15
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5449,7 +5450,7 @@ chara 134 {
     flags = [IsImmuneToFear]
 }
 
-chara 135 {
+chara golden_golem {
     id = 135
     item_type = 3
     tags = []
@@ -5465,7 +5466,7 @@ chara 135 {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5474,7 +5475,7 @@ chara 135 {
     flags = [IsImmuneToFear]
 }
 
-chara 136 {
+chara mithril_golem {
     id = 136
     item_type = 3
     tags = []
@@ -5490,7 +5491,7 @@ chara 136 {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5499,7 +5500,7 @@ chara 136 {
     flags = [IsImmuneToFear]
 }
 
-chara 137 {
+chara sky_golem {
     id = 137
     item_type = 3
     tags = []
@@ -5515,7 +5516,7 @@ chara 137 {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = 9
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5524,7 +5525,7 @@ chara 137 {
     flags = [IsImmuneToFear]
 }
 
-chara 138 {
+chara adamantium_golem {
     id = 138
     item_type = 3
     tags = []
@@ -5540,7 +5541,7 @@ chara 138 {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = 2
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5549,7 +5550,7 @@ chara 138 {
     flags = [IsImmuneToFear]
 }
 
-chara 147 {
+chara fire_crab {
     id = 147
     item_type = 2
     tags = ["fire"]
@@ -5572,7 +5573,7 @@ chara 147 {
     coefficient = 400
 }
 
-chara 148 {
+chara fire_centipede {
     id = 148
     item_type = 2
     tags = ["fire"]
@@ -5596,7 +5597,7 @@ chara 148 {
     coefficient = 400
 }
 
-chara 149 {
+chara cultist_of_fire {
     id = 149
     item_type = 3
     tags = ["fire"]
@@ -5622,7 +5623,7 @@ chara 149 {
     coefficient = 400
 }
 
-chara 150 {
+chara skeleton_warrior {
     id = 150
     item_type = 3
     tags = ["undead"]
@@ -5645,7 +5646,7 @@ chara 150 {
     flags = [IsImmuneToFear]
 }
 
-chara 151 {
+chara skeleton_berserker {
     id = 151
     item_type = 3
     tags = ["undead"]
@@ -5660,7 +5661,7 @@ chara 151 {
     original_relationship = Aggressive
     race = "skeleton"
     class_ = "warrior"
-    color = 3
+    color = Blue
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -5670,7 +5671,7 @@ chara 151 {
     flags = [IsImmuneToFear]
 }
 
-chara 152 {
+chara missionary_of_darkness {
     id = 152
     item_type = 3
     tags = ["man"]
@@ -5695,7 +5696,7 @@ chara 152 {
     flags = [IsImmuneToFear]
 }
 
-chara 153 {
+chara pawn {
     id = 153
     item_type = 3
     tags = ["pawn"]
@@ -5717,7 +5718,7 @@ chara 153 {
     coefficient = 400
 }
 
-chara 154 {
+chara rook {
     id = 154
     item_type = 3
     tags = ["pawn"]
@@ -5740,7 +5741,7 @@ chara 154 {
     coefficient = 400
 }
 
-chara 155 {
+chara bishop {
     id = 155
     item_type = 3
     tags = ["pawn"]
@@ -5764,7 +5765,7 @@ chara 155 {
     coefficient = 400
 }
 
-chara 156 {
+chara knight {
     id = 156
     item_type = 3
     tags = ["pawn"]
@@ -5788,7 +5789,7 @@ chara 156 {
     coefficient = 400
 }
 
-chara 157 {
+chara queen {
     id = 157
     item_type = 3
     tags = []
@@ -5812,7 +5813,7 @@ chara 157 {
     coefficient = 400
 }
 
-chara 158 {
+chara king {
     id = 158
     item_type = 3
     tags = []
@@ -5836,7 +5837,7 @@ chara 158 {
     coefficient = 400
 }
 
-chara 159 {
+chara mercenary_warrior {
     id = 159
     item_type = 3
     tags = ["man", "shopguard"]
@@ -5861,7 +5862,7 @@ chara 159 {
     coefficient = 400
 }
 
-chara 160 {
+chara mercenary_archer {
     id = 160
     item_type = 3
     tags = ["man", "shopguard"]
@@ -5886,7 +5887,7 @@ chara 160 {
     coefficient = 400
 }
 
-chara 161 {
+chara mercenary_wizard {
     id = 161
     item_type = 3
     tags = ["man", "shopguard"]
@@ -5911,7 +5912,7 @@ chara 161 {
     coefficient = 400
 }
 
-chara 302 {
+chara rogue_boss {
     id = 302
     item_type = 3
     tags = ["man", "rogue"]
@@ -5938,7 +5939,7 @@ chara 302 {
     coefficient = 400
 }
 
-chara 303 {
+chara rogue_warrior {
     id = 303
     item_type = 3
     tags = ["man", "rogue"]
@@ -5964,7 +5965,7 @@ chara 303 {
     coefficient = 400
 }
 
-chara 304 {
+chara rogue_archer {
     id = 304
     item_type = 3
     tags = ["man", "rogue"]
@@ -5989,7 +5990,7 @@ chara 304 {
     coefficient = 400
 }
 
-chara 305 {
+chara rogue_wizard {
     id = 305
     item_type = 3
     tags = ["man", "rogue"]
@@ -6015,7 +6016,7 @@ chara 305 {
     coefficient = 400
 }
 
-chara 162 {
+chara yerles_machine_infantry {
     id = 162
     item_type = 3
     tags = ["man"]
@@ -6039,7 +6040,7 @@ chara 162 {
     coefficient = 400
 }
 
-chara 234 {
+chara yerles_elite_machine_infantry {
     id = 234
     item_type = 3
     tags = ["man"]
@@ -6056,7 +6057,7 @@ chara 234 {
     race = "yerles"
     class_ = "gunner"
     image = 250
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6064,7 +6065,7 @@ chara 234 {
     coefficient = 400
 }
 
-chara 231 {
+chara gilbert_the_colonel {
     id = 231
     item_type = 3
     tags = ["man"]
@@ -6090,7 +6091,7 @@ chara 231 {
     coefficient = 400
 }
 
-chara 232 {
+chara yerles_self_propelled_gun {
     id = 232
     item_type = 3
     tags = []
@@ -6113,7 +6114,7 @@ chara 232 {
     coefficient = 400
 }
 
-chara 233 {
+chara juere_infantry {
     id = 233
     item_type = 3
     tags = ["man"]
@@ -6137,7 +6138,7 @@ chara 233 {
     coefficient = 400
 }
 
-chara 235 {
+chara juere_swordman {
     id = 235
     item_type = 3
     tags = ["man"]
@@ -6154,7 +6155,7 @@ chara 235 {
     race = "juere"
     class_ = "thief"
     image = 377
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6162,7 +6163,7 @@ chara 235 {
     coefficient = 400
 }
 
-chara 163 {
+chara rock_thrower {
     id = 163
     item_type = 3
     tags = ["man"]
@@ -6186,7 +6187,7 @@ chara 163 {
     coefficient = 400
 }
 
-chara 164 {
+chara cat {
     id = 164
     item_type = 1
     tags = ["wild", "cat"]
@@ -6210,7 +6211,7 @@ chara 164 {
     flags = [IsSuitableForMount]
 }
 
-chara 246 {
+chara silver_cat {
     id = 246
     item_type = 1
     tags = ["wild", "cat"]
@@ -6234,7 +6235,7 @@ chara 246 {
     coefficient = 0
 }
 
-chara 332 {
+chara stray_cat {
     id = 332
     item_type = 1
     tags = ["wild", "cat"]
@@ -6251,7 +6252,7 @@ chara 332 {
     original_relationship = Unconcerned
     race = "cat"
     image = 387
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6259,7 +6260,7 @@ chara 332 {
     coefficient = 0
 }
 
-chara 229 {
+chara lion {
     id = 229
     item_type = 1
     tags = ["wild", "cat"]
@@ -6284,7 +6285,7 @@ chara 229 {
     flags = [IsSuitableForMount]
 }
 
-chara 230 {
+chara cacy {
     id = 230
     item_type = 1
     tags = ["wild", "cat"]
@@ -6310,7 +6311,7 @@ chara 230 {
     coefficient = 400
 }
 
-chara 228 {
+chara carbuncle {
     id = 228
     item_type = 1
     tags = ["wild", "cat"]
@@ -6335,7 +6336,7 @@ chara 228 {
     coefficient = 400
 }
 
-chara 165 {
+chara dog {
     id = 165
     item_type = 1
     tags = ["wild"]
@@ -6359,7 +6360,7 @@ chara 165 {
     flags = [IsSuitableForMount]
 }
 
-chara 225 {
+chara poppy {
     id = 225
     item_type = 1
     tags = ["wild"]
@@ -6384,7 +6385,7 @@ chara 225 {
     flags = [IsSuitableForMount]
 }
 
-chara 226 {
+chara rilian {
     id = 226
     item_type = 3
     tags = ["man"]
@@ -6408,7 +6409,7 @@ chara 226 {
     coefficient = 400
 }
 
-chara 227 {
+chara tam {
     id = 227
     item_type = 3
     tags = ["man"]
@@ -6433,7 +6434,7 @@ chara 227 {
     coefficient = 400
 }
 
-chara 166 {
+chara little_girl {
     id = 166
     item_type = 3
     tags = ["man"]
@@ -6459,7 +6460,7 @@ chara 166 {
     flags = [IsSuitableForMount]
 }
 
-chara 167 {
+chara rat {
     id = 167
     item_type = 1
     tags = ["wild"]
@@ -6474,7 +6475,7 @@ chara 167 {
     can_talk = 1
     original_relationship = Aggressive
     race = "rat"
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6482,7 +6483,7 @@ chara 167 {
     coefficient = 400
 }
 
-chara 168 {
+chara hermit_crab {
     id = 168
     item_type = 1
     tags = ["wild"]
@@ -6504,7 +6505,7 @@ chara 168 {
     coefficient = 400
 }
 
-chara 170 {
+chara public_performer {
     id = 170
     item_type = 3
     tags = ["man"]
@@ -6529,7 +6530,7 @@ chara 170 {
     coefficient = 400
 }
 
-chara 175 {
+chara frisia {
     id = 175
     item_type = 3
     tags = ["god"]
@@ -6553,7 +6554,7 @@ chara 175 {
     coefficient = 400
 }
 
-chara 176 {
+chara younger_sister {
     id = 176
     item_type = 3
     tags = ["man"]
@@ -6579,7 +6580,7 @@ chara 176 {
     flags = [IsSuitableForMount]
 }
 
-chara 249 {
+chara younger_sister_of_mansion {
     id = 249
     item_type = 3
     tags = ["man"]
@@ -6606,7 +6607,7 @@ chara 249 {
     flags = [IsSuitableForMount]
 }
 
-chara 210 {
+chara younger_cat_sister {
     id = 210
     item_type = 3
     tags = ["man"]
@@ -6630,7 +6631,7 @@ chara 210 {
     coefficient = 400
 }
 
-chara 211 {
+chara young_lady {
     id = 211
     item_type = 3
     tags = ["man"]
@@ -6658,7 +6659,7 @@ chara 211 {
     flags = [IsSuitableForMount]
 }
 
-chara 177 {
+chara utima {
     id = 177
     item_type = 3
     tags = ["god"]
@@ -6688,7 +6689,7 @@ chara 177 {
     coefficient = 400
 }
 
-chara 178 {
+chara azzrssil {
     id = 178
     item_type = 6
     tags = ["undead", "god"]
@@ -6707,7 +6708,7 @@ chara 178 {
     class_ = "wizard"
     sex = Male
     image = 339
-    color = 3
+    color = Blue
     fixlv = 6
     cspecialeq = 0
     fltselect = 3
@@ -6716,7 +6717,7 @@ chara 178 {
     coefficient = 400
 }
 
-chara 179 {
+chara master_of_pet_arena {
     id = 179
     item_type = 3
     tags = ["man"]
@@ -6739,7 +6740,7 @@ chara 179 {
     coefficient = 400
 }
 
-chara 208 {
+chara garokk {
     id = 208
     item_type = 3
     tags = ["man"]
@@ -6765,7 +6766,7 @@ chara 208 {
     coefficient = 400
 }
 
-chara 209 {
+chara miral {
     id = 209
     item_type = 3
     tags = ["man"]
@@ -6791,7 +6792,7 @@ chara 209 {
     coefficient = 400
 }
 
-chara 180 {
+chara twintail {
     id = 180
     item_type = 1
     tags = []
@@ -6815,7 +6816,7 @@ chara 180 {
     flags = [IsSuitableForMount]
 }
 
-chara 181 {
+chara silver_wolf {
     id = 181
     item_type = 1
     tags = ["god"]
@@ -6838,7 +6839,7 @@ chara 181 {
     coefficient = 400
 }
 
-chara 182 {
+chara nurse {
     id = 182
     item_type = 3
     tags = ["man"]
@@ -6864,7 +6865,7 @@ chara 182 {
     flags = [IsSuitableForMount]
 }
 
-chara 183 {
+chara rich_person {
     id = 183
     item_type = 3
     tags = ["man"]
@@ -6889,7 +6890,7 @@ chara 183 {
     coefficient = 400
 }
 
-chara 184 {
+chara noble_child {
     id = 184
     item_type = 3
     tags = ["man"]
@@ -6914,7 +6915,7 @@ chara 184 {
     coefficient = 400
 }
 
-chara 185 {
+chara tourist {
     id = 185
     item_type = 3
     tags = ["man"]
@@ -6940,7 +6941,7 @@ chara 185 {
     coefficient = 400
 }
 
-chara 350 {
+chara festival_tourist {
     id = 350
     item_type = 3
     tags = ["man"]
@@ -6959,7 +6960,7 @@ chara 350 {
     class_ = "gunner"
     male_image = 477
     female_image = 476
-    color = 1
+    color = Green
     cspecialeq = 0
     fltselect = 1
     category = 0
@@ -6967,7 +6968,7 @@ chara 350 {
     coefficient = 400
 }
 
-chara 186 {
+chara blade {
     id = 186
     item_type = 3
     tags = []
@@ -6990,7 +6991,7 @@ chara 186 {
     flags = [IsImmuneToFear]
 }
 
-chara 187 {
+chara blade_alpha {
     id = 187
     item_type = 3
     tags = []
@@ -7006,7 +7007,7 @@ chara 187 {
     race = "machine"
     class_ = "predator"
     element_of_unarmed_attack = 6100120
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7015,7 +7016,7 @@ chara 187 {
     flags = [IsImmuneToFear]
 }
 
-chara 188 {
+chara blade_omega {
     id = 188
     item_type = 3
     tags = []
@@ -7031,7 +7032,7 @@ chara 188 {
     race = "machine"
     class_ = "predator"
     element_of_unarmed_attack = 6100150
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7040,7 +7041,7 @@ chara 188 {
     flags = [IsImmuneToFear]
 }
 
-chara 345 {
+chara kaneda_bike {
     id = 345
     item_type = 3
     tags = []
@@ -7066,7 +7067,7 @@ chara 345 {
     flags = [IsImmuneToFear, IsSuitableForMount]
 }
 
-chara 346 {
+chara cub {
     id = 346
     item_type = 3
     tags = []
@@ -7091,7 +7092,7 @@ chara 346 {
     flags = [IsImmuneToFear, IsSuitableForMount]
 }
 
-chara 341 {
+chara mine_dog {
     id = 341
     item_type = 3
     tags = []
@@ -7115,7 +7116,7 @@ chara 341 {
     flags = [IsImmuneToFear, IsImmuneToMine, CuresMpFrequently]
 }
 
-chara 258 {
+chara iron_maiden {
     id = 258
     item_type = 3
     tags = []
@@ -7140,7 +7141,7 @@ chara 258 {
     flags = [IsImmuneToFear]
 }
 
-chara 189 {
+chara deformed_eye {
     id = 189
     item_type = 3
     tags = ["undead"]
@@ -7164,7 +7165,7 @@ chara 189 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 190 {
+chara impure_eye {
     id = 190
     item_type = 3
     tags = ["undead"]
@@ -7180,7 +7181,7 @@ chara 190 {
     original_relationship = Aggressive
     race = "eye"
     image = 271
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7189,7 +7190,7 @@ chara 190 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 191 {
+chara wisp {
     id = 191
     item_type = 3
     tags = ["undead", "ether"]
@@ -7213,7 +7214,7 @@ chara 191 {
     flags = [IsFloating, IsImmuneToFear]
 }
 
-chara 192 {
+chara hedgehog {
     id = 192
     item_type = 1
     tags = ["wild"]
@@ -7236,7 +7237,7 @@ chara 192 {
     coefficient = 400
 }
 
-chara 193 {
+chara shining_hedgehog {
     id = 193
     item_type = 1
     tags = ["wild", "ether"]
@@ -7251,7 +7252,7 @@ chara 193 {
     original_relationship = Aggressive
     race = "crab"
     image = 273
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     damage_reaction_info = 500062
     fltselect = 0
@@ -7260,7 +7261,7 @@ chara 193 {
     coefficient = 400
 }
 
-chara 195 {
+chara chicken {
     id = 195
     item_type = 1
     tags = ["wild"]
@@ -7282,7 +7283,7 @@ chara 195 {
     coefficient = 400
 }
 
-chara 196 {
+chara pumpkin {
     id = 196
     item_type = 2
     tags = ["undead"]
@@ -7306,7 +7307,7 @@ chara 196 {
     coefficient = 400
 }
 
-chara 201 {
+chara puppy {
     id = 201
     item_type = 2
     tags = ["undead"]
@@ -7323,7 +7324,7 @@ chara 201 {
     race = "mandrake"
     element_of_unarmed_attack = 5400150
     image = 275
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7332,7 +7333,7 @@ chara 201 {
     flags = [IsInvisible]
 }
 
-chara 197 {
+chara greater_pumpkin {
     id = 197
     item_type = 2
     tags = ["undead"]
@@ -7349,7 +7350,7 @@ chara 197 {
     race = "mandrake"
     element_of_unarmed_attack = 5400200
     image = 275
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7358,7 +7359,7 @@ chara 197 {
     flags = [IsInvisible]
 }
 
-chara 198 {
+chara halloween_nightmare {
     id = 198
     item_type = 2
     tags = ["undead"]
@@ -7375,7 +7376,7 @@ chara 198 {
     race = "mandrake"
     element_of_unarmed_attack = 5400250
     image = 275
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7384,7 +7385,7 @@ chara 198 {
     flags = [IsInvisible]
 }
 
-chara 199 {
+chara stalker {
     id = 199
     item_type = 3
     tags = ["undead"]
@@ -7408,7 +7409,7 @@ chara 199 {
     flags = [IsInvisible, IsImmuneToFear]
 }
 
-chara 200 {
+chara shadow_stalker {
     id = 200
     item_type = 3
     tags = ["undead"]
@@ -7424,7 +7425,7 @@ chara 200 {
     race = "stalker"
     class_ = "predator"
     image = 276
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7433,7 +7434,7 @@ chara 200 {
     flags = [IsInvisible, IsImmuneToFear]
 }
 
-chara 202 {
+chara ebon {
     id = 202
     item_type = 3
     tags = []
@@ -7460,7 +7461,7 @@ chara 202 {
     coefficient = 400
 }
 
-chara 203 {
+chara moyer_the_crooked {
     id = 203
     item_type = 3
     tags = ["man"]
@@ -7485,7 +7486,7 @@ chara 203 {
     coefficient = 400
 }
 
-chara 205 {
+chara maid {
     id = 205
     item_type = 3
     tags = ["man"]
@@ -7511,7 +7512,7 @@ chara 205 {
     coefficient = 400
 }
 
-chara 207 {
+chara ebon2 {
     id = 207
     item_type = 3
     tags = ["god"]
@@ -7538,7 +7539,7 @@ chara 207 {
     coefficient = 400
 }
 
-chara 212 {
+chara stersha {
     id = 212
     item_type = 3
     tags = []
@@ -7564,7 +7565,7 @@ chara 212 {
     coefficient = 400
 }
 
-chara 213 {
+chara gwen {
     id = 213
     item_type = 3
     tags = ["man"]
@@ -7590,7 +7591,7 @@ chara 213 {
     coefficient = 400
 }
 
-chara 221 {
+chara pael {
     id = 221
     item_type = 3
     tags = ["man"]
@@ -7616,7 +7617,7 @@ chara 221 {
     coefficient = 400
 }
 
-chara 222 {
+chara lily {
     id = 222
     item_type = 3
     tags = ["man"]
@@ -7642,7 +7643,7 @@ chara 222 {
     coefficient = 400
 }
 
-chara 223 {
+chara raphael {
     id = 223
     item_type = 3
     tags = ["man"]
@@ -7668,7 +7669,7 @@ chara 223 {
     coefficient = 400
 }
 
-chara 224 {
+chara ainc {
     id = 224
     item_type = 3
     tags = ["man"]
@@ -7694,7 +7695,7 @@ chara 224 {
     coefficient = 400
 }
 
-chara 243 {
+chara arnord {
     id = 243
     item_type = 3
     tags = ["man"]
@@ -7720,7 +7721,7 @@ chara 243 {
     coefficient = 400
 }
 
-chara 247 {
+chara mia {
     id = 247
     item_type = 3
     tags = ["man"]
@@ -7745,7 +7746,7 @@ chara 247 {
     coefficient = 400
 }
 
-chara 252 {
+chara renton {
     id = 252
     item_type = 3
     tags = ["man"]
@@ -7771,7 +7772,7 @@ chara 252 {
     coefficient = 400
 }
 
-chara 253 {
+chara marks {
     id = 253
     item_type = 3
     tags = ["man"]
@@ -7798,7 +7799,7 @@ chara 253 {
     coefficient = 400
 }
 
-chara 259 {
+chara noel {
     id = 259
     item_type = 3
     tags = ["man"]
@@ -7825,7 +7826,7 @@ chara 259 {
     coefficient = 400
 }
 
-chara 301 {
+chara conery {
     id = 301
     item_type = 3
     tags = ["man"]
@@ -7853,7 +7854,7 @@ chara 301 {
     flags = [IsQuickTempered]
 }
 
-chara 214 {
+chara thief {
     id = 214
     item_type = 3
     tags = ["man"]
@@ -7878,7 +7879,7 @@ chara 214 {
     flags = [DropsGold]
 }
 
-chara 215 {
+chara robber {
     id = 215
     item_type = 3
     tags = ["man"]
@@ -7896,7 +7897,7 @@ chara 215 {
     race = "juere"
     class_ = "thief"
     image = 166
-    color = 3
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7905,7 +7906,7 @@ chara 215 {
     flags = [DropsGold]
 }
 
-chara 217 {
+chara master_thief {
     id = 217
     item_type = 3
     tags = ["man"]
@@ -7923,7 +7924,7 @@ chara 217 {
     race = "juere"
     class_ = "thief"
     image = 166
-    color = 4
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7932,7 +7933,7 @@ chara 217 {
     flags = [DropsGold]
 }
 
-chara 216 {
+chara great_race_of_yith {
     id = 216
     item_type = 1
     tags = []
@@ -7956,7 +7957,7 @@ chara 216 {
     flags = [IsImmuneToFear]
 }
 
-chara 218 {
+chara shub_niggurath {
     id = 218
     item_type = 1
     tags = []
@@ -7982,7 +7983,7 @@ chara 218 {
     flags = [IsImmuneToFear]
 }
 
-chara 219 {
+chara gagu {
     id = 219
     item_type = 3
     tags = []
@@ -8006,7 +8007,7 @@ chara 219 {
     coefficient = 400
 }
 
-chara 220 {
+chara spiral_king {
     id = 220
     item_type = 3
     tags = ["god"]
@@ -8032,7 +8033,7 @@ chara 220 {
     flags = [IsImmuneToFear]
 }
 
-chara 250 {
+chara fairy {
     id = 250
     item_type = 3
     tags = []
@@ -8055,7 +8056,7 @@ chara 250 {
     flags = [IsFloating, DropsGold]
 }
 
-chara 260 {
+chara black_cat {
     id = 260
     item_type = 3
     tags = ["god"]
@@ -8083,7 +8084,7 @@ chara 260 {
     flags = [IsFloating]
 }
 
-chara 261 {
+chara cute_fairy {
     id = 261
     item_type = 3
     tags = ["god"]
@@ -8111,7 +8112,7 @@ chara 261 {
     flags = [IsFloating]
 }
 
-chara 262 {
+chara android {
     id = 262
     item_type = 3
     tags = ["god"]
@@ -8138,7 +8139,7 @@ chara 262 {
     flags = [IsFloating]
 }
 
-chara 263 {
+chara black_angel {
     id = 263
     item_type = 3
     tags = ["god"]
@@ -8167,7 +8168,7 @@ chara 263 {
     flags = [IsFloating, IsSuitableForMount]
 }
 
-chara 264 {
+chara exile {
     id = 264
     item_type = 3
     tags = ["god"]
@@ -8193,7 +8194,7 @@ chara 264 {
     flags = [IsFloating, CanCastRapidMagic]
 }
 
-chara 265 {
+chara golden_knight {
     id = 265
     item_type = 3
     tags = ["god"]
@@ -8222,7 +8223,7 @@ chara 265 {
     flags = [IsFloating]
 }
 
-chara 266 {
+chara defender {
     id = 266
     item_type = 3
     tags = ["god"]
@@ -8251,7 +8252,7 @@ chara 266 {
     flags = [IsFloating, HasLayHand]
 }
 
-chara 267 {
+chara lame_horse {
     id = 267
     item_type = 1
     tags = ["wild", "horse"]
@@ -8267,7 +8268,7 @@ chara 267 {
     has_random_name = true
     original_relationship = Unconcerned
     race = "horse"
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8276,7 +8277,7 @@ chara 267 {
     flags = [IsSuitableForMount]
 }
 
-chara 276 {
+chara wild_horse {
     id = 276
     item_type = 1
     tags = ["wild", "horse"]
@@ -8293,7 +8294,7 @@ chara 276 {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = 6
+    color = Grey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8302,7 +8303,7 @@ chara 276 {
     flags = [IsSuitableForMount]
 }
 
-chara 275 {
+chara noyel_horse {
     id = 275
     item_type = 1
     tags = ["wild", "horse"]
@@ -8319,7 +8320,7 @@ chara 275 {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = 15
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8328,7 +8329,7 @@ chara 275 {
     flags = [IsSuitableForMount]
 }
 
-chara 268 {
+chara yowyn_horse {
     id = 268
     item_type = 1
     tags = ["wild", "horse"]
@@ -8345,7 +8346,7 @@ chara 268 {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = 16
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8354,7 +8355,7 @@ chara 268 {
     flags = [IsSuitableForMount]
 }
 
-chara 277 {
+chara wild_horse {
     id = 277
     item_type = 1
     tags = ["wild", "horse"]
@@ -8371,7 +8372,7 @@ chara 277 {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = 10
+    color = Gold
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8380,7 +8381,7 @@ chara 277 {
     flags = [IsSuitableForMount]
 }
 
-chara 278 {
+chara mutant {
     id = 278
     item_type = 3
     tags = []
@@ -8404,7 +8405,7 @@ chara 278 {
     coefficient = 400
 }
 
-chara 279 {
+chara icolle {
     id = 279
     item_type = 3
     tags = ["man"]
@@ -8430,7 +8431,7 @@ chara 279 {
     coefficient = 400
 }
 
-chara 280 {
+chara balzak {
     id = 280
     item_type = 3
     tags = ["man"]
@@ -8455,7 +8456,7 @@ chara 280 {
     coefficient = 400
 }
 
-chara 288 {
+chara revlus {
     id = 288
     item_type = 3
     tags = ["man"]
@@ -8482,7 +8483,7 @@ chara 288 {
     flags = [IsFloating, CanCastRapidMagic]
 }
 
-chara 290 {
+chara lexus {
     id = 290
     item_type = 3
     tags = ["man"]
@@ -8509,7 +8510,7 @@ chara 290 {
     flags = [IsFloating, CanCastRapidMagic]
 }
 
-chara 292 {
+chara sin {
     id = 292
     item_type = 3
     tags = ["man"]
@@ -8534,7 +8535,7 @@ chara 292 {
     coefficient = 400
 }
 
-chara 294 {
+chara abyss {
     id = 294
     item_type = 3
     tags = ["man"]
@@ -8560,7 +8561,7 @@ chara 294 {
     coefficient = 400
 }
 
-chara 291 {
+chara fray {
     id = 291
     item_type = 3
     tags = ["man"]
@@ -8585,7 +8586,7 @@ chara 291 {
     coefficient = 400
 }
 
-chara 297 {
+chara doria {
     id = 297
     item_type = 3
     tags = ["man"]
@@ -8611,7 +8612,7 @@ chara 297 {
     coefficient = 400
 }
 
-chara 317 {
+chara silver_eyed_witch {
     id = 317
     item_type = 3
     tags = []
@@ -8640,7 +8641,7 @@ chara 317 {
     coefficient = 400
 }
 
-chara 318 {
+chara big_daddy {
     id = 318
     item_type = 3
     tags = []
@@ -8671,7 +8672,7 @@ chara 318 {
     flags = [IsImmuneToFear]
 }
 
-chara 319 {
+chara little_sister {
     id = 319
     item_type = 3
     tags = []
@@ -8697,7 +8698,7 @@ chara 319 {
     coefficient = 400
 }
 
-chara 322 {
+chara strange_scientist {
     id = 322
     item_type = 3
     tags = ["man"]
@@ -8723,7 +8724,7 @@ chara 322 {
     coefficient = 400
 }
 
-chara 334 {
+chara mysterious_producer {
     id = 334
     item_type = 3
     tags = ["man"]
@@ -8749,7 +8750,7 @@ chara 334 {
     coefficient = 400
 }
 
-chara 323 {
+chara shade {
     id = 323
     item_type = 3
     tags = ["undead"]
@@ -8773,7 +8774,7 @@ chara 323 {
     flags = [IsFloating]
 }
 
-chara 324 {
+chara quickling {
     id = 324
     item_type = 3
     tags = []
@@ -8787,7 +8788,7 @@ chara 324 {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "quickling"
-    color = 19
+    color = YellowGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8796,7 +8797,7 @@ chara 324 {
     flags = [IsUnsuitableForMount, IsImmuneToElementalDamage]
 }
 
-chara 325 {
+chara quickling_archer {
     id = 325
     item_type = 3
     tags = []
@@ -8812,7 +8813,7 @@ chara 325 {
     original_relationship = Aggressive
     race = "quickling"
     class_ = "archer"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8821,7 +8822,7 @@ chara 325 {
     flags = [IsUnsuitableForMount, IsImmuneToElementalDamage]
 }
 
-chara 328 {
+chara silver_bell {
     id = 328
     item_type = 1
     tags = []
@@ -8845,7 +8846,7 @@ chara 328 {
     flags = [IsUnsuitableForMount, IsMetal, IsImmuneToElementalDamage, IsFloating]
 }
 
-chara 329 {
+chara gold_bell {
     id = 329
     item_type = 1
     tags = []
@@ -8861,7 +8862,7 @@ chara 329 {
     can_talk = 2
     original_relationship = Aggressive
     race = "metal"
-    color = 5
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8870,7 +8871,7 @@ chara 329 {
     flags = [IsUnsuitableForMount, IsMetal, IsImmuneToElementalDamage, IsFloating]
 }
 
-chara 330 {
+chara alien {
     id = 330
     item_type = 1
     tags = ["dragon"]
@@ -8888,7 +8889,7 @@ chara 330 {
     class_ = "predator"
     element_of_unarmed_attack = 6300250
     image = 283
-    color = 17
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8898,7 +8899,7 @@ chara 330 {
 
 
 # For debug
-chara 500 {
+chara spiral_putit {
     id = 500
     item_type = 1
     tags = ["slime"]
@@ -8924,7 +8925,7 @@ chara 500 {
 }
 
 # For debug
-chara 501 {
+chara dragon_putit {
     id = 501
     item_type = 5
     tags = ["dragon"]
