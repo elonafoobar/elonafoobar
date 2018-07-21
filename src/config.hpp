@@ -257,7 +257,7 @@ private:
  * Loads config options that are marked to be loaded before the
  * application instance is initialized, like screen size.
  */
-void load_config_pre_app_init(const fs::path& hcl_file);
+void initialize_config_preload(const fs::path& hcl_file);
 
 void load_config(const fs::path& hcl_file);
 

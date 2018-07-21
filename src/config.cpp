@@ -494,11 +494,9 @@ void load_config(const fs::path& hcl_file)
         key_ammo = u8"A"s;
         conf.set("core.config.key.ammo", key_ammo);
     }
-
-    conf.write();
 }
 
-void load_config_pre_app_init(const fs::path& hcl_file)
+void initialize_config_preload(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
 

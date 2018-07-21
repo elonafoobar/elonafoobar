@@ -31,7 +31,7 @@ public:
      * Registers a new datatype from the HCL spec file provided.
      */
     void register_datatype(const std::string& mod_name,
-                           const fs::path& spec_file);
+                           const std::string& datatype_name);
 
     /***
      * Registers instances of new data for a known datatype from the

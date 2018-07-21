@@ -367,12 +367,33 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
+sol::table initialize_single_lion_db(const std::string& type, const fs::path& data_file)
+{
+    cat::global.initialize();
+    lua::lua->get_registry_manager().register_datatype("core", type);
+    lua::lua->get_registry_manager().register_data("core", type, data_file);
+    auto table = lua::lua->get_registry_manager().get_table("core", "chara");
+    if (!table)
+    {
+        throw std::runtime_error("Could not load data for type " + type + " at" + data_file.string());
+    }
+    return *table;
+}
+
+void initialize_lion_db()
+{
+    const fs::path data_path = filesystem::dir::mods() / "core" / "data";
+
+    auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
+    the_character_db_ex.initialize(chara_table);
+}
+
 void initialize_config(const fs::path& config_file)
 {
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
 
-    if(defines::is_android)
+    if (defines::is_android)
     {
         snail::touch_input::instance().initialize(filesystem::dir::graphic());
     }
@@ -798,15 +819,17 @@ int run()
     initialize_cat_db();
 
     config::instance().init(config_def_file);
-    load_config_pre_app_init(config_file);
-
+    initialize_config_preload(config_file);
     initialize_screen();
 
     filesystem::dir::set_base_save_directory(fs::path("save"));
+
     initialize_config(config_file);
     init_assets();
     initialize_elona();
     initialize_lua();
+
+    config::instance().write();
 
     start_elona();
 

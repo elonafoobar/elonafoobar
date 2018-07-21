@@ -42,7 +42,7 @@ void registry_manager::init(lua_env& lua)
 }
 
 void registry_manager::register_datatype(const std::string& mod_name,
-                                         const fs::path& spec_file)
+                                         const std::string& datatype_name)
 {
     sol::table Registry = registry_env["Registry"];
     if (Registry[mod_name] == sol::lua_nil)
@@ -50,15 +50,6 @@ void registry_manager::register_datatype(const std::string& mod_name,
         Registry[mod_name] = lua->get_state()->create_table();
     }
 
-    std::string filename = spec_file.filename().string();
-    auto pos = filename.find("_def.hcl");
-
-    if (pos == std::string::npos)
-    {
-        throw std::runtime_error("File must be named <...>_def.hcl: " + filename);
-    }
-
-    std::string datatype_name = filename.substr(0, pos);
     // spec::object spec(datatype_name);
     // spec.init(spec_file);
 

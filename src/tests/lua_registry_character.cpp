@@ -11,7 +11,7 @@ static sol::table load(elona::lua::lua_env& lua, const fs::path& data_file)
 {
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
     REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
     auto table = lua.get_registry_manager().get_table("core", "chara");
     REQUIRE(table);
@@ -23,7 +23,7 @@ TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
 
     REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", "blah"));
 }
@@ -53,7 +53,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
 
     REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", data_path));
 }
