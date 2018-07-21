@@ -15,10 +15,15 @@ registry_manager::registry_manager(lua_env* lua_)
         lua->get_state()->globals());
 
     registry_env.set("Registry", lua->get_state()->create_table());
+    registry_env.set("Exports", lua->get_state()->create_table());
+
     registry_env.set("Elona", lua->get_api_manager().bind(*lua));
 
     lua->get_state()->safe_script(
-        R"(HCL = require "hclua")", registry_env);
+        R"(
+scan_exports = require "private/scan_exports"
+register_data = require "private/register_data"
+)", registry_env);
 }
 
 void registry_manager::init(lua_env& lua)
@@ -80,28 +85,7 @@ void registry_manager::register_data(const std::string& mod_name,
     };
 
     auto result = lua->get_state()->safe_script(R"(
-local parsed = HCL.parse_file(_FILEPATH)
-local data = parsed[_DATATYPE_NAME]
-
--- TODO make it a reserved keyword (_msg)
-if parsed.msg ~= nil then
-    error(_FILEPATH .. ":" .. parsed.line .. ":" .. parsed.column .. ": " .. parsed.msg)
-end
-
-if data == nil then
-    error(_FILEPATH .. ": No data found for datatype " .. _DATATYPE_NAME)
-end
-
-if data[1] ~= nil then
-    error("Datatype object was list, are there duplicate IDs?")
-end
-
-for key, value in pairs(data) do
-    -- if validate(spec, value) then
-    value._id = key
-    Registry[_MOD_NAME][_DATATYPE_NAME][key] = value
-    -- end
-end
+register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
 )", registry_env, ignore_handler);
 
     registry_env.set("_MOD_NAME", sol::lua_nil);
@@ -117,6 +101,30 @@ end
     }
 }
 
+void registry_manager::register_functions()
+{
+    registry_env.set("_API_TABLE", lua->get_api_manager().get_master_api_table());
+
+    // Don't print errors (they will be thrown anyways)
+    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
+        return pfr;
+    };
+
+    auto result = lua->get_state()->safe_script(R"(
+Exports = scan_exports(_API_TABLE)
+print("GET")
+print(Elona.require("Debug").inspect.inspect(Exports))
+)", registry_env, ignore_handler);
+
+    registry_env.set("_API_TABLE", sol::lua_nil);
+
+    if(!result.valid())
+    {
+        sol::error err = result;
+        throw std::runtime_error("Failed loading function export data: "s + err.what());
+    }
+}
+
 sol::optional<sol::table> registry_manager::get_table(const std::string& mod_name,
                                                       const std::string& datatype_name)
 {
@@ -128,6 +136,11 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     }
 
     return (*mod_data_table)[datatype_name];
+}
+
+sol::optional<sol::function> registry_manager::get_function(const std::string& name)
+{
+    return registry_env["Exports"][name];
 }
 
 } // namespace lua

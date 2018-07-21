@@ -280,6 +280,7 @@ void lua_env::load_all_mods()
     }
 
     event_mgr->run_callbacks<event_kind_t::all_mods_loaded>();
+    registry_mgr->register_functions();
     stage = mod_loading_stage_t::all_mods_loaded;
 }
 
@@ -463,11 +464,19 @@ void lua_env::load_mod_from_script(
     }
 
     auto result = this->lua->safe_script(script, info->env);
-    if (!result.valid())
+    if (result.valid())
+    {
+        sol::optional<sol::table> api_table = result.get<sol::table>();
+        if (api_table)
+        {
+            api_mgr->add_api(name, *api_table);
+        }
+    }
+    else
     {
         sol::error err = result;
         report_error(err);
-        throw std::runtime_error("Failed initializing mod "s + info->name);
+        throw std::runtime_error("Failed initializing mod "s + name);
     }
 
     this->mods[name] = std::move(info);

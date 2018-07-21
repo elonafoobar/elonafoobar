@@ -41,8 +41,33 @@ public:
                        const std::string& datatype_name,
                        const fs::path& data_file);
 
+    /***
+     * Registers function exports that are inside the "Exports" table
+     * inside the API tables returned by mods. They will then be
+     * accessable by the id
+     *
+     * "<mod_name>.exports.<namespaces>.<...>"
+     *
+     * corresponding to the nested table layout of the Exports table.
+     *
+     * This allows doing things like specifying what should happen
+     * when a corpse is eaten, a trap is activated, and so forth.
+     */
+    void register_functions();
+
+    /***
+     * Obtains the root table for a datatype. For example, to get the
+     * raw data of all characters, which have IDs like
+     * "core.chara.<xxx>", pass in "core" and "chara" as arguments.
+     */
     sol::optional<sol::table> get_table(const std::string& mod_name,
                                         const std::string& datatype_name);
+
+    /***
+     * Obtains a Lua callback of the format "core.exports.<name>", if
+     * it exists.
+     */
+    sol::optional<sol::function> get_function(const std::string& name);
 
 private:
     /***

@@ -72,6 +72,12 @@ public:
     void add_api(const std::string& module_namespace, sol::table& module_table);
 
     /***
+     * Returns the reference to the API table containing the APIs of
+     * all mods that have been added.
+     */
+    sol::table get_master_api_table();
+
+    /***
      * Returns the reference to the core API table "Elona" in the API
      * environment. This is so other internal C++ mechanisms can add
      * their own API methods to it.

@@ -1535,6 +1535,11 @@ void api_manager::set_on(lua_env& lua)
     lua.get_state()->set("Elona", bind(lua));
 }
 
+sol::table api_manager::get_master_api_table()
+{
+    return api_env["Elona"];
+}
+
 sol::table api_manager::get_api_table()
 {
     return api_env["Elona"]["core"];
