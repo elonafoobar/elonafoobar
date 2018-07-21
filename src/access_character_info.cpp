@@ -4,7 +4,6 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
-#include "optional.hpp"
 #include "race.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -14,95 +13,6 @@
 namespace elona
 {
 
-// optional<character> chara_create_ex(const std::string& id, int initlv, int voidlv)
-// {
-// const auto db = lua::lua->get_registry_manager().get_table("core", "chara");
-// if (!db)
-// return none;
-//
-// const auto data_opt = db[id];
-// if (!data_opt)
-// return none;
-//
-// const auto data = *data_opt;
-//
-// character chara{};
-//
-    // // TODO: ensure defaults have been set by this point
-    // chara.id = data.get_or("id", -1);
-    // int level = data.get_or("level", 1);
-    // chara.level = initlv != 0 ? initlv : level;
-    // if (voidlv != 0)
-    // {
-// chara.level = voidlv * (100 + level * 2) / 100;
-// }
-// chara.portrait = data.get_or("portrait", 0);
-// chara.ai_calm = data["ai"].get_or("calm", 0);
-// chara.ai_heal = data["ai"].get_or("calm", 0);
-// chara.ai_move = data["ai"].get_or("move", 0);
-// chara.ai_dist = data["ai"].get_or("dist", 0);
-// chara.ai_act_sub_freq = data["ai"].get_or("sub_action_frequency", 0);
-// chara.normal_actions = data["actions"].get_or("normal", std::vector<int>());
-// chara.special_actions = data["actions"].get_or("special", std::vector<int>());
-// creaturepack = data.get_or("creaturepack", 0);
-// chara.can_talk = data.get_or("can_talk", 0);
-// cdatan(0, rc) = i18n::_(u8"character", std::to_string(chara.id), u8"name");
-// if (data.get_or("has_random_name", false))
-// {
-// cdatan(0, rc) = i18n::s.get("core.locale.chara.job.own_name",
-// cdatan(0, rc),
-// randomname());
-// chara.has_own_name() = true;
-// }
-// chara.original_relationship = chara.relationship =
-// lua::lua->get_registry_manager().get_enum_value("Relation", data.get_or("relationship", ""), 0);
-        // // if (!data->race.empty())
-        // // {
-        // //     access_race_info(3, data->race);
-        // // }
-        // // if (!data->class_.empty())
-        // // {
-        // //     access_class_info(3, data->class_);
-        // // }
-        // // chara.element_of_unarmed_attack = data->element_of_unarmed_attack;
-        // // for (const auto& pair : data->resistances)
-        // // {
-        // //     sdata(pair.first, rc) = pair.second;
-        // // }
-        // // if (data->sex != -1)
-        // // {
-        // //     chara.sex = data->sex;
-        // // }
-        // // if (data->image != 0)
-        // // {
-        // //     chara.image = data->image;
-        // // }
-        // // if (chara.sex == 0 && data->male_image != 0)
-        // // {
-        // //     chara.image = data->male_image;
-        // // }
-        // // if (chara.sex == 1 && data->female_image != 0)
-        // // {
-        // //     chara.image = data->female_image;
-        // // }
-        // // chara.image += data->color * 1000;
-        // // eqammo(0) = data->eqammo_0;
-        // // eqammo(1) = data->eqammo_1;
-        // // eqmultiweapon = data->eqmultiweapon;
-        // // eqrange(0) = data->eqrange_0;
-        // // eqrange(1) = data->eqrange_1;
-        // // eqring1 = data->eqring1;
-        // // eqtwohand = data->eqtwohand;
-        // // eqweapon1 = data->eqweapon1;
-        // // if (data->fixlv == 6)
-        // // {
-        // //     fixlv = 6;
-        // // }
-        // // cspecialeq = data->cspecialeq;
-        // // chara.damage_reaction_info = data->damage_reaction_info;
-//
-// return chara;
-// }
 
 int access_character_info()
 {

@@ -142,39 +142,6 @@ struct character_data
 
 
 
-class character_db;
-
-
-namespace cat
-{
-
-template <>
-struct cat_db_traits<character_db>
-{
-    using id_type = int;
-    using data_type = character_data;
-    static constexpr const char* filename = u8"character.lua";
-    static constexpr const char* table_name = u8"character";
-};
-
-} // namespace cat
-
-
-
-class character_db : public cat::cat_db<character_db>
-{
-public:
-    character_db() = default;
-
-    void define(lua_State* L);
-};
-
-
-extern character_db the_character_db;
-
-
-
-
 class character_db_ex;
 
 
@@ -202,7 +169,7 @@ public:
 };
 
 
-extern character_db_ex the_character_db_ex;
+extern character_db_ex the_character_db;
 
 
 

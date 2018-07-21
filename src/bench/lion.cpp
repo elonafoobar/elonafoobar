@@ -12,7 +12,7 @@ BENCHMARK(Database, BenchInitializeCharaLion, 3, 1)
 {
     lua::lua.reset(new lua::lua_env());
     lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
+    lua::lua->load_core_mod();
     const fs::path data_path = filesystem::dir::mods() / "core" / "data";
     character_db_ex db;
 
@@ -24,7 +24,7 @@ BENCHMARK(Database, BenchInitializeLion, 3, 1)
 {
     lua::lua.reset(new lua::lua_env());
     lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
+    lua::lua->load_core_mod();
     initialize_lion_db();
 }
 

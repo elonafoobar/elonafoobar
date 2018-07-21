@@ -111,7 +111,9 @@ end
     if(!result.valid())
     {
         sol::error err = result;
-        throw err;
+        throw std::runtime_error("Failed loading data for "
+                                 + mod_name + "." + datatype_name
+                                 + ": " + err.what());
     }
 }
 

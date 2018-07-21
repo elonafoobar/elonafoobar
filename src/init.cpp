@@ -358,7 +358,6 @@ void initialize_cat_db()
 
     the_ability_db.initialize();
     the_buff_db.initialize();
-    the_character_db.initialize();
     the_class_db.initialize();
     the_fish_db.initialize();
     the_item_db.initialize();
@@ -369,10 +368,9 @@ void initialize_cat_db()
 
 sol::table initialize_single_lion_db(const std::string& type, const fs::path& data_file)
 {
-    cat::global.initialize();
     lua::lua->get_registry_manager().register_datatype("core", type);
     lua::lua->get_registry_manager().register_data("core", type, data_file);
-    auto table = lua::lua->get_registry_manager().get_table("core", "chara");
+    auto table = lua::lua->get_registry_manager().get_table("core", type);
     if (!table)
     {
         throw std::runtime_error("Could not load data for type " + type + " at" + data_file.string());
@@ -385,7 +383,7 @@ void initialize_lion_db()
     const fs::path data_path = filesystem::dir::mods() / "core" / "data";
 
     auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
-    the_character_db_ex.initialize(chara_table);
+    the_character_db.initialize(chara_table);
 }
 
 void initialize_config(const fs::path& config_file)
@@ -798,15 +796,7 @@ static void initialize_screen()
 static void initialize_lua()
 {
     lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
-
-    // NOTE: Registering new datatypes uses dummy filenames for now,
-    // until validation of user-created data is coded.
-    lua::lua->get_registry_manager()
-        .register_datatype("core", "chara_def.hcl");
-    lua::lua->get_registry_manager()
-        .register_data("core", "chara",
-                       filesystem::dir::mods() / "core" / "data" / "chara.hcl");
+    lua::lua->load_core_mod();
 }
 
 int run()
@@ -827,7 +817,9 @@ int run()
     initialize_config(config_file);
     init_assets();
     initialize_elona();
+
     initialize_lua();
+    initialize_lion_db();
 
     config::instance().write();
 

@@ -1,5 +1,4 @@
 #pragma once
-#include <boost/flyweight.hpp>
 #include <unordered_map>
 #include <sstream>
 #include <vector>
@@ -10,6 +9,9 @@
 #include "optional.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
+#include <boost/flyweight.hpp>
+#include <boost/flyweight/no_tracking.hpp>
+#include <boost/flyweight/no_locking.hpp>
 
 namespace elona
 {
@@ -25,8 +27,16 @@ extern std::unique_ptr<lua_env> lua;
 namespace lion
 {
 
+// Share memory across common instances of string IDs.
+//
+// Locking: The game is only single-threaded, so having a flyweight
+// locking policy is unnecessary. It also causes aborts on exit.
+// Tracking: Unnecessary use of memory.
 typedef std::string inner_id;
-typedef boost::flyweight<inner_id> id;
+typedef boost::flyweight<
+    inner_id,
+    boost::flyweights::no_tracking,
+    boost::flyweights::no_locking> id;
 
 template <typename>
 struct lion_db_traits;

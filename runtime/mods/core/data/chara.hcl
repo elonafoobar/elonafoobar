@@ -8900,49 +8900,49 @@ chara alien {
 
 
 # For debug
-chara spiral_putit {
-    id = 500
-    item_type = 1
-    tags = ["slime"]
-    level = 1
-    portrait = -1
-    ai_calm = 1
-    ai_move = 50
-    ai_dist = 2
-    ai_act_sub_freq = 0
-    creaturepack = 3
-    normal_actions = [417, 434, 415, 454]
-    special_actions = [636]
-    original_relationship = Aggressive
-    race = "slime"
-    class_ = "wizard"
-    resistances = {_54 = 500}
-    image = 430
-    cspecialeq = 0
-    fltselect = 0
-    category = 3
-    rarity = 0
-    coefficient = 0
-}
+# chara spiral_putit {
+#     id = 500
+#     item_type = 1
+#     tags = ["slime"]
+#     level = 1
+#     portrait = -1
+#     ai_calm = 1
+#     ai_move = 50
+#     ai_dist = 2
+#     ai_act_sub_freq = 0
+#     creaturepack = 3
+#     normal_actions = [417, 434, 415, 454]
+#     special_actions = [636]
+#     original_relationship = Aggressive
+#     race = "slime"
+#     class_ = "wizard"
+#     resistances = {_54 = 500}
+#     image = 430
+#     cspecialeq = 0
+#     fltselect = 0
+#     category = 3
+#     rarity = 0
+#     coefficient = 0
+# }
 
 # For debug
-chara dragon_putit {
-    id = 501
-    item_type = 5
-    tags = ["dragon"]
-    level = 1
-    portrait = -1
-    ai_calm = 1
-    ai_move = 100
-    ai_dist = 1
-    creaturepack = 0
-    normal_actions = [602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612]
-    original_relationship = Aggressive
-    race = "dragon"
-    class_ = "predator"
-    cspecialeq = 0
-    fltselect = 0
-    category = 0
-    rarity = 100000
-    coefficient = 0
-}
+# chara dragon_putit {
+#     id = 501
+#     item_type = 5
+#     tags = ["dragon"]
+#     level = 1
+#     portrait = -1
+#     ai_calm = 1
+#     ai_move = 100
+#     ai_dist = 1
+#     creaturepack = 0
+#     normal_actions = [602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612]
+#     original_relationship = Aggressive
+#     race = "dragon"
+#     class_ = "predator"
+#     cspecialeq = 0
+#     fltselect = 0
+#     category = 0
+#     rarity = 0
+#     coefficient = 0
+# }

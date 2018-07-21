@@ -88,10 +88,6 @@ void load_translations(const std::string& hcl)
 
 void configure_lua()
 {
-    lua::lua.reset(new lua::lua_env());
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
@@ -102,8 +98,13 @@ void pre_init()
 {
     log::initialize();
 
-    configure_lua();
+    lua::lua.reset(new lua::lua_env());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+    lua::lua->load_all_mods();
     initialize_cat_db();
+    initialize_lion_db();
+    configure_lua();
 
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
@@ -117,6 +118,7 @@ void pre_init()
     init_assets();
     filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
+    initialize_elona();
 
     config::instance().is_test = true;
 
@@ -133,7 +135,6 @@ void post_run()
 
 void reset_state()
 {
-    config::instance().is_test = true;
     lua::lua->reload();
     configure_lua();
     initialize_elona();
@@ -142,6 +143,8 @@ void reset_state()
     elona::jp = 1;
     elona::en = 0;
     set_item_info();
+
+    config::instance().is_test = true;
 
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();

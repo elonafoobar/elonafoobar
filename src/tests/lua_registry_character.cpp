@@ -10,7 +10,7 @@
 static sol::table load(elona::lua::lua_env& lua, const fs::path& data_file)
 {
     lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod(filesystem::dir::mods());
+    lua.load_core_mod();
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
     REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
     auto table = lua.get_registry_manager().get_table("core", "chara");
@@ -22,7 +22,7 @@ TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod(filesystem::dir::mods());
+    lua.load_core_mod();
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
 
     REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", "blah"));
@@ -52,7 +52,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
 
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod(filesystem::dir::mods());
+    lua.load_core_mod();
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
 
     REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", data_path));
@@ -153,4 +153,21 @@ TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
 
     REQUIRE(data);
     REQUIRE(data->id == 500);
+}
+
+TEST_CASE("test character flags", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, "tests/data/registry/chara_defaults.hcl");
+
+    character_db_ex db;
+    db.initialize(table);
+
+    auto data = db["core.chara.nothing"];
+
+    REQUIRE(data);
+    for (size_t i = 0; i < 32 * 30; ++i)
+    {
+        REQUIRE(data->_flags[i] == false);
+    }
 }

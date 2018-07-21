@@ -27,8 +27,7 @@ lua_env::lua_env()
         sol::lib::debug,
         sol::lib::string,
         sol::lib::math,
-        sol::lib::io,
-        sol::lib::os);
+        sol::lib::io);
 
     // Add executable directory to package.path
     fs::path exe_path = filesystem::dir::data() / "lua";
