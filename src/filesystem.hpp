@@ -52,6 +52,8 @@ fs::path sound();
 fs::path tmp();
 fs::path user();
 
+void set_base_save_directory(const fs::path& base_save_dir);
+
 } // namespace dir
 
 

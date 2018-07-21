@@ -10448,7 +10448,7 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
 
 
 
-void load_save_data(const fs::path& base_save_dir)
+void load_save_data()
 {
     ELONA_LOG("Load save data: " << playerid);
 
@@ -10459,7 +10459,7 @@ void load_save_data(const fs::path& base_save_dir)
     writeloadedbuff_clear();
 
     ctrl_file(file_operation_t::_10);
-    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
+    const auto save_dir = filesystem::dir::save(playerid);
 
     // TODO: Delete these lines when v1.0.0 stable is released.
     // Delete unnecessary file in old save data.
@@ -10490,6 +10490,7 @@ void load_save_data(const fs::path& base_save_dir)
 }
 
 
+
 void do_save_game()
 {
     snd(44);
@@ -10499,12 +10500,8 @@ void do_save_game()
 }
 
 
-void save_game()
-{
-    save_game(filesystem::dir::save());
-}
 
-void save_game(const fs::path& base_save_dir)
+void save_game()
 {
     ELONA_LOG("Save game: " << playerid);
 
@@ -10522,7 +10519,7 @@ void save_game(const fs::path& base_save_dir)
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             base_save_dir, filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -10530,7 +10527,7 @@ void save_game(const fs::path& base_save_dir)
             break;
         }
     }
-    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
+    const auto save_dir = filesystem::dir::save(playerid);
     if (save_f == 0)
     {
         fs::create_directory(save_dir);

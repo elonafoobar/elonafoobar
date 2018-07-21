@@ -215,6 +215,7 @@ void load_v1(
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
     {
+        ELONA_LOG("error:could not open file at");
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
@@ -1548,6 +1549,10 @@ void tmpload(const fs::path& filename)
             original_file,
             filesystem::dir::tmp() / filename,
             fs::copy_option::overwrite_if_exists);
+    }
+    else
+    {
+        ELONA_LOG("tmpload:not found:" << original_file);
     }
 }
 

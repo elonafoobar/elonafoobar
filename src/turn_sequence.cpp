@@ -1620,8 +1620,7 @@ label_2747:
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
-        const auto save_dir = filesystem::dir::save();
-        load_save_data(save_dir);
+        load_save_data();
         mode = 3;
         std::cerr << "emoicon:" << cdata[cc].emotion_icon << std::endl;
         return turn_result_t::initialize_map;

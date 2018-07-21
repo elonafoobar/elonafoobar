@@ -15,7 +15,7 @@ namespace elona
 namespace testing
 {
 
-const fs::path save_dir("tests/data/save");
+const std::string save_dir = "tests/data/save";
 const std::string player_id = "sav_testbed";
 
 void load_previous_savefile()
@@ -23,7 +23,8 @@ void load_previous_savefile()
     elona::testing::reset_state();
     // This file was saved directly after the dialog at the start of the game.
     elona::playerid = "sav_foobar_test";
-    load_save_data(filesystem::dir::exe() / save_dir);
+    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    load_save_data();
     elona::firstturn = 1;
     elona::mode =
         3; // begin the game as if it were loaded from a save; load inv_xxx.s2
@@ -32,19 +33,22 @@ void load_previous_savefile()
 
 void save_and_reload()
 {
-    save_game(filesystem::dir::exe() / save_dir);
+    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    save_game();
     elona::testing::reset_state();
     elona::firstturn = 1;
-    load_save_data(filesystem::dir::exe() / save_dir);
+    load_save_data();
 }
 
 void start_in_map(int map, int level)
 {
+    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+
     reset_state();
     initialize_debug_globals();
 
     elona::playerid = player_id;
-    fs::remove_all(filesystem::dir::exe() / save_dir / elona::playerid);
+    fs::remove_all(filesystem::dir::save(player_id));
 
     gdata_current_map = map; // Debug map
     gdata_current_dungeon_level = level;
@@ -108,6 +112,7 @@ void pre_init()
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     init_assets();
+    filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
 
     config::instance().is_test = true;
@@ -119,7 +124,8 @@ void pre_init()
 
 void post_run()
 {
-    fs::remove_all(filesystem::dir::exe() / save_dir / player_id);
+    filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
+    fs::remove_all(filesystem::dir::save(player_id));
     finish_elona();
 }
 
