@@ -1,3 +1,4 @@
+local x = os.clock()
 local Lexer = require "hclua.lexer"
 local Util = require "hclua.util"
 
