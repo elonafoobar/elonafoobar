@@ -1186,6 +1186,7 @@ void Debug::report_error(const std::string& message)
     }
 
     ELONA_LOG("Script error: " << message);
+    std::cerr << "Script error: " << message << std::endl;
 }
 
 void Debug::dump_characters()
@@ -1641,7 +1642,12 @@ sol::optional<sol::table> api_manager::try_find_api(
     return result;
 }
 
-void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
+void api_manager::add_api(const std::string& module_namespace, sol::table& module_table)
+{
+    api_env["Elona"][module_namespace] = module_table;
+}
+
+void api_manager::load_core(lua_env& lua, const fs::path& core_mod_dir)
 {
     // Don't load the core mod again if it's already loaded, because
     // all the tables will be read-only.
@@ -1651,7 +1657,7 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
     }
 
     auto result = lua.get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(mods_dir / "core" / "init.lua"),
+        filesystem::make_preferred_path_in_utf8(core_mod_dir / "init.lua"),
         api_env);
     if (!result.valid())
     {

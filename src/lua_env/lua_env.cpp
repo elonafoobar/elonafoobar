@@ -171,24 +171,36 @@ end
 }
 
 
-void lua_env::load_mod(const fs::path& path, mod_info& mod)
+void lua_env::load_mod(mod_info& mod)
 {
     setup_and_lock_mod_globals(mod);
 
-    auto result = this->lua->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(path / mod.name / "init.lua"),
-        mod.env);
-    if (!result.valid())
+    if (mod.path) // Skip initializing mods not created from files.
     {
-        sol::error err = result;
-        report_error(err);
-        throw std::runtime_error("Failed initializing mod "s + mod.name);
+        auto result = this->lua->safe_script_file(
+            filesystem::make_preferred_path_in_utf8(*mod.path / u8"init.lua"s),
+            mod.env);
+        if (result.valid())
+        {
+            sol::optional<sol::table> api_table = result.get<sol::table>();
+            if (api_table)
+            {
+                api_mgr->add_api(mod.name, *api_table);
+            }
+        }
+        else
+        {
+            sol::error err = result;
+            report_error(err);
+            throw std::runtime_error("Failed initializing mod "s + mod.name);
+        }
     }
 }
 
 void lua_env::scan_all_mods(const fs::path& mods_dir)
 {
-    if (stage != mod_loading_stage_t::not_started)
+    if (stage != mod_loading_stage_t::not_started
+          && stage != mod_loading_stage_t::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }
@@ -210,14 +222,14 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
             }
 
             std::unique_ptr<mod_info> info =
-                std::make_unique<mod_info>(mod_name, get_state());
+                std::make_unique<mod_info>(mod_name, entry.path(), get_state());
             this->mods.emplace(mod_name, std::move(info));
         }
     }
     stage = mod_loading_stage_t::scan_finished;
 }
 
-void lua_env::load_core_mod(const fs::path& mods_dir)
+void lua_env::load_core_mod()
 {
     if (stage != mod_loading_stage_t::scan_finished)
     {
@@ -233,11 +245,11 @@ void lua_env::load_core_mod(const fs::path& mods_dir)
 
     // Load the core mod before any others. The core API table will be
     // modified in-place by the Lua API code.
-    api_mgr->load_core(*this, mods_dir);
+    api_mgr->load_core(*this, *val->second->path);
     stage = mod_loading_stage_t::core_mod_loaded;
 }
 
-void lua_env::load_all_mods(const fs::path& mods_dir)
+void lua_env::load_all_mods()
 {
     if (stage != mod_loading_stage_t::core_mod_loaded)
     {
@@ -246,17 +258,18 @@ void lua_env::load_all_mods(const fs::path& mods_dir)
     for (auto& pair : this->mods)
     {
         auto& mod = pair.second;
-        if (mod->name == "core")
+        if (mod->name == "core" || mod->name == "script")
         {
             continue;
         }
         else
         {
-            load_mod(mods_dir, *mod);
+            load_mod(*mod);
         }
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
+    event_mgr->run_callbacks<event_kind_t::all_mods_loaded>();
     stage = mod_loading_stage_t::all_mods_loaded;
 }
 
@@ -272,7 +285,7 @@ void lua_env::run_startup_script(const std::string& name)
     }
 
     std::unique_ptr<mod_info> script_mod =
-        std::make_unique<mod_info>("script", get_state());
+        std::make_unique<mod_info>("script", none, get_state());
     setup_and_lock_mod_globals(*script_mod);
 
     lua->safe_script_file(
@@ -315,7 +328,8 @@ void lua_env::reload()
     clear(); // Unload character/item handles while they're still available.
     get_state()->set("_IS_TEST", config::instance().is_test);
     scan_all_mods(filesystem::dir::mods());
-    load_core_mod(filesystem::dir::mods());
+    load_core_mod();
+    load_all_mods();
 }
 
 int deny(
@@ -402,6 +416,7 @@ void lua_env::clear()
             on_chara_unloaded(cdata[i]);
         }
     }
+    event_mgr->clear();
     clear_mod_stores();
     mods.clear();
     lua->collect_garbage();
@@ -425,7 +440,7 @@ void lua_env::load_mod_from_script(
     }
 
     std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(name, get_state());
+        std::make_unique<mod_info>(name, none, get_state());
 
     if (readonly)
     {

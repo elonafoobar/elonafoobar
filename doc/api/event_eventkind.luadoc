@@ -7,8 +7,9 @@
 -- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
 module "Event.EventKind"
 
---- Fired after the game has finished initially loading.
---- This will only ever be fired once per game session.
+--- Fired after the game has finished initially loading. This will
+--- only ever be fired once per game session. The starting map will be
+--- initialized before this is called.
 -- @event GameInitialized
 
 --- Fired after a map has been initially created.
@@ -87,6 +88,9 @@ module "Event.EventKind"
 
 --- Fired before the current map is unloaded.
 -- @event MapUnloading
+
+--- Fired when all mods have finished loading.
+-- @event AllModsLoaded
 
 --- Fired when the startup script finished loading. This is only valid
 --- when the startup script feature is used.
