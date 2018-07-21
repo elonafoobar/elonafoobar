@@ -7539,7 +7539,8 @@ chara ebon2 {
     coefficient = 400
 }
 
-chara stersha {
+# Has the same name as Stersha in EN, but is named "実験台" in JP.
+chara test_subject {
     id = 212
     item_type = 3
     tags = []
@@ -8355,7 +8356,7 @@ chara yowyn_horse {
     flags = [IsSuitableForMount]
 }
 
-chara wild_horse {
+chara wild_horse2 {
     id = 277
     item_type = 1
     tags = ["wild", "horse"]

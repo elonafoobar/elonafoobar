@@ -7,22 +7,64 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-TEST_CASE("test registering character", "[Lua: Registry]")
+static sol::table load(elona::lua::lua_env& lua, const fs::path& data_file)
 {
-    const fs::path data_file = "tests/data/registry/chara.hcl";
+    lua.scan_all_mods(filesystem::dir::mods());
+    lua.load_core_mod(filesystem::dir::mods());
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
+    auto table = lua.get_registry_manager().get_table("core", "chara");
+    REQUIRE(table);
+    return *table;
+}
+
+TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    lua.scan_all_mods(filesystem::dir::mods());
+    lua.load_core_mod(filesystem::dir::mods());
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
+
+    REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", "blah"));
+}
+
+TEST_CASE("test reading of official chara.hcl", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, filesystem::dir::mods() / "core" / "data" / "chara.hcl");
+
+    character_db_ex db;
+    REQUIRE_NOTHROW(db.initialize(table));
+}
+
+TEST_CASE("test reading invalid enum", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, "tests/data/registry/chara_invalid_enum.hcl");
+
+    character_db_ex db;
+    REQUIRE_THROWS(db.initialize(table));
+}
+
+TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
+{
+    const fs::path data_path = "tests/data/registry/chara_duplicate_key.hcl";
 
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod(filesystem::dir::mods());
-
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
-    auto datatype_table = lua.get_registry_manager().get_table("core", "chara");
-    REQUIRE(datatype_table);
-    REQUIRE((*datatype_table)["spiral_putit"]["id"].get<int>() == 500);
+
+    REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", data_path));
+}
+
+TEST_CASE("test registering character", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, "tests/data/registry/chara.hcl");
 
     character_db_ex db;
-    REQUIRE_NOTHROW(db.initialize(*datatype_table));
+    db.initialize(table);
 
     auto data = db["core.chara.spiral_putit"];
 
@@ -60,19 +102,11 @@ TEST_CASE("test registering character", "[Lua: Registry]")
 
 TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
 {
-    const fs::path data_file = "tests/data/registry/chara_defaults.hcl";
-
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod(filesystem::dir::mods());
-
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara_def.hcl"));
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
-    auto datatype_table = lua.get_registry_manager().get_table("core", "chara");
-    REQUIRE(datatype_table);
+    auto table = load(lua, "tests/data/registry/chara_defaults.hcl");
 
     character_db_ex db;
-    REQUIRE_NOTHROW(db.initialize(*datatype_table));
+    db.initialize(table);
 
     auto data = db["core.chara.nothing"];
 
@@ -104,4 +138,19 @@ TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
     REQUIRE(data->original_relationship == 0);
     REQUIRE(data->_flags[22] == false);
     REQUIRE(data->_flags[27] == false);
+}
+
+
+TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, "tests/data/registry/chara.hcl");
+
+    character_db_ex db;
+    db.initialize(table);
+
+    auto data = db[500];
+
+    REQUIRE(data);
+    REQUIRE(data->id == 500);
 }

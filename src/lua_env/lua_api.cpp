@@ -1471,7 +1471,7 @@ void api_manager::add_api(const std::string& module_namespace, sol::table& modul
 }
 
 int api_manager::get_enum_value(const std::string& enum_name,
-                                          const std::string& variant)
+                                const std::string& variant)
 {
     sol::optional<sol::table> Enums = try_find_api("core", "Enums");
     if (!Enums)

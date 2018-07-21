@@ -73,6 +73,10 @@ void registry_manager::register_data(const std::string& mod_name,
                                      const std::string& datatype_name,
                                      const fs::path& data_file)
 {
+    if (!fs::exists(data_file))
+    {
+        throw std::runtime_error(data_file.string() + ": File does not exist.");
+    }
     std::string normalized = filesystem::to_forward_slashes(data_file);
 
     registry_env.set("_MOD_NAME", mod_name);

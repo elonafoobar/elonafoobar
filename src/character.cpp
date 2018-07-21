@@ -448,7 +448,7 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
     ELONA_LION_DB_FIELD(ai_heal,                    int, 0);
     ELONA_LION_DB_FIELD(ai_move,                    int, 0);
     ELONA_LION_DB_FIELD(can_talk,                   int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color,                      "Color", "Default");
+    ELONA_LION_DB_FIELD_ENUM(color,                 "Color", "Default");
     ELONA_LION_DB_FIELD(creaturepack,               int, 0);
     ELONA_LION_DB_FIELD(cspecialeq,                 int, 0);
     ELONA_LION_DB_FIELD(damage_reaction_info,       int, 0);
@@ -468,15 +468,15 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
     ELONA_LION_DB_FIELD(image,                      int, 0);
     ELONA_LION_DB_FIELD(level,                      int, 0);
     ELONA_LION_DB_FIELD(male_image,                 int, 0);
-    ELONA_LION_DB_FIELD_ENUM(original_relationship,      "Relation", "Neutral");
+    ELONA_LION_DB_FIELD_ENUM(original_relationship, "Relation", "Neutral");
     ELONA_LION_DB_FIELD(portrait,                   int, 0);
     ELONA_LION_DB_FIELD(race,                       std::string, "");
     ELONA_LION_DB_FIELD(class_,                     std::string, "");
     ELONA_LION_DB_FIELD_ENUM(sex,                   "Gender", "Random");
-    ELONA_LION_DB_FIELD(fltselect, int, 0);
-    ELONA_LION_DB_FIELD(category, int, 0);
-    ELONA_LION_DB_FIELD(rarity, int, 10000);
-    ELONA_LION_DB_FIELD(coefficient, int, 400);
+    ELONA_LION_DB_FIELD(fltselect,                  int, 0);
+    ELONA_LION_DB_FIELD(category,                   int, 0);
+    ELONA_LION_DB_FIELD(rarity,                     int, 10000);
+    ELONA_LION_DB_FIELD(coefficient,                int, 400);
 
     std::unordered_map<int, int> resistances = convert_resistances(data, "resistances");
 
@@ -505,6 +505,7 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
         flags[type] = true;
     }
 
+    // TODO: validate by regex/alphanum-only
     std::string filter = convert_tags(data, "tags");
 
     return character_data{

@@ -38,8 +38,10 @@ class lion_db : public lib::noncopyable
 public:
     using traits_type = lion_db_traits<T>;
     using id_type = id;
+    using legacy_id_type = typename traits_type::legacy_id_type;
     using data_type = typename traits_type::data_type;
     using map_type = std::unordered_map<id_type, data_type>;
+    using legacy_map_type = std::unordered_map<legacy_id_type, id_type>;
 
     lion_db() : scope("core") {}
 
@@ -105,8 +107,12 @@ public:
         for (const auto& pair : table) {
             std::string id = pair.first.as<std::string>();
             sol::table data = pair.second.as<sol::table>();
+
             data_type converted = static_cast<T&>(*this).convert(data, id);
-            storage.emplace(prefix + "." + id, converted);
+            id_type the_id(prefix + "." + id);
+
+            by_legacy_id.emplace(converted.id, the_id);
+            storage.emplace(the_id, converted);
         }
     }
 
@@ -127,9 +133,20 @@ public:
     }
 
 
+    optional_ref<data_type> operator[](const legacy_id_type& legacy_id) const
+    {
+        const auto itr = by_legacy_id.find(legacy_id);
+        if (itr == std::end(by_legacy_id))
+            return none;
+        else
+            return (*this)[itr->second];
+    }
+
+
 protected:
     std::string scope;
     map_type storage;
+    legacy_map_type by_legacy_id;
 };
 
 

@@ -185,6 +185,7 @@ template <>
 struct lion_db_traits<character_db_ex>
 {
     using data_type = character_data;
+    using legacy_id_type = int;
     static constexpr const char* datatype_name = u8"chara";
 };
 
