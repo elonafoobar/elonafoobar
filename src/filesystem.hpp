@@ -9,6 +9,23 @@
 #include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 
+
+namespace std
+{
+
+template <>
+struct hash<fs::path>
+{
+    size_t operator()(const fs::path& key) const
+    {
+        return hash<fs::path::string_type>()(key.native());
+    }
+};
+
+} // namespace std
+
+
+
 #include "range.hpp"
 
 
@@ -34,6 +51,8 @@ fs::path save(const std::string& player_id);
 fs::path sound();
 fs::path tmp();
 fs::path user();
+
+void set_base_save_directory(const fs::path& base_save_dir);
 
 } // namespace dir
 

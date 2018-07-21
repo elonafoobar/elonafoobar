@@ -78,6 +78,9 @@ namespace dir
 {
 
 
+fs::path base_save_dir;
+
+
 #define ELONA_DEFINE_PREDEFINED_DIR(func_name, path_name) \
     fs::path func_name() \
     { \
@@ -90,7 +93,6 @@ ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
 ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
 ELONA_DEFINE_PREDEFINED_DIR(map, "map")
 ELONA_DEFINE_PREDEFINED_DIR(mods, "mods")
-ELONA_DEFINE_PREDEFINED_DIR(save, "save")
 ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
 ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
 ELONA_DEFINE_PREDEFINED_DIR(user, "user")
@@ -98,9 +100,23 @@ ELONA_DEFINE_PREDEFINED_DIR(user, "user")
 #undef ELONA_DEFINE_PREDEFINED_DIR
 
 
+fs::path save()
+{
+    return base_save_dir;
+}
+
+
+
 fs::path save(const std::string& player_id)
 {
     return save() / u8path(player_id);
+}
+
+
+
+void set_base_save_directory(const fs::path& base_save_dir)
+{
+    dir::base_save_dir = base_save_dir;
 }
 
 

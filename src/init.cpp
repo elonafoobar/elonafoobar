@@ -439,7 +439,6 @@ void initialize_elona()
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
-    SDIM1(filemod);
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
@@ -775,6 +774,8 @@ static void initialize_screen()
           config_get_fullscreen_mode());
 }
 
+
+
 int run()
 {
     const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
@@ -789,6 +790,7 @@ int run()
 
     initialize_screen();
 
+    filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
     init_assets();
     initialize_elona();
@@ -800,6 +802,8 @@ int run()
 
     return 0;
 }
+
+
 
 void initialize_debug_globals()
 {
@@ -1186,8 +1190,7 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        const fs::path& save_dir = filesystem::dir::save();
-        load_save_data(save_dir);
+        load_save_data();
     }
     init_fovlist();
     initialize_map();

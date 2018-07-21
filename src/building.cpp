@@ -1016,6 +1016,7 @@ void show_shop_log()
     {
         ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     }
+    tmpload(filesystem::u8path(u8"shop5.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop5.s2"))
     {
         ctrl_file(file_operation2_t::_3, u8"shop5.s2");

@@ -5668,6 +5668,7 @@ turn_result_t exit_map()
         // quest instance)
         prepare_charas_for_map_unload();
 
+        tmpload(filesystem::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
@@ -7936,6 +7937,7 @@ void supply_income()
 {
     invfile = 4;
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    tmpload(filesystem::u8path(u8"shop4.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
     {
         ctrl_file(file_operation2_t::_3, u8"shop4.s2"s);
@@ -10030,9 +10032,9 @@ void migrate_save_data(const fs::path& save_dir)
                 const auto file_ = filesystem::dir::tmp() / file;
                 fs::copy_file(
                     file_, file_cnv, fs::copy_option::overwrite_if_exists);
-                fileadd(file_cnv);
+                save_t::instance().add(file_cnv.filename());
                 fs::remove_all(file_);
-                fileadd(file_, 1);
+                save_t::instance().remove(file_.filename());
             }
         }
         for (int cnt = 0; cnt < 500; ++cnt)
@@ -10062,8 +10064,16 @@ void migrate_save_data(const fs::path& save_dir)
     cdata[0].has_own_sprite() = true;
     initialize_recipememory();
 
+    // TODO: Delete these lines when v1.0.0 stable is released.
+    if (foobar_data.version.id() == 0)
+    {
+        ELONA_LOG("Fix version: " << latest_version.short_string());
+        foobar_data.version = latest_version;
+    }
+
     if (foobar_data.version.id() <= 205)
     {
+        ELONA_LOG("Update v0.2.5 save");
         // Fix corrupted map data.
         // Iterate all map file
         for (const auto& entry :
@@ -10428,61 +10438,40 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
     // v0.2.5
     fs::remove(old_meta_data_filepath);
     foobar_data.version = {0, 2, 5, "", "", ""};
+
+    for (const auto entry : filesystem::dir_entries{save_dir, filesystem::dir_entries::type::file, std::regex{R"(.*\.s2)"}})
+    {
+        ELONA_LOG("v0.2.5:copy:" << entry.path());
+        fs::copy_file(entry.path(), filesystem::dir::tmp() / entry.path().filename(), fs::copy_option::overwrite_if_exists);
+    }
 }
 
 
 
-void load_save_data(const fs::path& base_save_dir)
+void load_save_data()
 {
     ELONA_LOG("Load save data: " << playerid);
 
     // TODO instead serialize/deserialize data
     lua::lua->get_handle_manager().clear_map_local_handles();
 
-    filemod = "";
+    save_t::instance().clear();
+    writeloadedbuff_clear();
+
     ctrl_file(file_operation_t::_10);
-    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
-    buff(0).clear();
-    if (!fs::exists(save_dir / u8"filelist.txt"))
+    const auto save_dir = filesystem::dir::save(playerid);
+
+    // TODO: Delete these lines when v1.0.0 stable is released.
+    // Delete unnecessary file in old save data.
+    if (fs::exists(save_dir / u8"filelist.txt"))
     {
-        ELONA_LOG("Load save data: from directory");
-        for (const auto& entry :
-             filesystem::dir_entries{save_dir,
-                                     filesystem::dir_entries::type::file,
-                                     std::regex{u8R"(.*\..*)"}})
-        {
-            buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
-        }
+        fs::remove(save_dir / u8"filelist.txt");
     }
-    else
-    {
-        ELONA_LOG("Load save data: from filelist.txt");
-        std::ifstream in{(save_dir / u8"filelist.txt").native(),
-                         std::ios::binary};
-        std::string tmp;
-        while (std::getline(in, tmp))
-        {
-            buff(0) +=
-                filesystem::to_utf8_path(filesystem::path(tmp).filename())
-                + '\n';
-        }
-    }
-    notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        noteget(s, cnt);
-        if (strutil::contains(s(0), u8".s2"))
-        {
-            fs::copy_file(
-                save_dir / s(0),
-                filesystem::dir::tmp() / s(0),
-                fs::copy_option::overwrite_if_exists);
-        }
-    }
-    ELONA_LOG("asd " << save_dir);
+
     migrate_save_data_from_025_to_026(save_dir);
     ctrl_file(file_operation2_t::_7, save_dir);
     migrate_save_data(save_dir);
+    ELONA_LOG("migrate:end");
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
@@ -10497,8 +10486,9 @@ void load_save_data(const fs::path& base_save_dir)
     }
     refreshspeed(0);
     time_begin = timeGetTime() / 1000;
-    return;
+    ELONA_LOG("Load save data end: " << playerid);
 }
+
 
 
 void do_save_game()
@@ -10510,12 +10500,8 @@ void do_save_game()
 }
 
 
-void save_game()
-{
-    save_game(filesystem::dir::save());
-}
 
-void save_game(const fs::path& base_save_dir)
+void save_game()
 {
     ELONA_LOG("Save game: " << playerid);
 
@@ -10533,7 +10519,7 @@ void save_game(const fs::path& base_save_dir)
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             base_save_dir, filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -10541,52 +10527,14 @@ void save_game(const fs::path& base_save_dir)
             break;
         }
     }
-    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
+    const auto save_dir = filesystem::dir::save(playerid);
     if (save_f == 0)
     {
         fs::create_directory(save_dir);
     }
-    notesel(filemod);
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        std::string save_s;
-        noteget(save_s, cnt);
-        if (save_s.empty())
-            continue;
-        const auto save_p = save_s.front() == '*';
-        save_s = save_s.substr(1);
-        const auto path = save_dir / filesystem::u8path(save_s);
-        if (save_p)
-        {
-            fs::copy_file(
-                filesystem::dir::tmp() / filesystem::u8path(save_s),
-                path,
-                fs::copy_option::overwrite_if_exists);
-        }
-        else
-        {
-            if (fs::exists(path) && !fs::is_directory(path))
-            {
-                fs::remove_all(path);
-            }
-        }
-    }
+    save_t::instance().save(save_dir);
     ctrl_file(file_operation2_t::_8, save_dir);
-    filemod = "";
-    buff(0).clear();
-    for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::tmp(),
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{u8R"(.*\..*)"}})
-    {
-        buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
-    }
-    notesel(buff);
-    {
-        std::ofstream out{(save_dir / u8"filelist.txt").native(),
-                          std::ios::binary};
-        out << buff(0) << std::endl;
-    }
+    save_t::instance().clear();
     ELONA_LOG("Save game: finish");
 }
 
@@ -12735,6 +12683,7 @@ int pick_up_item()
                 {
                     std::string midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
+                    tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
                     if (fs::exists(
                             filesystem::dir::tmp()
                             / (u8"mdata_"s + mid + u8".s2")))
