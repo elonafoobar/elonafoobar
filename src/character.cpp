@@ -214,6 +214,7 @@ namespace elona
 
 
 character_db the_character_db;
+character_db_ex the_character_db_ex;
 cdata_t cdata;
 
 
@@ -378,6 +379,178 @@ void character_db::define(lua_State* L)
         });
 }
 
+static std::unordered_map<int, int> convert_resistances(const sol::table& data,
+                                                        const std::string& id)
+{
+    std::unordered_map<int, int> resistances;
+    sol::optional<sol::table> value = data[id];
+
+    if (value)
+    {
+        for (const auto& kvp : *value)
+        {
+            int k = std::stoi(kvp.first.as<std::string>().substr(1));
+            int v = kvp.second.as<int>();
+            resistances.emplace(k, v);
+        }
+    }
+
+
+    return resistances;
+}
+
+// Concatenate tags list into filter (["man", "slime"] -> "/man/slime/")
+static std::string convert_tags(const sol::table& data, const std::string& id)
+{
+    std::string filter = "";
+    sol::optional<sol::table> value = data[id];
+
+    if (value)
+    {
+        for (const auto& pair : *value)
+        {
+            if (filter == ""s)
+            {
+                filter += "/";
+            }
+            filter += pair.second.as<std::string>() + "/";
+        }
+    }
+
+    return filter;
+}
+
+static std::vector<int> convert_flags(const sol::table& data, const std::string& id)
+{
+    std::vector<int> flag_types;
+    sol::optional<sol::table> value = data[id];
+
+    if (value)
+    {
+        for (const auto& kvp : *value)
+        {
+            std::string variant_name = kvp.second.as<std::string>();
+            int variant_value = lua::lua->get_api_manager()
+                .get_enum_value("CharaFlag", variant_name);
+            flag_types.push_back(variant_value);
+        }
+    }
+
+    return flag_types;
+}
+
+character_data character_db_ex::convert(const sol::table& data, const std::string& id_)
+{
+    ELONA_LION_DB_FIELD(id,                         int, -1);
+    ELONA_LION_DB_FIELD(ai_act_sub_freq,            int, 0);
+    ELONA_LION_DB_FIELD(ai_calm,                    int, 0);
+    ELONA_LION_DB_FIELD(ai_dist,                    int, 0);
+    ELONA_LION_DB_FIELD(ai_heal,                    int, 0);
+    ELONA_LION_DB_FIELD(ai_move,                    int, 0);
+    ELONA_LION_DB_FIELD(can_talk,                   int, 0);
+    ELONA_LION_DB_FIELD_ENUM(color,                      "Color", "Default");
+    ELONA_LION_DB_FIELD(creaturepack,               int, 0);
+    ELONA_LION_DB_FIELD(cspecialeq,                 int, 0);
+    ELONA_LION_DB_FIELD(damage_reaction_info,       int, 0);
+    ELONA_LION_DB_FIELD(item_type,                  int, 0);
+    ELONA_LION_DB_FIELD(element_of_unarmed_attack,  int, 0);
+    ELONA_LION_DB_FIELD(eqammo_0,                   int, 0);
+    ELONA_LION_DB_FIELD(eqammo_1,                   int, 0);
+    ELONA_LION_DB_FIELD(eqmultiweapon,              int, 0);
+    ELONA_LION_DB_FIELD(eqrange_0,                  int, 0);
+    ELONA_LION_DB_FIELD(eqrange_1,                  int, 0);
+    ELONA_LION_DB_FIELD(eqring1,                    int, 0);
+    ELONA_LION_DB_FIELD(eqtwohand,                  int, 0);
+    ELONA_LION_DB_FIELD(eqweapon1,                  int, 0);
+    ELONA_LION_DB_FIELD(female_image,               int, 0);
+    ELONA_LION_DB_FIELD(fixlv,                      int, 0);
+    ELONA_LION_DB_FIELD(has_random_name,            bool, false);
+    ELONA_LION_DB_FIELD(image,                      int, 0);
+    ELONA_LION_DB_FIELD(level,                      int, 0);
+    ELONA_LION_DB_FIELD(male_image,                 int, 0);
+    ELONA_LION_DB_FIELD_ENUM(original_relationship,      "Relation", "Neutral");
+    ELONA_LION_DB_FIELD(portrait,                   int, 0);
+    ELONA_LION_DB_FIELD(race,                       std::string, "");
+    ELONA_LION_DB_FIELD(class_,                     std::string, "");
+    ELONA_LION_DB_FIELD_ENUM(sex,                   "Gender", "Random");
+    ELONA_LION_DB_FIELD(fltselect, int, 0);
+    ELONA_LION_DB_FIELD(category, int, 0);
+    ELONA_LION_DB_FIELD(rarity, int, 10000);
+    ELONA_LION_DB_FIELD(coefficient, int, 400);
+
+    std::unordered_map<int, int> resistances = convert_resistances(data, "resistances");
+
+    std::vector<int> normal_actions;
+    if (auto result = lion::convert_vector<int>(data, "normal_actions"))
+    {
+        normal_actions = *result;
+    }
+    else
+    {
+        normal_actions = {-1};
+    }
+
+    std::vector<int> special_actions;
+    if (auto result = lion::convert_vector<int>(data, "special_actions"))
+    {
+        special_actions = *result;
+    }
+
+    std::vector<int> flag_types = convert_flags(data, "flags");
+
+    // TODO: cannot set bit flags off.
+    decltype(character_data::_flags) flags;
+    for (const auto& type : flag_types)
+    {
+        flags[type] = true;
+    }
+
+    std::string filter = convert_tags(data, "tags");
+
+    return character_data{
+        id,
+        normal_actions,
+        special_actions,
+        ai_act_sub_freq,
+        ai_calm,
+        ai_dist,
+        ai_heal,
+        ai_move,
+        can_talk,
+        class_,
+        color,
+        creaturepack,
+        cspecialeq,
+        damage_reaction_info,
+        item_type,
+        element_of_unarmed_attack,
+        eqammo_0,
+        eqammo_1,
+        eqmultiweapon,
+        eqrange_0,
+        eqrange_1,
+        eqring1,
+        eqtwohand,
+        eqweapon1,
+        female_image,
+        filter,
+        fixlv,
+        has_random_name,
+        image,
+        level,
+        male_image,
+        original_relationship,
+        portrait,
+        race,
+        sex,
+        resistances,
+        fltselect,
+        category,
+        rarity,
+        coefficient,
+        flags,
+        };
+}
 
 character::character()
     : growth_buffs(10)

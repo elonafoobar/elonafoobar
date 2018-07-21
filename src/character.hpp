@@ -6,6 +6,7 @@
 #include <vector>
 #include "cat.hpp"
 #include "god.hpp"
+#include "lion.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -170,6 +171,37 @@ public:
 
 
 extern character_db the_character_db;
+
+
+
+
+class character_db_ex;
+
+
+namespace lion
+{
+
+template <>
+struct lion_db_traits<character_db_ex>
+{
+    using data_type = character_data;
+    static constexpr const char* datatype_name = u8"chara";
+};
+
+} // namespace cat
+
+
+
+class character_db_ex : public lion::lion_db<character_db_ex>
+{
+public:
+    character_db_ex() = default;
+
+    character_data convert(const sol::table&, const std::string&);
+};
+
+
+extern character_db_ex the_character_db_ex;
 
 
 

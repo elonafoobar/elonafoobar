@@ -2,9 +2,10 @@
 --- Don't change anything here unless you know what you're doing!
 
 Elona.core.Debug.inspect = require "inspect"
+Elona.core.Enums = require "enums"
+Elona.core.HCL = require "hclua"
 Elona.core.Iter = require "iter"
 Elona.core.ReadOnly = require "readonly"
-Elona.core.HCL = require "hclua"
 Elona.core.table = require "table"
 
 -- All the core API tables should be loaded by now, so we can make

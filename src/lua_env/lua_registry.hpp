@@ -25,7 +25,7 @@ class registry_manager
 public:
     explicit registry_manager(lua_env*);
 
-    void bind(lua_env& lua);
+    static void init(lua_env& lua);
 
     /***
      * Registers a new datatype from the HCL spec file provided.
@@ -43,8 +43,6 @@ public:
 
     sol::optional<sol::table> get_table(const std::string& mod_name,
                                         const std::string& datatype_name);
-
-    optional<int> get_enum_value(const std::string& enum_name, const std::string& variant, int default_value);
 
 private:
     /***

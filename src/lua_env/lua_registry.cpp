@@ -18,16 +18,12 @@ registry_manager::registry_manager(lua_env* lua_)
     registry_env.set("Elona", lua->get_api_manager().bind(*lua));
 
     lua->get_state()->safe_script(
-        R"(
-HCL = require "hclua"
-Enums = Elona.require("Enums")
-)", registry_env);
+        R"(HCL = require "hclua")", registry_env);
 }
 
-void registry_manager::bind(lua_env& lua)
+void registry_manager::init(lua_env& lua)
 {
     sol::table core = lua.get_api_manager().get_api_table();
-
     sol::table Registry = core.create_named("Registry");
 
     // "add_datatype", "add_data"
@@ -83,12 +79,22 @@ void registry_manager::register_data(const std::string& mod_name,
     registry_env.set("_DATATYPE_NAME", datatype_name);
     registry_env.set("_FILEPATH", normalized);
 
+    // Don't print errors (they will be thrown anyways)
+    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
+        return pfr;
+    };
+
     auto result = lua->get_state()->safe_script(R"(
 local parsed = HCL.parse_file(_FILEPATH)
 local data = parsed[_DATATYPE_NAME]
 
+-- TODO make it a reserved keyword (_msg)
+if parsed.msg ~= nil then
+    error(_FILEPATH .. ":" .. parsed.line .. ":" .. parsed.column .. ": " .. parsed.msg)
+end
+
 if data == nil then
-    return
+    error(_FILEPATH .. ": No data found for datatype " .. _DATATYPE_NAME)
 end
 
 if data[1] ~= nil then
@@ -101,7 +107,7 @@ for key, value in pairs(data) do
     Registry[_MOD_NAME][_DATATYPE_NAME][key] = value
     -- end
 end
-)", registry_env);
+)", registry_env, ignore_handler);
 
     registry_env.set("_MOD_NAME", sol::lua_nil);
     registry_env.set("_DATATYPE_NAME", sol::lua_nil);
@@ -125,20 +131,6 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     }
 
     return (*mod_data_table)[datatype_name];
-}
-
-int registry_manager::get_enum_value(const std::string& enum_name, const std::string& variant, int default_value)
-{
-    sol::optional<sol::table> enum_table = registry_env["Enums"][enum_name];
-    if (!enum_table)
-        return default_value;
-
-    sol::optional<sol::object> enum_value = (*enum_table)[variant];
-
-    if (!enum_value)
-        return default_value;
-
-    return enum_value->as<int>();
 }
 
 } // namespace lua

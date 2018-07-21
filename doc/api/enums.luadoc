@@ -140,3 +140,43 @@ DamageSource = {}
 -- @tfield Enums.CharaFlag HasLearnedWords
 -- @tfield Enums.CharaFlag OnlyChristmas
 CharaFlag = {}
+
+--- Possible genders of a character.
+-- @enum Gender
+-- @tfield Enums.Gender Random
+-- @tfield Enums.Gender Male
+-- @tfield Enums.Gender Female
+Gender = {}
+
+--- Relationship of a character to the player.
+-- @enum Relation
+-- @tfield Enums.Relation Aggressive Will attack the player on sight.
+-- @tfield Enums.Relation Nonaggressive Will not attack the player, but the player will attack if the character is moved into.
+-- @tfield Enums.Relation Unconcerned The player will switch places with the character when moved into. Examples are human NPCs in dungeons that attack monsters.
+-- @tfield Enums.Relation Neutral Behaves like NPCs in towns.
+-- @tfield Enums.Relation Friend Attacks and is attacked by enemies of the player. Examples are quest escorts and hired adventurers.
+Relation = {}
+
+--- A set of colors.
+-- @enum Color
+-- @tfield Enums.Color Default
+-- @tfield Enums.Color Green
+-- @tfield Enums.Color Red
+-- @tfield Enums.Color Blue
+-- @tfield Enums.Color Orange
+-- @tfield Enums.Color Yellow
+-- @tfield Enums.Color Grey
+-- @tfield Enums.Color Purple
+-- @tfield Enums.Color Cyan
+-- @tfield Enums.Color LightRed
+-- @tfield Enums.Color Gold
+-- @tfield Enums.Color White
+-- @tfield Enums.Color LightBrown
+-- @tfield Enums.Color DarkGreen
+-- @tfield Enums.Color LightGrey
+-- @tfield Enums.Color PaleRed
+-- @tfield Enums.Color LightBlue
+-- @tfield Enums.Color LightPurple
+-- @tfield Enums.Color LightGreen
+-- @tfield Enums.Color YellowGreen
+Color = {}

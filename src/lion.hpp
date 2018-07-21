@@ -4,14 +4,24 @@
 #include <sstream>
 #include <vector>
 #include "filesystem.hpp"
-#include "lib/noncopyable.hpp"
 #include "hcl.hpp"
+#include "lib/noncopyable.hpp"
 #include "log.hpp"
 #include "optional.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
+#include "thirdparty/sol2/sol.hpp"
 
 namespace elona
 {
+
+struct character;
+
+namespace lua
+{
+class lua_env;
+extern std::unique_ptr<lua_env> lua;
+}
+
 namespace lion
 {
 
@@ -25,12 +35,10 @@ struct lion_db_traits;
 template <class T>
 class lion_db : public lib::noncopyable
 {
-    using traits_type = lion_db_traits<T>;
-
 public:
+    using traits_type = lion_db_traits<T>;
     using id_type = id;
     using data_type = typename traits_type::data_type;
-    using spec_type = typename traits_type::spec_type;
     using map_type = std::unordered_map<id_type, data_type>;
 
     lion_db() : scope("core") {}
@@ -90,83 +98,15 @@ public:
         return iterator{std::end(storage)};
     }
 
-    virtual const std::string identifier() const { return traits_type::identifier; }
 
-
-    void load(const fs::path& file)
+    void initialize(sol::table table)
     {
-        if (fs::exists(file))
-        {
-            data_files.push_back(file);
-        }
-        else
-        {
-            ELONA_LOG("No such data file " << file.string());
-        }
-    }
-
-
-    void reify(hcl::Value object, const std::string& file = "[string]")
-    {
-        hcl::Value base = hclutil::skip_sections(object,
-                                                 {identifier()},
-                                                 file);
-        std::string id_base = scope + "." + identifier();
-
-        if (!base.is<hcl::Object>())
-        {
-            throw hcl_error(file, "\"" + identifier() + "\""
-                            + "was not declared as an object.");
-        }
-
-        for (const auto& value : base.as<hcl::Object>())
-        {
-            // Would be better served by expected<V, E>, but boost doesn't have it.
-            if (!value.second.is<hcl::Object>())
-            {
-                ELONA_LOG("Item was not object: " <<
-                          identifier() << "." << value.first);
-            }
-            if (!spec.validate(value))
-            {
-                ELONA_LOG("Validation failed for " <<
-                          identifier() << "." << value.first);
-            }
-            optional<data_type> data = static_cast<T&>(*this).convert(value.second.as<hcl::Object>());
-            if (data == none)
-            {
-                ELONA_LOG("Conversion failed for " <<
-                          identifier() << "." << value.first);
-            }
-            else
-            {
-                id id(id_base + "." + value.first);
-                if (storage.find(id) != storage.end())
-                {
-                    ELONA_LOG("Duplicate ID found for " << id.get());
-                }
-                else
-                {
-                    storage.emplace(id, *data);
-                }
-            }
-        }
-    }
-
-
-    void reify(std::string hcl)
-    {
-        std::istringstream ss(hcl);
-        hcl::Value value = hclutil::parse(ss);
-        reify(value);
-    }
-
-    void reify_all()
-    {
-        for (const fs::path& file : data_files)
-        {
-            hcl::Value object = hclutil::load(file);
-            reify(object);
+        std::string prefix = "core." + std::string(traits_type::datatype_name);
+        for (const auto& pair : table) {
+            std::string id = pair.first.as<std::string>();
+            sol::table data = pair.second.as<sol::table>();
+            data_type converted = static_cast<T&>(*this).convert(data, id);
+            storage.emplace(prefix + "." + id, converted);
         }
     }
 
@@ -189,10 +129,63 @@ public:
 
 protected:
     std::string scope;
-    std::vector<fs::path> data_files;
-    spec_type spec;
     map_type storage;
 };
+
+
+template <typename T>
+static optional<std::vector<T>> convert_vector(const sol::table& data,
+                                           const std::string& name)
+{
+    sol::optional<sol::table> value = data[name];
+
+    if (value)
+    {
+        std::vector<T> result;
+        for (const auto& kvp : *value)
+        {
+            T v = kvp.second.as<T>();
+            result.push_back(v);
+        }
+        return result;
+    }
+    else
+    {
+        return none;
+    }
+}
+
+
+#define ELONA_LION_DB_FIELD(name, type, default_value)       \
+    type name; \
+    { \
+        sol::optional<type> value = data[#name];                 \
+        if (value) \
+        { \
+            name = *value; \
+        } \
+        else                                        \
+        { \
+            name = default_value;                   \
+        } \
+    } \
+
+#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value) \
+    int name; \
+    { \
+        std::string variant; \
+        sol::optional<std::string> value = data[#name];   \
+        if (value)    \
+        { \
+            variant = *value; \
+        } \
+        else                                        \
+        { \
+            variant = default_value;                   \
+        } \
+        name = lua::lua->get_api_manager().get_enum_value(enum_type, variant);  \
+    } \
+
 
 } // namespace lion
 } // namespace elona

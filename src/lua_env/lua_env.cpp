@@ -49,6 +49,7 @@ lua_env::lua_env()
     handle_mgr = std::make_unique<handle_manager>(this);
 
     registry_mgr = std::make_unique<registry_manager>(this);
+    registry_manager::init(*this);
 }
 
 api_manager& lua_env::get_api_manager()

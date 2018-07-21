@@ -6,9 +6,22 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-TEST_CASE("test registering datatype", "[Lua: Registry]")
+TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 {
-    fs::path data = "tests/data/registry/putit.hcl";
+    const fs::path data_file = "tests/data/registry/invalid.hcl";
+
+    elona::lua::lua_env lua;
+    lua.scan_all_mods(filesystem::dir::mods());
+    lua.load_core_mod(filesystem::dir::mods());
+
+    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("test", "chara_def.hcl"));
+
+    REQUIRE_THROWS(lua.get_registry_manager().register_data("test", "chara", data_file));
+}
+
+TEST_CASE("test instantiating character from datatype", "[Lua: Registry]")
+{
+    const fs::path data = "tests/data/registry/putit.hcl";
 
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());

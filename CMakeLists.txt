@@ -244,6 +244,7 @@ else()
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
       src/tests/lua_registry.cpp
+      src/tests/lua_registry_character.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/i18n.cpp

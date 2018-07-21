@@ -27,12 +27,37 @@ enum class key_wait_delay_t
     none,
 };
 
-enum class curse_state_t
+// Index into c_col.
+enum class predefined_color_t : int
 {
-    doomed,
-    cursed,
-    none,
-    blessed,
+   white = 0,
+   green = 1,
+   red = 2,
+   blue = 3,
+   orange = 4,
+   yellow = 5,
+   grey = 6,
+   purple = 7,
+   cyan = 8,
+   light_red = 9,
+   gold = 10,
+   white2 = 11,
+   light_brown = 12,
+   dark_green = 13,
+   light_grey = 14,
+   pale_red = 15,
+   light_blue = 16,
+   light_purple = 17,
+   light_green = 18,
+   yellow_green = 19
+};
+
+enum class curse_state_t : int
+{
+    doomed = 0,
+    cursed = 1,
+    none = 2,
+    blessed = 3,
 };
 
 
@@ -42,12 +67,12 @@ inline bool is_cursed(curse_state_t s)
 }
 
 
-enum class identification_state_t
+enum class identification_state_t : int
 {
-    unidentified,
-    partly_identified,
-    almost_identified,
-    completely_identified,
+    unidentified = 0,
+    partly_identified = 1,
+    almost_identified = 2,
+    completely_identified = 3,
 };
 
 enum class damage_source_t : int

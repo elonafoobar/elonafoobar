@@ -88,6 +88,10 @@ void load_translations(const std::string& hcl)
 
 void configure_lua()
 {
+    lua::lua.reset(new lua::lua_env());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+    lua::lua->load_all_mods();
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
@@ -96,7 +100,6 @@ void configure_lua()
 
 void pre_init()
 {
-    lua::lua = std::make_unique<lua::lua_env>();
     log::initialize();
 
     initialize_cat_db();
@@ -116,11 +119,6 @@ void pre_init()
     initialize_config(config_file);
 
     config::instance().is_test = true;
-
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
-    configure_lua();
 
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();
