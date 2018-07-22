@@ -357,8 +357,8 @@ void cell_refresh(int prm_493, int prm_494)
     {
         return;
     }
-    if (prm_493 < 0 || prm_494 < 0 || prm_493 >= mdata(0)
-        || prm_494 >= mdata(1))
+    if (prm_493 < 0 || prm_494 < 0 || prm_493 >= mdata_map_width
+        || prm_494 >= mdata_map_height)
     {
         return;
     }
@@ -2105,9 +2105,9 @@ int inv_compress(int owner)
                     item_remove(inv[cnt]);
                     ++number_of_deleted_items;
                     if (inv[cnt].position.x >= 0
-                        && inv[cnt].position.x < mdata(0)
+                        && inv[cnt].position.x < mdata_map_width
                         && inv[cnt].position.y >= 0
-                        && inv[cnt].position.y < mdata(1))
+                        && inv[cnt].position.y < mdata_map_height)
                     {
                         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                     }
@@ -2141,8 +2141,8 @@ int inv_compress(int owner)
         item_remove(inv[slot]);
         if (mode != 6)
         {
-            if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata(0)
-                && inv[slot].position.y >= 0 && inv[slot].position.y < mdata(1))
+            if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata_map_width
+                && inv[slot].position.y >= 0 && inv[slot].position.y < mdata_map_height)
             {
                 cell_refresh(inv[slot].position.x, inv[slot].position.y);
             }

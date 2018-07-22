@@ -438,11 +438,11 @@ void continuous_action_perform()
                                     x = clamp(
                                         cdata[cc].position.x - 1 + rnd(3),
                                         0,
-                                        mdata(0) - 1);
+                                        mdata_map_width - 1);
                                     y = clamp(
                                         cdata[cc].position.y - 1 + rnd(3),
                                         0,
-                                        mdata(1) - 1);
+                                        mdata_map_height - 1);
                                     cell_check(x, y);
                                     if (cellaccess == 0)
                                     {
@@ -914,7 +914,7 @@ void continuous_action_others()
         }
         if (gdata(91) == 100)
         {
-            if (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)
+            if (mdata_map_type == mdata_t::map_type_t::player_owned || mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
                 cdata[cc].continuous_action_turn = 5;
@@ -971,9 +971,11 @@ void continuous_action_others()
             }
             if (gdata_weather != 0 && gdata_weather != 3)
             {
-                if (gdata_current_map == 30
-                    || (mdata(14) == 1
-                        && (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)))
+                if (gdata_current_map == mdata_t::map_id_t::shelter_
+                    || (mdata_map_indoors_flag == 1
+                        && (mdata_map_type == mdata_t::map_type_t::player_owned
+                            || mdata_map_type == mdata_t::map_type_t::town
+                            || mdata_map_type == mdata_t::map_type_t::guild)))
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.weather_is_bad"));
                 }
@@ -1024,13 +1026,15 @@ void continuous_action_others()
             p = 25;
             if (gdata_weather != 0 && gdata_weather != 3)
             {
-                if (gdata_current_map == 30)
+                if (gdata_current_map == mdata_t::map_id_t::shelter_)
                 {
                     p = 5;
                 }
-                if (gdata_current_map != 30 && mdata(14) == 1)
+                if (gdata_current_map != mdata_t::map_id_t::shelter_ && mdata_map_indoors_flag == 1)
                 {
-                    if (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)
+                    if (mdata_map_type == mdata_t::map_type_t::player_owned
+                        || mdata_map_type == mdata_t::map_type_t::town
+                        || mdata_map_type == mdata_t::map_type_t::guild)
                     {
                         p = 5;
                         gdata_minute += 30;
@@ -1625,7 +1629,7 @@ void spot_digging()
         return;
     }
     txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         for (const auto& cnt : items(0))
         {
@@ -1686,7 +1690,7 @@ void spot_digging()
                             }
                             txt(
                                 i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-                            autosave = 1 * (gdata_current_map != 35);
+                            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
                             --inv[cnt].number;
                             break;
                         }
@@ -1769,7 +1773,7 @@ void spot_mining_or_wall()
                 }
             }
         }
-        if (f == 1 || (gdata_tutorial_flag == 2 && gdata_current_map == 7))
+        if (f == 1 || (gdata_tutorial_flag == 2 && gdata_current_map == mdata_t::map_id_t::your_home))
         {
             rtval = 0;
             if (rnd(5) == 0)
@@ -1796,7 +1800,7 @@ void spot_mining_or_wall()
             aniref = 5;
             play_animation(14);
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
-            if (gdata_tutorial_flag == 2 && gdata_current_map == 7)
+            if (gdata_tutorial_flag == 2 && gdata_current_map == mdata_t::map_id_t::your_home)
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
@@ -1804,7 +1808,7 @@ void spot_mining_or_wall()
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
                 gdata_tutorial_flag = 3;
             }
-            else if (rtval != 0 && gdata_current_map != 30)
+            else if (rtval != 0 && gdata_current_map != mdata_t::map_id_t::shelter_)
             {
                 if (rtval > 0)
                 {
@@ -1861,23 +1865,23 @@ int search_material_spot()
     }
     atxspot = 11;
     atxlv = gdata_current_dungeon_level;
-    if (mdata(6) == 20)
+    if (mdata_map_type == mdata_t::map_type_t::dungeon)
     {
         atxspot = 9;
     }
-    if (mdata(6) == 21)
+    if (mdata_map_type == mdata_t::map_type_t::dungeon_tower)
     {
         atxspot = 12;
     }
-    if (mdata(6) == 22)
+    if (mdata_map_type == mdata_t::map_type_t::dungeon_forest)
     {
         atxspot = 10;
     }
-    if (mdata(6) == 23)
+    if (mdata_map_type == mdata_t::map_type_t::dungeon_castle)
     {
         atxspot = 12;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         atxlv = cdata[0].level / 2 + rnd(10);
         if (atxlv > 30)

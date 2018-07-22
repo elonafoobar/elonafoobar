@@ -240,7 +240,7 @@ optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 int calcobjlv(int base)
 {
     int ret = base <= 0 ? gdata_current_dungeon_level : base;
-    if (gdata_current_map == 30)
+    if (gdata_current_map == mdata_t::map_id_t::shelter_)
     {
         ret = 1;
     }
@@ -317,7 +317,7 @@ int decfame(int cc, int base)
 
 int calcshopreform()
 {
-    return mdata(18) * 100 + 1000;
+    return mdata_map_max_item_count * 100 + 1000;
 }
 
 
@@ -1115,11 +1115,11 @@ int calccostbuilding()
     {
         switch (adata(16, cnt))
         {
-        case 101: cost += 1500; break;
-        case 31: cost += 1000; break;
-        case 103: cost += 750; break;
-        case 102: cost += 5000; break;
-        case 104: cost += 750; break;
+        case mdata_t::map_id_t::museum: cost += 1500; break;
+        case mdata_t::map_id_t::ranch: cost += 1000; break;
+        case mdata_t::map_id_t::crop: cost += 750; break;
+        case mdata_t::map_id_t::shop: cost += 5000; break;
+        case mdata_t::map_id_t::storage_house: cost += 750; break;
         default: break;
         }
     }
@@ -1301,7 +1301,7 @@ int calcinitgold(int owner)
 {
     if (owner < 0)
     {
-        return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != 30)
+        return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != mdata_t::map_id_t::shelter_)
                    + 10)
             + 1;
     }

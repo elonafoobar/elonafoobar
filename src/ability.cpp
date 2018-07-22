@@ -273,7 +273,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
     {
         exp_at_m77 = experience;
     }
-    if (gdata_current_map == 35)
+    if (gdata_current_map == mdata_t::map_id_t::show_house)
     {
         exp_at_m77 /= 5;
     }
@@ -547,7 +547,7 @@ void gain_healing_and_meditation_experience(int cc)
 
 void gain_stealth_experience(int cc)
 {
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (rnd(20))
         {
@@ -572,7 +572,7 @@ void gain_weight_lifting_experience(int cc)
     {
         return;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (rnd(20))
         {

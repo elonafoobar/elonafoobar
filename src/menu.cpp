@@ -1843,7 +1843,7 @@ void label_2032()
     ++dbmax;
     dblist(0, dbmax) = 173;
     ++dbmax;
-    if (gdata_current_map == 12)
+    if (gdata_current_map == mdata_t::map_id_t::yowyn)
     {
         dblist(0, dbmax) = 154;
         ++dbmax;
@@ -1864,7 +1864,7 @@ void label_2032()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == 5)
+    if (gdata_current_map == mdata_t::map_id_t::vernis)
     {
         dblist(0, dbmax) = 178;
         ++dbmax;
@@ -1881,7 +1881,7 @@ void label_2032()
         dblist(0, dbmax) = 158;
         ++dbmax;
     }
-    if (gdata_current_map == 15)
+    if (gdata_current_map == mdata_t::map_id_t::palmia)
     {
         dblist(0, dbmax) = 151;
         ++dbmax;
@@ -1902,7 +1902,7 @@ void label_2032()
         dblist(0, dbmax) = 178;
         ++dbmax;
     }
-    if (gdata_current_map == 33)
+    if (gdata_current_map == mdata_t::map_id_t::noyel)
     {
         dblist(0, dbmax) = 181;
         ++dbmax;
@@ -1919,7 +1919,7 @@ void label_2032()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == 36)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -1941,7 +1941,7 @@ void label_2032()
             ++dbmax;
         }
     }
-    if (gdata_current_map == 36)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -1963,7 +1963,7 @@ void label_2032()
             ++dbmax;
         }
     }
-    if (gdata_current_map == 14)
+    if (gdata_current_map == mdata_t::map_id_t::derphy)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -1985,7 +1985,7 @@ void label_2032()
             ++dbmax;
         }
     }
-    if (gdata_current_map == 14)
+    if (gdata_current_map == mdata_t::map_id_t::derphy)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -2001,7 +2001,7 @@ void label_2032()
             ++dbmax;
         }
     }
-    if (gdata_current_map == 11)
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -2019,7 +2019,7 @@ void label_2032()
             ++dbmax;
         }
     }
-    if (gdata_current_map == 11)
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -6237,7 +6237,7 @@ void show_politics_window()
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get("core.locale.ui.politics.name", mapname(gdata(815)));
     ++listmax;
-    if (mdata(6) != 3)
+    if (mdata_map_type != mdata_t::map_type_t::town)
     {
         goto label_2281_internal;
     }
@@ -6288,7 +6288,7 @@ label_2283_internal:
     font(12 + sizefix - en * 2);
     pos(wx + 185, wy + 52);
     mes(i18n::s.get("core.locale.ui.politics.global"));
-    if (mdata(6) == 3)
+    if (mdata_map_type == mdata_t::map_type_t::town)
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get("core.locale.ui.politics.law_of", mapname(gdata_current_map)));
@@ -6679,7 +6679,7 @@ label_1960_internal:
     }
     if (allyctrl == 3)
     {
-        if (adata(16, gdata_current_map) == 102)
+        if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
         {
             txt(i18n::s.get("core.locale.ui.ally_list.shop.prompt"));
             s(10) = i18n::s.get("core.locale.ui.ally_list.shop.title");
@@ -6687,7 +6687,7 @@ label_1960_internal:
             s(12) = i18n::s.get("core.locale.ui.ally_list.name");
             s(13) = i18n::s.get("core.locale.ui.ally_list.shop.chr_negotiation");
         }
-        if (adata(16, gdata_current_map) == 31)
+        if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
         {
             txt(i18n::s.get("core.locale.ui.ally_list.ranch.prompt"));
             s(10) = i18n::s.get("core.locale.ui.ally_list.ranch.title");
@@ -6695,7 +6695,7 @@ label_1960_internal:
             s(12) = i18n::s.get("core.locale.ui.ally_list.name");
             s(13) = i18n::s.get("core.locale.ui.ally_list.ranch.breed_power");
         }
-        if (gdata_current_map == 7)
+        if (gdata_current_map == mdata_t::map_id_t::your_home)
         {
             txt(i18n::s.get("core.locale.ui.ally_list.stayer.prompt"));
             s(10) = i18n::s.get("core.locale.ui.ally_list.stayer.title");
@@ -6803,7 +6803,7 @@ label_1961_internal:
                 }
             }
             cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 0, n);
-            if (allyctrl != 3 || (allyctrl == 3 && gdata_current_map == 7))
+            if (allyctrl != 3 || (allyctrl == 3 && gdata_current_map == mdata_t::map_id_t::your_home))
             {
                 s = u8"Lv."s + cdata[i].level + u8" "s;
                 if (cdata[i].state == 6)
@@ -6837,11 +6837,11 @@ label_1961_internal:
             }
             else
             {
-                if (adata(16, gdata_current_map) == 102)
+                if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
                 {
                     s = u8"   "s + sdata(17, i) + u8" / " + sdata(156, i);
                 }
-                if (adata(16, gdata_current_map) == 31)
+                if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
                 {
                     s = u8"   "s + cbreeder(i);
                 }

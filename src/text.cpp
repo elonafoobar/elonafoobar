@@ -258,7 +258,7 @@ void initialize_nefia_names()
 
 std::string maplevel(int)
 {
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         if (gdata_current_dungeon_level != 1)
         {
@@ -272,12 +272,13 @@ std::string maplevel(int)
             }
         }
     }
-    if (adata(0, gdata_current_map) != 3)
+    if (adata(0, gdata_current_map) != mdata_t::map_type_t::town)
     {
-        if (adata(16, gdata_current_map) == 3
-            || adata(16, gdata_current_map) == 8
-            || adata(16, gdata_current_map) == 13
-            || (mdata(6) >= 20 && mdata(6) <= 23) == 1)
+        if (adata(16, gdata_current_map) == mdata_t::map_id_t::lesimas
+            || adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
+            || adata(16, gdata_current_map) == mdata_t::map_id_t::quest
+            || (mdata_map_type >= mdata_t::map_type_t::dungeon
+                && mdata_map_type <= mdata_t::map_type_t::dungeon_castle) == 1)
         {
             return ""s
                 + cnvrank(
@@ -296,7 +297,8 @@ std::string mapname_dungeon(int id)
     std::string name = mapnamerd(
         adata(5, id), std::min(adata(17, id) / 5, int(mapnamerd.j_size() - 1)));
 
-    if (suffix_id >= 20 && suffix_id <= 23)
+    if (suffix_id >= mdata_t::map_type_t::dungeon
+        && suffix_id <= mdata_t::map_type_t::dungeon_castle)
     {
         name += i18n::s.get_enum("core.locale.map.nefia.suffix", suffix_id);
     }
@@ -310,7 +312,7 @@ std::string mapname(int id, bool description)
 
     switch (adata(16, id))
     {
-    case 13:
+    case mdata_t::map_id_t::quest:
         if (gdata_executing_immediate_quest_type == 1001)
         {
             name = i18n::s.get("core.locale.map.quest.outskirts");
@@ -321,7 +323,9 @@ std::string mapname(int id, bool description)
             name = i18n::s.get("core.locale.map.quest.urban_area");
         }
         break;
-    case 8: name = mapname_dungeon(id); break;
+    case mdata_t::map_id_t::random_dungeon:
+        name = mapname_dungeon(id);
+        break;
     default:
         name = i18n::s.get_enum_property(
             "core.locale.map.unique", "name", adata(16, id));
@@ -339,7 +343,7 @@ std::string mapname(int id, bool description)
 
     if (description)
     {
-        if (adata(16, id) == 29)
+        if (adata(16, id) == mdata_t::map_id_t::mansion_of_younger_sister)
         {
             return "";
         }
@@ -347,7 +351,7 @@ std::string mapname(int id, bool description)
         {
             return desc;
         }
-        else if (adata(0, id) >= 20)
+        else if (adata(0, id) >= mdata_t::map_type_t::dungeon)
         {
             return i18n::s.get(
                 "core.locale.map.you_see_an_entrance", name, adata(17, id));
@@ -999,7 +1003,7 @@ void get_npc_talk()
         }
         if (adata(29, gdata_current_map))
         {
-            if (gdata_current_map == 33)
+            if (gdata_current_map == mdata_t::map_id_t::noyel)
             {
                 if (rnd(3))
                 {

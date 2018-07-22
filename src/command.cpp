@@ -150,7 +150,7 @@ turn_result_t do_interact_command()
             i18n::s.get("core.locale.action.interact.choices.teach_words"), u8"null"s, ""s + 7);
         ELONA_APPEND_PROMPT(
             i18n::s.get("core.locale.action.interact.choices.change_tone"), u8"null"s, ""s + 10);
-        if (gdata_current_map != 35)
+        if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
             if (cdata[tc].is_hung_on_sand_bag())
             {
@@ -336,7 +336,7 @@ turn_result_t do_dig_command()
         }
     }
     if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
-        || mdata(6) == 1)
+        || mdata_map_type == mdata_t::map_type_t::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
@@ -351,7 +351,7 @@ turn_result_t do_search_command()
 {
     ++msgdup;
     txt(i18n::s.get("core.locale.action.search.execute"));
-    if (gdata_current_map == 35)
+    if (gdata_current_map == mdata_t::map_id_t::show_house)
     {
         p = 9999;
         for (const auto& cnt : items(-1))
@@ -407,14 +407,14 @@ turn_result_t do_search_command()
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         y = cdata[cc].position.y + cnt - 5;
-        if (y < 0 || y >= mdata(1))
+        if (y < 0 || y >= mdata_map_height)
         {
             continue;
         }
         for (int cnt = 0; cnt < 11; ++cnt)
         {
             x = cdata[cc].position.x + cnt - 5;
-            if (x < 0 || x >= mdata(0))
+            if (x < 0 || x >= mdata_map_width)
             {
                 continue;
             }
@@ -450,7 +450,7 @@ turn_result_t do_search_command()
                 }
                 if (feat(1) == 32)
                 {
-                    if (gdata_current_map != 35)
+                    if (gdata_current_map != mdata_t::map_id_t::show_house)
                     {
                         if (cdata[cc].position.x == x
                             && cdata[cc].position.y == y)
@@ -559,9 +559,9 @@ turn_result_t do_throw_command()
         {
             if (y >= 0)
             {
-                if (x < mdata(0))
+                if (x < mdata_map_width)
                 {
-                    if (y < mdata(1))
+                    if (y < mdata_map_height)
                     {
                         if ((chipm(7, map(x, y, 0)) & 4) == 0)
                         {
@@ -640,8 +640,8 @@ turn_result_t do_throw_command()
                     txt(i18n::s.get("core.locale.common.nothing_happens"));
                     return turn_result_t::turn_end;
                 }
-                if (gdata_current_map == 6 || gdata_current_map == 40
-                    || gdata_current_map == 35)
+                if (gdata_current_map == mdata_t::map_id_t::arena || gdata_current_map == mdata_t::map_id_t::pet_arena
+                    || gdata_current_map == mdata_t::map_id_t::show_house)
                 {
                     txt(i18n::s.get("core.locale.action.throw.monster_ball.does_not_work"));
                     return turn_result_t::turn_end;
@@ -1610,7 +1610,7 @@ turn_result_t do_use_command()
     case 24:
         x = cdata[cc].position.x;
         y = cdata[cc].position.y;
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
             update_screen();
@@ -1691,7 +1691,7 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 8:
-        if (mdata(6) != 5)
+        if (mdata_map_type != mdata_t::map_type_t::player_owned)
         {
             txt(i18n::s.get("core.locale.action.use.house_board.cannot_use_it_here"));
             update_screen();
@@ -1893,7 +1893,7 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 45:
-        if (gdata_current_map == 35)
+        if (gdata_current_map == mdata_t::map_id_t::show_house)
         {
             txt(i18n::s.get("core.locale.action.use.sandbag.cannot_use_here"));
             update_screen();
@@ -1960,7 +1960,7 @@ turn_result_t do_use_command()
         {
             music = 90;
         }
-        mdata(13) = music;
+        mdata_map_bgm = music;
         play_music(music);
     }
         goto label_2229_internal;
@@ -1971,10 +1971,10 @@ turn_result_t do_use_command()
     case 7:
         if (inv[ci].own_state != 3)
         {
-            if (mdata(7) == 0 || gdata_current_map == 13
-                || gdata_current_map == 30)
+            if (mdata_map_refresh_type == 0 || gdata_current_map == mdata_t::map_id_t::quest
+                || gdata_current_map == mdata_t::map_id_t::shelter_)
             {
-                if (gdata_current_map == 2)
+                if (gdata_current_map == mdata_t::map_id_t::fields)
                 {
                     txt(i18n::s.get("core.locale.action.use.shelter.only_in_world_map"));
                 }
@@ -1989,7 +1989,7 @@ turn_result_t do_use_command()
             continuous_action_others();
             return turn_result_t::turn_end;
         }
-        if (adata(16, gdata_current_map) == 8)
+        if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
@@ -2038,7 +2038,8 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 22:
         snd(118);
-        if (mdata(6) != 3 && mdata(6) != 2)
+        if (mdata_map_type != mdata_t::map_type_t::town
+            && mdata_map_type != mdata_t::map_type_t::guild)
         {
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
@@ -2141,7 +2142,7 @@ turn_result_t do_use_command()
         play_music();
         goto label_2229_internal;
     case 28:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
             update_screen();
@@ -2169,7 +2170,8 @@ turn_result_t do_use_command()
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
-        if (gdata_current_map != 35 || usermapid == 0)
+        if (gdata_current_map != mdata_t::map_id_t::show_house
+            || usermapid == 0)
         {
             txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
             goto label_2229_internal;
@@ -2382,7 +2384,7 @@ turn_result_t do_use_command()
             }
         }
         chara_vanquish(tc);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         skillexp(151, 0, 1200);
         randomize();
         screenupdate = -1;
@@ -2468,7 +2470,7 @@ turn_result_t do_open_command()
     {
         snd(22);
         txt(i18n::s.get("core.locale.action.open.shackle.text"));
-        if (gdata_current_map == 33)
+        if (gdata_current_map == mdata_t::map_id_t::noyel)
         {
             if (gdata_current_dungeon_level == 1)
             {
@@ -2506,7 +2508,7 @@ turn_result_t do_open_command()
         }
         if (inv[ci].count == 3 || inv[ci].count == 4 || inv[ci].count == 6)
         {
-            if (gdata_current_map != 7)
+            if (gdata_current_map != mdata_t::map_id_t::your_home)
             {
                 txt(i18n::s.get("core.locale.action.open.only_in_home"));
                 update_screen();
@@ -2515,7 +2517,7 @@ turn_result_t do_open_command()
         }
         if (inv[ci].count == 5)
         {
-            if (adata(16, gdata_current_map) != 102)
+            if (adata(16, gdata_current_map) != mdata_t::map_id_t::shop)
             {
                 txt(i18n::s.get("core.locale.action.open.only_in_shop"));
                 update_screen();
@@ -2624,7 +2626,7 @@ turn_result_t do_use_stairs_command(int val0)
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
         {
             ci = stat;
             return step_into_gate();
@@ -2649,7 +2651,7 @@ turn_result_t do_use_stairs_command(int val0)
             return turn_result_t::turn_end;
         }
     }
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         if (val0 == 1)
         {
@@ -2686,7 +2688,7 @@ turn_result_t do_use_stairs_command(int val0)
     }
     if (movelevelbystairs == 0)
     {
-        if (mdata(6) != 1)
+        if (mdata_map_type != mdata_t::map_type_t::world_map)
         {
             if (val0 == 1)
             {
@@ -2699,7 +2701,7 @@ turn_result_t do_use_stairs_command(int val0)
                 else
                 {
                     movelevelbystairs = 1;
-                    if (gdata_current_map == 42
+                    if (gdata_current_map == mdata_t::map_id_t::the_void
                         && gdata_current_dungeon_level >= gdata(186))
                     {
                         txt(i18n::s.get("core.locale.action.use_stairs.blocked_by_barrier"));
@@ -2775,7 +2777,7 @@ turn_result_t do_use_stairs_command(int val0)
         txt(i18n::s.get("core.locale.action.use_stairs.locked"));
         return turn_result_t::turn_end;
     }
-    if (adata(16, gdata_current_map) == 8)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
@@ -2889,12 +2891,13 @@ turn_result_t do_movement_command()
             || (cdata[tc].relationship == -1
                 && !config::instance().attack_neutral_npcs)
             || (cdata[tc].relationship == 0
-                && (adata(16, gdata_current_map) == 101
-                    || adata(16, gdata_current_map) == 102 || key_shift)))
+                && (adata(16, gdata_current_map) == mdata_t::map_id_t::museum
+                    || adata(16, gdata_current_map) == mdata_t::map_id_t::shop
+                    || key_shift)))
         {
             if (cdata[tc].is_hung_on_sand_bag() == 0)
             {
-                if (mdata(6) == 1)
+                if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
                     goto label_2204_internal;
                 }
@@ -2980,13 +2983,13 @@ turn_result_t do_movement_command()
     {
         keybd_attacking = 0;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (dbg_freemove)
         {
             x = cdata[0].next_position.x;
             y = cdata[0].next_position.y;
-            if (x >= 0 && x < mdata(0) && y >= 0 && y < mdata(1))
+            if (x >= 0 && x < mdata_map_width && y >= 0 && y < mdata_map_height)
             {
                 if (map(x, y, 1) == 0)
                 {
@@ -2998,7 +3001,7 @@ turn_result_t do_movement_command()
     if (cellaccess == 1)
     {
     label_2204_internal:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             if (264 <= map(cdata[cc].next_position.x,
                            cdata[cc].next_position.y,
@@ -3011,17 +3014,19 @@ turn_result_t do_movement_command()
         }
         return proc_movement_event();
     }
-    if (mdata(6) == 6
-        || (gdata_current_dungeon_level == 1 && mdata(6) != 1
-            && (mdata(6) < 20 || 23 < mdata(6))))
+    if (mdata_map_type == mdata_t::map_type_t::shelter
+        || (gdata_current_dungeon_level == 1
+            && mdata_map_type != mdata_t::map_type_t::world_map
+            && (mdata_map_type < mdata_t::map_type_t::dungeon
+                || mdata_t::map_type_t::dungeon_castle < mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
-            || cdata[cc].next_position.x > mdata(0) - 1
+            || cdata[cc].next_position.x > mdata_map_width - 1
             || cdata[cc].next_position.y < 0
-            || cdata[cc].next_position.y > mdata(1) - 1)
+            || cdata[cc].next_position.y > mdata_map_height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
-            if (mdata(6) == 7)
+            if (mdata_map_type == mdata_t::map_type_t::temporary)
             {
                 if (gdata(73) != 3)
                 {
@@ -3208,7 +3213,7 @@ turn_result_t do_get_command()
     const auto item = item_info.second;
 
     if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0
-        && gdata_current_map != 35 && number == 0)
+        && gdata_current_map != mdata_t::map_id_t::show_house && number == 0)
     {
         cell_featread(cdata[0].position.x, cdata[0].position.y);
         if (feat(1) == 29)
@@ -3238,12 +3243,12 @@ turn_result_t do_get_command()
                     : 0);
             if (feat(2) == 40)
             {
-                autosave = 1 * (gdata_current_map != 35);
+                autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
             }
             refresh_burden_state();
             return turn_result_t::turn_end;
         }
-        if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
+        if (mdata_map_type == mdata_t::map_type_t::world_map && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
             && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
@@ -3256,7 +3261,7 @@ turn_result_t do_get_command()
             }
             area = feat(2) + feat(3) * 100;
             map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
-            adata(16, area) = 0;
+            adata(16, area) = mdata_t::map_id_t::none;
             removeworker(area);
             label_1749();
             ctrl_file(file_operation_t::_13);
@@ -3268,7 +3273,7 @@ turn_result_t do_get_command()
 
     if (number == 0)
     {
-        if ((mdata(6) == 3 || mdata(6) == 2)
+        if ((mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
             && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
         {
             snd(83);
@@ -3373,7 +3378,7 @@ turn_result_t do_short_cut_command()
     }
     if (efid >= 600)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -3394,7 +3399,7 @@ turn_result_t do_short_cut_command()
     }
     if (efid >= 400)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -3417,7 +3422,7 @@ turn_result_t do_short_cut_command()
 turn_result_t do_exit_command()
 {
     txtnew();
-    if (gdata_current_map == 35)
+    if (gdata_current_map == mdata_t::map_id_t::show_house)
     {
         txtef(3);
         txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"));
@@ -3435,7 +3440,7 @@ turn_result_t do_exit_command()
     rtval = show_prompt(promptx, prompty, 190);
     if (rtval == 0)
     {
-        if (gdata_current_map != 35)
+        if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
             snd(44);
             save_game();

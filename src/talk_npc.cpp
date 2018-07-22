@@ -697,7 +697,7 @@ talk_result_t talk_ally_marriage()
 
 talk_result_t talk_ally_gene()
 {
-    if (gdata_current_map == 30)
+    if (gdata_current_map == mdata_t::map_id_t::shelter_)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.refuses");
@@ -1082,19 +1082,19 @@ talk_result_t talk_prostitute_buy()
 
 talk_result_t talk_caravan_master_hire()
 {
-    if (gdata_current_map == 43)
+    if (gdata_current_map == mdata_t::map_id_t::north_tyris_south_border)
     {
         p(0) = 45;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == 45)
+    if (gdata_current_map == mdata_t::map_id_t::south_tyris_north_border)
     {
         p(0) = 43;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == 48)
+    if (gdata_current_map == mdata_t::map_id_t::test_world_north_border)
     {
         p(0) = 43;
         p(1) = 45;
@@ -1373,7 +1373,7 @@ talk_result_t talk_invest()
     {
         buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         calccosthire();
     }
@@ -1856,7 +1856,7 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].drunk != 0 || 0)
     {
-        if (gdata_current_map != 35)
+        if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
             if (tc >= 16)
             {
@@ -2001,7 +2001,7 @@ talk_result_t talk_npc()
         ELONA_APPEND_RESPONSE(
             25, i18n::s.get("core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
     }
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         if (tc >= 57)
         {
@@ -2043,7 +2043,8 @@ talk_result_t talk_npc()
         {
             if (cdata[0].karma < -30 && cdata[0].is_incognito() == 0)
             {
-                if (gdata_current_map != 14 && gdata_current_map != 7)
+                if (gdata_current_map != mdata_t::map_id_t::derphy
+                    && gdata_current_map != mdata_t::map_id_t::your_home)
                 {
                     listmax = 0;
                     if (chatval == 10)

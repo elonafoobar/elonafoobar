@@ -126,9 +126,9 @@ void mef_update()
         }
         if (mef(0, cnt) == 5)
         {
-            if (mdata(14) == 2)
+            if (mdata_map_indoors_flag == 2)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != mdata_t::map_type_t::world_map)
                 {
                     if (gdata_weather == 3 || gdata_weather == 4)
                     {
@@ -156,7 +156,7 @@ void mef_update()
                     {
                         x = rnd(2) + dx - rnd(2);
                         y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+                        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
                         {
                             f = 0;
                             continue;

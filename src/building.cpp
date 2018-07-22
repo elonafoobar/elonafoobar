@@ -55,7 +55,7 @@ void initialize_home_adata()
 
 turn_result_t build_new_building()
 {
-    if (mdata(6) != 1)
+    if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
         txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
@@ -71,7 +71,7 @@ turn_result_t build_new_building()
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == 0)
+        if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
         {
             area = cnt;
             break;
@@ -118,7 +118,7 @@ turn_result_t build_new_building()
     p = area;
     adata(1, p) = cdata[0].position.x;
     adata(2, p) = cdata[0].position.y;
-    adata(0, p) = 5;
+    adata(0, p) = mdata_t::map_type_t::player_owned;
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(18, p) = 3;
@@ -130,38 +130,38 @@ turn_result_t build_new_building()
     adata(30, p) = gdata(850);
     if (inv[ci].id == 521)
     {
-        adata(16, p) = 101;
+        adata(16, p) = mdata_t::map_id_t::museum;
         adata(15, p) = 151;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 522)
     {
-        adata(16, p) = 102;
+        adata(16, p) = mdata_t::map_id_t::shop;
         adata(15, p) = 150;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 542)
     {
-        adata(16, p) = 103;
+        adata(16, p) = mdata_t::map_id_t::crop;
         adata(15, p) = 152;
         adata(21, p) = 2;
     }
     if (inv[ci].id == 543)
     {
-        adata(16, p) = 104;
+        adata(16, p) = mdata_t::map_id_t::storage_house;
         adata(15, p) = 153;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 572)
     {
-        adata(16, p) = 31;
+        adata(16, p) = mdata_t::map_id_t::ranch;
         adata(15, p) = 154;
         adata(21, p) = 2;
         adata(12, p) = 1;
     }
     if (inv[ci].id == 712)
     {
-        adata(16, p) = 39;
+        adata(16, p) = mdata_t::map_id_t::your_dungeon;
         adata(15, p) = 138;
         adata(21, p) = 1;
         adata(12, p) = 1;
@@ -202,7 +202,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 turn_result_t show_house_board()
 {
     txtnew();
-    if (mdata(6) != 5)
+    if (mdata_map_type != mdata_t::map_type_t::player_owned)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
@@ -227,9 +227,9 @@ turn_result_t show_house_board()
             }
         }
     }
-    if (mdata(18) != 0)
+    if (mdata_map_max_item_count != 0)
     {
-        p(2) = mdata(18);
+        p(2) = mdata_map_max_item_count;
     }
     txt(i18n::s.get(
         "core.locale.building.house_board.item_count",
@@ -237,7 +237,7 @@ turn_result_t show_house_board()
         p(0),
         p(1),
         p(2)));
-    if (adata(16, gdata_current_map) == 102)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -251,7 +251,7 @@ turn_result_t show_house_board()
                 "core.locale.building.shop.no_assigned_shopkeeper"));
         }
     }
-    if (adata(16, gdata_current_map) == 31)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -264,7 +264,7 @@ turn_result_t show_house_board()
             txt(i18n::s.get("core.locale.building.ranch.no_assigned_breeder"));
         }
     }
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         p = 0;
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
@@ -286,14 +286,14 @@ turn_result_t show_house_board()
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
     p = 0;
-    if (adata(16, gdata_current_map) == 102)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
                 "core.locale.building.house_board.choices.assign_a_shopkeeper"),
             u8"null"s,
             ""s + 4);
-        if (mdata(18) < 400)
+        if (mdata_map_max_item_count < 400)
         {
             ELONA_APPEND_PROMPT(
                 i18n::s.get(
@@ -303,7 +303,7 @@ turn_result_t show_house_board()
                 ""s + 5);
         }
     }
-    if (adata(16, gdata_current_map) == 31)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
@@ -315,7 +315,7 @@ turn_result_t show_house_board()
         i18n::s.get("core.locale.building.house_board.choices.design"),
         u8"null"s,
         ""s + 0);
-    if (gdata_current_map == 7)
+    if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get("core.locale.building.house_board.choices.home_rank"),
@@ -698,7 +698,7 @@ void prompt_ally_staying()
             txtnew();
             if (getworker(gdata_current_map, c) == c)
             {
-                if (gdata_current_map == 7)
+                if (gdata_current_map == mdata_t::map_id_t::your_home)
                 {
                     cdata[c].current_map = 0;
                     txt(i18n::s.get(
@@ -715,7 +715,7 @@ void prompt_ally_staying()
             }
             else
             {
-                if (gdata_current_map == 7)
+                if (gdata_current_map == mdata_t::map_id_t::your_home)
                 {
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
@@ -747,9 +747,9 @@ void try_extend_shop()
     {
         snd(12);
         cdata[0].gold -= calcshopreform();
-        mdata(18) = clamp(mdata(18) + 10, 1, 400);
+        mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
         txtef(2);
-        txt(i18n::s.get("core.locale.building.shop.extend", mdata(18)));
+        txt(i18n::s.get("core.locale.building.shop.extend", mdata_map_max_item_count));
     }
 }
 
@@ -842,7 +842,7 @@ void update_shop_and_report()
     std::string midbk = mid;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == 102)
+        if (adata(16, cnt) == mdata_t::map_id_t::shop)
         {
             area = cnt;
             mid = ""s + area + u8"_"s + 101;
@@ -850,7 +850,7 @@ void update_shop_and_report()
         }
     }
     mid = midbk;
-    if (adata(16, gdata_current_map) == 102)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
     {
         update_shop();
     }
@@ -1123,11 +1123,11 @@ void show_shop_log()
 
 void update_shop()
 {
-    mdata(10) = (100 - gdata(125) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    mdata_map_max_crowd_density = (100 - gdata(125) / 100) / 4 + 1;
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             map(cnt, y, 4) = 0;
             map(cnt, y, 9) = 0;
@@ -1141,7 +1141,7 @@ void update_shop()
         }
         x = inv[cnt].position.x;
         y = inv[cnt].position.y;
-        if (x < 0 || x >= mdata(0) || y < 0 || y >= mdata(1))
+        if (x < 0 || x >= mdata_map_width || y < 0 || y >= mdata_map_height)
         {
             continue;
         }
@@ -1240,7 +1240,7 @@ void update_museum()
             ranktitle(3),
             rankn(10, 3)));
     }
-    mdata(10) = (100 - gdata(123) / 100) / 2 + 1;
+    mdata_map_max_crowd_density = (100 - gdata(123) / 100) / 2 + 1;
     return;
 }
 

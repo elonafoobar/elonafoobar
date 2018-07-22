@@ -33,8 +33,8 @@ namespace
 bool can_place_character_at(const position_t& position, bool allow_stairs)
 {
     // Out of range
-    if (position.x < 0 || mdata(0) <= position.x || position.y < 0
-        || mdata(1) <= position.y)
+    if (position.x < 0 || mdata_map_width <= position.x || position.y < 0
+        || mdata_map_height <= position.y)
         return false;
 
     // Wall
@@ -87,13 +87,13 @@ bool chara_place_internal(
         }
         if (i > 99)
         {
-            if (mdata(0) == 0)
+            if (mdata_map_width == 0)
             {
                 return false;
             }
-            y = (i - 100) / mdata(0);
-            x = (i - 100) % mdata(0);
-            if (y >= mdata(1))
+            y = (i - 100) / mdata_map_width;
+            x = (i - 100) % mdata_map_width;
+            if (y >= mdata_map_height)
             {
                 if (cc.index != 0)
                 {
@@ -102,8 +102,8 @@ bool chara_place_internal(
                 else
                 {
                     // Make the cell placable.
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
+                    x = rnd(mdata_map_width);
+                    y = rnd(mdata_map_height);
                     // FIXME: I refered to oor, but I think it is not perfect.
                     // Break wall.
                     if (chipm(7, map(x, y, 0)) & 4)
@@ -143,8 +143,8 @@ bool chara_place_internal(
             }
             else
             {
-                x = rnd(mdata(0) - 4) + 2;
-                y = rnd(mdata(1) - 4) + 2;
+                x = rnd(mdata_map_width - 4) + 2;
+                y = rnd(mdata_map_height - 4) + 2;
             }
             if (enemy_respawn && i < 20)
             {
@@ -790,19 +790,19 @@ void initialize_character_filters()
 void chara_set_generation_filter()
 {
     dbid = 0;
-    if (gdata_current_map == 21)
+    if (gdata_current_map == mdata_t::map_id_t::cyber_dome)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltn(u8"sf"s);
         return;
     }
-    if (mdata(6) == 3 || mdata(6) == 2)
+    if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltselect = 5;
         if (gdata_current_dungeon_level == 1)
         {
-            if (gdata_current_map == 12)
+            if (gdata_current_map == mdata_t::map_id_t::yowyn)
             {
                 if (rnd(2))
                 {
@@ -810,7 +810,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == 33)
+            if (gdata_current_map == mdata_t::map_id_t::noyel)
             {
                 if (rnd(3) == 0)
                 {
@@ -818,7 +818,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == 14)
+            if (gdata_current_map == mdata_t::map_id_t::derphy)
             {
                 if (rnd(3) == 0)
                 {
@@ -831,7 +831,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == 36)
+            if (gdata_current_map == mdata_t::map_id_t::lumiest)
             {
                 if (rnd(3) == 0)
                 {
@@ -839,7 +839,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == 5)
+            if (gdata_current_map == mdata_t::map_id_t::vernis)
             {
                 if (rnd(2))
                 {
@@ -847,7 +847,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == 15)
+            if (gdata_current_map == mdata_t::map_id_t::palmia)
             {
                 if (rnd(3) == 0)
                 {
@@ -856,21 +856,21 @@ void chara_set_generation_filter()
                 }
             }
         }
-        if (gdata_current_map == 36)
+        if (gdata_current_map == mdata_t::map_id_t::lumiest)
         {
             if (gdata_current_dungeon_level == 3)
             {
                 dbid = 289;
             }
         }
-        if (gdata_current_map == 14)
+        if (gdata_current_map == mdata_t::map_id_t::derphy)
         {
             if (gdata_current_dungeon_level == 3)
             {
                 dbid = 293;
             }
         }
-        if (gdata_current_map == 11)
+        if (gdata_current_map == mdata_t::map_id_t::port_kapul)
         {
             if (gdata_current_dungeon_level == 3)
             {
@@ -879,7 +879,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == 3)
+    if (gdata_current_map == mdata_t::map_id_t::lesimas)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (gdata_current_dungeon_level < 4)
@@ -891,29 +891,29 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == 42)
+    if (gdata_current_map == mdata_t::map_id_t::the_void)
     {
         flt(calcobjlv(gdata_current_dungeon_level % 50 + 5), calcfixlv(2));
         return;
     }
-    if (gdata_current_map == 19)
+    if (gdata_current_map == mdata_t::map_id_t::dragons_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;
     }
-    if (gdata_current_map == 17)
+    if (gdata_current_map == mdata_t::map_id_t::crypt_of_the_damned)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         fltn(u8"undead"s);
         return;
     }
-    if (gdata_current_map == 16)
+    if (gdata_current_map == mdata_t::map_id_t::tower_of_fire)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         fltn(u8"fire"s);
         return;
     }
-    if (gdata_current_map == 18)
+    if (gdata_current_map == mdata_t::map_id_t::ancient_castle)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2) == 0)
@@ -922,19 +922,19 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == 37)
+    if (gdata_current_map == mdata_t::map_id_t::pyramid)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         flttypemajor = 13;
         return;
     }
-    if (gdata_current_map == 10 || gdata_current_map == 20)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest_graveyard || gdata_current_map == mdata_t::map_id_t::truce_ground)
     {
         flt(calcobjlv(20), calcfixlv(2));
         fltselect = 4;
         return;
     }
-    if (gdata_current_map == 13)
+    if (gdata_current_map == mdata_t::map_id_t::quest)
     {
         if (gdata_executing_immediate_quest_type >= 1000)
         {
@@ -948,7 +948,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == 28)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::yeeks_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2))
@@ -957,7 +957,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == 38)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::minotaurs_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2))
@@ -966,13 +966,13 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata(6) >= 20)
+    if (mdata_map_type >= mdata_t::map_type_t::dungeon)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;
     }
-    if (adata(16, gdata_current_map) == 101
-        || adata(16, gdata_current_map) == 102)
+    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum
+        || adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
     {
         flt(calcobjlv(100), calcfixlv(2));
         if (rnd(1))
@@ -1133,7 +1133,7 @@ int chara_create_internal()
             get_random_npc_id();
         }
     }
-    if (gdata_current_map == 42)
+    if (gdata_current_map == mdata_t::map_id_t::the_void)
     {
         if (!novoidlv)
         {
@@ -1994,12 +1994,12 @@ bool chara_copy(int cc)
     for (int i = 0; i < 4; ++i)
     {
         y = cdata[cc].position.y - rnd(2) + rnd(2);
-        if (y < 0 || y >= mdata(1))
+        if (y < 0 || y >= mdata_map_height)
         {
             continue;
         }
         x = cdata[cc].position.x - rnd(2) + rnd(2);
-        if (x < 0 || x >= mdata(0))
+        if (x < 0 || x >= mdata_map_width)
         {
             continue;
         }

@@ -40,7 +40,7 @@ label_20591:
     }
     if (menucycle == 1)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             p = 0;
             for (int cnt = 0; cnt < 12; ++cnt)
@@ -141,7 +141,7 @@ label_20591:
                 inv[cnt].id = 0;
                 continue;
             }
-            if (mdata(6) == 1)
+            if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
                 if (invctrl == 7)
                 {
@@ -432,7 +432,7 @@ label_20591:
             {
                 if (invctrl(1) == 0)
                 {
-                    if (gdata_current_map == 36)
+                    if (gdata_current_map == mdata_t::map_id_t::lumiest)
                     {
                         if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
                         {
@@ -590,7 +590,7 @@ label_20591:
     {
         if (invctrl(1) == 0)
         {
-            if (gdata_current_map == 36)
+            if (gdata_current_map == mdata_t::map_id_t::lumiest)
             {
                 if (gdata_mages_guild_quota <= 0)
                 {
@@ -670,7 +670,7 @@ label_20591:
         {
             if (invctrl(1) == 0)
             {
-                if (gdata_current_map == 36)
+                if (gdata_current_map == mdata_t::map_id_t::lumiest)
                 {
                     txt(i18n::s.get("core.locale.ui.inv.put.guild.remaining",
                                     gdata_mages_guild_quota));
@@ -727,7 +727,7 @@ label_2060_internal:
             return result;
         }
         invsc = 0;
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             if (invctrl == 9 || invctrl == 15 || invctrl == 26)
             {
@@ -770,7 +770,7 @@ label_2060_internal:
         {
             i = 3;
         }
-        else if (mdata(6) == 1)
+        else if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             i = 1;
         }
@@ -1081,9 +1081,9 @@ label_2061_internal:
                 snd(27);
                 goto label_2060_internal;
             }
-            if (mdata(18) != 0)
+            if (mdata_map_max_item_count != 0)
             {
-                if (inv_sum(-1) >= mdata(18))
+                if (inv_sum(-1) >= mdata_map_max_item_count)
                 {
                     if (the_item_db[inv[ci].id]->category != 60000)
                     {
@@ -1761,7 +1761,7 @@ label_2061_internal:
             if (invctrl(1) == 0)
             {
                 snd(100);
-                if (gdata_current_map == 36)
+                if (gdata_current_map == mdata_t::map_id_t::lumiest)
                 {
                     gdata_mages_guild_quota -=
                         (inv[ci].param1 + 1) * inv[ci].number;
@@ -2021,7 +2021,7 @@ label_2061_internal:
             {
                 i = 3;
             }
-            else if (mdata(6) == 1)
+            else if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
                 i = 1;
             }

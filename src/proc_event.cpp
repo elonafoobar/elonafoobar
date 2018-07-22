@@ -85,7 +85,7 @@ void proc_event()
         chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
         break;
     case 27:
-        if (gdata_current_map == 35)
+        if (gdata_current_map == mdata_t::map_id_t::show_house)
         {
             break;
         }
@@ -191,7 +191,7 @@ void proc_event()
         itemcreate(
             -1, 55, cdata[0].position.x, cdata[0].position.y, rnd(3) + 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 29:
     {
@@ -269,7 +269,7 @@ void proc_event()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata[0].fame += gdata(74);
-        if (gdata_current_map == 42)
+        if (gdata_current_map == mdata_t::map_id_t::the_void)
         {
             adata(20, gdata_current_map) = 0;
             gdata(186) = gdata(186) + 5;
@@ -327,7 +327,7 @@ void proc_event()
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
         chara_refresh(0);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
@@ -628,7 +628,7 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.bomb"));
@@ -761,13 +761,13 @@ void proc_event()
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
             dy = tlocy - range_ + i;
-            if (dy < 0 || dy >= mdata(1))
+            if (dy < 0 || dy >= mdata_map_height)
                 continue;
             {
                 for (int j = 0; j < range_ * 2 + 1; ++j)
                 {
                     dx = tlocx - range_ + j;
-                    if (dx < 0 || dx >= mdata(0))
+                    if (dx < 0 || dx >= mdata_map_width)
                         continue;
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
@@ -796,14 +796,14 @@ void proc_event()
         }
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
-            && gdata_current_map == 15 && gdata_red_blossom_in_palmia == 1)
+            && gdata_current_map == mdata_t::map_id_t::palmia && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
         }
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
         {
             modify_karma(0, -80 + trait(162) * 60);
         }
@@ -813,7 +813,7 @@ void proc_event()
         }
         break;
     case 18:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
             break;
         gdata_weather = 1;
         envonly = 1;
@@ -825,16 +825,16 @@ void proc_event()
         {
             for (int j = 0; j < 2; ++j)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
                 map(x, y, 0) = 37;
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1) || rnd(5) == 0)
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height || rnd(5) == 0)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
             }
             mef_add(
                 x,
@@ -894,7 +894,7 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
             break;
         txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)

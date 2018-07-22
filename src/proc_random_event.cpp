@@ -125,14 +125,14 @@ optional<std::pair<int, int>> generate_random_event()
     {
         return generate_random_event_mode9();
     }
-    if (mdata(6) != 1)
+    if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
         if (cdata[0].continuous_action_id != 0)
         {
             return none;
         }
     }
-    if (mdata(6) == 5)
+    if (mdata_map_type == mdata_t::map_type_t::player_owned)
     {
         return none;
     }
@@ -166,7 +166,7 @@ optional<std::pair<int, int>> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata(6) == 3)
+    if (mdata_map_type == mdata_t::map_type_t::town)
     {
         if (rnd(25) == 0)
         {
@@ -182,7 +182,7 @@ optional<std::pair<int, int>> generate_random_event()
             return std::make_pair(id, luck_threshold);
         }
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (rnd(40))
         {

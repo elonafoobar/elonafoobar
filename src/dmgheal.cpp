@@ -232,7 +232,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     victim.hp = 1;
                 }
             }
-            if (gdata_current_map == 40)
+            if (gdata_current_map == mdata_t::map_id_t::pet_arena)
             {
                 victim.hp = 1;
             }
@@ -590,7 +590,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
-                    if (mdata(6) != 1)
+                    if (mdata_map_type != mdata_t::map_type_t::world_map)
                     {
                         if (chara_copy(victim))
                         {
@@ -613,7 +613,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                         && victim.paralyzed == 0
                         && victim.blind == 0)
                     {
-                        if (mdata(6) != 1)
+                        if (mdata_map_type != mdata_t::map_type_t::world_map)
                         {
                             if (chara_copy(victim))
                             {
@@ -947,9 +947,9 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         }
         if (victim != 0)
         {
-            if (gdata_current_map != 35)
+            if (gdata_current_map != mdata_t::map_id_t::show_house)
             {
-                if (gdata_current_map != 42)
+                if (gdata_current_map != mdata_t::map_id_t::the_void)
                 {
                     if (victim.id == 2)
                     {
@@ -1028,7 +1028,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     }
                     if (gdata_current_dungeon_level
                             == adata(10, gdata_current_map)
-                        || gdata_current_map == 42)
+                        || gdata_current_map == mdata_t::map_id_t::the_void)
                     {
                         if (adata(20, gdata_current_map) == victim
                             && victim.is_lord_of_dungeon() == 1)
@@ -1048,7 +1048,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     }
                     quest_check();
                 }
-                else if (gdata_current_map == 42)
+                else if (gdata_current_map == mdata_t::map_id_t::the_void)
                 {
                     if (adata(20, gdata_current_map) == victim
                         && victim.is_lord_of_dungeon() == 1)
@@ -1103,7 +1103,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         }
         rc = victim;
         character_drops_item();
-        if (gdata_current_map == 40)
+        if (gdata_current_map == mdata_t::map_id_t::pet_arena)
         {
             if (rnd(5) == 0)
             {

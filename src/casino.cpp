@@ -392,23 +392,23 @@ void casino_random_site()
     {
         atxid(1) = 3;
         atxlv = gdata_current_dungeon_level;
-        if (mdata(6) == 20)
+        if (mdata_map_type == mdata_t::map_type_t::dungeon)
         {
             atxid(1) = 1;
         }
-        if (mdata(6) == 21)
+        if (mdata_map_type == mdata_t::map_type_t::dungeon_tower)
         {
             atxid(1) = 4;
         }
-        if (mdata(6) == 22)
+        if (mdata_map_type == mdata_t::map_type_t::dungeon_forest)
         {
             atxid(1) = 2;
         }
-        if (mdata(6) == 23)
+        if (mdata_map_type == mdata_t::map_type_t::dungeon_castle)
         {
             atxid(1) = 4;
         }
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             atxlv = cdata[0].level;
             if (4 <= gdata(62) && gdata(62) < 9)
@@ -948,7 +948,7 @@ bool casino_blackjack()
     stake = rtval;
     winrow = 0;
     cardround = 0;
-    autosave = 1 * (gdata_current_map != 35);
+    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
     for (int cnt = 0;; ++cnt)
     {
         screenupdate = -1;

@@ -1032,7 +1032,7 @@ void create_pcpic(int cc, bool prm_410)
 void initialize_map_chip()
 {
     DIM3(chipm, 8, 825);
-    if (mdata(2) == 0)
+    if (mdata_map_atlas_number == 0)
     {
         chipm(5, 233) = 0;
         chipm(6, 233) = 0;
@@ -1095,7 +1095,7 @@ void initialize_map_chip()
         chipm(5, 145) = 16;
         chipm(5, 149) = 16;
     }
-    if (mdata(2) == 1)
+    if (mdata_map_atlas_number == 1)
     {
         for (int cnt = 396; cnt < 825; ++cnt)
         {
@@ -1141,7 +1141,7 @@ void initialize_map_chip()
         chipm(0, 594) = 3;
         chipm(3, 594) = 3;
     }
-    if (mdata(2) == 2)
+    if (mdata_map_atlas_number == 2)
     {
         for (int cnt = 0; cnt < 11; ++cnt)
         {
