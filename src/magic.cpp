@@ -769,8 +769,10 @@ int magic()
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata_current_map == 40 || mdata_map_type == map_type_t::world_map
-                    || gdata_current_map == 37 || gdata_current_map == 41)
+                if (gdata_current_map == mdata_t::map_id_t::pet_arena
+                    || mdata_map_type == mdata_t::map_type_t::world_map
+                    || gdata_current_map == mdata_t::map_id_t::pyramid
+                    || gdata_current_map == mdata_t::map_id_t::jail)
                 {
                     if (is_in_fov(tc))
                     {
@@ -1020,7 +1022,7 @@ label_2181_internal:
         damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
-        if (mdata_map_type != 1)
+        if (mdata_map_type != mdata_t::map_type_t::world_map)
         {
             txt(i18n::s.get("core.locale.magic.map.need_global_map"));
             break;
@@ -1686,7 +1688,7 @@ label_2181_internal:
         }
         snd(24);
         txt(i18n::s.get("core.locale.magic.create_material.apply", s(0)));
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         for (int cnt = 0,
                  cnt_end =
                      (rnd(3) + 3 + (efstatus == curse_state_t::blessed) * 6);
@@ -1891,7 +1893,7 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata_map_type == map_type_t::world_map)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2144,7 +2146,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 1143:
         if (efstatus == curse_state_t::blessed)
@@ -2234,7 +2236,7 @@ label_2181_internal:
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 1107:
         if (tc != 0)
@@ -2334,7 +2336,7 @@ label_2181_internal:
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 1106:
         i = rnd(10) + 10;
@@ -2391,7 +2393,7 @@ label_2181_internal:
                 snd(117);
             }
         }
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 653:
         if (tc < 57)
@@ -2621,7 +2623,7 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (adata(16, gdata_current_map) == 8)
+            if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
             {
                 if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
@@ -2894,8 +2896,8 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (gdata_current_map == 6 || gdata_current_map == 40
-            || gdata_current_map == 42)
+        if (gdata_current_map == mdata_t::map_id_t::arena || gdata_current_map == mdata_t::map_id_t::pet_arena
+            || gdata_current_map == mdata_t::map_id_t::the_void)
         {
             obvious = 0;
             txt(i18n::s.get("core.locale.magic.domination.does_not_work_in_area"));
@@ -3113,7 +3115,7 @@ label_2181_internal:
         ci = efcibk;
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 21:
     case 1127:
@@ -3452,7 +3454,7 @@ label_2181_internal:
             menu_result result = ctrl_inventory();
             if (result.succeeded)
             {
-                autosave = 1 * (gdata_current_map != 35);
+                autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
                 animeload(8, cc);
                 if (!is_cursed(efstatus))
                 {
@@ -3523,7 +3525,7 @@ label_2181_internal:
         }
         if (f == 1)
         {
-            autosave = 1 * (gdata_current_map != 35);
+            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
@@ -3673,7 +3675,7 @@ label_2181_internal:
         }
         break;
     case 659:
-        if (mdata_map_type == map_type_t::world_map)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             break;
         }

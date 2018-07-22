@@ -46,7 +46,9 @@ void create_adventurer()
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (adata(16, p) == 0 || adata(16, p) == 7 || adata(0, p) == 7)
+    if (adata(16, p) == mdata_t::map_id_t::none
+        || adata(16, p) == mdata_t::map_id_t::your_home
+        || adata(0, p) == mdata_t::map_type_t::temporary)
     {
         p = 4;
     }
@@ -223,7 +225,8 @@ void label_2662()
                 }
             }
         }
-        if ((cdata[rc].current_map != gdata_current_map || mdata_map_type == map_type_t::world_map)
+        if ((cdata[rc].current_map != gdata_current_map
+             || mdata_map_type == mdata_t::map_type_t::world_map)
             && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)
@@ -236,13 +239,16 @@ void label_2662()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == 0 || p == 7 || adata(0, p) == 7 || p == 9)
+                if (adata(16, p) == mdata_t::map_id_t::none
+                    || p == 7
+                    || adata(0, p) == mdata_t::map_type_t::temporary
+                    || p == 9)
                 {
                     p = 4;
                 }
                 if (cnt < 5)
                 {
-                    if (adata(0, p) != 3)
+                    if (adata(0, p) != mdata_t::map_type_t::town)
                     {
                         continue;
                     }
@@ -258,7 +264,7 @@ void label_2662()
         }
         if (rnd(200) == 0)
         {
-            if (adata(0, cdata[rc].current_map) != 3)
+            if (adata(0, cdata[rc].current_map) != mdata_t::map_type_t::town)
             {
                 label_2664();
             }

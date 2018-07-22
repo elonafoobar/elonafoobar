@@ -780,7 +780,7 @@ void calc_trade_goods_price()
     {
         trate(cnt) = 100;
     }
-    if (gdata_current_map == 5)
+    if (gdata_current_map == mdata_t::map_id_t::vernis)
     {
         trate(0) = 130;
         trate(1) = 70;
@@ -789,7 +789,7 @@ void calc_trade_goods_price()
         trate(6) = 150;
         trate(7) = 120;
     }
-    if (gdata_current_map == 11)
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
     {
         trate(0) = 65;
         trate(1) = 110;
@@ -799,7 +799,7 @@ void calc_trade_goods_price()
         trate(6) = 200;
         trate(7) = 150;
     }
-    if (gdata_current_map == 15)
+    if (gdata_current_map == mdata_t::map_id_t::palmia)
     {
         trate(0) = 120;
         trate(2) = 75;
@@ -808,7 +808,7 @@ void calc_trade_goods_price()
         trate(6) = 110;
         trate(7) = 80;
     }
-    if (gdata_current_map == 12)
+    if (gdata_current_map == mdata_t::map_id_t::yowyn)
     {
         trate(0) = 120;
         trate(3) = 75;
@@ -816,7 +816,7 @@ void calc_trade_goods_price()
         trate(6) = 160;
         trate(7) = 100;
     }
-    if (gdata_current_map == 14)
+    if (gdata_current_map == mdata_t::map_id_t::derphy)
     {
         trate(0) = 85;
         trate(3) = 70;
@@ -825,7 +825,7 @@ void calc_trade_goods_price()
         trate(6) = 130;
         trate(7) = 90;
     }
-    if (gdata_current_map == 33)
+    if (gdata_current_map == mdata_t::map_id_t::noyel)
     {
         trate(1) = 175;
         trate(0) = 170;
@@ -835,7 +835,7 @@ void calc_trade_goods_price()
         trate(6) = 75;
         trate(7) = 120;
     }
-    if (gdata_current_map == 36)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
     {
         trate(1) = 145;
         trate(0) = 130;

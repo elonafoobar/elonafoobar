@@ -373,7 +373,7 @@ int do_create_item(int slot, int x, int y)
     if (reftype == 72000)
     {
         inv[ci].param1 =
-            gdata_current_dungeon_level * (gdata_current_map != 30) + 5;
+            gdata_current_dungeon_level * (gdata_current_map != mdata_t::map_id_t::shelter_) + 5;
         if (inv[ci].id == 283)
         {
             inv[ci].param1 = (rnd(10) + 1) * (cdata[0].level / 10 + 1);
@@ -383,7 +383,7 @@ int do_create_item(int slot, int x, int y)
             inv[ci].param1 = cdata[0].level;
         }
         inv[ci].param2 = rnd(
-            std::abs(gdata_current_dungeon_level) * (gdata_current_map != 30)
+            std::abs(gdata_current_dungeon_level) * (gdata_current_map != mdata_t::map_id_t::shelter_)
             + 1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {

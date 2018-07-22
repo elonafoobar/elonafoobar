@@ -680,7 +680,7 @@ bool process_wish()
     txt(lang(u8"「" + inputlog + u8"！！」", u8"\"" + inputlog + u8"!!\""));
 
     msgtemp = "";
-    autosave = 1 * (gdata_current_map != 35);
+    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
     tcopy = 1;
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")

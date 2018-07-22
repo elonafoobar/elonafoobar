@@ -79,7 +79,7 @@ int quest_targets_remaining()
 void quest_check()
 {
     int p_at_m119 = 0;
-    if (gdata_current_map == 5)
+    if (gdata_current_map == mdata_t::map_id_t::vernis)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -121,7 +121,7 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == 12)
+    if (gdata_current_map == mdata_t::map_id_t::yowyn)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -150,7 +150,7 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == 36)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
     {
         if (gdata_current_dungeon_level == 20)
         {
@@ -721,13 +721,13 @@ int quest_generate()
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33 || gdata_current_map == 33)
+        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::map_id_t::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
-    if (rnd(23) == 0 || (gdata_current_map == 15 && rnd(8) == 0))
+    if (rnd(23) == 0 || (gdata_current_map == mdata_t::map_id_t::palmia && rnd(8) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
@@ -747,7 +747,7 @@ int quest_generate()
         rewardfix = 0;
         return 0;
     }
-    if (rnd(30) == 0 || (gdata_current_map == 12 && rnd(2) == 0))
+    if (rnd(30) == 0 || (gdata_current_map == mdata_t::map_id_t::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
@@ -829,7 +829,7 @@ int quest_generate()
                       adata(1, p),
                       adata(2, p))
                     * 2;
-            if (p == 33 || gdata_current_map == 33)
+            if (p == 33 || gdata_current_map == mdata_t::map_id_t::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
             }
@@ -1334,7 +1334,7 @@ void quest_complete()
     }
     qdata(3, rq) = 0;
     qdata(8, rq) = 0;
-    autosave = 1 * (gdata_current_map != 35);
+    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
     return;
 }
 

@@ -821,12 +821,12 @@ void initialize_debug_globals()
     gdata_previous_map = -1;
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    gdata_current_map = 4;
+    gdata_current_map = mdata_t::map_id_t::north_tyris;
     gdata_current_dungeon_level = 0;
     gdata_entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    gdata_current_map = 5;
+    gdata_current_map = mdata_t::map_id_t::vernis;
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 7;
     mapstartx = 10;
@@ -1120,7 +1120,7 @@ void initialize_world()
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
-    gdata_current_map = 7;
+    gdata_current_map = mdata_t::map_id_t::your_home;
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 4;
     gdata_version = 1220;

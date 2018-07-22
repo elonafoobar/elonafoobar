@@ -287,7 +287,7 @@ void play_music(int music_id)
     {
         DSSETVOLUME(13, max_volume * 0.8);
     }
-    else if (gdata_current_dungeon_level == 1 || gdata_current_map == 30)
+    else if (gdata_current_dungeon_level == 1 || gdata_current_map == mdata_t::map_id_t::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }
@@ -295,7 +295,7 @@ void play_music(int music_id)
     {
         DSSETVOLUME(13, max_volume);
     }
-    if (gdata_current_map == 11)
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
     {
         snd(78, true);
     }
@@ -303,7 +303,7 @@ void play_music(int music_id)
     {
         DSSTOP(14);
     }
-    if (mdata_map_type == map_type_t::town)
+    if (mdata_map_type == mdata_t::map_type_t::town)
     {
         snd(79, true);
     }
@@ -330,15 +330,15 @@ void play_music(int music_id)
     }
     if (music_id == 0)
     {
-        if (adata(0, gdata_current_map) == 4)
+        if (adata(0, gdata_current_map) == mdata_t::map_type_t::field)
         {
             music_id = musicprev;
         }
-        if (adata(0, gdata_current_map) == 3)
+        if (adata(0, gdata_current_map) == mdata_t::map_type_t::town)
         {
             music_id = 51;
         }
-        if (adata(0, gdata_current_map) == 5)
+        if (adata(0, gdata_current_map) == mdata_t::map_type_t::player_owned)
         {
             music_id = 67;
         }
@@ -346,12 +346,12 @@ void play_music(int music_id)
         {
             music_id = mdata_map_bgm;
         }
-        if (adata(0, gdata_current_map) >= 20)
+        if (adata(0, gdata_current_map) >= mdata_t::map_type_t::dungeon)
         {
             music_id = 55 + gdata_hour % 6;
         }
-        if (adata(16, gdata_current_map) == 8
-            || adata(16, gdata_current_map) == 42)
+        if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
+            || adata(16, gdata_current_map) == mdata_t::map_id_t::the_void)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
@@ -361,7 +361,7 @@ void play_music(int music_id)
                 }
             }
         }
-        if (gdata_current_map == 13)
+        if (gdata_current_map == mdata_t::map_id_t::quest)
         {
             if (gdata_executing_immediate_quest_type == 1001)
             {
@@ -384,44 +384,44 @@ void play_music(int music_id)
                 music_id = 73;
             }
         }
-        if (gdata_current_map == 6)
+        if (gdata_current_map == mdata_t::map_id_t::arena)
         {
             music_id = 73;
         }
-        if (gdata_current_map == 25)
+        if (gdata_current_map == mdata_t::map_id_t::larna)
         {
             music_id = 75;
         }
-        if (gdata_current_map == 11)
+        if (gdata_current_map == mdata_t::map_id_t::port_kapul)
         {
             music_id = 52;
         }
-        if (gdata_current_map == 36)
+        if (gdata_current_map == mdata_t::map_id_t::lumiest)
         {
             music_id = 52;
         }
-        if (gdata_current_map == 12)
+        if (gdata_current_map == mdata_t::map_id_t::yowyn)
         {
             music_id = 75;
         }
-        if (gdata_current_map == 14)
+        if (gdata_current_map == mdata_t::map_id_t::derphy)
         {
             music_id = 53;
         }
-        if (gdata_current_map == 15)
+        if (gdata_current_map == mdata_t::map_id_t::palmia)
         {
             music_id = 54;
         }
-        if (gdata_current_map == 21)
+        if (gdata_current_map == mdata_t::map_id_t::cyber_dome)
         {
             music_id = 83;
         }
-        if (gdata_current_map == 33)
+        if (gdata_current_map == mdata_t::map_id_t::noyel)
         {
             music_id = 85;
         }
     }
-    if (music_id == 0 || adata(0, gdata_current_map) == 1)
+    if (music_id == 0 || adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
     {
         music_id = 86 + gdata_day % 3;
     }

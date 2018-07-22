@@ -98,7 +98,7 @@ void render_weather_effect_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == map_type_t::world_map)); ++i)
+    for (int i = 0; i < max_particles * (1 + (mdata_map_type == mdata_t::map_type_t::world_map)); ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -140,7 +140,7 @@ void render_weather_effect_hard_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == map_type_t::world_map)); ++i)
+    for (int i = 0; i < max_particles * (1 + (mdata_map_type == mdata_t::map_type_t::world_map)); ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -780,7 +780,7 @@ void render_hud()
     {
         if (mode != 9)
         {
-            if (mdata_map_type != 1)
+            if (mdata_map_type != mdata_t::map_type_t::world_map)
             {
                 if (cdata[0].continuous_action_id == 0)
                 {
@@ -1437,7 +1437,7 @@ void update_scrolling_info()
         sy(0) = tlocy - scy;
         sy(1) = tlocy;
     }
-    if (gdata_current_map == 40)
+    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
     {
         sx(0) = cdata[camera].position.x - scx;
         sx(1) = cdata[camera].position.x;
@@ -1553,7 +1553,7 @@ void update_slight()
                 ++lx;
                 continue;
             }
-            if (gdata_current_map == 40)
+            if (gdata_current_map == mdata_t::map_id_t::pet_arena)
             {
                 goto label_1430_internal;
             }
@@ -1611,7 +1611,7 @@ void label_1433()
 {
     cell_draw();
 
-    if (gdata_current_map == 40)
+    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
     {
         highlight_characters_in_pet_arena();
     }
@@ -1647,7 +1647,7 @@ void label_1438()
         return;
     }
     scrollp = config::instance().walkwait;
-    if (mdata_map_type == map_type_t::world_map)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;

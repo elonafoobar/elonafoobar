@@ -204,7 +204,7 @@ void chara_vomit(int prm_876)
             }
         }
     }
-    if (mdata_map_type != 1)
+    if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
         p_at_m146 = 2;
         for (const auto& cnt : items(-1))

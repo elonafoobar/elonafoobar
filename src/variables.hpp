@@ -736,7 +736,7 @@ int can_evade_trap();
 int try_to_disarm_trap();
 int try_to_perceive_npc(int);
 int initialize_world_map();
-int label_1753();
+int place_random_nefias();
 int get_card_info();
 int label_1835();
 int label_1845();

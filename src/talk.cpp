@@ -162,7 +162,7 @@ void talk_to_npc()
     }
     if (chatval(1) != 0)
     {
-        if (gdata_current_map != 35)
+        if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
             if (tc >= 16)
             {

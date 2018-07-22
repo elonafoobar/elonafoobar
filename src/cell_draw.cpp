@@ -413,7 +413,7 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
     else
     {
         int f_ = 0;
-        if (scrollp > 3 || mdata_map_type == map_type_t::dungeon_a)
+        if (scrollp > 3 || mdata_map_type == mdata_t::map_type_t::dungeon)
         {
             f_ = 1;
         }
@@ -514,7 +514,7 @@ void draw_hp_bar(int cc, int x, int y)
 
     if (cc < 16)
     {
-        if (mdata_map_type != 1)
+        if (mdata_map_type != mdata_t::map_type_t::world_map)
         {
             pos(x + 9, y + 32);
             gcopy(3, 480 - ratio, 517, ratio, 3);
@@ -676,11 +676,11 @@ void draw_map6(int x, int y, int dx, int dy)
                 inf_tiles,
                 48 + chipm(6, p_));
         }
-        if (mdata_map_type == map_type_t::world_map)
+        if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
             const auto q_ =
                 map(x, y, 6) / 100000 % 100 + map(x, y, 6) / 10000000 * 100;
-            if (adata(16, q_) == 8)
+            if (adata(16, q_) == mdata_t::map_id_t::random_dungeon)
             {
                 if (adata(6, q_) == adata(10, q_))
                 {
@@ -763,7 +763,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                 p_ = inv[items[i]].image;
                 i_ = inv[items[i]].color;
                 prepare_item_image(p_, i_, inv[items[i]].param1);
-                if (mdata_map_type == map_type_t::world_map)
+                if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
                     pos(dx + 24, dy + 24 - stack_height / 2);
                     gmode(2);
@@ -858,7 +858,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
             {
                 prepare_item_image(p_, i_);
             }
-            if (mdata_map_type == map_type_t::world_map)
+            if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
                 pos(dx + 24, dy + 24);
                 gmode(2);
@@ -947,7 +947,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
         {
             if (cdata[c_].has_own_sprite())
             {
-                if (mdata_map_type == map_type_t::world_map)
+                if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
                     draw_character_sprite_in_world_map(
                         10 + c_, dx, dy, ani_, cdata[c_].direction);
@@ -1001,7 +1001,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     chara_chips[p_].height);
                 set_color_mod(255, 255, 255);
                 gsel(0);
-                if (mdata_map_type == map_type_t::world_map)
+                if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
                     pos(dx + 24, dy + 32);
                     gmode(6, 85);
@@ -1126,7 +1126,8 @@ void cell_draw()
 
     if (gdata_torch == 1)
     {
-        if (mdata_map_type >= 20 && mdata_map_type <= 23)
+        if (mdata_map_type >= mdata_t::map_type_t::dungeon
+            && mdata_map_type <= mdata_t::map_type_t::dungeon_castle)
         {
             light_ -= 50;
         }
@@ -1236,7 +1237,7 @@ void cell_draw()
                     {
                         ani_ = cdata[0].turn % 4 * 32;
                     }
-                    if (mdata_map_type == map_type_t::world_map)
+                    if (mdata_map_type == mdata_t::map_type_t::world_map)
                     {
                         draw_character_sprite_in_world_map(
                             10, px_, py_, ani_, cdata[0].direction);
@@ -1404,7 +1405,7 @@ void cell_draw()
         light_ = 25;
     }
 
-    if (mdata_map_type == map_type_t::world_map)
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         render_cloud();
     }

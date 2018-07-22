@@ -128,7 +128,7 @@ void mef_update()
         {
             if (mdata_map_indoors_flag == 2)
             {
-                if (mdata_map_type != 1)
+                if (mdata_map_type != mdata_t::map_type_t::world_map)
                 {
                     if (gdata_weather == 3 || gdata_weather == 4)
                     {

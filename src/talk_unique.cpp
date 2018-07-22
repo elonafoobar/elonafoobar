@@ -1470,7 +1470,7 @@ talk_result_t talk_unique_pael()
 {
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == 33 && adata(29, gdata_current_map))
+        if (gdata_current_map == mdata_t::map_id_t::noyel && adata(29, gdata_current_map))
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1659,7 +1659,7 @@ talk_result_t talk_unique_paels_mom()
     }
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == 33 && adata(29, gdata_current_map))
+        if (gdata_current_map == mdata_t::map_id_t::noyel && adata(29, gdata_current_map))
         {
             buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.dialog");
             int stat = inv_find(559, 0);
@@ -4029,7 +4029,8 @@ talk_result_t talk_unique_kaneda_bike()
 
 talk_result_t talk_unique_part_time_worker()
 {
-    if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
+    if (gdata_current_map != mdata_t::map_id_t::noyel
+        || adata(29, gdata_current_map) == 0)
     {
         return talk_result_t::talk_end;
     }

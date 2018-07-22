@@ -293,7 +293,7 @@ turn_result_t ai_proc_basic()
 
 turn_result_t proc_npc_movement_event(bool retreat)
 {
-    if (mdata_map_type == map_type_t::town)
+    if (mdata_map_type == mdata_t::map_type_t::town)
     {
         if (cc < 16)
         {
@@ -715,7 +715,8 @@ turn_result_t ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
+        if (mdata_map_type == mdata_t::map_type_t::town
+            || mdata_map_type == mdata_t::map_type_t::guild)
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {
@@ -733,7 +734,7 @@ label_2692_internal:
     {
         if (cdata[cc].relationship != 10)
         {
-            if (gdata_current_map == 13)
+            if (gdata_current_map == mdata_t::map_id_t::quest)
             {
                 if (gdata_executing_immediate_quest_type == 1009)
                 {
@@ -760,7 +761,8 @@ label_2692_internal:
                     }
                 }
             }
-            if (gdata_current_map == 33 || gdata_current_map == 29)
+            if (gdata_current_map == mdata_t::map_id_t::noyel
+                || gdata_current_map == mdata_t::map_id_t::mansion_of_younger_sister)
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {

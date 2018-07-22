@@ -86,7 +86,7 @@ int modpiety(int prm_1035)
         txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
-    cdata[0].piety_point += prm_1035 / (1 + (gdata_current_map == 35) * 9);
+    cdata[0].piety_point += prm_1035 / (1 + (gdata_current_map == mdata_t::map_id_t::show_house) * 9);
     return 1;
 }
 
