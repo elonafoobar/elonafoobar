@@ -88,10 +88,8 @@ lrun("test Chara.iter", function()
         Chara.create(0, 1, 3)
 
         local count = tally()
-        lequal(count, 42)
 
         Chara.create(0, 2, 3)
 
-        count = tally()
-        lequal(count, 43)
+        lequal(tally(), count + 1)
 end)

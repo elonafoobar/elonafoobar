@@ -1413,181 +1413,6 @@ void init_usertypes(lua_env& lua)
         );
 }
 
-void init_enums(sol::table& Elona)
-{
-    sol::table Enums = Elona.create_named("Enums");
-
-    Enums["IdentifyState"] = Enums.create_with(
-        "Unidentified",
-        identification_state_t::unidentified,
-        "Partly",
-        identification_state_t::partly_identified,
-        "Almost",
-        identification_state_t::almost_identified,
-        "Completely",
-        identification_state_t::completely_identified);
-    Enums["CurseState"] = Enums.create_with(
-        "Doomed",
-        curse_state_t::doomed,
-        "Cursed",
-        curse_state_t::cursed,
-        "None",
-        curse_state_t::none,
-        "Blessed",
-        curse_state_t::blessed);
-    Enums["StatusAilment"] = Enums.create_with(
-        "Blinded",
-        status_ailment_t::blinded,
-        "Confused",
-        status_ailment_t::confused,
-        "Paralyzed",
-        status_ailment_t::paralyzed,
-        "Poisoned",
-        status_ailment_t::poisoned,
-        "Sleep",
-        status_ailment_t::sleep,
-        "Fear",
-        status_ailment_t::fear,
-        "Dimmed",
-        status_ailment_t::dimmed,
-        "Bleeding",
-        status_ailment_t::bleeding,
-        "Drunk",
-        status_ailment_t::drunk,
-        "Insane",
-        status_ailment_t::insane,
-        "Sick",
-        status_ailment_t::sick);
-    Enums["TileKind"] = Enums.create_with(
-        "Normal",
-        tile_kind_t::normal,
-        "Wall",
-        tile_kind_t::wall,
-        "Tunnel",
-        tile_kind_t::tunnel,
-        "Room",
-        tile_kind_t::room,
-        "Fog",
-        tile_kind_t::fog);
-    Enums["DamageSource"] = Enums.create_with(
-        "Trap",
-        damage_source_t::trap,
-        "Overcasting",
-        damage_source_t::overcasting,
-        "Starvation",
-        damage_source_t::starvation,
-        "Poisoning",
-        damage_source_t::poisoning,
-        "Curse",
-        damage_source_t::curse,
-        "BackpackWeight",
-        damage_source_t::backpack_weight,
-        "FallFromStairs",
-        damage_source_t::fall_from_stairs,
-        "Audience",
-        damage_source_t::audience,
-        "Burn",
-        damage_source_t::burn,
-        "Adventuring",
-        damage_source_t::adventuring,
-        "UnseenHand",
-        damage_source_t::unseen_hand,
-        "FoodPoisoning",
-        damage_source_t::food_poisoning,
-        "BloodLoss",
-        damage_source_t::blood_loss,
-        "EtherDisease",
-        damage_source_t::ether_disease,
-        "Acid",
-        damage_source_t::acid,
-        "Shatter",
-        damage_source_t::shatter,
-        "AtomicBomb",
-        damage_source_t::atomic_bomb,
-        "IronMaiden",
-        damage_source_t::iron_maiden,
-        "Guillotine",
-        damage_source_t::guillotine,
-        "Hanging",
-        damage_source_t::hanging,
-        "Mochi",
-        damage_source_t::mochi);
-
-    // This table is too big to be defined using create_with.
-    sol::table CharaFlag = Enums.create_named("CharaFlag");
-
-    std::map<std::string, int> chara_flags = {
-        // Intrinsic flags (reset on every character refresh)
-        {"IsFloating", 5},
-        {"IsInvisible", 6},
-        {"CanSeeInvisible", 7},
-        {"IsImmuneToConfusion", 8},
-        {"IsImmuneToBlindness", 9},
-        {"IsImmuneToFear", 10},
-        {"IsImmuneToSleep", 11},
-        {"IsImmuneToParalyzation", 12},
-        {"IsImmuneToPoison", 13},
-        {"CanDigestRottenFood", 14},
-        {"IsProtectedFromThieves", 15},
-        {"IsIncognito", 16},
-        {"DropsGold", 17},
-        {"Explodes", 18},
-        {"IsDeathMaster", 19},
-        {"CanCastRapidMagic", 20},
-        {"HasLayHand", 21},
-        {"IsSuitableForMount", 22},
-        {"Splits", 23},
-        {"HasCursedEquipments", 24},
-        {"IsUnsuitableForMount", 25},
-        {"IsImmuneToElementalDamage", 26},
-        {"Splits2", 27},
-        {"IsMetal", 28},
-        {"CuresBleedingQuickly", 29},
-        {"HasPowerBash", 30},
-        {"IsImmuneToMine", 31},
-        {"IsQuickTempered", 32},
-
-        // Mutable flags
-        {"IsLivestock", 960},
-        {"IsMarried", 961},
-        {"HasMadeGene", 962},
-        {"IsEscorted", 963},
-        {"IsTemporary", 964},
-        {"IsSilent", 965},
-        {"HasBeenUsedStethoscope", 966},
-        {"HasOwnSprite", 967},
-        {"IsLeashed", 968},
-        {"IsContracting", 969},
-        {"IsQuestTarget", 970},
-        {"IsEscortedInSubQuest", 971},
-        {"WillExplodeSoon", 972},
-        {"IsSentencedDaeth", 973},
-        {"IsLayHandAvailable", 974},
-        {"IsRidden", 975},
-        {"IsLordOfDungeon", 976},
-        {"HasOwnName", 977},
-        {"IsPregnant", 978},
-        {"DoesNotSearchEnemy", 979},
-        {"IsContractingWithReaper", 980},
-        {"NeedsRefreshingStatus", 981},
-        {"VisitedJustNow", 982},
-        {"BreaksIntoDebris", 983},
-        {"IsBestFriend", 984},
-        {"IsHungOnSandBag", 985},
-        {"HasAnorexia", 986},
-        {"WasPassedItemByYouJustNow", 987},
-        {"CuresMpFrequently", 988},
-        {"HasCustomTalk", 989},
-        {"HasLearnedWords", 990},
-        {"OnlyChristmas", 991},
-    };
-
-    for (const auto& pair : chara_flags)
-    {
-        CharaFlag.set(pair.first, pair.second);
-    }
-}
-
 
 api_manager::api_manager(lua_env* lua)
 {
@@ -1615,8 +1440,6 @@ api_manager::api_manager(lua_env* lua)
     I18N::bind(core);
     Map::bind(core);
     Debug::bind(core);
-
-    init_enums(core);
 
     // register usertypes globally, so the handle manager can get at them.
     init_usertypes(*lua);
@@ -1647,7 +1470,27 @@ void api_manager::add_api(const std::string& module_namespace, sol::table& modul
     api_env["Elona"][module_namespace] = module_table;
 }
 
-void api_manager::load_core(lua_env& lua, const fs::path& core_mod_dir)
+int api_manager::get_enum_value(const std::string& enum_name,
+                                const std::string& variant)
+{
+    sol::optional<sol::table> Enums = try_find_api("core", "Enums");
+    if (!Enums)
+        throw std::runtime_error("Enum table not loaded in API manager (" + enum_name + "." + variant + ")");
+
+    sol::optional<sol::table> enum_table = (*Enums)[enum_name];
+
+    if (!enum_table)
+        throw std::runtime_error("No such enum \"" + enum_name + "\"");
+
+    sol::optional<int> enum_value =  (*enum_table)[variant];
+
+    if (!enum_value)
+        throw std::runtime_error("No such enum value \"" + variant + "\" for enum \"" + enum_name + "\"");
+
+    return *enum_value;
+}
+
+void api_manager::load_core(lua_env& lua)
 {
     // Don't load the core mod again if it's already loaded, because
     // all the tables will be read-only.
@@ -1657,7 +1500,7 @@ void api_manager::load_core(lua_env& lua, const fs::path& core_mod_dir)
     }
 
     auto result = lua.get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(core_mod_dir / "init.lua"),
+        filesystem::make_preferred_path_in_utf8(filesystem::dir::data() / "lua" / "init.lua"),
         api_env);
     if (!result.valid())
     {
@@ -1670,8 +1513,7 @@ void api_manager::load_core(lua_env& lua, const fs::path& core_mod_dir)
 
 sol::table api_manager::bind(lua_env& lua)
 {
-    return lua.get_state()->create_named_table(
-        "Elona",
+    return lua.get_state()->create_table_with(
         "require",
         sol::overload(
             [&lua](const std::string& parent, const std::string& module) {

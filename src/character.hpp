@@ -6,6 +6,7 @@
 #include <vector>
 #include "cat.hpp"
 #include "god.hpp"
+#include "lion.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -141,35 +142,34 @@ struct character_data
 
 
 
-class character_db;
+class character_db_ex;
 
 
-namespace cat
+namespace lion
 {
 
 template <>
-struct cat_db_traits<character_db>
+struct lion_db_traits<character_db_ex>
 {
-    using id_type = int;
     using data_type = character_data;
-    static constexpr const char* filename = u8"character.lua";
-    static constexpr const char* table_name = u8"character";
+    using legacy_id_type = int;
+    static constexpr const char* datatype_name = u8"chara";
 };
 
 } // namespace cat
 
 
 
-class character_db : public cat::cat_db<character_db>
+class character_db_ex : public lion::lion_db<character_db_ex>
 {
 public:
-    character_db() = default;
+    character_db_ex() = default;
 
-    void define(lua_State* L);
+    character_data convert(const sol::table&, const std::string&);
 };
 
 
-extern character_db the_character_db;
+extern character_db_ex the_character_db;
 
 
 

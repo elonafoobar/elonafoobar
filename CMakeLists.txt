@@ -142,6 +142,7 @@ set(CORE_SOURCES
   src/lua_env/handle_manager.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/lua_api.cpp
+  src/lua_env/lua_registry.cpp
   src/version.cpp
   )
 
@@ -242,6 +243,8 @@ else()
       src/tests/lua_events.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
+      src/tests/lua_registry.cpp
+      src/tests/lua_registry_character.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/i18n.cpp
@@ -254,13 +257,14 @@ else()
     add_executable(${PROJECT_NAME} ${TEST_SOURCES})
     target_link_libraries(${PROJECT_NAME} Catch)
   elseif(WITH_TESTS STREQUAL "BENCH")
-    add_subdirectory(thirdparty/hayai)
+    add_subdirectory(src/thirdparty/hayai)
 
     # Benchmark sources
     set(BENCH_SOURCES
       src/bench/ai.cpp
       src/bench/generate.cpp
       src/bench/i18n.cpp
+      src/bench/lion.cpp
       src/bench/lua_callbacks.cpp
       src/bench/magic.cpp
       src/bench/util.cpp
@@ -348,7 +352,11 @@ else()
     add_definitions("-D_UNICODE")
     set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
   else()
-    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+    if(WITH_TESTS STREQUAL "BENCH")
+      set(CMAKE_CXX_FLAGS "-Wall -Wextra -g3")
+    else()
+      set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+    endif()
   endif()
 
   # Compiler options(debug build)

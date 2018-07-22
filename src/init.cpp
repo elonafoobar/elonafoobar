@@ -358,7 +358,6 @@ void initialize_cat_db()
 
     the_ability_db.initialize();
     the_buff_db.initialize();
-    the_character_db.initialize();
     the_class_db.initialize();
     the_fish_db.initialize();
     the_item_db.initialize();
@@ -367,12 +366,32 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
+sol::table initialize_single_lion_db(const std::string& type, const fs::path& data_file)
+{
+    lua::lua->get_registry_manager().register_datatype("core", type);
+    lua::lua->get_registry_manager().register_data("core", type, data_file);
+    auto table = lua::lua->get_registry_manager().get_table("core", type);
+    if (!table)
+    {
+        throw std::runtime_error("Could not load data for type " + type + " at" + data_file.string());
+    }
+    return *table;
+}
+
+void initialize_lion_db()
+{
+    const fs::path data_path = filesystem::dir::mods() / "core" / "data";
+
+    auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
+    the_character_db.initialize(chara_table);
+}
+
 void initialize_config(const fs::path& config_file)
 {
     windoww = snail::application::instance().width();
     windowh = snail::application::instance().height();
 
-    if(defines::is_android)
+    if (defines::is_android)
     {
         snail::touch_input::instance().initialize(filesystem::dir::graphic());
     }
@@ -510,6 +529,9 @@ void initialize_elona()
     c_col(0, 0) = 0;
     c_col(1, 0) = 0;
     c_col(2, 0) = 0;
+    c_col(0, 1) = 0;
+    c_col(1, 1) = 0;
+    c_col(2, 1) = 0;
     c_col(0, 2) = 80;
     c_col(1, 2) = 0;
     c_col(2, 2) = 80;
@@ -774,7 +796,11 @@ static void initialize_screen()
           config_get_fullscreen_mode());
 }
 
-
+static void initialize_lua()
+{
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+}
 
 int run()
 {
@@ -786,16 +812,19 @@ int run()
     initialize_cat_db();
 
     config::instance().init(config_def_file);
-    load_config_pre_app_init(config_file);
-
+    initialize_config_preload(config_file);
     initialize_screen();
 
     filesystem::dir::set_base_save_directory(fs::path("save"));
+
     initialize_config(config_file);
     init_assets();
     initialize_elona();
 
-    lua::lua->scan_all_mods(filesystem::dir::mods());
+    initialize_lua();
+    initialize_lion_db();
+
+    config::instance().write();
 
     start_elona();
 

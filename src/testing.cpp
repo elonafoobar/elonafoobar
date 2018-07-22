@@ -96,10 +96,14 @@ void configure_lua()
 
 void pre_init()
 {
-    lua::lua = std::make_unique<lua::lua_env>();
     log::initialize();
 
+    lua::lua.reset(new lua::lua_env());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+    lua::lua->load_all_mods();
     initialize_cat_db();
+    initialize_lion_db();
     configure_lua();
 
     const fs::path config_def_file =
@@ -107,20 +111,16 @@ void pre_init()
     const fs::path config_file = filesystem::dir::exe() / "tests/data/config.hcl";
 
     config::instance().init(config_def_file);
-    load_config_pre_app_init(config_file);
+    initialize_config_preload(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     init_assets();
     filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
+    initialize_elona();
 
     config::instance().is_test = true;
-
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
-    configure_lua();
 
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();
@@ -135,7 +135,6 @@ void post_run()
 
 void reset_state()
 {
-    config::instance().is_test = true;
     lua::lua->reload();
     configure_lua();
     initialize_elona();
@@ -144,6 +143,8 @@ void reset_state()
     elona::jp = 1;
     elona::en = 0;
     set_item_info();
+
+    config::instance().is_test = true;
 
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();

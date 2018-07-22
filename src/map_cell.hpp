@@ -8,13 +8,13 @@ namespace elona
 struct position_t;
 
 // Maps from an enumeration to an ID in the current tileset.
-enum class tile_kind_t
+enum class tile_kind_t : int
 {
-    normal,
-    wall,
-    tunnel,
-    room,
-    fog
+    normal = 0,
+    wall = 1,
+    tunnel = 2,
+    room = 3,
+    fog = 4
 };
 
 std::pair<int, int> cell_itemoncell(const position_t& pos);
