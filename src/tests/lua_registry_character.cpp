@@ -93,7 +93,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
         REQUIRE(data->resistances == expected);
     }
 
-    REQUIRE(data->color == 3);
+    REQUIRE(data->color == 4);
     REQUIRE(data->sex == 1);
     REQUIRE(data->original_relationship == -3);
     REQUIRE(data->_flags[22] == true);

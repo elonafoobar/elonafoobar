@@ -291,7 +291,7 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
     ELONA_LION_DB_FIELD(ai_heal,                    int, 0);
     ELONA_LION_DB_FIELD(ai_move,                    int, 0);
     ELONA_LION_DB_FIELD(can_talk,                   int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color,                 "Color", "Default");
+    ELONA_LION_DB_FIELD_ENUM(color,                 "Color", "None");
     ELONA_LION_DB_FIELD(creaturepack,               int, 0);
     ELONA_LION_DB_FIELD(cspecialeq,                 int, 0);
     ELONA_LION_DB_FIELD(damage_reaction_info,       int, 0);
