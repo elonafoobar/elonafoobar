@@ -1467,7 +1467,21 @@ sol::optional<sol::table> api_manager::try_find_api(
 
 void api_manager::add_api(const std::string& module_namespace, sol::table& module_table)
 {
-    api_env["Elona"][module_namespace] = module_table;
+    if (api_env["Elona"][module_namespace] == sol::lua_nil)
+    {
+        api_env["Elona"][module_namespace] = lua->get_state()->create_table();
+    }
+
+    sol::table api_table = api_env["Elona"][module_namespace].get<sol::table>();
+    for (const auto& pair : module_table)
+    {
+        if (!pair.first.is<std::string>())
+        {
+            throw sol::error("Error loading mod " + module_namespace +
+                             ": Mod API tables must only have string keys.");
+        }
+        api_table[pair.first.as<std::string>()] = pair.second;
+    }
 }
 
 int api_manager::get_enum_value(const std::string& enum_name,
@@ -1509,6 +1523,13 @@ void api_manager::load_core(lua_env& lua)
         ELONA_LOG(what);
         throw std::runtime_error("Failed initializing core mod!");
     }
+}
+
+void api_manager::lock()
+{
+    lua->get_state()->safe_script(R"(
+Elona = Elona.core.ReadOnly.make_read_only(Elona)
+)", api_env);
 }
 
 sol::table api_manager::bind(lua_env& lua)

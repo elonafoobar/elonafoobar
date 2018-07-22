@@ -736,7 +736,6 @@ void pos(int x, int y)
 
 void redraw()
 {
-    std::cerr << "redraw" << std::endl;
     snail::hsp::redraw();
 }
 

@@ -189,6 +189,9 @@ void lua_env::load_mod(mod_info& mod)
         auto result = this->lua->safe_script_file(
             filesystem::make_preferred_path_in_utf8(*mod.path / u8"init.lua"s),
             mod.env);
+
+        // Add the API table returned by the mod's init.lua, if one
+        // was returned.
         if (result.valid())
         {
             sol::optional<sol::table> api_table = result.get<sol::table>();
@@ -224,6 +227,8 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
         {
             const std::string mod_name = entry.path().filename().string();
             ELONA_LOG("Found mod " << mod_name);
+
+            // TODO verify the mod name is alphanumeric only.
 
             if (mod_name == "script")
             {
@@ -267,9 +272,9 @@ void lua_env::load_all_mods()
     for (auto& pair : this->mods)
     {
         auto& mod = pair.second;
-        if (mod->name == "core" || mod->name == "script")
+        if (mod->name == "script")
         {
-            // TODO
+            // TODO warn about reserved mod names.
             continue;
         }
         else
@@ -281,6 +286,8 @@ void lua_env::load_all_mods()
 
     event_mgr->run_callbacks<event_kind_t::all_mods_loaded>();
     registry_mgr->register_functions();
+    api_mgr->lock();
+
     stage = mod_loading_stage_t::all_mods_loaded;
 }
 
@@ -343,6 +350,8 @@ void lua_env::reload()
     load_all_mods();
 }
 
+// Callback to be called in Lua for preventing write access to unknown
+// globals.
 int deny(
     sol::table table,
     sol::object key,
@@ -375,8 +384,11 @@ void lua_env::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
 
+    // Bind Store.global and Store.map_local.
     metatable["global"] = mod.store_global;
     metatable["map_local"] = mod.store_local;
+
+    // Prevent creating new variables in the Store table.
     metatable[sol::meta_function::new_index] = deny;
     metatable[sol::meta_function::index] = metatable;
 
@@ -386,10 +398,31 @@ void lua_env::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
 
 void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
 {
+    // Create the globals "Elona" and "Store" for this mod's
+    // environment.
     bind_store(*lua, mod, table);
     table["Elona"] = api_mgr->bind(*this);
     table["_MOD_NAME"] = mod.name;
+
+    // Add a list of whitelisted standard library functions to the
+    // environment.
     setup_sandbox(*this->lua, table);
+
+    // Add a custom version of "require" for use within mods. (Not
+    // added for scripts/console environment)
+    if (mod.path)
+    {
+        auto state = this->get_state();
+        fs::path mod_path = *mod.path;
+        table["require"] =
+            [state, mod_path](const std::string& path, sol::this_environment this_env)
+            {
+                sol::environment env = this_env;
+                const fs::path full_path = mod_path / (path + ".lua");
+                std::cout << full_path.string() << " PATH" << std::endl;
+                return state->script_file(full_path.string(), env);
+            };
+    }
 }
 
 void lua_env::setup_and_lock_mod_globals(mod_info& mod)
@@ -463,6 +496,8 @@ void lua_env::load_mod_from_script(
         setup_mod_globals(*info, info->env);
     }
 
+    // Add the API table returned by the mod's initialization script,
+    // if one was returned.
     auto result = this->lua->safe_script(script, info->env);
     if (result.valid())
     {

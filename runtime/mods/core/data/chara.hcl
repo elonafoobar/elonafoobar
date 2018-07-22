@@ -1179,6 +1179,7 @@ chara putit {
     rarity = 80000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.corpse_effect.test
 }
 
 chara red_putit {

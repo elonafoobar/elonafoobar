@@ -52,6 +52,11 @@ public:
     void load_core(lua_env&);
 
     /***
+     * Makes all API tables read-only.
+     */
+    void lock();
+
+    /***
      * Attempts to locate an API module under a namespace. For
      * example, all core API modules have module_namespace "core", and
      * the Rand module would have module_name "Rand".

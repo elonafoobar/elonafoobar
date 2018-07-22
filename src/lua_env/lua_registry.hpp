@@ -2,6 +2,7 @@
 #include <string>
 #include "../filesystem.hpp"
 #include "lua_env.hpp"
+#include "exported_function.hpp"
 
 namespace elona
 {
@@ -67,7 +68,7 @@ public:
      * Obtains a Lua callback of the format "core.exports.<name>", if
      * it exists.
      */
-    sol::optional<sol::function> get_function(const std::string& name);
+    optional<exported_function> get_function(const std::string& name);
 
 private:
     /***

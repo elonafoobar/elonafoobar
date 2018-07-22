@@ -118,7 +118,7 @@ public:
             std::string id = pair.first.as<std::string>();
             sol::table data = pair.second.as<sol::table>();
 
-            data_type converted = static_cast<T&>(*this).convert(data, id);
+            data_type converted = static_cast<T&>(*this).convert(data);
             id_type the_id(prefix + "." + id);
 
             by_legacy_id.emplace(converted.id, the_id);
@@ -162,7 +162,7 @@ protected:
 
 template <typename T>
 static optional<std::vector<T>> convert_vector(const sol::table& data,
-                                           const std::string& name)
+                                               const std::string& name)
 {
     sol::optional<sol::table> value = data[name];
 
@@ -211,6 +211,16 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
             variant = default_value;                   \
         } \
         name = lua::lua->get_api_manager().get_enum_value(enum_type, variant);  \
+    } \
+
+#define ELONA_LION_DB_FIELD_CALLBACK(name) \
+    optional<lua::exported_function> name = none;   \
+    { \
+        sol::optional<std::string> function_name = data[#name];   \
+        if (function_name)    \
+        { \
+            name = lua::lua->get_registry_manager().get_function(*function_name); \
+        } \
     } \
 
 

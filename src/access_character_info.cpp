@@ -320,6 +320,13 @@ int access_character_info()
     default: break;
     }
 
+    if (dbmode == 12 && data->corpse_eating_effect)
+    {
+        auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
+        data->corpse_eating_effect->call(handle);
+        return -1;
+    }
+
     switch (dbid)
     {
     case 74:

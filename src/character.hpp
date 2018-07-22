@@ -7,6 +7,7 @@
 #include "cat.hpp"
 #include "god.hpp"
 #include "lion.hpp"
+#include "lua_env/exported_function.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -135,6 +136,7 @@ struct character_data
     int category;
     int rarity;
     int coefficient;
+    optional<lua::exported_function> corpse_eating_effect;
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
@@ -165,7 +167,7 @@ class character_db_ex : public lion::lion_db<character_db_ex>
 public:
     character_db_ex() = default;
 
-    character_data convert(const sol::table&, const std::string&);
+    character_data convert(const sol::table&);
 };
 
 
