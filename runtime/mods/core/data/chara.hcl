@@ -1197,7 +1197,7 @@ chara red_putit {
     original_relationship = Aggressive
     race = "slime"
     resistances = {_63 = 500}
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 3
@@ -1224,7 +1224,7 @@ chara slime {
     class_ = "predator"
     resistances = {_63 = 500}
     image = 257
-    color = Orange
+    color = Blue
     cspecialeq = 0
     damage_reaction_info = 100063
     fltselect = 0
@@ -1253,7 +1253,7 @@ chara acid_slime {
     element_of_unarmed_attack = 6300100
     resistances = {_63 = 500}
     image = 257
-    color = Red
+    color = Green
     cspecialeq = 0
     damage_reaction_info = 200063
     fltselect = 0
@@ -2104,7 +2104,7 @@ chara yeek_warrior {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "yeek"
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2127,7 +2127,7 @@ chara yeek_archer {
     original_relationship = Aggressive
     race = "yeek"
     class_ = "archer"
-    color = Red
+    color = Green
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2150,7 +2150,7 @@ chara master_yeek {
     special_actions = [640]
     original_relationship = Aggressive
     race = "yeek"
-    color = Cyan
+    color = Purple
     cspecialeq = 0
     fltselect = 0
     category = 7
@@ -2172,7 +2172,7 @@ chara kamikaze_yeek {
     normal_actions = [644]
     original_relationship = Aggressive
     race = "yeek"
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 12
@@ -2391,7 +2391,7 @@ chara chaos_mushroom {
     race = "mushroom"
     element_of_unarmed_attack = 5900250
     image = 399
-    color = Cyan
+    color = Purple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2716,7 +2716,7 @@ chara minotaur_magician {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "priest"
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2739,7 +2739,7 @@ chara minotaur_boxer {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "predator"
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2763,7 +2763,7 @@ chara minotaur_king {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "warrior"
-    color = Cyan
+    color = Purple
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -2788,7 +2788,7 @@ chara ungaga {
     original_relationship = Aggressive
     race = "minotaur"
     class_ = "warrior"
-    color = Gold
+    color = LightRed
     fixlv = 6
     cspecialeq = 1
     eqweapon1 = 695
@@ -2907,7 +2907,7 @@ chara mitra {
     original_relationship = Aggressive
     race = "asura"
     class_ = "warrior"
-    color = Red
+    color = Green
     cspecialeq = 1
     eqmultiweapon = 266
     fltselect = 0
@@ -2931,7 +2931,7 @@ chara varuna {
     original_relationship = Aggressive
     race = "asura"
     class_ = "warrior"
-    color = Blue
+    color = Red
     cspecialeq = 1
     eqmultiweapon = 224
     fltselect = 0
@@ -3071,7 +3071,7 @@ chara goda {
     original_relationship = Aggressive
     race = "orc"
     class_ = "warrior"
-    color = Blue
+    color = Red
     fixlv = 6
     cspecialeq = 0
     fltselect = 2
@@ -3141,7 +3141,7 @@ chara vampire_bat {
     race = "bat"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3165,7 +3165,7 @@ chara dragon_bat {
     original_relationship = Aggressive
     race = "bat"
     class_ = "predator"
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3345,7 +3345,7 @@ chara messenger_of_death {
     race = "lich"
     class_ = "warrior"
     image = 404
-    color = Orange
+    color = Blue
     cspecialeq = 1
     eqweapon1 = 735
     fltselect = 0
@@ -3370,7 +3370,7 @@ chara hound {
     original_relationship = Aggressive
     race = "hound"
     class_ = "predator"
-    color = Grey
+    color = Yellow
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -3400,7 +3400,7 @@ chara fire_hound {
         _51 = 50
         _50 = 500
     }
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 14
@@ -3455,7 +3455,7 @@ chara lightning_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_52 = 500}
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 16
@@ -3481,7 +3481,7 @@ chara dark_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_53 = 500}
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 17
@@ -3507,7 +3507,7 @@ chara illusion_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_54 = 500}
-    color = Gold
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 18
@@ -3533,7 +3533,7 @@ chara nerve_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_58 = 500}
-    color = LightRed
+    color = Cyan
     cspecialeq = 0
     fltselect = 0
     category = 19
@@ -3559,7 +3559,7 @@ chara poison_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_55 = 500}
-    color = Red
+    color = Green
     cspecialeq = 0
     fltselect = 0
     category = 20
@@ -3585,7 +3585,7 @@ chara sound_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_57 = 500}
-    color = White
+    color = Gold
     cspecialeq = 0
     fltselect = 0
     category = 21
@@ -3662,7 +3662,7 @@ chara giant_squirrel {
     race = "rabbit"
     class_ = "predator"
     image = 204
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3686,7 +3686,7 @@ chara killer_squirrel {
     race = "rabbit"
     class_ = "predator"
     image = 204
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3731,7 +3731,7 @@ chara hungry_demon {
     normal_actions = [-1, 614]
     original_relationship = Aggressive
     race = "ghost"
-    color = Red
+    color = Green
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3806,7 +3806,7 @@ chara electric_cloud {
     original_relationship = Aggressive
     race = "spirit"
     resistances = {_52 = 500}
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3888,7 +3888,7 @@ chara chaos_eye {
         _54 = 500
         _58 = 500
     }
-    color = Cyan
+    color = Purple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3918,7 +3918,7 @@ chara mad_gaze {
         _58 = 500
     }
     image = 407
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3949,7 +3949,7 @@ chara death_gaze {
         _58 = 500
     }
     image = 407
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4045,7 +4045,7 @@ chara red_wasp {
     special_actions = [616]
     original_relationship = Aggressive
     race = "wasp"
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4141,7 +4141,7 @@ chara nether_imp {
     special_actions = [410]
     original_relationship = Aggressive
     race = "imp"
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4287,7 +4287,7 @@ chara nymph {
     element_of_unarmed_attack = 5400200
     resistances = {_51 = 500}
     image = 214
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4335,7 +4335,7 @@ chara chaos_flower {
     race = "mandrake"
     element_of_unarmed_attack = 5900250
     image = 215
-    color = Gold
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4405,7 +4405,7 @@ chara fire_drake {
     original_relationship = Aggressive
     race = "drake"
     resistances = {_50 = 500}
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4476,7 +4476,7 @@ chara mummy {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = Gold
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 13
@@ -4501,7 +4501,7 @@ chara greater_mummy {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 13
@@ -4526,7 +4526,7 @@ chara tuwen {
     race = "zombie"
     class_ = "warrior"
     image = 219
-    color = Cyan
+    color = Purple
     fixlv = 6
     cspecialeq = 0
     fltselect = 3
@@ -4596,7 +4596,7 @@ chara goblin_warrior {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "warrior"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4644,7 +4644,7 @@ chara goblin_wizard {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "wizard"
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4670,7 +4670,7 @@ chara red_baptist {
     class_ = "wizard"
     resistances = {_50 = 500}
     image = 221
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4697,7 +4697,7 @@ chara blue_baptist {
     class_ = "wizard"
     resistances = {_51 = 500}
     image = 221
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4743,7 +4743,7 @@ chara grizzly {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "bear"
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 11
@@ -4836,7 +4836,7 @@ chara golden_armor {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4907,7 +4907,7 @@ chara euryale {
     original_relationship = Aggressive
     race = "medusa"
     class_ = "warmage"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5070,7 +5070,7 @@ chara red_dragon {
     race = "dragon"
     class_ = "predator"
     resistances = {_50 = 500}
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5119,7 +5119,7 @@ chara elec_dragon {
     race = "dragon"
     class_ = "predator"
     resistances = {_52 = 500}
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5144,7 +5144,7 @@ chara nether_dragon {
     race = "dragon"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5242,7 +5242,7 @@ chara king_scorpion {
     element_of_unarmed_attack = 5500350
     resistances = {_55 = 500}
     image = 396
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5344,7 +5344,7 @@ chara tarantula {
     race = "spider"
     element_of_unarmed_attack = 5500200
     resistances = {_55 = 500}
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5393,7 +5393,7 @@ chara wooden_golem {
     can_talk = 1
     original_relationship = Aggressive
     race = "golem"
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5466,7 +5466,7 @@ chara golden_golem {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5516,7 +5516,7 @@ chara sky_golem {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = LightRed
+    color = Cyan
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5541,7 +5541,7 @@ chara adamantium_golem {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = Red
+    color = Green
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5661,7 +5661,7 @@ chara skeleton_berserker {
     original_relationship = Aggressive
     race = "skeleton"
     class_ = "warrior"
-    color = Blue
+    color = Red
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -6057,7 +6057,7 @@ chara yerles_elite_machine_infantry {
     race = "yerles"
     class_ = "gunner"
     image = 250
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6155,7 +6155,7 @@ chara juere_swordman {
     race = "juere"
     class_ = "thief"
     image = 377
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6252,7 +6252,7 @@ chara stray_cat {
     original_relationship = Unconcerned
     race = "cat"
     image = 387
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6475,7 +6475,7 @@ chara rat {
     can_talk = 1
     original_relationship = Aggressive
     race = "rat"
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -6708,7 +6708,7 @@ chara azzrssil {
     class_ = "wizard"
     sex = Male
     image = 339
-    color = Blue
+    color = Red
     fixlv = 6
     cspecialeq = 0
     fltselect = 3
@@ -6960,7 +6960,7 @@ chara festival_tourist {
     class_ = "gunner"
     male_image = 477
     female_image = 476
-    color = Green
+    color = White
     cspecialeq = 0
     fltselect = 1
     category = 0
@@ -7032,7 +7032,7 @@ chara blade_omega {
     race = "machine"
     class_ = "predator"
     element_of_unarmed_attack = 6100150
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7181,7 +7181,7 @@ chara impure_eye {
     original_relationship = Aggressive
     race = "eye"
     image = 271
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7324,7 +7324,7 @@ chara puppy {
     race = "mandrake"
     element_of_unarmed_attack = 5400150
     image = 275
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7350,7 +7350,7 @@ chara greater_pumpkin {
     race = "mandrake"
     element_of_unarmed_attack = 5400200
     image = 275
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7376,7 +7376,7 @@ chara halloween_nightmare {
     race = "mandrake"
     element_of_unarmed_attack = 5400250
     image = 275
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7425,7 +7425,7 @@ chara shadow_stalker {
     race = "stalker"
     class_ = "predator"
     image = 276
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7898,7 +7898,7 @@ chara robber {
     race = "juere"
     class_ = "thief"
     image = 166
-    color = Blue
+    color = Red
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7925,7 +7925,7 @@ chara master_thief {
     race = "juere"
     class_ = "thief"
     image = 166
-    color = Orange
+    color = Blue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8295,7 +8295,7 @@ chara wild_horse {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = Grey
+    color = Yellow
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8373,7 +8373,7 @@ chara wild_horse2 {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = Gold
+    color = LightRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8814,7 +8814,7 @@ chara quickling_archer {
     original_relationship = Aggressive
     race = "quickling"
     class_ = "archer"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8863,7 +8863,7 @@ chara gold_bell {
     can_talk = 2
     original_relationship = Aggressive
     race = "metal"
-    color = Yellow
+    color = Orange
     cspecialeq = 0
     fltselect = 0
     category = 0

@@ -529,6 +529,9 @@ void initialize_elona()
     c_col(0, 0) = 0;
     c_col(1, 0) = 0;
     c_col(2, 0) = 0;
+    c_col(0, 1) = 0;
+    c_col(1, 1) = 0;
+    c_col(2, 1) = 0;
     c_col(0, 2) = 80;
     c_col(1, 2) = 0;
     c_col(2, 2) = 80;

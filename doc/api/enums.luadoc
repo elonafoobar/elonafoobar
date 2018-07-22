@@ -159,7 +159,8 @@ Relation = {}
 
 --- A set of colors.
 -- @enum Color
--- @tfield Enums.Color Default
+-- @tfield Enums.Color None
+-- @tfield Enums.Color White
 -- @tfield Enums.Color Green
 -- @tfield Enums.Color Red
 -- @tfield Enums.Color Blue
@@ -170,7 +171,7 @@ Relation = {}
 -- @tfield Enums.Color Cyan
 -- @tfield Enums.Color LightRed
 -- @tfield Enums.Color Gold
--- @tfield Enums.Color White
+-- @tfield Enums.Color White2
 -- @tfield Enums.Color LightBrown
 -- @tfield Enums.Color DarkGreen
 -- @tfield Enums.Color LightGrey
