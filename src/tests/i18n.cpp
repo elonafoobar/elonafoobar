@@ -32,7 +32,7 @@ TEST_CASE("test formats", "[I18N: Formatting]")
     REQUIRE(i18n::fmt_hil("${_1}", u8"foo"s) == u8"foo"s);
     REQUIRE(i18n::fmt_hil("${_1} ${_2}", u8"foo"s, 2) == u8"foo 2"s);
     REQUIRE(i18n::fmt_hil("${_1} ${_1}", u8"foo"s, 2) == u8"foo foo"s);
-    REQUIRE(i18n::fmt_hil("${_1} ${_2}", u8"foo"s) == u8"foo <error>"s);
+    REQUIRE(i18n::fmt_hil("${_1} ${_2}", u8"foo"s) == u8"foo <missing>"s);
     REQUIRE(
         i18n::fmt_hil("You see ${_1}.", u8"Palmia") == u8"You see Palmia."s);
     REQUIRE(
@@ -167,7 +167,7 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"core.locale.foo") == u8"bar: <error>");
+    REQUIRE(store.get(u8"core.locale.foo") == u8"bar: <missing>");
     REQUIRE(store.get(u8"core.locale.foo", 12) == u8"bar: 12");
     REQUIRE(store.get(u8"core.locale.foo", u8"baz") == u8"bar: baz");
     REQUIRE(store.get(u8"core.locale.foo", u8"baz", "hoge") == u8"bar: baz");
@@ -181,8 +181,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"core.locale.foo") == u8"<error>: <error>");
-    REQUIRE(store.get(u8"core.locale.foo", 42) == u8"<error>: 42");
+    REQUIRE(store.get(u8"core.locale.foo") == u8"<missing>: <missing>");
+    REQUIRE(store.get(u8"core.locale.foo", 42) == u8"<missing>: 42");
     REQUIRE(store.get(u8"core.locale.foo", 12, u8"bar") == u8"bar: 12");
     REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
     REQUIRE(

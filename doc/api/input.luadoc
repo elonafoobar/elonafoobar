@@ -32,8 +32,9 @@ function prompt_choice(...) end
 --- Prompts the player to choose a number. Raises an error if
 --- <code>max</code> is less than 0.
 -- @tparam string message a message to display
--- @tparam int max the maximum number choosable
--- @treturn[1] int the number chosen
+-- @tparam num max the maximum number choosable
+-- @tparam[opt] num index the starting index
+-- @treturn[1] num the number chosen
 -- @treturn[2] nil if canceled, or max < 0
 -- @usage local result = Input.prompt_number("Which character to spawn? ", 353)
 -- if result then

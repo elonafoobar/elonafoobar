@@ -155,7 +155,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
 
 
 
-void input_number_dialog(int x, int y, int max_number)
+void input_number_dialog(int x, int y, int max_number, int initial_number)
 {
     snd(26);
     dx = 8 * 16 + 60;
@@ -165,7 +165,15 @@ void input_number_dialog(int x, int y, int max_number)
     {
         max_number = 1;
     }
-    int number = max_number;
+    int number;
+    if (initial_number != 0)
+    {
+        number = clamp(initial_number, 1, max_number);
+    }
+    else
+    {
+        number = max_number;
+    }
     if (strlen_u(std::to_string(max_number)) >= 3)
     {
         dx += strlen_u(std::to_string(max_number)) * 8;

@@ -26,7 +26,10 @@ int show_prompt(
     int initial_number = 0);
 
 
-void input_number_dialog(int x, int y, int max_number);
+void input_number_dialog(int x,
+                         int y,
+                         int max_number,
+                         int initial_number = 0);
 
 bool input_text_dialog(
     int x,

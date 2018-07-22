@@ -81,9 +81,9 @@ local function switch_item_type(chara)
 end
 
 local function gain_magic_skills()
-   Chara.player():gain_skill_exp(14, 999999)
-   Chara.player():gain_skill_exp(155, 999999)
-   Chara.player():gain_skill_exp(174, 999999)
+   Chara.player():modify_skill_exp(14, 999999)
+   Chara.player():modify_skill_exp(155, 999999)
+   Chara.player():modify_skill_exp(174, 999999)
    Chara.player():gain_skill(164, 9999)
    Chara.player():gain_skill(172, 9999)
    Chara.player():gain_skill(188, 9999)

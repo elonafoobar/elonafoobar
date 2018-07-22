@@ -722,6 +722,7 @@ namespace Input
 {
 bool yes_no(const std::string&);
 sol::optional<int> prompt_number(const std::string&, int);
+sol::optional<int> prompt_number_with_initial(const std::string&, int, int);
 sol::optional<std::string> prompt_text(const std::string&, bool);
 sol::optional<int> prompt_choice(sol::variadic_args);
 
@@ -738,6 +739,13 @@ bool Input::yes_no(const std::string& message)
 
 sol::optional<int> Input::prompt_number(const std::string& message, int max)
 {
+    return Input::prompt_number_with_initial(message, max, 0);
+}
+
+sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
+                                                     int max,
+                                                     int initial)
+{
     if (max < 1)
     {
         throw sol::error("Input.prompt_number called with max < 1");
@@ -747,9 +755,12 @@ sol::optional<int> Input::prompt_number(const std::string& message, int max)
     input_number_dialog(
         (windoww - 200) / 2 + inf_screenx,
         winposy(60),
-        max);
+        max,
+        initial);
+
     if (rtval == -1)
     {
+        std::cout << "nullopt" << std::endl;
         return sol::nullopt;
     }
 
@@ -795,7 +806,8 @@ void Input::bind(sol::table& Elona)
     sol::table Input = Elona.create_named("Input");
     Input.set_function("yes_no", Input::yes_no);
     Input.set_function("prompt_choice", Input::prompt_choice);
-    Input.set_function("prompt_number", Input::prompt_number);
+    Input.set_function("prompt_number", sol::overload(Input::prompt_number,
+                                                      Input::prompt_number_with_initial));
     Input.set_function("prompt_text", Input::prompt_text);
 }
 
@@ -1156,6 +1168,26 @@ void I18N::bind(sol::table& Elona)
     I18N.set_function(
         "get_enum_property_optional", I18N::get_enum_property_optional);
 }
+
+
+namespace Math
+{
+int clamp(int, int, int);
+
+void bind(sol::table&);
+} // namespace Math
+
+int Math::clamp(int n, int min, int max)
+{
+    return elona::clamp(n, min, max);
+}
+
+void Math::bind(sol::table& Elona)
+{
+    sol::table Math = Elona.create_named("Math");
+    Math.set_function("clamp", Math::clamp);
+}
+
 
 namespace Debug
 {
