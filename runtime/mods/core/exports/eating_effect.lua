@@ -17,6 +17,12 @@ local function eat_message(eater, locale_id, color)
    end
 end
 
+local function mod_resist_chance(eater, elem, chance)
+   if Rand.one_in(chance) then
+      eater:modify_resistance(elem, 50)
+   end
+end
+
 
 function eating_effect.iron(eater)
    eat_message(eater, "iron", Enums.Color.Purple)
@@ -37,9 +43,7 @@ end
 function eating_effect.holy_one(eater)
    eat_message(eater, "holy_one", Enums.Color.Green)
    eater:gain_sanity(-50)
-   if Rand.one_in(5) then
-      eater:modify_resistance(Enums.Element.Mind, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Mind, 5)
 end
 
 function eating_effect.at(eater)
@@ -84,8 +88,8 @@ local function eating_effect_poisonous(gain_resist)
    return function(eater)
       eat_message(eater, "poisonous", Enums.Color.Purple)
       eater:apply_status_ailment(Enums.StatusAilment.Poisoned, 100)
-      if gain_resist and Rand.one_in(6) then
-         eater:modify_resistance(Enums.Element.Poison, 50)
+      if gain_resist then
+         mod_resist_chance(eater, Enums.Element.Poison, 6)
       end
    end
 end
@@ -126,23 +130,17 @@ end
 
 function eating_effect.fire_crab(eater)
    eating_effect.calm(eater)
-   if Rand.one_in(5) then
-      eater:modify_resistance(Enums.Element.Fire, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Fire, 5)
 end
 
 function eating_effect.fire_centipede(eater)
-   if Rand.one_in(5) then
-      eater:modify_resistance(Enums.Element.Fire, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Fire, 5)
 end
 
 function eating_effect.yith(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
    eater:gain_sanity(-50)
-   if Rand.one_in(5) then
-      eater:modify_resistance(Enums.Element.Mind, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Mind, 5)
 end
 
 function eating_effect.lightning(eater)
@@ -219,65 +217,42 @@ function eating_effect.alien(eater)
 end
 
 function eating_effect.fire_ent(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Fire, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Fire, 3)
 end
 
 function eating_effect.ice_ent(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Cold, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Cold, 3)
 end
 
 function eating_effect.electric_cloud(eater)
-   if Rand.one_in(4) then
-      eater:modify_resistance(Enums.Element.Lightning, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Lightning, 4)
 end
 
 function eating_effect.chaos_cloud(eater)
    eat_message(eater, "chaos_cloud", Enums.Color.Purple)
    eater:apply_status_ailment(Enums.StatusAilment.Confused, 300)
-   if Rand.one_in(5) then
-      eater:modify_resistance(Enums.Element.Chaos, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Chaos, 5)
 end
 
 function eating_effect.floating_eye(eater)
    eating_effect.lightning(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Nerve, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Nerve, 3)
 end
 
 function eating_effect.chaos_eye(eater)
    eating_effect.lightning(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Chaos, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Chaos, 3)
 end
 
 function eating_effect.mad_gaze(eater)
    eating_effect.lightning(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Mind, 50)
-   end
-end
-
-function eating_effect.death_gaze(eater)
-   eating_effect.lightning(eater)
-   if Rand.one_in(3) then
-      eater:modify_resistance(Enums.Element.Nerve, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Mind, 3)
 end
 
 
 local function eating_effect_pumpkin(resist_gain_chance)
    return function(eater)
-      if Rand.one_in(resist_gain_chance) then
-         eater:modify_resistance(Enums.Element.Mind, 50)
-      end
+      mod_resist_chance(eater, Enums.Element.Mind, resist_gain_chance)
    end
 end
 
@@ -287,9 +262,7 @@ eating_effect.halloween_nightmare = eating_effect_pumpkin(6)
 
 
 function eating_effect.stalker(eater)
-   if Rand.one_in(4) then
-      eater:modify_resistance(Enums.Element.Darkness, 50)
-   end
+   mod_resist_chance(eater, Enums.Element.Darkness, 4)
 end
 
 

@@ -3986,7 +3986,7 @@ chara death_gaze {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
-    corpse_eating_effect = core.exports.eating_effect.death_gaze
+    corpse_eating_effect = core.exports.eating_effect.floating_eye
 }
 
 chara wyvern {

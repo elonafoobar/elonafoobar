@@ -816,14 +816,29 @@ namespace GUI
 {
 void txt(const std::string&);
 void txtnew();
-void txt_color(int);
-
+void txt_txtef(const std::string&, color_index_t);
+void txtef(color_index_t);
 void bind(sol::table&);
 }; // namespace GUI
 
 void GUI::txt(const std::string& message)
 {
+    GUI::txt_txtef(message, color_index_t::none);
+}
+
+void GUI::txt_txtef(const std::string& message, color_index_t color)
+{
+    GUI::txtef(color);
     elona::txt(message);
+}
+
+void GUI::txtef(color_index_t color)
+{
+    if (color < color_index_t::none || color > color_index_t::yellow_green)
+    {
+        return;
+    }
+    elona::txtef(color);
 }
 
 void GUI::txtnew()
@@ -831,21 +846,12 @@ void GUI::txtnew()
     elona::txtnew();
 }
 
-void GUI::txt_color(int color)
-{
-    if (color < 0 || color > 20)
-    {
-        return;
-    }
-    elona::txtef(color);
-}
-
 void GUI::bind(sol::table& Elona)
 {
     sol::table GUI = Elona.create_named("GUI");
-    GUI.set_function("txt", GUI::txt);
+    GUI.set_function("txt", sol::overload(GUI::txt, GUI::txt_txtef));
+    GUI.set_function("txtef", GUI::txtef);
     GUI.set_function("txtnew", GUI::txtnew);
-    GUI.set_function("txt_color", GUI::txt_color);
 }
 
 

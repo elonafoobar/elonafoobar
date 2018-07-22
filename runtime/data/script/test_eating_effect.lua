@@ -27,8 +27,7 @@ local function prompt(chara)
       local cb = callbacks[index]
       if cb then
          last = index
-         GUI.txtef(Enums.Color.Gold)
-         GUI.txt(cb.name .. " ")
+         GUI.txt(cb.name .. " ", Enums.Color.Gold)
          cb.func(Chara.player())
       end
    else
