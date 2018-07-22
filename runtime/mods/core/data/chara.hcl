@@ -197,6 +197,7 @@ chara healer {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.holy_one
 }
 
 chara nun {
@@ -223,6 +224,7 @@ chara nun {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.holy_one
 }
 
 chara elder {
@@ -326,6 +328,7 @@ chara guard_port_kapul {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.guard
 }
 
 chara guard {
@@ -351,6 +354,7 @@ chara guard {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.guard
 }
 
 chara palmian_elite_soldier {
@@ -431,6 +435,7 @@ chara at {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.at
 }
 
 chara orphe {
@@ -587,6 +592,7 @@ chara vesda {
     category = 0
     rarity = 1000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.fire
 }
 
 chara miches {
@@ -884,6 +890,7 @@ chara issizzle {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.insanity
 }
 
 chara wynan {
@@ -1179,7 +1186,7 @@ chara putit {
     rarity = 80000
     coefficient = 400
     flags = [IsSuitableForMount]
-    corpse_eating_effect = core.exports.corpse_effect.test
+    corpse_eating_effect = core.exports.eating_effect.putit
 }
 
 chara red_putit {
@@ -1205,6 +1212,7 @@ chara red_putit {
     rarity = 70000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.putit
 }
 
 chara slime {
@@ -2068,6 +2076,7 @@ chara kobold {
     category = 5
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.poisonous
 }
 
 chara yeek {
@@ -2330,6 +2339,7 @@ chara centipede {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.poisonous
 }
 
 chara mushroom {
@@ -2374,6 +2384,7 @@ chara spore_mushroom {
     category = 0
     rarity = 50000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.poisonous
 }
 
 chara chaos_mushroom {
@@ -2820,6 +2831,7 @@ chara troll {
     category = 2
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.troll
 }
 
 chara warrior_of_elea {
@@ -3011,6 +3023,7 @@ chara mandrake {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.mandrake
 }
 
 chara beetle {
@@ -3033,6 +3046,7 @@ chara beetle {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.strength
 }
 
 chara orc_warrior {
@@ -3102,6 +3116,7 @@ chara zombie {
     category = 9
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara bat {
@@ -3201,6 +3216,7 @@ chara fire_ent {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.fire_ent
 }
 
 chara ice_ent {
@@ -3229,6 +3245,7 @@ chara ice_ent {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.ice_ent
 }
 
 chara lich {
@@ -3252,6 +3269,7 @@ chara lich {
     category = 0
     rarity = 60000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara master_lich {
@@ -3276,6 +3294,7 @@ chara master_lich {
     category = 0
     rarity = 50000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara demi_lich {
@@ -3300,6 +3319,7 @@ chara demi_lich {
     category = 0
     rarity = 40000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara executioner {
@@ -3669,6 +3689,7 @@ chara giant_squirrel {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.calm
 }
 
 chara killer_squirrel {
@@ -3693,6 +3714,7 @@ chara killer_squirrel {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.calm
 }
 
 chara grudge {
@@ -3716,6 +3738,7 @@ chara grudge {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.grudge
 }
 
 chara hungry_demon {
@@ -3739,6 +3762,7 @@ chara hungry_demon {
     rarity = 70000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.grudge
 }
 
 chara hungry_sea_lion {
@@ -3814,6 +3838,7 @@ chara electric_cloud {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.electric_cloud
 }
 
 chara chaos_cloud {
@@ -3839,6 +3864,7 @@ chara chaos_cloud {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.chaos_cloud
 }
 
 chara floating_eye {
@@ -3866,6 +3892,7 @@ chara floating_eye {
     rarity = 80000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.floating_eye
 }
 
 chara chaos_eye {
@@ -3896,6 +3923,7 @@ chara chaos_eye {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.chaos_eye
 }
 
 chara mad_gaze {
@@ -3926,6 +3954,7 @@ chara mad_gaze {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.mad_gaze
 }
 
 chara death_gaze {
@@ -3957,6 +3986,7 @@ chara death_gaze {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.death_gaze
 }
 
 chara wyvern {
@@ -4076,6 +4106,7 @@ chara cyclops {
     rarity = 60000
     coefficient = 400
     flags = [IsQuickTempered]
+    corpse_eating_effect = core.exports.eating_effect.cyclops
 }
 
 chara titan {
@@ -4101,6 +4132,7 @@ chara titan {
     rarity = 50000
     coefficient = 400
     flags = [IsQuickTempered]
+    corpse_eating_effect = core.exports.eating_effect.titan
 }
 
 chara imp {
@@ -4125,6 +4157,7 @@ chara imp {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.imp
 }
 
 chara nether_imp {
@@ -4149,6 +4182,7 @@ chara nether_imp {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.imp
 }
 
 chara chaos_imp {
@@ -4173,6 +4207,7 @@ chara chaos_imp {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.imp
 }
 
 chara hand_of_the_dead {
@@ -4196,6 +4231,7 @@ chara hand_of_the_dead {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.hand
 }
 
 chara hand_of_the_chaos {
@@ -4220,6 +4256,7 @@ chara hand_of_the_chaos {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.hand
 }
 
 chara hand_of_the_murderer {
@@ -4245,6 +4282,7 @@ chara hand_of_the_murderer {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.hand
 }
 
 chara ghost {
@@ -4269,6 +4307,7 @@ chara ghost {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.ghost
 }
 
 chara nymph {
@@ -4295,6 +4334,7 @@ chara nymph {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.nymph
 }
 
 chara man_eater_flower {
@@ -4365,6 +4405,7 @@ chara cobra {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara king_cobra {
@@ -4388,6 +4429,7 @@ chara king_cobra {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara fire_drake {
@@ -4458,6 +4500,7 @@ chara lesser_mummy {
     category = 13
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara mummy {
@@ -4483,6 +4526,7 @@ chara mummy {
     category = 13
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara greater_mummy {
@@ -4508,6 +4552,7 @@ chara greater_mummy {
     category = 13
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara tuwen {
@@ -4535,6 +4580,7 @@ chara tuwen {
     rarity = 100000
     coefficient = 400
     flags = [IsDeathMaster]
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara ancient_coffin {
@@ -4558,6 +4604,7 @@ chara ancient_coffin {
     category = 13
     rarity = 50000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.rotten_one
 }
 
 chara goblin {
@@ -4773,6 +4820,7 @@ chara mammoth {
     category = 11
     rarity = 50000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.mammoth
 }
 
 chara living_armor {
@@ -4796,6 +4844,7 @@ chara living_armor {
     rarity = 40000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara steel_mass {
@@ -4820,6 +4869,7 @@ chara steel_mass {
     rarity = 30000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara golden_armor {
@@ -4844,6 +4894,7 @@ chara golden_armor {
     rarity = 30000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara death_armor {
@@ -4869,6 +4920,7 @@ chara death_armor {
     rarity = 30000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara medusa {
@@ -4961,6 +5013,7 @@ chara cupid_of_love {
     rarity = 100000
     coefficient = 400
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.cupid_of_love
 }
 
 chara lesser_phantom {
@@ -5224,6 +5277,7 @@ chara scorpion {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara king_scorpion {
@@ -5249,6 +5303,7 @@ chara king_scorpion {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara spider {
@@ -5299,6 +5354,7 @@ chara black_widow {
     category = 6
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara paralyzer {
@@ -5325,6 +5381,7 @@ chara paralyzer {
     category = 6
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara tarantula {
@@ -5351,6 +5408,7 @@ chara tarantula {
     category = 6
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.cobra
 }
 
 chara blood_spider {
@@ -5401,6 +5459,7 @@ chara wooden_golem {
     rarity = 40000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara stone_golem {
@@ -5424,6 +5483,7 @@ chara stone_golem {
     rarity = 40000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara steel_golem {
@@ -5449,6 +5509,7 @@ chara steel_golem {
     rarity = 40000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara golden_golem {
@@ -5474,6 +5535,7 @@ chara golden_golem {
     rarity = 30000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara mithril_golem {
@@ -5499,6 +5561,7 @@ chara mithril_golem {
     rarity = 20000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara sky_golem {
@@ -5524,6 +5587,7 @@ chara sky_golem {
     rarity = 15000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara adamantium_golem {
@@ -5549,6 +5613,7 @@ chara adamantium_golem {
     rarity = 15000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara fire_crab {
@@ -5572,6 +5637,7 @@ chara fire_crab {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.fire_crab
 }
 
 chara fire_centipede {
@@ -5596,6 +5662,7 @@ chara fire_centipede {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.fire_centipede
 }
 
 chara cultist_of_fire {
@@ -5717,6 +5784,7 @@ chara pawn {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara rook {
@@ -5740,6 +5808,7 @@ chara rook {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara bishop {
@@ -5764,6 +5833,7 @@ chara bishop {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara knight {
@@ -5788,6 +5858,7 @@ chara knight {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara queen {
@@ -5812,6 +5883,7 @@ chara queen {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara king {
@@ -5836,6 +5908,7 @@ chara king {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara mercenary_warrior {
@@ -6210,6 +6283,7 @@ chara cat {
     rarity = 100000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.cat
 }
 
 chara silver_cat {
@@ -6234,6 +6308,7 @@ chara silver_cat {
     category = 0
     rarity = 1000
     coefficient = 0
+    corpse_eating_effect = core.exports.eating_effect.cat
 }
 
 chara stray_cat {
@@ -6259,6 +6334,7 @@ chara stray_cat {
     category = 0
     rarity = 10000
     coefficient = 0
+    corpse_eating_effect = core.exports.eating_effect.cat
 }
 
 chara lion {
@@ -6504,6 +6580,7 @@ chara hermit_crab {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.calm
 }
 
 chara public_performer {
@@ -6716,6 +6793,7 @@ chara azzrssil {
     category = 0
     rarity = 100000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.insanity
 }
 
 chara master_of_pet_arena {
@@ -6990,6 +7068,7 @@ chara blade {
     rarity = 100000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara blade_alpha {
@@ -7015,6 +7094,7 @@ chara blade_alpha {
     rarity = 100000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara blade_omega {
@@ -7040,6 +7120,7 @@ chara blade_omega {
     rarity = 100000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara kaneda_bike {
@@ -7066,6 +7147,7 @@ chara kaneda_bike {
     rarity = 100000
     coefficient = 400
     flags = [IsImmuneToFear, IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara cub {
@@ -7091,6 +7173,7 @@ chara cub {
     rarity = 5000
     coefficient = 400
     flags = [IsImmuneToFear, IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara mine_dog {
@@ -7115,6 +7198,7 @@ chara mine_dog {
     rarity = 25000
     coefficient = 400
     flags = [IsImmuneToFear, IsImmuneToMine, CuresMpFrequently]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara iron_maiden {
@@ -7140,6 +7224,7 @@ chara iron_maiden {
     rarity = 50000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara deformed_eye {
@@ -7164,6 +7249,7 @@ chara deformed_eye {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.deformed_eye
 }
 
 chara impure_eye {
@@ -7189,6 +7275,7 @@ chara impure_eye {
     rarity = 60000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.deformed_eye
 }
 
 chara wisp {
@@ -7213,6 +7300,7 @@ chara wisp {
     rarity = 50000
     coefficient = 400
     flags = [IsFloating, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.ether
 }
 
 chara hedgehog {
@@ -7260,6 +7348,7 @@ chara shining_hedgehog {
     category = 0
     rarity = 70000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.ether
 }
 
 chara chicken {
@@ -7306,6 +7395,7 @@ chara pumpkin {
     category = 0
     rarity = 60000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.pumpkin
 }
 
 chara puppy {
@@ -7332,6 +7422,7 @@ chara puppy {
     rarity = 20000
     coefficient = 400
     flags = [IsInvisible]
+    corpse_eating_effect = core.exports.eating_effect.pumpkin
 }
 
 chara greater_pumpkin {
@@ -7358,6 +7449,7 @@ chara greater_pumpkin {
     rarity = 60000
     coefficient = 400
     flags = [IsInvisible]
+    corpse_eating_effect = core.exports.eating_effect.greater_pumpkin
 }
 
 chara halloween_nightmare {
@@ -7384,6 +7476,7 @@ chara halloween_nightmare {
     rarity = 60000
     coefficient = 400
     flags = [IsInvisible]
+    corpse_eating_effect = core.exports.eating_effect.halloween_nightmare
 }
 
 chara stalker {
@@ -7408,6 +7501,7 @@ chara stalker {
     rarity = 30000
     coefficient = 400
     flags = [IsInvisible, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.stalker
 }
 
 chara shadow_stalker {
@@ -7433,6 +7527,7 @@ chara shadow_stalker {
     rarity = 30000
     coefficient = 400
     flags = [IsInvisible, IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.stalker
 }
 
 chara ebon {
@@ -7957,6 +8052,7 @@ chara great_race_of_yith {
     rarity = 20000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.yith
 }
 
 chara shub_niggurath {
@@ -7983,6 +8079,7 @@ chara shub_niggurath {
     rarity = 40000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.yith
 }
 
 chara gagu {
@@ -8007,6 +8104,7 @@ chara gagu {
     category = 0
     rarity = 80000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.yith
 }
 
 chara spiral_king {
@@ -8033,6 +8131,7 @@ chara spiral_king {
     rarity = 30000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.yith
 }
 
 chara fairy {
@@ -8277,6 +8376,7 @@ chara lame_horse {
     rarity = 10000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.horse
 }
 
 chara wild_horse {
@@ -8303,6 +8403,7 @@ chara wild_horse {
     rarity = 10000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.horse
 }
 
 chara noyel_horse {
@@ -8329,6 +8430,7 @@ chara noyel_horse {
     rarity = 10000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.horse
 }
 
 chara yowyn_horse {
@@ -8355,6 +8457,7 @@ chara yowyn_horse {
     rarity = 10000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.horse
 }
 
 chara wild_horse2 {
@@ -8381,6 +8484,7 @@ chara wild_horse2 {
     rarity = 10000
     coefficient = 400
     flags = [IsSuitableForMount]
+    corpse_eating_effect = core.exports.eating_effect.horse
 }
 
 chara mutant {
@@ -8672,6 +8776,7 @@ chara big_daddy {
     rarity = 50000
     coefficient = 400
     flags = [IsImmuneToFear]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara little_sister {
@@ -8774,6 +8879,7 @@ chara shade {
     rarity = 10000
     coefficient = 0
     flags = [IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.ghost
 }
 
 chara quickling {
@@ -8797,6 +8903,7 @@ chara quickling {
     rarity = 15000
     coefficient = 400
     flags = [IsUnsuitableForMount, IsImmuneToElementalDamage]
+    corpse_eating_effect = core.exports.eating_effect.quickling
 }
 
 chara quickling_archer {
@@ -8822,6 +8929,7 @@ chara quickling_archer {
     rarity = 15000
     coefficient = 400
     flags = [IsUnsuitableForMount, IsImmuneToElementalDamage]
+    corpse_eating_effect = core.exports.eating_effect.quickling
 }
 
 chara silver_bell {
@@ -8846,6 +8954,7 @@ chara silver_bell {
     rarity = 2000
     coefficient = 0
     flags = [IsUnsuitableForMount, IsMetal, IsImmuneToElementalDamage, IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara gold_bell {
@@ -8871,6 +8980,7 @@ chara gold_bell {
     rarity = 5000
     coefficient = 0
     flags = [IsUnsuitableForMount, IsMetal, IsImmuneToElementalDamage, IsFloating]
+    corpse_eating_effect = core.exports.eating_effect.iron
 }
 
 chara alien {
@@ -8897,6 +9007,7 @@ chara alien {
     category = 0
     rarity = 40000
     coefficient = 400
+    corpse_eating_effect = core.exports.eating_effect.pregnant
 }
 
 

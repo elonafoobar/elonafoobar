@@ -118,7 +118,7 @@ public:
             std::string id = pair.first.as<std::string>();
             sol::table data = pair.second.as<sol::table>();
 
-            data_type converted = static_cast<T&>(*this).convert(data);
+            data_type converted = static_cast<T&>(*this).convert(id, data);
             id_type the_id(prefix + "." + id);
 
             by_legacy_id.emplace(converted.id, the_id);
@@ -183,45 +183,49 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
 }
 
 
-#define ELONA_LION_DB_FIELD(name, type, default_value)       \
-    type name; \
-    { \
-        sol::optional<type> value = data[#name];                 \
-        if (value) \
-        { \
-            name = *value; \
-        } \
-        else                                        \
-        { \
-            name = default_value;                   \
-        } \
-    } \
+#define ELONA_LION_DB_FIELD(name, type, default_value)  \
+    type name;                                          \
+    {                                                   \
+        sol::optional<type> value = data[#name];        \
+        if (value)                                      \
+        {                                               \
+            name = *value;                              \
+        }                                               \
+        else                                            \
+        {                                               \
+            name = default_value;                       \
+        }                                               \
+    }                                                   \
 
-#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value) \
-    int name; \
-    { \
-        std::string variant; \
-        sol::optional<std::string> value = data[#name];   \
-        if (value)    \
-        { \
-            variant = *value; \
-        } \
-        else                                        \
-        { \
-            variant = default_value;                   \
-        } \
-        name = lua::lua->get_api_manager().get_enum_value(enum_type, variant);  \
-    } \
+#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value)        \
+    int name;                                                           \
+    {                                                                   \
+        std::string variant;                                            \
+        sol::optional<std::string> value = data[#name];                 \
+        if (value)                                                      \
+        {                                                               \
+            variant = *value;                                           \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            variant = default_value;                                    \
+        }                                                               \
+        name = lua::lua->get_api_manager().get_enum_value(enum_type, variant); \
+    }                                                                   \
 
-#define ELONA_LION_DB_FIELD_CALLBACK(name) \
-    optional<lua::exported_function> name = none;   \
-    { \
-        sol::optional<std::string> function_name = data[#name];   \
-        if (function_name)    \
-        { \
+#define ELONA_LION_DB_FIELD_CALLBACK(name)                              \
+    optional<lua::exported_function> name = none;                       \
+    {                                                                   \
+        sol::optional<std::string> function_name = data[#name];         \
+        if (function_name)                                              \
+        {                                                               \
             name = lua::lua->get_registry_manager().get_function(*function_name); \
-        } \
-    } \
+            if (!name)                                                  \
+            {                                                           \
+                throw std::runtime_error("Error loading " + id_ + "." + #name + ": No such callback named " + *function_name); \
+            }                                                           \
+        }                                                               \
+    }                                                                   \
 
 
 } // namespace lion

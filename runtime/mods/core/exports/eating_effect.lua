@@ -62,7 +62,7 @@ function eating_effect.vesda(eater)
    eater:modify_resistance(Enums.Element.Fire, 100)
 end
 
-function eating_effect.issizzle(eater)
+function eating_effect.insanity(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
    eater:modify_resistance(Enums.Element.Mind, 50)
    eater:gain_sanity(-500)
@@ -131,17 +131,18 @@ function eating_effect.fire_crab(eater)
    end
 end
 
+function eating_effect.fire_centipede(eater)
+   if Rand.one_in(5) then
+      eater:modify_resistance(Enums.Element.Fire, 50)
+   end
+end
+
 function eating_effect.yith(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
    eater:gain_sanity(-50)
    if Rand.one_in(5) then
       eater:modify_resistance(Enums.Element.Mind, 50)
    end
-end
-
-function eating_effect.chaos_cloud(eater)
-   eat_message(eater, "chaos_cloud", Enums.Color.Purple)
-   eater:apply_status_ailment(Enums.StatusAilment.Confused, 300)
 end
 
 function eating_effect.lightning(eater)
@@ -215,6 +216,80 @@ end
 function eating_effect.alien(eater)
    eat_message(eater, "pregnant", Enums.Color.None)
    eater:make_pregnant()
+end
+
+function eating_effect.fire_ent(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Fire, 50)
+   end
+end
+
+function eating_effect.ice_ent(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Cold, 50)
+   end
+end
+
+function eating_effect.electric_cloud(eater)
+   if Rand.one_in(4) then
+      eater:modify_resistance(Enums.Element.Lightning, 50)
+   end
+end
+
+function eating_effect.chaos_cloud(eater)
+   eat_message(eater, "chaos_cloud", Enums.Color.Purple)
+   eater:apply_status_ailment(Enums.StatusAilment.Confused, 300)
+   if Rand.one_in(5) then
+      eater:modify_resistance(Enums.Element.Chaos, 50)
+   end
+end
+
+function eating_effect.floating_eye(eater)
+   eating_effect.lightning(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Nerve, 50)
+   end
+end
+
+function eating_effect.chaos_eye(eater)
+   eating_effect.lightning(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Chaos, 50)
+   end
+end
+
+function eating_effect.mad_gaze(eater)
+   eating_effect.lightning(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Mind, 50)
+   end
+end
+
+function eating_effect.death_gaze(eater)
+   eating_effect.lightning(eater)
+   if Rand.one_in(3) then
+      eater:modify_resistance(Enums.Element.Nerve, 50)
+   end
+end
+
+
+local function eating_effect_pumpkin(resist_gain_chance)
+   return function(eater)
+      if Rand.one_in(resist_gain_chance) then
+         eater:modify_resistance(Enums.Element.Mind, 50)
+      end
+   end
+end
+
+eating_effect.pumpkin = eating_effect_pumpkin(10)
+eating_effect.greater_pumpkin = eating_effect_pumpkin(8)
+eating_effect.halloween_nightmare = eating_effect_pumpkin(6)
+
+
+function eating_effect.stalker(eater)
+   if Rand.one_in(4) then
+      eater:modify_resistance(Enums.Element.Darkness, 50)
+   end
 end
 
 

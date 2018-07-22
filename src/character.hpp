@@ -167,7 +167,7 @@ class character_db_ex : public lion::lion_db<character_db_ex>
 public:
     character_db_ex() = default;
 
-    character_data convert(const sol::table&);
+    character_data convert(const std::string&, const sol::table&);
 };
 
 

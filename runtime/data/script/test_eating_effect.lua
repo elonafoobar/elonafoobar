@@ -17,8 +17,11 @@ local function make_sandbag(x, y, chara_id)
    return chara
 end
 
-local function prompt()
-   Chara.player():gain_skill_exp(16, 199999)
+local function prompt(chara)
+   if chara.index ~= Store.map_local.runner.index then
+      return
+   end
+
    local index = Input.prompt_number("Which? ", max, last)
    if index then
       local cb = callbacks[index]

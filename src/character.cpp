@@ -282,7 +282,7 @@ static std::vector<int> convert_flags(const sol::table& data, const std::string&
     return flag_types;
 }
 
-character_data character_db_ex::convert(const sol::table& data)
+character_data character_db_ex::convert(const std::string& id_, const sol::table& data)
 {
     ELONA_LION_DB_FIELD(id,                         int, -1);
     ELONA_LION_DB_FIELD(ai_act_sub_freq,            int, 0);
