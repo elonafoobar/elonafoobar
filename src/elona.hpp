@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include "enums.hpp"
 #include "gdata.hpp"
+#include "mdata.hpp"
 #include "snail/color.hpp"
 #include "snail/font.hpp"
 #include "snail/input.hpp"

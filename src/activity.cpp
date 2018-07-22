@@ -438,11 +438,11 @@ void continuous_action_perform()
                                     x = clamp(
                                         cdata[cc].position.x - 1 + rnd(3),
                                         0,
-                                        mdata(0) - 1);
+                                        mdata_map_width - 1);
                                     y = clamp(
                                         cdata[cc].position.y - 1 + rnd(3),
                                         0,
-                                        mdata(1) - 1);
+                                        mdata_map_height - 1);
                                     cell_check(x, y);
                                     if (cellaccess == 0)
                                     {
@@ -914,7 +914,7 @@ void continuous_action_others()
         }
         if (gdata(91) == 100)
         {
-            if (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)
+            if (mdata_map_type == 5 || mdata_map_type == 3 || mdata_map_type == 2)
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
                 cdata[cc].continuous_action_turn = 5;
@@ -972,8 +972,8 @@ void continuous_action_others()
             if (gdata_weather != 0 && gdata_weather != 3)
             {
                 if (gdata_current_map == 30
-                    || (mdata(14) == 1
-                        && (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)))
+                    || (mdata_map_indoors_flag == 1
+                        && (mdata_map_type == 5 || mdata_map_type == 3 || mdata_map_type == 2)))
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.weather_is_bad"));
                 }
@@ -1028,9 +1028,9 @@ void continuous_action_others()
                 {
                     p = 5;
                 }
-                if (gdata_current_map != 30 && mdata(14) == 1)
+                if (gdata_current_map != 30 && mdata_map_indoors_flag == 1)
                 {
-                    if (mdata(6) == 5 || mdata(6) == 3 || mdata(6) == 2)
+                    if (mdata_map_type == 5 || mdata_map_type == 3 || mdata_map_type == 2)
                     {
                         p = 5;
                         gdata_minute += 30;
@@ -1625,7 +1625,7 @@ void spot_digging()
         return;
     }
     txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         for (const auto& cnt : items(0))
         {
@@ -1861,23 +1861,23 @@ int search_material_spot()
     }
     atxspot = 11;
     atxlv = gdata_current_dungeon_level;
-    if (mdata(6) == 20)
+    if (mdata_map_type == 20)
     {
         atxspot = 9;
     }
-    if (mdata(6) == 21)
+    if (mdata_map_type == 21)
     {
         atxspot = 12;
     }
-    if (mdata(6) == 22)
+    if (mdata_map_type == 22)
     {
         atxspot = 10;
     }
-    if (mdata(6) == 23)
+    if (mdata_map_type == 23)
     {
         atxspot = 12;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         atxlv = cdata[0].level / 2 + rnd(10);
         if (atxlv > 30)

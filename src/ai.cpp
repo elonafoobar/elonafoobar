@@ -293,7 +293,7 @@ turn_result_t ai_proc_basic()
 
 turn_result_t proc_npc_movement_event(bool retreat)
 {
-    if (mdata(6) == 3)
+    if (mdata_map_type == 3)
     {
         if (cc < 16)
         {
@@ -439,11 +439,11 @@ turn_result_t proc_npc_movement_event(bool retreat)
             {
                 if (x >= 0)
                 {
-                    if (x < mdata(0))
+                    if (x < mdata_map_width)
                     {
                         if (y >= 0)
                         {
-                            if (y < mdata(1))
+                            if (y < mdata_map_height)
                             {
                                 if (chipm(7, map(x, y, 0)) & 4)
                                 {
@@ -715,7 +715,7 @@ turn_result_t ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == 3 || mdata_map_type == 2)
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {
@@ -1038,7 +1038,7 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 2)
     {
-        if (mdata(8) == 1
+        if (mdata_map_designated_spawns == 1
             && dist(
                    cdata[cc].position.x,
                    cdata[cc].position.y,

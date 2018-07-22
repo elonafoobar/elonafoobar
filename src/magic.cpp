@@ -299,7 +299,7 @@ int magic()
                      ++cnt)
                 {
                     dy = tlocy - range_ + cnt;
-                    if (dy < 0 || dy >= mdata(1))
+                    if (dy < 0 || dy >= mdata_map_height)
                     {
                         continue;
                     }
@@ -307,7 +307,7 @@ int magic()
                          ++cnt)
                     {
                         dx = tlocx - range_ + cnt;
-                        if (dx < 0 || dx >= mdata(0))
+                        if (dx < 0 || dx >= mdata_map_width)
                         {
                             continue;
                         }
@@ -769,7 +769,7 @@ int magic()
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata_current_map == 40 || mdata(6) == 1
+                if (gdata_current_map == 40 || mdata_map_type == 1
                     || gdata_current_map == 37 || gdata_current_map == 41)
                 {
                     if (is_in_fov(tc))
@@ -858,8 +858,8 @@ int magic()
                     }
                     else
                     {
-                        cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
-                        cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
+                        cdata[tc].next_position.x = rnd(mdata_map_width - 2) + 1;
+                        cdata[tc].next_position.y = rnd(mdata_map_height - 2) + 1;
                     }
                     cell_check(
                         cdata[tc].next_position.x, cdata[tc].next_position.y);
@@ -1020,7 +1020,7 @@ label_2181_internal:
         damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
-        if (mdata(6) != 1)
+        if (mdata_map_type != 1)
         {
             txt(i18n::s.get("core.locale.magic.map.need_global_map"));
             break;
@@ -1043,8 +1043,8 @@ label_2181_internal:
             item_separate(ci);
             for (int cnt = 0; cnt < 1000; ++cnt)
             {
-                dx = 4 + rnd((mdata(0) - 8));
-                dy = 3 + rnd((mdata(1) - 6));
+                dx = 4 + rnd((mdata_map_width - 8));
+                dy = 3 + rnd((mdata_map_height - 6));
                 if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
                 {
                     continue;
@@ -1537,7 +1537,7 @@ label_2181_internal:
         {
             y = cdata[cc].position.y + cnt - 1;
             x = cdata[cc].position.x;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {
                 continue;
             }
@@ -1553,7 +1553,7 @@ label_2181_internal:
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
-                if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+                if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
                 {
                     continue;
                 }
@@ -1891,7 +1891,7 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2420,10 +2420,10 @@ label_2181_internal:
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
                 {
                     x = cnt;
                     p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
@@ -2974,7 +2974,7 @@ label_2181_internal:
             x = rnd(p) + tlocx - rnd(p);
             y = rnd(p) + tlocy - rnd(p);
             f = 1;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {
                 f = 0;
             }
@@ -3564,7 +3564,7 @@ label_2181_internal:
         x = tlocx;
         y = tlocy;
         f = 1;
-        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
         {
             f = 0;
         }
@@ -3673,7 +3673,7 @@ label_2181_internal:
         }
         break;
     case 659:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             break;
         }
@@ -3743,10 +3743,10 @@ label_2181_internal:
         txtef(4);
         txt(i18n::s.get("core.locale.magic.meteor"));
         play_animation(22);
-        for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
         {
             dy = cnt;
-            for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
                 dx = cnt;
                 if (rnd(3) == 0)

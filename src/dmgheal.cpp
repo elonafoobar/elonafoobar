@@ -590,7 +590,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
-                    if (mdata(6) != 1)
+                    if (mdata_map_type != 1)
                     {
                         if (chara_copy(victim))
                         {
@@ -613,7 +613,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                         && victim.paralyzed == 0
                         && victim.blind == 0)
                     {
-                        if (mdata(6) != 1)
+                        if (mdata_map_type != 1)
                         {
                             if (chara_copy(victim))
                             {

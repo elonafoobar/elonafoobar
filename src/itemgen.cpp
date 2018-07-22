@@ -114,8 +114,8 @@ int do_create_item(int slot, int x, int y)
         {
             if (x == -1)
             {
-                sx = rnd(mdata(0) - 2) + 2;
-                sy = rnd(mdata(1) - 2) + 2;
+                sx = rnd(mdata_map_width - 2) + 2;
+                sy = rnd(mdata_map_height - 2) + 2;
                 if (map(sx, sy, 4) != 0)
                 {
                     continue;
@@ -133,7 +133,7 @@ int do_create_item(int slot, int x, int y)
                     sx = x + rnd(i + 1) - rnd(i + 1);
                     sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (sx < 0 || sy < 0 || sx > mdata(0) - 1 || sy > mdata(1) - 1)
+                if (sx < 0 || sy < 0 || sx > mdata_map_width - 1 || sy > mdata_map_height - 1)
                 {
                     continue;
                 }

@@ -33,8 +33,8 @@ namespace
 bool can_place_character_at(const position_t& position, bool allow_stairs)
 {
     // Out of range
-    if (position.x < 0 || mdata(0) <= position.x || position.y < 0
-        || mdata(1) <= position.y)
+    if (position.x < 0 || mdata_map_width <= position.x || position.y < 0
+        || mdata_map_height <= position.y)
         return false;
 
     // Wall
@@ -87,13 +87,13 @@ bool chara_place_internal(
         }
         if (i > 99)
         {
-            if (mdata(0) == 0)
+            if (mdata_map_width == 0)
             {
                 return false;
             }
-            y = (i - 100) / mdata(0);
-            x = (i - 100) % mdata(0);
-            if (y >= mdata(1))
+            y = (i - 100) / mdata_map_width;
+            x = (i - 100) % mdata_map_width;
+            if (y >= mdata_map_height)
             {
                 if (cc.index != 0)
                 {
@@ -102,8 +102,8 @@ bool chara_place_internal(
                 else
                 {
                     // Make the cell placable.
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
+                    x = rnd(mdata_map_width);
+                    y = rnd(mdata_map_height);
                     // FIXME: I refered to oor, but I think it is not perfect.
                     // Break wall.
                     if (chipm(7, map(x, y, 0)) & 4)
@@ -143,8 +143,8 @@ bool chara_place_internal(
             }
             else
             {
-                x = rnd(mdata(0) - 4) + 2;
-                y = rnd(mdata(1) - 4) + 2;
+                x = rnd(mdata_map_width - 4) + 2;
+                y = rnd(mdata_map_height - 4) + 2;
             }
             if (enemy_respawn && i < 20)
             {
@@ -779,7 +779,7 @@ void chara_set_generation_filter()
         fltn(u8"sf"s);
         return;
     }
-    if (mdata(6) == 3 || mdata(6) == 2)
+    if (mdata_map_type == 3 || mdata_map_type == 2)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltselect = 5;
@@ -949,7 +949,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata(6) >= 20)
+    if (mdata_map_type >= 20)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;
@@ -1977,12 +1977,12 @@ bool chara_copy(int cc)
     for (int i = 0; i < 4; ++i)
     {
         y = cdata[cc].position.y - rnd(2) + rnd(2);
-        if (y < 0 || y >= mdata(1))
+        if (y < 0 || y >= mdata_map_height)
         {
             continue;
         }
         x = cdata[cc].position.x - rnd(2) + rnd(2);
-        if (x < 0 || x >= mdata(0))
+        if (x < 0 || x >= mdata_map_width)
         {
             continue;
         }

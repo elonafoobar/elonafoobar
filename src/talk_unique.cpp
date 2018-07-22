@@ -179,7 +179,7 @@ talk_result_t talk_unique_loyter()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_nightmare = 2;
-        mdata(4) = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 5;
         gdata_destination_dungeon_level = 5;
         levelexitby = 2;
@@ -2295,7 +2295,7 @@ talk_result_t talk_unique_gilbert()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_defense_line = 2;
-        mdata(4) = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 12;
         gdata_destination_dungeon_level = 4;
         levelexitby = 2;
@@ -2395,7 +2395,7 @@ talk_result_t talk_unique_arnord()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_kamikaze_attack = 2;
-        mdata(4) = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 11;
         gdata_destination_dungeon_level = 25;
         levelexitby = 2;

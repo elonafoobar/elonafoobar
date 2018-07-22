@@ -628,7 +628,7 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.bomb"));
@@ -761,13 +761,13 @@ void proc_event()
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
             dy = tlocy - range_ + i;
-            if (dy < 0 || dy >= mdata(1))
+            if (dy < 0 || dy >= mdata_map_height)
                 continue;
             {
                 for (int j = 0; j < range_ * 2 + 1; ++j)
                 {
                     dx = tlocx - range_ + j;
-                    if (dx < 0 || dx >= mdata(0))
+                    if (dx < 0 || dx >= mdata_map_width)
                         continue;
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
@@ -803,7 +803,7 @@ void proc_event()
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
         }
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == 3 || mdata_map_type == 2)
         {
             modify_karma(0, -80 + trait(162) * 60);
         }
@@ -813,7 +813,7 @@ void proc_event()
         }
         break;
     case 18:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
             break;
         gdata_weather = 1;
         envonly = 1;
@@ -825,16 +825,16 @@ void proc_event()
         {
             for (int j = 0; j < 2; ++j)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
                 map(x, y, 0) = 37;
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1) || rnd(5) == 0)
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height || rnd(5) == 0)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
             }
             mef_add(
                 x,
@@ -894,7 +894,7 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
             break;
         txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)

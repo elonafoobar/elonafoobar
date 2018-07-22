@@ -392,23 +392,23 @@ void casino_random_site()
     {
         atxid(1) = 3;
         atxlv = gdata_current_dungeon_level;
-        if (mdata(6) == 20)
+        if (mdata_map_type == 20)
         {
             atxid(1) = 1;
         }
-        if (mdata(6) == 21)
+        if (mdata_map_type == 21)
         {
             atxid(1) = 4;
         }
-        if (mdata(6) == 22)
+        if (mdata_map_type == 22)
         {
             atxid(1) = 2;
         }
-        if (mdata(6) == 23)
+        if (mdata_map_type == 23)
         {
             atxid(1) = 4;
         }
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             atxlv = cdata[0].level;
             if (4 <= gdata(62) && gdata(62) < 9)

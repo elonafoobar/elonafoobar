@@ -55,7 +55,7 @@ void initialize_home_adata()
 
 turn_result_t build_new_building()
 {
-    if (mdata(6) != 1)
+    if (mdata_map_type != 1)
     {
         txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
@@ -202,7 +202,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 turn_result_t show_house_board()
 {
     txtnew();
-    if (mdata(6) != 5)
+    if (mdata_map_type != 5)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
@@ -227,9 +227,9 @@ turn_result_t show_house_board()
             }
         }
     }
-    if (mdata(18) != 0)
+    if (mdata_map_max_item_count != 0)
     {
-        p(2) = mdata(18);
+        p(2) = mdata_map_max_item_count;
     }
     txt(i18n::s.get(
         "core.locale.building.house_board.item_count",
@@ -293,7 +293,7 @@ turn_result_t show_house_board()
                 "core.locale.building.house_board.choices.assign_a_shopkeeper"),
             u8"null"s,
             ""s + 4);
-        if (mdata(18) < 400)
+        if (mdata_map_max_item_count < 400)
         {
             ELONA_APPEND_PROMPT(
                 i18n::s.get(
@@ -747,9 +747,9 @@ void try_extend_shop()
     {
         snd(12);
         cdata[0].gold -= calcshopreform();
-        mdata(18) = clamp(mdata(18) + 10, 1, 400);
+        mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
         txtef(2);
-        txt(i18n::s.get("core.locale.building.shop.extend", mdata(18)));
+        txt(i18n::s.get("core.locale.building.shop.extend", mdata_map_max_item_count));
     }
 }
 
@@ -1123,11 +1123,11 @@ void show_shop_log()
 
 void update_shop()
 {
-    mdata(10) = (100 - gdata(125) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    mdata_map_max_crowd_density = (100 - gdata(125) / 100) / 4 + 1;
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             map(cnt, y, 4) = 0;
             map(cnt, y, 9) = 0;
@@ -1141,7 +1141,7 @@ void update_shop()
         }
         x = inv[cnt].position.x;
         y = inv[cnt].position.y;
-        if (x < 0 || x >= mdata(0) || y < 0 || y >= mdata(1))
+        if (x < 0 || x >= mdata_map_width || y < 0 || y >= mdata_map_height)
         {
             continue;
         }
@@ -1240,7 +1240,7 @@ void update_museum()
             ranktitle(3),
             rankn(10, 3)));
     }
-    mdata(10) = (100 - gdata(123) / 100) / 2 + 1;
+    mdata_map_max_crowd_density = (100 - gdata(123) / 100) / 2 + 1;
     return;
 }
 

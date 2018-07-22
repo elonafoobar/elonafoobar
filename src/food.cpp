@@ -204,7 +204,7 @@ void chara_vomit(int prm_876)
             }
         }
     }
-    if (mdata(6) != 1)
+    if (mdata_map_type != 1)
     {
         p_at_m146 = 2;
         for (const auto& cnt : items(-1))

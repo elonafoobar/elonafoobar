@@ -66,7 +66,7 @@ turn_result_t npc_turn()
         {
             if (rnd(4) == 0)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != 1)
                 {
                     if (cdata[cc].is_leashed())
                     {
@@ -485,7 +485,7 @@ label_2689_internal:
                             {
                                 if (ibit(5, ci) == 0)
                                 {
-                                    if (mdata(6) != 5)
+                                    if (mdata_map_type != 5)
                                     {
                                         in = inv[ci].number;
                                         if (gdata_mount != cc)
@@ -546,7 +546,7 @@ label_2689_internal:
         for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
         {
             y = cdata[cc].position.y - 2 + cnt;
-            if (y < 0 || y >= mdata(1))
+            if (y < 0 || y >= mdata_map_height)
             {
                 continue;
             }
@@ -554,7 +554,7 @@ label_2689_internal:
             for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
             {
                 x = cdata[cc].position.x - 2 + cnt;
-                if (x < 0 || x >= mdata(0))
+                if (x < 0 || x >= mdata_map_width)
                 {
                     continue;
                 }
@@ -722,7 +722,7 @@ turn_result_t turn_begin()
     {
         gspd = 10;
     }
-    turncost = (mdata(9) - cdata[0].turn_cost) / gspd + 1;
+    turncost = (mdata_map_turn_cost - cdata[0].turn_cost) / gspd + 1;
     if (event_was_set())
     {
         return event_start_proc(); // TODO avoid evnum side effect
@@ -733,11 +733,11 @@ turn_result_t turn_begin()
     }
 
     bool update_turn_cost = true;
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (cdata[0].continuous_action_turn > 2)
         {
-            cdata[0].turn_cost = mdata(9);
+            cdata[0].turn_cost = mdata_map_turn_cost;
             update_turn_cost = false;
         }
     }
@@ -813,9 +813,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 ++ct;
                 continue;
             }
-            if (cdata[ct].turn_cost >= mdata(9))
+            if (cdata[ct].turn_cost >= mdata_map_turn_cost)
             {
-                cdata[ct].turn_cost -= mdata(9);
+                cdata[ct].turn_cost -= mdata_map_turn_cost;
                 break;
             }
             else
@@ -868,7 +868,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (gdata_is_returning_or_escaping != 0)
         {
             --gdata_is_returning_or_escaping;
-            if (mdata(6) == 7 || gdata_current_map == 30
+            if (mdata_map_type == 7 || gdata_current_map == 30
                 || gdata_current_map == 41)
             {
                 gdata_is_returning_or_escaping = 0;
@@ -934,7 +934,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (gdata_weather == 1)
         {
-            if (mdata(14) == 2)
+            if (mdata_map_indoors_flag == 2)
             {
                 if (rnd(2) == 0)
                 {
@@ -1039,7 +1039,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     {
                         continue;
                     }
-                    if (cnt == cc || rnd(3) || mdata(6) == 1)
+                    if (cnt == cc || rnd(3) || mdata_map_type == 1)
                     {
                         continue;
                     }
@@ -1134,7 +1134,7 @@ void label_27412()
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata(14) == 2 && gdata_weather >= 3)
+    if (mdata_map_indoors_flag == 2 && gdata_weather >= 3)
     {
         cdata[cc].wet = 50;
     }
@@ -1191,7 +1191,7 @@ turn_result_t turn_end()
         get_hungry(cc);
         refreshspeed(cc);
     }
-    else if (mdata(6) != 1)
+    else if (mdata_map_type != 1)
     {
         cdata[cc].nutrition -= 16;
         if (cdata[cc].nutrition < 6000)
@@ -1246,7 +1246,7 @@ turn_result_t pc_turn(bool advance_time)
         {
             cdata[gdata_mount].position = cdata[0].position;
         }
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             map(cdata[0].position.x, cdata[0].position.y, 1) = 1;
         }
@@ -1264,12 +1264,12 @@ turn_result_t pc_turn(bool advance_time)
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata[0].position.y + dy;
-                if (y < 0 || y <= mdata(1))
+                if (y < 0 || y <= mdata_map_height)
                     continue;
                 for (int dx = -1; dx <= 1; ++dx)
                 {
                     x = cdata[0].position.x + dx;
-                    if (x < 0 || x <= mdata(0))
+                    if (x < 0 || x <= mdata_map_width)
                         continue;
                     if (map(x, y, 1) != 0)
                     {
@@ -1477,7 +1477,7 @@ turn_result_t pc_turn(bool advance_time)
                 access_item_db(15);
             }
         }
-        if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
+        if (trait(214) != 0 && rnd(250) == 0 && mdata_map_type != 1)
         {
             efid = 408;
             magic();
@@ -1595,7 +1595,7 @@ label_2747:
         }
         if (getkey(snail::key::f7))
         {
-            if (mdata(6) != 3)
+            if (mdata_map_type != 3)
             {
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
@@ -1692,7 +1692,7 @@ label_2747:
     {
         key = key_search;
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
-        if (feat(1) == 11 || mdata(6) == 1)
+        if (feat(1) == 11 || mdata_map_type == 1)
         {
             key = key_godown;
         }
@@ -1841,7 +1841,7 @@ label_2747:
     }
     if (key == key_throw)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1868,7 +1868,7 @@ label_2747:
     }
     if (key == key_drop)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1911,7 +1911,7 @@ label_2747:
     }
     if (key == key_zap)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1938,7 +1938,7 @@ label_2747:
     }
     if (key == key_open)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1957,7 +1957,7 @@ label_2747:
     }
     if (key == key_dip)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1991,7 +1991,7 @@ label_2747:
     }
     if (key == key_cast)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2007,7 +2007,7 @@ label_2747:
     }
     if (key == key_skill)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2032,7 +2032,7 @@ label_2747:
     menucycle = 0;
     if (key == key_offer)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2061,7 +2061,7 @@ label_2747:
     }
     if (key == key_interact)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2083,7 +2083,7 @@ label_2747:
     }
     if (key == key_fire)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2098,7 +2098,7 @@ label_2747:
     }
     if (key == key_give)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2117,7 +2117,7 @@ label_2747:
     }
     if (key == key_look)
     {
-        if (mdata(6) != 1)
+        if (mdata_map_type != 1)
         {
             return do_look_command();
         }
@@ -2148,7 +2148,7 @@ label_2747:
 
     if (key == key_bash)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2167,7 +2167,7 @@ label_2747:
     }
     if (key == key_close)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2182,7 +2182,7 @@ label_2747:
     }
     if (key == key_pray)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2278,9 +2278,9 @@ label_2747:
         int y = cdata[0].next_position.y;
         if (foobar_data.is_autodig_enabled)
         {
-            if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
+            if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
-                && mdata(6) != 1)
+                && mdata_map_type != 1)
             {
                 refx = x;
                 refy = y;

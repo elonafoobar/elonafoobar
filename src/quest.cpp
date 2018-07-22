@@ -1192,7 +1192,7 @@ void quest_all_targets_killed()
         modrank(0, 100, 2);
         cdata[0].fame += gdata(74);
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
-        map_placeupstairs(mdata(0) / 2, mdata(1) / 2);
+        map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
         ++adata(22, gdata_previous_map2);
         if (adata(22, gdata_previous_map2) % 20 == 0)
         {

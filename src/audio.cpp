@@ -283,7 +283,7 @@ void play_music(int music_id)
             }
         }
     }
-    if (mdata(14) == 2)
+    if (mdata_map_indoors_flag == 2)
     {
         DSSETVOLUME(13, max_volume * 0.8);
     }
@@ -303,7 +303,7 @@ void play_music(int music_id)
     {
         DSSTOP(14);
     }
-    if (mdata(6) == 3)
+    if (mdata_map_type == 3)
     {
         snd(79, true);
     }
@@ -311,7 +311,7 @@ void play_music(int music_id)
     {
         DSSTOP(15);
     }
-    if (mdata(20) == 1)
+    if (mdata_map_play_campfire_sound == 1)
     {
         snd(80, true);
     }
@@ -342,9 +342,9 @@ void play_music(int music_id)
         {
             music_id = 67;
         }
-        if (mdata(13) != 0)
+        if (mdata_map_bgm != 0)
         {
-            music_id = mdata(13);
+            music_id = mdata_map_bgm;
         }
         if (adata(0, gdata_current_map) >= 20)
         {

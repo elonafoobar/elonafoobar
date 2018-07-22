@@ -319,17 +319,17 @@ void bind(sol::table& Elona);
 
 int Map::width()
 {
-    return mdata(0);
+    return mdata_map_width;
 }
 
 int Map::height()
 {
-    return mdata(1);
+    return mdata_map_height;
 }
 
 bool Map::is_overworld()
 {
-    return elona::mdata(2) == 0;
+    return elona::mdata_map_atlas_number == 0;
 }
 
 bool Map::valid(const position_t& position)
@@ -368,15 +368,15 @@ bool Map::can_access_xy(int x, int y)
 
 position_t Map::bound_within(const position_t& position)
 {
-    int x = clamp(position.x, 0, mdata(0) - 1);
-    int y = clamp(position.y, 0, mdata(1) - 1);
+    int x = clamp(position.x, 0, mdata_map_width - 1);
+    int y = clamp(position.y, 0, mdata_map_height - 1);
     return position_t{x, y};
 }
 
 position_t Map::random_pos()
 {
     return Map::bound_within(
-        position_t{elona::rnd(mdata(0) - 1), elona::rnd(mdata(1) - 1)});
+        position_t{elona::rnd(mdata_map_width - 1), elona::rnd(mdata_map_height - 1)});
 }
 
 int Map::generate_tile(tile_kind_t type)

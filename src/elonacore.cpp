@@ -1106,8 +1106,8 @@ int cargocheck()
     {
         return 1;
     }
-    if (mdata(6) != 1 && mdata(6) != 5 && mdata(6) != 3 && mdata(6) != 4
-        && mdata(6) != 6 && mdata(6) != 2)
+    if (mdata_map_type != 1 && mdata_map_type != 5 && mdata_map_type != 3 && mdata_map_type != 4
+        && mdata_map_type != 6 && mdata_map_type != 2)
     {
         ++msgdup;
         txt(lang(
@@ -1424,8 +1424,8 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
         {
             return 0;
         }
-        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= mdata(0)
-            || prm_613 >= mdata(1))
+        if (prm_612 < 0 || prm_613 < 0 || prm_612 >= mdata_map_width
+            || prm_613 >= mdata_map_height)
         {
             return 0;
         }
@@ -1498,7 +1498,7 @@ int breath_list()
                 {
                     continue;
                 }
-                if (tx < 0 || ty < 0 || tx >= mdata(0) || ty >= mdata(1))
+                if (tx < 0 || ty < 0 || tx >= mdata_map_width || ty >= mdata_map_height)
                 {
                     continue;
                 }
@@ -1846,7 +1846,7 @@ void refreshspeed(int cc)
     {
         cdata[0].speed_percentage_in_next_turn -= 10;
     }
-    if (mdata(6) == 1 || mdata(6) == 4)
+    if (mdata_map_type == 1 || mdata_map_type == 4)
     {
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
@@ -2328,8 +2328,8 @@ void spillblood(int prm_830, int prm_831, int prm_832)
             dx_at_m136 = prm_830 + rnd(2) - rnd(2);
             dy_at_m136 = prm_831 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= mdata(0) || dy_at_m136 < 0
-            || dy_at_m136 >= mdata(1))
+        if (dx_at_m136 < 0 || dx_at_m136 >= mdata_map_width || dy_at_m136 < 0
+            || dy_at_m136 >= mdata_map_height)
         {
             continue;
         }
@@ -2361,8 +2361,8 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
             dx_at_m136 = prm_833 + rnd(2) - rnd(2);
             dy_at_m136 = prm_834 + rnd(2) - rnd(2);
         }
-        if (dx_at_m136 < 0 || dx_at_m136 >= mdata(0) || dy_at_m136 < 0
-            || dy_at_m136 >= mdata(1))
+        if (dx_at_m136 < 0 || dx_at_m136 >= mdata_map_width || dy_at_m136 < 0
+            || dy_at_m136 >= mdata_map_height)
         {
             continue;
         }
@@ -3873,7 +3873,7 @@ void character_drops_item()
             {
                 continue;
             }
-            if (mdata(7) == 0)
+            if (mdata_map_refresh_type == 0)
             {
                 if (inv[cnt].body_part != 0)
                 {
@@ -3894,8 +3894,8 @@ void character_drops_item()
             }
             if (the_item_db[inv[ci].id]->is_cargo == 1)
             {
-                if (mdata(6) != 1 && mdata(6) != 5 && mdata(6) != 3
-                    && mdata(6) != 4 && mdata(6) != 6 && mdata(6) != 2)
+                if (mdata_map_type != 1 && mdata_map_type != 5 && mdata_map_type != 3
+                    && mdata_map_type != 4 && mdata_map_type != 6 && mdata_map_type != 2)
                 {
                     continue;
                 }
@@ -4912,7 +4912,7 @@ void damage_by_cursed_equipments()
         dmghp(cc, cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100, -5);
         return;
     }
-    if (mdata(6) != 1)
+    if (mdata_map_type != 1)
     {
         if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
         {
@@ -4967,7 +4967,7 @@ void proc_pregnant()
                     u8"\"Something is wrong with my stomach...\""s));
         }
     }
-    if (mdata(6) != 1)
+    if (mdata_map_type != 1)
     {
         if (rnd(30) == 0)
         {
@@ -5021,7 +5021,7 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 21)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != 1)
                 {
                     if (rnd(25)
                         < clamp(
@@ -5082,9 +5082,9 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 47)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != 1)
                 {
-                    if (mdata(6) != 5)
+                    if (mdata_map_type != 5)
                     {
                         if (rnd(50)
                             < clamp(
@@ -5277,7 +5277,7 @@ void monster_respawn()
     if (adata(16, gdata_current_map) == 101
         || adata(16, gdata_current_map) == 102)
     {
-        if (gdata_crowd_density < mdata(10) / 2)
+        if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
         {
             if (rnd(2) == 0)
             {
@@ -5286,11 +5286,11 @@ void monster_respawn()
             }
         }
     }
-    if (mdata(10) == 0)
+    if (mdata_map_max_crowd_density == 0)
     {
         return;
     }
-    if (gdata_crowd_density < mdata(10) / 4)
+    if (gdata_crowd_density < mdata_map_max_crowd_density / 4)
     {
         if (rnd(2) == 0)
         {
@@ -5298,7 +5298,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata(10) / 2)
+    if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
     {
         if (rnd(4) == 0)
         {
@@ -5306,7 +5306,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata(10))
+    if (gdata_crowd_density < mdata_map_max_crowd_density)
     {
         if (rnd(8) == 0)
         {
@@ -5326,7 +5326,7 @@ turn_result_t exit_map()
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
     gdata(171) = 0;
-    if (mdata(6) == 5)
+    if (mdata_map_type == 5)
     {
         if (config::instance().extrahelp)
         {
@@ -5344,7 +5344,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata(6) == 7)
+    if (mdata_map_type == 7)
     {
         rq = gdata_executing_immediate_quest;
         quest_exit_map();
@@ -5405,7 +5405,7 @@ turn_result_t exit_map()
                 lang(u8"階段を降りた。"s, u8"You walk down the stairs. "s);
             f = 1;
             gdata_entrance_type = 1;
-            mdata(4) = cdata[0].position.y * 1000 + cdata[0].position.x;
+            mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
             if (feat(2) == 0)
             {
                 ++gdata_current_dungeon_level;
@@ -5422,7 +5422,7 @@ turn_result_t exit_map()
             msgtemp += lang(u8"階段を昇った。"s, u8"You walk up the stairs. "s);
             f = 1;
             gdata_entrance_type = 2;
-            mdata(5) = cdata[0].position.y * 1000 + cdata[0].position.x;
+            mdata_map_stair_up_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
             if (feat(2) == 0)
             {
                 --gdata_current_dungeon_level;
@@ -5436,7 +5436,7 @@ turn_result_t exit_map()
         }
         if (f == 0)
         {
-            if (mdata(6) == 1)
+            if (mdata_map_type == 1)
             {
                 gdata_pc_home_x = cdata[cc].position.x;
                 gdata_pc_home_y = cdata[cc].position.y;
@@ -5478,13 +5478,13 @@ turn_result_t exit_map()
                     gdata_current_map = 2;
                 }
             }
-            if (mdata(6) == 3 || mdata(6) == 4 || mdata(6) == 5 || mdata(6) == 6
-                || mdata(6) == 2)
+            if (mdata_map_type == 3 || mdata_map_type == 4 || mdata_map_type == 5 || mdata_map_type == 6
+                || mdata_map_type == 2)
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata(6) >= 20 || mdata(6) == 6)
+        if (mdata_map_type >= 20 || mdata_map_type == 6)
         {
             if (gdata_current_dungeon_level < adata(17, gdata_current_map))
             {
@@ -5508,7 +5508,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata(6) == 7)
+    if (mdata_map_type == 7)
     {
         gdata_current_map = gdata_previous_map2;
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
@@ -5552,8 +5552,8 @@ turn_result_t exit_map()
     }
     if (gdata_current_map != gdata_previous_map)
     {
-        if (mdata(6) == 3 || gdata_departure_date == 0
-            || gdata_previous_map == 7 || mdata(6) == 2)
+        if (mdata_map_type == 3 || gdata_departure_date == 0
+            || gdata_previous_map == 7 || mdata_map_type == 2)
         {
             gdata_departure_date = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
@@ -5565,9 +5565,9 @@ turn_result_t exit_map()
         {
             autosave = 1 * (gdata_current_map != 35);
         }
-        if (mdata(6) != 1)
+        if (mdata_map_type != 1)
         {
-            if (mdata(6) != 4 || mdata(6) == 5)
+            if (mdata_map_type != 4 || mdata_map_type == 5)
             {
                 if (fixtransfermap == 0)
                 {
@@ -5594,7 +5594,7 @@ turn_result_t exit_map()
             msgtemp += i18n::s.get("core.locale.action.exit_map.entered",
                                    mapname(gdata_current_map));
         }
-        else if (mdata(6) == 7)
+        else if (mdata_map_type == 7)
         {
             msgtemp += i18n::s.get("core.locale.action.exit_map.returned_to",
                                    mapname(gdata_current_map));
@@ -5657,7 +5657,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata(7) == 1)
+    if (mdata_map_refresh_type == 1)
     {
         // This map should be saved.
         save_map_local_data();
@@ -5728,9 +5728,9 @@ void prepare_charas_for_map_unload()
 void save_map_local_data()
 {
     prepare_charas_for_map_unload();
-    for (int y = 0; y < mdata(1); ++y)
+    for (int y = 0; y < mdata_map_height; ++y)
     {
-        for (int x = 0; x < mdata(0); ++x)
+        for (int x = 0; x < mdata_map_width; ++x)
         {
             map(x, y, 7) = 0;
         }
@@ -5757,16 +5757,16 @@ void label_1745()
     }
     if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12
-        >= mdata(3))
+        >= mdata_map_next_regenerate_date)
     {
-        if (mdata(17) == 0)
+        if (mdata_map_should_regenerate == 0)
         {
-            if (mdata(3) != 0)
+            if (mdata_map_next_regenerate_date != 0)
             {
-                for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
                 {
                     y = cnt;
-                    for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end;
+                    for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
                          ++cnt)
                     {
                         if (map(cnt, y, 6) != 0)
@@ -5795,7 +5795,7 @@ void label_1745()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (mdata(6) == 3 || mdata(6) == 2)
+                    if (mdata_map_type == 3 || mdata_map_type == 2)
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5830,16 +5830,16 @@ void label_1745()
                     }
                 }
             }
-            p = rnd(mdata(1) * mdata(0) / 400 + 3);
-            if (mdata(6) == 1)
+            p = rnd(mdata_map_height * mdata_map_width / 400 + 3);
+            if (mdata_map_type == 1)
             {
                 p = rnd(40);
             }
-            if (mdata(6) == 3)
+            if (mdata_map_type == 3)
             {
                 p = rnd(rnd(rnd(12) + 1) + 1);
             }
-            if (mdata(6) == 2)
+            if (mdata_map_type == 2)
             {
                 p = rnd(p + 1);
             }
@@ -5848,21 +5848,21 @@ void label_1745()
                 map_randsite();
             }
         }
-        mdata(3) = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+        mdata_map_next_regenerate_date = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 120;
     }
     if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12
-        >= mdata(16))
+        >= mdata_map_next_restock_date)
     {
-        if (mdata(16) == 0)
+        if (mdata_map_next_restock_date == 0)
         {
             renewmulti = 1;
         }
         else
         {
             renewmulti = (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                          + gdata_year * 24 * 30 * 12 - mdata(16))
+                          + gdata_year * 24 * 30 * 12 - mdata_map_next_restock_date)
                     / 24
                 + 1;
         }
@@ -5887,12 +5887,12 @@ void label_1745()
                 }
             }
         }
-        if (mdata(17) == 0)
+        if (mdata_map_should_regenerate == 0)
         {
-            for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
                 {
                     if (map(cnt, y, 6) != 0)
                     {
@@ -5916,7 +5916,7 @@ void label_1745()
                     }
                 }
             }
-            if (mdata(6) == 3 || mdata(6) == 2 || gdata_current_map == 7)
+            if (mdata_map_type == 3 || mdata_map_type == 2 || gdata_current_map == 7)
             {
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
                      cnt < ELONA_MAX_CHARACTERS;
@@ -5968,7 +5968,7 @@ void label_1745()
                 }
             }
         }
-        mdata(16) = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+        mdata_map_next_restock_date = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24;
     }
     return;
@@ -5979,22 +5979,22 @@ void label_1745()
 void label_1746()
 {
     gsel(6);
-    if (mdata(2) != mtilefilecur)
+    if (mdata_map_atlas_number != mtilefilecur)
     {
         pos(0, 0);
         picload(
-            filesystem::dir::graphic() / (u8"map"s + mdata(2) + u8".bmp"), 1);
-        mtilefilecur = mdata(2);
+            filesystem::dir::graphic() / (u8"map"s + mdata_map_atlas_number + u8".bmp"), 1);
+        mtilefilecur = mdata_map_atlas_number;
         initialize_map_chip();
     }
-    map_tileset(mdata(12));
+    map_tileset(mdata_map_tileset);
     gsel(2);
     gmode(0);
     pos(0, 0);
     // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
 
     int shadow = 5;
-    if (mdata(14) == 2)
+    if (mdata_map_indoors_flag == 2)
     {
         if (gdata_hour >= 24 || (gdata_hour >= 0 && gdata_hour < 4))
         {
@@ -6040,17 +6040,17 @@ void label_1746()
     gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
     set_color_mod(255, 255, 255, 6);
     gmode(4, 30);
-    if (mdata(2) == 0)
+    if (mdata_map_atlas_number == 0)
     {
         pos(0, 192);
         gcopy(6, 0, 192, 1360, 48);
     }
-    if (mdata(2) == 1)
+    if (mdata_map_atlas_number == 1)
     {
         pos(0, 1056);
         gcopy(6, 0, 1056, 1360, 48);
     }
-    if (mdata(2) != 2)
+    if (mdata_map_atlas_number != 2)
     {
         pos(0, 336);
         gcopy(6, 0, 336, 1360, 48);
@@ -6083,8 +6083,8 @@ int initialize_world_map()
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        cxinit = rnd(mdata(0));
-        cyinit = rnd(mdata(1));
+        cxinit = rnd(mdata_map_width);
+        cyinit = rnd(mdata_map_height);
         label_1753();
     }
     label_1749();
@@ -6197,10 +6197,10 @@ void label_1750()
             continue;
         }
         if (adata(1, cnt) <= 0 || adata(2, cnt) <= 0
-            || adata(1, cnt) >= mdata(0) || adata(2, cnt) >= mdata(1))
+            || adata(1, cnt) >= mdata_map_width || adata(2, cnt) >= mdata_map_height)
         {
-            adata(1, cnt) = mdata(0) / 2;
-            adata(2, cnt) = mdata(1) / 2;
+            adata(1, cnt) = mdata_map_width / 2;
+            adata(2, cnt) = mdata_map_height / 2;
         }
         p = cnt;
         if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) & 4
@@ -6208,11 +6208,11 @@ void label_1750()
         {
             for (int cnt = 0;; ++cnt)
             {
-                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
+                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
                 x = adata(1, p) + rnd(dx) - rnd(dx);
                 y = adata(2, p) + rnd(dy) - rnd(dy);
-                if (x <= 0 || y <= 0 || x >= mdata(0) - 1 || y >= mdata(1) - 1)
+                if (x <= 0 || y <= 0 || x >= mdata_map_width - 1 || y >= mdata_map_height - 1)
                 {
                     continue;
                 }
@@ -6252,10 +6252,10 @@ void label_1750()
 
 void label_1751()
 {
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             cell_featread(x, y);
@@ -7005,7 +7005,7 @@ int label_1753()
         {
             x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
             y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-            if (x <= 5 || y <= 5 || x >= mdata(0) - 6 || y >= mdata(1) - 6)
+            if (x <= 5 || y <= 5 || x >= mdata_map_width - 6 || y >= mdata_map_height - 6)
             {
                 continue;
             }
@@ -7188,21 +7188,21 @@ void label_1754()
         {
             ++gdata_duration_of_kamikaze_attack;
             x = 1;
-            y = rnd(mdata(1));
+            y = rnd(mdata_map_height);
             if (rnd(4) == 0)
             {
-                x = mdata(0) - 2;
-                y = rnd(mdata(1));
+                x = mdata_map_width - 2;
+                y = rnd(mdata_map_height);
             }
             if (rnd(5) == 0)
             {
-                x = rnd(mdata(0));
+                x = rnd(mdata_map_width);
                 y = 1;
             }
             if (rnd(6) == 0)
             {
-                x = rnd(mdata(0));
-                y = mdata(1) - 2;
+                x = rnd(mdata_map_width);
+                y = mdata_map_height - 2;
             }
             p = 237;
             if (gdata_duration_of_kamikaze_attack > 50)
@@ -7305,11 +7305,11 @@ void label_1754()
             {
                 gdata_continuous_active_hours = 13;
             }
-            mdata(9) = 1000000;
+            mdata_map_turn_cost = 1000000;
         }
-        else if (mdata(9) == 1000000)
+        else if (mdata_map_turn_cost == 1000000)
         {
-            mdata(9) = 10000;
+            mdata_map_turn_cost = 10000;
             for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 cdata[cnt].turn_cost = 0;
@@ -8234,7 +8234,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     }
     if (map(prm_1057, prm_1058, 6) != 0)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 15)
             {
@@ -8785,17 +8785,17 @@ label_1948_internal:
             {
                 cdata[0].position.x = 0;
             }
-            else if (cdata[0].position.x >= mdata(0))
+            else if (cdata[0].position.x >= mdata_map_width)
             {
-                cdata[0].position.x = mdata(0) - 1;
+                cdata[0].position.x = mdata_map_width - 1;
             }
             if (cdata[0].position.y < 0)
             {
                 cdata[0].position.y = 0;
             }
-            else if (cdata[0].position.y >= mdata(1))
+            else if (cdata[0].position.y >= mdata_map_height)
             {
-                cdata[0].position.y = mdata(1) - 1;
+                cdata[0].position.y = mdata_map_height - 1;
             }
         }
         tlocx = tx + scx;
@@ -8803,18 +8803,18 @@ label_1948_internal:
         {
             tlocx = 0;
         }
-        else if (tlocx >= mdata(0))
+        else if (tlocx >= mdata_map_width)
         {
-            tlocx = mdata(0) - 1;
+            tlocx = mdata_map_width - 1;
         }
         tlocy = ty + scy;
         if (tlocy < 0)
         {
             tlocy = 0;
         }
-        else if (tlocy >= mdata(1))
+        else if (tlocy >= mdata_map_height)
         {
-            tlocy = mdata(1) - 1;
+            tlocy = mdata_map_height - 1;
         }
     }
     else
@@ -8824,7 +8824,7 @@ label_1948_internal:
         {
             x = tlocx + kdx;
             y = tlocy + kdy;
-            if (x >= 0 && y >= 0 && x < mdata(0) && y < mdata(1))
+            if (x >= 0 && y >= 0 && x < mdata_map_width && y < mdata_map_height)
             {
                 tlocx += kdx;
                 tlocy += kdy;
@@ -9023,7 +9023,7 @@ turn_result_t do_short_cut()
     }
     if (efid >= 600)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -9044,7 +9044,7 @@ turn_result_t do_short_cut()
     }
     if (efid >= 400)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -9923,20 +9923,20 @@ void label_2088()
     {
         if (cdata[cnt].state == 1)
         {
-            if (cdata[cnt].position.x < 0 || cdata[cnt].position.x >= mdata(0)
+            if (cdata[cnt].position.x < 0 || cdata[cnt].position.x >= mdata_map_width
                 || cdata[cnt].position.y < 0
-                || cdata[cnt].position.y >= mdata(1))
+                || cdata[cnt].position.y >= mdata_map_height)
             {
                 cdata[cnt].position.x = 0;
                 cdata[cnt].position.y = 0;
             }
         }
     }
-    if (mdata(6) != 5)
+    if (mdata_map_type != 5)
     {
-        if (mdata(18) != 0)
+        if (mdata_map_max_item_count != 0)
         {
-            mdata(18) = 0;
+            mdata_map_max_item_count = 0;
         }
     }
     if (gdata_current_map == 7)
@@ -9944,7 +9944,7 @@ void label_2088()
         adata(17, gdata_current_map) = 0;
         adata(10, gdata_current_map) = 10;
         adata(12, gdata_current_map) = 1;
-        mdata(8) = 1;
+        mdata_map_designated_spawns = 1;
         event_add(17);
         calccosthire();
     }
@@ -10099,7 +10099,7 @@ void migrate_save_data(const fs::path& save_dir)
             ctrl_file(file_operation2_t::_3, "inv_" + mid + ".s2");
 
             ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
-            if (mdata(7) == 1 && mdata(17) == 0 && level == 1)
+            if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0 && level == 1)
             {
                 fs::path map_filename;
                 switch (map_id)
@@ -10668,7 +10668,7 @@ label_2128_internal:
     }
     if (key != ""s)
     {
-        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
         {
             x = cdata[0].position.x;
             y = cdata[0].position.y;
@@ -10916,8 +10916,8 @@ label_21451_internal:
                     }
                     for (int cnt = 0; cnt < 200; ++cnt)
                     {
-                        cdata[cc].next_position.x = rnd(mdata(0) - 2) + 1;
-                        cdata[cc].next_position.y = rnd(mdata(1) - 2) + 1;
+                        cdata[cc].next_position.x = rnd(mdata_map_width - 2) + 1;
+                        cdata[cc].next_position.y = rnd(mdata_map_height - 2) + 1;
                         cell_check(
                             cdata[cc].next_position.x,
                             cdata[cc].next_position.y);
@@ -12886,7 +12886,7 @@ int pick_up_item()
     {
         if (inv[ti].id == 255)
         {
-            if (mdata(20) == 1)
+            if (mdata_map_play_campfire_sound == 1)
             {
                 f = 0;
                 for (const auto& cnt : items(-1))
@@ -12903,7 +12903,7 @@ int pick_up_item()
                 }
                 if (f == 0)
                 {
-                    mdata(20) = 0;
+                    mdata_map_play_campfire_sound = 0;
                     play_music();
                 }
             }
@@ -13003,7 +13003,7 @@ int drop_item()
     }
     if (inv[ti].id == 255)
     {
-        mdata(20) = 1;
+        mdata_map_play_campfire_sound = 1;
         play_music();
     }
     return 1;
@@ -13095,7 +13095,7 @@ turn_result_t do_bash()
                 inv[ci].image = 592;
                 cell_refresh(x, y);
             }
-            if (y + 1 < mdata(1))
+            if (y + 1 < mdata_map_height)
             {
                 if ((chipm(7, map(x, y + 1, 0)) & 4) == 0)
                 {
@@ -13315,7 +13315,7 @@ turn_result_t proc_movement_event()
             return turn_result_t::turn_end;
         }
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (cc == 0)
         {
@@ -13346,7 +13346,7 @@ turn_result_t proc_movement_event()
         }
     }
     label_2206();
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (cc == 0)
         {
@@ -13638,7 +13638,7 @@ void label_2206()
         if (key_shift && gdata(30) == 0 && cdata[0].confused == 0
             && cdata[0].dimmed == 0)
         {
-            if (mdata(6) != 1)
+            if (mdata_map_type != 1)
             {
                 gdata(30) = 1;
                 cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
@@ -13685,14 +13685,14 @@ void label_2206()
                     rnd(2));
                 if (keybd_wait <= config::instance().walkwait
                             * config::instance().startrun
-                    || cdata[0].turn % 2 == 0 || mdata(6) == 1)
+                    || cdata[0].turn % 2 == 0 || mdata_map_type == 1)
                 {
                     snd(83 + foot % 3);
                     foot += 1 + rnd(2);
                 }
             }
         }
-        else if (mdata(6) == 1)
+        else if (mdata_map_type == 1)
         {
             addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
             snd(81 + foot % 2);
@@ -14101,8 +14101,8 @@ void open_new_year_gift()
             {
                 tlocx = cdata[0].position.x + rnd(3) - rnd(3);
                 tlocy = cdata[0].position.y - rnd(3) + rnd(3);
-                if (tlocx < 0 || tlocx >= mdata(0) || tlocy < 0
-                    || tlocy >= mdata(1))
+                if (tlocx < 0 || tlocx >= mdata_map_width || tlocy < 0
+                    || tlocy >= mdata_map_height)
                 {
                     continue;
                 }
@@ -14269,11 +14269,11 @@ turn_result_t try_to_open_locked_door()
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.action.open.door.succeed", cdata[cc]));
-            if (mdata(12) == 8)
+            if (mdata_map_tileset == 8)
             {
                 snd(67);
             }
-            else if (mdata(12) == 9)
+            else if (mdata_map_tileset == 9)
             {
                 snd(71);
             }
@@ -15302,7 +15302,7 @@ turn_result_t do_plant()
 {
     screenupdate = -1;
     update_screen();
-    if (mdata(6) == 1 || mdata(6) == 3 || mdata(6) == 2)
+    if (mdata_map_type == 1 || mdata_map_type == 3 || mdata_map_type == 2)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
@@ -15976,7 +15976,7 @@ void weather_changes()
     {
         calc_home_rank();
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         gdata_pc_home_x = cdata[0].position.x;
         gdata_pc_home_y = cdata[0].position.y;
@@ -16156,7 +16156,7 @@ void weather_changes()
     label_1746();
     label_2662();
     food_gets_rotten();
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (rnd(3) == 0)
         {
@@ -16296,7 +16296,7 @@ void weather_changes()
     }
     if (mode == 0)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             if (rnd(40) == 0)
             {
@@ -16337,7 +16337,7 @@ void weather_changes()
 
 optional<turn_result_t> check_angband()
 {
-    if (gdata_angband_flag == -1 || mdata(6) == 1)
+    if (gdata_angband_flag == -1 || mdata_map_type == 1)
         return none;
 
     switch (gdata_angband_flag)

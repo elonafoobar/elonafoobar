@@ -125,14 +125,14 @@ optional<std::pair<int, int>> generate_random_event()
     {
         return generate_random_event_mode9();
     }
-    if (mdata(6) != 1)
+    if (mdata_map_type != 1)
     {
         if (cdata[0].continuous_action_id != 0)
         {
             return none;
         }
     }
-    if (mdata(6) == 5)
+    if (mdata_map_type == 5)
     {
         return none;
     }
@@ -166,7 +166,7 @@ optional<std::pair<int, int>> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata(6) == 3)
+    if (mdata_map_type == 3)
     {
         if (rnd(25) == 0)
         {
@@ -182,7 +182,7 @@ optional<std::pair<int, int>> generate_random_event()
             return std::make_pair(id, luck_threshold);
         }
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (rnd(40))
         {

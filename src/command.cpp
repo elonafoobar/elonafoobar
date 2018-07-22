@@ -336,7 +336,7 @@ turn_result_t do_dig_command()
         }
     }
     if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
-        || mdata(6) == 1)
+        || mdata_map_type == 1)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
@@ -407,14 +407,14 @@ turn_result_t do_search_command()
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         y = cdata[cc].position.y + cnt - 5;
-        if (y < 0 || y >= mdata(1))
+        if (y < 0 || y >= mdata_map_height)
         {
             continue;
         }
         for (int cnt = 0; cnt < 11; ++cnt)
         {
             x = cdata[cc].position.x + cnt - 5;
-            if (x < 0 || x >= mdata(0))
+            if (x < 0 || x >= mdata_map_width)
             {
                 continue;
             }
@@ -559,9 +559,9 @@ turn_result_t do_throw_command()
         {
             if (y >= 0)
             {
-                if (x < mdata(0))
+                if (x < mdata_map_width)
                 {
-                    if (y < mdata(1))
+                    if (y < mdata_map_height)
                     {
                         if ((chipm(7, map(x, y, 0)) & 4) == 0)
                         {
@@ -1610,7 +1610,7 @@ turn_result_t do_use_command()
     case 24:
         x = cdata[cc].position.x;
         y = cdata[cc].position.y;
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
             update_screen();
@@ -1691,7 +1691,7 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 8:
-        if (mdata(6) != 5)
+        if (mdata_map_type != 5)
         {
             txt(i18n::s.get("core.locale.action.use.house_board.cannot_use_it_here"));
             update_screen();
@@ -1960,7 +1960,7 @@ turn_result_t do_use_command()
         {
             music = 90;
         }
-        mdata(13) = music;
+        mdata_map_bgm = music;
         play_music(music);
     }
         goto label_2229_internal;
@@ -1971,7 +1971,7 @@ turn_result_t do_use_command()
     case 7:
         if (inv[ci].own_state != 3)
         {
-            if (mdata(7) == 0 || gdata_current_map == 13
+            if (mdata_map_refresh_type == 0 || gdata_current_map == 13
                 || gdata_current_map == 30)
             {
                 if (gdata_current_map == 2)
@@ -2038,7 +2038,7 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 22:
         snd(118);
-        if (mdata(6) != 3 && mdata(6) != 2)
+        if (mdata_map_type != 3 && mdata_map_type != 2)
         {
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
@@ -2141,7 +2141,7 @@ turn_result_t do_use_command()
         play_music();
         goto label_2229_internal;
     case 28:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
             update_screen();
@@ -2624,7 +2624,7 @@ turn_result_t do_use_stairs_command(int val0)
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == 3 || mdata_map_type == 2)
         {
             ci = stat;
             return step_into_gate();
@@ -2686,7 +2686,7 @@ turn_result_t do_use_stairs_command(int val0)
     }
     if (movelevelbystairs == 0)
     {
-        if (mdata(6) != 1)
+        if (mdata_map_type != 1)
         {
             if (val0 == 1)
             {
@@ -2894,7 +2894,7 @@ turn_result_t do_movement_command()
         {
             if (cdata[tc].is_hung_on_sand_bag() == 0)
             {
-                if (mdata(6) == 1)
+                if (mdata_map_type == 1)
                 {
                     goto label_2204_internal;
                 }
@@ -2980,13 +2980,13 @@ turn_result_t do_movement_command()
     {
         keybd_attacking = 0;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (dbg_freemove)
         {
             x = cdata[0].next_position.x;
             y = cdata[0].next_position.y;
-            if (x >= 0 && x < mdata(0) && y >= 0 && y < mdata(1))
+            if (x >= 0 && x < mdata_map_width && y >= 0 && y < mdata_map_height)
             {
                 if (map(x, y, 1) == 0)
                 {
@@ -2998,7 +2998,7 @@ turn_result_t do_movement_command()
     if (cellaccess == 1)
     {
     label_2204_internal:
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             if (264 <= map(cdata[cc].next_position.x,
                            cdata[cc].next_position.y,
@@ -3011,17 +3011,17 @@ turn_result_t do_movement_command()
         }
         return proc_movement_event();
     }
-    if (mdata(6) == 6
-        || (gdata_current_dungeon_level == 1 && mdata(6) != 1
-            && (mdata(6) < 20 || 23 < mdata(6))))
+    if (mdata_map_type == 6
+        || (gdata_current_dungeon_level == 1 && mdata_map_type != 1
+            && (mdata_map_type < 20 || 23 < mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
-            || cdata[cc].next_position.x > mdata(0) - 1
+            || cdata[cc].next_position.x > mdata_map_width - 1
             || cdata[cc].next_position.y < 0
-            || cdata[cc].next_position.y > mdata(1) - 1)
+            || cdata[cc].next_position.y > mdata_map_height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
-            if (mdata(6) == 7)
+            if (mdata_map_type == 7)
             {
                 if (gdata(73) != 3)
                 {
@@ -3243,7 +3243,7 @@ turn_result_t do_get_command()
             refresh_burden_state();
             return turn_result_t::turn_end;
         }
-        if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
+        if (mdata_map_type == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
             && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
@@ -3268,7 +3268,7 @@ turn_result_t do_get_command()
 
     if (number == 0)
     {
-        if ((mdata(6) == 3 || mdata(6) == 2)
+        if ((mdata_map_type == 3 || mdata_map_type == 2)
             && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
         {
             snd(83);
@@ -3373,7 +3373,7 @@ turn_result_t do_short_cut_command()
     }
     if (efid >= 600)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -3394,7 +3394,7 @@ turn_result_t do_short_cut_command()
     }
     if (efid >= 400)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == 1)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));

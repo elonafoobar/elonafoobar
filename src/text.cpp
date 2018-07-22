@@ -277,7 +277,7 @@ std::string maplevel(int)
         if (adata(16, gdata_current_map) == 3
             || adata(16, gdata_current_map) == 8
             || adata(16, gdata_current_map) == 13
-            || (mdata(6) >= 20 && mdata(6) <= 23) == 1)
+            || (mdata_map_type >= 20 && mdata_map_type <= 23) == 1)
         {
             return ""s
                 + cnvrank(

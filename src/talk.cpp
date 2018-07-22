@@ -333,8 +333,8 @@ talk_result_t talk_house_visitor()
                 {
                     tlocx = cdata[tc].position.x + rnd(3) - rnd(3);
                     tlocy = cdata[tc].position.y - rnd(3) + rnd(3);
-                    if (tlocx < 0 || tlocy < 0 || tlocx >= mdata(0)
-                        || tlocy >= mdata(1))
+                    if (tlocx < 0 || tlocy < 0 || tlocx >= mdata_map_width
+                        || tlocy >= mdata_map_height)
                     {
                         continue;
                     }
@@ -1356,7 +1356,7 @@ talk_result_t talk_game_begin()
             return talk_result_t::talk_end;
         }
     }
-    mdata(13) = 67;
+    mdata_map_bgm = 67;
     play_music();
     return talk_result_t::talk_unique;
 }

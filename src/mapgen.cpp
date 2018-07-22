@@ -67,10 +67,10 @@ void map_initialize()
     {
         roomexist(cnt) = 0;
     }
-    DIM4(map, mdata(0), mdata(1), 10);
-    DIM3(mapsync, mdata(0), mdata(1));
+    DIM4(map, mdata_map_width, mdata_map_height, 10);
+    DIM3(mapsync, mdata_map_width, mdata_map_height);
     DIM3(mef, 9, MEF_MAX);
-    map_tileset(mdata(12));
+    map_tileset(mdata_map_tileset);
     return;
 }
 
@@ -190,10 +190,10 @@ void initialize_cell_object_data()
 
 void map_converttile()
 {
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             if (map(x, y, 0) == 0)
@@ -239,10 +239,10 @@ int dist_town()
     int x_at_m165 = 0;
     int i_at_m165 = 0;
     p_at_m165 = 1000;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y_at_m165 = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x_at_m165 = cnt;
             cell_featread(x_at_m165, y_at_m165);
@@ -271,12 +271,12 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     int y_at_m167 = 0;
     if (prm_937 == 1)
     {
-        x_at_m167 = mdata(5) % 1000;
+        x_at_m167 = mdata_map_stair_up_pos % 1000;
         if (prm_938 != 0)
         {
             x_at_m167 += rnd(prm_938) - rnd(prm_938);
         }
-        y_at_m167 = mdata(5) / 1000;
+        y_at_m167 = mdata_map_stair_up_pos / 1000;
         if (prm_938 != 0)
         {
             y_at_m167 += rnd(prm_938) - rnd(prm_938);
@@ -284,12 +284,12 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 2)
     {
-        x_at_m167 = mdata(4) % 1000;
+        x_at_m167 = mdata_map_stair_down_pos % 1000;
         if (prm_938 != 0)
         {
             x_at_m167 += rnd(prm_938) - rnd(prm_938);
         }
-        y_at_m167 = mdata(4) / 1000;
+        y_at_m167 = mdata_map_stair_down_pos / 1000;
         if (prm_938 != 0)
         {
             y_at_m167 += rnd(prm_938) - rnd(prm_938);
@@ -299,8 +299,8 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     {
         if (gdata(35) == 1)
         {
-            x_at_m167 = mdata(0) - 2;
-            y_at_m167 = mdata(1) / 2;
+            x_at_m167 = mdata_map_width - 2;
+            y_at_m167 = mdata_map_height / 2;
             if (gdata_current_map == 15)
             {
                 y_at_m167 = 22;
@@ -314,7 +314,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         if (gdata(35) == 2)
         {
             x_at_m167 = 1;
-            y_at_m167 = mdata(1) / 2;
+            y_at_m167 = mdata_map_height / 2;
             if (gdata_current_map == 33)
             {
                 y_at_m167 = 3;
@@ -327,8 +327,8 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         }
         if (gdata(35) == 3)
         {
-            x_at_m167 = mdata(0) / 2;
-            y_at_m167 = mdata(1) - 2;
+            x_at_m167 = mdata_map_width / 2;
+            y_at_m167 = mdata_map_height - 2;
             if (gdata_current_map == 15)
             {
                 x_at_m167 = 30;
@@ -345,7 +345,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         }
         if (gdata(35) == 0)
         {
-            x_at_m167 = mdata(0) / 2;
+            x_at_m167 = mdata_map_width / 2;
             y_at_m167 = 1;
             if (gdata_current_map == 33)
             {
@@ -370,18 +370,18 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 4)
     {
-        x_at_m167 = mdata(0) / 2;
-        y_at_m167 = mdata(1) / 2;
+        x_at_m167 = mdata_map_width / 2;
+        y_at_m167 = mdata_map_height / 2;
     }
     if (prm_937 == 8)
     {
-        x_at_m167 = mdata(0) / 2;
-        y_at_m167 = mdata(1) - 2;
+        x_at_m167 = mdata_map_width / 2;
+        y_at_m167 = mdata_map_height - 2;
     }
     if (prm_937 == 5)
     {
-        x_at_m167 = rnd(mdata(0) - 5) + 2;
-        y_at_m167 = rnd(mdata(1) - 5) + 2;
+        x_at_m167 = rnd(mdata_map_width - 5) + 2;
+        y_at_m167 = rnd(mdata_map_height - 5) + 2;
     }
     if (prm_937 == 6)
     {
@@ -493,11 +493,11 @@ void map_placeplayer()
 
 void map_randomtile(int prm_941, int prm_942)
 {
-    for (int cnt = 0, cnt_end = (mdata(0) * mdata(1) * prm_942 / 100 + 1);
+    for (int cnt = 0, cnt_end = (mdata_map_width * mdata_map_height * prm_942 / 100 + 1);
          cnt < cnt_end;
          ++cnt)
     {
-        map(rnd(mdata(0)), rnd(mdata(1)), 0) = prm_941;
+        map(rnd(mdata_map_width), rnd(mdata_map_height), 0) = prm_941;
     }
     return;
 }
@@ -506,8 +506,8 @@ void map_randomtile(int prm_941, int prm_942)
 
 int map_digcheck(int prm_953, int prm_954)
 {
-    if (prm_953 < 1 || prm_954 < 1 || prm_953 > mdata(0) - 2
-        || prm_954 > mdata(1) - 2)
+    if (prm_953 < 1 || prm_954 < 1 || prm_953 > mdata_map_width - 2
+        || prm_954 > mdata_map_height - 2)
     {
         return 0;
     }
@@ -878,10 +878,10 @@ int map_digtoentrance1(
 
 void map_setfog(int, int)
 {
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             map(x, y, 2) =
@@ -967,7 +967,7 @@ void map_createroomdoor()
         {
             dx = x + p(cnt);
             dy = y + p((cnt + 2));
-            if ((dx >= 0 && dy >= 0 && dx < mdata(0) && dy < mdata(1)) == 0)
+            if ((dx >= 0 && dy >= 0 && dx < mdata_map_width && dy < mdata_map_height) == 0)
             {
                 f = 0;
                 break;
@@ -1044,22 +1044,22 @@ int map_createroom(int prm_966)
         {
             roomwidth(cr) = rnd(rdroomsizemax) + rdroomsizemin;
             roomheight(cr) = rnd(rdroomsizemax) + rdroomsizemin;
-            roomx(cr) = rnd(mdata(0)) + 2;
-            roomy(cr) = rnd(mdata(1)) + 2;
+            roomx(cr) = rnd(mdata_map_width) + 2;
+            roomy(cr) = rnd(mdata_map_height) + 2;
         }
         if (roompos == 1)
         {
             roomwidth(cr) = (rnd(rdroomsizemax) + rdroomsizemin) / 3 * 3 + 5;
             roomheight(cr) = (rnd(rdroomsizemax) + rdroomsizemin) / 3 * 3 + 5;
-            roomx(cr) = rnd(mdata(0)) / 3 * 3 + 2;
-            roomy(cr) = rnd(mdata(1)) / 3 * 3 + 2;
+            roomx(cr) = rnd(mdata_map_width) / 3 * 3 + 2;
+            roomy(cr) = rnd(mdata_map_height) / 3 * 3 + 2;
         }
         if (roompos == 2)
         {
             rdpos = rnd(4);
             if (rdpos == 3 || rdpos == 0)
             {
-                roomx(cr) = rnd(mdata(0) - rdroomsizemin * 3 / 2 - 2)
+                roomx(cr) = rnd(mdata_map_width - rdroomsizemin * 3 / 2 - 2)
                     + rdroomsizemin / 2;
                 roomwidth(cr) = rnd(rdroomsizemin) + rdroomsizemin / 2 + 3;
                 roomheight(cr) = rdroomsizemin;
@@ -1069,12 +1069,12 @@ int map_createroom(int prm_966)
                 }
                 else
                 {
-                    roomy(cr) = mdata(1) - roomheight(cr);
+                    roomy(cr) = mdata_map_height - roomheight(cr);
                 }
             }
             if (rdpos == 1 || rdpos == 2)
             {
-                roomy(cr) = rnd(mdata(1) - rdroomsizemin * 3 / 2 - 2)
+                roomy(cr) = rnd(mdata_map_height - rdroomsizemin * 3 / 2 - 2)
                     + rdroomsizemin / 2;
                 roomwidth(cr) = rdroomsizemin;
                 roomheight(cr) = rnd(rdroomsizemin) + rdroomsizemin / 2 + 3;
@@ -1084,7 +1084,7 @@ int map_createroom(int prm_966)
                 }
                 else
                 {
-                    roomx(cr) = mdata(0) - roomwidth(cr);
+                    roomx(cr) = mdata_map_width - roomwidth(cr);
                 }
             }
         }
@@ -1092,12 +1092,12 @@ int map_createroom(int prm_966)
         {
             roomwidth(cr) = 3;
             roomheight(cr) = 3;
-            x = mdata(0) - rdroomsizemin * 2 - roomwidth(cr) - 2 + 1;
+            x = mdata_map_width - rdroomsizemin * 2 - roomwidth(cr) - 2 + 1;
             if (x < 1)
             {
                 break;
             }
-            y = mdata(1) - rdroomsizemin * 2 - roomheight(cr) - 2 + 1;
+            y = mdata_map_height - rdroomsizemin * 2 - roomheight(cr) - 2 + 1;
             if (y < 1)
             {
                 break;
@@ -1109,26 +1109,26 @@ int map_createroom(int prm_966)
         {
             roomwidth(cr) = rnd(rdroomsizemax) + rdroomsizemin;
             roomheight(cr) = rnd(rdroomsizemax) + rdroomsizemin;
-            roomx(cr) = rnd(mdata(0) - rdroomsizemax - 8) + 3;
-            roomy(cr) = rnd(mdata(1) - rdroomsizemax - 8) + 3;
+            roomx(cr) = rnd(mdata_map_width - rdroomsizemax - 8) + 3;
+            roomy(cr) = rnd(mdata_map_height - rdroomsizemax - 8) + 3;
         }
         x = roomx(cr) + roomwidth(cr) - 1;
         y = roomy(cr) + roomheight(cr) - 1;
-        if (x >= mdata(0))
+        if (x >= mdata_map_width)
         {
             continue;
         }
-        if (y >= mdata(1))
+        if (y >= mdata_map_height)
         {
             continue;
         }
         if (roompos == 1)
         {
-            if (x + 1 >= mdata(0))
+            if (x + 1 >= mdata_map_width)
             {
                 continue;
             }
-            if (y + 1 >= mdata(1))
+            if (y + 1 >= mdata_map_height)
             {
                 continue;
             }
@@ -1304,7 +1304,7 @@ int map_placeupstairs(int prm_967, int prm_968)
         y_at_m169 = prm_968;
     }
     cell_featset(x_at_m169, y_at_m169, tile_upstairs, 10);
-    mdata(5) = y_at_m169 * 1000 + x_at_m169;
+    mdata_map_stair_up_pos = y_at_m169 * 1000 + x_at_m169;
     rdroomupstair = cr;
     return 1;
 }
@@ -1328,7 +1328,7 @@ int map_placedownstairs(int prm_969, int prm_970)
         y_at_m169 = prm_970;
     }
     cell_featset(x_at_m169, y_at_m169, tile_downstairs, 11);
-    mdata(4) = y_at_m169 * 1000 + x_at_m169;
+    mdata_map_stair_down_pos = y_at_m169 * 1000 + x_at_m169;
     rdroomdownstair = cr;
     return 1;
 }
@@ -1343,8 +1343,8 @@ void map_randsite(int prm_971, int prm_972)
     {
         if (prm_971 == 0)
         {
-            x_at_m169 = rnd(mdata(0) - 5) + 2;
-            y_at_m169 = rnd(mdata(1) - 5) + 2;
+            x_at_m169 = rnd(mdata_map_width - 5) + 2;
+            y_at_m169 = rnd(mdata_map_height - 5) + 2;
         }
         else
         {
@@ -1361,7 +1361,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if ((264 <= map(x_at_m169, y_at_m169, 0)
              && map(x_at_m169, y_at_m169, 0) < 363)
@@ -1375,9 +1375,9 @@ void map_randsite(int prm_971, int prm_972)
     {
         return;
     }
-    if (mdata(6) >= 20 && mdata(6) <= 23)
+    if (mdata_map_type >= 20 && mdata_map_type <= 23)
     {
-        if (mdata(3) == 0)
+        if (mdata_map_next_regenerate_date == 0)
         {
             if (rnd(25) == 0)
             {
@@ -1396,7 +1396,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata(6) >= 20 && mdata(6) <= 23)
+    if (mdata_map_type >= 20 && mdata_map_type <= 23)
     {
         if (rnd(14) == 0)
         {
@@ -1421,7 +1421,7 @@ void map_randsite(int prm_971, int prm_972)
         cell_featset(x_at_m169, y_at_m169, tile_re + rnd(3), 24);
         return;
     }
-    if (mdata(6) == 3 || mdata(6) == 2)
+    if (mdata_map_type == 3 || mdata_map_type == 2)
     {
         if (rnd(3) == 0)
         {
@@ -1478,8 +1478,8 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
         }
         if (prm_973 == 0)
         {
-            dx_at_m170 = rnd(mdata(0) - 5) + 2;
-            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+            dx_at_m170 = rnd(mdata_map_width - 5) + 2;
+            dy_at_m170 = rnd(mdata_map_height - 5) + 2;
         }
         else
         {
@@ -1544,8 +1544,8 @@ int map_web(int prm_977, int prm_978, int prm_979)
         }
         if (prm_977 == 0)
         {
-            dx_at_m170 = rnd(mdata(0) - 5) + 2;
-            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+            dx_at_m170 = rnd(mdata_map_width - 5) + 2;
+            dy_at_m170 = rnd(mdata_map_height - 5) + 2;
         }
         else
         {
@@ -1580,8 +1580,8 @@ int map_barrel(int prm_980, int prm_981)
         }
         if (prm_980 == 0)
         {
-            dx_at_m170 = rnd(mdata(0) - 5) + 2;
-            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+            dx_at_m170 = rnd(mdata_map_width - 5) + 2;
+            dy_at_m170 = rnd(mdata_map_height - 5) + 2;
         }
         else
         {
@@ -1727,18 +1727,18 @@ void map_makedoor()
 
 void generate_debug_map()
 {
-    mdata(0) = 50; // width
-    mdata(1) = 50; // height
-    mdata(2) = 1; // world map or local
-    mdata(9) = 10000; // time passed per turn
-    mdata(10) = mdata(0) * mdata(1) / 100;
-    mdata(12) = 3; // tileset
-    mdata(15) = 0;
+    mdata_map_width = 50; // width
+    mdata_map_height = 50; // height
+    mdata_map_atlas_number = 1; // world map or local
+    mdata_map_turn_cost = 10000; // time passed per turn
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 100;
+    mdata_map_tileset = 3; // tileset
+    mdata_map_user_map_flag = 0;
     map_initialize();
 
-    for (int y = 0; y < mdata(1); ++y)
+    for (int y = 0; y < mdata_map_height; ++y)
     {
-        for (int x = 0; x < mdata(0); ++x)
+        for (int x = 0; x < mdata_map_width; ++x)
         {
             map(x, y, 0) = 3;
         }
@@ -1766,18 +1766,18 @@ void generate_random_nefia()
     {
         randomize();
         ++rdtry;
-        mdata(15) = 0;
-        mdata(0) = 34 + rnd(15);
-        mdata(1) = 22 + rnd(15);
-        mdata(10) = mdata(0) * mdata(1) / 100;
+        mdata_map_user_map_flag = 0;
+        mdata_map_width = 34 + rnd(15);
+        mdata_map_height = 22 + rnd(15);
+        mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 100;
         roomsum = 0;
-        rdroomnum = mdata(0) * mdata(1) / 70;
+        rdroomnum = mdata_map_width * mdata_map_height / 70;
         rdroomsizemin = 3;
         rdroomsizemax = 4;
         rdroomentrance = 1;
         rdhiddenpath = 20;
         rdval(2) = 2;
-        rdtunnel = mdata(0) * mdata(1);
+        rdtunnel = mdata_map_width * mdata_map_height;
         rdextraroom = 10;
         rdtype = 1;
         if (rnd(30) == 0)
@@ -1805,7 +1805,7 @@ void generate_random_nefia()
             }
             if (rnd(20) == 0)
             {
-                mdata(12) = 10;
+                mdata_map_tileset = 10;
             }
         }
         if (adata(0, gdata_current_map) == 22)
@@ -1845,7 +1845,7 @@ void generate_random_nefia()
             }
             if (rnd(40) == 0)
             {
-                mdata(12) = 10;
+                mdata_map_tileset = 10;
             }
         }
         if (adata(0, gdata_current_map) == 23)
@@ -1865,32 +1865,32 @@ void generate_random_nefia()
             }
             if (rnd(40) == 0)
             {
-                mdata(12) = 10;
+                mdata_map_tileset = 10;
             }
         }
         if (adata(16, gdata_current_map) == 3)
         {
-            mdata(10) += gdata_current_dungeon_level / 2;
-            mdata(12) = 101;
+            mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
+            mdata_map_tileset = 101;
             if (rnd(20) == 0)
             {
-                mdata(12) = 10;
+                mdata_map_tileset = 10;
             }
             if (gdata_current_dungeon_level < 35)
             {
-                mdata(12) = 0;
+                mdata_map_tileset = 0;
             }
             if (gdata_current_dungeon_level < 20)
             {
-                mdata(12) = 100;
+                mdata_map_tileset = 100;
             }
             if (gdata_current_dungeon_level < 10)
             {
-                mdata(12) = 200;
+                mdata_map_tileset = 200;
             }
             if (gdata_current_dungeon_level < 5)
             {
-                mdata(12) = 0;
+                mdata_map_tileset = 0;
             }
             rdtype = 1;
             for (int cnt = 0; cnt < 1; ++cnt)
@@ -1953,20 +1953,20 @@ void generate_random_nefia()
         }
         if (adata(16, gdata_current_map) == 16)
         {
-            mdata(10) += gdata_current_dungeon_level / 2;
-            mdata(12) = 7;
+            mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
+            mdata_map_tileset = 7;
             rdtype = 1;
         }
         if (adata(16, gdata_current_map) == 17)
         {
-            mdata(10) += gdata_current_dungeon_level / 2;
-            mdata(12) = 0;
+            mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
+            mdata_map_tileset = 0;
             rdtype = 1;
         }
         if (adata(16, gdata_current_map) == 18)
         {
-            mdata(10) += gdata_current_dungeon_level / 2;
-            mdata(12) = 200;
+            mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
+            mdata_map_tileset = 200;
             rdtype = 1;
         }
         if (adata(16, gdata_current_map) == 26)
@@ -1985,9 +1985,9 @@ void generate_random_nefia()
         {
             if (gdata_executing_immediate_quest_type == 1001)
             {
-                mdata(12) = 300;
-                mdata(0) = 28 + rnd(6);
-                mdata(1) = 20 + rnd(6);
+                mdata_map_tileset = 300;
+                mdata_map_width = 28 + rnd(6);
+                mdata_map_height = 20 + rnd(6);
                 rdtype = 6;
             }
             if (gdata_executing_immediate_quest_type == 1009)
@@ -2034,7 +2034,7 @@ void generate_random_nefia()
         }
         if (rdtype == 6)
         {
-            mdata(14) = 2;
+            mdata_map_indoors_flag = 2;
             initialize_random_nefia_rdtype6();
             return;
         }
@@ -2144,31 +2144,31 @@ void generate_random_nefia()
             }
         }
     }
-    mobdensity = mdata(10) / 4;
-    itemdensity = mdata(10) / 4;
+    mobdensity = mdata_map_max_crowd_density / 4;
+    itemdensity = mdata_map_max_crowd_density / 4;
     if (rdtype == 3)
     {
         flt();
         flttypemajor = choice(fsetwear);
         fixlv = 4;
         itemcreate(-1, 0, -1, -1, 0);
-        mobdensity = mdata(10) / 2;
-        itemdensity = mdata(10) / 3;
+        mobdensity = mdata_map_max_crowd_density / 2;
+        itemdensity = mdata_map_max_crowd_density / 3;
     }
     if (rdtype == 8)
     {
-        mobdensity = mdata(10) / 4;
-        itemdensity = mdata(10) / 10;
+        mobdensity = mdata_map_max_crowd_density / 4;
+        itemdensity = mdata_map_max_crowd_density / 10;
     }
     if (rdtype == 10)
     {
-        mobdensity = mdata(10) / 3;
-        itemdensity = mdata(10) / 6;
+        mobdensity = mdata_map_max_crowd_density / 3;
+        itemdensity = mdata_map_max_crowd_density / 6;
     }
     if (rdtype == 9)
     {
-        mobdensity = mdata(10) / 3;
-        itemdensity = mdata(10) / 10;
+        mobdensity = mdata_map_max_crowd_density / 3;
+        itemdensity = mdata_map_max_crowd_density / 10;
     }
     for (int cnt = 0, cnt_end = (mobdensity); cnt < cnt_end; ++cnt)
     {
@@ -2181,17 +2181,17 @@ void generate_random_nefia()
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, -1, -1, 0);
     }
-    for (int cnt = 0, cnt_end = (rnd(mdata(0) * mdata(1) / 80)); cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 80)); cnt < cnt_end;
          ++cnt)
     {
         map_trap(0, 0, gdata_current_dungeon_level);
     }
     if (rnd(5) == 0)
     {
-        p = rnd(mdata(0) * mdata(1) / 40);
+        p = rnd(mdata_map_width * mdata_map_height / 40);
         if (rnd(5) == 0)
         {
-            p = rnd(mdata(0) * mdata(1) / 5);
+            p = rnd(mdata_map_width * mdata_map_height / 5);
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
@@ -2200,13 +2200,13 @@ void generate_random_nefia()
     }
     if (rnd(4) == 0)
     {
-        p = clamp(rnd(mdata(0) * mdata(1) / 500 + 1) + 1, 3, 15);
+        p = clamp(rnd(mdata_map_width * mdata_map_height / 500 + 1) + 1, 3, 15);
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             map_barrel(0, 0);
         }
     }
-    if (mdata(7) == 1)
+    if (mdata_map_refresh_type == 1)
     {
         if (rnd(15 + gdata_kill_count_of_little_sister * 2) == 0)
         {
@@ -2221,8 +2221,8 @@ void generate_random_nefia()
             || gdata_current_dungeon_level == 25
             || gdata_current_dungeon_level == 44)
         {
-            x = mdata(4) % 1000;
-            y = mdata(4) / 1000;
+            x = mdata_map_stair_down_pos % 1000;
+            y = mdata_map_stair_down_pos / 1000;
             cell_featset(x, y, tile_downlocked, 11);
         }
     }
@@ -2234,19 +2234,19 @@ void generate_random_nefia()
 void initialize_random_nefia_rdtype6()
 {
     map_initialize();
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         p = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             map(cnt, p, 0) = 3;
         }
     }
-    for (int cnt = 0, cnt_end = (rnd(mdata(0) * mdata(1) / 30)); cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 30)); cnt < cnt_end;
          ++cnt)
     {
-        x = rnd(mdata(0));
-        y = rnd(mdata(1));
+        x = rnd(mdata_map_width);
+        y = rnd(mdata_map_height);
         map(x, y, 0) = 1;
     }
     if (gdata_previous_map2 == 33)
@@ -2256,7 +2256,7 @@ void initialize_random_nefia_rdtype6()
     }
     map_converttile();
     map_placeplayer();
-    mdata(10) = 0;
+    mdata_map_max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
         chara_set_generation_filter();
@@ -2283,15 +2283,15 @@ int initialize_quest_map_crop()
 {
     gdata_left_minutes_of_executing_quest = 120;
     gdata(87) = 9999;
-    mdata(14) = 2;
-    mdata(12) = 4;
-    mdata(0) = 58 + rnd(16);
-    mdata(1) = 50 + rnd(16);
+    mdata_map_indoors_flag = 2;
+    mdata_map_tileset = 4;
+    mdata_map_width = 58 + rnd(16);
+    mdata_map_height = 50 + rnd(16);
     map_initialize();
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         p = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             map(cnt, p, 0) = tile_default
                 + (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
@@ -2310,8 +2310,8 @@ int initialize_quest_map_crop()
     {
         int w = rnd(5) + 5;
         int h = rnd(4) + 4;
-        dx = rnd(mdata(0));
-        dy = rnd(mdata(1));
+        dx = rnd(mdata_map_width);
+        dy = rnd(mdata_map_height);
         if (rnd(2))
         {
             tile = 30;
@@ -2320,19 +2320,19 @@ int initialize_quest_map_crop()
         {
             tile = 31;
         }
-        size = clamp(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
+        size = clamp(dist(dx, dy, mdata_map_width / 2, mdata_map_height / 2) / 8, 0, 8);
         crop = choice(isetcrop);
         for (int cnt = dy, cnt_end = cnt + (h); cnt < cnt_end; ++cnt)
         {
             y = cnt;
-            if (y >= mdata(1))
+            if (y >= mdata_map_height)
             {
                 break;
             }
             for (int cnt = dx, cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
             {
                 x = cnt;
-                if (x >= mdata(0))
+                if (x >= mdata_map_width)
                 {
                     break;
                 }
@@ -2359,16 +2359,16 @@ int initialize_quest_map_crop()
         }
     }
     gdata_entrance_type = 7;
-    mapstartx = rnd(mdata(0) / 3) + mdata(0) / 3;
-    mapstarty = rnd(mdata(1) / 3) + mdata(1) / 3;
+    mapstartx = rnd(mdata_map_width / 3) + mdata_map_width / 3;
+    mapstarty = rnd(mdata_map_height / 3) + mdata_map_height / 3;
     map_placeplayer();
     flt();
     itemcreate(-1, 560, cdata[0].position.x + 1, cdata[0].position.y, 0);
     inv[ci].own_state = 1;
     for (int cnt = 0, cnt_end = (70 + rnd(20)); cnt < cnt_end; ++cnt)
     {
-        x = rnd(mdata(0));
-        y = rnd(mdata(1));
+        x = rnd(mdata_map_width);
+        y = rnd(mdata_map_height);
         if (map(x, y, 0) != 30 && map(x, y, 0) != 31)
         {
             if (map(x, y, 4) == 0)
@@ -2387,7 +2387,7 @@ int initialize_quest_map_crop()
             }
         }
     }
-    mdata(10) = 15;
+    mdata_map_max_crowd_density = 15;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         chara_set_generation_filter();
@@ -2437,14 +2437,14 @@ int initialize_random_nefia_rdtype4()
     rdroomsizemin = 8;
     map_initialize();
     p = rdroomsizemin - 1;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             map(x, y, 0) = 1;
-            if (x > p && y > p && x + 1 < mdata(0) - p && y + 1 < mdata(1) - p)
+            if (x > p && y > p && x + 1 < mdata_map_width - p && y + 1 < mdata_map_height - p)
             {
                 map(x, y, 0) = 100;
             }
@@ -2478,10 +2478,10 @@ int initialize_random_nefia_rdtype4()
     else
     {
         p = rdroomsizemin + 1 + rnd(3);
-        for (int cnt = 0, cnt_end = (mdata(1) - p * 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end; ++cnt)
         {
             y = p + cnt;
-            for (int cnt = 0, cnt_end = (mdata(0) - p * 2); cnt < cnt_end;
+            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2); cnt < cnt_end;
                  ++cnt)
             {
                 x = p + cnt;
@@ -2497,19 +2497,19 @@ int initialize_random_nefia_rdtype4()
 int initialize_random_nefia_rdtype5()
 {
     rdroomsizemin = 8;
-    mdata(0) = 48 + rnd(20);
-    mdata(1) = 22;
-    mdata(10) = mdata(0) * mdata(1) / 20;
+    mdata_map_width = 48 + rnd(20);
+    mdata_map_height = 22;
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 20;
     map_initialize();
     p = rdroomsizemin - 1;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             map(x, y, 0) = 1;
-            if (x > p && y > p && x + 1 < mdata(0) - p && y + 1 < mdata(1) - p)
+            if (x > p && y > p && x + 1 < mdata_map_width - p && y + 1 < mdata_map_height - p)
             {
                 map(x, y, 0) = 100;
             }
@@ -2543,10 +2543,10 @@ int initialize_random_nefia_rdtype5()
     else
     {
         p = rdroomsizemin + 1 + rnd(3);
-        for (int cnt = 0, cnt_end = (mdata(1) - p * 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end; ++cnt)
         {
             y = p + cnt;
-            for (int cnt = 0, cnt_end = (mdata(0) - p * 2); cnt < cnt_end;
+            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2); cnt < cnt_end;
                  ++cnt)
             {
                 x = p + cnt;
@@ -2563,8 +2563,8 @@ int initialize_random_nefia_rdtype2()
 {
     rdroomsizemax = 3;
     map_initialize();
-    dx = mdata(0) / 2;
-    dy = mdata(1) / 2;
+    dx = mdata_map_width / 2;
+    dy = mdata_map_height / 2;
     map(dx, dy, 0) = 3;
     p = 0;
     for (int cnt = 0, cnt_end = (rdtunnel); cnt < cnt_end; ++cnt)
@@ -2576,10 +2576,10 @@ int initialize_random_nefia_rdtype2()
         if (p == 2)
         {
             ++dx;
-            if (dx > mdata(0) - 2)
+            if (dx > mdata_map_width - 2)
             {
                 p = 0;
-                dx = mdata(0) - 2;
+                dx = mdata_map_width - 2;
             }
         }
         if (p == 1)
@@ -2594,10 +2594,10 @@ int initialize_random_nefia_rdtype2()
         if (p == 0)
         {
             ++dy;
-            if (dy > mdata(1) - 2)
+            if (dy > mdata_map_height - 2)
             {
                 p = 1;
-                dy = mdata(1) - 2;
+                dy = mdata_map_height - 2;
             }
         }
         if (p == 3)
@@ -2634,16 +2634,16 @@ int initialize_random_nefia_rdtype2()
         p = 0;
         for (int cnt = 0; cnt < 100; ++cnt)
         {
-            x = rnd(mdata(0));
-            y = rnd(mdata(1));
+            x = rnd(mdata_map_width);
+            y = rnd(mdata_map_height);
             if (map(x, y, 0) == 3)
             {
                 dx = rnd(rdroomsizemax) + rdroomsizemin;
                 dy = rnd(rdroomsizemax) + rdroomsizemin;
                 rx = rnd(dx);
                 ry = rnd(dy);
-                if (x > 1 && y > 1 && x + dx < mdata(0) - 2
-                    && y + dy < mdata(1) - 2)
+                if (x > 1 && y > 1 && x + dx < mdata_map_width - 2
+                    && y + dy < mdata_map_height - 2)
                 {
                     p = 1;
                     break;
@@ -2673,33 +2673,33 @@ int initialize_random_nefia_rdtype2()
 
 int initialize_random_nefia_rdtype3()
 {
-    mdata(0) = 48 + rnd(20);
-    mdata(1) = 22;
-    mdata(10) = mdata(0) * mdata(1) / 20;
+    mdata_map_width = 48 + rnd(20);
+    mdata_map_height = 22;
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 20;
     map_initialize();
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            if (x == 0 || y == 0 || x + 1 == mdata(0) || y + 1 == mdata(1))
+            if (x == 0 || y == 0 || x + 1 == mdata_map_width || y + 1 == mdata_map_height)
             {
                 continue;
             }
             map(x, y, 0) = 3;
         }
     }
-    p(0) = rnd(mdata(0) / 2) + 2;
-    p(1) = rnd(mdata(0) / 2) + mdata(0) / 2 - 2;
+    p(0) = rnd(mdata_map_width / 2) + 2;
+    p(1) = rnd(mdata_map_width / 2) + mdata_map_width / 2 - 2;
     if (rnd(2) == 0)
     {
         p(2) = p;
         p = p(1);
         p(1) = p(2);
     }
-    map_placeupstairs(p, rnd(mdata(1) - 4) + 2);
-    map_placedownstairs(p(1), rnd(mdata(1) - 4) + 2);
+    map_placeupstairs(p, rnd(mdata_map_height - 4) + 2);
+    map_placedownstairs(p(1), rnd(mdata_map_height - 4) + 2);
     return 1;
 }
 
@@ -2712,19 +2712,19 @@ int initialize_quest_map_party()
     gdata(87) = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
-    mdata(14) = 1;
-    mdata(12) = 11;
-    mdata(0) = 38;
-    mdata(1) = 28;
+    mdata_map_indoors_flag = 1;
+    mdata_map_tileset = 11;
+    mdata_map_width = 38;
+    mdata_map_height = 28;
     map_initialize();
     rdroomnum = 80;
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            if (x == 0 || y == 0 || x + 1 == mdata(0) || y + 1 == mdata(1))
+            if (x == 0 || y == 0 || x + 1 == mdata_map_width || y + 1 == mdata_map_height)
             {
                 continue;
             }
@@ -2738,8 +2738,8 @@ int initialize_quest_map_party()
     map_converttile();
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        dx = rnd(mdata(0) - 5);
-        dy = rnd(mdata(1) - 5);
+        dx = rnd(mdata_map_width - 5);
+        dy = rnd(mdata_map_height - 5);
         p(0) = 1;
         p(1) = 1;
         for (int cnt = 0; cnt < 4; ++cnt)
@@ -2934,14 +2934,14 @@ int initialize_quest_map_party()
         }
     }
     gdata_entrance_type = 7;
-    mapstartx = rnd(mdata(0) / 3) + mdata(0) / 3;
-    mapstarty = rnd(mdata(1) / 3) + mdata(1) / 3;
+    mapstartx = rnd(mdata_map_width / 3) + mdata_map_width / 3;
+    mapstarty = rnd(mdata_map_height / 3) + mdata_map_height / 3;
     map_placeplayer();
-    mdata(10) = 0;
+    mdata_map_max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (25 + rnd(10)); cnt < cnt_end; ++cnt)
     {
-        x = rnd(mdata(0));
-        y = rnd(mdata(1));
+        x = rnd(mdata_map_width);
+        y = rnd(mdata_map_height);
         if (map(x, y, 4) != 0 || chipm(7, map(x, y, 0)) & 4)
         {
             continue;
@@ -3032,14 +3032,14 @@ int initialize_quest_map_party()
 
 void initialize_quest_map_town()
 {
-    mdata(10) = 0;
-    mdata(14) = 2;
+    mdata_map_max_crowd_density = 0;
+    mdata_map_indoors_flag = 2;
     map_initcustom(mapfile(gdata_previous_map2));
     mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
     randomize();
     gdata_entrance_type = 5;
     map_placeplayer();
-    mdata(15) = 0;
+    mdata_map_user_map_flag = 0;
     if (gdata_executing_immediate_quest_type == 1008)
     {
         gdata_left_minutes_of_executing_quest = 720;
@@ -3080,10 +3080,10 @@ void initialize_quest_map_town()
             inv[cnt].param1 = 0;
         }
     }
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
             map(x, y, 6) = 0;
@@ -3096,14 +3096,14 @@ void initialize_quest_map_town()
 
 void initialize_random_nefia_rdtype8()
 {
-    mdata(0) = 30;
-    mdata(1) = 60 + rnd(60);
-    mdata(10) = mdata(0) * mdata(1) / 20;
+    mdata_map_width = 30;
+    mdata_map_height = 60 + rnd(60);
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 20;
     map_initialize();
     int w = 6;
-    dx = mdata(0) / 2 - w / 2;
+    dx = mdata_map_width / 2 - w / 2;
     p = 0;
-    for (int cnt = 0, cnt_end = (mdata(1) - 4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height - 4); cnt < cnt_end; ++cnt)
     {
         y = 2 + cnt;
         for (int cnt = 0, cnt_end = (w); cnt < cnt_end; ++cnt)
@@ -3148,18 +3148,18 @@ void initialize_random_nefia_rdtype8()
         {
             dx -= rnd(2);
         }
-        if (dx + w < mdata(0) - 1)
+        if (dx + w < mdata_map_width - 1)
         {
             dx += rnd(2);
         }
-        if (dx + w > mdata(0))
+        if (dx + w > mdata_map_width)
         {
-            w = mdata(0) - dx;
+            w = mdata_map_width - dx;
         }
     }
     while (1)
     {
-        x = rnd(mdata(0));
+        x = rnd(mdata_map_width);
         y = rnd(15);
         if (map(x, y, 0) == 100)
         {
@@ -3169,8 +3169,8 @@ void initialize_random_nefia_rdtype8()
     }
     while (1)
     {
-        x = rnd(mdata(0));
-        y = mdata(1) - rnd(15) - 1;
+        x = rnd(mdata_map_width);
+        y = mdata_map_height - rnd(15) - 1;
         if (map(x, y, 0) == 100)
         {
             map_placedownstairs(x, y);
@@ -3201,9 +3201,9 @@ void dimmix(elona_vector1<int>& prm_983)
 
 void initialize_random_nefia_rdtype9()
 {
-    mdata(0) = _mclass * (_bold * 2) - _bold + 8;
-    mdata(1) = mdata(0);
-    mdata(10) = mdata(0) * mdata(1) / 12;
+    mdata_map_width = _mclass * (_bold * 2) - _bold + 8;
+    mdata_map_height = mdata_map_width;
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 12;
     map_initialize();
     label_1709();
     rdsecond = 1;
@@ -3389,14 +3389,14 @@ void label_1709()
     }
     for (int cnt = 0;; ++cnt)
     {
-        x = rnd(mdata(0));
-        y = rnd(mdata(1));
+        x = rnd(mdata_map_width);
+        y = rnd(mdata_map_height);
         if (map(x, y, 0) != 100)
         {
             continue;
         }
-        dx = rnd(mdata(0));
-        dy = rnd(mdata(1));
+        dx = rnd(mdata_map_width);
+        dy = rnd(mdata_map_height);
         if (map(dx, dy, 0) != 100)
         {
             continue;
@@ -3419,9 +3419,9 @@ void label_1709()
 
 void initialize_random_nefia_rdtype10()
 {
-    mdata(0) = _mclass * (_bold * 2) - _bold + 8;
-    mdata(1) = mdata(0);
-    mdata(10) = mdata(0) * mdata(1) / 12;
+    mdata_map_width = _mclass * (_bold * 2) - _bold + 8;
+    mdata_map_height = mdata_map_width;
+    mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 12;
     map_initialize();
     label_1709();
     for (int cnt = 0; cnt < 50; ++cnt)
@@ -3430,8 +3430,8 @@ void initialize_random_nefia_rdtype10()
         t = 100 + cnt2 + 1;
         while (1)
         {
-            x = rnd(mdata(0));
-            y = rnd(mdata(1));
+            x = rnd(mdata_map_width);
+            y = rnd(mdata_map_height);
             if (map(x, y, 0) != 100)
             {
                 continue;
@@ -3443,8 +3443,8 @@ void initialize_random_nefia_rdtype10()
                 for (int cnt = 0, cnt_end = (w); cnt < cnt_end; ++cnt)
                 {
                     dx = cnt + x - w / 2;
-                    if (dx < 1 || dy < 1 || dx >= mdata(0) - 1
-                        || dy >= mdata(1) - 1)
+                    if (dx < 1 || dy < 1 || dx >= mdata_map_width - 1
+                        || dy >= mdata_map_height - 1)
                     {
                         continue;
                     }
@@ -3554,10 +3554,10 @@ void initialize_random_nefia_rdtype10()
             break;
         }
     }
-    for (int cnt = 0, cnt_end = (mdata(1) / 2 - 2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height / 2 - 2); cnt < cnt_end; ++cnt)
     {
         y = cnt * 2;
-        for (int cnt = 0, cnt_end = (mdata(0) / 2 - 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width / 2 - 2); cnt < cnt_end; ++cnt)
         {
             x = cnt * 2;
             if (map(x, y, 0) < 100)
@@ -3799,33 +3799,33 @@ void initialize_home_mdata()
 {
     if (gdata_home_scale == 0)
     {
-        mdata(18) = 100;
+        mdata_map_max_item_count = 100;
         gdata_basic_point_of_home_rank = 1000;
     }
     if (gdata_home_scale == 1)
     {
-        mdata(18) = 150;
+        mdata_map_max_item_count = 150;
         gdata_basic_point_of_home_rank = 3000;
     }
     if (gdata_home_scale == 2)
     {
-        mdata(18) = 200;
+        mdata_map_max_item_count = 200;
         gdata_basic_point_of_home_rank = 5000;
     }
     if (gdata_home_scale == 3)
     {
-        mdata(18) = 300;
+        mdata_map_max_item_count = 300;
         gdata_basic_point_of_home_rank = 7000;
     }
     if (gdata_home_scale == 4)
     {
-        mdata(18) = 350;
+        mdata_map_max_item_count = 350;
         gdata_basic_point_of_home_rank = 8000;
-        mdata(12) = 8;
+        mdata_map_tileset = 8;
     }
     if (gdata_home_scale == 5)
     {
-        mdata(18) = 400;
+        mdata_map_max_item_count = 400;
         gdata_basic_point_of_home_rank = 10000;
     }
     return;
@@ -3835,7 +3835,7 @@ void map_initcustom(const std::string& prm_934)
 {
     fmapfile = (filesystem::dir::map() / prm_934).generic_string();
     ctrl_file(file_operation_t::_5);
-    map_tileset(mdata(12));
+    map_tileset(mdata_map_tileset);
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)
     {
@@ -3877,16 +3877,16 @@ void map_initcustom(const std::string& prm_934)
                 cmapdata(3, cnt) / 1000);
             if (cellobjdata(0, cmapdata(0, cnt)) == 10)
             {
-                mdata(5) = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                mdata_map_stair_up_pos = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
             if (cellobjdata(0, cmapdata(0, cnt)) == 11)
             {
-                mdata(4) = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                mdata_map_stair_down_pos = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
         }
     }
     nooracle = 0;
-    mdata(15) = 1;
+    mdata_map_user_map_flag = 1;
     return;
 }
 

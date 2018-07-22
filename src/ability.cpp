@@ -547,7 +547,7 @@ void gain_healing_and_meditation_experience(int cc)
 
 void gain_stealth_experience(int cc)
 {
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (rnd(20))
         {
@@ -572,7 +572,7 @@ void gain_weight_lifting_experience(int cc)
     {
         return;
     }
-    if (mdata(6) == 1)
+    if (mdata_map_type == 1)
     {
         if (rnd(20))
         {

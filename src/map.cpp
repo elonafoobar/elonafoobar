@@ -22,9 +22,9 @@ void map_reload(const std::string& map_filename)
     fmapfile = (filesystem::dir::map() / map_filename).generic_string();
     ctrl_file(file_operation_t::_16);
 
-    for (int y = 0; y < mdata(1); ++y)
+    for (int y = 0; y < mdata_map_height; ++y)
     {
-        for (int x = 0; x < mdata(0); ++x)
+        for (int x = 0; x < mdata_map_width; ++x)
         {
             map(x, y, 8) = 0;
             map(x, y, 9) = 0;
