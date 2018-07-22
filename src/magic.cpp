@@ -769,7 +769,7 @@ int magic()
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata_current_map == 40 || mdata_map_type == 1
+                if (gdata_current_map == 40 || mdata_map_type == map_type_t::world_map
                     || gdata_current_map == 37 || gdata_current_map == 41)
                 {
                     if (is_in_fov(tc))
@@ -1891,7 +1891,7 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -3673,7 +3673,7 @@ label_2181_internal:
         }
         break;
     case 659:
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             break;
         }

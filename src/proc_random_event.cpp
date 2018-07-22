@@ -132,7 +132,7 @@ optional<std::pair<int, int>> generate_random_event()
             return none;
         }
     }
-    if (mdata_map_type == 5)
+    if (mdata_map_type == map_type_t::your_home)
     {
         return none;
     }
@@ -166,7 +166,7 @@ optional<std::pair<int, int>> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         if (rnd(25) == 0)
         {
@@ -182,7 +182,7 @@ optional<std::pair<int, int>> generate_random_event()
             return std::make_pair(id, luck_threshold);
         }
     }
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (rnd(40))
         {

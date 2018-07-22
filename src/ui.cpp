@@ -98,7 +98,7 @@ void render_weather_effect_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == 1)); ++i)
+    for (int i = 0; i < max_particles * (1 + (mdata_map_type == map_type_t::world_map)); ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -140,7 +140,7 @@ void render_weather_effect_hard_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == 1)); ++i)
+    for (int i = 0; i < max_particles * (1 + (mdata_map_type == map_type_t::world_map)); ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -1647,7 +1647,7 @@ void label_1438()
         return;
     }
     scrollp = config::instance().walkwait;
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;

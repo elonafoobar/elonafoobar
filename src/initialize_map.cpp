@@ -109,10 +109,10 @@ label_17401:
         {
             goto label_1741_internal;
         }
-        if (mdata_map_regenerate_count != gdata(184) || (gdata(79) == 1 && mdata_map_type == 1))
+        if (mdata_map_regenerate_count != gdata(184) || (gdata(79) == 1 && mdata_map_type == map_type_t::world_map))
         {
-            if (mdata_map_type == 3 || mdata_map_type == 2 || mdata_map_type == 6
-                || mdata_map_type == 1)
+            if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild || mdata_map_type == map_type_t::shelter
+                || mdata_map_type == map_type_t::world_map)
             {
                 mapupdate = 1;
                 goto label_1741_internal;
@@ -2518,7 +2518,7 @@ label_1741_internal:
     }
     map_setfog();
     if (gdata_current_map == 40 || dbg_revealmap || gdata_current_map == 6
-        || mdata_map_type == 3 || mdata_map_type == 1 || mdata_map_type == 5 || mdata_map_type == 2
+        || mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::world_map || mdata_map_type == map_type_t::your_home || mdata_map_type == map_type_t::guild
         || gdata_current_map == 30 || gdata_current_map == 32
         || gdata_current_map == 34 || gdata_current_map == 35
         || (gdata_current_map == 13
@@ -2535,7 +2535,7 @@ label_1741_internal:
     }
     if (mapupdate == 1)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             f = 0;
             i = 0;
@@ -2848,7 +2848,7 @@ label_1742_internal:
                         }
                     }
                 }
-                if (mdata_map_type == 3 || mdata_map_type == 2)
+                if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
                 {
                     cdata[rc].sleep = 0;
                     if (gdata_hour >= 22 || gdata_hour < 7)
@@ -2948,7 +2948,7 @@ label_1744_internal:
     label_1439();
     update_scrolling_info();
 
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         quest_refresh_list();
     }
@@ -3269,7 +3269,7 @@ label_1744_internal:
             }
         }
     }
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
              cnt < cnt_end;
@@ -3338,7 +3338,7 @@ label_1744_internal:
             }
         }
     }
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (config::instance().extrahelp)
         {
@@ -3356,7 +3356,7 @@ label_1744_internal:
             }
         }
     }
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         if (config::instance().extrahelp)
         {
@@ -3392,7 +3392,7 @@ label_1744_internal:
             }
         }
     }
-    if (mdata_map_type == 3 || gdata_current_map == 7 || mdata_map_type == 2)
+    if (mdata_map_type == map_type_t::town || gdata_current_map == 7 || mdata_map_type == map_type_t::guild)
     {
         if (gdata_distance_between_town >= 16)
         {

@@ -6288,7 +6288,7 @@ label_2283_internal:
     font(12 + sizefix - en * 2);
     pos(wx + 185, wy + 52);
     mes(i18n::s.get("core.locale.ui.politics.global"));
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get("core.locale.ui.politics.law_of", mapname(gdata_current_map)));

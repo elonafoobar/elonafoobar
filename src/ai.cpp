@@ -293,7 +293,7 @@ turn_result_t ai_proc_basic()
 
 turn_result_t proc_npc_movement_event(bool retreat)
 {
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         if (cc < 16)
         {
@@ -715,7 +715,7 @@ turn_result_t ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (mdata_map_type == 3 || mdata_map_type == 2)
+        if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {

@@ -628,7 +628,7 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.bomb"));
@@ -803,7 +803,7 @@ void proc_event()
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
         }
-        if (mdata_map_type == 3 || mdata_map_type == 2)
+        if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
         {
             modify_karma(0, -80 + trait(162) * 60);
         }
@@ -813,7 +813,7 @@ void proc_event()
         }
         break;
     case 18:
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
             break;
         gdata_weather = 1;
         envonly = 1;
@@ -894,7 +894,7 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
             break;
         txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)

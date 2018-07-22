@@ -779,7 +779,7 @@ void chara_set_generation_filter()
         fltn(u8"sf"s);
         return;
     }
-    if (mdata_map_type == 3 || mdata_map_type == 2)
+    if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltselect = 5;

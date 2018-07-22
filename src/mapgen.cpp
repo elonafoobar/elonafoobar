@@ -1361,7 +1361,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if ((264 <= map(x_at_m169, y_at_m169, 0)
              && map(x_at_m169, y_at_m169, 0) < 363)
@@ -1421,7 +1421,7 @@ void map_randsite(int prm_971, int prm_972)
         cell_featset(x_at_m169, y_at_m169, tile_re + rnd(3), 24);
         return;
     }
-    if (mdata_map_type == 3 || mdata_map_type == 2)
+    if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
     {
         if (rnd(3) == 0)
         {

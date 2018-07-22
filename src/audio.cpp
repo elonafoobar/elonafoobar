@@ -303,7 +303,7 @@ void play_music(int music_id)
     {
         DSSTOP(14);
     }
-    if (mdata_map_type == 3)
+    if (mdata_map_type == map_type_t::town)
     {
         snd(79, true);
     }

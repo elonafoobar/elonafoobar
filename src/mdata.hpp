@@ -22,3 +22,23 @@
 #define mdata_map_regenerate_count      mdata(19)
 #define mdata_map_play_campfire_sound   mdata(20)
 #define mdata_map_mefs_loaded_flag      mdata(21)
+
+namespace elona
+{
+
+enum map_type_t
+{
+    world_map = 1,
+    guild = 2,
+    town = 3,
+    field = 4,
+    your_home = 5,
+    shelter = 6,
+    escort_ambush = 7,
+    dungeon_a = 20,
+    dungeon_b = 21,
+    dungeon_c = 22,
+    dungeon_d = 23,
+};
+
+} // namespace elona

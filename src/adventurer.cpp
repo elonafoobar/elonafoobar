@@ -223,7 +223,7 @@ void label_2662()
                 }
             }
         }
-        if ((cdata[rc].current_map != gdata_current_map || mdata_map_type == 1)
+        if ((cdata[rc].current_map != gdata_current_map || mdata_map_type == map_type_t::world_map)
             && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)

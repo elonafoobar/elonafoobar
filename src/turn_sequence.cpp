@@ -733,7 +733,7 @@ turn_result_t turn_begin()
     }
 
     bool update_turn_cost = true;
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (cdata[0].continuous_action_turn > 2)
         {
@@ -868,7 +868,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (gdata_is_returning_or_escaping != 0)
         {
             --gdata_is_returning_or_escaping;
-            if (mdata_map_type == 7 || gdata_current_map == 30
+            if (mdata_map_type == map_type_t::escort_ambush || gdata_current_map == 30
                 || gdata_current_map == 41)
             {
                 gdata_is_returning_or_escaping = 0;
@@ -1039,7 +1039,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     {
                         continue;
                     }
-                    if (cnt == cc || rnd(3) || mdata_map_type == 1)
+                    if (cnt == cc || rnd(3) || mdata_map_type == map_type_t::world_map)
                     {
                         continue;
                     }
@@ -1246,7 +1246,7 @@ turn_result_t pc_turn(bool advance_time)
         {
             cdata[gdata_mount].position = cdata[0].position;
         }
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             map(cdata[0].position.x, cdata[0].position.y, 1) = 1;
         }
@@ -1692,7 +1692,7 @@ label_2747:
     {
         key = key_search;
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
-        if (feat(1) == 11 || mdata_map_type == 1)
+        if (feat(1) == 11 || mdata_map_type == map_type_t::world_map)
         {
             key = key_godown;
         }
@@ -1841,7 +1841,7 @@ label_2747:
     }
     if (key == key_throw)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1868,7 +1868,7 @@ label_2747:
     }
     if (key == key_drop)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1911,7 +1911,7 @@ label_2747:
     }
     if (key == key_zap)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1938,7 +1938,7 @@ label_2747:
     }
     if (key == key_open)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1957,7 +1957,7 @@ label_2747:
     }
     if (key == key_dip)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1991,7 +1991,7 @@ label_2747:
     }
     if (key == key_cast)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2007,7 +2007,7 @@ label_2747:
     }
     if (key == key_skill)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2032,7 +2032,7 @@ label_2747:
     menucycle = 0;
     if (key == key_offer)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2061,7 +2061,7 @@ label_2747:
     }
     if (key == key_interact)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2083,7 +2083,7 @@ label_2747:
     }
     if (key == key_fire)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2098,7 +2098,7 @@ label_2747:
     }
     if (key == key_give)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2148,7 +2148,7 @@ label_2747:
 
     if (key == key_bash)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2167,7 +2167,7 @@ label_2747:
     }
     if (key == key_close)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2182,7 +2182,7 @@ label_2747:
     }
     if (key == key_pray)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));

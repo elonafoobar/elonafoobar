@@ -1846,7 +1846,7 @@ void refreshspeed(int cc)
     {
         cdata[0].speed_percentage_in_next_turn -= 10;
     }
-    if (mdata_map_type == 1 || mdata_map_type == 4)
+    if (mdata_map_type == map_type_t::world_map || mdata_map_type == map_type_t::field)
     {
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
@@ -5326,7 +5326,7 @@ turn_result_t exit_map()
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
     gdata(171) = 0;
-    if (mdata_map_type == 5)
+    if (mdata_map_type == map_type_t::your_home)
     {
         if (config::instance().extrahelp)
         {
@@ -5344,7 +5344,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata_map_type == 7)
+    if (mdata_map_type == map_type_t::escort_ambush)
     {
         rq = gdata_executing_immediate_quest;
         quest_exit_map();
@@ -5436,7 +5436,7 @@ turn_result_t exit_map()
         }
         if (f == 0)
         {
-            if (mdata_map_type == 1)
+            if (mdata_map_type == map_type_t::world_map)
             {
                 gdata_pc_home_x = cdata[cc].position.x;
                 gdata_pc_home_y = cdata[cc].position.y;
@@ -5478,13 +5478,13 @@ turn_result_t exit_map()
                     gdata_current_map = 2;
                 }
             }
-            if (mdata_map_type == 3 || mdata_map_type == 4 || mdata_map_type == 5 || mdata_map_type == 6
-                || mdata_map_type == 2)
+            if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::field || mdata_map_type == map_type_t::your_home || mdata_map_type == map_type_t::shelter
+                || mdata_map_type == map_type_t::guild)
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata_map_type >= 20 || mdata_map_type == 6)
+        if (mdata_map_type >= 20 || mdata_map_type == map_type_t::shelter)
         {
             if (gdata_current_dungeon_level < adata(17, gdata_current_map))
             {
@@ -5508,7 +5508,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata_map_type == 7)
+    if (mdata_map_type == map_type_t::escort_ambush)
     {
         gdata_current_map = gdata_previous_map2;
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
@@ -5552,8 +5552,8 @@ turn_result_t exit_map()
     }
     if (gdata_current_map != gdata_previous_map)
     {
-        if (mdata_map_type == 3 || gdata_departure_date == 0
-            || gdata_previous_map == 7 || mdata_map_type == 2)
+        if (mdata_map_type == map_type_t::town || gdata_departure_date == 0
+            || gdata_previous_map == 7 || mdata_map_type == map_type_t::guild)
         {
             gdata_departure_date = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
@@ -5567,7 +5567,7 @@ turn_result_t exit_map()
         }
         if (mdata_map_type != 1)
         {
-            if (mdata_map_type != 4 || mdata_map_type == 5)
+            if (mdata_map_type != 4 || mdata_map_type == map_type_t::your_home)
             {
                 if (fixtransfermap == 0)
                 {
@@ -5594,7 +5594,7 @@ turn_result_t exit_map()
             msgtemp += i18n::s.get("core.locale.action.exit_map.entered",
                                    mapname(gdata_current_map));
         }
-        else if (mdata_map_type == 7)
+        else if (mdata_map_type == map_type_t::escort_ambush)
         {
             msgtemp += i18n::s.get("core.locale.action.exit_map.returned_to",
                                    mapname(gdata_current_map));
@@ -5795,7 +5795,7 @@ void label_1745()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (mdata_map_type == 3 || mdata_map_type == 2)
+                    if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5831,15 +5831,15 @@ void label_1745()
                 }
             }
             p = rnd(mdata_map_height * mdata_map_width / 400 + 3);
-            if (mdata_map_type == 1)
+            if (mdata_map_type == map_type_t::world_map)
             {
                 p = rnd(40);
             }
-            if (mdata_map_type == 3)
+            if (mdata_map_type == map_type_t::town)
             {
                 p = rnd(rnd(rnd(12) + 1) + 1);
             }
-            if (mdata_map_type == 2)
+            if (mdata_map_type == map_type_t::guild)
             {
                 p = rnd(p + 1);
             }
@@ -5916,7 +5916,7 @@ void label_1745()
                     }
                 }
             }
-            if (mdata_map_type == 3 || mdata_map_type == 2 || gdata_current_map == 7)
+            if (mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild || gdata_current_map == 7)
             {
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
                      cnt < ELONA_MAX_CHARACTERS;
@@ -8234,7 +8234,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     }
     if (map(prm_1057, prm_1058, 6) != 0)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 15)
             {
@@ -9023,7 +9023,7 @@ turn_result_t do_short_cut()
     }
     if (efid >= 600)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -9044,7 +9044,7 @@ turn_result_t do_short_cut()
     }
     if (efid >= 400)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -13315,7 +13315,7 @@ turn_result_t proc_movement_event()
             return turn_result_t::turn_end;
         }
     }
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (cc == 0)
         {
@@ -13346,7 +13346,7 @@ turn_result_t proc_movement_event()
         }
     }
     label_2206();
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (cc == 0)
         {
@@ -13685,14 +13685,14 @@ void label_2206()
                     rnd(2));
                 if (keybd_wait <= config::instance().walkwait
                             * config::instance().startrun
-                    || cdata[0].turn % 2 == 0 || mdata_map_type == 1)
+                    || cdata[0].turn % 2 == 0 || mdata_map_type == map_type_t::world_map)
                 {
                     snd(83 + foot % 3);
                     foot += 1 + rnd(2);
                 }
             }
         }
-        else if (mdata_map_type == 1)
+        else if (mdata_map_type == map_type_t::world_map)
         {
             addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
             snd(81 + foot % 2);
@@ -15302,7 +15302,7 @@ turn_result_t do_plant()
 {
     screenupdate = -1;
     update_screen();
-    if (mdata_map_type == 1 || mdata_map_type == 3 || mdata_map_type == 2)
+    if (mdata_map_type == map_type_t::world_map || mdata_map_type == map_type_t::town || mdata_map_type == map_type_t::guild)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
@@ -15976,7 +15976,7 @@ void weather_changes()
     {
         calc_home_rank();
     }
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         gdata_pc_home_x = cdata[0].position.x;
         gdata_pc_home_y = cdata[0].position.y;
@@ -16156,7 +16156,7 @@ void weather_changes()
     label_1746();
     label_2662();
     food_gets_rotten();
-    if (mdata_map_type == 1)
+    if (mdata_map_type == map_type_t::world_map)
     {
         if (rnd(3) == 0)
         {
@@ -16296,7 +16296,7 @@ void weather_changes()
     }
     if (mode == 0)
     {
-        if (mdata_map_type == 1)
+        if (mdata_map_type == map_type_t::world_map)
         {
             if (rnd(40) == 0)
             {
@@ -16337,7 +16337,7 @@ void weather_changes()
 
 optional<turn_result_t> check_angband()
 {
-    if (gdata_angband_flag == -1 || mdata_map_type == 1)
+    if (gdata_angband_flag == -1 || mdata_map_type == map_type_t::world_map)
         return none;
 
     switch (gdata_angband_flag)
