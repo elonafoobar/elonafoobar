@@ -255,6 +255,6 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", you) == u8"");
-    REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", chara) == u8"putitは");
+    REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", chara) == u8"プチは");
     REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", out_of_fov) == u8"それは");
 }

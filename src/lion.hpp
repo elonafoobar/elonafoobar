@@ -110,15 +110,24 @@ public:
         return iterator{std::end(storage)};
     }
 
+    void clear()
+    {
+        storage.clear();
+    }
 
     void initialize(sol::table table)
+    {
+        initialize(table, *lua::lua.get());
+    }
+
+    void initialize(sol::table table, lua::lua_env& lua)
     {
         std::string prefix = "core." + std::string(traits_type::datatype_name);
         for (const auto& pair : table) {
             std::string id = pair.first.as<std::string>();
             sol::table data = pair.second.as<sol::table>();
 
-            data_type converted = static_cast<T&>(*this).convert(id, data);
+            data_type converted = static_cast<T&>(*this).convert(id, data, lua);
             id_type the_id(prefix + "." + id);
 
             by_legacy_id.emplace(converted.id, the_id);
@@ -210,17 +219,17 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
         {                                                               \
             variant = default_value;                                    \
         }                                                               \
-        name = lua::lua->get_api_manager().get_enum_value(enum_type, variant); \
+        name = lua.get_api_manager().get_enum_value(enum_type, variant); \
     }                                                                   \
 
 #define ELONA_LION_DB_FIELD_CALLBACK(name)                              \
-    optional<lua::exported_function> name = none;                       \
+    optional<std::string> name = none;                                  \
     {                                                                   \
         sol::optional<std::string> function_name = data[#name];         \
         if (function_name)                                              \
         {                                                               \
-            name = lua::lua->get_registry_manager().get_function(*function_name); \
-            if (!name)                                                  \
+            name = *function_name;                                      \
+            if (!lua.get_registry_manager().has_function(*function_name)) \
             {                                                           \
                 throw std::runtime_error("Error loading " + id_ + "." + #name + ": No such callback named " + *function_name); \
             }                                                           \

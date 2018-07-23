@@ -27,7 +27,7 @@ struct exported_function
         if (!result.valid())
         {
             sol::error err = result;
-            txtef(predefined_color_t::red);
+            txtef(color_index_t::red);
             txt(id + ": Script callback error: " + err.what());
         }
     }
@@ -39,7 +39,7 @@ struct exported_function
         if (!result.valid())
         {
             sol::error err = result;
-            txtef(predefined_color_t::red);
+            txtef(color_index_t::red);
             txt(id + ": Script callback error: " + err.what());
             return sol::nullopt;
         }

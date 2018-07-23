@@ -11,6 +11,7 @@ static sol::table load(elona::lua::lua_env& lua, const fs::path& data_file)
 {
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod();
+    lua.load_all_mods();
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
     REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
     auto table = lua.get_registry_manager().get_table("core", "chara");
@@ -34,7 +35,7 @@ TEST_CASE("test reading of official chara.hcl", "[Lua: Registry]")
     auto table = load(lua, filesystem::dir::mods() / "core" / "data" / "chara.hcl");
 
     character_db_ex db;
-    REQUIRE_NOTHROW(db.initialize(table));
+    REQUIRE_NOTHROW(db.initialize(table, lua));
 }
 
 TEST_CASE("test reading invalid enum", "[Lua: Registry]")
@@ -43,7 +44,16 @@ TEST_CASE("test reading invalid enum", "[Lua: Registry]")
     auto table = load(lua, "tests/data/registry/chara_invalid_enum.hcl");
 
     character_db_ex db;
-    REQUIRE_THROWS(db.initialize(table));
+    REQUIRE_THROWS(db.initialize(table, lua));
+}
+
+TEST_CASE("test reading invalid callback name", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    auto table = load(lua, "tests/data/registry/chara_invalid_callback.hcl");
+
+    character_db_ex db;
+    REQUIRE_THROWS(db.initialize(table, lua));
 }
 
 TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
@@ -64,7 +74,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
     auto table = load(lua, "tests/data/registry/chara.hcl");
 
     character_db_ex db;
-    db.initialize(table);
+    db.initialize(table, lua);
 
     auto data = db["core.chara.spiral_putit"];
 
@@ -106,7 +116,7 @@ TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
     auto table = load(lua, "tests/data/registry/chara_defaults.hcl");
 
     character_db_ex db;
-    db.initialize(table);
+    db.initialize(table, lua);
 
     auto data = db["core.chara.nothing"];
 
@@ -147,7 +157,7 @@ TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
     auto table = load(lua, "tests/data/registry/chara.hcl");
 
     character_db_ex db;
-    db.initialize(table);
+    db.initialize(table, lua);
 
     auto data = db[500];
 
@@ -161,7 +171,7 @@ TEST_CASE("test character flags", "[Lua: Registry]")
     auto table = load(lua, "tests/data/registry/chara_defaults.hcl");
 
     character_db_ex db;
-    db.initialize(table);
+    db.initialize(table, lua);
 
     auto data = db["core.chara.nothing"];
 

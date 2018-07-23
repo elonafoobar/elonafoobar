@@ -68,7 +68,21 @@ public:
      * Obtains a Lua callback of the format "core.exports.<name>", if
      * it exists.
      */
-    optional<exported_function> get_function(const std::string& name);
+    optional<exported_function> get_function(const std::string& name) const;
+
+    bool has_function(const std::string& name) const
+    {
+        return static_cast<bool>(get_function(name));
+    }
+
+    template <typename... Args>
+    void call(const std::string& name, Args&&... args) const
+    {
+        if (auto func = get_function(name))
+        {
+            func->call(std::forward<Args>(args)...);
+        }
+    }
 
 private:
     /***

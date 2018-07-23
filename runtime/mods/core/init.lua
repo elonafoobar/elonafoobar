@@ -1,6 +1,6 @@
 local Exports = {}
 
-Exports.corpse_effect = require "exports/corpse_effect"
+Exports.eating_effect = require "exports/eating_effect"
 
 return {
    Exports = Exports

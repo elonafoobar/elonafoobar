@@ -592,7 +592,7 @@ chara vesda {
     category = 0
     rarity = 1000
     coefficient = 400
-    corpse_eating_effect = core.exports.eating_effect.fire
+    corpse_eating_effect = core.exports.eating_effect.vesda
 }
 
 chara miches {
@@ -3046,7 +3046,7 @@ chara beetle {
     category = 0
     rarity = 100000
     coefficient = 400
-    corpse_eating_effect = core.exports.eating_effect.strength
+    corpse_eating_effect = core.exports.eating_effect.beetle
 }
 
 chara orc_warrior {
@@ -9007,7 +9007,7 @@ chara alien {
     category = 0
     rarity = 40000
     coefficient = 400
-    corpse_eating_effect = core.exports.eating_effect.pregnant
+    corpse_eating_effect = core.exports.eating_effect.alien
 }
 
 

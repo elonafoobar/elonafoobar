@@ -277,7 +277,7 @@ locale {
                 strength = "This food is good for your strength."
                 ghost = "This food is good for your will power."
                 quickling = "Wow, ${name(_1)} speed${s(_1)} up!"
-                pregnant = "Something gets into ${name(_1)}${his_owned(_1)} body."
+                alien = "Something gets into ${name(_1)}${his_owned(_1)} body."
             }
 
             quality {

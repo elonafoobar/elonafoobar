@@ -323,7 +323,7 @@ int access_character_info()
     if (dbmode == 12 && data->corpse_eating_effect)
     {
         auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
-        data->corpse_eating_effect->call(handle);
+        lua::lua->get_registry_manager().call(*data->corpse_eating_effect, handle);
         return -1;
     }
 

@@ -194,10 +194,11 @@ void lua_env::load_mod(mod_info& mod)
         // was returned.
         if (result.valid())
         {
-            sol::optional<sol::table> api_table = result.get<sol::table>();
-            if (api_table)
+            sol::optional<sol::object> object = result.get<sol::object>();
+            if (object && object->is<sol::table>())
             {
-                api_mgr->add_api(mod.name, *api_table);
+                sol::table api_table = object->as<sol::table>();
+                api_mgr->add_api(mod.name, api_table);
             }
         }
         else
@@ -286,7 +287,6 @@ void lua_env::load_all_mods()
 
     event_mgr->run_callbacks<event_kind_t::all_mods_loaded>();
     registry_mgr->register_functions();
-    api_mgr->lock();
 
     stage = mod_loading_stage_t::all_mods_loaded;
 }
@@ -419,7 +419,6 @@ void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
             {
                 sol::environment env = this_env;
                 const fs::path full_path = mod_path / (path + ".lua");
-                std::cout << full_path.string() << " PATH" << std::endl;
                 return state->script_file(full_path.string(), env);
             };
     }
@@ -462,9 +461,9 @@ void lua_env::clear()
     }
     event_mgr->clear();
     clear_mod_stores();
-    mods.clear();
     lua->collect_garbage();
-    stage = mod_loading_stage_t::not_started;
+    // mods.clear();
+    // stage = mod_loading_stage_t::not_started;
 }
 
 void lua_env::load_mod_from_script(
@@ -501,10 +500,11 @@ void lua_env::load_mod_from_script(
     auto result = this->lua->safe_script(script, info->env);
     if (result.valid())
     {
-        sol::optional<sol::table> api_table = result.get<sol::table>();
-        if (api_table)
+        sol::optional<sol::object> object = result.get<sol::object>();
+        if (object && object->is<sol::table>())
         {
-            api_mgr->add_api(name, *api_table);
+            sol::table api_table = object->as<sol::table>();
+            api_mgr->add_api(name, api_table);
         }
     }
     else

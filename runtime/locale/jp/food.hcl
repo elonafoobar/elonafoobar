@@ -277,7 +277,7 @@ locale {
                 strength = "力がつきそうだ。"
                 ghost = "精神が少しずぶとくなった。"
                 quickling = "ワアーォ、${name(_1)}は速くなった気がする！"
-                pregnant = "何かが${name(_1)}の体内に入り込んだ。"
+                alien = "何かが${name(_1)}の体内に入り込んだ。"
             }
 
             quality {

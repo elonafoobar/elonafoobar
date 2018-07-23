@@ -129,7 +129,6 @@ end
 
 function Handle.remove_item_handle(cpp_ref)
     local handle = Handle.ItemHandles[cpp_ref.index];
-
     handle.cpp_ref = nil
     handle.is_valid = false
     Handle.ItemHandles[cpp_ref.index] = nil

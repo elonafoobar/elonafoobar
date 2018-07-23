@@ -760,7 +760,6 @@ sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
 
     if (rtval == -1)
     {
-        std::cout << "nullopt" << std::endl;
         return sol::nullopt;
     }
 
@@ -823,7 +822,7 @@ void bind(sol::table&);
 
 void GUI::txt(const std::string& message)
 {
-    GUI::txt_txtef(message, color_index_t::none);
+    elona::txt(message);
 }
 
 void GUI::txt_txtef(const std::string& message, color_index_t color)
@@ -1215,11 +1214,11 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    GUI::txt_color(3);
+    GUI::txtef(color_index_t::red);
     GUI::txt("Script error: ");
     while (getline(sstream, line, '\n'))
     {
-        GUI::txt_color(3);
+        GUI::txtef(color_index_t::red);
         GUI::txt(line + "  ");
     }
 
@@ -1491,7 +1490,7 @@ bool api_manager::is_loaded()
 
 sol::optional<sol::table> api_manager::try_find_api(
     const std::string& module_namespace,
-    const std::string& module_name)
+    const std::string& module_name) const
 {
     sol::optional<sol::table> table = api_env["Elona"][module_namespace];
     if (!table)
@@ -1523,7 +1522,7 @@ void api_manager::add_api(const std::string& module_namespace, sol::table& modul
 }
 
 int api_manager::get_enum_value(const std::string& enum_name,
-                                const std::string& variant)
+                                const std::string& variant) const
 {
     sol::optional<sol::table> Enums = try_find_api("core", "Enums");
     if (!Enums)

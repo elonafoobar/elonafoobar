@@ -67,7 +67,7 @@ public:
      */
     sol::optional<sol::table> try_find_api(
         const std::string& module_namespace,
-        const std::string& module_name);
+        const std::string& module_name) const;
 
     /***
      * Adds a new API from the return value of a mod's init.lua file.
@@ -90,7 +90,7 @@ public:
     sol::table get_api_table();
 
     int get_enum_value(const std::string& enum_name,
-                       const std::string& variant);
+                       const std::string& variant) const;
 
 private:
     /***

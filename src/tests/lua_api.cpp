@@ -49,25 +49,9 @@ assert(Hello.hello() == "Hello!")
 )"));
 }
 
-TEST_CASE("test verification that API tables only have string keys", "[Lua: API]")
-{
-    elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.scan_all_mods(filesystem::dir::exe() / u8"tests/data/mods");
-    lua.load_core_mod();
-    lua.load_all_mods();
-
-    REQUIRE(false);
-}
-
 TEST_CASE("test loading of non-ASCII filepaths", "[Lua: Misc]")
 {
     lua_testcase(u8"Windowsファイル名.lua");
-}
-
-TEST_CASE("test that core API tables are read-only", "[Lua: API]")
-{
-    lua_testcase("readonly.lua");
 }
 
 
@@ -99,11 +83,6 @@ TEST_CASE("Core API: I18N", "[Lua: API]")
 TEST_CASE("Core API: Trait", "[Lua: API]")
 {
     lua_testcase("trait.lua");
-}
-
-TEST_CASE("Core API: Input", "[Lua: API]")
-{
-    lua_testcase("input.lua");
 }
 
 

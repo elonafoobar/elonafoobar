@@ -153,7 +153,7 @@ void help_halt()
 
 
 
-void txtef(predefined_color_t color)
+void txtef(color_index_t color)
 {
     txtef(static_cast<int>(color));
 }

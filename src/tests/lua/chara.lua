@@ -2,6 +2,7 @@ require "tests/lua/support/minctest"
 
 local Chara = Elona.require("Chara")
 local Enums = Elona.require("Enums")
+local D = Elona.require("Debug")
 
 lrun("test Chara.is_alive", function()
         Testing.start_in_debug_map()

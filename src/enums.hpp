@@ -28,7 +28,7 @@ enum class key_wait_delay_t
 };
 
 // Index into c_col.
-enum class predefined_color_t : int
+enum class color_index_t : int
 {
     // These two colors are exactly the same.
     none = 0,

@@ -801,6 +801,7 @@ static void initialize_lua()
     lua::lua->scan_all_mods(filesystem::dir::mods());
     lua::lua->load_core_mod();
     lua::lua->load_all_mods();
+    lua::lua->get_api_manager().lock();
 }
 
 int run()

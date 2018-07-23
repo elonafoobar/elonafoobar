@@ -212,7 +212,7 @@ function eating_effect.quickling(eater)
 end
 
 function eating_effect.alien(eater)
-   eat_message(eater, "pregnant", Enums.Color.None)
+   eat_message(eater, "alien", Enums.Color.None)
    eater:make_pregnant()
 end
 

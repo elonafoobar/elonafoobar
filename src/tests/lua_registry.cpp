@@ -72,14 +72,14 @@ return {
 
     {
         auto function = lua.get_registry_manager().get_function("test.exports.my_callback");
-        REQUIRE(function);
+        REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
     }
 
     {
         auto function = lua.get_registry_manager().get_function("test.exports.nesting.my_callback");
-        REQUIRE(function);
+        REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
@@ -114,7 +114,7 @@ return {
     lua.get_registry_manager().register_functions();
 
     auto function = lua.get_registry_manager().get_function("test.exports.my_callback");
-    REQUIRE(function);
+    REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(42));
 
     REQUIRE_NOTHROW(
@@ -123,8 +123,6 @@ return {
 
 TEST_CASE("test registering Lua functions with userdata arguments", "[Lua: Registry]")
 {
-    elona::testing::start_in_debug_map();
-
     REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script("test_registry_chara_callback", R"(
 local Exports = {}
 
@@ -139,6 +137,7 @@ return {
 }
 )"));
 
+    elona::testing::start_in_debug_map();
     elona::lua::lua->get_registry_manager().register_functions();
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -148,11 +147,31 @@ return {
 
     auto function = elona::lua::lua->get_registry_manager()
         .get_function("test_registry_chara_callback.exports.my_callback");
-    REQUIRE(function);
+    REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(handle));
 
     elona::lua::lua->get_mod("test_registry_chara_callback")->env.set("index", elona::rc);
     REQUIRE_NOTHROW(
         elona::lua::lua->run_in_mod("test_registry_chara_callback",
                                     R"(assert(Store.global.found_index == index))"));
+}
+
+TEST_CASE("test verification that API tables only have string keys", "[Lua: Registry]")
+{
+    elona::lua::lua_env lua;
+    lua.scan_all_mods(filesystem::dir::mods());
+    lua.load_core_mod();
+
+    REQUIRE_NOTHROW(
+        lua.load_mod_from_script("test", R"(
+local Exports = {}
+
+Exports[0] = function() end
+
+return {
+    Exports = Exports
+}
+)"));
+
+    REQUIRE_THROWS(lua.load_all_mods());
 }

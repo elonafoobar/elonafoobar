@@ -112,7 +112,6 @@ void registry_manager::register_functions()
 
     auto result = lua->get_state()->safe_script(R"(
 Exports = scan_exports(_API_TABLE)
-print(Elona.require("Debug").inspect.inspect(Exports))
 )", registry_env, ignore_handler);
 
     registry_env.set("_API_TABLE", sol::lua_nil);
@@ -137,10 +136,10 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     return (*mod_data_table)[datatype_name];
 }
 
-optional<exported_function> registry_manager::get_function(const std::string& name)
+optional<exported_function> registry_manager::get_function(const std::string& name) const
 {
     sol::optional<sol::protected_function> func = registry_env["Exports"][name];
-    if (func)
+    if (func && *func != sol::lua_nil)
     {
         return exported_function{name, *func};
     }

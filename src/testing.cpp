@@ -44,7 +44,7 @@ void start_in_map(int map, int level)
 {
     filesystem::dir::set_base_save_directory(filesystem::path(save_dir));
 
-    reset_state();
+    lua::lua->clear();
     initialize_debug_globals();
 
     elona::playerid = player_id;
@@ -86,8 +86,20 @@ void load_translations(const std::string& hcl)
     i18n::s.load(ss, "test.hcl");
 }
 
+void clear_lion_db()
+{
+    the_character_db.clear();
+}
+
 void configure_lua()
 {
+    clear_lion_db();
+    lua::lua.reset(new lua::lua_env());
+    lua::lua->scan_all_mods(filesystem::dir::mods());
+    lua::lua->load_core_mod();
+    lua::lua->load_all_mods();
+    initialize_lion_db();
+
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
@@ -98,12 +110,7 @@ void pre_init()
 {
     log::initialize();
 
-    lua::lua.reset(new lua::lua_env());
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
     initialize_cat_db();
-    initialize_lion_db();
     configure_lua();
 
     const fs::path config_def_file =
@@ -135,7 +142,7 @@ void post_run()
 
 void reset_state()
 {
-    lua::lua->reload();
+    lua::lua->clear();
     configure_lua();
     initialize_elona();
 

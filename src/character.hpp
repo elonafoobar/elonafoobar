@@ -136,7 +136,7 @@ struct character_data
     int category;
     int rarity;
     int coefficient;
-    optional<lua::exported_function> corpse_eating_effect;
+    optional<std::string> corpse_eating_effect;
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
@@ -167,7 +167,7 @@ class character_db_ex : public lion::lion_db<character_db_ex>
 public:
     character_db_ex() = default;
 
-    character_data convert(const std::string&, const sol::table&);
+    character_data convert(const std::string&, const sol::table&, lua::lua_env&);
 };
 
 
