@@ -109,7 +109,8 @@ int magic()
                 }
                 else if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
-                    play_animation(6);
+                    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
+                        .play();
                 }
                 if (efid == 625 || efid == 446)
                 {
@@ -187,7 +188,9 @@ int magic()
             switch (the_ability_db[efid]->sdataref1)
             {
             case 10:
-                play_animation(18);
+                ranged_attack_animation(
+                    ranged_attack_animation::type_t::distant_attack)
+                    .play();
                 try_to_melee_attack();
                 goto the_end;
             case 1:
@@ -199,7 +202,7 @@ int magic()
                     goto the_end;
                 }
             }
-                play_animation(0);
+                bolt_animation(cdata[cc], ele).play();
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 for (int cnt = 0; cnt < 20; ++cnt)
@@ -293,7 +296,7 @@ int magic()
                     aniref = range_;
                     anix = tlocx;
                     aniy = tlocy;
-                    play_animation(2);
+                    ball_animation(ball_animation::type_t::ball).play();
                 }
                 for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                      ++cnt)
@@ -340,7 +343,9 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                play_animation(11);
+                                bright_aura_animation(cdata[tc],
+                                    bright_aura_animation::type_t::healing_rain)
+                                    .play();
                                 if (is_in_fov(tc))
                                 {
                                     txt(i18n::s.get("core.locale.magic.healed.normal", cdata[tc]));
@@ -365,7 +370,9 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                play_animation(11);
+                                bright_aura_animation(cdata[tc],
+                                    bright_aura_animation::type_t::healing_rain)
+                                    .play();
                                 txt(i18n::s.get("core.locale.magic.rain_of_sanity", cdata[tc]));
                                 healsan(tc, efp / 10);
                                 healcon(tc, 11, 9999);
@@ -474,7 +481,9 @@ int magic()
                 cc = ccbk;
                 goto the_end;
             case 2:
-                play_animation(1);
+                ranged_attack_animation(
+                    ranged_attack_animation::type_t::magic_arrow)
+                    .play();
                 dmg = roll(dice1, dice2, bonus);
                 if (is_in_fov(tc))
                 {
@@ -526,7 +535,8 @@ int magic()
                     healcon(tc, 12, 5 + rnd(5));
                 }
                 sickifcursed(efstatus, tc, 3);
-                play_animation(5);
+                bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+                    .play();
                 goto the_end;
             case 6:
                 if (cdata[cc].special_attack_type != 0)
@@ -936,7 +946,7 @@ int magic()
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 breath_list();
-                play_animation(3);
+                breath_animation(cdata[cc], ele).play();
                 for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
@@ -1669,7 +1679,7 @@ label_2181_internal:
         txtef(5);
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
-        play_animation(5);
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing).play();
         break;
     case 1117:
         if (tc >= 16)
@@ -1941,7 +1951,7 @@ label_2181_internal:
                         cdata[rc]));
         txt(i18n::s.get("core.locale.magic.resurrection.dialog"));
         animode = 100 + rc;
-        play_animation(19);
+        miracle_animation().play();
         snd(120);
         cdata[rc].emotion_icon = 317;
         if (cc == 0)
@@ -2274,7 +2284,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.faith.blessed"));
             }
             animode = 100 + tc;
-            play_animation(19);
+            miracle_animation().play();
             snd(120);
             cdata[0].praying_point += 500;
             modpiety(75);
@@ -2341,7 +2351,7 @@ label_2181_internal:
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
-        play_animation(6);
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff).play();
         chara_refresh(tc);
         break;
     case 1139:
@@ -2365,7 +2375,7 @@ label_2181_internal:
             }
             txt(i18n::s.get("core.locale.magic.gain_potential.blessed", cdata[tc]));
             animode = 100 + tc;
-            play_animation(19);
+            miracle_animation().play();
             snd(61);
         }
         else
@@ -2676,7 +2686,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
-            play_animation(5);
+            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+                .play();
         }
         break;
     case 624:
@@ -2684,7 +2695,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
-            play_animation(5);
+            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+                .play();
         }
         break;
     case 1108:
@@ -3670,7 +3682,7 @@ label_2181_internal:
             {
                 continue;
             }
-            play_animation(9);
+            swarm_animation(cdata[tc]).play();
             try_to_melee_attack();
         }
         break;
@@ -3722,7 +3734,7 @@ label_2181_internal:
         txtef(4);
         txt(i18n::s.get("core.locale.magic.mewmewmew"));
         animode = 0;
-        play_animation(19);
+        miracle_animation().play();
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cc].state != 1)
@@ -3744,7 +3756,7 @@ label_2181_internal:
     case 465:
         txtef(4);
         txt(i18n::s.get("core.locale.magic.meteor"));
-        play_animation(22);
+        meteor_animation().play();
         for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
         {
             dy = cnt;

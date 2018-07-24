@@ -275,7 +275,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     "core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim;
-                play_animation(19);
+                miracle_animation().play();
                 snd(120);
                 break;
             }

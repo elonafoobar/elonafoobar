@@ -511,19 +511,10 @@ void initialize_chara_chips()
 
 
 
-struct image_info
-{
-    int window_id;
-    int x;
-    int y;
-    int width;
-    int height;
-};
-
 std::unordered_map<std::string, image_info> images = {};
 
-
 std::unordered_map<std::string, int> window_id_table = {
+    {"item.bmp", 1},
     {"interface.bmp", 3},
 };
 
@@ -1265,10 +1256,7 @@ void init_assets()
 
 void draw(const std::string& key, int x, int y)
 {
-    const auto itr = images.find(key);
-    if (itr == std::end(images))
-        throw std::runtime_error{u8"Unknown image ID: "s + key};
-    const auto& info = itr->second;
+    const auto& info = get_image_info(key);
 
     pos(x, y);
     gcopy(info.window_id, info.x, info.y, info.width, info.height);
@@ -1278,10 +1266,7 @@ void draw(const std::string& key, int x, int y)
 
 void draw(const std::string& key, int x, int y, int width, int height)
 {
-    const auto itr = images.find(key);
-    if (itr == std::end(images))
-        throw std::runtime_error{u8"Unknown image ID: "s + key};
-    const auto& info = itr->second;
+    const auto& info = get_image_info(key);
 
     pos(x, y);
     gcopy(
@@ -1296,10 +1281,7 @@ void draw_rotated(
     int center_y,
     double angle)
 {
-    const auto itr = images.find(key);
-    if (itr == std::end(images))
-        throw std::runtime_error{u8"Unknown image ID: "s + key};
-    const auto& info = itr->second;
+    const auto& info = get_image_info(key);
 
     pos(center_x, center_y);
     grotate(
@@ -1321,10 +1303,7 @@ void draw_rotated(
     int height,
     double angle)
 {
-    const auto itr = images.find(key);
-    if (itr == std::end(images))
-        throw std::runtime_error{u8"Unknown image ID: "s + key};
-    const auto& info = itr->second;
+    const auto& info = get_image_info(key);
 
     pos(center_x, center_y);
     grotate(
@@ -1336,6 +1315,16 @@ void draw_rotated(
         width,
         height,
         3.14159265 / 180 * angle);
+}
+
+
+
+const image_info& get_image_info(const std::string& key)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
+    return itr->second;
 }
 
 

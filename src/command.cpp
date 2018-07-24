@@ -577,7 +577,7 @@ turn_result_t do_throw_command()
     aniref(1) = inv[ci].color;
     anix = tlocx;
     aniy = tlocy;
-    play_animation(15);
+    throwing_object_animation(cdata[cc]).play();
     ti = inv_getfreeid(-1);
     removeitem(ci, 1);
     if (inv[ci].id == 685)
@@ -597,7 +597,7 @@ turn_result_t do_throw_command()
     }
     x = tlocx;
     y = tlocy;
-    play_animation(14);
+    breaking_animation({x, y}).play();
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -946,7 +946,8 @@ turn_result_t do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    play_animation(7);
+    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::offering)
+        .play();
     tc = tcbk;
     int stat = item_find(60002);
     if (stat != -1)
@@ -997,7 +998,7 @@ turn_result_t do_offer_command()
             modpiety(i * 5);
             cdata[0].praying_point += i * 30;
             animode = 100;
-            play_animation(19);
+            miracle_animation().play();
             snd(120);
             if (inv[ti].param1 != 0)
             {
@@ -2320,7 +2321,7 @@ turn_result_t do_use_command()
         txtef(5);
         txt(i18n::s.get("core.locale.action.use.gene_machine.has_inherited", cdata[rc], cdata[tc]));
         anic = rc;
-        play_animation(20);
+        geen_engineering_animation().play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)

@@ -102,7 +102,7 @@ void proc_event()
         txtef(5);
         txt(i18n::s.get("core.locale.event.ehekatl"));
         msg_halt();
-        play_animation(21);
+        ragnarok_animation().play();
         flt();
         chara_create(
             -1,
@@ -756,7 +756,7 @@ void proc_event()
         aniref = range_;
         anix = tlocx;
         aniy = tlocy;
-        play_animation(17);
+        ball_animation(ball_animation::type_t::atomic_bomb).play();
         update_screen();
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
@@ -820,7 +820,7 @@ void proc_event()
         play_music();
         txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
-        play_animation(21);
+        ragnarok_animation().play();
         for (int i = 0; i < 200; ++i)
         {
             for (int j = 0; j < 2; ++j)

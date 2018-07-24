@@ -223,5 +223,33 @@ images {
         width = 24
         height = 24
     }
+    failure_to_cast_effect {
+        source = "item.bmp"
+        x = 480
+        y = 0
+        width = 48
+        height = 48
+    }
+    swarm_effect {
+        source = "item.bmp"
+        x = 816
+        y = 0
+        width = 48
+        height = 48
+    }
+    #swarm_effect {
+    #    source = "item.bmp"
+    #    x = 96
+    #    y = 96
+    #    width = 48
+    #    height = 144
+    #}
+    breaking_effect {
+        source = "item.bmp"
+        x = 864
+        y = 0
+        width = 48
+        height = 48
+    }
 }
 

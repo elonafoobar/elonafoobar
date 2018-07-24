@@ -451,7 +451,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                     {
                                         map(x, y, 0) = tile_tunnel;
                                         snd(45);
-                                        play_animation(14);
+                                        breaking_animation({x, y}).play();
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cc))
                                         {
