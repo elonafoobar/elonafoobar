@@ -105,8 +105,8 @@ turn_result_t build_new_building()
         levelexitby = 2;
         gdata_destination_map = 7;
         gdata_destination_dungeon_level = 1;
-        gdata_pc_home_x = adata(1, 7);
-        gdata_pc_home_y = adata(2, 7);
+        gdata_pc_x_in_world_map = adata(1, 7);
+        gdata_pc_y_in_world_map = adata(2, 7);
         snd(58);
         txtef(2);
         txt(i18n::s.get("core.locale.building.built_new_house"));

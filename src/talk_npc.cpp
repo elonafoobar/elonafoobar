@@ -1122,8 +1122,8 @@ talk_result_t talk_caravan_master_hire()
     levelexitby = 4;
     gdata(79) = 1;
     gdata(850) = adata(30, chatval);
-    gdata_pc_home_x = adata(1, chatval);
-    gdata_pc_home_y = adata(2, chatval);
+    gdata_pc_x_in_world_map = adata(1, chatval);
+    gdata_pc_y_in_world_map = adata(2, chatval);
     fixtransfermap = 1;
     chatteleport = 1;
     return talk_result_t::talk_end;
