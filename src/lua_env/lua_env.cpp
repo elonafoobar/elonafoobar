@@ -240,7 +240,7 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
 
 void lua_env::load_core_mod()
 {
-    if (stage != mod_loading_stage_t::scan_finished)
+    if (stage == mod_loading_stage_t::not_started)
     {
         throw std::runtime_error("Mods haven't been scanned yet!");
     }
