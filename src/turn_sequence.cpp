@@ -1129,7 +1129,6 @@ turn_result_t pass_one_turn(bool label_2738_flg)
 
 void label_27412()
 {
-    std::cerr << "emoicon update:" << cdata[cc].turn << std::endl;
     cdata[cc].emotion_icon -= 100;
     if (cdata[cc].emotion_icon < 0)
     {
@@ -1623,7 +1622,6 @@ label_2747:
         firstturn = 1;
         load_save_data();
         mode = 3;
-        std::cerr << "emoicon:" << cdata[cc].emotion_icon << std::endl;
         return turn_result_t::initialize_map;
     }
 
