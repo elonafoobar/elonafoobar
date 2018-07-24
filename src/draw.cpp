@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "hcl.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -12,11 +13,15 @@
 #include "random.hpp"
 #include "hcl.hpp"
 #include "variables.hpp"
+#include "pic_loader/extent.hpp"
+#include "pic_loader/pic_loader.hpp"
 
 
 
 namespace
 {
+
+pic_loader loader;
 
 
 // TODO: it should be configurable.
@@ -433,80 +438,52 @@ void initialize_item_chips()
 
 void initialize_chara_chips()
 {
-    for (size_t i = 0; i < chara_chips.size(); ++i)
+    auto value = hclutil::load(filesystem::dir::mods() / "core" / "data" / "chara_chip.hcl");
+    pic_loader::map_type extents;
+
+    for (const auto& pair : value.get<hcl::Object>("chara_chip"))
     {
-        chara_chips[i].x = i % 33 * inf_tiles;
-        chara_chips[i].y = i / 33 * inf_tiles;
-        chara_chips[i].width = inf_tiles;
-        chara_chips[i].height = inf_tiles;
-        chara_chips[i].offset_y = 16;
+        int i = std::stoi(pair.first);
+        int x = 0;
+        int y = 0;
+        int width = inf_tiles;
+        int height = inf_tiles;
+        int offset_y = 16;
+        bool tall = false;
+
+        auto source = pair.second["source"];
+        if (source.is<hcl::Object>())
+        {
+            x = source["x"].as<int>();
+            y = source["y"].as<int>();
+        }
+        else
+        {
+            throw std::runtime_error("unimplemented");
+        }
+
+        if (auto value = pair.second.find("tall"))
+        {
+            tall = value->as<bool>();
+        }
+        if (auto value = pair.second.find("offset_y"))
+        {
+            offset_y = value->as<int>();
+        }
+
+        if (tall)
+        {
+            width = inf_tiles * 2;
+        }
+
+        shared_id key("core.chara_chip." + std::to_string(i));
+        extents[key] = extent{x, y, width, height};
+        chara_chips[i] = chara_chip_t{key, offset_y};
     }
 
-    chara_chips[176].offset_y = 8;
-    chara_chips[225].offset_y = 29;
-    chara_chips[230].offset_y = 12;
-    chara_chips[256].offset_y = 16;
-    chara_chips[277].offset_y = 29;
-    chara_chips[201].height = inf_tiles * 2;
-    chara_chips[201].offset_y = inf_tiles + 16;
-    chara_chips[228].height = inf_tiles * 2;
-    chara_chips[228].offset_y = inf_tiles + 8;
-    chara_chips[231].height = inf_tiles * 2;
-    chara_chips[231].offset_y = inf_tiles + 16;
-    chara_chips[232].height = inf_tiles * 2;
-    chara_chips[232].offset_y = inf_tiles + 16;
-    chara_chips[233].height = inf_tiles * 2;
-    chara_chips[233].offset_y = inf_tiles + 8;
-    chara_chips[297].height = inf_tiles * 2;
-    chara_chips[297].offset_y = inf_tiles + 16;
-    chara_chips[235].height = inf_tiles * 2;
-    chara_chips[235].offset_y = inf_tiles + 16;
-    chara_chips[280].height = inf_tiles * 2;
-    chara_chips[280].offset_y = inf_tiles + 32;
-    chara_chips[338].height = inf_tiles * 2;
-    chara_chips[338].offset_y = inf_tiles + 32;
-    chara_chips[339].height = inf_tiles * 2;
-    chara_chips[339].offset_y = inf_tiles + 16;
-    chara_chips[341].height = inf_tiles * 2;
-    chara_chips[341].offset_y = inf_tiles + 16;
-    chara_chips[342].height = inf_tiles * 2;
-    chara_chips[342].offset_y = inf_tiles + 12;
-    chara_chips[343].height = inf_tiles * 2;
-    chara_chips[343].offset_y = inf_tiles + 16;
-    chara_chips[349].height = inf_tiles * 2;
-    chara_chips[349].offset_y = inf_tiles + 8;
-    chara_chips[351].height = inf_tiles * 2;
-    chara_chips[351].offset_y = inf_tiles + 8;
-    chara_chips[389].height = inf_tiles * 2;
-    chara_chips[389].offset_y = inf_tiles + 16;
-    chara_chips[391].height = inf_tiles * 2;
-    chara_chips[391].offset_y = inf_tiles + 16;
-    chara_chips[393].height = inf_tiles * 2;
-    chara_chips[393].offset_y = inf_tiles + 16;
-    chara_chips[398].height = inf_tiles * 2;
-    chara_chips[398].offset_y = inf_tiles + 16;
-    chara_chips[404].height = inf_tiles * 2;
-    chara_chips[404].offset_y = inf_tiles + 16;
-    chara_chips[405].height = inf_tiles * 2;
-    chara_chips[405].offset_y = inf_tiles + 16;
-    chara_chips[408].height = inf_tiles * 2;
-    chara_chips[408].offset_y = inf_tiles + 16;
-    chara_chips[413].height = inf_tiles * 2;
-    chara_chips[413].offset_y = inf_tiles + 16;
-    chara_chips[429].height = inf_tiles * 2;
-    chara_chips[429].offset_y = inf_tiles + 8;
-    chara_chips[430].height = inf_tiles * 2;
-    chara_chips[430].offset_y = inf_tiles + 8;
-    chara_chips[432].height = inf_tiles * 2;
-    chara_chips[432].offset_y = inf_tiles + 8;
-    chara_chips[433].height = inf_tiles * 2;
-    chara_chips[433].offset_y = inf_tiles + 8;
-    chara_chips[439].height = inf_tiles * 2;
-    chara_chips[439].offset_y = inf_tiles + 8;
-    chara_chips[442].height = inf_tiles * 2;
-    chara_chips[442].offset_y = inf_tiles + 8;
-    chara_chips[447].height = inf_tiles * 2;
-    chara_chips[447].offset_y = inf_tiles + 16;
+    loader.add_predefined_extents(filesystem::dir::graphic() / u8"character.bmp",
+                                  extents,
+                                  0);
 }
 
 
@@ -519,7 +496,6 @@ std::unordered_map<std::string, int> window_id_table = {
 };
 
 
-
 } // namespace
 
 
@@ -530,6 +506,17 @@ namespace elona
 std::vector<item_chip_t> item_chips{825};
 std::vector<chara_chip_t> chara_chips{925};
 
+
+
+optional_ref<extent> draw_get_rect_chara(int id)
+{
+    return draw_get_rect(chara_chips[id].key);
+}
+
+optional_ref<extent> draw_get_rect(const std::string& key)
+{
+    return loader[key];
+}
 
 
 void prepare_item_image(int id, int color)
@@ -570,6 +557,7 @@ void prepare_item_image(int id, int color, int character_image)
     {
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
+        auto rect = draw_get_rect_chara(character_id);
         gmode(2);
         pos(0, 960);
         set_color_mod(
@@ -583,18 +571,16 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
-            5);
+            rect->buffer);
         gcopy(
-            5,
-            chara_chips[character_id].x + 8,
-            chara_chips[character_id].y + 4
-                + (chara_chips[character_id].height > inf_tiles) * 8,
-            chara_chips[character_id].width - 16,
-            chara_chips[character_id].height - 8
-                - (chara_chips[character_id].height > inf_tiles) * 10,
+            rect->buffer,
+            rect->x + 8,
+            rect->y + 4 + (rect->height > inf_tiles) * 8,
+            rect->width - 16,
+            rect->height - 8 - (rect->height > inf_tiles) * 10,
             22,
             20);
-        set_color_mod(255, 255, 255, 5);
+        set_color_mod(255, 255, 255, rect->buffer);
         pos(6, 974);
         gcopy(1, 0, 1008, 22, 20);
         gsel(0);
@@ -603,21 +589,22 @@ void prepare_item_image(int id, int color, int character_image)
     {
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
-        pos(8, 1058 - chara_chips[character_id].height);
+        auto rect = draw_get_rect_chara(character_id);
+        pos(8, 1058 - rect->height);
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
-            5);
+            rect->buffer);
         gcopy(
-            5,
-            chara_chips[character_id].x + 8,
-            chara_chips[character_id].y + 2,
-            chara_chips[character_id].width - 16,
-            chara_chips[character_id].height - 8);
-        set_color_mod(255, 255, 255, 5);
+            rect->buffer,
+            rect->x + 8,
+            rect->y + 2,
+            rect->width - 16,
+            rect->height - 8);
+        set_color_mod(255, 255, 255, rect->buffer);
         gmode(4, 192);
-        pos(0, 960 + (chara_chips[character_id].height == inf_tiles) * 48);
+        pos(0, 960 + (rect->height == inf_tiles) * 48);
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
@@ -625,10 +612,10 @@ void prepare_item_image(int id, int color, int character_image)
         gcopy(
             1,
             144,
-            768 + (chara_chips[character_id].height > inf_tiles) * 48,
+            768 + (rect->height > inf_tiles) * 48,
             inf_tiles,
-            chara_chips[character_id].height
-                + (chara_chips[character_id].height > inf_tiles) * 48);
+            rect->height
+                + (rect->height > inf_tiles) * 48);
         set_color_mod(255, 255, 255);
         gmode(2);
         gsel(0);
@@ -888,35 +875,38 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 
 
 
-void chara_preparepic(const character& cc)
+optional_ref<extent> chara_preparepic(const character& cc)
 {
-    chara_preparepic(cc.image);
+    return chara_preparepic(cc.image);
 }
 
 
 
-void chara_preparepic(int image_id)
+optional_ref<extent> chara_preparepic(int image_id)
 {
     const auto chip_id = image_id % 1000;
     const auto color_id = image_id / 1000;
     const auto& chip = chara_chips[chip_id];
-    gsel(5);
-    boxf(0, 960, chip.width, chip.height);
+    const auto rect = draw_get_rect(chip.key);
+    gsel(rect->buffer);
+    boxf(0, 960, rect->width, rect->height);
     pos(0, 960);
     set_color_mod(
         255 - c_col(0, color_id),
         255 - c_col(1, color_id),
         255 - c_col(2, color_id));
-    gcopy(5, chip.x, chip.y, chip.width, chip.height);
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
     set_color_mod(255, 255, 255);
     gsel(0);
+    return rect;
 }
 
 
 
 void create_pcpic(int cc, bool prm_410)
 {
-    buffer(10 + cc, 384, 198);
+    std::cout << "Create pcpic " << cc << " buf " << (30 + cc) << std::endl;
+    buffer(30 + cc, 384, 198);
     boxf();
 
     if (pcc(15, cc) == 0)

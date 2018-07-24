@@ -1516,17 +1516,17 @@ void talk_window_show()
         {
             p(0) = cdata[tc].image % 1000;
             p(1) = cdata[tc].image / 1000;
-            chara_preparepic(cdata[tc]);
+            auto rect = chara_preparepic(cdata[tc]);
             pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
             gmode(2);
             gcopy_c(
-                5,
+                rect->buffer,
                 0,
                 960,
-                chara_chips[p].width,
-                chara_chips[p].height,
-                chara_chips[p].width * 2,
-                chara_chips[p].height * 2);
+                rect->width,
+                rect->height,
+                rect->width * 2,
+                rect->height * 2);
         }
         else
         {

@@ -589,6 +589,207 @@ void draw_character_sprite(
 
 
 
+optional_ref<extent> prepare_chara_chip(int c_, int dx, int dy)
+{
+    const int col_ = cdata[c_].image / 1000;
+    const int p_ = cdata[c_].image % 1000;
+    auto rect = draw_get_rect_chara(p_);
+    if (cdata[c_].is_hung_on_sand_bag())
+    {
+        gmode(2, 80);
+        pos(dx + 26 - 11, dy - 32 + 11);
+        func_2(1, 96, 816, -80, 48, 96);
+        gmode(2, 255);
+        pos(dx, dy - 63);
+        gcopy(1, 96, 816, 48, 96);
+        chara_chips[p_].offset_y += 24;
+    }
+    gsel(rect->buffer);
+    boxf(0, 960, rect->width, rect->height);
+    pos(0, 960);
+    set_color_mod(
+        255 - c_col(0, col_),
+        255 - c_col(1, col_),
+        255 - c_col(2, col_));
+    gcopy(
+        rect->buffer,
+        rect->x,
+        rect->y,
+        rect->width,
+        rect->height);
+    set_color_mod(255, 255, 255);
+    gsel(0);
+
+    return rect;
+}
+
+
+void draw_chara_chip_sprite_in_world_map(int texture_id,
+                                         int chip_id,
+                                         int x,
+                                         int y,
+                                         int width,
+                                         int height)
+{
+    pos(x + 24, y + 32);
+    gmode(6, 85);
+    gcopy_c(3, 240, 384, 32, 16, 20, 10);
+    pos(x + 24, y + 24 - chara_chips[chip_id].offset_y / 4);
+    gmode(2);
+    gcopy_c(
+        texture_id,
+        0,
+        960,
+        width,
+        height,
+        24,
+        height / 2);
+}
+
+
+void draw_chara_chip_sprite_in_water(int texture_id,
+                                     int chip_id,
+                                     int x,
+                                     int y,
+                                     int width,
+                                     int height,
+                                     int ground_)
+{
+    int dy = (chipm(0, ground_) == 3) * -16;
+    gmode(4, 100);
+    pos(x,
+        y + 16 - chara_chips[chip_id].offset_y - dy);
+    gcopy(
+        texture_id,
+        0,
+        976,
+        width,
+        height - 16);
+    gmode(2);
+    pos(x,
+        y - chara_chips[chip_id].offset_y - dy);
+    gcopy(
+        texture_id,
+        0,
+        960,
+        width,
+        height - 16);
+}
+
+void draw_chara_chip_sprite(int texture_id,
+                            int chip_id,
+                            int x,
+                            int y,
+                            int width,
+                            int height,
+                            int ground_)
+{
+    int dy = (chipm(0, ground_) == 3) * -16;
+    gmode(6, 110);
+    draw("character_shadow", x + 8, y + 20);
+    gmode(2);
+    pos(x,
+        y - chara_chips[chip_id].offset_y - dy);
+    gcopy(
+        texture_id,
+        0,
+        960,
+        width,
+        height);
+}
+
+void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
+{
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    {
+        draw_character_sprite_in_world_map(
+            10 + c_, dx, dy, ani_, cdata[c_].direction);
+    }
+    else if (chipm(0, ground_) == 3)
+    {
+        draw_character_sprite_in_water(
+            10 + c_, dx, dy, ani_, cdata[c_].direction);
+    }
+    else
+    {
+        draw_character_sprite(
+            10 + c_, dx, dy, ani_, cdata[c_].direction);
+    }
+    gmode(2);
+    if (cdata[c_].furious != 0)
+    {
+        draw("furious_icon", dx + 12, dy - 28);
+    }
+    if (cdata[c_].emotion_icon != 0)
+    {
+        draw_emo(c_, dx + 4, dy - 32);
+    }
+}
+
+void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
+{
+    int p_ = cdata[c_].image % 1000;
+    auto rect = prepare_chara_chip(c_, dx, dy);
+
+    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    {
+        draw_chara_chip_sprite_in_world_map(
+            rect->buffer, p_, dx, dy, rect->width, rect->height);
+
+        if (cdata[c_].emotion_icon != 0)
+        {
+            draw_emo(
+                c_, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+        }
+    }
+    else
+    {
+        if (chipm(0, ground_) == 3)
+        {
+            draw_chara_chip_sprite_in_water(
+                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+        }
+        else
+        {
+            draw_chara_chip_sprite(
+                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+        }
+
+        if (cdata[c_].furious != 0)
+        {
+            draw("furious_icon",
+                 dx + 12, dy - chara_chips[p_].offset_y - 12);
+        }
+        if (cdata[c_].emotion_icon != 0)
+        {
+            draw_emo(
+                c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
+        }
+    }
+    if (cdata[c_].is_hung_on_sand_bag())
+    {
+        pos(dx, dy - 26);
+        gcopy(1, 96, 768, 48, 48);
+        chara_chips[p_].offset_y -= 24;
+    }
+}
+
+
+bool you_can_see(const character& chara)
+{
+    return is_in_fov(chara)
+        && (!chara.is_invisible()
+            || cdata[0].can_see_invisible()
+            || chara.wet != 0);
+}
+
+bool hp_bar_visible(const character& chara)
+{
+    return chara.has_been_used_stethoscope()
+        || gdata(94) == chara.index
+        || debug::voldemort;
+}
+
 bool is_night()
 {
     return gdata_hour > 17 || gdata_hour < 6;
@@ -841,7 +1042,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                     }
                 }
                 stack_height += item_chips[p_].stack_height;
-                if (p_ == 531 && chara_chips[i_].height == 96)
+                if (p_ == 531 && draw_get_rect_chara(i_)->height == 96)
                 {
                     stack_height += 44;
                 }
@@ -936,152 +1137,21 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
 
 void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
 {
-    elona_vector1<int> p_;
-
     if (map(x, y, 1) != 0)
     {
         const int c_ = map(x, y, 1) - 1;
-        if (c_ != 0 && is_in_fov(c_)
-            && (!cdata[c_].is_invisible() || cdata[0].can_see_invisible()
-                || cdata[c_].wet != 0))
+        if (c_ != 0 && you_can_see(cdata[c_]))
         {
             if (cdata[c_].has_own_sprite())
             {
-                if (mdata_map_type == mdata_t::map_type_t::world_map)
-                {
-                    draw_character_sprite_in_world_map(
-                        10 + c_, dx, dy, ani_, cdata[c_].direction);
-                }
-                else if (chipm(0, ground_) == 3)
-                {
-                    draw_character_sprite_in_water(
-                        10 + c_, dx, dy, ani_, cdata[c_].direction);
-                }
-                else
-                {
-                    draw_character_sprite(
-                        10 + c_, dx, dy, ani_, cdata[c_].direction);
-                }
-                gmode(2);
-                if (cdata[c_].furious != 0)
-                {
-                    draw("furious_icon", dx + 12, dy - 28);
-                }
-                if (cdata[c_].emotion_icon != 0)
-                {
-                    draw_emo(c_, dx + 4, dy - 32);
-                }
+                draw_npc_own_sprite(c_, dx, dy, ani_, ground_);
             }
             else
             {
-                const int col_ = cdata[c_].image / 1000;
-                p_ = cdata[c_].image % 1000;
-                if (cdata[c_].is_hung_on_sand_bag())
-                {
-                    gmode(2, 80);
-                    pos(dx + 26 - 11, dy - 32 + 11);
-                    func_2(1, 96, 816, -80, 48, 96);
-                    gmode(2, 255);
-                    pos(dx, dy - 63);
-                    gcopy(1, 96, 816, 48, 96);
-                    chara_chips[p_].offset_y += 24;
-                }
-                gsel(5);
-                boxf(0, 960, chara_chips[p_].width, chara_chips[p_].height);
-                pos(0, 960);
-                set_color_mod(
-                    255 - c_col(0, col_),
-                    255 - c_col(1, col_),
-                    255 - c_col(2, col_));
-                gcopy(
-                    5,
-                    chara_chips[p_].x,
-                    chara_chips[p_].y,
-                    chara_chips[p_].width,
-                    chara_chips[p_].height);
-                set_color_mod(255, 255, 255);
-                gsel(0);
-                if (mdata_map_type == mdata_t::map_type_t::world_map)
-                {
-                    pos(dx + 24, dy + 32);
-                    gmode(6, 85);
-                    gcopy_c(3, 240, 384, 32, 16, 20, 10);
-                    pos(dx + 24, dy + 24 - chara_chips[p_].offset_y / 4);
-                    gmode(2);
-                    gcopy_c(
-                        5,
-                        0,
-                        960,
-                        chara_chips[p_].width,
-                        chara_chips[p_].height,
-                        24,
-                        chara_chips[p_].height / 2);
-                    if (cdata[c_].emotion_icon != 0)
-                    {
-                        draw_emo(
-                            c_, dx + 4, dy - chara_chips[p_].offset_y / 4 - 16);
-                    }
-                }
-                else
-                {
-                    if (chipm(0, ground_) == 3)
-                    {
-                        gmode(4, 100);
-                        pos(dx,
-                            dy + 16 - chara_chips[p_].offset_y
-                                - (chipm(0, ground_) == 3) * -16);
-                        gcopy(
-                            5,
-                            0,
-                            976,
-                            chara_chips[p_].width,
-                            chara_chips[p_].height - 16);
-                        gmode(2);
-                        pos(dx,
-                            dy - chara_chips[p_].offset_y
-                                - (chipm(0, ground_) == 3) * -16);
-                        gcopy(
-                            5,
-                            0,
-                            960,
-                            chara_chips[p_].width,
-                            chara_chips[p_].height - 16);
-                    }
-                    else
-                    {
-                        gmode(6, 110);
-                        draw("character_shadow", dx + 8, dy + 20);
-                        gmode(2);
-                        pos(dx,
-                            dy - chara_chips[p_].offset_y
-                                - (chipm(0, ground_) == 3) * -16);
-                        gcopy(
-                            5,
-                            0,
-                            960,
-                            chara_chips[p_].width,
-                            chara_chips[p_].height);
-                    }
-                    if (cdata[c_].furious != 0)
-                    {
-                        draw("furious_icon",
-                            dx + 12, dy - chara_chips[p_].offset_y - 12);
-                    }
-                    if (cdata[c_].emotion_icon != 0)
-                    {
-                        draw_emo(
-                            c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
-                    }
-                }
-                if (cdata[c_].is_hung_on_sand_bag())
-                {
-                    pos(dx, dy - 26);
-                    gcopy(1, 96, 768, 48, 48);
-                    chara_chips[p_].offset_y -= 24;
-                }
+                draw_npc_chara_chip(c_, dx, dy, ground_);
             }
-            if (cdata[c_].has_been_used_stethoscope() || gdata(94) == c_
-                || debug::voldemort)
+
+            if (hp_bar_visible(cdata[c_]))
             {
                 draw_hp_bar(c_, dx, dy);
             }
