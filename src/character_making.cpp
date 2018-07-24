@@ -954,30 +954,12 @@ void show_race_or_class_info(int val0)
     else
     {
         {
-            auto rect = chara_preparepic(ref1);
-            pos(wx + 480, wy + 96);
-            gmode(4, 40);
-            gcopy_c(
-                rect->buffer,
-                0,
-                960,
-                rect->width,
-                rect->height,
-                rect->width * 2,
-                rect->height * 2);
+            // male
+            draw_chara(ref1, wx + 480, wy + 96, 2, 40);
         }
         {
-            auto rect = chara_preparepic(ref2);
-            pos(wx + 350, wy + 96);
-            gmode(4, 40);
-            gcopy_c(
-                rect->buffer,
-                0,
-                960,
-                rect->width,
-                rect->height,
-                rect->width * 2,
-                rect->height * 2);
+            // female
+            draw_chara(ref2, wx + 350, wy + 96, 2, 40);
         }
         gmode(2);
     }

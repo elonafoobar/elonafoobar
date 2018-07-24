@@ -2356,19 +2356,7 @@ label_2035_internal:
         }
         else
         {
-            i = cdata[cc].image % 1000;
-            auto rect = chara_preparepic(cdata[cc]);
-            pos(wx + 596 + 22, wy + 86 + 24);
-            gmode(2);
-            gcopy_c(
-                rect->buffer,
-                0,
-                960,
-                rect->width,
-                rect->height,
-                rect->width
-                    / (1 + (rect->height > inf_tiles)),
-                inf_tiles);
+            draw_chara_scale_height(cdata[cc], wx + 596 + 22, wy + 86 + 24);
         }
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
@@ -3790,11 +3778,7 @@ label_2041_internal:
     }
     else
     {
-        i = cdata[cc].image % 1000;
-        auto rect = chara_preparepic(cdata[cc]);
-        pos(wx + 280, wy + 130);
-        gmode(2);
-        gcopy_c(rect->buffer, 0, 960, rect->width, rect->height);
+        draw_chara(cdata[cc], wx + 280, wy + 130);
     }
     gmode(2);
     font(14 - en * 2);
@@ -5431,19 +5415,11 @@ label_1982_internal:
         {
             break;
         }
-        i(0) = cdata[list(0, p)].image % 1000;
-        i(1) = cdata[list(0, p)].image / 1000;
-        auto rect = chara_preparepic(cdata[list(0, p)]);
-        pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2);
-        gcopy_c(
-            rect->buffer,
-            0,
-            960,
-            rect->width,
-            rect->height,
-            rect->width / (1 + (rect->height > inf_tiles)),
-            inf_tiles);
+
+        draw_chara_scale_height(cdata[list(0, p)],
+                                wx + 40,
+                                wy + 74 + cnt * 19 - 8);
+
         i = list(0, p);
         s = cdatan(0, i);
         cutname(s, 36);
@@ -5714,19 +5690,11 @@ label_1990_internal:
         {
             break;
         }
-        i(0) = cdata[list(0, p)].image % 1000;
-        i(1) = cdata[list(0, p)].image / 1000;
-        auto rect = chara_preparepic(cdata[list(0, p)]);
-        pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2);
-        gcopy_c(
-            rect->buffer,
-            0,
-            960,
-            rect->width,
-            rect->height,
-            rect->width / (1 + (rect->height > inf_tiles)),
-            inf_tiles);
+
+        draw_chara_scale_height(cdata[list(0, p)],
+                                wx + 40,
+                                wy + 74 + cnt * 19 - 8);
+
         pos(wx + 84, wy + 66 + cnt * 19 + 2);
         mes(cnvrank(p + 1) + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
         i = list(0, p);
@@ -6754,20 +6722,9 @@ label_1961_internal:
         }
         if (list(0, p) != 99)
         {
-            i(0) = cdata[list(0, p)].image % 1000;
-            i(1) = cdata[list(0, p)].image / 1000;
-            auto rect = chara_preparepic(cdata[list(0, p)]);
-            pos(wx + 40, wy + 74 + cnt * 19 - 8);
-            gmode(2);
-            gcopy_c(
-                rect->buffer,
-                0,
-                960,
-                rect->width,
-                rect->height,
-                rect->width
-                    / (1 + (rect->height > inf_tiles)),
-                inf_tiles);
+            draw_chara_scale_height(cdata[list(0, p)],
+                                    wx + 40,
+                                    wy + 74 + cnt * 19 - 8);
         }
         i = list(0, p);
         if (i == 99)

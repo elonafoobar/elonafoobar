@@ -26,7 +26,14 @@ public:
 
     struct buffer_info
     {
-        buffer_info(int width, int height) : width(width), height(height) {}
+        buffer_info(int type,
+                    int buffer_id,
+                    int width,
+                    int height)
+            : type(type)
+            , buffer_id(buffer_id)
+            , width(width)
+            , height(height) {}
 
         optional<extent> fits(int w, int h, size_t index) const
         {
@@ -140,19 +147,23 @@ public:
             }
         }
 
+        int type;
+        int buffer_id;
         int width;
         int height;
+
+    private:
         std::vector<skyline> skylines;
     };
 
     using id_type = shared_id;
     using map_type = std::unordered_map<id_type, extent>;
-    typedef int page_index;
+    typedef int page_type;
 
     void clear();
 
-    void load(const fs::path&, const id_type&, page_index);
-    void add_predefined_extents(const fs::path&, const map_type&, page_index);
+    void load(const fs::path&, const id_type&, page_type);
+    void add_predefined_extents(const fs::path&, const map_type&, page_type);
 
     optional_ref<extent> operator[](const id_type& id) const
     {
@@ -169,10 +180,10 @@ public:
     }
 
 private:
-    void add_buffer(page_index index) { add_buffer(index, 1024, 1024); }
-    void add_buffer(page_index, int, int);
+    int add_buffer(page_type type) { return add_buffer(type, 1024, 1024); }
+    int add_buffer(page_type, int, int);
 
-    std::unordered_map<page_index, std::vector<buffer_info>> buffers;
+    std::vector<buffer_info> buffers;
     map_type storage;
 
 };

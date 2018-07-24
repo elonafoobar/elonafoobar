@@ -1313,6 +1313,61 @@ const image_info& get_image_info(const std::string& key)
     return itr->second;
 }
 
+void draw_chara(const character& chara,
+                int x,
+                int y,
+                int scale,
+                int alpha)
+{
+    draw_chara(chara.image, x, y, scale, alpha);
+}
+
+void draw_chara(int image_id,
+                int x,
+                int y,
+                int scale,
+                int alpha)
+{
+    auto rect = chara_preparepic(image_id);
+    pos(x, y);
+    if (alpha != 0)
+    {
+        gmode(4, alpha);
+    }
+    else
+    {
+        gmode(2);
+    }
+
+    gcopy_c(rect->buffer,
+            0,
+            960,
+            rect->width,
+            rect->height,
+            rect->width * scale,
+            rect->height * scale);
+}
+
+void draw_chara_scale_height(const character& chara, int x, int y)
+{
+    draw_chara_scale_height(chara.image, x, y);
+}
+
+void draw_chara_scale_height(int image_id, int x, int y)
+{
+    auto rect = chara_preparepic(image_id);
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        rect->buffer,
+        0,
+        960,
+        rect->width,
+        rect->height,
+        rect->width / (1 + (rect->height > inf_tiles)),
+        inf_tiles);
+}
 
 
 } // namespace elona

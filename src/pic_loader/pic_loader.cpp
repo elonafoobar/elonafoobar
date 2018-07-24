@@ -7,27 +7,11 @@
 namespace elona
 {
 
-namespace
-{
-
-std::unordered_map<std::string, pic_loader::page_index> page_index_table = {
-    {"character.bmp", 0},
-};
-
-} // namespace
-
 void pic_loader::clear()
 {
-    for (const auto& pair : buffers)
+    for (const auto& buffer : buffers)
     {
-        page_index index = pair.first;
-        size_t buffer_count = pair.second.size();
-        size_t start_buffer = 10 + index * 2;
-
-        for (size_t i = start_buffer; i < start_buffer + buffer_count; i++)
-        {
-            buffer(i, 1, 1);
-        }
+        elona::buffer(buffer.buffer_id, 1, 1);
     }
 
     buffers.clear();
@@ -36,34 +20,40 @@ void pic_loader::clear()
 
 void pic_loader::load(const fs::path& image_file,
                       const id_type& id,
-                      page_index page)
+                      page_type type)
 {
     snail::basic_image img{image_file};
     extent ext{0, 0, 0, 0};
 
-    auto& infos = buffers.at(page);
-
     size_t i = 0;
-    while (true)
+    while(true)
     {
-        buffer_info& info = infos.at(i);
+        std::cout << "BACK" << std::endl;
+        auto& info = buffers.at(i);
+
+        if (info.type != type)
+        {
+            continue;
+        }
+
         if (auto pair = info.find(img.width(), img.height()))
         {
             size_t skyline_index = pair->first;
             ext = pair->second;
-            ext.buffer = 10 + page * 2 + i;
+            ext.buffer = info.buffer_id;
 
             info.split(skyline_index, ext);
             info.merge_all();
 
             break;
         }
+
         i += 1;
-        assert(i < 5);
 
         if (i == buffers.size())
         {
-            add_buffer(page);
+            add_buffer(type);
+            std::cout << "ADDBUF" << i << std::endl;
         }
     }
 
@@ -103,21 +93,21 @@ void pic_loader::load(const fs::path& image_file,
 
 //     for (const auto& pair : extents)
 //     {
-//         add_predefined_extents(pair.first, pair.second, page_index_table(pair));
+//         add_predefined_extents(pair.first, pair.second, page_type_table(pair));
 //     }
 // }
 
 void pic_loader::add_predefined_extents(const fs::path& atlas_file,
                                         const map_type& extents,
-                                        page_index index)
+                                        page_type type)
 {
     snail::basic_image img{atlas_file};
-    int buffer = 10 + index * 2 + buffers.at(index).size();
 
-    add_buffer(index, img.width(), img.height());
+    int buffer = add_buffer(type, img.width(), img.height());
     gsel(buffer);
 
-    buffer_info& info = buffers.at(index)[buffer];
+    buffer_info& info = buffers.at(buffer);
+
     const auto save = snail::application::instance().get_renderer().blend_mode();
     snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
 
@@ -147,28 +137,19 @@ void pic_loader::add_predefined_extents(const fs::path& atlas_file,
     snail::application::instance().get_renderer().set_blend_mode(save);
 }
 
-void pic_loader::add_buffer(page_index index, int w, int h)
+int pic_loader::add_buffer(page_type type, int w, int h)
 {
     int new_buffer_index;
-    size_t current_buffer_count = 0;
+    size_t current_buffer_count = buffers.size();
 
-    const auto itr = buffers.find(index);
+    assert(current_buffer_count < 10);
 
-    if (itr == buffers.end())
-    {
-        buffers.emplace(index, std::vector<buffer_info>());
-    }
-    else
-    {
-        current_buffer_count = itr->second.size();
-    }
-
-    assert(current_buffer_count < 2);
-
-    new_buffer_index = 10 + index * 2 + current_buffer_count;
-    buffers[index].emplace_back(w, h);
+    new_buffer_index = 10 + current_buffer_count;
+    buffers.emplace_back(type, new_buffer_index, w, h);
 
     buffer(new_buffer_index, w, h);
+
+    return new_buffer_index;
 }
 
 } // namespace elona

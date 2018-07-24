@@ -115,6 +115,18 @@ void draw_rotated(
 
 const image_info& get_image_info(const std::string& key);
 
+void draw_chara(const character& chara,
+                int x,
+                int y,
+                int scale = 1,
+                int alpha = 0);
+void draw_chara(int image_id,
+                int x,
+                int y,
+                int scale = 1,
+                int alpha = 0);
+void draw_chara_scale_height(const character& chara, int x, int y);
+void draw_chara_scale_height(int image_id, int x, int y);
 
 
 } // namespace elona

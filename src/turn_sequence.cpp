@@ -833,7 +833,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     cc = ct;
     cdata[cc].speed_percentage = cdata[cc].speed_percentage_in_next_turn;
     ++cdata[cc].turn;
-    label_27412();
+    update_emoicon();
     if (ct == 0)
     {
         tnew = 1;
@@ -1127,7 +1127,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
 
 
 
-void label_27412()
+void update_emoicon()
 {
     cdata[cc].emotion_icon -= 100;
     if (cdata[cc].emotion_icon < 0)

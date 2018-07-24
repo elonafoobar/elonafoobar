@@ -1145,7 +1145,7 @@ void lovemiracle(int = 0);
 void resistmod(int = 0, int = 0, int = 0);
 void weather_changes_by_location();
 void weather_changes();
-void label_27412();
+void update_emoicon();
 turn_result_t turn_end();
 optional<turn_result_t> check_angband();
 void conquer_lesimas();

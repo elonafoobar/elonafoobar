@@ -16784,17 +16784,9 @@ void show_game_score_ranking()
         pos(x + 480, y + 20);
         mes(""s + s + lang(u8"点"s, ""s));
         p = elona::stoi(s(1)) % 1000;
-        auto rect = chara_preparepic(elona::stoi(s(1)));
-        pos(x - 22, y + 12);
-        gmode(2);
-        gcopy_c(
-            rect->buffer,
-            0,
-            960,
-            rect->width,
-            rect->height,
-            rect->width / (1 + (rect->height > inf_tiles)),
-            inf_tiles);
+
+        draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);
+
         color(0, 0, 0);
     }
     color(0, 0, 0);
