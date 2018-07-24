@@ -47,7 +47,7 @@ before_install:
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
       brew update &&
       brew upgrade cmake boost &&
-      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua;
+      brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua clang-format;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
        export CC="gcc-7";
@@ -76,6 +76,9 @@ before_script:
     fi
 
 script:
+  - if [[ "$BUILD_TYPE" == "osx" ]]; then
+      make format;
+    fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
        export CC="gcc-7";
        export CXX="g++-7";
