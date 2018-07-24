@@ -651,8 +651,6 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
             const auto name = cdatan(0, i);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
             const int y = inf_clocky + 200 - 180 * right + cnt * 32;
-            // std::cout << "HP bar(" << i << "):name: " << position_t{x, y} <<
-            // std::endl;
             bmes(
                 name,
                 x,
@@ -664,8 +662,6 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
-                // std::cout << "HP bar(" << i << "):bar:  " << position_t{x_,
-                // y_} << std::endl;
                 pos(x_, y_);
                 gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 

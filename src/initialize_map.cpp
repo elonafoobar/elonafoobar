@@ -3226,20 +3226,16 @@ label_1744_internal:
         if (mapsubroutine == 0)
         {
             screenupdate = -1;
-            std::cerr << "hoge" << std::endl;
             update_entire_screen();
             txt_conv();
             screenupdate = -1;
             update_screen();
-            std::cerr << "piyo" << std::endl;
             if (evnum == 0)
             {
-                std::cerr << "fuga2" << std::endl;
                 return turn_result_t::pc_turn_user_error;
             }
             else
             {
-                std::cerr << "fuga3" << std::endl;
                 return turn_result_t::turn_begin;
             }
         }
