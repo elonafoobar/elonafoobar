@@ -5448,8 +5448,8 @@ turn_result_t exit_map()
         {
             if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
-                gdata_pc_home_x = cdata[cc].position.x;
-                gdata_pc_home_y = cdata[cc].position.y;
+                gdata_pc_x_in_world_map = cdata[cc].position.x;
+                gdata_pc_y_in_world_map = cdata[cc].position.y;
                 gdata_current_dungeon_level = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
@@ -5539,8 +5539,8 @@ turn_result_t exit_map()
         {
             if (gdata_previous_map != 2)
             {
-                gdata_pc_home_x = adata(1, gdata_current_map);
-                gdata_pc_home_y = adata(2, gdata_current_map);
+                gdata_pc_x_in_world_map = adata(1, gdata_current_map);
+                gdata_pc_y_in_world_map = adata(2, gdata_current_map);
                 weather_changes_by_location();
             }
         }
@@ -5588,8 +5588,8 @@ turn_result_t exit_map()
             {
                 if (fixtransfermap == 0)
                 {
-                    gdata_pc_home_x = adata(1, gdata_previous_map);
-                    gdata_pc_home_y = adata(2, gdata_previous_map);
+                    gdata_pc_x_in_world_map = adata(1, gdata_previous_map);
+                    gdata_pc_y_in_world_map = adata(2, gdata_previous_map);
                 }
                 else
                 {
@@ -15970,7 +15970,7 @@ void weather_changes_by_location()
 {
     if (gdata_weather == 2)
     {
-        if (gdata_pc_home_x < 65 && gdata_pc_home_y > 10)
+        if (gdata_pc_x_in_world_map < 65 && gdata_pc_y_in_world_map > 10)
         {
             gdata_weather = 3;
             envonly = 1;
@@ -15981,7 +15981,7 @@ void weather_changes_by_location()
     }
     if (gdata_weather == 4 || gdata_weather == 3)
     {
-        if (gdata_pc_home_x > 65 || gdata_pc_home_y < 10)
+        if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
         {
             gdata_weather = 2;
             envonly = 1;
@@ -16007,8 +16007,8 @@ void weather_changes()
     }
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
-        gdata_pc_home_x = cdata[0].position.x;
-        gdata_pc_home_y = cdata[0].position.y;
+        gdata_pc_x_in_world_map = cdata[0].position.x;
+        gdata_pc_y_in_world_map = cdata[0].position.y;
     }
     --gdata_hours_until_weather_changes;
     weather_changes_by_location();
@@ -16048,7 +16048,7 @@ void weather_changes()
                         break;
                     }
                 }
-                if (gdata_pc_home_x > 65 || gdata_pc_home_y < 10)
+                if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {

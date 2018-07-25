@@ -2920,8 +2920,8 @@ label_1744_internal:
             mode = 2;
             gdata_current_map = 7;
             gdata_current_dungeon_level = 1;
-            gdata_pc_home_x = adata(1, 7);
-            gdata_pc_home_y = adata(2, 7);
+            gdata_pc_x_in_world_map = adata(1, 7);
+            gdata_pc_y_in_world_map = adata(2, 7);
             gdata_previous_map = 2;
             levelexitby = 4;
             goto label_17401;

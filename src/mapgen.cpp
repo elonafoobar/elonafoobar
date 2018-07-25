@@ -385,8 +385,8 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 6)
     {
-        x_at_m167 = gdata_pc_home_x + rnd((prm_936 / 5 + 1));
-        y_at_m167 = gdata_pc_home_y + rnd((prm_936 / 5 + 1));
+        x_at_m167 = gdata_pc_x_in_world_map + rnd((prm_936 / 5 + 1));
+        y_at_m167 = gdata_pc_y_in_world_map + rnd((prm_936 / 5 + 1));
     }
     if (prm_937 == 7)
     {

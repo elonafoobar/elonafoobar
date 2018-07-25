@@ -845,8 +845,8 @@ void initialize_debug_globals()
     gdata(43) = 631;
     gdata_next_inventory_serial_id = 1000;
     gdata_next_shelter_serial_id = 100;
-    gdata_pc_home_x = 22;
-    gdata_pc_home_y = 21;
+    gdata_pc_x_in_world_map = 22;
+    gdata_pc_y_in_world_map = 21;
     gdata_previous_map = -1;
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
@@ -1144,8 +1144,8 @@ void initialize_world()
     gdata_day = 12;
     gdata_hour = 1;
     gdata_minute = 10;
-    gdata_pc_home_x = 22;
-    gdata_pc_home_y = 21;
+    gdata_pc_x_in_world_map = 22;
+    gdata_pc_y_in_world_map = 21;
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
