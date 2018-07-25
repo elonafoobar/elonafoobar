@@ -2,7 +2,10 @@
 
 #include <string>
 #include <vector>
+#include "optional.hpp"
+#include "pic_loader/extent.hpp"
 #include "snail/color.hpp"
+#include "shared_id.hpp"
 
 
 namespace elona
@@ -29,10 +32,7 @@ extern std::vector<item_chip_t> item_chips;
 
 struct chara_chip_t
 {
-    int x;
-    int y;
-    int width;
-    int height;
+    shared_id key;
     int offset_y;
 };
 
@@ -40,6 +40,8 @@ struct chara_chip_t
 extern std::vector<chara_chip_t> chara_chips;
 
 
+optional_ref<extent> draw_get_rect_chara(int);
+optional_ref<extent> draw_get_rect(const std::string&);
 
 void prepare_item_image(int id, int color);
 void prepare_item_image(int id, int color, int character_image);
@@ -67,12 +69,12 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str);
 void set_pcc_depending_on_equipments(int cc, int ci);
 
 struct character;
-void chara_preparepic(const character& cc);
-void chara_preparepic(int image_id);
+optional_ref<extent> chara_preparepic(const character& cc);
+optional_ref<extent> chara_preparepic(int image_id);
 
 void create_pcpic(int cc, bool prm_410);
 void initialize_map_chip();
-void initialize_item_chip();
+void initialize_all_chips();
 
 
 void bmes(
@@ -113,6 +115,18 @@ void draw_rotated(
 
 const image_info& get_image_info(const std::string& key);
 
+void draw_chara(const character& chara,
+                int x,
+                int y,
+                int scale = 1,
+                int alpha = 0);
+void draw_chara(int image_id,
+                int x,
+                int y,
+                int scale = 1,
+                int alpha = 0);
+void draw_chara_scale_height(const character& chara, int x, int y);
+void draw_chara_scale_height(int image_id, int x, int y);
 
 
 } // namespace elona

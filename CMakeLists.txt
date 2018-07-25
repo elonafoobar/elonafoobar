@@ -143,6 +143,7 @@ set(CORE_SOURCES
   src/lua_env/lua_env.cpp
   src/lua_env/lua_api.cpp
   src/lua_env/lua_registry.cpp
+  src/pic_loader/pic_loader.cpp
   src/version.cpp
   )
 

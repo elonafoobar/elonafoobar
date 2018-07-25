@@ -937,40 +937,30 @@ void show_race_or_class_info(int val0)
 {
     if (val0 == 1)
     {
-        chara_preparepic(ref1);
-        pos(wx + 380, wy - chara_chips[ref1].height + 60);
-        gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
-        chara_preparepic(ref2);
-        pos(wx + 350, wy - chara_chips[ref1].height + 60);
-        gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
+        {
+            auto rect = chara_preparepic(ref1);
+            pos(wx + 380, wy - rect->height + 60);
+            gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+        }
+        {
+            auto rect = chara_preparepic(ref2);
+            pos(wx + 350, wy - rect->height + 60);
+            gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+        }
         pos(wx + 460, wy + 38);
         mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race")
             + u8": "s + cmrace(1));
     }
     else
     {
-        chara_preparepic(ref1);
-        pos(wx + 480, wy + 96);
-        gmode(4, 40);
-        gcopy_c(
-            5,
-            0,
-            960,
-            chara_chips[ref1].width,
-            chara_chips[ref1].height,
-            chara_chips[ref1].width * 2,
-            chara_chips[ref1].height * 2);
-        chara_preparepic(ref2);
-        pos(wx + 350, wy + 96);
-        gmode(4, 40);
-        gcopy_c(
-            5,
-            0,
-            960,
-            chara_chips[ref1].width,
-            chara_chips[ref1].height,
-            chara_chips[ref1].width * 2,
-            chara_chips[ref1].height * 2);
+        {
+            // male
+            draw_chara(ref1, wx + 480, wy + 96, 2, 40);
+        }
+        {
+            // female
+            draw_chara(ref2, wx + 350, wy + 96, 2, 40);
+        }
         gmode(2);
     }
     font(14 - en * 2);

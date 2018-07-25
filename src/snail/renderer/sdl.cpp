@@ -383,5 +383,56 @@ void renderer::render_image(
 }
 
 
+void renderer::render_image_crop(
+    image_base& image,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y)
+{
+    render_image_crop(
+        image.ptr(),
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_x,
+        dst_y);
+}
+
+
+void renderer::render_image_crop(
+    ::SDL_Texture* image,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_x,
+    int dst_y)
+{
+    switch (_blend_mode)
+    {
+    case blend_mode_t::none:
+        detail::enforce_sdl(
+            ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_NONE));
+        break;
+    case blend_mode_t::blend:
+        detail::enforce_sdl(
+            ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_BLEND));
+        break;
+    case blend_mode_t::add:
+        detail::enforce_sdl(
+            ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_ADD));
+        break;
+    }
+
+    ::SDL_Rect src{src_x, src_y, src_width, src_height};
+    ::SDL_Rect dst{dst_x, dst_y, src_width, src_height};
+    detail::enforce_sdl(::SDL_RenderCopyEx(ptr(), image, &src, &dst, 0, 0, ::SDL_FLIP_NONE));
+}
+
+
 } // namespace snail
 } // namespace elona

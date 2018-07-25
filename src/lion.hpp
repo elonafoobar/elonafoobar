@@ -4,14 +4,12 @@
 #include <vector>
 #include "filesystem.hpp"
 #include "hcl.hpp"
+#include "shared_id.hpp"
 #include "lib/noncopyable.hpp"
 #include "log.hpp"
 #include "optional.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
-#include <boost/flyweight.hpp>
-#include <boost/flyweight/no_tracking.hpp>
-#include <boost/flyweight/no_locking.hpp>
 
 namespace elona
 {
@@ -27,17 +25,6 @@ extern std::unique_ptr<lua_env> lua;
 namespace lion
 {
 
-// Share memory across common instances of string IDs.
-//
-// Locking: The game is only single-threaded, so having a flyweight
-// locking policy is unnecessary. It also causes aborts on exit.
-// Tracking: Unnecessary use of memory.
-typedef std::string inner_id;
-typedef boost::flyweight<
-    inner_id,
-    boost::flyweights::no_tracking,
-    boost::flyweights::no_locking> id;
-
 template <typename>
 struct lion_db_traits;
 
@@ -47,7 +34,7 @@ class lion_db : public lib::noncopyable
 {
 public:
     using traits_type = lion_db_traits<T>;
-    using id_type = id;
+    using id_type = shared_id;
     using legacy_id_type = typename traits_type::legacy_id_type;
     using data_type = typename traits_type::data_type;
     using map_type = std::unordered_map<id_type, data_type>;
@@ -146,9 +133,9 @@ public:
     }
 
 
-    optional_ref<data_type> operator[](const inner_id& inner_id) const
+    optional_ref<data_type> operator[](const std::string& inner_id) const
     {
-        return (*this)[id(inner_id)];
+        return (*this)[shared_id(inner_id)];
     }
 
 

@@ -1514,19 +1514,11 @@ void talk_window_show()
             / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
         if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
         {
-            p(0) = cdata[tc].image % 1000;
-            p(1) = cdata[tc].image / 1000;
-            chara_preparepic(cdata[tc]);
-            pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
-            gmode(2);
-            gcopy_c(
-                5,
-                0,
-                960,
-                chara_chips[p].width,
-                chara_chips[p].height,
-                chara_chips[p].width * 2,
-                chara_chips[p].height * 2);
+            int chara_chip_id = cdata[tc].image % 1000;
+            draw_chara(cdata[tc],
+                       wx + 82,
+                       wy + 125 - chara_chips[chara_chip_id].offset_y,
+                       2);
         }
         else
         {

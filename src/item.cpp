@@ -889,7 +889,6 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     std::string s3_;
     int alpha_ = 0;
     std::string s4_;
-    int len_ = 0;
     elona_vector1<std::string> buf_;
     elona::prm_518 = prm_518;
     if (inv[prm_518].id >= maxitemid - 2
