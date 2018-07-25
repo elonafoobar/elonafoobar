@@ -1,5 +1,6 @@
 #include "pic_loader.hpp"
 #include "../snail/application.hpp"
+#include "../snail/color.hpp"
 #include "../snail/image.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
@@ -7,7 +8,7 @@
 namespace elona
 {
 
-void pic_loader::clear()
+void pic_loader::clear_storage_and_buffers()
 {
     for (const auto& buffer : buffers)
     {
@@ -22,134 +23,114 @@ void pic_loader::load(const fs::path& image_file,
                       const id_type& id,
                       page_type type)
 {
-    snail::basic_image img{image_file};
+    snail::basic_image img{image_file, snail::color{0, 0, 0}};
     extent ext{0, 0, 0, 0};
 
     size_t i = 0;
     while(true)
     {
-        std::cout << "BACK" << std::endl;
         auto& info = buffers.at(i);
+        i += 1;
 
         if (info.type != type)
         {
             continue;
         }
 
+        // Try to find an available buffer location to pack this
+        // sprite.
         if (auto pair = info.find(img.width(), img.height()))
         {
             size_t skyline_index = pair->first;
             ext = pair->second;
             ext.buffer = info.buffer_id;
 
-            info.split(skyline_index, ext);
-            info.merge_all();
+            // Update the sprite packing information.
+            info.insert_extent(skyline_index, ext);
 
             break;
         }
 
-        i += 1;
-
         if (i == buffers.size())
         {
             add_buffer(type);
-            std::cout << "ADDBUF" << i << std::endl;
         }
     }
 
+    // Render the sprite to the region of the buffer that was found.
     gsel(ext.buffer);
     pos(ext.x, ext.y);
+
     const auto save = snail::application::instance().get_renderer().blend_mode();
     snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-    snail::application::instance().get_renderer().render_image_crop(
-        img, 0, 0, ext.x, ext.y);
+    snail::application::instance().get_renderer().render_image(
+        img, ext.x, ext.y, ext.width, ext.height);
     snail::application::instance().get_renderer().set_blend_mode(save);
 
+    // Store the buffer region for later lookup.
     storage[id] = ext;
 }
-
-// void pic_loader::load_predefined_extents(const fs::path& hcl_file)
-// {
-//     const auto& value = hclutil::load(hcl_file);
-//     if (!value.is<hcl::Object>() || !value.has("images"))
-//     {
-//         throw std::runtime_error{"\"images\" object not found"};
-//     }
-
-//     std::unordered_map<fs::path, map_type> extents;
-
-//     for (const auto& pair : value.get<hcl::Object>("images"))
-//     {
-//         const auto& source = pair.second.get<std::string>("source");
-//         auto& images = extents[source];
-
-//         images[pair.first] = {
-//             pair.second.get<int>("x"),
-//             pair.second.get<int>("y"),
-//             pair.second.get<int>("width"),
-//             pair.second.get<int>("height"),
-//         };
-//     }
-
-//     for (const auto& pair : extents)
-//     {
-//         add_predefined_extents(pair.first, pair.second, page_type_table(pair));
-//     }
-// }
 
 void pic_loader::add_predefined_extents(const fs::path& atlas_file,
                                         const map_type& extents,
                                         page_type type)
 {
-    snail::basic_image img{atlas_file};
+    snail::basic_image img{atlas_file, snail::color{0, 0, 0}};
 
-    int buffer = add_buffer(type, img.width(), img.height());
-    gsel(buffer);
+    // Add a new buffer for this atlas. The assumption is that all the
+    // defined sprites will fit on this buffer. This assumption might
+    // not hold in the degenerate case, but for the atlases used
+    // (character.bmp, image.bmp) there is still a good amount of
+    // unused space to hold any potential overflow.
+    buffer_info& info = add_buffer(type, img.width(), img.height());
+    gsel(info.buffer_id);
 
-    buffer_info& info = buffers.at(buffer);
-
-    const auto save = snail::application::instance().get_renderer().blend_mode();
+    const auto saved_blend_mode = snail::application::instance().get_renderer().blend_mode();
     snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
 
     for (auto& pair : extents)
     {
+        // Get the source loaded from a definition file.
         const extent& source = pair.second;
 
         assert(source.right() < img.width());
         assert(source.bottom() < img.height());
 
-        auto found = info.find(img.width(), img.height());
+        // Find a region on a buffer to place the sprite.
+        auto found = info.find(source.width, source.height);
         assert(found);
 
         size_t skyline_index = found->first;
         extent& ext = found->second;
-        ext.buffer = buffer;
+        ext.buffer = info.buffer_id;
 
-        info.split(skyline_index, ext);
-        info.merge_all();
+        // Update the sprite packing information.
+        info.insert_extent(skyline_index, ext);
 
+        // Render the defined portion of the image onto the buffer.
         snail::application::instance().get_renderer().render_image_crop(
-            img, source.x, source.y, ext.x, ext.y);
+            img, source.x, source.y, source.width, source.height, ext.x, ext.y);
 
+        // Store the buffer region for later lookup.
         storage[pair.first] = ext;
     }
 
-    snail::application::instance().get_renderer().set_blend_mode(save);
+    snail::application::instance().get_renderer().set_blend_mode(saved_blend_mode);
 }
 
-int pic_loader::add_buffer(page_type type, int w, int h)
+pic_loader::buffer_info& pic_loader::add_buffer(page_type type, int w, int h)
 {
     int new_buffer_index;
-    size_t current_buffer_count = buffers.size();
+    size_t buffer_info_index = buffers.size();
 
-    assert(current_buffer_count < 10);
+    assert(buffer_info_index < 10);
 
-    new_buffer_index = 10 + current_buffer_count;
+    new_buffer_index = 10 + buffer_info_index;
     buffers.emplace_back(type, new_buffer_index, w, h);
 
     buffer(new_buffer_index, w, h);
 
-    return new_buffer_index;
+    return buffers.at(buffer_info_index);
 }
 
 } // namespace elona

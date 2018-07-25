@@ -530,12 +530,14 @@ void draw_hp_bar(int cc, int x, int y)
 
 
 void draw_character_sprite_in_world_map(
-    int texture_id,
+    int c_,
     int x,
     int y,
     int frame,
     int direction)
 {
+    int texture_id = c_ + 20;
+
     // Shadow
     pos(x + 24, y + 27);
     gmode(6, 85);
@@ -550,12 +552,14 @@ void draw_character_sprite_in_world_map(
 
 
 void draw_character_sprite_in_water(
-    int texture_id,
+    int c_,
     int x,
     int y,
     int frame,
     int direction)
 {
+    int texture_id = c_ + 20;
+
     // Upper body
     pos(x + 24, y + 16);
     gmode(2);
@@ -570,13 +574,15 @@ void draw_character_sprite_in_water(
 
 
 void draw_character_sprite(
-    int texture_id,
+    int c_,
     int x,
     int y,
     int frame,
     int direction,
     int dy = 0)
 {
+    int texture_id = c_ + 20;
+
     // Shadow
     gmode(6, 110);
     draw("character_shadow", x + 8, y + 20);
@@ -703,17 +709,17 @@ void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         draw_character_sprite_in_world_map(
-            10 + c_, dx, dy, ani_, cdata[c_].direction);
+            c_, dx, dy, ani_, cdata[c_].direction);
     }
     else if (chipm(0, ground_) == 3)
     {
         draw_character_sprite_in_water(
-            10 + c_, dx, dy, ani_, cdata[c_].direction);
+            c_, dx, dy, ani_, cdata[c_].direction);
     }
     else
     {
         draw_character_sprite(
-            10 + c_, dx, dy, ani_, cdata[c_].direction);
+            c_, dx, dy, ani_, cdata[c_].direction);
     }
     gmode(2);
     if (cdata[c_].furious != 0)
@@ -1310,13 +1316,13 @@ void cell_draw()
                     if (mdata_map_type == mdata_t::map_type_t::world_map)
                     {
                         draw_character_sprite_in_world_map(
-                            10, px_, py_, ani_, cdata[0].direction);
+                            0, px_, py_, ani_, cdata[0].direction);
                     }
                     else if (chipm(0, ground_) == 3)
                     {
                         // TODO アイコン位置が不自然(ただし本家から)
                         draw_character_sprite_in_water(
-                            10, px_, py_, ani_, cdata[0].direction);
+                            0, px_, py_, ani_, cdata[0].direction);
                     }
                     else
                     {
@@ -1333,7 +1339,7 @@ void cell_draw()
                             }
                         }
                         draw_character_sprite(
-                            10, px_, py_, ani_, cdata[0].direction, dy);
+                            0, px_, py_, ani_, cdata[0].direction, dy);
                         py_ += dy;
                     }
                     gmode(2);

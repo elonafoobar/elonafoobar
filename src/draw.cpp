@@ -23,6 +23,10 @@ namespace
 
 pic_loader loader;
 
+std::unordered_map<std::string, pic_loader::page_type> page_type_table = {
+    {"character.bmp", 0},
+};
+
 
 // TODO: it should be configurable.
 constexpr size_t max_damage_popups = 20; // compatible with oomEx
@@ -443,7 +447,8 @@ void initialize_chara_chips()
 
     for (const auto& pair : value.get<hcl::Object>("chara_chip"))
     {
-        int i = std::stoi(pair.first);
+        assert(pair.first.size() > 1);
+        int i = std::stoi(pair.first.substr(1));
         int x = 0;
         int y = 0;
         int width = inf_tiles;
@@ -473,7 +478,8 @@ void initialize_chara_chips()
 
         if (tall)
         {
-            width = inf_tiles * 2;
+            height = inf_tiles * 2;
+            offset_y += inf_tiles;
         }
 
         shared_id key("core.chara_chip." + std::to_string(i));
@@ -483,7 +489,7 @@ void initialize_chara_chips()
 
     loader.add_predefined_extents(filesystem::dir::graphic() / u8"character.bmp",
                                   extents,
-                                  0);
+                                  page_type_table.at("character.bmp"));
 }
 
 
@@ -494,6 +500,7 @@ std::unordered_map<std::string, int> window_id_table = {
     {"item.bmp", 1},
     {"interface.bmp", 3},
 };
+
 
 
 } // namespace
@@ -840,7 +847,7 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     gmode(4, 256);
     pget(128, 0);
     pos(256, 0);
-    gcopy(10 + cc, 128, 0, 128, 198);
+    gcopy(20 + cc, 128, 0, 128, 198);
     pos(256, 0);
     gmode(2);
     pos(0, 0);
@@ -848,9 +855,9 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
         255 - c_col(0, pcc(body_part, cc) / 1000),
         255 - c_col(1, pcc(body_part, cc) / 1000),
         255 - c_col(2, pcc(body_part, cc) / 1000),
-        10 + cc);
-    gcopy(10 + cc, 256, 0, 128, 198);
-    set_color_mod(255, 255, 255, 10 + cc);
+        20 + cc);
+    gcopy(20 + cc, 256, 0, 128, 198);
+    set_color_mod(255, 255, 255, 20 + cc);
 }
 
 
@@ -888,6 +895,10 @@ optional_ref<extent> chara_preparepic(int image_id)
     const auto color_id = image_id / 1000;
     const auto& chip = chara_chips[chip_id];
     const auto rect = draw_get_rect(chip.key);
+
+    // TODO don't crash, and instead return a default.
+    assert(rect);
+
     gsel(rect->buffer);
     boxf(0, 960, rect->width, rect->height);
     pos(0, 960);
@@ -905,8 +916,7 @@ optional_ref<extent> chara_preparepic(int image_id)
 
 void create_pcpic(int cc, bool prm_410)
 {
-    std::cout << "Create pcpic " << cc << " buf " << (30 + cc) << std::endl;
-    buffer(30 + cc, 384, 198);
+    buffer(20 + cc, 384, 198);
     boxf();
 
     if (pcc(15, cc) == 0)

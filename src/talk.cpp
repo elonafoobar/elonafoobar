@@ -1514,9 +1514,10 @@ void talk_window_show()
             / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
         if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
         {
+            int chara_chip_id = cdata[tc].image % 1000;
             draw_chara(cdata[tc],
                        wx + 82,
-                       wy + 125 - chara_chips[p].offset_y,
+                       wy + 125 - chara_chips[chara_chip_id].offset_y,
                        2);
         }
         else

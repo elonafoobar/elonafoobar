@@ -2352,7 +2352,7 @@ label_2035_internal:
         {
             pos(wx + 596 + 22, wy + 86 + 24);
             gmode(2);
-            gcopy_c(10 + cc, 32, 0, 32, 48, 24, 40);
+            gcopy_c(20 + cc, 32, 0, 32, 48, 24, 40);
         }
         else
         {
@@ -3774,7 +3774,7 @@ label_2041_internal:
     {
         pos(wx + 280, wy + 130);
         gmode(2);
-        gcopy_c(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
+        gcopy_c(20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
     }
     else
     {
@@ -3999,7 +3999,7 @@ int label_2044()
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         pos(wx + 280, wy + 120);
         gmode(2);
-        gcopy_c(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
+        gcopy_c(20 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 32, 48, 48, 80);
         gmode(2);
         font(14 - en * 2);
         cs_listbk();

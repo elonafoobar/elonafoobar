@@ -191,6 +191,8 @@ public:
         image_base& image,
         int src_x,
         int src_y,
+        int src_width,
+        int src_height,
         int dst_x,
         int dst_y);
     void render_image_crop(

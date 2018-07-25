@@ -148,6 +148,8 @@ void renderer::render_image_crop(
     int,
     int,
     int,
+    int,
+    int,
     int)
 {
 }

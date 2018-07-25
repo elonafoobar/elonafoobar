@@ -1,1207 +1,1405 @@
-chara_chip "1" {
+chara_chip _1 {
     source {
         x = 48
         y = 0
     }
 }
 
-chara_chip "2" {
+chara_chip _2 {
     source {
         x = 96
         y = 0
     }
 }
 
-chara_chip "3" {
+chara_chip _3 {
     source {
         x = 144
         y = 0
     }
 }
-chara_chip "4" {
+
+chara_chip _4 {
     source {
         x = 192
         y = 0
     }
 }
-chara_chip "5" {
+
+chara_chip _5 {
     source {
         x = 240
         y = 0
     }
 }
-chara_chip "6" {
+
+chara_chip _6 {
     source {
         x = 288
         y = 0
     }
 }
-chara_chip "7" {
+
+chara_chip _7 {
     source {
         x = 336
         y = 0
     }
 }
-chara_chip "8" {
+
+chara_chip _8 {
     source {
         x = 384
         y = 0
     }
 }
-chara_chip "9" {
+
+chara_chip _9 {
     source {
         x = 432
         y = 0
     }
 }
-chara_chip "10" {
+
+chara_chip _10 {
     source {
         x = 480
         y = 0
     }
 }
-chara_chip "11" {
+
+chara_chip _11 {
     source {
         x = 528
         y = 0
     }
 }
-chara_chip "12" {
+
+chara_chip _12 {
     source {
         x = 576
         y = 0
     }
 }
-chara_chip "13" {
+
+chara_chip _13 {
     source {
         x = 624
         y = 0
     }
 }
-chara_chip "14" {
+
+chara_chip _14 {
     source {
         x = 672
         y = 0
     }
 }
-chara_chip "15" {
+
+chara_chip _15 {
     source {
         x = 720
         y = 0
     }
 }
-chara_chip "16" {
+
+chara_chip _16 {
     source {
         x = 768
         y = 0
     }
 }
-chara_chip "17" {
+
+chara_chip _17 {
     source {
         x = 816
         y = 0
     }
 }
-chara_chip "18" {
+
+chara_chip _18 {
     source {
         x = 864
         y = 0
     }
 }
-chara_chip "19" {
+
+chara_chip _19 {
     source {
         x = 912
         y = 0
     }
 }
-chara_chip "20" {
+
+chara_chip _20 {
     source {
         x = 960
         y = 0
     }
 }
-chara_chip "21" {
+
+chara_chip _21 {
     source {
         x = 1008
         y = 0
     }
 }
-chara_chip "22" {
+
+chara_chip _22 {
     source {
         x = 1056
         y = 0
     }
 }
-chara_chip "23" {
+
+chara_chip _23 {
     source {
         x = 1104
         y = 0
     }
 }
-chara_chip "24" {
+
+chara_chip _24 {
     source {
         x = 1152
         y = 0
     }
 }
-chara_chip "25" {
+
+chara_chip _25 {
     source {
         x = 1200
         y = 0
     }
 }
-chara_chip "26" {
+
+chara_chip _26 {
     source {
         x = 1248
         y = 0
     }
 }
-chara_chip "27" {
+
+chara_chip _27 {
     source {
         x = 1296
         y = 0
     }
 }
-chara_chip "28" {
+
+chara_chip _28 {
     source {
         x = 1344
         y = 0
     }
 }
-chara_chip "29" {
+
+chara_chip _29 {
     source {
         x = 1392
         y = 0
     }
 }
-chara_chip "30" {
+
+chara_chip _30 {
     source {
         x = 1440
         y = 0
     }
 }
-chara_chip "31" {
+
+chara_chip _31 {
     source {
         x = 1488
         y = 0
     }
 }
-chara_chip "32" {
+
+chara_chip _32 {
     source {
         x = 1536
         y = 0
     }
 }
-chara_chip "33" {
+
+chara_chip _33 {
     source {
         x = 0
         y = 48
     }
 }
-chara_chip "34" {
+
+chara_chip _34 {
     source {
         x = 48
         y = 48
     }
 }
-chara_chip "35" {
+
+chara_chip _35 {
     source {
         x = 96
         y = 48
     }
 }
-chara_chip "36" {
+
+chara_chip _36 {
     source {
         x = 144
         y = 48
     }
 }
-chara_chip "37" {
+
+chara_chip _37 {
     source {
         x = 192
         y = 48
     }
 }
-chara_chip "38" {
+
+chara_chip _38 {
     source {
         x = 240
         y = 48
     }
 }
-chara_chip "39" {
+
+chara_chip _39 {
     source {
         x = 288
         y = 48
     }
 }
-chara_chip "40" {
+
+chara_chip _40 {
     source {
         x = 336
         y = 48
     }
 }
-chara_chip "41" {
+
+chara_chip _41 {
     source {
         x = 384
         y = 48
     }
 }
-chara_chip "42" {
+
+chara_chip _42 {
     source {
         x = 432
         y = 48
     }
 }
-chara_chip "43" {
+
+chara_chip _43 {
     source {
         x = 480
         y = 48
     }
 }
-chara_chip "44" {
+
+chara_chip _44 {
     source {
         x = 528
         y = 48
     }
 }
-chara_chip "45" {
+
+chara_chip _45 {
     source {
         x = 576
         y = 48
     }
 }
-chara_chip "46" {
+
+chara_chip _46 {
     source {
         x = 624
         y = 48
     }
 }
-chara_chip "47" {
+
+chara_chip _47 {
     source {
         x = 672
         y = 48
     }
 }
-chara_chip "48" {
+
+chara_chip _48 {
     source {
         x = 720
         y = 48
     }
 }
-chara_chip "49" {
+
+chara_chip _49 {
     source {
         x = 768
         y = 48
     }
 }
-chara_chip "50" {
+
+chara_chip _50 {
     source {
         x = 816
         y = 48
     }
 }
-chara_chip "51" {
+
+chara_chip _51 {
     source {
         x = 864
         y = 48
     }
 }
-chara_chip "52" {
+
+chara_chip _52 {
     source {
         x = 912
         y = 48
     }
 }
-chara_chip "53" {
+
+chara_chip _53 {
     source {
         x = 960
         y = 48
     }
 }
-chara_chip "54" {
+
+chara_chip _54 {
     source {
         x = 1008
         y = 48
     }
 }
-chara_chip "55" {
+
+chara_chip _55 {
     source {
         x = 1056
         y = 48
     }
 }
-chara_chip "56" {
+
+chara_chip _56 {
     source {
         x = 1104
         y = 48
     }
 }
-chara_chip "57" {
+
+chara_chip _57 {
     source {
         x = 1152
         y = 48
     }
 }
-chara_chip "58" {
+
+chara_chip _58 {
     source {
         x = 1200
         y = 48
     }
 }
-chara_chip "59" {
+
+chara_chip _59 {
     source {
         x = 1248
         y = 48
     }
 }
-chara_chip "60" {
+
+chara_chip _60 {
     source {
         x = 1296
         y = 48
     }
 }
-chara_chip "61" {
+
+chara_chip _61 {
     source {
         x = 1344
         y = 48
     }
 }
-chara_chip "62" {
+
+chara_chip _62 {
     source {
         x = 1392
         y = 48
     }
 }
-chara_chip "63" {
+
+chara_chip _63 {
     source {
         x = 1440
         y = 48
     }
 }
-chara_chip "64" {
+
+chara_chip _64 {
     source {
         x = 1488
         y = 48
     }
 }
-chara_chip "65" {
+
+chara_chip _65 {
     source {
         x = 1536
         y = 48
     }
 }
-chara_chip "66" {
+
+chara_chip _66 {
     source {
         x = 0
         y = 96
     }
 }
-chara_chip "67" {
+
+chara_chip _67 {
     source {
         x = 48
         y = 96
     }
 }
-chara_chip "68" {
+
+chara_chip _68 {
     source {
         x = 96
         y = 96
     }
 }
-chara_chip "69" {
+
+chara_chip _69 {
     source {
         x = 144
         y = 96
     }
 }
-chara_chip "70" {
+
+chara_chip _70 {
     source {
         x = 192
         y = 96
     }
 }
-chara_chip "71" {
+
+chara_chip _71 {
     source {
         x = 240
         y = 96
     }
 }
-chara_chip "72" {
+
+chara_chip _72 {
     source {
         x = 288
         y = 96
     }
 }
-chara_chip "73" {
+
+chara_chip _73 {
     source {
         x = 336
         y = 96
     }
 }
-chara_chip "74" {
+
+chara_chip _74 {
     source {
         x = 384
         y = 96
     }
 }
-chara_chip "75" {
+
+chara_chip _75 {
     source {
         x = 432
         y = 96
     }
 }
-chara_chip "76" {
+
+chara_chip _76 {
     source {
         x = 480
         y = 96
     }
 }
-chara_chip "77" {
+
+chara_chip _77 {
     source {
         x = 528
         y = 96
     }
 }
-chara_chip "78" {
+
+chara_chip _78 {
     source {
         x = 576
         y = 96
     }
 }
-chara_chip "79" {
+
+chara_chip _79 {
     source {
         x = 624
         y = 96
     }
 }
-chara_chip "80" {
+
+chara_chip _80 {
     source {
         x = 672
         y = 96
     }
 }
-chara_chip "81" {
+
+chara_chip _81 {
     source {
         x = 720
         y = 96
     }
 }
-chara_chip "82" {
+
+chara_chip _82 {
     source {
         x = 768
         y = 96
     }
 }
-chara_chip "83" {
+
+chara_chip _83 {
     source {
         x = 816
         y = 96
     }
 }
-chara_chip "84" {
+
+chara_chip _84 {
     source {
         x = 864
         y = 96
     }
 }
-chara_chip "85" {
+
+chara_chip _85 {
     source {
         x = 912
         y = 96
     }
 }
-chara_chip "86" {
+
+chara_chip _86 {
     source {
         x = 960
         y = 96
     }
 }
-chara_chip "87" {
+
+chara_chip _87 {
     source {
         x = 1008
         y = 96
     }
 }
-chara_chip "88" {
+
+chara_chip _88 {
     source {
         x = 1056
         y = 96
     }
 }
-chara_chip "89" {
+
+chara_chip _89 {
     source {
         x = 1104
         y = 96
     }
 }
-chara_chip "90" {
+
+chara_chip _90 {
     source {
         x = 1152
         y = 96
     }
 }
-chara_chip "91" {
+
+chara_chip _91 {
     source {
         x = 1200
         y = 96
     }
 }
-chara_chip "92" {
+
+chara_chip _92 {
     source {
         x = 1248
         y = 96
     }
 }
-chara_chip "93" {
+
+chara_chip _93 {
     source {
         x = 1296
         y = 96
     }
 }
-chara_chip "94" {
+
+chara_chip _94 {
     source {
         x = 1344
         y = 96
     }
 }
-chara_chip "95" {
+
+chara_chip _95 {
     source {
         x = 1392
         y = 96
     }
 }
-chara_chip "96" {
+
+chara_chip _96 {
     source {
         x = 1440
         y = 96
     }
 }
-chara_chip "97" {
+
+chara_chip _97 {
     source {
         x = 1488
         y = 96
     }
 }
-chara_chip "98" {
+
+chara_chip _98 {
     source {
         x = 1536
         y = 96
     }
 }
-chara_chip "99" {
+
+chara_chip _99 {
     source {
         x = 0
         y = 144
     }
 }
-chara_chip "100" {
+
+chara_chip _100 {
     source {
         x = 48
         y = 144
     }
 }
-chara_chip "101" {
+
+chara_chip _101 {
     source {
         x = 96
         y = 144
     }
 }
-chara_chip "102" {
+
+chara_chip _102 {
     source {
         x = 144
         y = 144
     }
 }
-chara_chip "103" {
+
+chara_chip _103 {
     source {
         x = 192
         y = 144
     }
 }
-chara_chip "104" {
+
+chara_chip _104 {
     source {
         x = 240
         y = 144
     }
 }
-chara_chip "105" {
+
+chara_chip _105 {
     source {
         x = 288
         y = 144
     }
 }
-chara_chip "106" {
+
+chara_chip _106 {
     source {
         x = 336
         y = 144
     }
 }
-chara_chip "107" {
+
+chara_chip _107 {
     source {
         x = 384
         y = 144
     }
 }
-chara_chip "108" {
+
+chara_chip _108 {
     source {
         x = 432
         y = 144
     }
 }
-chara_chip "109" {
+
+chara_chip _109 {
     source {
         x = 480
         y = 144
     }
 }
-chara_chip "110" {
+
+chara_chip _110 {
     source {
         x = 528
         y = 144
     }
 }
-chara_chip "111" {
+
+chara_chip _111 {
     source {
         x = 576
         y = 144
     }
 }
-chara_chip "112" {
+
+chara_chip _112 {
     source {
         x = 624
         y = 144
     }
 }
-chara_chip "113" {
+
+chara_chip _113 {
     source {
         x = 672
         y = 144
     }
 }
-chara_chip "114" {
+
+chara_chip _114 {
     source {
         x = 720
         y = 144
     }
 }
-chara_chip "115" {
+
+chara_chip _115 {
     source {
         x = 768
         y = 144
     }
 }
-chara_chip "116" {
+
+chara_chip _116 {
     source {
         x = 816
         y = 144
     }
 }
-chara_chip "117" {
+
+chara_chip _117 {
     source {
         x = 864
         y = 144
     }
 }
-chara_chip "118" {
+
+chara_chip _118 {
     source {
         x = 912
         y = 144
     }
 }
-chara_chip "119" {
+
+chara_chip _119 {
     source {
         x = 960
         y = 144
     }
 }
-chara_chip "120" {
+
+chara_chip _120 {
     source {
         x = 1008
         y = 144
     }
 }
-chara_chip "121" {
+
+chara_chip _121 {
     source {
         x = 1056
         y = 144
     }
 }
-chara_chip "122" {
+
+chara_chip _122 {
     source {
         x = 1104
         y = 144
     }
 }
-chara_chip "123" {
+
+chara_chip _123 {
     source {
         x = 1152
         y = 144
     }
 }
-chara_chip "124" {
+
+chara_chip _124 {
     source {
         x = 1200
         y = 144
     }
 }
-chara_chip "125" {
+
+chara_chip _125 {
     source {
         x = 1248
         y = 144
     }
 }
-chara_chip "126" {
+
+chara_chip _126 {
     source {
         x = 1296
         y = 144
     }
 }
-chara_chip "127" {
+
+chara_chip _127 {
     source {
         x = 1344
         y = 144
     }
 }
-chara_chip "128" {
+
+chara_chip _128 {
     source {
         x = 1392
         y = 144
     }
 }
-chara_chip "129" {
+
+chara_chip _129 {
     source {
         x = 1440
         y = 144
     }
 }
-chara_chip "130" {
+
+chara_chip _130 {
     source {
         x = 1488
         y = 144
     }
 }
-chara_chip "131" {
+
+chara_chip _131 {
     source {
         x = 1536
         y = 144
     }
 }
-chara_chip "132" {
+
+chara_chip _132 {
     source {
         x = 0
         y = 192
     }
 }
-chara_chip "133" {
+
+chara_chip _133 {
     source {
         x = 48
         y = 192
     }
 }
-chara_chip "134" {
+
+chara_chip _134 {
     source {
         x = 96
         y = 192
     }
 }
-chara_chip "135" {
+
+chara_chip _135 {
     source {
         x = 144
         y = 192
     }
 }
-chara_chip "136" {
+
+chara_chip _136 {
     source {
         x = 192
         y = 192
     }
 }
-chara_chip "137" {
+
+chara_chip _137 {
     source {
         x = 240
         y = 192
     }
 }
-chara_chip "138" {
+
+chara_chip _138 {
     source {
         x = 288
         y = 192
     }
 }
-chara_chip "139" {
+
+chara_chip _139 {
     source {
         x = 336
         y = 192
     }
 }
-chara_chip "140" {
+
+chara_chip _140 {
     source {
         x = 384
         y = 192
     }
 }
-chara_chip "141" {
+
+chara_chip _141 {
     source {
         x = 432
         y = 192
     }
 }
-chara_chip "142" {
+
+chara_chip _142 {
     source {
         x = 480
         y = 192
     }
 }
-chara_chip "143" {
+
+chara_chip _143 {
     source {
         x = 528
         y = 192
     }
 }
-chara_chip "144" {
+
+chara_chip _144 {
     source {
         x = 576
         y = 192
     }
 }
-chara_chip "145" {
+
+chara_chip _145 {
     source {
         x = 624
         y = 192
     }
 }
-chara_chip "146" {
+
+chara_chip _146 {
     source {
         x = 672
         y = 192
     }
 }
-chara_chip "147" {
+
+chara_chip _147 {
     source {
         x = 720
         y = 192
     }
 }
-chara_chip "148" {
+
+chara_chip _148 {
     source {
         x = 768
         y = 192
     }
 }
-chara_chip "149" {
+
+chara_chip _149 {
     source {
         x = 816
         y = 192
     }
 }
-chara_chip "150" {
+
+chara_chip _150 {
     source {
         x = 864
         y = 192
     }
 }
-chara_chip "151" {
+
+chara_chip _151 {
     source {
         x = 912
         y = 192
     }
 }
-chara_chip "152" {
+
+chara_chip _152 {
     source {
         x = 960
         y = 192
     }
 }
-chara_chip "153" {
+
+chara_chip _153 {
     source {
         x = 1008
         y = 192
     }
 }
-chara_chip "154" {
+
+chara_chip _154 {
     source {
         x = 1056
         y = 192
     }
 }
-chara_chip "155" {
+
+chara_chip _155 {
     source {
         x = 1104
         y = 192
     }
 }
-chara_chip "156" {
+
+chara_chip _156 {
     source {
         x = 1152
         y = 192
     }
 }
-chara_chip "157" {
+
+chara_chip _157 {
     source {
         x = 1200
         y = 192
     }
 }
-chara_chip "158" {
+
+chara_chip _158 {
     source {
         x = 1248
         y = 192
     }
 }
-chara_chip "159" {
+
+chara_chip _159 {
     source {
         x = 1296
         y = 192
     }
 }
-chara_chip "160" {
+
+chara_chip _160 {
     source {
         x = 1344
         y = 192
     }
 }
-chara_chip "161" {
+
+chara_chip _161 {
     source {
         x = 1392
         y = 192
     }
 }
-chara_chip "162" {
+
+chara_chip _162 {
     source {
         x = 1440
         y = 192
     }
 }
-chara_chip "163" {
+
+chara_chip _163 {
     source {
         x = 1488
         y = 192
     }
 }
-chara_chip "164" {
+
+chara_chip _164 {
     source {
         x = 1536
         y = 192
     }
 }
-chara_chip "165" {
+
+chara_chip _165 {
     source {
         x = 0
         y = 240
     }
 }
-chara_chip "166" {
+
+chara_chip _166 {
     source {
         x = 48
         y = 240
     }
 }
-chara_chip "167" {
+
+chara_chip _167 {
     source {
         x = 96
         y = 240
     }
 }
-chara_chip "168" {
+
+chara_chip _168 {
     source {
         x = 144
         y = 240
     }
 }
-chara_chip "169" {
+
+chara_chip _169 {
     source {
         x = 192
         y = 240
     }
 }
-chara_chip "170" {
+
+chara_chip _170 {
     source {
         x = 240
         y = 240
     }
 }
-chara_chip "171" {
+
+chara_chip _171 {
     source {
         x = 288
         y = 240
     }
 }
-chara_chip "172" {
+
+chara_chip _172 {
     source {
         x = 336
         y = 240
     }
 }
-chara_chip "173" {
+
+chara_chip _173 {
     source {
         x = 384
         y = 240
     }
 }
-chara_chip "174" {
+
+chara_chip _174 {
     source {
         x = 432
         y = 240
     }
 }
-chara_chip "175" {
+
+chara_chip _175 {
     source {
         x = 480
         y = 240
     }
 }
-chara_chip "176" {
+
+chara_chip _176 {
     offset_y = 8
     source {
         x = 528
         y = 240
     }
 }
-chara_chip "177" {
+
+chara_chip _177 {
     source {
         x = 576
         y = 240
     }
 }
-chara_chip "178" {
+
+chara_chip _178 {
     source {
         x = 624
         y = 240
     }
 }
-chara_chip "179" {
+
+chara_chip _179 {
     source {
         x = 672
         y = 240
     }
 }
-chara_chip "180" {
+
+chara_chip _180 {
     source {
         x = 720
         y = 240
     }
 }
-chara_chip "181" {
+
+chara_chip _181 {
     source {
         x = 768
         y = 240
     }
 }
-chara_chip "182" {
+
+chara_chip _182 {
     source {
         x = 816
         y = 240
     }
 }
-chara_chip "183" {
+
+chara_chip _183 {
     source {
         x = 864
         y = 240
     }
 }
-chara_chip "184" {
+
+chara_chip _184 {
     source {
         x = 912
         y = 240
     }
 }
-chara_chip "185" {
+
+chara_chip _185 {
     source {
         x = 960
         y = 240
     }
 }
-chara_chip "186" {
+
+chara_chip _186 {
     source {
         x = 1008
         y = 240
     }
 }
-chara_chip "187" {
+
+chara_chip _187 {
     source {
         x = 1056
         y = 240
     }
 }
-chara_chip "188" {
+
+chara_chip _188 {
     source {
         x = 1104
         y = 240
     }
 }
-chara_chip "189" {
+
+chara_chip _189 {
     source {
         x = 1152
         y = 240
     }
 }
-chara_chip "190" {
+
+chara_chip _190 {
     source {
         x = 1200
         y = 240
     }
 }
-chara_chip "191" {
+
+chara_chip _191 {
     source {
         x = 1248
         y = 240
     }
 }
-chara_chip "192" {
+
+chara_chip _192 {
     source {
         x = 1296
         y = 240
     }
 }
-chara_chip "193" {
+
+chara_chip _193 {
     source {
         x = 1344
         y = 240
     }
 }
-chara_chip "194" {
+
+chara_chip _194 {
     source {
         x = 1392
         y = 240
     }
 }
-chara_chip "195" {
+
+chara_chip _195 {
     source {
         x = 1440
         y = 240
     }
 }
-chara_chip "196" {
+
+chara_chip _196 {
     source {
         x = 1488
         y = 240
     }
 }
-chara_chip "197" {
+
+chara_chip _197 {
     source {
         x = 1536
         y = 240
     }
 }
-chara_chip "198" {
+
+chara_chip _198 {
     source {
         x = 0
         y = 288
     }
 }
-chara_chip "199" {
+
+chara_chip _199 {
     source {
         x = 48
         y = 288
     }
 }
-chara_chip "200" {
+
+chara_chip _200 {
     source {
         x = 96
         y = 288
     }
 }
-chara_chip "201" {
+
+chara_chip _201 {
     tall = true
     offset_y = 16
     source {
@@ -1209,164 +1407,191 @@ chara_chip "201" {
         y = 288
     }
 }
-chara_chip "202" {
+
+chara_chip _202 {
     source {
         x = 192
         y = 288
     }
 }
-chara_chip "203" {
+
+chara_chip _203 {
     source {
         x = 240
         y = 288
     }
 }
-chara_chip "204" {
+
+chara_chip _204 {
     source {
         x = 288
         y = 288
     }
 }
-chara_chip "205" {
+
+chara_chip _205 {
     source {
         x = 336
         y = 288
     }
 }
-chara_chip "206" {
+
+chara_chip _206 {
     source {
         x = 384
         y = 288
     }
 }
-chara_chip "207" {
+
+chara_chip _207 {
     source {
         x = 432
         y = 288
     }
 }
-chara_chip "208" {
+
+chara_chip _208 {
     source {
         x = 480
         y = 288
     }
 }
-chara_chip "209" {
+
+chara_chip _209 {
     source {
         x = 528
         y = 288
     }
 }
-chara_chip "210" {
+
+chara_chip _210 {
     source {
         x = 576
         y = 288
     }
 }
-chara_chip "211" {
+
+chara_chip _211 {
     source {
         x = 624
         y = 288
     }
 }
-chara_chip "212" {
+
+chara_chip _212 {
     source {
         x = 672
         y = 288
     }
 }
-chara_chip "213" {
+
+chara_chip _213 {
     source {
         x = 720
         y = 288
     }
 }
-chara_chip "214" {
+
+chara_chip _214 {
     source {
         x = 768
         y = 288
     }
 }
-chara_chip "215" {
+
+chara_chip _215 {
     source {
         x = 816
         y = 288
     }
 }
-chara_chip "216" {
+
+chara_chip _216 {
     source {
         x = 864
         y = 288
     }
 }
-chara_chip "217" {
+
+chara_chip _217 {
     source {
         x = 912
         y = 288
     }
 }
-chara_chip "218" {
+
+chara_chip _218 {
     source {
         x = 960
         y = 288
     }
 }
-chara_chip "219" {
+
+chara_chip _219 {
     source {
         x = 1008
         y = 288
     }
 }
-chara_chip "220" {
+
+chara_chip _220 {
     source {
         x = 1056
         y = 288
     }
 }
-chara_chip "221" {
+
+chara_chip _221 {
     source {
         x = 1104
         y = 288
     }
 }
-chara_chip "222" {
+
+chara_chip _222 {
     source {
         x = 1152
         y = 288
     }
 }
-chara_chip "223" {
+
+chara_chip _223 {
     source {
         x = 1200
         y = 288
     }
 }
-chara_chip "224" {
+
+chara_chip _224 {
     source {
         x = 1248
         y = 288
     }
 }
-chara_chip "225" {
+
+chara_chip _225 {
     offset_y = 29
     source {
         x = 1296
         y = 288
     }
 }
-chara_chip "226" {
+
+chara_chip _226 {
     source {
         x = 1344
         y = 288
     }
 }
-chara_chip "227" {
+
+chara_chip _227 {
     source {
         x = 1392
         y = 288
     }
 }
-chara_chip "228" {
+
+chara_chip _228 {
     offset_y = 8
     tall = true
     source {
@@ -1374,20 +1599,23 @@ chara_chip "228" {
         y = 288
     }
 }
-chara_chip "229" {
+
+chara_chip _229 {
     source {
         x = 1488
         y = 288
     }
 }
-chara_chip "230" {
+
+chara_chip _230 {
     offset_y = 12
     source {
         x = 1536
         y = 288
     }
 }
-chara_chip "231" {
+
+chara_chip _231 {
     offset_y = 16
     tall = true
     source {
@@ -1395,7 +1623,8 @@ chara_chip "231" {
         y = 336
     }
 }
-chara_chip "232" {
+
+chara_chip _232 {
     tall = true
     offset_y = 16
     source {
@@ -1403,7 +1632,8 @@ chara_chip "232" {
         y = 336
     }
 }
-chara_chip "233" {
+
+chara_chip _233 {
     tall = true
     offset_y = 8
     source {
@@ -1411,13 +1641,15 @@ chara_chip "233" {
         y = 336
     }
 }
-chara_chip "234" {
+
+chara_chip _234 {
     source {
         x = 144
         y = 336
     }
 }
-chara_chip "235" {
+
+chara_chip _235 {
     tall = true
     offset_y = 16
     source {
@@ -1425,273 +1657,318 @@ chara_chip "235" {
         y = 336
     }
 }
-chara_chip "236" {
+
+chara_chip _236 {
     source {
         x = 240
         y = 336
     }
 }
-chara_chip "237" {
+
+chara_chip _237 {
     source {
         x = 288
         y = 336
     }
 }
-chara_chip "238" {
+
+chara_chip _238 {
     source {
         x = 336
         y = 336
     }
 }
-chara_chip "239" {
+
+chara_chip _239 {
     source {
         x = 384
         y = 336
     }
 }
-chara_chip "240" {
+
+chara_chip _240 {
     source {
         x = 432
         y = 336
     }
 }
-chara_chip "241" {
+
+chara_chip _241 {
     source {
         x = 480
         y = 336
     }
 }
-chara_chip "242" {
+
+chara_chip _242 {
     source {
         x = 528
         y = 336
     }
 }
-chara_chip "243" {
+
+chara_chip _243 {
     source {
         x = 576
         y = 336
     }
 }
-chara_chip "244" {
+
+chara_chip _244 {
     source {
         x = 624
         y = 336
     }
 }
-chara_chip "245" {
+
+chara_chip _245 {
     source {
         x = 672
         y = 336
     }
 }
-chara_chip "246" {
+
+chara_chip _246 {
     source {
         x = 720
         y = 336
     }
 }
-chara_chip "247" {
+
+chara_chip _247 {
     source {
         x = 768
         y = 336
     }
 }
-chara_chip "248" {
+
+chara_chip _248 {
     source {
         x = 816
         y = 336
     }
 }
-chara_chip "249" {
+
+chara_chip _249 {
     source {
         x = 864
         y = 336
     }
 }
-chara_chip "250" {
+
+chara_chip _250 {
     source {
         x = 912
         y = 336
     }
 }
-chara_chip "251" {
+
+chara_chip _251 {
     source {
         x = 960
         y = 336
     }
 }
-chara_chip "252" {
+
+chara_chip _252 {
     source {
         x = 1008
         y = 336
     }
 }
-chara_chip "253" {
+
+chara_chip _253 {
     source {
         x = 1056
         y = 336
     }
 }
-chara_chip "254" {
+
+chara_chip _254 {
     source {
         x = 1104
         y = 336
     }
 }
-chara_chip "255" {
+
+chara_chip _255 {
     source {
         x = 1152
         y = 336
     }
 }
-chara_chip "256" {
+
+chara_chip _256 {
     offset_y = 16
     source {
         x = 1200
         y = 336
     }
 }
-chara_chip "257" {
+
+chara_chip _257 {
     source {
         x = 1248
         y = 336
     }
 }
-chara_chip "258" {
+
+chara_chip _258 {
     source {
         x = 1296
         y = 336
     }
 }
-chara_chip "259" {
+
+chara_chip _259 {
     source {
         x = 1344
         y = 336
     }
 }
-chara_chip "260" {
+
+chara_chip _260 {
     source {
         x = 1392
         y = 336
     }
 }
-chara_chip "261" {
+
+chara_chip _261 {
     source {
         x = 1440
         y = 336
     }
 }
-chara_chip "262" {
+
+chara_chip _262 {
     source {
         x = 1488
         y = 336
     }
 }
-chara_chip "263" {
+
+chara_chip _263 {
     source {
         x = 1536
         y = 336
     }
 }
-chara_chip "264" {
+
+chara_chip _264 {
     source {
         x = 0
         y = 384
     }
 }
-chara_chip "265" {
+
+chara_chip _265 {
     source {
         x = 48
         y = 384
     }
 }
-chara_chip "266" {
+
+chara_chip _266 {
     source {
         x = 96
         y = 384
     }
 }
-chara_chip "267" {
+
+chara_chip _267 {
     source {
         x = 144
         y = 384
     }
 }
-chara_chip "268" {
+
+chara_chip _268 {
     source {
         x = 192
         y = 384
     }
 }
-chara_chip "269" {
+
+chara_chip _269 {
     source {
         x = 240
         y = 384
     }
 }
-chara_chip "270" {
+
+chara_chip _270 {
     source {
         x = 288
         y = 384
     }
 }
-chara_chip "271" {
+
+chara_chip _271 {
     source {
         x = 336
         y = 384
     }
 }
-chara_chip "272" {
+
+chara_chip _272 {
     source {
         x = 384
         y = 384
     }
 }
-chara_chip "273" {
+
+chara_chip _273 {
     source {
         x = 432
         y = 384
     }
 }
-chara_chip "274" {
+
+chara_chip _274 {
     source {
         x = 480
         y = 384
     }
 }
-chara_chip "275" {
+
+chara_chip _275 {
     source {
         x = 528
         y = 384
     }
 }
-chara_chip "276" {
+
+chara_chip _276 {
     source {
         x = 576
         y = 384
     }
 }
-chara_chip "277" {
+
+chara_chip _277 {
     offset_y = 29
     source {
         x = 624
         y = 384
     }
 }
-chara_chip "278" {
+
+chara_chip _278 {
     source {
         x = 672
         y = 384
     }
 }
-chara_chip "279" {
+
+chara_chip _279 {
     source {
         x = 720
         y = 384
     }
 }
-chara_chip "280" {
+
+chara_chip _280 {
     tall = true
     offset_y = 32
     source {
@@ -1699,103 +1976,120 @@ chara_chip "280" {
         y = 384
     }
 }
-chara_chip "281" {
+
+chara_chip _281 {
     source {
         x = 816
         y = 384
     }
 }
-chara_chip "282" {
+
+chara_chip _282 {
     source {
         x = 864
         y = 384
     }
 }
-chara_chip "283" {
+
+chara_chip _283 {
     source {
         x = 912
         y = 384
     }
 }
-chara_chip "284" {
+
+chara_chip _284 {
     source {
         x = 960
         y = 384
     }
 }
-chara_chip "285" {
+
+chara_chip _285 {
     source {
         x = 1008
         y = 384
     }
 }
-chara_chip "286" {
+
+chara_chip _286 {
     source {
         x = 1056
         y = 384
     }
 }
-chara_chip "287" {
+
+chara_chip _287 {
     source {
         x = 1104
         y = 384
     }
 }
-chara_chip "288" {
+
+chara_chip _288 {
     source {
         x = 1152
         y = 384
     }
 }
-chara_chip "289" {
+
+chara_chip _289 {
     source {
         x = 1200
         y = 384
     }
 }
-chara_chip "290" {
+
+chara_chip _290 {
     source {
         x = 1248
         y = 384
     }
 }
-chara_chip "291" {
+
+chara_chip _291 {
     source {
         x = 1296
         y = 384
     }
 }
-chara_chip "292" {
+
+chara_chip _292 {
     source {
         x = 1344
         y = 384
     }
 }
-chara_chip "293" {
+
+chara_chip _293 {
     source {
         x = 1392
         y = 384
     }
 }
-chara_chip "294" {
+
+chara_chip _294 {
     source {
         x = 1440
         y = 384
     }
 }
-chara_chip "295" {
+
+chara_chip _295 {
     source {
         x = 1488
         y = 384
     }
 }
-chara_chip "296" {
+
+chara_chip _296 {
     source {
         x = 1536
         y = 384
     }
 }
-chara_chip "297" {
+
+chara_chip _297 {
     tall = true
     offset_y = 16
     source {
@@ -1803,247 +2097,288 @@ chara_chip "297" {
         y = 432
     }
 }
-chara_chip "298" {
+
+chara_chip _298 {
     source {
         x = 48
         y = 432
     }
 }
-chara_chip "299" {
+
+chara_chip _299 {
     source {
         x = 96
         y = 432
     }
 }
-chara_chip "300" {
+
+chara_chip _300 {
     source {
         x = 144
         y = 432
     }
 }
-chara_chip "301" {
+
+chara_chip _301 {
     source {
         x = 192
         y = 432
     }
 }
-chara_chip "302" {
+
+chara_chip _302 {
     source {
         x = 240
         y = 432
     }
 }
-chara_chip "303" {
+
+chara_chip _303 {
     source {
         x = 288
         y = 432
     }
 }
-chara_chip "304" {
+
+chara_chip _304 {
     source {
         x = 336
         y = 432
     }
 }
-chara_chip "305" {
+
+chara_chip _305 {
     source {
         x = 384
         y = 432
     }
 }
-chara_chip "306" {
+
+chara_chip _306 {
     source {
         x = 432
         y = 432
     }
 }
-chara_chip "307" {
+
+chara_chip _307 {
     source {
         x = 480
         y = 432
     }
 }
-chara_chip "308" {
+
+chara_chip _308 {
     source {
         x = 528
         y = 432
     }
 }
-chara_chip "309" {
+
+chara_chip _309 {
     source {
         x = 576
         y = 432
     }
 }
-chara_chip "310" {
+
+chara_chip _310 {
     source {
         x = 624
         y = 432
     }
 }
-chara_chip "311" {
+
+chara_chip _311 {
     source {
         x = 672
         y = 432
     }
 }
-chara_chip "312" {
+
+chara_chip _312 {
     source {
         x = 720
         y = 432
     }
 }
-chara_chip "313" {
+
+chara_chip _313 {
     source {
         x = 768
         y = 432
     }
 }
-chara_chip "314" {
+
+chara_chip _314 {
     source {
         x = 816
         y = 432
     }
 }
-chara_chip "315" {
+
+chara_chip _315 {
     source {
         x = 864
         y = 432
     }
 }
-chara_chip "316" {
+
+chara_chip _316 {
     source {
         x = 912
         y = 432
     }
 }
-chara_chip "317" {
+
+chara_chip _317 {
     source {
         x = 960
         y = 432
     }
 }
-chara_chip "318" {
+
+chara_chip _318 {
     source {
         x = 1008
         y = 432
     }
 }
-chara_chip "319" {
+
+chara_chip _319 {
     source {
         x = 1056
         y = 432
     }
 }
-chara_chip "320" {
+
+chara_chip _320 {
     source {
         x = 1104
         y = 432
     }
 }
-chara_chip "321" {
+
+chara_chip _321 {
     source {
         x = 1152
         y = 432
     }
 }
-chara_chip "322" {
+
+chara_chip _322 {
     source {
         x = 1200
         y = 432
     }
 }
-chara_chip "323" {
+
+chara_chip _323 {
     source {
         x = 1248
         y = 432
     }
 }
-chara_chip "324" {
+
+chara_chip _324 {
     source {
         x = 1296
         y = 432
     }
 }
-chara_chip "325" {
+
+chara_chip _325 {
     source {
         x = 1344
         y = 432
     }
 }
-chara_chip "326" {
+
+chara_chip _326 {
     source {
         x = 1392
         y = 432
     }
 }
-chara_chip "327" {
+
+chara_chip _327 {
     source {
         x = 1440
         y = 432
     }
 }
-chara_chip "328" {
+
+chara_chip _328 {
     source {
         x = 1488
         y = 432
     }
 }
-chara_chip "329" {
+
+chara_chip _329 {
     source {
         x = 1536
         y = 432
     }
 }
-chara_chip "330" {
+
+chara_chip _330 {
     source {
         x = 0
         y = 480
     }
 }
-chara_chip "331" {
+
+chara_chip _331 {
     source {
         x = 48
         y = 480
     }
 }
-chara_chip "332" {
+
+chara_chip _332 {
     source {
         x = 96
         y = 480
     }
 }
-chara_chip "333" {
+
+chara_chip _333 {
     source {
         x = 144
         y = 480
     }
 }
-chara_chip "334" {
+
+chara_chip _334 {
     source {
         x = 192
         y = 480
     }
 }
-chara_chip "335" {
+
+chara_chip _335 {
     source {
         x = 240
         y = 480
     }
 }
-chara_chip "336" {
+
+chara_chip _336 {
     source {
         x = 288
         y = 480
     }
 }
-chara_chip "337" {
+
+chara_chip _337 {
     source {
         x = 336
         y = 480
     }
 }
-chara_chip "338" {
+
+chara_chip _338 {
     tall = true
     offset_y = 32
     source {
@@ -2051,7 +2386,8 @@ chara_chip "338" {
         y = 480
     }
 }
-chara_chip "339" {
+
+chara_chip _339 {
     tall = true
     offset_y = 16
     source {
@@ -2059,13 +2395,15 @@ chara_chip "339" {
         y = 480
     }
 }
-chara_chip "340" {
+
+chara_chip _340 {
     source {
         x = 480
         y = 480
     }
 }
-chara_chip "341" {
+
+chara_chip _341 {
     tall = true
     offset_y = 16
     source {
@@ -2073,7 +2411,8 @@ chara_chip "341" {
         y = 480
     }
 }
-chara_chip "342" {
+
+chara_chip _342 {
     tall = true
     offset_y = 12
     source {
@@ -2081,7 +2420,8 @@ chara_chip "342" {
         y = 480
     }
 }
-chara_chip "343" {
+
+chara_chip _343 {
     tall = true
     offset_y = 16
     source {
@@ -2089,37 +2429,43 @@ chara_chip "343" {
         y = 480
     }
 }
-chara_chip "344" {
+
+chara_chip _344 {
     source {
         x = 672
         y = 480
     }
 }
-chara_chip "345" {
+
+chara_chip _345 {
     source {
         x = 720
         y = 480
     }
 }
-chara_chip "346" {
+
+chara_chip _346 {
     source {
         x = 768
         y = 480
     }
 }
-chara_chip "347" {
+
+chara_chip _347 {
     source {
         x = 816
         y = 480
     }
 }
-chara_chip "348" {
+
+chara_chip _348 {
     source {
         x = 864
         y = 480
     }
 }
-chara_chip "349" {
+
+chara_chip _349 {
     tall = true
     offset_y = 8
     source {
@@ -2127,13 +2473,15 @@ chara_chip "349" {
         y = 480
     }
 }
-chara_chip "350" {
+
+chara_chip _350 {
     source {
         x = 960
         y = 480
     }
 }
-chara_chip "351" {
+
+chara_chip _351 {
     tall = true
     offset_y = 8
     source {
@@ -2141,229 +2489,267 @@ chara_chip "351" {
         y = 480
     }
 }
-chara_chip "352" {
+
+chara_chip _352 {
     source {
         x = 1056
         y = 480
     }
 }
-chara_chip "353" {
+
+chara_chip _353 {
     source {
         x = 1104
         y = 480
     }
 }
-chara_chip "354" {
+
+chara_chip _354 {
     source {
         x = 1152
         y = 480
     }
 }
-chara_chip "355" {
+
+chara_chip _355 {
     source {
         x = 1200
         y = 480
     }
 }
-chara_chip "356" {
+
+chara_chip _356 {
     source {
         x = 1248
         y = 480
     }
 }
-chara_chip "357" {
+
+chara_chip _357 {
     source {
         x = 1296
         y = 480
     }
 }
-chara_chip "358" {
+
+chara_chip _358 {
     source {
         x = 1344
         y = 480
     }
 }
-chara_chip "359" {
+
+chara_chip _359 {
     source {
         x = 1392
         y = 480
     }
 }
-chara_chip "360" {
+
+chara_chip _360 {
     source {
         x = 1440
         y = 480
     }
 }
-chara_chip "361" {
+
+chara_chip _361 {
     source {
         x = 1488
         y = 480
     }
 }
-chara_chip "362" {
+
+chara_chip _362 {
     source {
         x = 1536
         y = 480
     }
 }
-chara_chip "363" {
+
+chara_chip _363 {
     source {
         x = 0
         y = 528
     }
 }
-chara_chip "364" {
+
+chara_chip _364 {
     source {
         x = 48
         y = 528
     }
 }
-chara_chip "365" {
+
+chara_chip _365 {
     source {
         x = 96
         y = 528
     }
 }
-chara_chip "366" {
+
+chara_chip _366 {
     source {
         x = 144
         y = 528
     }
 }
-chara_chip "367" {
+
+chara_chip _367 {
     source {
         x = 192
         y = 528
     }
 }
-chara_chip "368" {
+
+chara_chip _368 {
     source {
         x = 240
         y = 528
     }
 }
-chara_chip "369" {
+
+chara_chip _369 {
     source {
         x = 288
         y = 528
     }
 }
-chara_chip "370" {
+
+chara_chip _370 {
     source {
         x = 336
         y = 528
     }
 }
-chara_chip "371" {
+
+chara_chip _371 {
     source {
         x = 384
         y = 528
     }
 }
-chara_chip "372" {
+
+chara_chip _372 {
     source {
         x = 432
         y = 528
     }
 }
-chara_chip "373" {
+
+chara_chip _373 {
     source {
         x = 480
         y = 528
     }
 }
-chara_chip "374" {
+
+chara_chip _374 {
     source {
         x = 528
         y = 528
     }
 }
-chara_chip "375" {
+
+chara_chip _375 {
     source {
         x = 576
         y = 528
     }
 }
-chara_chip "376" {
+
+chara_chip _376 {
     source {
         x = 624
         y = 528
     }
 }
-chara_chip "377" {
+
+chara_chip _377 {
     source {
         x = 672
         y = 528
     }
 }
-chara_chip "378" {
+
+chara_chip _378 {
     source {
         x = 720
         y = 528
     }
 }
-chara_chip "379" {
+
+chara_chip _379 {
     source {
         x = 768
         y = 528
     }
 }
-chara_chip "380" {
+
+chara_chip _380 {
     source {
         x = 816
         y = 528
     }
 }
-chara_chip "381" {
+
+chara_chip _381 {
     source {
         x = 864
         y = 528
     }
 }
-chara_chip "382" {
+
+chara_chip _382 {
     source {
         x = 912
         y = 528
     }
 }
-chara_chip "383" {
+
+chara_chip _383 {
     source {
         x = 960
         y = 528
     }
 }
-chara_chip "384" {
+
+chara_chip _384 {
     source {
         x = 1008
         y = 528
     }
 }
-chara_chip "385" {
+
+chara_chip _385 {
     source {
         x = 1056
         y = 528
     }
 }
-chara_chip "386" {
+
+chara_chip _386 {
     source {
         x = 1104
         y = 528
     }
 }
-chara_chip "387" {
+
+chara_chip _387 {
     source {
         x = 1152
         y = 528
     }
 }
-chara_chip "388" {
+
+chara_chip _388 {
     source {
         x = 1200
         y = 528
     }
 }
-chara_chip "389" {
+
+chara_chip _389 {
     tall = true
     offset_y = 16
     source {
@@ -2371,13 +2757,15 @@ chara_chip "389" {
         y = 528
     }
 }
-chara_chip "390" {
+
+chara_chip _390 {
     source {
         x = 1296
         y = 528
     }
 }
-chara_chip "391" {
+
+chara_chip _391 {
     tall = true
     offset_y = 16
     source {
@@ -2385,13 +2773,15 @@ chara_chip "391" {
         y = 528
     }
 }
-chara_chip "392" {
+
+chara_chip _392 {
     source {
         x = 1392
         y = 528
     }
 }
-chara_chip "393" {
+
+chara_chip _393 {
     tall = true
     offset_y = 16
     source {
@@ -2399,31 +2789,36 @@ chara_chip "393" {
         y = 528
     }
 }
-chara_chip "394" {
+
+chara_chip _394 {
     source {
         x = 1488
         y = 528
     }
 }
-chara_chip "395" {
+
+chara_chip _395 {
     source {
         x = 1536
         y = 528
     }
 }
-chara_chip "396" {
+
+chara_chip _396 {
     source {
         x = 0
         y = 576
     }
 }
-chara_chip "397" {
+
+chara_chip _397 {
     source {
         x = 48
         y = 576
     }
 }
-chara_chip "398" {
+
+chara_chip _398 {
     tall = true
     offset_y = 16
     source {
@@ -2431,37 +2826,43 @@ chara_chip "398" {
         y = 576
     }
 }
-chara_chip "399" {
+
+chara_chip _399 {
     source {
         x = 144
         y = 576
     }
 }
-chara_chip "400" {
+
+chara_chip _400 {
     source {
         x = 192
         y = 576
     }
 }
-chara_chip "401" {
+
+chara_chip _401 {
     source {
         x = 240
         y = 576
     }
 }
-chara_chip "402" {
+
+chara_chip _402 {
     source {
         x = 288
         y = 576
     }
 }
-chara_chip "403" {
+
+chara_chip _403 {
     source {
         x = 336
         y = 576
     }
 }
-chara_chip "404" {
+
+chara_chip _404 {
     tall = true
     offset_y = 16
     source {
@@ -2469,7 +2870,8 @@ chara_chip "404" {
         y = 576
     }
 }
-chara_chip "405" {
+
+chara_chip _405 {
     tall = true
     offset_y = 16
     source {
@@ -2477,19 +2879,22 @@ chara_chip "405" {
         y = 576
     }
 }
-chara_chip "406" {
+
+chara_chip _406 {
     source {
         x = 480
         y = 576
     }
 }
-chara_chip "407" {
+
+chara_chip _407 {
     source {
         x = 528
         y = 576
     }
 }
-chara_chip "408" {
+
+chara_chip _408 {
     tall = true
     offset_y = 16
     source {
@@ -2497,31 +2902,36 @@ chara_chip "408" {
         y = 576
     }
 }
-chara_chip "409" {
+
+chara_chip _409 {
     source {
         x = 624
         y = 576
     }
 }
-chara_chip "410" {
+
+chara_chip _410 {
     source {
         x = 672
         y = 576
     }
 }
-chara_chip "411" {
+
+chara_chip _411 {
     source {
         x = 720
         y = 576
     }
 }
-chara_chip "412" {
+
+chara_chip _412 {
     source {
         x = 768
         y = 576
     }
 }
-chara_chip "413" {
+
+chara_chip _413 {
     tall = true
     offset_y = 16
     source {
@@ -2529,97 +2939,113 @@ chara_chip "413" {
         y = 576
     }
 }
-chara_chip "414" {
+
+chara_chip _414 {
     source {
         x = 864
         y = 576
     }
 }
-chara_chip "415" {
+
+chara_chip _415 {
     source {
         x = 912
         y = 576
     }
 }
-chara_chip "416" {
+
+chara_chip _416 {
     source {
         x = 960
         y = 576
     }
 }
-chara_chip "417" {
+
+chara_chip _417 {
     source {
         x = 1008
         y = 576
     }
 }
-chara_chip "418" {
+
+chara_chip _418 {
     source {
         x = 1056
         y = 576
     }
 }
-chara_chip "419" {
+
+chara_chip _419 {
     source {
         x = 1104
         y = 576
     }
 }
-chara_chip "420" {
+
+chara_chip _420 {
     source {
         x = 1152
         y = 576
     }
 }
-chara_chip "421" {
+
+chara_chip _421 {
     source {
         x = 1200
         y = 576
     }
 }
-chara_chip "422" {
+
+chara_chip _422 {
     source {
         x = 1248
         y = 576
     }
 }
-chara_chip "423" {
+
+chara_chip _423 {
     source {
         x = 1296
         y = 576
     }
 }
-chara_chip "424" {
+
+chara_chip _424 {
     source {
         x = 1344
         y = 576
     }
 }
-chara_chip "425" {
+
+chara_chip _425 {
     source {
         x = 1392
         y = 576
     }
 }
-chara_chip "426" {
+
+chara_chip _426 {
     source {
         x = 1440
         y = 576
     }
 }
-chara_chip "427" {
+
+chara_chip _427 {
     source {
         x = 1488
         y = 576
     }
 }
-chara_chip "428" {
+
+chara_chip _428 {
     source {
         x = 1536
         y = 576
     }
 }
-chara_chip "429" {
+
+chara_chip _429 {
     tall = true
     offset_y = 8
     source {
@@ -2627,7 +3053,8 @@ chara_chip "429" {
         y = 624
     }
 }
-chara_chip "430" {
+
+chara_chip _430 {
     tall = true
     offset_y = 8
     source {
@@ -2635,13 +3062,15 @@ chara_chip "430" {
         y = 624
     }
 }
-chara_chip "431" {
+
+chara_chip _431 {
     source {
         x = 96
         y = 624
     }
 }
-chara_chip "432" {
+
+chara_chip _432 {
     tall = true
     offset_y = 8
     source {
@@ -2649,7 +3078,8 @@ chara_chip "432" {
         y = 624
     }
 }
-chara_chip "433" {
+
+chara_chip _433 {
     tall = true
     offset_y = 8
     source {
@@ -2657,37 +3087,43 @@ chara_chip "433" {
         y = 624
     }
 }
-chara_chip "434" {
+
+chara_chip _434 {
     source {
         x = 240
         y = 624
     }
 }
-chara_chip "435" {
+
+chara_chip _435 {
     source {
         x = 288
         y = 624
     }
 }
-chara_chip "436" {
+
+chara_chip _436 {
     source {
         x = 0
         y = 0
     }
 }
-chara_chip "437" {
+
+chara_chip _437 {
     source {
         x = 384
         y = 624
     }
 }
-chara_chip "438" {
+
+chara_chip _438 {
     source {
         x = 432
         y = 624
     }
 }
-chara_chip "439" {
+
+chara_chip _439 {
     tall = true
     offset_y = 8
     source {
@@ -2695,19 +3131,22 @@ chara_chip "439" {
         y = 624
     }
 }
-chara_chip "440" {
+
+chara_chip _440 {
     source {
         x = 528
         y = 624
     }
 }
-chara_chip "441" {
+
+chara_chip _441 {
     source {
         x = 576
         y = 624
     }
 }
-chara_chip "442" {
+
+chara_chip _442 {
     tall = true
     offset_y = 8
     source {
@@ -2715,35 +3154,411 @@ chara_chip "442" {
         y = 624
     }
 }
-chara_chip "443" {
+
+chara_chip _443 {
     source {
         x = 672
         y = 624
     }
 }
-chara_chip "444" {
+
+chara_chip _444 {
     source {
         x = 720
         y = 624
     }
 }
-chara_chip "445" {
+
+chara_chip _445 {
     source {
         x = 768
         y = 624
     }
 }
-chara_chip "446" {
+
+chara_chip _446 {
     source {
         x = 816
         y = 624
     }
 }
-chara_chip "447" {
+
+chara_chip _447 {
     tall = true
     offset_y = 16
     source {
         x = 864
         y = 624
+    }
+}
+
+chara_chip _448 {
+    source {
+        x = 912
+        y = 624
+    }
+}
+
+chara_chip _449 {
+    source {
+        x = 960
+        y = 624
+    }
+}
+
+chara_chip _450 {
+    source {
+        x = 1008
+        y = 624
+    }
+}
+
+chara_chip _451 {
+    source {
+        x = 1056
+        y = 624
+    }
+}
+
+chara_chip _452 {
+    source {
+        x = 1104
+        y = 624
+    }
+}
+
+chara_chip _453 {
+    source {
+        x = 1152
+        y = 624
+    }
+}
+
+chara_chip _454 {
+    source {
+        x = 1200
+        y = 624
+    }
+}
+
+chara_chip _455 {
+    source {
+        x = 1248
+        y = 624
+    }
+}
+
+chara_chip _456 {
+    source {
+        x = 1296
+        y = 624
+    }
+}
+
+chara_chip _457 {
+    source {
+        x = 1344
+        y = 624
+    }
+}
+
+chara_chip _458 {
+    source {
+        x = 1392
+        y = 624
+    }
+}
+
+chara_chip _459 {
+    source {
+        x = 1440
+        y = 624
+    }
+}
+
+chara_chip _460 {
+    source {
+        x = 1488
+        y = 624
+    }
+}
+
+chara_chip _461 {
+    source {
+        x = 1536
+        y = 624
+    }
+}
+
+chara_chip _462 {
+    source {
+        x = 0
+        y = 672
+    }
+}
+
+chara_chip _463 {
+    source {
+        x = 48
+        y = 672
+    }
+}
+
+chara_chip _464 {
+    source {
+        x = 96
+        y = 672
+    }
+}
+
+chara_chip _465 {
+    source {
+        x = 144
+        y = 672
+    }
+}
+
+chara_chip _466 {
+    source {
+        x = 192
+        y = 672
+    }
+}
+
+chara_chip _467 {
+    source {
+        x = 240
+        y = 672
+    }
+}
+
+chara_chip _468 {
+    source {
+        x = 288
+        y = 672
+    }
+}
+
+chara_chip _469 {
+    source {
+        x = 336
+        y = 672
+    }
+}
+
+chara_chip _470 {
+    source {
+        x = 384
+        y = 672
+    }
+}
+
+chara_chip _471 {
+    source {
+        x = 432
+        y = 672
+    }
+}
+
+chara_chip _472 {
+    source {
+        x = 480
+        y = 672
+    }
+}
+
+chara_chip _473 {
+    source {
+        x = 528
+        y = 672
+    }
+}
+
+chara_chip _474 {
+    source {
+        x = 576
+        y = 672
+    }
+}
+
+chara_chip _475 {
+    source {
+        x = 624
+        y = 672
+    }
+}
+
+chara_chip _476 {
+    source {
+        x = 672
+        y = 672
+    }
+}
+
+chara_chip _477 {
+    source {
+        x = 720
+        y = 672
+    }
+}
+
+chara_chip _478 {
+    source {
+        x = 768
+        y = 672
+    }
+}
+
+chara_chip _479 {
+    source {
+        x = 816
+        y = 672
+    }
+}
+
+chara_chip _480 {
+    source {
+        x = 864
+        y = 672
+    }
+}
+
+chara_chip _481 {
+    source {
+        x = 912
+        y = 672
+    }
+}
+
+chara_chip _482 {
+    source {
+        x = 960
+        y = 672
+    }
+}
+
+chara_chip _483 {
+    source {
+        x = 1008
+        y = 672
+    }
+}
+
+chara_chip _484 {
+    source {
+        x = 1056
+        y = 672
+    }
+}
+
+chara_chip _485 {
+    source {
+        x = 1104
+        y = 672
+    }
+}
+
+chara_chip _486 {
+    source {
+        x = 1152
+        y = 672
+    }
+}
+
+chara_chip _487 {
+    source {
+        x = 1200
+        y = 672
+    }
+}
+
+chara_chip _488 {
+    source {
+        x = 1248
+        y = 672
+    }
+}
+
+chara_chip _489 {
+    source {
+        x = 1296
+        y = 672
+    }
+}
+
+chara_chip _490 {
+    source {
+        x = 1344
+        y = 672
+    }
+}
+
+chara_chip _491 {
+    source {
+        x = 1392
+        y = 672
+    }
+}
+
+chara_chip _492 {
+    source {
+        x = 1440
+        y = 672
+    }
+}
+
+chara_chip _493 {
+    source {
+        x = 1488
+        y = 672
+    }
+}
+
+chara_chip _494 {
+    source {
+        x = 1536
+        y = 672
+    }
+}
+
+chara_chip _495 {
+    source {
+        x = 0
+        y = 720
+    }
+}
+
+chara_chip _496 {
+    source {
+        x = 48
+        y = 720
+    }
+}
+
+chara_chip _497 {
+    source {
+        x = 96
+        y = 720
+    }
+}
+
+chara_chip _498 {
+    source {
+        x = 144
+        y = 720
+    }
+}
+
+chara_chip _499 {
+    source {
+        x = 192
+        y = 720
+    }
+}
+
+chara_chip _500 {
+    source {
+        x = 240
+        y = 720
     }
 }

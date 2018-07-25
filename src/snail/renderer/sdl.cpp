@@ -387,6 +387,8 @@ void renderer::render_image_crop(
     image_base& image,
     int src_x,
     int src_y,
+    int src_width,
+    int src_height,
     int dst_x,
     int dst_y)
 {
@@ -394,8 +396,8 @@ void renderer::render_image_crop(
         image.ptr(),
         src_x,
         src_y,
-        image.width(),
-        image.height(),
+        src_width,
+        src_height,
         dst_x,
         dst_y);
 }
