@@ -3,6 +3,7 @@
 #include "../lib/noncopyable.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"
+#include "../snail/image.hpp"
 #include "extent.hpp"
 #include <cassert>
 #include <climits>

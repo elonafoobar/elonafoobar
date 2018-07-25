@@ -1,12 +1,35 @@
 #include "pic_loader.hpp"
 #include "../snail/application.hpp"
 #include "../snail/color.hpp"
-#include "../snail/image.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
 
 namespace elona
 {
+
+namespace
+{
+
+static void copy_image(snail::basic_image& img, const extent& ext)
+{
+    const auto save = snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    snail::application::instance().get_renderer().render_image(
+        img, ext.x, ext.y, ext.width, ext.height);
+    snail::application::instance().get_renderer().set_blend_mode(save);
+}
+
+static void copy_image_cropped(snail::basic_image& img, const extent& source, const extent& dest)
+{
+    const auto save = snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    snail::application::instance().get_renderer().render_image_crop(
+        img, source.x, source.y, source.width, source.height, dest.x, dest.y);
+    snail::application::instance().get_renderer().set_blend_mode(save);
+}
+
+} // namespace
+
 
 void pic_loader::clear_storage_and_buffers()
 {
@@ -61,11 +84,7 @@ void pic_loader::load(const fs::path& image_file,
     gsel(ext.buffer);
     pos(ext.x, ext.y);
 
-    const auto save = snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-    snail::application::instance().get_renderer().render_image(
-        img, ext.x, ext.y, ext.width, ext.height);
-    snail::application::instance().get_renderer().set_blend_mode(save);
+    copy_image(img, ext);
 
     // Store the buffer region for later lookup.
     storage[id] = ext;
@@ -85,9 +104,6 @@ void pic_loader::add_predefined_extents(const fs::path& atlas_file,
     buffer_info& info = add_buffer(type, img.width(), img.height());
     gsel(info.buffer_id);
 
-    const auto saved_blend_mode = snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
-
     for (auto& pair : extents)
     {
         // Get the source loaded from a definition file.
@@ -101,21 +117,18 @@ void pic_loader::add_predefined_extents(const fs::path& atlas_file,
         assert(found);
 
         size_t skyline_index = found->first;
-        extent& ext = found->second;
-        ext.buffer = info.buffer_id;
+        extent& dest = found->second;
+        dest.buffer = info.buffer_id;
 
         // Update the sprite packing information.
-        info.insert_extent(skyline_index, ext);
+        info.insert_extent(skyline_index, dest);
 
         // Render the defined portion of the image onto the buffer.
-        snail::application::instance().get_renderer().render_image_crop(
-            img, source.x, source.y, source.width, source.height, ext.x, ext.y);
+        copy_image_cropped(img, source, dest);
 
         // Store the buffer region for later lookup.
-        storage[pair.first] = ext;
+        storage[pair.first] = dest;
     }
-
-    snail::application::instance().get_renderer().set_blend_mode(saved_blend_mode);
 }
 
 pic_loader::buffer_info& pic_loader::add_buffer(page_type type, int w, int h)

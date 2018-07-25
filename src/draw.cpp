@@ -1018,6 +1018,10 @@ void create_pcpic(int cc, bool prm_410)
 
 void initialize_map_chip()
 {
+    // TODO: this could be called multiple times outside of
+    // initialize_all_chips. Add a method to clear only map chip
+    // buffers from pic_loader so they can be loaded again, or keep
+    // all chips loaded at once.
     DIM3(chipm, 8, 825);
     if (mdata_map_atlas_number == 0)
     {
@@ -1178,8 +1182,10 @@ void initialize_map_chip()
 
 
 
-void initialize_item_chip()
+void initialize_all_chips()
 {
+    loader.clear_storage_and_buffers();
+
     initialize_mef();
     SDIM3(tname, 16, 11);
     tname(1) = i18n::s.get("core.locale.item.chip.dryrock");

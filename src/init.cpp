@@ -648,7 +648,7 @@ void initialize_elona()
     SDIM1(filtern);
     SDIM1(filter_creature);
     initialize_character_filters();
-    initialize_item_chip();
+    initialize_all_chips();
     initialize_building_daga();
     initialize_adata();
     initialize_cell_object_data();

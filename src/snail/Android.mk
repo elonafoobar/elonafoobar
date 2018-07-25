@@ -29,7 +29,7 @@ messagebox.cpp \
 renderer/sdl.cpp \
 scene.cpp \
 touch_input/sdl.cpp \
-window.cpp \
+window/sdl.cpp \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)

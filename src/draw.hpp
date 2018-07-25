@@ -74,7 +74,7 @@ optional_ref<extent> chara_preparepic(int image_id);
 
 void create_pcpic(int cc, bool prm_410);
 void initialize_map_chip();
-void initialize_item_chip();
+void initialize_all_chips();
 
 
 void bmes(

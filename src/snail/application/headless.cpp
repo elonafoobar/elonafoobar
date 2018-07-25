@@ -23,8 +23,17 @@ void application::set_title(const std::string&)
 
 
 
-void initialize(const std::string&)
+void application::initialize(const std::string&)
 {
+    _window.reset(new window(
+        "snail headless",
+        window::position_undefined,
+        window::position_undefined,
+        width(),
+        height(),
+        window::shown));
+    _renderer.reset(new renderer(
+        *_window, renderer::accelerated | renderer::present_vsync));
 }
 
 

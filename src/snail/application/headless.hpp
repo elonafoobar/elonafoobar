@@ -127,6 +127,7 @@ public:
 
 private:
     application() = default;
+    std::unique_ptr<window> _window;
     std::unique_ptr<renderer> _renderer;
     bool _will_quit = false;
     const std::string _title = "";
