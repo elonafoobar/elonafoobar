@@ -815,7 +815,7 @@ int run()
     initialize_config_preload(config_file);
     initialize_screen();
 
-    filesystem::dir::set_base_save_directory(fs::path("save"));
+    filesystem::dir::set_base_save_directory(filesystem::path("save"));
 
     initialize_config(config_file);
     init_assets();
