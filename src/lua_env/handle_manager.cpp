@@ -99,8 +99,7 @@ sol::object handle_manager::get_chara_handle(character& chara)
     }
     if (chara_handles.find(chara.index) == chara_handles.end())
     {
-        // std::cout << "Character " << chara.index << " not found." <<
-        // std::endl;
+        // std::cout << "Character " << chara.index << " not found." << std::endl;
         return sol::lua_nil;
     }
     sol::object handle = handle_env["Handle"]["CharaHandles"][chara.index];

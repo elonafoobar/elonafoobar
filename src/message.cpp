@@ -153,6 +153,13 @@ void help_halt()
 
 
 
+void txtef(color_index_t color)
+{
+    txtef(static_cast<int>(color));
+}
+
+
+
 void txtef(int prm_308)
 {
     tcol_at_txtfunc(0) = 255 - c_col(0, prm_308);

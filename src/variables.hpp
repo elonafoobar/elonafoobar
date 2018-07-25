@@ -1208,6 +1208,7 @@ void text_set();
 void turn_aggro(int = 0, int = 0, int = 0);
 void txt_conv();
 void txtcontinue();
+void txtef(color_index_t);
 void txtef(int = 0);
 void txteledmg(int = 0, int = 0, int = 0, int = 0);
 void txtnew();

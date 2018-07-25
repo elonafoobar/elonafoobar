@@ -371,7 +371,7 @@ inline std::string fmt_interpolate_converted(
         }
         else
         {
-            s += "<error>";
+            s += "<missing>";
         }
     }
 

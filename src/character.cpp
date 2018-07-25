@@ -282,7 +282,9 @@ static std::vector<int> convert_flags(const sol::table& data, const std::string&
     return flag_types;
 }
 
-character_data character_db_ex::convert(const sol::table& data, const std::string& id_)
+character_data character_db_ex::convert(const std::string& id_,
+                                        const sol::table& data,
+                                        lua::lua_env& lua)
 {
     ELONA_LION_DB_FIELD(id,                         int, -1);
     ELONA_LION_DB_FIELD(ai_act_sub_freq,            int, 0);
@@ -320,6 +322,7 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
     ELONA_LION_DB_FIELD(category,                   int, 0);
     ELONA_LION_DB_FIELD(rarity,                     int, 10000);
     ELONA_LION_DB_FIELD(coefficient,                int, 400);
+    ELONA_LION_DB_FIELD_CALLBACK(corpse_eating_effect);
 
     std::unordered_map<int, int> resistances = convert_resistances(data, "resistances");
 
@@ -392,6 +395,7 @@ character_data character_db_ex::convert(const sol::table& data, const std::strin
         category,
         rarity,
         coefficient,
+        corpse_eating_effect,
         flags,
         };
 }

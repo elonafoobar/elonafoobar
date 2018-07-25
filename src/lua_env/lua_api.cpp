@@ -722,6 +722,7 @@ namespace Input
 {
 bool yes_no(const std::string&);
 sol::optional<int> prompt_number(const std::string&, int);
+sol::optional<int> prompt_number_with_initial(const std::string&, int, int);
 sol::optional<std::string> prompt_text(const std::string&, bool);
 sol::optional<int> prompt_choice(sol::variadic_args);
 
@@ -738,6 +739,13 @@ bool Input::yes_no(const std::string& message)
 
 sol::optional<int> Input::prompt_number(const std::string& message, int max)
 {
+    return Input::prompt_number_with_initial(message, max, 0);
+}
+
+sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
+                                                     int max,
+                                                     int initial)
+{
     if (max < 1)
     {
         throw sol::error("Input.prompt_number called with max < 1");
@@ -747,7 +755,9 @@ sol::optional<int> Input::prompt_number(const std::string& message, int max)
     input_number_dialog(
         (windoww - 200) / 2 + inf_screenx,
         winposy(60),
-        max);
+        max,
+        initial);
+
     if (rtval == -1)
     {
         return sol::nullopt;
@@ -795,7 +805,8 @@ void Input::bind(sol::table& Elona)
     sol::table Input = Elona.create_named("Input");
     Input.set_function("yes_no", Input::yes_no);
     Input.set_function("prompt_choice", Input::prompt_choice);
-    Input.set_function("prompt_number", Input::prompt_number);
+    Input.set_function("prompt_number", sol::overload(Input::prompt_number,
+                                                      Input::prompt_number_with_initial));
     Input.set_function("prompt_text", Input::prompt_text);
 }
 
@@ -804,8 +815,8 @@ namespace GUI
 {
 void txt(const std::string&);
 void txtnew();
-void txt_color(int);
-
+void txt_txtef(const std::string&, color_index_t);
+void txtef(color_index_t);
 void bind(sol::table&);
 }; // namespace GUI
 
@@ -814,26 +825,32 @@ void GUI::txt(const std::string& message)
     elona::txt(message);
 }
 
-void GUI::txtnew()
+void GUI::txt_txtef(const std::string& message, color_index_t color)
 {
-    elona::txtnew();
+    GUI::txtef(color);
+    elona::txt(message);
 }
 
-void GUI::txt_color(int color)
+void GUI::txtef(color_index_t color)
 {
-    if (color < 0 || color > 20)
+    if (color < color_index_t::none || color > color_index_t::yellow_green)
     {
         return;
     }
     elona::txtef(color);
 }
 
+void GUI::txtnew()
+{
+    elona::txtnew();
+}
+
 void GUI::bind(sol::table& Elona)
 {
     sol::table GUI = Elona.create_named("GUI");
-    GUI.set_function("txt", GUI::txt);
+    GUI.set_function("txt", sol::overload(GUI::txt, GUI::txt_txtef));
+    GUI.set_function("txtef", GUI::txtef);
     GUI.set_function("txtnew", GUI::txtnew);
-    GUI.set_function("txt_color", GUI::txt_color);
 }
 
 
@@ -1157,6 +1174,26 @@ void I18N::bind(sol::table& Elona)
         "get_enum_property_optional", I18N::get_enum_property_optional);
 }
 
+
+namespace Math
+{
+int clamp(int, int, int);
+
+void bind(sol::table&);
+} // namespace Math
+
+int Math::clamp(int n, int min, int max)
+{
+    return elona::clamp(n, min, max);
+}
+
+void Math::bind(sol::table& Elona)
+{
+    sol::table Math = Elona.create_named("Math");
+    Math.set_function("clamp", Math::clamp);
+}
+
+
 namespace Debug
 {
 void log(const std::string&);
@@ -1177,11 +1214,11 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    GUI::txt_color(3);
+    GUI::txtef(color_index_t::red);
     GUI::txt("Script error: ");
     while (getline(sstream, line, '\n'))
     {
-        GUI::txt_color(3);
+        GUI::txtef(color_index_t::red);
         GUI::txt(line + "  ");
     }
 
@@ -1453,7 +1490,7 @@ bool api_manager::is_loaded()
 
 sol::optional<sol::table> api_manager::try_find_api(
     const std::string& module_namespace,
-    const std::string& module_name)
+    const std::string& module_name) const
 {
     sol::optional<sol::table> table = api_env["Elona"][module_namespace];
     if (!table)
@@ -1467,11 +1504,25 @@ sol::optional<sol::table> api_manager::try_find_api(
 
 void api_manager::add_api(const std::string& module_namespace, sol::table& module_table)
 {
-    api_env["Elona"][module_namespace] = module_table;
+    if (api_env["Elona"][module_namespace] == sol::lua_nil)
+    {
+        api_env["Elona"][module_namespace] = lua->get_state()->create_table();
+    }
+
+    sol::table api_table = api_env["Elona"][module_namespace].get<sol::table>();
+    for (const auto& pair : module_table)
+    {
+        if (!pair.first.is<std::string>())
+        {
+            throw sol::error("Error loading mod " + module_namespace +
+                             ": Mod API tables must only have string keys.");
+        }
+        api_table[pair.first.as<std::string>()] = pair.second;
+    }
 }
 
 int api_manager::get_enum_value(const std::string& enum_name,
-                                const std::string& variant)
+                                const std::string& variant) const
 {
     sol::optional<sol::table> Enums = try_find_api("core", "Enums");
     if (!Enums)
@@ -1511,6 +1562,13 @@ void api_manager::load_core(lua_env& lua)
     }
 }
 
+void api_manager::lock()
+{
+    lua->get_state()->safe_script(R"(
+Elona = Elona.core.ReadOnly.make_read_only(Elona)
+)", api_env);
+}
+
 sol::table api_manager::bind(lua_env& lua)
 {
     return lua.get_state()->create_table_with(
@@ -1533,6 +1591,11 @@ sol::table api_manager::bind(lua_env& lua)
 void api_manager::set_on(lua_env& lua)
 {
     lua.get_state()->set("Elona", bind(lua));
+}
+
+sol::table api_manager::get_master_api_table()
+{
+    return api_env["Elona"];
 }
 
 sol::table api_manager::get_api_table()

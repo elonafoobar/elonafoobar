@@ -28,29 +28,31 @@ enum class key_wait_delay_t
 };
 
 // Index into c_col.
-enum class predefined_color_t : int
+enum class color_index_t : int
 {
-   none = 0,
-   white = 1,
-   green = 2,
-   red = 3,
-   blue = 4,
-   orange = 5,
-   yellow = 6,
-   grey = 7,
-   purple = 8,
-   cyan = 9,
-   light_red = 10,
-   gold = 11,
-   white2 = 12,
-   light_brown = 13,
-   dark_green = 14,
-   light_grey = 15,
-   pale_red = 16,
-   light_blue = 17,
-   light_purple = 18,
-   light_green = 19,
-   yellow_green = 20
+    // These two colors are exactly the same.
+    none = 0,
+    white = 1,
+
+    green = 2,
+    red = 3,
+    blue = 4,
+    orange = 5,
+    yellow = 6,
+    grey = 7,
+    purple = 8,
+    cyan = 9,
+    light_red = 10,
+    gold = 11,
+    white2 = 12, // same as none/white
+    light_brown = 13,
+    dark_green = 14,
+    light_grey = 15,
+    pale_red = 16,
+    light_blue = 17,
+    light_purple = 18,
+    light_green = 19,
+    yellow_green = 20
 };
 
 enum class curse_state_t : int

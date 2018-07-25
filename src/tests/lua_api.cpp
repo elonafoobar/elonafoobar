@@ -54,11 +54,6 @@ TEST_CASE("test loading of non-ASCII filepaths", "[Lua: Misc]")
     lua_testcase(u8"Windowsファイル名.lua");
 }
 
-TEST_CASE("test that core API tables are read-only", "[Lua: API]")
-{
-    lua_testcase("readonly.lua");
-}
-
 
 TEST_CASE("Core API: Chara", "[Lua: API]")
 {
@@ -88,11 +83,6 @@ TEST_CASE("Core API: I18N", "[Lua: API]")
 TEST_CASE("Core API: Trait", "[Lua: API]")
 {
     lua_testcase("trait.lua");
-}
-
-TEST_CASE("Core API: Input", "[Lua: API]")
-{
-    lua_testcase("input.lua");
 }
 
 

@@ -19,8 +19,8 @@ function ReadOnly.make_read_only(t)
 		__metatable = "read only table",
 		__index = function(_, k) return t[k] end,
 		__pairs = function() return pairs(t) end,
-		__newindex = function (_,_,_)
-			error("attempt to update a read-only table", 2)
+		__newindex = function (_,k,v)
+                   error("attempt to update a read-only table (key: " .. tostring(k) .. ", value: " .. tostring(v) .. ")", 2)
 		end
 	}
 	setmetatable(proxy, mt)

@@ -24,7 +24,7 @@ locale {
 
         lequal(I18N.get("core.locale.foo"), "bar")
         lequal(I18N.get("core.locale.baz", "dood", 42), "You passed in dood and 42.")
-        lequal(I18N.get("core.locale.baz", "dood"), "You passed in dood and <error>.")
+        lequal(I18N.get("core.locale.baz", "dood"), "You passed in dood and <missing>.")
         lequal(I18N.get("core.locale.hoge", "dood", 42), "You are nice.")
         lequal(I18N.get("core.locale.piyo", "dood", 42), "She is nice.")
 
@@ -56,7 +56,7 @@ locale {
 
         lequal(I18N.get_optional("core.locale.foo"), "bar")
         lequal(I18N.get_optional("core.locale.baz", "dood", 42), "You passed in dood and 42.")
-        lequal(I18N.get_optional("core.locale.baz", "dood"), "You passed in dood and <error>.")
+        lequal(I18N.get_optional("core.locale.baz", "dood"), "You passed in dood and <missing>.")
         lequal(I18N.get_optional("core.locale.hoge", "dood", 42), "You are nice.")
         lequal(I18N.get_optional("core.locale.piyo", "dood", 42), "She is nice.")
 
@@ -86,7 +86,7 @@ locale {
 
         lequal(I18N.get_enum("core.locale.foo", 0), "bar")
         lequal(I18N.get_enum("core.locale.foo", 1), "baz")
-        lequal(I18N.get_enum("core.locale.foo", 2), "hoge <error>")
+        lequal(I18N.get_enum("core.locale.foo", 2), "hoge <missing>")
         lequal(I18N.get_enum("core.locale.foo", 2, "quux"), "hoge quux")
 end)
 
@@ -115,7 +115,7 @@ locale {
         lequal(I18N.get_enum_property("core.locale.foo", "name", 2), "hoge")
         lequal(I18N.get_enum_property("core.locale.foo", "desc", 0), "bar")
         lequal(I18N.get_enum_property("core.locale.foo", "desc", 1), "quux")
-        lequal(I18N.get_enum_property("core.locale.foo", "desc", 2), "piyo <error>")
+        lequal(I18N.get_enum_property("core.locale.foo", "desc", 2), "piyo <missing>")
         lequal(I18N.get_enum_property("core.locale.foo", "desc", 2, "fuga"), "piyo fuga")
 end)
 
@@ -138,6 +138,6 @@ locale {
         lequal(I18N.get_enum_property_optional("core.locale.foo", "name", 1), "baz")
         lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 0), nil)
         lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 0, "hoge"), nil)
-        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1), "bar <error>")
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1), "bar <missing>")
         lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1, "hoge"), "bar hoge")
 end)
