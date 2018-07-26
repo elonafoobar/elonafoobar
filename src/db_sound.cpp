@@ -23,7 +23,6 @@ sound_data sound_db::convert(const std::string& id_,
     }
     else
     {
-        assert(_mod != "");
         sound_dir = filesystem::dir::for_mod(_mod) / filesystem::u8path(file);
     }
 

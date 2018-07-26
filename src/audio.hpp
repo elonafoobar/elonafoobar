@@ -9,7 +9,6 @@
 namespace elona
 {
 
-
 int DSINIT();
 void DSLOADFNAME(const fs::path& filepath, int id);
 void DSPLAY(int, bool);

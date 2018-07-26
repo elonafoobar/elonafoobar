@@ -55,7 +55,6 @@ struct optional_ref
 
     const T* operator*() const noexcept
     {
-        assert(data);
         return data;
     }
 

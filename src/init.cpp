@@ -824,10 +824,11 @@ int run()
 
     initialize_config(config_file);
     init_assets();
-    initialize_elona();
 
     initialize_lua();
     initialize_lion_db();
+
+    initialize_elona();
 
     config::instance().write();
 

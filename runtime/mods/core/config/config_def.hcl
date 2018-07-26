@@ -33,8 +33,7 @@ config def {
                 preload = true
             }
 
-            stereo = false
-
+            stereo_sound = false
 
             fullscreen = {
                 type = "enum"
