@@ -36,10 +36,12 @@ TEST_CASE("test instantiating character from datatype", "[Lua: Registry]")
     REQUIRE((*table)["normal"]["name"].get<std::string>() == "putit");
     REQUIRE((*table)["normal"]["id"].get<int>() == 3);
     REQUIRE((*table)["normal"]["_id"].get<std::string>() == "normal");
+    REQUIRE((*table)["normal"]["_mod"].get<std::string>() == "test");
 
     REQUIRE((*table)["red"]["name"].get<std::string>() == "red putit");
     REQUIRE((*table)["red"]["id"].get<int>() == 4);
     REQUIRE((*table)["red"]["_id"].get<std::string>() == "red");
+    REQUIRE((*table)["red"]["_mod"].get<std::string>() == "test");
 }
 
 TEST_CASE("test registering Lua functions", "[Lua: Registry]")

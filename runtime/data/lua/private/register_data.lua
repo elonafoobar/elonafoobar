@@ -19,7 +19,8 @@ local function register_data(mod_name, datatype_name, filepath, registry)
 
    for key, value in pairs(data) do
       -- if validate(spec, value) then
-      value._mod = key
+      value._id = key
+      value._mod = mod_name
       registry[mod_name][datatype_name][key] = value
       -- end
    end

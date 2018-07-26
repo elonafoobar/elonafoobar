@@ -159,6 +159,10 @@ std::pair<short, unsigned char> sound_calculate_position(int listener_x, int lis
 
 std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
 {
+    if (!config::instance().get<bool>("core.config.screen.stereo_sound"))
+    {
+        return {0, 0};
+    }
     if (cdata[0].state == 0)
     {
         return {0, 0};
@@ -221,7 +225,7 @@ void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool lo
         DSLOADFNAME(sound.file, channel);
     }
 
-    if (config::instance().get<bool>("core.config.screen.stereo_sound") && dist != 0)
+    if (dist != 0)
     {
         sound_set_position(channel, angle, dist);
     }
