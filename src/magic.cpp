@@ -838,7 +838,7 @@ int magic()
                 }
                 if (is_in_fov(tc))
                 {
-                    snd(72);
+                    snd_at(72, cdata[tc].position);
                 }
                 tx = cdata[tc].position.x;
                 ty = cdata[tc].position.y;

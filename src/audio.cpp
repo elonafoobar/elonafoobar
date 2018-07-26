@@ -1,10 +1,13 @@
 #include "audio.hpp"
+#include <cmath>
 #include <unordered_map>
 #include "config.hpp"
+#include "character.hpp"
 #include "elona.hpp"
 #include "snail/application.hpp"
 #include "snail/audio.hpp"
 #include "variables.hpp"
+#include <boost/math/special_functions/gamma.hpp>
 
 
 namespace
@@ -104,6 +107,11 @@ void DMSTOP()
 }
 
 
+void sound_set_position(int channel, short angle, unsigned char distance)
+{
+    snail::audio::set_position(channel, angle, distance);
+}
+
 
 void sndload(const fs::path& filepath, int prm_293)
 {
@@ -125,7 +133,41 @@ void initialize_sound_file()
     }
 }
 
-void snd_inner(const sound_data& sound, bool loop, bool allow_duplicate)
+std::pair<short, unsigned char> sound_calculate_position(int listener_x, int listener_y, int source_x, int source_y)
+{
+    // Larger means it takes more distance for sounds to become quiet.
+    const constexpr double distance_factor = 8.0;
+
+    double x = static_cast<double>(source_x - listener_x);
+    double y = static_cast<double>(source_y - listener_y);
+
+    double angle_raw = std::atan2(y, x);
+    if (angle_raw < 0)
+    {
+        angle_raw += 2 * M_PI;
+    }
+
+    angle_raw += M_PI / 2;
+
+    short angle = static_cast<short>(angle_raw * 180.0 / M_PI) % 360;
+    int dist_raw = dist(listener_x, listener_y, source_x, source_y);
+    double dist_norm = boost::math::gamma_p(distance_factor, static_cast<double>(dist_raw));
+    unsigned char dist = static_cast<unsigned char>(dist_norm * 255.0);
+
+    return {angle, dist};
+}
+
+std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
+{
+    if (cdata[0].state == 0)
+    {
+        return {0, 0};
+    }
+
+    return sound_calculate_position(cdata[0].position.x, cdata[0].position.y, p.x, p.y);
+}
+
+void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool loop, bool allow_duplicate)
 {
     if (!config::instance().sound)
         return;
@@ -178,6 +220,16 @@ void snd_inner(const sound_data& sound, bool loop, bool allow_duplicate)
         }
         DSLOADFNAME(sound.file, channel);
     }
+
+    if (config::instance().get<bool>("core.config.screen.stereo_sound") && dist != 0)
+    {
+        sound_set_position(channel, angle, dist);
+    }
+    else
+    {
+        sound_set_position(channel, 0, 0);
+    }
+
     DSPLAY(channel, loop);
 }
 

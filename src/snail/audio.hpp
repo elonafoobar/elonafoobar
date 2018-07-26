@@ -9,6 +9,8 @@ namespace snail
 namespace audio
 {
 
+void set_position(int, short, unsigned char);
+
 int DSINIT();
 void DSLOADFNAME(const std::string& filepath, int id);
 void DSPLAY(int, bool);

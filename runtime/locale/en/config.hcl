@@ -108,6 +108,9 @@ locale {
                         mci = "MCI"
                     }
                 }
+                stereo_sound {
+                  name = "Stereo Sound"
+                }
                 fullscreen {
                     name = "Screen Mode*"
                     variants {
