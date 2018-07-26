@@ -1,3 +1,10 @@
+chara_chip _0 {
+    source {
+        x = 0
+        y = 0
+    }
+}
+
 chara_chip _1 {
     source {
         x = 48
