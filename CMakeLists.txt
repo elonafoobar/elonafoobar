@@ -81,6 +81,7 @@ set(CORE_SOURCES
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
   src/crafting.cpp
+  src/db_sound.cpp
   src/debug.cpp
   src/dmgheal.cpp
   src/draw.cpp

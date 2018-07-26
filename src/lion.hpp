@@ -193,6 +193,20 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
         }                                               \
     }                                                   \
 
+#define ELONA_LION_DB_FIELD_REQUIRED(name, type)                        \
+    type name;                                                          \
+    {                                                                   \
+        sol::optional<type> value = data[#name];                        \
+        if (value)                                                      \
+        {                                                               \
+            name = *value;                                              \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            throw std::runtime_error(id_ + ": No such field " + #name); \
+        }                                                               \
+    }                                                                   \
+
 #define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value)        \
     int name;                                                           \
     {                                                                   \

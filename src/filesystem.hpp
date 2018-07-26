@@ -42,6 +42,7 @@ namespace dir
 
 fs::path exe();
 fs::path data();
+fs::path for_mod(const std::string& mod_id);
 fs::path graphic();
 fs::path locale();
 fs::path map();
