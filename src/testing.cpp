@@ -1,6 +1,8 @@
 #include "testing.hpp"
 #include <sstream>
 #include "config.hpp"
+#include "db_music.hpp"
+#include "db_sound.hpp"
 #include "draw.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
@@ -89,6 +91,8 @@ void load_translations(const std::string& hcl)
 void clear_lion_db()
 {
     the_character_db.clear();
+    the_sound_db.clear();
+    the_music_db.clear();
 }
 
 void configure_lua()

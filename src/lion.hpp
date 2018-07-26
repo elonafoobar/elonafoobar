@@ -100,6 +100,7 @@ public:
     void clear()
     {
         storage.clear();
+        by_legacy_id.clear();
     }
 
     void initialize(sol::table table)
@@ -116,6 +117,12 @@ public:
 
             data_type converted = static_cast<T&>(*this).convert(id, data, lua);
             id_type the_id(prefix + "." + id);
+
+            auto it = by_legacy_id.find(converted.id);
+            if (it != by_legacy_id.end())
+            {
+                throw std::runtime_error(the_id.get() + ": Legacy id already exists: " + converted.id + " -> " + it->second.get());
+            }
 
             by_legacy_id.emplace(converted.id, the_id);
             storage.emplace(the_id, converted);

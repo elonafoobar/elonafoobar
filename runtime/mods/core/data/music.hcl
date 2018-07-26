@@ -113,19 +113,19 @@ music mcLonely {
 }
 
 music mcChaos {
-    file = "fantasy01.MID"
+    file = "fantasy01.mid"
     id = 69
     predefined = true
 }
 
 music mcMarch1 {
-    file = "orc06.MID"
+    file = "orc06.mid"
     id = 70
     predefined = true
 }
 
 music mcMarch2 {
-    file = "orc02.MID"
+    file = "orc02.mid"
     id = 71
     predefined = true
 }
@@ -179,7 +179,7 @@ music mcRuin {
 }
 
 music mcWedding {
-    file = "PSML052.mid"
+    file = "PSML052.MID"
     id = 80
     predefined = true
 }
@@ -253,13 +253,13 @@ music mcSoraochi {
 }
 
 music mcPsml515 {
-    file = "PSML515.mid"
+    file = "PSML515.MID"
     id = 92
     predefined = true
 }
 
 music mcPsml035 {
-    file = "PSML035.mid"
+    file = "PSML035.MID"
     id = 93
     predefined = true
 }

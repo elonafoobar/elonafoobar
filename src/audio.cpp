@@ -32,6 +32,11 @@ int envwprev{};
 shared_id musicprev{};
 
 
+void sound_set_position(int channel, short angle, unsigned char distance)
+{
+    snail::audio::set_position(channel, angle, distance);
+}
+
 shared_id get_default_music()
 {
     optional<std::string> music_id = none;
@@ -172,6 +177,78 @@ void play_music_inner(const shared_id& music_id, int musicloop)
 namespace elona
 {
 
+namespace detail
+{
+
+void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool loop, bool allow_duplicate)
+{
+    if (!config::instance().sound)
+        return;
+
+    int channel = sound.id;
+    if (channel > temporary_channels_head)
+    {
+        if (loop)
+        {
+            switch (sound.id)
+            {
+            case 78: channel = 14; break;
+            case 79: channel = 15; break;
+            case 80: channel = 16; break;
+            default: channel = 13; break;
+            }
+        }
+        else
+        {
+            channel = temporary_channels_head;
+            bool found{};
+            if (!allow_duplicate)
+            {
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
+                {
+                    if (CHECKPLAY(i)
+                        && soundlist[i - temporary_channels_head] == sound.id)
+                    {
+                        channel = i;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found)
+            {
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
+                {
+                    if (!CHECKPLAY(i))
+                    {
+                        channel = i;
+                        soundlist[i - temporary_channels_head] = sound.id;
+                    }
+                }
+            }
+        }
+        DSLOADFNAME(sound.file, channel);
+    }
+
+    if (dist != 0)
+    {
+        sound_set_position(channel, angle, dist);
+    }
+    else
+    {
+        // implicitly unregisters distance effect on mixer
+        sound_set_position(channel, 0, 0);
+    }
+
+    DSPLAY(channel, loop);
+}
+
+} // namespace detail
+
 
 int DSINIT()
 {
@@ -242,11 +319,6 @@ void DMSTOP()
 }
 
 
-void sound_set_position(int channel, short angle, unsigned char distance)
-{
-    snail::audio::set_position(channel, angle, distance);
-}
-
 
 void sndload(const fs::path& filepath, int prm_293)
 {
@@ -304,73 +376,6 @@ std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
     }
 
     return sound_calculate_position(cdata[0].position.x, cdata[0].position.y, p.x, p.y);
-}
-
-void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool loop, bool allow_duplicate)
-{
-    if (!config::instance().sound)
-        return;
-
-    int channel = sound.id;
-    if (channel > temporary_channels_head)
-    {
-        if (loop)
-        {
-            switch (sound.id)
-            {
-            case 78: channel = 14; break;
-            case 79: channel = 15; break;
-            case 80: channel = 16; break;
-            default: channel = 13; break;
-            }
-        }
-        else
-        {
-            channel = temporary_channels_head;
-            bool found{};
-            if (!allow_duplicate)
-            {
-                for (int i = temporary_channels_head;
-                     i < temporary_channels_head + temporary_channels_size;
-                     ++i)
-                {
-                    if (CHECKPLAY(i)
-                        && soundlist[i - temporary_channels_head] == sound.id)
-                    {
-                        channel = i;
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (!found)
-            {
-                for (int i = temporary_channels_head;
-                     i < temporary_channels_head + temporary_channels_size;
-                     ++i)
-                {
-                    if (!CHECKPLAY(i))
-                    {
-                        channel = i;
-                        soundlist[i - temporary_channels_head] = sound.id;
-                    }
-                }
-            }
-        }
-        DSLOADFNAME(sound.file, channel);
-    }
-
-    if (dist != 0)
-    {
-        sound_set_position(channel, angle, dist);
-    }
-    else
-    {
-        // implicitly unregisters distance effect on mixer
-        sound_set_position(channel, 0, 0);
-    }
-
-    DSPLAY(channel, loop);
 }
 
 
