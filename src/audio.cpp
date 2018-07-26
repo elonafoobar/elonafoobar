@@ -227,6 +227,7 @@ void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool lo
     }
     else
     {
+        // implicitly unregisters distance effect on mixer
         sound_set_position(channel, 0, 0);
     }
 
