@@ -33,6 +33,8 @@ config def {
                 preload = true
             }
 
+            stereo_sound = true
+
             fullscreen = {
                 type = "enum"
                 platform = "desktop"

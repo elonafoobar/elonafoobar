@@ -81,6 +81,7 @@ set(CORE_SOURCES
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
   src/crafting.cpp
+  src/db_sound.cpp
   src/debug.cpp
   src/dmgheal.cpp
   src/draw.cpp
@@ -371,11 +372,17 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
   endif()
 
+  # Warning suppressions
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # Force GCC to output warnings about undefined symbols
     string(APPEND CMAKE_CXX_FLAGS " -Wl,--no-undefined")
-    # Disable deprecated declarations, because it causes warnings with Boost locale's use of auto_ptr
+    # Disable deprecated declarations, because it causes warnings with boost_locale's use of auto_ptr
     string(APPEND CMAKE_CXX_FLAGS " -Wno-deprecated-declarations")
+  elseif(MSVC)
+    # Disable warnings about hiding of global/local declarations
+    string(APPEND CMAKE_CXX_FLAGS " /wd4459 /wd4456")
+    # Disable warnings about Boost versions.
+    add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE)
   endif()
 
   # My libraries

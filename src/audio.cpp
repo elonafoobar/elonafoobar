@@ -1,10 +1,13 @@
 #include "audio.hpp"
+#include <cmath>
 #include <unordered_map>
 #include "config.hpp"
+#include "character.hpp"
 #include "elona.hpp"
 #include "snail/application.hpp"
 #include "snail/audio.hpp"
 #include "variables.hpp"
+#include <boost/math/special_functions/gamma.hpp>
 
 
 namespace
@@ -23,8 +26,6 @@ constexpr int max_channels = 17;
 constexpr int temporary_channels_head = 7;
 constexpr int temporary_channels_size = 6;
 
-
-std::vector<fs::path> soundfile;
 std::vector<int> soundlist;
 
 int envwprev{};
@@ -106,6 +107,11 @@ void DMSTOP()
 }
 
 
+void sound_set_position(int channel, short angle, unsigned char distance)
+{
+    snail::audio::set_position(channel, angle, distance);
+}
+
 
 void sndload(const fs::path& filepath, int prm_293)
 {
@@ -113,98 +119,69 @@ void sndload(const fs::path& filepath, int prm_293)
     {
         DSLOADFNAME(filepath, prm_293);
     }
-    soundfile[prm_293] = filepath;
 }
 
 
 
 void initialize_sound_file()
 {
-    soundfile.resize(122);
     soundlist.resize(temporary_channels_size);
 
-    const std::pair<const char*, int> se_list[] = {
-        {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
-        {u8"write1.wav", 44},     {u8"pop1.wav", 1},
-        {u8"kill1.wav", 8},       {u8"kill2.wav", 9},
-        {u8"trap1.wav", 70},      {u8"more1.wav", 10},
-        {u8"getgold1.wav", 11},   {u8"paygold1.wav", 12},
-        {u8"equip1.wav", 13},     {u8"get1.wav", 14},
-        {u8"get2.wav", 15},       {u8"drop1.wav", 16},
-        {u8"drink1.wav", 17},     {u8"eat1.wav", 18},
-        {u8"spend1.wav", 19},     {u8"ding1.wav", 60},
-        {u8"ding3.wav", 61},      {u8"dead1.wav", 50},
-        {u8"ok1.wav", 20},        {u8"dig1.wav", 52},
-        {u8"bash1.wav", 73},      {u8"complete1.wav", 51},
-        {u8"alert1.wav", 21},     {u8"locked1.wav", 22},
-        {u8"chest1.wav", 23},     {u8"ding2.wav", 24},
-        {u8"cook1.wav", 25},      {u8"pop2.wav", 26},
-        {u8"fail1.wav", 27},      {u8"build1.wav", 58},
-        {u8"bow1.wav", 29},       {u8"atk1.wav", 2},
-        {u8"atk2.wav", 3},        {u8"gun1.wav", 30},
-        {u8"throw1.wav", 31},     {u8"Heart1.wav", 32},
-        {u8"heal1.wav", 33},      {u8"teleport1.wav", 72},
-        {u8"ball1.wav", 34},      {u8"breath1.wav", 35},
-        {u8"bolt1.wav", 37},      {u8"arrow1.wav", 36},
-        {u8"curse1.wav", 38},     {u8"pop3.wav", 39},
-        {u8"chime.wav", 53},      {u8"laser1.wav", 42},
-        {u8"web.wav", 68},        {u8"cheer.wav", 69},
-        {u8"door1.wav", 48},      {u8"crush1.wav", 45},
-        {u8"crush2.wav", 47},     {u8"fire1.wav", 6},
-        {u8"snow.wav", 86},       {u8"fish_cast.wav", 87},
-        {u8"fish_get.wav", 88},   {u8"fish_fight.wav", 89},
-        {u8"ammo.wav", 90},       {u8"throw2.wav", 91},
-        {u8"foot1a.wav", 81},     {u8"foot2a.wav", 83},
-        {u8"foot1b.wav", 82},     {u8"foot2b.wav", 84},
-        {u8"foot2c.wav", 85},     {u8"click1.wav", 40},
-        {u8"get3.wav", 41},       {u8"card1.wav", 71},
-        {u8"water.wav", 57},      {u8"water2.wav", 46},
-        {u8"dig2.wav", 54},       {u8"bush1.wav", 55},
-        {u8"gasha.wav", 56},      {u8"cursor1.wav", 5},
-        {u8"pop4.wav", 62},       {u8"punish1.wav", 63},
-        {u8"pray1.wav", 64},      {u8"offer1.wav", 65},
-        {u8"fizzle.wav", 66},     {u8"door2.wav", 67},
-        {u8"foot.wav", 43},       {u8"miss.wav", 4},
-        {u8"night.wav", 74},      {u8"bg_rain.wav", 75},
-        {u8"bg_thunder.wav", 76}, {u8"bg_wind.wav", 77},
-        {u8"bg_sea.wav", 78},     {u8"bg_town.wav", 79},
-        {u8"bg_fire.wav", 80},    {u8"scroll.wav", 92},
-        {u8"log.wav", 93},        {u8"chara.wav", 94},
-        {u8"wear.wav", 95},       {u8"feat.wav", 96},
-        {u8"port.wav", 97},       {u8"unpop1.wav", 98},
-        {u8"chat.wav", 99},       {u8"inv.wav", 100},
-        {u8"skill.wav", 101},     {u8"spell.wav", 102},
-        {u8"dice.wav", 103},      {u8"vomit.wav", 104},
-        {u8"atksword.wav", 105},  {u8"atk_ice.wav", 106},
-        {u8"atk_elec.wav", 107},  {u8"atk_fire.wav", 108},
-        {u8"atk_hell.wav", 109},  {u8"atk_poison.wav", 110},
-        {u8"atk_nerve.wav", 111}, {u8"atk_sound.wav", 112},
-        {u8"atk_mind.wav", 113},  {u8"atk_chaos.wav", 114},
-        {u8"atk_dark.wav", 115},  {u8"curse2.wav", 116},
-        {u8"curse3.wav", 117},    {u8"enc.wav", 118},
-        {u8"enc2.wav", 119},      {u8"pray2.wav", 120},
-        {u8"offer2.wav", 121},
-    };
-
-    for (const auto& se : se_list)
+    for (const auto& se : the_sound_db)
     {
-        sndload(filesystem::dir::sound() / se.first, se.second);
+        sndload(se.file, se.id);
     }
 }
 
+std::pair<short, unsigned char> sound_calculate_position(int listener_x, int listener_y, int source_x, int source_y)
+{
+    // Larger means it takes more distance for sounds to become quiet.
+    const constexpr double distance_factor = 8.0;
 
+    double x = static_cast<double>(source_x - listener_x);
+    double y = static_cast<double>(source_y - listener_y);
 
-void snd(int sound_id, bool loop, bool allow_duplicate)
+    double angle_raw = std::atan2(y, x);
+    if (angle_raw < 0)
+    {
+        angle_raw += 2 * M_PI;
+    }
+
+    angle_raw += M_PI / 2;
+
+    short angle = static_cast<short>(angle_raw * 180.0 / M_PI) % 360;
+    int dist_raw = dist(listener_x, listener_y, source_x, source_y);
+    double dist_norm = boost::math::gamma_p(distance_factor, static_cast<double>(dist_raw));
+    unsigned char dist = static_cast<unsigned char>(dist_norm * 255.0);
+
+    return {angle, dist};
+}
+
+std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
+{
+    if (!config::instance().get<bool>("core.config.screen.stereo_sound"))
+    {
+        return {0, 0};
+    }
+    if (cdata[0].state == 0)
+    {
+        return {0, 0};
+    }
+
+    return sound_calculate_position(cdata[0].position.x, cdata[0].position.y, p.x, p.y);
+}
+
+void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool loop, bool allow_duplicate)
 {
     if (!config::instance().sound)
         return;
 
-    int channel = sound_id;
+    int channel = sound.id;
     if (channel > temporary_channels_head)
     {
         if (loop)
         {
-            switch (sound_id)
+            switch (sound.id)
             {
             case 78: channel = 14; break;
             case 79: channel = 15; break;
@@ -223,7 +200,7 @@ void snd(int sound_id, bool loop, bool allow_duplicate)
                      ++i)
                 {
                     if (CHECKPLAY(i)
-                        && soundlist[i - temporary_channels_head] == sound_id)
+                        && soundlist[i - temporary_channels_head] == sound.id)
                     {
                         channel = i;
                         found = true;
@@ -240,13 +217,24 @@ void snd(int sound_id, bool loop, bool allow_duplicate)
                     if (!CHECKPLAY(i))
                     {
                         channel = i;
-                        soundlist[i - temporary_channels_head] = sound_id;
+                        soundlist[i - temporary_channels_head] = sound.id;
                     }
                 }
             }
         }
-        DSLOADFNAME(soundfile[sound_id], channel);
+        DSLOADFNAME(sound.file, channel);
     }
+
+    if (dist != 0)
+    {
+        sound_set_position(channel, angle, dist);
+    }
+    else
+    {
+        // implicitly unregisters distance effect on mixer
+        sound_set_position(channel, 0, 0);
+    }
+
     DSPLAY(channel, loop);
 }
 

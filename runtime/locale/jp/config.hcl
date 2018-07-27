@@ -107,6 +107,9 @@ locale {
                         mci = "MCI"
                     }
                 }
+                stereo_sound {
+                  name = "ステレオサウンド"
+                }
                 fullscreen {
                     name = "画面モード*"
                     variants {

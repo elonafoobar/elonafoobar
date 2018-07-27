@@ -383,7 +383,10 @@ void initialize_lion_db()
     const fs::path data_path = filesystem::dir::mods() / "core" / "data";
 
     auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
+    auto sound_table = initialize_single_lion_db("sound", data_path / "sound.hcl");
+
     the_character_db.initialize(chara_table);
+    the_sound_db.initialize(sound_table);
 }
 
 void initialize_config(const fs::path& config_file)
@@ -821,10 +824,11 @@ int run()
 
     initialize_config(config_file);
     init_assets();
-    initialize_elona();
 
     initialize_lua();
     initialize_lion_db();
+
+    initialize_elona();
 
     config::instance().write();
 

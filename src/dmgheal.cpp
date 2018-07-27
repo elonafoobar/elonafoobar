@@ -708,7 +708,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         int se = eleinfo(element, 1);
         if (se)
         {
-            snd(se, false, false);
+            snd_at(se, victim.position, false, false);
         }
         txtef(3);
         if (attacker)
@@ -895,14 +895,14 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 x = victim.position.x;
                 y = victim.position.y;
-                snd(45, false, false);
+                snd_at(45, victim.position, false, false);
                 animeblood(victim, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
-            snd(8 + rnd(2), false, false);
+            snd_at(8 + rnd(2), victim.position, false, false);
             animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }

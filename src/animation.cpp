@@ -233,7 +233,7 @@ void failure_to_cast_animation::do_play()
     if (!is_in_fov(caster))
         return;
 
-    snd(66);
+    snd_at(66, caster.position);
 
     do_animation(
         rendering_base_position_center(caster),
@@ -263,13 +263,13 @@ void bright_aura_animation::do_play()
     {
     case type_t::debuff:
         prepare_item_image(8, 0);
-        snd(38);
+        snd_at(38, cdata[cc].position);
         break;
     case type_t::offering: prepare_item_image(9, 0); break;
     case type_t::healing:
     case type_t::healing_rain:
         prepare_item_image(7, 0);
-        snd(33);
+        snd_at(33, cdata[cc].position);
         break;
     }
 
@@ -337,7 +337,7 @@ void bright_aura_animation::do_play()
 void breath_animation::do_play()
 {
     // Play sound.
-    snd(35);
+    snd_at(35, attacker.position);
 
     // Prepare image.
     gsel(7);
@@ -399,7 +399,7 @@ void breath_animation::do_play()
     // Play sound
     if (const auto se = eleinfo(element, 1))
     {
-        snd(se, false, false);
+        snd_at(se, attacker.position, false, false);
     }
 }
 
@@ -415,7 +415,7 @@ void ball_animation::do_play()
         anisound = eleinfo(ele, 1);
     }
 
-    snd(34);
+    snd_at(34, {anix, aniy});
 
     // Load image.
     gsel(7);
@@ -502,7 +502,7 @@ void ball_animation::do_play()
     // Play sound.
     if (anisound)
     {
-        snd(anisound, false, false);
+        snd_at(anisound, {anix, aniy}, false, false);
     }
 }
 
@@ -513,7 +513,7 @@ void bolt_animation::do_play()
     elona_vector1<int> ax;
     elona_vector1<int> ay;
 
-    snd(37);
+    snd_at(37, attacker.position);
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime6.bmp");
@@ -607,7 +607,7 @@ void bolt_animation::do_play()
 
     if (const auto sound = eleinfo(element, 1))
     {
-        snd(sound, false, false);
+        snd_at(sound, attacker.position, false, false);
     }
 }
 
@@ -666,6 +666,7 @@ void ranged_attack_animation::do_play()
 
     int anicol{};
     int anisound{};
+    const auto& chara_pos = cdata[cc].position;
     if (type == type_t::magic_arrow)
     {
         anicol = eleinfo(ele, 0);
@@ -675,17 +676,17 @@ void ranged_attack_animation::do_play()
     if (type == type_t::distant_attack)
     {
         prepare_item_image(23, 0);
-        snd(29);
+        snd_at(29, chara_pos);
     }
     if (type == type_t::bow)
     {
         prepare_item_image(1, anicol);
-        snd(29);
+        snd_at(29, chara_pos);
     }
     if (type == type_t::crossbow)
     {
         prepare_item_image(2, anicol);
-        snd(29);
+        snd_at(29, chara_pos);
     }
     if (type == type_t::firearm)
     {
@@ -693,21 +694,22 @@ void ranged_attack_animation::do_play()
         if (ap == 24021)
         {
             prepare_item_image(13, anicol);
-            snd(42);
+            snd_at(42, chara_pos);
         }
         if (ap == 24020)
         {
             prepare_item_image(2, anicol);
-            snd(30);
+            snd_at(30, chara_pos);
         }
     }
     if (type == type_t::throwing)
     {
         prepare_item_image(inv[aniref].image % 1000, inv[aniref].image / 1000);
+        snd_at(31, chara_pos);
     }
     if (type == type_t::magic_arrow)
     {
-        snd(36);
+        snd_at(36, chara_pos);
     }
 
     int ax = (cdata[cc].position.x - scx) * inf_tiles;
@@ -748,7 +750,7 @@ void ranged_attack_animation::do_play()
 
     if (anisound)
     {
-        snd(anisound, false, false);
+        snd_at(anisound, cdata[tc].position, false, false);
     }
 }
 
@@ -756,7 +758,7 @@ void ranged_attack_animation::do_play()
 
 void swarm_animation::do_play()
 {
-    snd(2);
+    snd_at(2, target.position);
 
     do_animation(
         rendering_base_position_center(target),
@@ -879,7 +881,7 @@ void melee_attack_animation::do_play()
 
 void geen_engineering_animation::do_play()
 {
-    snd(107);
+    snd_at(107, cdata[anic].position);
     if (!is_in_fov(anic))
         return;
 

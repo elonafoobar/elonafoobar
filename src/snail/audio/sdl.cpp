@@ -34,6 +34,12 @@ namespace audio
 {
 
 
+void set_position(int channel, short angle, unsigned char distance)
+{
+    ::Mix_SetPosition(channel, angle, distance);
+}
+
+
 int DSINIT()
 {
     Mix_AllocateChannels(max_channels);

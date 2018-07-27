@@ -158,7 +158,7 @@ struct lion_db_traits<character_db_ex>
     static constexpr const char* datatype_name = u8"chara";
 };
 
-} // namespace cat
+} // namespace lion
 
 
 

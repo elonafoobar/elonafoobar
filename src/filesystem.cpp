@@ -114,6 +114,13 @@ fs::path save(const std::string& player_id)
 
 
 
+fs::path for_mod(const std::string& mod_id)
+{
+    return mods() / u8path(mod_id);
+}
+
+
+
 void set_base_save_directory(const fs::path& base_save_dir)
 {
     dir::base_save_dir = base_save_dir;
