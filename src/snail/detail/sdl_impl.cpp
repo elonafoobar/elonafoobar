@@ -107,7 +107,7 @@ sdl_mixer::sdl_mixer()
     }
 
     enforce_mixer(
-        ::Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048));
+        ::Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048));
 }
 
 

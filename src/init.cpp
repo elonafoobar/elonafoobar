@@ -384,9 +384,11 @@ void initialize_lion_db()
 
     auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
     auto sound_table = initialize_single_lion_db("sound", data_path / "sound.hcl");
+    auto music_table = initialize_single_lion_db("music", data_path / "music.hcl");
 
     the_character_db.initialize(chara_table);
     the_sound_db.initialize(sound_table);
+    the_music_db.initialize(music_table);
 }
 
 void initialize_config(const fs::path& config_file)

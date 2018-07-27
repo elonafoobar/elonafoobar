@@ -1,8 +1,11 @@
 #pragma once
 
-#include "filesystem.hpp"
+#include "db_music.hpp"
 #include "db_sound.hpp"
+#include "filesystem.hpp"
+#include "optional.hpp"
 #include "position.hpp"
+#include "shared_id.hpp"
 
 
 
@@ -45,7 +48,12 @@ void snd(I sound_id, bool loop = false, bool allow_duplicate = true)
 void snd_inner(const sound_data& sound,
                short angle = 0, unsigned char dist = 0,
                bool loop = false, bool allow_duplicate = true);
-void play_music(int music_id = 0);
+
+void sound_play_environmental();
+void stop_music();
+
+void play_music(optional<shared_id> music_id = none);
+void play_music(const char* music_id);
 
 
 } // namespace elona

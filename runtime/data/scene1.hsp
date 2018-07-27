@@ -1,7 +1,7 @@
 ;#####################################
 {0}
 {pic}	"bg3"
-{mc}	"mcIntro"
+{mc}	"core.music.mcIntro"
 {txt}
 今はもう忘れ去られた昔
 イルヴァの地に十の文明の残骸が埋もれ
@@ -48,7 +48,7 @@
 
 {1}
 {actor_1}	"ザナンの皇子『サイモア』,54"
-{mc}	"mcTown1"
+{mc}	"core.music.mcTown1"
 
 {pic}	"bg1"
 
@@ -64,7 +64,7 @@
 供の腕に弱々しくもたれた白子の皇子の言葉に
 皆が耳を傾けていた。
 
-{mc}	"mcUnrest2"
+{mc}	"core.music.mcUnrest2"
 {chat_1}
 …そして深い悲しみが 私を襲う。ザナンが新王国との戦に敗れ、指導者を失った大陸が二大国間の戦火の舞台となり、幾多の歳月が過ぎよう。今は亡きクレイン皇子のあとを継ぎ和平に模索しても、二国の対立の溝はうまらず、未だ緊張の糸は張り詰められたままだ。
 
@@ -94,7 +94,7 @@
 {actor_1}	"ザナンの紅血『ロイター』,49"
 {actor_2}	"兵士,18"
 {actor_3}	"????,50"
-{mc}	"mcTown1"
+{mc}	"core.music.mcTown1"
 {pic}	"bg2"
 {txt}
 同刻 - ヴェルニースの酒場 -
@@ -136,7 +136,7 @@
 誰のために言ったと思っている？ザナンの白き鷹、それがお前の目の前にいる男だ。…しばし二人だけにさせてもらう。
 
 {fade}
-{mc}	"mcMemory"
+{mc}	"core.music.mcMemory"
 {fadein}
 
 {chat_1}
@@ -184,7 +184,7 @@
 {actor_2}	"青い髪の『ヴァリウス』,48"
 {actor_3}	"兵士,18"
 
-{mc}	"xp_shrine2.mid"
+{mc}	"core.music.mcUnrest2"
 
 {pic}	"bg6"
 {txt}
@@ -229,7 +229,7 @@
 {actor_3}	"青い髪の『ヴァリウス』,48"
 {actor_4}	"ザナンの皇子サイモア,54"
 
-{mc}	"xp_field7.mid"
+{mc}	"core.music.mcTown4"
 {pic}	"bg5"
 
 {txt}
@@ -275,7 +275,7 @@
 陛下…わかりました。しかし明日また参ります。陛下の決断が最後の希望です。
 
 {fade}
-{mc} "soraochi.mid"
+{mc} "core.music.mcSoraochi"
 {fadein}
 
 
@@ -323,7 +323,7 @@
 {actor_3}	"????,120"
 {actor_4}	"白き鷹『ヴェセル』,50"
 
-{mc}	"PSML515.mid"
+{mc}	"core.music.mcPsml515"
 {pic}	"bg2"
 
 {txt}
@@ -405,7 +405,7 @@
 {actor_5}	"セビリスの部下,18"
 {actor_6}	"青い髪の『ヴァリウス』,48"
 
-{mc}	"PSML060.mid"
+{mc}	"core.music.mcLonely"
 {pic}	"bg5"
 
 {txt}
@@ -477,7 +477,7 @@
 {actor_2}	"青い髪の『ヴァリウス』,48"
 {actor_3}	"風を聴く者『ラーネイレ』,112"
 
-{mc}	"xp_shrine2.mid"
+{mc}	"core.music.mcUnrest2"
 
 {pic}	"bg6"
 
@@ -502,7 +502,7 @@
 {chat_3}
 …
 
-{mc}	"PSML035.mid"
+{mc}	"core.music.mcPsml035"
 {wait}
 
 {chat_1}
@@ -531,7 +531,7 @@
 {actor_5}	"セビリスの部下,18"
 {actor_6}	"青い髪の『ヴァリウス』,48"
 
-{mc}	"PSML060.mid"
+{mc}	"core.music.mcLonely"
 {pic}	"bg2"
 
 {txt}
@@ -566,7 +566,7 @@
 {actor_2}	"青い髪の『ヴァリウス』,48"
 {actor_3}	"風を聴く者『ラーネイレ』,112"
 
-{mc}	"PSML035.mid"
+{mc}	"core.music.mcPsml035"
 {pic}	"bg6"
 
 {txt}
@@ -625,7 +625,7 @@
 
 
 {pic}	"bg6"
-{mc}	"xp_field7.mid"
+{mc}	"core.music.mcTown4"
 
 {txt}
 - パルミア城 一室 -
@@ -654,7 +654,7 @@
 
 {wait}
 {se}	"door1.wav"
-{mc}	"pinch2.mid"
+{mc}	"core.music.mcPinch2"
 
 {chat_5}
 いたぞ！暗殺者だ！
@@ -690,7 +690,7 @@
 {actor_3}	"異形の森の使者『ロミアス』,57"
 {actor_4}	"白き鷹『ヴェセル』,50"
 
-{mc}	"PSML060.mid"
+{mc}	"core.music.mcLonely"
 {pic}	"bg9"
 
 {txt}
@@ -729,7 +729,7 @@
 {actor_3}	"異形の森の使者『ロミアス』,57"
 {actor_4}	"白き鷹『ヴェセル』,50"
 
-{mc}	"PSML515.mid"
+{mc}	"core.music.mcPsml515"
 {pic}	"bg4"
 
 {txt}
@@ -759,7 +759,7 @@
 {actor_2}	"ラーネイレ,112"
 
 {pic}	"bg7"
-{mc}	"memory2.mid"
+{mc}	"core.music.mcMemory2"
 
 {txt}
 - 野営地 -
@@ -811,7 +811,7 @@
 {actor_2}	"ラーネイレ,112"
 
 {pic}	"bg7"
-{mc}	"memory2.mid"
+{mc}	"core.music.mcMemory2"
 
 {chat_1}
 アルティハイトに来る以前、私はアテランという士官学校にいた。アテランは少数の優れた者が才能を磨くための施設だった。彼らにとっては力こそが全てだ。他人は全て敵であり、自らを押し上げるための道具に過ぎない。弱者を踏み台にすることに、何の躊躇いもない連中だ。…そして、私もそんな人間の一人だった。私は知らずに、あるいは知っていても何の抵抗もなく、多くの人を傷つけていた。高慢で冷酷な男だった。
@@ -838,7 +838,7 @@
 {actor_1}	"ヴェセル,50"
 {actor_2}	"ラーネイレ,112"
 
-{mc}	"mcMemory"
+{mc}	"core.music.mcMemory"
 {pic}	"bg7"
 
 {chat_1}
@@ -872,7 +872,7 @@
 {actor_4}	"白き鷹『ヴェセル』,50"
 {actor_5}	"青い髪の『ヴァリウス』,48"
 
-{mc}	"xp_shrine2.mid"
+{mc}	"core.music.mcUnrest2"
 {pic}	"bg10"
 
 {chat_3}
@@ -893,7 +893,7 @@
 {chat_5}
 信じるかどうかは、あなた次第。無駄な画策のために貴重な時間を削るつもりはありません。私は、同じエレアの血を分かつ者として、あなた方の置かれた境遇に同情さえしています。
 
-{mc}	"AnoSora.mid"
+{mc}	"core.music.mcAnoSora"
 {wait}
 
 {chat_5}
@@ -927,7 +927,7 @@
 {actor_4}	"白き鷹『ヴェセル』,50"
 {actor_5}	"青い髪の『ヴァリウス』,48"
 
-{mc}	"AnoSora.mid"
+{mc}	"core.music.mcAnoSora"
 {pic}	"bg10"
 
 {chat_5}
@@ -961,7 +961,7 @@
 {actor_3}	"異形の森の使者『ロミアス』,57"
 {actor_4}	"白き鷹『ヴェセル』,50"
 
-{mc}	"PSML060.mid"
+{mc}	"core.music.mcLonely"
 {pic}	"bg9"
 
 {chat_4}
@@ -996,7 +996,7 @@
 {actor_4}	"ダルフィの霧『セビリス』,59"
 {actor_5}	"異形の森の使者『ロミアス』,57"
 
-{mc}	"PSML060.mid"
+{mc}	"core.music.mcLonely"
 {pic}	"bg7"
 
 {chat_5}
@@ -1013,7 +1013,7 @@
 
 {fade}
 {pic}	"bg5"
-{mc} "soraochi.mid"
+{mc} "core.music.mcSoraochi"
 {fadein}
 
 {txt}
@@ -1037,7 +1037,7 @@
 {actor_3}	"異形の森の使者『ロミアス』,57"
 {actor_4}	"白き鷹『ヴェセル』,50"
 
-{mc}	"climax.mid"
+{mc}	"core.music.mcBoss2"
 {pic}	"bg11"
 
 {chat_3}
@@ -1068,7 +1068,7 @@
 {actor_4}	"白き鷹『ヴェセル』,50"
 {actor_5}	"青い髪の『ヴァリウス』,48"
 
-{mc}	"climax.mid"
+{mc}	"core.music.mcBoss2"
 {pic}	"bg11"
 
 {chat_5}
@@ -1117,7 +1117,7 @@
 
 {100}
 {pic}	"bg12"
-{mc}	"xp_epilogue1.mid"
+{mc}	"core.music.mcEpilogue"
 
 {txt}
 - エピローグ -

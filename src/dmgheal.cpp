@@ -126,11 +126,11 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
     {
         if (critical)
         {
-            snd(3);
+            snd_at(3, victim.position);
         }
         else
         {
-            snd(2);
+            snd_at(2, victim.position);
         }
     }
     if (victim.wet > 0)

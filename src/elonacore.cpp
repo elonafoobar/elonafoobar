@@ -1057,7 +1057,7 @@ void fltn(const std::string& prm_447)
 
 int discsetmc()
 {
-    return rnd(40);
+    return rnd(47);
 }
 
 
@@ -11069,7 +11069,7 @@ void label_2151()
     }
     label_2150();
     musicloop = 1;
-    play_music(78);
+    play_music("core.music.mcCoda");
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -15813,32 +15813,8 @@ label_2682_internal:
     }
     if (s == u8"{mc}"s)
     {
-        auto music = -1;
-        if (s(1) == u8"mcUnrest2"s)
-        {
-            music = 84;
-        }
-        if (s(1) == u8"mcTown1"s)
-        {
-            music = 51;
-        }
-        if (s(1) == u8"mcMemory"s)
-        {
-            music = 89;
-        }
-        if (s(1) == u8"mcIntro"s)
-        {
-            music = 90;
-        }
-        if (music == -1)
-        {
-            musicfile(91) = s(1);
-            play_music(91);
-        }
-        else
-        {
-            play_music(music);
-        }
+        shared_id music_id(s(1));
+        play_music(music_id);
         goto label_2682_internal;
     }
     if (s == u8"{se}"s)
@@ -15973,8 +15949,7 @@ void weather_changes_by_location()
         if (gdata_pc_x_in_world_map < 65 && gdata_pc_y_in_world_map > 10)
         {
             gdata_weather = 3;
-            envonly = 1;
-            play_music();
+            sound_play_environmental();
             gdata_hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
@@ -15984,8 +15959,7 @@ void weather_changes_by_location()
         if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
         {
             gdata_weather = 2;
-            envonly = 1;
-            play_music();
+            sound_play_environmental();
             gdata_hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
@@ -16178,8 +16152,7 @@ void weather_changes()
         }
         if (p != gdata_weather)
         {
-            envonly = 1;
-            play_music();
+            sound_play_environmental();
         }
     }
     label_1746();
@@ -16417,7 +16390,7 @@ void conquer_lesimas()
 {
     std::string wincomment;
     snd(51);
-    play_music(-1);
+    stop_music();
     txt(lang(
         u8"信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！"s,
         u8"Unbelievable! You conquered Lesimas!"s));
@@ -16438,7 +16411,7 @@ void conquer_lesimas()
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
         chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
-        play_music(69);
+        play_music("core.music.mcChaos");
         msg_halt();
         msg_clear();
         txt(u8"「決まっていたことなのだ…遅かれ早かれな」"s);
@@ -16470,7 +16443,7 @@ void conquer_lesimas()
         msg_halt();
     }
     mode = 0;
-    play_music(71);
+    play_music("core.music.mcMarch2");
     label_1442();
     gsel(4);
     pos(0, 0);

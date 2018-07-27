@@ -122,6 +122,14 @@ public:
         }
     }
 
+    optional_ref<id_type> get_id_from_legacy(const legacy_id_type& legacy_id) const
+    {
+        const auto itr = by_legacy_id.find(legacy_id);
+        if (itr == std::end(by_legacy_id))
+            return none;
+        else
+            return itr->second;
+    }
 
     optional_ref<data_type> operator[](const id_type& id) const
     {
@@ -141,11 +149,10 @@ public:
 
     optional_ref<data_type> operator[](const legacy_id_type& legacy_id) const
     {
-        const auto itr = by_legacy_id.find(legacy_id);
-        if (itr == std::end(by_legacy_id))
-            return none;
+        if (const auto id = get_id_from_legacy(legacy_id))
+            return (*this)[**id];
         else
-            return (*this)[itr->second];
+            return none;
     }
 
 
