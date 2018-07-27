@@ -525,13 +525,13 @@ void bolt_animation::do_play()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
 
+    int x = attacker.position.x;
+    int y = attacker.position.y;
     ap(20) = -1;
     for (int t = 0; t < 20; ++t)
     {
         if (ap(20) == -1)
         {
-            int x = attacker.position.x;
-            int y = attacker.position.y;
             int stat = route_info(x, y, t);
             if (stat == -1)
             {
