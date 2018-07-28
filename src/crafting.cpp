@@ -1085,8 +1085,6 @@ label_1857_internal:
             f = 1;
         }
         s = ioriginalnameref(i);
-        p(1) = ipicref(i);
-        prepare_item_image(p(1), 0);
         s(1) = i18n::s.get("core.locale.crafting.menu.make", s(0));
         font(14 - en * 2);
         if (elona::stoi(listn(0, p)) == -1)
@@ -1100,16 +1098,8 @@ label_1857_internal:
         cs_list(cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s(1));
-        pos(wx + 37, wy + 69 + cnt * 19 + 2);
-        gmode(2);
-        gcopy_c(
-            1,
-            0,
-            960,
-            inf_tiles,
-            inf_tiles,
-            item_chips[p(1)].width,
-            item_chips[p(1)].height);
+
+        draw_item_material(ipicref(i), wx + 37, wy + 69 + cnt * 19 + 2);
     }
     if (keyrange != 0)
     {

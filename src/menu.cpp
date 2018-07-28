@@ -3153,18 +3153,9 @@ label_2052_internal:
             p(1) = p(1) % 10000 - 1;
             s(0) = itemname(p(1));
             s(1) = cnvweight(inv[p(1)].weight);
-            p(2) = inv[p(1)].image;
-            prepare_item_image(p(2), inv[p(1)].color, inv[p(1)].param1);
-            pos(wx + 126, wy + 70 + cnt * 19);
-            gmode(2);
-            gcopy_c(
-                1,
-                0,
-                960,
-                inf_tiles,
-                inf_tiles,
-                item_chips[p(2)].width,
-                item_chips[p(2)].height);
+
+            draw_item_with_portrait(inv[p(1)], wx + 126, wy + 70 + cnt * 19);
+
             if (showresist)
             {
                 equipinfo(p(1), wx + 320, wy + 60 + cnt * 19 + 2);
@@ -3411,18 +3402,8 @@ label_1861_internal:
         s = matdesc(i);
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s);
-        p(1) = matref(2, i);
-        prepare_item_image(p(1), 0);
-        pos(wx + 47, wy + 69 + cnt * 19 + 2);
-        gmode(2);
-        gcopy_c(
-            1,
-            0,
-            960,
-            inf_tiles,
-            inf_tiles,
-            item_chips[p(1)].width,
-            item_chips[p(1)].height);
+
+        draw_item_material(matref(2, i), wx + 47, wy + 69 + cnt * 19 + 2);
     }
     if (keyrange != 0)
     {
@@ -5553,10 +5534,9 @@ label_1986_internal:
             break;
         }
         i = list(0, p);
-        prepare_item_image(429, 0);
-        pos(wx + 38, wy + 73 + cnt * 19);
-        gmode(2);
-        gcopy_c(1, 0, 960, inf_tiles, inf_tiles);
+
+        draw_item_material(429, wx + 38, wy + 73 + cnt * 19);
+
         s = ioriginalnameref(i);
         cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
         pos(wx + 400, wy + 66 + cnt * 19 + 2);

@@ -10,9 +10,12 @@ local whom_dwell = 28
 local short_pic = 378
 local tall_pic = 429
 
-local items = {503, 504, 255, 76, 75, 142, 276}
+local items = {161, 789, 236, 503, 504, 255, 76, 75, 142, 276}
 
 local function setup()
+   -- Carpentry, for testing crafting menu
+   Chara.player():gain_skill(174, 9999)
+
    local shop = Chara.create(23, 23, shopkeeper)
    shop.character_role = 1001
    shop.shop_rank = 12

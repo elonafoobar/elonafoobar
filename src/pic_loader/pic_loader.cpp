@@ -119,6 +119,7 @@ void pic_loader::add_predefined_extents(const fs::path& atlas_file,
         size_t skyline_index = found->first;
         extent& dest = found->second;
         dest.buffer = info.buffer_id;
+        dest.frame_width = source.frame_width;
 
         // Update the sprite packing information.
         info.insert_extent(skyline_index, dest);

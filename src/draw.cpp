@@ -113,6 +113,7 @@ void initialize_item_chips()
         int x = 0;
         int y = 0;
         int width = inf_tiles;
+        int frame_width = inf_tiles;
         int height = inf_tiles;
         int offset_y = 0;
         int stack_height = 8;
@@ -158,9 +159,17 @@ void initialize_item_chips()
             offset_y += inf_tiles;
         }
 
+        if (animation > 0)
+        {
+            // Animation frames are laid out from left to right. The
+            // region width represents the entire set of frames, while
+            // frame_width represents the width per frame.
+            width = inf_tiles * animation;
+        }
+
         shared_id key("core.item_chip." + std::to_string(i));
-        extents[key] = extent{x, y, width, height};
-        item_chips[i] = item_chip_t{key, x, y, width, height, offset_y, stack_height, shadow, animation};
+        extents[key] = extent{x, y, width, height, frame_width};
+        item_chips[i] = item_chip_t{key, offset_y, stack_height, shadow, animation};
     }
 
     loader.add_predefined_extents(filesystem::dir::graphic() / u8"item.bmp",
@@ -250,48 +259,50 @@ optional_ref<extent> draw_get_rect_chara(int id)
     return draw_get_rect(chara_chips[id].key);
 }
 
+optional_ref<extent> draw_get_rect_item(int id)
+{
+    return draw_get_rect(item_chips[id].key);
+}
+
 optional_ref<extent> draw_get_rect(const std::string& key)
 {
     return loader[key];
 }
 
 
-void prepare_item_image(int id, int color)
+optional_ref<extent> prepare_item_image(int id, int color)
 {
-    const auto x = item_chips[id].x;
-    const auto y = item_chips[id].y;
-    const auto w = item_chips[id].width;
-    const auto h = item_chips[id].height;
+    const auto rect = draw_get_rect_item(id);
 
     gsel(1);
-    boxf(0, 960, w, h);
+    boxf(0, 960, rect->width, rect->height);
 
     pos(0, 960);
     set_color_mod(
         255 - c_col(0, color), 255 - c_col(1, color), 255 - c_col(2, color));
-    gcopy(1, x, y, w, h);
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
     set_color_mod(255, 255, 255);
     gsel(0);
+    return rect;
 }
 
 
 
-void prepare_item_image(int id, int color, int character_image)
+optional_ref<extent> prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
     {
-        prepare_item_image(id, color);
-        return;
+        return prepare_item_image(id, color);
     }
 
-    const auto w = item_chips[id].width;
-    const auto h = item_chips[id].height;
-
-    gsel(1);
-    boxf(0, 960, w, h);
+    optional_ref<extent> item_rect;
 
     if (id == 528) // Cards
     {
+        item_rect = draw_get_rect_item(id);
+        gsel(1);
+        boxf(0, 960, item_rect->width, item_rect->height);
+
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
         auto rect = draw_get_rect_chara(character_id);
@@ -301,7 +312,7 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(0, color),
             255 - c_col(1, color),
             255 - c_col(2, color));
-        gcopy(1, 0, 768, inf_tiles, inf_tiles);
+        gcopy(item_rect->buffer, item_rect->x, item_rect->y, item_rect->width, item_rect->height);
         set_color_mod(255, 255, 255);
         pos(0, 1008);
         set_color_mod(
@@ -327,6 +338,18 @@ void prepare_item_image(int id, int color, int character_image)
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
         auto rect = draw_get_rect_chara(character_id);
+
+        if (rect->height > inf_tiles)
+        {
+            item_rect = draw_get_rect_item(564); // Tall variant
+        }
+        else
+        {
+            item_rect = draw_get_rect_item(531); // Short variant
+        }
+        gsel(1);
+        boxf(0, 960, item_rect->width, item_rect->height);
+
         pos(8, 1058 - rect->height);
         set_color_mod(
             255 - c_col(0, character_color),
@@ -347,9 +370,9 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(1, color),
             255 - c_col(2, color));
         gcopy(
-            1,
-            144,
-            768 + (rect->height > inf_tiles) * 48,
+            item_rect->buffer,
+            item_rect->x,
+            item_rect->y,
             inf_tiles,
             rect->height
                 + (rect->height > inf_tiles) * 48);
@@ -357,6 +380,8 @@ void prepare_item_image(int id, int color, int character_image)
         gmode(2);
         gsel(0);
     }
+
+    return item_rect;
 }
 
 
@@ -393,9 +418,9 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 if (config::instance().leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
-                    prepare_item_image(leash, 2);
-                    const int icon_width = item_chips[leash].width;
-                    const int icon_height = item_chips[leash].height;
+                    auto rect = prepare_item_image(leash, 2);
+                    const int icon_width = rect->frame_width;
+                    const int icon_height = rect->height;
 
                     pos(right ? std::min(x, x_) - icon_width / 2
                               : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
@@ -1112,6 +1137,94 @@ void draw_chara_scale_height(int image_id, int x, int y)
         rect->width,
         rect->height,
         rect->width / (1 + (rect->height > inf_tiles)),
+        inf_tiles);
+}
+
+
+void draw_item_material(int image_id, int x, int y)
+{
+    auto rect = prepare_item_image(image_id, 0);
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        1,
+        0,
+        960,
+        inf_tiles,
+        inf_tiles,
+        rect->frame_width,
+        rect->height);
+}
+
+void draw_item_with_portrait(const item& item, int x, int y)
+{
+    draw_item_with_portrait(item.image, item.color, item.param1, x, y);
+}
+
+void draw_item_with_portrait(int image_id,
+                             int color,
+                             optional<int> chara_chip_id,
+                             int x,
+                             int y)
+{
+    optional_ref<extent> rect;
+
+    if (chara_chip_id)
+    {
+        rect = prepare_item_image(image_id, color, *chara_chip_id);
+    }
+    else
+    {
+        rect = prepare_item_image(image_id, color);
+    }
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        1,
+        0,
+        960,
+        inf_tiles,
+        inf_tiles,
+        rect->frame_width,
+        rect->height);
+}
+
+void draw_item_with_portrait_scale_height(const item& item, int x, int y)
+{
+    draw_item_with_portrait_scale_height(item.image, item.color, item.param1, x, y);
+}
+
+void draw_item_with_portrait_scale_height(int image_id,
+                                          int color,
+                                          optional<int> chara_chip_id,
+                                          int x,
+                                          int y)
+{
+    optional_ref<extent> rect;
+
+    if (chara_chip_id)
+    {
+        rect = prepare_item_image(image_id, color, *chara_chip_id);
+    }
+    else
+    {
+        rect = prepare_item_image(image_id, color);
+    }
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        1,
+        0,
+        960,
+        rect->frame_width,
+        rect->height,
+        rect->frame_width * inf_tiles / rect->height,
         inf_tiles);
 }
 

@@ -784,7 +784,6 @@ label_1925_internal:
     mes(s);
     keyrange = 0;
     gmode(2);
-    prepare_item_image(550, 0);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -798,16 +797,9 @@ label_1925_internal:
         {
             boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
-        pos(wx + 37, wy + 70 + cnt * 19);
-        gmode(2);
-        gcopy_c(
-            1,
-            0,
-            960,
-            item_chips[550].width,
-            item_chips[550].height,
-            inf_tiles,
-            inf_tiles);
+
+        draw_item_material(550, wx + 37, wy + 70 + cnt * 19); // Recipe image
+
         pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
@@ -941,18 +933,9 @@ label_1928_internal:
             s += i18n::s.get("core.locale.blending.steps.ground");
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        p(1) = inv[p].image % 1000;
-        prepare_item_image(p(1), inv[p].color, inv[p].param1);
-        pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2);
-        gcopy_c(
-            1,
-            0,
-            960,
-            item_chips[p(1)].width,
-            item_chips[p(1)].height,
-            item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
-            inf_tiles);
+
+        draw_item_with_portrait_scale_height(inv[p], wx + 37, wy + 69 + cnt * 19);
+
         if (inv[p].body_part != 0)
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);

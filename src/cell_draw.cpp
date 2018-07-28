@@ -868,7 +868,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
 
 
 
-void draw_map6(int x, int y, int dx, int dy)
+void draw_nefia_icons(int x, int y, int dx, int dy)
 {
     if (map(x, y, 6) != 0 && map(x, y, 2) == map(x, y, 0))
     {
@@ -904,36 +904,115 @@ void draw_map6(int x, int y, int dx, int dy)
 
 
 
-void draw_map8(int x, int y, int dx, int dy, int scrturn)
+void draw_mefs(int x, int y, int dx, int dy, int scrturn_)
 {
     if (map(x, y, 8) != 0 && mapsync(x, y) == msync)
     {
-        const auto p2 = map(x, y, 8) - 1;
-        auto p0 = mef(1, p2) % 10000;
-        const auto p1 = mef(1, p2) / 10000;
-        pos(dx, dy - item_chips[p0].offset_y);
-        if (item_chips[p0].animation)
+        const auto mef_id = map(x, y, 8) - 1;
+        auto item_chip_id = mef(1, mef_id) % 10000;
+        int anim_frame = 0;
+        const auto item_chip_color = mef(1, mef_id) / 10000;
+        pos(dx, dy - item_chips[item_chip_id].offset_y);
+        if (item_chips[item_chip_id].animation > 0)
         {
-            p0 += (scrturn + p2) % (item_chips[p0].animation + 1)
-                - ((scrturn + p2) % (item_chips[p0].animation + 1)
-                   == item_chips[p0].animation)
-                    * 2 * (item_chips[p0].animation != 0);
+            anim_frame = (scrturn_ + mef_id) % item_chips[item_chip_id].animation;
         }
-        if (mef(1, p2) > 10000)
+        if (mef(1, mef_id) > 10000)
         {
-            prepare_item_image(p0, p1);
-            gcopy(1, 0, 960, inf_tiles, inf_tiles);
+            // Colorized
+            auto rect = prepare_item_image(item_chip_id, item_chip_color);
+            gcopy(1, anim_frame * rect->frame_width, 960, inf_tiles, rect->height);
         }
         else
         {
-            gcopy(1, item_chips[p0].x, item_chips[p0].y, inf_tiles, inf_tiles);
+            auto rect = draw_get_rect_item(item_chip_id);
+            gcopy(rect->buffer, rect->x + anim_frame * rect->frame_width, rect->y, rect->frame_width, rect->height);
         }
     }
 }
 
 
 
-void draw_items(int x, int y, int dx, int dy, int scrturn)
+void draw_item_chip_in_world_map(int x, int y, const extent& rect)
+{
+    pos(x, y);
+    gmode(2);
+    gcopy_c(
+        1,
+        0,
+        960,
+        rect.frame_width,
+        rect.height,
+        inf_tiles / 2,
+        inf_tiles / 2);
+}
+
+
+
+void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
+{
+    gmode(2, alpha);
+    if (rect.height == inf_tiles)
+    {
+        pos(x + rect.frame_width / 2
+            + item_chips[p_].shadow / 80 + 2,
+            y - item_chips[p_].offset_y + 22);
+        if (item_chips[p_].offset_y < 24)
+        {
+            func_2(
+                1,
+                0,
+                960,
+                item_chips[p_].shadow / 2,
+                rect.frame_width,
+                rect.height);
+        }
+    }
+    else
+    {
+        pos(x + rect.frame_width / 2
+            + item_chips[p_].shadow / 4,
+            y - item_chips[p_].offset_y + 46);
+        func_2(
+            1,
+            0,
+            960,
+            item_chips[p_].shadow * 2,
+            rect.frame_width,
+            rect.height);
+    }
+    gmode(2);
+}
+
+
+void draw_item_chip_on_ground(int x, int y, const extent& rect, int p_, int scrturn_)
+{
+    pos(x, y);
+    if (item_chips[p_].animation == 0)
+    {
+        gcopy(
+            1,
+            0,
+            960,
+            rect.frame_width,
+            rect.height);
+    }
+    else
+    {
+        // Skip colorizing the item chip and copy directly from the
+        // atlas buffer.
+        gcopy(
+            rect.buffer,
+            rect.x + (scrturn_ % item_chips[p_].animation) * rect.frame_width,
+            rect.y,
+            rect.frame_width,
+            rect.height);
+    }
+}
+
+
+
+void draw_items(int x, int y, int dx, int dy, int scrturn_)
 {
     elona_vector1<int> p_;
 
@@ -969,83 +1048,25 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                 }
                 p_ = inv[items[i]].image;
                 i_ = inv[items[i]].color;
-                prepare_item_image(p_, i_, inv[items[i]].param1);
+                auto rect = prepare_item_image(p_, i_, inv[items[i]].param1);
                 if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
-                    pos(dx + 24, dy + 24 - stack_height / 2);
-                    gmode(2);
-                    gcopy_c(
-                        1,
-                        0,
-                        960,
-                        item_chips[p_].width,
-                        item_chips[p_].height,
-                        24,
-                        24);
+                    draw_item_chip_in_world_map(dx + (inf_tiles / 2),
+                                                dy + (inf_tiles / 2) - (stack_height / 2),
+                                                **rect);
                 }
                 else
                 {
                     if (config::instance().objectshadow
                         && item_chips[p_].shadow)
                     {
-                        gmode(2, 70);
-                        if (item_chips[p_].height == inf_tiles)
-                        {
-                            pos(dx + item_chips[p_].width / 2
-                                    + item_chips[p_].shadow / 80 + 2,
-                                dy - item_chips[p_].offset_y + 22
-                                    - stack_height);
-                            if (item_chips[p_].offset_y < 24)
-                            {
-                                func_2(
-                                    1,
-                                    0,
-                                    960,
-                                    item_chips[p_].shadow / 2,
-                                    item_chips[p_].width,
-                                    item_chips[p_].height);
-                            }
-                        }
-                        else
-                        {
-                            pos(dx + item_chips[p_].width / 2
-                                    + item_chips[p_].shadow / 4,
-                                dy - item_chips[p_].offset_y + 46
-                                    - stack_height);
-                            func_2(
-                                1,
-                                0,
-                                960,
-                                item_chips[p_].shadow * 2,
-                                item_chips[p_].width,
-                                item_chips[p_].height);
-                        }
-                        gmode(2);
+                        draw_item_chip_shadow(dx, dy - stack_height, **rect, p_, 70);
                     }
-                    pos(dx, dy - item_chips[p_].offset_y - stack_height);
-                    if (item_chips[p_].animation == 0)
-                    {
-                        gcopy(
-                            1,
-                            0,
-                            960,
-                            item_chips[p_].width,
-                            item_chips[p_].height);
-                    }
-                    else
-                    {
-                        gcopy(
-                            1,
-                            item_chips[p_].x
-                                + (scrturn % (item_chips[p_].animation + 1)
-                                   - (scrturn % (item_chips[p_].animation + 1)
-                                      == item_chips[p_].animation)
-                                       * 2 * (item_chips[p_].animation != 0))
-                                    * inf_tiles,
-                            item_chips[p_].y,
-                            item_chips[p_].width,
-                            item_chips[p_].height);
-                    }
+                    draw_item_chip_on_ground(dx,
+                                             dy - item_chips[p_].offset_y - stack_height,
+                                             **rect,
+                                             p_,
+                                             scrturn_);
                 }
                 stack_height += item_chips[p_].stack_height;
                 if (p_ == 531 && draw_get_rect_chara(i_)->height == 96)
@@ -1056,84 +1077,31 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
         }
         else
         {
+            optional_ref<extent> rect;
             if (p_ == 528 || p_ == 531)
             {
-                prepare_item_image(
+                rect = prepare_item_image(
                     p_, i_, inv[cell_itemoncell({x, y}).second].param1);
             }
             else
             {
-                prepare_item_image(p_, i_);
+                rect = prepare_item_image(p_, i_);
             }
             if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
-                pos(dx + 24, dy + 24);
-                gmode(2);
-                gcopy_c(
-                    1,
-                    0,
-                    960,
-                    item_chips[p_].width,
-                    item_chips[p_].height,
-                    24,
-                    24);
+                draw_item_chip_in_world_map(dx + (inf_tiles / 2), dy + (inf_tiles / 2), **rect);
             }
             else
             {
                 if (config::instance().objectshadow && item_chips[p_].shadow)
                 {
-                    gmode(2, 80);
-                    if (item_chips[p_].height == inf_tiles)
-                    {
-                        pos(dx + item_chips[p_].width / 2
-                                + item_chips[p_].shadow / 80 + 2,
-                            dy - item_chips[p_].offset_y + 22);
-                        if (item_chips[p_].offset_y < 24)
-                        {
-                            func_2(
-                                1,
-                                0,
-                                960,
-                                item_chips[p_].shadow / 2,
-                                item_chips[p_].width,
-                                item_chips[p_].height);
-                        }
-                    }
-                    else
-                    {
-                        pos(dx + item_chips[p_].width / 2
-                                + item_chips[p_].shadow / 4,
-                            dy - item_chips[p_].offset_y + 46);
-                        func_2(
-                            1,
-                            0,
-                            960,
-                            item_chips[p_].shadow * 2,
-                            item_chips[p_].width,
-                            item_chips[p_].height);
-                    }
-                    gmode(2);
+                    draw_item_chip_shadow(dx, dy, **rect, p_, 80);
                 }
-                pos(dx, dy - item_chips[p_].offset_y);
-                if (item_chips[p_].animation == 0)
-                {
-                    gcopy(
-                        1, 0, 960, item_chips[p_].width, item_chips[p_].height);
-                }
-                else
-                {
-                    gcopy(
-                        1,
-                        item_chips[p_].x
-                            + (scrturn % (item_chips[p_].animation + 1)
-                               - (scrturn % (item_chips[p_].animation + 1)
-                                  == item_chips[p_].animation)
-                                   * 2 * (item_chips[p_].animation != 0))
-                                * inf_tiles,
-                        item_chips[p_].y,
-                        item_chips[p_].width,
-                        item_chips[p_].height);
-                }
+                draw_item_chip_on_ground(dx,
+                                         dy - item_chips[p_].offset_y,
+                                         **rect,
+                                         p_,
+                                         scrturn_);
             }
         }
     }
@@ -1393,8 +1361,8 @@ void cell_draw()
 
             draw_blood_pool_and_fragments(x_, y);
             draw_efmap(x_, y, dx_, dy_, scrturnnew_ == 1);
-            draw_map6(x_, y, dx_, dy_);
-            draw_map8(x_, y, dx_, dy_, scrturn_);
+            draw_nefia_icons(x_, y, dx_, dy_);
+            draw_mefs(x_, y, dx_, dy_, scrturn_);
             draw_items(x_, y, dx_, dy_, scrturn_);
             draw_npc(x_, y, dx_, dy_, ani_, ground_);
 
