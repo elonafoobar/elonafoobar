@@ -19,7 +19,7 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.global.thing = 1"));
 
-    lua.clear_mod_stores();
+    lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == nil)"));
 }
@@ -34,7 +34,7 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
     REQUIRE_NOTHROW(lua.load_mod_from_script(
         "test2", "Store.global.theirs = true; Store.global.thing = 2"));
 
-    lua.clear_mod_stores();
+    lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod("test1", "assert(Store.global.thing == nil)"));
     REQUIRE_NOTHROW(lua.run_in_mod("test1", "assert(Store.global.mine == nil)"));
@@ -51,7 +51,7 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     REQUIRE_NOTHROW(lua.run_in_mod(
         "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
 
-    lua.clear_mod_stores();
+    lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod(
         "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
@@ -65,7 +65,7 @@ TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(_MOD_NAME == "test"))"));
 
-    lua.clear_mod_stores();
+    lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(_MOD_NAME == "test"))"));
 }
@@ -91,7 +91,7 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
         .run_callbacks<elona::lua::event_kind_t::map_initialized>();
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.val == 42)"));
 
-    lua.clear_mod_stores();
+    lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.global.thing == nil)"));
 

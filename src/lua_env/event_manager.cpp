@@ -8,6 +8,56 @@ namespace elona
 namespace lua
 {
 
+event_manager::event_manager(lua_env* lua)
+{
+    this->lua = lua;
+    init_events();
+}
+
+void event_manager::bind_api()
+{
+    sol::table core = lua->get_api_manager().get_api_table();
+    sol::table Event = core.create_named("Event");
+
+    Event.set_function(
+        "register",
+        [](
+            event_kind_t event,
+            sol::protected_function func,
+            sol::this_environment this_env) {
+            sol::environment& env = this_env;
+            register_event(event, env, func);
+        });
+
+    Event.set_function(
+        "unregister",
+        [](
+            event_kind_t event,
+            sol::protected_function func,
+            sol::this_environment this_env) {
+            sol::environment& env = this_env;
+            unregister_event(event, env, func);
+        });
+
+    Event.set_function(
+        "clear",
+        sol::overload(
+            [](sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                clear_mod_callbacks(env);
+            },
+            [](event_kind_t event, sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                clear_mod_callbacks(event, env);
+            }));
+
+    Event.set_function("trigger", [&lua](event_kind_t event, sol::table data) {
+        trigger_event(event, data);
+    });
+
+    init_event_kinds(Event);
+}
+
 void init_event_kinds(sol::table& Event)
 {
     Event["EventKind"] = Event.create_with(
@@ -56,56 +106,6 @@ void init_event_kinds(sol::table& Event)
         event_kind_t::all_mods_loaded,
         "ScriptLoaded",
         event_kind_t::script_loaded);
-}
-
-void event_manager::init(lua_env& lua)
-{
-    sol::table core = lua.get_api_manager().get_api_table();
-    sol::table Event = core.create_named("Event");
-
-    Event.set_function(
-        "register",
-        [&lua](
-            event_kind_t event,
-            sol::protected_function func,
-            sol::this_environment this_env) {
-            sol::environment& env = this_env;
-            lua.get_event_manager().register_event(event, env, func);
-        });
-
-    Event.set_function(
-        "unregister",
-        [&lua](
-            event_kind_t event,
-            sol::protected_function func,
-            sol::this_environment this_env) {
-            sol::environment& env = this_env;
-            return lua.get_event_manager().unregister_event(event, env, func);
-        });
-
-    Event.set_function(
-        "clear",
-        sol::overload(
-            [&lua](sol::this_environment this_env) {
-                sol::environment& env = this_env;
-                lua.get_event_manager().clear_mod_callbacks(env);
-            },
-            [&lua](event_kind_t event, sol::this_environment this_env) {
-                sol::environment& env = this_env;
-                lua.get_event_manager().clear_mod_callbacks(event, env);
-            }));
-
-    Event.set_function("trigger", [&lua](event_kind_t event, sol::table data) {
-        lua.get_event_manager().trigger_event(event, data);
-    });
-
-    init_event_kinds(Event);
-}
-
-event_manager::event_manager(lua_env* lua)
-{
-    this->lua = lua;
-    init_events();
 }
 
 void event_manager::init_events()

@@ -492,7 +492,7 @@ void item_exchange(int a, int b)
 void item_remove(item& i)
 {
     i.number = 0;
-    lua::lua->on_item_removal(i);
+    lua::lua->get_handle_manager().remove_item_handle_run_callbacks(i);
 }
 
 // TODO this only runs after an invalid item slot is replaced by a new
@@ -504,7 +504,7 @@ void item_delete(int ci)
     {
         // This item slot was previously occupied, but the item is now
         // invalid.
-        lua::lua->on_item_removal(inv[ci]);
+        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(inv[ci]);
     }
     else
     {

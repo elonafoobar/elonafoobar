@@ -927,7 +927,7 @@ main_menu_result_t character_making_final_phase()
     }
     mode = 5;
     cdata[0].index = 0;
-    lua::lua->on_chara_creation(cdata[0]);
+    lua::lua->create_chara_handle_run_callbacks(cdata[0]);
     return main_menu_result_t::initialize_game;
 }
 

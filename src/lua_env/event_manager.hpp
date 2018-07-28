@@ -207,7 +207,7 @@ public:
      * Binds the Lua Event API and the EventKind enum to the lua_env's
      * API manager.
      */
-    static void init(lua_env&);
+    void bind_api(lua_env&);
 
 public:
     explicit event_manager(lua_env*);
