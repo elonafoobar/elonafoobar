@@ -1,3 +1,4 @@
+#include <chrono>
 #include "registry_manager.hpp"
 #include "../hcl.hpp"
 
@@ -67,6 +68,9 @@ void registry_manager::register_data(const std::string& mod_name,
                                      const std::string& datatype_name,
                                      const fs::path& data_file)
 {
+    using namespace std::chrono;
+    steady_clock::time_point begin = steady_clock::now();
+
     if (!fs::exists(data_file))
     {
         throw std::runtime_error(data_file.string() + ": File does not exist.");
@@ -97,7 +101,12 @@ register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
                                  + mod_name + "." + datatype_name
                                  + ": " + err.what());
     }
+
+    steady_clock::time_point end = steady_clock::now();
+    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    ELONA_LOG("[REGISTRY ("s << datatype_name << ")] time: "s << time << "ms"s);
 }
+
 
 sol::optional<sol::table> registry_manager::get_table(const std::string& mod_name,
                                                       const std::string& datatype_name)

@@ -1,6 +1,7 @@
 #pragma once
-#include <unordered_map>
+#include <chrono>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 #include "filesystem.hpp"
 #include "hcl.hpp"
@@ -10,6 +11,8 @@
 #include "optional.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
+
+using namespace std::literals::string_literals;
 
 namespace elona
 {
@@ -107,6 +110,9 @@ public:
 
     void initialize(sol::table table, lua::lua_env& lua)
     {
+        using namespace std::chrono;
+        steady_clock::time_point begin = steady_clock::now();
+
         std::string prefix = "core." + std::string(traits_type::datatype_name);
         for (const auto& pair : table) {
             std::string id = pair.first.as<std::string>();
@@ -118,6 +124,12 @@ public:
             by_legacy_id.emplace(converted.id, the_id);
             storage.emplace(the_id, converted);
         }
+
+        steady_clock::time_point end = steady_clock::now();
+        auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+        ELONA_LOG("[LION ("s << traits_type::datatype_name << ")] Elements: "s
+                  << storage.size() << ", time: "s
+                  << time << "ms"s);
     }
 
 

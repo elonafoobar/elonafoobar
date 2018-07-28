@@ -154,7 +154,7 @@ sol::object handle_manager::get_chara_handle(character& chara)
 {
     if (chara.index == -1)
     {
-        ELONA_LOG("Tried getting handle to character of index -1");
+        //ELONA_LOG("Tried getting handle to character of index -1");
         return sol::lua_nil;
     }
     if (chara_handles.find(chara.index) == chara_handles.end())
@@ -171,7 +171,7 @@ sol::object handle_manager::get_item_handle(item& item)
 {
     if (item.index == -1)
     {
-        ELONA_LOG("Tried getting handle to item of index -1");
+        //ELONA_LOG("Tried getting handle to item of index -1");
         return sol::lua_nil;
     }
     if (item_handles.find(item.index) == item_handles.end())

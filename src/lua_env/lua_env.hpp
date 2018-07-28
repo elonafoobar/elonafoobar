@@ -106,4 +106,4 @@ private:
 extern std::unique_ptr<lua_env> lua;
 
 } // namespace lua
-} // namspace elona
+} // namespace elona
