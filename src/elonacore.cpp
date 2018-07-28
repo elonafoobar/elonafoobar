@@ -5711,7 +5711,9 @@ turn_result_t exit_map()
     if (map_changed)
     {
         lua::lua->get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
+
         lua::lua->get_mod_manager().clear_map_local_data();
+        lua::lua->get_handle_manager().clear_map_local_handles();
     }
 
     mode = 2;

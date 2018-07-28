@@ -228,7 +228,7 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
         if (function_name)                                              \
         {                                                               \
             name = *function_name;                                      \
-            if (!lua.get_registry_manager().has_function(*function_name)) \
+            if (!lua.get_export_manager().has_function(*function_name)) \
             {                                                           \
                 throw std::runtime_error("Error loading " + id_ + "." + #name + ": No such callback named " + *function_name); \
             }                                                           \

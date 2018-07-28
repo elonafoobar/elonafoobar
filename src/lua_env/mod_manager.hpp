@@ -53,7 +53,7 @@ enum class mod_loading_stage_t : unsigned
 {
     not_started,
     scan_finished,
-    core_mod_loaded,
+    lua_libraries_loaded,
     all_mods_loaded,
 };
 
@@ -86,8 +86,7 @@ public:
 
 
     /***
-     * - Clears all map-local handles and runs their removal callbacks.
-     * - Clears all map-local mod storages.
+     * Clears all map-local mod storages.
      */
     void clear_map_local_data();
 
@@ -167,21 +166,20 @@ private:
 
     /***
      * Adds the parts of the API implemented in Lua to the API
-     * manager's API table. It expects the core mod to have been found
-     * after the initial mods scan.
+     * manager's API table.
      *
      * Stage before is scan_finished.
-     * Stage after is core_mod_loaded.
+     * Stage after is lua_libraries_loaded.
      */
-    void load_core_mod();
+    void load_lua_support_libraries();
 
     /***
-     * Loads all other mods that were scanned besides the core mod.
+     * Loads all mods that were scanned during the scanning stage.
      *
-     * Stage before is core_mod_loaded.
+     * Stage before is lua_libraries_loaded.
      * Stage after is all_mods_loaded.
      */
-    void load_all_mods();
+    void load_scanned_mods();
 
 
     //********************** Mod loading related ***********************//
@@ -212,11 +210,17 @@ private:
      */
     void setup_mod_globals(mod_info& mod, sol::table&);
 
+
+    /***
+     * Binds the Store global variable to a mod's environment.
+     */
     static void bind_store(sol::state&, mod_info&, sol::table&);
 
+    /***
+     * Whitelists functions that are safe for usage in user-written scripts.
+     */
     static void setup_sandbox(const sol::state& state, sol::table& metatable)
     {
-        // Whitelist functions that are safe for usage in user-written scripts.
         // This list can be expanded.
         static const std::string safe_functions[] = {"assert",
                                                      "type",

@@ -51,7 +51,7 @@ public:
 
     /***
      * Methods that will create/remove handles as well as run
-     * creation/removal event callbacks using the static event manager
+     * creation/removal event callbacks using the event manager
      * instance.
      */
     void create_chara_handle_run_callbacks(character&);
@@ -70,8 +70,9 @@ public:
     void clear_all_handles();
 
     /***
-     * Clears only the handles that are local to the current map.
-     * Player and party character/item handles are not cleared.
+     * Clears handles that are local to the current map without
+     * running removal callbacks. Player and party character/item
+     * handles are not cleared.
      */
     void clear_map_local_handles();
 

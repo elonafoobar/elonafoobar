@@ -1,6 +1,7 @@
 #pragma once
 #include "../thirdparty/sol2/sol.hpp"
 #include "event_manager.hpp"
+#include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "api_manager.hpp"
 #include "registry_manager.hpp"
@@ -13,13 +14,15 @@ namespace lua
 
 class api_manager;
 class event_manager;
+class export_manager;
 class mod_manager;
 class handle_manager;
 class registry_manager;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
- * responsibility for specific operations to invidual subsystems.
+ * responsibility for specific Lua-related operations to invidual
+ * subsystems.
  */
 class lua_env
 {
@@ -27,7 +30,8 @@ public:
     explicit lua_env();
 
     /***
-     * Returns a shared pointer to this mod_manager's internal Lua state.
+     * Returns a shared pointer to the Lua environment's internal Lua
+     * state.
      */
     std::shared_ptr<sol::state> get_state()
     {
@@ -44,6 +48,11 @@ public:
     event_manager& get_event_manager()
     {
         return *event_mgr;
+    }
+
+    export_manager& get_export_manager()
+    {
+        return *export_mgr;
     }
 
     handle_manager& get_handle_manager()
@@ -89,6 +98,7 @@ private:
     std::unique_ptr<mod_manager> mod_mgr;
     std::unique_ptr<api_manager> api_mgr;
     std::unique_ptr<event_manager> event_mgr;
+    std::unique_ptr<export_manager> export_mgr;
     std::unique_ptr<handle_manager> handle_mgr;
     std::unique_ptr<registry_manager> registry_mgr;
 };

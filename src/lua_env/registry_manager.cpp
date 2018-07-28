@@ -15,13 +15,9 @@ registry_manager::registry_manager(lua_env* lua)
         lua_->get_state()->globals());
 
     registry_env.set("Registry", lua_->get_state()->create_table());
-    registry_env.set("Exports", lua_->get_state()->create_table());
-
-    registry_env.set("Elona", lua_->get_api_manager().bind(*lua_));
 
     lua_->get_state()->safe_script(
         R"(
-scan_exports = require "private/scan_exports"
 register_data = require "private/register_data"
 )", registry_env);
 
@@ -103,28 +99,6 @@ register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
     }
 }
 
-void registry_manager::register_functions()
-{
-    registry_env.set("_API_TABLE", lua_->get_api_manager().get_master_api_table());
-
-    // Don't print errors (they will be thrown anyways)
-    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-        return pfr;
-    };
-
-    auto result = lua_->get_state()->safe_script(R"(
-Exports = scan_exports(_API_TABLE)
-)", registry_env, ignore_handler);
-
-    registry_env.set("_API_TABLE", sol::lua_nil);
-
-    if(!result.valid())
-    {
-        sol::error err = result;
-        throw std::runtime_error("Failed loading function export data: "s + err.what());
-    }
-}
-
 sol::optional<sol::table> registry_manager::get_table(const std::string& mod_name,
                                                       const std::string& datatype_name)
 {
@@ -136,19 +110,6 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     }
 
     return (*mod_data_table)[datatype_name];
-}
-
-optional<exported_function> registry_manager::get_function(const std::string& name) const
-{
-    sol::optional<sol::protected_function> func = registry_env["Exports"][name];
-    if (func && *func != sol::lua_nil)
-    {
-        return exported_function{name, *func};
-    }
-    else
-    {
-        return none;
-    }
 }
 
 } // namespace lua

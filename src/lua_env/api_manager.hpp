@@ -42,14 +42,14 @@ public:
     explicit api_manager(lua_env*);
 
     /***
-     * Loads the core mod for API implementations that are handled in
-     * Lua instead of C++.
+     * Loads Lua library files in data/lua for API implementations
+     * that are handled in Lua instead of C++.
      *
      * This is done by lua_env on construction. It must be done before
-     * more mods can be loaded, because they all implicitly depend on
-     * the core mod..
+     * any mods can be loaded, because they all implicitly depend on
+     * these libraries.
      */
-    void load_core(lua_env&);
+    void load_lua_support_libraries(lua_env&);
 
     /***
      * Makes all API tables read-only.

@@ -67,17 +67,17 @@ return {
 }
 )"));
 
-    lua.get_registry_manager().register_functions();
+    lua.get_export_manager().register_all_exports();
 
     {
-        auto function = lua.get_registry_manager().get_function("test.exports.my_callback");
+        auto function = lua.get_export_manager().get_exported_function("test.exports.my_callback");
         REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
     }
 
     {
-        auto function = lua.get_registry_manager().get_function("test.exports.nesting.my_callback");
+        auto function = lua.get_export_manager().get_exported_function("test.exports.nesting.my_callback");
         REQUIRE(static_cast<bool>(function));
         REQUIRE_NOTHROW(function->call());
         REQUIRE_NOTHROW(function->call());
@@ -109,9 +109,9 @@ return {
 }
 )"));
 
-    lua.get_registry_manager().register_functions();
+    lua.get_export_manager().register_all_exports();
 
-    auto function = lua.get_registry_manager().get_function("test.exports.my_callback");
+    auto function = lua.get_export_manager().get_exported_function("test.exports.my_callback");
     REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(42));
 
@@ -136,15 +136,15 @@ return {
 )"));
 
     elona::testing::start_in_debug_map();
-    elona::lua::lua->get_registry_manager().register_functions();
+    elona::lua::lua->get_export_manager().register_all_exports();
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
     character& chara = elona::cdata[elona::rc];
     auto handle = elona::lua::lua->get_handle_manager()
         .get_chara_handle(chara);
 
-    auto function = elona::lua::lua->get_registry_manager()
-        .get_function("test_registry_chara_callback.exports.my_callback");
+    auto function = elona::lua::lua->get_export_manager()
+        .get_exported_function("test_registry_chara_callback.exports.my_callback");
     REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(handle));
 

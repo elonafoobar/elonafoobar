@@ -14,6 +14,17 @@ namespace elona
 namespace lua
 {
 
+namespace
+{
+
+bool is_alnum_only(const std::string &str)
+{
+    return find_if(str.begin(), str.end(),
+            [](char c) { return !(isalnum(c) || (c == '_')); }) == str.end();
+}
+
+} // namespace
+
 mod_manager::mod_manager(lua_env* lua)
 {
     lua_ = lua;
@@ -28,8 +39,8 @@ void mod_manager::load_mods(const fs::path& mod_dir)
     }
 
     scan_all_mods(mod_dir);
-    load_core_mod();
-    load_all_mods();
+    load_lua_support_libraries();
+    load_scanned_mods();
 }
 
 void mod_manager::load_mods(const fs::path& mod_dir,
@@ -42,8 +53,8 @@ void mod_manager::load_mods(const fs::path& mod_dir,
 
     scan_all_mods(mod_dir);
     scan_mod(additional_mod_path);
-    load_core_mod();
-    load_all_mods();
+    load_lua_support_libraries();
+    load_scanned_mods();
 }
 
 
@@ -70,8 +81,6 @@ if Store then
 end
 )", mod->env);
     }
-    // TODO: move elsewhere
-    lua_->get_handle_manager().clear_map_local_handles();
 }
 
 
@@ -79,7 +88,10 @@ void mod_manager::load_mod(mod_info& mod)
 {
     setup_and_lock_mod_globals(mod);
 
-    if (mod.path) // Skip initializing mods not created from files.
+    // Skip initializing mods not created from files, because the
+    // string passed to load_mod_from_script acts as the
+    // initialization script.
+    if (mod.path)
     {
         auto result = lua_->get_state()->safe_script_file(
             filesystem::make_preferred_path_in_utf8(*mod.path / u8"init.lua"s),
@@ -93,7 +105,6 @@ void mod_manager::load_mod(mod_info& mod)
             if (object && object->is<sol::table>())
             {
                 sol::table api_table = object->as<sol::table>();
-                // TODO move elsewhere
                 lua_->get_api_manager().add_api(mod.name, api_table);
             }
         }
@@ -111,8 +122,10 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
     const std::string mod_name = mod_dir.filename().string();
     ELONA_LOG("Found mod " << mod_name);
 
-    // TODO verify the mod name is alphanumeric only.
-
+    if (!is_alnum_only(mod_name))
+    {
+        throw std::runtime_error("Mod name \"" + mod_name + "\" must contain alphanumeric characters only.");
+    }
     if (mod_name == "script")
     {
         throw std::runtime_error("\"script\" is a reserved mod name.");
@@ -145,32 +158,26 @@ void mod_manager::scan_all_mods(const fs::path& mods_dir)
     stage = mod_loading_stage_t::scan_finished;
 }
 
-void mod_manager::load_core_mod()
+void mod_manager::load_lua_support_libraries()
 {
     if (stage == mod_loading_stage_t::not_started)
     {
         throw std::runtime_error("Mods haven't been scanned yet!");
     }
 
-    auto val = this->mods.find("core");
-    if (val == this->mods.end())
-    {
-        throw std::runtime_error(
-            "Core mod was not found. Does \"mods/core\" exist?");
-    }
-
     // Add special API tables from data/lua to the core mod. The core
-    // API table will be modified in-place by the Lua API code.
-    // TODO move elsewhere
-    lua_->get_api_manager().load_core(*lua_);
-    stage = mod_loading_stage_t::core_mod_loaded;
+    // mod's API table will be modified in-place by the Lua API code
+    // under data/lua.
+    lua_->get_api_manager().load_lua_support_libraries(*lua_);
+
+    stage = mod_loading_stage_t::lua_libraries_loaded;
 }
 
-void mod_manager::load_all_mods()
+void mod_manager::load_scanned_mods()
 {
-    if (stage != mod_loading_stage_t::core_mod_loaded)
+    if (stage != mod_loading_stage_t::lua_libraries_loaded)
     {
-        throw std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Lua libraries weren't loaded!");
     }
     for (auto& pair : this->mods)
     {
@@ -187,18 +194,17 @@ void mod_manager::load_all_mods()
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
-    // TODO move elsewhere
     lua_->get_event_manager().run_callbacks<event_kind_t::all_mods_loaded>();
-    lua_->get_registry_manager().register_functions();
+    lua_->get_export_manager().register_all_exports();
 
     stage = mod_loading_stage_t::all_mods_loaded;
 }
 
 void mod_manager::run_startup_script(const std::string& name)
 {
-    if (stage < mod_loading_stage_t::core_mod_loaded)
+    if (stage < mod_loading_stage_t::lua_libraries_loaded)
     {
-        throw std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Lua libraries weren't loaded!");
     }
     if (this->mods.find(name) != this->mods.end())
     {
@@ -340,9 +346,9 @@ void mod_manager::load_mod_from_script(
     const std::string& script,
     bool readonly)
 {
-    if (stage < mod_loading_stage_t::core_mod_loaded)
+    if (stage < mod_loading_stage_t::lua_libraries_loaded)
     {
-        throw std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Lua libraries weren't loaded!");
     }
     {
         auto val = mods.find(name);
@@ -364,16 +370,18 @@ void mod_manager::load_mod_from_script(
         setup_mod_globals(*info, info->env);
     }
 
+    // Run the provided script string.
+    auto result = lua_->get_state()->safe_script(script, info->env);
+
     // Add the API table returned by the mod's initialization script,
     // if one was returned.
-    auto result = lua_->get_state()->safe_script(script, info->env);
     if (result.valid())
     {
         sol::optional<sol::object> object = result.get<sol::object>();
         if (object && object->is<sol::table>())
         {
             sol::table api_table = object->as<sol::table>();
-            lua_->get_api_manager().add_api(name, api_table); // TODO move elsewhere?
+            lua_->get_api_manager().add_api(name, api_table);
         }
     }
     else
