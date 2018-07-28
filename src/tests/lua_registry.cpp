@@ -45,8 +45,7 @@ TEST_CASE("test instantiating character from datatype", "[Lua: Registry]")
 TEST_CASE("test registering Lua functions", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Exports = {}
@@ -149,7 +148,7 @@ return {
     REQUIRE(static_cast<bool>(function));
     REQUIRE_NOTHROW(function->call(handle));
 
-    elona::lua::lua->get_mod("test_registry_chara_callback")->env.set("index", elona::rc);
+    elona::lua::lua->get_mod_manager().get_mod("test_registry_chara_callback")->env.set("index", elona::rc);
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_registry_chara_callback",
                                     R"(assert(Store.global.found_index == index))"));
@@ -171,5 +170,6 @@ return {
 }
 )"));
 
-    REQUIRE_THROWS(lua.load_all_mods());
+    REQUIRE(false);
+    //REQUIRE_THROWS(lua.load_all_mods());
 }

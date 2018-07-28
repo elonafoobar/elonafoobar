@@ -35,7 +35,7 @@ assert(type(Rand.coinflip) == "function")
 TEST_CASE("test Elona.require from other mods", "[Lua: API]")
 {
     elona::lua::lua_env lua;
-    REQUIRE(false)
+    REQUIRE(false);
     // lua.scan_all_mods(filesystem::dir::mods());
     // lua.scan_all_mods(filesystem::dir::exe() / u8"tests/data/mods");
     // lua.load_core_mod();

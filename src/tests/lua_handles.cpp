@@ -180,7 +180,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script("test", ""));
 
-        elona::lua::lua->get_mod("test")->env.set("chara", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test")->env.set("chara", handle);
         REQUIRE_NOTHROW(
             elona::lua::lua->get_mod_manager().run_in_mod("test", "Store.global.charas = {[0]=chara}"));
 
@@ -198,7 +198,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script("test2", ""));
 
-        elona::lua::lua->get_mod("test2")->env.set("item", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test2")->env.set("item", handle);
         REQUIRE_NOTHROW(
             elona::lua::lua->get_mod_manager().run_in_mod("test2", "Store.global.items = {[0]=item}"));
 
@@ -222,7 +222,7 @@ local chara = Chara.create(0, 0, 3)
 idx = chara.index
 Store.global.charas = {[0]=chara}
 )"));
-        int idx = elona::lua::lua->get_mod("test_invalid_chara")->env["idx"];
+        int idx = elona::lua::lua->get_mod_manager().get_mod("test_invalid_chara")->env["idx"];
 
         chara_delete(idx);
 
@@ -238,7 +238,7 @@ local item = Item.create(0, 0, 792, 3)
 idx = item.index
 Store.global.items = {[0]=items}
 )"));
-        int idx = elona::lua::lua->get_mod("test_invalid_item")->env["idx"];
+        int idx = elona::lua::lua->get_mod_manager().get_mod("test_invalid_item")->env["idx"];
 
         item_delete(idx);
 
@@ -260,7 +260,7 @@ TEST_CASE("Test calling C++ functions taking handles as arguments")
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
             "test_chara_arg", "Store.global.charas = {}"));
-        elona::lua::lua->get_mod("test_chara_arg")->env.set("chara", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test_chara_arg")->env.set("chara", handle);
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod("test_chara_arg", R"(
 Store.global.charas[0] = chara
@@ -284,7 +284,7 @@ print(Chara.is_ally(Store.global.charas[0]))
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
             "test_item_arg", "Store.global.items = {}"));
-        elona::lua::lua->get_mod("test_item_arg")->env.set("item", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test_item_arg")->env.set("item", handle);
 
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod("test_item_arg", R"(
 Store.global.items[0] = item
