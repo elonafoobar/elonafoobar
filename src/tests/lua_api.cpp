@@ -35,14 +35,11 @@ assert(type(Rand.coinflip) == "function")
 TEST_CASE("test Elona.require from other mods", "[Lua: API]")
 {
     elona::lua::lua_env lua;
-    REQUIRE(false);
-    // lua.scan_all_mods(filesystem::dir::mods());
-    // lua.scan_all_mods(filesystem::dir::exe() / u8"tests/data/mods");
-    // lua.load_core_mod();
-    // lua.load_all_mods();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods(),
+                                    filesystem::dir::exe() / u8"tests/data/mods/test_require");
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test_require_from_mods", R"(
-local Hello = Elona.require("test", "Hello")
+local Hello = Elona.require("test_require", "Hello")
 assert(Hello ~= nil)
 assert(type(Hello.hello) == "function")
 assert(Hello.hello() == "Hello!")

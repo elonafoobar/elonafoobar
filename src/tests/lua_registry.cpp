@@ -157,19 +157,6 @@ return {
 TEST_CASE("test verification that API tables only have string keys", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
-
-    REQUIRE_NOTHROW(
-        lua.get_mod_manager().load_mod_from_script("test", R"(
-local Exports = {}
-
-Exports[0] = function() end
-
-return {
-    Exports = Exports
-}
-)"));
-
-    REQUIRE(false);
-    //REQUIRE_THROWS(lua.load_all_mods());
+    REQUIRE_THROWS(lua.get_mod_manager().load_mods(filesystem::dir::mods(),
+                       {filesystem::dir::exe() / u8"tests/data/mods/test_export_keys"}));
 }

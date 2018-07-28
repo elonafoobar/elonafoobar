@@ -32,6 +32,20 @@ void mod_manager::load_mods(const fs::path& mod_dir)
     load_all_mods();
 }
 
+void mod_manager::load_mods(const fs::path& mod_dir,
+                            const fs::path& additional_mod_path)
+{
+    if (stage != mod_loading_stage_t::not_started)
+    {
+        throw std::runtime_error("Mods have already been loaded.");
+    }
+
+    scan_all_mods(mod_dir);
+    scan_mod(additional_mod_path);
+    load_core_mod();
+    load_all_mods();
+}
+
 
 void report_error(sol::error err)
 {
@@ -92,6 +106,23 @@ void mod_manager::load_mod(mod_info& mod)
     }
 }
 
+void mod_manager::scan_mod(const fs::path& mod_dir)
+{
+    const std::string mod_name = mod_dir.filename().string();
+    ELONA_LOG("Found mod " << mod_name);
+
+    // TODO verify the mod name is alphanumeric only.
+
+    if (mod_name == "script")
+    {
+        throw std::runtime_error("\"script\" is a reserved mod name.");
+    }
+
+    std::unique_ptr<mod_info> info =
+        std::make_unique<mod_info>(mod_name, mod_dir, lua_->get_state());
+    this->mods.emplace(mod_name, std::move(info));
+}
+
 void mod_manager::scan_all_mods(const fs::path& mods_dir)
 {
     if (stage != mod_loading_stage_t::not_started
@@ -108,19 +139,7 @@ void mod_manager::scan_all_mods(const fs::path& mods_dir)
     {
         if (fs::exists(entry.path() / init_script))
         {
-            const std::string mod_name = entry.path().filename().string();
-            ELONA_LOG("Found mod " << mod_name);
-
-            // TODO verify the mod name is alphanumeric only.
-
-            if (mod_name == "script")
-            {
-                throw std::runtime_error("\"script\" is a reserved mod name.");
-            }
-
-            std::unique_ptr<mod_info> info =
-                std::make_unique<mod_info>(mod_name, entry.path(), lua_->get_state());
-            this->mods.emplace(mod_name, std::move(info));
+            scan_mod(entry.path());
         }
     }
     stage = mod_loading_stage_t::scan_finished;

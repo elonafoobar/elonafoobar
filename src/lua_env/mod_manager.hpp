@@ -109,6 +109,15 @@ public:
     void clear();
 
     /***
+     * Same as load_mods, but also inject an additional mod to be
+     * loaded. The additional mod's path points directly to the
+     * subfolder under mods/ where its init.lua is located.
+     *
+     * For testing use only.
+     */
+    void load_mods(const fs::path&, const fs::path&);
+
+    /***
      * Instantiates a new mod by running the given Lua code.
      *
      * For testing use only.
@@ -176,6 +185,13 @@ private:
 
 
     //********************** Mod loading related ***********************//
+
+    /***
+     * Adds the mod under the given path to the list of known mods to
+     * be loaded. The provided path is the subfolder under mods/ that
+     * contains the mod's init.lua script.
+     */
+    void scan_mod(const fs::path&);
 
     /***
      * Runs the init script for the given mod. The mod will have been

@@ -102,7 +102,7 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", "Store.global.thing = 1"));
 
     // Accessed from main state, not the mod's environment
-    sol::object obj = (*lua.get_state())["Store"]["global"];
+    sol::object obj = (*lua.get_state())["Store"];
     REQUIRE(obj == sol::lua_nil);
 }
 
