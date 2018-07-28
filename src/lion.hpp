@@ -11,6 +11,8 @@
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace elona
 {
 
@@ -121,7 +123,7 @@ public:
             auto it = by_legacy_id.find(converted.id);
             if (it != by_legacy_id.end())
             {
-                throw std::runtime_error(the_id.get() + ": Legacy id already exists: " + converted.id + " -> " + it->second.get());
+                throw std::runtime_error(the_id.get() + ": Legacy id already exists: "s + std::to_string(converted.id) + " -> "s + it->second.get());
             }
 
             by_legacy_id.emplace(converted.id, the_id);
