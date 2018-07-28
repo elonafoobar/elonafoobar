@@ -14,8 +14,6 @@
 namespace elona
 {
 
-struct character;
-
 namespace lua
 {
 class lua_env;

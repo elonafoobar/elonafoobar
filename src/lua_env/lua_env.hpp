@@ -1,11 +1,15 @@
 #pragma once
+#include "../thirdparty/sol2/sol.hpp"
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "api_manager.hpp"
-#include "lua_registry.hpp"
+#include "registry_manager.hpp"
 #include "mod_manager.hpp"
-#include "../lib/noncopyable.hpp"
-#include "../thirdparty/sol2/sol.hpp"
+
+namespace elona
+{
+namespace lua
+{
 
 class api_manager;
 class event_manager;
@@ -17,9 +21,10 @@ class registry_manager;
  * Main singleton encapsulating various Lua subsystems. Delegates
  * responsibility for specific operations to invidual subsystems.
  */
-class lua_env : public lib::noncopyable
+class lua_env
 {
-    void initialize();
+public:
+    explicit lua_env();
 
     /***
      * Returns a shared pointer to this mod_manager's internal Lua state.
@@ -33,27 +38,27 @@ class lua_env : public lib::noncopyable
 
     api_manager& get_api_manager()
     {
-        return api_mgr.get();
+        return *api_mgr;
     }
 
     event_manager& get_event_manager()
     {
-        return event_mgr.get();
+        return *event_mgr;
     }
 
     handle_manager& get_handle_manager()
     {
-        return handle_mgr.get();
+        return *handle_mgr;
     }
 
     mod_manager& get_mod_manager()
     {
-        return mod_mgr.get();
+        return *mod_mgr;
     }
 
     registry_manager& get_registry_manager()
     {
-        return registry_mgr.get();
+        return *registry_mgr;
     }
 
     /***
@@ -63,6 +68,16 @@ class lua_env : public lib::noncopyable
      * Used when modifying startup scripts.
      */
     void reload();
+
+
+    //****************** Methods for testing use *******************//
+
+    /***
+     * Unloads all characters and items tracked by handles.
+     *
+     * For testing use only.
+     */
+    void clear();
 
 private:
     /***
@@ -79,3 +94,6 @@ private:
 };
 
 extern std::unique_ptr<lua_env> lua;
+
+} // namespace lua
+} // namspace elona

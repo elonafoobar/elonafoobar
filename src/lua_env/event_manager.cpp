@@ -12,16 +12,18 @@ event_manager::event_manager(lua_env* lua)
 {
     this->lua = lua;
     init_events();
+
+    bind_api(*lua);
 }
 
-void event_manager::bind_api()
+void event_manager::bind_api(lua_env& lua)
 {
-    sol::table core = lua->get_api_manager().get_api_table();
+    sol::table core = lua.get_api_manager().get_api_table();
     sol::table Event = core.create_named("Event");
 
     Event.set_function(
         "register",
-        [](
+        [this](
             event_kind_t event,
             sol::protected_function func,
             sol::this_environment this_env) {
@@ -31,7 +33,7 @@ void event_manager::bind_api()
 
     Event.set_function(
         "unregister",
-        [](
+        [this](
             event_kind_t event,
             sol::protected_function func,
             sol::this_environment this_env) {
@@ -42,23 +44,23 @@ void event_manager::bind_api()
     Event.set_function(
         "clear",
         sol::overload(
-            [](sol::this_environment this_env) {
+            [this](sol::this_environment this_env) {
                 sol::environment& env = this_env;
                 clear_mod_callbacks(env);
             },
-            [](event_kind_t event, sol::this_environment this_env) {
+            [this](event_kind_t event, sol::this_environment this_env) {
                 sol::environment& env = this_env;
                 clear_mod_callbacks(event, env);
             }));
 
-    Event.set_function("trigger", [&lua](event_kind_t event, sol::table data) {
+    Event.set_function("trigger", [this](event_kind_t event, sol::table data) {
         trigger_event(event, data);
     });
 
     init_event_kinds(Event);
 }
 
-void init_event_kinds(sol::table& Event)
+void event_manager::init_event_kinds(sol::table& Event)
 {
     Event["EventKind"] = Event.create_with(
         "MapCreated",

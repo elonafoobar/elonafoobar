@@ -85,13 +85,18 @@ public:
     void run_startup_script(const std::string&);
 
 
-    //*************** C++ handle management methods ****************//
-
     /***
      * - Clears all map-local handles and runs their removal callbacks.
      * - Clears all map-local mod storages.
      */
     void clear_map_local_data();
+
+    /***
+     * Clears the internal storage for each loaded mod. This is used
+     * when transitioning between maps, because most data in the store
+     * will become invalid after transitioning.
+     */
+    void clear_mod_stores();
 
 
     //****************** Methods for testing use *******************//
@@ -169,13 +174,6 @@ private:
      */
     void load_all_mods();
 
-    /***
-     * Clears the internal storage for each loaded mod. This is used
-     * when transitioning between maps, because most data in the store
-     * will become invalid after transitioning.
-     */
-    void clear_mod_stores();
-
 
     //********************** Mod loading related ***********************//
 
@@ -228,6 +226,8 @@ private:
      * functions are ran in the correct order.
      */
     mod_loading_stage_t stage = mod_loading_stage_t::not_started;
+
+    lua_env* lua_;
 };
 
 } // namespace lua

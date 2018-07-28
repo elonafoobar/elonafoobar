@@ -1163,7 +1163,7 @@ int chara_create_internal()
     cdata[rc].index = rc;
     initialize_character();
 
-    lua::lua->create_chara_handle_run_callbacks(cdata[rc]);
+    lua::lua->get_handle_manager().create_chara_handle_run_callbacks(cdata[rc]);
 
     rtval = rc;
     return 1;
@@ -2069,7 +2069,7 @@ void chara_killed(character& chara)
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
         // to clean up character things.
-        lua::lua->remove_chara_handle_run_callbacks(chara);
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
     }
     else if (chara.state == 2 || chara.state == 4 || chara.state == 6)
     {
@@ -2092,7 +2092,7 @@ void chara_delete(int cc)
         // currently valid. If the state were 0, then chara_killed
         // would have been called to run the chara removal handler for
         // the Lua state. We'll have to run it now.
-        lua::lua->remove_chara_handle_run_callbacks(cdata[cc]);
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(cdata[cc]);
     }
     else
     {

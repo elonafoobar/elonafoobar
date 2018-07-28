@@ -479,7 +479,7 @@ int do_create_item(int slot, int x, int y)
         inv[ci].number = initnum;
     }
 
-    lua::lua->create_item_handle_run_callbacks(inv[ci]);
+    lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[ci]);
 
     if (nostack == 1)
     {

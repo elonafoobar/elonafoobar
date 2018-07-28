@@ -1,11 +1,14 @@
 #include "lua_env.hpp"
+#include "../config.hpp"
 
 namespace elona
 {
 namespace lua
 {
 
-void lua_env::initialize()
+std::unique_ptr<lua_env> lua;
+
+lua_env::lua_env()
 {
     lua = std::make_shared<sol::state>();
     lua->open_libraries(

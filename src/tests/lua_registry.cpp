@@ -11,8 +11,7 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
     const fs::path data_file = "tests/data/registry/invalid.hcl";
 
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("test", "chara"));
 
@@ -24,8 +23,7 @@ TEST_CASE("test instantiating character from datatype", "[Lua: Registry]")
     const fs::path data = "tests/data/registry/putit.hcl";
 
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("test", "putit"));
     REQUIRE_NOTHROW(lua.get_registry_manager().register_data("test", "putit", data));
@@ -50,7 +48,7 @@ TEST_CASE("test registering Lua functions", "[Lua: Registry]")
     lua.scan_all_mods(filesystem::dir::mods());
     lua.load_core_mod();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Exports = {}
 Exports.nesting = {}
 
@@ -88,18 +86,17 @@ return {
     }
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times_a == 2))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times_a == 2))"));
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times_b == 3))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times_b == 3))"));
 }
 
 TEST_CASE("test registering Lua functions with arguments", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Exports = {}
 
 function Exports.my_callback(arg)
@@ -120,12 +117,12 @@ return {
     REQUIRE_NOTHROW(function->call(42));
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.value == 42))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.value == 42))"));
 }
 
 TEST_CASE("test registering Lua functions with userdata arguments", "[Lua: Registry]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script("test_registry_chara_callback", R"(
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script("test_registry_chara_callback", R"(
 local Exports = {}
 
 function Exports.my_callback(chara)
@@ -154,18 +151,17 @@ return {
 
     elona::lua::lua->get_mod("test_registry_chara_callback")->env.set("index", elona::rc);
     REQUIRE_NOTHROW(
-        elona::lua::lua->run_in_mod("test_registry_chara_callback",
+        elona::lua::lua->get_mod_manager().run_in_mod("test_registry_chara_callback",
                                     R"(assert(Store.global.found_index == index))"));
 }
 
 TEST_CASE("test verification that API tables only have string keys", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(filesystem::dir::mods());
-    lua.load_core_mod();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(
-        lua.load_mod_from_script("test", R"(
+        lua.get_mod_manager().load_mod_from_script("test", R"(
 local Exports = {}
 
 Exports[0] = function() end

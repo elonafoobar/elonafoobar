@@ -6,6 +6,7 @@
 #include "i18n.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 
 

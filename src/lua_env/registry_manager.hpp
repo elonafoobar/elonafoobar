@@ -26,8 +26,6 @@ class registry_manager
 public:
     explicit registry_manager(lua_env*);
 
-    static void init(lua_env& lua);
-
     /***
      * Registers a new datatype from the HCL spec file provided.
      */
@@ -85,12 +83,14 @@ public:
     }
 
 private:
+    void bind_api();
+
     /***
      * The isolated Lua environment where data is stored.
      */
     sol::environment registry_env;
 
-    lua_env* lua;
+    lua_env* lua_;
 };
 
 } // namespace lua

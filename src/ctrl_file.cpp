@@ -475,13 +475,13 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
-                    lua::lua->get_handle_manager().remove_charcter_handle(cdata[index]);
+                    lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_character_handle(cdata[index]);
+                    lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
                 }
             }
         }
@@ -545,7 +545,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int index = 0; index < 1320; index++)
                 {
-                    lua::lua->get_handle_manager().create_chara_handle(inv[index]);
+                    lua::lua->get_handle_manager().remove_item_handle(inv[index]);
                 }
                 load(filepath, inv, 0, 1320);
                 for (int index = 0; index < 1320; index++)
@@ -808,13 +808,13 @@ void fmode_14_15(bool read)
             {
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
-                    lua::lua->get_handle_manager().remove_character_handle(cdata[index]);
+                    lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_character_handle(cdata[index]);
+                    lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
                 }
             }
         }
@@ -1012,7 +1012,7 @@ void fmode_1_2(bool read)
                  index < ELONA_MAX_CHARACTERS;
                  index++)
             {
-                lua::lua->get_handle_manager().remove_character_handle(cdata[index]);
+                lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
             }
             tmpload(u8"cdata_"s + mid + u8".s2");
             load(
@@ -1025,7 +1025,7 @@ void fmode_1_2(bool read)
                  index++)
             {
                 cdata[index].index = index;
-                lua::lua->get_handle_manager().create_character_handle(cdata[index]);
+                lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
             }
         }
         else
@@ -1246,7 +1246,7 @@ void fmode_17()
              index++)
         {
             cdata[index].index = index;
-            lua::lua->get_handle_manager().create_character_handle(cdata[index]);
+            lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
         }
     }
 
