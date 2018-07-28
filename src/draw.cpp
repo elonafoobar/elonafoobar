@@ -23,10 +23,6 @@ namespace
 
 pic_loader loader;
 
-std::unordered_map<std::string, pic_loader::page_type> page_type_table = {
-    {"character.bmp", 0},
-};
-
 
 // TODO: it should be configurable.
 constexpr size_t max_damage_popups = 20; // compatible with oomEx
@@ -107,335 +103,69 @@ double easing(double t)
 
 void initialize_item_chips()
 {
-    for (size_t i = 0; i < item_chips.size(); ++i)
+    auto value = hclutil::load(filesystem::dir::mods() / "core" / "data" / "item_chip.hcl");
+    pic_loader::map_type extents;
+
+    for (const auto& pair : value.get<hcl::Object>("item_chip"))
     {
-        item_chips[i].x = i % 33 * inf_tiles;
-        item_chips[i].y = i / 33 * inf_tiles;
-        item_chips[i].width = inf_tiles;
-        item_chips[i].height = inf_tiles;
-        item_chips[i].offset_y = 0;
-        item_chips[i].stack_height = 8;
-        item_chips[i].shadow = 40;
-        item_chips[i].animation = 0;
+        assert(pair.first.size() > 1);
+        int i = std::stoi(pair.first.substr(1));
+        int x = 0;
+        int y = 0;
+        int width = inf_tiles;
+        int height = inf_tiles;
+        int offset_y = 0;
+        int stack_height = 8;
+        int shadow = 40;
+        int animation = 0;
+        bool tall = false;
+
+        auto source = pair.second["source"];
+        if (source.is<hcl::Object>())
+        {
+            x = source["x"].as<int>();
+            y = source["y"].as<int>();
+        }
+        else
+        {
+            throw std::runtime_error("unimplemented");
+        }
+
+        if (auto value = pair.second.find("tall"))
+        {
+            tall = value->as<bool>();
+        }
+        if (auto value = pair.second.find("offset_y"))
+        {
+            offset_y = value->as<int>();
+        }
+        if (auto value = pair.second.find("stack_height"))
+        {
+            stack_height = value->as<int>();
+        }
+        if (auto value = pair.second.find("shadow"))
+        {
+            shadow = value->as<int>();
+        }
+        if (auto value = pair.second.find("animation"))
+        {
+            animation = value->as<int>();
+        }
+
+        if (tall)
+        {
+            height = inf_tiles * 2;
+            offset_y += inf_tiles;
+        }
+
+        shared_id key("core.item_chip." + std::to_string(i));
+        extents[key] = extent{x, y, width, height};
+        item_chips[i] = item_chip_t{key, x, y, width, height, offset_y, stack_height, shadow, animation};
     }
 
-    item_chips[24].offset_y = 16;
-    item_chips[30].offset_y = 16;
-    item_chips[72].offset_y = 22;
-    item_chips[73].offset_y = 22;
-    item_chips[74].offset_y = 22;
-    item_chips[75].offset_y = 22;
-    item_chips[76].offset_y = 22;
-    item_chips[76].stack_height = 28;
-    item_chips[78].offset_y = 22;
-    item_chips[80].offset_y = 22;
-    item_chips[85].offset_y = 8;
-    item_chips[85].stack_height = 8;
-    item_chips[85].shadow = 150;
-    item_chips[87].offset_y = 22;
-    item_chips[88].offset_y = 22;
-    item_chips[91].offset_y = 22;
-    item_chips[95].offset_y = 22;
-    item_chips[96].offset_y = 22;
-    item_chips[96].stack_height = 18;
-    item_chips[97].offset_y = 22;
-    item_chips[99].offset_y = 22;
-    item_chips[98].offset_y = 22;
-    item_chips[100].offset_y = 22;
-    item_chips[102].offset_y = 22;
-    item_chips[103].offset_y = 22;
-    item_chips[104].offset_y = 22;
-    item_chips[107].offset_y = 22;
-    item_chips[116].offset_y = 22;
-    item_chips[117].offset_y = 22;
-    item_chips[123].offset_y = 12;
-    item_chips[125].offset_y = 12;
-    item_chips[130].offset_y = 12;
-    item_chips[132].offset_y = 22;
-    item_chips[134].offset_y = 12;
-    item_chips[136].offset_y = 12;
-    item_chips[137].offset_y = 22;
-    item_chips[138].offset_y = 22;
-    item_chips[139].offset_y = 22;
-    item_chips[142].offset_y = 22;
-    item_chips[142].stack_height = 36;
-    item_chips[143].offset_y = 22;
-    item_chips[143].stack_height = 36;
-    item_chips[145].offset_y = 22;
-    item_chips[146].offset_y = 22;
-    item_chips[147].offset_y = 22;
-    item_chips[150].offset_y = 22;
-    item_chips[150].stack_height = 8;
-    item_chips[150].shadow = 70;
-    item_chips[151].offset_y = 22;
-    item_chips[156].offset_y = 8;
-    item_chips[156].stack_height = 20;
-    item_chips[156].shadow = 150;
-    item_chips[158].offset_y = 8;
-    item_chips[158].stack_height = 24;
-    item_chips[158].shadow = 150;
-    item_chips[159].offset_y = 8;
-    item_chips[159].stack_height = 24;
-    item_chips[159].shadow = 150;
-    item_chips[160].offset_y = 22;
-    item_chips[163].offset_y = 22;
-    item_chips[163].stack_height = 16;
-    item_chips[164].offset_y = 22;
-    item_chips[118].offset_y = 22;
-    item_chips[166].offset_y = 22;
-    item_chips[197].offset_y = 22;
-    item_chips[197].stack_height = 24;
-    item_chips[232].offset_y = 22;
-    item_chips[248].offset_y = 22;
-    item_chips[234].offset_y = 22;
-    item_chips[234].stack_height = 24;
-    item_chips[235].offset_y = 22;
-    item_chips[235].stack_height = 36;
-    item_chips[236].offset_y = 22;
-    item_chips[242].offset_y = 22;
-    item_chips[242].stack_height = 8;
-    item_chips[242].shadow = 250;
-    item_chips[259].offset_y = 8;
-    item_chips[259].stack_height = 12;
-    item_chips[260].offset_y = 22;
-    item_chips[260].stack_height = 22;
-    item_chips[262].offset_y = 22;
-    item_chips[263].offset_y = 22;
-    item_chips[264].offset_y = 22;
-    item_chips[266].offset_y = 22;
-    item_chips[266].stack_height = 24;
-    item_chips[270].offset_y = 22;
-    item_chips[272].offset_y = 22;
-    item_chips[272].stack_height = 34;
-    item_chips[273].offset_y = 22;
-    item_chips[276].offset_y = 22;
-    item_chips[277].offset_y = 8;
-    item_chips[278].offset_y = 22;
-    item_chips[279].offset_y = 22;
-    item_chips[281].offset_y = 22;
-    item_chips[281].stack_height = 40;
-    item_chips[282].offset_y = 22;
-    item_chips[285].offset_y = 22;
-    item_chips[286].offset_y = 22;
-    item_chips[288].offset_y = 22;
-    item_chips[288].stack_height = 18;
-    item_chips[291].offset_y = 22;
-    item_chips[292].offset_y = 22;
-    item_chips[292].stack_height = 32;
-    item_chips[293].offset_y = 22;
-    item_chips[295].offset_y = 22;
-    item_chips[296].offset_y = 22;
-    item_chips[299].offset_y = 22;
-    item_chips[299].stack_height = 8;
-    item_chips[299].shadow = 250;
-    item_chips[300].offset_y = 22;
-    item_chips[320].offset_y = 22;
-    item_chips[321].offset_y = 22;
-    item_chips[325].offset_y = 22;
-    item_chips[327].offset_y = 22;
-    item_chips[331].offset_y = 22;
-    item_chips[332].offset_y = 22;
-    item_chips[348].offset_y = 22;
-    item_chips[353].offset_y = 48;
-    item_chips[354].stack_height = 8;
-    item_chips[354].shadow = 20;
-    item_chips[360].offset_y = 0;
-    item_chips[360].stack_height = 2;
-    item_chips[360].shadow = 1;
-    item_chips[364].offset_y = 22;
-    item_chips[364].stack_height = 8;
-    item_chips[364].shadow = 250;
-    item_chips[367].offset_y = 22;
-    item_chips[368].offset_y = 22;
-    item_chips[370].offset_y = 8;
-    item_chips[372].offset_y = 22;
-    item_chips[373].offset_y = 22;
-    item_chips[375].offset_y = 22;
-    item_chips[376].offset_y = 22;
-    item_chips[377].offset_y = 22;
-    item_chips[395].offset_y = 22;
-    item_chips[378].offset_y = 48;
-    item_chips[379].offset_y = 48;
-    item_chips[380].offset_y = 8;
-    item_chips[381].offset_y = 22;
-    item_chips[382].offset_y = 48;
-    item_chips[384].offset_y = 22;
-    item_chips[442].offset_y = 8;
-    item_chips[442].stack_height = 24;
-    item_chips[442].shadow = 100;
-    item_chips[507].offset_y = 22;
-    item_chips[508].offset_y = 22;
-    item_chips[506].offset_y = 22;
-    item_chips[510].offset_y = 22;
-    item_chips[511].offset_y = 22;
-    item_chips[511].stack_height = 28;
-    item_chips[512].offset_y = 22;
-    item_chips[513].offset_y = 22;
-    item_chips[541].offset_y = 22;
-    item_chips[541].stack_height = 36;
-    item_chips[543].offset_y = 22;
-    item_chips[544].offset_y = 48;
-    item_chips[545].offset_y = 0;
-    item_chips[545].stack_height = 0;
-    item_chips[545].shadow = 0;
-    item_chips[627].offset_y = 22;
-    item_chips[637].offset_y = 22;
-    item_chips[639].offset_y = 48;
-    item_chips[640].offset_y = 22;
-    item_chips[640].stack_height = 34;
-    item_chips[641].offset_y = 22;
-    item_chips[642].offset_y = 22;
-    item_chips[643].offset_y = 22;
-    item_chips[644].offset_y = 32;
-    item_chips[646].offset_y = 22;
-    item_chips[647].offset_y = 22;
-    item_chips[648].offset_y = 22;
-    item_chips[650].offset_y = 22;
-    item_chips[651].offset_y = 48;
-    item_chips[652].offset_y = 48;
-    item_chips[653].offset_y = 32;
-    item_chips[655].offset_y = 22;
-    item_chips[659].offset_y = 22;
-    item_chips[662].offset_y = 22;
-    item_chips[664].shadow = 0;
-    item_chips[665].shadow = 0;
-    item_chips[667].shadow = 0;
-    item_chips[668].offset_y = 8;
-    item_chips[669].offset_y = 8;
-    item_chips[672].offset_y = 38;
-    item_chips[674].offset_y = 22;
-    item_chips[674].stack_height = 24;
-    item_chips[675].offset_y = 16;
-    item_chips[676].offset_y = 40;
-    item_chips[677].offset_y = 16;
-    item_chips[677].stack_height = 8;
-    item_chips[677].shadow = 50;
-    item_chips[679].shadow = 1;
-    item_chips[523].height = inf_tiles * 2;
-    item_chips[523].offset_y = inf_tiles + 16;
-    item_chips[523].stack_height = 40;
-    item_chips[523].shadow = 6;
-    item_chips[524].height = inf_tiles * 2;
-    item_chips[524].offset_y = inf_tiles + 16;
-    item_chips[524].stack_height = 65;
-    item_chips[525].height = inf_tiles * 2;
-    item_chips[525].offset_y = inf_tiles + 20;
-    item_chips[526].height = inf_tiles * 2;
-    item_chips[526].offset_y = inf_tiles + 20;
-    item_chips[527].height = inf_tiles * 2;
-    item_chips[527].offset_y = inf_tiles + 20;
-    item_chips[531].height = inf_tiles * 2;
-    item_chips[531].offset_y = inf_tiles + 16;
-    item_chips[531].stack_height = 40;
-    item_chips[563].height = inf_tiles * 2;
-    item_chips[563].offset_y = inf_tiles + 15;
-    item_chips[566].height = inf_tiles * 2;
-    item_chips[566].offset_y = inf_tiles + 12;
-    item_chips[567].height = inf_tiles * 2;
-    item_chips[567].offset_y = inf_tiles + 12;
-    item_chips[568].height = inf_tiles * 2;
-    item_chips[568].offset_y = inf_tiles + 12;
-    item_chips[569].height = inf_tiles * 2;
-    item_chips[569].offset_y = inf_tiles + 12;
-    item_chips[569].stack_height = 70;
-    item_chips[569].shadow = 6;
-    item_chips[570].height = inf_tiles * 2;
-    item_chips[570].offset_y = inf_tiles + 20;
-    item_chips[571].height = inf_tiles * 2;
-    item_chips[571].offset_y = inf_tiles + 20;
-    item_chips[571].stack_height = 64;
-    item_chips[572].height = inf_tiles * 2;
-    item_chips[572].offset_y = inf_tiles + 20;
-    item_chips[573].height = inf_tiles * 2;
-    item_chips[573].offset_y = inf_tiles + 20;
-    item_chips[574].height = inf_tiles * 2;
-    item_chips[574].offset_y = inf_tiles + 20;
-    item_chips[575].height = inf_tiles * 2;
-    item_chips[575].offset_y = inf_tiles + 20;
-    item_chips[576].height = inf_tiles * 2;
-    item_chips[576].offset_y = inf_tiles + 20;
-    item_chips[577].height = inf_tiles * 2;
-    item_chips[577].offset_y = inf_tiles + 20;
-    item_chips[577].stack_height = 48;
-    item_chips[577].shadow = 6;
-    item_chips[578].height = inf_tiles * 2;
-    item_chips[578].offset_y = inf_tiles + 20;
-    item_chips[579].height = inf_tiles * 2;
-    item_chips[579].offset_y = inf_tiles + 20;
-    item_chips[580].height = inf_tiles * 2;
-    item_chips[580].offset_y = inf_tiles + 20;
-    item_chips[580].stack_height = 40;
-    item_chips[580].shadow = 6;
-    item_chips[581].height = inf_tiles * 2;
-    item_chips[581].offset_y = inf_tiles + 20;
-    item_chips[582].height = inf_tiles * 2;
-    item_chips[582].offset_y = inf_tiles + 20;
-    item_chips[583].height = inf_tiles * 2;
-    item_chips[583].offset_y = inf_tiles + 20;
-    item_chips[583].stack_height = 44;
-    item_chips[583].shadow = 6;
-    item_chips[584].height = inf_tiles * 2;
-    item_chips[584].offset_y = inf_tiles + 20;
-    item_chips[584].stack_height = 40;
-    item_chips[584].shadow = 6;
-    item_chips[585].height = inf_tiles * 2;
-    item_chips[585].offset_y = inf_tiles + 20;
-    item_chips[586].height = inf_tiles * 2;
-    item_chips[586].offset_y = inf_tiles + 20;
-    item_chips[586].stack_height = 44;
-    item_chips[586].shadow = 6;
-    item_chips[587].height = inf_tiles * 2;
-    item_chips[587].offset_y = inf_tiles + 20;
-    item_chips[588].height = inf_tiles * 2;
-    item_chips[588].offset_y = inf_tiles + 20;
-    item_chips[589].height = inf_tiles * 2;
-    item_chips[589].offset_y = inf_tiles + 20;
-    item_chips[590].height = inf_tiles * 2;
-    item_chips[590].offset_y = inf_tiles + 20;
-    item_chips[591].height = inf_tiles * 2;
-    item_chips[591].offset_y = inf_tiles + 20;
-    item_chips[592].height = inf_tiles * 2;
-    item_chips[592].offset_y = inf_tiles + 20;
-    item_chips[593].height = inf_tiles * 2;
-    item_chips[593].offset_y = inf_tiles + 20;
-    item_chips[680].height = inf_tiles * 2;
-    item_chips[680].offset_y = inf_tiles + 16;
-    item_chips[681].height = inf_tiles * 2;
-    item_chips[681].offset_y = inf_tiles + 16;
-    item_chips[682].height = inf_tiles * 2;
-    item_chips[682].offset_y = inf_tiles + 16;
-    item_chips[683].height = inf_tiles * 2;
-    item_chips[683].offset_y = inf_tiles + 22;
-    item_chips[683].stack_height = 50;
-    item_chips[685].height = inf_tiles * 2;
-    item_chips[685].offset_y = inf_tiles + 52;
-    item_chips[685].stack_height = 50;
-    item_chips[685].shadow = 18;
-    item_chips[684].height = inf_tiles * 2;
-    item_chips[684].offset_y = inf_tiles + 52;
-    item_chips[684].stack_height = 50;
-    item_chips[684].shadow = 18;
-    item_chips[686].height = inf_tiles * 2;
-    item_chips[686].offset_y = inf_tiles + 16;
-    item_chips[687].height = inf_tiles * 2;
-    item_chips[687].offset_y = inf_tiles + 16;
-    item_chips[688].height = inf_tiles * 2;
-    item_chips[688].offset_y = inf_tiles + 16;
-    item_chips[689].height = inf_tiles * 2;
-    item_chips[689].offset_y = inf_tiles + 16;
-    item_chips[690].height = inf_tiles * 2;
-    item_chips[690].offset_y = inf_tiles + 16;
-    item_chips[691].height = inf_tiles * 2;
-    item_chips[691].offset_y = inf_tiles + 16;
-    item_chips[691].stack_height = 48;
-    item_chips[692].height = inf_tiles * 2;
-    item_chips[692].offset_y = inf_tiles + 16;
-    item_chips[19].animation = 2;
-    item_chips[24].animation = 3;
-    item_chips[27].animation = 3;
-    item_chips[30].animation = 2;
-    item_chips[349].animation = 3;
-    item_chips[355].animation = 3;
+    loader.add_predefined_extents(filesystem::dir::graphic() / u8"item.bmp",
+                                  extents,
+                                  pic_loader::page_type::item);
 }
 
 
@@ -489,7 +219,7 @@ void initialize_chara_chips()
 
     loader.add_predefined_extents(filesystem::dir::graphic() / u8"character.bmp",
                                   extents,
-                                  page_type_table.at("character.bmp"));
+                                  pic_loader::page_type::character);
 }
 
 

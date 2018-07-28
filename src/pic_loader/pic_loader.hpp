@@ -41,6 +41,11 @@ namespace elona
 class pic_loader : public lib::noncopyable
 {
 public:
+    enum class page_type
+    {
+        character,
+        item
+    };
     struct skyline
     {
         skyline (int x, int y, int width) : x(x), y(y), width(width) {}
@@ -60,7 +65,7 @@ public:
      */
     struct buffer_info
     {
-        buffer_info(int type,
+        buffer_info(pic_loader::page_type type,
                     int buffer_id,
                     int width,
                     int height)
@@ -192,7 +197,7 @@ public:
         }
 
     public:
-        int type;
+        pic_loader::page_type type;
         int buffer_id;
         int width;
         int height;
@@ -203,7 +208,6 @@ public:
 
     using id_type = shared_id;
     using map_type = std::unordered_map<id_type, extent>;
-    typedef int page_type;
 
     void clear_storage_and_buffers();
 

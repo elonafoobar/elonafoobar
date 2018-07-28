@@ -15,6 +15,7 @@ namespace elona
 
 struct item_chip_t
 {
+    shared_id key;
     int x;
     int y;
     int width;
