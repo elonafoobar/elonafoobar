@@ -803,9 +803,7 @@ static void initialize_screen()
 
 static void initialize_lua()
 {
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     lua::lua->get_api_manager().lock();
 }
 
@@ -1213,7 +1211,7 @@ void initialize_game()
         initialize_testbed();
         if (config::instance().startup_script != ""s)
         {
-            lua::lua->run_startup_script(config::instance().startup_script);
+            lua::lua->get_mod_manager().run_startup_script(config::instance().startup_script);
             script_loaded = true;
         }
         mode = 2;

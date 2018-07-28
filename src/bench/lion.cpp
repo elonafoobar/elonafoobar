@@ -11,8 +11,7 @@ using namespace elona;
 BENCHMARK(Database, BenchInitializeCharaLion, 3, 1)
 {
     lua::lua.reset(new lua::lua_env());
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     const fs::path data_path = filesystem::dir::mods() / "core" / "data";
     character_db_ex db;
 
@@ -23,8 +22,7 @@ BENCHMARK(Database, BenchInitializeCharaLion, 3, 1)
 BENCHMARK(Database, BenchInitializeLion, 3, 1)
 {
     lua::lua.reset(new lua::lua_env());
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     initialize_lion_db();
 }
 

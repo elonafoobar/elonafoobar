@@ -203,13 +203,6 @@ class event_manager
 {
 
 public:
-    /***
-     * Binds the Lua Event API and the EventKind enum to the lua_env's
-     * API manager.
-     */
-    static void init(lua_env&);
-
-public:
     explicit event_manager(lua_env*);
 
     /***
@@ -263,7 +256,22 @@ public:
     typedef std::unordered_map<event_kind_t, callbacks> container;
 
 private:
+    /***
+     * Binds the Lua Event API and the EventKind enum to the lua_env's
+     * API manager.
+     */
+    void bind_api(lua_env&);
+
+    /**
+     * Sets up event callback error handlers for each event type.
+     */
     void init_events();
+
+    /***
+     * Creates the Event.EventKind enum table in Lua.
+     */
+    void init_event_kinds(sol::table&);
+
     container events;
     lua_env* lua;
 };

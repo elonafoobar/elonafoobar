@@ -1,4 +1,5 @@
-#include "lua_registry.hpp"
+#include <chrono>
+#include "registry_manager.hpp"
 #include "../hcl.hpp"
 
 namespace elona
@@ -6,29 +7,27 @@ namespace elona
 namespace lua
 {
 
-registry_manager::registry_manager(lua_env* lua_)
+registry_manager::registry_manager(lua_env* lua)
 {
-    lua = lua_;
+    lua_ = lua;
     registry_env = sol::environment(
-        *(lua->get_state()),
+        *(lua_->get_state()),
         sol::create,
-        lua->get_state()->globals());
+        lua_->get_state()->globals());
 
-    registry_env.set("Registry", lua->get_state()->create_table());
-    registry_env.set("Exports", lua->get_state()->create_table());
+    registry_env.set("Registry", lua_->get_state()->create_table());
 
-    registry_env.set("Elona", lua->get_api_manager().bind(*lua));
-
-    lua->get_state()->safe_script(
+    lua_->get_state()->safe_script(
         R"(
-scan_exports = require "private/scan_exports"
 register_data = require "private/register_data"
 )", registry_env);
+
+    bind_api();
 }
 
-void registry_manager::init(lua_env& lua)
+void registry_manager::bind_api()
 {
-    sol::table core = lua.get_api_manager().get_api_table();
+    sol::table core = lua_->get_api_manager().get_api_table();
     sol::table Registry = core.create_named("Registry");
 
     // "add_datatype", "add_data"
@@ -36,13 +35,13 @@ void registry_manager::init(lua_env& lua)
     Registry.set_function(
         "get",
         sol::overload(
-            [&lua](const std::string& parent, const std::string& module) {
-                return lua.get_registry_manager().get_table(parent, module);
+            [this](const std::string& parent, const std::string& module) {
+                return get_table(parent, module);
             },
 
             // If no mod name is provided, assume it is "core".
-            [&lua](const std::string& datatype) {
-                return lua.get_registry_manager().get_table("core", datatype);
+            [this](const std::string& datatype) {
+                return get_table("core", datatype);
             }));
 }
 
@@ -52,7 +51,7 @@ void registry_manager::register_datatype(const std::string& mod_name,
     sol::table Registry = registry_env["Registry"];
     if (Registry[mod_name] == sol::lua_nil)
     {
-        Registry[mod_name] = lua->get_state()->create_table();
+        Registry[mod_name] = lua_->get_state()->create_table();
     }
 
     // spec::object spec(datatype_name);
@@ -62,13 +61,16 @@ void registry_manager::register_datatype(const std::string& mod_name,
     {
         throw std::runtime_error("Mod datatype was already registered: " + datatype_name);
     }
-    Registry[mod_name][datatype_name] = lua->get_state()->create_table();
+    Registry[mod_name][datatype_name] = lua_->get_state()->create_table();
 }
 
 void registry_manager::register_data(const std::string& mod_name,
                                      const std::string& datatype_name,
                                      const fs::path& data_file)
 {
+    using namespace std::chrono;
+    steady_clock::time_point begin = steady_clock::now();
+
     if (!fs::exists(data_file))
     {
         throw std::runtime_error(data_file.string() + ": File does not exist.");
@@ -84,7 +86,7 @@ void registry_manager::register_data(const std::string& mod_name,
         return pfr;
     };
 
-    auto result = lua->get_state()->safe_script(R"(
+    auto result = lua_->get_state()->safe_script(R"(
 register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
 )", registry_env, ignore_handler);
 
@@ -99,29 +101,12 @@ register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
                                  + mod_name + "." + datatype_name
                                  + ": " + err.what());
     }
+
+    steady_clock::time_point end = steady_clock::now();
+    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    ELONA_LOG("[REGISTRY ("s << datatype_name << ")] time: "s << time << "ms"s);
 }
 
-void registry_manager::register_functions()
-{
-    registry_env.set("_API_TABLE", lua->get_api_manager().get_master_api_table());
-
-    // Don't print errors (they will be thrown anyways)
-    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-        return pfr;
-    };
-
-    auto result = lua->get_state()->safe_script(R"(
-Exports = scan_exports(_API_TABLE)
-)", registry_env, ignore_handler);
-
-    registry_env.set("_API_TABLE", sol::lua_nil);
-
-    if(!result.valid())
-    {
-        sol::error err = result;
-        throw std::runtime_error("Failed loading function export data: "s + err.what());
-    }
-}
 
 sol::optional<sol::table> registry_manager::get_table(const std::string& mod_name,
                                                       const std::string& datatype_name)
@@ -134,19 +119,6 @@ sol::optional<sol::table> registry_manager::get_table(const std::string& mod_nam
     }
 
     return (*mod_data_table)[datatype_name];
-}
-
-optional<exported_function> registry_manager::get_function(const std::string& name) const
-{
-    sol::optional<sol::protected_function> func = registry_env["Exports"][name];
-    if (func && *func != sol::lua_nil)
-    {
-        return exported_function{name, *func};
-    }
-    else
-    {
-        return none;
-    }
 }
 
 } // namespace lua

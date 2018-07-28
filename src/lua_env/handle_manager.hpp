@@ -2,6 +2,7 @@
 
 #include <set>
 #include "../character.hpp"
+#include "../lib/noncopyable.hpp"
 #include "../item.hpp"
 #include "lua_env.hpp"
 
@@ -24,7 +25,7 @@ class lua_env;
  *
  * See mods/core/handle.lua for more information.
  */
-class handle_manager
+class handle_manager : public lib::noncopyable
 {
 public:
     explicit handle_manager(lua_env*);
@@ -47,6 +48,18 @@ public:
     void remove_chara_handle(character& chara);
     void remove_item_handle(item& item);
 
+
+    /***
+     * Methods that will create/remove handles as well as run
+     * creation/removal event callbacks using the event manager
+     * instance.
+     */
+    void create_chara_handle_run_callbacks(character&);
+    void create_item_handle_run_callbacks(item&);
+    void remove_chara_handle_run_callbacks(character&);
+    void remove_item_handle_run_callbacks(item&);
+
+
     /***
      * Provides a reference to a handle from the isolated handle
      * environment.
@@ -57,12 +70,14 @@ public:
     void clear_all_handles();
 
     /***
-     * Clears only the handles that are local to the current map.
-     * Player and party character/item handles are not cleared.
+     * Clears handles that are local to the current map without
+     * running removal callbacks. Player and party character/item
+     * handles are not cleared.
      */
     void clear_map_local_handles();
 
 private:
+
     void bind(lua_env&);
 
     std::set<int> chara_handles;

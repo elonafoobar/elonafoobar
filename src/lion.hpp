@@ -1,6 +1,7 @@
 #pragma once
-#include <unordered_map>
+#include <chrono>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 #include "filesystem.hpp"
 #include "hcl.hpp"
@@ -15,8 +16,6 @@ using namespace std::literals::string_literals;
 
 namespace elona
 {
-
-struct character;
 
 namespace lua
 {
@@ -112,6 +111,9 @@ public:
 
     void initialize(sol::table table, lua::lua_env& lua)
     {
+        using namespace std::chrono;
+        steady_clock::time_point begin = steady_clock::now();
+
         std::string prefix = "core." + std::string(traits_type::datatype_name);
         for (const auto& pair : table) {
             std::string id = pair.first.as<std::string>();
@@ -129,6 +131,12 @@ public:
             by_legacy_id.emplace(converted.id, the_id);
             storage.emplace(the_id, converted);
         }
+
+        steady_clock::time_point end = steady_clock::now();
+        auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+        ELONA_LOG("[LION ("s << traits_type::datatype_name << ")] Elements: "s
+                  << storage.size() << ", time: "s
+                  << time << "ms"s);
     }
 
     optional_ref<id_type> get_id_from_legacy(const legacy_id_type& legacy_id) const
@@ -246,7 +254,7 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
         if (function_name)                                              \
         {                                                               \
             name = *function_name;                                      \
-            if (!lua.get_registry_manager().has_function(*function_name)) \
+            if (!lua.get_export_manager().has_function(*function_name)) \
             {                                                           \
                 throw std::runtime_error("Error loading " + id_ + "." + #name + ": No such callback named " + *function_name); \
             }                                                           \

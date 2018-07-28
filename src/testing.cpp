@@ -99,9 +99,7 @@ void configure_lua()
 {
     clear_lion_db();
     lua::lua.reset(new lua::lua_env());
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod();
-    lua::lua->load_all_mods();
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     initialize_lion_db();
 
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");

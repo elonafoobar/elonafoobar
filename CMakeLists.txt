@@ -140,11 +140,13 @@ set(CORE_SOURCES
   src/ui.cpp
   src/variables.cpp
   src/wish.cpp
+  src/lua_env/api_manager.cpp
   src/lua_env/event_manager.cpp
+  src/lua_env/export_manager.cpp
   src/lua_env/handle_manager.cpp
   src/lua_env/lua_env.cpp
-  src/lua_env/lua_api.cpp
-  src/lua_env/lua_registry.cpp
+  src/lua_env/mod_manager.cpp
+  src/lua_env/registry_manager.cpp
   src/pic_loader/pic_loader.cpp
   src/version.cpp
   )

@@ -1541,10 +1541,10 @@ int api_manager::get_enum_value(const std::string& enum_name,
     return *enum_value;
 }
 
-void api_manager::load_core(lua_env& lua)
+void api_manager::load_lua_support_libraries(lua_env& lua)
 {
-    // Don't load the core mod again if it's already loaded, because
-    // all the tables will be read-only.
+    // Don't load the support libraries again if they're already
+    // loaded, because all the tables will be read-only.
     if (is_loaded())
     {
         return;
@@ -1553,12 +1553,13 @@ void api_manager::load_core(lua_env& lua)
     auto result = lua.get_state()->safe_script_file(
         filesystem::make_preferred_path_in_utf8(filesystem::dir::data() / "lua" / "init.lua"),
         api_env);
+
     if (!result.valid())
     {
         sol::error err = result;
         std::string what = err.what();
         ELONA_LOG(what);
-        throw std::runtime_error("Failed initializing core mod!");
+        throw std::runtime_error("Failed initializing Lua support libraries.");
     }
 }
 

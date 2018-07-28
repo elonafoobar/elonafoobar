@@ -38,10 +38,10 @@ public:
 
     void AddCallbacks(int amount)
     {
-        elona::lua::lua->load_mod_from_script("bench", "");
+        elona::lua::lua->get_mod_manager().load_mod_from_script("bench", "");
         for (int i = 0; i < amount; i++)
         {
-            elona::lua::lua->run_in_mod("bench", R"(
+            elona::lua::lua->get_mod_manager().run_in_mod("bench", R"(
 local GUI = Elona.require("GUI")
 local Event = Elona.require("Event")
 

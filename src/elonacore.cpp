@@ -3382,7 +3382,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua->on_chara_loaded(
+    lua::lua->get_handle_manager().create_chara_handle(
         cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
@@ -5660,7 +5660,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
-                lua::lua->on_chara_loaded(
+                lua::lua->get_handle_manager().create_chara_handle(
                     cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
@@ -5711,7 +5711,9 @@ turn_result_t exit_map()
     if (map_changed)
     {
         lua::lua->get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
-        lua::lua->clear_map_local_data();
+
+        lua::lua->get_mod_manager().clear_map_local_data();
+        lua::lua->get_handle_manager().clear_map_local_handles();
     }
 
     mode = 2;

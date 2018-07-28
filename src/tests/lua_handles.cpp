@@ -178,16 +178,16 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         auto handle =
             elona::lua::lua->get_handle_manager().get_chara_handle(chara);
 
-        REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script("test", ""));
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script("test", ""));
 
-        elona::lua::lua->get_mod("test")->env.set("chara", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test")->env.set("chara", handle);
         REQUIRE_NOTHROW(
-            elona::lua::lua->run_in_mod("test", "Store.global.charas = {[0]=chara}"));
+            elona::lua::lua->get_mod_manager().run_in_mod("test", "Store.global.charas = {[0]=chara}"));
 
         chara_delete(chara.index);
 
         REQUIRE_THROWS(
-            elona::lua::lua->run_in_mod("test", "print(Store.global.charas[0].index)"));
+            elona::lua::lua->get_mod_manager().run_in_mod("test", "print(Store.global.charas[0].index)"));
     }
     SECTION("Items")
     {
@@ -196,16 +196,16 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         auto handle =
             elona::lua::lua->get_handle_manager().get_item_handle(item);
 
-        REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script("test2", ""));
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script("test2", ""));
 
-        elona::lua::lua->get_mod("test2")->env.set("item", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test2")->env.set("item", handle);
         REQUIRE_NOTHROW(
-            elona::lua::lua->run_in_mod("test2", "Store.global.items = {[0]=item}"));
+            elona::lua::lua->get_mod_manager().run_in_mod("test2", "Store.global.items = {[0]=item}"));
 
         item_delete(item.index);
 
         REQUIRE_THROWS(
-            elona::lua::lua->run_in_mod("test2", "print(Store.global.items[0].index)"));
+            elona::lua::lua->get_mod_manager().run_in_mod("test2", "print(Store.global.items[0].index)"));
     }
 }
 
@@ -216,33 +216,33 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
     SECTION("Characters")
     {
         REQUIRE_NOTHROW(
-            elona::lua::lua->load_mod_from_script("test_invalid_chara", R"(
+            elona::lua::lua->get_mod_manager().load_mod_from_script("test_invalid_chara", R"(
 local Chara = Elona.require("Chara")
 local chara = Chara.create(0, 0, 3)
 idx = chara.index
 Store.global.charas = {[0]=chara}
 )"));
-        int idx = elona::lua::lua->get_mod("test_invalid_chara")->env["idx"];
+        int idx = elona::lua::lua->get_mod_manager().get_mod("test_invalid_chara")->env["idx"];
 
         chara_delete(idx);
 
-        REQUIRE_THROWS(elona::lua::lua->run_in_mod(
+        REQUIRE_THROWS(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_invalid_chara", "print(Store.global.charas[0].index)"));
     }
     SECTION("Items")
     {
         REQUIRE_NOTHROW(
-            elona::lua::lua->load_mod_from_script("test_invalid_item", R"(
+            elona::lua::lua->get_mod_manager().load_mod_from_script("test_invalid_item", R"(
 local Item = Elona.require("Item")
 local item = Item.create(0, 0, 792, 3)
 idx = item.index
 Store.global.items = {[0]=items}
 )"));
-        int idx = elona::lua::lua->get_mod("test_invalid_item")->env["idx"];
+        int idx = elona::lua::lua->get_mod_manager().get_mod("test_invalid_item")->env["idx"];
 
         item_delete(idx);
 
-        REQUIRE_THROWS(elona::lua::lua->run_in_mod(
+        REQUIRE_THROWS(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_invalid_item", "print(Store.global.items[0].index)"));
     }
 }
@@ -258,11 +258,11 @@ TEST_CASE("Test calling C++ functions taking handles as arguments")
         auto handle =
             elona::lua::lua->get_handle_manager().get_chara_handle(chara);
 
-        REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script(
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
             "test_chara_arg", "Store.global.charas = {}"));
-        elona::lua::lua->get_mod("test_chara_arg")->env.set("chara", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test_chara_arg")->env.set("chara", handle);
 
-        REQUIRE_NOTHROW(elona::lua::lua->run_in_mod("test_chara_arg", R"(
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod("test_chara_arg", R"(
 Store.global.charas[0] = chara
 local Chara = Elona.require("Chara")
 print(Chara.is_ally(Store.global.charas[0]))
@@ -270,7 +270,7 @@ print(Chara.is_ally(Store.global.charas[0]))
 
         chara_delete(chara.index);
 
-        REQUIRE_THROWS(elona::lua::lua->run_in_mod("test_chara_arg", R"(
+        REQUIRE_THROWS(elona::lua::lua->get_mod_manager().run_in_mod("test_chara_arg", R"(
 local Chara = Elona.require("Chara")
 print(Chara.is_ally(Store.global.charas[0]))
 )"));
@@ -282,11 +282,11 @@ print(Chara.is_ally(Store.global.charas[0]))
         auto handle =
             elona::lua::lua->get_handle_manager().get_item_handle(item);
 
-        REQUIRE_NOTHROW(elona::lua::lua->load_mod_from_script(
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
             "test_item_arg", "Store.global.items = {}"));
-        elona::lua::lua->get_mod("test_item_arg")->env.set("item", handle);
+        elona::lua::lua->get_mod_manager().get_mod("test_item_arg")->env.set("item", handle);
 
-        REQUIRE_NOTHROW(elona::lua::lua->run_in_mod("test_item_arg", R"(
+        REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod("test_item_arg", R"(
 Store.global.items[0] = item
 local Item = Elona.require("Item")
 Item.has_enchantment(Store.global.items[0], 20)
@@ -294,7 +294,7 @@ Item.has_enchantment(Store.global.items[0], 20)
 
         item_delete(item.index);
 
-        REQUIRE_THROWS(elona::lua::lua->run_in_mod("test_item_arg", R"(
+        REQUIRE_THROWS(elona::lua::lua->get_mod_manager().run_in_mod("test_item_arg", R"(
 local Item = Elona.require("Item")
 Item.has_enchantment(Store.global.items[0], 20)
 )"));

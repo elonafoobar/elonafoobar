@@ -16,9 +16,9 @@ using namespace elona::testing;
 TEST_CASE("Test registering of callback", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -33,15 +33,15 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(Store.global.thing == "dood"))"));
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.thing == "dood"))"));
 }
 
 TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -60,15 +60,15 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 4))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 4))"));
 }
 
 TEST_CASE("Test unregistering of callback", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -84,15 +84,15 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(Store.global.thing == nil))"));
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.thing == nil))"));
 }
 
 TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -115,15 +115,15 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
 }
 
 TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -139,15 +139,15 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 0))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 0))"));
 }
 
 TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -166,15 +166,15 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
 }
 
 TEST_CASE("Test clearing of single callback type", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -195,15 +195,15 @@ Event.clear(Event.EventKind.AllTurnsFinished)
         .run_callbacks<elona::lua::event_kind_t::player_turn>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 1))"));
 }
 
 TEST_CASE("Test clearing of all callback types", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -224,15 +224,15 @@ Event.clear()
         .run_callbacks<elona::lua::event_kind_t::player_turn>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("test", R"(assert(Store.global.called_times == 0))"));
+        lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.called_times == 0))"));
 }
 
 TEST_CASE("Test isolation of event clearing between mods", "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("first_mod", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("first_mod", R"(
 local Event = Elona.require("Event")
 
 local function my_handler()
@@ -244,7 +244,7 @@ Store.global.called_times = 0
 Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("second_mod", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("second_mod", R"(
 local Event = Elona.require("Event")
 Event.clear()
 )"));
@@ -253,7 +253,7 @@ Event.clear()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
     REQUIRE_NOTHROW(
-        lua.run_in_mod("first_mod", R"(assert(Store.global.called_times == 1))"));
+        lua.get_mod_manager().run_in_mod("first_mod", R"(assert(Store.global.called_times == 1))"));
 }
 
 TEST_CASE(
@@ -261,9 +261,9 @@ TEST_CASE(
     "[Lua: Events]")
 {
     elona::lua::lua_env lua;
-    lua.reload();
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
 local function first_handler()
@@ -285,6 +285,6 @@ Event.register(Event.EventKind.PlayerTurn, second_handler)
     lua.get_event_manager()
         .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(Store.global.first == true))"));
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(Store.global.second == true))"));
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.first == true))"));
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(assert(Store.global.second == true))"));
 }

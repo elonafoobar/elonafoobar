@@ -6,6 +6,7 @@
 #include "i18n.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 
 
@@ -323,7 +324,7 @@ int access_character_info()
     if (dbmode == 12 && data->corpse_eating_effect)
     {
         auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
-        lua::lua->get_registry_manager().call(*data->corpse_eating_effect, handle);
+        lua::lua->get_export_manager().call(*data->corpse_eating_effect, handle);
         return -1;
     }
 

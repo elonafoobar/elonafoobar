@@ -44,6 +44,11 @@ void handle_manager::bind(lua_env& lua)
 
 void handle_manager::create_chara_handle(character& chara)
 {
+    if (chara.state == 0)
+    {
+        return;
+    }
+
     if (chara_handles.find(chara.index) != chara_handles.end())
     {
         handle_env["Handle"]["assert_chara_valid"](chara);
@@ -55,6 +60,11 @@ void handle_manager::create_chara_handle(character& chara)
 
 void handle_manager::create_item_handle(item& item)
 {
+    if (item.number == 0)
+    {
+        return;
+    }
+
     if (item_handles.find(item.index) != item_handles.end())
     {
         handle_env["Handle"]["assert_item_valid"](item);
@@ -66,6 +76,11 @@ void handle_manager::create_item_handle(item& item)
 
 void handle_manager::remove_chara_handle(character& chara)
 {
+    if (chara.state == 0)
+    {
+        return;
+    }
+
     // TODO should chara.state == 0 mean the handle is invalid?
     // Some characters can die and respawn again.
     if (chara_handles.find(chara.index) == chara_handles.end())
@@ -79,6 +94,11 @@ void handle_manager::remove_chara_handle(character& chara)
 
 void handle_manager::remove_item_handle(item& item)
 {
+    if (item.number == 0)
+    {
+        return;
+    }
+
     // item.number is set to zero often, but it doesn't seem to
     // signify whether or not the item was deleted.
     if (item_handles.find(item.index) == item_handles.end())
@@ -90,11 +110,51 @@ void handle_manager::remove_item_handle(item& item)
     handle_env["Handle"]["remove_item_handle"](item);
 }
 
+
+// Handlers for brand-new instances of characters/objects being created
+void handle_manager::create_chara_handle_run_callbacks(character& chara)
+{
+    assert(chara.state != 0);
+    create_chara_handle(chara);
+
+    auto handle = get_chara_handle(chara);
+    assert(handle != sol::lua_nil);
+    lua->get_event_manager().run_callbacks<event_kind_t::character_created>(handle);
+}
+
+void handle_manager::create_item_handle_run_callbacks(item& item)
+{
+    assert(item.number != 0);
+    create_item_handle(item);
+
+    auto handle = get_item_handle(item);
+    assert(handle != sol::lua_nil);
+    lua->get_event_manager().run_callbacks<event_kind_t::item_created>(handle);
+}
+
+
+// Handlers for invalidation of characters/items (character death, item count is
+// 0)
+void handle_manager::remove_chara_handle_run_callbacks(character& chara)
+{
+    auto handle = get_chara_handle(chara);
+    lua->get_event_manager().run_callbacks<event_kind_t::character_removed>(handle);
+    remove_chara_handle(chara);
+}
+
+void handle_manager::remove_item_handle_run_callbacks(item& item)
+{
+    auto handle = get_item_handle(item);
+    lua->get_event_manager().run_callbacks<event_kind_t::item_removed>(handle);
+    remove_item_handle(item);
+}
+
+
 sol::object handle_manager::get_chara_handle(character& chara)
 {
     if (chara.index == -1)
     {
-        ELONA_LOG("Tried getting handle to character of index -1");
+        //ELONA_LOG("Tried getting handle to character of index -1");
         return sol::lua_nil;
     }
     if (chara_handles.find(chara.index) == chara_handles.end())
@@ -111,7 +171,7 @@ sol::object handle_manager::get_item_handle(item& item)
 {
     if (item.index == -1)
     {
-        ELONA_LOG("Tried getting handle to item of index -1");
+        //ELONA_LOG("Tried getting handle to item of index -1");
         return sol::lua_nil;
     }
     if (item_handles.find(item.index) == item_handles.end())
