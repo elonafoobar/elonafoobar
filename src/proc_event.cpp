@@ -169,7 +169,7 @@ void proc_event()
         new_ally_joins();
         break;
     case 13:
-        play_music(80);
+        play_music("core.music.mcWedding");
         s = i18n::s.get("core.locale.event.popup.marriage.title");
         buff = i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
         listmax = 1;
@@ -239,7 +239,7 @@ void proc_event()
         txt(i18n::s.get("core.locale.event.guarded_by_lord", mapname(gdata_current_map), cdata[tc]));
         break;
     case 5:
-        play_music(64);
+        play_music("core.music.mcVictory");
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;
@@ -816,8 +816,7 @@ void proc_event()
         if (mdata_map_type == mdata_t::map_type_t::world_map)
             break;
         gdata_weather = 1;
-        envonly = 1;
-        play_music();
+        sound_play_environmental();
         txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
         ragnarok_animation().play();

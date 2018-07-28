@@ -1957,12 +1957,19 @@ turn_result_t do_use_command()
     {
         txt(i18n::s.get("core.locale.action.use.music_disc.play", inv[ci]));
         auto music = inv[ci].param1 + 50 + 1;
-        if (music > 90)
+        if (music > 97)
         {
-            music = 90;
+            music = 97;
         }
         mdata_map_bgm = music;
-        play_music(music);
+
+        auto music_id = *the_music_db.get_id_from_legacy(music);
+        assert(music_id);
+        if (!music_id)
+        {
+            goto label_2229_internal;
+        }
+        play_music(*music_id);
     }
         goto label_2229_internal;
     case 10:
@@ -2139,8 +2146,7 @@ turn_result_t do_use_command()
         }
         txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"));
         txt(i18n::s.get("core.locale.action.weather.changes"));
-        envonly = 1;
-        play_music();
+        sound_play_environmental();
         goto label_2229_internal;
     case 28:
         if (mdata_map_type == mdata_t::map_type_t::world_map)

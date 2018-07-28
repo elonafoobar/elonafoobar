@@ -20,7 +20,7 @@ main_menu_result_t main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
-    play_music(65);
+    play_music("core.music.mcOpening");
     cs = 0;
     cs_bk = -1;
     keyrange = 6;

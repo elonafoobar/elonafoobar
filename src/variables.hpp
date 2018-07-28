@@ -471,7 +471,6 @@ ELONA_EXTERN(int encounterlv);
 ELONA_EXTERN(int encounterref);
 ELONA_EXTERN(int enemylv);
 ELONA_EXTERN(int enemyteam);
-ELONA_EXTERN(int envonly);
 ELONA_EXTERN(int eqmultiweapon);
 ELONA_EXTERN(int eqtwohand);
 ELONA_EXTERN(int equip);

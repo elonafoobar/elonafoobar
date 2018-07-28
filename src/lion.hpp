@@ -11,6 +11,8 @@
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace elona
 {
 
@@ -100,6 +102,7 @@ public:
     void clear()
     {
         storage.clear();
+        by_legacy_id.clear();
     }
 
     void initialize(sol::table table)
@@ -117,11 +120,25 @@ public:
             data_type converted = static_cast<T&>(*this).convert(id, data, lua);
             id_type the_id(prefix + "." + id);
 
+            auto it = by_legacy_id.find(converted.id);
+            if (it != by_legacy_id.end())
+            {
+                throw std::runtime_error(the_id.get() + ": Legacy id already exists: "s + std::to_string(converted.id) + " -> "s + it->second.get());
+            }
+
             by_legacy_id.emplace(converted.id, the_id);
             storage.emplace(the_id, converted);
         }
     }
 
+    optional_ref<id_type> get_id_from_legacy(const legacy_id_type& legacy_id) const
+    {
+        const auto itr = by_legacy_id.find(legacy_id);
+        if (itr == std::end(by_legacy_id))
+            return none;
+        else
+            return itr->second;
+    }
 
     optional_ref<data_type> operator[](const id_type& id) const
     {
@@ -141,11 +158,10 @@ public:
 
     optional_ref<data_type> operator[](const legacy_id_type& legacy_id) const
     {
-        const auto itr = by_legacy_id.find(legacy_id);
-        if (itr == std::end(by_legacy_id))
-            return none;
+        if (const auto id = get_id_from_legacy(legacy_id))
+            return (*this)[**id];
         else
-            return (*this)[itr->second];
+            return none;
     }
 
 
