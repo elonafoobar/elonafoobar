@@ -2,6 +2,7 @@
 #include <set>
 #include "ability.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"

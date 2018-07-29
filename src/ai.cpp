@@ -314,7 +314,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                         sell += inv[cnt].number;
                         sell(1) += p;
                         item_remove(inv[cnt]);
-                        cdata[cc].gold += p;
+                        earn_gold(cdata[cc], p);
                     }
                 }
                 if (sell != 0)

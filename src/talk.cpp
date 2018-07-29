@@ -894,7 +894,7 @@ talk_result_t talk_house_visitor()
             txt(i18n::s.get("core.locale.talk.visitor.beggar.spare", p(0), cdata[tc]));
             cdata[0].gold -= p;
             snd(12);
-            cdata[tc].gold += p;
+            earn_gold(cdata[tc], p);
             modify_karma(0, 2);
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.visitor.beggar.after", cdata[tc]);

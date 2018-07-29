@@ -1,4 +1,5 @@
 #include "character_status.hpp"
+#include <limits>
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "character.hpp"
@@ -336,6 +337,38 @@ void update_required_experience(int cc)
         || cdata[cc].required_experience < 0)
     {
         cdata[cc].required_experience = 100000000;
+    }
+}
+
+
+
+void earn_gold(character& cc, int delta)
+{
+    constexpr auto max = std::numeric_limits<decltype(cc.gold)>::max();
+
+    if (cc.gold > max - delta)
+    {
+        cc.gold = max;
+    }
+    else
+    {
+        cc.gold += delta;
+    }
+}
+
+
+
+void earn_platinum(character& cc, int delta)
+{
+    constexpr auto max = std::numeric_limits<decltype(cc.platinum_coin)>::max();
+
+    if (cc.platinum_coin > max - delta)
+    {
+        cc.platinum_coin = max;
+    }
+    else
+    {
+        cc.platinum_coin += delta;
     }
 }
 

@@ -2931,7 +2931,7 @@ turn_result_t do_movement_command()
                             {
                                 snd(11);
                                 cdata[cc].gold -= p;
-                                cdata[tc].gold += p;
+                                earn_gold(cdata[tc], p);
                                 txt(i18n::s.get_enum("core.locale.action.move.displace.dialog", rnd(2)));
                             }
                         }

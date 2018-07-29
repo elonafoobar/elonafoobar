@@ -825,7 +825,7 @@ int magic()
                                         cdata[cc],
                                         cdata[tc],
                                         p(0)));
-                        cdata[cc].gold += p;
+                        earn_gold(cdata[cc], p);
                     }
                     tc = cc;
                     if (gdata_mount != 0)
