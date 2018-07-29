@@ -26,9 +26,6 @@
 --
 -- Borrowed from https://eliasdaler.github.io/game-object-references/
 
-local UUID = require "uuid"
-local inspect = require "inspect"
-
 local Handle = {}
 
 -- Stores a map of handle -> C++ object reference. These should not be
@@ -123,12 +120,6 @@ local metatables = {}
 metatables.LuaCharacter = generate_metatable("LuaCharacter")
 metatables.LuaItem = generate_metatable("LuaItem")
 
--- Because os.time()'s precision is one second, it makes for a poor
--- random seed. However, it doesn't matter as because only uniqueness
--- is needed (as in this case), and the ability to predict UUIDs has
--- no real consequence.
-UUID.seed()
-
 --- Given a valid handle and kind, retrieves the underlying C++
 --- userdata reference.
 function Handle.get_ref(handle, kind)
@@ -161,14 +152,14 @@ function Handle.get_handle(cpp_ref, kind)
    return handle
 end
 
-function Handle.create_handle(cpp_ref, kind)
+function Handle.create_handle(cpp_ref, kind, uuid)
    if handles_by_index[kind][cpp_ref.index] ~= nil then
       error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
       return nil
    end
 
    local handle = {
-      uuid = UUID(),
+      uuid = uuid,
       kind = kind,
       is_valid = function(self) return Handle.is_valid(self) end
    }

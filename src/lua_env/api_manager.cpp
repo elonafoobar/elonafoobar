@@ -32,25 +32,6 @@ namespace elona
 namespace lua
 {
 
-/***
- * The below two functions marshal Lua handles to C++ references.
- *
- * TODO
- *
- * NOTE: a side effect of this is that overloaded methods that can
- * take a handle argument MUST be ordered last inside sol::overload(),
- * because if an argument can be converted to a Lua table the handler
- * for the Lua handle will be called first (since handles are Lua
- * tables), which is wrong. It also means that overloaded methods
- * cannot take either a character or item (but the only real
- * similarity between the two is the position field, so that should be
- * okay).
- *
- * See mods/core/handle.lua for the Lua side of things.
- */
-
-
-
 namespace Chara
 {
 bool is_alive(lua_character_handle);

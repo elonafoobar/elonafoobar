@@ -5,6 +5,10 @@
 #include "../lib/noncopyable.hpp"
 #include "../item.hpp"
 #include "lua_env.hpp"
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 namespace elona
 {
@@ -139,7 +143,9 @@ private:
             return;
         }
         handle_set.emplace(obj.index);
-        handle_env["Handle"]["create_handle"](obj, T::lua_type());
+
+        std::string uuid = boost::lexical_cast<std::string>(uuid_generator());
+        handle_env["Handle"]["create_handle"](obj, T::lua_type(), uuid);
     }
 
     template<typename T>
@@ -164,6 +170,7 @@ private:
     void bind(lua_env&);
 
     std::unordered_map<std::string, std::set<int>> handles;
+    boost::uuids::random_generator uuid_generator;
 
     /***
      * The isolated Lua environment where the handles are stored and
