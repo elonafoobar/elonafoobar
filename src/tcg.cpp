@@ -1823,7 +1823,7 @@ void tcgdeck()
             if (rtval == 0)
             {
                 ctrl_file(
-                    file_operation2_t::_24,
+                    file_operation2_t::deck_read,
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
         }
@@ -2709,7 +2709,7 @@ label_1830_internal:
             if (rtval == 0)
             {
                 ctrl_file(
-                    file_operation2_t::_23,
+                    file_operation2_t::deck_write,
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
                 writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
             }

@@ -3837,7 +3837,7 @@ void initialize_home_mdata()
 void map_initcustom(const std::string& prm_934)
 {
     fmapfile = (filesystem::dir::map() / prm_934).generic_string();
-    ctrl_file(file_operation_t::_5);
+    ctrl_file(file_operation_t::custom_map_read);
     map_tileset(mdata_map_tileset);
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)

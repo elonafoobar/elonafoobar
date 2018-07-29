@@ -473,7 +473,7 @@ main_menu_result_t main_menu_continue()
                     if (rtval == 0)
                     {
                         snd(20);
-                        ctrl_file(file_operation_t::_9);
+                        ctrl_file(file_operation_t::save_game_delete);
                     }
                     return main_menu_result_t::main_menu_continue;
                 }

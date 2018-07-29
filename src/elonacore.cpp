@@ -5749,7 +5749,7 @@ turn_result_t exit_map()
         // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
-            ctrl_file(file_operation_t::_11);
+            ctrl_file(file_operation_t::map_delete);
         }
 
         // forget about all NPCs that were here
@@ -5816,10 +5816,10 @@ void save_map_local_data()
     }
 
     // write map data and characters/skill data local to this map
-    ctrl_file(file_operation_t::_2);
+    ctrl_file(file_operation_t::map_write);
 
     // write data for items/character inventories local to this map
-    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
 }
 
 
@@ -7133,7 +7133,7 @@ int place_random_nefias()
         }
         p = cnt;
         area = p;
-        ctrl_file(file_operation_t::_13);
+        ctrl_file(file_operation_t::temp_dir_delete_area);
         adata(0, p) = mdata_t::map_type_t::dungeon + rnd(4);
         adata(16, p) = mdata_t::map_id_t::random_dungeon;
         adata(15, p) = 133;
@@ -7918,7 +7918,7 @@ void atxinit()
 
 void begintempinv()
 {
-    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
         item_remove(inv[cnt]);
@@ -7930,7 +7930,7 @@ void begintempinv()
 
 void exittempinv()
 {
-    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
     return;
 }
 
@@ -8018,11 +8018,11 @@ int calcincome(int prm_1036)
 void supply_income()
 {
     invfile = 4;
-    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
     tmpload(filesystem::u8path(u8"shop4.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
     {
-        ctrl_file(file_operation2_t::_3, u8"shop4.s2"s);
+        ctrl_file(file_operation2_t::map_items_read, u8"shop4.s2"s);
     }
     else
     {
@@ -8178,8 +8178,8 @@ void supply_income()
                 u8"You don't have to pay tax until you hit level 6."s));
         }
     }
-    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
     mode = 0;
     if (config::instance().extrahelp)
     {
@@ -10102,9 +10102,9 @@ void migrate_save_data(const fs::path& save_dir)
                     std::to_string(map_id) + "_" + std::to_string(level + 100);
             }
             // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(file_operation_t::_1);
+            ctrl_file(file_operation_t::map_read);
             // Read inv.
-            ctrl_file(file_operation2_t::_3, "inv_" + mid + ".s2");
+            ctrl_file(file_operation2_t::map_items_read, "inv_" + mid + ".s2");
 
             ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
             if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0 && level == 1)
@@ -10130,16 +10130,16 @@ void migrate_save_data(const fs::path& save_dir)
                         }
                     }
                     // Write inv.
-                    ctrl_file(file_operation2_t::_4, "inv_" + mid + ".s2");
+                    ctrl_file(file_operation2_t::map_items_write, "inv_" + mid + ".s2");
                     // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-                    ctrl_file(file_operation_t::_2);
+                    ctrl_file(file_operation_t::map_write);
                     continue;
                 }
 
                 ELONA_LOG("Reinitialize map items.");
                 fmapfile =
                     (filesystem::dir::map() / map_filename).generic_string();
-                ctrl_file(file_operation_t::_16);
+                ctrl_file(file_operation_t::map_load_map_obj_files);
 
                 for (int i = 0; i < 400; ++i)
                 {
@@ -10179,9 +10179,9 @@ void migrate_save_data(const fs::path& save_dir)
                 }
             }
             // Write inv.
-            ctrl_file(file_operation2_t::_4, "inv_" + mid + ".s2");
+            ctrl_file(file_operation2_t::map_items_write, "inv_" + mid + ".s2");
             // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(file_operation_t::_2);
+            ctrl_file(file_operation_t::map_write);
         }
     }
 
@@ -10204,7 +10204,7 @@ void label_2090()
 
 void get_inheritance()
 {
-    ctrl_file(file_operation2_t::_4, u8"shop3.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)
@@ -10250,7 +10250,7 @@ void get_inheritance()
 
 void load_gene_files()
 {
-    ctrl_file(file_operation_t::_15);
+    ctrl_file(file_operation_t::gene_read);
     DIM2(spell, 200);
     DIM2(spact, 500);
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
@@ -10311,7 +10311,7 @@ void load_gene_files()
 
 void save_gene()
 {
-    ctrl_file(file_operation_t::_14);
+    ctrl_file(file_operation_t::gene_write);
 }
 
 
@@ -10466,7 +10466,7 @@ void load_save_data()
     save_t::instance().clear();
     writeloadedbuff_clear();
 
-    ctrl_file(file_operation_t::_10);
+    ctrl_file(file_operation_t::temp_dir_delete);
     const auto save_dir = filesystem::dir::save(playerid);
 
     // TODO: Delete these lines when v1.0.0 stable is released.
@@ -10477,7 +10477,7 @@ void load_save_data()
     }
 
     migrate_save_data_from_025_to_026(save_dir);
-    ctrl_file(file_operation2_t::_7, save_dir);
+    ctrl_file(file_operation2_t::global_read, save_dir);
     migrate_save_data(save_dir);
     ELONA_LOG("migrate:end");
     set_item_info();
@@ -10523,8 +10523,8 @@ void save_game()
         update_screen();
         return;
     }
-    ctrl_file(file_operation_t::_2);
-    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation_t::map_write);
+    ctrl_file(file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
@@ -10541,7 +10541,7 @@ void save_game()
         fs::create_directory(save_dir);
     }
     save_t::instance().save(save_dir);
-    ctrl_file(file_operation2_t::_8, save_dir);
+    ctrl_file(file_operation2_t::global_write, save_dir);
     save_t::instance().clear();
     ELONA_LOG("Save game: finish");
 }
@@ -12696,7 +12696,7 @@ int pick_up_item()
                             filesystem::dir::tmp()
                             / (u8"mdata_"s + mid + u8".s2")))
                     {
-                        ctrl_file(file_operation_t::_11);
+                        ctrl_file(file_operation_t::map_delete);
                     }
                     mid = midbk;
                     inv[ci].count = 0;
