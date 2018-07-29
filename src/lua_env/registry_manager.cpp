@@ -81,14 +81,9 @@ void registry_manager::register_data(const std::string& mod_name,
     registry_env.set("_DATATYPE_NAME", datatype_name);
     registry_env.set("_FILEPATH", normalized);
 
-    // Don't print errors (they will be thrown anyways)
-    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-        return pfr;
-    };
-
     auto result = lua_->get_state()->safe_script(R"(
 register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
-)", registry_env, ignore_handler);
+)", registry_env, &sol::script_pass_on_error);
 
     registry_env.set("_MOD_NAME", sol::lua_nil);
     registry_env.set("_DATATYPE_NAME", sol::lua_nil);

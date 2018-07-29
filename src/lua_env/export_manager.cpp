@@ -26,14 +26,9 @@ void export_manager::register_all_exports()
 {
     export_env.set("_API_TABLE", lua_->get_api_manager().get_master_api_table());
 
-    // Don't print errors (they will be thrown anyways)
-    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-        return pfr;
-    };
-
     auto result = lua_->get_state()->safe_script(R"(
 Exports = scan_exports(_API_TABLE)
-)", export_env, ignore_handler);
+)", export_env, &sol::script_pass_on_error);
 
     export_env.set("_API_TABLE", sol::lua_nil);
 

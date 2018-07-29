@@ -110,7 +110,7 @@ local function generate_metatable(prefix)
       refs[prefix][handle.uuid][key] = value
    end
    mt.__eq = function(lhs, rhs)
-      return lhs.kind == rhs.type and lhs.uuid == rhs.uuid
+      return lhs.kind == rhs.kind and lhs.uuid == rhs.uuid
    end
 
    refs[prefix] = {}
@@ -129,17 +129,32 @@ metatables.LuaItem = generate_metatable("LuaItem")
 -- no real consequence.
 UUID.seed()
 
-function Handle.get_ref(cpp_ref, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
-
+--- Given a valid handle and kind, retrieves the underlying C++
+--- userdata reference.
+function Handle.get_ref(handle, kind)
    if not Handle.is_valid(handle) then
       print_handle_error()
+      error("Error: handle is not valid!", 2)
       return nil
    end
 
    if not handle.kind == kind then
-      print("Error: handle is of wrong type: wanted " .. kind .. ", got " .. handle.kind)
       print(debug.traceback())
+      error("Error: handle is of wrong type: wanted " .. kind .. ", got " .. handle.kind)
+      return nil
+   end
+
+   return refs[kind][handle.uuid]
+end
+
+--- Given a C++ userdata reference and kind, retrieves the handle that
+--- references it.
+function Handle.get_handle(cpp_ref, kind)
+   local handle = handles_by_index[kind][cpp_ref.index]
+
+   if not handle.kind == kind then
+      print(debug.traceback())
+      error("Error: handle is of wrong type: wanted " .. kind .. ", got " .. handle.kind)
       return nil
    end
 
@@ -147,9 +162,15 @@ function Handle.get_ref(cpp_ref, kind)
 end
 
 function Handle.create_handle(cpp_ref, kind)
+   if handles_by_index[kind][cpp_ref.index] ~= nil then
+      error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
+      return nil
+   end
+
    local handle = {
       uuid = UUID(),
-      kind = kind
+      kind = kind,
+      is_valid = function(self) return Handle.is_valid(self) end
    }
 
    setmetatable(handle, metatables[handle.kind])
@@ -163,6 +184,13 @@ end
 function Handle.remove_handle(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
+   if handle == nil then
+      error("Handle doesn't exist: " .. kind .. ":" .. cpp_ref.index, 2)
+      return
+   end
+
+   assert(handle.kind == kind)
+
    refs[handle.kind][handle.uuid] = nil
    handles_by_index[handle.kind][cpp_ref.index] = nil
 end
@@ -170,12 +198,14 @@ end
 
 function Handle.assert_valid(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
+
    assert(Handle.is_valid(handle))
 end
 
 
 function Handle.assert_invalid(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
+
    assert(not Handle.is_valid(handle))
 end
 
@@ -192,13 +222,13 @@ end
 
 
 local function iter(a, i)
-   local v = a[i]
+   local v = a.handles[i]
    while not (v and Handle.is_valid(v)) do
       if i >= a.to then
          return nil
       end
       i = i + 1
-      v = a[i]
+      v = a.handles[i]
    end
    i = i + 1
    return i, v

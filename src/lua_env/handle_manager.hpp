@@ -67,15 +67,7 @@ public:
     template <typename T>
     T& get_ref(sol::table handle)
     {
-        if (!handle_is_valid(handle))
-        {
-            throw sol::error("Handle not valid");
-        }
-        if (!handle_is<T>(handle))
-        {
-            throw sol::error("Handle is of incorrect type");
-        }
-        sol::object obj = handle_env["refs"][T::lua_type()][handle["uuid"]];
+        sol::object obj = handle_env["Handle"]["get_ref"](handle, T::lua_type());
         return obj.as<T&>();
     }
 
@@ -92,7 +84,7 @@ public:
 
 
     /***
-     * Provides a reference to a handle from the isolated handle
+     * Provides a Lua reference to a handle from the isolated handle
      * environment.
      */
     template <typename T>
@@ -111,13 +103,13 @@ public:
         auto& handle_set = handles.at(T::lua_type());
         if (handle_set.find(obj.index) == handle_set.end())
         {
-            std::cout << "Handle " << obj.index << " not found." << std::endl;
+            // std::cout << "Handle " << obj.index << " not found." << std::endl;
             return sol::lua_nil;
         }
 
         // NOTE: currently indexes by the object's integer ID, but
         // this may be phased out in the future.
-        sol::table handle = handle_env["Handle"]["create_handle"](obj, T::lua_type());
+        sol::table handle = handle_env["Handle"]["get_handle"](obj, T::lua_type());
         return handle;
     }
 
