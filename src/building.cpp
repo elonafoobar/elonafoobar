@@ -600,18 +600,9 @@ void show_home_value()
         {
             continue;
         }
-        p(1) = inv[p].image % 1000;
-        prepare_item_image(p(1), inv[p].color, inv[p].param1);
-        pos(wx + 37, cnt * 16 + wy + 138);
-        gmode(2);
-        gcopy_c(
-            1,
-            0,
-            960,
-            item_chips[p(1)].width,
-            item_chips[p(1)].height,
-            item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
-            inf_tiles);
+
+        draw_item_with_portrait_scale_height(inv[p], wx + 37, cnt * 16 + wy + 138);
+
         pos(wx + 68, cnt * 16 + wy + 138);
         mes(i18n::s.get(
             "core.locale.building.home.rank.place", cnvrank(10 - cnt)));

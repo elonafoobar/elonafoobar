@@ -10,12 +10,20 @@ struct extent
         : x(x)
         , y(y)
         , width(width)
-        , height(height) {}
+        , height(height)
+        , frame_width(width) {}
+    extent(int x, int y, int width, int height, int frame_width)
+        : x(x)
+        , y(y)
+        , width(width)
+        , height(height)
+        , frame_width(frame_width) {}
 
     int x;
     int y;
     int width;
     int height;
+    int frame_width;
     int buffer;
 
     inline int left() const { return x; }

@@ -15,10 +15,7 @@ namespace elona
 
 struct item_chip_t
 {
-    int x;
-    int y;
-    int width;
-    int height;
+    shared_id key;
     int offset_y;
     int stack_height;
     int shadow;
@@ -41,10 +38,12 @@ extern std::vector<chara_chip_t> chara_chips;
 
 
 optional_ref<extent> draw_get_rect_chara(int);
+optional_ref<extent> draw_get_rect_item(int);
 optional_ref<extent> draw_get_rect(const std::string&);
 
-void prepare_item_image(int id, int color);
-void prepare_item_image(int id, int color, int character_image);
+struct item;
+optional_ref<extent> prepare_item_image(int id, int color);
+optional_ref<extent> prepare_item_image(int id, int color, int character_image);
 
 void set_color_mod(int r, int g, int b, int window_id = -1);
 
@@ -127,6 +126,21 @@ void draw_chara(int image_id,
                 int alpha = 0);
 void draw_chara_scale_height(const character& chara, int x, int y);
 void draw_chara_scale_height(int image_id, int x, int y);
+
+void draw_item_material(int mat_id, int x, int y);
+void draw_item_with_portrait(const item& item, int x, int y);
+void draw_item_with_portrait(int image_id,
+                             int color,
+                             optional<int> chara_chip_id,
+                             int x,
+                             int y);
+
+void draw_item_with_portrait_scale_height(const item& item, int x, int y);
+void draw_item_with_portrait_scale_height(int image_id,
+                                          int color,
+                                          optional<int> chara_chip_id,
+                                          int x,
+                                          int y);
 
 
 } // namespace elona

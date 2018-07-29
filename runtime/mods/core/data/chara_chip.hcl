@@ -3569,3 +3569,10 @@ chara_chip _500 {
         y = 720
     }
 }
+
+chara_chip _660 {
+    source {
+        x = 0
+        y = 960
+    }
+}
