@@ -64,6 +64,8 @@ enum class mod_loading_stage_t : unsigned
  */
 class mod_manager
 {
+    // Needs access to mod list so they can be saved/loaded.
+    friend class serial_manager;
 public:
     explicit mod_manager(lua_env*);
 

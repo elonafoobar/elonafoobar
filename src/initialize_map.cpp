@@ -175,7 +175,7 @@ label_1741_internal:
     {
         cdata[cnt].state = 0;
     }
-    for (int cnt = 1320; cnt < 5480; ++cnt)
+    for (int cnt = ELONA_ITEM_ON_GROUND_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         item_remove(inv[cnt]);
     }
@@ -947,7 +947,7 @@ label_1741_internal:
                     inv[cnt].position.y = mdata_map_height / 2;
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
-                ctrl_file(file_operation_t::_17);
+                ctrl_file(file_operation_t::map_home_upgrade);
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
                      cnt < ELONA_MAX_CHARACTERS;
                      ++cnt)

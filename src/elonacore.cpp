@@ -3549,7 +3549,7 @@ int convertartifact(int prm_930, int prm_931)
         return prm_930;
     }
     f_at_m163 = 0;
-    for (int cnt = 0; cnt < 5480; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
         if (prm_931)
         {

@@ -147,6 +147,7 @@ set(CORE_SOURCES
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
   src/lua_env/registry_manager.cpp
+  src/lua_env/serial_manager.cpp
   src/pic_loader/pic_loader.cpp
   src/version.cpp
   )

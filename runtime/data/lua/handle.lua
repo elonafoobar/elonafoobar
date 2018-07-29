@@ -161,6 +161,8 @@ function Handle.create_handle(cpp_ref, kind, uuid)
    local handle = {
       uuid = uuid,
       kind = kind,
+      index = cpp_ref.index,
+      __handle = true,
       is_valid = function(self) return Handle.is_valid(self) end
    }
 
@@ -198,6 +200,20 @@ function Handle.assert_invalid(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    assert(not Handle.is_valid(handle))
+end
+
+
+-- Functions for deserialization. The steps are as follows.
+-- 1. Deserialize mod data that contains the list of handles.
+-- 2. Place handles into the handles_by_index table.
+-- 3. In C++, for each object loaded, add its reference to the refs
+--    table using handles_by_index.
+function Handle.get_all()
+   return handles_by_index
+end
+
+function Handle.set_all(handles_by_index_)
+   handles_by_index = handles_by_index_
 end
 
 

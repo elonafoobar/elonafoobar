@@ -35,11 +35,12 @@ lua_env::lua_env()
     handle_mgr = std::make_unique<handle_manager>(this);
     registry_mgr = std::make_unique<registry_manager>(this);
     export_mgr = std::make_unique<export_manager>(this);
+    serial_mgr = std::make_unique<serial_manager>(this);
 }
 
 void lua_env::clear()
 {
-    for (int i = 0; i < 5480; i++)
+    for (int i = 0; i < ELONA_MAX_ITEMS; i++)
     {
         if (inv[i].number != 0)
         {

@@ -139,7 +139,7 @@ void handle_manager::clear_map_local_handles()
     {
         remove_chara_handle(cdata[i]);
     }
-    for (int i = 1320; i < 5480; i++)
+    for (int i = ELONA_ITEM_ON_GROUND_INDEX; i < ELONA_MAX_ITEMS; i++)
     {
         remove_item_handle(inv[i]);
     }

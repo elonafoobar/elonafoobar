@@ -6,6 +6,7 @@
 #include "api_manager.hpp"
 #include "registry_manager.hpp"
 #include "mod_manager.hpp"
+#include "serial_manager.hpp"
 
 namespace elona
 {
@@ -18,6 +19,7 @@ class export_manager;
 class mod_manager;
 class handle_manager;
 class registry_manager;
+class serial_manager;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
@@ -70,6 +72,11 @@ public:
         return *registry_mgr;
     }
 
+    serial_manager& get_serial_manager()
+    {
+        return *serial_mgr;
+    }
+
     /***
      * Clears and reset the Lua state to directly after loading the
      * core mod.
@@ -101,6 +108,7 @@ private:
     std::unique_ptr<export_manager> export_mgr;
     std::unique_ptr<handle_manager> handle_mgr;
     std::unique_ptr<registry_manager> registry_mgr;
+    std::unique_ptr<serial_manager> serial_mgr;
 };
 
 extern std::unique_ptr<lua_env> lua;
