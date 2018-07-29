@@ -99,6 +99,7 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 ## Luaライブラリ
 
 * [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
+* [uuid.lua](https://github.com/Tieske/uuid) (Apache 2.0)
 
 
 

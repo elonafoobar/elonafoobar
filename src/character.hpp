@@ -341,6 +341,9 @@ struct character
 
     operator int() const { return index; }
 
+    // for identifying the type of a Lua reference
+    static std::string lua_type() { return "LuaCharacter"; }
+
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 

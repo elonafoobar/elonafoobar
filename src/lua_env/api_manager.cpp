@@ -35,20 +35,7 @@ namespace lua
 /***
  * The below two functions marshal Lua handles to C++ references.
  *
- * These are needed so if a C++ reference goes invalid, the Lua side
- * will know and be able to raise an error. But that means that the
- * handles (which are Lua tables) will be passed as arguments to the
- * API instead of the underlying usertype. So, we need to attempt to
- * unwrap the underlying C++ reference using sol's as<T>(). We can
- * also check for handle validity here.
- *
- * Note that these don't apply to methods called on the handles,
- * because the handle's metatable will be able to pass those functions
- * the raw C++ reference from inside the __index metamethod. It's just
- * that if a user passes a handle as an argument to an API function
- * implemented in C++, it's not possible to transparently get the
- * reference out of the handle before the function is called in C++,
- * so we have to marshal it by the time it's reached the C++ side.
+ * TODO
  *
  * NOTE: a side effect of this is that overloaded methods that can
  * take a handle argument MUST be ordered last inside sol::overload(),
@@ -62,49 +49,14 @@ namespace lua
  * See mods/core/handle.lua for the Lua side of things.
  */
 
-bool is_chara_handle(sol::table handle)
-{
-    sol::object obj = handle["cpp_ref"];
-    bool is_valid = handle["is_valid"];
-    return is_valid && obj.is<character&>();
-}
-
-bool is_item_handle(sol::table handle)
-{
-    sol::object obj = handle["cpp_ref"];
-    bool is_valid = handle["is_valid"];
-    return is_valid && obj.is<item&>();
-}
-
-character& conv_chara(lua_character_handle handle)
-{
-    if (!is_chara_handle(handle))
-    {
-        std::cerr << "Handle not valid" << std::endl;
-        throw sol::error("not valid handle");
-    }
-    sol::object obj = handle["cpp_ref"];
-    return obj.as<character&>();
-}
-
-item& conv_item(lua_item_handle handle)
-{
-    if (!is_item_handle(handle))
-    {
-        std::cerr << "Handle not valid" << std::endl;
-        throw sol::error("not valid handle");
-    }
-    sol::object obj = handle["cpp_ref"];
-    return obj.as<item&>();
-}
 
 
 namespace Chara
 {
-bool is_alive(const lua_character_handle);
-bool is_player(const lua_character_handle);
-bool is_ally(const lua_character_handle);
-bool flag(const lua_character_handle, int);
+bool is_alive(lua_character_handle);
+bool is_player(lua_character_handle);
+bool is_ally(lua_character_handle);
+bool flag(lua_character_handle, int);
 int count();
 sol::optional<lua_character_handle> player();
 sol::optional<lua_character_handle> create(const position_t&, int);
@@ -113,24 +65,29 @@ sol::optional<lua_character_handle> create_xy(int, int, int);
 void bind(sol::table& Elona);
 }; // namespace Chara
 
-bool Chara::is_alive(const lua_character_handle handle)
+bool Chara::is_alive(lua_character_handle handle)
 {
-    bool is_valid = handle["is_valid"];
-    if (!is_valid)
+    try
+    {
+        auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+        return chara.state == 1;
+    }
+    catch(...)
     {
         return false;
     }
-    return conv_chara(handle).state == 1;
 }
 
-bool Chara::is_player(const lua_character_handle handle)
+bool Chara::is_player(lua_character_handle handle)
 {
-    return conv_chara(handle).index == 0;
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return chara.index == 0;
 }
 
-bool Chara::is_ally(const lua_character_handle handle)
+bool Chara::is_ally(lua_character_handle handle)
 {
-    return !Chara::is_player(handle) && conv_chara(handle).index <= 16;
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return !Chara::is_player(handle) && chara.index <= 16;
 }
 
 int Chara::count()
@@ -138,13 +95,14 @@ int Chara::count()
     return gdata_crowd_density;
 }
 
-bool Chara::flag(const lua_character_handle handle, int flag)
+bool Chara::flag(lua_character_handle handle, int flag)
 {
     if (flag < 5 || flag > 991 || (flag > 32 && flag < 960))
     {
         return false;
     }
-    return conv_chara(handle)._flags[flag] == 1;
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return chara._flags[flag] == 1;
 }
 
 sol::optional<lua_character_handle> Chara::player()
@@ -156,7 +114,7 @@ sol::optional<lua_character_handle> Chara::player()
     else
     {
         lua_character_handle handle =
-            lua::lua->get_handle_manager().get_chara_handle(elona::cdata[0]);
+            lua::lua->get_handle_manager().get_handle(elona::cdata[0]);
         return handle;
     }
 }
@@ -174,7 +132,7 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
     if (elona::chara_create(-1, id, x, y) != 0)
     {
         lua_character_handle handle =
-            lua::lua->get_handle_manager().get_chara_handle(
+            lua::lua->get_handle_manager().get_handle(
                 elona::cdata[elona::rc]);
         return handle;
     }
@@ -251,19 +209,19 @@ void bind(sol::table& Elona);
 } // namespace Magic
 
 void Magic::cast_self(
-    lua_character_handle caster,
+    lua_character_handle caster_handle,
     int effect_id,
     int effect_power,
     const position_t& target_location)
 {
     elona::tlocx = target_location.x;
     elona::tlocy = target_location.y;
-    Magic::cast(caster, caster, effect_id, effect_power);
+    Magic::cast(caster_handle, caster_handle, effect_id, effect_power);
 }
 
 void Magic::cast(
-    lua_character_handle caster,
-    lua_character_handle target,
+    lua_character_handle caster_handle,
+    lua_character_handle target_handle,
     int effect_id,
     int effect_power)
 {
@@ -272,8 +230,10 @@ void Magic::cast(
 
     try
     {
-        elona::cc = conv_chara(caster).index;
-        elona::tc = conv_chara(target).index;
+        auto caster = lua::lua->get_handle_manager().get_ref<character>(caster_handle);
+        auto target = lua::lua->get_handle_manager().get_ref<character>(target_handle);
+        elona::cc = caster.index;
+        elona::tc = target.index;
         elona::efid = effect_id;
         elona::efp = effect_power;
         elona::magic();
@@ -445,7 +405,7 @@ namespace FOV
 {
 bool los(const position_t&, const position_t&);
 bool los_xy(int, int, int, int);
-bool you_see(const lua_character_handle);
+bool you_see(lua_character_handle);
 bool you_see_pos(const position_t&);
 bool you_see_pos_xy(int, int);
 void refresh();
@@ -463,9 +423,10 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
     return elona::fov_los(fx, fy, tx, ty) == 1;
 }
 
-bool FOV::you_see(const lua_character_handle handle)
+bool FOV::you_see(lua_character_handle handle)
 {
-    return elona::is_in_fov(conv_chara(handle).index);
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return elona::is_in_fov(chara.index);
 }
 
 bool FOV::you_see_pos(const position_t& pos)
@@ -559,7 +520,7 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
     elona::flt();
     if (elona::itemcreate(-1, id, x, y, number) != 0)
     {
-        lua_item_handle handle = lua::lua->get_handle_manager().get_item_handle(
+        lua_item_handle handle = lua::lua->get_handle_manager().get_handle(
             elona::inv[elona::ci]); // TODO deglobalize ci
         return handle;
     }
@@ -571,12 +532,14 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
 
 bool Item::has_enchantment(const lua_item_handle handle, int id)
 {
-    return elona::encfindspec(conv_item(handle).index, id);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    return elona::encfindspec(item_ref.index, id);
 }
 
 void Item::remove(lua_item_handle handle)
 {
-    elona::item_remove(conv_item(handle));
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    elona::item_remove(item_ref);
 }
 
 void Item::bind(sol::table& Elona)
@@ -591,18 +554,19 @@ void Item::bind(sol::table& Elona)
 
 namespace Skill
 {
-int level(int, const lua_character_handle);
+int level(int, lua_character_handle);
 
 void bind(sol::table& Elona);
 } // namespace Skill
 
-int Skill::level(int skill, const lua_character_handle handle)
+int Skill::level(int skill, lua_character_handle handle)
 {
     if (skill < 0 || skill >= 600)
     {
         return -1;
     }
-    return elona::sdata(skill, conv_chara(handle).index);
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return elona::sdata(skill, chara.index);
 }
 
 void Skill::bind(sol::table& Elona)
@@ -1277,7 +1241,7 @@ namespace LuaCharacter
 {
 void damage_hp(character&, int);
 void damage_hp_source(character&, int, damage_source_t);
-void damage_hp_chara(character&, int, const lua_character_handle);
+void damage_hp_chara(character&, int, lua_character_handle handle);
 void apply_ailment(character&, status_ailment_t, int);
 bool recruit_as_ally(character&);
 void set_flag(character&, int, bool);
@@ -1303,9 +1267,10 @@ void LuaCharacter::damage_hp_source(
 void LuaCharacter::damage_hp_chara(
     character& self,
     int amount,
-    const lua_character_handle handle)
+    lua_character_handle handle)
 {
-    elona::dmghp(self.index, amount, conv_chara(handle).index);
+    auto other = lua::lua->get_handle_manager().get_ref<character>(handle);
+    elona::dmghp(self.index, amount, other.index);
 }
 
 void LuaCharacter::apply_ailment(
@@ -1367,6 +1332,18 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
 }
 
 
+namespace LuaItem
+{
+std::string lua_type(item&);
+} // namespace LuaItem
+
+std::string lua_type(item&)
+{
+    // TODO move?
+    return "LuaItem";
+}
+
+
 /***
  * Set up usertype tables in Sol so we can call methods with them.
  */
@@ -1381,6 +1358,8 @@ void init_usertypes(lua_env& lua)
         &position_t::y);
     lua.get_state()->new_usertype<character>(
         "LuaCharacter",
+        "lua_type",
+        &character::lua_type,
         "damage_hp",
         sol::overload(
             &LuaCharacter::damage_hp,
@@ -1425,6 +1404,8 @@ void init_usertypes(lua_env& lua)
         &character::experience);
     lua.get_state()->new_usertype<item>(
         "LuaItem",
+        "lua_type",
+        &item::lua_type,
         "curse_state",
         &item::curse_state,
         "identify_state",

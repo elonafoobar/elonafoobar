@@ -109,6 +109,7 @@ contents in this repository. Note that images, sounds and fonts are not included
 ## Lua libraries
 
 * [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
+* [uuid.lua](https://github.com/Tieske/uuid) (Apache 2.0)
 
 
 

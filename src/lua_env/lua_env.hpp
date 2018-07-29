@@ -35,7 +35,7 @@ public:
      */
     std::shared_ptr<sol::state> get_state()
     {
-        return lua;
+        return lua_;
     }
 
     //********** Individual API manager retrieval methods **********//
@@ -93,7 +93,7 @@ private:
      * The underlying Lua state shared across all mod/API
      * environments.
      */
-    std::shared_ptr<sol::state> lua;
+    std::shared_ptr<sol::state> lua_;
 
     std::unique_ptr<mod_manager> mod_mgr;
     std::unique_ptr<api_manager> api_mgr;

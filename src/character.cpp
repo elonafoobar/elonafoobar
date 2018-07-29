@@ -1717,7 +1717,7 @@ void chara_refresh(int cc)
     refreshspeed(cc);
     cdata[cc].needs_refreshing_status() = false;
 
-    auto handle = lua::lua->get_handle_manager().get_chara_handle(cdata[cc]);
+    auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
     if (handle != sol::lua_nil)
     {
         lua::lua->get_event_manager()
@@ -2060,7 +2060,7 @@ void chara_killed(character& chara)
 {
     // Regardless of whether or not this character will revive, run
     // the character killed callback.
-    auto handle = lua::lua->get_handle_manager().get_chara_handle(chara);
+    auto handle = lua::lua->get_handle_manager().get_handle(chara);
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::character_killed>(handle);
 

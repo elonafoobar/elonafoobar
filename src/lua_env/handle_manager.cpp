@@ -49,13 +49,7 @@ void handle_manager::create_chara_handle(character& chara)
         return;
     }
 
-    if (chara_handles.find(chara.index) != chara_handles.end())
-    {
-        handle_env["Handle"]["assert_chara_valid"](chara);
-        return;
-    }
-    chara_handles.emplace(chara.index);
-    handle_env["Handle"]["create_chara_handle"](chara);
+    create_handle(chara);
 }
 
 void handle_manager::create_item_handle(item& item)
@@ -65,13 +59,7 @@ void handle_manager::create_item_handle(item& item)
         return;
     }
 
-    if (item_handles.find(item.index) != item_handles.end())
-    {
-        handle_env["Handle"]["assert_item_valid"](item);
-        return;
-    }
-    item_handles.emplace(item.index);
-    handle_env["Handle"]["create_item_handle"](item);
+    create_handle(item);
 }
 
 void handle_manager::remove_chara_handle(character& chara)
@@ -83,13 +71,7 @@ void handle_manager::remove_chara_handle(character& chara)
 
     // TODO should chara.state == 0 mean the handle is invalid?
     // Some characters can die and respawn again.
-    if (chara_handles.find(chara.index) == chara_handles.end())
-    {
-        handle_env["Handle"]["assert_chara_invalid"](chara);
-        return;
-    }
-    chara_handles.erase(chara.index);
-    handle_env["Handle"]["remove_chara_handle"](chara);
+    remove_handle(chara);
 }
 
 void handle_manager::remove_item_handle(item& item)
@@ -99,15 +81,9 @@ void handle_manager::remove_item_handle(item& item)
         return;
     }
 
-    // item.number is set to zero often, but it doesn't seem to
+    // item.number is set to zero often, but it doesn't always seem to
     // signify whether or not the item was deleted.
-    if (item_handles.find(item.index) == item_handles.end())
-    {
-        handle_env["Handle"]["assert_item_invalid"](item);
-        return;
-    }
-    item_handles.erase(item.index);
-    handle_env["Handle"]["remove_item_handle"](item);
+    remove_handle(item);
 }
 
 
@@ -117,7 +93,7 @@ void handle_manager::create_chara_handle_run_callbacks(character& chara)
     assert(chara.state != 0);
     create_chara_handle(chara);
 
-    auto handle = get_chara_handle(chara);
+    auto handle = get_handle(chara);
     assert(handle != sol::lua_nil);
     lua->get_event_manager().run_callbacks<event_kind_t::character_created>(handle);
 }
@@ -127,7 +103,7 @@ void handle_manager::create_item_handle_run_callbacks(item& item)
     assert(item.number != 0);
     create_item_handle(item);
 
-    auto handle = get_item_handle(item);
+    auto handle = get_handle(item);
     assert(handle != sol::lua_nil);
     lua->get_event_manager().run_callbacks<event_kind_t::item_created>(handle);
 }
@@ -137,61 +113,23 @@ void handle_manager::create_item_handle_run_callbacks(item& item)
 // 0)
 void handle_manager::remove_chara_handle_run_callbacks(character& chara)
 {
-    auto handle = get_chara_handle(chara);
+    auto handle = get_handle(chara);
     lua->get_event_manager().run_callbacks<event_kind_t::character_removed>(handle);
     remove_chara_handle(chara);
 }
 
 void handle_manager::remove_item_handle_run_callbacks(item& item)
 {
-    auto handle = get_item_handle(item);
+    auto handle = get_handle(item);
     lua->get_event_manager().run_callbacks<event_kind_t::item_removed>(handle);
     remove_item_handle(item);
 }
 
 
-sol::object handle_manager::get_chara_handle(character& chara)
-{
-    if (chara.index == -1)
-    {
-        //ELONA_LOG("Tried getting handle to character of index -1");
-        return sol::lua_nil;
-    }
-    if (chara_handles.find(chara.index) == chara_handles.end())
-    {
-        // std::cout << "Character " << chara.index << " not found." << std::endl;
-        return sol::lua_nil;
-    }
-    sol::object handle = handle_env["Handle"]["CharaHandles"][chara.index];
-    assert(handle != sol::lua_nil);
-    return handle;
-}
-
-sol::object handle_manager::get_item_handle(item& item)
-{
-    if (item.index == -1)
-    {
-        //ELONA_LOG("Tried getting handle to item of index -1");
-        return sol::lua_nil;
-    }
-    if (item_handles.find(item.index) == item_handles.end())
-    {
-        // std::cout << "Item " << item.index << " not found." << std::endl;
-        return sol::lua_nil;
-    }
-    sol::object handle = handle_env["Handle"]["ItemHandles"][item.index];
-    assert(handle != sol::lua_nil);
-    return handle;
-}
-
 void handle_manager::clear_all_handles()
 {
-    chara_handles.clear();
-    item_handles.clear();
-    handle_env["Handle"]["CharaHandles"] =
-        this->lua->get_state()->create_table_with();
-    handle_env["Handle"]["ItemHandles"] =
-        this->lua->get_state()->create_table_with();
+    handles.clear();
+    handle_env["Handle"]["clear"]();
 }
 
 // Player/party handles are global, so don't clear them when e.g. changing maps

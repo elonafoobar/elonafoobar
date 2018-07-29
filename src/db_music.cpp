@@ -7,7 +7,7 @@ music_db the_music_db;
 
 music_data music_db::convert(const std::string& id_,
                              const sol::table& data,
-                             lua::lua_env& lua)
+                             lua::lua_env&)
 {
     ELONA_LION_DB_FIELD(_mod,                       std::string, "");
     ELONA_LION_DB_FIELD(id,                         int, -1);
