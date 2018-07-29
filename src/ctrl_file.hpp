@@ -12,31 +12,31 @@ namespace elona
 
 enum class file_operation_t
 {
-    _1,
-    _2,
-    _5,
-    _6,
-    _9,
-    _10,
-    _11,
-    _12,
-    _13,
-    _14,
-    _15,
-    _16,
-    _17,
+    map_read,
+    map_write,
+    custom_map_read,
+    custom_map_write,
+    save_game_delete,
+    temp_dir_delete,
+    map_delete,
+    map_delete_preserve_items,
+    temp_dir_delete_area,
+    gene_write,
+    gene_read,
+    map_load_map_obj_files,
+    map_home_upgrade,
 };
 
 
 
 enum class file_operation2_t
 {
-    _3,
-    _4,
-    _7,
-    _8,
-    _23,
-    _24,
+    map_items_read,
+    map_items_write,
+    global_read,
+    global_write,
+    deck_write,
+    deck_read,
 };
 
 

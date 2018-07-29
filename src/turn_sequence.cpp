@@ -1634,7 +1634,7 @@ label_2747:
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                ctrl_file(file_operation_t::_11);
+                ctrl_file(file_operation_t::map_delete);
                 mode = 2;
                 levelexitby = 4;
                 return turn_result_t::initialize_map;

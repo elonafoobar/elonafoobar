@@ -24,7 +24,7 @@ void shop_refresh_on_talk()
         }
     }
     mode = 6;
-    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
     if (cdata[tc].shop_store_id == 0)
     {
         if (cdata[tc].character_role == 1010
@@ -48,7 +48,8 @@ void shop_refresh_on_talk()
     }
     else
     {
-        ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+        ctrl_file(
+            file_operation2_t::map_items_read, u8"shop"s + invfile + u8".s2");
     }
     invfile = cdata[tc].shop_store_id;
     shop_load_shoptmp();
@@ -57,8 +58,9 @@ void shop_refresh_on_talk()
 
 void shop_load_shoptmp()
 {
-    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+    ctrl_file(
+        file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
     mode = 0;
     return;
 }
@@ -860,8 +862,8 @@ void calc_trade_goods_price()
 void shop_sell_item()
 {
     mode = 6;
-    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
-    ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_read, u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
     if (tc > 0)
     {

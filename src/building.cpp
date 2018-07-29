@@ -198,7 +198,7 @@ turn_result_t build_new_building()
         initialize_home_adata();
         std::string midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
-        ctrl_file(file_operation_t::_12);
+        ctrl_file(file_operation_t::map_delete_preserve_items);
         mid = midbk;
         map_global_prepare();
         levelexitby = 2;
@@ -213,7 +213,7 @@ turn_result_t build_new_building()
         snd(49);
         return turn_result_t::exit_map;
     }
-    ctrl_file(file_operation_t::_13);
+    ctrl_file(file_operation_t::temp_dir_delete_area);
     p = area;
     adata(1, p) = cdata.player().position.x;
     adata(2, p) = cdata.player().position.y;
@@ -937,8 +937,8 @@ void show_shop_log()
     }
     if (gdata_current_map != area)
     {
-        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
-        ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::map_items_read, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
     dblistmax = 0;
@@ -1059,16 +1059,17 @@ void show_shop_log()
     mode = 0;
     if (gdata_current_map != area)
     {
-        ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
     }
     else
     {
-        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
     }
     tmpload(filesystem::u8path(u8"shop5.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop5.s2"))
     {
-        ctrl_file(file_operation2_t::_3, u8"shop5.s2");
+        ctrl_file(file_operation2_t::map_items_read, u8"shop5.s2");
     }
     else
     {
@@ -1166,8 +1167,8 @@ void show_shop_log()
         modrank(5, 30, 2);
     }
     mode = 0;
-    ctrl_file(file_operation2_t::_4, u8"shop5.s2");
-    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::map_items_write, u8"shop5.s2");
+    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
     return;
 }
 
