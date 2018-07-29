@@ -89,6 +89,9 @@ struct item
 
     bool almost_equals(const item& other, bool ignore_position);
 
+    // for identifying the type of a Lua reference
+    static std::string lua_type() { return "LuaItem"; }
+
 
     template <typename Archive>
     void serialize(Archive& ar)

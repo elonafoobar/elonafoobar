@@ -243,13 +243,15 @@ std::string format_function_type(
     else if (object.is<sol::table>())
     {
         sol::table table = object.as<sol::table>();
-        if (lua::is_chara_handle(table))
+        if (lua::lua->get_handle_manager().handle_is<character>(table))
         {
-            return format_builtins_character(func, lua::conv_chara(table));
+            auto& chara = lua::lua->get_handle_manager().get_ref<character>(table);
+            return format_builtins_character(func, chara);
         }
-        else if (lua::is_item_handle(table))
+        else if (lua::lua->get_handle_manager().handle_is<item>(table))
         {
-            return format_builtins_item(func, lua::conv_item(table));
+            auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(table);
+            return format_builtins_item(func, item_ref);
         }
     }
 

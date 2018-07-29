@@ -279,15 +279,15 @@ Store.global.ally:recruit_as_ally()
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-                        "test_map_local_chara", R"(assert(Store.global.chara.is_valid == true))"));
+                        "test_map_local_chara", R"(assert(Store.global.chara:is_valid() == true))"));
 
     run_in_temporary_map(6, 1,
                          []() {
                              REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-                                                 "test_map_local_chara", R"(assert(Store.global.chara.is_valid == false))"));
+                                                 "test_map_local_chara", R"(assert(Store.global.chara:is_valid() == false))"));
                              REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-                                                 "test_map_local_chara", R"(assert(Store.global.player.is_valid == true))"));
+                                                 "test_map_local_chara", R"(assert(Store.global.player:is_valid() == true))"));
                              REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-                                                 "test_map_local_chara", R"(assert(Store.global.ally.is_valid == true))"));
+                                                 "test_map_local_chara", R"(assert(Store.global.ally:is_valid() == true))"));
                                  });
 }

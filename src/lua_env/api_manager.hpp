@@ -16,11 +16,6 @@ typedef sol::table lua_item_handle;
 class lua_env;
 struct mod_info;
 
-bool is_chara_handle(sol::table);
-bool is_item_handle(sol::table);
-character& conv_chara(lua_character_handle);
-item& conv_item(lua_item_handle);
-
 class api_manager
 {
 public:

@@ -10,20 +10,21 @@ std::unique_ptr<lua_env> lua;
 
 lua_env::lua_env()
 {
-    lua = std::make_shared<sol::state>();
-    lua->open_libraries(
+    lua_ = std::make_shared<sol::state>();
+    lua_->open_libraries(
         sol::lib::base,
         sol::lib::package,
         sol::lib::table,
         sol::lib::debug,
         sol::lib::string,
         sol::lib::math,
-        sol::lib::io);
+        sol::lib::io,
+        sol::lib::os);
 
     // Add executable directory to package.path
     fs::path exe_path = filesystem::dir::data() / "lua";
     std::string normalized = filesystem::to_forward_slashes(exe_path);
-    lua->safe_script(u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
+    lua_->safe_script(u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
 
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like
@@ -56,7 +57,7 @@ void lua_env::clear()
 
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
-    lua->collect_garbage();
+    lua_->collect_garbage();
 }
 
 void lua_env::reload()
