@@ -81,7 +81,6 @@ label_17401:
         ""s + gdata_current_map + u8"_"s + (100 + gdata_current_dungeon_level);
     if (mode == 3)
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::map_read);
         ctrl_file(file_operation2_t::map_items_read, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
@@ -103,7 +102,6 @@ label_17401:
     tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        lua::lua->get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::map_read);
         if (mdata_map_refresh_type == 0)
         {
@@ -174,6 +172,7 @@ label_1741_internal:
          ++cnt)
     {
         cdata[cnt].state = 0;
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(cdata[cnt]);
     }
     for (int cnt = ELONA_ITEM_ON_GROUND_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {

@@ -6,6 +6,8 @@
 #include "position.hpp"
 #include "range.hpp"
 
+#define ELONA_ITEM_ON_GROUND_INDEX 1320
+#define ELONA_MAX_ITEMS 5480
 
 namespace elona
 {

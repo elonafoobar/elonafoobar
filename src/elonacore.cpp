@@ -10460,9 +10460,6 @@ void load_save_data()
 {
     ELONA_LOG("Load save data: " << playerid);
 
-    // TODO instead serialize/deserialize data
-    lua::lua->get_handle_manager().clear_map_local_handles();
-
     save_t::instance().clear();
     writeloadedbuff_clear();
 

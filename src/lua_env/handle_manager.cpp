@@ -64,11 +64,6 @@ void handle_manager::create_item_handle(item& item)
 
 void handle_manager::remove_chara_handle(character& chara)
 {
-    if (chara.state == 0)
-    {
-        return;
-    }
-
     // TODO should chara.state == 0 mean the handle is invalid?
     // Some characters can die and respawn again.
     remove_handle(chara);
@@ -76,11 +71,6 @@ void handle_manager::remove_chara_handle(character& chara)
 
 void handle_manager::remove_item_handle(item& item)
 {
-    if (item.number == 0)
-    {
-        return;
-    }
-
     // item.number is set to zero often, but it doesn't always seem to
     // signify whether or not the item was deleted.
     remove_handle(item);
@@ -128,7 +118,6 @@ void handle_manager::remove_item_handle_run_callbacks(item& item)
 
 void handle_manager::clear_all_handles()
 {
-    handles.clear();
     handle_env["Handle"]["clear"]();
 }
 
