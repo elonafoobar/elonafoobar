@@ -71,7 +71,7 @@ turn_result_t build_new_building()
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, cnt) == mdata_t::map_id_t::none)
         {
             area = cnt;
             break;
