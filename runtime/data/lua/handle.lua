@@ -174,7 +174,6 @@ end
 
 function Handle.create_handle(cpp_ref, kind, uuid)
    if handles_by_index[kind][cpp_ref.index] ~= nil then
-      local inspect = require "inspect"
       print(handles_by_index[kind][cpp_ref.index].__uuid)
       error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
       return nil

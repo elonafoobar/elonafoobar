@@ -24,10 +24,15 @@ class lua_env;
  * forgetting to check they're still valid.
  *
  * The handles are represented as Lua tables stored in an isolated Lua
- * environment. The handle manager acts as the interface for providing
- * references to the handles to other Lua environments.
+ * environment. Each handle acts as a reference to an object whose
+ * memory is managed by C++. The C++ reference is not stored on the
+ * handle; it acts as a unique identifier for that object instance,
+ * but to gain access to the C++ reference the handle manager must be
+ * used, where it will check for validity. The handle manager also
+ * acts as the interface for providing handles to other Lua
+ * environments.
  *
- * See mods/core/handle.lua for more information.
+ * See data/lua/handle.lua for more information.
  */
 class handle_manager : public lib::noncopyable
 {
@@ -78,7 +83,7 @@ public:
     template <typename T>
     bool handle_is(sol::table handle)
     {
-        return handle["kind"] == T::lua_type();
+        return handle["__kind"] == T::lua_type();
     }
 
     bool handle_is_valid(sol::table handle)

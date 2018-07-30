@@ -1168,7 +1168,7 @@ void fmode_1_2(bool read)
 
     // Mod handle data of map-local characters
     {
-        const auto filepath = dir / (u8"mod_cdata"s + mid + u8".s2");
+        const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
         if (read)
         {
             lua::lua->get_serial_manager().load_handles<character>(
