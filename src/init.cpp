@@ -139,8 +139,12 @@ void load_character_sprite()
     SDIM1(untaglist);
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
+
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"character.bmp", 1);
+    pos(640, 1120);
+    picload(filesystem::dir::graphic() / u8"bufficon.png", 1);
+
     gmode(0);
     gsel(5);
     for (const auto& entry :
