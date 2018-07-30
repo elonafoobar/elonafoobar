@@ -461,7 +461,7 @@ talk_result_t talk_quest_delivery()
     rc = tc;
     chara_set_item_which_will_be_used();
     rq = deliver;
-    --inv[deliver(1)].number;
+    item_modify_num(inv[deliver(1)], -1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[deliver(1)]));
     quest_set_data(3);
     quest_complete();
@@ -479,7 +479,7 @@ talk_result_t talk_quest_supply()
     ci = ti;
     rc = tc;
     chara_set_item_which_will_be_used();
-    --inv[supply].number;
+    item_modify_num(inv[supply], -1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
     quest_complete();
@@ -515,7 +515,7 @@ talk_result_t talk_guard_return_item()
     {
         p = itemfind(0, 283);
     }
-    --inv[p].number;
+    item_modify_num(inv[p], -1);
     if (inv[p].param1 == 0)
     {
         buff = i18n::s.get(

@@ -1105,11 +1105,7 @@ label_2181_internal:
             if (rnd(5) == 0)
             {
                 txt(i18n::s.get("core.locale.magic.map.cursed"));
-                --inv[ci].number;
-                if (ci >= 5080)
-                {
-                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                }
+                item_modify_num(inv[ci], -1);
                 break;
             }
         }
@@ -3251,8 +3247,7 @@ label_2181_internal:
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 21:
@@ -3290,12 +3285,10 @@ label_2181_internal:
                     break;
                 }
                 animeload(8, cc);
-                txt(i18n::s.get(
-                    "core.locale.magic.change_material.artifact_reconstructed",
-                    cdata[cc],
-                    inv[ci]));
-                --inv[ci].number;
-                cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                txt(i18n::s.get("core.locale.magic.change_material.artifact_reconstructed",
+                                cdata[cc],
+                                inv[ci]));
+                item_modify_num(inv[ci], -1);
                 flt();
                 itemcreate(0, inv[ci].id, -1, -1, 0);
             }
@@ -3480,9 +3473,8 @@ label_2181_internal:
                 {
                     if (rnd(4) == 0)
                     {
-                        txt(i18n::s.get(
-                            "core.locale.magic.fill_charge.explodes", inv[ci]));
-                        --inv[ci].number;
+                        txt(i18n::s.get("core.locale.magic.fill_charge.explodes", inv[ci]));
+                        item_modify_num(inv[ci], -1);
                         refresh_burden_state();
                         break;
                     }

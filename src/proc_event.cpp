@@ -256,7 +256,7 @@ void proc_event()
         nostack = 1;
         flt();
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y);
-        inv[ci].number = 200 + inv[ci].number * 5;
+        item_set_num(inv[ci], 200 + inv[ci].number * 5);
         flt();
         itemcreate(
             -1,

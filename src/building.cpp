@@ -194,8 +194,7 @@ turn_result_t build_new_building()
     if (inv[ci].id == 344)
     {
         gdata_home_scale = inv[ci].param1;
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         initialize_home_adata();
         std::string midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
@@ -271,8 +270,7 @@ turn_result_t build_new_building()
     txtef(5);
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
     label_1749();
-    --inv[ci].number;
-    cell_refresh(inv[ci].position.x, inv[ci].position.y);
+    item_modify_num(inv[ci], -1);
     return turn_result_t::turn_end;
 }
 
@@ -1024,7 +1022,7 @@ void show_shop_log()
             continue;
         }
         in = rnd(inv[ci].number) + 1;
-        inv[ci].number -= in;
+        item_modify_num(inv[ci], (-in));
         sold += in;
         val0 = val0 * in;
         if (rnd(4) == 0)

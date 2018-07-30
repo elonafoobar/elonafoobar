@@ -1465,14 +1465,9 @@ label_2061_internal:
             reftype = the_item_db[inv[ci].id]->category;
             if (inv[ci].id == 729)
             {
-                txt(i18n::s.get(
-                    "core.locale.ui.inv.give.present.text",
-                    cdata[tc],
-                    inv[ci]));
-                --inv[ci].number;
-                refresh_burden_state();
-                txt(i18n::s.get(
-                    "core.locale.ui.inv.give.present.dialog", cdata[tc]));
+                txt(i18n::s.get("core.locale.ui.inv.give.present.text", cdata[tc], inv[ci]));
+                item_modify_num(inv[ci], -1);
+                txt(i18n::s.get("core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
@@ -1627,13 +1622,12 @@ label_2061_internal:
                         cdata[tc]));
                     chara_mod_impression(tc, -20);
                     cdata[tc].emotion_icon = 318;
-                    --inv[ci].number;
-                    refresh_burden_state();
+                    item_modify_num(inv[ci], -1);
                     goto label_20591;
                 }
                 item_copy(ci, ti);
-                --inv[ci].number;
-                inv[ti].number = 1;
+                item_modify_num(inv[ci], -1);
+                item_set_num(inv[ti], 1);
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
@@ -1867,9 +1861,8 @@ label_2061_internal:
                 snd(12);
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
-                --inv[ci].number;
+                item_modify_num(inv[ci], -1);
                 --gdata_left_bill;
-                refresh_burden_state();
                 screenupdate = -1;
                 update_screen();
                 goto label_20591;
@@ -1877,10 +1870,9 @@ label_2061_internal:
             if (invctrl(1) == 8)
             {
                 snd(71);
-                --inv[ci].number;
+                item_modify_num(inv[ci], -1);
                 txt(i18n::s.get("core.locale.ui.inv.put.deck", inv[ci]));
                 ++card(0, inv[ci].subname);
-                refresh_burden_state();
                 screenupdate = -1;
                 update_screen();
                 goto label_20591;
@@ -1934,7 +1926,7 @@ label_2061_internal:
                 snd(65);
                 chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
-                --inv[ci].number;
+                item_modify_num(inv[ci], -1);
                 goto label_20591;
             }
             snd(13);
@@ -1957,8 +1949,8 @@ label_2061_internal:
             else
             {
                 item_copy(ci, ti);
-                inv[ci].number -= in;
-                inv[ti].number = in;
+                item_modify_num(inv[ci], (-in));
+                item_set_num(inv[ti], in);
                 item_stack(0, ti, 1);
                 convertartifact(ti);
             }

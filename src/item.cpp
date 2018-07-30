@@ -447,26 +447,6 @@ void itemturn(int ci)
 }
 
 
-
-void removeitem(int ci, int delta)
-{
-    inv[ci].number -= delta;
-    if (ci < 200)
-    {
-        refresh_burden_state();
-    }
-    if (inv[ci].number <= 0)
-    {
-        item_remove(inv[ci]);
-        if (mode != 6 && ci >= 5080)
-        {
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        }
-    }
-}
-
-
-
 void item_copy(int a, int b)
 {
     if (a < 0 || b < 0)
@@ -495,9 +475,6 @@ void item_remove(item& i)
     lua::lua->get_handle_manager().remove_item_handle_run_callbacks(i);
 }
 
-// TODO this only runs after an invalid item slot is replaced by a new
-// item. The callbacks actually need to run wherever item.number is
-// set to 0, which is in many more places.
 void item_delete(int ci)
 {
     if (inv[ci].index != -1 && inv[ci].number > 0)
@@ -519,21 +496,36 @@ void item_delete(int ci)
 
 
 
-void item_num(int ci, int delta)
+void item_refresh(item& i)
 {
-    inv[ci].number += delta;
-    if (inv[ci].number < 0)
+    if (i.number <= 0)
     {
-        item_remove(inv[ci]);
+        item_remove(i);
     }
-    if (ci >= 5080)
+    if (ci >= 5080 && mode != 6)
     {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        cell_refresh(i.position.x, i.position.y);
     }
-    else
+    else if (ci < 200)
     {
         refresh_burden_state();
     }
+}
+
+
+
+void item_modify_num(item& i, int delta)
+{
+    i.number += delta;
+    item_refresh(i);
+}
+
+
+
+void item_set_num(item& i, int number)
+{
+    i.number = number;
+    item_refresh(i);
 }
 
 
@@ -549,7 +541,7 @@ int item_separate(int ci)
         ti = inv_getfreeid(-1);
         if (ti == -1)
         {
-            inv[ci].number = 1;
+            item_set_num(inv[ci], 1);
             txt(lang(
                 u8"何かが地面に落ちて消えた…"s,
                 u8"Something falls to the ground and disappear..."s));
@@ -558,8 +550,8 @@ int item_separate(int ci)
     }
 
     item_copy(ci, ti);
-    inv[ti].number = inv[ci].number - 1;
-    inv[ci].number = 1;
+    item_set_num(inv[ti], inv[ci].number - 1);
+    item_set_num(inv[ci], 1);
 
     if (inv_getowner(ti) == -1 && mode != 6)
     {
@@ -1512,7 +1504,7 @@ int item_stack(int inventory_id, int ci, int show_message)
 
         if (stackable)
         {
-            inv[i].number += inv[ci].number;
+            item_modify_num(inv[i], inv[ci].number);
             item_remove(inv[ci]);
             ti = i;
             did_stack = true;
@@ -1752,7 +1744,7 @@ int item_fire(int prm_840, int prm_841)
                         }
                         else if (rnd(20) == 0)
                         {
-                            --inv[ti_at_m138].number;
+                            item_modify_num(inv[ti_at_m138], -1);
                             if (is_in_fov(prm_840))
                             {
                                 txt(lang(
@@ -1920,7 +1912,7 @@ int item_cold(int prm_844, int prm_845)
                             itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
                             itemname(ti_at_m138, 1)
                                 + u8" is broken to pieces."s));
-                        --inv[ti_at_m138].number;
+                        item_modify_num(inv[ti_at_m138], -1);
                         break;
                     }
                     continue;

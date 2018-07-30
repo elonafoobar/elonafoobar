@@ -866,15 +866,7 @@ void continuous_action_eating_finish()
     {
         chara_refresh(cc);
     }
-    --inv[ci].number;
-    if (ci >= 5080)
-    {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    }
-    else if (cc == 0)
-    {
-        refresh_burden_state();
-    }
+    item_modify_num(inv[ci], -1);
     if (cc == 0)
     {
         show_eating_message();
@@ -1338,10 +1330,10 @@ void continuous_action_others()
             chara_refresh(tc);
         }
         item_copy(ci, ti);
-        inv[ti].number = in;
+        item_set_num(inv[ti], in);
         ibitmod(9, ti, 1);
         inv[ti].own_state = 0;
-        inv[ci].number -= in;
+        item_modify_num(inv[ci], (-in));
         if (inv[ci].number <= 0)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -1753,12 +1745,9 @@ void spot_digging()
                                     0);
                             }
                             txt(
-                                i18n::s.get("core.locale.common.something_is_"
-                                            "put_on_the_ground"));
-                            autosave = 1
-                                * (gdata_current_map
-                                   != mdata_t::map_id_t::show_house);
-                            --inv[cnt].number;
+                                i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+                            item_modify_num(inv[cnt], -1);
                             break;
                         }
                     }

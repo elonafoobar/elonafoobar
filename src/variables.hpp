@@ -1166,7 +1166,6 @@ void opencard(int = 0);
 void page_load();
 void page_save();
 void remain_make(int = 0, int = 0);
-void removeitem(int, int);
 void removeworker(int = 0);
 void ride_begin(int = 0);
 void ride_end();
