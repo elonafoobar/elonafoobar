@@ -224,6 +224,14 @@ buff['28'] = {
     return "Increases the growth rate " .. ability['18'].name .. " by " .. self._effect(power)
   end,
 }
+buff['29'] = {
+  name = "Grow Luck",
+  message_0 = "",
+  message_1 = " magical effect.",
+  description = function(self, power)
+    return "Increases the growth rate " .. ability['19'].name .. " by " .. self._effect(power)
+  end,
+}
 
 
 -- vim: et sw=2 sts=2

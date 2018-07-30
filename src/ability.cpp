@@ -246,15 +246,12 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
     if (experience > 0)
     {
         exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (id >= 10)
+        if (id >= 10 && id <= 19)
         {
-            if (id <= 19)
+            if (cdata[cc].growth_buffs[id - 10] > 0)
             {
-                if (cdata[cc].growth_buffs[id - 10] > 0)
-                {
-                    exp_at_m77 = exp_at_m77
-                        * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
-                }
+                exp_at_m77 = exp_at_m77
+                    * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
             }
         }
         if (exp_at_m77 == 0)
