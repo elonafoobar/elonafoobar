@@ -8,6 +8,7 @@
 #include "building.hpp"
 #include "cat.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "class.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
@@ -890,7 +891,7 @@ void initialize_debug_globals()
     cdata[0].piety_point = 1000;
     cdata[0].praying_point = 1000;
     gdata_pael_and_her_mom = 1000;
-    cdata[0].gold += 1000000;
+    earn_gold(cdata[0], 1000000);
     cdata[0].platinum_coin = 30;
     cdata[0].fame = 65000;
     gdata_main_quest_flag = 100;

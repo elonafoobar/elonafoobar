@@ -652,7 +652,7 @@ talk_result_t talk_slave_sell()
             txt(i18n::s.get("core.locale.talk.npc.slave_trader.sell.you_sell_off",
                             cnven(cdatan(0, rc))));
             snd(11);
-            cdata[0].gold += calcslavevalue(rc) * 2 / 3;
+            earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state == 1)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
@@ -947,7 +947,7 @@ talk_result_t talk_moyer_sell_paels_mom()
         txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
         modify_karma(0, -20);
         snd(11);
-        cdata[0].gold += 50000;
+        earn_gold(cdata[0], 50000);
         gdata_pael_and_her_mom = 1002;
         rc = chara_find(222);
         cdata[rc].ai_calm = 3;
@@ -1066,7 +1066,7 @@ talk_result_t talk_prostitute_buy()
     }
     snd(12);
     cdata[cc].gold -= sexvalue;
-    cdata[tc].gold += sexvalue;
+    earn_gold(cdata[tc], sexvalue);
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.common.sex.start", cdata[tc]);
     tc = tc * 1 + 0;

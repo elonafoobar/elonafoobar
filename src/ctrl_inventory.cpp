@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
 #include "draw.hpp"
@@ -1882,7 +1883,7 @@ label_2061_internal:
             txt(i18n::s.get("core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
-                cdata[0].gold += in;
+                earn_gold(cdata[0], in);
                 item_remove(inv[ci]);
             }
             else

@@ -382,7 +382,7 @@ void continuous_action_perform()
                         p = cdata[tc].gold;
                     }
                     cdata[tc].gold -= p;
-                    cdata[cc].gold += p;
+                    earn_gold(cdata[cc], p);
                     gold += p;
                 }
                 if (cdata[tc].level > sdata(183, cc))
@@ -773,7 +773,7 @@ void continuous_action_sex()
         }
         else
         {
-            cdata[cc].gold += sexvalue;
+            earn_gold(cdata[cc], sexvalue);
         }
     }
     txt(i18n::s.get("core.locale.activity.sex.format", dialog_head, dialog_tail) + dialog_after);
@@ -1295,7 +1295,7 @@ void continuous_action_others()
         {
             snd(11);
             item_remove(inv[ti]);
-            cdata[0].gold += in;
+            earn_gold(cdata[0], in);
         }
         else
         {

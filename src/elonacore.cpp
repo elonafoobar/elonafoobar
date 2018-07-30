@@ -10253,8 +10253,8 @@ void get_inheritance()
     {
         i = 40;
     }
-    cdata[0].gold += clamp(cdata[56].gold / 100, 1000, 100000);
-    cdata[0].platinum_coin += p;
+    earn_gold(cdata[0], clamp(cdata[56].gold / 100, 1000, 100000));
+    earn_platinum(cdata[0], p);
     cdata[0].skill_bonus += i;
     for (int cnt = 0; cnt < 400; ++cnt)
     {
@@ -12657,11 +12657,11 @@ int pick_up_item()
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             if (inv[ci].id == 54)
             {
-                cdata[cc].gold += in;
+                earn_gold(cdata[cc], in);
             }
             else
             {
-                cdata[cc].platinum_coin += in;
+                earn_platinum(cdata[cc], in);
             }
             return 1;
         }
@@ -12840,7 +12840,7 @@ int pick_up_item()
             sellgold = calcitemvalue(ti, 0) * in;
             snd(12);
             cdata[0].gold -= sellgold;
-            cdata[tc].gold += sellgold;
+            earn_gold(cdata[tc], sellgold);
             if (the_item_db[inv[ti].id]->category == 92000)
             {
                 inv[ti].param2 = calcitemvalue(ti, 0);
@@ -12870,7 +12870,7 @@ int pick_up_item()
                 }
             }
             snd(11);
-            cdata[0].gold += sellgold;
+            earn_gold(cdata[0], sellgold);
             cdata[tc].gold -= sellgold;
             if (cdata[tc].gold < 0)
             {

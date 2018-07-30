@@ -422,13 +422,13 @@ void run_random_event(int id, int luck_threshold)
         event_bg = u8"bg_re4";
         break;
     case 9:
-        ++cdata[0].platinum_coin;
+        earn_platinum(cdata[0], 1);
         listmax = 1;
         event_bg = u8"bg_re1";
         break;
     case 16:
         p = rnd(cdata[0].gold / 10 + 1000) + 1;
-        cdata[0].gold += p;
+        earn_gold(cdata[0], p);
         txt(i18n::s.get_enum_property("core.locale.event.popup", "you_pick_up", 16,
                         p(0)));
         listmax = 1;

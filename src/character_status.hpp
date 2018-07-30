@@ -3,6 +3,8 @@
 namespace elona
 {
 
+struct character;
+
 void modcorrupt(int = 0);
 void modify_potential(int, int, int);
 void modify_karma(int, int);
@@ -14,5 +16,7 @@ void gain_new_body_part(int);
 void gain_level(int);
 void grow_primary_skills(int);
 void update_required_experience(int);
+void earn_gold(character& cc, int delta);
+void earn_platinum(character& cc, int delta);
 
 } // namespace elona
