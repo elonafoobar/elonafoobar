@@ -1106,7 +1106,7 @@ void quest_failed(int val0)
                                 txt(s);
                                 dmghp(tc, 999999, p);
                             }
-                            cdata[tc].state = 0;
+                            chara_remove(cdata[cnt]);
                             break;
                         }
                     }

@@ -854,38 +854,45 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             cell_removechara(
                 victim.position.x, victim.position.y);
         }
+
+        // This block will always mark the character as killed so mods
+        // can run callbacks and clean up references.
         if (victim.character_role == 0)
         {
-            victim.state = 0;
+            chara_killed(victim, 0);
         }
         else if (victim.character_role == 13)
         {
-            victim.state = 4;
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
+            chara_killed(victim, 4);
         }
         else
         {
-            victim.state = 2;
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
+            chara_killed(victim, 2);
         }
+
         if (victim != 0)
         {
             if (victim < 16)
             {
                 chara_mod_impression(victim, -10);
-                victim.state = 6;
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
                 {
                     event_add(15, victim.id);
-                    victim.state = 0;
+                    chara_killed(victim, 0);
                 }
-                if (victim.is_escorted_in_sub_quest() == 1)
+                else if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    victim.state = 0;
+                    chara_killed(victim, 0);
+                }
+                else
+                {
+                    chara_killed(victim, 6);
                 }
             }
         }
@@ -1146,8 +1153,6 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         }
 
         end_dmghp(victim);
-        chara_killed(victim);
-
         return 0;
     }
     end_dmghp(victim);

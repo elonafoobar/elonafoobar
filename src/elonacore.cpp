@@ -3442,8 +3442,6 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua->get_handle_manager().create_chara_handle(
-        cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -5720,8 +5718,6 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
-                lua::lua->get_handle_manager().create_chara_handle(
-                    cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -5903,7 +5899,7 @@ void label_1745()
                 {
                     if (rnd(2))
                     {
-                        cdata[cnt].state = 0;
+                        chara_remove(cdata[cnt]);
                         map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
                             0;
                     }
@@ -5961,7 +5957,7 @@ void label_1745()
                 }
                 if (cdata[cnt].is_temporary() == 1)
                 {
-                    cdata[cnt].state = 0;
+                    chara_remove(cdata[cnt]);
                     map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
                 }
             }
@@ -10255,7 +10251,7 @@ void load_gene_files()
     DIM2(spact, 500);
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        cdata[cnt].state = 0;
+        chara_remove(cdata[cnt]);
     }
     sdata.copy(56, 0);
     sdata.clear(0);

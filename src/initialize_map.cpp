@@ -72,7 +72,6 @@ label_17401:
                 if (cdata[cnt].state == 9)
                 {
                     cdata[cnt].state = 1;
-                    lua::lua->get_handle_manager().create_chara_handle(cdata[cnt]);
                 }
             }
         }
@@ -171,8 +170,7 @@ label_1741_internal:
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        cdata[cnt].state = 0;
-        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(cdata[cnt]);
+        chara_remove(cdata[cnt]);
     }
     for (int cnt = ELONA_ITEM_ON_GROUND_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {

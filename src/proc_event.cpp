@@ -332,7 +332,7 @@ void proc_event()
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
-        cdata[evdata1(evnum - (evnum != 0) * 1)].state = 0;
+        chara_remove(cdata[evdata1(evnum - (evnum != 0) * 1)]);
         flt();
         itemcreate(
             -1,

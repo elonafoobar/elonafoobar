@@ -213,8 +213,7 @@ void label_2662()
                     if (rnd(3) == 0)
                     {
                         addnews(5, rc);
-                        cdata[rc].state = 0;
-                        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(cdata[rc]);
+                        chara_remove(cdata[rc]);
                         create_adventurer();
                     }
                     else

@@ -27,7 +27,6 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].state = 0;
         }
         testing::post_run();
     }
@@ -70,7 +69,6 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].state = 0;
         }
         testing::post_run();
     }
