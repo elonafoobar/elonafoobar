@@ -1110,7 +1110,7 @@ bool talk_give_potion_of_cure_corruption()
         }
         return false;
     }
-    --inv[stat].number;
+    item_modify_num(inv[stat], -1);
     txt(i18n::s.get("core.locale.talk.unique.pael.give.you_give"));
     snd(13);
     listmax = 0;

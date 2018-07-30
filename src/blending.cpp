@@ -1564,13 +1564,13 @@ int label_1932()
         }
         if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
         {
-            --inv[rpref(10 + cnt * 2)].number;
+            item_modify_num(inv[rpref(10 + cnt * 2)], -1);
         }
         else if (rnd(3) == 0)
         {
 
             txt(i18n::s.get("core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
-            --inv[rpref(10 + cnt * 2)].number;
+            item_modify_num(inv[rpref(10 + cnt * 2)], -1);
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {

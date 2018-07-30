@@ -4951,7 +4951,7 @@ void food_gets_rotten()
                                             u8"You extract plant seeds from "s
                                                 + itemname(cnt) + u8"."s));
                                         p = rnd(inv[cnt].number) + 1;
-                                        removeitem(cnt, inv[cnt].number);
+                                        item_modify_num(inv[cnt], (-inv[cnt].number));
                                         flt(calcobjlv(cdata[0].level));
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
@@ -8420,8 +8420,7 @@ turn_result_t step_into_gate()
         do_save_game();
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
-    --inv[ci].number;
-    cell_refresh(inv[ci].position.x, inv[ci].position.y);
+    item_modify_num(inv[ci], -1);
     txt(i18n::s.get("core.locale.action.exit_map.gate.need_network"));
     update_screen();
     return turn_result_t::pc_turn_user_error;
@@ -10148,7 +10147,7 @@ void migrate_save_data(const fs::path& save_dir)
                         if (inv[i].number > 0
                             && inv[i].position == position_t{x, y})
                         {
-                            inv[i].number = 0;
+                            item_remove(inv[i]);
                         }
                     }
                     if (cmapdata(4, i) == 0)
@@ -11480,15 +11479,7 @@ int decode_book()
             }
             if (inv[ci].count == 0)
             {
-                --inv[ci].number;
-                if (ci >= 5080)
-                {
-                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                }
-                else
-                {
-                    refresh_burden_state();
-                }
+                item_modify_num(inv[ci], -1);
                 if (is_in_fov(cc))
                 {
                     txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11511,7 +11502,7 @@ int decode_book()
         txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
         ++recipememory(inv[ci].subname);
         item_identify(inv[ci], identification_state_t::partly_identified);
-        removeitem(ci, 1);
+        item_modify_num(inv[ci], -1);
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11553,7 +11544,7 @@ int decode_book()
         }
         if (inv[ci].count == 0)
         {
-            removeitem(ci, 1);
+            item_modify_num(inv[ci], -1);
             if (is_in_fov(cc))
             {
                 txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11868,15 +11859,7 @@ int drink_potion()
                     inv[ci], identification_state_t::partly_identified);
             }
         }
-        --inv[ci].number;
-        if (ci >= 5080)
-        {
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        }
-        else if (tc == 0)
-        {
-            refresh_burden_state();
-        }
+        item_modify_num(inv[ci], -1);
     }
     cdata[tc].nutrition += 150;
     if (tc < 16)
@@ -12122,15 +12105,7 @@ int read_scroll()
     }
     if (inv[ci].id != 621)
     {
-        --inv[ci].number;
-        if (ci >= 5080)
-        {
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        }
-        else
-        {
-            refresh_burden_state();
-        }
+        item_modify_num(inv[ci], -1);
         skillexp(150, cc, 25, 2);
     }
     magic();
@@ -12708,7 +12683,7 @@ int pick_up_item()
         }
     }
     inumbk = inv[ci].number - in;
-    inv[ci].number = in;
+    item_set_num(inv[ci], in);
     if (cc == 0)
     {
         if (trait(215) != 0)
@@ -12759,7 +12734,7 @@ int pick_up_item()
         ti = inv_getfreeid(cc);
         if (ti == -1)
         {
-            inv[ci].number = inumbk + in;
+            item_set_num(inv[ci], inumbk + in);
             if (invctrl == 12)
             {
                 txt(i18n::s.get("core.locale.action.pick_up.shopkeepers_inventory_is_full"));
@@ -12771,9 +12746,9 @@ int pick_up_item()
             return 0;
         }
         item_copy(ci, ti);
-        inv[ti].number = in;
+        item_set_num(inv[ti], in);
     }
-    inv[ci].number = inumbk;
+    item_set_num(inv[ci], inumbk);
     if (mode == 6)
     {
         if (the_item_db[inv[ti].id]->category == 57000)
@@ -12931,13 +12906,19 @@ int pick_up_item()
     {
         refresh_burden_state();
     }
+
+    if (inv[ci].number <= 0)
+    {
+        item_remove(inv[ci]);
+    }
+
     return 1;
 }
 
 int drop_item()
 {
     inumbk = inv[ci].number - in;
-    inv[ci].number = in;
+    item_set_num(inv[ci], in);
     inv[ci].position.x = cdata[cc].position.x;
     inv[ci].position.y = cdata[cc].position.y;
     itemturn(ci);
@@ -12960,7 +12941,7 @@ int drop_item()
         inv[ti].count = gdata_next_shelter_serial_id + 100;
         ++gdata_next_shelter_serial_id;
     }
-    inv[ci].number = inumbk;
+    item_set_num(inv[ci], inumbk);
     cell_refresh(inv[ti].position.x, inv[ti].position.y);
     if (dropval == 0)
     {
@@ -13007,6 +12988,12 @@ int drop_item()
         mdata_map_play_campfire_sound = 1;
         play_music();
     }
+
+    if (inv[ti].number <= 0)
+    {
+        item_remove(inv[ti]);
+    }
+
     return 1;
 }
 
@@ -13884,8 +13871,7 @@ int unlock_box(int difficulty)
     {
         if (rnd(3) == 0)
         {
-            --inv[ti].number;
-            cell_refresh(inv[ti].position.x, inv[ti].position.y);
+            item_modify_num(inv[ti], -1);
             txt(i18n::s.get("core.locale.action.unlock.lockpick_breaks"));
         }
         txtnew();
@@ -15344,7 +15330,7 @@ turn_result_t do_plant()
     }
     txt(s);
     snd(55);
-    removeitem(ci, 1);
+    item_modify_num(inv[ci], -1);
     cell_featset(
         cdata[cc].position.x,
         cdata[cc].position.y,
