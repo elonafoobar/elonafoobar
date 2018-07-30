@@ -614,13 +614,13 @@ turn_result_t do_throw_command()
     aniy = tlocy;
     throwing_object_animation(cdata[cc]).play();
     ti = inv_getfreeid(-1);
-    removeitem(ci, 1);
+    item_modify_num(inv[ci], -1);
     if (inv[ci].id == 685)
     {
         if (ti != -1)
         {
             item_copy(ci, ti);
-            inv[ti].number = 1;
+            item_set_num(inv[ti], 1);
             inv[ti].position.x = tlocx;
             inv[ti].position.y = tlocy;
             ci = ti;
@@ -788,7 +788,7 @@ turn_result_t do_throw_command()
                                     "snowman",
                                     inv[p(0)]));
                             }
-                            --inv[p].number;
+                            item_modify_num(inv[p], -1);
                             f = 1;
                             break;
                         }
@@ -1112,7 +1112,7 @@ turn_result_t do_offer_command()
         modpiety(i);
         cdata[0].praying_point += i * 7;
     }
-    removeitem(ci, inv[ci].number);
+    item_modify_num(inv[ci], (-inv[ci].number));
     return turn_result_t::turn_end;
 }
 
@@ -1297,7 +1297,7 @@ turn_result_t do_dip_command()
     if (inv[cidip].id == 617)
     {
         item_separate(ci);
-        item_num(cidip, -1);
+        item_modify_num(inv[cidip], -1);
         snd(13);
         txt(i18n::s.get(
             "core.locale.action.dip.result.bait_attachment",
@@ -1320,7 +1320,7 @@ turn_result_t do_dip_command()
         if (the_item_db[inv[ci].id]->subcategory == 60001)
         {
             item_separate(ci);
-            item_num(cidip, -1);
+            item_modify_num(inv[cidip], -1);
             if (inv[cidip].id != 601)
             {
                 txt(i18n::s.get(
@@ -1396,7 +1396,7 @@ turn_result_t do_dip_command()
     {
         if (the_item_db[inv[ci].id]->category == 57000)
         {
-            item_num(cidip, -1);
+            item_modify_num(inv[cidip], -1);
             item_separate(ci);
             txt(i18n::s.get(
                     "core.locale.action.dip.result.love_food.made",
@@ -1415,7 +1415,7 @@ turn_result_t do_dip_command()
     {
         if (the_item_db[inv[ci].id]->category == 57000)
         {
-            item_num(cidip, -1);
+            item_modify_num(inv[cidip], -1);
             item_separate(ci);
             txt(i18n::s.get(
                     "core.locale.action.dip.result.love_food.made",
@@ -1442,7 +1442,7 @@ turn_result_t do_dip_command()
             in = 1;
             item_separate(ci);
         }
-        item_num(cidip, -1);
+        item_modify_num(inv[cidip], -1);
         inv[ci].color = inv[cidip].color;
         txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
         if (inv_getowner(ci) == -1)
@@ -1478,7 +1478,7 @@ turn_result_t do_dip_command()
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         }
-        item_num(cidip, -1);
+        item_modify_num(inv[cidip], -1);
         return turn_result_t::turn_end;
     }
     if (inv[cidip].id == 736)
@@ -1508,12 +1508,12 @@ turn_result_t do_dip_command()
             txt(i18n::s.get(
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
-        item_num(cidip, -1);
+        item_modify_num(inv[cidip], -1);
         return turn_result_t::turn_end;
     }
     if (inv[cidip].id == 516)
     {
-        item_num(cidip, -1);
+        item_modify_num(inv[cidip], -1);
         if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             txtef(2);
@@ -1718,8 +1718,7 @@ turn_result_t do_use_command()
             txt(i18n::s.get("core.locale.action.use.mine.cannot_place_here"));
             return turn_result_t::pc_turn_user_error;
         }
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         cell_featset(x, y, 0, 14, 7, cc);
         txt(i18n::s.get("core.locale.action.use.mine.you_set_up"));
         snd(58);
@@ -1852,7 +1851,7 @@ turn_result_t do_use_command()
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
-            removeitem(ci, 5);
+            item_modify_num(inv[ci], -5);
         }
         flt();
         itemcreate(-1, 541, cdata[0].position.x, cdata[0].position.y, 0);
@@ -1967,11 +1966,9 @@ turn_result_t do_use_command()
                         {
                             if (rnd(5) == 0)
                             {
-                                txt(i18n::s.get(
-                                    "core.locale.action.use.leash.other.start."
-                                    "resists",
-                                    cdata[tc]));
-                                --inv[ci].number;
+                                txt(i18n::s.get("core.locale.action.use.leash.other.start.resists",
+                                        cdata[tc]));
+                                item_modify_num(inv[ci], -1);
                                 cell_refresh(
                                     inv[ci].position.x, inv[ci].position.y);
                                 refresh_burden_state();
@@ -2060,7 +2057,7 @@ turn_result_t do_use_command()
                             "core.locale.action.use.leash.other.start.dialog",
                             cdata[tc]));
                         animeload(8, tc);
-                        --inv[ci].number;
+                        item_modify_num(inv[ci], -1);
                         cell_refresh(inv[ci].position.x, inv[ci].position.y);
                         refresh_burden_state();
                     }
@@ -2177,7 +2174,7 @@ turn_result_t do_use_command()
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
         }
-        --inv[ci].number;
+        item_modify_num(inv[ci], -1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(i18n::s.get("core.locale.action.use.rune.use"));
         comctrl = 2;
@@ -2199,8 +2196,7 @@ turn_result_t do_use_command()
     case 21:
         txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
         snd(58);
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         fixmaterial = inv[ci].material;
         efid = 21;
         efp = 500;
@@ -2208,8 +2204,7 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 25:
         txt(i18n::s.get("core.locale.action.use.unicorn_horn.use", inv[ci]));
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         efid = 637;
         efp = 500;
         magic();
@@ -2295,7 +2290,7 @@ turn_result_t do_use_command()
                 }
             }
         }
-        --inv[ci].number;
+        item_modify_num(inv[ci], -1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         txt(i18n::s.get("core.locale.action.use.nuke.set_up"));
         snd(58);
@@ -2321,8 +2316,7 @@ turn_result_t do_use_command()
         {
             trait(169) = 0;
         }
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         txt(i18n::s.get("core.locale.action.use.secret_treasure.use"));
         animeload(10, 0);
         chara_refresh(cc);
@@ -2347,8 +2341,7 @@ turn_result_t do_use_command()
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         ++gdata_acquirable_feat_count;
         txt(i18n::s.get(
             "core.locale.action.use.secret_experience.kumiromi.use.dialog"));
@@ -2385,8 +2378,7 @@ turn_result_t do_use_command()
             goto label_2229_internal;
         }
         txt(i18n::s.get("core.locale.action.use.monster_ball.use", inv[ci]));
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item_modify_num(inv[ci], -1);
         flt();
         novoidlv = 1;
         chara_create(56, inv[ci].subname, -3, 0);
