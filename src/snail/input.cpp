@@ -178,98 +178,53 @@ namespace snail
 {
 
 
-// class Mouse
-// {
-// static:
-//     enum ButtonType
-//     {
-//         left,
-//         middle,
-//         right,
-//         x1,
-//         x2,
-//     }
-//
-//     @property auto position()
-//     {
-//         return tuple!("x", "y")(_x, _y);
-//     }
-//
-//     @property int x()
-//     {
-//         return _x;
-//     }
-//
-//     @property int y()
-//     {
-//         return _y;
-//     }
-//
-//
-//     auto opIndex(ButtonType button)
-//     {
-//         return _mouseButtons[button];
-//     }
-//
-//
-//     package
-//     {
-//         void handleEvent(sdl.SDL_MouseButtonEvent event)
-//         {
-//             _x = event.x;
-//             _y = event.y;
-//
-//             if (event.type != sdl.SDL_MOUSEBUTTONUP && event.type !=
-//             sdl.SDL_MOUSEBUTTONDOWN)
-//                 return;
-//
-//             ButtonType button;
-//             switch (event.button)
-//             {
-//             case sdl.SDL_BUTTON_LEFT:
-//                 button = ButtonType.left;
-//                 break;
-//             case sdl.SDL_BUTTON_MIDDLE:
-//                 button = ButtonType.middle;
-//                 break;
-//             case sdl.SDL_BUTTON_RIGHT:
-//                 button = ButtonType.right;
-//                 break;
-//             case sdl.SDL_BUTTON_X1:
-//                 button = ButtonType.x1;
-//                 break;
-//             case sdl.SDL_BUTTON_X2:
-//                 button = ButtonType.x2;
-//                 break;
-//             default:
-//                 return;
-//             }
-//
-//             if (event.state == sdl.SDL_PRESSED)
-//                 _mouseButtons[button].press();
-//             else
-//                 _mouseButtons[button].release();
-//         }
-//
-//
-//         void update()
-//         {
-//             foreach (ref button; _mouseButtons)
-//             {
-//                 if (button.isPressed)
-//                     button.increaseRepeat();
-//             }
-//         }
-//     }
-//
-//
-//     private
-//     {
-//         int _x;
-//         int _y;
-//         button[ButtonType.max + 1] _mouseButtons;
-//     }
-// }
+
+void mouse_t::_handle_event(const ::SDL_MouseButtonEvent& event)
+{
+    _x = event.x;
+    _y = event.y;
+
+    if (event.type != SDL_MOUSEBUTTONUP && event.type != SDL_MOUSEBUTTONDOWN)
+        return;
+
+    button_t button;
+    switch (event.button)
+    {
+    case SDL_BUTTON_LEFT:
+        button = button_t::left;
+        break;
+    case SDL_BUTTON_MIDDLE:
+        button = button_t::middle;
+        break;
+    case SDL_BUTTON_RIGHT:
+        button = button_t::right;
+        break;
+    case SDL_BUTTON_X1:
+        button = button_t::x1;
+        break;
+    case SDL_BUTTON_X2:
+        button = button_t::x2;
+        break;
+    default:
+        return;
+    }
+
+    if (event.state == SDL_PRESSED)
+        buttons[static_cast<size_t>(button)]._press();
+    else
+        buttons[static_cast<size_t>(button)]._release();
+}
+
+
+
+void mouse_t::update()
+{
+    for (auto&& button : buttons)
+    {
+        if (button.is_pressed())
+            button._increase_repeat();
+    }
+}
 
 
 
@@ -300,9 +255,23 @@ bool input::is_pressed(key k, int key_wait) const
 
 
 
+bool input::is_pressed(mouse_t::button_t b) const
+{
+    return was_pressed_just_now(b);
+}
+
+
+
 bool input::was_pressed_just_now(key k) const
 {
     return is_pressed(k) && _keys[static_cast<size_t>(k)].repeat() == 0;
+}
+
+
+
+bool input::was_pressed_just_now(mouse_t::button_t b) const
+{
+    return mouse()[b].is_pressed();
 }
 
 
@@ -544,6 +513,14 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
         _quick_action_text_repeat = -1;
     }
 }
+
+
+
+void input::_handle_event(const ::SDL_MouseButtonEvent& event)
+{
+    _mouse._handle_event(event);
+}
+
 
 
 } // namespace snail

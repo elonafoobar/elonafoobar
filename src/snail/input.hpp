@@ -267,17 +267,72 @@ inline bool is_modifier(key k)
 }
 
 
+
+class mouse_t
+{
+public:
+    enum class button_t
+    {
+        left,
+        middle,
+        right,
+        x1,
+        x2,
+
+        _size,
+    };
+
+
+    int x() const
+    {
+        return _x;
+    }
+
+
+    int y() const
+    {
+        return _y;
+    }
+
+
+    const button& operator[](button_t button) const
+    {
+        return buttons[static_cast<size_t>(button)];
+    }
+
+
+    void _handle_event(const ::SDL_MouseButtonEvent& event);
+
+    void update();
+
+
+private:
+    int _x;
+    int _y;
+    std::array<button, static_cast<size_t>(button_t::_size)> buttons;
+};
+
+
+
 class input final : public lib::noncopyable
 {
 public:
     bool is_pressed(key k, int key_wait = 1) const;
+    bool is_pressed(mouse_t::button_t b) const;
     bool was_pressed_just_now(key k) const;
+    bool was_pressed_just_now(mouse_t::button_t b) const;
 
     bool is_ime_active() const;
 
     void show_soft_keyboard();
     void hide_soft_keyboard();
     void toggle_soft_keyboard();
+
+    const mouse_t& mouse() const
+    {
+        return _mouse;
+    }
+
 
     /***
      * Disables NumLock to prevent strange Windows-specific behavior when
@@ -329,6 +384,7 @@ public:
     void _handle_event(const ::SDL_TextInputEvent& event);
     void _handle_event(const ::SDL_TextEditingEvent& event);
     void _handle_event(const ::SDL_TouchFingerEvent& event);
+    void _handle_event(const ::SDL_MouseButtonEvent& event);
 
 
 private:
@@ -346,6 +402,8 @@ private:
     int _quick_action_text_repeat = -1;
     int _quick_action_repeat_start_wait = 10;
     int _quick_action_repeat_wait = 2;
+
+    mouse_t _mouse;
 
     input() = default;
 };
