@@ -21,6 +21,106 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+
+
+void prepare_house_board_tiles()
+{
+    std::vector<int> unavailable_tiles{
+        15,  16,  24,  25,  26,  27,  28,  29,  30,  92,  93,  94,  95,  141,
+        169, 170, 171, 180, 182, 192, 244, 245, 246, 247, 248, 249, 250, 251,
+        252, 253, 254, 255, 256, 257, 258, 292, 293, 294, 309, 310, 311, 312,
+        313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 327, 328,
+        329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342,
+        343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356,
+        372, 373, 374, 375, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409,
+        410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 422, 431, 432, 433,
+        434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447,
+        448, 449, 450, 451, 452, 453, 454, 455};
+
+    p = 0;
+    p(1) = 0;
+
+    gsel(2);
+
+    for (int cnt = 0; cnt < 2772; ++cnt)
+    {
+        bool available{};
+        if (cnt < 231)
+        {
+            available = true;
+        }
+        if (cnt >= 396 && cnt < 429)
+        {
+            available = true;
+        }
+        if (cnt >= 462 && cnt < 495)
+        {
+            available = true;
+        }
+        if (cnt >= 561 && cnt < 726)
+        {
+            available = true;
+        }
+        if (!available)
+        {
+            continue;
+        }
+        if (chipm(0, cnt) == 2)
+        {
+            continue;
+        }
+        if (chipm(0, cnt) == 1)
+        {
+            continue;
+        }
+        if (chipm(1, cnt) == 5)
+        {
+            continue;
+        }
+        if (chipm(0, cnt) == 3)
+        {
+            if (gdata_home_scale <= 3)
+            {
+                continue;
+            }
+            else
+            {
+                --p(1);
+            }
+        }
+        ++p(1);
+        if (std::find(
+                std::begin(unavailable_tiles),
+                std::end(unavailable_tiles),
+                p(1))
+            != std::end(unavailable_tiles))
+        {
+            continue;
+        }
+        list(0, p) = cnt;
+        ++p;
+        if (chipm(3, cnt) != 0)
+        {
+            cnt = cnt + chipm(3, cnt) - 1;
+            continue;
+        }
+    }
+
+    listmax = p;
+    gsel(0);
+}
+
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -71,7 +171,7 @@ turn_result_t build_new_building()
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, cnt) == mdata_t::map_id_t::none)
         {
             area = cnt;
             break;
@@ -506,7 +606,7 @@ void start_home_map_mode()
     const auto pc_position_prev = cdata[0].position;
     homemapmode = 1;
 
-    prepare_hourse_board_tiles();
+    prepare_house_board_tiles();
 
     txtnew();
     txt(i18n::s.get("core.locale.building.home.design.help"));
@@ -759,87 +859,7 @@ void try_extend_shop()
     }
 }
 
-void prepare_hourse_board_tiles()
-{
-    p = 0;
-    gsel(2);
-    for (int cnt = 0; cnt < 2772; ++cnt)
-    {
-        f = 0;
-        if (cnt < 231)
-        {
-            f = 1;
-        }
-        if (cnt >= 396)
-        {
-            if (cnt < 429)
-            {
-                f = 1;
-            }
-        }
-        if (cnt >= 462)
-        {
-            if (cnt < 495)
-            {
-                f = 1;
-            }
-        }
-        if (cnt >= 561)
-        {
-            if (cnt < 726)
-            {
-                f = 1;
-            }
-        }
-        if (f == 0)
-        {
-            continue;
-        }
-        f = 1;
-        pget(cnt % 33 * 48, cnt / 33 * 48);
-        if (ginfo(16) == 0)
-        {
-            if (ginfo(17) == 0)
-            {
-                if (ginfo(18) == 0)
-                {
-                    f = 0;
-                }
-            }
-        }
-        if (chipm(0, cnt) == 2)
-        {
-            f = 0;
-        }
-        if (chipm(0, cnt) == 1)
-        {
-            f = 0;
-        }
-        if (chipm(1, cnt) == 5)
-        {
-            f = 0;
-        }
-        if (gdata_home_scale < 4)
-        {
-            if (chipm(0, cnt) == 3)
-            {
-                f = 0;
-            }
-        }
-        if (f)
-        {
-            list(0, p) = cnt;
-            ++p;
-        }
-        if (chipm(3, cnt) != 0)
-        {
-            cnt = cnt + chipm(3, cnt) - 1;
-            continue;
-        }
-    }
-    listmax = p;
-    gsel(0);
-}
+
 
 void update_shop_and_report()
 {

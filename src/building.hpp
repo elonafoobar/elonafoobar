@@ -18,7 +18,6 @@ void prompt_hiring();
 void prompt_move_ally();
 void prompt_ally_staying();
 
-void prepare_hourse_board_tiles();
 void update_shop_and_report();
 void update_shop();
 void calc_collection_value(bool);

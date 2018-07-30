@@ -94,6 +94,66 @@ void memcpy(
 
 
 
+void select_house_board_tile()
+{
+    snd(26);
+
+    while (1)
+    {
+        gmode(0);
+        p = 0;
+        for (int y = 0; y < 20; ++y)
+        {
+            for (int x = 0; x < 33; ++x)
+            {
+                if (p < listmax)
+                {
+                    pos(x * 24, y * 24);
+                    gcopy(
+                        2,
+                        list(0, p) % 33 * 48,
+                        list(0, p) / 33 * 48,
+                        48,
+                        48,
+                        24,
+                        24);
+                    if (chipm(7, list(0, p)) & 4)
+                    {
+                        boxl(x * 24, y * 24, 24, 24, {240, 230, 220});
+                    }
+                }
+                ++p;
+            }
+        }
+
+        gmode(2);
+        redraw();
+        await(config::instance().wait1);
+        int a{};
+        a = stick();
+        if (a == stick_key::mouse_left)
+        {
+            p = mousex / 24 + mousey / 24 * 33;
+            if (p >= listmax)
+            {
+                snd(27);
+                continue;
+            }
+            tile = list(0, p);
+            snd(20);
+            label_1958();
+            return;
+        }
+        if (a == stick_key::mouse_right)
+        {
+            label_1958();
+            return;
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -8776,7 +8836,7 @@ int target_position()
         {
             if (key == key_enter)
             {
-                label_1955();
+                select_house_board_tile();
                 wait_key_released();
                 continue;
             }
@@ -8938,69 +8998,6 @@ int target_position()
             return -1;
         }
     }
-}
-
-
-
-void label_1955()
-{
-    ww = 33;
-    wh = 20;
-    wx = 0;
-    wy = 0;
-    snd(26);
-label_1956_internal:
-    gmode(0);
-    p = 0;
-    for (int cnt = 0, cnt_end = (wh); cnt < cnt_end; ++cnt)
-    {
-        int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = (ww); cnt < cnt_end; ++cnt)
-        {
-            if (p < listmax)
-            {
-                pos(wx + cnt * 24, wy + cnt2 * 24);
-                gcopy(
-                    2,
-                    list(0, p) % ww * 48,
-                    list(0, p) / ww * 48,
-                    48,
-                    48,
-                    24,
-                    24);
-                if (chipm(7, list(0, p)) & 4)
-                {
-                    boxl(
-                        wx + cnt * 24, wy + cnt2 * 24, 24, 24, {240, 230, 220});
-                }
-            }
-            ++p;
-        }
-    }
-    gmode(2);
-    redraw();
-    await(config::instance().wait1);
-    int a{};
-    a = stick();
-    if (a == stick_key::mouse_left)
-    {
-        p = mousex / 24 + mousey / 24 * ww;
-        if (p >= listmax)
-        {
-            snd(27);
-            goto label_1956_internal;
-        }
-        tile = list(0, p);
-        snd(20);
-        label_1958();
-        return;
-    }
-    if (a == stick_key::mouse_right)
-    {
-        label_1958();
-        return;
-    }
-    goto label_1956_internal;
 }
 
 
