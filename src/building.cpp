@@ -499,14 +499,18 @@ void prompt_hiring()
     calccosthire();
 }
 
+
+
 void start_home_map_mode()
 {
-    int cxbk = cdata[0].position.x;
-    int cybk = cdata[0].position.y;
+    const auto pc_position_prev = cdata[0].position;
     homemapmode = 1;
+
     prepare_hourse_board_tiles();
+
     txtnew();
     txt(i18n::s.get("core.locale.building.home.design.help"));
+
     tlocinitx = cdata[0].position.x;
     tlocinity = cdata[0].position.y;
     tile = 0;
@@ -518,23 +522,25 @@ void start_home_map_mode()
         {
             break;
         }
-        if ((chipm(7, tile) & 4) == 0)
-        {
-            map(tlocx, tlocy, 0) = tile;
-            map(tlocx, tlocy, 2) = tile;
-        }
-        else
+        if (chipm(7, tile) & 4)
         {
             efid = 438;
             magic();
         }
+        else
+        {
+            map(tlocx, tlocy, 0) = tile;
+            map(tlocx, tlocy, 2) = tile;
+        }
         tlocinitx = tlocx;
         tlocinity = tlocy;
     }
+
     homemapmode = 0;
-    cdata[0].position.x = cxbk;
-    cdata[0].position.y = cybk;
+    cdata[0].position = pc_position_prev;
 }
+
+
 
 void show_home_value()
 {
@@ -833,7 +839,6 @@ void prepare_hourse_board_tiles()
     }
     listmax = p;
     gsel(0);
-    return;
 }
 
 void update_shop_and_report()

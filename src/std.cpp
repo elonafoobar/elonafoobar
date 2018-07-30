@@ -743,7 +743,7 @@ void redraw()
 
 int stick(int allow_repeat_keys)
 {
-    auto check_key_pressed = [allow_repeat_keys](int n, snail::key key) {
+    auto check_key_pressed = [allow_repeat_keys](int n, auto&& key) {
         if ((1 << n) & allow_repeat_keys)
         {
             return (1 << n) * snail::input::instance().is_pressed(key);
@@ -766,8 +766,8 @@ int stick(int allow_repeat_keys)
     ret += check_key_pressed(5, snail::key::keypad_enter);
     ret += check_key_pressed(6, snail::key::ctrl);
     ret += check_key_pressed(7, snail::key::escape);
-    // ret += check_key_pressed(8,  /* Mouse left */,  false);
-    // ret += check_key_pressed(9,  /* Mouse right */);
+    ret += check_key_pressed(8, snail::mouse_t::button_t::left);
+    ret += check_key_pressed(9, snail::mouse_t::button_t::right);
     ret += check_key_pressed(10, snail::key::tab);
 
     if (allow_repeat_keys == 15)
@@ -783,6 +783,9 @@ int stick(int allow_repeat_keys)
             ret |= 4 * snail::input::instance().is_pressed(snail::key::right);
         }
     }
+
+    mousex = snail::input::instance().mouse().x();
+    mousey = snail::input::instance().mouse().y();
 
     return ret;
 }

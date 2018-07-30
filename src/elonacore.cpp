@@ -8627,6 +8627,7 @@ int target_position()
         tlocx = cdata[cc].position.x;
         tlocy = cdata[cc].position.y;
     }
+
     if (homemapmode)
     {
         scposval = 0;
@@ -8659,299 +8660,284 @@ int target_position()
             }
         }
     }
-label_1948_internal:
-    screenupdate = -1;
-    update_screen();
-    dx = (tlocx - scx) * inf_tiles + inf_screenx;
-    dy = (tlocy - scy) * inf_tiles + inf_screeny;
-    if (dy + inf_tiles <= windowh - inf_verh)
+
+    while (1)
     {
-        pos(dx, dy * (dy > 0));
-        snail::application::instance().get_renderer().set_blend_mode(
-            snail::blend_mode_t::blend);
-        snail::application::instance().get_renderer().set_draw_color(
-            {127, 127, 255, 50});
-        snail::application::instance().get_renderer().fill_rect(
-            dx,
-            dy * (dy > 0),
-            inf_tiles - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
-            inf_tiles + (dy < 0) * inf_screeny
-                - (dy + inf_tiles > windowh - inf_verh)
+        screenupdate = -1;
+        update_screen();
+        dx = (tlocx - scx) * inf_tiles + inf_screenx;
+        dy = (tlocy - scy) * inf_tiles + inf_screeny;
+        if (dy + inf_tiles <= windowh - inf_verh)
+        {
+            pos(dx, dy * (dy > 0));
+            snail::application::instance().get_renderer().set_blend_mode(
+                    snail::blend_mode_t::blend);
+            snail::application::instance().get_renderer().set_draw_color(
+                    {127, 127, 255, 50});
+            snail::application::instance().get_renderer().fill_rect(
+                    dx,
+                    dy * (dy > 0),
+                    inf_tiles - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
+                    inf_tiles + (dy < 0) * inf_screeny
+                    - (dy + inf_tiles > windowh - inf_verh)
                     * (dy + inf_tiles - windowh + inf_verh));
-    }
-    if (homemapmode == 1)
-    {
-        pos(windoww - 80, 20);
-        gcopy(
-            2,
-            tile % 33 * inf_tiles,
-            tile / 33 * inf_tiles,
-            inf_tiles,
-            inf_tiles);
-    }
-    else
-    {
-        rc = -1;
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (map(tlocx, tlocy, 1) <= 1)
-            {
-                break;
-            }
-            rc = map(tlocx, tlocy, 1) - 1;
-            if (is_in_fov(rc) == 0)
-            {
-                break;
-            }
-            if (fov_los(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    cdata[rc].position.x,
-                    cdata[rc].position.y)
-                == 0)
-            {
-                break;
-            }
-            if ((cdata[rc].is_invisible() == 0 || cdata[0].can_see_invisible()
-                 || cdata[rc].wet)
-                == 0)
-            {
-                break;
-            }
-            get_route(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[rc].position.x,
-                cdata[rc].position.y);
-            dx = (tlocx - scx) * inf_tiles + inf_screenx;
-            dy = (tlocy - scy) * inf_tiles + inf_screeny;
-            if (maxroute != 0)
-            {
-                dx = cdata[cc].position.x;
-                dy = cdata[cc].position.y;
-                for (int cnt = 0; cnt < 100; ++cnt)
-                {
-                    int stat = route_info(dx, dy, cnt);
-                    if (stat == 0)
-                    {
-                        break;
-                    }
-                    else if (stat == -1)
-                    {
-                        continue;
-                    }
-                    sx = (dx - scx) * inf_tiles + inf_screenx;
-                    sy = (dy - scy) * inf_tiles + inf_screeny;
-                    if (sy + inf_tiles <= windowh - inf_verh)
-                    {
-                        pos(sx, sy * (sy > 0));
-                        snail::application::instance()
-                            .get_renderer()
-                            .set_blend_mode(snail::blend_mode_t::blend);
-                        snail::application::instance()
-                            .get_renderer()
-                            .set_draw_color({255, 255, 255, 25});
-                        snail::application::instance().get_renderer().fill_rect(
-                            sx,
-                            sy * (sy > 0),
-                            inf_tiles
-                                - (sx + inf_tiles > windoww)
-                                    * (sx + inf_tiles - windoww),
-                            inf_tiles + (sy < 0) * inf_screeny
-                                - (sy + inf_tiles > windowh - inf_verh)
-                                    * (sy + inf_tiles - windowh + inf_verh));
-                    }
-                }
-            }
         }
-    }
-    txttargetnpc(tlocx, tlocy);
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    if (homemapmode == 1)
-    {
-        if (key == key_enter)
+        if (homemapmode == 1)
         {
-            label_1955();
-            wait_key_released();
-            goto label_1948_internal;
-        }
-        int a{};
-        a = stick(stick_key::mouse_left | stick_key::mouse_right);
-        if (a == stick_key::mouse_left)
-        {
-            key = key_enter;
-        }
-        if (a == stick_key::mouse_right)
-        {
-            if (chipm(0, map(tlocx, tlocy, 0)) == 2
-                || chipm(0, map(tlocx, tlocy, 0)) == 1)
-            {
-                snd(27);
-                wait_key_released();
-                goto label_1948_internal;
-            }
-            tile = map(tlocx, tlocy, 0);
-            snd(5);
-            wait_key_released();
-        }
-        tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
-        ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
-        int stat = key_direction();
-        if (stat == 1)
-        {
-            cdata[0].position.x += kdx;
-            cdata[0].position.y += kdy;
-            if (cdata[0].position.x < 0)
-            {
-                cdata[0].position.x = 0;
-            }
-            else if (cdata[0].position.x >= mdata_map_width)
-            {
-                cdata[0].position.x = mdata_map_width - 1;
-            }
-            if (cdata[0].position.y < 0)
-            {
-                cdata[0].position.y = 0;
-            }
-            else if (cdata[0].position.y >= mdata_map_height)
-            {
-                cdata[0].position.y = mdata_map_height - 1;
-            }
-        }
-        tlocx = tx + scx;
-        if (tlocx < 0)
-        {
-            tlocx = 0;
-        }
-        else if (tlocx >= mdata_map_width)
-        {
-            tlocx = mdata_map_width - 1;
-        }
-        tlocy = ty + scy;
-        if (tlocy < 0)
-        {
-            tlocy = 0;
-        }
-        else if (tlocy >= mdata_map_height)
-        {
-            tlocy = mdata_map_height - 1;
-        }
-    }
-    else
-    {
-        int stat = key_direction();
-        if (stat == 1)
-        {
-            x = tlocx + kdx;
-            y = tlocy + kdy;
-            if (x >= 0 && y >= 0 && x < mdata_map_width && y < mdata_map_height)
-            {
-                tlocx += kdx;
-                tlocy += kdy;
-            }
-        }
-    }
-    if (findlocmode == 1)
-    {
-        if (rc == -1)
-        {
-            i = 0;
+            pos(windoww - 80, 20);
+            gcopy(
+                    2,
+                    tile % 33 * inf_tiles,
+                    tile / 33 * inf_tiles,
+                    inf_tiles,
+                    inf_tiles);
         }
         else
         {
-            i = rc;
-        }
-        f = 0;
-        p = 0;
-        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-        {
-            if (cdata[list(0, cnt)].position.x == cdata[i].position.x)
+            rc = -1;
+            for (int cnt = 0; cnt < 1; ++cnt)
             {
-                if (cdata[list(0, cnt)].position.y == cdata[i].position.y)
+                if (map(tlocx, tlocy, 1) <= 1)
                 {
-                    p = cnt;
                     break;
+                }
+                rc = map(tlocx, tlocy, 1) - 1;
+                if (is_in_fov(rc) == 0)
+                {
+                    break;
+                }
+                if (fov_los(
+                            cdata[cc].position.x,
+                            cdata[cc].position.y,
+                            cdata[rc].position.x,
+                            cdata[rc].position.y)
+                        == 0)
+                {
+                    break;
+                }
+                if ((cdata[rc].is_invisible() == 0 || cdata[0].can_see_invisible()
+                            || cdata[rc].wet)
+                        == 0)
+                {
+                    break;
+                }
+                get_route(
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cdata[rc].position.x,
+                        cdata[rc].position.y);
+                dx = (tlocx - scx) * inf_tiles + inf_screenx;
+                dy = (tlocy - scy) * inf_tiles + inf_screeny;
+                if (maxroute != 0)
+                {
+                    dx = cdata[cc].position.x;
+                    dy = cdata[cc].position.y;
+                    for (int cnt = 0; cnt < 100; ++cnt)
+                    {
+                        int stat = route_info(dx, dy, cnt);
+                        if (stat == 0)
+                        {
+                            break;
+                        }
+                        else if (stat == -1)
+                        {
+                            continue;
+                        }
+                        sx = (dx - scx) * inf_tiles + inf_screenx;
+                        sy = (dy - scy) * inf_tiles + inf_screeny;
+                        if (sy + inf_tiles <= windowh - inf_verh)
+                        {
+                            pos(sx, sy * (sy > 0));
+                            snail::application::instance()
+                                .get_renderer()
+                                .set_blend_mode(snail::blend_mode_t::blend);
+                            snail::application::instance()
+                                .get_renderer()
+                                .set_draw_color({255, 255, 255, 25});
+                            snail::application::instance().get_renderer().fill_rect(
+                                    sx,
+                                    sy * (sy > 0),
+                                    inf_tiles
+                                    - (sx + inf_tiles > windoww)
+                                    * (sx + inf_tiles - windoww),
+                                    inf_tiles + (sy < 0) * inf_screeny
+                                    - (sy + inf_tiles > windowh - inf_verh)
+                                    * (sy + inf_tiles - windowh + inf_verh));
+                        }
+                    }
                 }
             }
         }
-        if (key == key_pageup)
+        txttargetnpc(tlocx, tlocy);
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+        if (homemapmode == 1)
         {
-            ++p;
-            f = 1;
-            if (p >= listmax)
+            if (key == key_enter)
             {
-                p = 0;
+                label_1955();
+                wait_key_released();
+                continue;
+            }
+            int a{};
+            a = stick(stick_key::mouse_left | stick_key::mouse_right);
+            if (a == stick_key::mouse_left)
+            {
+                key = key_enter;
+            }
+            if (a == stick_key::mouse_right)
+            {
+                if (chipm(0, map(tlocx, tlocy, 0)) == 2
+                        || chipm(0, map(tlocx, tlocy, 0)) == 1)
+                {
+                    snd(27);
+                    wait_key_released();
+                    continue;
+                }
+                tile = map(tlocx, tlocy, 0);
+                snd(5);
+                wait_key_released();
+            }
+            tx = clamp(mousex - inf_screenx, 0, windoww) / 48;
+            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) / 48;
+            int stat = key_direction();
+            if (stat == 1)
+            {
+                cdata[0].position.x += kdx;
+                cdata[0].position.y += kdy;
+                if (cdata[0].position.x < 0)
+                {
+                    cdata[0].position.x = 0;
+                }
+                else if (cdata[0].position.x >= mdata_map_width)
+                {
+                    cdata[0].position.x = mdata_map_width - 1;
+                }
+                if (cdata[0].position.y < 0)
+                {
+                    cdata[0].position.y = 0;
+                }
+                else if (cdata[0].position.y >= mdata_map_height)
+                {
+                    cdata[0].position.y = mdata_map_height - 1;
+                }
+            }
+            tlocx = clamp(tx + scx, 0, mdata_map_width - 1);
+            tlocy = clamp(ty + scy, 0, mdata_map_height - 1);
+        }
+        else
+        {
+            int stat = key_direction();
+            if (stat == 1)
+            {
+                x = tlocx + kdx;
+                y = tlocy + kdy;
+                if (x >= 0 && y >= 0 && x < mdata_map_width && y < mdata_map_height)
+                {
+                    tlocx += kdx;
+                    tlocy += kdy;
+                }
             }
         }
-        if (key == key_pagedown)
+        if (findlocmode == 1)
         {
-            --p;
-            f = 1;
-            if (p < 0)
+            if (rc == -1)
             {
-                p = listmax - 1;
-                if (p < 0)
+                i = 0;
+            }
+            else
+            {
+                i = rc;
+            }
+            f = 0;
+            p = 0;
+            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+            {
+                if (cdata[list(0, cnt)].position.x == cdata[i].position.x)
+                {
+                    if (cdata[list(0, cnt)].position.y == cdata[i].position.y)
+                    {
+                        p = cnt;
+                        break;
+                    }
+                }
+            }
+            if (key == key_pageup)
+            {
+                ++p;
+                f = 1;
+                if (p >= listmax)
                 {
                     p = 0;
                 }
             }
-        }
-        i = list(0, p);
-        if (f)
-        {
-            snd(5);
-            tlocx = cdata[list(0, p)].position.x;
-            tlocy = cdata[list(0, p)].position.y;
-        }
-    }
-    if (key == key_enter)
-    {
-        if (findlocmode == 1)
-        {
-            if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
+            if (key == key_pagedown)
             {
-                txt(i18n::s.get("core.locale.action.which_direction.cannot_see"));
-                goto label_1948_internal;
+                --p;
+                f = 1;
+                if (p < 0)
+                {
+                    p = listmax - 1;
+                    if (p < 0)
+                    {
+                        p = 0;
+                    }
+                }
             }
-            snd(20);
-            if (rc > 0)
+            i = list(0, p);
+            if (f)
             {
-                cdata[0].enemy_id = rc;
-                txt(i18n::s.get("core.locale.action.look.target", cdata[rc]));
-            }
-            else
-            {
-                tgloc = 1;
-                tglocx = tlocx;
-                tglocy = tlocy;
-                txt(i18n::s.get("core.locale.action.look.target_ground"));
+                snd(5);
+                tlocx = cdata[list(0, p)].position.x;
+                tlocy = cdata[list(0, p)].position.y;
             }
         }
-        else if (homemapmode == 0)
+        if (key == key_enter)
         {
-            snd(5);
+            if (findlocmode == 1)
+            {
+                if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
+                {
+                    txt(i18n::s.get("core.locale.action.which_direction.cannot_see"));
+                    continue;
+                }
+                snd(20);
+                if (rc > 0)
+                {
+                    cdata[0].enemy_id = rc;
+                    txt(i18n::s.get("core.locale.action.look.target", cdata[rc]));
+                }
+                else
+                {
+                    tgloc = 1;
+                    tglocx = tlocx;
+                    tglocy = tlocy;
+                    txt(i18n::s.get("core.locale.action.look.target_ground"));
+                }
+            }
+            else if (homemapmode == 0)
+            {
+                snd(5);
+            }
+            scposval = 0;
+            if (tlocinitx == 0 && tlocinity == 0)
+            {
+                update_screen();
+            }
+            tlocinitx = 0;
+            tlocinity = 0;
+            return cansee;
         }
-        scposval = 0;
-        if (tlocinitx == 0 && tlocinity == 0)
+        if (key == key_cancel)
         {
+            tlocinitx = 0;
+            tlocinity = 0;
             scposval = 0;
             update_screen();
+            return -1;
         }
-        tlocinitx = 0;
-        tlocinity = 0;
-        return cansee;
     }
-    if (key == key_cancel)
-    {
-        tlocinitx = 0;
-        tlocinity = 0;
-        scposval = 0;
-        update_screen();
-        return -1;
-    }
-    goto label_1948_internal;
 }
 
 
