@@ -224,6 +224,14 @@ buff['28'] = {
     return ability['18'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
+buff['29'] = {
+  name = "運勢の成長",
+  message_0 = "",
+  message_1 = "",
+  description = function(self, power)
+    return ability['19'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
+  end,
+}
 
 
 

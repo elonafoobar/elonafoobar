@@ -1333,9 +1333,9 @@ void chara_refresh(int cc)
             cdata[cc]._flags[i] = the_character_db[cdata[cc].id]->_flags[i];
         }
     }
-    for (int cnt = 10; cnt < 20; ++cnt)
+    for (auto&& growth_buff : cdata[cc].growth_buffs)
     {
-        cdata[cc].growth_buffs[cnt - 10] = 0;
+        growth_buff = 0;
     }
     cdata[cc].dv = 0;
     cdata[cc].pv = 0;

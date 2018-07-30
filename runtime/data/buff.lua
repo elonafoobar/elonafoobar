@@ -376,5 +376,17 @@ buff['28'] = {
     return power
   end,
 }
+buff['29'] = {
+  type_ = BUFF_TYPE_FOOD,
+  duration = function(power)
+    return 10 + power // 10
+  end,
+  on_refresh = function(self, cc, power, turn)
+    cdata(cc):growth_buffs(9, self._effect(power))
+  end,
+  _effect = function(power)
+    return power
+  end,
+}
 
 -- vim: et sw=2 sts=2
