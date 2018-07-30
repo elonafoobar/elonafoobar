@@ -37,10 +37,8 @@ local refs = {}
 -- may have to be indexed by another value.
 local handles_by_index = {}
 
-local function print_handle_error(key)
-   if _IS_TEST then return end
-
-   if Elona.core.GUI then
+local function print_handle_error(handle, key)
+   if Elona.core and Elona.core.GUI then
       Elona.core.GUI.txt_color(3)
       Elona.core.GUI.txt("Error: handle is not valid! ")
       if key ~= nil then
@@ -49,7 +47,12 @@ local function print_handle_error(key)
       Elona.core.GUI.txt("This means the character/item got removed. ")
       Elona.core.GUI.txt_color(0)
    end
-   print("Error: handle is not valid!")
+
+   if handle then
+      print("Error: handle is not valid! " .. handle.__kind .. ":" .. handle.__index)
+   else
+      print("Error: handle is not valid!")
+   end
    print(debug.traceback())
 end
 
@@ -72,7 +75,7 @@ local function generate_metatable(prefix)
    memoizedFuncs[prefix] = {}
    mt.__index = function(handle, key)
       if not Handle.is_valid(handle)then
-         print_handle_error(key)
+         print_handle_error(handle, key)
          error("Error: handle is not valid!", 2)
       end
 
@@ -100,7 +103,7 @@ local function generate_metatable(prefix)
    end
    mt.__newindex = function(handle, key, value)
       if not Handle.is_valid(handle) then
-         print_handle_error(key)
+         print_handle_error(handle, key)
          error("Error: handle is not valid!", 2)
       end
 
@@ -133,7 +136,7 @@ metatables.LuaItem = generate_metatable("LuaItem")
 --- userdata reference.
 function Handle.get_ref(handle, kind)
    if not Handle.is_valid(handle) then
-      print_handle_error()
+      print_handle_error(handle)
       error("Error: handle is not valid!", 2)
       return nil
    end
@@ -171,9 +174,13 @@ end
 
 function Handle.create_handle(cpp_ref, kind, uuid)
    if handles_by_index[kind][cpp_ref.index] ~= nil then
+      local inspect = require "inspect"
+      print(handles_by_index[kind][cpp_ref.index].__uuid)
       error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
       return nil
    end
+
+   print("CREATE " .. cpp_ref.index .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -198,10 +205,35 @@ function Handle.remove_handle(cpp_ref, kind)
       return
    end
 
+   print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
+
    assert(handle.__kind == kind)
 
    refs[handle.__kind][handle.__uuid] = nil
    handles_by_index[handle.__kind][cpp_ref.index] = nil
+end
+
+
+function Handle.relocate_handle(cpp_ref, new_index, kind)
+   print("RELOCATE " .. cpp_ref.index .. " "  .. new_index)
+   local handle = handles_by_index[kind][cpp_ref.index]
+   assert(Handle.is_valid(handle))
+   assert(not Handle.is_valid(handles_by_index[kind][new_index]))
+
+   handle.__index = new_index
+   handles_by_index[kind][new_index] = handle
+   handles_by_index[kind][cpp_ref.index] = nil
+end
+
+function Handle.swap_handles(cpp_ref_a, cpp_ref_b, kind)
+   print("SWAP " .. cpp_ref_a.index .. " "  .. cpp_ref_b.index)
+   local handle_a = handles_by_index[kind][cpp_ref_a.index]
+   local handle_b = handles_by_index[kind][cpp_ref_b.index]
+   assert(Handle.is_valid(handle_a))
+   assert(Handle.is_valid(handle_b))
+
+   handles_by_index[kind][cpp_ref_a.index] = handle_b
+   handles_by_index[kind][cpp_ref_b.index] = handle_a
 end
 
 
@@ -299,5 +331,11 @@ Handle.iter_charas = function(from, to) return Handle.iter("LuaCharacter", from,
 -- Item.iter(from, to)
 Handle.iter_items = function(from, to) return Handle.iter("LuaItem", from, to) end
 
+
+function Handle.print_all()
+   local inspect = require "inspect"
+   print(inspect(refs))
+   print(inspect(handles_by_index))
+end
 
 return Handle

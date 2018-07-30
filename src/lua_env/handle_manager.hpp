@@ -86,6 +86,8 @@ public:
         return handle_env["Handle"]["is_valid"](handle);
     }
 
+    void print();
+
 
     /***
      * Provides a Lua reference to a handle from the isolated handle
@@ -123,6 +125,18 @@ public:
     void merge_handles(const std::string& kind, sol::table handles)
     {
         handle_env["Handle"]["merge_handles"](kind, handles);
+    }
+
+    template <typename T>
+    void relocate_handle(const T& obj, int new_index)
+    {
+        handle_env["Handle"]["relocate_handle"](obj, new_index, T::lua_type());
+    }
+
+    template <typename T>
+    void swap_handles(const T& obj_a, const T& obj_b)
+    {
+        handle_env["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
     }
 
     template <typename T>

@@ -52,7 +52,7 @@ void start_in_map(int map, int level)
     elona::playerid = player_id;
     fs::remove_all(filesystem::dir::save(player_id));
 
-    gdata_current_map = map; // Debug map
+    gdata_current_map = map;
     gdata_current_dungeon_level = level;
     init_fovlist();
     initialize_map();

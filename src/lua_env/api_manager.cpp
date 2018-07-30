@@ -48,15 +48,13 @@ void bind(sol::table& Elona);
 
 bool Chara::is_alive(lua_character_handle handle)
 {
-    try
-    {
-        auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-        return chara.state == 1;
-    }
-    catch(...)
+    if (!lua::lua->get_handle_manager().handle_is_valid(handle))
     {
         return false;
     }
+
+    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    return chara.state == 1;
 }
 
 bool Chara::is_player(lua_character_handle handle)

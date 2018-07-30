@@ -2204,8 +2204,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         ++p_at_m125;
     }
 
-    // TODO handle transferring through Lua robustly
-    // lua::lua->remove_chara_handle_run_callbacks(cdata[prm_784]);
+    lua::lua->get_handle_manager().relocate_handle<character>(cdata[prm_784], tc_at_m125);
 
     sdata.copy(tc_at_m125, prm_784);
     sdata.clear(prm_784);
