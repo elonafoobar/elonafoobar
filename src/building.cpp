@@ -601,6 +601,31 @@ void prompt_hiring()
 
 
 
+void fill_tile(int x, int y, int from, int to)
+{
+    // out of range
+    if (x < 0 || mdata_map_width <= x || y < 0 || mdata_map_height <= y)
+        return;
+
+    if (map(x, y, 0) != from)
+        return;
+
+    if ((chipm(7, to) & 4) != 0 && map(x, y, 1) != 0)
+        return;
+
+    // Draw one tile.
+    map(x, y, 0) = tile;
+    map(x, y, 2) = tile;
+
+    // Draw tiles around.
+    fill_tile(x - 1, y, from, to);
+    fill_tile(x + 1, y, from, to);
+    fill_tile(x, y - 1, from, to);
+    fill_tile(x, y + 1, from, to);
+}
+
+
+
 void start_home_map_mode()
 {
     const auto pc_position_prev = cdata[0].position;
@@ -622,7 +647,15 @@ void start_home_map_mode()
         {
             break;
         }
-        if (chipm(7, tile) & 4)
+
+        if (getkey(snail::key::ctrl))
+        {
+            if (map(tlocx, tlocy, 0) != tile)
+            {
+                fill_tile(tlocx, tlocy, map(tlocx, tlocy, 0), tile);
+            }
+        }
+        else if (chipm(7, tile) & 4)
         {
             efid = 438;
             magic();
