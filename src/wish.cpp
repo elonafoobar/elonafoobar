@@ -219,7 +219,7 @@ void wish_for_card()
     cell_refresh(cdata[0].position.x, cdata[0].position.y);
     txt(lang(
         u8"足元に" + itemname(ci) + u8"が転がってきた。",
-        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number)
+        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number())
             + u8" from nowhere."));
 }
 
@@ -237,7 +237,7 @@ void wish_for_figure()
     cell_refresh(cdata[0].position.x, cdata[0].position.y);
     txt(lang(
         u8"足元に" + itemname(ci) + u8"が転がってきた。",
-        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number)
+        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number())
             + u8" from nowhere."));
 }
 
@@ -515,7 +515,7 @@ bool wish_for_item(const std::string& input)
             {
                 // Remove this item and retry.
                 selector.remove(id);
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 --itemmemory(1, inv[ci].id);
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 continue;
@@ -524,15 +524,15 @@ bool wish_for_item(const std::string& input)
 
         if (inv[ci].id == 54)
         {
-            inv[ci].number = cdata[0].level * cdata[0].level * 50 + 20000;
+            inv[ci].set_number(cdata[0].level * cdata[0].level * 50 + 20000);
         }
         else if (inv[ci].id == 55)
         {
-            inv[ci].number = 8 + rnd(5);
+            inv[ci].set_number(8 + rnd(5));
         }
         else if (inv[ci].id == 602)
         {
-            item_remove(inv[ci]);
+            inv[ci].remove();
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
             inv[ci].curse_state = curse_state_t::blessed;
@@ -541,31 +541,31 @@ bool wish_for_item(const std::string& input)
         if (the_item_db[inv[ci].id]->category == 52000
             || the_item_db[inv[ci].id]->category == 53000)
         {
-            inv[ci].number = 3 + rnd(2);
+            inv[ci].set_number(3 + rnd(2));
             if (inv[ci].value >= 20000)
             {
-                inv[ci].number = 1;
+                inv[ci].set_number(1);
             }
             else if (inv[ci].value >= 10000)
             {
-                inv[ci].number = 2;
+                inv[ci].set_number(2);
             }
             else if (inv[ci].value >= 5000)
             {
-                inv[ci].number = 3;
+                inv[ci].set_number(3);
             }
             switch (inv[ci].id)
             {
-            case 559: inv[ci].number = 2 + rnd(2); break;
-            case 502: inv[ci].number = 2; break;
-            case 243: inv[ci].number = 1; break;
-            case 621: inv[ci].number = 1; break;
-            case 706: inv[ci].number = 1; break;
+            case 559: inv[ci].set_number(2 + rnd(2)); break;
+            case 502: inv[ci].set_number(2); break;
+            case 243: inv[ci].set_number(1); break;
+            case 621: inv[ci].set_number(1); break;
+            case 706: inv[ci].set_number(1); break;
             }
         }
         if (debug::voldemort && number_of_items != 0)
         {
-            inv[ci].number = number_of_items;
+            inv[ci].set_number(number_of_items);
         }
         if (debug::voldemort && curse_state)
         {
@@ -575,7 +575,7 @@ bool wish_for_item(const std::string& input)
         item_identify(inv[ci], identification_state_t::completely_identified);
         txt(lang(
             u8"足元に" + itemname(ci) + u8"が転がってきた。",
-            "" + itemname(ci) + u8" appear" + _s2(inv[ci].number) + u8"."));
+            "" + itemname(ci) + u8" appear" + _s2(inv[ci].number()) + u8"."));
         return true;
     }
 

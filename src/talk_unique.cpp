@@ -1588,7 +1588,7 @@ talk_result_t talk_unique_miral()
         if (stat != -1)
         {
             ci = stat;
-            if (inv[ci].number >= calccargoupdatecost())
+            if (inv[ci].number() >= calccargoupdatecost())
             {
                 ELONA_APPEND_RESPONSE(
                     1,
@@ -1618,7 +1618,7 @@ talk_result_t talk_unique_miral()
             "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
             cnvweight(calccargoupdate())));
         snd(58);
-        item_modify_num(inv[ci], (-calccargoupdatecost()));
+        inv[ci].modify_number((-calccargoupdatecost()));
         gdata_current_cart_limit += calccargoupdate();
         refresh_burden_state();
         listmax = 0;
@@ -1855,7 +1855,7 @@ talk_result_t talk_unique_paels_mom()
             if (chatval == 2)
             {
                 int stat = inv_find(559, 0);
-                item_modify_num(inv[stat], -1);
+                inv[stat].modify_number(-1);
                 txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.give.you_hand_her"));
                 snd(13);
                 modify_karma(0, 20);
@@ -1926,7 +1926,7 @@ talk_result_t talk_unique_paels_mom()
         if (chatval == 2)
         {
             int stat = inv_find(559, 0);
-            item_modify_num(inv[stat], -1);
+            inv[stat].modify_number(-1);
             txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.give.you_hand_her"));
             snd(13);
             modify_karma(0, 20);
@@ -2807,7 +2807,7 @@ talk_result_t talk_unique_renton()
         p(5) = 0;
         for (const auto& cnt : items(0))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -2841,7 +2841,7 @@ talk_result_t talk_unique_renton()
             p(5) = 0;
             for (const auto& cnt : items(0))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }
@@ -2849,7 +2849,7 @@ talk_result_t talk_unique_renton()
                 {
                     if (p(inv[cnt].param2) == 0)
                     {
-                        item_modify_num(inv[cnt], -1);
+                        inv[cnt].modify_number(-1);
                         p(inv[cnt].param2) = 1;
                     }
                 }
@@ -3164,13 +3164,13 @@ talk_result_t talk_unique_icolle()
             {
                 break;
             }
-            if (inv[cnt].number > 0)
+            if (inv[cnt].number() > 0)
             {
                 if (inv[cnt].id == 685)
                 {
                     if (inv[cnt].subname != 0)
                     {
-                        item_modify_num(inv[cnt], -1);
+                        inv[cnt].modify_number(-1);
                         ++gdata_ambitious_scientist;
                         f = 1;
                         txt(i18n::s.get(
@@ -4062,13 +4062,12 @@ talk_result_t talk_unique_rogue_boss()
         cdata[0].gold -= cdata[0].gold / 5;
         for (const auto& cnt : items(0))
         {
-            if (inv[cnt].number > 0)
+            if (inv[cnt].number() > 0)
             {
                 if (the_item_db[inv[cnt].id]->is_cargo == 1)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.talk.npc.common.hand_over", inv[cnt]));
-                    item_remove(inv[cnt]);
+                    txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[cnt]));
+                    inv[cnt].remove();
                 }
             }
         }
@@ -4201,7 +4200,7 @@ talk_result_t talk_unique_strange_scientist()
                         {
                             if (inv[ci].quality < 4)
                             {
-                                item_remove(inv[ci]);
+                                inv[ci].remove();
                             }
                         }
                     }
@@ -4346,7 +4345,7 @@ talk_result_t talk_unique_kaneda_bike()
             if (chatval == 1)
             {
                 int stat = inv_find(771, 0);
-                item_modify_num(inv[stat], -1);
+                inv[stat].modify_number(-1);
                 txt(i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"));
                 snd(13);
                 listmax = 0;

@@ -256,7 +256,7 @@ void proc_event()
         nostack = 1;
         flt();
         itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y);
-        item_set_num(inv[ci], 200 + inv[ci].number * 5);
+        inv[ci].set_number(200 + inv[ci].number() * 5);
         flt();
         itemcreate(
             -1,
@@ -509,7 +509,7 @@ void proc_event()
             p(1) = 6;
             for (const auto& ci : items(-1))
             {
-                if (inv[ci].number == 0)
+                if (inv[ci].number() == 0)
                     continue;
                 if (inv[ci].function != 44)
                     continue;

@@ -392,7 +392,7 @@ turn_result_t npc_turn()
         goto label_2689_internal;
     }
     ci = cdata[cc].item_which_will_be_used;
-    if (inv[ci].number == 0)
+    if (inv[ci].number() == 0)
     {
         cdata[cc].item_which_will_be_used = 0;
         goto label_2689_internal;
@@ -493,7 +493,7 @@ label_2689_internal:
                                     if (mdata_map_type
                                         != mdata_t::map_type_t::player_owned)
                                     {
-                                        in = inv[ci].number;
+                                        in = inv[ci].number();
                                         if (gdata_mount != cc)
                                         {
                                             int stat = pick_up_item();
@@ -1490,7 +1490,7 @@ turn_result_t pc_turn(bool advance_time)
         if (trait(210) != 0 && rnd(5) == 0)
         {
             ci = get_random_inv(0);
-            if (inv[ci].number > 0
+            if (inv[ci].number() > 0
                 && the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
@@ -1727,7 +1727,7 @@ label_2747:
         p = 0;
         for (const auto& ci : items(-1))
         {
-            if (inv[ci].number == 0)
+            if (inv[ci].number() == 0)
                 continue;
             if (inv[ci].position != cdata[cc].position)
                 continue;

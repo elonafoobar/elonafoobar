@@ -63,7 +63,7 @@ int access_item_db(int dbmode)
     {
         // Common initialization
         inv[ci].id = dbid;
-        inv[ci].number = 1;
+        inv[ci].set_number(1);
         inv[ci].difficulty_of_identification = 0; // Default value
         inv[ci].image = info->image;
         fixeditemenc(0) = 0; // Default value

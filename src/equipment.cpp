@@ -137,7 +137,7 @@ void wear_most_valuable_equipment_for_all_body_parts()
     for (const auto& cnt : items(rc))
     {
         ci = cnt;
-        if (inv[cnt].number == 0 || inv[cnt].body_part != 0)
+        if (inv[cnt].number() == 0 || inv[cnt].body_part != 0)
         {
             continue;
         }
@@ -223,7 +223,7 @@ void supply_new_equipment()
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             ci = get_random_inv(rc);
-            if (inv[ci].number == 0)
+            if (inv[ci].number() == 0)
             {
                 f = 1;
                 break;
@@ -236,9 +236,9 @@ void supply_new_equipment()
             {
                 continue;
             }
-            if (inv[ci].number != 0)
+            if (inv[ci].number() != 0)
             {
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 f = 1;
                 break;
             }
@@ -974,7 +974,7 @@ void supply_initial_equipments()
                     {
                         if (cnt < 14)
                         {
-                            item_remove(inv[ci]);
+                            inv[ci].remove();
                             continue;
                         }
                     }
@@ -1002,7 +1002,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1013,7 +1013,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1049,7 +1049,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1162,7 +1162,7 @@ void supply_initial_equipments()
             int stat = itemcreate(rc, 772, -1, -1, 0);
             if (stat != 0)
             {
-                inv[ci].number += rnd(4);
+                inv[ci].modify_number(rnd(4));
                 if (rnd(2))
                 {
                     inv[ci].param3 = -1;
