@@ -296,6 +296,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.damage_popup"s,             bool,        config::instance().damage_popup);
     CONFIG_OPTION("foobar.hp_bar_position"s,          std::string, config::instance().hp_bar);
     CONFIG_OPTION("foobar.leash_icon"s,               bool,        config::instance().leash_icon);
+    CONFIG_OPTION("foobar.max_damage_popup"s,         int,         config::instance().max_damage_popup);
     CONFIG_OPTION("foobar.startup_script"s,           std::string, config::instance().startup_script);
     CONFIG_OPTION("game.attack_neutral_npcs"s,        bool,        config::instance().attack_neutral_npcs);
     CONFIG_OPTION("game.extra_help"s,                 bool,        config::instance().extrahelp);
