@@ -167,7 +167,7 @@ reset_page:
             int page_bk = page;
             int cs_bk = cs;
             item_show_description();
-            inv[ci].set_number(0);
+            inv[ci].set_number(tmp.number());
             inv[tmp.index] = tmp;
             pagesize = pagesize_bk;
             page = page_bk;

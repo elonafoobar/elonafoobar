@@ -344,3 +344,33 @@ TEST_CASE("Test uniqueness of handle after original handle has been replaced", "
             elona::lua::lua->get_state()->safe_script(R"(assert(chara ~= chara3))"));
     }
 }
+
+TEST_CASE("Test creation of item causing handle creation", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test removal of item causing handle removal", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test separation of item handles", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test copying of item handles", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}
+
+TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
+{
+    REQUIRE(false);
+}

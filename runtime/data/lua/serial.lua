@@ -10,7 +10,6 @@ local function resolve_handles(data)
       if type(value) == "table" then
          if value.__handle then
             -- Set the handle's metatable.
-            value.is_valid = function(self) return Handle.is_valid(self) end
             setmetatable(value, Handle.get_metatable(value.kind))
          else
             resolve_handles(value)

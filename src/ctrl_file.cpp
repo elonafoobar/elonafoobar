@@ -1151,16 +1151,18 @@ void fmode_1_2(bool read)
     arrayfile(read, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 
-    // Mod store data (Store.map_local)
+    // Mod map-local store data (Store.map_local)
     {
         const auto filepath = dir / (u8"mod_"s + mid + u8".s2");
         if (read)
         {
+            tmpload(u8"mod_"s + mid + u8".s2");
             lua::lua->get_serial_manager().load_mod_store_data(
                 filepath, lua::mod_save_t::map_local);
         }
         else
         {
+            save_t::instance().add(filepath.filename());
             lua::lua->get_serial_manager().save_mod_store_data(
                 filepath, lua::mod_save_t::map_local);
         }
@@ -1171,6 +1173,7 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
         if (read)
         {
+            tmpload(u8"mod_cdata_"s + mid + u8".s2");
             lua::lua->get_serial_manager().load_handles<character>(
                 filepath, lua::mod_save_t::map_local);
 
@@ -1182,6 +1185,7 @@ void fmode_1_2(bool read)
         }
         else
         {
+            save_t::instance().add(filepath.filename());
             lua::lua->get_serial_manager().save_handles<character>(
                 filepath, lua::mod_save_t::map_local);
         }
@@ -1274,7 +1278,9 @@ void fmode_3_4(bool read, const fs::path& filename)
         tmpload(filename);
         load(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
 
+        tmpload(mod_filepath.filename().string());
         lua::lua->get_serial_manager().load_handles<item>(
+        save_t::instance().add(mod_filepath.filename());
             mod_filepath, lua::mod_save_t::map_local);
 
         auto& handle_mgr = lua::lua->get_handle_manager();
@@ -1289,6 +1295,8 @@ void fmode_3_4(bool read, const fs::path& filename)
         tmpload(filename);
         save(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
 
+        save_t::instance().add(mod_filepath.filename());
+        tmpload(mod_filepath.filename().string());
         lua::lua->get_serial_manager().save_handles<item>(
             mod_filepath, lua::mod_save_t::map_local);
     }

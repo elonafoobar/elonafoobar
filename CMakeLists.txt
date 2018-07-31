@@ -296,7 +296,7 @@ else()
     set(copy_dest "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     message("Will copy libraries to output folder.")
 
-    # Perform the copy
+    # Perform the copy after building
     foreach(copy_source ${copy_sources})
       add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E
@@ -359,6 +359,7 @@ else()
     set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
   else()
     if(WITH_TESTS STREQUAL "BENCH")
+      # Enable debug symbols for usage with "perf".
       set(CMAKE_CXX_FLAGS "-Wall -Wextra -g3")
     else()
       set(CMAKE_CXX_FLAGS "-Wall -Wextra")

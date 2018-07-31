@@ -502,10 +502,13 @@ void item_refresh(item& i)
     }
     if (i.index >= 5080 && mode != 6)
     {
+        // Refresh the cell the item is on if it's on the ground.
         cell_refresh(i.position.x, i.position.y);
     }
     else if (i.index < 200)
     {
+        // Refresh the player's burden state if the item is in their
+        // inventory.
         refresh_burden_state();
     }
 }
@@ -514,16 +517,7 @@ void item_refresh(item& i)
 
 void item::modify_number(int delta)
 {
-    bool num_was_zero = this->number_ == 0;
-
-    this->number_ += delta;
-    item_refresh(*this);
-
-    bool created_new = num_was_zero && this->number_ > 0;
-    if (created_new)
-    {
-        lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);
-    }
+    this->set_number(this->number_ + delta);
 }
 
 

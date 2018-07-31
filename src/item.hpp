@@ -95,8 +95,15 @@ struct item
 
     int number() const { return number_; }
 
+    // These methods set or modify this item's number. These methods
+    // will also run Lua callbacks for item creation/removal if the
+    // item's number becomes zero/non-zero. Setting the number to zero
+    // will cause the item slot to become open, thus allowing a newly
+    // item to take its slot, so these methods assure that the item's
+    // reference in Lua will be created/removed appropriately.
     void set_number(int number_);
     void modify_number(int delta);
+
     void remove();
 
 
