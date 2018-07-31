@@ -295,19 +295,19 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 54)
     {
-        inv[ci].number = calcinitgold(slot);
+        inv[ci].set_number(calcinitgold(slot));
         if (inv[ci].quality == 3)
         {
-            inv[ci].number = inv[ci].number * 2;
+            inv[ci].set_number(inv[ci].number() * 2);
         }
         if (inv[ci].quality >= 4)
         {
-            inv[ci].number = inv[ci].number * 4;
+            inv[ci].set_number(inv[ci].number() * 4);
         }
         if (slot >= 0)
         {
-            earn_gold(cdata[slot], inv[ci].number);
-            item_remove(inv[ci]);
+            earn_gold(cdata[slot], inv[ci].number());
+            inv[ci].remove();
             return 1;
         }
     }
@@ -482,10 +482,8 @@ int do_create_item(int slot, int x, int y)
 
     if (initnum != 0)
     {
-        inv[ci].number = initnum;
+        inv[ci].set_number(initnum);
     }
-
-    lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[ci]);
 
     if (nostack == 1)
     {

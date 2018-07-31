@@ -45,7 +45,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 
     save_and_reload();
 
-    REQUIRE(elona::inv(index).number == 3);
+    REQUIRE(elona::inv(index).number() == 3);
     REQUIRE(elona::inv(index).id == PUTITORO_PROTO_ID);
     REQUIRE(elona::inv(index).position.x == 4);
     REQUIRE(elona::inv(index).position.y == 8);

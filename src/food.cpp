@@ -217,7 +217,7 @@ void chara_vomit(int prm_876)
         p_at_m146 = 2;
         for (const auto& cnt : items(-1))
         {
-            if (inv[cnt].number > 0)
+            if (inv[cnt].number() > 0)
             {
                 if (inv[cnt].id == 704)
                 {

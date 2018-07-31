@@ -126,9 +126,9 @@ label_20591:
         }
         for (const auto& cnt : items(p))
         {
-            if (inv[cnt].number <= 0)
+            if (inv[cnt].number() <= 0)
             {
-                item_remove(inv[cnt]);
+                inv[cnt].remove();
                 continue;
             }
             if (inv[cnt].id == 488)
@@ -137,9 +137,8 @@ label_20591:
             }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
-                dialog(i18n::s.get(
-                    "core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
-                item_remove(inv[cnt]);
+                dialog(i18n::s.get("core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
+                inv[cnt].remove();
                 inv[cnt].id = 0;
                 continue;
             }
@@ -358,8 +357,8 @@ label_20591:
             }
             if (invctrl == 21)
             {
-                if (calcitemvalue(cnt, 0) * inv[cnt].number
-                    < calcitemvalue(citrade, 0) * inv[citrade].number / 2 * 3)
+                if (calcitemvalue(cnt, 0) * inv[cnt].number()
+                    < calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
                 {
                     continue;
                 }
@@ -664,7 +663,7 @@ label_20591:
             int stat = item_find(622, 3, 1);
             if (stat != -1)
             {
-                p = inv[stat].number;
+                p = inv[stat].number();
             }
             else
             {
@@ -963,8 +962,8 @@ label_2061_internal:
             break;
         }
         p = list(0, p);
-        s(0) = itemname(p, inv[p].number);
-        s(1) = cnvweight(inv[p].weight * inv[p].number);
+        s(0) = itemname(p, inv[p].number());
+        s(1) = cnvweight(inv[p].weight * inv[p].number());
         if (invctrl == 11)
         {
             s += u8" "s + cnvweight(inv[p].weight);
@@ -1098,21 +1097,19 @@ label_2061_internal:
                     }
                 }
             }
-            if (inv[ci].number > 1)
+            if (inv[ci].number() > 1)
             {
-                txt(i18n::s.get(
-                    "core.locale.ui.inv.drop.how_many",
-                    inv[ci].number,
-                    inv[ci]));
+                txt(i18n::s.get("core.locale.ui.inv.drop.how_many",
+                                inv[ci].number(), inv[ci]));
                 display_msg(screenmsgy, 1);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    inv[ci].number);
+                    inv[ci].number());
                 in = elona::stoi(inputlog(0));
-                if (in > inv[ci].number)
+                if (in > inv[ci].number())
                 {
-                    in = inv[ci].number;
+                    in = inv[ci].number();
                 }
                 if (in == 0 || rtval == -1)
                 {
@@ -1227,31 +1224,27 @@ label_2061_internal:
                 return result;
             }
             page_save();
-            if (mode == 6 && inv[ci].number > 1 && invctrl != 22)
+            if (mode == 6 && inv[ci].number() > 1 && invctrl != 22)
             {
                 if (invctrl == 11)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.buy.how_many",
-                        inv[ci].number,
-                        inv[ci]));
+                    txt(i18n::s.get("core.locale.ui.inv.buy.how_many",
+                                    inv[ci].number(), inv[ci]));
                 }
                 if (invctrl == 12)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.sell.how_many",
-                        inv[ci].number,
-                        inv[ci]));
+                    txt(i18n::s.get("core.locale.ui.inv.sell.how_many",
+                                    inv[ci].number(), inv[ci]));
                 }
                 display_msg(screenmsgy, 2);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    inv[ci].number);
+                    inv[ci].number());
                 in = elona::stoi(inputlog(0));
-                if (in > inv[ci].number)
+                if (in > inv[ci].number())
                 {
-                    in = inv[ci].number;
+                    in = inv[ci].number();
                 }
                 if (in == 0 || rtval == -1)
                 {
@@ -1262,7 +1255,7 @@ label_2061_internal:
             }
             else
             {
-                in = inv[ci].number;
+                in = inv[ci].number();
             }
             if (mode == 6 && invctrl != 22 && invctrl != 24)
             {
@@ -1466,7 +1459,7 @@ label_2061_internal:
             if (inv[ci].id == 729)
             {
                 txt(i18n::s.get("core.locale.ui.inv.give.present.text", cdata[tc], inv[ci]));
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 txt(i18n::s.get("core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
@@ -1622,12 +1615,12 @@ label_2061_internal:
                         cdata[tc]));
                     chara_mod_impression(tc, -20);
                     cdata[tc].emotion_icon = 318;
-                    item_modify_num(inv[ci], -1);
+                    inv[ci].modify_number(-1);
                     goto label_20591;
                 }
                 item_copy(ci, ti);
-                item_modify_num(inv[ci], -1);
-                item_set_num(inv[ti], 1);
+                inv[ci].modify_number(-1);
+                inv[ti].set_number(1);
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
@@ -1807,15 +1800,14 @@ label_2061_internal:
                 if (gdata_current_map == mdata_t::map_id_t::lumiest)
                 {
                     gdata_mages_guild_quota -=
-                        (inv[ci].param1 + 1) * inv[ci].number;
+                        (inv[ci].param1 + 1) * inv[ci].number();
                     if (gdata_mages_guild_quota <= 0)
                     {
                         gdata_mages_guild_quota = 0;
                     }
                     txtef(2);
-                    txt(i18n::s.get(
-                            "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
-                        + u8"("s + (inv[ci].param1 + 1) * inv[ci].number
+                    txt(i18n::s.get("core.locale.ui.inv.put.guild.you_deliver", inv[ci])
+                        + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
                         + u8" Guild Point)"s);
                     if (gdata_mages_guild_quota == 0)
                     {
@@ -1828,16 +1820,15 @@ label_2061_internal:
                 else
                 {
                     qdata(13, gdata_executing_immediate_quest) +=
-                        inv[ci].weight * inv[ci].number;
+                        inv[ci].weight * inv[ci].number();
                     txtef(2);
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.put.harvest",
-                        inv[ci],
-                        cnvweight(inv[ci].weight * inv[ci].number),
-                        cnvweight(qdata(13, gdata_executing_immediate_quest)),
-                        cnvweight(qdata(12, gdata_executing_immediate_quest))));
+                    txt(i18n::s.get("core.locale.ui.inv.put.harvest",
+                                    inv[ci],
+                                    cnvweight(inv[ci].weight * inv[ci].number()),
+                                    cnvweight(qdata(13, gdata_executing_immediate_quest)),
+                                    cnvweight(qdata(12, gdata_executing_immediate_quest))));
                 }
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 refresh_burden_state();
                 goto label_20591;
             }
@@ -1861,7 +1852,7 @@ label_2061_internal:
                 snd(12);
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 --gdata_left_bill;
                 screenupdate = -1;
                 update_screen();
@@ -1870,7 +1861,7 @@ label_2061_internal:
             if (invctrl(1) == 8)
             {
                 snd(71);
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 txt(i18n::s.get("core.locale.ui.inv.put.deck", inv[ci]));
                 ++card(0, inv[ci].subname);
                 screenupdate = -1;
@@ -1926,14 +1917,14 @@ label_2061_internal:
                 snd(65);
                 chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 goto label_20591;
             }
             snd(13);
             ibitmod(12, ci, 0);
             if (inv[ci].id == 54)
             {
-                in = inv[ci].number;
+                in = inv[ci].number();
             }
             else
             {
@@ -1944,13 +1935,13 @@ label_2061_internal:
             if (inv[ci].id == 54)
             {
                 earn_gold(cdata[0], in);
-                item_remove(inv[ci]);
+                inv[ci].remove();
             }
             else
             {
                 item_copy(ci, ti);
-                item_modify_num(inv[ci], (-in));
-                item_set_num(inv[ti], in);
+                inv[ci].modify_number((-in));
+                inv[ti].set_number(in);
                 item_stack(0, ti, 1);
                 convertartifact(ti);
             }
@@ -2011,7 +2002,7 @@ label_2061_internal:
             if (stat != -1)
             {
                 i = stat;
-                p = inv[i].number;
+                p = inv[i].number();
             }
             else
             {
@@ -2024,7 +2015,7 @@ label_2061_internal:
                 snd(27);
                 goto label_20591;
             }
-            inv[i].number -= calcmedalvalue(ci);
+            inv[i].modify_number(-calcmedalvalue(ci));
             snd(12);
             item_copy(ci, ti);
             txt(i18n::s.get(

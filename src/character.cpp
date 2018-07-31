@@ -2113,7 +2113,7 @@ void chara_delete(int cc)
 
     for (const auto& cnt : items(cc))
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

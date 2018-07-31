@@ -361,7 +361,7 @@ void casino_acquire_items()
     f = 0;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number != 0)
+        if (inv[cnt].number() != 0)
         {
             f = 1;
         }
@@ -1224,7 +1224,7 @@ bool casino_blackjack()
                 i);
             flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, -1, -1, 0);
-            if (inv[ci].number == 0)
+            if (inv[ci].number() == 0)
             {
                 --cnt;
                 continue;

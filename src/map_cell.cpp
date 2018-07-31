@@ -183,7 +183,7 @@ int cell_itemlist(int prm_625, int prm_626)
     listmax = 0;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[cnt].number() > 0)
         {
             if (inv[cnt].position.x == prm_625
                 && inv[cnt].position.y == prm_626)
@@ -204,7 +204,7 @@ std::pair<int, int> cell_itemoncell(const position_t& pos)
 
     for (const auto& ci : items(-1))
     {
-        if (inv[ci].number > 0 && inv[ci].position == pos)
+        if (inv[ci].number() > 0 && inv[ci].position == pos)
         {
             ++number;
             item = ci;

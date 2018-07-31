@@ -1283,7 +1283,7 @@ void dmgheal_death_by_backpack(character& chara)
 
     for (const auto& cnt : items(chara.index))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }

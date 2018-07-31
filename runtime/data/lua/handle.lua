@@ -40,7 +40,7 @@ local handles_by_index = {}
 local function print_handle_error(key)
    if _IS_TEST then return end
 
-   if Elona.core.GUI then
+   if Elona.core and Elona.core.GUI then
       Elona.core.GUI.txt_color(3)
       Elona.core.GUI.txt("Error: handle is not valid! ")
       if key ~= nil then
