@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "cat.hpp"
 #include "character.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -192,6 +193,11 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
                 + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0")
                 + _s(prm_801)
                 + i18n::_(u8"buff", std::to_string(prm_802), u8"message_1")));
+
+        add_damage_popup(
+            i18n::_(u8"buff", std::to_string(prm_802), u8"name"),
+            prm_801,
+            {255, 255, 255});
     }
     cdata[prm_801].buffs[p_at_m132].id = prm_802;
     cdata[prm_801].buffs[p_at_m132].power = prm_803;
@@ -209,6 +215,16 @@ void buff_delete(int prm_805, int prm_806)
         txtef(8);
         txt(i18n::s.get("core.locale.magic.buff.ends",
                         i18n::_(u8"buff", std::to_string(cdata[prm_805].buffs[prm_806].id), u8"name")));
+    }
+    if (is_in_fov(prm_805))
+    {
+        add_damage_popup(
+            i18n::_(
+                u8"buff",
+                std::to_string(cdata[prm_805].buffs[prm_806].id),
+                u8"name"),
+            prm_805,
+            {191, 191, 191});
     }
     if (cdata[prm_805].buffs[prm_806].id == 15)
     {
