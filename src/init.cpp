@@ -1226,16 +1226,18 @@ void initialize_game()
     }
     if (mode == 3)
     {
+        // This will run the GameLoaded Lua callback. Unless starting
+        // a new game, it should be the first callback to be run in
+        // the mod lifecycle. Note that since the map hasn't been
+        // loaded yet, it is dangerous to call certain Lua APIs here.
         load_save_data();
     }
     init_fovlist();
     initialize_map();
 
-    // A saved game should be loaded by this point, so allow mods to
-    // run their initialization callbacks. This should always be the
-    // first event to fire in the mod lifecycle. (Firing it before a
-    // save is loaded is dangerous, as many variables haven't been
-    // initialized at that point.)
+    // The game should be loaded by now, so allow mods to run their
+    // initialization callbacks. (Firing it before this point is
+    // dangerous, as many variables wouldn't have been initialized.)
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::game_initialized>();
 

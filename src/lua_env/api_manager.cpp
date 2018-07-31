@@ -1264,7 +1264,6 @@ void LuaCharacter::apply_ailment(
 bool LuaCharacter::recruit_as_ally(character& self)
 {
     // can't use Chara methods because they take a handle...
-    // TODO: DRY (would need to be far-reaching)
     if (self.state == 0 || (self.index != 0 && self.index <= 16)
         || self.index == 0)
     {

@@ -12601,6 +12601,7 @@ int pick_up_item()
     int sellgold = 0;
     if (cc != -1)
     {
+        // Handle gold/platinum specially.
         if (inv[ci].id == 54 || inv[ci].id == 55)
         {
             snd(11);
@@ -12651,6 +12652,8 @@ int pick_up_item()
                 }
             }
         }
+
+        // Handle trying to "pick up" a building to remove it.
         if (inv[ci].own_state == 3)
         {
             txt(i18n::s.get("core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
@@ -12686,8 +12689,15 @@ int pick_up_item()
             return 0;
         }
     }
+
+    // Record the new item amount for the item being taken from for later.
     inumbk = inv[ci].number() - in;
+
+    // Set the number of the item to that being picked up to do
+    // in-place transformations on the portion of the item being taken
+    // (magic absorption/poison ether disease effect)
     inv[ci].set_number(in);
+
     if (cc == 0)
     {
         if (trait(215) != 0)
@@ -12732,12 +12742,19 @@ int pick_up_item()
     }
     ibitmod(12, ci, 0);
     item_checkknown(ci);
+
+    // Attempt to stack this item in the character's inventory. If it
+    // can be stacked, the item at inv[ci] will be removed.
     int stat = item_stack(cc, ci);
     if (stat == 0)
     {
+        // Stacking failed. The item will have to be placed in a free
+        // inventory slot.
         ti = inv_getfreeid(cc);
         if (ti == -1)
         {
+            // A free slot couldn't be found. Reset the item's number
+            // back to the original as if nothing happened.
             inv[ci].set_number(inumbk + in);
             if (invctrl == 12)
             {
@@ -12749,14 +12766,24 @@ int pick_up_item()
             }
             return 0;
         }
+        // Copy the item's information to the found slot, and set the
+        // copy's amount to the amount that was picked up.
         item_copy(ci, ti);
         inv[ti].set_number(in);
     }
+
+    // By now the item has been transferred to the character's
+    // inventory. The item at inv[ci] now acts as the item on the
+    // ground.
+
+    // Set the updated amount for the item on the ground.
     inv[ci].set_number(inumbk);
     if (mode == 6)
     {
+        // Adjust expiration date for food being bought/taken/put away.
         if (the_item_db[inv[ti].id]->category == 57000)
         {
+            // Buying/being taken
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
@@ -12778,6 +12805,7 @@ int pick_up_item()
                     }
                 }
             }
+            // Being put into a container
             if (invctrl == 24 && invctrl(1) == 3)
             {
                 if (inv[ti].param3 > 0)
@@ -12911,11 +12939,6 @@ int pick_up_item()
         refresh_burden_state();
     }
 
-    if (inv[ci].number() <= 0)
-    {
-        inv[ci].remove();
-    }
-
     return 1;
 }
 
@@ -12991,11 +13014,6 @@ int drop_item()
     {
         mdata_map_play_campfire_sound = 1;
         play_music();
-    }
-
-    if (inv[ti].number() <= 0)
-    {
-        inv[ti].remove();
     }
 
     return 1;

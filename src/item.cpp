@@ -524,12 +524,12 @@ void item::modify_number(int delta)
 
 void item::set_number(int number_)
 {
-    bool num_was_zero = this->number_ == 0;
+    bool item_was_empty = this->number_ <= 0;
 
-    this->number_ = number_;
+    this->number_ = std::max(number_, 0);
     item_refresh(*this);
 
-    bool created_new = num_was_zero && this->number_ > 0;
+    bool created_new = item_was_empty && this->number_ > 0;
     if (created_new)
     {
         lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);

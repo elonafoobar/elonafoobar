@@ -97,5 +97,8 @@ module "Event.EventKind"
 -- @event GameSaved
 
 --- Fired after the game has finished loading from a savefile on disk.
---- This may be called before GameInitialized.
+--- This may be called before GameInitialized. NOTE: It is dangerous
+--- to call most APIs here as the map may not be loaded by this point,
+--- so limit logic in event handlers to initializing the mod's Store
+--- or similar.
 -- @event GameLoaded

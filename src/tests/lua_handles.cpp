@@ -345,32 +345,166 @@ TEST_CASE("Test uniqueness of handle after original handle has been replaced", "
     }
 }
 
-TEST_CASE("Test creation of item causing handle creation", "[Lua: Handles]")
-{
-    REQUIRE(false);
-}
-
-TEST_CASE("Test removal of item causing handle removal", "[Lua: Handles]")
-{
-    REQUIRE(false);
-}
-
 TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
 {
-    REQUIRE(false);
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    auto handle = handle_mgr.get_handle(chara);
+
+    int first_index = elona::rc;
+    std::string uuid = handle["__uuid"];
+    REQUIRE(handle["__index"].get<int>() == first_index);
+
+    new_ally_joins();
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(elona::rc != first_index);
+    REQUIRE(handle["__index"].get<int>() == elona::rc);
+    REQUIRE(handle["__uuid"].get<std::string>() == uuid);
+}
+
+TEST_CASE("Test removal of character causing handle removal", "[Lua: Handles]")
+{
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    auto handle = handle_mgr.get_handle(chara);
+
+    chara_delete(chara.index);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+}
+
+TEST_CASE("Test setting of item amount causing handle deletion", "[Lua: Handles]")
+{
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    int amount = 2;
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    item& i = elona::inv[elona::ci];
+    auto handle = handle_mgr.get_handle(i);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    // Amount becomes 1.
+    i.set_number(1);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    // Amount becomes 0.
+    i.set_number(-5);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // Amount becomes 1 again. Item counts as recreated.
+    i.set_number(1);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // The handle has been replaced, so retrieve it again.
+    handle = handle_mgr.get_handle(i);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+}
+
+TEST_CASE("Test modifying of item amount causing handle deletion", "[Lua: Handles]")
+{
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    int amount = 2;
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    item& i = elona::inv[elona::ci];
+    auto handle = handle_mgr.get_handle(i);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    // Amount becomes 1.
+    i.modify_number(-1);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    // Amount becomes 0.
+    i.modify_number(-5);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // Amount becomes 1 again. Item counts as recreated.
+    i.modify_number(1);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // The handle has been replaced, so retrieve it again.
+    handle = handle_mgr.get_handle(i);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 }
 
 TEST_CASE("Test separation of item handles", "[Lua: Handles]")
 {
-    REQUIRE(false);
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    int amount = 3;
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    item& i = elona::inv[elona::ci];
+    sol::table handle = handle_mgr.get_handle(i);
+
+    elona::item_separate(elona::ci);
+    item& item_sep = elona::inv[elona::ci];
+    sol::table handle_sep = handle_mgr.get_handle(item_sep);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
+
+    elona::item_separate(elona::ci);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
 }
 
 TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 {
-    REQUIRE(false);
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    int amount = 1;
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    item& i = elona::inv[elona::ci];
+    sol::table handle = handle_mgr.get_handle(i);
+
+    int ti = elona::inv_getfreeid(-1);
+    REQUIRE(handle_mgr.get_handle(elona::inv[ti]) == sol::lua_nil);
+
+    elona::item_copy(elona::ci, ti);
+    item& copy = elona::inv[ti];
+    sol::table handle_copy = handle_mgr.get_handle(copy);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle_mgr.handle_is_valid(handle_copy) == true);
+
+    // Copying will create a handle with a unique UUID if no item
+    // existed before at the new index.
+    REQUIRE(handle["__uuid"].get<std::string>() != handle_copy["__uuid"].get<std::string>());
+
+    // Assert that copying to an existing item will not try to
+    // overwrite the existing handle.
+    REQUIRE_NOTHROW(elona::item_copy(elona::ci, ti));
 }
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
 {
-    REQUIRE(false);
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 1));
+    item& item_a = elona::inv[elona::ci];
+    sol::table handle_a = handle_mgr.get_handle(item_a);
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 9, 1));
+    item& item_b = elona::inv[elona::ci];
+    sol::table handle_b = handle_mgr.get_handle(item_b);
+
+    std::string uuid_a = handle_a["__uuid"];
+    std::string uuid_b = handle_b["__uuid"];
+
+    elona::item_exchange(item_a.index, item_b.index);
+
+    // Handle indices should reflect the swapped item indices.
+    REQUIRE(handle_a["__index"].get<int>() == item_b.index);
+    REQUIRE(handle_b["__index"].get<int>() == item_a.index);
+
+    // UUIDs should still be the same as before.
+    REQUIRE(handle_a["__uuid"].get<std::string>() == uuid_a);
+    REQUIRE(handle_b["__uuid"].get<std::string>() == uuid_b);
 }

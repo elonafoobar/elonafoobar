@@ -142,14 +142,5 @@ void handle_manager::clear_map_local_handles()
     }
 }
 
-void handle_manager::print()
-{
-    lua->get_state()->safe_script(R"(
-local inspect = require "inspect"
-print(inspect(refs))
-print(inspect(handles_by_index))
-)", handle_env);
-}
-
 } // namespace lua
 } // namespace elona
