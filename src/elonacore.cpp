@@ -12591,15 +12591,19 @@ void heal_both_rider_and_mount()
     }
     for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
     {
-        healhp(tc(cnt), roll(dice1, dice2, bonus));
+        const auto amount = roll(dice1, dice2, bonus);
+        healhp(tc(cnt), amount);
         healcon(tc(cnt), 6);
         healcon(tc(cnt), 1, 50);
         healcon(tc(cnt), 5, 50);
         healcon(tc(cnt), 7, 30);
         healcon(tc(cnt), 9, 20);
         healsan(tc(cnt), 1);
+        if (is_in_fov(tc(cnt)))
+        {
+            add_damage_popup(std::to_string(amount), tc(cnt), {127, 255, 127});
+        }
     }
-    return;
 }
 
 
@@ -14875,7 +14879,7 @@ label_22191_internal:
                 txt(i18n::s.get(
                     "core.locale.damage.miss.other", cdata[cc], cdata[tc]));
             }
-            add_damage_popup(u8"miss", tc, {0, 0, 0});
+            add_damage_popup(u8"miss", tc, {191, 191, 191});
         }
     }
     if (hit == -2)
@@ -14897,7 +14901,7 @@ label_22191_internal:
                 txt(i18n::s.get(
                     "core.locale.damage.evade.other", cdata[cc], cdata[tc]));
             }
-            add_damage_popup(u8"evade!!", tc, {0, 0, 0});
+            add_damage_popup(u8"evade!!", tc, {191, 191, 191});
         }
     }
     if (tc == 0)

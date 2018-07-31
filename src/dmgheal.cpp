@@ -201,7 +201,11 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
 
     if (is_in_fov(victim))
     {
-        add_damage_popup(std::to_string(dmg_at_m141), victim, {0, 0, 0});
+        const auto color_id = eleinfo(ele, 0);
+        const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
+        const auto g = static_cast<uint8_t>(255 - c_col(1, color_id));
+        const auto b = static_cast<uint8_t>(255 - c_col(2, color_id));
+        add_damage_popup(std::to_string(dmg_at_m141), victim, {r, g, b});
     }
 
 

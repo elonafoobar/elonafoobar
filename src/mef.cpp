@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "event.hpp"
 #include "fov.hpp"
 #include "item.hpp"
@@ -341,6 +342,7 @@ bool mef_proc_from_physical_attack(int tc)
                     name(cc) + u8"は霧の中の幻影を攻撃した。"s,
                     name(cc) + u8" attack"s + _s(cc)
                         + u8" an illusion in the mist."s));
+                add_damage_popup(u8"miss", tc, {191, 191, 191});
             }
             return true;
         }

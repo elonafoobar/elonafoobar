@@ -460,6 +460,8 @@ void initialize_damage_popups()
     }
 }
 
+
+
 void add_damage_popup(
     const std::string& text,
     int character,
@@ -568,7 +570,15 @@ void show_damage_popups()
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
         font(2 + cfg_dmgfont - en * 2);
-        bmes(damage_popup.text, x, y, {255, 255, 255}, damage_popup.color);
+
+        bmes(
+            damage_popup.text,
+            x,
+            y,
+            damage_popup.color,
+            {static_cast<uint8_t>(damage_popup.color.r / 3),
+             static_cast<uint8_t>(damage_popup.color.g / 3),
+             static_cast<uint8_t>(damage_popup.color.b / 3)});
 
         ++damage_popup.frame;
 
