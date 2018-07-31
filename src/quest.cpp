@@ -985,7 +985,7 @@ void quest_exit_map()
         {
             if (inv[cnt].own_state == 4)
             {
-                item_remove(inv[cnt]);
+                inv[cnt].remove();
             }
         }
         refresh_burden_state();

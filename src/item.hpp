@@ -50,7 +50,6 @@ struct item
     // creation and load.
     int index = -1;
 
-    int number = 0;
     int value = 0;
     int image = 0;
     int id = 0;
@@ -94,12 +93,18 @@ struct item
     // for identifying the type of a Lua reference
     static std::string lua_type() { return "LuaItem"; }
 
+    int number() const { return number_; }
+
+    void set_number(int number_);
+    void modify_number(int delta);
+    void remove();
+
 
     template <typename Archive>
     void serialize(Archive& ar)
     {
         // WARNING: Changing this will break save compatibility!
-        ar(number);
+        ar(number_);
         ar(value);
         ar(image);
         ar(id);
@@ -133,6 +138,9 @@ struct item
         range::for_each(
             enchantments, [&](auto&& enchantment) { ar(enchantment); });
     }
+private:
+    static void refresh();
+    int number_ = 0;
 };
 
 

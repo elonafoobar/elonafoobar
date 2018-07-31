@@ -146,7 +146,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
         for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
              ++cnt)
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -251,7 +251,7 @@ std::vector<int> itemlist(int owner, int id)
     std::vector<int> ret;
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -296,7 +296,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
     {
         for (const auto& cnt : items(prm_487))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -312,7 +312,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
     {
         for (const auto& cnt : items(prm_487))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -332,7 +332,7 @@ int mapitemfind(int x, int y, int id)
 {
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -366,7 +366,7 @@ void cell_refresh(int prm_493, int prm_494)
     map(prm_493, prm_494, 9) = 0;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[cnt].number() > 0)
         {
             if (inv[cnt].position.x == prm_493
                 && inv[cnt].position.y == prm_494)
@@ -451,7 +451,7 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
-    bool created_new = inv[b].number == 0;
+    bool created_new = inv[b].number() == 0;
 
     inv[b] = inv[a];
     // Restore "index".
@@ -477,15 +477,15 @@ void item_exchange(int a, int b)
 }
 
 
-void item_remove(item& i)
+void item::remove()
 {
-    i.number = 0;
-    lua::lua->get_handle_manager().remove_item_handle_run_callbacks(i);
+    number_ = 0;
+    lua::lua->get_handle_manager().remove_item_handle_run_callbacks(*this);
 }
 
 void item_delete(int ci)
 {
-    item_remove(inv[ci]);
+    inv[ci].remove();
 
     inv[ci].clear();
     // Restore "index".
@@ -496,15 +496,15 @@ void item_delete(int ci)
 
 void item_refresh(item& i)
 {
-    if (i.number <= 0)
+    if (i.number() <= 0)
     {
-        item_remove(i);
+        i.remove();
     }
-    if (ci >= 5080 && mode != 6)
+    if (i.index >= 5080 && mode != 6)
     {
         cell_refresh(i.position.x, i.position.y);
     }
-    else if (ci < 200)
+    else if (i.index < 200)
     {
         refresh_burden_state();
     }
@@ -512,25 +512,41 @@ void item_refresh(item& i)
 
 
 
-void item_modify_num(item& i, int delta)
+void item::modify_number(int delta)
 {
-    i.number += delta;
-    item_refresh(i);
+    bool num_was_zero = this->number_ == 0;
+
+    this->number_ += delta;
+    item_refresh(*this);
+
+    bool created_new = num_was_zero && this->number_ > 0;
+    if (created_new)
+    {
+        lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);
+    }
 }
 
 
 
-void item_set_num(item& i, int number)
+void item::set_number(int number_)
 {
-    i.number = number;
-    item_refresh(i);
+    bool num_was_zero = this->number_ == 0;
+
+    this->number_ = number_;
+    item_refresh(*this);
+
+    bool created_new = num_was_zero && this->number_ > 0;
+    if (created_new)
+    {
+        lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);
+    }
 }
 
 
 
 int item_separate(int ci)
 {
-    if (inv[ci].number <= 1)
+    if (inv[ci].number() <= 1)
         return ci;
 
     int ti = inv_getfreeid(inv_getowner(ci));
@@ -539,7 +555,7 @@ int item_separate(int ci)
         ti = inv_getfreeid(-1);
         if (ti == -1)
         {
-            item_set_num(inv[ci], 1);
+            inv[ci].set_number(1);
             txt(lang(
                 u8"何かが地面に落ちて消えた…"s,
                 u8"Something falls to the ground and disappear..."s));
@@ -548,8 +564,8 @@ int item_separate(int ci)
     }
 
     item_copy(ci, ti);
-    item_set_num(inv[ti], inv[ci].number - 1);
-    item_set_num(inv[ci], 1);
+    inv[ti].set_number(inv[ci].number() - 1);
+    inv[ci].set_number(1);
 
     if (inv_getowner(ti) == -1 && mode != 6)
     {
@@ -896,7 +912,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     item_checkknown(prm_518);
     if (prm_519 == 0)
     {
-        num2_ = inv[prm_518].number;
+        num2_ = inv[prm_518].number();
     }
     else
     {
@@ -1489,7 +1505,7 @@ int item_stack(int inventory_id, int ci, int show_message)
 
     for (const auto& i : items(inventory_id))
     {
-        if (i == ci || inv[i].number == 0 || inv[i].id != inv[ci].id)
+        if (i == ci || inv[i].number() == 0 || inv[i].id != inv[ci].id)
             continue;
 
         bool stackable;
@@ -1502,8 +1518,8 @@ int item_stack(int inventory_id, int ci, int show_message)
 
         if (stackable)
         {
-            item_modify_num(inv[i], inv[ci].number);
-            item_remove(inv[ci]);
+            inv[i].modify_number(inv[ci].number());
+            inv[ci].remove();
             ti = i;
             did_stack = true;
             break;
@@ -1519,10 +1535,10 @@ int item_stack(int inventory_id, int ci, int show_message)
         if (show_message)
         {
             txt(lang(
-                itemname(ti, 1) + u8"をまとめた(計"s + inv[ti].number
+                itemname(ti, 1) + u8"をまとめた(計"s + inv[ti].number()
                     + u8"個) "s,
                 itemname(ti, 1) + u8" has been stacked. (Total:"s
-                    + inv[ti].number + u8")"s));
+                    + inv[ti].number() + u8")"s));
         }
     }
 
@@ -1609,7 +1625,7 @@ int item_fire(int prm_840, int prm_841)
         }
         for (const auto& cnt : items(prm_840))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -1637,7 +1653,7 @@ int item_fire(int prm_840, int prm_841)
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number <= 0)
+        if (inv[ci_at_m138].number() <= 0)
         {
             continue;
         }
@@ -1660,11 +1676,11 @@ int item_fire(int prm_840, int prm_841)
                                     u8"地面の"s
                                         + itemname(
                                               ci_at_m138,
-                                              inv[ci_at_m138].number)
+                                              inv[ci_at_m138].number())
                                         + u8"はこんがりと焼き上がった。"s,
-                                    itemname(ci_at_m138, inv[ci_at_m138].number)
+                                    itemname(ci_at_m138, inv[ci_at_m138].number())
                                         + u8" on the ground get"s
-                                        + _s2(inv[ci_at_m138].number)
+                                        + _s2(inv[ci_at_m138].number())
                                         + u8" perfectly broiled."s));
                             }
                         }
@@ -1677,15 +1693,15 @@ int item_fire(int prm_840, int prm_841)
                                     name(prm_840) + u8"の"s
                                         + itemname(
                                               ci_at_m138,
-                                              inv[ci_at_m138].number)
+                                              inv[ci_at_m138].number())
                                         + u8"はこんがりと焼き上がった。"s,
                                     name(prm_840) + your(prm_840) + u8" "s
                                         + itemname(
                                               ci_at_m138,
-                                              inv[ci_at_m138].number,
+                                              inv[ci_at_m138].number(),
                                               1)
                                         + u8" get"s
-                                        + _s2(inv[ci_at_m138].number)
+                                        + _s2(inv[ci_at_m138].number())
                                         + u8" perfectly broiled."s));
                             }
                         }
@@ -1724,7 +1740,7 @@ int item_fire(int prm_840, int prm_841)
                 }
                 if (ti_at_m138 != -1)
                 {
-                    if (inv[ti_at_m138].number > 0)
+                    if (inv[ti_at_m138].number() > 0)
                     {
                         if (is_in_fov(prm_840))
                         {
@@ -1742,7 +1758,7 @@ int item_fire(int prm_840, int prm_841)
                         }
                         else if (rnd(20) == 0)
                         {
-                            item_modify_num(inv[ti_at_m138], -1);
+                            inv[ti_at_m138].modify_number(-1);
                             if (is_in_fov(prm_840))
                             {
                                 txt(lang(
@@ -1756,7 +1772,7 @@ int item_fire(int prm_840, int prm_841)
                         continue;
                     }
                 }
-                p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
+                p_at_m138 = rnd(inv[ci_at_m138].number()) / 2 + 1;
                 if (prm_840 != -1)
                 {
                     if (inv[ci_at_m138].body_part != 0)
@@ -1802,7 +1818,7 @@ int item_fire(int prm_840, int prm_841)
                             + u8" on the ground turn"s + _s(p_at_m138)
                             + u8" to dust."s));
                 }
-                inv[ci_at_m138].number -= p_at_m138;
+                inv[ci_at_m138].modify_number(-p_at_m138);
                 cell_refresh(
                     inv[ci_at_m138].position.x, inv[ci_at_m138].position.y);
                 f_at_m138 = 1;
@@ -1831,7 +1847,7 @@ int item_cold(int prm_844, int prm_845)
         }
         for (const auto& cnt : items(prm_844))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -1859,7 +1875,7 @@ int item_cold(int prm_844, int prm_845)
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number <= 0)
+        if (inv[ci_at_m138].number() <= 0)
         {
             continue;
         }
@@ -1892,7 +1908,7 @@ int item_cold(int prm_844, int prm_845)
             }
             if (ti_at_m138 != -1)
             {
-                if (inv[ti_at_m138].number > 0)
+                if (inv[ti_at_m138].number() > 0)
                 {
                     txt(lang(
                         itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
@@ -1910,20 +1926,20 @@ int item_cold(int prm_844, int prm_845)
                             itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
                             itemname(ti_at_m138, 1)
                                 + u8" is broken to pieces."s));
-                        item_modify_num(inv[ti_at_m138], -1);
+                        inv[ti_at_m138].modify_number(-1);
                         break;
                     }
                     continue;
                 }
             }
-            p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
+            p_at_m138 = rnd(inv[ci_at_m138].number()) / 2 + 1;
             txtef(8);
             txt(lang(
                 s_at_m138 + itemname(ci_at_m138, p_at_m138)
                     + u8"は粉々に砕けた。"s,
                 s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
                     + _s2(p_at_m138) + u8" to pieces."s));
-            inv[ci_at_m138].number -= p_at_m138;
+            inv[ci_at_m138].modify_number(-p_at_m138);
             f_at_m138 = 1;
         }
     }
@@ -1940,7 +1956,7 @@ void mapitem_fire(int prm_842, int prm_843)
     ci_at_m138 = -1;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -1977,7 +1993,7 @@ void mapitem_cold(int prm_846, int prm_847)
     ci_at_m138 = -1;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -2043,7 +2059,7 @@ int inv_find(int id, int owner)
 {
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -2059,7 +2075,7 @@ bool inv_getspace(int owner)
 {
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             return true;
         }
@@ -2072,7 +2088,7 @@ int inv_sum(int owner)
     int n{};
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number != 0)
+        if (inv[cnt].number() != 0)
         {
             ++n;
         }
@@ -2088,11 +2104,11 @@ int inv_compress(int owner)
         int threshold = 200 * (i * i + 1);
         for (const auto& cnt : items(owner))
         {
-            if (inv[cnt].number != 0)
+            if (inv[cnt].number() != 0)
             {
                 if (!ibit(5, cnt) && inv[cnt].value < threshold)
                 {
-                    item_remove(inv[cnt]);
+                    inv[cnt].remove();
                     ++number_of_deleted_items;
                     if (inv[cnt].position.x >= 0
                         && inv[cnt].position.x < mdata_map_width
@@ -2117,7 +2133,7 @@ int inv_compress(int owner)
     int slot = -1;
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             slot = cnt;
             break;
@@ -2128,7 +2144,7 @@ int inv_compress(int owner)
     {
         // Destroy 1 existing item forcely.
         slot = get_random_inv(owner);
-        item_remove(inv[slot]);
+        inv[slot].remove();
         if (mode != 6)
         {
             if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata_map_width
@@ -2146,7 +2162,7 @@ int inv_getfreeid(int owner)
 {
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             return cnt;
         }
@@ -2170,15 +2186,15 @@ int inv_weight(int owner)
     }
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number != 0)
+        if (inv[cnt].number() != 0)
         {
             if (inv[cnt].weight >= 0)
             {
-                weight += inv[cnt].weight * inv[cnt].number;
+                weight += inv[cnt].weight * inv[cnt].number();
             }
             else if (owner == 0)
             {
-                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
+                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number();
             }
         }
     }
@@ -2197,7 +2213,7 @@ int inv_getfreeid_force()
         p = rnd(invrange) + invhead;
         if (inv[p].body_part == 0)
         {
-            item_remove(inv[p]);
+            inv[p].remove();
             if (cdata[tc].item_which_will_be_used == p)
             {
                 cdata[tc].item_which_will_be_used = 0;

@@ -1042,7 +1042,7 @@ label_2181_internal:
             if (rnd(5) == 0)
             {
                 txt(i18n::s.get("core.locale.magic.map.cursed"));
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 break;
             }
         }
@@ -1446,7 +1446,7 @@ label_2181_internal:
             f = 0;
             for (const auto& cnt : items(cc))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }
@@ -1986,7 +1986,7 @@ label_2181_internal:
         p(2) = 0;
         for (const auto& cnt : items(tc))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -2792,7 +2792,7 @@ label_2181_internal:
             for (int cnt = 0; cnt < 200; ++cnt)
             {
                 p = get_random_inv(tc);
-                if (inv[p].number == 0)
+                if (inv[p].number() == 0)
                 {
                     continue;
                 }
@@ -3121,7 +3121,7 @@ label_2181_internal:
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
-        item_modify_num(inv[ci], -1);
+        inv[ci].modify_number(-1);
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 21:
@@ -3161,7 +3161,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.change_material.artifact_reconstructed",
                                 cdata[cc],
                                 inv[ci]));
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 flt();
                 itemcreate(0, inv[ci].id, -1, -1, 0);
             }
@@ -3335,7 +3335,7 @@ label_2181_internal:
                     if (rnd(4) == 0)
                     {
                         txt(i18n::s.get("core.locale.magic.fill_charge.explodes", inv[ci]));
-                        item_modify_num(inv[ci], -1);
+                        inv[ci].modify_number(-1);
                         refresh_burden_state();
                         break;
                     }
@@ -3396,7 +3396,7 @@ label_2181_internal:
                                 inv[ci],
                                 p(0),
                                 gdata_charge_power));
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 refresh_burden_state();
             }
         }
@@ -3535,7 +3535,7 @@ label_2181_internal:
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
-            item_remove(inv[ci]);
+            inv[ci].remove();
             for (int cnt = 0;; ++cnt)
             {
                 flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
@@ -3550,7 +3550,7 @@ label_2181_internal:
                 }
                 if (inv[ci].value > valuebk * 3 / 2 + 1000)
                 {
-                    item_remove(inv[ci]);
+                    inv[ci].remove();
                     continue;
                 }
                 else
@@ -3947,7 +3947,7 @@ label_2181_internal:
         p = -1;
         for (const auto& cnt : items(tc))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -3961,7 +3961,7 @@ label_2181_internal:
         {
             for (const auto& cnt : items(tc))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }
@@ -4064,7 +4064,7 @@ label_2181_internal:
         {
             for (const auto& cnt : items(-1))
             {
-                item_remove(inv[cnt]);
+                inv[cnt].remove();
             }
         }
         shoptrade = 0;

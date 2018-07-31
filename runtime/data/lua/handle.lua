@@ -38,6 +38,10 @@ local refs = {}
 local handles_by_index = {}
 
 local function print_handle_error(handle, key)
+   if _IS_TEST then
+      return
+   end
+
    if Elona.core and Elona.core.GUI then
       Elona.core.GUI.txt_color(3)
       Elona.core.GUI.txt("Error: handle is not valid! ")
@@ -179,7 +183,7 @@ function Handle.create_handle(cpp_ref, kind, uuid)
       return nil
    end
 
-   print("CREATE " .. cpp_ref.index .. " " .. uuid)
+   --print("CREATE " .. cpp_ref.index .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -204,7 +208,7 @@ function Handle.remove_handle(cpp_ref, kind)
       return
    end
 
-   print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
+   --print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
 
    assert(handle.__kind == kind)
 

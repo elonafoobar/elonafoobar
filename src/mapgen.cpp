@@ -3023,7 +3023,7 @@ int initialize_quest_map_party()
     }
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[cnt].number() > 0)
         {
             inv[cnt].own_state = 1;
         }
@@ -3069,7 +3069,7 @@ void initialize_quest_map_town()
     }
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }

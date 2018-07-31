@@ -196,7 +196,7 @@ void failed_to_place_character(character& cc)
     {
         cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
-        chara_killed(cdata[cc, 4);
+        chara_killed(cdata[cc], 4);
     }
 }
 
@@ -2094,7 +2094,6 @@ void chara_killed(character& chara, int new_state)
 
 void chara_delete(int cc)
 {
-    int state = cdata[cc].state;
     if (cc != -1)
     {
         chara_remove(cdata[cc]);
@@ -2102,7 +2101,7 @@ void chara_delete(int cc)
 
     for (const auto& cnt : items(cc))
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

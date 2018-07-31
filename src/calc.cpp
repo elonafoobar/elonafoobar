@@ -1165,7 +1165,7 @@ int calccostreload(int owner, bool do_reload)
 
     for (const auto& cnt : items(owner))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
             continue;
         if (the_item_db[inv[cnt].id]->category != 25000)
             continue;
@@ -1224,7 +1224,7 @@ int calcidentifyvalue(int type)
         int need_to_identify{};
         for (const auto& cnt : items(0))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }

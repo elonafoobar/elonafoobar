@@ -35,13 +35,13 @@ void map_reload(const std::string& map_filename)
 
     for (const auto& i : items(-1))
     {
-        if (inv[i].number > 0)
+        if (inv[i].number() > 0)
         {
             if (inv[i].own_state == 1)
             {
                 if (the_item_db[inv[i].id]->category == 57000)
                 {
-                    item_remove(inv[i]);
+                    inv[i].remove();
                     cell_refresh(inv[i].position.x, inv[i].position.y);
                 }
             }

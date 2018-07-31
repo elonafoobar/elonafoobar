@@ -167,7 +167,7 @@ inline std::string builtin_itemname(
     const hil::FunctionCall& func,
     const item& item)
 {
-    int number = item.number;
+    int number = item.number();
     bool needs_article = true;
     if (func.args.size() > 1)
     {
@@ -258,9 +258,9 @@ std::string format_builtins_item(
     ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
 
     // English only
-    ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number));
-    ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number));
-    ELONA_DEFINE_I18N_BUILTIN("does", does(item.number));
+    ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number()));
+    ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number()));
+    ELONA_DEFINE_I18N_BUILTIN("does", does(item.number()));
 
     return UNKNOWN_FUNCTION("item");
 }

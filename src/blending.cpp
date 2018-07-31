@@ -683,9 +683,9 @@ label_1923:
                 {
                     continue;
                 }
-                if (inv[rpref(10 + cnt * 2)].number < p)
+                if (inv[rpref(10 + cnt * 2)].number() < p)
                 {
-                    p = inv[rpref(10 + cnt * 2)].number;
+                    p = inv[rpref(10 + cnt * 2)].number();
                 }
             }
             rpmode = 1;
@@ -926,7 +926,7 @@ label_1928_internal:
             break;
         }
         p = list(0, p);
-        s = itemname(p, inv[p].number);
+        s = itemname(p, inv[p].number());
         s = strmid(s, 0, 28);
         if (p >= 5080)
         {
@@ -1266,7 +1266,7 @@ int blendcheckmat(int prm_1044)
             }
             for (const auto& cnt : items(o_at_m181))
             {
-                if (inv[cnt].number <= 0)
+                if (inv[cnt].number() <= 0)
                 {
                     continue;
                 }
@@ -1354,7 +1354,7 @@ int blendmatnum(int prm_1045, int prm_1046)
         }
         for (const auto& cnt : items(o_at_m182))
         {
-            if (inv[cnt].number <= 0)
+            if (inv[cnt].number() <= 0)
             {
                 continue;
             }
@@ -1387,7 +1387,7 @@ int blendmatnum(int prm_1045, int prm_1046)
             {
                 if (inv[cnt].id == prm_1045)
                 {
-                    m_at_m182 += inv[cnt].number;
+                    m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
@@ -1400,13 +1400,13 @@ int blendmatnum(int prm_1045, int prm_1046)
                         != -1
                     || prm_1045 == 9004)
                 {
-                    m_at_m182 += inv[cnt].number;
+                    m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
             if (the_item_db[inv[cnt].id]->category == prm_1045)
             {
-                m_at_m182 += inv[cnt].number;
+                m_at_m182 += inv[cnt].number();
                 continue;
             }
         }
@@ -1439,7 +1439,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
             {
                 break;
             }
-            if (inv[cnt].number <= 0)
+            if (inv[cnt].number() <= 0)
             {
                 continue;
             }
@@ -1539,7 +1539,7 @@ int label_1931()
             f = 0;
             break;
         }
-        if (inv[rpref(10 + cnt * 2)].number <= 0
+        if (inv[rpref(10 + cnt * 2)].number() <= 0
             || inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
         {
             f = 0;
@@ -1564,13 +1564,13 @@ int label_1932()
         }
         if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
         {
-            item_modify_num(inv[rpref(10 + cnt * 2)], -1);
+            inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         else if (rnd(3) == 0)
         {
 
             txt(i18n::s.get("core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
-            item_modify_num(inv[rpref(10 + cnt * 2)], -1);
+            inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
@@ -1658,7 +1658,7 @@ void label_1935()
     {
         item_separate(ci);
     }
-    else if (inv[ci].number <= 1)
+    else if (inv[ci].number() <= 1)
     {
         rpref(10) = -2;
     }

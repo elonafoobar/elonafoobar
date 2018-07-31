@@ -42,7 +42,7 @@ void lua_env::clear()
 {
     for (int i = 0; i < ELONA_MAX_ITEMS; i++)
     {
-        if (inv[i].number != 0)
+        if (inv[i].number() != 0)
         {
             handle_mgr->remove_item_handle(inv[i]);
         }

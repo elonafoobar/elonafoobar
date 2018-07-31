@@ -918,81 +918,81 @@ void initialize_noa_items()
 {
     flt();
     itemcreate(0, 284, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     inv[ci].curse_state = curse_state_t::blessed;
     flt();
     itemcreate(0, 127, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     inv[ci].curse_state = curse_state_t::blessed;
     flt();
     itemcreate(0, 617, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     flt();
     itemcreate(0, 671, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 749, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 748, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 601, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 342, -1, -1, 0);
-    inv[ci].number = 12;
+    inv[ci].set_number(12);
     flt();
     itemcreate(0, 343, -1, -1, 0);
-    inv[ci].number = 50;
+    inv[ci].set_number(50);
     flt();
     itemcreate(0, 519, -1, -1, 0);
-    inv[ci].number = 50;
+    inv[ci].set_number(50);
     inv[ci].color = 4;
     flt();
     itemcreate(0, 622, -1, -1, 0);
-    inv[ci].number = 50000;
+    inv[ci].set_number(50000);
     flt();
     itemcreate(0, 603, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 620, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 736, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 516, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     inv[ci].curse_state = curse_state_t::blessed;
     flt();
     itemcreate(0, 262, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 632, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].curse_state = curse_state_t::cursed;
     flt();
     itemcreate(0, 632, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].curse_state = curse_state_t::none;
     flt();
     itemcreate(0, 204, -1, -1, 0);
     inv[ci].subname = 330;
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 636, -1, -1, 0);
-    inv[ci].number = 3;
+    inv[ci].set_number(3);
     inv[ci].curse_state = curse_state_t::none;
     flt();
     itemcreate(0, 342, -1, -1, 0);
     inv[ci].count = 100;
     flt();
     itemcreate(0, 350, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     flt();
     itemcreate(0, 707, -1, -1, 0);
     flt();
@@ -1029,10 +1029,10 @@ void initialize_noa_items()
     itemcreate(0, 784, -1, -1, 0);
     flt();
     itemcreate(0, 785, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 786, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 787, -1, -1, 0);
     flt();
@@ -1047,7 +1047,7 @@ void initialize_noa_items()
     itemcreate(0, 792, -1, -1, 0);
     flt();
     itemcreate(0, 260, -1, -1, 0);
-    inv[ci].number = 100;
+    inv[ci].set_number(100);
     gdata(41) = 140789;
     gdata(42) = 140790;
     for (int cnt = 0; cnt < 1200; ++cnt)
@@ -1068,32 +1068,32 @@ void initialize_noa_items()
     inv[ci].param1 = 164;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].curse_state = curse_state_t::blessed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].curse_state = curse_state_t::cursed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 55, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 385, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 672, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].param1 = 169;
     flt();
     itemcreate(0, 672, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].param1 = 162;
     flt();
     itemcreate(0, 771, -1, -1, 0);
-    inv[ci].number = 100;
+    inv[ci].set_number(100);
     flt();
     itemcreate(0, 761, -1, -1, 0);
     flt();
@@ -1112,7 +1112,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     flt();
@@ -1121,7 +1121,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     flt();
@@ -1130,7 +1130,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     for (int cnt = 0; cnt < 40; ++cnt)

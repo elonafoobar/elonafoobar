@@ -535,18 +535,18 @@ void initialize_pc_character()
     cdata[0].has_own_sprite() = true;
     flt();
     itemcreate(0, 333, -1, -1, 0);
-    inv[ci].number = 8;
+    inv[ci].set_number(8);
     flt();
     itemcreate(0, 233, -1, -1, 0);
-    inv[ci].number = 4;
+    inv[ci].set_number(4);
     flt();
     itemcreate(0, 31, -1, -1, 0);
-    inv[ci].number = 2;
+    inv[ci].set_number(2);
     if (sdata(150, 0) == 0)
     {
         flt();
         itemcreate(0, 68, -1, -1, 0);
-        inv[ci].number = 3;
+        inv[ci].set_number(3);
     }
     if (cdatan(3, 0) == u8"pianist"s)
     {
@@ -564,13 +564,13 @@ void initialize_pc_character()
         itemcreate(0, 116, -1, -1, 0);
         flt();
         itemcreate(0, 257, -1, -1, 0);
-        inv[ci].number = 3;
+        inv[ci].set_number(3);
     }
     if (cdatan(3, 0) == u8"priest"s)
     {
         flt();
         itemcreate(0, 249, -1, -1, 0);
-        inv[ci].number = 3;
+        inv[ci].set_number(3);
         flt();
         itemcreate(0, 378, -1, -1, 0);
     }
@@ -579,7 +579,7 @@ void initialize_pc_character()
     cdata[0].total_skill_bonus = 5 + trait(154);
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -3569,7 +3569,7 @@ int convertartifact(int prm_930, int prm_931)
                 continue;
             }
         }
-        if (inv[cnt].number > 0)
+        if (inv[cnt].number() > 0)
         {
             if (inv[cnt].id == inv[prm_930].id)
             {
@@ -3591,7 +3591,7 @@ int convertartifact(int prm_930, int prm_931)
     {
         flt(the_item_db[inv[prm_930].id]->level, 4);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-        item_remove(inv[prm_930]);
+        inv[prm_930].remove();
 
         itemcreate(
             inv_getowner(prm_930),
@@ -3932,7 +3932,7 @@ void character_drops_item()
         for (const auto& cnt : items(rc))
         {
             ci = cnt;
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -4050,7 +4050,7 @@ void character_drops_item()
             }
             if (f)
             {
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 continue;
             }
             inv[ci].position.x = cdata[rc].position.x;
@@ -4066,7 +4066,7 @@ void character_drops_item()
                 item_copy(ci, ti);
                 inv[ti].own_state = -2;
             }
-            item_remove(inv[ci]);
+            inv[ci].remove();
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(0, true);
@@ -4110,7 +4110,7 @@ void character_drops_item()
     }
     for (const auto& cnt : items(rc))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -4209,7 +4209,7 @@ void character_drops_item()
             }
             item_copy(ci, ti);
         }
-        item_remove(inv[ci]);
+        inv[ci].remove();
     }
     if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
         || rc < 16)
@@ -4595,8 +4595,7 @@ void character_drops_item()
             {
                 if (sdata(161, 0) != 0)
                 {
-                    inv[ci].number +=
-                        rnd(1 + (sdata(161, 0) > cdata[rc].level));
+                    inv[ci].modify_number(rnd(1 + (sdata(161, 0) > cdata[rc].level)));
                 }
             }
         }
@@ -4801,7 +4800,7 @@ void character_drops_item()
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             if (inv[ci].value < 800)
             {
-                inv[ci].number = rnd(5) + 1;
+                inv[ci].set_number(rnd(5) + 1);
             }
         }
     }
@@ -4874,7 +4873,7 @@ void food_gets_rotten()
         }
         for (const auto& cnt : items(p))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -4904,7 +4903,7 @@ void food_gets_rotten()
                                         txt(lang(
                                             itemname(cnt)
                                                 + u8"は上手い具合に干された。"s,
-                                            itemname(cnt) + is2(inv[cnt].number)
+                                            itemname(cnt) + is2(inv[cnt].number())
                                                 + u8" dried up in the sun."s));
                                         inv[cnt].param3 = gdata_hour
                                             + gdata_day * 24
@@ -4928,7 +4927,7 @@ void food_gets_rotten()
                                     txt(lang(
                                         itemname(cnt) + u8"は腐った。"s,
                                         itemname(cnt) + u8" rot"s
-                                            + _s2(inv[cnt].number) + u8"."s));
+                                            + _s2(inv[cnt].number()) + u8"."s));
                                 }
                             }
                             inv[cnt].param3 = -1;
@@ -4950,8 +4949,8 @@ void food_gets_rotten()
                                                 + u8"から種を取り出した。"s,
                                             u8"You extract plant seeds from "s
                                                 + itemname(cnt) + u8"."s));
-                                        p = rnd(inv[cnt].number) + 1;
-                                        item_modify_num(inv[cnt], (-inv[cnt].number));
+                                        p = rnd(inv[cnt].number()) + 1;
+                                        inv[cnt].modify_number((-inv[cnt].number()));
                                         flt(calcobjlv(cdata[0].level));
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
@@ -5201,7 +5200,7 @@ void auto_identify()
     }
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number == 0
+        if (inv[cnt].number() == 0
             || inv[cnt].identification_state
                 == identification_state_t::completely_identified)
         {
@@ -5856,7 +5855,7 @@ void label_1745()
                 }
                 for (const auto& cnt : items(-1))
                 {
-                    if (inv[cnt].number == 0)
+                    if (inv[cnt].number() == 0)
                     {
                         continue;
                     }
@@ -5878,7 +5877,7 @@ void label_1745()
                         }
                         if (inv[cnt].own_state == 0)
                         {
-                            item_remove(inv[cnt]);
+                            inv[cnt].remove();
                             cell_refresh(
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
@@ -6037,7 +6036,7 @@ void label_1745()
                                 if (inv[ci].weight <= 0
                                     || inv[ci].weight >= 4000)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                 }
                             }
                         }
@@ -7514,7 +7513,7 @@ void label_1755()
         {
             continue;
         }
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
 
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
@@ -7917,7 +7916,7 @@ void begintempinv()
     ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     return;
 }
@@ -8024,7 +8023,7 @@ void supply_income()
     {
         for (const auto& cnt : items(-1))
         {
-            item_remove(inv[cnt]);
+            inv[cnt].remove();
         }
     }
     mode = 6;
@@ -8104,7 +8103,7 @@ void supply_income()
             p = -1;
             for (const auto& cnt : items(-1))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     p = cnt;
                     break;
@@ -8420,7 +8419,7 @@ turn_result_t step_into_gate()
         do_save_game();
     }
     txt(i18n::s.get("core.locale.action.exit_map.gate.step_into"));
-    item_modify_num(inv[ci], -1);
+    inv[ci].modify_number(-1);
     txt(i18n::s.get("core.locale.action.exit_map.gate.need_network"));
     update_screen();
     return turn_result_t::pc_turn_user_error;
@@ -9912,7 +9911,7 @@ void remove_card_and_figures()
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
-            item_remove(inv[cnt]);
+            inv[cnt].remove();
         }
     }
     return;
@@ -10118,7 +10117,7 @@ void migrate_save_data(const fs::path& save_dir)
                     ELONA_LOG("Refresh map data: 1");
                     for (const auto& i : items(-1))
                     {
-                        if (inv[i].number > 0)
+                        if (inv[i].number() > 0)
                         {
                             ELONA_LOG("  " << cnvitemname(inv[i].id));
                             cell_refresh(inv[i].position.x, inv[i].position.y);
@@ -10144,10 +10143,10 @@ void migrate_save_data(const fs::path& save_dir)
                     const auto y = cmapdata(2, i);
                     for (const auto& i : items(-1))
                     {
-                        if (inv[i].number > 0
+                        if (inv[i].number() > 0
                             && inv[i].position == position_t{x, y})
                         {
-                            item_remove(inv[i]);
+                            inv[i].remove();
                         }
                     }
                     if (cmapdata(4, i) == 0)
@@ -10167,7 +10166,7 @@ void migrate_save_data(const fs::path& save_dir)
                 ELONA_LOG("Refresh map data: 2");
                 for (const auto& i : items(-1))
                 {
-                    if (inv[i].number > 0)
+                    if (inv[i].number() > 0)
                     {
                         cell_refresh(inv[i].position.x, inv[i].position.y);
                     }
@@ -10258,11 +10257,11 @@ void load_gene_files()
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -11151,7 +11150,7 @@ void label_2151()
     else
     {
         ci = cdata[0].continuous_action_item;
-        if (inv[ci].param1 == 0 || inv[ci].number == 0
+        if (inv[ci].param1 == 0 || inv[ci].number() == 0
             || the_item_db[inv[ci].id]->subcategory != 60004)
         {
             f = 1;
@@ -11294,7 +11293,7 @@ void label_2153()
         f = 0;
         for (const auto& cnt : items(cc))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -11479,7 +11478,7 @@ int decode_book()
             }
             if (inv[ci].count == 0)
             {
-                item_modify_num(inv[ci], -1);
+                inv[ci].modify_number(-1);
                 if (is_in_fov(cc))
                 {
                     txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11502,7 +11501,7 @@ int decode_book()
         txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
         ++recipememory(inv[ci].subname);
         item_identify(inv[ci], identification_state_t::partly_identified);
-        item_modify_num(inv[ci], -1);
+        inv[ci].modify_number(-1);
         if (is_in_fov(cc))
         {
             txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11544,7 +11543,7 @@ int decode_book()
         }
         if (inv[ci].count == 0)
         {
-            item_modify_num(inv[ci], -1);
+            inv[ci].modify_number(-1);
             if (is_in_fov(cc))
             {
                 txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11859,7 +11858,7 @@ int drink_potion()
                     inv[ci], identification_state_t::partly_identified);
             }
         }
-        item_modify_num(inv[ci], -1);
+        inv[ci].modify_number(-1);
     }
     cdata[tc].nutrition += 150;
     if (tc < 16)
@@ -12105,7 +12104,7 @@ int read_scroll()
     }
     if (inv[ci].id != 621)
     {
-        item_modify_num(inv[ci], -1);
+        inv[ci].modify_number(-1);
         skillexp(150, cc, 25, 2);
     }
     magic();
@@ -12212,7 +12211,7 @@ int label_2172()
     }
 label_2173_internal:
     efsource = 0;
-    if (inv[ci].number == 0)
+    if (inv[ci].number() == 0)
     {
         if (ci >= 5080)
         {
@@ -12601,8 +12600,8 @@ int pick_up_item()
         {
             snd(11);
             ti = ci;
-            in = inv[ci].number;
-            item_remove(inv[ci]);
+            in = inv[ci].number();
+            inv[ci].remove();
             msgkeep = 1;
             txt(i18n::s.get("core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -12682,8 +12681,8 @@ int pick_up_item()
             return 0;
         }
     }
-    inumbk = inv[ci].number - in;
-    item_set_num(inv[ci], in);
+    inumbk = inv[ci].number() - in;
+    inv[ci].set_number(in);
     if (cc == 0)
     {
         if (trait(215) != 0)
@@ -12697,11 +12696,11 @@ int pick_up_item()
                     txt(i18n::s.get("core.locale.action.pick_up.you_absorb_magic", inv[ci]));
                     if (efid >= 400 && efid < 467)
                     {
-                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number;
+                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number();
                     }
                     else
                     {
-                        healmp(0, inv[ci].count * 5 * inv[ci].number);
+                        healmp(0, inv[ci].count * 5 * inv[ci].number());
                     }
                     inv[ci].count = 0;
                 }
@@ -12734,7 +12733,7 @@ int pick_up_item()
         ti = inv_getfreeid(cc);
         if (ti == -1)
         {
-            item_set_num(inv[ci], inumbk + in);
+            inv[ci].set_number(inumbk + in);
             if (invctrl == 12)
             {
                 txt(i18n::s.get("core.locale.action.pick_up.shopkeepers_inventory_is_full"));
@@ -12746,9 +12745,9 @@ int pick_up_item()
             return 0;
         }
         item_copy(ci, ti);
-        item_set_num(inv[ti], in);
+        inv[ti].set_number(in);
     }
-    item_set_num(inv[ci], inumbk);
+    inv[ci].set_number(inumbk);
     if (mode == 6)
     {
         if (the_item_db[inv[ti].id]->category == 57000)
@@ -12867,7 +12866,7 @@ int pick_up_item()
                 f = 0;
                 for (const auto& cnt : items(-1))
                 {
-                    if (inv[cnt].number == 0)
+                    if (inv[cnt].number() == 0)
                     {
                         continue;
                     }
@@ -12907,9 +12906,9 @@ int pick_up_item()
         refresh_burden_state();
     }
 
-    if (inv[ci].number <= 0)
+    if (inv[ci].number() <= 0)
     {
-        item_remove(inv[ci]);
+        inv[ci].remove();
     }
 
     return 1;
@@ -12917,8 +12916,8 @@ int pick_up_item()
 
 int drop_item()
 {
-    inumbk = inv[ci].number - in;
-    item_set_num(inv[ci], in);
+    inumbk = inv[ci].number() - in;
+    inv[ci].set_number(in);
     inv[ci].position.x = cdata[cc].position.x;
     inv[ci].position.y = cdata[cc].position.y;
     itemturn(ci);
@@ -12941,7 +12940,7 @@ int drop_item()
         inv[ti].count = gdata_next_shelter_serial_id + 100;
         ++gdata_next_shelter_serial_id;
     }
-    item_set_num(inv[ci], inumbk);
+    inv[ci].set_number(inumbk);
     cell_refresh(inv[ti].position.x, inv[ti].position.y);
     if (dropval == 0)
     {
@@ -12989,9 +12988,9 @@ int drop_item()
         play_music();
     }
 
-    if (inv[ti].number <= 0)
+    if (inv[ti].number() <= 0)
     {
-        item_remove(inv[ti]);
+        inv[ti].remove();
     }
 
     return 1;
@@ -13516,7 +13515,7 @@ void proc_autopick()
 
     for (const auto& ci : items(-1))
     {
-        if (inv[ci].number == 0)
+        if (inv[ci].number() == 0)
             continue;
         if (inv[ci].position != cdata[0].position)
             continue;
@@ -13552,7 +13551,7 @@ void proc_autopick()
                     break;
                 }
             }
-            in = inv[ci].number;
+            in = inv[ci].number();
             elona::ci = ci;
             pick_up_item();
             if (int(op.type) & int(autopick::operation::type_t::no_drop))
@@ -13584,7 +13583,7 @@ void proc_autopick()
             }
             snd(45);
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
-            item_remove(inv[ci]);
+            inv[ci].remove();
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
@@ -13871,7 +13870,7 @@ int unlock_box(int difficulty)
     {
         if (rnd(3) == 0)
         {
-            item_modify_num(inv[ti], -1);
+            inv[ti].modify_number(-1);
             txt(i18n::s.get("core.locale.action.unlock.lockpick_breaks"));
         }
         txtnew();
@@ -15330,7 +15329,7 @@ turn_result_t do_plant()
     }
     txt(s);
     snd(55);
-    item_modify_num(inv[ci], -1);
+    inv[ci].modify_number(-1);
     cell_featset(
         cdata[cc].position.x,
         cdata[cc].position.y,

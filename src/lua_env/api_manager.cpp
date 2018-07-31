@@ -518,7 +518,7 @@ bool Item::has_enchantment(const lua_item_handle handle, int id)
 void Item::remove(lua_item_handle handle)
 {
     auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
-    elona::item_remove(item_ref);
+    item_ref.remove();
 }
 
 void Item::bind(sol::table& Elona)
@@ -1187,7 +1187,7 @@ void Debug::dump_items()
     ELONA_LOG("===== Items  =====")
     for (const auto& cnt : items(-1))
     {
-        if (elona::inv[cnt].number != 0)
+        if (elona::inv[cnt].number() != 0)
             ELONA_LOG(
                 elona::inv[cnt].index
                 << ") Name: " << elona::itemname(cnt)
@@ -1310,19 +1310,6 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
     elona::skillmod(skill, self.index, amount);
 }
 
-
-namespace LuaItem
-{
-std::string lua_type(item&);
-} // namespace LuaItem
-
-std::string lua_type(item&)
-{
-    // TODO move?
-    return "LuaItem";
-}
-
-
 /***
  * Set up usertype tables in Sol so we can call methods with them.
  */
@@ -1336,7 +1323,7 @@ void init_usertypes(lua_env& lua)
         "y",
         &position_t::y);
     lua.get_state()->new_usertype<character>(
-        "LuaCharacter",
+        character::lua_type(),
         "lua_type",
         &character::lua_type,
         "damage_hp",
@@ -1382,9 +1369,11 @@ void init_usertypes(lua_env& lua)
         "experience",
         &character::experience);
     lua.get_state()->new_usertype<item>(
-        "LuaItem",
+        item::lua_type(),
         "lua_type",
         &item::lua_type,
+        "set_number",
+        &item::set_number,
         "curse_state",
         &item::curse_state,
         "identify_state",
@@ -1394,7 +1383,7 @@ void init_usertypes(lua_env& lua)
         "position",
         &item::position,
         "number",
-        &item::number,
+        sol::property([](item& i) { return i.number(); }),
         "id",
         &item::id,
         "count",

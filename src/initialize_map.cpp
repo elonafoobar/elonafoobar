@@ -174,7 +174,7 @@ label_1741_internal:
     }
     for (int cnt = ELONA_ITEM_ON_GROUND_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     DIM2(mdata, 100);
     mdata_map_current_dungeon_level = gdata_current_dungeon_level;
@@ -936,7 +936,7 @@ label_1741_internal:
                 ctrl_file(file_operation2_t::map_items_read, u8"inv_"s + mid + u8".s2");
                 for (const auto& cnt : items(-1))
                 {
-                    if (inv[cnt].number == 0)
+                    if (inv[cnt].number() == 0)
                     {
                         continue;
                     }

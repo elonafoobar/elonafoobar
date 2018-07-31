@@ -158,7 +158,7 @@ reset_page:
             && (p != -1 || key == key_identify))
         {
             item tmp = inv[ci];
-            inv[ci].number = 0;
+            inv[ci].set_number(0);
             itemcreate(0, 504, -1, -1, 0);
             inv[ci].subname = list(0, pagesize * page + cs);
             inv[ci].identification_state =
@@ -167,7 +167,7 @@ reset_page:
             int page_bk = page;
             int cs_bk = cs;
             item_show_description();
-            inv[ci].number = 0;
+            inv[ci].set_number(0);
             inv[tmp.index] = tmp;
             pagesize = pagesize_bk;
             page = page_bk;

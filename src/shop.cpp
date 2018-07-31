@@ -67,7 +67,7 @@ void shop_refresh()
 {
     for (const auto& cnt : items(-1))
     {
-        item_remove(inv[cnt]);
+        inv[cnt].remove();
     }
     p = std::min(80, 20 + cdata[tc].shop_rank / 2);
     if (cdata[tc].character_role == 1007)
@@ -569,7 +569,7 @@ void shop_refresh()
         }
         if (cdata[tc].character_role == 1016)
         {
-            inv[ci].number = 1;
+            inv[ci].set_number(1);
             inv[ci].curse_state = curse_state_t::none;
             if (inv[ci].id == 480)
             {
@@ -591,7 +591,7 @@ void shop_refresh()
         }
         if (f)
         {
-            item_remove(inv[ci]);
+            inv[ci].remove();
             continue;
         }
         if (cdata[tc].character_role == 1012)
@@ -599,54 +599,53 @@ void shop_refresh()
             flttypemajor = 60000;
         }
         calc_number_of_items_sold_at_shop();
-        inv[ci].number = rnd(rtval) + 1;
+        inv[ci].set_number(rnd(rtval) + 1);
         if (cdata[tc].character_role == 1009)
         {
             p = trate(inv[ci].param1);
             if (p <= 70)
             {
-                inv[ci].number = inv[ci].number * 200 / 100;
+                inv[ci].set_number(inv[ci].number() * 200 / 100);
             }
             if (p <= 50)
             {
-                inv[ci].number = inv[ci].number * 200 / 100;
+                inv[ci].set_number(inv[ci].number() * 200 / 100);
             }
             if (p >= 80)
             {
-                inv[ci].number = inv[ci].number / 2 + 1;
+                inv[ci].set_number(inv[ci].number() / 2 + 1);
                 if (rnd(2))
                 {
-                    item_remove(inv[ci]);
+                    inv[ci].remove();
                     continue;
                 }
             }
             if (p >= 100)
             {
-                inv[ci].number = inv[ci].number / 2 + 1;
+                inv[ci].set_number(inv[ci].number() / 2 + 1);
                 if (rnd(3))
                 {
-                    item_remove(inv[ci]);
+                    inv[ci].remove();
                     continue;
                 }
             }
-            inv[ci].number =
-                inv[ci].number * (100 + sdata(156, 0) * 10) / 100 + 1;
+            inv[ci].set_number(inv[ci].number() * (100 + sdata(156, 0) * 10) / 100 + 1);
         }
         p = the_item_db[inv[ci].id]->category;
         if (is_cursed(inv[ci].curse_state))
         {
-            item_remove(inv[ci]);
+            inv[ci].remove();
             continue;
         }
         if (inv[ci].curse_state == curse_state_t::blessed)
         {
-            inv[ci].number = 1;
+            inv[ci].set_number(1);
         }
         if (p == 52000)
         {
             if (inv[ci].id == 516)
             {
-                item_remove(inv[ci]);
+                inv[ci].remove();
             }
         }
         if (p == 57000)
@@ -655,7 +654,7 @@ void shop_refresh()
             {
                 if (rnd(5))
                 {
-                    item_remove(inv[ci]);
+                    inv[ci].remove();
                 }
             }
         }

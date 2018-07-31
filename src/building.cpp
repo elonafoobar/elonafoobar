@@ -194,7 +194,7 @@ turn_result_t build_new_building()
     if (inv[ci].id == 344)
     {
         gdata_home_scale = inv[ci].param1;
-        item_modify_num(inv[ci], -1);
+        inv[ci].modify_number(-1);
         initialize_home_adata();
         std::string midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
@@ -270,7 +270,7 @@ turn_result_t build_new_building()
     txtef(5);
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
     label_1749();
-    item_modify_num(inv[ci], -1);
+    inv[ci].modify_number(-1);
     return turn_result_t::turn_end;
 }
 
@@ -313,7 +313,7 @@ turn_result_t show_house_board()
     for (const auto& cnt : items(-1))
     {
         ++p(2);
-        if (inv[cnt].number != 0)
+        if (inv[cnt].number() != 0)
         {
             if (the_item_db[inv[cnt].id]->category != 60000)
             {
@@ -942,7 +942,7 @@ void show_shop_log()
     dblistmax = 0;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number <= 0)
+        if (inv[cnt].number() <= 0)
         {
             continue;
         }
@@ -1010,7 +1010,7 @@ void show_shop_log()
         {
             continue;
         }
-        if (inv[ci].number <= 0)
+        if (inv[ci].number() <= 0)
         {
             continue;
         }
@@ -1018,8 +1018,8 @@ void show_shop_log()
         {
             continue;
         }
-        in = rnd(inv[ci].number) + 1;
-        item_modify_num(inv[ci], (-in));
+        in = rnd(inv[ci].number()) + 1;
+        inv[ci].modify_number((-in));
         sold += in;
         val0 = val0 * in;
         if (rnd(4) == 0)
@@ -1072,7 +1072,7 @@ void show_shop_log()
     {
         for (const auto& cnt : items(-1))
         {
-            item_remove(inv[cnt]);
+            inv[cnt].remove();
         }
     }
     mode = 6;
@@ -1103,7 +1103,7 @@ void show_shop_log()
             }
             else
             {
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 if (cnt == 3)
                 {
                     f = 0;
@@ -1182,7 +1182,7 @@ void update_shop()
     }
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number <= 0)
+        if (inv[cnt].number() <= 0)
         {
             continue;
         }
@@ -1239,7 +1239,7 @@ void update_museum()
     DIM3(dblist, 2, 800);
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -1352,7 +1352,7 @@ void calc_home_rank()
     }
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
