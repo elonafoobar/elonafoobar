@@ -17,9 +17,9 @@ using namespace std::literals::string_literals;
  * Stores the Lua environment and internal storage for a single mod.
  *
  * Mods each have a sanitized environment with a whitelist of safe
- * functions, so things like dofile can't be called. They also have an
- * internal C++ storage object for storing, serializing and
- * deserializing mod data alongside the base game data.
+ * functions, so things like dofile can't be called. They also have
+ * references to Lua tables for storing, serializing and deserializing
+ * mod data alongside the base game data.
  */
 struct mod_info
 {
@@ -58,9 +58,7 @@ enum class mod_loading_stage_t : unsigned
 };
 
 /***
- * The core interface to the Lua environment. Used as a central
- * interface for more specialized API handling mechanisms and for
- * keeping track of mods.
+ * Manages mods and mod loading.
  */
 class mod_manager
 {

@@ -76,6 +76,10 @@ void event_manager::init_event_kinds(sol::table& Event)
         event_kind_t::map_initialized,
         "GameInitialized",
         event_kind_t::game_initialized,
+        "GameSaved",
+        event_kind_t::game_saved,
+        "GameLoaded",
+        event_kind_t::game_loaded,
 
         "MapUnloading",
         event_kind_t::map_unloading,
@@ -102,12 +106,7 @@ void event_manager::init_event_kinds(sol::table& Event)
         "PlayerTurn",
         event_kind_t::player_turn,
         "AllTurnsFinished",
-        event_kind_t::all_turns_finished,
-
-        "AllModsLoaded",
-        event_kind_t::all_mods_loaded,
-        "ScriptLoaded",
-        event_kind_t::script_loaded);
+        event_kind_t::all_turns_finished);
 }
 
 void event_manager::init_events()

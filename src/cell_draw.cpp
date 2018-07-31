@@ -600,7 +600,6 @@ optional_ref<extent> prepare_chara_chip(int c_, int dx, int dy)
     const int col_ = cdata[c_].image / 1000;
     const int p_ = cdata[c_].image % 1000;
     auto rect = draw_get_rect_chara(p_);
-    std::cout << "DRAW " << p_ << " " << rect->x << " " << rect->y << std::endl;
     if (cdata[c_].is_hung_on_sand_bag())
     {
         gmode(2, 80);

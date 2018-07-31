@@ -194,7 +194,6 @@ void mod_manager::load_scanned_mods()
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
-    lua_->get_event_manager().run_callbacks<event_kind_t::all_mods_loaded>();
     lua_->get_export_manager().register_all_exports();
 
     stage = mod_loading_stage_t::all_mods_loaded;

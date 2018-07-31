@@ -9,7 +9,8 @@ module "Event.EventKind"
 
 --- Fired after the game has finished initially loading. This will
 --- only ever be fired once per game session. The starting map will be
---- initialized before this is called.
+--- initialized before this is called. The save file to be used will
+--- also have been loaded by the time this event fires.
 -- @event GameInitialized
 
 --- Fired after a map has been initially created.
@@ -49,6 +50,9 @@ module "Event.EventKind"
 --- global storage here.
 -- @event CharaKilled
 -- @tfield LuaCharacter chara the character that was killed
+-- @tfield[opt] LuaCharacter killer the character that did the
+-- killing. May be nil if the death was not caused by another
+-- character (starvation, etc.)
 
 --- Fired when a character is about to start moving.
 -- @event CharaMoved
@@ -89,9 +93,9 @@ module "Event.EventKind"
 --- Fired before the current map is unloaded.
 -- @event MapUnloading
 
---- Fired when all mods have finished loading.
--- @event AllModsLoaded
+--- Fired after the game has finished saving.
+-- @event GameSaved
 
---- Fired when the startup script finished loading. This is only valid
---- when the startup script feature is used.
--- @event ScriptLoaded
+--- Fired after the game has finished loading from a savefile on disk.
+--- This may be called before GameInitialized.
+-- @event GameLoaded

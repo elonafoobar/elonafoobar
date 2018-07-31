@@ -46,4 +46,4 @@ local function setup()
    end
 end
 
-Event.register(Event.EventKind.ScriptLoaded, setup)
+Event.register(Event.EventKind.GameInitialized, setup)

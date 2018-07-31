@@ -89,8 +89,6 @@ void serial_manager::save_mod_store_data(const fs::path& output_path, mod_save_t
         std::string mod_name = pair.first;
         ar.save(mod_name);
 
-        std::cout << "SAVE DATA: " << mod_name << std::endl;
-
         std::string table_name = get_table_name(type);
         sol::table data = pair.second->env["Store"][table_name].get<sol::table>();
         save(data, ar);
@@ -117,8 +115,6 @@ void serial_manager::load_mod_store_data(const fs::path& input_path, mod_save_t 
         std::string mod_name;
         ar.load(mod_name);
 
-        std::cout << "LOAD DATA: " << mod_name << std::endl;
-
         auto val = mod_mgr.mods.find(mod_name);
         if (val == mod_mgr.mods.end())
         {
@@ -132,8 +128,13 @@ void serial_manager::load_mod_store_data(const fs::path& input_path, mod_save_t 
         mod_info* mod = val->second.get();
 
         std::string table_name = get_table_name(type);
-        sol::table data = mod->env["Store"][table_name].get<sol::table>();
+        sol::table data = lua_->get_state()->create_table();
         load(data, ar);
+        sol::table store = mod->env["Store"];
+
+        // bypass metatable that forces Store table reference to be
+        // unchangeable (set in mod_manager::bind_store)
+        store.raw_set(table_name, data);
     }
 }
 
@@ -147,8 +148,6 @@ void serial_manager::save(sol::table& data, putit::binary_oarchive& ar)
     {
         std::string dump = result.get<std::string>();
         ar.save(dump);
-        std::cout << dump.size() << std::endl;
-        std::cout << "SAVED" << std::endl;
     }
     else
     {
@@ -161,9 +160,6 @@ void serial_manager::load(sol::table& data, putit::binary_iarchive& ar)
 {
     std::string raw_data;
     ar.load(raw_data);
-    std::cout << raw_data.size() << std::endl;
-    std::cout << "LOADING" << std::endl;
-
 
     serial_env["_TO_DESERIALIZE"] = raw_data;
     auto result = lua_->get_state()->safe_script(R"(return Serial.load(_TO_DESERIALIZE))", serial_env);
@@ -196,8 +192,6 @@ void serial_manager::save_handles_inner(const fs::path& output_path,
     int index_start, index_end;
     std::tie (index_start, index_end) = get_start_end_indices(kind, save_type);
 
-    std::cout << "HANDLE SAVE " << static_cast<int>(save_type) << " " << output_path.string() << std::endl;
-
     auto handles = lua_->get_handle_manager().get_handle_range(kind, index_start, index_end);
     save(handles, ar);
     handles = sol::lua_nil;
@@ -218,8 +212,6 @@ void serial_manager::load_handles_inner(const fs::path& input_path,
 
     int index_start, index_end;
     std::tie (index_start, index_end) = get_start_end_indices(kind, save_type);
-
-    std::cout << "HANDLE LOAD " << static_cast<int>(save_type) << input_path.string() << std::endl;
 
     sol::table handles = lua_->get_state()->create_table();
     load(handles, ar);

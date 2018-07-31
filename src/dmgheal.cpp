@@ -858,20 +858,20 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         // can run callbacks and clean up references.
         if (victim.character_role == 0)
         {
-            chara_killed(victim, 0);
+            chara_killed(victim, 0, attacker);
         }
         else if (victim.character_role == 13)
         {
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
-            chara_killed(victim, 4);
+            chara_killed(victim, 4, attacker);
         }
         else
         {
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
-            chara_killed(victim, 2);
+            chara_killed(victim, 2, attacker);
         }
 
         if (victim != 0)
@@ -883,15 +883,15 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                 if (victim.is_escorted() == 1)
                 {
                     event_add(15, victim.id);
-                    chara_killed(victim, 0);
+                    chara_killed(victim, 0, attacker);
                 }
                 else if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    chara_killed(victim, 0);
+                    chara_killed(victim, 0, attacker);
                 }
                 else
                 {
-                    chara_killed(victim, 6);
+                    chara_killed(victim, 6, attacker);
                 }
             }
         }

@@ -30,6 +30,9 @@ enum class event_kind_t : unsigned
     item_initialized,
     game_initialized,
 
+    game_saved,
+    game_loaded,
+
     map_unloading,
     map_loaded,
 
@@ -49,9 +52,6 @@ enum class event_kind_t : unsigned
     character_moved,
     player_turn,
     all_turns_finished,
-
-    all_mods_loaded,
-    script_loaded,
 
     COUNT // for iterating over all event kinds
 };

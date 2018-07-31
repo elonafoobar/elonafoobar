@@ -2059,28 +2059,34 @@ void chara_remove(character& chara)
     lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
 }
 
-void chara_killed(character& chara, int new_state)
+void chara_killed(character& victim, int new_state, optional<character&> killer)
 {
     // Run the character killed lua callback if the character was not dead to begin with.
-    if (chara.state != 0 && chara.state != 2 && chara.state != 4 && chara.state != 6)
+    if (victim.state != 0 && victim.state != 2 && victim.state != 4 && victim.state != 6)
     {
-        auto handle = lua::lua->get_handle_manager().get_handle(chara);
+        auto victim_handle = lua::lua->get_handle_manager().get_handle(victim);
+        sol::table killer_handle = sol::lua_nil;
+        if (killer)
+        {
+            killer_handle = lua::lua->get_handle_manager().get_handle(*killer);
+        }
+
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::character_killed>(handle);
+            .run_callbacks<lua::event_kind_t::character_killed>(victim_handle, killer_handle);
     }
 
     // The provided state must be 0, 2, 4 or 6.
-    chara.state = new_state;
+    victim.state = new_state;
 
-    if (chara.state == 0)
+    if (victim.state == 0)
     {
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
         // to clean up character things, if there is a valid Lua
         // handle for it.
-        chara_remove(chara);
+        chara_remove(victim);
     }
-    else if (chara.state == 2 || chara.state == 4 || chara.state == 6)
+    else if (victim.state == 2 || victim.state == 4 || victim.state == 6)
     {
         // This character revives.
     }

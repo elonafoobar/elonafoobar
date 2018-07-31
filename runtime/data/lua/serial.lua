@@ -21,7 +21,6 @@ end
 Serial.save = serpent.dump
 
 function Serial.load(raw_data)
-   print(tostring(raw_data))
    local ok, data = serpent.load(raw_data)
    if not ok then
       error("Mod data load error: " .. data, 2)

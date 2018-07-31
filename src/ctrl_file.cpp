@@ -474,15 +474,10 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
-                {
-                    lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
-                }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
                 }
             }
         }
@@ -544,15 +539,10 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_ITEM_ON_GROUND_INDEX; index++)
-                {
-                    lua::lua->get_handle_manager().remove_item_handle(inv[index]);
-                }
                 load(filepath, inv, 0, ELONA_ITEM_ON_GROUND_INDEX);
                 for (int index = 0; index < ELONA_ITEM_ON_GROUND_INDEX; index++)
                 {
                     inv[index].index = index;
-                    lua::lua->get_handle_manager().create_item_handle(inv[index]);
                 }
             }
         }
@@ -1073,6 +1063,13 @@ void fmode_1_2(bool read)
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
+
+            for (int index = ELONA_MAX_PARTY_CHARACTERS;
+                 index < ELONA_MAX_CHARACTERS;
+                 index++)
+            {
+                cdata[index].index = index;
+            }
         }
         else
         {
@@ -1270,32 +1267,47 @@ void fmode_5_6(bool read)
 // does not read/write player or party character inventories.
 void fmode_3_4(bool read, const fs::path& filename)
 {
-    const auto filepath = filesystem::dir::tmp() / filename;
-    const auto mod_filepath = filesystem::dir::tmp() / (u8"mod_" + filename.string());
-
-    if (read)
     {
-        tmpload(filename);
-        load(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
+        const auto filepath = filesystem::dir::tmp() / filename;
 
-        tmpload(mod_filepath.filename().string());
-        lua::lua->get_serial_manager().load_handles<item>(
-            mod_filepath, lua::mod_save_t::map_local);
-
-        auto& handle_mgr = lua::lua->get_handle_manager();
-        for (int i = ELONA_ITEM_ON_GROUND_INDEX; i < ELONA_MAX_ITEMS; i++)
+        if (read)
         {
-            handle_mgr.resolve_handle<item>(inv[i]);
+            tmpload(filename);
+            load(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
+
+            for (int index = ELONA_ITEM_ON_GROUND_INDEX; index < ELONA_MAX_ITEMS; index++)
+            {
+                inv[index].index = index;
+            }
+        }
+        else
+        {
+            save_t::instance().add(filepath.filename());
+            save(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
         }
     }
-    else
-    {
-        save_t::instance().add(filepath.filename());
-        save(filepath, inv, ELONA_ITEM_ON_GROUND_INDEX, ELONA_MAX_ITEMS);
 
-        save_t::instance().add(mod_filepath.filename());
-        lua::lua->get_serial_manager().save_handles<item>(
-            mod_filepath, lua::mod_save_t::map_local);
+    {
+        const auto filepath = filesystem::dir::tmp() / (u8"mod_" + filename.string());
+
+        if (read)
+        {
+            tmpload(filepath.filename().string());
+            lua::lua->get_serial_manager().load_handles<item>(
+                filepath, lua::mod_save_t::map_local);
+
+            auto& handle_mgr = lua::lua->get_handle_manager();
+            for (int i = ELONA_ITEM_ON_GROUND_INDEX; i < ELONA_MAX_ITEMS; i++)
+            {
+                handle_mgr.resolve_handle<item>(inv[i]);
+            }
+        }
+        else
+        {
+            save_t::instance().add(filepath.filename());
+            lua::lua->get_serial_manager().save_handles<item>(
+                filepath, lua::mod_save_t::map_local);
+        }
     }
 }
 
@@ -1325,12 +1337,6 @@ void fmode_17()
 
     {
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
-        for (int index = ELONA_MAX_PARTY_CHARACTERS;
-             index < ELONA_MAX_CHARACTERS;
-             index++)
-        {
-            lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
-        }
         tmpload(u8"cdata_"s + mid + u8".s2");
         load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         for (int index = ELONA_MAX_PARTY_CHARACTERS;
@@ -1338,7 +1344,6 @@ void fmode_17()
              index++)
         {
             cdata[index].index = index;
-            lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
         }
     }
 
@@ -1358,6 +1363,20 @@ void fmode_17()
     }
 
     arrayfile(true, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
+
+    // Mod handle data of map-local characters
+    {
+        const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
+        tmpload(u8"mod_cdata_"s + mid + u8".s2");
+        lua::lua->get_serial_manager().load_handles<character>(
+            filepath, lua::mod_save_t::map_local);
+
+        auto& handle_mgr = lua::lua->get_handle_manager();
+        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; i++)
+        {
+            handle_mgr.resolve_handle<character>(cdata[i]);
+        }
+    }
 }
 
 

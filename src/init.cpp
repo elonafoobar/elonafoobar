@@ -53,9 +53,6 @@ namespace
 
 void main_loop()
 {
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
-
     while (true)
     {
         bool finished = turn_wrapper();
@@ -1234,11 +1231,14 @@ void initialize_game()
     init_fovlist();
     initialize_map();
 
-    if (script_loaded)
-    {
-        lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::script_loaded>();
-    }
+    // A saved game should be loaded by this point, so allow mods to
+    // run their initialization callbacks. This should always be the
+    // first event to fire in the mod lifecycle. (Firing it before a
+    // save is loaded is dangerous, as many variables haven't been
+    // initialized at that point.)
+    lua::lua->get_event_manager()
+        .run_callbacks<lua::event_kind_t::game_initialized>();
+
 }
 
 void main_title_loop()

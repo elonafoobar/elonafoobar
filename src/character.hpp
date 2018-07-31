@@ -519,7 +519,7 @@ bool chara_copy(int cc);
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
 void chara_remove(character&);
-void chara_killed(character&, int);
+void chara_killed(character&, int, optional<character&> = none);
 int chara_find(int = 0);
 int chara_find_ally(int = 0);
 int chara_get_free_slot();
