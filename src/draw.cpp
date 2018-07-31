@@ -24,9 +24,6 @@ namespace
 pic_loader loader;
 
 
-// TODO: it should be configurable.
-constexpr size_t max_damage_popups = 20; // compatible with oomEx
-
 struct damage_popup_t
 {
     int frame;
@@ -454,10 +451,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    for (size_t i = 0; i < max_damage_popups; i++)
-    {
-        damage_popups.emplace_back(damage_popup_t{});
-    }
+    damage_popups.resize(config::instance().max_damage_popup);
 }
 
 
@@ -467,7 +461,8 @@ void add_damage_popup(
     int character,
     const snail::color& color)
 {
-    if (damage_popups_active == max_damage_popups)
+    damage_popups.resize(config::instance().max_damage_popup);
+    if (damage_popups_active == config::instance().max_damage_popup)
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(

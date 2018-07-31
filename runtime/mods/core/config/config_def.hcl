@@ -322,6 +322,11 @@ config def {
                     android = false
                 }
             }
+            max_damage_popup = {
+                default = 100
+                min = 10
+                max = 100
+            }
 
             startup_script = {
                 default = ""

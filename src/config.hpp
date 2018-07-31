@@ -64,6 +64,7 @@ public:
     int keywait;
     std::string language;
     bool leash_icon;
+    int max_damage_popup;
     bool msgaddtime;
     int msgtrans;
     std::string music;

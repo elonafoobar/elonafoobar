@@ -418,6 +418,9 @@ DOC
                     doc = "Show damage popups."
                     yes_no = core.locale.config.common.yes_no.on_off
                 }
+                max_damage_popup {
+                    name = "Max damage popup"
+                }
                 startup_script {
                     doc = <<DOC
 Run a script in the data/script/ folder at startup.

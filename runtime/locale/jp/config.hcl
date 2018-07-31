@@ -355,6 +355,9 @@ locale {
                     name = "ダメージポップアップ"
                     yes_no = core.locale.config.common.yes_no.ari_nashi
                 }
+                max_damage_popup {
+                    name = "ダメージポップアップ最大数"
+                }
                 startup_script {
                 }
             }
