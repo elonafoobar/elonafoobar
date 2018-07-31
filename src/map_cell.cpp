@@ -140,7 +140,7 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     }
     else
     {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) = 0;
+        cell_removechara(cdata[prm_605]);
         x2_at_m81 = prm_607;
         y2_at_m81 = prm_608;
     }
@@ -172,7 +172,7 @@ void cell_movechara(int cc, int x, int y)
     }
     else
     {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
+        cell_removechara(cdata[cc]);
         cdata[cc].position = {x, y};
         map(x, y, 1) = cc + 1;
     }
@@ -218,6 +218,13 @@ void cell_setchara(int cc, int x, int y)
 {
     map(x, y, 1) = cc + 1;
     cdata[cc].position = position_t{x, y};
+}
+
+
+
+void cell_removechara(character& chara)
+{
+    cell_removechara(chara.position.x, chara.position.y);
 }
 
 

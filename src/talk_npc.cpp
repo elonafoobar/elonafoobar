@@ -558,7 +558,7 @@ talk_result_t talk_ally_order_wait()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
+    cell_removechara(cdata[tc]);
     cdata[tc].state = 7;
     cdata[tc].current_map = 0;
     return talk_result_t::talk_end;
@@ -575,7 +575,7 @@ talk_result_t talk_ally_abandon()
     if (chatval == 1)
     {
         txt(i18n::s.get("core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
-        map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
+        cell_removechara(cdata[tc]);
         chara_delete(tc);
         return talk_result_t::talk_end;
     }
@@ -655,7 +655,7 @@ talk_result_t talk_slave_sell()
             earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state == 1)
             {
-                map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
+                cell_removechara(cdata[rc]);
             }
             if (cdata[rc].is_escorted() == 1)
             {

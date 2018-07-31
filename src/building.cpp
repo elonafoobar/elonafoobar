@@ -801,7 +801,7 @@ void prompt_move_ally()
             goto label_1718_internal;
         }
         tc = tchome;
-        map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
+        cell_removechara(cdata[tc]);
         map(tlocx, tlocy, 1) = tc + 1;
         cdata[tc].position.x = tlocx;
         cdata[tc].initial_position.x = tlocx;

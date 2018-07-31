@@ -17,6 +17,8 @@ enum class tile_kind_t : int
     fog = 4
 };
 
+struct character;
+
 std::pair<int, int> cell_itemoncell(const position_t& pos);
 int cell_featread(int = 0, int = 0, int = 0);
 int cell_findspace(int = 0, int = 0, int = 0);
@@ -26,6 +28,7 @@ void cell_featclear(int = 0, int = 0);
 void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void cell_movechara(int = 0, int = 0, int = 0);
 void cell_refresh(int = 0, int = 0);
+void cell_removechara(character&);
 void cell_removechara(int = 0, int = 0);
 void cell_setchara(int = 0, int = 0, int = 0);
 bool cell_swap(int = 0, int = 0, int = 0, int = 0);

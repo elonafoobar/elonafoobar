@@ -432,7 +432,7 @@ void map_placearena(int prm_939, int prm_940)
         {
             break;
         }
-        map(cdata[prm_939].position.x, cdata[prm_939].position.y, 1) = 0;
+        cell_removechara(cdata[prm_939]);
     }
     return;
 }

@@ -303,7 +303,7 @@ int do_create_item(int slot, int x, int y)
         }
         if (slot >= 0)
         {
-            earn_gold(cdata[slot], inv[ci].number);
+            earn_gold(cdata[slot], inv[ci].number());
             inv[ci].remove();
             return 1;
         }

@@ -114,7 +114,7 @@ bool chara_place_internal(
                     // TODO: Work around. Need delete him/her *completely*.
                     if (map(x, y, 1) != 0)
                     {
-                        map(x, y, 1) = 0;
+                        cell_removechara(x, y);
                     }
                     if (map(x, y, 6) != 0)
                     {
@@ -1952,7 +1952,7 @@ void chara_vanquish(int cc)
     }
     else if (cdata[cc].state == 1 || cdata[cc].state == 10)
     {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
+        cell_removechara(cdata[cc]);
     }
     chara_remove(cdata[cc]);
     cdata[cc].character_role = 0;

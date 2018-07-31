@@ -851,8 +851,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         }
         if (gdata_mount != victim || victim == 0)
         {
-            cell_removechara(
-                victim.position.x, victim.position.y);
+            cell_removechara(victim);
         }
 
         // This block will always mark the character as killed so mods
