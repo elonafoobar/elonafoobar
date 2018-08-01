@@ -14303,7 +14303,7 @@ turn_result_t try_to_open_locked_door()
         if (is_in_fov(cc))
         {
             snd(22);
-            txt(i18n::s.get("core.locale.action.open.door.fail", inv[cc]));
+            txt(i18n::s.get("core.locale.action.open.door.fail", cdata[cc]));
         }
     }
     if (cc == 0)

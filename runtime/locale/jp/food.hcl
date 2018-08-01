@@ -190,7 +190,7 @@ locale {
             cursed_drink = "${name(_1)}は気分が悪くなった。"
         }
 
-        cook = "${_itemname(_2, 1)}で${_1}を料理して、${_itemname(_3, 1)}を作った。"
+        cook = "${itemname(_2, 1)}で${_1}を料理して、${itemname(_3, 1)}を作った。"
 
         effect {
             rotten = "うげっ！腐ったものを食べてしまった…うわ…"
