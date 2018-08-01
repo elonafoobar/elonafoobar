@@ -275,10 +275,17 @@ optional_ref<extent> prepare_item_image(int id, int color)
     boxf(0, 960, rect->width, rect->height);
 
     pos(0, 960);
+
+    // The color modifier is applied to the source buffer before
+    // copying it to the scratch region. It is restored after copying.
     set_color_mod(
-        255 - c_col(0, color), 255 - c_col(1, color), 255 - c_col(2, color));
+        255 - c_col(0, color),
+        255 - c_col(1, color),
+        255 - c_col(2, color),
+        rect->buffer);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
-    set_color_mod(255, 255, 255);
+    set_color_mod(255, 255, 255, rect->buffer);
+
     gsel(0);
     return rect;
 }
@@ -305,13 +312,19 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
         auto rect = draw_get_rect_chara(character_id);
         gmode(2);
         pos(0, 960);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
-            255 - c_col(2, color));
+            255 - c_col(2, color),
+            item_rect->buffer);
         gcopy(item_rect->buffer, item_rect->x, item_rect->y, item_rect->width, item_rect->height);
-        set_color_mod(255, 255, 255);
+        set_color_mod(255, 255, 255, item_rect->buffer);
+
         pos(0, 1008);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
@@ -326,6 +339,7 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
             22,
             20);
         set_color_mod(255, 255, 255, rect->buffer);
+
         pos(6, 974);
         gcopy(1, 0, 1008, 22, 20);
         gsel(0);
@@ -348,6 +362,8 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
         boxf(0, 960, item_rect->width, item_rect->height);
 
         pos(8, 1058 - rect->height);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
@@ -360,12 +376,16 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
             rect->width - 16,
             rect->height - 8);
         set_color_mod(255, 255, 255, rect->buffer);
+
         gmode(4, 192);
         pos(0, 960 + (rect->height == inf_tiles) * 48);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
-            255 - c_col(2, color));
+            255 - c_col(2, color),
+            item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -373,7 +393,8 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
             inf_tiles,
             rect->height
                 + (rect->height > inf_tiles) * 48);
-        set_color_mod(255, 255, 255);
+        set_color_mod(255, 255, 255, item_rect->buffer);
+
         gmode(2);
         gsel(0);
     }
