@@ -356,10 +356,6 @@ struct character
     void clear();
     void clear_flags();
 
-    operator int() const
-    {
-        return index;
-    }
 
     // for identifying the type of a Lua reference
     static std::string lua_type()

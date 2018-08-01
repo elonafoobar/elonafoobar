@@ -111,7 +111,7 @@ int dmghp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = sdata(element, victim) / 50;
+        int resistance = sdata(element, victim.index) / 50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -125,7 +125,7 @@ int dmghp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim) / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
     }
     if (attacker_is_player)
     {
@@ -168,7 +168,9 @@ int dmghp(
         if (victim.hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25 + victim.buffs[buff_find(victim, 18)].power / 17, 25, 80)
+                    25 + victim.buffs[buff_find(victim.index, 18)].power / 17,
+                    25,
+                    80)
                 >= rnd(100))
             {
                 dmg_at_m141 *= -1;
@@ -188,25 +190,25 @@ int dmghp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim == 0 && cdata[0].god_id == core_god::opatos)
+    if (victim.index == 0 && cdata[0].god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && victim == 0)
+    if (debug::voldemort && victim.index == 0)
     {
         dmg_at_m141 = 0;
     }
     victim.hp -= dmg_at_m141;
 
 
-    if (is_in_fov(victim))
+    if (is_in_fov(victim.index))
     {
         const auto color_id = eleinfo(ele, 0);
         const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
         const auto g = static_cast<uint8_t>(255 - c_col(1, color_id));
         const auto b = static_cast<uint8_t>(255 - c_col(2, color_id));
-        add_damage_popup(std::to_string(dmg_at_m141), victim, {r, g, b});
+        add_damage_popup(std::to_string(dmg_at_m141), victim.index, {r, g, b});
     }
 
 
@@ -226,7 +228,7 @@ int dmghp(
             }
         }
     }
-    if (victim == 0)
+    if (victim.index == 0)
     {
         gdata(30) = 0;
         if (victim.hp < 0)
@@ -254,11 +256,11 @@ int dmghp(
     }
     if (victim.hp < 0)
     {
-        if (victim < 16)
+        if (victim.index < 16)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (victim == cnt)
+                if (victim.index == cnt)
                 {
                     continue;
                 }
@@ -279,7 +281,7 @@ int dmghp(
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
-                animode = 100 + victim;
+                animode = 100 + victim.index;
                 miracle_animation().play();
                 snd(120);
                 break;
@@ -298,7 +300,7 @@ int dmghp(
         }
         if (gdata(809) == 1)
         {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim, element);
+            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
             goto label_1369_internal;
         }
         if (damage_level > 0)
@@ -358,12 +360,12 @@ int dmghp(
                     victim,
                     attacker_is_player));
             }
-            rowact_check(victim);
+            rowact_check(victim.index);
             goto label_1369_internal;
         }
         if (damage_level == 1)
         {
-            if (is_in_fov(victim))
+            if (is_in_fov(victim.index))
             {
                 txtef(11);
                 txt(i18n::s.get(
@@ -372,7 +374,7 @@ int dmghp(
         }
         if (damage_level == 2)
         {
-            if (is_in_fov(victim))
+            if (is_in_fov(victim.index))
             {
                 txtef(10);
                 txt(i18n::s.get(
@@ -381,7 +383,7 @@ int dmghp(
         }
         if (damage_level >= 3)
         {
-            if (is_in_fov(victim))
+            if (is_in_fov(victim.index))
             {
                 txtef(3);
                 txt(i18n::s.get(
@@ -394,17 +396,17 @@ int dmghp(
             {
                 victim.hp = victim.max_hp;
             }
-            if (is_in_fov(victim))
+            if (is_in_fov(victim.index))
             {
                 txtef(4);
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
             }
         }
     label_1369_internal:
-        rowact_check(victim);
+        rowact_check(victim.index);
         if (victim.hp < victim.max_hp / 5)
         {
-            if (victim != 0)
+            if (victim.index != 0)
             {
                 if (victim.fear == 0)
                 {
@@ -429,7 +431,7 @@ int dmghp(
                         if (runs_away)
                         {
                             victim.fear = rnd(20) + 5;
-                            if (is_in_fov(victim))
+                            if (is_in_fov(victim.index))
                             {
                                 txtef(4);
                                 txt(i18n::s.get(
@@ -448,35 +450,35 @@ int dmghp(
                 if (rnd(10) < element_power / 75 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::blinded,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::paralyzed,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::confused,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::poisoned,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::sleep,
                         rnd(element_power / 3 * 2 + 1));
                 }
@@ -491,57 +493,67 @@ int dmghp(
             if (element == 53)
             {
                 dmgcon(
-                    victim, status_ailment_t::blinded, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::blinded,
+                    rnd(element_power + 1));
             }
             if (element == 58)
             {
                 dmgcon(
-                    victim,
+                    victim.index,
                     status_ailment_t::paralyzed,
                     rnd(element_power + 1));
             }
             if (element == 54)
             {
                 dmgcon(
-                    victim, status_ailment_t::confused, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::confused,
+                    rnd(element_power + 1));
             }
             if (element == 57)
             {
                 dmgcon(
-                    victim, status_ailment_t::confused, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::confused,
+                    rnd(element_power + 1));
             }
             if (element == 55)
             {
                 dmgcon(
-                    victim, status_ailment_t::poisoned, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::poisoned,
+                    rnd(element_power + 1));
             }
             if (element == 61)
             {
                 dmgcon(
-                    victim, status_ailment_t::bleeding, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::bleeding,
+                    rnd(element_power + 1));
             }
             if (element == 62)
             {
-                if (victim == 0)
+                if (victim.index == 0)
                 {
                     modcorrupt(rnd(element_power + 1));
                 }
             }
             if (element == 63)
             {
-                if (victim == 0 || rnd(3) == 0)
+                if (victim.index == 0 || rnd(3) == 0)
                 {
-                    item_acid(victim, -1);
+                    item_acid(victim.index, -1);
                 }
             }
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim, -1);
+            item_fire(victim.index, -1);
         }
         if (element == 51)
         {
-            item_cold(victim, -1);
+            item_cold(victim.index, -1);
         }
         if (victim.sleep != 0)
         {
@@ -554,10 +566,10 @@ int dmghp(
         }
         if (attacker_is_player)
         {
-            hostileaction(0, victim);
-            gdata(94) = victim;
+            hostileaction(0, victim.index);
+            gdata(94) = victim.index;
         }
-        if (victim == 0)
+        if (victim.index == 0)
         {
             if (config::instance().sound)
             {
@@ -598,7 +610,7 @@ int dmghp(
                 {
                     if (mdata_map_type != mdata_t::map_type_t::world_map)
                     {
-                        if (chara_copy(victim))
+                        if (chara_copy(victim.index))
                         {
                             txt(i18n::s.get(
                                 "core.locale.damage.splits", victim));
@@ -619,7 +631,7 @@ int dmghp(
                     {
                         if (mdata_map_type != mdata_t::map_type_t::world_map)
                         {
-                            if (chara_copy(victim))
+                            if (chara_copy(victim.index))
                             {
                                 txt(i18n::s.get(
                                     "core.locale.damage.splits", victim));
@@ -637,7 +649,7 @@ int dmghp(
                 {
                     if (rnd(20) == 0)
                     {
-                        if (is_in_fov(victim))
+                        if (is_in_fov(victim.index))
                         {
                             txtef(4);
                             txt(i18n::s.get(
@@ -671,7 +683,7 @@ int dmghp(
             }
             if (!attacker_is_player)
             {
-                if (attacker->enemy_id == victim)
+                if (attacker->enemy_id == victim.index)
                 {
                     if (rnd(3) == 0)
                     {
@@ -681,7 +693,7 @@ int dmghp(
             }
             if (apply_hate)
             {
-                if (victim != 0)
+                if (victim.index != 0)
                 {
                     victim.enemy_id = attacker->index;
                     if (victim.hate == 0)
@@ -717,14 +729,14 @@ int dmghp(
         {
             if (element)
             {
-                if (victim >= 16 && gdata(809) == 2)
+                if (victim.index >= 16 && gdata(809) == 2)
                 {
                     txtcontinue();
-                    txteledmg(1, attacker_is_player, victim, element);
+                    txteledmg(1, attacker_is_player, victim.index, element);
                 }
                 else
                 {
-                    txteledmg(2, attacker_is_player, victim, element);
+                    txteledmg(2, attacker_is_player, victim.index, element);
                 }
             }
             else
@@ -732,7 +744,7 @@ int dmghp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -752,7 +764,7 @@ int dmghp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -770,7 +782,7 @@ int dmghp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -788,7 +800,7 @@ int dmghp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -820,7 +832,7 @@ int dmghp(
 
                 txt(i18n::s.get_enum_property(
                     "core.locale.death_by.other", "text", death_kind, victim));
-                if (victim == 0)
+                if (victim.index == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property(
                         "core.locale.death_by.other",
@@ -852,7 +864,7 @@ int dmghp(
                 }
             }
         }
-        if (gdata_mount != victim || victim == 0)
+        if (gdata_mount != victim.index || victim.index == 0)
         {
             cell_removechara(victim.position.x, victim.position.y);
         }
@@ -873,11 +885,11 @@ int dmghp(
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
-            if (victim < 16)
+            if (victim.index < 16)
             {
-                chara_mod_impression(victim, -10);
+                chara_mod_impression(victim.index, -10);
                 victim.set_state(character::state_t::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
@@ -893,26 +905,26 @@ int dmghp(
         }
         if (victim.breaks_into_debris())
         {
-            if (is_in_fov(victim))
+            if (is_in_fov(victim.index))
             {
                 x = victim.position.x;
                 y = victim.position.y;
                 snd_at(45, victim.position, false, false);
-                animeblood(victim, 1, element);
+                animeblood(victim.index, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             snd_at(8 + rnd(2), victim.position, false, false);
-            animeblood(victim, 0, element);
+            animeblood(victim.index, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim == 0)
+        if (victim.index == 0)
         {
             ++gdata_death_count;
         }
-        if (victim == gdata(94))
+        if (victim.index == gdata(94))
         {
             gdata(94) = 0;
         }
@@ -920,7 +932,7 @@ int dmghp(
         {
             if (!attacker_is_player)
             {
-                chara_custom_talk(*attacker, 103);
+                chara_custom_talk(attacker->index, 103);
             }
             gained_exp = clamp(victim.level, 1, 200)
                     * clamp((victim.level + 1), 1, 200)
@@ -947,7 +959,7 @@ int dmghp(
                 gdata(94) = 0;
             }
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
             if (gdata_current_map != mdata_t::map_id_t::show_house)
             {
@@ -1034,7 +1046,7 @@ int dmghp(
                             == adata(10, gdata_current_map)
                         || gdata_current_map == mdata_t::map_id_t::the_void)
                     {
-                        if (adata(20, gdata_current_map) == victim
+                        if (adata(20, gdata_current_map) == victim.index
                             && victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
@@ -1051,7 +1063,7 @@ int dmghp(
                 }
                 else if (gdata_current_map == mdata_t::map_id_t::the_void)
                 {
-                    if (adata(20, gdata_current_map) == victim
+                    if (adata(20, gdata_current_map) == victim.index
                         && victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);
@@ -1059,11 +1071,11 @@ int dmghp(
                 }
             }
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
             ++npcmemory(0, victim.id);
-            chara_custom_talk(victim, 102);
-            if (victim < 16)
+            chara_custom_talk(victim.index, 102);
+            if (victim.index < 16)
             {
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
@@ -1072,17 +1084,17 @@ int dmghp(
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
-            modify_crowd_density(victim, -1);
+            modify_crowd_density(victim.index, -1);
         }
         if (gdata_mount)
         {
-            if (victim == gdata_mount)
+            if (victim.index == gdata_mount)
             {
                 txt(i18n::s.get("core.locale.damage.get_off_corpse", victim));
                 ride_end();
             }
         }
-        check_kill(damage_source, victim);
+        check_kill(damage_source, victim.index);
         catitem = 0;
         rollanatomy = 0;
         if (rnd(60) == 0)
@@ -1101,7 +1113,7 @@ int dmghp(
             }
             skillexp(161, attacker->index, 10 + rollanatomy * 4);
         }
-        rc = victim;
+        rc = victim.index;
         character_drops_item();
         if (gdata_current_map == mdata_t::map_id_t::pet_arena)
         {
@@ -1161,7 +1173,7 @@ void end_dmghp(const character& victim)
 {
     if (victim.is_hung_on_sand_bag())
     {
-        if (is_in_fov(victim))
+        if (is_in_fov(victim.index))
         {
             txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
             if (rnd(20) == 0)

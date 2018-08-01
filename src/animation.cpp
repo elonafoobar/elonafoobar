@@ -230,7 +230,7 @@ void abstract_animation::play()
 
 void failure_to_cast_animation::do_play()
 {
-    if (!is_in_fov(caster))
+    if (!is_in_fov(caster.index))
         return;
 
     snd_at(66, caster.position);
@@ -255,7 +255,7 @@ void bright_aura_animation::do_play()
 {
     constexpr auto max_particles = 15;
 
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cc.index) == 0)
         return;
 
     // Load image and play sound.
@@ -263,13 +263,13 @@ void bright_aura_animation::do_play()
     {
     case type_t::debuff:
         prepare_item_image(8, 0);
-        snd_at(38, cdata[cc].position);
+        snd_at(38, cc.position);
         break;
     case type_t::offering: prepare_item_image(9, 0); break;
     case type_t::healing:
     case type_t::healing_rain:
         prepare_item_image(7, 0);
-        snd_at(33, cdata[cc].position);
+        snd_at(33, cc.position);
         break;
     }
 
@@ -615,7 +615,7 @@ void bolt_animation::do_play()
 
 void throwing_object_animation::do_play()
 {
-    if (!is_in_fov(target))
+    if (!is_in_fov(target.index))
         return;
 
     prepare_item_image(aniref, aniref(1));

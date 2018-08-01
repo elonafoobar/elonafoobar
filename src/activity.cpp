@@ -76,7 +76,7 @@ void rowactend(int cc)
 
 void activity_handle_damage(character& chara)
 {
-    if (chara == 0)
+    if (chara.index == 0)
     {
         if (chara.continuous_action_id != 1 && chara.continuous_action_id != 2
             && chara.continuous_action_id != 3)
@@ -90,17 +90,17 @@ void activity_handle_damage(character& chara)
             prompt_stop_continuous_action();
         }
     }
-    if (chara != 0 || rtval == 0)
+    if (chara.index != 0 || rtval == 0)
     {
-        if (is_in_fov(chara))
+        if (is_in_fov(chara.index))
         {
             txt(i18n::s.get(
                 "core.locale.activity.cancel.normal",
-                cdata[chara],
+                chara,
                 i18n::_(
                     u8"ui", u8"action", u8"_"s + chara.continuous_action_id)));
         }
-        rowactend(chara);
+        rowactend(chara.index);
     }
     screenupdate = -1;
     update_screen();
@@ -438,9 +438,9 @@ void continuous_action_perform()
                             txtef(9);
                             txt(i18n::s.get_enum(
                                 "core.locale.activity.perform.dialog.interest",
+                                rnd(4),
                                 cdata[tc],
-                                cdata[cc],
-                                rnd(4)));
+                                cdata[cc]));
                         }
                         cdata[cc].quality_of_performance += cdata[tc].level + 5;
                         if (cc == 0)
