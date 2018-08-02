@@ -24,7 +24,8 @@ lua_env::lua_env()
     // Add executable directory to package.path
     fs::path exe_path = filesystem::dir::data() / "lua";
     std::string normalized = filesystem::to_forward_slashes(exe_path);
-    lua_->safe_script(u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
+    lua_->safe_script(
+        u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
 
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like

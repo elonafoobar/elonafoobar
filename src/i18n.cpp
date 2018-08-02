@@ -114,7 +114,8 @@ void store::visit(
         return val; \
     }
 
-#define UNKNOWN_FUNCTION(type) "<unknown function(" + func.name + ", " + type + ")>"
+#define UNKNOWN_FUNCTION(type) \
+    "<unknown function(" + func.name + ", " + type + ")>"
 
 std::string format_builtins_argless(const hil::FunctionCall& func)
 {
@@ -188,7 +189,9 @@ std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
     return UNKNOWN_FUNCTION("bool");
 }
 
-std::string format_builtins_string(const hil::FunctionCall& func, std::string value)
+std::string format_builtins_string(
+    const hil::FunctionCall& func,
+    std::string value)
 {
     ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
 

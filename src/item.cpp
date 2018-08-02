@@ -504,7 +504,8 @@ void item_delete(int ci)
     {
         // This item slot was previously occupied, but the item is now
         // invalid.
-        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(inv[ci]);
+        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(
+            inv[ci]);
     }
     else
     {
@@ -2140,8 +2141,10 @@ int inv_compress(int owner)
         item_remove(inv[slot]);
         if (mode != 6)
         {
-            if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata_map_width
-                && inv[slot].position.y >= 0 && inv[slot].position.y < mdata_map_height)
+            if (inv[slot].position.x >= 0
+                && inv[slot].position.x < mdata_map_width
+                && inv[slot].position.y >= 0
+                && inv[slot].position.y < mdata_map_height)
             {
                 cell_refresh(inv[slot].position.x, inv[slot].position.y);
             }

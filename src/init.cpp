@@ -371,14 +371,18 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-sol::table initialize_single_lion_db(const std::string& type, const fs::path& data_file)
+sol::table initialize_single_lion_db(
+    const std::string& type,
+    const fs::path& data_file)
 {
     lua::lua->get_registry_manager().register_datatype("core", type);
     lua::lua->get_registry_manager().register_data("core", type, data_file);
     auto table = lua::lua->get_registry_manager().get_table("core", type);
     if (!table)
     {
-        throw std::runtime_error("Could not load data for type " + type + " at" + data_file.string());
+        throw std::runtime_error(
+            "Could not load data for type " + type + " at"
+            + data_file.string());
     }
     return *table;
 }
@@ -387,9 +391,12 @@ void initialize_lion_db()
 {
     const fs::path data_path = filesystem::dir::mods() / "core" / "data";
 
-    auto chara_table = initialize_single_lion_db("chara", data_path / "chara.hcl");
-    auto sound_table = initialize_single_lion_db("sound", data_path / "sound.hcl");
-    auto music_table = initialize_single_lion_db("music", data_path / "music.hcl");
+    auto chara_table =
+        initialize_single_lion_db("chara", data_path / "chara.hcl");
+    auto sound_table =
+        initialize_single_lion_db("sound", data_path / "sound.hcl");
+    auto music_table =
+        initialize_single_lion_db("music", data_path / "music.hcl");
 
     the_character_db.initialize(chara_table);
     the_sound_db.initialize(sound_table);
@@ -797,13 +804,14 @@ static void initialize_screen()
 
     if (defines::is_android)
     {
-        display_mode = config::instance()
-            .get<std::string>("core.config.screen.window_mode");
+        display_mode = config::instance().get<std::string>(
+            "core.config.screen.window_mode");
     }
 
-    title(u8"Elona Foobar version "s + latest_version.short_string(),
-          display_mode,
-          config_get_fullscreen_mode());
+    title(
+        u8"Elona Foobar version "s + latest_version.short_string(),
+        display_mode,
+        config_get_fullscreen_mode());
 }
 
 static void initialize_lua()
@@ -1216,7 +1224,8 @@ void initialize_game()
         initialize_testbed();
         if (config::instance().startup_script != ""s)
         {
-            lua::lua->get_mod_manager().run_startup_script(config::instance().startup_script);
+            lua::lua->get_mod_manager().run_startup_script(
+                config::instance().startup_script);
             script_loaded = true;
         }
         mode = 2;

@@ -84,8 +84,6 @@ public:
         int flag);
 
     virtual ~window() override = default;
-
-
 };
 
 

@@ -69,7 +69,12 @@ void healsp(int cc, int delta)
 
 
 
-int dmghp(int victim_id, int amount, int damage_source, int element, int element_power)
+int dmghp(
+    int victim_id,
+    int amount,
+    int damage_source,
+    int element,
+    int element_power)
 {
     int damage_level = 0;
     elona_vector1<int> p_at_m141;
@@ -163,11 +168,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         if (victim.hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25
-                        + victim.buffs[buff_find(victim, 18)].power
-                            / 17,
-                    25,
-                    80)
+                    25 + victim.buffs[buff_find(victim, 18)].power / 17, 25, 80)
                 >= rnd(100))
             {
                 dmg_at_m141 *= -1;
@@ -218,7 +219,8 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                 healhp(
                     attacker->index,
                     clamp(
-                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000 + 10),
+                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000
+                            + 10),
                         1,
                         attacker->max_hp / 10 + rnd(5)));
             }
@@ -275,8 +277,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                 cdata[cnt].is_lay_hand_available() = false;
                 txtef(9);
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
-                txt(i18n::s.get(
-                    "core.locale.damage.is_healed", victim));
+                txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim;
                 miracle_animation().play();
@@ -293,10 +294,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
     {
         if (damage_level > 1)
         {
-            spillblood(
-                victim.position.x,
-                victim.position.y,
-                1 + rnd(2));
+            spillblood(victim.position.x, victim.position.y, 1 + rnd(2));
         }
         if (gdata(809) == 1)
         {
@@ -378,8 +376,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 txtef(10);
                 txt(i18n::s.get(
-                    "core.locale.damage.reactions.writhes_in_pain",
-                    victim));
+                    "core.locale.damage.reactions.writhes_in_pain", victim));
             }
         }
         if (damage_level >= 3)
@@ -388,8 +385,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 txtef(3);
                 txt(i18n::s.get(
-                    "core.locale.damage.reactions.is_severely_hurt",
-                    victim));
+                    "core.locale.damage.reactions.is_severely_hurt", victim));
             }
         }
         if (dmg_at_m141 < 0)
@@ -401,8 +397,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             if (is_in_fov(victim))
             {
                 txtef(4);
-                txt(i18n::s.get(
-                    "core.locale.damage.is_healed", victim));
+                txt(i18n::s.get("core.locale.damage.is_healed", victim));
             }
         }
     label_1369_internal:
@@ -416,8 +411,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     bool runs_away = false;
                     if (victim.is_immune_to_fear() == 0)
                     {
-                        if (dmg_at_m141 * 100 / victim.max_hp + 10
-                            > rnd(200))
+                        if (dmg_at_m141 * 100 / victim.max_hp + 10 > rnd(200))
                         {
                             runs_away = true;
                         }
@@ -496,27 +490,35 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             }
             if (element == 53)
             {
-                dmgcon(victim, status_ailment_t::blinded, rnd(element_power + 1));
+                dmgcon(
+                    victim, status_ailment_t::blinded, rnd(element_power + 1));
             }
             if (element == 58)
             {
-                dmgcon(victim, status_ailment_t::paralyzed, rnd(element_power + 1));
+                dmgcon(
+                    victim,
+                    status_ailment_t::paralyzed,
+                    rnd(element_power + 1));
             }
             if (element == 54)
             {
-                dmgcon(victim, status_ailment_t::confused, rnd(element_power + 1));
+                dmgcon(
+                    victim, status_ailment_t::confused, rnd(element_power + 1));
             }
             if (element == 57)
             {
-                dmgcon(victim, status_ailment_t::confused, rnd(element_power + 1));
+                dmgcon(
+                    victim, status_ailment_t::confused, rnd(element_power + 1));
             }
             if (element == 55)
             {
-                dmgcon(victim, status_ailment_t::poisoned, rnd(element_power + 1));
+                dmgcon(
+                    victim, status_ailment_t::poisoned, rnd(element_power + 1));
             }
             if (element == 61)
             {
-                dmgcon(victim, status_ailment_t::bleeding, rnd(element_power + 1));
+                dmgcon(
+                    victim, status_ailment_t::bleeding, rnd(element_power + 1));
             }
             if (element == 62)
             {
@@ -561,16 +563,16 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 if (config::instance().heart)
                 {
-                    int threshold =
-                        config::instance().get<int>("core.config.screen.heartbeat_threshold");
+                    int threshold = config::instance().get<int>(
+                        "core.config.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
                         {
                             snd(32);
 
-                            if (config::instance()
-                                .get<bool>("core.config.android.vibrate"))
+                            if (config::instance().get<bool>(
+                                    "core.config.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();
                             }
@@ -611,10 +613,8 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 if (rnd(3) == 0)
                 {
-                    if (victim.confused == 0
-                        && victim.dimmed == 0
-                        && victim.poisoned == 0
-                        && victim.paralyzed == 0
+                    if (victim.confused == 0 && victim.dimmed == 0
+                        && victim.poisoned == 0 && victim.paralyzed == 0
                         && victim.blind == 0)
                     {
                         if (mdata_map_type != mdata_t::map_type_t::world_map)
@@ -622,8 +622,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                             if (chara_copy(victim))
                             {
                                 txt(i18n::s.get(
-                                    "core.locale.damage.splits",
-                                    victim));
+                                    "core.locale.damage.splits", victim));
                             }
                         }
                     }
@@ -700,8 +699,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
     }
 
     {
-        auto handle =
-            lua::lua->get_handle_manager().get_handle(victim);
+        auto handle = lua::lua->get_handle_manager().get_handle(victim);
         lua::lua->get_event_manager()
             .run_callbacks<lua::event_kind_t::character_damaged>(
                 handle, dmg_at_m141);
@@ -738,14 +736,16 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     {
                         txtcontinue();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat.active",
+                            "core.locale.death_by.chara.transformed_into_meat."
+                            "active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat.passive",
+                            "core.locale.death_by.chara.transformed_into_meat."
+                            "passive",
                             victim,
                             attacker_is_player));
                     }
@@ -819,10 +819,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                 int death_kind = -damage_source;
 
                 txt(i18n::s.get_enum_property(
-                    "core.locale.death_by.other",
-                    "text",
-                    death_kind,
-                    victim));
+                    "core.locale.death_by.other", "text", death_kind, victim));
                 if (victim == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property(
@@ -849,14 +846,15 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 if (dmg_at_m141 > 0)
                 {
-                    healhp(cc, rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
+                    healhp(
+                        cc,
+                        rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
         }
         if (gdata_mount != victim || victim == 0)
         {
-            cell_removechara(
-                victim.position.x, victim.position.y);
+            cell_removechara(victim.position.x, victim.position.y);
         }
         if (victim.character_role == 0)
         {
@@ -962,21 +960,24 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     if (victim.id == 141)
                     {
                         txtef(2);
-                        txt(i18n::s.get("core.locale.scenario.obtain_stone.fool"));
+                        txt(i18n::s.get(
+                            "core.locale.scenario.obtain_stone.fool"));
                         snd(51);
                         gdata_magic_stone_of_fool = 1;
                     }
                     if (victim.id == 143)
                     {
                         txtef(2);
-                        txt(i18n::s.get("core.locale.scenario.obtain_stone.king"));
+                        txt(i18n::s.get(
+                            "core.locale.scenario.obtain_stone.king"));
                         snd(51);
                         gdata_magic_stone_of_king = 1;
                     }
                     if (victim.id == 144)
                     {
                         txtef(2);
-                        txt(i18n::s.get("core.locale.scenario.obtain_stone.sage"));
+                        txt(i18n::s.get(
+                            "core.locale.scenario.obtain_stone.sage"));
                         snd(51);
                         gdata_magic_stone_of_sage = 1;
                     }
@@ -1017,18 +1018,17 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     }
                     if (victim.id == 318)
                     {
-                        event_add(
-                            27,
-                            victim.position.x,
-                            victim.position.y);
+                        event_add(27, victim.position.x, victim.position.y);
                     }
                     if (victim.id == 319)
                     {
                         ++gdata_kill_count_of_little_sister;
                         txtef(3);
-                        txt(i18n::s.get("core.locale.talk.unique.strange_scientist.saved_count",
-                                        gdata_save_count_of_little_sister,
-                                        gdata_kill_count_of_little_sister));
+                        txt(i18n::s.get(
+                            "core.locale.talk.unique.strange_scientist.saved_"
+                            "count",
+                            gdata_save_count_of_little_sister,
+                            gdata_kill_count_of_little_sister));
                     }
                     if (gdata_current_dungeon_level
                             == adata(10, gdata_current_map)
@@ -1044,10 +1044,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                     {
                         if (rnd(4) == 0)
                         {
-                            event_add(
-                                28,
-                                victim.position.x,
-                                victim.position.y);
+                            event_add(28, victim.position.x, victim.position.y);
                         }
                     }
                     quest_check();
@@ -1081,8 +1078,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         {
             if (victim == gdata_mount)
             {
-                txt(i18n::s.get(
-                    "core.locale.damage.get_off_corpse", victim));
+                txt(i18n::s.get("core.locale.damage.get_off_corpse", victim));
                 ride_end();
             }
         }
@@ -1117,7 +1113,8 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
         if (victim.is_death_master() == 1)
         {
             txt(i18n::s.get("core.locale.damage.death_word_breaks"));
-            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS; ++chara_index)
+            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
+                 ++chara_index)
             {
                 if (cdata[chara_index].state != 1)
                 {
@@ -1170,7 +1167,8 @@ void end_dmghp(const character& victim)
             if (rnd(20) == 0)
             {
                 int picked = rnd(6);
-                txt(i18n::s.get_enum("core.locale.damage.sand_bag", picked, victim));
+                txt(i18n::s.get_enum(
+                    "core.locale.damage.sand_bag", picked, victim));
             }
         }
     }

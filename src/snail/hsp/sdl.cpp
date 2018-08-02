@@ -1,12 +1,12 @@
+#include "../detail/sdl.hpp"
+#include <iostream>
+#include <unordered_map>
 #include "../application.hpp"
 #include "../color.hpp"
 #include "../font.hpp"
 #include "../input.hpp"
-#include <iostream>
-#include <unordered_map>
-#include "../detail/sdl.hpp"
-#include "../window.hpp"
 #include "../touch_input.hpp"
+#include "../window.hpp"
 
 
 namespace
@@ -143,16 +143,18 @@ void setup_buffers()
         std::max(1024, application::instance().width()),
         std::max(1024, application::instance().height())));
 
-    if (application::is_android) {
+    if (application::is_android)
+    {
         // Output texture for Android. This is so the game window can
         // be placed such that it covers only part of the actual
         // screen, or scaled up and down.
-    detail::android_display_region = snail::detail::enforce_sdl(::SDL_CreateTexture(
-        application::instance().get_renderer().ptr(),
-        SDL_PIXELFORMAT_ARGB8888,
-        SDL_TEXTUREACCESS_TARGET,
-        application::instance().width(),
-        application::instance().height()));
+        detail::android_display_region =
+            snail::detail::enforce_sdl(::SDL_CreateTexture(
+                application::instance().get_renderer().ptr(),
+                SDL_PIXELFORMAT_ARGB8888,
+                SDL_TEXTUREACCESS_TARGET,
+                application::instance().width(),
+                application::instance().height()));
     }
 
     application::instance().register_finalizer([]() {
@@ -344,7 +346,8 @@ void mesbox(std::string& buffer, int keywait, bool text)
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
-    if (application::is_android && text) {
+    if (application::is_android && text)
+    {
         input::instance().show_soft_keyboard();
     }
 }
@@ -376,9 +379,8 @@ static void redraw_android()
 
     renderer.set_render_target(nullptr);
     renderer.clear();
-    renderer.render_image(detail::android_display_region,
-                          pos.x, pos.y,
-                          pos.width, pos.height);
+    renderer.render_image(
+        detail::android_display_region, pos.x, pos.y, pos.width, pos.height);
 
     auto itr = font_detail::font_cache.find({14, font_t::style_t::regular});
     if (itr != std::end(font_detail::font_cache))
@@ -431,7 +433,8 @@ void onkey_0()
     mesbox_detail::message_boxes.erase(
         std::end(mesbox_detail::message_boxes) - 1);
 
-    if (application::is_android) {
+    if (application::is_android)
+    {
         input::instance().hide_soft_keyboard();
     }
 }
@@ -812,10 +815,10 @@ void line(int x1, int y1, int x2, int y2, const snail::color& color)
 
 static void title_android(const std::string& display_mode)
 {
-    application::instance()
-        .set_display_mode(application::instance().get_default_display_mode());
-    application::instance()
-        .set_fullscreen_mode(window::fullscreen_mode_t::fullscreen);
+    application::instance().set_display_mode(
+        application::instance().get_default_display_mode());
+    application::instance().set_fullscreen_mode(
+        window::fullscreen_mode_t::fullscreen);
     application::instance().set_subwindow_display_mode(display_mode);
 }
 

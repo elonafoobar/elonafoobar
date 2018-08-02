@@ -110,8 +110,9 @@ inline size_t byte_count(char c)
 
 
 
-inline std::pair<size_t, size_t>
-find_widthwise(std::string str, std::string pattern)
+inline std::pair<size_t, size_t> find_widthwise(
+    std::string str,
+    std::string pattern)
 {
     size_t w{};
     auto pos = str.find(pattern);

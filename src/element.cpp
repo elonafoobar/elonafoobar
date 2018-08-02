@@ -202,9 +202,8 @@ void resistmod(int cc, int element, int delta)
     if (delta >= 50)
     {
         txtef(2);
-        if (auto text = i18n::s.get_enum_optional("core.locale.element.resist.gain",
-                                                  element,
-                                                  cdata[cc]))
+        if (auto text = i18n::s.get_enum_optional(
+                "core.locale.element.resist.gain", element, cdata[cc]))
         {
             txt(*text);
         }
@@ -216,9 +215,8 @@ void resistmod(int cc, int element, int delta)
     else if (delta <= 50 * -1)
     {
         txtef(8);
-        if (auto text = i18n::s.get_enum_optional("core.locale.element.resist.lose",
-                                                  element,
-                                                  cdata[cc]))
+        if (auto text = i18n::s.get_enum_optional(
+                "core.locale.element.resist.lose", element, cdata[cc]))
         {
             txt(*text);
         }

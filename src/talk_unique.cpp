@@ -43,8 +43,10 @@ talk_result_t talk_unique_orphe()
     if (event_id() == 1)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.orphe.dialog", 0,
-                           i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.orphe.dialog",
+            0,
+            i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -120,16 +122,18 @@ talk_result_t talk_unique_loyter()
     if (gdata_nightmare == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.loyter.quest.dialog", 0, cdatan(1, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.loyter.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.loyter.quest.choices.yes"));
+            1, i18n::s.get("core.locale.talk.unique.loyter.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.loyter.quest.choices.no"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.loyter.quest.dialog", 1);
+            0, i18n::s.get("core.locale.talk.unique.loyter.quest.choices.no"));
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.loyter.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -145,7 +149,8 @@ talk_result_t talk_unique_loyter()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.loyter.quest.yes");;
+        buff = i18n::s.get("core.locale.talk.unique.loyter.quest.yes");
+        ;
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -155,8 +160,14 @@ talk_result_t talk_unique_loyter()
     }
     if (gdata_nightmare == 1 || gdata_nightmare == 2)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.loyter.quest.begin.choices.yes"));
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.loyter.quest.begin.choices.no"));
+        ELONA_APPEND_RESPONSE(
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.loyter.quest.begin.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.loyter.quest.begin.choices.no"));
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.begin.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -179,7 +190,8 @@ talk_result_t talk_unique_loyter()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_nightmare = 2;
-        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos =
+            cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 5;
         gdata_destination_dungeon_level = 5;
         levelexitby = 2;
@@ -194,14 +206,12 @@ talk_result_t talk_unique_loyter()
         fixmaterial = 15;
         change_item_material();
         flt();
-        itemcreate(
-                -1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
+        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -232,14 +242,18 @@ talk_result_t talk_unique_miches()
     if (gdata_putit_attacks == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.miches.quest.dialog", 0);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.miches.quest.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.miches.quest.choices.yes"));
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.miches.quest.choices.no"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.miches.quest.dialog", 1);
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.unique.miches.quest.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.unique.miches.quest.choices.no"));
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.miches.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -285,8 +299,7 @@ talk_result_t talk_unique_miches()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -317,16 +330,18 @@ talk_result_t talk_unique_shena()
     if (gdata_thieves_hideout == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.shena.quest.dialog", 0);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.shena.quest.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.shena.quest.choices.yes"));
+            1, i18n::s.get("core.locale.talk.unique.shena.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.shena.quest.choices.no"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.shena.quest.dialog", 1);
+            0, i18n::s.get("core.locale.talk.unique.shena.quest.choices.no"));
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.shena.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -376,8 +391,7 @@ talk_result_t talk_unique_shena()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -396,48 +410,55 @@ talk_result_t talk_unique_shena()
 talk_result_t talk_unique_larnneire()
 {
     ELONA_APPEND_RESPONSE(
-            3, i18n::s.get("core.locale.talk.unique.larnneire.choices.mission"));
+        3, i18n::s.get("core.locale.talk.unique.larnneire.choices.mission"));
     ELONA_APPEND_RESPONSE(
-            2, i18n::s.get("core.locale.talk.unique.larnneire.choices.north_tyris"));
+        2,
+        i18n::s.get("core.locale.talk.unique.larnneire.choices.north_tyris"));
     ELONA_APPEND_RESPONSE(
-            1, i18n::s.get("core.locale.talk.unique.larnneire.choices.fairy_tale"));
+        1, i18n::s.get("core.locale.talk.unique.larnneire.choices.fairy_tale"));
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.larnneire.dialog");
     talk_window_query();
     if (chatval == 1)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 0);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 1);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 2);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 3);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 3);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 4);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 4);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 5);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.larnneire.fairy_tale", 5);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -447,13 +468,15 @@ talk_result_t talk_unique_larnneire()
     if (chatval == 2)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.north_tyris", 0);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.larnneire.north_tyris", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.larnneire.north_tyris", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.larnneire.north_tyris", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -479,66 +502,85 @@ talk_result_t talk_unique_lomias()
     {
         if (gdata_tutorial_flag == 0)
         {
-            buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lomias.tutorial.before.dialog");
             ELONA_APPEND_RESPONSE(
-                    1, i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.choices.yes"));
+                1,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.before."
+                            "choices.yes"));
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.choices.no"));
+                0,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.before."
+                            "choices.no"));
         }
         if (gdata_tutorial_flag == 1)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.movement.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.movement.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.movement.dialog", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.dialog", 3);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.movement.dialog", 3);
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement.choices.alright"));
+                0,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement."
+                            "choices.alright"));
             ELONA_APPEND_RESPONSE(
-                    3, i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement.choices.ate"));
+                3,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement."
+                            "choices.ate"));
         }
         if (gdata_tutorial_flag == 2)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.skills.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.skills.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.skills.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.skills.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.skills.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.skills.dialog", 2);
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.skills.response"));
+                0,
+                i18n::s.get(
+                    "core.locale.talk.unique.lomias.tutorial.skills.response"));
         }
         if (gdata_tutorial_flag == 3)
         {
             txt(i18n::s.get(
-                        "core.locale.common.something_is_put_on_the_ground"));
+                "core.locale.common.something_is_put_on_the_ground"));
             flt();
             itemcreate(-1, 14, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.after_dig.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lomias.tutorial.after_dig.dialog");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -548,30 +590,42 @@ talk_result_t talk_unique_lomias()
         if (gdata_tutorial_flag == 4)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.identify.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.identify.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.identify.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.identify.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.identify.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.identify.dialog", 2);
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.identify.choices.alright"));
+                0,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.identify."
+                            "choices.alright"));
             ELONA_APPEND_RESPONSE(
-                    4, i18n::s.get("core.locale.talk.unique.lomias.tutorial.identify.choices.done"));
+                4,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.identify."
+                            "choices.done"));
         }
         if (gdata_tutorial_flag == 5)
         {
-            buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lomias.tutorial.equip.dialog");
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.choices.alright"));
+                0,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip."
+                            "choices.alright"));
             ELONA_APPEND_RESPONSE(
-                    5, i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.choices.done"));
+                5,
+                i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip."
+                            "choices.done"));
         }
         if (gdata_tutorial_flag == 6)
         {
@@ -579,7 +633,9 @@ talk_result_t talk_unique_lomias()
             if (p != 0)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.combat.not_finished");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.lomias.tutorial.combat.not_"
+                    "finished");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -587,7 +643,8 @@ talk_result_t talk_unique_lomias()
                 return talk_result_t::talk_end;
             }
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.combat.finished");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lomias.tutorial.combat.finished");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -597,31 +654,35 @@ talk_result_t talk_unique_lomias()
         if (gdata_tutorial_flag == 7)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.chests.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.chests.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.chests.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.chests.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(
-                    -1, 240, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(-1, 240, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].param1 = 35;
             inv[ci].param2 = 25;
             flt();
-            itemcreate(
-                    -1, 636, cdata[0].position.x, cdata[0].position.y, 2);
+            itemcreate(-1, 636, cdata[0].position.x, cdata[0].position.y, 2);
             txt(i18n::s.get(
-                        "core.locale.common.something_is_put_on_the_ground"));
+                "core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.chests.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.chests.dialog", 2);
             tc = tc * 1 + 0;
-            ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.chests.response"));
+            ELONA_APPEND_RESPONSE(
+                0,
+                i18n::s.get(
+                    "core.locale.talk.unique.lomias.tutorial.chests.response"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_tutorial_flag = 8;
@@ -630,25 +691,29 @@ talk_result_t talk_unique_lomias()
         if (gdata_tutorial_flag == 8)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.house.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.house.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.house.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.house.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.house.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.house.dialog", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.house.dialog", 3);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.house.dialog", 3);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -658,13 +723,15 @@ talk_result_t talk_unique_lomias()
         if (gdata_tutorial_flag == 99)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.end.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.end.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.end.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lomias.tutorial.end.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -676,20 +743,24 @@ talk_result_t talk_unique_lomias()
         {
             buff = i18n::s.get("core.locale.talk.unique.lomias.after.dialog");
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.lomias.after.choices.nothing"));
+                0,
+                i18n::s.get(
+                    "core.locale.talk.unique.lomias.after.choices.nothing"));
         }
         if (gdata_tutorial_flag == 0 || gdata_tutorial_flag == -1)
         {
             ELONA_APPEND_RESPONSE(
-                    2,
-                    i18n::s.get("core.locale.talk.unique.lomias.after.choices.get_out"));
+                2,
+                i18n::s.get(
+                    "core.locale.talk.unique.lomias.after.choices.get_out"));
         }
         talk_window_query();
     }
     if (chatval == 1)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.yes");
+        buff =
+            i18n::s.get("core.locale.talk.unique.lomias.tutorial.before.yes");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -699,8 +770,7 @@ talk_result_t talk_unique_lomias()
         inv[ci].subname = 9;
         inv[ci].identification_state =
             identification_state_t::completely_identified;
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         gdata_tutorial_flag = 1;
         return talk_result_t::talk_unique;
     }
@@ -712,7 +782,8 @@ talk_result_t talk_unique_lomias()
             tc = chara_find(34);
             hostileaction(0, tc);
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lomias.after.get_out.larnneire_died");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lomias.after.get_out.larnneire_died");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -720,22 +791,29 @@ talk_result_t talk_unique_lomias()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.after.get_out.dialog", 0, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.after.get_out.dialog",
+            0,
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.after.get_out.dialog", 1);
-        tc = tc * (chara_find(34) == 0)
-            + (chara_find(34) != 0) * chara_find(34);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.after.get_out.dialog", 1);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.after.get_out.dialog", 2, cdatan(1, 0));
-        tc = tc * (chara_find(33) == 0)
-            + (chara_find(33) != 0) * chara_find(33);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.after.get_out.dialog",
+            2,
+            cdatan(1, 0));
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
@@ -744,8 +822,7 @@ talk_result_t talk_unique_lomias()
         txt(i18n::s.get("core.locale.talk.unique.lomias.after.get_out.leave"));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
@@ -756,20 +833,25 @@ talk_result_t talk_unique_lomias()
     if (chatval == 3)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 0);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement.ate.response"));
+            0,
+            i18n::s.get("core.locale.talk.unique.lomias.tutorial.movement.ate."
+                        "response"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.movement.ate.dialog", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -780,13 +862,15 @@ talk_result_t talk_unique_lomias()
     if (chatval == 4)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 0);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.identify.done.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -802,33 +886,37 @@ talk_result_t talk_unique_lomias()
         inv[ci].identification_state =
             identification_state_t::completely_identified;
         inv[ci].curse_state = curse_state_t::blessed;
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         gdata_tutorial_flag = 5;
         return talk_result_t::talk_unique;
     }
     if (chatval == 5)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 0);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.lomias.tutorial.equip.done.dialog", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         txtef(9);
-        txt(i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.done.lomias_releases"));
+        txt(
+            i18n::s.get("core.locale.talk.unique.lomias.tutorial.equip.done."
+                        "lomias_releases"));
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
@@ -839,8 +927,7 @@ talk_result_t talk_unique_lomias()
         itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
         inv[ci].identification_state =
             identification_state_t::completely_identified;
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         gdata_tutorial_flag = 6;
     }
     return talk_result_t::talk_end;
@@ -917,7 +1004,8 @@ talk_result_t talk_unique_xabi()
         picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.xabi.early", 1, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.xabi.early", 1, cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -930,8 +1018,7 @@ talk_result_t talk_unique_xabi()
         itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(-1, 621, cdata[0].position.x, cdata[0].position.y, 0);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -967,16 +1054,15 @@ talk_result_t talk_unique_slan()
         {
             flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
             flttypemajor = fltsetdungeon();
-            itemcreate(
-                    -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
+            itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
         }
         flt();
         itemcreate(
-                -1,
-                54,
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                1000 + rnd(200));
+            -1,
+            54,
+            cdata[tc].position.x,
+            cdata[tc].position.y,
+            1000 + rnd(200));
         flt();
         itemcreate(-1, 55, cdata[tc].position.x, cdata[tc].position.y, 3);
         flt();
@@ -1009,8 +1095,11 @@ talk_result_t talk_unique_erystia()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.late", 2,
-                                cdatan(1, 0), cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.late",
+            2,
+            cdatan(1, 0),
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1020,43 +1109,52 @@ talk_result_t talk_unique_erystia()
     if (gdata_main_quest_flag == 120)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.all_stones.dialog", 0, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.all_stones.dialog",
+            0,
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.all_stones.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.all_stones.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.all_stones.dialog", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.all_stones.dialog", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.all_stones.dialog", 3, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.all_stones.dialog",
+            3,
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         snd(44);
         txtef(2);
-        txt(i18n::s.get("core.locale.talk.unique.erystia.all_stones.you_receive"));
+        txt(i18n::s.get(
+            "core.locale.talk.unique.erystia.all_stones.you_receive"));
         flt();
         itemcreate(-1, 360, cdata[0].position.x, cdata[0].position.y, 0);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         gdata_main_quest_flag = 125;
         return talk_result_t::talk_end;
     }
     if (gdata_main_quest_flag == 105)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.stones.dialog", 0, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.stones.dialog", 0, cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1068,25 +1166,29 @@ talk_result_t talk_unique_erystia()
         picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.stones.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.stones.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.stones.dialog", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.stones.dialog", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.stones.dialog", 3);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.stones.dialog", 3);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.stones.dialog", 4);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.stones.dialog", 4);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1099,19 +1201,31 @@ talk_result_t talk_unique_erystia()
     }
     if (gdata_main_quest_flag >= 60)
     {
-        buff = i18n::s.get("core.locale.talk.unique.erystia.investigation.dialog", cdatan(0, 0));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.erystia.investigation.dialog",
+            cdatan(0, 0));
         ELONA_APPEND_RESPONSE(
-                6, i18n::s.get("core.locale.talk.unique.erystia.investigation.choices.lesimas"));
+            6,
+            i18n::s.get("core.locale.talk.unique.erystia.investigation.choices."
+                        "lesimas"));
         ELONA_APPEND_RESPONSE(
-                5, i18n::s.get("core.locale.talk.unique.erystia.investigation.choices.mission"));
+            5,
+            i18n::s.get("core.locale.talk.unique.erystia.investigation.choices."
+                        "mission"));
         if (gdata_main_quest_flag >= 100 && gdata_main_quest_flag <= 120)
         {
             ELONA_APPEND_RESPONSE(
-                3, i18n::s.get("core.locale.talk.unique.erystia.investigation.choices.stones.castle"));
+                3,
+                i18n::s.get("core.locale.talk.unique.erystia.investigation."
+                            "choices.stones.castle"));
             ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.erystia.investigation.choices.stones.inferno"));
+                2,
+                i18n::s.get("core.locale.talk.unique.erystia.investigation."
+                            "choices.stones.inferno"));
             ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.erystia.investigation.choices.stones.crypt"));
+                1,
+                i18n::s.get("core.locale.talk.unique.erystia.investigation."
+                            "choices.stones.crypt"));
         }
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1119,31 +1233,36 @@ talk_result_t talk_unique_erystia()
         if (chatval == 6)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.lesmias", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.lesmias", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.lesmias", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.lesmias", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.lesmias", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.lesmias", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.lesmias", 3);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.lesmias", 3);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.lesmias", 4);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.lesmias", 4);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1155,13 +1274,19 @@ talk_result_t talk_unique_erystia()
             if (gdata_main_quest_flag >= 125)
             {
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.mission.excavation", 0);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.erystia.investigation.mission."
+                    "excavation",
+                    0);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.mission.excavation", 1);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.erystia.investigation.mission."
+                    "excavation",
+                    1);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -1171,7 +1296,10 @@ talk_result_t talk_unique_erystia()
             if (gdata_main_quest_flag >= 110)
             {
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.mission.stones", 0);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.erystia.investigation.mission."
+                    "stones",
+                    0);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -1179,8 +1307,10 @@ talk_result_t talk_unique_erystia()
                 return talk_result_t::talk_unique;
             }
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.mission.stones", 1,
-                                    cdatan(0, 0));
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.mission.stones",
+                1,
+                cdatan(0, 0));
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1190,19 +1320,22 @@ talk_result_t talk_unique_erystia()
         if (chatval == 3)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.castle", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.castle", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.castle", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.castle", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.castle", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.castle", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1212,19 +1345,22 @@ talk_result_t talk_unique_erystia()
         if (chatval == 2)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.inferno", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.inferno", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.inferno", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.inferno", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.inferno", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.inferno", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1234,19 +1370,22 @@ talk_result_t talk_unique_erystia()
         if (chatval == 1)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.crypt", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.crypt", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.crypt", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.crypt", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.erystia.investigation.crypt", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.erystia.investigation.crypt", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1258,17 +1397,24 @@ talk_result_t talk_unique_erystia()
     if (gdata_main_quest_flag == 50)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.erystia.introduction.dialog", cdatan(0, 0));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.erystia.introduction.dialog",
+            cdatan(0, 0));
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.erystia.introduction.choices.pledge_strength"));
+            1,
+            i18n::s.get("core.locale.talk.unique.erystia.introduction.choices."
+                        "pledge_strength"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.erystia.introduction.choices.not_interested"));
+            0,
+            i18n::s.get("core.locale.talk.unique.erystia.introduction.choices."
+                        "not_interested"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.erystia.introduction.not_interested");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.erystia.introduction.not_interested");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1276,33 +1422,47 @@ talk_result_t talk_unique_erystia()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.introduction.pledge_strength.dialog", 0);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.introduction.pledge_strength."
+            "dialog",
+            0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.introduction.pledge_strength.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.introduction.pledge_strength."
+            "dialog",
+            1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.introduction.pledge_strength.dialog", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.introduction.pledge_strength."
+            "dialog",
+            2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.erystia.introduction.pledge_strength.dialog", 3,
-                                cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.erystia.introduction.pledge_strength."
+            "dialog",
+            3,
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         snd(44);
         txtef(2);
-        txt(i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_strength.you_receive"));
+        txt(
+            i18n::s.get("core.locale.talk.unique.erystia.introduction.pledge_"
+                        "strength.you_receive"));
         gdata_main_quest_flag = 60;
         return talk_result_t::talk_end;
     }
@@ -1354,16 +1514,15 @@ talk_result_t talk_unique_karam()
         {
             flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
             flttypemajor = fltsetdungeon();
-            itemcreate(
-                    -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
+            itemcreate(-1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
         }
         flt();
         itemcreate(
-                -1,
-                54,
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                1000 + rnd(200));
+            -1,
+            54,
+            cdata[tc].position.x,
+            cdata[tc].position.y,
+            1000 + rnd(200));
         flt();
         itemcreate(-1, 55, cdata[tc].position.x, cdata[tc].position.y, 3);
         flt();
@@ -1397,9 +1556,9 @@ talk_result_t talk_unique_garokk()
 talk_result_t talk_unique_miral()
 {
     ELONA_APPEND_RESPONSE(
-            2, i18n::s.get("core.locale.talk.unique.miral.choices.small_medals"));
+        2, i18n::s.get("core.locale.talk.unique.miral.choices.small_medals"));
     ELONA_APPEND_RESPONSE(
-            3, i18n::s.get("core.locale.talk.unique.miral.choices.upgrade_cart"));
+        3, i18n::s.get("core.locale.talk.unique.miral.choices.upgrade_cart"));
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.miral.dialog");
     talk_window_query();
@@ -1422,8 +1581,9 @@ talk_result_t talk_unique_miral()
     if (chatval == 3)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.dialog",
-                           calccargoupdatecost());
+        buff = i18n::s.get(
+            "core.locale.talk.unique.miral.upgrade_cart.dialog",
+            calccargoupdatecost());
         int stat = item_find(622, 3, 1);
         if (stat != -1)
         {
@@ -1431,17 +1591,22 @@ talk_result_t talk_unique_miral()
             if (inv[ci].number >= calccargoupdatecost())
             {
                 ELONA_APPEND_RESPONSE(
-                    1, i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.choices.give"));
+                    1,
+                    i18n::s.get("core.locale.talk.unique.miral.upgrade_cart."
+                                "choices.give"));
             }
         }
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.choices.go_back"));
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.miral.upgrade_cart.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval != 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.go_back");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.miral.upgrade_cart.go_back");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1449,14 +1614,16 @@ talk_result_t talk_unique_miral()
             return talk_result_t::talk_unique;
         }
         txtnew();
-        txt(i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
-                        cnvweight(calccargoupdate())));
+        txt(i18n::s.get(
+            "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
+            cnvweight(calccargoupdate())));
         snd(58);
         inv[ci].number -= calccargoupdatecost();
         gdata_current_cart_limit += calccargoupdate();
         refresh_burden_state();
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.miral.upgrade_cart.give.dialog");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.miral.upgrade_cart.give.dialog");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1470,7 +1637,8 @@ talk_result_t talk_unique_pael()
 {
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::map_id_t::noyel && adata(29, gdata_current_map))
+        if (gdata_current_map == mdata_t::map_id_t::noyel
+            && adata(29, gdata_current_map))
         {
             listmax = 0;
             buff = i18n::s.get("core.locale.talk.unique.pael.festival");
@@ -1535,7 +1703,8 @@ talk_result_t talk_unique_pael()
     if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 1, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.pael.progress", 1, cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1544,7 +1713,8 @@ talk_result_t talk_unique_pael()
     }
     if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
     {
-        buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 2, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.pael.progress", 2, cdatan(0, 0));
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
@@ -1573,7 +1743,8 @@ talk_result_t talk_unique_pael()
     }
     if (gdata_pael_and_her_mom == 8)
     {
-        buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 4, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.pael.progress", 4, cdatan(0, 0));
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
@@ -1598,7 +1769,8 @@ talk_result_t talk_unique_pael()
     if (gdata_pael_and_her_mom == 10)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.pael.progress", 6, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.pael.progress", 6, cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1623,13 +1795,15 @@ talk_result_t talk_unique_paels_mom()
     if (gdata_pael_and_her_mom == 10)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.paels_mom.progress.last", 0, cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.paels_mom.progress.last", 0, cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.paels_mom.progress.last", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.paels_mom.progress.last", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1643,13 +1817,13 @@ talk_result_t talk_unique_paels_mom()
         snd(51);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.paels_mom.progress.last", 2);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.paels_mom.progress.last", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1659,28 +1833,38 @@ talk_result_t talk_unique_paels_mom()
     }
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::map_id_t::noyel && adata(29, gdata_current_map))
+        if (gdata_current_map == mdata_t::map_id_t::noyel
+            && adata(29, gdata_current_map))
         {
-            buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.paels_mom.progress.festival.dialog");
             int stat = inv_find(559, 0);
             if (stat != -1)
             {
                 ELONA_APPEND_RESPONSE(
-                    2, i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.choices.give"));
+                    2,
+                    i18n::s.get("core.locale.talk.unique.paels_mom.progress."
+                                "festival.choices.give"));
             }
             ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.choices.take_care"));
+                0,
+                i18n::s.get("core.locale.talk.unique.paels_mom.progress."
+                            "festival.choices.take_care"));
             chatesc = 1;
             talk_window_query();
             if (chatval == 2)
             {
                 int stat = inv_find(559, 0);
                 --inv[stat].number;
-                txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.give.you_hand_her"));
+                txt(
+                    i18n::s.get("core.locale.talk.unique.paels_mom.progress."
+                                "festival.give.you_hand_her"));
                 snd(13);
                 modify_karma(0, 20);
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.give.dialog");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.paels_mom.progress.festival.give."
+                    "dialog");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -1688,7 +1872,9 @@ talk_result_t talk_unique_paels_mom()
                 return talk_result_t::talk_end;
             }
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.take_care");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.paels_mom.progress.festival.take_"
+                "care");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1699,29 +1885,39 @@ talk_result_t talk_unique_paels_mom()
     if (gdata_pael_and_her_mom == 1000)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.paels_mom.progress.end_life.dialog", 0,
-                                cdatan(0, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.paels_mom.progress.end_life.dialog",
+            0,
+            cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        buff = i18n::s.get_enum("core.locale.talk.unique.paels_mom.progress.end_life.dialog", 1);
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.paels_mom.progress.end_life.dialog", 1);
         int stat = inv_find(559, 0);
         if (stat != -1)
         {
             ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.choices.give"));
+                2,
+                i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
+                            "life.choices.give"));
         }
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.choices.end"));
+            1,
+            i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life."
+                        "choices.end"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.choices.leave"));
+            0,
+            i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life."
+                        "choices.leave"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.end");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.paels_mom.progress.end_life.end");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1733,11 +1929,15 @@ talk_result_t talk_unique_paels_mom()
         {
             int stat = inv_find(559, 0);
             --inv[stat].number;
-            txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.give.you_hand_her"));
+            txt(
+                i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
+                            "life.give.you_hand_her"));
             snd(13);
             modify_karma(0, 20);
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.give.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.paels_mom.progress.end_life.give."
+                "dialog");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1745,7 +1945,8 @@ talk_result_t talk_unique_paels_mom()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.leave");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.paels_mom.progress.end_life.leave");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1755,7 +1956,8 @@ talk_result_t talk_unique_paels_mom()
     if (gdata_pael_and_her_mom > 7)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.very_late");
+        buff =
+            i18n::s.get("core.locale.talk.unique.paels_mom.progress.very_late");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1765,7 +1967,8 @@ talk_result_t talk_unique_paels_mom()
     if (gdata_pael_and_her_mom > 5)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.late", cdatan(0, 0));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.paels_mom.progress.late", cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1795,8 +1998,11 @@ talk_result_t talk_unique_raphael()
 {
     if (gdata_wife_collector == 0)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.raphael.quest.choices.yes"));
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.raphael.quest.choices.no"));
+        ELONA_APPEND_RESPONSE(
+            1,
+            i18n::s.get("core.locale.talk.unique.raphael.quest.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.unique.raphael.quest.choices.no"));
         buff = i18n::s.get("core.locale.talk.unique.raphael.quest.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -1824,15 +2030,20 @@ talk_result_t talk_unique_raphael()
     if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.raphael.bring_wife.choices.this_one"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.choices.this_one"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.raphael.bring_wife.choices.go_back"));
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.choices.go_back"));
         buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.dialog");
         talk_window_query();
         if (chatval != 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.go_back");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.go_back");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1844,7 +2055,9 @@ talk_result_t talk_unique_raphael()
         if (stat == -1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.no_such_wife");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.this_one.no_such_"
+                "wife");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1855,7 +2068,9 @@ talk_result_t talk_unique_raphael()
         if (cdata[rc].is_married() == 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.not_married");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.this_one.not_"
+                "married");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -1863,8 +2078,9 @@ talk_result_t talk_unique_raphael()
             return talk_result_t::talk_end;
         }
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.come_along",
-                           cdatan(0, rc));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.raphael.bring_wife.this_one.come_along",
+            cdatan(0, rc));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1884,7 +2100,8 @@ talk_result_t talk_unique_raphael()
             modify_karma(0, -15);
         }
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.leaving");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.raphael.bring_wife.this_one.leaving");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -1893,7 +2110,9 @@ talk_result_t talk_unique_raphael()
         if (f == 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.not_human");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.raphael.bring_wife.this_one.not_"
+                "human");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -1902,8 +2121,7 @@ talk_result_t talk_unique_raphael()
         if (gdata_wife_collector == 1)
         {
             flt();
-            itemcreate(
-                    -1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
+            itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
@@ -1917,10 +2135,10 @@ talk_result_t talk_unique_raphael()
         itemcreate(-1, 640, cdata[0].position.x, cdata[0].position.y, 2);
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.raphael.bring_wife.this_one.end");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.raphael.bring_wife.this_one.end");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1935,7 +2153,8 @@ talk_result_t talk_unique_ainc()
     if (gdata_novice_knight == 1000)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.ainc.complete", cdatan(0, 0));
+        buff =
+            i18n::s.get("core.locale.talk.unique.ainc.complete", cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -1945,7 +2164,7 @@ talk_result_t talk_unique_ainc()
     if (gdata_novice_knight == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.ainc.quest.choices.do_it"));
+            1, i18n::s.get("core.locale.talk.unique.ainc.quest.choices.do_it"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.dialog");
         talk_window_query();
@@ -1997,8 +2216,7 @@ talk_result_t talk_unique_ainc()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2022,14 +2240,16 @@ talk_result_t talk_unique_poppy()
     }
     if (chara_get_free_slot_ally() != 0)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.poppy.find.choices.take"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.unique.poppy.find.choices.take"));
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.poppy.find.dialog");
     talk_window_query();
     if (chatval == 1)
     {
-        txt(i18n::s.get("core.locale.talk.unique.poppy.find.you_must_return", cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.talk.unique.poppy.find.you_must_return", cdata[tc]));
         rc = tc;
         new_ally_joins();
         cdata[rc].is_escorted_in_sub_quest() = true;
@@ -2058,7 +2278,8 @@ talk_result_t talk_unique_rilian()
     if (gdata_puppys_cave == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.rilian.quest.choices.do_it"));
+            1,
+            i18n::s.get("core.locale.talk.unique.rilian.quest.choices.do_it"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.dialog");
         talk_window_query();
@@ -2110,8 +2331,7 @@ talk_result_t talk_unique_rilian()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2140,9 +2360,9 @@ talk_result_t talk_unique_tam()
     if (gdata_cat_house == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.tam.quest.choices.yes"));
+            1, i18n::s.get("core.locale.talk.unique.tam.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.tam.quest.choices.no"));
+            0, i18n::s.get("core.locale.talk.unique.tam.quest.choices.no"));
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -2191,8 +2411,7 @@ talk_result_t talk_unique_tam()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2233,17 +2452,19 @@ talk_result_t talk_unique_gilbert()
     if (gdata_defense_line == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.gilbert.quest.dialog", 0,
-                                cdatan(1, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.gilbert.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.gilbert.quest.choices.yes"));
+            1,
+            i18n::s.get("core.locale.talk.unique.gilbert.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.gilbert.quest.choices.no"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.gilbert.quest.dialog", 1);
+            0, i18n::s.get("core.locale.talk.unique.gilbert.quest.choices.no"));
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.gilbert.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -2270,15 +2491,21 @@ talk_result_t talk_unique_gilbert()
     if (gdata_defense_line == 1 || gdata_defense_line == 2)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.choices.yes"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.gilbert.quest.begin.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.choices.no"));
-        buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.dialog");
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.gilbert.quest.begin.choices.no"));
+        buff =
+            i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.dialog");
         talk_window_query();
         if (chatval != 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.no");
+            buff =
+                i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.no");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -2295,7 +2522,8 @@ talk_result_t talk_unique_gilbert()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_defense_line = 2;
-        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos =
+            cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 12;
         gdata_destination_dungeon_level = 4;
         levelexitby = 2;
@@ -2312,8 +2540,7 @@ talk_result_t talk_unique_gilbert()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2334,7 +2561,8 @@ talk_result_t talk_unique_arnord()
     if (gdata_kamikaze_attack == 1000)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.arnord.complete", cdatan(0, 0));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.arnord.complete", cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -2344,8 +2572,10 @@ talk_result_t talk_unique_arnord()
     if (gdata_kamikaze_attack == 0)
     {
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.dialog");
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.arnord.quest.choices.yes"));
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.arnord.quest.choices.no"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.unique.arnord.quest.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.unique.arnord.quest.choices.no"));
         talk_window_query();
         if (chatval != 1)
         {
@@ -2371,8 +2601,14 @@ talk_result_t talk_unique_arnord()
     }
     if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.arnord.quest.begin.choices.yes"));
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.arnord.quest.begin.choices.no"));
+        ELONA_APPEND_RESPONSE(
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.arnord.quest.begin.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.arnord.quest.begin.choices.no"));
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.begin.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -2395,7 +2631,8 @@ talk_result_t talk_unique_arnord()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_kamikaze_attack = 2;
-        mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
+        mdata_map_stair_down_pos =
+            cdata[0].position.y * 1000 + cdata[0].position.x;
         gdata_destination_map = 11;
         gdata_destination_dungeon_level = 25;
         levelexitby = 2;
@@ -2412,8 +2649,7 @@ talk_result_t talk_unique_arnord()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2444,9 +2680,9 @@ talk_result_t talk_unique_mia()
     if (gdata_mias_dream == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.mia.quest.choices.yes"));
+            1, i18n::s.get("core.locale.talk.unique.mia.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.mia.quest.choices.no"));
+            0, i18n::s.get("core.locale.talk.unique.mia.quest.choices.no"));
         buff = i18n::s.get("core.locale.talk.unique.mia.quest.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -2503,8 +2739,7 @@ talk_result_t talk_unique_mia()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2533,25 +2768,29 @@ talk_result_t talk_unique_renton()
     if (gdata_rare_books == 0 || gdata_rare_books == 1)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 0);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 1);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 1);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 2);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 2);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 3);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.renton.quest.dialog", 3);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -2590,7 +2829,8 @@ talk_result_t talk_unique_renton()
             if (p != 4)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.renton.quest.brought", p(0));
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.renton.quest.brought", p(0));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -2619,7 +2859,8 @@ talk_result_t talk_unique_renton()
                 }
             }
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.brought_all.dialog", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.renton.quest.brought_all.dialog", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -2643,35 +2884,35 @@ talk_result_t talk_unique_renton()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.brought_all.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.renton.quest.brought_all.dialog", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             txtef(5);
-            txt(i18n::s.get("core.locale.talk.unique.renton.quest.brought_all.ehekatl"));
+            txt(i18n::s.get(
+                "core.locale.talk.unique.renton.quest.brought_all.ehekatl"));
             txt(i18n::s.get("core.locale.quest.completed"));
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.renton.quest.brought_all.dialog", 2);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.renton.quest.brought_all.dialog", 2);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(
-                    -1, 666, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(-1, 666, cdata[0].position.x, cdata[0].position.y, 0);
             flt();
-            itemcreate(
-                    -1, 655, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(-1, 655, cdata[0].position.x, cdata[0].position.y, 0);
             flt();
-            itemcreate(
-                    -1, 54, cdata[0].position.x, cdata[0].position.y, 20000);
+            itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 20000);
             flt();
             itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             txt(i18n::s.get(
-                        "core.locale.common.something_is_put_on_the_ground"));
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2707,8 +2948,8 @@ talk_result_t talk_unique_marks()
     if (gdata_pyramid_trial == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.marks.quest.dialog", 0,
-                                cdatan(1, 0));
+        buff = i18n::s.get_enum(
+            "core.locale.talk.unique.marks.quest.dialog", 0, cdatan(1, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -2716,10 +2957,12 @@ talk_result_t talk_unique_marks()
         if (cdata[0].gold >= 20000)
         {
             ELONA_APPEND_RESPONSE(
-                    1, i18n::s.get("core.locale.talk.unique.marks.quest.choices.pay"));
+                1,
+                i18n::s.get("core.locale.talk.unique.marks.quest.choices.pay"));
         }
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.marks.quest.dialog", 1);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.marks.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -2734,8 +2977,7 @@ talk_result_t talk_unique_marks()
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         cdata[0].gold -= 20000;
         snd(12);
         flt();
@@ -2783,8 +3025,7 @@ talk_result_t talk_unique_noel()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 6);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2805,7 +3046,9 @@ talk_result_t talk_unique_noel()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.noel.quest.choices.of_course"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.noel.quest.choices.of_course"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get_enum("core.locale.talk.unique.noel.quest.dialog", 1);
         talk_window_query();
@@ -2833,7 +3076,9 @@ talk_result_t talk_unique_noel()
     if (cdata[0].gold >= 12000)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.choices.buy"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.noel.quest.buy_nuke.choices.buy"));
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.dialog");
@@ -2877,7 +3122,9 @@ talk_result_t talk_unique_icolle()
     if (gdata_ambitious_scientist == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.icolle.quest.choices.alright"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.icolle.quest.choices.alright"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.dialog");
         talk_window_query();
@@ -2898,8 +3145,7 @@ talk_result_t talk_unique_icolle()
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.alright");
         tc = tc * 1 + 0;
@@ -2916,7 +3162,7 @@ talk_result_t talk_unique_icolle()
         const auto invhead = tmp.first;
         const auto invrange = tmp.second;
         for (int cnt = invhead, cnt_end = invhead + invrange; cnt < cnt_end;
-                ++cnt)
+             ++cnt)
         {
             if (gdata_ambitious_scientist >= 6)
             {
@@ -2931,8 +3177,9 @@ talk_result_t talk_unique_icolle()
                         --inv[cnt].number;
                         ++gdata_ambitious_scientist;
                         f = 1;
-                        txt(i18n::s.get("core.locale.talk.unique.icolle.quest.give.deliver",
-                                        inv[cnt]));
+                        txt(i18n::s.get(
+                            "core.locale.talk.unique.icolle.quest.give.deliver",
+                            inv[cnt]));
                         --cnt;
                         continue;
                     }
@@ -2942,7 +3189,8 @@ talk_result_t talk_unique_icolle()
         if (f)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.icolle.quest.give.have");
+            buff =
+                i18n::s.get("core.locale.talk.unique.icolle.quest.give.have");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -2951,7 +3199,8 @@ talk_result_t talk_unique_icolle()
         if (f == 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.icolle.quest.give.do_not_have");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.icolle.quest.give.do_not_have");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -2975,8 +3224,7 @@ talk_result_t talk_unique_icolle()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3000,15 +3248,18 @@ talk_result_t talk_unique_balzak()
     if (gdata_sewer_sweeping == 0)
     {
         listmax = 0;
-        buff = i18n::s.get_enum("core.locale.talk.unique.balzak.quest.dialog", 0);
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.balzak.quest.dialog", 0);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.balzak.quest.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.balzak.quest.choices.no"));
-        buff = i18n::s.get_enum("core.locale.talk.unique.balzak.quest.dialog", 1);
+            1, i18n::s.get("core.locale.talk.unique.balzak.quest.choices.yes"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.unique.balzak.quest.choices.no"));
+        buff =
+            i18n::s.get_enum("core.locale.talk.unique.balzak.quest.dialog", 1);
         talk_window_query();
         if (chatval != 1)
         {
@@ -3057,8 +3308,7 @@ talk_result_t talk_unique_balzak()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3079,16 +3329,21 @@ talk_result_t talk_unique_lexus()
     if (gdata_belongs_to_mages_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.lexus.nonmember.choices.tell_me_about"));
+            2,
+            i18n::s.get("core.locale.talk.unique.lexus.nonmember.choices.tell_"
+                        "me_about"));
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.lexus.nonmember.choices.want_to_join"));
+            1,
+            i18n::s.get("core.locale.talk.unique.lexus.nonmember.choices.want_"
+                        "to_join"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.lexus.nonmember.dialog");
         talk_window_query();
         if (chatval == 2)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lexus.nonmember.tell_me_about");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lexus.nonmember.tell_me_about");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3100,13 +3355,15 @@ talk_result_t talk_unique_lexus()
             if (gdata_joining_mages_guild == 0)
             {
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.want_to_join", 0);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.lexus.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.want_to_join", 1);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.lexus.nonmember.want_to_join", 1);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3117,7 +3374,8 @@ talk_result_t talk_unique_lexus()
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.journal_updated"));
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.want_to_join", 2);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.lexus.nonmember.want_to_join", 2);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3127,7 +3385,8 @@ talk_result_t talk_unique_lexus()
             if (gdata_mages_guild_quota > 0)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.lexus.nonmember.quota");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.lexus.nonmember.quota");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3135,7 +3394,8 @@ talk_result_t talk_unique_lexus()
                 return talk_result_t::talk_unique;
             }
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.end", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lexus.nonmember.end", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3160,7 +3420,8 @@ talk_result_t talk_unique_lexus()
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"));
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.end", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lexus.nonmember.end", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -3177,16 +3438,22 @@ talk_result_t talk_unique_lexus()
     if (gdata_mages_guild_quota2 == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.lexus.member.choices.new_quota"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.new_quota"));
     }
     else
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.lexus.member.choices.report_quota"));
+            2,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-    buff = i18n::s.get("core.locale.talk.unique.lexus.member.dialog",
-                       ranktitle(8), cdatan(0, 0));
+    buff = i18n::s.get(
+        "core.locale.talk.unique.lexus.member.dialog",
+        ranktitle(8),
+        cdatan(0, 0));
     talk_window_query();
     if (chatval == 1)
     {
@@ -3196,8 +3463,9 @@ talk_result_t talk_unique_lexus()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.lexus.member.new_quota",
-                           gdata_mages_guild_quota);
+        buff = i18n::s.get(
+            "core.locale.talk.unique.lexus.member.new_quota",
+            gdata_mages_guild_quota);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -3209,7 +3477,8 @@ talk_result_t talk_unique_lexus()
         if (gdata_mages_guild_quota > 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.waiting");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3222,28 +3491,28 @@ talk_result_t talk_unique_lexus()
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(
-                -1,
-                54,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                10000 - gdata(128) + 1000);
+            -1,
+            54,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            10000 - gdata(128) + 1000);
         flt();
         itemcreate(
-                -1,
-                55,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                clamp(4 - gdata(128) / 2500, 1, 4));
+            -1,
+            55,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            clamp(4 - gdata(128) / 2500, 1, 4));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         modrank(8, 500, 8);
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.end");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3258,16 +3527,21 @@ talk_result_t talk_unique_abyss()
     if (gdata_belongs_to_thieves_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.abyss.nonmember.choices.tell_me_about"));
+            2,
+            i18n::s.get("core.locale.talk.unique.abyss.nonmember.choices.tell_"
+                        "me_about"));
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.abyss.nonmember.choices.want_to_join"));
+            1,
+            i18n::s.get("core.locale.talk.unique.abyss.nonmember.choices.want_"
+                        "to_join"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.abyss.nonmember.dialog");
         talk_window_query();
         if (chatval == 2)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.abyss.nonmember.tell_me_about");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.abyss.nonmember.tell_me_about");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3279,7 +3553,8 @@ talk_result_t talk_unique_abyss()
             if (gdata_joining_thieves_guild == 0)
             {
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.abyss.nonmember.want_to_join", 0);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.abyss.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3289,7 +3564,8 @@ talk_result_t talk_unique_abyss()
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.journal_updated"));
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.abyss.nonmember.want_to_join", 1);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.abyss.nonmember.want_to_join", 1);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3299,7 +3575,8 @@ talk_result_t talk_unique_abyss()
             if (gdata_left_bill <= 4)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.abyss.nonmember.quota");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.abyss.nonmember.quota");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3307,7 +3584,8 @@ talk_result_t talk_unique_abyss()
                 return talk_result_t::talk_unique;
             }
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.abyss.nonmember.end", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.abyss.nonmember.end", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3332,7 +3610,8 @@ talk_result_t talk_unique_abyss()
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"));
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.abyss.nonmember.end", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.abyss.nonmember.end", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -3349,16 +3628,22 @@ talk_result_t talk_unique_abyss()
     if (gdata_thieves_guild_quota2 == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.lexus.member.choices.new_quota"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.new_quota"));
     }
     else
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.lexus.member.choices.report_quota"));
+            2,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-    buff = i18n::s.get("core.locale.talk.unique.abyss.member.dialog",
-                       ranktitle(8), cdatan(0, 0));
+    buff = i18n::s.get(
+        "core.locale.talk.unique.abyss.member.dialog",
+        ranktitle(8),
+        cdatan(0, 0));
     talk_window_query();
     if (chatval == 1)
     {
@@ -3368,8 +3653,9 @@ talk_result_t talk_unique_abyss()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.abyss.member.new_quota",
-                           gdata_thieves_guild_quota);
+        buff = i18n::s.get(
+            "core.locale.talk.unique.abyss.member.new_quota",
+            gdata_thieves_guild_quota);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -3381,7 +3667,8 @@ talk_result_t talk_unique_abyss()
         if (gdata_thieves_guild_quota > 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.waiting");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3394,28 +3681,28 @@ talk_result_t talk_unique_abyss()
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(
-                -1,
-                54,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                10000 - gdata(128) + 1000);
+            -1,
+            54,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            10000 - gdata(128) + 1000);
         flt();
         itemcreate(
-                -1,
-                55,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                clamp(3 - gdata(128) / 3000, 1, 3));
+            -1,
+            55,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            clamp(3 - gdata(128) / 3000, 1, 3));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         modrank(8, 500, 8);
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.end");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3430,16 +3717,21 @@ talk_result_t talk_unique_doria()
     if (gdata_belongs_to_fighters_guild == 0)
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.doria.nonmember.choices.tell_me_about"));
+            2,
+            i18n::s.get("core.locale.talk.unique.doria.nonmember.choices.tell_"
+                        "me_about"));
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.doria.nonmember.choices.want_to_join"));
+            1,
+            i18n::s.get("core.locale.talk.unique.doria.nonmember.choices.want_"
+                        "to_join"));
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = i18n::s.get("core.locale.talk.unique.doria.nonmember.dialog");
         talk_window_query();
         if (chatval == 2)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.doria.nonmember.tell_me_about");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.doria.nonmember.tell_me_about");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3451,7 +3743,8 @@ talk_result_t talk_unique_doria()
             if (gdata_joining_fighters_guild == 0)
             {
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.doria.nonmember.want_to_join", 0);
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.doria.nonmember.want_to_join", 0);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3482,9 +3775,11 @@ talk_result_t talk_unique_doria()
                 gdata_fighters_guild_target = cdata[56].id;
                 chara_vanquish(56);
                 listmax = 0;
-                buff = i18n::s.get_enum("core.locale.talk.unique.doria.nonmember.want_to_join", 1,
-                                        gdata_fighters_guild_quota,
-                                        chara_refstr(gdata_fighters_guild_target, 2));
+                buff = i18n::s.get_enum(
+                    "core.locale.talk.unique.doria.nonmember.want_to_join",
+                    1,
+                    gdata_fighters_guild_quota,
+                    chara_refstr(gdata_fighters_guild_target, 2));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3494,9 +3789,10 @@ talk_result_t talk_unique_doria()
             if (gdata_fighters_guild_quota > 0)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.doria.nonmember.quota",
-                                   gdata_fighters_guild_quota,
-                                   chara_refstr(gdata_fighters_guild_target, 2));
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.doria.nonmember.quota",
+                    gdata_fighters_guild_quota,
+                    chara_refstr(gdata_fighters_guild_target, 2));
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3504,7 +3800,8 @@ talk_result_t talk_unique_doria()
                 return talk_result_t::talk_unique;
             }
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.lexus.nonmember.end", 0);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.lexus.nonmember.end", 0);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3529,7 +3826,8 @@ talk_result_t talk_unique_doria()
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"));
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.unique.doria.nonmember.end", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.unique.doria.nonmember.end", 1);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -3546,16 +3844,22 @@ talk_result_t talk_unique_doria()
     if (gdata_fighters_guild_quota2 == 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.lexus.member.choices.new_quota"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.new_quota"));
     }
     else
     {
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.lexus.member.choices.report_quota"));
+            2,
+            i18n::s.get(
+                "core.locale.talk.unique.lexus.member.choices.report_quota"));
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
-    buff = i18n::s.get("core.locale.talk.unique.doria.member.dialog",
-                       ranktitle(8), cdatan(0, 0));
+    buff = i18n::s.get(
+        "core.locale.talk.unique.doria.member.dialog",
+        ranktitle(8),
+        cdatan(0, 0));
     talk_window_query();
     if (chatval == 1)
     {
@@ -3585,9 +3889,10 @@ talk_result_t talk_unique_doria()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.doria.member.new_quota",
-                           gdata_fighters_guild_quota,
-                           chara_refstr(gdata_fighters_guild_target, 2));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.doria.member.new_quota",
+            gdata_fighters_guild_quota,
+            chara_refstr(gdata_fighters_guild_target, 2));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3599,7 +3904,8 @@ talk_result_t talk_unique_doria()
         if (gdata_fighters_guild_quota > 0)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.waiting");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.lexus.member.report_quota.waiting");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3612,28 +3918,28 @@ talk_result_t talk_unique_doria()
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
         itemcreate(
-                -1,
-                54,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                10000 - gdata(128) + 1000);
+            -1,
+            54,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            10000 - gdata(128) + 1000);
         flt();
         itemcreate(
-                -1,
-                55,
-                cdata[0].position.x,
-                cdata[0].position.y,
-                clamp(4 - gdata(128) / 2500, 1, 4));
+            -1,
+            55,
+            cdata[0].position.x,
+            cdata[0].position.y,
+            clamp(4 - gdata(128) / 2500, 1, 4));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         modrank(8, 500, 8);
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.lexus.member.report_quota.end");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.lexus.member.report_quota.end");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3657,9 +3963,11 @@ talk_result_t talk_unique_conery()
     }
     if (gdata_minotaur_king == 0)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.conery.quest.choices.do_it"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.conery.quest.choices.bye"));
+            1,
+            i18n::s.get("core.locale.talk.unique.conery.quest.choices.do_it"));
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.unique.conery.quest.choices.bye"));
         buff = i18n::s.get("core.locale.talk.unique.conery.quest.dialog");
         talk_window_query();
         if (chatval != 1)
@@ -3676,7 +3984,8 @@ talk_result_t talk_unique_conery()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.conery.quest.do_it", cdatan(0, 0));
+        buff = i18n::s.get(
+            "core.locale.talk.unique.conery.quest.do_it", cdatan(0, 0));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3713,8 +4022,7 @@ talk_result_t talk_unique_conery()
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3729,17 +4037,27 @@ talk_result_t talk_unique_rogue_boss()
     if (cdata[0].gold <= 10)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.rogue_boss.too_poor", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.unique.rogue_boss.too_poor", cdata[tc]);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         return talk_result_t::talk_end;
     }
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.unique.rogue_boss.ambush.choices.try_me"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.unique.rogue_boss.ambush.choices.surrender"));
-    buff = i18n::s.get("core.locale.talk.unique.rogue_boss.ambush.dialog",
-                       gdatan(1), (cdata[0].gold / 5), cdata[tc]);
+    ELONA_APPEND_RESPONSE(
+        1,
+        i18n::s.get(
+            "core.locale.talk.unique.rogue_boss.ambush.choices.try_me"));
+    ELONA_APPEND_RESPONSE(
+        0,
+        i18n::s.get(
+            "core.locale.talk.unique.rogue_boss.ambush.choices.surrender"));
+    buff = i18n::s.get(
+        "core.locale.talk.unique.rogue_boss.ambush.dialog",
+        gdatan(1),
+        (cdata[0].gold / 5),
+        cdata[tc]);
     chatesc = 0;
     talk_window_query();
     if (chatval == 0)
@@ -3752,14 +4070,16 @@ talk_result_t talk_unique_rogue_boss()
             {
                 if (the_item_db[inv[cnt].id]->is_cargo == 1)
                 {
-                    txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[cnt]));
+                    txt(i18n::s.get(
+                        "core.locale.talk.npc.common.hand_over", inv[cnt]));
                     item_remove(inv[cnt]);
                 }
             }
         }
         refresh_burden_state();
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.rogue_boss.ambush.surrender", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.unique.rogue_boss.ambush.surrender", cdata[tc]);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -3770,7 +4090,8 @@ talk_result_t talk_unique_rogue_boss()
         return talk_result_t::talk_end;
     }
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.unique.rogue_boss.ambush.try_me", cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.unique.rogue_boss.ambush.try_me", cdata[tc]);
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
@@ -3791,8 +4112,7 @@ talk_result_t talk_unique_strange_scientist()
         gdata_little_sister = 0;
         flt();
         itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
-        txt(i18n::s.get(
-                    "core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3802,13 +4122,19 @@ talk_result_t talk_unique_strange_scientist()
     if (gdata_little_sister > 0)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.strange_scientist.choices.reward"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.choices.reward"));
         ELONA_APPEND_RESPONSE(
-                2, i18n::s.get("core.locale.talk.unique.strange_scientist.choices.replenish"));
+            2,
+            i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.choices.replenish"));
         if (chara_find_ally(319) != -1)
         {
             ELONA_APPEND_RESPONSE(
-                3, i18n::s.get("core.locale.talk.unique.strange_scientist.choices.turn_over"));
+                3,
+                i18n::s.get("core.locale.talk.unique.strange_scientist.choices."
+                            "turn_over"));
         }
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         i18n::s.get("core.locale.talk.unique.strange_scientist.dialog");
@@ -3817,17 +4143,17 @@ talk_result_t talk_unique_strange_scientist()
         {
             p = gdata_kill_count_of_little_sister;
             for (int cnt = 1,
-                    cnt_end =
-                    cnt + (gdata_gift_count_of_little_sister + 1);
-                    cnt < cnt_end;
-                    ++cnt)
+                     cnt_end = cnt + (gdata_gift_count_of_little_sister + 1);
+                 cnt < cnt_end;
+                 ++cnt)
             {
                 p += cnt;
             }
             if (gdata_save_count_of_little_sister >= p || 0)
             {
                 listmax = 0;
-                i18n::s.get("core.locale.talk.unique.strange_scientist.reward.dialog");
+                i18n::s.get(
+                    "core.locale.talk.unique.strange_scientist.reward.dialog");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -3885,7 +4211,9 @@ talk_result_t talk_unique_strange_scientist()
                     }
                     randomize();
                 }
-                txt(i18n::s.get("core.locale.talk.unique.strange_scientist.reward.choose_one"));
+                txt(
+                    i18n::s.get("core.locale.talk.unique.strange_scientist."
+                                "reward.choose_one"));
                 invsubroutine = 1;
                 invctrl(0) = 22;
                 invctrl(1) = 4;
@@ -3893,7 +4221,8 @@ talk_result_t talk_unique_strange_scientist()
                 exittempinv();
                 mode = 0;
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.strange_scientist.reward.find");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.strange_scientist.reward.find");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -3902,7 +4231,9 @@ talk_result_t talk_unique_strange_scientist()
             else
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.strange_scientist.reward.not_enough");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.strange_scientist.reward.not_"
+                    "enough");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -3913,30 +4244,33 @@ talk_result_t talk_unique_strange_scientist()
         if (chatval == 2)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.strange_scientist.replenish");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.replenish");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(
-                    -1, 699, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
             txt(i18n::s.get(
-                        "core.locale.common.something_is_put_on_the_ground"));
+                "core.locale.common.something_is_put_on_the_ground"));
             return talk_result_t::talk_end;
         }
         if (chatval == 3)
         {
-            txt(i18n::s.get("core.locale.talk.unique.strange_scientist.turn_over.text"));
+            txt(i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.turn_over.text"));
             ++gdata_save_count_of_little_sister;
             txtef(2);
-            txt(i18n::s.get("core.locale.talk.unique.strange_scientist.saved_count",
-                            gdata_save_count_of_little_sister,
-                            gdata_kill_count_of_little_sister));
+            txt(i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.saved_count",
+                gdata_save_count_of_little_sister,
+                gdata_kill_count_of_little_sister));
             chara_vanquish(chara_find_ally(319));
             snd(51);
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.strange_scientist.turn_over.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.strange_scientist.turn_over.dialog");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -3951,11 +4285,16 @@ talk_result_t talk_unique_kaneda_bike()
 {
     if (gdata_blue_capsule_drug >= 3)
     {
-        buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.dialog");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.kaneda_bike.after_drug.dialog");
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.choices.yes"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.kaneda_bike.after_drug.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.choices.no"));
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.kaneda_bike.after_drug.choices.no"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
@@ -3964,14 +4303,17 @@ talk_result_t talk_unique_kaneda_bike()
             if (f == 0)
             {
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.yes.party_full");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.kaneda_bike.after_drug.yes.party_"
+                    "full");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.yes.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.kaneda_bike.after_drug.yes.dialog");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -3993,21 +4335,30 @@ talk_result_t talk_unique_kaneda_bike()
         int stat = inv_find(771, 0);
         if (stat != -1)
         {
-            buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.dialog");
+            buff = i18n::s.get(
+                "core.locale.talk.unique.kaneda_bike.before_drug.dialog");
             ELONA_APPEND_RESPONSE(
-                    1, i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.choices.yes"));
+                1,
+                i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug."
+                            "choices.yes"));
             ELONA_APPEND_RESPONSE(
-                    0, i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.choices.no"));
+                0,
+                i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug."
+                            "choices.no"));
             chatesc = 1;
             talk_window_query();
             if (chatval == 1)
             {
                 int stat = inv_find(771, 0);
                 --inv[stat].number;
-                txt(i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"));
+                txt(
+                    i18n::s.get("core.locale.talk.unique.kaneda_bike.before_"
+                                "drug.yes.you_hand_him"));
                 snd(13);
                 listmax = 0;
-                buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.yes.dialog");
+                buff = i18n::s.get(
+                    "core.locale.talk.unique.kaneda_bike.before_drug.yes."
+                    "dialog");
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -4018,8 +4369,7 @@ talk_result_t talk_unique_kaneda_bike()
         }
     }
     listmax = 0;
-    buff =
-        i18n::s.get("core.locale.talk.unique.kaneda_bike.do_not_have_drug");
+    buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.do_not_have_drug");
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
@@ -4037,7 +4387,8 @@ talk_result_t talk_unique_part_time_worker()
     if (cdata[0].god_id == core_god::jure)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.unique.part_time_worker.already_believe_in_jure");
+        buff = i18n::s.get(
+            "core.locale.talk.unique.part_time_worker.already_believe_in_jure");
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -4045,34 +4396,39 @@ talk_result_t talk_unique_part_time_worker()
         return talk_result_t::talk_end;
     }
     ELONA_APPEND_RESPONSE(
-            1, i18n::s.get("core.locale.talk.unique.part_time_worker.choices.yes"));
+        1, i18n::s.get("core.locale.talk.unique.part_time_worker.choices.yes"));
     ELONA_APPEND_RESPONSE(
-            0, i18n::s.get("core.locale.talk.unique.part_time_worker.choices.no"));
+        0, i18n::s.get("core.locale.talk.unique.part_time_worker.choices.no"));
     buff = i18n::s.get("core.locale.talk.unique.part_time_worker.dialog");
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
         ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.unique.part_time_worker.yes.choices.yes"));
+            1,
+            i18n::s.get(
+                "core.locale.talk.unique.part_time_worker.yes.choices.yes"));
         ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.unique.part_time_worker.yes.choices.no"));
-        buff = i18n::s.get("core.locale.talk.unique.part_time_worker.yes.dialog");
+            0,
+            i18n::s.get(
+                "core.locale.talk.unique.part_time_worker.yes.choices.no"));
+        buff =
+            i18n::s.get("core.locale.talk.unique.part_time_worker.yes.dialog");
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
-            buff = i18n::s.get("core.locale.talk.unique.part_time_worker.yes.yes");
+            buff =
+                i18n::s.get("core.locale.talk.unique.part_time_worker.yes.yes");
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             txt(i18n::s.get(
-                        "core.locale.common.something_is_put_on_the_ground"));
+                "core.locale.common.something_is_put_on_the_ground"));
             flt();
-            itemcreate(
-                    -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(-1, 767, cdata[0].position.x, cdata[0].position.y, 0);
             cdata[0].god_id = core_god::int2godid(6);
             switch_religion();
             return talk_result_t::talk_end;
@@ -4094,82 +4450,44 @@ talk_result_t talk_unique()
     listmax = 0;
     switch (chatval(1))
     {
-        case 2:
-            return talk_unique_zeome();
-        case 23:
-            return talk_unique_orphe();
-        case 28:
-            return talk_unique_whom_dwell_in_the_vanity();
-        case 29:
-            return talk_unique_loyter();
-        case 30:
-            return talk_unique_miches();
-        case 31:
-            return talk_unique_shena();
-        case 33:
-            return talk_unique_larnneire();
-        case 34:
-            return talk_unique_lomias();
-        case 79:
-            return talk_unique_stersha();
-        case 80:
-            return talk_unique_xabi();
-        case 139:
-            return talk_unique_slan();
-        case 142:
-            return talk_unique_erystia();
-        case 146:
-            return talk_unique_karam();
-        case 208:
-            return talk_unique_garokk();
-        case 209:
-            return talk_unique_miral();
-        case 221:
-            return talk_unique_pael();
-        case 222:
-            return talk_unique_paels_mom();
-        case 223:
-            return talk_unique_raphael();
-        case 224:
-            return talk_unique_ainc();
-        case 225:
-            return talk_unique_poppy();
-        case 226:
-            return talk_unique_rilian();
-        case 227:
-            return talk_unique_tam();
-        case 231:
-            return talk_unique_gilbert();
-        case 243:
-            return talk_unique_arnord();
-        case 247:
-            return talk_unique_mia();
-        case 252:
-            return talk_unique_renton();
-        case 253:
-            return talk_unique_marks();
-        case 259:
-            return talk_unique_noel();
-        case 279:
-            return talk_unique_icolle();
-        case 280:
-            return talk_unique_balzak();
-        case 290:
-            return talk_unique_lexus();
-        case 294:
-            return talk_unique_abyss();
-        case 297:
-            return talk_unique_doria();
-        case 301:
-            return talk_unique_conery();
-        case 302:
-            return talk_unique_rogue_boss();
-        case 322:
-            return talk_unique_strange_scientist();
-        case 345:
-            return talk_unique_kaneda_bike();
-        case 348:
-            return talk_unique_part_time_worker();
+    case 2: return talk_unique_zeome();
+    case 23: return talk_unique_orphe();
+    case 28: return talk_unique_whom_dwell_in_the_vanity();
+    case 29: return talk_unique_loyter();
+    case 30: return talk_unique_miches();
+    case 31: return talk_unique_shena();
+    case 33: return talk_unique_larnneire();
+    case 34: return talk_unique_lomias();
+    case 79: return talk_unique_stersha();
+    case 80: return talk_unique_xabi();
+    case 139: return talk_unique_slan();
+    case 142: return talk_unique_erystia();
+    case 146: return talk_unique_karam();
+    case 208: return talk_unique_garokk();
+    case 209: return talk_unique_miral();
+    case 221: return talk_unique_pael();
+    case 222: return talk_unique_paels_mom();
+    case 223: return talk_unique_raphael();
+    case 224: return talk_unique_ainc();
+    case 225: return talk_unique_poppy();
+    case 226: return talk_unique_rilian();
+    case 227: return talk_unique_tam();
+    case 231: return talk_unique_gilbert();
+    case 243: return talk_unique_arnord();
+    case 247: return talk_unique_mia();
+    case 252: return talk_unique_renton();
+    case 253: return talk_unique_marks();
+    case 259: return talk_unique_noel();
+    case 279: return talk_unique_icolle();
+    case 280: return talk_unique_balzak();
+    case 290: return talk_unique_lexus();
+    case 294: return talk_unique_abyss();
+    case 297: return talk_unique_doria();
+    case 301: return talk_unique_conery();
+    case 302: return talk_unique_rogue_boss();
+    case 322: return talk_unique_strange_scientist();
+    case 345: return talk_unique_kaneda_bike();
+    case 348: return talk_unique_part_time_worker();
     }
     return talk_result_t::talk_ignored;
 }

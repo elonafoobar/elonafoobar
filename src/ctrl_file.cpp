@@ -476,13 +476,15 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
-                    lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
+                    lua::lua->get_handle_manager().remove_chara_handle(
+                        cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
+                    lua::lua->get_handle_manager().create_chara_handle(
+                        cdata[index]);
                 }
             }
         }
@@ -546,13 +548,15 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int index = 0; index < 1320; index++)
                 {
-                    lua::lua->get_handle_manager().remove_item_handle(inv[index]);
+                    lua::lua->get_handle_manager().remove_item_handle(
+                        inv[index]);
                 }
                 load(filepath, inv, 0, 1320);
                 for (int index = 0; index < 1320; index++)
                 {
                     inv[index].index = index;
-                    lua::lua->get_handle_manager().create_item_handle(inv[index]);
+                    lua::lua->get_handle_manager().create_item_handle(
+                        inv[index]);
                 }
             }
         }
@@ -809,13 +813,15 @@ void fmode_14_15(bool read)
             {
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
-                    lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
+                    lua::lua->get_handle_manager().remove_chara_handle(
+                        cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
                 for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
                 {
                     cdata[index].index = index;
-                    lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
+                    lua::lua->get_handle_manager().create_chara_handle(
+                        cdata[index]);
                 }
             }
         }
@@ -882,13 +888,15 @@ void fmode_14_15(bool read)
             {
                 for (int index = 0; index < 1320; index++)
                 {
-                    lua::lua->get_handle_manager().remove_item_handle(inv[index]);
+                    lua::lua->get_handle_manager().remove_item_handle(
+                        inv[index]);
                 }
                 load(filepath, inv, 0, 1320);
                 for (int index = 0; index < 1320; index++)
                 {
                     inv[index].index = index;
-                    lua::lua->get_handle_manager().create_item_handle(inv[index]);
+                    lua::lua->get_handle_manager().create_item_handle(
+                        inv[index]);
                 }
             }
         }
@@ -995,13 +1003,15 @@ void fmode_1_2(bool read)
             DIM3(mapsync, mdata_map_width, mdata_map_height);
             DIM3(mef, 9, MEF_MAX);
             tmpload(u8"map_"s + mid + u8".s2");
-            load_v3(filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+            load_v3(
+                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }
         else
         {
             save_t::instance().add(filepath.filename());
             writeloadedbuff(u8"map_"s + mid + u8".s2");
-            save_v3(filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
+            save_v3(
+                filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10);
         }
     }
 
@@ -1013,7 +1023,8 @@ void fmode_1_2(bool read)
                  index < ELONA_MAX_CHARACTERS;
                  index++)
             {
-                lua::lua->get_handle_manager().remove_chara_handle(cdata[index]);
+                lua::lua->get_handle_manager().remove_chara_handle(
+                    cdata[index]);
             }
             tmpload(u8"cdata_"s + mid + u8".s2");
             load(
@@ -1026,7 +1037,8 @@ void fmode_1_2(bool read)
                  index++)
             {
                 cdata[index].index = index;
-                lua::lua->get_handle_manager().create_chara_handle(cdata[index]);
+                lua::lua->get_handle_manager().create_chara_handle(
+                    cdata[index]);
             }
         }
         else
@@ -1113,7 +1125,16 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    load_v3(fmapfile + u8".map", map, 0, mdata_map_width, 0, mdata_map_height, 0, 3, true);
+    load_v3(
+        fmapfile + u8".map",
+        map,
+        0,
+        mdata_map_width,
+        0,
+        mdata_map_height,
+        0,
+        3,
+        true);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1155,12 +1176,33 @@ void fmode_5_6(bool read)
         if (read)
         {
             DIM4(map, mdata_map_width, mdata_map_height, 10);
-            DIM3(mapsync, mdata_map_width, mdata_map_height); // TODO length_exception
-            load_v3(filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10, true);
+            DIM3(
+                mapsync,
+                mdata_map_width,
+                mdata_map_height); // TODO length_exception
+            load_v3(
+                filepath,
+                map,
+                0,
+                mdata_map_width,
+                0,
+                mdata_map_height,
+                0,
+                10,
+                true);
         }
         else
         {
-            save_v3(filepath, map, 0, mdata_map_width, 0, mdata_map_height, 0, 10, true);
+            save_v3(
+                filepath,
+                map,
+                0,
+                mdata_map_width,
+                0,
+                mdata_map_height,
+                0,
+                10,
+                true);
         }
     }
 

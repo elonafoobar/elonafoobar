@@ -36,17 +36,19 @@ void msg_write(std::string& message)
         auto bytewise_pos = pos.first;
         auto widthwise_pos = pos.second;
 
-        const auto symbol_type =
-            elona::stoi(message.substr(bytewise_pos + std::strlen(musical_note), 1));
+        const auto symbol_type = elona::stoi(
+            message.substr(bytewise_pos + std::strlen(musical_note), 1));
         if (jp && symbol_type == 0)
         {
             break;
         }
         message = message.substr(0, bytewise_pos) + u8"  "
             + message.substr(
-                  bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
+                  bytewise_pos + std::strlen(musical_note)
+                  + (symbol_type != 0));
         elona::pos(
-            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
+                + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
         gmode(2);
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
@@ -109,7 +111,12 @@ void anime_halt()
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         await(config::instance().wait1 / 3);
-        draw("label_more", x_at_txtfunc, y_at_txtfunc + 12 - cnt, 120, cnt * 2 + 1);
+        draw(
+            "label_more",
+            x_at_txtfunc,
+            y_at_txtfunc + 12 - cnt,
+            120,
+            cnt * 2 + 1);
         redraw();
     }
     wait_key_pressed(true);
@@ -121,7 +128,12 @@ void anime_halt()
         gcopy(3, 672, 504, 120, 24);
         if (cnt != 6)
         {
-            draw("label_more", x_at_txtfunc, y_at_txtfunc + cnt * 2, 120, 22 - cnt * 4);
+            draw(
+                "label_more",
+                x_at_txtfunc,
+                y_at_txtfunc + cnt * 2,
+                120,
+                22 - cnt * 4);
         }
         redraw();
     }

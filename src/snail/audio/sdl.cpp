@@ -112,7 +112,8 @@ int DMINIT()
 void DMLOADFNAME(const std::string& filepath, int)
 {
     // TODO: find why MIDI is marked "unsupported"
-    if (application::is_android) {
+    if (application::is_android)
+    {
         return;
     }
     if (played_music)
@@ -126,7 +127,8 @@ void DMLOADFNAME(const std::string& filepath, int)
 void DMPLAY(int loop, int)
 {
     // TODO: find why MIDI is marked "unsupported"
-    if (application::is_android) {
+    if (application::is_android)
+    {
         return;
     }
     detail::enforce_mixer(Mix_PlayMusic(played_music, loop ? -1 : 1));

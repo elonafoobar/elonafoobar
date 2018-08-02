@@ -29,10 +29,14 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
         update_slight();
 
         item.param2 = 1;
-        REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"グロテスクな鳥の卵");
+        REQUIRE(
+            i18n::fmt_hil("${itemname(_1)}", item) == u8"グロテスクな鳥の卵");
         item.param2 = 8;
-        REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"鳥のレアチーズケーキ");
+        REQUIRE(
+            i18n::fmt_hil("${itemname(_1)}", item) == u8"鳥のレアチーズケーキ");
         item.subname = 3;
-        REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"プチのレアチーズケーキ");
+        REQUIRE(
+            i18n::fmt_hil("${itemname(_1)}", item)
+            == u8"プチのレアチーズケーキ");
     }
 }

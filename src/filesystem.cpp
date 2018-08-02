@@ -1,8 +1,8 @@
 #include "filesystem.hpp"
+#include <algorithm>
 #include <boost/locale.hpp>
 #include "defines.hpp"
 #include "util.hpp"
-#include <algorithm>
 
 // For get_executable_path()
 #if defined(ELONA_OS_WINDOWS)
@@ -53,7 +53,7 @@ fs::path get_executable_path()
         std::string external_storage_path(SDL_AndroidGetExternalStoragePath());
         if (external_storage_path.back() != '/')
             external_storage_path += '/';
-        const char *buf = external_storage_path.c_str();
+        const char* buf = external_storage_path.c_str();
 #else
 #error Unsupported OS
 #endif

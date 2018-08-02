@@ -250,7 +250,15 @@ void label_1870()
             {
                 p(1) = 5;
             }
-            grotate(p(1), atxpic(1) % 33 * 32, atxpic(1) / 33 * 32, inf_tiles, inf_tiles, cnt * (atxpic(2) / 10), cnt * (atxpic(3) / 10), p_double);
+            grotate(
+                p(1),
+                atxpic(1) % 33 * 32,
+                atxpic(1) / 33 * 32,
+                inf_tiles,
+                inf_tiles,
+                cnt * (atxpic(2) / 10),
+                cnt * (atxpic(3) / 10),
+                p_double);
         }
         if (mattile != -1)
         {
@@ -633,7 +641,10 @@ label_1876_internal:
                 atxpic(3) = 96;
                 snd(41);
                 mat(p) += 1;
-                noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
+                noteadd(
+                    "@BL"
+                    + i18n::s.get(
+                          "core.locale.casino.you_get", 1, matname(p), mat(p)));
             }
             atxthrough = 1;
             goto label_1875;
@@ -800,7 +811,9 @@ label_1876_internal:
         atxpic(3) = 96;
         snd(41);
         mat(p) += 1;
-        noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
+        noteadd(
+            "@BL"
+            + i18n::s.get("core.locale.casino.you_get", 1, matname(p), mat(p)));
         atxthrough = 1;
         goto label_1875;
     }
@@ -868,7 +881,10 @@ bool casino_start()
         gdata_used_casino_once = 1;
         snd(41);
         mat(1) += 10;
-        noteadd("@BL" + i18n::s.get("core.locale.casino.you_get", 10, matname(1), mat(1)));
+        noteadd(
+            "@BL"
+            + i18n::s.get(
+                  "core.locale.casino.you_get", 10, matname(1), mat(1)));
     }
     atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
     atxinfon(2) = "";
@@ -876,7 +892,8 @@ bool casino_start()
     listn(0, listmax) = i18n::s.get("core.locale.casino.window.choices.leave");
     ++listmax;
     list(0, listmax) = 1;
-    listn(0, listmax) = i18n::s.get("core.locale.casino.window.choices.blackjack");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.casino.window.choices.blackjack");
     ++listmax;
     chatesc = 0;
     txtadvmsgfix = 0;
@@ -917,24 +934,28 @@ bool casino_blackjack()
         noteadd(i18n::s.get("core.locale.casino.blackjack.no_chips"));
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.quit");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.casino.blackjack.choices.quit");
     ++listmax;
     if (mat(1) >= 1)
     {
         list(0, listmax) = 1;
-        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 1);
+        listn(0, listmax) =
+            i18n::s.get("core.locale.casino.blackjack.choices.bet", 1);
         ++listmax;
     }
     if (mat(1) >= 5)
     {
         list(0, listmax) = 5;
-        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 5);
+        listn(0, listmax) =
+            i18n::s.get("core.locale.casino.blackjack.choices.bet", 5);
         ++listmax;
     }
     if (mat(1) >= 20)
     {
         list(0, listmax) = 20;
-        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.choices.bet", 20);
+        listn(0, listmax) =
+            i18n::s.get("core.locale.casino.blackjack.choices.bet", 20);
         ++listmax;
     }
     chatesc = 0;
@@ -957,7 +978,8 @@ bool casino_blackjack()
         if (cnt == 0)
         {
             mat(1) -= stake;
-            noteadd(i18n::s.get("core.locale.casino.you_lose", stake, matname(1), mat(1)));
+            noteadd(i18n::s.get(
+                "core.locale.casino.you_lose", stake, matname(1), mat(1)));
         }
         if (cardround == 0)
         {
@@ -1002,10 +1024,12 @@ bool casino_blackjack()
                 }
             }
         }
-        noteadd(i18n::s.get("core.locale.casino.blackjack.game.your_hand", cpscore(1)));
+        noteadd(i18n::s.get(
+            "core.locale.casino.blackjack.game.your_hand", cpscore(1)));
         if (cardround == -1)
         {
-            noteadd(i18n::s.get("core.locale.casino.blackjack.game.dealers_hand", cpscore(0)));
+            noteadd(i18n::s.get(
+                "core.locale.casino.blackjack.game.dealers_hand", cpscore(0)));
             winner = -1;
             if (cpscore(0) <= 21)
             {
@@ -1023,22 +1047,24 @@ bool casino_blackjack()
             }
             if (winner == -1)
             {
-                noteadd(
-                    i18n::s.get("core.locale.casino.blackjack.game.result.draw"));
+                noteadd(i18n::s.get(
+                    "core.locale.casino.blackjack.game.result.draw"));
             }
             if (winner == 0)
             {
-                noteadd(
-                    i18n::s.get("core.locale.casino.blackjack.game.result.lose"));
+                noteadd(i18n::s.get(
+                    "core.locale.casino.blackjack.game.result.lose"));
             }
             if (winner == 1)
             {
-                noteadd(
-                    i18n::s.get("core.locale.casino.blackjack.game.result.win"));
+                noteadd(i18n::s.get(
+                    "core.locale.casino.blackjack.game.result.win"));
             }
         }
-        atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
-        atxinfon(2) = i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
+        atxinfon(1) =
+            i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+        atxinfon(2) =
+            i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
             + i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
         if (cardround == -1)
         {
@@ -1049,15 +1075,16 @@ bool casino_blackjack()
             if (winner != 0)
             {
                 list(0, listmax) = 0;
-                listn(0, listmax) =
-                    i18n::s.get("core.locale.casino.blackjack.game.result.choices.next_round");
+                listn(0, listmax) = i18n::s.get(
+                    "core.locale.casino.blackjack.game.result.choices.next_"
+                    "round");
                 ++listmax;
             }
             if (winner == 0)
             {
                 list(0, listmax) = 0;
-                listn(0, listmax) =
-                    i18n::s.get("core.locale.casino.blackjack.game.result.choices.leave");
+                listn(0, listmax) = i18n::s.get(
+                    "core.locale.casino.blackjack.game.result.choices.leave");
                 ++listmax;
             }
             chatesc = -1;
@@ -1072,21 +1099,22 @@ bool casino_blackjack()
             continue;
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.choices.stay");
+        listn(0, listmax) =
+            i18n::s.get("core.locale.casino.blackjack.game.choices.stay");
         ++listmax;
         if (pileremain() > 10)
         {
             if (cpcardnum(1) < 5)
             {
                 list(0, listmax) = 1;
-                listn(0, listmax) =
-                    i18n::s.get("core.locale.casino.blackjack.game.choices.hit");
+                listn(0, listmax) = i18n::s.get(
+                    "core.locale.casino.blackjack.game.choices.hit");
                 ++listmax;
             }
             list(0, listmax) = 2;
-            listn(0, listmax) =
-                i18n::s.get("core.locale.casino.blackjack.game.choices.cheat",
-                            sdata(12, 0));
+            listn(0, listmax) = i18n::s.get(
+                "core.locale.casino.blackjack.game.choices.cheat",
+                sdata(12, 0));
             ++listmax;
         }
         chatesc = -1;
@@ -1111,7 +1139,9 @@ bool casino_blackjack()
                     {
                         if (rnd(sdata(19, 0)) > 40)
                         {
-                            txt(i18n::s.get("core.locale.casino.blackjack.game.bad_feeling"));
+                            txt(
+                                i18n::s.get("core.locale.casino.blackjack.game."
+                                            "bad_feeling"));
                             trashcard(p);
                             int stat = servecard(1);
                             p = stat;
@@ -1138,15 +1168,22 @@ bool casino_blackjack()
             if (rnd(sdata(12, 0)) < rnd(p))
             {
                 atxinit();
-                noteadd(i18n::s.get("core.locale.casino.blackjack.game.cheat.dialog"));
-                atxinfon(1) = i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
-                atxinfon(2) = i18n::s.get("core.locale.casino.blackjack.game.bets", stake) + " "
-                    + i18n::s.get("core.locale.casino.blackjack.game.wins", winrow);
+                noteadd(i18n::s.get(
+                    "core.locale.casino.blackjack.game.cheat.dialog"));
+                atxinfon(1) =
+                    i18n::s.get("core.locale.casino.chips_left", mat(1)) + "\n";
+                atxinfon(2) =
+                    i18n::s.get("core.locale.casino.blackjack.game.bets", stake)
+                    + " "
+                    + i18n::s.get(
+                          "core.locale.casino.blackjack.game.wins", winrow);
                 winrow = 0;
-                txt(i18n::s.get("core.locale.casino.blackjack.game.cheat.text"));
+                txt(i18n::s.get(
+                    "core.locale.casino.blackjack.game.cheat.text"));
                 modify_karma(0, -5);
                 list(0, listmax) = 0;
-                listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.cheat.response");
+                listn(0, listmax) = i18n::s.get(
+                    "core.locale.casino.blackjack.game.cheat.response");
                 ++listmax;
                 chatesc = -1;
                 txtadvmsgfix = 0;
@@ -1160,7 +1197,8 @@ bool casino_blackjack()
     if (winrow > 0)
     {
         atxinit();
-        noteadd(i18n::s.get("core.locale.casino.blackjack.game.total_wins", winrow));
+        noteadd(i18n::s.get(
+            "core.locale.casino.blackjack.game.total_wins", winrow));
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             i = 2;
@@ -1193,7 +1231,9 @@ bool casino_blackjack()
             }
         }
         snd(41);
-        noteadd("@GR" + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
+        noteadd(
+            "@GR"
+            + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
         if (winrow > 3)
         {
             // Potion of cure corruption
@@ -1202,11 +1242,15 @@ bool casino_blackjack()
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);
                 snd(41);
-                noteadd("@GR" + i18n::s.get("core.locale.casino.blackjack.game.loot", inv[ci]));
+                noteadd(
+                    "@GR"
+                    + i18n::s.get(
+                          "core.locale.casino.blackjack.game.loot", inv[ci]));
             }
         }
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get("core.locale.casino.blackjack.game.leave");
+        listn(0, listmax) =
+            i18n::s.get("core.locale.casino.blackjack.game.leave");
         ++listmax;
         chatesc = 0;
         txtadvmsgfix = 0;

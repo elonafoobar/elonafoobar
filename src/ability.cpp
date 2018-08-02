@@ -193,15 +193,17 @@ void gain_special_action()
         {
             spact(29) = 1;
             txtef(5);
-            txt(i18n::s.get("core.locale.skill.gained",
-                            i18n::_(u8"ability", std::to_string(629), u8"name")));
+            txt(i18n::s.get(
+                "core.locale.skill.gained",
+                i18n::_(u8"ability", std::to_string(629), u8"name")));
         }
         if (spact(30) == 0)
         {
             spact(30) = 1;
             txtef(5);
-            txt(i18n::s.get("core.locale.skill.gained",
-                            i18n::_(u8"ability", std::to_string(630), u8"name")));
+            txt(i18n::s.get(
+                "core.locale.skill.gained",
+                i18n::_(u8"ability", std::to_string(630), u8"name")));
         }
     }
     if (sdata.get(152, 0).original_level > 15)
@@ -210,8 +212,9 @@ void gain_special_action()
         {
             spact(31) = 1;
             txtef(5);
-            txt(i18n::s.get("core.locale.skill.gained",
-                            i18n::_(u8"ability", std::to_string(631), u8"name")));
+            txt(i18n::s.get(
+                "core.locale.skill.gained",
+                i18n::_(u8"ability", std::to_string(631), u8"name")));
         }
     }
     return;
@@ -250,8 +253,8 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
         {
             if (cdata[cc].growth_buffs[id - 10] > 0)
             {
-                exp_at_m77 = exp_at_m77
-                    * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
+                exp_at_m77 =
+                    exp_at_m77 * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
             }
         }
         if (exp_at_m77 == 0)

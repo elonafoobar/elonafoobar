@@ -1,8 +1,8 @@
 #include "pic_loader.hpp"
-#include "../snail/application.hpp"
-#include "../snail/color.hpp"
 #include "../elona.hpp"
 #include "../hcl.hpp"
+#include "../snail/application.hpp"
+#include "../snail/color.hpp"
 
 namespace elona
 {
@@ -12,17 +12,24 @@ namespace
 
 static void copy_image(snail::basic_image& img, const extent& ext)
 {
-    const auto save = snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    const auto save =
+        snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(
+        snail::blend_mode_t::none);
     snail::application::instance().get_renderer().render_image(
         img, ext.x, ext.y, ext.width, ext.height);
     snail::application::instance().get_renderer().set_blend_mode(save);
 }
 
-static void copy_image_cropped(snail::basic_image& img, const extent& source, const extent& dest)
+static void copy_image_cropped(
+    snail::basic_image& img,
+    const extent& source,
+    const extent& dest)
 {
-    const auto save = snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(snail::blend_mode_t::none);
+    const auto save =
+        snail::application::instance().get_renderer().blend_mode();
+    snail::application::instance().get_renderer().set_blend_mode(
+        snail::blend_mode_t::none);
     snail::application::instance().get_renderer().render_image_crop(
         img, source.x, source.y, source.width, source.height, dest.x, dest.y);
     snail::application::instance().get_renderer().set_blend_mode(save);
@@ -42,15 +49,16 @@ void pic_loader::clear_storage_and_buffers()
     storage.clear();
 }
 
-void pic_loader::load(const fs::path& image_file,
-                      const id_type& id,
-                      page_type type)
+void pic_loader::load(
+    const fs::path& image_file,
+    const id_type& id,
+    page_type type)
 {
     snail::basic_image img{image_file, snail::color{0, 0, 0}};
     extent ext{0, 0, 0, 0};
 
     size_t i = 0;
-    while(true)
+    while (true)
     {
         auto& info = buffers.at(i);
         i += 1;
@@ -90,9 +98,10 @@ void pic_loader::load(const fs::path& image_file,
     storage[id] = ext;
 }
 
-void pic_loader::add_predefined_extents(const fs::path& atlas_file,
-                                        const map_type& extents,
-                                        page_type type)
+void pic_loader::add_predefined_extents(
+    const fs::path& atlas_file,
+    const map_type& extents,
+    page_type type)
 {
     snail::basic_image img{atlas_file, snail::color{0, 0, 0}};
 

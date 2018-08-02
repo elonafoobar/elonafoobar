@@ -1,8 +1,8 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
-#include "../testing.hpp"
 #include "../config_def.hpp"
+#include "../testing.hpp"
+#include "tests.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -104,10 +104,18 @@ config def {
 }
 )");
 
-    REQUIRE(def.get_metadata("core.config.foo").platform == config_def::option_platform::all);
-    REQUIRE(def.get_metadata("core.config.baz").platform == config_def::option_platform::desktop);
-    REQUIRE(def.get_metadata("core.config.hoge").platform == config_def::option_platform::android);
-    REQUIRE(def.get_metadata("core.config.fuga").platform == config_def::option_platform::all);
+    REQUIRE(
+        def.get_metadata("core.config.foo").platform
+        == config_def::option_platform::all);
+    REQUIRE(
+        def.get_metadata("core.config.baz").platform
+        == config_def::option_platform::desktop);
+    REQUIRE(
+        def.get_metadata("core.config.hoge").platform
+        == config_def::option_platform::android);
+    REQUIRE(
+        def.get_metadata("core.config.fuga").platform
+        == config_def::option_platform::all);
 }
 
 TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
@@ -130,9 +138,15 @@ config def {
 }
 )");
 
-    REQUIRE(static_cast<bool>(def.get_metadata("core.config.foo").default_value) == false);
-    REQUIRE(def.get_metadata("core.config.bar").default_value->as<std::string>() == "hoge");
-    REQUIRE(static_cast<bool>(def.get_metadata("core.config.baz").default_value) == false);
+    REQUIRE(
+        static_cast<bool>(def.get_metadata("core.config.foo").default_value)
+        == false);
+    REQUIRE(
+        def.get_metadata("core.config.bar").default_value->as<std::string>()
+        == "hoge");
+    REQUIRE(
+        static_cast<bool>(def.get_metadata("core.config.baz").default_value)
+        == false);
 }
 
 TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")

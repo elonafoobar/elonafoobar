@@ -137,7 +137,8 @@ label_20591:
             }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
-                dialog(i18n::s.get("core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
+                dialog(i18n::s.get(
+                    "core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
                 item_remove(inv[cnt]);
                 inv[cnt].id = 0;
                 continue;
@@ -549,14 +550,16 @@ label_20591:
     {
         if (invctrl == 21)
         {
-            txt(i18n::s.get("core.locale.ui.inv.trade.too_low_value", inv[citrade]));
+            txt(i18n::s.get(
+                "core.locale.ui.inv.trade.too_low_value", inv[citrade]));
             f = 1;
         }
         if (invctrl == 27)
         {
             if (tc != 0)
             {
-                txt(i18n::s.get("core.locale.ui.inv.steal.has_nothing", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.steal.has_nothing", cdata[tc]));
                 f = 1;
             }
             else
@@ -595,7 +598,8 @@ label_20591:
             {
                 if (gdata_mages_guild_quota <= 0)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.put.guild.have_no_quota"));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.guild.have_no_quota"));
                     f = 1;
                 }
             }
@@ -636,7 +640,8 @@ label_20591:
 
         for (int cnt = 0; cnt < 30; cnt++)
         {
-            if (auto text = i18n::s.get_enum_optional("core.locale.ui.inv.title", cnt, valn))
+            if (auto text = i18n::s.get_enum_optional(
+                    "core.locale.ui.inv.title", cnt, valn))
             {
                 s(cnt) = *text;
             }
@@ -673,8 +678,9 @@ label_20591:
             {
                 if (gdata_current_map == mdata_t::map_id_t::lumiest)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.put.guild.remaining",
-                                    gdata_mages_guild_quota));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.guild.remaining",
+                        gdata_mages_guild_quota));
                 }
             }
         }
@@ -814,14 +820,15 @@ label_2060_internal:
             }
         }
         bmes(
-            ""s + key_prev + u8","s + key_next + u8",Tab "s
-            + "[" + i18n::s.get("core.locale.ui.inv.window.change") + "]",
+            ""s + key_prev + u8","s + key_next + u8",Tab "s + "["
+                + i18n::s.get("core.locale.ui.inv.window.change") + "]",
             x + 325,
             y + 32);
     }
 label_2061_internal:
-    s = i18n::s.get("core.locale.ui.inv.window.select_item",
-                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
+    s = i18n::s.get(
+        "core.locale.ui.inv.window.select_item",
+        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
     s(1) = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)
@@ -830,15 +837,15 @@ label_2061_internal:
     }
     if (invctrl == 1)
     {
-        s(1) += ""s + key_mode2 + u8" "s
-            + "[" + i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
+        s(1) += ""s + key_mode2 + u8" "s + "["
+            + i18n::s.get("core.locale.ui.inv.window.tag.no_drop") + "]";
     }
     if (invctrl == 2)
     {
         if (dropcontinue == 0)
         {
-            s(1) += ""s + key_mode2 + u8" "s
-                + "[" + i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
+            s(1) += ""s + key_mode2 + u8" "s + "["
+                + i18n::s.get("core.locale.ui.inv.window.tag.multi_drop") + "]";
         }
     }
     display_window((windoww - 640) / 2 + inf_screenx, winposy(432), 640, 432);
@@ -856,7 +863,8 @@ label_2061_internal:
     {
         s = i18n::s.get("core.locale.ui.inv.trade_medals.window.medal");
     }
-    display_topic(i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
+    display_topic(
+        i18n::s.get("core.locale.ui.inv.window.name"), wx + 28, wy + 30);
     display_topic(s, wx + 526, wy + 30);
     if (showresist)
     {
@@ -875,10 +883,13 @@ label_2061_internal:
     pos(wx - 6, wy - 6);
     gcopy(3, 960, 216, 48, 72);
     s = ""s + listmax + u8" items"s;
-    s += "  ("s + i18n::s.get("core.locale.ui.inv.window.total_weight",
-                     cnvweight(cdata[0].inventory_weight),
-                     cnvweight(cdata[0].max_inventory_weight),
-                     cnvweight(gdata_cargo_weight)) + ")"s;
+    s += "  ("s
+        + i18n::s.get(
+              "core.locale.ui.inv.window.total_weight",
+              cnvweight(cdata[0].inventory_weight),
+              cnvweight(cdata[0].max_inventory_weight),
+              cnvweight(gdata_cargo_weight))
+        + ")"s;
     if (invctrl == 25)
     {
         s = ""s;
@@ -896,8 +907,8 @@ label_2061_internal:
         pos(x + 16, y + 17);
         mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
-        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight") + ":"
-            + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
+        mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip_weight")
+            + ":" + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
             + cnveqweight(tc));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
@@ -966,7 +977,9 @@ label_2061_internal:
         }
         if (invctrl == 28)
         {
-            s(1) = i18n::s.get("core.locale.ui.inv.trade_medals.medal_value", calcmedalvalue(p));
+            s(1) = i18n::s.get(
+                "core.locale.ui.inv.trade_medals.medal_value",
+                calcmedalvalue(p));
         }
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27
             && invctrl != 28)
@@ -974,8 +987,7 @@ label_2061_internal:
             if (p >= 5080)
             {
                 s += i18n::space_if_needed() + "("
-                    + i18n::s.get("core.locale.ui.inv.window.ground")
-                    + ")";
+                    + i18n::s.get("core.locale.ui.inv.window.ground") + ")";
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -987,7 +999,8 @@ label_2061_internal:
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
-        draw_item_with_portrait_scale_height(inv[p], wx + 37, wy + 69 + cnt * 19);
+        draw_item_with_portrait_scale_height(
+            inv[p], wx + 37, wy + 69 + cnt * 19);
 
         if (inv[p].body_part != 0)
         {
@@ -995,8 +1008,7 @@ label_2061_internal:
             if (p == mainweapon)
             {
                 s += i18n::space_if_needed() + "("
-                    + i18n::s.get("core.locale.ui.inv.window.main_hand")
-                    + ")";
+                    + i18n::s.get("core.locale.ui.inv.window.main_hand") + ")";
             }
         }
         if (showresist)
@@ -1079,7 +1091,8 @@ label_2061_internal:
                 {
                     if (the_item_db[inv[ci].id]->category != 60000)
                     {
-                        txt(i18n::s.get("core.locale.ui.inv.drop.cannot_anymore"));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.drop.cannot_anymore"));
                         snd(27);
                         goto label_2060_internal;
                     }
@@ -1087,8 +1100,10 @@ label_2061_internal:
             }
             if (inv[ci].number > 1)
             {
-                txt(i18n::s.get("core.locale.ui.inv.drop.how_many",
-                                inv[ci].number, inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.drop.how_many",
+                    inv[ci].number,
+                    inv[ci]));
                 display_msg(screenmsgy, 1);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
@@ -1128,7 +1143,8 @@ label_2061_internal:
                 if (ibit(13, ci))
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
                 }
             }
@@ -1139,7 +1155,8 @@ label_2061_internal:
                     if (inv_sum(-1) >= invcontainer)
                     {
                         snd(27);
-                        txt(i18n::s.get("core.locale.ui.inv.put.container.full"));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.put.container.full"));
                         goto label_2060_internal;
                     }
                 }
@@ -1148,14 +1165,17 @@ label_2061_internal:
                     if (inv[ci].weight >= efp * 100)
                     {
                         snd(27);
-                        txt(i18n::s.get("core.locale.ui.inv.put.container.too_heavy",
-                                        cnvweight(efp * 100)));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.put.container.too_heavy",
+                            cnvweight(efp * 100)));
                         goto label_2060_internal;
                     }
                     if (inv[ci].weight <= 0)
                     {
                         snd(27);
-                        txt(i18n::s.get("core.locale.ui.inv.put.container.cannot_hold_cargo"));
+                        txt(
+                            i18n::s.get("core.locale.ui.inv.put.container."
+                                        "cannot_hold_cargo"));
                         goto label_2060_internal;
                     }
                 }
@@ -1163,7 +1183,8 @@ label_2061_internal:
                 {
                     if (!actionsp(0, 10))
                     {
-                        txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.too_exhausted"));
                         goto label_2063_internal;
                     }
                 }
@@ -1182,7 +1203,8 @@ label_2061_internal:
                 {
                     if (!actionsp(0, 10))
                     {
-                        txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.too_exhausted"));
                         goto label_2063_internal;
                     }
                 }
@@ -1197,7 +1219,8 @@ label_2061_internal:
                 }
                 if (inv[ci].own_state == 1)
                 {
-                    txt(i18n::s.get_enum("core.locale.action.get.not_owned", rnd(3)));
+                    txt(i18n::s.get_enum(
+                        "core.locale.action.get.not_owned", rnd(3)));
                 }
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1208,13 +1231,17 @@ label_2061_internal:
             {
                 if (invctrl == 11)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.buy.how_many",
-                                    inv[ci].number, inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.buy.how_many",
+                        inv[ci].number,
+                        inv[ci]));
                 }
                 if (invctrl == 12)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.sell.how_many",
-                                    inv[ci].number, inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.sell.how_many",
+                        inv[ci].number,
+                        inv[ci]));
                 }
                 display_msg(screenmsgy, 2);
                 input_number_dialog(
@@ -1241,13 +1268,17 @@ label_2061_internal:
             {
                 if (invctrl == 11)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.buy.prompt",
-                                    itemname(ci, in), (in * calcitemvalue(ci, 0))));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.buy.prompt",
+                        itemname(ci, in),
+                        (in * calcitemvalue(ci, 0))));
                 }
                 if (invctrl == 12)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.sell.prompt",
-                                    itemname(ci, in), (in * calcitemvalue(ci, 1))));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.sell.prompt",
+                        itemname(ci, in),
+                        (in * calcitemvalue(ci, 1))));
                 }
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
@@ -1263,7 +1294,8 @@ label_2061_internal:
                     {
                         screenupdate = -1;
                         update_screen();
-                        txt(i18n::s.get_enum("core.locale.ui.inv.buy.not_enough_money", rnd(2)));
+                        txt(i18n::s.get_enum(
+                            "core.locale.ui.inv.buy.not_enough_money", rnd(2)));
                         msgkeep = 1;
                         goto label_20591;
                     }
@@ -1276,8 +1308,9 @@ label_2061_internal:
                         {
                             screenupdate = -1;
                             update_screen();
-                            txt(i18n::s.get("core.locale.ui.inv.sell.not_enough_money",
-                                            cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.ui.inv.sell.not_enough_money",
+                                cdata[tc]));
                             msgkeep = 1;
                             goto label_20591;
                         }
@@ -1301,8 +1334,9 @@ label_2061_internal:
                     --gdata_rights_to_succeed_to;
                     if (invctrl(1) == 1)
                     {
-                        txt(i18n::s.get("core.locale.ui.inv.take.can_claim_more",
-                                        gdata_rights_to_succeed_to));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.take.can_claim_more",
+                            gdata_rights_to_succeed_to));
                     }
                 }
                 if (invctrl(1) == 4)
@@ -1330,7 +1364,8 @@ label_2061_internal:
             savecycle();
             if (cdata[0].nutrition > 10000)
             {
-                txt(i18n::s.get_enum("core.locale.ui.inv.eat.too_bloated", rnd(3)));
+                txt(i18n::s.get_enum(
+                    "core.locale.ui.inv.eat.too_bloated", rnd(3)));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -1415,23 +1450,29 @@ label_2061_internal:
             ti = inv_getfreeid(tc);
             if (cdata[tc].sleep)
             {
-                txt(i18n::s.get("core.locale.ui.inv.give.is_sleeping", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.is_sleeping", cdata[tc]));
                 snd(27);
                 goto label_2060_internal;
             }
             if (ti == -1)
             {
-                txt(i18n::s.get("core.locale.ui.inv.give.inventory_is_full", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.inventory_is_full", cdata[tc]));
                 snd(27);
                 goto label_2060_internal;
             }
             reftype = the_item_db[inv[ci].id]->category;
             if (inv[ci].id == 729)
             {
-                txt(i18n::s.get("core.locale.ui.inv.give.present.text", cdata[tc], inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.present.text",
+                    cdata[tc],
+                    inv[ci]));
                 --inv[ci].number;
                 refresh_burden_state();
-                txt(i18n::s.get("core.locale.ui.inv.give.present.dialog", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
@@ -1469,7 +1510,8 @@ label_2061_internal:
                 s(0) = "";
                 for (int cnt = 0; cnt < 4; cnt++)
                 {
-                    s(cnt + 1) = i18n::s.get_enum("core.locale.ui.inv.give.refuse_dialog", cnt);
+                    s(cnt + 1) = i18n::s.get_enum(
+                        "core.locale.ui.inv.give.refuse_dialog", cnt);
                 }
                 snd(27);
                 txt(lang(name(tc) + s(f), s(f)));
@@ -1486,13 +1528,15 @@ label_2061_internal:
                     <= identification_state_t::partly_identified)
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.give.too_creepy", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.give.too_creepy", cdata[tc]));
                     goto label_2060_internal;
                 }
                 if (is_cursed(inv[ci].curse_state))
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.give.cursed", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.give.cursed", cdata[tc]));
                     goto label_2060_internal;
                 }
                 if (reftype == 53000)
@@ -1527,7 +1571,9 @@ label_2061_internal:
                         if (cdata[tc].drunk)
                         {
                             snd(27);
-                            txt(i18n::s.get("core.locale.ui.inv.give.no_more_drink", cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.ui.inv.give.no_more_drink",
+                                cdata[tc]));
                             goto label_2060_internal;
                         }
                     }
@@ -1547,7 +1593,8 @@ label_2061_internal:
                             || inv[ci].id == 392)
                         {
                             f = 1;
-                            txt(i18n::s.get("core.locale.ui.inv.give.abortion"));
+                            txt(i18n::s.get(
+                                "core.locale.ui.inv.give.abortion"));
                         }
                     }
                 }
@@ -1555,23 +1602,29 @@ label_2061_internal:
             if (f)
             {
                 snd(13);
-                txt(i18n::s.get("core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.you_hand", inv[ci], cdata[tc]));
                 if (inv[ci].id == 477 || inv[ci].id == 473)
                 {
                     txtef(2);
-                    txt(i18n::s.get("core.locale.ui.inv.give.engagement", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.give.engagement", cdata[tc]));
                     chara_mod_impression(tc, 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
                 {
                     txtef(8);
-                    txt(i18n::s.get("core.locale.ui.inv.give.love_potion.text",
-                                    cdata[tc], inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.give.love_potion.text",
+                        cdata[tc],
+                        inv[ci]));
                     snd(47);
                     txtef(9);
-                    txt(i18n::s.get_enum("core.locale.ui.inv.give.love_potion.dialog", rnd(3),
-                                    cdata[tc]));
+                    txt(i18n::s.get_enum(
+                        "core.locale.ui.inv.give.love_potion.dialog",
+                        rnd(3),
+                        cdata[tc]));
                     chara_mod_impression(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
@@ -1601,7 +1654,8 @@ label_2061_internal:
                 return result;
             }
             snd(27);
-            txt(i18n::s.get("core.locale.ui.inv.give.refuses", cdata[tc], inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.ui.inv.give.refuses", cdata[tc], inv[ci]));
             goto label_2060_internal;
         }
         if (invctrl == 13)
@@ -1617,7 +1671,8 @@ label_2061_internal:
                 identify_result
                 != identification_state_t::completely_identified)
             {
-                txt(i18n::s.get("core.locale.ui.inv.identify.partially", inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.identify.partially", inv[ci]));
             }
             else
             {
@@ -1704,7 +1759,8 @@ label_2061_internal:
             }
             snd(13);
             ibitmod(12, citrade, 0);
-            txt(i18n::s.get("core.locale.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
+            txt(i18n::s.get(
+                "core.locale.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
             if (inv[citrade].body_part != 0)
             {
                 p = inv[citrade].body_part;
@@ -1739,7 +1795,8 @@ label_2061_internal:
                 if (ibit(13, ci))
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.common.set_as_no_drop"));
                     goto label_2060_internal;
                 }
             }
@@ -1762,14 +1819,16 @@ label_2061_internal:
                         gdata_mages_guild_quota = 0;
                     }
                     txtef(2);
-                    txt(i18n::s.get("core.locale.ui.inv.put.guild.you_deliver", inv[ci])
+                    txt(i18n::s.get(
+                            "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
                         + u8"("s + (inv[ci].param1 + 1) * inv[ci].number
                         + u8" Guild Point)"s);
                     if (gdata_mages_guild_quota == 0)
                     {
                         snd(51);
                         txtef(2);
-                        txt(i18n::s.get("core.locale.ui.inv.put.guild.you_fulfill"));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.put.guild.you_fulfill"));
                     }
                 }
                 else
@@ -1777,11 +1836,12 @@ label_2061_internal:
                     qdata(13, gdata_executing_immediate_quest) +=
                         inv[ci].weight * inv[ci].number;
                     txtef(2);
-                    txt(i18n::s.get("core.locale.ui.inv.put.harvest",
-                                    inv[ci],
-                                    cnvweight(inv[ci].weight * inv[ci].number),
-                                    cnvweight(qdata(13, gdata_executing_immediate_quest)),
-                                    cnvweight(qdata(12, gdata_executing_immediate_quest))));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.harvest",
+                        inv[ci],
+                        cnvweight(inv[ci].weight * inv[ci].number),
+                        cnvweight(qdata(13, gdata_executing_immediate_quest)),
+                        cnvweight(qdata(12, gdata_executing_immediate_quest))));
                 }
                 item_remove(inv[ci]);
                 refresh_burden_state();
@@ -1792,13 +1852,15 @@ label_2061_internal:
                 if (cdata[0].gold < inv[ci].subname)
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.put.tax.not_enough_money"));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.tax.not_enough_money"));
                     goto label_2060_internal;
                 }
                 if (gdata_left_bill <= 0)
                 {
                     snd(27);
-                    txt(i18n::s.get("core.locale.ui.inv.put.tax.do_not_have_to"));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.tax.do_not_have_to"));
                     goto label_20591;
                 }
                 cdata[0].gold -= inv[ci].subname;
@@ -1842,7 +1904,8 @@ label_2061_internal:
                 s(0) = "";
                 for (int cnt = 0; cnt < 4; cnt++)
                 {
-                    s(cnt + 1) = i18n::s.get_enum("core.locale.ui.inv.take_ally.refuse_dialog", cnt);
+                    s(cnt + 1) = i18n::s.get_enum(
+                        "core.locale.ui.inv.take_ally.refuse_dialog", cnt);
                 }
                 snd(27);
                 txtef(4);
@@ -1853,7 +1916,8 @@ label_2061_internal:
             {
                 if (is_cursed(inv[ci].curse_state))
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.take_ally.cursed", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.take_ally.cursed", inv[ci]));
                     goto label_20591;
                 }
                 p = inv[ci].body_part;
@@ -1863,7 +1927,10 @@ label_2061_internal:
             if (inv[ci].id == 477 || inv[ci].id == 473)
             {
                 txtef(8);
-                txt(i18n::s.get("core.locale.ui.inv.take_ally.swallows_ring", cdata[tc], inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.take_ally.swallows_ring",
+                    cdata[tc],
+                    inv[ci]));
                 snd(65);
                 chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
@@ -1880,7 +1947,8 @@ label_2061_internal:
             {
                 in = 1;
             }
-            txt(i18n::s.get("core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
+            txt(i18n::s.get(
+                "core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
                 earn_gold(cdata[0], in);
@@ -1920,7 +1988,8 @@ label_2061_internal:
             }
             if (chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
-                txt(i18n::s.get("core.locale.ui.inv.throw.location_is_blocked"));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.throw.location_is_blocked"));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -1941,7 +2010,8 @@ label_2061_internal:
             ti = inv_getfreeid(0);
             if (ti == -1)
             {
-                txt(i18n::s.get("core.locale.ui.inv.trade_medals.inventory_full"));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.trade_medals.inventory_full"));
                 snd(27);
                 goto label_20591;
             }
@@ -1957,14 +2027,16 @@ label_2061_internal:
             }
             if (p < calcmedalvalue(ci))
             {
-                txt(i18n::s.get("core.locale.ui.inv.trade_medals.not_enough_medals"));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.trade_medals.not_enough_medals"));
                 snd(27);
                 goto label_20591;
             }
             inv[i].number -= calcmedalvalue(ci);
             snd(12);
             item_copy(ci, ti);
-            txt(i18n::s.get("core.locale.ui.inv.trade_medals.you_receive", inv[ti]));
+            txt(i18n::s.get(
+                "core.locale.ui.inv.trade_medals.you_receive", inv[ti]));
             item_stack(0, ti, 1);
             convertartifact(ti, 1);
             goto label_20591;
@@ -2067,12 +2139,14 @@ label_2061_internal:
             if (ibit(13, ci) == 0)
             {
                 ibitmod(13, ci, 1);
-                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.set", inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.examine.no_drop.set", inv[ci]));
             }
             else
             {
                 ibitmod(13, ci, 0);
-                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.unset", inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.examine.no_drop.unset", inv[ci]));
             }
         }
         if (invctrl == 2)

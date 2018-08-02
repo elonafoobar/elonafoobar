@@ -30,8 +30,10 @@ void initialize_craft_material_data()
 
     for (int cnt = 0; cnt < 55; cnt++)
     {
-        matname(cnt) = i18n::s.get_enum_property("core.locale.material", "name", cnt);
-        matdesc(cnt) = i18n::s.get_enum_property("core.locale.material", "desc", cnt);
+        matname(cnt) =
+            i18n::s.get_enum_property("core.locale.material", "name", cnt);
+        matdesc(cnt) =
+            i18n::s.get_enum_property("core.locale.material", "desc", cnt);
     }
 
     matref(0, 0) = 0;
@@ -1003,10 +1005,16 @@ label_1857_internal:
     s(0) = i18n::s.get("core.locale.crafting.menu.title");
     s(1) = strhint2 + strhint3b;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
-    display_topic(i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
-    display_topic(i18n::s.get("core.locale.crafting.menu.detail"), wx + 296, wy + 36);
-    display_topic(i18n::s.get("core.locale.crafting.menu.requirement"), wx + 28, wy + 258);
-    display_topic(i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
+    display_topic(
+        i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.crafting.menu.detail"), wx + 296, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.crafting.menu.requirement"),
+        wx + 28,
+        wy + 258);
+    display_topic(
+        i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -1041,8 +1049,10 @@ label_1857_internal:
             {
                 get_required_craft_materials();
                 font(13 - en * 2);
-                s = i18n::s.get("core.locale.crafting.menu.skill_needed") + u8": "s;
-                if (auto text = i18n::s.get_enum_optional("core.locale.crafting.menu.skills", matval))
+                s = i18n::s.get("core.locale.crafting.menu.skill_needed")
+                    + u8": "s;
+                if (auto text = i18n::s.get_enum_optional(
+                        "core.locale.crafting.menu.skills", matval))
                 {
                     s += *text;
                 }
@@ -1067,9 +1077,9 @@ label_1857_internal:
                 {
                     break;
                 }
-                s = matname(j0)
-                    + " " + i18n::s.get("core.locale.crafting.menu.x") + " "
-                    + j1 + u8"("s + mat(j0) + u8")"s;
+                s = matname(j0) + " "
+                    + i18n::s.get("core.locale.crafting.menu.x") + " " + j1
+                    + u8"("s + mat(j0) + u8")"s;
                 if (mat(j0) >= j1)
                 {
                     color(30, 30, 200);
@@ -1121,7 +1131,8 @@ label_1857_internal:
         if (prodcheck() == -1)
         {
             snd(27);
-            txt(i18n::s.get("core.locale.crafting.you_do_not_meet_requirements"));
+            txt(i18n::s.get(
+                "core.locale.crafting.you_do_not_meet_requirements"));
             goto label_1857_internal;
         }
         if (!inv_getspace(0))

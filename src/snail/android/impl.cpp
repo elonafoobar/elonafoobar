@@ -1,5 +1,5 @@
-#include "../android.hpp"
 #include <jni.h>
+#include "../android.hpp"
 #include "SDL_system.h"
 
 namespace elona
@@ -18,7 +18,7 @@ namespace android
     env->DeleteLocalRef(activity); \
     env->DeleteLocalRef(clazz)
 
-#define JNI_METHOD_ARGLESS(name, signature)        \
+#define JNI_METHOD_ARGLESS(name, signature) \
     JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv(); \
     jobject activity = (jobject)SDL_AndroidGetActivity(); \
     jclass clazz(env->GetObjectClass(activity)); \
@@ -34,15 +34,18 @@ void toast(std::string message, toast_length length)
     jobject activity = (jobject)SDL_AndroidGetActivity();
     jclass clazz(env->GetObjectClass(activity));
     jstring toast_message = env->NewStringUTF(message.c_str());
-    jmethodID method_id = env->GetMethodID(clazz, "toast", "(Ljava/lang/String;I)V");
-    env->CallVoidMethod(activity, method_id, toast_message, static_cast<int>(length));
+    jmethodID method_id =
+        env->GetMethodID(clazz, "toast", "(Ljava/lang/String;I)V");
+    env->CallVoidMethod(
+        activity, method_id, toast_message, static_cast<int>(length));
     env->DeleteLocalRef(activity);
     env->DeleteLocalRef(clazz);
 }
 
 void set_requested_orientation(orientation orientation)
 {
-    JNI_METHOD("setRequestedOrientation", "(I)V", static_cast<int>(orientation));
+    JNI_METHOD(
+        "setRequestedOrientation", "(I)V", static_cast<int>(orientation));
 }
 
 void set_navigation_bar_visibility(bool enable)

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ability.hpp"
 #include "audio.hpp"
 #include "building.hpp"
@@ -21,7 +22,6 @@
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include <iostream>
 
 
 namespace elona
@@ -72,7 +72,8 @@ label_17401:
                 if (cdata[cnt].state == 9)
                 {
                     cdata[cnt].state = 1;
-                    lua::lua->get_handle_manager().create_chara_handle(cdata[cnt]);
+                    lua::lua->get_handle_manager().create_chara_handle(
+                        cdata[cnt]);
                 }
             }
         }
@@ -91,9 +92,8 @@ label_17401:
         tmpload(filesystem::u8path(u8"mdata_"s + mid + u8".s2"));
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
-            int stat = dialog(
-                i18n::s.get("core.locale.map.prompt_initialize"),
-                3);
+            int stat =
+                dialog(i18n::s.get("core.locale.map.prompt_initialize"), 3);
             if (stat == 6)
             {
                 ctrl_file(file_operation_t::_11);
@@ -110,8 +110,8 @@ label_17401:
             goto label_1741_internal;
         }
         if (mdata_map_regenerate_count != gdata(184)
-            || (gdata(79) == 1 &&
-                mdata_map_type == mdata_t::map_type_t::world_map))
+            || (gdata(79) == 1
+                && mdata_map_type == mdata_t::map_type_t::world_map))
         {
             if (mdata_map_type == mdata_t::map_type_t::town
                 || mdata_map_type == mdata_t::map_type_t::guild
@@ -197,9 +197,12 @@ label_1741_internal:
     if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         if (mdatan(0) == ""s
-            || mdatan(0) == i18n::s.get_enum_property("core.locale.map.unique", "name", 4))
+            || mdatan(0)
+                == i18n::s.get_enum_property(
+                       "core.locale.map.unique", "name", 4))
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "name", 7);
+            mdatan(0) =
+                i18n::s.get_enum_property("core.locale.map.unique", "name", 7);
         }
     }
     else
@@ -342,7 +345,9 @@ label_1741_internal:
         mdata_map_max_crowd_density = 7;
         mdata_map_bgm = 79;
         map_placeplayer();
-        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2);
+             cnt < cnt_end;
+             ++cnt)
         {
             chara_set_generation_filter();
             chara_create(-1, 0, -3, 0);
@@ -392,7 +397,9 @@ label_1741_internal:
         inv[ci].own_state = 1;
         mdata_map_bgm = 79;
         map_placeplayer();
-        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2);
+             cnt < cnt_end;
+             ++cnt)
         {
             chara_set_generation_filter();
             chara_create(-1, 0, -3, 0);
@@ -492,7 +499,8 @@ label_1741_internal:
         map_placeplayer();
         event_add(30);
     }
-    if (gdata_current_map == mdata_t::map_id_t::north_tyris_south_border || gdata_current_map == mdata_t::map_id_t::south_tyris_north_border)
+    if (gdata_current_map == mdata_t::map_id_t::north_tyris_south_border
+        || gdata_current_map == mdata_t::map_id_t::south_tyris_north_border)
     {
         map_initcustom(u8"station-nt1"s);
         mdata_map_max_crowd_density = 0;
@@ -692,7 +700,9 @@ label_1741_internal:
             chara_create(-1, 172, -3, 0);
             cdata[rc].character_role = 4;
         }
-        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2);
+             cnt < cnt_end;
+             ++cnt)
         {
             chara_set_generation_filter();
             chara_create(-1, 0, -3, 0);
@@ -711,12 +721,14 @@ label_1741_internal:
         chara_create(-1, 1, 9, 44);
         cdata[rc].character_role = 1017;
         cdata[rc].shop_rank = 5;
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.dye_vendor", cdatan(0, rc));
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.job.dye_vendor", cdatan(0, rc));
         flt();
         chara_create(-1, 1, 13, 37);
         cdata[rc].character_role = 1018;
         cdata[rc].shop_rank = 30;
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
         flt();
         chara_create(-1, 70, 24, 48);
         cdata[rc].character_role = 9;
@@ -748,7 +760,9 @@ label_1741_internal:
             flt();
             chara_create(-1, 239, -3, 0);
         }
-        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density / 2);
+             cnt < cnt_end;
+             ++cnt)
         {
             chara_set_generation_filter();
             chara_create(-1, 0, -3, 0);
@@ -1076,7 +1090,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 9, 18);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_derphy", cdatan(0, rc));
+            cdatan(0, rc) =
+                i18n::s.get("core.locale.chara.job.of_derphy", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 13, 18);
             cdata[rc].character_role = 7;
@@ -1113,7 +1128,8 @@ label_1741_internal:
             mdata_map_max_crowd_density = 25;
             mdata_map_bgm = 79;
             mdata_map_should_regenerate = 0;
-            mdatan(0) = i18n::s.get("core.locale.map.unique.thieves_guild.name");
+            mdatan(0) =
+                i18n::s.get("core.locale.map.unique.thieves_guild.name");
             map_placeplayer();
             flt();
             chara_create(-1, 292, 21, 9);
@@ -1139,7 +1155,8 @@ label_1741_internal:
             chara_create(-1, 1, 21, 19);
             cdata[rc].character_role = 1021;
             cdata[rc].shop_rank = 10;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.fence", cdatan(0, rc));
+            cdatan(0, rc) =
+                i18n::s.get("core.locale.chara.job.fence", cdatan(0, rc));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
@@ -1233,7 +1250,8 @@ label_1741_internal:
         flt();
         chara_create(-1, 38, 49, 11);
         cdata[rc].character_role = 6;
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_palmia", cdatan(0, rc));
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.job.of_palmia", cdatan(0, rc));
         flt();
         chara_create(-1, 40, 30, 27);
         cdata[rc].character_role = 7;
@@ -1387,7 +1405,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 3, 38);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_lumiest", cdatan(0, rc));
+            cdatan(0, rc) =
+                i18n::s.get("core.locale.chara.job.of_lumiest", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 21, 28);
             cdata[rc].character_role = 7;
@@ -1438,7 +1457,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 41, 27, 8);
             cdata[rc].character_role = 1020;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.spell_writer", cdatan(0, rc));
+            cdatan(0, rc) = i18n::s.get(
+                "core.locale.chara.job.spell_writer", cdatan(0, rc));
             flt();
             chara_create(-1, 41, 22, 8);
             cdata[rc].character_role = 1004;
@@ -1519,7 +1539,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 1, 35, 18);
             cdata[rc].character_role = 22;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.horse_master", cdatan(0, rc));
+            cdatan(0, rc) = i18n::s.get(
+                "core.locale.chara.job.horse_master", cdatan(0, rc));
             flt();
             chara_create(-1, 267, 33, 16);
             cdata[rc].character_role = 3;
@@ -1535,7 +1556,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 3, 4);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_yowyn", cdatan(0, rc));
+            cdatan(0, rc) =
+                i18n::s.get("core.locale.chara.job.of_yowyn", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 20, 14);
             cdata[rc].character_role = 7;
@@ -1705,7 +1727,8 @@ label_1741_internal:
         flt();
         chara_create(-1, 38, 5, 18);
         cdata[rc].character_role = 6;
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_noyel", cdatan(0, rc));
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.job.of_noyel", cdatan(0, rc));
         flt();
         chara_create(-1, 40, 18, 20);
         cdata[rc].character_role = 7;
@@ -1829,7 +1852,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 8, 12);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_port_kapul", cdatan(0, rc));
+            cdatan(0, rc) = i18n::s.get(
+                "core.locale.chara.job.of_port_kapul", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 16, 4);
             cdata[rc].character_role = 7;
@@ -1883,7 +1907,8 @@ label_1741_internal:
             mdata_map_max_crowd_density = 25;
             mdata_map_bgm = 79;
             mdata_map_should_regenerate = 0;
-            mdatan(0) = i18n::s.get("core.locale.map.unique.fighters_guild.name");
+            mdatan(0) =
+                i18n::s.get("core.locale.map.unique.fighters_guild.name");
             map_placeplayer();
             flt();
             chara_create(-1, 291, 27, 4);
@@ -2019,7 +2044,8 @@ label_1741_internal:
             flt();
             chara_create(-1, 38, 10, 7);
             cdata[rc].character_role = 6;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.of_vernis", cdatan(0, rc));
+            cdatan(0, rc) =
+                i18n::s.get("core.locale.chara.job.of_vernis", cdatan(0, rc));
             flt();
             chara_create(-1, 40, 27, 16);
             cdata[rc].character_role = 7;
@@ -2072,7 +2098,8 @@ label_1741_internal:
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
-            mdatan(0) = i18n::s.get("core.locale.map.unique.robbers_hideout.name");
+            mdatan(0) =
+                i18n::s.get("core.locale.map.unique.robbers_hideout.name");
             quest_place_target();
             map_placeplayer();
         }
@@ -2116,7 +2143,8 @@ label_1741_internal:
         mdatan(0) = "";
         if (4 <= gdata(62) && gdata(62) < 9)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "forest", 2);
+            mdatan(0) = i18n::s.get_enum_property(
+                "core.locale.map.unique", "forest", 2);
             map_randomtile(8, 25);
             map_randomtile(0, 10);
             map_randomtile(1, 4);
@@ -2132,11 +2160,13 @@ label_1741_internal:
         }
         if (264 <= gdata(62) && gdata(62) < 363)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "sea", 2);
+            mdatan(0) =
+                i18n::s.get_enum_property("core.locale.map.unique", "sea", 2);
         }
         if (9 <= gdata(62) && gdata(62) < 13)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "grassland", 2);
+            mdatan(0) = i18n::s.get_enum_property(
+                "core.locale.map.unique", "grassland", 2);
             map_randomtile(9, 10);
             map_randomtile(10, 10);
             map_randomtile(0, 30);
@@ -2155,7 +2185,8 @@ label_1741_internal:
         }
         if (13 <= gdata(62) && gdata(62) < 17)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "desert", 2);
+            mdatan(0) = i18n::s.get_enum_property(
+                "core.locale.map.unique", "desert", 2);
             map_randomtile(18, 25);
             map_randomtile(17, 10);
             map_randomtile(19, 2);
@@ -2170,7 +2201,8 @@ label_1741_internal:
         }
         if (chipm(0, gdata(62)) == 4)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "snow_field", 2);
+            mdatan(0) = i18n::s.get_enum_property(
+                "core.locale.map.unique", "snow_field", 2);
             map_randomtile(57, 4);
             map_randomtile(56, 4);
             map_randomtile(49, 2);
@@ -2189,7 +2221,8 @@ label_1741_internal:
         }
         if (mdatan(0) == ""s)
         {
-            mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "plain_field", 2);
+            mdatan(0) = i18n::s.get_enum_property(
+                "core.locale.map.unique", "plain_field", 2);
             map_randomtile(1, 10);
             map_randomtile(2, 2);
             map_randomtile(3, 2);
@@ -2216,7 +2249,9 @@ label_1741_internal:
         }
         if (encounter == 0)
         {
-            for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density + 1); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density + 1);
+                 cnt < cnt_end;
+                 ++cnt)
             {
                 chara_set_generation_filter();
                 flt();
@@ -2268,7 +2303,8 @@ label_1741_internal:
             chara_create(-1, 1, 10, 11);
             cdata[rc].character_role = 1010;
             cdata[rc].shop_rank = encounterlv;
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.wandering_vendor", cdatan(0, rc));
+            cdatan(0, rc) = i18n::s.get(
+                "core.locale.chara.job.wandering_vendor", cdatan(0, rc));
             generatemoney(rc);
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
@@ -2344,7 +2380,8 @@ label_1741_internal:
                 mdata_map_max_crowd_density = 0;
                 mdata_map_refresh_type = 0;
                 mdata_map_bgm = 66;
-                mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "the_depth", 3);
+                mdatan(0) = i18n::s.get_enum_property(
+                    "core.locale.map.unique", "the_depth", 3);
                 if (gdata_main_quest_flag < 170)
                 {
                     event_add(3);
@@ -2502,7 +2539,9 @@ label_1741_internal:
             mdata_map_max_crowd_density = 40;
             mdata_map_bgm = 61;
             map_placeplayer();
-            for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density + 1); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_max_crowd_density + 1);
+                 cnt < cnt_end;
+                 ++cnt)
             {
                 chara_set_generation_filter();
                 chara_create(-1, 0, -3, 0);
@@ -2522,8 +2561,7 @@ label_1741_internal:
     }
     map_setfog();
     if (gdata_current_map == mdata_t::map_id_t::pet_arena
-        || gdata_current_map == mdata_t::map_id_t::arena
-        || dbg_revealmap
+        || gdata_current_map == mdata_t::map_id_t::arena || dbg_revealmap
         || mdata_map_type == mdata_t::map_type_t::town
         || mdata_map_type == mdata_t::map_type_t::world_map
         || mdata_map_type == mdata_t::map_type_t::player_owned
@@ -2571,8 +2609,10 @@ label_1741_internal:
                         {
                             for (int cnt = 0;; ++cnt)
                             {
-                                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
-                                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
+                                dx = clamp(
+                                    rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
+                                dy = clamp(
+                                    rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
                                 x = adata(1, p) + rnd(dx) - rnd(dx);
                                 y = adata(2, p) + rnd(dy) - rnd(dy);
                                 if (x < 0 || y < 0 || x >= mdata_map_width
@@ -2594,7 +2634,8 @@ label_1741_internal:
                                      ++cnt)
                                 {
                                     if (adata(1, cnt) == 0 || adata(2, cnt) == 0
-                                        || adata(16, cnt) == mdata_t::map_id_t::none)
+                                        || adata(16, cnt)
+                                            == mdata_t::map_id_t::none)
                                     {
                                         continue;
                                     }
@@ -2611,10 +2652,13 @@ label_1741_internal:
                                 {
                                     continue;
                                 }
-                                dialog(i18n::s.get("core.locale.map.location_changed",
-                                                   mapname(p),
-                                                   adata(1, p), adata(2, p),
-                                                   x(0), y(0)));
+                                dialog(i18n::s.get(
+                                    "core.locale.map.location_changed",
+                                    mapname(p),
+                                    adata(1, p),
+                                    adata(2, p),
+                                    x(0),
+                                    y(0)));
                                 adata(1, p) = x;
                                 adata(2, p) = y;
                                 ++f;
@@ -2671,7 +2715,8 @@ label_1742_internal:
             gdata(35) = 1;
             gdata(60) = -1;
             msg_newline();
-            msgtemp = "  " + i18n::s.get("core.locale.scenario.three_years_later");
+            msgtemp =
+                "  " + i18n::s.get("core.locale.scenario.three_years_later");
         }
     }
     for (int cnt = 16; cnt < 55; ++cnt)
@@ -2861,7 +2906,8 @@ label_1742_internal:
                         }
                     }
                 }
-                if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
+                if (mdata_map_type == mdata_t::map_type_t::town
+                    || mdata_map_type == mdata_t::map_type_t::guild)
                 {
                     cdata[rc].sleep = 0;
                     if (gdata_hour >= 22 || gdata_hour < 7)
@@ -3207,8 +3253,9 @@ label_1744_internal:
         {
             if (adata(20, gdata_current_map) == -1)
             {
-                msgtemp += i18n::s.get("core.locale.map.no_dungeon_master",
-                                       mapname(gdata_current_map));
+                msgtemp += i18n::s.get(
+                    "core.locale.map.no_dungeon_master",
+                    mapname(gdata_current_map));
             }
         }
     }
@@ -3401,16 +3448,20 @@ label_1744_internal:
             }
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::town || gdata_current_map == mdata_t::map_id_t::your_home || mdata_map_type == mdata_t::map_type_t::guild)
+    if (mdata_map_type == mdata_t::map_type_t::town
+        || gdata_current_map == mdata_t::map_id_t::your_home
+        || mdata_map_type == mdata_t::map_type_t::guild)
     {
         if (gdata_distance_between_town >= 16)
         {
             p = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12 - gdata_departure_date;
-            txt(i18n::s.get("core.locale.map.since_leaving.time_passed",
-                            p / 24, p % 24,
-                            mapname(gdata_left_town_map),
-                            cnvdate(gdata_departure_date, false)));
+            txt(i18n::s.get(
+                "core.locale.map.since_leaving.time_passed",
+                p / 24,
+                p % 24,
+                mapname(gdata_left_town_map),
+                cnvdate(gdata_departure_date, false)));
             p = 0;
             exp = cdata[0].level * gdata_distance_between_town * sdata(182, 0)
                     / 100
@@ -3430,13 +3481,15 @@ label_1744_internal:
             }
             if (p == 1)
             {
-                txt(i18n::s.get("core.locale.map.since_leaving.walked.you",
-                                gdata_distance_between_town));
+                txt(i18n::s.get(
+                    "core.locale.map.since_leaving.walked.you",
+                    gdata_distance_between_town));
             }
             else
             {
-                txt(i18n::s.get("core.locale.map.since_leaving.walked.you_and_allies",
-                                gdata_distance_between_town));
+                txt(i18n::s.get(
+                    "core.locale.map.since_leaving.walked.you_and_allies",
+                    gdata_distance_between_town));
             }
             skillexp(182, 0, 25 + gdata_distance_between_town * 2 / 3, 0, 1000);
             gdata_distance_between_town = 0;
@@ -3447,9 +3500,10 @@ label_1744_internal:
         if (gdata_executing_immediate_quest_type == 1009)
         {
             txtef(9);
-            txt(i18n::s.get("core.locale.map.quest.on_enter.party",
-                            gdata_left_minutes_of_executing_quest,
-                            qdata(12, gdata_executing_immediate_quest)));
+            txt(i18n::s.get(
+                "core.locale.map.quest.on_enter.party",
+                gdata_left_minutes_of_executing_quest,
+                qdata(12, gdata_executing_immediate_quest)));
         }
         if (gdata_executing_immediate_quest_type == 1006)
         {
@@ -3459,22 +3513,25 @@ label_1744_internal:
                 qdata(6, gdata_executing_immediate_quest) = 400;
             }
             txtef(9);
-            txt(i18n::s.get("core.locale.map.quest.on_enter.harvest",
-                            cnvweight(qdata(12, gdata_executing_immediate_quest)),
-                            gdata_left_minutes_of_executing_quest ));
+            txt(i18n::s.get(
+                "core.locale.map.quest.on_enter.harvest",
+                cnvweight(qdata(12, gdata_executing_immediate_quest)),
+                gdata_left_minutes_of_executing_quest));
         }
         if (gdata_executing_immediate_quest_type == 1008)
         {
             txtef(9);
-            txt(i18n::s.get("core.locale.map.quest.on_enter.conquer",
-                            chara_refstr(qdata(12, gdata_executing_immediate_quest), 2),
-                            gdata_left_minutes_of_executing_quest));
+            txt(i18n::s.get(
+                "core.locale.map.quest.on_enter.conquer",
+                chara_refstr(qdata(12, gdata_executing_immediate_quest), 2),
+                gdata_left_minutes_of_executing_quest));
         }
     }
 
     if (loaded_from_file)
     {
-        lua::lua->get_event_manager().run_callbacks<lua::event_kind_t::map_loaded>();
+        lua::lua->get_event_manager()
+            .run_callbacks<lua::event_kind_t::map_loaded>();
     }
 
     lua::lua->get_event_manager()

@@ -6,8 +6,8 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "menu.hpp"
 #include "itemgen.hpp"
+#include "menu.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -71,9 +71,16 @@ reset_page:
             55,
             40);
 
-        display_topic(i18n::s.get("core.locale.action.use.deck.npc_name"), wx + 46, wy + 36);
-        display_topic(i18n::s.get("core.locale.action.use.deck.kill"), wx + 385, wy + 36);
-        display_topic(i18n::s.get("core.locale.action.use.deck.generate"), wx + 475, wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.npc_name"),
+            wx + 46,
+            wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.kill"), wx + 385, wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.generate"),
+            wx + 475,
+            wy + 36);
 
         keyrange = 0;
         for (int i = 0; i < pagesize; ++i)

@@ -98,7 +98,9 @@ void render_weather_effect_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == mdata_t::map_type_t::world_map)); ++i)
+    for (int i = 0; i < max_particles
+             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+         ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -140,7 +142,9 @@ void render_weather_effect_hard_rain()
         particles.resize(max_particles * 2);
     }
 
-    for (int i = 0; i < max_particles * (1 + (mdata_map_type == mdata_t::map_type_t::world_map)); ++i)
+    for (int i = 0; i < max_particles
+             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+         ++i)
     {
         auto&& particle = particles[i];
         const auto brightness = rnd(100);
@@ -627,7 +631,10 @@ void screen_txtadv()
             sx = 265;
             sy = 8;
             draw("casino_title_decoration_left", sx - 30, 5);
-            draw("casino_title_decoration_right", sx + strlen_u(atxinfon(0)) * 13 / 2 + 14, 5);
+            draw(
+                "casino_title_decoration_right",
+                sx + strlen_u(atxinfon(0)) * 13 / 2 + 14,
+                5);
         }
         else
         {
@@ -1187,7 +1194,8 @@ void render_hud()
         sy -= 32;
     }
     gmode(2);
-    draw_rotated("clock_hand", inf_clockarrowx, inf_clockarrowy, gdata_hour * 30);
+    draw_rotated(
+        "clock_hand", inf_clockarrowx, inf_clockarrowy, gdata_hour * 30);
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
@@ -1734,7 +1742,12 @@ void label_1439()
             }
         }
     }
-    boxf(688, 528, raderw * mdata_map_width, raderh * mdata_map_height, {255, 255, 255, 10});
+    boxf(
+        688,
+        528,
+        raderw * mdata_map_width,
+        raderh * mdata_map_height,
+        {255, 255, 255, 10});
     gsel(0);
 }
 
@@ -1996,7 +2009,12 @@ void display_window(
 {
     if (windowshadow == 1)
     {
-        window(window_x + 4, window_y + 4, window_width, window_height - window_height % 8, true);
+        window(
+            window_x + 4,
+            window_y + 4,
+            window_width,
+            window_height - window_height % 8,
+            true);
         windowshadow = 0;
     }
     window(window_x, window_y, window_width, window_height - window_height % 8);
@@ -2011,7 +2029,10 @@ void display_window(
             1);
     }
     gmode(2);
-    draw("tip_icon", window_x + 30 + prm_672, window_y + window_height - 47 - window_height % 8);
+    draw(
+        "tip_icon",
+        window_x + 30 + prm_672,
+        window_y + window_height - 47 - window_height % 8);
     line(
         window_x + 50 + prm_672,
         window_y + window_height - 48 - window_height % 8,
@@ -2033,7 +2054,8 @@ void display_window(
         {255, 255, 255},
         {20, 10, 0});
     font(12 + sizefix - en * 2);
-    pos(window_x + 58 + prm_672, window_y + window_height - 43 - window_height % 8);
+    pos(window_x + 58 + prm_672,
+        window_y + window_height - 43 - window_height % 8);
     mes(s(1));
     if (pagesize != 0)
     {

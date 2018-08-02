@@ -54,7 +54,8 @@ turn_result_t npc_turn()
             if (rnd(30) == 0)
             {
                 tc = cc;
-                txt(i18n::s.get_enum("core.locale.action.npc.sand_bag", rnd(3), cdata[tc]));
+                txt(i18n::s.get_enum(
+                    "core.locale.action.npc.sand_bag", rnd(3), cdata[tc]));
             }
         }
         cdata[cc].hate = 0;
@@ -81,15 +82,18 @@ turn_result_t npc_turn()
                             {
                                 if (rnd(2))
                                 {
-                                    txt(i18n::s.get_enum("core.locale.action.npc.leash.dialog", rnd(2)));
+                                    txt(i18n::s.get_enum(
+                                        "core.locale.action.npc.leash.dialog",
+                                        rnd(2)));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
                                 {
                                     cdata[cc].is_leashed() = false;
                                     txtef(9);
-                                    txt(i18n::s.get("core.locale.action.npc.leash.untangle",
-                                                    cdata[cc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.action.npc.leash.untangle",
+                                        cdata[cc]));
                                 }
                             }
                             tc = 0;
@@ -187,7 +191,8 @@ turn_result_t npc_turn()
                 if (rnd(40) == 0)
                 {
                     txtef(4);
-                    txt(i18n::s.get_enum("core.locale.action.npc.arena", rnd(8)));
+                    txt(i18n::s.get_enum(
+                        "core.locale.action.npc.arena", rnd(8)));
                 }
                 return ai_proc_misc_map_events();
             }
@@ -485,7 +490,8 @@ label_2689_internal:
                             {
                                 if (ibit(5, ci) == 0)
                                 {
-                                    if (mdata_map_type != mdata_t::map_type_t::player_owned)
+                                    if (mdata_map_type
+                                        != mdata_t::map_type_t::player_owned)
                                     {
                                         in = inv[ci].number;
                                         if (gdata_mount != cc)
@@ -779,8 +785,9 @@ turn_result_t turn_begin()
             if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
-                txt(i18n::s.get("core.locale.quest.minutes_left",
-                                (gdata_left_minutes_of_executing_quest + 1)));
+                txt(i18n::s.get(
+                    "core.locale.quest.minutes_left",
+                    (gdata_left_minutes_of_executing_quest + 1)));
                 gdata(87) = gdata_left_minutes_of_executing_quest / 10;
             }
             if (gdata_left_minutes_of_executing_quest <= 0)
@@ -868,7 +875,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (gdata_is_returning_or_escaping != 0)
         {
             --gdata_is_returning_or_escaping;
-            if (mdata_map_type == mdata_t::map_type_t::temporary || gdata_current_map == mdata_t::map_id_t::shelter_
+            if (mdata_map_type == mdata_t::map_type_t::temporary
+                || gdata_current_map == mdata_t::map_id_t::shelter_
                 || gdata_current_map == mdata_t::map_id_t::jail)
             {
                 gdata_is_returning_or_escaping = 0;
@@ -896,7 +904,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 }
                 if (1 && cdata[0].inventory_weight_type >= 4)
                 {
-                    txt(i18n::s.get("core.locale.magic.return.prevented.overweight"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
                 if (gdata_destination_map == gdata(850))
@@ -910,14 +919,16 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 int stat = quest_is_return_forbidden();
                 if (stat == 1)
                 {
-                    txt(i18n::s.get("core.locale.magic.return.you_commit_a_crime"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.you_commit_a_crime"));
                     modify_karma(0, -10);
                 }
                 snd(72);
                 txt(i18n::s.get("core.locale.magic.return.door_opens"));
                 if (gdata_destination_map == 41)
                 {
-                    txt(i18n::s.get("core.locale.magic.return.destination_changed"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.destination_changed"));
                 }
                 msg_halt();
                 update_screen();
@@ -1040,7 +1051,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     {
                         continue;
                     }
-                    if (cnt == cc || rnd(3) || mdata_map_type == mdata_t::map_type_t::world_map)
+                    if (cnt == cc || rnd(3)
+                        || mdata_map_type == mdata_t::map_type_t::world_map)
                     {
                         continue;
                     }
@@ -1048,9 +1060,12 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     if (is_in_fov(cc) || is_in_fov(tc))
                     {
                         txtef(9);
-                        txt(i18n::s.get("core.locale.action.npc.drunk.gets_the_worse",
-                                        cdata[cc], cdata[tc]));
-                        txt(i18n::s.get_enum("core.locale.action.npc.drunk.dialog", rnd(4)));
+                        txt(i18n::s.get(
+                            "core.locale.action.npc.drunk.gets_the_worse",
+                            cdata[cc],
+                            cdata[tc]));
+                        txt(i18n::s.get_enum(
+                            "core.locale.action.npc.drunk.dialog", rnd(4)));
                     }
                     if (rnd(4) == 0)
                     {
@@ -1059,9 +1074,12 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                             if (is_in_fov(cc) || is_in_fov(tc))
                             {
                                 txtef(9);
-                                txt(i18n::s.get("core.locale.action.npc.drunk.annoyed.text",
-                                                cdata[tc]));
-                                txt(i18n::s.get("core.locale.action.npc.drunk.annoyed.dialog"));
+                                txt(i18n::s.get(
+                                    "core.locale.action.npc.drunk.annoyed.text",
+                                    cdata[tc]));
+                                txt(
+                                    i18n::s.get("core.locale.action.npc.drunk."
+                                                "annoyed.dialog"));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;
@@ -1337,7 +1355,8 @@ turn_result_t pc_turn(bool advance_time)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != mdata_t::map_id_t::pet_arena
+            if (gdata_wizard == 0
+                && gdata_current_map != mdata_t::map_id_t::pet_arena
                 && config::instance().autosave)
             {
                 do_save_game();
@@ -1451,7 +1470,8 @@ turn_result_t pc_turn(bool advance_time)
             update_screen();
             if (key == key_goup || key_escape == 1)
             {
-                txt(i18n::s.get("core.locale.action.use_stairs.prompt_give_up_game"));
+                txt(i18n::s.get(
+                    "core.locale.action.use_stairs.prompt_give_up_game"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
@@ -1477,7 +1497,8 @@ turn_result_t pc_turn(bool advance_time)
                 access_item_db(15);
             }
         }
-        if (trait(214) != 0 && rnd(250) == 0 && mdata_map_type != mdata_t::map_type_t::world_map)
+        if (trait(214) != 0 && rnd(250) == 0
+            && mdata_map_type != mdata_t::map_type_t::world_map)
         {
             efid = 408;
             magic();
@@ -1736,11 +1757,13 @@ label_2747:
             {
                 key = key_godown;
             }
-            if (inv[ci].id == 750 && gdata_current_map == mdata_t::map_id_t::your_home)
+            if (inv[ci].id == 750
+                && gdata_current_map == mdata_t::map_id_t::your_home)
             {
                 key = key_goup;
             }
-            if (inv[ci].id == 751 && gdata_current_map == mdata_t::map_id_t::your_home)
+            if (inv[ci].id == 751
+                && gdata_current_map == mdata_t::map_id_t::your_home)
             {
                 key = key_godown;
             }

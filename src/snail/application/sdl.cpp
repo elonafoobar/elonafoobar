@@ -4,9 +4,9 @@
 #include <algorithm>
 #include <map>
 #include <sstream>
+#include <boost/lexical_cast.hpp>
 #include "../input.hpp"
 #include "../touch_input.hpp"
-#include <boost/lexical_cast.hpp>
 
 
 namespace elona
@@ -35,7 +35,8 @@ void application::set_title(const std::string& title)
 
 void application::initialize_dpi()
 {
-    const constexpr int display_in_use = 0; // Assume the first display is being used.
+    const constexpr int display_in_use =
+        0; // Assume the first display is being used.
     const constexpr float default_dpi =
 #ifdef __APPLE__
         72.0f;
@@ -192,12 +193,8 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_TEXTEDITING: input::instance()._handle_event(event.edit); break;
     case SDL_FINGERMOTION:
     case SDL_FINGERDOWN:
-    case SDL_FINGERUP:
-        input::instance()._handle_event(event.tfinger);
-        break;
-    case SDL_WINDOWEVENT:
-        handle_window_event(event.window);
-        break;
+    case SDL_FINGERUP: input::instance()._handle_event(event.tfinger); break;
+    case SDL_WINDOWEVENT: handle_window_event(event.window); break;
     default: break;
     }
 }
@@ -232,20 +229,15 @@ void application::handle_window_event(const ::SDL_WindowEvent& event)
 {
     switch (event.event)
     {
-    case SDL_WINDOWEVENT_FOCUS_LOST:
-        _focus_lost_just_now = true;
-        break;
+    case SDL_WINDOWEVENT_FOCUS_LOST: _focus_lost_just_now = true; break;
     case SDL_WINDOWEVENT_SIZE_CHANGED:
         // Handle device rotation.
         on_size_changed(event);
         break;
     case SDL_WINDOWEVENT_SHOWN:
     case SDL_WINDOWEVENT_EXPOSED:
-    case SDL_WINDOWEVENT_RESTORED:
-        hsp::redraw();
-        break;
-    default:
-        break;
+    case SDL_WINDOWEVENT_RESTORED: hsp::redraw(); break;
+    default: break;
     }
 }
 
@@ -275,7 +267,8 @@ void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
 
 std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
 {
-    const constexpr int display_in_use = 0; // Assume the first display is being used.
+    const constexpr int display_in_use =
+        0; // Assume the first display is being used.
     std::map<std::string, ::SDL_DisplayMode> display_modes;
 
     int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
@@ -373,7 +366,7 @@ void application::set_subwindow_display_mode(const std::string& mode)
     if ((found = mode.find("x")) != std::string::npos)
     {
         std::string width_s = mode.substr(0, found);
-        std::string height_s = mode.substr(found+1);
+        std::string height_s = mode.substr(found + 1);
 
         try
         {
@@ -382,7 +375,8 @@ void application::set_subwindow_display_mode(const std::string& mode)
 
             if (width < 800 || height < 600)
             {
-                throw std::logic_error("Subwindow resolution too small: " + mode);
+                throw std::logic_error(
+                    "Subwindow resolution too small: " + mode);
             }
 
             _width = width;
@@ -475,16 +469,13 @@ rect application::calculate_android_window_pos()
 
     if (_orientation == screen_orientation::portrait)
     {
-        return calculate_android_window_pos_portrait(_width,
-                                                     _height,
-                                                     _physical_width);
+        return calculate_android_window_pos_portrait(
+            _width, _height, _physical_width);
     }
     else
     {
-        return calculate_android_window_pos_landscape(_width,
-                                                      _height,
-                                                      _physical_width,
-                                                      _physical_height);
+        return calculate_android_window_pos_landscape(
+            _width, _height, _physical_width, _physical_height);
     }
 
     return {x, y, width, height};

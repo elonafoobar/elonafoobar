@@ -86,7 +86,8 @@ int modpiety(int prm_1035)
         txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
-    cdata[0].piety_point += prm_1035 / (1 + (gdata_current_map == mdata_t::map_id_t::show_house) * 9);
+    cdata[0].piety_point += prm_1035
+        / (1 + (gdata_current_map == mdata_t::map_id_t::show_house) * 9);
     return 1;
 }
 
@@ -368,16 +369,20 @@ std::string get_god_description()
 
     if (inv[ci].param1 > 0 && inv[ci].param1 <= 7)
     {
-        buff = i18n::s.get_enum_property("core.locale.god.desc", "text", inv[ci].param1);
+        buff = i18n::s.get_enum_property(
+            "core.locale.god.desc", "text", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.offering") + u8": ";
-        buff += i18n::s.get_enum_property("core.locale.god.desc", "offering", inv[ci].param1);
+        buff += i18n::s.get_enum_property(
+            "core.locale.god.desc", "offering", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.bonus") + u8": ";
-        buff += i18n::s.get_enum_property("core.locale.god.desc", "bonus", inv[ci].param1);
+        buff += i18n::s.get_enum_property(
+            "core.locale.god.desc", "bonus", inv[ci].param1);
 
         buff += i18n::s.get("core.locale.god.desc.ability") + u8": ";
-        buff += i18n::s.get_enum_property("core.locale.god.desc", "ability", inv[ci].param1);
+        buff += i18n::s.get_enum_property(
+            "core.locale.god.desc", "ability", inv[ci].param1);
     }
 
     return buff;
@@ -399,8 +404,9 @@ void label_1888()
         {
             mode = 9;
             txtef(8);
-            txt(i18n::s.get("core.locale.god.enraged",
-                            i18n::_(u8"god", cdata[0].god_id, u8"name")));
+            txt(i18n::s.get(
+                "core.locale.god.enraged",
+                i18n::_(u8"god", cdata[0].god_id, u8"name")));
             txtgod(cdata[0].god_id, 1);
             redraw();
             efid = 622;
@@ -440,8 +446,9 @@ void switch_religion()
         miracle_animation().play();
         snd(51);
         txtef(5);
-        txt(i18n::s.get("core.locale.god.switch.follower",
-                        i18n::_(u8"god", cdata[0].god_id, u8"name")));
+        txt(i18n::s.get(
+            "core.locale.god.switch.follower",
+            i18n::_(u8"god", cdata[0].god_id, u8"name")));
         if (cdata[0].god_id == core_god::itzpalt)
         {
             spact(24) = 1;
@@ -477,12 +484,14 @@ turn_result_t do_pray()
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
-    txt(i18n::s.get("core.locale.god.pray.you_pray_to",
-                    i18n::_(u8"god", cdata[0].god_id, u8"name")));
+    txt(i18n::s.get(
+        "core.locale.god.pray.you_pray_to",
+        i18n::_(u8"god", cdata[0].god_id, u8"name")));
     if (cdata[0].piety_point < 200 || cdata[0].praying_point < 1000)
     {
-        i18n::s.get("core.locale.god.pray.indifferent",
-                    i18n::_(u8"god", cdata[0].god_id, u8"name"));
+        i18n::s.get(
+            "core.locale.god.pray.indifferent",
+            i18n::_(u8"god", cdata[0].god_id, u8"name"));
         return turn_result_t::turn_end;
     }
     animode = 100;
@@ -515,7 +524,8 @@ turn_result_t do_pray()
                         if (p >= 2)
                         {
                             f = 1;
-                            txt(i18n::s.get("core.locale.god.pray.servant.no_more"));
+                            txt(i18n::s.get(
+                                "core.locale.god.pray.servant.no_more"));
                             break;
                         }
                     }
@@ -526,7 +536,8 @@ turn_result_t do_pray()
                 if (chara_get_free_slot_ally() == 0)
                 {
                     f = 1;
-                    txt(i18n::s.get("core.locale.god.pray.servant.party_is_full"));
+                    txt(i18n::s.get(
+                        "core.locale.god.pray.servant.party_is_full"));
                 }
             }
             if (f)

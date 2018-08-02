@@ -117,8 +117,9 @@ void await(int msec)
             && !std::uncaught_exception())
         {
             ELONA_LOG("Focus lost, quicksaving game.");
-            snail::android::toast(i18n::s.get("core.locale.ui.save_on_suspend"),
-                                  snail::android::toast_length::long_length);
+            snail::android::toast(
+                i18n::s.get("core.locale.ui.save_on_suspend"),
+                snail::android::toast_length::long_length);
             save_game();
         }
     }
@@ -455,7 +456,15 @@ void grotate(
     int dst_height,
     double angle)
 {
-    snail::hsp::grotate(window_id, src_x, src_y, src_width, src_height, dst_width, dst_height, angle);
+    snail::hsp::grotate(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_width,
+        dst_height,
+        angle);
 }
 
 

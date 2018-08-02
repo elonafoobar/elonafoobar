@@ -1,16 +1,19 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
-#include "../testing.hpp"
 #include "../config.hpp"
 #include "../config_def.hpp"
+#include "../testing.hpp"
+#include "tests.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
 
 namespace
 {
-config load(const std::string& def_str, const std::string& config_str, bool preload = false)
+config load(
+    const std::string& def_str,
+    const std::string& config_str,
+    bool preload = false)
 {
     config_def def;
     config conf;
@@ -29,7 +32,10 @@ config load(const std::string& def_str, const std::string& config_str, bool prel
     return conf;
 }
 
-bool load_fails(const std::string& def_str, const std::string& config_str, bool preload = false)
+bool load_fails(
+    const std::string& def_str,
+    const std::string& config_str,
+    bool preload = false)
 {
     config_def def;
     config conf;
@@ -78,12 +84,14 @@ TEST_CASE("Test loading config with unknown value", "[Config: Loading]")
 
 TEST_CASE("Test loading config with differing type", "[Config: Loading]")
 {
-    REQUIRE(load_fails(R"(config def {foo = false})", R"(config core {foo = "bar"})"));
+    REQUIRE(load_fails(
+        R"(config def {foo = false})", R"(config core {foo = "bar"})"));
 }
 
 TEST_CASE("Test loading config with invalid enum variant", "[Config: Loading]")
 {
-    REQUIRE(load_fails(R"(
+    REQUIRE(load_fails(
+        R"(
 config def {
     foo = {
         type = "enum"
@@ -91,16 +99,19 @@ config def {
         default = "baz"
     }
 }
-)", R"(config core {foo = "hoge"})"));
+)",
+        R"(config core {foo = "hoge"})"));
 }
 
 TEST_CASE("Test fallback to default config value", "[Config: Loading]")
 {
-    config conf = load(R"(
+    config conf = load(
+        R"(
 config def {
     foo = false
     bar = "baz"
-})", R"(config core {})");
+})",
+        R"(config core {})");
 
     REQUIRE(conf.get<bool>("core.config.foo") == false);
     REQUIRE(conf.get<std::string>("core.config.bar") == "baz");
@@ -108,7 +119,8 @@ config def {
 
 TEST_CASE("Test loading config with out-of-bounds value", "[Config: Loading]")
 {
-    config conf = load(R"(
+    config conf = load(
+        R"(
 config def {
     foo = {
         default = 42
@@ -120,7 +132,8 @@ config def {
         min = 0
         max = 100
     }
-})", R"(config core {
+})",
+        R"(config core {
     foo = 101
     bar = -1
 })");
@@ -131,13 +144,17 @@ config def {
 
 TEST_CASE("Test value getter", "[Config: Loading]")
 {
-    config conf = load(R"(
+    config conf = load(
+        R"(
 config def {
     foo = "bar"
-})", R"(config core {})");
+})",
+        R"(config core {})");
 
-    REQUIRE_NOTHROW(conf.bind_getter("core.config.foo", [&]() { return "hoge"; }));
-    REQUIRE_THROWS(conf.bind_getter("core.config.baz", [&]() { return "hoge"; }));
+    REQUIRE_NOTHROW(
+        conf.bind_getter("core.config.foo", [&]() { return "hoge"; }));
+    REQUIRE_THROWS(
+        conf.bind_getter("core.config.baz", [&]() { return "hoge"; }));
 
     REQUIRE(conf.get<std::string>("core.config.foo") == "hoge");
     REQUIRE_THROWS(conf.get<std::string>("core.config.baz"));
@@ -145,15 +162,19 @@ config def {
 
 TEST_CASE("Test value setter", "[Config: Loading]")
 {
-    config conf = load(R"(
+    config conf = load(
+        R"(
 config def {
     foo = "bar"
-})", R"(config core {})");
+})",
+        R"(config core {})");
 
     std::string result = "";
 
-    REQUIRE_NOTHROW(conf.bind_setter<std::string>("core.config.foo", [&](auto value) { result = value; }));
-    REQUIRE_THROWS(conf.bind_setter<std::string>("core.config.baz", [&](auto value) { result = value; }));
+    REQUIRE_NOTHROW(conf.bind_setter<std::string>(
+        "core.config.foo", [&](auto value) { result = value; }));
+    REQUIRE_THROWS(conf.bind_setter<std::string>(
+        "core.config.baz", [&](auto value) { result = value; }));
 
     REQUIRE_NOTHROW(conf.set("core.config.foo", "hoge"));
     REQUIRE(result == "hoge");
@@ -165,12 +186,14 @@ config def {
 
 TEST_CASE("Test invalid injected enum type", "[Config: Loading]")
 {
-    REQUIRE(load_fails(R"(
+    REQUIRE(load_fails(
+        R"(
 config def {
     foo = {
         type = "runtime_enum"
     }
-})", R"(
+})",
+        R"(
 config core {
     foo = 42
 }
@@ -179,17 +202,20 @@ config core {
 
 TEST_CASE("Test invalid injected enum value", "[Config: Loading]")
 {
-    config conf = load(R"(
+    config conf = load(
+        R"(
 config def {
     foo = {
         type = "runtime_enum"
     }
-})", R"(
+})",
+        R"(
 config core {
     foo = "hoge"
 }
 )");
 
-    REQUIRE_NOTHROW(conf.inject_enum("core.config.foo", {"foo", "bar", "baz"}, "baz"));
+    REQUIRE_NOTHROW(
+        conf.inject_enum("core.config.foo", {"foo", "bar", "baz"}, "baz"));
     REQUIRE(conf.get<std::string>("core.config.foo") == "baz");
 }

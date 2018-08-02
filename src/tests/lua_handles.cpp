@@ -81,10 +81,10 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(
             elona::lua::lua->get_state()->safe_script(R"(item.number = 3)"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.position.x = 4)"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.position.y = 8)"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(item.position.x = 4)"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(item.position.y = 8)"));
 
         REQUIRE(item.number == 3);
         REQUIRE(item.position.x == 4);
@@ -121,8 +121,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
     {
         REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
         character& chara = elona::cdata[elona::rc];
-        auto handle =
-            handle_mgr.get_handle(chara);
+        auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
 
         chara_delete(chara.index);
@@ -147,8 +146,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
     {
         REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
         item& item = elona::inv[elona::ci];
-        auto handle =
-            handle_mgr.get_handle(item);
+        auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
 
         item_delete(item.index);
@@ -176,8 +174,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
         character& chara = elona::cdata[elona::rc];
-        auto handle =
-            handle_mgr.get_handle(chara);
+        auto handle = handle_mgr.get_handle(chara);
 
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test", ""));
 
@@ -194,8 +191,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
         item& item = elona::inv[elona::ci];
-        auto handle =
-            handle_mgr.get_handle(item);
+        auto handle = handle_mgr.get_handle(item);
 
         REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test2", ""));
 
@@ -218,8 +214,7 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
 
     SECTION("Characters")
     {
-        REQUIRE_NOTHROW(
-            mod_mgr.load_mod_from_script("test_invalid_chara", R"(
+        REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_chara", R"(
 local Chara = Elona.require("Chara")
 local chara = Chara.create(0, 0, 3)
 idx = chara.index
@@ -234,8 +229,7 @@ Store.global.charas = {[0]=chara}
     }
     SECTION("Items")
     {
-        REQUIRE_NOTHROW(
-            mod_mgr.load_mod_from_script("test_invalid_item", R"(
+        REQUIRE_NOTHROW(mod_mgr.load_mod_from_script("test_invalid_item", R"(
 local Item = Elona.require("Item")
 local item = Item.create(0, 0, 792, 3)
 idx = item.index
@@ -250,7 +244,9 @@ Store.global.items = {[0]=items}
     }
 }
 
-TEST_CASE("Test calling C++ functions taking handles as arguments", "[Lua: Handles]")
+TEST_CASE(
+    "Test calling C++ functions taking handles as arguments",
+    "[Lua: Handles]")
 {
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
@@ -304,7 +300,9 @@ Item.has_enchantment(Store.global.items[0], 20)
     }
 }
 
-TEST_CASE("Test uniqueness of handle after original handle has been replaced", "[Lua: Handles]")
+TEST_CASE(
+    "Test uniqueness of handle after original handle has been replaced",
+    "[Lua: Handles]")
 {
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
@@ -321,24 +319,24 @@ TEST_CASE("Test uniqueness of handle after original handle has been replaced", "
         auto handle2 = handle_mgr.get_handle(chara2);
         elona::lua::lua->get_state()->set("chara2", handle2);
 
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(assert(chara == chara))"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(assert(chara ~= chara2))"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(assert(chara == chara))"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(assert(chara ~= chara2))"));
 
         chara_delete(chara.index);
 
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(assert(chara ~= nil))"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(assert(chara ~= chara2))"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(assert(chara ~= nil))"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(assert(chara ~= chara2))"));
 
         REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
         character& chara3 = elona::cdata[elona::rc];
         auto handle3 = handle_mgr.get_handle(chara3);
         elona::lua::lua->get_state()->set("chara3", handle3);
 
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(assert(chara ~= chara3))"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(assert(chara ~= chara3))"));
     }
 }

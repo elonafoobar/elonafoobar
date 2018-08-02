@@ -1,5 +1,5 @@
-#include "../application.hpp"
 #include <iostream>
+#include "../application.hpp"
 
 namespace elona
 {
@@ -102,7 +102,10 @@ void line(int, int, int, int, const snail::color&)
 {
 }
 
-void title(const std::string& title_str, const std::string&, window::fullscreen_mode_t)
+void title(
+    const std::string& title_str,
+    const std::string&,
+    window::fullscreen_mode_t)
 {
     application::instance().initialize(title_str);
 }

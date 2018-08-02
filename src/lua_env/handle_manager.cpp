@@ -17,13 +17,10 @@ handle_manager::handle_manager(lua_env* lua_)
     lua = lua_;
     lua->get_state()->set("_IS_TEST", config::instance().is_test);
     handle_env = sol::environment(
-        *(lua->get_state()),
-        sol::create,
-        lua->get_state()->globals());
+        *(lua->get_state()), sol::create, lua->get_state()->globals());
 
     // Load the Lua chunk for storing handles.
-    lua->get_state()->safe_script(
-        R"(Handle = require "handle")", handle_env);
+    lua->get_state()->safe_script(R"(Handle = require "handle")", handle_env);
 
     bind(*lua);
 }
@@ -95,7 +92,8 @@ void handle_manager::create_chara_handle_run_callbacks(character& chara)
 
     auto handle = get_handle(chara);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().run_callbacks<event_kind_t::character_created>(handle);
+    lua->get_event_manager().run_callbacks<event_kind_t::character_created>(
+        handle);
 }
 
 void handle_manager::create_item_handle_run_callbacks(item& item)
@@ -114,7 +112,8 @@ void handle_manager::create_item_handle_run_callbacks(item& item)
 void handle_manager::remove_chara_handle_run_callbacks(character& chara)
 {
     auto handle = get_handle(chara);
-    lua->get_event_manager().run_callbacks<event_kind_t::character_removed>(handle);
+    lua->get_event_manager().run_callbacks<event_kind_t::character_removed>(
+        handle);
     remove_chara_handle(chara);
 }
 

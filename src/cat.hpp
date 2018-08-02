@@ -1,9 +1,9 @@
 #pragma once
 
 #include <chrono>
-#include <lua.hpp>
 #include <memory>
 #include <unordered_map>
+#include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
 #include "log.hpp"
@@ -256,10 +256,12 @@ public:
         lua_pop(L, 2);
 
         steady_clock::time_point end = steady_clock::now();
-        auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-        ELONA_LOG("[CAT ("s << traits_type::filename << ")] Elements: "s
-                  << storage.size() << ", time: []"s
-                  << time << "ms"s);
+        auto time =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)
+                .count();
+        ELONA_LOG(
+            "[CAT ("s << traits_type::filename << ")] Elements: "s
+                      << storage.size() << ", time: []"s << time << "ms"s);
     }
 
 

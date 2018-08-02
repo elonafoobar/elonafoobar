@@ -109,7 +109,8 @@ int magic()
                 }
                 else if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
-                    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
+                    bright_aura_animation(
+                        cdata[tc], bright_aura_animation::type_t::debuff)
                         .play();
                 }
                 if (efid == 625 || efid == 446)
@@ -135,7 +136,8 @@ int magic()
                         if (is_in_fov(tc))
                         {
                             txtef(2);
-                            txt(i18n::s.get("core.locale.magic.slow", cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.magic.slow", cdata[tc]));
                         }
                     }
                 }
@@ -147,7 +149,8 @@ int magic()
                         if (is_in_fov(tc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.magic.speed", cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.magic.speed", cdata[tc]));
                         }
                     }
                 }
@@ -261,11 +264,15 @@ int magic()
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(i18n::s.get("core.locale.magic.bolt.other", cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.bolt.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(i18n::s.get("core.locale.magic.bolt.ally", cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.bolt.ally",
+                                        cdata[tc]));
                                 }
                             }
                             dmghp(tc, dmg, cc, ele, elep);
@@ -278,7 +285,10 @@ int magic()
                 ccbk = cc;
                 if (efid == 644)
                 {
-                    stxt(cc, i18n::s.get("core.locale.magic.explosion.begins", cdata[cc]));
+                    stxt(
+                        cc,
+                        i18n::s.get(
+                            "core.locale.magic.explosion.begins", cdata[cc]));
                 }
             label_2177_internal:
                 cdata[cc].will_explode_soon() = false;
@@ -343,12 +353,15 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                bright_aura_animation(cdata[tc],
+                                bright_aura_animation(
+                                    cdata[tc],
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
                                 if (is_in_fov(tc))
                                 {
-                                    txt(i18n::s.get("core.locale.magic.healed.normal", cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.healed.normal",
+                                        cdata[tc]));
                                 }
                                 heal_both_rider_and_mount();
                             }
@@ -370,10 +383,13 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                bright_aura_animation(cdata[tc],
+                                bright_aura_animation(
+                                    cdata[tc],
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
-                                txt(i18n::s.get("core.locale.magic.rain_of_sanity", cdata[tc]));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.rain_of_sanity",
+                                    cdata[tc]));
                                 healsan(tc, efp / 10);
                                 healcon(tc, 11, 9999);
                             }
@@ -419,11 +435,15 @@ int magic()
                                     {
                                         gdata(809) = 2;
                                         txt3rd = 1;
-                                        txt(i18n::s.get("core.locale.magic.explosion.other", cdata[tc]));
+                                        txt(i18n::s.get(
+                                            "core.locale.magic.explosion.other",
+                                            cdata[tc]));
                                     }
                                     else
                                     {
-                                        txt(i18n::s.get("core.locale.magic.explosion.ally", cdata[tc]));
+                                        txt(i18n::s.get(
+                                            "core.locale.magic.explosion.ally",
+                                            cdata[tc]));
                                     }
                                 }
                                 if (cdata[tc].explodes())
@@ -439,11 +459,15 @@ int magic()
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(i18n::s.get("core.locale.magic.ball.other", cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.ball.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(i18n::s.get("core.locale.magic.ball.ally", cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.ball.ally",
+                                        cdata[tc]));
                                 }
                             }
                             dmghp(tc, dmg, cc, ele, elep);
@@ -473,7 +497,11 @@ int magic()
                             bonus = damage->damage_bonus;
                             ele = damage->element;
                             elep = damage->element_power;
-                            stxt(cc, i18n::s.get("core.locale.magic.explosion.chain", cdata[cc]));
+                            stxt(
+                                cc,
+                                i18n::s.get(
+                                    "core.locale.magic.explosion.chain",
+                                    cdata[cc]));
                             goto label_2177_internal;
                         }
                     }
@@ -491,11 +519,13 @@ int magic()
                     {
                         gdata(809) = 2;
                         txt3rd = 1;
-                        txt(i18n::s.get("core.locale.magic.arrow.other", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.arrow.other", cdata[tc]));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.magic.arrow.ally", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.arrow.ally", cdata[tc]));
                     }
                 }
                 dmghp(tc, dmg, cc, ele, elep);
@@ -505,28 +535,32 @@ int magic()
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.healed.slightly", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.slightly", cdata[tc]));
                     }
                 }
                 if (efid == 401 || efid == 405)
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.healed.normal", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.normal", cdata[tc]));
                     }
                 }
                 if (efid == 402)
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.healed.greatly", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.greatly", cdata[tc]));
                     }
                 }
                 if (efid == 403)
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.healed.completely", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.completely", cdata[tc]));
                     }
                 }
                 heal_both_rider_and_mount();
@@ -535,7 +569,8 @@ int magic()
                     healcon(tc, 12, 5 + rnd(5));
                 }
                 sickifcursed(efstatus, tc, 3);
-                bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+                bright_aura_animation(
+                    cdata[tc], bright_aura_animation::type_t::healing)
                     .play();
                 goto the_end;
             case 6:
@@ -546,19 +581,26 @@ int magic()
                         if (cc == 0)
                         {
                             txt(i18n::s.get(
-                                    "core.locale.magic.special_attack.self",
-                                    cdata[cc],
-                                    i18n::_(u8"ability", std::to_string(efid), u8"name"),
-                                    i18n::_(u8"ui", u8"cast_style", u8"_"s
-                                            + cdata[cc].special_attack_type)));
+                                "core.locale.magic.special_attack.self",
+                                cdata[cc],
+                                i18n::_(
+                                    u8"ability",
+                                    std::to_string(efid),
+                                    u8"name"),
+                                i18n::_(
+                                    u8"ui",
+                                    u8"cast_style",
+                                    u8"_"s + cdata[cc].special_attack_type)));
                         }
                         else
                         {
                             txt(i18n::s.get(
-                                    "core.locale.magic.special_attack.other",
-                                    cdata[cc],
-                                    i18n::_(u8"ui", u8"cast_style", u8"_"s
-                                            + cdata[cc].special_attack_type)));
+                                "core.locale.magic.special_attack.other",
+                                cdata[cc],
+                                i18n::_(
+                                    u8"ui",
+                                    u8"cast_style",
+                                    u8"_"s + cdata[cc].special_attack_type)));
                         }
                     }
                 }
@@ -569,15 +611,17 @@ int magic()
                         if (tc >= 16)
                         {
                             gdata(809) = 2;
-                            txt(i18n::s.get("core.locale.magic.sucks_blood.other",
-                                            cdata[cc],
-                                            cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.magic.sucks_blood.other",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                         else
                         {
-                            txt(i18n::s.get("core.locale.magic.sucks_blood.ally",
-                                            cdata[cc],
-                                            cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.magic.sucks_blood.ally",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                     }
                 }
@@ -593,21 +637,23 @@ int magic()
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
-                        txt(i18n::s.get("core.locale.magic.touch.other",
-                                        cdata[cc],
-                                        cdata[tc],
-                                        elename(ele),
-                                        _melee(2, cdata[cc].melee_attack_type),
-                                        _melee(0, cdata[cc].melee_attack_type)));
+                        txt(i18n::s.get(
+                            "core.locale.magic.touch.other",
+                            cdata[cc],
+                            cdata[tc],
+                            elename(ele),
+                            _melee(2, cdata[cc].melee_attack_type),
+                            _melee(0, cdata[cc].melee_attack_type)));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.magic.touch.ally",
-                                        cdata[cc],
-                                        cdata[tc],
-                                        elename(ele),
-                                        _melee(2, cdata[cc].melee_attack_type),
-                                        _melee(1, cdata[cc].melee_attack_type)));
+                        txt(i18n::s.get(
+                            "core.locale.magic.touch.ally",
+                            cdata[cc],
+                            cdata[tc],
+                            elename(ele),
+                            _melee(2, cdata[cc].melee_attack_type),
+                            _melee(1, cdata[cc].melee_attack_type)));
                     }
                 }
                 if (efid == 660)
@@ -654,7 +700,8 @@ int magic()
                         if (is_in_fov(tc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.magic.weaken", cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.magic.weaken", cdata[tc]));
                         }
                         chara_refresh(tc);
                     }
@@ -786,7 +833,8 @@ int magic()
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.teleport.prevented"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.prevented"));
                     }
                     goto the_end;
                 }
@@ -794,7 +842,8 @@ int magic()
                 {
                     if (is_in_fov(tc))
                     {
-                        txt(i18n::s.get("core.locale.magic.teleport.prevented"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.prevented"));
                     }
                     goto the_end;
                 }
@@ -804,7 +853,8 @@ int magic()
                     {
                         if (is_in_fov(tc))
                         {
-                            txt(i18n::s.get("core.locale.magic.teleport.prevented"));
+                            txt(i18n::s.get(
+                                "core.locale.magic.teleport.prevented"));
                         }
                         goto the_end;
                     }
@@ -813,18 +863,21 @@ int magic()
                         || cdata[tc].is_protected_from_thieves() == 1)
                     {
                         txt(i18n::s.get(
-                                "core.locale.magic.teleport.suspicious_hand.prevented",
-                                cdata[tc]));
+                            "core.locale.magic.teleport.suspicious_hand."
+                            "prevented",
+                            cdata[tc]));
                         p = 0;
                     }
                     if (p != 0)
                     {
                         snd(12);
                         cdata[tc].gold -= p;
-                        txt(i18n::s.get("core.locale.magic.teleport.suspicious_hand.succeeded",
-                                        cdata[cc],
-                                        cdata[tc],
-                                        p(0)));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.suspicious_hand."
+                            "succeeded",
+                            cdata[cc],
+                            cdata[tc],
+                            p(0)));
                         earn_gold(cdata[cc], p);
                     }
                     tc = cc;
@@ -870,8 +923,10 @@ int magic()
                     }
                     else
                     {
-                        cdata[tc].next_position.x = rnd(mdata_map_width - 2) + 1;
-                        cdata[tc].next_position.y = rnd(mdata_map_height - 2) + 1;
+                        cdata[tc].next_position.x =
+                            rnd(mdata_map_width - 2) + 1;
+                        cdata[tc].next_position.y =
+                            rnd(mdata_map_height - 2) + 1;
                     }
                     cell_check(
                         cdata[tc].next_position.x, cdata[tc].next_position.y);
@@ -881,29 +936,34 @@ int magic()
                         {
                             if (is_in_fov(cc))
                             {
-                                txt(i18n::s.get("core.locale.magic.teleport.shadow_step",
-                                                cdata[cc],
-                                                cdata[tcprev]));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.shadow_step",
+                                    cdata[cc],
+                                    cdata[tcprev]));
                             }
                         }
                         else if (efidprev == 620)
                         {
                             if (is_in_fov(cc))
                             {
-                                txt(i18n::s.get("core.locale.magic.teleport.draw_shadow",
-                                                cdata[tc]));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.draw_shadow",
+                                    cdata[tc]));
                             }
                         }
                         else if (is_in_fov(cc))
                         {
                             if (efidprev == 635)
                             {
-                                txt(i18n::s.get("core.locale.magic.teleport.suspicious_hand.after"));
+                                txt(
+                                    i18n::s.get("core.locale.magic.teleport."
+                                                "suspicious_hand.after"));
                             }
                             else
                             {
-                                txt(i18n::s.get("core.locale.magic.teleport.disappears",
-                                                cdata[tc]));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.disappears",
+                                    cdata[tc]));
                             }
                         }
                         rowactend(cc);
@@ -930,8 +990,9 @@ int magic()
                 std::string valn;
                 if (ele)
                 {
-                    valn = i18n::s.get("core.locale.magic.breath.named",
-                                       i18n::_(u8"ability", std::to_string(ele), u8"name"));
+                    valn = i18n::s.get(
+                        "core.locale.magic.breath.named",
+                        i18n::_(u8"ability", std::to_string(ele), u8"name"));
                 }
                 else
                 {
@@ -939,9 +1000,8 @@ int magic()
                 }
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.magic.breath.bellows",
-                                    cdata[cc],
-                                    valn));
+                    txt(i18n::s.get(
+                        "core.locale.magic.breath.bellows", cdata[cc], valn));
                 }
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
@@ -992,13 +1052,15 @@ int magic()
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(i18n::s.get("core.locale.magic.breath.other",
-                                                    cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.breath.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(i18n::s.get("core.locale.magic.breath.ally",
-                                                    cdata[tc]));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.breath.ally",
+                                        cdata[tc]));
                                 }
                             }
                             dmghp(tc, dmg, cc, ele, elep);
@@ -1028,7 +1090,8 @@ label_2181_internal:
     {
     case 636:
         txtef(8);
-        txt(i18n::s.get_enum("core.locale.magic.insanity", rnd(4), cdata[cc], cdata[tc]));
+        txt(i18n::s.get_enum(
+            "core.locale.magic.insanity", rnd(4), cdata[cc], cdata[tc]));
         damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
@@ -1154,7 +1217,8 @@ label_2181_internal:
             }
             else
             {
-                txt(i18n::s.get("core.locale.magic.love_potion.cursed", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.love_potion.cursed", cdata[tc]));
                 chara_mod_impression(tc, -15);
             }
             obvious = 0;
@@ -1184,7 +1248,8 @@ label_2181_internal:
     case 654:
         if (is_in_fov(tc))
         {
-            txt(i18n::s.get("core.locale.magic.pregnant", cdata[cc], cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.pregnant", cdata[cc], cdata[tc]));
         }
         get_pregnant();
         break;
@@ -1241,12 +1306,14 @@ label_2181_internal:
             if (is_cursed(efstatus))
             {
                 txtef(9);
-                txt(i18n::s.get_enum("core.locale.magic.alcohol.cursed", rnd(4)));
+                txt(i18n::s.get_enum(
+                    "core.locale.magic.alcohol.cursed", rnd(4)));
             }
             else
             {
                 txtef(9);
-                txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
+                txt(i18n::s.get_enum(
+                    "core.locale.magic.alcohol.normal", rnd(7)));
             }
         }
         dmgcon(tc, status_ailment_t::drunk, efp);
@@ -1266,7 +1333,9 @@ label_2181_internal:
             cdata[tc].is_pregnant() = false;
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.common.melts_alien_children", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.common.melts_alien_children",
+                    cdata[tc]));
             }
         }
         dmghp(tc, efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
@@ -1289,7 +1358,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.restore_stamina.dialog"));
-            txt(i18n::s.get("core.locale.magic.restore_stamina.apply", cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina.apply", cdata[tc]));
         }
         healsp(tc, 25);
         sickifcursed(efstatus, tc, 1);
@@ -1297,8 +1367,10 @@ label_2181_internal:
     case 1147:
         if (is_in_fov(tc))
         {
-            txt(i18n::s.get("core.locale.magic.restore_stamina_greater.dialog"));
-            txt(i18n::s.get("core.locale.magic.restore_stamina_greater.apply", cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina_greater.dialog"));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina_greater.apply", cdata[tc]));
         }
         healsp(tc, 100);
         sickifcursed(efstatus, tc, 1);
@@ -1394,14 +1466,17 @@ label_2181_internal:
                     cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
                 if (stat == 0)
                 {
-                    txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.mount.no_place_to_get_off"));
                     break;
                 }
                 cell_setchara(gdata_mount, rtval, rtval(1));
-                txt(i18n::s.get("core.locale.magic.mount.dismount", cdata[gdata_mount]));
+                txt(i18n::s.get(
+                    "core.locale.magic.mount.dismount", cdata[gdata_mount]));
                 txtef(9);
                 txt(name(gdata_mount)
-                    + i18n::s.get("core.locale.magic.mount.dismount_dialog", rnd(4)));
+                    + i18n::s.get(
+                          "core.locale.magic.mount.dismount_dialog", rnd(4)));
                 ride_end();
                 break;
             }
@@ -1421,7 +1496,8 @@ label_2181_internal:
         {
             if (gdata_mount == 0)
             {
-                txt(i18n::s.get("core.locale.magic.mount.ride_self", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.mount.ride_self", cdata[cc]));
             }
             break;
         }
@@ -1432,9 +1508,10 @@ label_2181_internal:
         }
         if (gdata_mount != 0)
         {
-            txt(i18n::s.get("core.locale.magic.mount.currently_riding",
-                            cdata[cc],
-                            cdata[gdata_mount]));
+            txt(i18n::s.get(
+                "core.locale.magic.mount.currently_riding",
+                cdata[cc],
+                cdata[gdata_mount]));
         }
         else
         {
@@ -1470,8 +1547,8 @@ label_2181_internal:
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.magic.perform.do_not_know",
-                        cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.perform.do_not_know", cdata[cc]));
                 return 0;
             }
         }
@@ -1565,7 +1642,8 @@ label_2181_internal:
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
-                if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+                if (x < 0 || y < 0 || x >= mdata_map_width
+                    || y >= mdata_map_height)
                 {
                     continue;
                 }
@@ -1679,7 +1757,8 @@ label_2181_internal:
         txtef(5);
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
-        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing).play();
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+            .play();
         break;
     case 1117:
         if (tc >= 16)
@@ -1726,9 +1805,8 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txt(i18n::s.get("core.locale.magic.mutation.spell",
-                            cdata[cc],
-                            cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.mutation.spell", cdata[cc], cdata[tc]));
             if (rnd(3))
             {
                 break;
@@ -1934,7 +2012,8 @@ label_2181_internal:
             {
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.magic.resurrection.fail", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.resurrection.fail", cdata[cc]));
                 }
                 break;
             }
@@ -1946,9 +2025,10 @@ label_2181_internal:
         chara_place();
         cdata[rc].current_map = 0;
         txtef(5);
-        txt(i18n::s.get("core.locale.magic.resurrection.apply",
-                        cnven(cdatan(0, rc)),
-                        cdata[rc]));
+        txt(i18n::s.get(
+            "core.locale.magic.resurrection.apply",
+            cnven(cdatan(0, rc)),
+            cdata[rc]));
         txt(i18n::s.get("core.locale.magic.resurrection.dialog"));
         animode = 100 + rc;
         miracle_animation().play();
@@ -1975,7 +2055,8 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.uncurse.blessed", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.uncurse.blessed", cdata[tc]));
             }
         }
         if (is_cursed(efstatus))
@@ -2036,7 +2117,8 @@ label_2181_internal:
             {
                 if (is_in_fov(tc))
                 {
-                    txt(i18n::s.get("core.locale.magic.uncurse.item", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.uncurse.item", cdata[tc]));
                 }
             }
         }
@@ -2044,14 +2126,15 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                    txt(i18n::s.get("core.locale.magic.uncurse.equipment", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.uncurse.equipment", cdata[tc]));
             }
         }
         if (p(2) != 0)
         {
             if (is_in_fov(tc))
             {
-                    txt(i18n::s.get("core.locale.magic.uncurse.resist"));
+                txt(i18n::s.get("core.locale.magic.uncurse.resist"));
             }
         }
         if (p(1) == 0 && p(2) == 0)
@@ -2117,16 +2200,23 @@ label_2181_internal:
                     {
                         if (cnt2 == 0)
                         {
-                            s = i18n::s.get("core.locale.magic.gain_knowledge.suddenly");
+                            s = i18n::s.get(
+                                "core.locale.magic.gain_knowledge.suddenly");
                         }
                         else
                         {
-                            s = i18n::s.get("core.locale.magic.gain_knowledge.furthermore");
+                            s = i18n::s.get(
+                                "core.locale.magic.gain_knowledge.furthermore");
                         }
                         skillgain(0, p, 1, 200);
                         txtef(2);
-                        txt(s + i18n::s.get("core.locale.magic.gain_knowledge.gain",
-                                            i18n::_(u8"ability", std::to_string(p), u8"name")));
+                        txt(s
+                            + i18n::s.get(
+                                  "core.locale.magic.gain_knowledge.gain",
+                                  i18n::_(
+                                      u8"ability",
+                                      std::to_string(p),
+                                      u8"name")));
                         snd(24);
                         f = 1;
                         break;
@@ -2138,10 +2228,15 @@ label_2181_internal:
                     if (spell(p) > 0)
                     {
                         spell(p) = 0;
-                        txt(i18n::s.get("core.locale.magic.common.it_is_cursed"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.it_is_cursed"));
                         txtef(3);
-                        txt(i18n::s.get("core.locale.magic.gain_knowledge.lose",
-                                        i18n::_(u8"ability", std::to_string(p + 400), u8"name")));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_knowledge.lose",
+                            i18n::_(
+                                u8"ability",
+                                std::to_string(p + 400),
+                                u8"name")));
                         snd(117);
                         animeload(14, 0);
                         f = 1;
@@ -2223,9 +2318,10 @@ label_2181_internal:
                     {
                         snd(24);
                         txtef(2);
-                        txt(i18n::s.get("core.locale.magic.gain_skill",
-                                        cdata[tc],
-                                        i18n::_(u8"ability", std::to_string(p), u8"name")));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_skill",
+                            cdata[tc],
+                            i18n::_(u8"ability", std::to_string(p), u8"name")));
                     }
                     break;
                 }
@@ -2238,7 +2334,8 @@ label_2181_internal:
                     if (is_in_fov(tc))
                     {
                         snd(38);
-                        txt(i18n::s.get("core.locale.magic.common.it_is_cursed"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.it_is_cursed"));
                     }
                     skillexp(p, tc, -1000);
                     break;
@@ -2277,8 +2374,9 @@ label_2181_internal:
         else
         {
             txtef(2);
-            txt(i18n::s.get("core.locale.magic.faith.apply",
-                            i18n::_(u8"god", cdata[0].god_id, u8"name")));
+            txt(i18n::s.get(
+                "core.locale.magic.faith.apply",
+                i18n::_(u8"god", cdata[0].god_id, u8"name")));
             if (efstatus == curse_state_t::blessed)
             {
                 txt(i18n::s.get("core.locale.magic.faith.blessed"));
@@ -2316,11 +2414,14 @@ label_2181_internal:
                         tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                     if (cnt2 == 0)
                     {
-                        s = i18n::s.get("core.locale.magic.gain_skill_potential.the");
+                        s = i18n::s.get(
+                            "core.locale.magic.gain_skill_potential.the");
                     }
                     else
                     {
-                        s = i18n::s.get("core.locale.magic.gain_skill_potential.furthermore_the");
+                        s = i18n::s.get(
+                            "core.locale.magic.gain_skill_potential."
+                            "furthermore_the");
                     }
                     if (!is_cursed(efstatus))
                     {
@@ -2328,18 +2429,25 @@ label_2181_internal:
                         {
                             snd(24);
                             txtef(2);
-                            txt(s + i18n::s.get("core.locale.magic.gain_skill_potential.increases",
-                                                cdata[tc],
-                                                i18n::_(u8"ability", std::to_string(p), u8"name")));
+                            txt(s
+                                + i18n::s.get(
+                                      "core.locale.magic.gain_skill_potential."
+                                      "increases",
+                                      cdata[tc],
+                                      i18n::_(
+                                          u8"ability",
+                                          std::to_string(p),
+                                          u8"name")));
                         }
                     }
                     else if (is_in_fov(tc))
                     {
                         snd(117);
                         txtef(3);
-                        txt(i18n::s.get("core.locale.magic.gain_skill_potential.decreases",
-                                        cdata[tc],
-                                        i18n::_(u8"ability", std::to_string(p), u8"name")));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_skill_potential.decreases",
+                            cdata[tc],
+                            i18n::_(u8"ability", std::to_string(p), u8"name")));
                     }
                     break;
                 }
@@ -2351,7 +2459,8 @@ label_2181_internal:
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
-        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff).play();
+        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
+            .play();
         chara_refresh(tc);
         break;
     case 1139:
@@ -2373,7 +2482,8 @@ label_2181_internal:
                 modify_potential(
                     tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
             }
-            txt(i18n::s.get("core.locale.magic.gain_potential.blessed", cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.gain_potential.blessed", cdata[tc]));
             animode = 100 + tc;
             miracle_animation().play();
             snd(61);
@@ -2384,18 +2494,20 @@ label_2181_internal:
             const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
             if (efstatus == curse_state_t::none)
             {
-                txt(i18n::s.get("core.locale.magic.gain_potential.increases",
-                                cdata[tc],
-                                valn));
+                txt(i18n::s.get(
+                    "core.locale.magic.gain_potential.increases",
+                    cdata[tc],
+                    valn));
                 modify_potential(
                     tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
                 snd(24);
             }
             else
             {
-                txt(i18n::s.get("core.locale.magic.gain_potential.decreases",
-                                cdata[tc],
-                                valn));
+                txt(i18n::s.get(
+                    "core.locale.magic.gain_potential.decreases",
+                    cdata[tc],
+                    valn));
                 modify_potential(
                     tc,
                     i,
@@ -2432,10 +2544,12 @@ label_2181_internal:
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
+                 ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                     ++cnt)
                 {
                     x = cnt;
                     p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
@@ -2477,13 +2591,13 @@ label_2181_internal:
         {
             if (efid == 429)
             {
-                txt(i18n::s.get("core.locale.magic.sense.magic_mapping",
-                                cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.sense.magic_mapping", cdata[tc]));
             }
             if (efid == 430)
             {
-                txt(i18n::s.get("core.locale.magic.sense.sense_object",
-                                cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.sense.sense_object", cdata[tc]));
             }
         }
         animeload(10, tc);
@@ -2504,15 +2618,13 @@ label_2181_internal:
             {
                 gdata(809) = 2;
                 txt3rd = 1;
-                txt(i18n::s.get("core.locale.magic.vorpal.other",
-                                cdata[cc],
-                                cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.vorpal.other", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(i18n::s.get("core.locale.magic.vorpal.ally",
-                                cdata[cc],
-                                cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.vorpal.ally", cdata[cc], cdata[tc]));
             }
         }
         dmghp(tc, cdata[tc].max_hp, cc, 658);
@@ -2526,16 +2638,19 @@ label_2181_internal:
                 if (is_cursed(efstatus))
                 {
                     snd(117);
-                    txt(i18n::s.get("core.locale.magic.restore.body.cursed", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.cursed", cdata[tc]));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.magic.restore.body.apply", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.apply", cdata[tc]));
                     animeload(10, tc);
                 }
                 if (efstatus == curse_state_t::blessed)
                 {
-                    txt(i18n::s.get("core.locale.magic.restore.body.blessed", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.blessed", cdata[tc]));
                     animeload(10, tc);
                 }
             }
@@ -2553,16 +2668,19 @@ label_2181_internal:
                 if (is_cursed(efstatus))
                 {
                     snd(117);
-                    txt(i18n::s.get("core.locale.magic.restore.mind.cursed", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.cursed", cdata[tc]));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.magic.restore.mind.apply", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.apply", cdata[tc]));
                     animeload(10, tc);
                 }
                 if (efstatus == curse_state_t::blessed)
                 {
-                    txt(i18n::s.get("core.locale.magic.restore.mind.blessed", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.blessed", cdata[tc]));
                     animeload(10, tc);
                 }
             }
@@ -2633,13 +2751,15 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
+            if (adata(16, gdata_current_map)
+                == mdata_t::map_id_t::random_dungeon)
             {
                 if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
                     if (adata(20, gdata_current_map) != -1)
                     {
-                        txt(i18n::s.get("core.locale.magic.escape.lord_may_disappear"));
+                        txt(i18n::s.get(
+                            "core.locale.magic.escape.lord_may_disappear"));
                     }
                 }
             }
@@ -2686,7 +2806,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
-            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+            bright_aura_animation(
+                cdata[tc], bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -2695,7 +2816,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
-            bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+            bright_aura_animation(
+                cdata[tc], bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -2709,7 +2831,9 @@ label_2181_internal:
             cdata[tc].is_pregnant() = false;
             if (is_in_fov(tc))
             {
-            txt(i18n::s.get("core.locale.magic.common.melts_alien_children", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.common.melts_alien_children",
+                    cdata[tc]));
             }
         }
         dmgcon(tc, status_ailment_t::poisoned, efp);
@@ -2749,9 +2873,8 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.curse.spell",
-                                cdata[cc],
-                                cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.curse.spell", cdata[cc], cdata[tc]));
             }
         }
         p = 75 + sdata(19, tc);
@@ -2825,9 +2948,8 @@ label_2181_internal:
             }
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.curse.apply",
-                                cdata[tc],
-                                valn));
+                txt(i18n::s.get(
+                    "core.locale.magic.curse.apply", cdata[tc], valn));
             }
             chara_refresh(tc);
             snd(117);
@@ -2857,7 +2979,8 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(i18n::s.get("core.locale.magic.weaken_resistance.nothing_happens"));
+            txt(i18n::s.get(
+                "core.locale.magic.weaken_resistance.nothing_happens"));
             obvious = 0;
         }
         else
@@ -2908,11 +3031,13 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (gdata_current_map == mdata_t::map_id_t::arena || gdata_current_map == mdata_t::map_id_t::pet_arena
+        if (gdata_current_map == mdata_t::map_id_t::arena
+            || gdata_current_map == mdata_t::map_id_t::pet_arena
             || gdata_current_map == mdata_t::map_id_t::the_void)
         {
             obvious = 0;
-            txt(i18n::s.get("core.locale.magic.domination.does_not_work_in_area"));
+            txt(i18n::s.get(
+                "core.locale.magic.domination.does_not_work_in_area"));
             break;
         }
         f = 1;
@@ -2944,7 +3069,8 @@ label_2181_internal:
         }
         else
         {
-            txt(i18n::s.get("core.locale.magic.domination.cannot_be_charmed", cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.domination.cannot_be_charmed", cdata[tc]));
         }
         break;
     case 436:
@@ -3159,13 +3285,15 @@ label_2181_internal:
             {
                 if (efp < 350)
                 {
-                    txt(i18n::s.get("core.locale.magic.change_material.more_power_needed"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.change_material.more_power_needed"));
                     break;
                 }
                 animeload(8, cc);
-                txt(i18n::s.get("core.locale.magic.change_material.artifact_reconstructed",
-                                cdata[cc],
-                                inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.magic.change_material.artifact_reconstructed",
+                    cdata[cc],
+                    inv[ci]));
                 --inv[ci].number;
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 flt();
@@ -3186,7 +3314,11 @@ label_2181_internal:
                 objfix = efp / 100;
                 randomize();
                 change_item_material();
-                txt(i18n::s.get("core.locale.magic.change_material.apply", cdata[cc], s(0), inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.magic.change_material.apply",
+                    cdata[cc],
+                    s(0),
+                    inv[ci]));
             }
         }
         else
@@ -3216,8 +3348,9 @@ label_2181_internal:
         gdata_rights_to_succeed_to += p;
         txtef(5);
         txt(i18n::s.get("core.locale.magic.deed_of_inheritance.claim", p(0)));
-        txt(i18n::s.get("core.locale.magic.deed_of_inheritance.can_now_inherit",
-                        gdata_rights_to_succeed_to));
+        txt(i18n::s.get(
+            "core.locale.magic.deed_of_inheritance.can_now_inherit",
+            gdata_rights_to_succeed_to));
         break;
     case 1124:
     case 1125:
@@ -3245,12 +3378,14 @@ label_2181_internal:
                 if (inv[ci].enhancement < efp / 100)
                 {
                     snd(24);
-                    txt(i18n::s.get("core.locale.magic.enchant.apply", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.enchant.apply", inv[ci]));
                     ++inv[ci].enhancement;
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.magic.enchant.resist", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.enchant.resist", inv[ci]));
                 }
                 chara_refresh(cc);
             }
@@ -3272,11 +3407,13 @@ label_2181_internal:
         {
             if (gdata_charge_power < 10)
             {
-                txt(i18n::s.get("core.locale.magic.fill_charge.more_power_needed"));
+                txt(i18n::s.get(
+                    "core.locale.magic.fill_charge.more_power_needed"));
                 break;
             }
             gdata_charge_power -= 10;
-            txt(i18n::s.get("core.locale.magic.fill_charge.spend", gdata_charge_power));
+            txt(i18n::s.get(
+                "core.locale.magic.fill_charge.spend", gdata_charge_power));
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3292,7 +3429,8 @@ label_2181_internal:
                     || inv[ci].id == 289 || inv[ci].id == 732
                     || (inv[ci].id == 687 && inv[ci].param2 != 0))
                 {
-                    txt(i18n::s.get("core.locale.magic.fill_charge.cannot_recharge"));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.cannot_recharge"));
                     break;
                 }
                 f = 1;
@@ -3302,8 +3440,9 @@ label_2181_internal:
                 }
                 if (f == -1)
                 {
-                    txt(i18n::s.get("core.locale.magic.fill_charge.cannot_recharge_anymore",
-                            inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.cannot_recharge_anymore",
+                        inv[ci]));
                     break;
                 }
                 if (rnd(efp / 25 + 1) == 0)
@@ -3332,7 +3471,8 @@ label_2181_internal:
                     {
                         p = 1;
                     }
-                    txt(i18n::s.get("core.locale.magic.fill_charge.apply", inv[ci], p(0)));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.apply", inv[ci], p(0)));
                     inv[ci].count += p;
                     animeload(8, cc);
                 }
@@ -3340,12 +3480,14 @@ label_2181_internal:
                 {
                     if (rnd(4) == 0)
                     {
-                        txt(i18n::s.get("core.locale.magic.fill_charge.explodes", inv[ci]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.fill_charge.explodes", inv[ci]));
                         --inv[ci].number;
                         refresh_burden_state();
                         break;
                     }
-                    txt(i18n::s.get("core.locale.magic.fill_charge.fail", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.fail", inv[ci]));
                 }
             }
             else
@@ -3398,10 +3540,11 @@ label_2181_internal:
                 animeload(8, cc);
                 p = p * inv[ci].count;
                 gdata_charge_power += p;
-                txt(i18n::s.get("core.locale.magic.draw_charge",
-                                inv[ci],
-                                p(0),
-                                gdata_charge_power));
+                txt(i18n::s.get(
+                    "core.locale.magic.draw_charge",
+                    inv[ci],
+                    p(0),
+                    gdata_charge_power));
                 item_remove(inv[ci]);
                 refresh_burden_state();
             }
@@ -3447,8 +3590,8 @@ label_2181_internal:
         }
         else
         {
-            txt(i18n::s.get("core.locale.magic.change.cannot_be_changed",
-                    cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.change.cannot_be_changed", cdata[tc]));
         }
         break;
     case 1140:
@@ -3466,7 +3609,8 @@ label_2181_internal:
             menu_result result = ctrl_inventory();
             if (result.succeeded)
             {
-                autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+                autosave =
+                    1 * (gdata_current_map != mdata_t::map_id_t::show_house);
                 animeload(8, cc);
                 if (!is_cursed(efstatus))
                 {
@@ -3501,7 +3645,8 @@ label_2181_internal:
                         inv[ci].damage_bonus +=
                             clamp(inv[ci].damage_bonus / 10, 1, 5);
                     }
-                    txt(i18n::s.get("core.locale.magic.flying.cursed", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.magic.flying.cursed", inv[ci]));
                 }
                 refresh_burden_state();
             }
@@ -3822,7 +3967,8 @@ label_2181_internal:
             if (is_in_fov(tc))
             {
                 txtef(4);
-                txt(i18n::s.get("core.locale.magic.cheer.is_excited", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.cheer.is_excited", cdata[tc]));
             }
             buff_add(tc, 5, sdata(17, cc) * 5 + 50, 15);
             buff_add(tc, 7, sdata(17, cc) * 5 + 100, 60);
@@ -3864,7 +4010,8 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.insult.apply", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.insult.apply", cdata[cc], cdata[tc]));
                 txtef(9);
                 if (jp)
                 {
@@ -3918,7 +4065,8 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.gaze", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.magic.gaze", cdata[cc], cdata[tc]));
             }
         }
         dmgcon(tc, status_ailment_t::dimmed, 200);
@@ -3948,7 +4096,8 @@ label_2181_internal:
     case 651:
         if (is_in_fov(tc))
         {
-            txt(i18n::s.get("core.locale.magic.scavenge.apply", cdata[cc], cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.magic.scavenge.apply", cdata[cc], cdata[tc]));
         }
         p = -1;
         for (const auto& cnt : items(tc))
@@ -3992,7 +4141,8 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                txt(i18n::s.get("core.locale.magic.scavenge.rotten", cdata[cc], inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.magic.scavenge.rotten", cdata[cc], inv[ci]));
             }
             break;
         }
@@ -4000,7 +4150,8 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             snd(18);
-            txt(i18n::s.get("core.locale.magic.scavenge.eats", cdata[cc], inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.magic.scavenge.eats", cdata[cc], inv[ci]));
         }
         healhp(cc, cdata[cc].max_hp / 3);
         continuous_action_eating_finish();
@@ -4036,7 +4187,8 @@ label_2181_internal:
             nostack = 1;
             itemcreate(
                 -1, dbid, cdata[cc].position.x, cdata[cc].position.y, number);
-            const auto message = i18n::s.get("core.locale.magic.wizards_harvest", inv[ci]);
+            const auto message =
+                i18n::s.get("core.locale.magic.wizards_harvest", inv[ci]);
             if (fastest)
             {
                 messages += message;

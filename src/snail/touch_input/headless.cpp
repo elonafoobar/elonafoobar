@@ -29,5 +29,5 @@ void touch_input::on_touch_event(::SDL_TouchFingerEvent)
 {
 }
 
-}
-}
+} // namespace snail
+} // namespace elona

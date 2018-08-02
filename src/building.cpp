@@ -429,7 +429,8 @@ turn_result_t show_house_board()
         if (gdata_current_dungeon_level == 1)
         {
             ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.recruit_a_servant"),
+                i18n::s.get("core.locale.building.house_board.choices.recruit_"
+                            "a_servant"),
                 u8"null"s,
                 ""s + 6);
         }
@@ -740,7 +741,8 @@ void show_home_value()
             continue;
         }
 
-        draw_item_with_portrait_scale_height(inv[p], wx + 37, cnt * 16 + wy + 138);
+        draw_item_with_portrait_scale_height(
+            inv[p], wx + 37, cnt * 16 + wy + 138);
 
         pos(wx + 68, cnt * 16 + wy + 138);
         mes(i18n::s.get(
@@ -879,7 +881,8 @@ void try_extend_shop()
         cdata[0].gold -= calcshopreform();
         mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
         txtef(2);
-        txt(i18n::s.get("core.locale.building.shop.extend", mdata_map_max_item_count));
+        txt(i18n::s.get(
+            "core.locale.building.shop.extend", mdata_map_max_item_count));
     }
 }
 

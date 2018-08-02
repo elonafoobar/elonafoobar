@@ -1,10 +1,11 @@
+#include <cassert>
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
-#include "config.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "config.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "event.hpp"
@@ -16,7 +17,6 @@
 #include "optional.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include <cassert>
 
 namespace elona
 {
@@ -246,7 +246,8 @@ void run_random_event(int id, int luck_threshold)
             }
             if (cdata[p].state == 1)
             {
-                txt(i18n::s.get_enum_property("core.locale.event.popup", "scream", 15, cdata[p]));
+                txt(i18n::s.get_enum_property(
+                    "core.locale.event.popup", "scream", 15, cdata[p]));
                 dmghp(p, 99999, -11);
                 break;
             }
@@ -320,8 +321,8 @@ void run_random_event(int id, int luck_threshold)
     case 19:
         flt();
         itemcreate(0, 621, -1, -1, 0);
-        txt(i18n::s.get("core.locale.common.you_put_in_your_backpack",
-                inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.common.you_put_in_your_backpack", inv[ci]));
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
@@ -333,15 +334,16 @@ void run_random_event(int id, int luck_threshold)
     case 21:
         flt();
         itemcreate(0, 721, -1, -1, 0);
-        txt(i18n::s.get("core.locale.common.you_put_in_your_backpack",
-                inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.common.you_put_in_your_backpack", inv[ci]));
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
     case 5:
         if (trait(42))
         {
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "no_effect", 5));
+            txt(i18n::s.get_enum_property(
+                "core.locale.event.popup", "no_effect", 5));
         }
         else
         {
@@ -380,13 +382,14 @@ void run_random_event(int id, int luck_threshold)
         }
         if (p > 0)
         {
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "you_lose", 8,
-                                          p(0)));
+            txt(i18n::s.get_enum_property(
+                "core.locale.event.popup", "you_lose", 8, p(0)));
             cdata[0].gold -= p;
         }
         else
         {
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "no_effect", 8));
+            txt(i18n::s.get_enum_property(
+                "core.locale.event.popup", "no_effect", 8));
         }
         listmax = 1;
         event_bg = u8"bg_re9";
@@ -429,8 +432,8 @@ void run_random_event(int id, int luck_threshold)
     case 16:
         p = rnd(cdata[0].gold / 10 + 1000) + 1;
         earn_gold(cdata[0], p);
-        txt(i18n::s.get_enum_property("core.locale.event.popup", "you_pick_up", 16,
-                        p(0)));
+        txt(i18n::s.get_enum_property(
+            "core.locale.event.popup", "you_pick_up", 16, p(0)));
         listmax = 1;
         event_bg = u8"bg_re1";
         break;
@@ -444,24 +447,23 @@ void run_random_event(int id, int luck_threshold)
         break;
     }
 
-    for(int cnt = 0; cnt < listmax; cnt++)
+    for (int cnt = 0; cnt < listmax; cnt++)
     {
         list(0, cnt) = cnt;
-        listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
-                                                  "choices._" + std::to_string(cnt),
-                                                  id);
+        listn(0, cnt) = i18n::s.get_enum_property(
+            "core.locale.event.popup", "choices._" + std::to_string(cnt), id);
     }
 
     int result = show_random_event_window(event_bg);
 
-    switch(id)
+    switch (id)
     {
     case 14:
         if (result == 0)
         {
             cdata[0].nutrition = 15000;
-            txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results",
-                                 rnd(3)));
+            txt(i18n::s.get_enum(
+                "core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
             show_eating_message();
             chara_anorexia(0);
         }
@@ -475,13 +477,15 @@ void run_random_event(int id, int luck_threshold)
                 flttypemajor = fsetremain(rnd(fsetremain.size()));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
         }
         break;
     case 11:
         if (result == 0)
         {
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "loot", 11));
+            txt(i18n::s.get_enum_property(
+                "core.locale.event.popup", "loot", 11));
             modify_karma(0, -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
@@ -496,11 +500,13 @@ void run_random_event(int id, int luck_threshold)
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "bury", 11));
+            txt(i18n::s.get_enum_property(
+                "core.locale.event.popup", "bury", 11));
             modify_karma(0, 5);
         }
     }

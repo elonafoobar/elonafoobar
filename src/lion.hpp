@@ -5,10 +5,10 @@
 #include <vector>
 #include "filesystem.hpp"
 #include "hcl.hpp"
-#include "shared_id.hpp"
 #include "lib/noncopyable.hpp"
 #include "log.hpp"
 #include "optional.hpp"
+#include "shared_id.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/sol2/sol.hpp"
 
@@ -21,7 +21,7 @@ namespace lua
 {
 class lua_env;
 extern std::unique_ptr<lua_env> lua;
-}
+} // namespace lua
 
 namespace lion
 {
@@ -41,7 +41,10 @@ public:
     using map_type = std::unordered_map<id_type, data_type>;
     using legacy_map_type = std::unordered_map<legacy_id_type, id_type>;
 
-    lion_db() : scope("core") {}
+    lion_db()
+        : scope("core")
+    {
+    }
 
     struct iterator
     {
@@ -115,7 +118,8 @@ public:
         steady_clock::time_point begin = steady_clock::now();
 
         std::string prefix = "core." + std::string(traits_type::datatype_name);
-        for (const auto& pair : table) {
+        for (const auto& pair : table)
+        {
             std::string id = pair.first.as<std::string>();
             sol::table data = pair.second.as<sol::table>();
 
@@ -125,7 +129,10 @@ public:
             auto it = by_legacy_id.find(converted.id);
             if (it != by_legacy_id.end())
             {
-                throw std::runtime_error(the_id.get() + ": Legacy id already exists: "s + std::to_string(converted.id) + " -> "s + it->second.get());
+                throw std::runtime_error(
+                    the_id.get() + ": Legacy id already exists: "s
+                    + std::to_string(converted.id) + " -> "s
+                    + it->second.get());
             }
 
             by_legacy_id.emplace(converted.id, the_id);
@@ -133,13 +140,16 @@ public:
         }
 
         steady_clock::time_point end = steady_clock::now();
-        auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-        ELONA_LOG("[LION ("s << traits_type::datatype_name << ")] Elements: "s
-                  << storage.size() << ", time: "s
-                  << time << "ms"s);
+        auto time =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)
+                .count();
+        ELONA_LOG(
+            "[LION ("s << traits_type::datatype_name << ")] Elements: "s
+                       << storage.size() << ", time: "s << time << "ms"s);
     }
 
-    optional_ref<id_type> get_id_from_legacy(const legacy_id_type& legacy_id) const
+    optional_ref<id_type> get_id_from_legacy(
+        const legacy_id_type& legacy_id) const
     {
         const auto itr = by_legacy_id.find(legacy_id);
         if (itr == std::end(by_legacy_id))
@@ -181,8 +191,9 @@ protected:
 
 
 template <typename T>
-static optional<std::vector<T>> convert_vector(const sol::table& data,
-                                               const std::string& name)
+static optional<std::vector<T>> convert_vector(
+    const sol::table& data,
+    const std::string& name)
 {
     sol::optional<sol::table> value = data[name];
 
@@ -203,63 +214,65 @@ static optional<std::vector<T>> convert_vector(const sol::table& data,
 }
 
 
-#define ELONA_LION_DB_FIELD(name, type, default_value)  \
-    type name;                                          \
-    {                                                   \
-        sol::optional<type> value = data[#name];        \
-        if (value)                                      \
-        {                                               \
-            name = *value;                              \
-        }                                               \
-        else                                            \
-        {                                               \
-            name = default_value;                       \
-        }                                               \
-    }                                                   \
+#define ELONA_LION_DB_FIELD(name, type, default_value) \
+    type name; \
+    { \
+        sol::optional<type> value = data[#name]; \
+        if (value) \
+        { \
+            name = *value; \
+        } \
+        else \
+        { \
+            name = default_value; \
+        } \
+    }
 
-#define ELONA_LION_DB_FIELD_REQUIRED(name, type)                        \
-    type name;                                                          \
-    {                                                                   \
-        sol::optional<type> value = data[#name];                        \
-        if (value)                                                      \
-        {                                                               \
-            name = *value;                                              \
-        }                                                               \
-        else                                                            \
-        {                                                               \
+#define ELONA_LION_DB_FIELD_REQUIRED(name, type) \
+    type name; \
+    { \
+        sol::optional<type> value = data[#name]; \
+        if (value) \
+        { \
+            name = *value; \
+        } \
+        else \
+        { \
             throw std::runtime_error(id_ + ": No such field " + #name); \
-        }                                                               \
-    }                                                                   \
+        } \
+    }
 
-#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value)        \
-    int name;                                                           \
-    {                                                                   \
-        std::string variant;                                            \
-        sol::optional<std::string> value = data[#name];                 \
-        if (value)                                                      \
-        {                                                               \
-            variant = *value;                                           \
-        }                                                               \
-        else                                                            \
-        {                                                               \
-            variant = default_value;                                    \
-        }                                                               \
+#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value) \
+    int name; \
+    { \
+        std::string variant; \
+        sol::optional<std::string> value = data[#name]; \
+        if (value) \
+        { \
+            variant = *value; \
+        } \
+        else \
+        { \
+            variant = default_value; \
+        } \
         name = lua.get_api_manager().get_enum_value(enum_type, variant); \
-    }                                                                   \
+    }
 
-#define ELONA_LION_DB_FIELD_CALLBACK(name)                              \
-    optional<std::string> name = none;                                  \
-    {                                                                   \
-        sol::optional<std::string> function_name = data[#name];         \
-        if (function_name)                                              \
-        {                                                               \
-            name = *function_name;                                      \
+#define ELONA_LION_DB_FIELD_CALLBACK(name) \
+    optional<std::string> name = none; \
+    { \
+        sol::optional<std::string> function_name = data[#name]; \
+        if (function_name) \
+        { \
+            name = *function_name; \
             if (!lua.get_export_manager().has_function(*function_name)) \
-            {                                                           \
-                throw std::runtime_error("Error loading " + id_ + "." + #name + ": No such callback named " + *function_name); \
-            }                                                           \
-        }                                                               \
-    }                                                                   \
+            { \
+                throw std::runtime_error( \
+                    "Error loading " + id_ + "." + #name \
+                    + ": No such callback named " + *function_name); \
+            } \
+        } \
+    }
 
 
 } // namespace lion

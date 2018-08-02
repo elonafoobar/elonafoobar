@@ -620,8 +620,13 @@ void show_chat_dialog()
         inputlog = u8"\""s + inputlog + u8"\""s;
     }
     txt(inputlog);
-    net_send("chat" + i18n::s.get("core.locale.network.chat.says",
-                                  cdatan(1, 0), cdatan(0, 0), inputlog(0)));
+    net_send(
+        "chat"
+        + i18n::s.get(
+              "core.locale.network.chat.says",
+              cdatan(1, 0),
+              cdatan(0, 0),
+              inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
     return;
@@ -650,16 +655,16 @@ label_14001_internal:
     listmax = 0;
     list(0, listmax) = -999;
     list(1, listmax) = 0;
-    listn(0, listmax) =
-        i18n::s.get("core.locale.network.alias.submit");
+    listn(0, listmax) = i18n::s.get("core.locale.network.alias.submit");
     ++listmax;
     net_read(1);
     if (gdata_next_voting_time > gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
     {
         comctrl = 0;
-        txt(i18n::s.get("core.locale.network.alias.cannot_vote_until",
-                        cnvdate(gdata_next_voting_time)));
+        txt(i18n::s.get(
+            "core.locale.network.alias.cannot_vote_until",
+            cnvdate(gdata_next_voting_time)));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             if (cnt == 0)
@@ -702,8 +707,7 @@ label_1401_internal:
     }
 label_1402_internal:
     s(0) = i18n::s.get("core.locale.network.alias.title");
-    s(1) = i18n::s.get("core.locale.network.alias.hint") + strhint2
-        + strhint3;
+    s(1) = i18n::s.get("core.locale.network.alias.hint") + strhint2 + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     x = ww / 5 * 3;
     y = wh - 80;
@@ -750,7 +754,8 @@ label_1402_internal:
             pos(wx + 90, wy + 66 + cnt * 19 + 2);
             if (comctrl == 0)
             {
-                mes(i18n::s.get("core.locale.network.alias.rank", cnvrank(p), p(0)));
+                mes(i18n::s.get(
+                    "core.locale.network.alias.rank", cnvrank(p), p(0)));
             }
             else
             {
@@ -777,8 +782,10 @@ label_1402_internal:
     {
         if (p == -999)
         {
-            net_send(""s + cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0), 1);
-            ELONA_APPEND_PROMPT(i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
+            net_send(
+                ""s + cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0), 1);
+            ELONA_APPEND_PROMPT(
+                i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
             rtval = show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
@@ -791,12 +798,14 @@ label_1402_internal:
         }
         gdata_next_voting_time = gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
-        txt(i18n::s.get("core.locale.network.alias.i_like",
-                        listn(0, (cs + pagesize * page))));
+        txt(i18n::s.get(
+            "core.locale.network.alias.i_like",
+            listn(0, (cs + pagesize * page))));
         txt(i18n::s.get("core.locale.network.alias.you_vote"));
         net_send(""s + p, 2);
         modrank(6, 100, 5);
-        ELONA_APPEND_PROMPT(i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
         rtval = show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }

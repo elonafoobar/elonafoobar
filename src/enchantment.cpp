@@ -79,7 +79,8 @@ void initialize_enchantment_data()
 
     for (int cnt = 0; cnt < 6; cnt++)
     {
-        ammoname(cnt) = i18n::s.get_enum("core.locale.enchantment.with_parameters.ammo.kinds", cnt);
+        ammoname(cnt) = i18n::s.get_enum(
+            "core.locale.enchantment.with_parameters.ammo.kinds", cnt);
     }
 
     encref(0, 21) = -1;
@@ -493,15 +494,19 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     i18n::_(u8"ability", std::to_string(sid), u8"name");
                 if (category == 57000)
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.in_food.decreases", skill_name);
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "food.decreases",
+                        skill_name);
                     s += enchantment_level_string(power / 50);
-
                 }
                 else
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.other.decreases",
-                                    skill_name,
-                                    std::abs(power / 50 + 1));
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute."
+                        "other.decreases",
+                        skill_name,
+                        std::abs(power / 50 + 1));
                 }
             }
             else
@@ -510,14 +515,19 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     i18n::_(u8"ability", std::to_string(sid), u8"name");
                 if (category == 57000)
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.in_food.increases", skill_name);
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "food.increases",
+                        skill_name);
                     s += enchantment_level_string(power / 50);
                 }
                 else
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.other.increases",
-                                    skill_name,
-                                    std::abs(power / 50 + 1));
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute."
+                        "other.increases",
+                        skill_name,
+                        std::abs(power / 50 + 1));
                 }
             }
             break;
@@ -526,8 +536,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (power / 2 < 0)
             {
                 rtval = 9;
-                s = i18n::s.get("core.locale.enchantment.with_parameters.resistance.decreases",
-                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.resistance."
+                    "decreases",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             else
             {
@@ -537,8 +549,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     u8"enchantment_description");
                 if (s == ""s)
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.resistance.increases",
-                                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.resistance."
+                        "increases",
+                        i18n::_(u8"ability", std::to_string(sid), u8"name"));
                 }
             }
             s += enchantment_level_string(power / 100);
@@ -548,8 +562,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (power / 50 + 1 < 0)
             {
                 rtval = 9;
-                s = i18n::s.get("core.locale.enchantment.with_parameters.skill.decreases",
-                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill.decreases",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             else
             {
@@ -559,8 +574,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     u8"enchantment_description");
                 if (s == ""s)
                 {
-                    s = i18n::s.get("core.locale.enchantment.with_parameters.skill.increases",
-                                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.skill."
+                        "increases",
+                        i18n::_(u8"ability", std::to_string(sid), u8"name"));
                 }
             }
             s += enchantment_level_string((power / 50 + 1) / 5);
@@ -569,14 +586,18 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             rtval = 8;
             if (category == 57000)
             {
-                s = i18n::s.get("core.locale.enchantment.with_parameters.skill_maintenance.in_food",
-                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
-                s +=  enchantment_level_string(power / 50);
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "in_food",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s += enchantment_level_string(power / 50);
             }
             else
             {
-                s = i18n::s.get("core.locale.enchantment.with_parameters.skill_maintenance.other",
-                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "other",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             break;
         case 7:
@@ -585,24 +606,29 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
             {
-                s = i18n::s.get("core.locale.enchantment.with_parameters.extra_damage",
-                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.extra_damage",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             s += enchantment_level_string(power / 100);
             break;
         case 8:
             rtval = 4;
             sid = encprocref(0, sid);
-            s = i18n::s.get("core.locale.enchantment.with_parameters.invokes",
-                            i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            s = i18n::s.get(
+                "core.locale.enchantment.with_parameters.invokes",
+                i18n::_(u8"ability", std::to_string(sid), u8"name"));
             s += enchantment_level_string(power / 50);
             break;
         case 9:
             rtval = 4;
-            s = i18n::s.get("core.locale.enchantment.with_parameters.ammo.text",
-                            ammoname(sid));
+            s = i18n::s.get(
+                "core.locale.enchantment.with_parameters.ammo.text",
+                ammoname(sid));
             s += " ["
-                + i18n::s.get("core.locale.enchantment.with_parameters.ammo.max", power / 1000)
+                + i18n::s.get(
+                      "core.locale.enchantment.with_parameters.ammo.max",
+                      power / 1000)
                 + "]";
             break;
         }
@@ -658,33 +684,15 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 22:
-        rtval = 4;
-        break;
-    case 23:
-        rtval = 4;
-        break;
-    case 24:
-        rtval = 4;
-        break;
-    case 25:
-        rtval = 4;
-        break;
-    case 26:
-        rtval = 4;
-        break;
-    case 27:
-        rtval = 4;
-        break;
-    case 28:
-        rtval = 4;
-        break;
-    case 41:
-        rtval = 4;
-        break;
-    case 42:
-        rtval = 4;
-        break;
+    case 22: rtval = 4; break;
+    case 23: rtval = 4; break;
+    case 24: rtval = 4; break;
+    case 25: rtval = 4; break;
+    case 26: rtval = 4; break;
+    case 27: rtval = 4; break;
+    case 28: rtval = 4; break;
+    case 41: rtval = 4; break;
+    case 42: rtval = 4; break;
     case 29:
         rtval = 4;
         if (trait)
@@ -696,21 +704,11 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 100);
         }
         break;
-    case 30:
-        rtval = 4;
-        break;
-    case 31:
-        rtval = 4;
-        break;
-    case 48:
-        rtval = 4;
-        break;
-    case 32:
-        rtval = 4;
-        break;
-    case 33:
-        rtval = 4;
-        break;
+    case 30: rtval = 4; break;
+    case 31: rtval = 4; break;
+    case 48: rtval = 4; break;
+    case 32: rtval = 4; break;
+    case 33: rtval = 4; break;
     case 34:
         rtval = 4;
         if (trait)
@@ -722,9 +720,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 35:
-        rtval = 4;
-        break;
+    case 35: rtval = 4; break;
     case 36:
         rtval = 4;
         if (trait)
@@ -736,9 +732,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 37:
-        rtval = 4;
-        break;
+    case 37: rtval = 4; break;
     case 38:
         rtval = 4;
         if (trait)
@@ -816,9 +810,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 49:
-        rtval = 4;
-        break;
+    case 49: rtval = 4; break;
     case 52:
         rtval = 4;
         if (trait)
@@ -852,12 +844,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 55:
-        rtval = 4;
-        break;
-    case 56:
-        rtval = 4;
-        break;
+    case 55: rtval = 4; break;
+    case 56: rtval = 4; break;
     case 57:
         rtval = 4;
         if (trait)
@@ -880,12 +868,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 59:
-        rtval = 4;
-        break;
-    case 60:
-        rtval = 4;
-        break;
+    case 59: rtval = 4; break;
+    case 60: rtval = 4; break;
     case 61:
         rtval = 4;
         if (trait)
@@ -1517,7 +1501,8 @@ void initialize_ego_data()
 
     for (int cnt = 0; cnt < 11; cnt++)
     {
-        egoname(cnt) = i18n::s.get_enum("core.locale.enchantment.item_ego.major", cnt);
+        egoname(cnt) =
+            i18n::s.get_enum("core.locale.enchantment.item_ego.major", cnt);
     }
 
     egoref(0, 1) = 0;
@@ -1590,7 +1575,8 @@ void initialize_ego_data()
 
     for (int cnt = 0; cnt < 10; cnt++)
     {
-        egominorn(cnt) = i18n::s.get_enum("core.locale.enchantment.item_ego.minor", cnt);
+        egominorn(cnt) =
+            i18n::s.get_enum("core.locale.enchantment.item_ego.minor", cnt);
     }
 
     maxegominorn = egominorn.size();

@@ -4,9 +4,9 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "lua_env/lua_env.hpp"
 #include "race.hpp"
 #include "random.hpp"
-#include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 
 
@@ -53,9 +53,8 @@ int access_character_info()
         cdatan(0, rc) = i18n::_(u8"character", std::to_string(dbid), u8"name");
         if (data->has_random_name)
         {
-            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.own_name",
-                                        cdatan(0, rc),
-                                        randomname());
+            cdatan(0, rc) = i18n::s.get(
+                "core.locale.chara.job.own_name", cdatan(0, rc), randomname());
             cdata[rc].has_own_name() = true;
         }
         cdata[rc].original_relationship = cdata[rc].relationship =
@@ -324,7 +323,8 @@ int access_character_info()
     if (dbmode == 12 && data->corpse_eating_effect)
     {
         auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
-        lua::lua->get_export_manager().call(*data->corpse_eating_effect, handle);
+        lua::lua->get_export_manager().call(
+            *data->corpse_eating_effect, handle);
         return -1;
     }
 

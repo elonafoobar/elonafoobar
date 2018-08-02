@@ -721,13 +721,15 @@ int quest_generate()
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::map_id_t::noyel)
+        if (qdata(12, rq) == 33
+            || gdata_current_map == mdata_t::map_id_t::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
-    if (rnd(23) == 0 || (gdata_current_map == mdata_t::map_id_t::palmia && rnd(8) == 0))
+    if (rnd(23) == 0
+        || (gdata_current_map == mdata_t::map_id_t::palmia && rnd(8) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
@@ -747,7 +749,8 @@ int quest_generate()
         rewardfix = 0;
         return 0;
     }
-    if (rnd(30) == 0 || (gdata_current_map == mdata_t::map_id_t::yowyn && rnd(2) == 0))
+    if (rnd(30) == 0
+        || (gdata_current_map == mdata_t::map_id_t::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
@@ -1075,19 +1078,22 @@ void quest_failed(int val0)
                                 if (qdata(4, rq) == 0)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed.assassin");
+                                        "core.locale.quest.escort.failed."
+                                        "assassin");
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed.poison");
+                                        "core.locale.quest.escort.failed."
+                                        "poison");
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
                                 {
                                     s = i18n::s.get(
-                                        "core.locale.quest.escort.failed.deadline",
+                                        "core.locale.quest.escort.failed."
+                                        "deadline",
                                         cdata[tc]);
                                     mef_add(
                                         cdata[0].position.x,

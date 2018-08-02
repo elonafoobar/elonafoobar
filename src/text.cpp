@@ -236,7 +236,8 @@ std::vector<std::string> txtsetwinword(int n)
     std::vector<std::string> choices;
     for (int cnt = 0; cnt < 6; cnt++)
     {
-        choices.push_back(i18n::s.get_enum("core.locale.scenario.win_words", cnt));
+        choices.push_back(
+            i18n::s.get_enum("core.locale.scenario.win_words", cnt));
     }
     sample(choices, std::back_inserter(ret), n);
     return ret;
@@ -249,8 +250,10 @@ void initialize_nefia_names()
     SDIM4(mapnamerd, 20, 2, 5);
     for (int cnt = 0; cnt < 5; cnt++)
     {
-        mapnamerd(0, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_a", cnt);
-        mapnamerd(1, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_b", cnt);
+        mapnamerd(0, cnt) =
+            i18n::s.get_enum("core.locale.map.nefia.prefix.type_a", cnt);
+        mapnamerd(1, cnt) =
+            i18n::s.get_enum("core.locale.map.nefia.prefix.type_b", cnt);
     }
 }
 
@@ -278,7 +281,8 @@ std::string maplevel(int)
             || adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
             || adata(16, gdata_current_map) == mdata_t::map_id_t::quest
             || (mdata_map_type >= mdata_t::map_type_t::dungeon
-                && mdata_map_type <= mdata_t::map_type_t::dungeon_castle) == 1)
+                && mdata_map_type <= mdata_t::map_type_t::dungeon_castle)
+                == 1)
         {
             return ""s
                 + cnvrank(
@@ -323,9 +327,7 @@ std::string mapname(int id, bool description)
             name = i18n::s.get("core.locale.map.quest.urban_area");
         }
         break;
-    case mdata_t::map_id_t::random_dungeon:
-        name = mapname_dungeon(id);
-        break;
+    case mdata_t::map_id_t::random_dungeon: name = mapname_dungeon(id); break;
     default:
         name = i18n::s.get_enum_property(
             "core.locale.map.unique", "name", adata(16, id));
@@ -382,10 +384,11 @@ std::string txtbuilding(int prm_368, int prm_369)
 
 std::string txtskillchange(int id, int cc, bool increase)
 {
-    if (auto text = i18n::s.get_enum_property_opt("core.locale.skill",
-                                                  increase ? "increase" : "decrease",
-                                                  id,
-                                                  cdata[cc]))
+    if (auto text = i18n::s.get_enum_property_opt(
+            "core.locale.skill",
+            increase ? "increase" : "decrease",
+            id,
+            cdata[cc]))
     {
         return *text;
     }
@@ -393,15 +396,17 @@ std::string txtskillchange(int id, int cc, bool increase)
     {
         if (increase)
         {
-            return i18n::s.get("core.locale.skill.default.increase",
-                               cdata[cc],
-                               i18n::_(u8"ability", std::to_string(id), u8"name"));
+            return i18n::s.get(
+                "core.locale.skill.default.increase",
+                cdata[cc],
+                i18n::_(u8"ability", std::to_string(id), u8"name"));
         }
         else
         {
-            return i18n::s.get("core.locale.skill.default.decrease",
-                               cdata[cc],
-                               i18n::_(u8"ability", std::to_string(id), u8"name"));
+            return i18n::s.get(
+                "core.locale.skill.default.decrease",
+                cdata[cc],
+                i18n::_(u8"ability", std::to_string(id), u8"name"));
         }
     }
 }
@@ -810,7 +815,8 @@ std::string replace_tag(const std::string source)
 {
     if (source == u8"ref"s && talkref == 1)
     {
-        return i18n::s.get("core.locale.talk.tag.ref", gdata_number_of_waiting_guests);
+        return i18n::s.get(
+            "core.locale.talk.tag.ref", gdata_number_of_waiting_guests);
     }
     if (source == u8"you"s)
     {
@@ -1055,7 +1061,8 @@ std::string cnvweight(int weight)
 
 std::string fltname(int category)
 {
-    if (auto text = i18n::s.get_enum_optional("core.locale.item.filter_name", category))
+    if (auto text =
+            i18n::s.get_enum_optional("core.locale.item.filter_name", category))
     {
         return *text;
     }
@@ -1118,7 +1125,8 @@ void append_subquest_journal(int val0)
     if (val0 == 0)
     {
         noteadd(""s);
-        noteadd("@QM[" + i18n::s.get("core.locale.quest.journal.sub.title") + "]");
+        noteadd(
+            "@QM[" + i18n::s.get("core.locale.quest.journal.sub.title") + "]");
     }
     p = 0;
     if (gdata_putit_attacks != 0)
@@ -1129,7 +1137,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1137,7 +1147,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.putit_attacks.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.putit_attacks.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1147,7 +1158,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.putit_attacks.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.putit_attacks.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1162,7 +1174,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1170,7 +1184,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.thieves_hideout.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.thieves_hideout.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1180,7 +1195,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.thieves_hideout.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.thieves_hideout.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1195,7 +1211,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1203,7 +1221,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.puppys_cave.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.puppys_cave.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1218,7 +1237,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1226,7 +1247,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.nightmare.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1236,7 +1258,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.nightmare.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1246,7 +1269,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.nightmare.progress", 2);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.nightmare.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1261,7 +1285,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1269,7 +1295,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1279,7 +1306,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1289,7 +1317,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1299,7 +1328,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 4)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1309,7 +1339,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 5)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1319,7 +1350,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 6)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1329,7 +1361,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 7)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1339,7 +1372,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 8)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1349,7 +1383,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 9)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1359,7 +1394,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 10)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1374,7 +1410,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1382,7 +1420,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.wife_collector.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.wife_collector.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1397,7 +1436,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1405,7 +1446,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.cat_house.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.cat_house.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1415,7 +1457,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.cat_house.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.cat_house.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1430,7 +1473,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1438,7 +1483,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.defense_line.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1448,7 +1494,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.defense_line.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1458,7 +1505,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.defense_line.progress", 2);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.defense_line.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1473,7 +1521,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1481,7 +1531,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.novice_knight.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.novice_knight.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1491,7 +1542,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.novice_knight.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.novice_knight.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1506,7 +1558,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1514,7 +1568,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.kamikaze_attack.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1524,7 +1579,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.kamikaze_attack.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1534,7 +1590,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 3)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.kamikaze_attack.progress", 2);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.kamikaze_attack.progress", 2);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1549,7 +1606,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1557,7 +1616,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.mias_dream.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.mias_dream.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1572,7 +1632,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1580,7 +1642,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.rare_books.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.rare_books.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1595,7 +1658,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1603,7 +1668,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.pyramid_trial.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.pyramid_trial.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1612,13 +1678,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_red_blossom_in_palmia != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.red_blossom_in_palmia.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.red_blossom_in_palmia.title");
         p = gdata_red_blossom_in_palmia;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1626,7 +1695,9 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.red_blossom_in_palmia.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.red_blossom_in_palmia.progress",
+                0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1636,7 +1707,9 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.red_blossom_in_palmia.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.red_blossom_in_palmia.progress",
+                1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1645,13 +1718,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_ambitious_scientist != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.ambitious_scientist.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.ambitious_scientist.title");
         p = gdata_ambitious_scientist;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1661,8 +1737,10 @@ void append_subquest_journal(int val0)
             == gdata_ambitious_scientist * (gdata_ambitious_scientist < 6)
                 + (gdata_ambitious_scientist == 0))
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.ambitious_scientist.progress", 0,
-                                  (6 - gdata_ambitious_scientist));
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.ambitious_scientist.progress",
+                0,
+                (6 - gdata_ambitious_scientist));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1677,7 +1755,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1685,7 +1765,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.sewer_sweeping.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.sewer_sweeping.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1695,7 +1776,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.sewer_sweeping.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.sewer_sweeping.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1704,13 +1786,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_mages_guild != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.joining_mages_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.joining_mages_guild.title");
         p = gdata_joining_mages_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1718,8 +1803,10 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_mages_guild.progress", 0,
-                                  gdata_mages_guild_quota);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.joining_mages_guild.progress",
+                0,
+                gdata_mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1728,13 +1815,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_thieves_guild != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.joining_thieves_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.joining_thieves_guild.title");
         p = gdata_joining_thieves_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1742,7 +1832,9 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_thieves_guild.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.joining_thieves_guild.progress",
+                0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1751,13 +1843,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_joining_fighters_guild != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.joining_fighters_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.joining_fighters_guild.title");
         p = gdata_joining_fighters_guild;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1765,9 +1860,11 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.joining_fighters_guild.progress", 0,
-                                  gdata_fighters_guild_quota,
-                                  chara_refstr(gdata_fighters_guild_target, 2));
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.joining_fighters_guild.progress",
+                0,
+                gdata_fighters_guild_quota,
+                chara_refstr(gdata_fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1776,13 +1873,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_mages_guild_quota2 != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.quota_mages_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.quota_mages_guild.title");
         p = gdata_mages_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1790,8 +1890,10 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_mages_guild.progress", 0,
-                                  gdata_mages_guild_quota);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.quota_mages_guild.progress",
+                0,
+                gdata_mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1800,13 +1902,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_fighters_guild_quota2 != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.quota_fighters_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.quota_fighters_guild.title");
         p = gdata_fighters_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1814,9 +1919,11 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_fighters_guild.progress", 0,
-                                  gdata_fighters_guild_quota,
-                                  chara_refstr(gdata_fighters_guild_target, 2));
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.quota_fighters_guild.progress",
+                0,
+                gdata_fighters_guild_quota,
+                chara_refstr(gdata_fighters_guild_target, 2));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1825,13 +1932,16 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_thieves_guild_quota2 != 0)
     {
-        s = i18n::s.get("core.locale.quest.journal.sub.quota_thieves_guild.title");
+        s = i18n::s.get(
+            "core.locale.quest.journal.sub.quota_thieves_guild.title");
         p = gdata_thieves_guild_quota2;
         if (val0 == 1)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1839,8 +1949,10 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.quota_thieves_guild.progress", 0,
-                                  gdata_thieves_guild_quota);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.quota_thieves_guild.progress",
+                0,
+                gdata_thieves_guild_quota);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1855,7 +1967,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1863,7 +1977,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.minotaur_king.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.minotaur_king.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1873,7 +1988,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 2)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.minotaur_king.progress", 1);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.minotaur_king.progress", 1);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1888,7 +2004,9 @@ void append_subquest_journal(int val0)
         {
             if (p >= 1000)
             {
-                noteadd("[" + i18n::s.get("core.locale.quest.journal.sub.done") + "]" + s);
+                noteadd(
+                    "[" + i18n::s.get("core.locale.quest.journal.sub.done")
+                    + "]" + s);
             }
         }
     }
@@ -1896,7 +2014,8 @@ void append_subquest_journal(int val0)
     {
         if (p == 1)
         {
-            s1 = i18n::s.get_enum("core.locale.quest.journal.sub.little_sister.progress", 0);
+            s1 = i18n::s.get_enum(
+                "core.locale.quest.journal.sub.little_sister.progress", 0);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1909,22 +2028,35 @@ void append_subquest_journal(int val0)
 
 void append_quest_item_journal()
 {
-    noteadd("[" + i18n::s.get("core.locale.quest.journal.item.old_talisman") + "]");
+    noteadd(
+        "[" + i18n::s.get("core.locale.quest.journal.item.old_talisman") + "]");
     if (gdata_main_quest_flag >= 30)
     {
-        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.letter_to_the_king") + "]");
+        noteadd(
+            "["
+            + i18n::s.get("core.locale.quest.journal.item.letter_to_the_king")
+            + "]");
     }
     if (gdata_magic_stone_of_fool != 0)
     {
-        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.fools_magic_stone") + "]");
+        noteadd(
+            "["
+            + i18n::s.get("core.locale.quest.journal.item.fools_magic_stone")
+            + "]");
     }
     if (gdata_magic_stone_of_king != 0)
     {
-        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.kings_magic_stone") + "]");
+        noteadd(
+            "["
+            + i18n::s.get("core.locale.quest.journal.item.kings_magic_stone")
+            + "]");
     }
     if (gdata_magic_stone_of_sage != 0)
     {
-        noteadd("[" + i18n::s.get("core.locale.quest.journal.item.sages_magic_stone") + "]");
+        noteadd(
+            "["
+            + i18n::s.get("core.locale.quest.journal.item.sages_magic_stone")
+            + "]");
     }
     return;
 }

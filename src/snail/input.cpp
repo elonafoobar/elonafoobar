@@ -1,9 +1,9 @@
 #include "input.hpp"
-#include "touch_input.hpp"
 #include <cassert>
 #include <algorithm>
 #include <iostream>
 #include <tuple>
+#include "touch_input.hpp"
 #ifdef _WIN32
 #include <windows.h> // GetKeyboardState, keybd_event
 #endif
@@ -190,23 +190,12 @@ void mouse_t::_handle_event(const ::SDL_MouseButtonEvent& event)
     button_t button;
     switch (event.button)
     {
-    case SDL_BUTTON_LEFT:
-        button = button_t::left;
-        break;
-    case SDL_BUTTON_MIDDLE:
-        button = button_t::middle;
-        break;
-    case SDL_BUTTON_RIGHT:
-        button = button_t::right;
-        break;
-    case SDL_BUTTON_X1:
-        button = button_t::x1;
-        break;
-    case SDL_BUTTON_X2:
-        button = button_t::x2;
-        break;
-    default:
-        return;
+    case SDL_BUTTON_LEFT: button = button_t::left; break;
+    case SDL_BUTTON_MIDDLE: button = button_t::middle; break;
+    case SDL_BUTTON_RIGHT: button = button_t::right; break;
+    case SDL_BUTTON_X1: button = button_t::x1; break;
+    case SDL_BUTTON_X2: button = button_t::x2; break;
+    default: return;
     }
 
     if (event.state == SDL_PRESSED)
@@ -342,8 +331,8 @@ void input::_update()
     {
         _quick_action_key_repeat++;
 
-        if (_quick_action_key_repeat == 0 ||
-            (_quick_action_key_repeat > _quick_action_repeat_start_wait
+        if (_quick_action_key_repeat == 0
+            || (_quick_action_key_repeat > _quick_action_repeat_start_wait
                 && _quick_action_key_repeat % _quick_action_repeat_wait))
         {
             _keys[static_cast<size_t>(*_last_quick_action_key)]._press();
@@ -372,8 +361,8 @@ void input::_update()
         // on-screen quick actions.
         _quick_action_text_repeat++;
 
-        if (_quick_action_text_repeat == 0 ||
-            (_quick_action_text_repeat > _quick_action_repeat_start_wait
+        if (_quick_action_text_repeat == 0
+            || (_quick_action_text_repeat > _quick_action_repeat_start_wait
                 && _quick_action_text_repeat % _quick_action_repeat_wait))
         {
             _text = *_last_quick_action_text;
@@ -479,7 +468,8 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
         if (action->key)
         {
             // Keypress action
-            if (_last_quick_action_key && *_last_quick_action_key != action->key)
+            if (_last_quick_action_key
+                && *_last_quick_action_key != action->key)
             {
                 _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
             }

@@ -4,8 +4,8 @@
 #include <vector>
 #include "optional.hpp"
 #include "pic_loader/extent.hpp"
-#include "snail/color.hpp"
 #include "shared_id.hpp"
+#include "snail/color.hpp"
 
 
 namespace elona
@@ -114,33 +114,32 @@ void draw_rotated(
 
 const image_info& get_image_info(const std::string& key);
 
-void draw_chara(const character& chara,
-                int x,
-                int y,
-                int scale = 1,
-                int alpha = 0);
-void draw_chara(int image_id,
-                int x,
-                int y,
-                int scale = 1,
-                int alpha = 0);
+void draw_chara(
+    const character& chara,
+    int x,
+    int y,
+    int scale = 1,
+    int alpha = 0);
+void draw_chara(int image_id, int x, int y, int scale = 1, int alpha = 0);
 void draw_chara_scale_height(const character& chara, int x, int y);
 void draw_chara_scale_height(int image_id, int x, int y);
 
 void draw_item_material(int mat_id, int x, int y);
 void draw_item_with_portrait(const item& item, int x, int y);
-void draw_item_with_portrait(int image_id,
-                             int color,
-                             optional<int> chara_chip_id,
-                             int x,
-                             int y);
+void draw_item_with_portrait(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y);
 
 void draw_item_with_portrait_scale_height(const item& item, int x, int y);
-void draw_item_with_portrait_scale_height(int image_id,
-                                          int color,
-                                          optional<int> chara_chip_id,
-                                          int x,
-                                          int y);
+void draw_item_with_portrait_scale_height(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y);
 
 
 } // namespace elona
