@@ -599,18 +599,88 @@ void render_skill_trackers()
 
 
 
-void render_one_status_ailment(
+template <typename F1, typename F2, typename F3>
+int render_one_status_ailment(
+    int value,
     int x,
     int y,
-    const std::string& text,
-    const snail::color& text_color = {0, 0, 0})
+    F1 do_render,
+    F2 get_text,
+    F3 get_color)
 {
+    // Check signatures.
+    static_assert(
+        std::is_same<decltype(do_render(value)), bool>::value,
+        "F1 signature: bool do_render(int value)");
+    static_assert(
+        std::is_same<decltype(get_text(value)), std::string>::value,
+        "F2 signature: std::string get_text(int value)");
+    static_assert(
+        std::is_same<decltype(get_color(value)), snail::color>::value,
+        "F3 signature: snail::color get_color(int value)");
+
+    if (!do_render(value))
+        return y;
+
+    const auto text_color = get_color(value);
     color(text_color.r, text_color.g, text_color.b);
     pos(x, y);
     gcopy(3, 0, 416, 50 + en * 30, 15);
     pos(x + 6, y + 1);
-    mes(text);
+    mes(get_text(value));
     color(0, 0, 0);
+
+    return y - 20;
+}
+
+
+
+template <typename F1, typename F3>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    const std::string& text,
+    F3 get_color)
+{
+    return render_one_status_ailment(
+        value, x, y, do_render, [&](auto) { return text; }, get_color);
+}
+
+
+
+template <typename F1, typename F2>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    F2 get_text,
+    const snail::color& text_color)
+{
+    return render_one_status_ailment(
+        value, x, y, do_render, get_text, [&](auto) { return text_color; });
+}
+
+
+
+template <typename F1>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    const std::string& text,
+    const snail::color& text_color)
+{
+    return render_one_status_ailment(
+        value,
+        x,
+        y,
+        do_render,
+        [&](auto) { return text; },
+        [&](auto) { return text_color; });
 }
 
 
@@ -620,282 +690,223 @@ void render_status_ailments()
     const auto x = 8;
     auto y = inf_ver - 50;
 
-    if (cdata[0].nutrition >= 12000)
-    {
-        render_one_status_ailment(x, y, i18n::_(u8"ui", u8"hunger", u8"_12"));
-        y -= 20;
-    }
-    else if (cdata[0].nutrition >= 1000)
-    {
-        const auto text =
-            i18n::_(u8"ui", u8"hunger", u8"_"s + (cdata[0].nutrition / 1000));
-        if (!text.empty())
-        {
-            if (cdata[0].nutrition <= 4000)
-            {
-                render_one_status_ailment(x, y, text, {200, 0, 0});
-            }
-            else
-            {
-                render_one_status_ailment(x, y, text);
-            }
-        }
-        y -= 20;
-    }
-    else
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"hunger", u8"_0"), {250, 0, 0});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].nutrition / 1000,
+        x,
+        y,
+        [](auto nutrition) { return !(5 <= nutrition && nutrition <= 9); },
+        [](auto nutrition) {
+            return (nutrition >= 12)
+                ? i18n::_("ui", "hunger", "_12")
+                : (nutrition >= 1) ? i18n::_("ui", "hunger", "_"s + nutrition)
+                                   : i18n::_("ui", "hunger", "_0");
+        },
+        [](auto nutrition) {
+            return (nutrition >= 10)
+                ? snail::color{0, 0, 0}
+                : (nutrition >= 1) ? snail::color{200, 0, 0}
+                                   : snail::color{250, 0, 0};
+        });
 
-    if (cdata[0].sick != 0)
-    {
-        if (cdata[0].sick >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sick", u8"_1"), {80, 120, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sick", u8"_0"), {80, 120, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].sick,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "sick", "_1")
+                                : i18n::_("ui", "sick", "_0");
+        },
+        {80, 120, 0});
 
-    if (cdata[0].poisoned != 0)
-    {
-        if (cdata[0].poisoned >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"poison", u8"_1"), {0, 150, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"poison", u8"_0"), {0, 150, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].poisoned,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "poison", "_1")
+                                : i18n::_("ui", "poison", "_0");
+        },
+        {0, 150, 0});
 
-    if (cdata[0].sleep != 0)
-    {
-        if (cdata[0].sleep >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sleep", u8"_1"), {0, 50, 50});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sleep", u8"_0"), {0, 50, 50});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].sleep,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "sleep", "_1")
+                                : i18n::_("ui", "sleep", "_0");
+        },
+        {0, 50, 50});
 
-    if (cdata[0].blind != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"blind"), {100, 100, 0});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].blind,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "blind"),
+        {100, 100, 0});
 
-    if (cdata[0].paralyzed != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"paralyzed"), {0, 100, 100});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].paralyzed,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "paralyzed"),
+        {0, 100, 100});
 
-    if (cdata[0].choked != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"choked"), {0, 100, 100});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].choked,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "choked"),
+        {0, 100, 100});
 
-    if (cdata[0].confused != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"confused"), {100, 0, 100});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].confused,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "confused"),
+        {100, 0, 100});
 
-    if (cdata[0].fear != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"fear"), {100, 0, 100});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].fear,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "fear"),
+        {100, 0, 100});
 
-    if (cdata[0].dimmed != 0)
-    {
-        if (cdata[0].dimmed >= 60)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"dimmed", u8"_2"), {0, 100, 100});
-            y -= 20;
-        }
-        else if (cdata[0].dimmed >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"dimmed", u8"_1"), {0, 100, 100});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"dimmed", u8"_0"), {0, 100, 100});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].dimmed,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 60)
+                ? i18n::_(u8"ui", u8"dimmed", u8"_2")
+                : (turn >= 30) ? i18n::_(u8"ui", u8"dimmed", u8"_1")
+                               : i18n::_(u8"ui", u8"dimmed", u8"_0");
+        },
+        {0, 100, 100});
 
-    if (cdata[0].furious != 0)
-    {
-        if (cdata[0].furious >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"angry", u8"_1"), {150, 0, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"angry", u8"_0"), {150, 0, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].furious,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_(u8"ui", u8"angry", u8"_1")
+                                : i18n::_(u8"ui", u8"angry", u8"_0");
+        },
+        {150, 0, 0});
 
-    if (cdata[0].bleeding != 0)
-    {
-        if (cdata[0].bleeding >= 20)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"bleeding", u8"_2"), {150, 0, 0});
-            y -= 20;
-        }
-        else if (cdata[0].bleeding >= 10)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"bleeding", u8"_1"), {150, 0, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"bleeding", u8"_0"), {150, 0, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].bleeding,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 20)
+                ? i18n::_(u8"ui", u8"bleeding", u8"_2")
+                : (turn >= 10) ? i18n::_(u8"ui", u8"bleeding", u8"_1")
+                               : i18n::_(u8"ui", u8"bleeding", u8"_0");
+        },
+        {150, 0, 0});
 
-    if (cdata[0].insane != 0)
-    {
-        if (cdata[0].insane >= 50)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"insane", u8"_2"), {150, 100, 0});
-            y -= 20;
-        }
-        else if (cdata[0].insane >= 25)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"insane", u8"_1"), {150, 100, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"insane", u8"_0"), {150, 100, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].insane,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 50)
+                ? i18n::_(u8"ui", u8"insane", u8"_2")
+                : (turn >= 25) ? i18n::_(u8"ui", u8"insane", u8"_1")
+                               : i18n::_(u8"ui", u8"insane", u8"_0");
+        },
+        {150, 100, 0});
 
-    if (cdata[0].drunk != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"drunk"), {100, 0, 100});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].drunk,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"drunk"),
+        {100, 0, 100});
 
-    if (cdata[0].wet != 0)
-    {
-        render_one_status_ailment(x, y, i18n::_(u8"ui", u8"wet"), {0, 0, 160});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].wet,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"wet"),
+        {0, 0, 160});
 
-    if (cdata[0].gravity != 0)
-    {
-        render_one_status_ailment(
-            x, y, i18n::_(u8"ui", u8"gravity"), {0, 80, 80});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].gravity,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"gravity"),
+        {0, 80, 80});
 
-    if (gdata_continuous_active_hours >= 15)
-    {
-        if (gdata_continuous_active_hours >= 50)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sleepy", u8"_2"), {255, 0, 0});
-            y -= 20;
-        }
-        else if (gdata_continuous_active_hours >= 30)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sleepy", u8"_1"), {100, 100, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"sleepy", u8"_0"));
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        gdata_continuous_active_hours,
+        x,
+        y,
+        [](auto hours) { return hours >= 15; },
+        [](auto hours) {
+            return (hours >= 50)
+                ? i18n::_(u8"ui", u8"sleepy", u8"_2")
+                : (hours >= 30) ? i18n::_(u8"ui", u8"sleepy", u8"_1")
+                                : i18n::_(u8"ui", u8"sleepy", u8"_0");
+        },
+        [](auto hours) {
+            return (hours >= 50) ? snail::color{255, 0, 0}
+                                 : (hours >= 30) ? snail::color{100, 100, 0}
+                                                 : snail::color{0, 0, 0};
+        });
 
-    if (cdata[0].sp < 50)
-    {
-        if (cdata[0].sp < 0)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"tired", u8"_2"), {120, 120, 0});
-            y -= 20;
-        }
-        else if (cdata[0].sp < 25)
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"tired", u8"_1"), {80, 80, 0});
-            y -= 20;
-        }
-        else
-        {
-            render_one_status_ailment(
-                x, y, i18n::_(u8"ui", u8"tired", u8"_0"), {60, 60, 0});
-            y -= 20;
-        }
-    }
+    y = render_one_status_ailment(
+        cdata[0].sp,
+        x,
+        y,
+        [](auto sp) { return sp < 50; },
+        [](auto sp) {
+            return (sp < 0) ? i18n::_(u8"ui", u8"tired", u8"_2")
+                            : (sp < 25) ? i18n::_(u8"ui", u8"tired", u8"_1")
+                                        : i18n::_(u8"ui", u8"tired", u8"_0");
+        },
+        [](auto sp) {
+            return (sp < 0)
+                ? snail::color{120, 120, 0}
+                : (sp < 25) ? snail::color{80, 80, 0} : snail::color{60, 60, 0};
+        });
 
-    if (cdata[0].inventory_weight_type != 0)
-    {
-        render_one_status_ailment(
-            x,
-            y,
-            i18n::_(
-                u8"ui", u8"burden", u8"_"s + cdata[0].inventory_weight_type),
-            {0,
-             static_cast<uint8_t>(cdata[0].inventory_weight_type * 40),
-             static_cast<uint8_t>(cdata[0].inventory_weight_type * 40)});
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        cdata[0].inventory_weight_type,
+        x,
+        y,
+        [](auto state) { return state != 0; },
+        [](auto state) { return i18n::_(u8"ui", u8"burden", u8"_"s + state); },
+        [](auto state) {
+            return snail::color{0,
+                                static_cast<uint8_t>(state * 40),
+                                static_cast<uint8_t>(state * 40)};
+        });
 
-    if (foobar_data.is_autodig_enabled)
-    {
-        render_one_status_ailment(x, y, i18n::_(u8"ui", u8"autodig", u8"mode"));
-        y -= 20;
-    }
+    y = render_one_status_ailment(
+        static_cast<int>(foobar_data.is_autodig_enabled),
+        x,
+        y,
+        [](auto is_enabled) { return is_enabled == 1; },
+        i18n::_(u8"ui", u8"autodig", u8"mode"),
+        {0, 0, 0});
 }
 
 
