@@ -361,6 +361,556 @@ void render_stair_positions_in_minimap()
 
 
 
+void _render_hp_or_mp_bar(
+    int value,
+    int max,
+    int x,
+    int y,
+    int bar_offset_x,
+    bool show_digit = false)
+{
+    draw("hp_bar_frame", x, y);
+
+    if (value > 0)
+    {
+        const auto width = std::min(value * 84 / max, 100);
+        pos(x + 16, y + 5);
+        gcopy(3, bar_offset_x - width, 520, width, 6);
+    }
+
+    if (show_digit)
+    {
+        bmes(""s + value + u8"("s + max + u8")"s, x + 20, y - 8);
+    }
+}
+
+
+
+void render_hp_bar(const character& cc, int x, int y, bool show_digit = false)
+{
+    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, 412, show_digit);
+}
+
+
+
+void render_mp_bar(const character& cc, int x, int y, bool show_digit = false)
+{
+    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, 532, show_digit);
+}
+
+
+
+void render_basic_attributes_and_pv_dv()
+{
+    const auto y = inf_bary + 2 + vfix;
+    for (int i = 0; i < 10; ++i)
+    {
+        const auto x = inf_radarw + i * 47 + 166;
+        if (i < 8)
+        {
+            // Basic attributes except for Speed
+            if (cdata[0].attr_adjs[i] < 0)
+            {
+                color(200, 0, 0);
+            }
+            else
+            {
+                color(0, 0, 0);
+            }
+            pos(x, y);
+            gcopy(3, 0, 440, 28, 16);
+            mes(sdata(10 + i, 0));
+            color(0, 0, 0);
+        }
+        else if (i == 8)
+        {
+            // Speed
+            if (gspdorg > gspd)
+            {
+                color(200, 0, 0);
+            }
+            else if (gspdorg < gspd)
+            {
+                color(0, 120, 0);
+            }
+            else
+            {
+                color(0, 0, 0);
+            }
+            pos(x + 8, y);
+            gcopy(3, 0, 440, 34, 16);
+            mes(gspd);
+            color(0, 0, 0);
+        }
+        else
+        {
+            // PV/DV
+            pos(x + 14, y);
+            gcopy(3, 0, 440, 64, 16);
+            mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
+        }
+    }
+}
+
+
+
+void _render_gold_or_platinum(
+    int value,
+    int x,
+    int y,
+    const std::string& icon_id,
+    const std::string& unit)
+{
+    draw(icon_id, x, y);
+    bmes(""s + value + " " + unit, x + 28, y + 2);
+}
+
+
+
+void render_gold()
+{
+    _render_gold_or_platinum(
+        cdata[0].gold, windoww - 240, inf_ver - 16, "gold_coin", "gp");
+}
+
+
+
+void render_platinum()
+{
+    _render_gold_or_platinum(
+        cdata[0].platinum_coin,
+        windoww - 120,
+        inf_ver - 16,
+        "platinum_coin",
+        "pp");
+}
+
+
+
+void render_character_level()
+{
+    const auto lvl = cdata[0].level;
+    const auto exp = cdata[0].required_experience - cdata[0].experience;
+
+    draw("character_level_icon", 4, inf_ver - 16);
+    bmes(u8"Lv"s + lvl + u8"/"s + exp, 32, inf_ver - 14);
+}
+
+
+
+void render_date_label()
+{
+    pos(inf_clockx, inf_clocky);
+    gcopy(3, 448, 408, inf_clockw, inf_clockh);
+    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
+}
+
+
+
+void render_buffs()
+{
+    const auto x = windoww - 40;
+    auto y = inf_ver - 40;
+
+    for (const auto& buff : cdata[0].buffs)
+    {
+        if (buff.id == 0)
+            break;
+
+        // Icon
+        pos(x, y);
+        gcopy(5, buff.id * 32, 1120, 32, 32);
+        // Turns
+        pos(x + 3, y + 19);
+        mes(buff.turns);
+        // Turns
+        color(255, 255, 255);
+        pos(x + 2, y + 18);
+        mes(buff.turns);
+        color(0, 0, 0);
+
+        y -= 32;
+    }
+}
+
+
+
+void render_clock()
+{
+    const auto& info = get_image_info("clock_hand");
+
+    // Short hand
+    draw_rotated(
+        "clock_hand",
+        inf_clockarrowx,
+        inf_clockarrowy,
+        gdata_hour * 30 + gdata_minute / 2);
+    // Long hand
+    draw_rotated(
+        "clock_hand",
+        inf_clockarrowx,
+        inf_clockarrowy,
+        info.width / 2,
+        info.height,
+        gdata_minute * 6);
+
+    pos(inf_clockw - 3, inf_clocky + 17 + vfix);
+    mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
+    bmes(
+        i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
+            + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
+        inf_clockw + 6,
+        inf_clocky + 35);
+}
+
+
+
+void render_skill_trackers()
+{
+    int y{};
+    for (int i = 0; i < 3; ++i)
+    {
+        const auto skill = gdata(750 + i) % 10000;
+        if (skill == 0)
+        {
+            continue;
+        }
+        const auto chara = gdata(750 + i) / 10000;
+        if (chara != 0 && cdata[chara].state != 1)
+        {
+            gdata(750 + i) = 0;
+            continue;
+        }
+        bmes(
+            strutil::take_by_width(
+                i18n::_(u8"ability", std::to_string(skill), u8"name"), 6),
+            16,
+            inf_clocky + 155 - y * 16);
+        bmes(
+            ""s + sdata.get(skill, chara).original_level + u8"."s
+                + std::to_string(
+                      1000 + sdata.get(skill, chara).experience % 1000)
+                      .substr(1),
+            66,
+            inf_clocky + 155 - y * 16);
+        ++y;
+    }
+}
+
+
+
+template <typename F1, typename F2, typename F3>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    F2 get_text,
+    F3 get_color)
+{
+    // Check signatures.
+    static_assert(
+        std::is_same<decltype(do_render(value)), bool>::value,
+        "F1 signature: bool do_render(int value)");
+    static_assert(
+        std::is_same<decltype(get_text(value)), std::string>::value,
+        "F2 signature: std::string get_text(int value)");
+    static_assert(
+        std::is_same<decltype(get_color(value)), snail::color>::value,
+        "F3 signature: snail::color get_color(int value)");
+
+    if (!do_render(value))
+        return y;
+
+    const auto text_color = get_color(value);
+    color(text_color.r, text_color.g, text_color.b);
+    pos(x, y);
+    gcopy(3, 0, 416, 50 + en * 30, 15);
+    pos(x + 6, y + 1);
+    mes(get_text(value));
+    color(0, 0, 0);
+
+    return y - 20;
+}
+
+
+
+template <typename F1, typename F3>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    const std::string& text,
+    F3 get_color)
+{
+    return render_one_status_ailment(
+        value, x, y, do_render, [&](auto) { return text; }, get_color);
+}
+
+
+
+template <typename F1, typename F2>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    F2 get_text,
+    const snail::color& text_color)
+{
+    return render_one_status_ailment(
+        value, x, y, do_render, get_text, [&](auto) { return text_color; });
+}
+
+
+
+template <typename F1>
+int render_one_status_ailment(
+    int value,
+    int x,
+    int y,
+    F1 do_render,
+    const std::string& text,
+    const snail::color& text_color)
+{
+    return render_one_status_ailment(
+        value,
+        x,
+        y,
+        do_render,
+        [&](auto) { return text; },
+        [&](auto) { return text_color; });
+}
+
+
+
+void render_status_ailments()
+{
+    const auto x = 8;
+    auto y = inf_ver - 50;
+
+    y = render_one_status_ailment(
+        cdata[0].nutrition / 1000,
+        x,
+        y,
+        [](auto nutrition) { return !(5 <= nutrition && nutrition <= 9); },
+        [](auto nutrition) {
+            return (nutrition >= 12)
+                ? i18n::_("ui", "hunger", "_12")
+                : (nutrition >= 1) ? i18n::_("ui", "hunger", "_"s + nutrition)
+                                   : i18n::_("ui", "hunger", "_0");
+        },
+        [](auto nutrition) {
+            return (nutrition >= 10)
+                ? snail::color{0, 0, 0}
+                : (nutrition >= 1) ? snail::color{200, 0, 0}
+                                   : snail::color{250, 0, 0};
+        });
+
+    y = render_one_status_ailment(
+        cdata[0].sick,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "sick", "_1")
+                                : i18n::_("ui", "sick", "_0");
+        },
+        {80, 120, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].poisoned,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "poison", "_1")
+                                : i18n::_("ui", "poison", "_0");
+        },
+        {0, 150, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].sleep,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_("ui", "sleep", "_1")
+                                : i18n::_("ui", "sleep", "_0");
+        },
+        {0, 50, 50});
+
+    y = render_one_status_ailment(
+        cdata[0].blind,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "blind"),
+        {100, 100, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].paralyzed,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "paralyzed"),
+        {0, 100, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].choked,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "choked"),
+        {0, 100, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].confused,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "confused"),
+        {100, 0, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].fear,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_("ui", "fear"),
+        {100, 0, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].dimmed,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 60)
+                ? i18n::_(u8"ui", u8"dimmed", u8"_2")
+                : (turn >= 30) ? i18n::_(u8"ui", u8"dimmed", u8"_1")
+                               : i18n::_(u8"ui", u8"dimmed", u8"_0");
+        },
+        {0, 100, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].furious,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 30) ? i18n::_(u8"ui", u8"angry", u8"_1")
+                                : i18n::_(u8"ui", u8"angry", u8"_0");
+        },
+        {150, 0, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].bleeding,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 20)
+                ? i18n::_(u8"ui", u8"bleeding", u8"_2")
+                : (turn >= 10) ? i18n::_(u8"ui", u8"bleeding", u8"_1")
+                               : i18n::_(u8"ui", u8"bleeding", u8"_0");
+        },
+        {150, 0, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].insane,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        [](auto turn) {
+            return (turn >= 50)
+                ? i18n::_(u8"ui", u8"insane", u8"_2")
+                : (turn >= 25) ? i18n::_(u8"ui", u8"insane", u8"_1")
+                               : i18n::_(u8"ui", u8"insane", u8"_0");
+        },
+        {150, 100, 0});
+
+    y = render_one_status_ailment(
+        cdata[0].drunk,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"drunk"),
+        {100, 0, 100});
+
+    y = render_one_status_ailment(
+        cdata[0].wet,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"wet"),
+        {0, 0, 160});
+
+    y = render_one_status_ailment(
+        cdata[0].gravity,
+        x,
+        y,
+        [](auto turn) { return turn != 0; },
+        i18n::_(u8"ui", u8"gravity"),
+        {0, 80, 80});
+
+    y = render_one_status_ailment(
+        gdata_continuous_active_hours,
+        x,
+        y,
+        [](auto hours) { return hours >= 15; },
+        [](auto hours) {
+            return (hours >= 50)
+                ? i18n::_(u8"ui", u8"sleepy", u8"_2")
+                : (hours >= 30) ? i18n::_(u8"ui", u8"sleepy", u8"_1")
+                                : i18n::_(u8"ui", u8"sleepy", u8"_0");
+        },
+        [](auto hours) {
+            return (hours >= 50) ? snail::color{255, 0, 0}
+                                 : (hours >= 30) ? snail::color{100, 100, 0}
+                                                 : snail::color{0, 0, 0};
+        });
+
+    y = render_one_status_ailment(
+        cdata[0].sp,
+        x,
+        y,
+        [](auto sp) { return sp < 50; },
+        [](auto sp) {
+            return (sp < 0) ? i18n::_(u8"ui", u8"tired", u8"_2")
+                            : (sp < 25) ? i18n::_(u8"ui", u8"tired", u8"_1")
+                                        : i18n::_(u8"ui", u8"tired", u8"_0");
+        },
+        [](auto sp) {
+            return (sp < 0)
+                ? snail::color{120, 120, 0}
+                : (sp < 25) ? snail::color{80, 80, 0} : snail::color{60, 60, 0};
+        });
+
+    y = render_one_status_ailment(
+        cdata[0].inventory_weight_type,
+        x,
+        y,
+        [](auto state) { return state != 0; },
+        [](auto state) { return i18n::_(u8"ui", u8"burden", u8"_"s + state); },
+        [](auto state) {
+            return snail::color{0,
+                                static_cast<uint8_t>(state * 40),
+                                static_cast<uint8_t>(state * 40)};
+        });
+
+    y = render_one_status_ailment(
+        static_cast<int>(foobar_data.is_autodig_enabled),
+        x,
+        y,
+        [](auto is_enabled) { return is_enabled == 1; },
+        i18n::_(u8"ui", u8"autodig", u8"mode"),
+        {0, 0, 0});
+}
+
+
+
 } // namespace
 
 
@@ -678,111 +1228,29 @@ void label_1420()
 
 void render_hud()
 {
-    int ap3 = 0;
-    int ap2 = 0;
+    gmode(2);
+
+    // HP/MP bar
     font(12 - en * 2, snail::font_t::style_t::bold);
-    draw("hp_bar_frame", inf_hpx, inf_hpy);
-    draw("hp_bar_frame", inf_mpx, inf_mpy);
-    if (cdata[0].hp > 0) // TODO coupling
+    render_hp_bar(cdata[0], inf_hpx, inf_hpy, true);
+    render_mp_bar(cdata[0], inf_mpx, inf_mpy, true);
+    if (gdata_mount != 0 && cdata[gdata_mount].state == 1)
     {
-        ap = cdata[0].hp * 84 / cdata[0].max_hp;
-        if (ap > 100)
-        {
-            ap = 100;
-        }
-        pos(inf_hpx + 16, inf_hpy + 5);
-        gcopy(3, 412 - ap, 520, ap, 6);
+        render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
     }
-    if (cdata[0].mp > 0)
-    {
-        ap = cdata[0].mp * 84 / cdata[0].max_mp;
-        if (ap > 100)
-        {
-            ap = 100;
-        }
-        pos(inf_mpx + 16, inf_mpy + 5);
-        gcopy(3, 532 - ap, 520, ap, 6);
-    }
-    if (gdata_mount != 0)
-    {
-        if (cdata[gdata_mount].state == 1)
-        {
-            draw("hp_bar_frame", inf_hpx - 120, inf_hpy);
-            ap = cdata[gdata_mount].hp * 84 / cdata[gdata_mount].max_hp;
-            if (ap > 100)
-            {
-                ap = 100;
-            }
-            pos(inf_hpx - 120 + 16, inf_hpy + 5);
-            gcopy(3, 412 - ap, 520, ap, 6);
-        }
-    }
-    sx = inf_hpx + 16;
-    sy = inf_hpy - 8;
-    bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, sx + 4, sy);
-    sx = inf_mpx + 16;
-    sy = inf_mpy - 8;
-    bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, sx + 4, sy);
+
+    // Basic attributes and PV/DV.
     font(13 - en * 2);
-    sy = inf_bary + 2 + vfix;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        sx = inf_radarw + cnt * 47 + 168 - 2;
-        if (cnt < 8)
-        {
-            if (cdata[0].attr_adjs[cnt] < 0)
-            {
-                color(200, 0, 0);
-            }
-            else
-            {
-                color(0, 0, 0);
-            }
-            pos(sx, sy);
-            gcopy(3, 0, 440, 28, 16);
-            mes(sdata(10 + cnt, 0)); // TODO coupling
-            color(0, 0, 0);
-        }
-        else if (cnt == 8)
-        {
-            pos(sx + 8, sy);
-            gcopy(3, 0, 440, 34, 16);
-            if (gspdorg > gspd)
-            {
-                color(200, 0, 0);
-            }
-            else if (gspdorg < gspd)
-            {
-                color(0, 120, 0);
-            }
-            else
-            {
-                color(0, 0, 0);
-            }
-            mes(""s + gspd);
-            color(0, 0, 0);
-        }
-        else
-        {
-            pos(sx + 14, sy);
-            gcopy(3, 0, 440, 64, 16);
-            mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
-        }
-    }
-    font(13 - en * 2);
-    sy = inf_ver - 16;
-    sx = windoww - 240;
-    draw("gold_coin", sx, sy);
-    bmes(""s + cdata[0].gold + u8" gp"s, sx + 28, sy + 2);
-    sx = windoww - 120;
-    draw("platinum_coin", sx, sy);
-    bmes(""s + cdata[0].platinum_coin + u8" pp"s, sx + 28, sy + 2);
-    draw("character_level_icon", 4, inf_ver - 16);
-    bmes(
-        u8"Lv"s + cdata[0].level + u8"/"s
-            + (cdata[0].required_experience - cdata[0].experience),
-        32,
-        inf_ver - 14);
+    render_basic_attributes_and_pv_dv();
+
+    // Gold/platinum
+    render_gold();
+    render_platinum();
+
+    // Character level
+    render_character_level();
+
+    // Set transparency of UI parts.
     if (cdata[0].position.x < 6)
     {
         if (mode != 9)
@@ -796,444 +1264,25 @@ void render_hud()
             }
         }
     }
-    sx = 8;
-    sy = inf_ver - 50;
-    if (cdata[0].nutrition >= 12000)
-    {
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"hunger", u8"_12"));
-        sy -= 20;
-    }
-    else if (cdata[0].nutrition >= 1000)
-    {
-        if (cdata[0].nutrition <= 4000)
-        {
-            color(200, 0, 0);
-        }
-        if (i18n::_(u8"ui", u8"hunger", u8"_"s + (cdata[0].nutrition / 1000))
-            != ""s)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(
-                u8"ui", u8"hunger", u8"_"s + (cdata[0].nutrition / 1000)));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    else
-    {
-        color(250, 0, 0);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"hunger", u8"_0"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].sick != 0)
-    {
-        color(80, 120, 0);
-        if (cdata[0].sick >= 30)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sick", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sick", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].poisoned != 0)
-    {
-        color(0, 150, 0);
-        if (cdata[0].poisoned >= 30)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"poison", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"poison", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].sleep != 0)
-    {
-        color(0, 50, 50);
-        if (cdata[0].sleep >= 30)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sleep", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sleep", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].blind != 0)
-    {
-        color(100, 100, 0);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"blind"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].paralyzed != 0)
-    {
-        color(0, 100, 100);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"paralyzed"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].choked != 0)
-    {
-        color(0, 100, 100);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"choked"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].confused != 0)
-    {
-        color(100, 0, 100);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"confused"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].fear != 0)
-    {
-        color(100, 0, 100);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"fear"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].dimmed != 0)
-    {
-        color(0, 100, 100);
-        if (cdata[0].dimmed >= 60)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"dimmed", u8"_2"));
-            sy -= 20;
-        }
-        else if (cdata[0].dimmed >= 30)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"dimmed", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"dimmed", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].furious != 0)
-    {
-        color(150, 0, 0);
-        if (cdata[0].furious >= 30)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"angry", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"angry", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].bleeding != 0)
-    {
-        color(150, 0, 0);
-        if (cdata[0].bleeding >= 20)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"bleeding", u8"_2"));
-            sy -= 20;
-        }
-        else if (cdata[0].bleeding >= 10)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"bleeding", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"bleeding", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].insane != 0)
-    {
-        color(150, 100, 0);
-        if (cdata[0].insane >= 50)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"insane", u8"_2"));
-            sy -= 20;
-        }
-        else if (cdata[0].insane >= 25)
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"insane", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"insane", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].drunk != 0)
-    {
-        color(100, 0, 100);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"drunk"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].wet != 0)
-    {
-        color(0, 0, 160);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"wet"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (cdata[0].gravity != 0)
-    {
-        color(0, 80, 80);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"gravity"));
-        color(0, 0, 0);
-        sy -= 20;
-    }
-    if (gdata_continuous_active_hours >= 15)
-    {
-        if (gdata_continuous_active_hours >= 50)
-        {
-            color(255, 0, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sleepy", u8"_2"));
-            sy -= 20;
-        }
-        else if (gdata_continuous_active_hours >= 30)
-        {
-            color(100, 100, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sleepy", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            color(0, 0, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"sleepy", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].sp < 50)
-    {
-        if (cdata[0].sp < 0)
-        {
-            color(120, 120, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"tired", u8"_2"));
-            sy -= 20;
-        }
-        else if (cdata[0].sp < 25)
-        {
-            color(80, 80, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"tired", u8"_1"));
-            sy -= 20;
-        }
-        else
-        {
-            color(60, 60, 0);
-            pos(sx, sy);
-            gcopy(3, 0, 416, 50 + en * 30, 15);
-            pos(sx + 6, sy + 1);
-            mes(i18n::_(u8"ui", u8"tired", u8"_0"));
-            sy -= 20;
-        }
-        color(0, 0, 0);
-    }
-    if (cdata[0].inventory_weight_type != 0)
-    {
-        color(
-            0,
-            cdata[0].inventory_weight_type * 40,
-            cdata[0].inventory_weight_type * 40);
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(
-            u8"ui", u8"burden", u8"_"s + cdata[0].inventory_weight_type));
-        color(0, 0, 0);
-        sy -= 20;
-    }
 
-    if (foobar_data.is_autodig_enabled)
-    {
-        pos(sx, sy);
-        gcopy(3, 0, 416, 50 + en * 30, 15);
-        pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"autodig", u8"mode"));
-        sy -= 20;
-    }
+    // Status ailments
+    render_status_ailments();
 
-    pos(inf_clockx, inf_clocky);
-    gcopy(3, 448, 408, inf_clockw, inf_clockh);
-    draw("date_label_frame", inf_clockx + 78, inf_clocky + 8);
+    // Date label
+    render_date_label();
+
+    // Buffs
     gmode(4, 180);
-    sx = windoww - 40;
-    sy = inf_ver - 40;
-    for (int cnt = 0; cnt < 16; ++cnt)
-    {
-        if (cdata[0].buffs[cnt].id == 0)
-        {
-            break;
-        }
-        pos(sx, sy);
-        gcopy(5, cdata[0].buffs[cnt].id * 32, 1120, 32, 32);
-        pos(sx + 3, sy + 19);
-        mes(cdata[0].buffs[cnt].turns);
-        color(255, 255, 255);
-        pos(sx + 2, sy + 18);
-        mes(cdata[0].buffs[cnt].turns);
-        color(0, 0, 0);
-        sy -= 32;
-    }
+    render_buffs();
     gmode(2);
-    draw_rotated(
-        "clock_hand", inf_clockarrowx, inf_clockarrowy, gdata_hour * 30);
-    pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
-    bmes(
-        i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
-            + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
-        inf_clockw + 6,
-        inf_clocky + 35);
-    ap3 = 0;
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        ap = gdata((750 + cnt)) % 10000;
-        if (ap == 0)
-        {
-            continue;
-        }
-        ap2 = gdata((750 + cnt)) / 10000;
-        if (cdata[ap2].state != 1)
-        {
-            if (ap2 != 0)
-            {
-                gdata(750 + cnt) = 0;
-            }
-            continue;
-        }
-        bmes(
-            ""s
-                + strmid(
-                      i18n::_(u8"ability", std::to_string(ap), u8"name"), 0, 6),
-            16,
-            inf_clocky + 155 - ap3 * 16);
-        bmes(
-            ""s + sdata.get(ap, ap2).original_level + u8"."s
-                + std::to_string(1000 + sdata.get(ap, ap2).experience % 1000)
-                      .substr(1),
-            66,
-            inf_clocky + 155 - ap3 * 16);
-        ++ap3;
-    }
+
+    // Clock
+    render_clock();
+
+    // Skill trackers
+    render_skill_trackers();
+
+    // HP bars(pets)
     if (config::instance().hp_bar != "hide")
     {
         show_hp_bar(
@@ -1242,6 +1291,7 @@ void render_hud()
             inf_clocky);
     }
 
+    // Damage popups
     show_damage_popups();
 }
 
