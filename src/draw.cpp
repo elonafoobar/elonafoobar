@@ -10,11 +10,10 @@
 #include "item_db.hpp"
 #include "map.hpp"
 #include "mef.hpp"
-#include "random.hpp"
-#include "hcl.hpp"
-#include "variables.hpp"
 #include "pic_loader/extent.hpp"
 #include "pic_loader/pic_loader.hpp"
+#include "random.hpp"
+#include "variables.hpp"
 
 
 
@@ -100,7 +99,8 @@ double easing(double t)
 
 void initialize_item_chips()
 {
-    auto value = hclutil::load(filesystem::dir::mods() / "core" / "data" / "item_chip.hcl");
+    auto value = hclutil::load(
+        filesystem::dir::mods() / "core" / "data" / "item_chip.hcl");
     pic_loader::map_type extents;
 
     for (const auto& pair : value.get<hcl::Object>("item_chip"))
@@ -166,19 +166,22 @@ void initialize_item_chips()
 
         shared_id key("core.item_chip." + std::to_string(i));
         extents[key] = extent{x, y, width, height, frame_width};
-        item_chips[i] = item_chip_t{key, offset_y, stack_height, shadow, animation};
+        item_chips[i] =
+            item_chip_t{key, offset_y, stack_height, shadow, animation};
     }
 
-    loader.add_predefined_extents(filesystem::dir::graphic() / u8"item.bmp",
-                                  extents,
-                                  pic_loader::page_type::item);
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"item.bmp",
+        extents,
+        pic_loader::page_type::item);
 }
 
 
 
 void initialize_chara_chips()
 {
-    auto value = hclutil::load(filesystem::dir::mods() / "core" / "data" / "chara_chip.hcl");
+    auto value = hclutil::load(
+        filesystem::dir::mods() / "core" / "data" / "chara_chip.hcl");
     pic_loader::map_type extents;
 
     for (const auto& pair : value.get<hcl::Object>("chara_chip"))
@@ -223,9 +226,10 @@ void initialize_chara_chips()
         chara_chips[i] = chara_chip_t{key, offset_y};
     }
 
-    loader.add_predefined_extents(filesystem::dir::graphic() / u8"character.bmp",
-                                  extents,
-                                  pic_loader::page_type::character);
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"character.bmp",
+        extents,
+        pic_loader::page_type::character);
 }
 
 
@@ -319,7 +323,12 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
             255 - c_col(1, color),
             255 - c_col(2, color),
             item_rect->buffer);
-        gcopy(item_rect->buffer, item_rect->x, item_rect->y, item_rect->width, item_rect->height);
+        gcopy(
+            item_rect->buffer,
+            item_rect->x,
+            item_rect->y,
+            item_rect->width,
+            item_rect->height);
         set_color_mod(255, 255, 255, item_rect->buffer);
 
         pos(0, 1008);
@@ -391,8 +400,7 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
             item_rect->x,
             item_rect->y,
             inf_tiles,
-            rect->height
-                + (rect->height > inf_tiles) * 48);
+            rect->height + (rect->height > inf_tiles) * 48);
         set_color_mod(255, 255, 255, item_rect->buffer);
 
         gmode(2);
@@ -1110,20 +1118,12 @@ const image_info& get_image_info(const std::string& key)
     return itr->second;
 }
 
-void draw_chara(const character& chara,
-                int x,
-                int y,
-                int scale,
-                int alpha)
+void draw_chara(const character& chara, int x, int y, int scale, int alpha)
 {
     draw_chara(chara.image, x, y, scale, alpha);
 }
 
-void draw_chara(int image_id,
-                int x,
-                int y,
-                int scale,
-                int alpha)
+void draw_chara(int image_id, int x, int y, int scale, int alpha)
 {
     auto rect = chara_preparepic(image_id);
     pos(x, y);
@@ -1136,13 +1136,14 @@ void draw_chara(int image_id,
         gmode(2);
     }
 
-    gcopy_c(rect->buffer,
-            0,
-            960,
-            rect->width,
-            rect->height,
-            rect->width * scale,
-            rect->height * scale);
+    gcopy_c(
+        rect->buffer,
+        0,
+        960,
+        rect->width,
+        rect->height,
+        rect->width * scale,
+        rect->height * scale);
 }
 
 void draw_chara_scale_height(const character& chara, int x, int y)
@@ -1174,14 +1175,7 @@ void draw_item_material(int image_id, int x, int y)
     pos(x, y);
     gmode(2);
 
-    gcopy_c(
-        1,
-        0,
-        960,
-        inf_tiles,
-        inf_tiles,
-        rect->frame_width,
-        rect->height);
+    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
 }
 
 void draw_item_with_portrait(const item& item, int x, int y)
@@ -1189,11 +1183,12 @@ void draw_item_with_portrait(const item& item, int x, int y)
     draw_item_with_portrait(item.image, item.color, item.param1, x, y);
 }
 
-void draw_item_with_portrait(int image_id,
-                             int color,
-                             optional<int> chara_chip_id,
-                             int x,
-                             int y)
+void draw_item_with_portrait(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y)
 {
     optional_ref<extent> rect;
 
@@ -1209,26 +1204,21 @@ void draw_item_with_portrait(int image_id,
     pos(x, y);
     gmode(2);
 
-    gcopy_c(
-        1,
-        0,
-        960,
-        inf_tiles,
-        inf_tiles,
-        rect->frame_width,
-        rect->height);
+    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
 }
 
 void draw_item_with_portrait_scale_height(const item& item, int x, int y)
 {
-    draw_item_with_portrait_scale_height(item.image, item.color, item.param1, x, y);
+    draw_item_with_portrait_scale_height(
+        item.image, item.color, item.param1, x, y);
 }
 
-void draw_item_with_portrait_scale_height(int image_id,
-                                          int color,
-                                          optional<int> chara_chip_id,
-                                          int x,
-                                          int y)
+void draw_item_with_portrait_scale_height(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y)
 {
     optional_ref<extent> rect;
 

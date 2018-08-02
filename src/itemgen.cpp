@@ -134,7 +134,8 @@ int do_create_item(int slot, int x, int y)
                     sx = x + rnd(i + 1) - rnd(i + 1);
                     sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (sx < 0 || sy < 0 || sx > mdata_map_width - 1 || sy > mdata_map_height - 1)
+                if (sx < 0 || sy < 0 || sx > mdata_map_width - 1
+                    || sy > mdata_map_height - 1)
                 {
                     continue;
                 }
@@ -242,13 +243,14 @@ int do_create_item(int slot, int x, int y)
         {
             if (cdata[owner].character_role == 13)
             {
-                artifactlocation.push_back(i18n::s.get("core.locale.magic.oracle.was_held_by",
-                                                       cnven(iknownnameref(inv[ci].id)),
-                                                       cdata[owner],
-                                                       mapname(cdata[owner].current_map),
-                                                       gdata_day,
-                                                       gdata_month,
-                                                       gdata_year));
+                artifactlocation.push_back(i18n::s.get(
+                    "core.locale.magic.oracle.was_held_by",
+                    cnven(iknownnameref(inv[ci].id)),
+                    cdata[owner],
+                    mapname(cdata[owner].current_map),
+                    gdata_day,
+                    gdata_month,
+                    gdata_year));
             }
             else
             {
@@ -257,12 +259,13 @@ int do_create_item(int slot, int x, int y)
         }
         if (owner == -1)
         {
-            artifactlocation.push_back(i18n::s.get("core.locale.magic.oracle.was_created_at",
-                                                   iknownnameref(inv[ci].id),
-                                                   mdatan(0),
-                                                   gdata_day,
-                                                   gdata_month,
-                                                   gdata_year));
+            artifactlocation.push_back(i18n::s.get(
+                "core.locale.magic.oracle.was_created_at",
+                iknownnameref(inv[ci].id),
+                mdatan(0),
+                gdata_day,
+                gdata_month,
+                gdata_year));
         }
     }
 
@@ -373,8 +376,9 @@ int do_create_item(int slot, int x, int y)
 
     if (reftype == 72000)
     {
-        inv[ci].param1 =
-            gdata_current_dungeon_level * (gdata_current_map != mdata_t::map_id_t::shelter_) + 5;
+        inv[ci].param1 = gdata_current_dungeon_level
+                * (gdata_current_map != mdata_t::map_id_t::shelter_)
+            + 5;
         if (inv[ci].id == 283)
         {
             inv[ci].param1 = (rnd(10) + 1) * (cdata[0].level / 10 + 1);
@@ -383,9 +387,10 @@ int do_create_item(int slot, int x, int y)
         {
             inv[ci].param1 = cdata[0].level;
         }
-        inv[ci].param2 = rnd(
-            std::abs(gdata_current_dungeon_level) * (gdata_current_map != mdata_t::map_id_t::shelter_)
-            + 1);
+        inv[ci].param2 =
+            rnd(std::abs(gdata_current_dungeon_level)
+                    * (gdata_current_map != mdata_t::map_id_t::shelter_)
+                + 1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {
             inv[ci].param2 = rnd(15);

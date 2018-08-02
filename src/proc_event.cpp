@@ -139,8 +139,8 @@ void proc_event()
         for (int cnt = 0; cnt < listmax; cnt++)
         {
             list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum("core.locale.event.popup.reunion_with_pet.choices",
-                                             cnt);
+            listn(0, cnt) = i18n::s.get_enum(
+                "core.locale.event.popup.reunion_with_pet.choices", cnt);
         }
         {
             int result = show_random_event_window(u8"bg_re13");
@@ -171,13 +171,14 @@ void proc_event()
     case 13:
         play_music("core.music.mcWedding");
         s = i18n::s.get("core.locale.event.popup.marriage.title");
-        buff = i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
+        buff =
+            i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
         listmax = 1;
         for (int cnt = 0; cnt < listmax; cnt++)
         {
             list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum("core.locale.event.popup.marriage.choices",
-                                             cnt);
+            listn(0, cnt) = i18n::s.get_enum(
+                "core.locale.event.popup.marriage.choices", cnt);
         }
         show_random_event_window(u8"bg_re14");
         for (int i = 0; i < 5; ++i)
@@ -211,7 +212,10 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
-        txt(i18n::s.get("core.locale.event.guarded_by_lord", mapname(gdata_current_map), cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.event.guarded_by_lord",
+            mapname(gdata_current_map),
+            cdata[tc]));
     }
     break;
     case 4:
@@ -236,7 +240,10 @@ void proc_event()
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
-        txt(i18n::s.get("core.locale.event.guarded_by_lord", mapname(gdata_current_map), cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.event.guarded_by_lord",
+            mapname(gdata_current_map),
+            cdata[tc]));
         break;
     case 5:
         play_music("core.music.mcVictory");
@@ -796,14 +803,16 @@ void proc_event()
         }
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
-            && gdata_current_map == mdata_t::map_id_t::palmia && gdata_red_blossom_in_palmia == 1)
+            && gdata_current_map == mdata_t::map_id_t::palmia
+            && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
         }
-        if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
+        if (mdata_map_type == mdata_t::map_type_t::town
+            || mdata_map_type == mdata_t::map_type_t::guild)
         {
             modify_karma(0, -80 + trait(162) * 60);
         }
@@ -830,7 +839,8 @@ void proc_event()
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height || rnd(5) == 0)
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height
+                || rnd(5) == 0)
             {
                 x = rnd(mdata_map_width);
                 y = rnd(mdata_map_height);

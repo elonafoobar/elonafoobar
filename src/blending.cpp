@@ -44,7 +44,8 @@ label_19341_internal:
     if (cdata[cc].continuous_action_id == 0)
     {
         txtnew();
-        txt(i18n::s.get("core.locale.blending.started", cdata[cc], rpname(rpid)));
+        txt(i18n::s.get(
+            "core.locale.blending.started", cdata[cc], rpname(rpid)));
         cdata[cc].continuous_action_id = 12;
         cdata[cc].continuous_action_turn = rpref(2) % 10000;
         return;
@@ -82,7 +83,8 @@ label_19341_internal:
                 int stat = label_1931();
                 if (stat == 0)
                 {
-                    txt(i18n::s.get("core.locale.blending.required_material_not_found"));
+                    txt(i18n::s.get(
+                        "core.locale.blending.required_material_not_found"));
                     break;
                 }
                 label_1933();
@@ -368,10 +370,12 @@ void window_recipe2(int val0)
         }
         p_at_m183 += rpdata(1, rpid) / 10000 * val0 * 10000;
     }
-    s_at_m183 = i18n::s.get("core.locale.blending.rate_panel.turns", p_at_m183 % 10000);
+    s_at_m183 =
+        i18n::s.get("core.locale.blending.rate_panel.turns", p_at_m183 % 10000);
     if (p_at_m183 >= 10000)
     {
-        s_at_m183 += i18n::s.get("core.locale.blending.rate_panel.and_hours", p_at_m183 / 10000);
+        s_at_m183 += i18n::s.get(
+            "core.locale.blending.rate_panel.and_hours", p_at_m183 / 10000);
     }
     bmes(
         i18n::s.get("core.locale.blending.rate_panel.required_time", s_at_m183),
@@ -479,7 +483,9 @@ void window_recipe_(
     {
         pos(dx_at_m184, dy_at_m184);
         mes(""s + i_at_m184 + u8"."s
-            + i18n::s.get("core.locale.blending.window.chose_the_recipe_of", rpname(rpid)));
+            + i18n::s.get(
+                  "core.locale.blending.window.chose_the_recipe_of",
+                  rpname(rpid)));
     }
     dy_at_m184 += 17;
     ++i_at_m184;
@@ -512,11 +518,14 @@ void window_recipe_(
         {
             int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
             p_at_m184 = stat;
-            s_at_m184 = i18n::s.get("core.locale.blending.window.add", rpmatname(cnt), p_at_m184);
+            s_at_m184 = i18n::s.get(
+                "core.locale.blending.window.add", rpmatname(cnt), p_at_m184);
         }
         else
         {
-            s_at_m184 = i18n::s.get("core.locale.blending.window.selected", inv[rpref(10 + cnt * 2)]);
+            s_at_m184 = i18n::s.get(
+                "core.locale.blending.window.selected",
+                inv[rpref(10 + cnt * 2)]);
             s_at_m184 = strmid(s_at_m184, 0, 44);
         }
         pos(dx_at_m184, dy_at_m184);
@@ -553,7 +562,8 @@ void window_recipe_(
     {
         font(12 - en * 2, snail::font_t::style_t::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.the_recipe_of", rpname(rpid)));
+        mes(i18n::s.get(
+            "core.locale.blending.window.the_recipe_of", rpname(rpid)));
         dy_at_m184 += 20;
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(i18n::s.get("core.locale.blending.window.required_skills"));
@@ -777,7 +787,8 @@ label_1925_internal:
     windowshadow = windowshadow(1);
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
-    display_topic(i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
+    display_topic(
+        i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
@@ -879,7 +890,8 @@ label_1925_internal:
 label_1927_internal:
     windowshadow(1) = 1;
     txtnew();
-    txt(i18n::s.get("core.locale.blending.steps.add_ingredient", rpmatname(step)));
+    txt(i18n::s.get(
+        "core.locale.blending.steps.add_ingredient", rpmatname(step)));
 label_1928_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -891,12 +903,14 @@ label_1928_internal:
     {
         page = 0;
     }
-    s(0) = i18n::s.get("core.locale.blending.steps.add_ingredient_prompt", rpmatname(step));
+    s(0) = i18n::s.get(
+        "core.locale.blending.steps.add_ingredient_prompt", rpmatname(step));
     s(1) = strhint2;
     windowshadow = windowshadow(1);
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
-    display_topic(i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
+    display_topic(
+        i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
@@ -934,7 +948,8 @@ label_1928_internal:
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
-        draw_item_with_portrait_scale_height(inv[p], wx + 37, wy + 69 + cnt * 19);
+        draw_item_with_portrait_scale_height(
+            inv[p], wx + 37, wy + 69 + cnt * 19);
 
         if (inv[p].body_part != 0)
         {
@@ -1056,8 +1071,9 @@ std::string rpmatname(int prm_1037)
             s_at_m177 += u8"/bugged/"s;
             return s_at_m177;
         }
-        s_at_m177 = i18n::s.get("core.locale.blending.ingredient.corpse",
-                                chara_refstr(p_at_m177, 2));
+        s_at_m177 = i18n::s.get(
+            "core.locale.blending.ingredient.corpse",
+            chara_refstr(p_at_m177, 2));
         return s_at_m177;
     }
     return s_at_m177;
@@ -1100,7 +1116,8 @@ std::string rpsuccessrate(int prm_1040)
     }
     if (prm_1040 >= 20)
     {
-        return i18n::s.get("core.locale.blending.success_rate.almost_impossible");
+        return i18n::s.get(
+            "core.locale.blending.success_rate.almost_impossible");
     }
     return i18n::s.get("core.locale.blending.success_rate.impossible");
 }
@@ -1156,13 +1173,15 @@ int rpdiff(int, int prm_1042, int prm_1043)
                     if (f2_at_m180 < 0)
                     {
                         txtef(2);
-                        txt(i18n::s.get("core.locale.blending.success_rate.goes_up"));
+                        txt(i18n::s.get(
+                            "core.locale.blending.success_rate.goes_up"));
                         break;
                     }
                     if (f2_at_m180 > 0)
                     {
                         txtef(3);
-                        txt(i18n::s.get("core.locale.blending.success_rate.goes_down"));
+                        txt(i18n::s.get(
+                            "core.locale.blending.success_rate.goes_down"));
                         break;
                     }
                     break;
@@ -1569,7 +1588,8 @@ int label_1932()
         else if (rnd(3) == 0)
         {
 
-            txt(i18n::s.get("core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
+            txt(i18n::s.get(
+                "core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
             --inv[rpref(10 + cnt * 2)].number;
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
@@ -1698,7 +1718,8 @@ void label_1935()
         break;
     case 10003:
         txtef(2);
-        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         if (inv[ci].id == 567)
         {
             txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
@@ -1706,20 +1727,24 @@ void label_1935()
         else
         {
             ibitmod(2, ci, 1);
-            txt(i18n::s.get("core.locale.action.dip.result.gains_fireproof", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
         snd(17);
         break;
     case 10004:
         txtef(2);
-        txt(i18n::s.get("core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         ibitmod(1, ci, 1);
-        txt(i18n::s.get("core.locale.action.dip.result.gains_acidproof", inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         snd(17);
         break;
     case 10005:
         txtef(2);
-        txt(i18n::s.get("core.locale.action.dip.result.bait_attachment", inv[ci], inv[ti]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.bait_attachment", inv[ci], inv[ti]));
         if (inv[ci].param4 == inv[ti].param1)
         {
             inv[ci].count += rnd(10) + 15;
@@ -1733,32 +1758,38 @@ void label_1935()
         break;
     case 10006:
         txtef(2);
-        txt(i18n::s.get("core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]));
         if (inv[ti].curse_state == curse_state_t::blessed)
         {
             txtef(5);
-            txt(i18n::s.get("core.locale.action.dip.result.becomes_blessed", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.becomes_blessed", inv[ci]));
             inv[ci].curse_state = curse_state_t::blessed;
         }
         if (is_cursed(inv[ti].curse_state))
         {
             txtef(8);
-            txt(i18n::s.get("core.locale.action.dip.result.becomes_cursed", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.becomes_cursed", inv[ci]));
             inv[ci].curse_state = curse_state_t::cursed;
         }
         snd(17);
         break;
     case 10007:
-        txt(i18n::s.get("core.locale.action.dip.result.well_refill", inv[ci], inv[ti]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.well_refill", inv[ci], inv[ti]));
         if (inv[ti].id == 601)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.empty_bottle_shatters"));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd(17);
         if (inv[ci].id == 602)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.holy_well_polluted"));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.holy_well_polluted"));
             break;
         }
         if (inv[ci].param3 >= 20)
@@ -1767,10 +1798,12 @@ void label_1935()
             break;
         }
         txtef(2);
-        txt(i18n::s.get("core.locale.action.dip.result.well_refilled", inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.well_refilled", inv[ci]));
         if (inv[ti].id == 587)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.snow_melts.blending"));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.snow_melts.blending"));
         }
         else
         {
@@ -1781,8 +1814,10 @@ void label_1935()
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
         {
-            txt(i18n::s.get("core.locale.action.dip.result.natural_potion_dry", inv[ci]));
-            txt(i18n::s.get("core.locale.action.dip.result.natural_potion_drop"));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.natural_potion_dry", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.natural_potion_drop"));
             break;
         }
         if (inv_getfreeid(0) == -1)

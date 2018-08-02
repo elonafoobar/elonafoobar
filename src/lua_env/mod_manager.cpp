@@ -17,10 +17,13 @@ namespace lua
 namespace
 {
 
-bool is_alnum_only(const std::string &str)
+bool is_alnum_only(const std::string& str)
 {
-    return find_if(str.begin(), str.end(),
-            [](char c) { return !(isalnum(c) || (c == '_')); }) == str.end();
+    return find_if(
+               str.begin(),
+               str.end(),
+               [](char c) { return !(isalnum(c) || (c == '_')); })
+        == str.end();
 }
 
 } // namespace
@@ -43,8 +46,9 @@ void mod_manager::load_mods(const fs::path& mod_dir)
     load_scanned_mods();
 }
 
-void mod_manager::load_mods(const fs::path& mod_dir,
-                            const fs::path& additional_mod_path)
+void mod_manager::load_mods(
+    const fs::path& mod_dir,
+    const fs::path& additional_mod_path)
 {
     if (stage != mod_loading_stage_t::not_started)
     {
@@ -70,7 +74,8 @@ void mod_manager::clear_map_local_data()
     for (auto&& pair : mods)
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(R"(
+        lua_->get_state()->safe_script(
+            R"(
 local function clear(t)
     for key, _ in pairs(t) do
         t[key] = nil
@@ -79,7 +84,8 @@ end
 if Store then
     clear(Store.map_local)
 end
-)", mod->env);
+)",
+            mod->env);
     }
 }
 
@@ -124,7 +130,9 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
 
     if (!is_alnum_only(mod_name))
     {
-        throw std::runtime_error("Mod name \"" + mod_name + "\" must contain alphanumeric characters only.");
+        throw std::runtime_error(
+            "Mod name \"" + mod_name
+            + "\" must contain alphanumeric characters only.");
     }
     if (mod_name == "script")
     {
@@ -139,7 +147,7 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
 void mod_manager::scan_all_mods(const fs::path& mods_dir)
 {
     if (stage != mod_loading_stage_t::not_started
-          && stage != mod_loading_stage_t::scan_finished)
+        && stage != mod_loading_stage_t::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }
@@ -223,8 +231,7 @@ void mod_manager::run_startup_script(const std::string& name)
     ELONA_LOG("Loaded startup script " << name);
     txtef(8);
     txt(lang(
-        u8"スクリプト"s + name
-            + u8"が読み込まれました。"s,
+        u8"スクリプト"s + name + u8"が読み込まれました。"s,
         u8"Loaded script "s + name + u8". "s));
     txtnew();
 
@@ -236,7 +243,8 @@ void mod_manager::clear_mod_stores()
     for (auto&& pair : mods)
     {
         auto& mod = pair.second;
-        lua_->get_state()->safe_script(R"(
+        lua_->get_state()->safe_script(
+            R"(
 local function clear(t)
     for key, _ in pairs(t) do
         t[key] = nil
@@ -246,7 +254,8 @@ if Store then
     clear(Store.map_local)
     clear(Store.global)
 end
-)", mod->env);
+)",
+            mod->env);
     }
 }
 
@@ -314,13 +323,13 @@ void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
     {
         auto state = lua_->get_state();
         fs::path mod_path = *mod.path;
-        table["require"] =
-            [state, mod_path](const std::string& path, sol::this_environment this_env)
-            {
-                sol::environment env = this_env;
-                const fs::path full_path = mod_path / (path + ".lua");
-                return state->script_file(full_path.string(), env);
-            };
+        table["require"] = [state, mod_path](
+                               const std::string& path,
+                               sol::this_environment this_env) {
+            sol::environment env = this_env;
+            const fs::path full_path = mod_path / (path + ".lua");
+            return state->script_file(full_path.string(), env);
+        };
     }
 }
 
@@ -408,7 +417,8 @@ void mod_manager::run_in_mod(const std::string& name, const std::string& script)
         return pfr;
     };
 
-    auto result = lua_->get_state()->safe_script(script, val->second->env, ignore_handler);
+    auto result = lua_->get_state()->safe_script(
+        script, val->second->env, ignore_handler);
 
     if (!result.valid())
     {

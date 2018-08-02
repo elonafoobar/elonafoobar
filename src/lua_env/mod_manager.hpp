@@ -27,7 +27,8 @@ struct mod_info
         const std::string name_,
         const optional<fs::path> path_,
         std::shared_ptr<sol::state> state)
-        : name(name_), path(path_)
+        : name(name_)
+        , path(path_)
     {
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
@@ -151,7 +152,6 @@ public:
     }
 
 private:
-
     //********************* Lifecycle methods **********************//
 
     /***

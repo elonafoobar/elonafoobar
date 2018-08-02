@@ -2,16 +2,16 @@
 #include <cassert>
 #include <fstream>
 #include <functional>
-#include <string>
 #include <stdexcept>
+#include <string>
 #include "elona.hpp"
+#include "hcl.hpp"
 #include "range.hpp"
-#include "snail/application.hpp"
 #include "snail/android.hpp"
+#include "snail/application.hpp"
 #include "snail/touch_input.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
-#include "hcl.hpp"
 
 
 namespace
@@ -91,11 +91,15 @@ static void inject_display_modes(config& conf)
     // "invalid enum variant" will be generated).
     if (current_display_mode != "")
     {
-        conf.inject_enum("core.config.screen.display_mode", display_mode_names, default_display_mode);
+        conf.inject_enum(
+            "core.config.screen.display_mode",
+            display_mode_names,
+            default_display_mode);
 
         if (config::instance().display_mode == spec::unknown_enum_variant)
         {
-            config::instance().set(u8"core.config.screen.display_mode", default_display_mode);
+            config::instance().set(
+                u8"core.config.screen.display_mode", default_display_mode);
         }
     }
 }
@@ -111,9 +115,10 @@ static void inject_save_files(config& conf)
     if (fs::exists(filesystem::dir::save()))
     {
         for (const auto& entry : filesystem::dir_entries{
-                filesystem::dir::save(), filesystem::dir_entries::type::dir})
+                 filesystem::dir::save(), filesystem::dir_entries::type::dir})
         {
-            std::string folder = filesystem::to_utf8_path(entry.path().filename());
+            std::string folder =
+                filesystem::to_utf8_path(entry.path().filename());
             saves.push_back(folder);
         }
     }
@@ -134,9 +139,10 @@ static void inject_languages(config& conf)
     bool has_en = false;
 
     for (const auto& entry : filesystem::dir_entries{
-            filesystem::dir::locale(), filesystem::dir_entries::type::dir})
+             filesystem::dir::locale(), filesystem::dir_entries::type::dir})
     {
-        std::string identifier = filesystem::to_utf8_path(entry.path().filename());
+        std::string identifier =
+            filesystem::to_utf8_path(entry.path().filename());
         locales.push_back(identifier);
 
         if (identifier == "en")
@@ -155,22 +161,22 @@ static void inject_languages(config& conf)
     // the code are refactored.
     if (!has_en || !has_jp)
     {
-        throw config_loading_error("Locale for English or Japanese is missing in locale/ folder.");
+        throw config_loading_error(
+            "Locale for English or Japanese is missing in locale/ folder.");
     }
 
-    conf.inject_enum("core.config.language.language", locales, spec::unknown_enum_variant);
+    conf.inject_enum(
+        "core.config.language.language", locales, spec::unknown_enum_variant);
 }
 
-static std::map<std::string, snail::android::orientation> orientations =
-{
-    {"sensor_landscape",   snail::android::orientation::sensor_landscape},
-    {"sensor_portait",     snail::android::orientation::sensor_portrait},
-    {"sensor",             snail::android::orientation::sensor},
-    {"landscape",          snail::android::orientation::landscape},
-    {"portrait",           snail::android::orientation::portrait},
-    {"reverse_landscape",  snail::android::orientation::reverse_landscape},
-    {"reverse_portrait",   snail::android::orientation::reverse_portrait}
-};
+static std::map<std::string, snail::android::orientation> orientations = {
+    {"sensor_landscape", snail::android::orientation::sensor_landscape},
+    {"sensor_portait", snail::android::orientation::sensor_portrait},
+    {"sensor", snail::android::orientation::sensor},
+    {"landscape", snail::android::orientation::landscape},
+    {"portrait", snail::android::orientation::portrait},
+    {"reverse_landscape", snail::android::orientation::reverse_landscape},
+    {"reverse_portrait", snail::android::orientation::reverse_portrait}};
 
 static void convert_and_set_requested_orientation(std::string variant)
 {
@@ -263,8 +269,9 @@ void config_query_language()
 }
 
 #define CONFIG_OPTION(confkey, type, getter) \
-    conf.bind_getter("core.config."s + confkey, [&]() { return (getter); } );             \
-    conf.bind_setter<type>("core.config."s + confkey, [&](auto value) { getter = value; } )
+    conf.bind_getter("core.config."s + confkey, [&]() { return (getter); }); \
+    conf.bind_setter<type>( \
+        "core.config."s + confkey, [&](auto value) { getter = value; })
 
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
@@ -274,133 +281,156 @@ void load_config(const fs::path& hcl_file)
     auto& conf = config::instance();
 
     // TODO do inversions
-    CONFIG_OPTION("anime.alert_wait"s,                int,         config::instance().alert);
-    CONFIG_OPTION("anime.anime_wait"s,                int,         config::instance().animewait);
-    CONFIG_OPTION("anime.attack_anime"s,              bool,        config::instance().attackanime);
-    CONFIG_OPTION("anime.auto_turn_speed"s,           std::string, config::instance().autoturn);
-    CONFIG_OPTION("anime.general_wait"s,              int,         config::instance().wait1);
-    CONFIG_OPTION("anime.screen_refresh"s,            int,         config::instance().scrsync);
-    CONFIG_OPTION("anime.scroll"s,                    bool,        config::instance().scroll);
-    CONFIG_OPTION("anime.scroll_when_run"s,           bool,        config::instance().runscroll);
-    CONFIG_OPTION("anime.title_effect"s,              bool,        config::instance().titleanime);
-    CONFIG_OPTION("anime.weather_effect"s,            bool,        config::instance().env);
-    CONFIG_OPTION("anime.window_anime"s,              bool,        config::instance().windowanime);
-    CONFIG_OPTION("balance.restock_interval"s,        int,         config::instance().restock_interval);
-    CONFIG_OPTION("debug.noa_debug"s,                 bool,        config::instance().noadebug);
-    CONFIG_OPTION("font.english"s,                    std::string, config::instance().font2);
-    CONFIG_OPTION("font.japanese"s,                   std::string, config::instance().font1);
-    CONFIG_OPTION("font.size_adjustment"s,            int,         sizefix);
-    CONFIG_OPTION("font.vertical_offset"s,            int,         vfix);
-    CONFIG_OPTION("foobar.autopick"s,                 bool,        config::instance().use_autopick);
-    CONFIG_OPTION("foobar.autosave"s,                 bool,        config::instance().autosave);
-    CONFIG_OPTION("foobar.damage_popup"s,             bool,        config::instance().damage_popup);
-    CONFIG_OPTION("foobar.hp_bar_position"s,          std::string, config::instance().hp_bar);
-    CONFIG_OPTION("foobar.leash_icon"s,               bool,        config::instance().leash_icon);
-    CONFIG_OPTION("foobar.max_damage_popup"s,         int,         config::instance().max_damage_popup);
-    CONFIG_OPTION("foobar.startup_script"s,           std::string, config::instance().startup_script);
-    CONFIG_OPTION("game.attack_neutral_npcs"s,        bool,        config::instance().attack_neutral_npcs);
-    CONFIG_OPTION("game.extra_help"s,                 bool,        config::instance().extrahelp);
-    CONFIG_OPTION("game.hide_autoidentify"s,          bool,        config::instance().hideautoidentify);
-    CONFIG_OPTION("game.hide_shop_updates"s,          bool,        config::instance().hideshopresult);
-    CONFIG_OPTION("game.story"s,                      bool,        config::instance().story);
-    CONFIG_OPTION("input.attack_wait"s,               int,         config::instance().attackwait);
-    CONFIG_OPTION("input.autodisable_numlock"s,       bool,        config::instance().autonumlock);
-    CONFIG_OPTION("input.key_wait"s,                  int,         config::instance().keywait);
-    CONFIG_OPTION("input.walk_wait"s,                 int,         config::instance().walkwait);
-    CONFIG_OPTION("input.run_wait"s,                  int,         config::instance().runwait);
-    CONFIG_OPTION("input.start_run_wait"s,            int,         config::instance().startrun);
-    CONFIG_OPTION("input.select_wait"s,               int,         config::instance().select_wait);
-    CONFIG_OPTION("input.select_fast_start_wait"s,    int,         config::instance().select_fast_start);
-    CONFIG_OPTION("input.select_fast_wait"s,          int,         config::instance().select_fast_wait);
-    CONFIG_OPTION("message.add_timestamps"s,          bool,        config::instance().msgaddtime);
-    CONFIG_OPTION("message.transparency"s,            int,         config::instance().msgtrans);
-    CONFIG_OPTION("net.chat"s,                        bool,        config::instance().netchat);
-    CONFIG_OPTION("net.enabled"s,                     bool,        config::instance().net);
-    CONFIG_OPTION("net.server_list"s,                 bool,        config::instance().serverlist);
-    CONFIG_OPTION("net.wish"s,                        bool,        config::instance().netwish);
-    CONFIG_OPTION("anime.always_center"s,             bool,        config::instance().alwayscenter);
-    CONFIG_OPTION("screen.music"s,                    std::string, config::instance().music);
-    CONFIG_OPTION("screen.sound"s,                    bool,        config::instance().sound);
-    CONFIG_OPTION("screen.heartbeat"s,                bool,        config::instance().heart);
-    CONFIG_OPTION("screen.high_quality_shadows"s,     bool,        config::instance().shadow);
-    CONFIG_OPTION("screen.object_shadows"s,           bool,        config::instance().objectshadow);
-    CONFIG_OPTION("screen.skip_random_event_popups"s, bool,        config::instance().skiprandevents);
+    CONFIG_OPTION("anime.alert_wait"s, int, config::instance().alert);
+    CONFIG_OPTION("anime.anime_wait"s, int, config::instance().animewait);
+    CONFIG_OPTION("anime.attack_anime"s, bool, config::instance().attackanime);
+    CONFIG_OPTION(
+        "anime.auto_turn_speed"s, std::string, config::instance().autoturn);
+    CONFIG_OPTION("anime.general_wait"s, int, config::instance().wait1);
+    CONFIG_OPTION("anime.screen_refresh"s, int, config::instance().scrsync);
+    CONFIG_OPTION("anime.scroll"s, bool, config::instance().scroll);
+    CONFIG_OPTION("anime.scroll_when_run"s, bool, config::instance().runscroll);
+    CONFIG_OPTION("anime.title_effect"s, bool, config::instance().titleanime);
+    CONFIG_OPTION("anime.weather_effect"s, bool, config::instance().env);
+    CONFIG_OPTION("anime.window_anime"s, bool, config::instance().windowanime);
+    CONFIG_OPTION(
+        "balance.restock_interval"s, int, config::instance().restock_interval);
+    CONFIG_OPTION("debug.noa_debug"s, bool, config::instance().noadebug);
+    CONFIG_OPTION("font.english"s, std::string, config::instance().font2);
+    CONFIG_OPTION("font.japanese"s, std::string, config::instance().font1);
+    CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
+    CONFIG_OPTION("font.vertical_offset"s, int, vfix);
+    CONFIG_OPTION("foobar.autopick"s, bool, config::instance().use_autopick);
+    CONFIG_OPTION("foobar.autosave"s, bool, config::instance().autosave);
+    CONFIG_OPTION(
+        "foobar.damage_popup"s, bool, config::instance().damage_popup);
+    CONFIG_OPTION(
+        "foobar.hp_bar_position"s, std::string, config::instance().hp_bar);
+    CONFIG_OPTION("foobar.leash_icon"s, bool, config::instance().leash_icon);
+    CONFIG_OPTION(
+        "foobar.max_damage_popup"s, int, config::instance().max_damage_popup);
+    CONFIG_OPTION(
+        "foobar.startup_script"s,
+        std::string,
+        config::instance().startup_script);
+    CONFIG_OPTION(
+        "game.attack_neutral_npcs"s,
+        bool,
+        config::instance().attack_neutral_npcs);
+    CONFIG_OPTION("game.extra_help"s, bool, config::instance().extrahelp);
+    CONFIG_OPTION(
+        "game.hide_autoidentify"s, bool, config::instance().hideautoidentify);
+    CONFIG_OPTION(
+        "game.hide_shop_updates"s, bool, config::instance().hideshopresult);
+    CONFIG_OPTION("game.story"s, bool, config::instance().story);
+    CONFIG_OPTION("input.attack_wait"s, int, config::instance().attackwait);
+    CONFIG_OPTION(
+        "input.autodisable_numlock"s, bool, config::instance().autonumlock);
+    CONFIG_OPTION("input.key_wait"s, int, config::instance().keywait);
+    CONFIG_OPTION("input.walk_wait"s, int, config::instance().walkwait);
+    CONFIG_OPTION("input.run_wait"s, int, config::instance().runwait);
+    CONFIG_OPTION("input.start_run_wait"s, int, config::instance().startrun);
+    CONFIG_OPTION("input.select_wait"s, int, config::instance().select_wait);
+    CONFIG_OPTION(
+        "input.select_fast_start_wait"s,
+        int,
+        config::instance().select_fast_start);
+    CONFIG_OPTION(
+        "input.select_fast_wait"s, int, config::instance().select_fast_wait);
+    CONFIG_OPTION(
+        "message.add_timestamps"s, bool, config::instance().msgaddtime);
+    CONFIG_OPTION("message.transparency"s, int, config::instance().msgtrans);
+    CONFIG_OPTION("net.chat"s, bool, config::instance().netchat);
+    CONFIG_OPTION("net.enabled"s, bool, config::instance().net);
+    CONFIG_OPTION("net.server_list"s, bool, config::instance().serverlist);
+    CONFIG_OPTION("net.wish"s, bool, config::instance().netwish);
+    CONFIG_OPTION(
+        "anime.always_center"s, bool, config::instance().alwayscenter);
+    CONFIG_OPTION("screen.music"s, std::string, config::instance().music);
+    CONFIG_OPTION("screen.sound"s, bool, config::instance().sound);
+    CONFIG_OPTION("screen.heartbeat"s, bool, config::instance().heart);
+    CONFIG_OPTION(
+        "screen.high_quality_shadows"s, bool, config::instance().shadow);
+    CONFIG_OPTION(
+        "screen.object_shadows"s, bool, config::instance().objectshadow);
+    CONFIG_OPTION(
+        "screen.skip_random_event_popups"s,
+        bool,
+        config::instance().skiprandevents);
 
-    CONFIG_KEY("key.north"s,            key_north);
-    CONFIG_KEY("key.south"s,            key_south);
-    CONFIG_KEY("key.west"s,             key_west);
-    CONFIG_KEY("key.east"s,             key_east);
-    CONFIG_KEY("key.northwest"s,        key_northwest);
-    CONFIG_KEY("key.northeast"s,        key_northeast);
-    CONFIG_KEY("key.southwest"s,        key_southwest);
-    CONFIG_KEY("key.southeast"s,        key_southeast);
-    CONFIG_KEY("key.wait"s,             key_wait);
-    CONFIG_KEY("key.cancel"s,           key_cancel);
-    CONFIG_KEY("key.esc"s,              key_esc);
-    CONFIG_KEY("key.alter"s,            key_alter);
-    CONFIG_KEY("key.pageup"s,           key_pageup);
-    CONFIG_KEY("key.pagedown"s,         key_pagedown);
-    CONFIG_KEY("key.mode"s,             key_mode);
-    CONFIG_KEY("key.mode2"s,            key_mode2);
-    CONFIG_KEY("key.quick_menu"s,       key_quick);
-    CONFIG_KEY("key.zap"s,              key_zap);
-    CONFIG_KEY("key.inventory"s,        key_inventory);
-    CONFIG_KEY("key.quick_inventory"s,  key_quickinv);
-    CONFIG_KEY("key.get"s,              key_get);
-    CONFIG_KEY("key.get2"s,             key_get2);
-    CONFIG_KEY("key.drop"s,             key_drop);
-    CONFIG_KEY("key.chara_info"s,       key_charainfo);
-    CONFIG_KEY("key.enter"s,            key_enter);
-    CONFIG_KEY("key.eat"s,              key_eat);
-    CONFIG_KEY("key.wear"s,             key_wear);
-    CONFIG_KEY("key.cast"s,             key_cast);
-    CONFIG_KEY("key.drink"s,            key_drink);
-    CONFIG_KEY("key.read"s,             key_read);
-    CONFIG_KEY("key.fire"s,             key_fire);
-    CONFIG_KEY("key.go_down"s,          key_godown);
-    CONFIG_KEY("key.go_up"s,            key_goup);
-    CONFIG_KEY("key.save"s,             key_save);
-    CONFIG_KEY("key.search"s,           key_search);
-    CONFIG_KEY("key.interact"s,         key_interact);
-    CONFIG_KEY("key.identify"s,         key_identify);
-    CONFIG_KEY("key.skill"s,            key_skill);
-    CONFIG_KEY("key.close"s,            key_close);
-    CONFIG_KEY("key.rest"s,             key_rest);
-    CONFIG_KEY("key.target"s,           key_target);
-    CONFIG_KEY("key.dig"s,              key_dig);
-    CONFIG_KEY("key.use"s,              key_use);
-    CONFIG_KEY("key.bash"s,             key_bash);
-    CONFIG_KEY("key.open"s,             key_open);
-    CONFIG_KEY("key.dip"s,              key_dip);
-    CONFIG_KEY("key.pray"s,             key_pray);
-    CONFIG_KEY("key.offer"s,            key_offer);
-    CONFIG_KEY("key.journal"s,          key_journal);
-    CONFIG_KEY("key.material"s,         key_material);
-    CONFIG_KEY("key.trait"s,            key_trait);
-    CONFIG_KEY("key.look"s,             key_look);
-    CONFIG_KEY("key.give"s,             key_give);
-    CONFIG_KEY("key.throw"s,            key_throw);
-    CONFIG_KEY("key.ammo"s,             key_ammo);
-    CONFIG_KEY("key.autodig"s,          key_autodig);
-    CONFIG_KEY("key.quicksave"s,        key_quicksave);
-    CONFIG_KEY("key.quickload"s,        key_quickload);
-    CONFIG_KEY("key.help"s,             key_help);
-    CONFIG_KEY("key.message_log"s,      key_msglog);
+    CONFIG_KEY("key.north"s, key_north);
+    CONFIG_KEY("key.south"s, key_south);
+    CONFIG_KEY("key.west"s, key_west);
+    CONFIG_KEY("key.east"s, key_east);
+    CONFIG_KEY("key.northwest"s, key_northwest);
+    CONFIG_KEY("key.northeast"s, key_northeast);
+    CONFIG_KEY("key.southwest"s, key_southwest);
+    CONFIG_KEY("key.southeast"s, key_southeast);
+    CONFIG_KEY("key.wait"s, key_wait);
+    CONFIG_KEY("key.cancel"s, key_cancel);
+    CONFIG_KEY("key.esc"s, key_esc);
+    CONFIG_KEY("key.alter"s, key_alter);
+    CONFIG_KEY("key.pageup"s, key_pageup);
+    CONFIG_KEY("key.pagedown"s, key_pagedown);
+    CONFIG_KEY("key.mode"s, key_mode);
+    CONFIG_KEY("key.mode2"s, key_mode2);
+    CONFIG_KEY("key.quick_menu"s, key_quick);
+    CONFIG_KEY("key.zap"s, key_zap);
+    CONFIG_KEY("key.inventory"s, key_inventory);
+    CONFIG_KEY("key.quick_inventory"s, key_quickinv);
+    CONFIG_KEY("key.get"s, key_get);
+    CONFIG_KEY("key.get2"s, key_get2);
+    CONFIG_KEY("key.drop"s, key_drop);
+    CONFIG_KEY("key.chara_info"s, key_charainfo);
+    CONFIG_KEY("key.enter"s, key_enter);
+    CONFIG_KEY("key.eat"s, key_eat);
+    CONFIG_KEY("key.wear"s, key_wear);
+    CONFIG_KEY("key.cast"s, key_cast);
+    CONFIG_KEY("key.drink"s, key_drink);
+    CONFIG_KEY("key.read"s, key_read);
+    CONFIG_KEY("key.fire"s, key_fire);
+    CONFIG_KEY("key.go_down"s, key_godown);
+    CONFIG_KEY("key.go_up"s, key_goup);
+    CONFIG_KEY("key.save"s, key_save);
+    CONFIG_KEY("key.search"s, key_search);
+    CONFIG_KEY("key.interact"s, key_interact);
+    CONFIG_KEY("key.identify"s, key_identify);
+    CONFIG_KEY("key.skill"s, key_skill);
+    CONFIG_KEY("key.close"s, key_close);
+    CONFIG_KEY("key.rest"s, key_rest);
+    CONFIG_KEY("key.target"s, key_target);
+    CONFIG_KEY("key.dig"s, key_dig);
+    CONFIG_KEY("key.use"s, key_use);
+    CONFIG_KEY("key.bash"s, key_bash);
+    CONFIG_KEY("key.open"s, key_open);
+    CONFIG_KEY("key.dip"s, key_dip);
+    CONFIG_KEY("key.pray"s, key_pray);
+    CONFIG_KEY("key.offer"s, key_offer);
+    CONFIG_KEY("key.journal"s, key_journal);
+    CONFIG_KEY("key.material"s, key_material);
+    CONFIG_KEY("key.trait"s, key_trait);
+    CONFIG_KEY("key.look"s, key_look);
+    CONFIG_KEY("key.give"s, key_give);
+    CONFIG_KEY("key.throw"s, key_throw);
+    CONFIG_KEY("key.ammo"s, key_ammo);
+    CONFIG_KEY("key.autodig"s, key_autodig);
+    CONFIG_KEY("key.quicksave"s, key_quicksave);
+    CONFIG_KEY("key.quickload"s, key_quickload);
+    CONFIG_KEY("key.help"s, key_help);
+    CONFIG_KEY("key.message_log"s, key_msglog);
 
-    conf.bind_setter<hcl::List>("core.config.key.key_set",
-        [&](auto values)
-        {
-            for_each_with_index(
-                std::begin(values),
-                std::end(values),
-                [&](auto index, hcl::Value value) {
-                    std::string s = value.as<std::string>();
-                    key_select(index) = s;
-                });
-        });
+    conf.bind_setter<hcl::List>("core.config.key.key_set", [&](auto values) {
+        for_each_with_index(
+            std::begin(values),
+            std::end(values),
+            [&](auto index, hcl::Value value) {
+                std::string s = value.as<std::string>();
+                key_select(index) = s;
+            });
+    });
 
-    conf.bind_setter<std::string>("core.config.input.assign_z_key",
-        [&](auto value) {
+    conf.bind_setter<std::string>(
+        "core.config.input.assign_z_key", [&](auto value) {
             if (value == "quick_menu")
             {
                 key_quick = u8"z"s;
@@ -413,8 +443,8 @@ void load_config(const fs::path& hcl_file)
             }
         });
 
-    conf.bind_setter<std::string>("core.config.input.assign_x_key",
-        [&](auto value) {
+    conf.bind_setter<std::string>(
+        "core.config.input.assign_x_key", [&](auto value) {
             if (value == "quick_inv")
             {
                 key_quickinv = u8"x"s;
@@ -427,20 +457,22 @@ void load_config(const fs::path& hcl_file)
             }
         });
 
-    conf.bind_setter<std::string>("core.config.screen.orientation",
-                                  &convert_and_set_requested_orientation);
+    conf.bind_setter<std::string>(
+        "core.config.screen.orientation",
+        &convert_and_set_requested_orientation);
 
-    conf.bind_setter<int>("core.config.android.quick_action_repeat_start_wait",
-        [](auto value){
+    conf.bind_setter<int>(
+        "core.config.android.quick_action_repeat_start_wait", [](auto value) {
             snail::input::instance().set_quick_action_repeat_start_wait(value);
         });
 
-    conf.bind_setter<int>("core.config.android.quick_action_repeat_wait",
-        [](auto value){
+    conf.bind_setter<int>(
+        "core.config.android.quick_action_repeat_wait", [](auto value) {
             snail::input::instance().set_quick_action_repeat_wait(value);
         });
 
-    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    std::ifstream ifs{
+        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), false);
 
     key_prev = key_northwest;
@@ -505,39 +537,45 @@ void initialize_config_preload(const fs::path& hcl_file)
     inject_languages(conf);
     inject_save_files(conf);
 
-    CONFIG_OPTION("language.language"s,   std::string, config::instance().language);
-    CONFIG_OPTION("screen.fullscreen"s,   std::string, config::instance().fullscreen);
-    CONFIG_OPTION("screen.music"s,        std::string, config::instance().music);
-    CONFIG_OPTION("screen.sound"s,        bool,        config::instance().sound);
-    CONFIG_OPTION("balance.extra_race"s,  bool,        config::instance().extrarace);
-    CONFIG_OPTION("balance.extra_class"s, bool,        config::instance().extraclass);
-    CONFIG_OPTION("input.joypad"s,        bool,        config::instance().joypad);
-    CONFIG_OPTION("input.key_wait"s,      int,         config::instance().keywait);
-    CONFIG_OPTION("ui.msg_line"s,         int,         inf_msgline);
-    CONFIG_OPTION("ui.tile_size"s,        int,         inf_tiles);
-    CONFIG_OPTION("ui.font_size"s,        int,         inf_mesfont);
-    CONFIG_OPTION("ui.inf_ver_type"s,     int,         inf_vertype);
-    CONFIG_OPTION("ui.window_x"s,         int,         windowx);
-    CONFIG_OPTION("ui.window_y"s,         int,         windowy);
-    CONFIG_OPTION("ui.clock_x"s,          int,         inf_clockx);
-    CONFIG_OPTION("ui.clock_w"s,          int,         inf_clockw);
-    CONFIG_OPTION("ui.clock_h"s,          int,         inf_clockh);
-    CONFIG_OPTION("game.default_save"s,   std::string, defload);    // TODO runtime enum
-    CONFIG_OPTION("debug.wizard"s,        bool,        config::instance().wizard);
-    CONFIG_OPTION("screen.display_mode"s, std::string, config::instance().display_mode);
+    CONFIG_OPTION(
+        "language.language"s, std::string, config::instance().language);
+    CONFIG_OPTION(
+        "screen.fullscreen"s, std::string, config::instance().fullscreen);
+    CONFIG_OPTION("screen.music"s, std::string, config::instance().music);
+    CONFIG_OPTION("screen.sound"s, bool, config::instance().sound);
+    CONFIG_OPTION("balance.extra_race"s, bool, config::instance().extrarace);
+    CONFIG_OPTION("balance.extra_class"s, bool, config::instance().extraclass);
+    CONFIG_OPTION("input.joypad"s, bool, config::instance().joypad);
+    CONFIG_OPTION("input.key_wait"s, int, config::instance().keywait);
+    CONFIG_OPTION("ui.msg_line"s, int, inf_msgline);
+    CONFIG_OPTION("ui.tile_size"s, int, inf_tiles);
+    CONFIG_OPTION("ui.font_size"s, int, inf_mesfont);
+    CONFIG_OPTION("ui.inf_ver_type"s, int, inf_vertype);
+    CONFIG_OPTION("ui.window_x"s, int, windowx);
+    CONFIG_OPTION("ui.window_y"s, int, windowy);
+    CONFIG_OPTION("ui.clock_x"s, int, inf_clockx);
+    CONFIG_OPTION("ui.clock_w"s, int, inf_clockw);
+    CONFIG_OPTION("ui.clock_h"s, int, inf_clockh);
+    CONFIG_OPTION(
+        "game.default_save"s, std::string, defload); // TODO runtime enum
+    CONFIG_OPTION("debug.wizard"s, bool, config::instance().wizard);
+    CONFIG_OPTION(
+        "screen.display_mode"s, std::string, config::instance().display_mode);
 
-    conf.bind_setter<int>("core.config.android.quick_action_size",
-                          &set_touch_quick_action_size);
+    conf.bind_setter<int>(
+        "core.config.android.quick_action_size", &set_touch_quick_action_size);
 
-    conf.bind_setter<int>("core.config.android.quick_action_transparency",
-                          &set_touch_quick_action_transparency);
+    conf.bind_setter<int>(
+        "core.config.android.quick_action_transparency",
+        &set_touch_quick_action_transparency);
 
     if (!fs::exists(hcl_file))
     {
         write_default_config(hcl_file);
     }
 
-    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    std::ifstream ifs{
+        filesystem::make_preferred_path_in_utf8(hcl_file.native())};
     conf.load(ifs, hcl_file.string(), true);
 
     snail::android::set_navigation_bar_visibility(
@@ -605,10 +643,11 @@ void config::load(std::istream& is, const std::string& hcl_file, bool preload)
 
     hcl::ParseResult parseResult = hcl::parse(is);
 
-    if (!parseResult.valid()) {
+    if (!parseResult.valid())
+    {
         std::cerr << parseResult.errorReason << std::endl;
-        throw config_loading_error(u8"Failed to read " + hcl_file + u8": "
-                                   + parseResult.errorReason);
+        throw config_loading_error(
+            u8"Failed to read " + hcl_file + u8": " + parseResult.errorReason);
     }
 
     // TODO: This pattern seems to be shared in various places in the
@@ -617,7 +656,8 @@ void config::load(std::istream& is, const std::string& hcl_file, bool preload)
 
     if (!value.is<hcl::Object>() || !value.has("config"))
     {
-        throw config_loading_error(hcl_file + ": \"config\" object not found at top level");
+        throw config_loading_error(
+            hcl_file + ": \"config\" object not found at top level");
     }
 
     const hcl::Value conf = value["config"];
@@ -625,17 +665,19 @@ void config::load(std::istream& is, const std::string& hcl_file, bool preload)
     // TODO mod support
     if (!conf.is<hcl::Object>() || !conf.has("core"))
     {
-        throw config_loading_error(hcl_file + ": \"core\" object not found after \"config\"");
+        throw config_loading_error(
+            hcl_file + ": \"core\" object not found after \"config\"");
     }
 
     const hcl::Value core = conf["core"];
     visit_object(core.as<hcl::Object>(), "core.config", hcl_file, preload);
 }
 
-void config::visit_object(const hcl::Object& object,
-                          const std::string& current_key,
-                          const std::string& hcl_file,
-                          bool preload)
+void config::visit_object(
+    const hcl::Object& object,
+    const std::string& current_key,
+    const std::string& hcl_file,
+    bool preload)
 {
     for (const auto& pair : object)
     {
@@ -643,16 +685,18 @@ void config::visit_object(const hcl::Object& object,
     }
 }
 
-void config::visit(const hcl::Value& value,
-                   const std::string& current_key,
-                   const std::string& hcl_file,
-                   bool preload)
+void config::visit(
+    const hcl::Value& value,
+    const std::string& current_key,
+    const std::string& hcl_file,
+    bool preload)
 {
     if (value.is<hcl::Object>())
     {
         if (!def.is<spec::section_def>(current_key))
         {
-            throw config_loading_error(hcl_file + ": No such config section \"" + current_key + "\".");
+            throw config_loading_error(
+                hcl_file + ": No such config section \"" + current_key + "\".");
         }
         visit_object(value.as<hcl::Object>(), current_key, hcl_file, preload);
     }
@@ -660,7 +704,8 @@ void config::visit(const hcl::Value& value,
     {
         if (!def.exists(current_key))
         {
-            throw config_loading_error(hcl_file + ": No such config value \"" + current_key + "\".");
+            throw config_loading_error(
+                hcl_file + ": No such config value \"" + current_key + "\".");
         }
         if (preload == def.get_metadata(current_key).preload)
         {
@@ -669,7 +714,9 @@ void config::visit(const hcl::Value& value,
     }
 }
 
-bool config::verify_types(const hcl::Value& value, const std::string& current_key)
+bool config::verify_types(
+    const hcl::Value& value,
+    const std::string& current_key)
 {
     if (def.is<spec::section_def>(current_key))
     {
@@ -701,7 +748,8 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
             }
             else
             {
-                return static_cast<bool>(enum_def.get_index_of(value.as<std::string>()));
+                return static_cast<bool>(
+                    enum_def.get_index_of(value.as<std::string>()));
             }
         }
         else
@@ -721,8 +769,8 @@ void config::write()
     {
         throw config_loading_error{
             u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                    filesystem::dir::exe() / u8"config.hcl")};
+            + filesystem::make_preferred_path_in_utf8(
+                  filesystem::dir::exe() / u8"config.hcl")};
     }
 
     // Create a top level "config" section.
@@ -740,7 +788,8 @@ void config::write()
         hcl::Value value = pair.second;
 
         // Don't save hidden options if their value is the same as the default.
-        if (!def.get_metadata(key).is_visible() && value == def.get_default(key))
+        if (!def.get_metadata(key).is_visible()
+            && value == def.get_default(key))
         {
             continue;
         }
@@ -760,34 +809,32 @@ void config::write()
         // Function to split the flat key ("core.config.some.option")
         // on the next period and set the token to the split section
         // name ("some" or "option").
-        auto advance = [&pos, &key, &token]()
-                           {
-                               pos = key.find(".");
-                               if (pos == std::string::npos)
-                               {
-                                   return false;
-                               }
-                               token = key.substr(0, pos);
-                               key.erase(0, pos + 1);
-                               return true;
-                           };
+        auto advance = [&pos, &key, &token]() {
+            pos = key.find(".");
+            if (pos == std::string::npos)
+            {
+                return false;
+            }
+            token = key.substr(0, pos);
+            key.erase(0, pos + 1);
+            return true;
+        };
 
         // Function that either creates a new object for holding the
         // nested config value or finds an existing one.
-        auto set = [&current](std::string key)
-                       {
-                           hcl::Value* existing = current->find(key);
-                           if (existing)
-                           {
-                               current = existing;
-                           }
-                           else
-                           {
-                               current->set(key, hcl::Object());
-                               current = current->find(key);
-                               assert(current);
-                           }
-                       };
+        auto set = [&current](std::string key) {
+            hcl::Value* existing = current->find(key);
+            if (existing)
+            {
+                current = existing;
+            }
+            else
+            {
+                current->set(key, hcl::Object());
+                current = current->find(key);
+                assert(current);
+            }
+        };
 
         // Get the mod-level scope ("core").
         assert(advance());
@@ -798,7 +845,8 @@ void config::write()
         assert(advance());
         assert(token == "config");
 
-        while (advance()) {
+        while (advance())
+        {
             set(token);
         }
 
@@ -806,7 +854,6 @@ void config::write()
     }
 
     file << out;
-
 }
 
 } // namespace elona

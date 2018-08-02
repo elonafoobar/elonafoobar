@@ -174,7 +174,8 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
         {
             if (is_in_fov(prm_801))
             {
-                txt(i18n::s.get("core.locale.magic.buff.resists", cdata[prm_801]));
+                txt(i18n::s.get(
+                    "core.locale.magic.buff.resists", cdata[prm_801]));
             }
             return 0;
         }
@@ -213,8 +214,12 @@ void buff_delete(int prm_805, int prm_806)
     if (prm_805 == 0)
     {
         txtef(8);
-        txt(i18n::s.get("core.locale.magic.buff.ends",
-                        i18n::_(u8"buff", std::to_string(cdata[prm_805].buffs[prm_806].id), u8"name")));
+        txt(i18n::s.get(
+            "core.locale.magic.buff.ends",
+            i18n::_(
+                u8"buff",
+                std::to_string(cdata[prm_805].buffs[prm_806].id),
+                u8"name")));
     }
     if (is_in_fov(prm_805))
     {

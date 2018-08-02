@@ -53,7 +53,7 @@ bool Chara::is_alive(lua_character_handle handle)
         auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
         return chara.state == 1;
     }
-    catch(...)
+    catch (...)
     {
         return false;
     }
@@ -113,8 +113,7 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
     if (elona::chara_create(-1, id, x, y) != 0)
     {
         lua_character_handle handle =
-            lua::lua->get_handle_manager().get_handle(
-                elona::cdata[elona::rc]);
+            lua::lua->get_handle_manager().get_handle(elona::cdata[elona::rc]);
         return handle;
     }
     else
@@ -211,8 +210,10 @@ void Magic::cast(
 
     try
     {
-        auto caster = lua::lua->get_handle_manager().get_ref<character>(caster_handle);
-        auto target = lua::lua->get_handle_manager().get_ref<character>(target_handle);
+        auto caster =
+            lua::lua->get_handle_manager().get_ref<character>(caster_handle);
+        auto target =
+            lua::lua->get_handle_manager().get_ref<character>(target_handle);
         elona::cc = caster.index;
         elona::tc = target.index;
         elona::efid = effect_id;
@@ -316,8 +317,8 @@ position_t Map::bound_within(const position_t& position)
 
 position_t Map::random_pos()
 {
-    return Map::bound_within(
-        position_t{elona::rnd(mdata_map_width - 1), elona::rnd(mdata_map_height - 1)});
+    return Map::bound_within(position_t{elona::rnd(mdata_map_width - 1),
+                                        elona::rnd(mdata_map_height - 1)});
 }
 
 int Map::generate_tile(tile_kind_t type)
@@ -602,24 +603,22 @@ void Trait::set(int trait_id, int level)
         return;
     }
     if (elona::trait(trait_id) < level
-        && elona::trait(trait_id) < elona::traitref(2)
-        && traitrefn(0) != "")
+        && elona::trait(trait_id) < elona::traitref(2) && traitrefn(0) != "")
     {
         snd(61);
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
-    else if (elona::trait(trait_id) > level
-             && elona::trait(trait_id) > elona::traitref(1)
-             && traitrefn(1) != "")
+    else if (
+        elona::trait(trait_id) > level
+        && elona::trait(trait_id) > elona::traitref(1) && traitrefn(1) != "")
     {
         snd(61);
         elona::txtef(3);
         elona::txt(traitrefn(1));
     }
-    elona::trait(trait_id) = clamp(level,
-                                   elona::traitref(1),
-                                   elona::traitref(2));
+    elona::trait(trait_id) =
+        clamp(level, elona::traitref(1), elona::traitref(2));
     chara_refresh(0);
 }
 
@@ -629,25 +628,23 @@ void Trait::modify(int trait_id, int delta)
     {
         return;
     }
-    if (delta > 0
-        && elona::trait(trait_id) < elona::traitref(2)
+    if (delta > 0 && elona::trait(trait_id) < elona::traitref(2)
         && traitrefn(0) != "")
     {
         snd(61);
         elona::txtef(2);
         elona::txt(traitrefn(0));
     }
-    else if (delta < 0
-             && elona::trait(trait_id) > elona::traitref(1)
-             && traitrefn(1) != "")
+    else if (
+        delta < 0 && elona::trait(trait_id) > elona::traitref(1)
+        && traitrefn(1) != "")
     {
         snd(61);
         elona::txtef(3);
         elona::txt(traitrefn(1));
     }
-    elona::trait(trait_id) = clamp(elona::trait(trait_id) + delta,
-                                   elona::traitref(1),
-                                   elona::traitref(2));
+    elona::trait(trait_id) = clamp(
+        elona::trait(trait_id) + delta, elona::traitref(1), elona::traitref(2));
     chara_refresh(0);
 }
 
@@ -672,7 +669,7 @@ sol::optional<std::string> prompt_text(const std::string&, bool);
 sol::optional<int> prompt_choice(sol::variadic_args);
 
 void bind(sol::table&);
-}; // namespace GUI
+}; // namespace Input
 
 bool Input::yes_no(const std::string& message)
 {
@@ -687,9 +684,10 @@ sol::optional<int> Input::prompt_number(const std::string& message, int max)
     return Input::prompt_number_with_initial(message, max, 0);
 }
 
-sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
-                                                     int max,
-                                                     int initial)
+sol::optional<int> Input::prompt_number_with_initial(
+    const std::string& message,
+    int max,
+    int initial)
 {
     if (max < 1)
     {
@@ -698,10 +696,7 @@ sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
 
     txt(message + " ");
     input_number_dialog(
-        (windoww - 200) / 2 + inf_screenx,
-        winposy(60),
-        max,
-        initial);
+        (windoww - 200) / 2 + inf_screenx, winposy(60), max, initial);
 
     if (rtval == -1)
     {
@@ -711,10 +706,17 @@ sol::optional<int> Input::prompt_number_with_initial(const std::string& message,
     return elona::stoi(elona::inputlog(0));
 }
 
-sol::optional<std::string> Input::prompt_text(const std::string& message, bool is_cancelable)
+sol::optional<std::string> Input::prompt_text(
+    const std::string& message,
+    bool is_cancelable)
 {
     txt(message + " ");
-    bool canceled = input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20, is_cancelable, true);
+    bool canceled = input_text_dialog(
+        (windoww - 360) / 2 + inf_screenx,
+        winposy(90),
+        20,
+        is_cancelable,
+        true);
     if (canceled)
     {
         return sol::nullopt;
@@ -732,7 +734,8 @@ sol::optional<int> Input::prompt_choice(sol::variadic_args args)
 
     for (size_t i = 0; i < args.size(); i++)
     {
-        ELONA_APPEND_PROMPT(args[i].as<std::string>(), u8"null"s, std::to_string(i));
+        ELONA_APPEND_PROMPT(
+            args[i].as<std::string>(), u8"null"s, std::to_string(i));
     }
 
     int rtval = show_prompt(promptx, prompty, 160);
@@ -750,8 +753,9 @@ void Input::bind(sol::table& Elona)
     sol::table Input = Elona.create_named("Input");
     Input.set_function("yes_no", Input::yes_no);
     Input.set_function("prompt_choice", Input::prompt_choice);
-    Input.set_function("prompt_number", sol::overload(Input::prompt_number,
-                                                      Input::prompt_number_with_initial));
+    Input.set_function(
+        "prompt_number",
+        sol::overload(Input::prompt_number, Input::prompt_number_with_initial));
     Input.set_function("prompt_text", Input::prompt_text);
 }
 
@@ -1408,8 +1412,7 @@ void init_usertypes(lua_env& lua)
         "param1",
         &item::param1,
         "param2",
-        &item::param2
-        );
+        &item::param2);
 }
 
 
@@ -1464,7 +1467,9 @@ sol::optional<sol::table> api_manager::try_find_api(
     return result;
 }
 
-void api_manager::add_api(const std::string& module_namespace, sol::table& module_table)
+void api_manager::add_api(
+    const std::string& module_namespace,
+    sol::table& module_table)
 {
     if (api_env["Elona"][module_namespace] == sol::lua_nil)
     {
@@ -1476,29 +1481,35 @@ void api_manager::add_api(const std::string& module_namespace, sol::table& modul
     {
         if (!pair.first.is<std::string>())
         {
-            throw sol::error("Error loading mod " + module_namespace +
-                             ": Mod API tables must only have string keys.");
+            throw sol::error(
+                "Error loading mod " + module_namespace
+                + ": Mod API tables must only have string keys.");
         }
         api_table[pair.first.as<std::string>()] = pair.second;
     }
 }
 
-int api_manager::get_enum_value(const std::string& enum_name,
-                                const std::string& variant) const
+int api_manager::get_enum_value(
+    const std::string& enum_name,
+    const std::string& variant) const
 {
     sol::optional<sol::table> Enums = try_find_api("core", "Enums");
     if (!Enums)
-        throw std::runtime_error("Enum table not loaded in API manager (" + enum_name + "." + variant + ")");
+        throw std::runtime_error(
+            "Enum table not loaded in API manager (" + enum_name + "." + variant
+            + ")");
 
     sol::optional<sol::table> enum_table = (*Enums)[enum_name];
 
     if (!enum_table)
         throw std::runtime_error("No such enum \"" + enum_name + "\"");
 
-    sol::optional<int> enum_value =  (*enum_table)[variant];
+    sol::optional<int> enum_value = (*enum_table)[variant];
 
     if (!enum_value)
-        throw std::runtime_error("No such enum value \"" + variant + "\" for enum \"" + enum_name + "\"");
+        throw std::runtime_error(
+            "No such enum value \"" + variant + "\" for enum \"" + enum_name
+            + "\"");
 
     return *enum_value;
 }
@@ -1513,7 +1524,8 @@ void api_manager::load_lua_support_libraries(lua_env& lua)
     }
 
     auto result = lua.get_state()->safe_script_file(
-        filesystem::make_preferred_path_in_utf8(filesystem::dir::data() / "lua" / "init.lua"),
+        filesystem::make_preferred_path_in_utf8(
+            filesystem::dir::data() / "lua" / "init.lua"),
         api_env);
 
     if (!result.valid())
@@ -1527,9 +1539,11 @@ void api_manager::load_lua_support_libraries(lua_env& lua)
 
 void api_manager::lock()
 {
-    lua->get_state()->safe_script(R"(
+    lua->get_state()->safe_script(
+        R"(
 Elona = Elona.core.ReadOnly.make_read_only(Elona)
-)", api_env);
+)",
+        api_env);
 }
 
 sol::table api_manager::bind(lua_env& lua)

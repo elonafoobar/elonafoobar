@@ -100,7 +100,14 @@ void showcard2(int prm_425, int prm_426)
                     card_at_cardcontrol(4, prm_425) + 36);
                 gmode(4, 220);
                 auto rect = draw_get_rect_chara(168); // slime
-                gcopy_c(rect->buffer, rect->x, rect->y, rect->width, rect->height, 64, 104);
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    104);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 255;
@@ -111,7 +118,14 @@ void showcard2(int prm_425, int prm_426)
                     card_at_cardcontrol(4, prm_425) + 40);
                 gmode(4, 220);
                 auto rect = draw_get_rect_chara(211); // black cat
-                gcopy_c(rect->buffer, rect->x, rect->y, rect->width, rect->height, 64, 104);
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    104);
                 col_at_cardcontrol(0) = 255;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 140;
@@ -122,7 +136,14 @@ void showcard2(int prm_425, int prm_426)
                     card_at_cardcontrol(4, prm_425) + 50);
                 gmode(4, 220);
                 auto rect = draw_get_rect_chara(241); // skeleton
-                gcopy_c(rect->buffer, rect->x, rect->y, rect->width, rect->height, 64, 84);
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    84);
                 col_at_cardcontrol(0) = 240;
                 col_at_cardcontrol(1) = 240;
                 col_at_cardcontrol(2) = 240;
@@ -133,7 +154,14 @@ void showcard2(int prm_425, int prm_426)
                     card_at_cardcontrol(4, prm_425) + 48);
                 gmode(4, 220);
                 auto rect = draw_get_rect_chara(223); // armor
-                gcopy_c(rect->buffer, rect->x, rect->y, rect->width, rect->height, 64, 80);
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    80);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 255;
                 col_at_cardcontrol(2) = 140;
@@ -144,7 +172,14 @@ void showcard2(int prm_425, int prm_426)
                     card_at_cardcontrol(4, prm_425) + 44);
                 gmode(4, 220);
                 auto rect = draw_get_rect_chara(258); // public performer
-                gcopy_c(rect->buffer, rect->x, rect->y, rect->width, rect->height, 72, 86);
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    72,
+                    86);
                 col_at_cardcontrol(0) = 250;
                 col_at_cardcontrol(1) = 250;
                 col_at_cardcontrol(2) = 105;
@@ -393,7 +428,8 @@ int trashcard(int prm_430)
         }
         pos(card_at_cardcontrol(3, prm_430) + 32,
             card_at_cardcontrol(4, prm_430) + 48);
-        grotate(3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
+        grotate(
+            3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
         await(10);
         redraw();
     }

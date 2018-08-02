@@ -828,7 +828,8 @@ std::string txttargetlevel(int cc, int tc)
         danger = 0;
     }
 
-    return i18n::s.get_enum("core.locale.action.target.level", danger, cdata[tc]);
+    return i18n::s.get_enum(
+        "core.locale.action.target.level", danger, cdata[tc]);
 }
 
 
@@ -1562,7 +1563,8 @@ int breath_list()
                 {
                     continue;
                 }
-                if (tx < 0 || ty < 0 || tx >= mdata_map_width || ty >= mdata_map_height)
+                if (tx < 0 || ty < 0 || tx >= mdata_map_width
+                    || ty >= mdata_map_height)
                 {
                     continue;
                 }
@@ -1930,9 +1932,10 @@ void refreshspeed(int cc)
 
 void ride_begin(int mount)
 {
-    txt(i18n::s.get("core.locale.magic.mount.mount.execute",
-                    cdata[mount],
-                    cdata[mount].current_speed));
+    txt(i18n::s.get(
+        "core.locale.magic.mount.mount.execute",
+        cdata[mount],
+        cdata[mount].current_speed));
     cdata[mount].is_ridden() = true;
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
@@ -2365,7 +2368,15 @@ void animeblood(int cc, int animation_type, int element)
                         * cnt2_at_m133,
                 dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2
                     - 12 + cnt);
-            grotate(1, 0, 960, inf_tiles, inf_tiles, 24 - cnt2_at_m133 * 2, 24 - cnt2_at_m133 * 2, 0.2 * cnt);
+            grotate(
+                1,
+                0,
+                960,
+                inf_tiles,
+                inf_tiles,
+                24 - cnt2_at_m133 * 2,
+                24 - cnt2_at_m133 * 2,
+                0.2 * cnt);
         }
         gmode(0);
         redraw();
@@ -2449,7 +2460,8 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
 void check_kill(int prm_836, int prm_837)
 {
     int p_at_m137 = 0;
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena || gdata_current_map == mdata_t::map_id_t::show_house
+    if (gdata_current_map == mdata_t::map_id_t::pet_arena
+        || gdata_current_map == mdata_t::map_id_t::show_house
         || gdata_current_map == mdata_t::map_id_t::arena)
     {
         return;
@@ -5057,14 +5069,19 @@ void proc_pregnant()
             if (stat != 0)
             {
                 if (strlen_u(cdatan(0, cc)) > 10
-                    || instr(cdatan(0, cc), 0, i18n::s.get("core.locale.chara.job.alien.child"))
+                    || instr(
+                           cdatan(0, cc),
+                           0,
+                           i18n::s.get("core.locale.chara.job.alien.child"))
                         != -1)
                 {
-                    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.alien.alien_kid");
+                    cdatan(0, rc) =
+                        i18n::s.get("core.locale.chara.job.alien.alien_kid");
                 }
                 else
                 {
-                    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.alien.child_of", cdatan(0, cc));
+                    cdatan(0, rc) = i18n::s.get(
+                        "core.locale.chara.job.alien.child_of", cdatan(0, cc));
                 }
             }
         }
@@ -5421,7 +5438,8 @@ turn_result_t exit_map()
     }
     msg_newline();
     msgtemp = u8"  "s;
-    if (gdata_current_map == mdata_t::map_id_t::show_house || gdata_current_map == mdata_t::map_id_t::arena
+    if (gdata_current_map == mdata_t::map_id_t::show_house
+        || gdata_current_map == mdata_t::map_id_t::arena
         || gdata_current_map == mdata_t::map_id_t::pet_arena)
     {
         usermapid = 0;
@@ -5475,7 +5493,8 @@ turn_result_t exit_map()
                 lang(u8"階段を降りた。"s, u8"You walk down the stairs. "s);
             f = 1;
             gdata_entrance_type = 1;
-            mdata_map_stair_down_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
+            mdata_map_stair_down_pos =
+                cdata[0].position.y * 1000 + cdata[0].position.x;
             if (feat(2) == 0)
             {
                 ++gdata_current_dungeon_level;
@@ -5492,7 +5511,8 @@ turn_result_t exit_map()
             msgtemp += lang(u8"階段を昇った。"s, u8"You walk up the stairs. "s);
             f = 1;
             gdata_entrance_type = 2;
-            mdata_map_stair_up_pos = cdata[0].position.y * 1000 + cdata[0].position.x;
+            mdata_map_stair_up_pos =
+                cdata[0].position.y * 1000 + cdata[0].position.x;
             if (feat(2) == 0)
             {
                 --gdata_current_dungeon_level;
@@ -5514,27 +5534,33 @@ turn_result_t exit_map()
                 if (feat(2) != 0 || feat(3) != 0)
                 {
                     gdata_current_map = feat(2) + feat(3) * 100;
-                    if (adata(16, gdata_current_map) == mdata_t::map_id_t::the_void)
+                    if (adata(16, gdata_current_map)
+                        == mdata_t::map_id_t::the_void)
                     {
                         if (itemfind(0, 742) == -1)
                         {
-                            txt(i18n::s.get("core.locale.action.exit_map.not_permitted"));
+                            txt(i18n::s.get(
+                                "core.locale.action.exit_map.not_permitted"));
                             msg_halt();
                             gdata_current_map = mdata_t::map_id_t::fields;
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::map_id_t::pyramid)
+                    if (adata(16, gdata_current_map)
+                        == mdata_t::map_id_t::pyramid)
                     {
                         if (gdata_pyramid_trial == 0)
                         {
-                            txt(i18n::s.get("core.locale.action.exit_map.no_invitation_to_pyramid"));
+                            txt(
+                                i18n::s.get("core.locale.action.exit_map.no_"
+                                            "invitation_to_pyramid"));
                             msg_halt();
                             gdata_current_map = mdata_t::map_id_t::fields;
                         }
                     }
                     if (adata(16, gdata_current_map) == mdata_t::map_id_t::jail)
                     {
-                        txt(i18n::s.get("core.locale.action.exit_map.cannot_enter_jail"));
+                        txt(i18n::s.get(
+                            "core.locale.action.exit_map.cannot_enter_jail"));
                         msg_halt();
                         gdata_current_map = mdata_t::map_id_t::fields;
                     }
@@ -5571,13 +5597,15 @@ turn_result_t exit_map()
             {
                 if (gdata_current_dungeon_level == 1)
                 {
-                    msgtemp += i18n::s.get("core.locale.action.exit_map.surface.returned_to",
-                                           mapname(gdata_current_map));
+                    msgtemp += i18n::s.get(
+                        "core.locale.action.exit_map.surface.returned_to",
+                        mapname(gdata_current_map));
                 }
                 else
                 {
-                    msgtemp += i18n::s.get("core.locale.action.exit_map.surface.left",
-                                           mapname(gdata_current_map));
+                    msgtemp += i18n::s.get(
+                        "core.locale.action.exit_map.surface.left",
+                        mapname(gdata_current_map));
                 }
             }
         }
@@ -5644,7 +5672,8 @@ turn_result_t exit_map()
         }
         if (mdata_map_type != mdata_t::map_type_t::world_map)
         {
-            if (mdata_map_type != mdata_t::map_type_t::field || mdata_map_type == mdata_t::map_type_t::player_owned)
+            if (mdata_map_type != mdata_t::map_type_t::field
+                || mdata_map_type == mdata_t::map_type_t::player_owned)
             {
                 if (fixtransfermap == 0)
                 {
@@ -5663,30 +5692,34 @@ turn_result_t exit_map()
         }
         if (event_find(6))
         {
-            msgtemp += i18n::s.get("core.locale.action.exit_map.delivered_to_your_home");
+            msgtemp += i18n::s.get(
+                "core.locale.action.exit_map.delivered_to_your_home");
             weather_changes_by_location();
         }
         else if (adata(0, gdata_previous_map) == mdata_t::map_type_t::world_map)
         {
-            msgtemp += i18n::s.get("core.locale.action.exit_map.entered",
-                                   mapname(gdata_current_map));
+            msgtemp += i18n::s.get(
+                "core.locale.action.exit_map.entered",
+                mapname(gdata_current_map));
         }
         else if (mdata_map_type == mdata_t::map_type_t::temporary)
         {
-            msgtemp += i18n::s.get("core.locale.action.exit_map.returned_to",
-                                   mapname(gdata_current_map));
+            msgtemp += i18n::s.get(
+                "core.locale.action.exit_map.returned_to",
+                mapname(gdata_current_map));
         }
         else
         {
-            msgtemp += i18n::s.get("core.locale.action.exit_map.left",
-                                   mapname(gdata_current_map));
+            msgtemp += i18n::s.get(
+                "core.locale.action.exit_map.left", mapname(gdata_current_map));
         }
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
             if (adata(0, gdata_current_map) == mdata_t::map_type_t::world_map
                 || adata(0, gdata_current_map) == mdata_t::map_type_t::field)
             {
-                msgtemp += i18n::s.get("core.locale.action.exit_map.burdened_by_cargo");
+                msgtemp += i18n::s.get(
+                    "core.locale.action.exit_map.burdened_by_cargo");
             }
         }
     }
@@ -5770,7 +5803,8 @@ turn_result_t exit_map()
     // not change if access to it is refused (jail, pyramid, etc.).
     if (map_changed)
     {
-        lua::lua->get_event_manager().run_callbacks<lua::event_kind_t::map_unloading>();
+        lua::lua->get_event_manager()
+            .run_callbacks<lua::event_kind_t::map_unloading>();
 
         lua::lua->get_mod_manager().clear_map_local_data();
         lua::lua->get_handle_manager().clear_map_local_handles();
@@ -5842,10 +5876,12 @@ void label_1745()
         {
             if (mdata_map_next_regenerate_date != 0)
             {
-                for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
+                     ++cnt)
                 {
                     y = cnt;
-                    for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                    for (int cnt = 0, cnt_end = (mdata_map_width);
+                         cnt < cnt_end;
                          ++cnt)
                     {
                         if (map(cnt, y, 6) != 0)
@@ -5874,7 +5910,8 @@ void label_1745()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
+                    if (mdata_map_type == mdata_t::map_type_t::town
+                        || mdata_map_type == mdata_t::map_type_t::guild)
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5927,8 +5964,8 @@ void label_1745()
                 map_randsite();
             }
         }
-        mdata_map_next_regenerate_date = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 120;
+        mdata_map_next_regenerate_date = gdata_hour + gdata_day * 24
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 120;
     }
     if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12
@@ -5940,8 +5977,9 @@ void label_1745()
         }
         else
         {
-            renewmulti = (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                          + gdata_year * 24 * 30 * 12 - mdata_map_next_restock_date)
+            renewmulti =
+                (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                 + gdata_year * 24 * 30 * 12 - mdata_map_next_restock_date)
                     / 24
                 + 1;
         }
@@ -5968,10 +6006,12 @@ void label_1745()
         }
         if (mdata_map_should_regenerate == 0)
         {
-            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
+                 ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                     ++cnt)
                 {
                     if (map(cnt, y, 6) != 0)
                     {
@@ -6049,8 +6089,8 @@ void label_1745()
                 }
             }
         }
-        mdata_map_next_restock_date = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 24;
+        mdata_map_next_restock_date = gdata_hour + gdata_day * 24
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
     }
     return;
 }
@@ -6064,7 +6104,9 @@ void label_1746()
     {
         pos(0, 0);
         picload(
-            filesystem::dir::graphic() / (u8"map"s + mdata_map_atlas_number + u8".bmp"), 1);
+            filesystem::dir::graphic()
+                / (u8"map"s + mdata_map_atlas_number + u8".bmp"),
+            1);
         mtilefilecur = mdata_map_atlas_number;
         initialize_map_chip();
     }
@@ -6109,7 +6151,8 @@ void label_1746()
         {
             shadow = 65;
         }
-        if (gdata_current_map == mdata_t::map_id_t::noyel && (gdata_hour >= 17 || gdata_hour < 7))
+        if (gdata_current_map == mdata_t::map_id_t::noyel
+            && (gdata_hour >= 17 || gdata_hour < 7))
         {
             shadow += 35;
         }
@@ -6278,7 +6321,8 @@ void label_1750()
             continue;
         }
         if (adata(1, cnt) <= 0 || adata(2, cnt) <= 0
-            || adata(1, cnt) >= mdata_map_width || adata(2, cnt) >= mdata_map_height)
+            || adata(1, cnt) >= mdata_map_width
+            || adata(2, cnt) >= mdata_map_height)
         {
             adata(1, cnt) = mdata_map_width / 2;
             adata(2, cnt) = mdata_map_height / 2;
@@ -6293,7 +6337,8 @@ void label_1750()
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
                 x = adata(1, p) + rnd(dx) - rnd(dx);
                 y = adata(2, p) + rnd(dy) - rnd(dy);
-                if (x <= 0 || y <= 0 || x >= mdata_map_width - 1 || y >= mdata_map_height - 1)
+                if (x <= 0 || y <= 0 || x >= mdata_map_width - 1
+                    || y >= mdata_map_height - 1)
                 {
                     continue;
                 }
@@ -7087,7 +7132,8 @@ int place_random_nefias()
         {
             x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
             y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-            if (x <= 5 || y <= 5 || x >= mdata_map_width - 6 || y >= mdata_map_height - 6)
+            if (x <= 5 || y <= 5 || x >= mdata_map_width - 6
+                || y >= mdata_map_height - 6)
             {
                 continue;
             }
@@ -7580,7 +7626,8 @@ void label_1755()
             {
                 cdata[rc].only_christmas() = true;
                 cdata[rc].is_hung_on_sand_bag() = true;
-                cdatan(0, rc) = i18n::s.get_enum("core.locale.chara.job.fanatic", rnd(3));
+                cdatan(0, rc) =
+                    i18n::s.get_enum("core.locale.chara.job.fanatic", rnd(3));
             }
         }
         {
@@ -7647,7 +7694,8 @@ void label_1755()
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7662,7 +7710,8 @@ void label_1755()
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7689,7 +7738,8 @@ void label_1755()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.street_vendor", cdatan(0, rc));
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.chara.job.street_vendor", cdatan(0, rc));
             }
         }
         {
@@ -7704,7 +7754,8 @@ void label_1755()
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
-                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.street_vendor2", cdatan(0, rc));
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.chara.job.street_vendor2", cdatan(0, rc));
             }
         }
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -7859,7 +7910,6 @@ int random_material(int prm_1028, int prm_1029)
     }
     return f_at_m174;
 }
-
 
 
 
@@ -8239,20 +8289,24 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
         }
         if (inv[item].own_state <= 0)
         {
-            return i18n::s.get("core.locale.action.move.item_on_cell.item", rtvaln(0));
+            return i18n::s.get(
+                "core.locale.action.move.item_on_cell.item", rtvaln(0));
         }
         else if (inv[item].own_state == 3)
         {
-            return i18n::s.get("core.locale.action.move.item_on_cell.building", rtvaln(0));
+            return i18n::s.get(
+                "core.locale.action.move.item_on_cell.building", rtvaln(0));
         }
         else
         {
-            return i18n::s.get("core.locale.action.move.item_on_cell.not_owned", rtvaln(0));
+            return i18n::s.get(
+                "core.locale.action.move.item_on_cell.not_owned", rtvaln(0));
         }
     }
     else
     {
-        return i18n::s.get("core.locale.action.move.item_on_cell.more_than_three", number);
+        return i18n::s.get(
+            "core.locale.action.move.item_on_cell.more_than_three", number);
     }
 }
 
@@ -8294,13 +8348,14 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(
-                i18n::s.get("core.locale.action.target.you_are_targeting",
-                            cdata[i_at_m186],
-                            dist(
-                                cdata[0].position.x,
-                                cdata[0].position.y,
-                                cdata[i_at_m186].position.x,
-                                cdata[i_at_m186].position.y)),
+                i18n::s.get(
+                    "core.locale.action.target.you_are_targeting",
+                    cdata[i_at_m186],
+                    dist(
+                        cdata[0].position.x,
+                        cdata[0].position.y,
+                        cdata[i_at_m186].position.x,
+                        cdata[i_at_m186].position.y)),
                 100,
                 windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
@@ -8731,26 +8786,27 @@ int target_position()
         {
             pos(dx, dy * (dy > 0));
             snail::application::instance().get_renderer().set_blend_mode(
-                    snail::blend_mode_t::blend);
+                snail::blend_mode_t::blend);
             snail::application::instance().get_renderer().set_draw_color(
-                    {127, 127, 255, 50});
+                {127, 127, 255, 50});
             snail::application::instance().get_renderer().fill_rect(
-                    dx,
-                    dy * (dy > 0),
-                    inf_tiles - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
-                    inf_tiles + (dy < 0) * inf_screeny
+                dx,
+                dy * (dy > 0),
+                inf_tiles
+                    - (dx + inf_tiles > windoww) * (dx + inf_tiles - windoww),
+                inf_tiles + (dy < 0) * inf_screeny
                     - (dy + inf_tiles > windowh - inf_verh)
-                    * (dy + inf_tiles - windowh + inf_verh));
+                        * (dy + inf_tiles - windowh + inf_verh));
         }
         if (homemapmode == 1)
         {
             pos(windoww - 80, 20);
             gcopy(
-                    2,
-                    tile % 33 * inf_tiles,
-                    tile / 33 * inf_tiles,
-                    inf_tiles,
-                    inf_tiles);
+                2,
+                tile % 33 * inf_tiles,
+                tile / 33 * inf_tiles,
+                inf_tiles,
+                inf_tiles);
         }
         else
         {
@@ -8767,25 +8823,25 @@ int target_position()
                     break;
                 }
                 if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[rc].position.x,
-                            cdata[rc].position.y)
-                        == 0)
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cdata[rc].position.x,
+                        cdata[rc].position.y)
+                    == 0)
                 {
                     break;
                 }
-                if ((cdata[rc].is_invisible() == 0 || cdata[0].can_see_invisible()
-                            || cdata[rc].wet)
-                        == 0)
+                if ((cdata[rc].is_invisible() == 0
+                     || cdata[0].can_see_invisible() || cdata[rc].wet)
+                    == 0)
                 {
                     break;
                 }
                 get_route(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[rc].position.x,
-                        cdata[rc].position.y);
+                    cdata[cc].position.x,
+                    cdata[cc].position.y,
+                    cdata[rc].position.x,
+                    cdata[rc].position.y);
                 dx = (tlocx - scx) * inf_tiles + inf_screenx;
                 dy = (tlocy - scy) * inf_tiles + inf_screeny;
                 if (maxroute != 0)
@@ -8814,15 +8870,18 @@ int target_position()
                             snail::application::instance()
                                 .get_renderer()
                                 .set_draw_color({255, 255, 255, 25});
-                            snail::application::instance().get_renderer().fill_rect(
+                            snail::application::instance()
+                                .get_renderer()
+                                .fill_rect(
                                     sx,
                                     sy * (sy > 0),
                                     inf_tiles
-                                    - (sx + inf_tiles > windoww)
-                                    * (sx + inf_tiles - windoww),
+                                        - (sx + inf_tiles > windoww)
+                                            * (sx + inf_tiles - windoww),
                                     inf_tiles + (sy < 0) * inf_screeny
-                                    - (sy + inf_tiles > windowh - inf_verh)
-                                    * (sy + inf_tiles - windowh + inf_verh));
+                                        - (sy + inf_tiles > windowh - inf_verh)
+                                            * (sy + inf_tiles - windowh
+                                               + inf_verh));
                         }
                     }
                 }
@@ -8849,7 +8908,7 @@ int target_position()
             if (a == stick_key::mouse_right)
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 2
-                        || chipm(0, map(tlocx, tlocy, 0)) == 1)
+                    || chipm(0, map(tlocx, tlocy, 0)) == 1)
                 {
                     snd(27);
                     wait_key_released();
@@ -8893,7 +8952,8 @@ int target_position()
             {
                 x = tlocx + kdx;
                 y = tlocy + kdy;
-                if (x >= 0 && y >= 0 && x < mdata_map_width && y < mdata_map_height)
+                if (x >= 0 && y >= 0 && x < mdata_map_width
+                    && y < mdata_map_height)
                 {
                     tlocx += kdx;
                     tlocy += kdy;
@@ -8959,14 +9019,16 @@ int target_position()
             {
                 if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
                 {
-                    txt(i18n::s.get("core.locale.action.which_direction.cannot_see"));
+                    txt(i18n::s.get(
+                        "core.locale.action.which_direction.cannot_see"));
                     continue;
                 }
                 snd(20);
                 if (rc > 0)
                 {
                     cdata[0].enemy_id = rc;
-                    txt(i18n::s.get("core.locale.action.look.target", cdata[rc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.look.target", cdata[rc]));
                 }
                 else
                 {
@@ -9040,7 +9102,8 @@ turn_result_t do_short_cut()
         {
             if (spact(efid - 600) == 0)
             {
-                txt(i18n::s.get("core.locale.action.shortcut.cannot_use_anymore"));
+                txt(i18n::s.get(
+                    "core.locale.action.shortcut.cannot_use_anymore"));
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
@@ -9060,7 +9123,8 @@ turn_result_t do_short_cut()
         if (spell(efid - 400) <= 0)
         {
             ++msgdup;
-            txt(i18n::s.get("core.locale.action.shortcut.cannot_use_spell_anymore"));
+            txt(i18n::s.get(
+                "core.locale.action.shortcut.cannot_use_spell_anymore"));
             update_screen();
             return turn_result_t::pc_turn_user_error;
         }
@@ -9107,11 +9171,13 @@ void equip_melee_weapon()
         {
             if (inv[cw].weight >= 4000)
             {
-                txt(i18n::s.get("core.locale.action.equip.two_handed.fits_well", inv[cw]));
+                txt(i18n::s.get(
+                    "core.locale.action.equip.two_handed.fits_well", inv[cw]));
             }
             else
             {
-                txt(i18n::s.get("core.locale.action.equip.two_handed.too_light", inv[cw]));
+                txt(i18n::s.get(
+                    "core.locale.action.equip.two_handed.too_light", inv[cw]));
             }
         }
         if (cdata[cc].equipment_type & 4)
@@ -9120,13 +9186,16 @@ void equip_melee_weapon()
             {
                 if (inv[cw].weight >= 4000)
                 {
-                    txt(i18n::s.get("core.locale.action.equip.two_handed.too_heavy", inv[cw]));
+                    txt(i18n::s.get(
+                        "core.locale.action.equip.two_handed.too_heavy",
+                        inv[cw]));
                 }
             }
             else if (inv[cw].weight > 1500)
             {
-                    txt(i18n::s.get("core.locale.action.equip.two_handed.too_heavy_other_hand",
-                                    inv[cw]));
+                txt(i18n::s.get(
+                    "core.locale.action.equip.two_handed.too_heavy_other_hand",
+                    inv[cw]));
             }
         }
         if (cc == 0)
@@ -9135,8 +9204,10 @@ void equip_melee_weapon()
             {
                 if (inv[cw].weight >= 4000)
                 {
-                    txt(i18n::s.get("core.locale.action.equip.two_handed.too_heavy_when_riding",
-                            inv[cw]));
+                    txt(i18n::s.get(
+                        "core.locale.action.equip.two_handed.too_heavy_when_"
+                        "riding",
+                        inv[cw]));
                 }
             }
         }
@@ -9484,8 +9555,6 @@ void label_2076()
 
 
 
-
-
 void try_to_return()
 {
     int stat = quest_is_return_forbidden();
@@ -9640,7 +9709,8 @@ turn_result_t do_gatcha()
         }
         else
         {
-            txt(i18n::s.get("core.locale.action.gatcha.do_not_have", matname(tmat)));
+            txt(i18n::s.get(
+                "core.locale.action.gatcha.do_not_have", matname(tmat)));
         }
     }
     return turn_result_t::turn_end;
@@ -9931,7 +10001,8 @@ void label_2088()
     {
         if (cdata[cnt].state == 1)
         {
-            if (cdata[cnt].position.x < 0 || cdata[cnt].position.x >= mdata_map_width
+            if (cdata[cnt].position.x < 0
+                || cdata[cnt].position.x >= mdata_map_width
                 || cdata[cnt].position.y < 0
                 || cdata[cnt].position.y >= mdata_map_height)
             {
@@ -10107,7 +10178,8 @@ void migrate_save_data(const fs::path& save_dir)
             ctrl_file(file_operation2_t::_3, "inv_" + mid + ".s2");
 
             ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
-            if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0 && level == 1)
+            if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0
+                && level == 1)
             {
                 fs::path map_filename;
                 switch (map_id)
@@ -10447,10 +10519,16 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
     fs::remove(old_meta_data_filepath);
     foobar_data.version = {0, 2, 5, "", "", ""};
 
-    for (const auto entry : filesystem::dir_entries{save_dir, filesystem::dir_entries::type::file, std::regex{R"(.*\.s2)"}})
+    for (const auto entry :
+         filesystem::dir_entries{save_dir,
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{R"(.*\.s2)"}})
     {
         ELONA_LOG("v0.2.5:copy:" << entry.path());
-        fs::copy_file(entry.path(), filesystem::dir::tmp() / entry.path().filename(), fs::copy_option::overwrite_if_exists);
+        fs::copy_file(
+            entry.path(),
+            filesystem::dir::tmp() / entry.path().filename(),
+            fs::copy_option::overwrite_if_exists);
     }
 }
 
@@ -10753,8 +10831,6 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 
 
 
-
-
 void disarm_trap()
 {
     cell_featset(movx, movy, 0);
@@ -10843,7 +10919,8 @@ label_21451_internal:
                         }
                         else
                         {
-                            txt(i18n::s.get("core.locale.action.move.trap.disarm.fail"));
+                            txt(i18n::s.get(
+                                "core.locale.action.move.trap.disarm.fail"));
                         }
                     }
                 }
@@ -10853,7 +10930,8 @@ label_21451_internal:
             {
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.action.move.trap.evade", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.trap.evade", cdata[cc]));
                 }
                 if (cc == 0)
                 {
@@ -10874,13 +10952,16 @@ label_21451_internal:
                 efsource = 5;
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.action.move.trap.activate.text", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.trap.activate.text",
+                        cdata[cc]));
                 }
                 if (feat(2) == 4)
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.blind"));
+                        txt(i18n::s.get(
+                            "core.locale.action.move.trap.activate.blind"));
                     }
                     dmgcon(
                         cc,
@@ -10891,7 +10972,8 @@ label_21451_internal:
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.paralyze"));
+                        txt(i18n::s.get(
+                            "core.locale.action.move.trap.activate.paralyze"));
                     }
                     dmgcon(
                         cc,
@@ -10902,7 +10984,8 @@ label_21451_internal:
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.confuse"));
+                        txt(i18n::s.get(
+                            "core.locale.action.move.trap.activate.confuse"));
                     }
                     dmgcon(
                         cc,
@@ -10924,8 +11007,10 @@ label_21451_internal:
                     }
                     for (int cnt = 0; cnt < 200; ++cnt)
                     {
-                        cdata[cc].next_position.x = rnd(mdata_map_width - 2) + 1;
-                        cdata[cc].next_position.y = rnd(mdata_map_height - 2) + 1;
+                        cdata[cc].next_position.x =
+                            rnd(mdata_map_width - 2) + 1;
+                        cdata[cc].next_position.y =
+                            rnd(mdata_map_height - 2) + 1;
                         cell_check(
                             cdata[cc].next_position.x,
                             cdata[cc].next_position.y);
@@ -10950,14 +11035,18 @@ label_21451_internal:
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.spears.text"));
+                        txt(
+                            i18n::s.get("core.locale.action.move.trap.activate."
+                                        "spears.text"));
                     }
                     if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                     {
                         if (is_in_fov(cc))
                         {
-                            txt(i18n::s.get("core.locale.action.move.trap.activate.spears.target_floating",
-                                    cdata[cc]));
+                            txt(i18n::s.get(
+                                "core.locale.action.move.trap.activate.spears."
+                                "target_floating",
+                                cdata[cc]));
                         }
                     }
                     else
@@ -10970,7 +11059,8 @@ label_21451_internal:
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.poison"));
+                        txt(i18n::s.get(
+                            "core.locale.action.move.trap.activate.poison"));
                     }
                     dmgcon(
                         cc,
@@ -10981,7 +11071,8 @@ label_21451_internal:
                 {
                     if (is_in_fov(cc))
                     {
-                        txt(i18n::s.get("core.locale.action.move.trap.activate.sleep"));
+                        txt(i18n::s.get(
+                            "core.locale.action.move.trap.activate.sleep"));
                     }
                     dmgcon(
                         cc,
@@ -10991,7 +11082,8 @@ label_21451_internal:
                 if (feat(2) == 7)
                 {
                     txtef(9);
-                    txt(i18n::s.get("core.locale.action.move.trap.activate.mine"));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.trap.activate.mine"));
                     aniref = 0;
                     anix = movx;
                     aniy = movy;
@@ -11005,8 +11097,6 @@ label_21451_internal:
     }
     return;
 }
-
-
 
 
 
@@ -11134,10 +11224,12 @@ void label_2151()
         if (tc != -1)
         {
             s = i18n::s.get("core.locale.activity.sleep.new_gene.title");
-            buff = i18n::s.get("core.locale.activity.sleep.new_gene.text", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.activity.sleep.new_gene.text", cdata[tc]);
             listmax = 0;
             list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get_enum("core.locale.activity.sleep.new_gene.choices", 0);
+            listn(0, listmax) = i18n::s.get_enum(
+                "core.locale.activity.sleep.new_gene.choices", 0);
             ++listmax;
             cdata[tc].has_made_gene() = false;
             show_random_event_window(u8"bg_re14");
@@ -11335,14 +11427,18 @@ void label_2153()
                 if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get_enum("core.locale.action.move.global.weather.snow.sound", rnd(5)));
+                    txt(i18n::s.get_enum(
+                        "core.locale.action.move.global.weather.snow.sound",
+                        rnd(5)));
                     cdata[cc].continuous_action_turn += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
                 txtef(8);
-                txt(i18n::s.get_enum("core.locale.action.move.global.weather.snow.message", rnd(3)));
+                txt(i18n::s.get_enum(
+                    "core.locale.action.move.global.weather.snow.message",
+                    rnd(3)));
                 cdata[cc].continuous_action_turn += 50;
             }
         }
@@ -11351,7 +11447,8 @@ void label_2153()
             if (cdata[0].has_anorexia() == 0)
             {
                 snd(18);
-                txt(i18n::s.get("core.locale.action.move.global.weather.snow.eat"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.global.weather.snow.eat"));
                 txt(lang(
                     u8"空腹のあまり、あなたは積もっている雪を腹にかきこんだ。"s,
                     u8"You are too hungry. You chow down snow."s));
@@ -11370,8 +11467,10 @@ void label_2153()
                 if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get_enum("core.locale.action.move.global.weather.heavy_rain.sound",
-                                         rnd(5)));
+                    txt(i18n::s.get_enum(
+                        "core.locale.action.move.global.weather.heavy_rain."
+                        "sound",
+                        rnd(5)));
                     cdata[cc].continuous_action_turn += 5;
                 }
             }
@@ -11380,8 +11479,10 @@ void label_2153()
                 if (rnd(500) == 0)
                 {
                     txtef(8);
-                    txt(i18n::s.get_enum("core.locale.action.move.global.weather.heavy_rain.message",
-                                         rnd(3)));
+                    txt(i18n::s.get_enum(
+                        "core.locale.action.move.global.weather.heavy_rain."
+                        "message",
+                        rnd(3)));
                     cdata[0].confused = 10;
                 }
             }
@@ -11413,7 +11514,8 @@ int decode_book()
         {
             if (inv[ci].param2 != 0)
             {
-                txt(i18n::s.get("core.locale.action.read.book.already_decoded"));
+                txt(i18n::s.get(
+                    "core.locale.action.read.book.already_decoded"));
                 return 0;
             }
         }
@@ -11421,7 +11523,8 @@ int decode_book()
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.read.cannot_see", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.read.cannot_see", cdata[cc]));
             }
             return 0;
         }
@@ -11442,7 +11545,8 @@ int decode_book()
         cdata[cc].continuous_action_item = ci;
         if (is_in_fov(cc))
         {
-            txt(i18n::s.get("core.locale.activity.read.start", cdata[cc], inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.activity.read.start", cdata[cc], inv[ci]));
         }
         item_separate(ci);
         return 0;
@@ -11498,7 +11602,8 @@ int decode_book()
                 }
                 if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.action.read.book.falls_apart", inv[ci]));
                 }
             }
         }
@@ -11506,7 +11611,8 @@ int decode_book()
     }
     if (is_in_fov(cc))
     {
-        txt(i18n::s.get("core.locale.activity.read.finish", cdata[cc], inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.activity.read.finish", cdata[cc], inv[ci]));
     }
     if (inv[ci].id == 783)
     {
@@ -11521,7 +11627,8 @@ int decode_book()
         removeitem(ci, 1);
         if (is_in_fov(cc))
         {
-            txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.read.book.falls_apart", inv[ci]));
         }
         rowactend(cc);
         return 1;
@@ -11529,7 +11636,8 @@ int decode_book()
     if (inv[ci].id == 687)
     {
         item_identify(inv[ci], identification_state_t::completely_identified);
-        txt(i18n::s.get("core.locale.action.read.book.finished_decoding", inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.action.read.book.finished_decoding", inv[ci]));
         inv[ci].param2 = 1;
         inv[ci].count = 1;
         ibitmod(4, ci, 0);
@@ -11563,7 +11671,8 @@ int decode_book()
             removeitem(ci, 1);
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.read.book.falls_apart", inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.action.read.book.falls_apart", inv[ci]));
             }
         }
     }
@@ -11700,7 +11809,8 @@ int label_2168()
     {
         if (the_ability_db[efid]->sdataref1 == 7)
         {
-            if (cdata[cc].relationship == 10 || gdata_current_map == mdata_t::map_id_t::pet_arena)
+            if (cdata[cc].relationship == 10
+                || gdata_current_map == mdata_t::map_id_t::pet_arena)
             {
                 efsource = 0;
                 return 0;
@@ -11756,16 +11866,24 @@ int label_2168()
     {
         if (cc == 0)
         {
-            txt(i18n::s.get("core.locale.action.cast.self",
-                            cdata[cc],
-                            i18n::_(u8"ability", std::to_string(efid), u8"name"),
-                            i18n::_(u8"ui", u8"cast_style", u8"_"s + cdata[cc].special_attack_type)));
+            txt(i18n::s.get(
+                "core.locale.action.cast.self",
+                cdata[cc],
+                i18n::_(u8"ability", std::to_string(efid), u8"name"),
+                i18n::_(
+                    u8"ui",
+                    u8"cast_style",
+                    u8"_"s + cdata[cc].special_attack_type)));
         }
         else
         {
-            txt(i18n::s.get("core.locale.action.cast.other",
-                            cdata[cc],
-                            i18n::_(u8"ui", u8"cast_style", u8"_"s + cdata[cc].special_attack_type)));
+            txt(i18n::s.get(
+                "core.locale.action.cast.other",
+                cdata[cc],
+                i18n::_(
+                    u8"ui",
+                    u8"cast_style",
+                    u8"_"s + cdata[cc].special_attack_type)));
         }
     }
     if (buff_find(cc, 2) != -1)
@@ -11856,7 +11974,8 @@ int drink_potion()
         if (is_in_fov(tc))
         {
             snd_at(17, cdata[tc].position);
-            txt(i18n::s.get("core.locale.action.drink.potion", cdata[tc], inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.drink.potion", cdata[tc], inv[ci]));
         }
     }
     magic();
@@ -11922,12 +12041,18 @@ int drink_well()
         {
             if (rnd(15) == 0)
             {
-                txt(i18n::s.get("core.locale.action.drink.well.effect.falls.text", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.drink.well.effect.falls.text",
+                    cdata[cc]));
                 txtef(9);
-                txt(i18n::s.get("core.locale.action.drink.well.effect.falls.dialog", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.drink.well.effect.falls.dialog",
+                    cdata[cc]));
                 if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                 {
-                    txt(i18n::s.get("core.locale.action.drink.well.effect.falls.floats", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.drink.well.effect.falls.floats",
+                        cdata[cc]));
                 }
                 else
                 {
@@ -11993,7 +12118,8 @@ int drink_well()
                 cdata[cc].position.x,
                 cdata[cc].position.y,
                 rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
-            txt(i18n::s.get("core.locale.action.drink.well.effect.finds_gold", cdata[cc]));
+            txt(i18n::s.get(
+                "core.locale.action.drink.well.effect.finds_gold", cdata[cc]));
             break;
         }
         if (p > 45)
@@ -12017,7 +12143,9 @@ int drink_well()
             }
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.drink.well.effect.pregnancy", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.drink.well.effect.pregnancy",
+                    cdata[cc]));
             }
             tc = cc;
             get_pregnant();
@@ -12050,7 +12178,8 @@ int drink_well()
             if (rnd(gdata_wish_count + 1))
             {
                 txtef(5);
-                txt(i18n::s.get("core.locale.action.drink.well.effect.wish_too_frequent"));
+                txt(i18n::s.get(
+                    "core.locale.action.drink.well.effect.wish_too_frequent"));
                 break;
             }
             ++gdata_wish_count;
@@ -12082,7 +12211,8 @@ int drink_well()
         inv[ci].param3 += rnd(3);
         if (inv[ci].param3 >= 20)
         {
-            txt(i18n::s.get("core.locale.action.drink.well.completely_dried_up", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.drink.well.completely_dried_up", inv[ci]));
             return 1;
         }
     }
@@ -12117,7 +12247,9 @@ int read_scroll()
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.read.scroll.dimmed_or_confused", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.read.scroll.dimmed_or_confused",
+                    cdata[cc]));
             }
             efsource = 0;
             return 0;
@@ -12125,7 +12257,8 @@ int read_scroll()
     }
     if (is_in_fov(cc))
     {
-        txt(i18n::s.get("core.locale.action.read.scroll.execute", cdata[cc], inv[ci]));
+        txt(i18n::s.get(
+            "core.locale.action.read.scroll.execute", cdata[cc], inv[ci]));
     }
     if (inv[ci].id != 621)
     {
@@ -12423,7 +12556,9 @@ int label_2175()
                 {
                     if (stat == 0)
                     {
-                        txt(i18n::s.get("core.locale.action.which_direction.cannot_see_location"));
+                        txt(
+                            i18n::s.get("core.locale.action.which_direction."
+                                        "cannot_see_location"));
                         update_screen();
                     }
                     obvious = 0;
@@ -12439,7 +12574,9 @@ int label_2175()
                 {
                     if (stat == 0)
                     {
-                        txt(i18n::s.get("core.locale.action.which_direction.cannot_see_location"));
+                        txt(
+                            i18n::s.get("core.locale.action.which_direction."
+                                        "cannot_see_location"));
                         update_screen();
                     }
                     obvious = 0;
@@ -12525,7 +12662,8 @@ int label_2175()
             if (cc == 0)
             {
                 ++msgdup;
-                txt(i18n::s.get("core.locale.action.which_direction.out_of_range"));
+                txt(i18n::s.get(
+                    "core.locale.action.which_direction.out_of_range"));
                 update_screen();
             }
             return 0;
@@ -12640,7 +12778,10 @@ int pick_up_item()
             in = inv[ci].number;
             item_remove(inv[ci]);
             msgkeep = 1;
-            txt(i18n::s.get("core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
+            txt(i18n::s.get(
+                "core.locale.action.pick_up.execute",
+                cdata[cc],
+                itemname(ti, in)));
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             if (inv[ci].id == 54)
             {
@@ -12661,7 +12802,9 @@ int pick_up_item()
             {
                 if (cdata[gdata_mount].continuous_action_item == ci)
                 {
-                    txt(i18n::s.get("core.locale.action.pick_up.used_by_mount", cdata[gdata_mount]));
+                    txt(i18n::s.get(
+                        "core.locale.action.pick_up.used_by_mount",
+                        cdata[gdata_mount]));
                     return 1;
                 }
             }
@@ -12674,7 +12817,8 @@ int pick_up_item()
                 {
                     if (!inv_getspace(0))
                     {
-                        txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.common.inventory_is_full"));
                         return 0;
                     }
                     gdata(91) = 103;
@@ -12685,7 +12829,8 @@ int pick_up_item()
         }
         if (inv[ci].own_state == 3)
         {
-            txt(i18n::s.get("core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.pick_up.do_you_want_to_remove", inv[ci]));
             ELONA_YES_NO_PROMPT();
             rtval = show_prompt(promptx, prompty, 160);
             if (rtval == 0)
@@ -12714,7 +12859,8 @@ int pick_up_item()
         }
         if (inv_getfreeid(cc) == -1)
         {
-            txt(i18n::s.get("core.locale.action.pick_up.your_inventory_is_full"));
+            txt(i18n::s.get(
+                "core.locale.action.pick_up.your_inventory_is_full"));
             return 0;
         }
     }
@@ -12730,7 +12876,9 @@ int pick_up_item()
                 {
                     dbid = inv[ci].id;
                     access_item_db(14);
-                    txt(i18n::s.get("core.locale.action.pick_up.you_absorb_magic", inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.action.pick_up.you_absorb_magic",
+                        inv[ci]));
                     if (efid >= 400 && efid < 467)
                     {
                         spell(efid - 400) += inv[ci].count * 5 * inv[ci].number;
@@ -12751,7 +12899,8 @@ int pick_up_item()
                 {
                     if (rnd(5) == 0)
                     {
-                        txt(i18n::s.get("core.locale.action.pick_up.poison_drips"));
+                        txt(i18n::s.get(
+                            "core.locale.action.pick_up.poison_drips"));
                         inv[ci].id = 262;
                     }
                 }
@@ -12773,11 +12922,14 @@ int pick_up_item()
             inv[ci].number = inumbk + in;
             if (invctrl == 12)
             {
-                txt(i18n::s.get("core.locale.action.pick_up.shopkeepers_inventory_is_full"));
+                txt(
+                    i18n::s.get("core.locale.action.pick_up.shopkeepers_"
+                                "inventory_is_full"));
             }
             else
             {
-                txt(i18n::s.get("core.locale.action.pick_up.your_inventory_is_full"));
+                txt(i18n::s.get(
+                    "core.locale.action.pick_up.your_inventory_is_full"));
             }
             return 0;
         }
@@ -12823,7 +12975,8 @@ int pick_up_item()
         if (invctrl == 11)
         {
             msgkeep = 1;
-            txt(i18n::s.get("core.locale.action.pick_up.you_buy", itemname(ti, in)));
+            txt(i18n::s.get(
+                "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
             snd(12);
             cdata[0].gold -= sellgold;
@@ -12839,12 +12992,15 @@ int pick_up_item()
             sellgold = calcitemvalue(ci, 1) * in;
             if (ibit(9, ti) == 0)
             {
-                txt(i18n::s.get("core.locale.action.pick_up.you_sell", itemname(ti, in)));
+                txt(i18n::s.get(
+                    "core.locale.action.pick_up.you_sell", itemname(ti, in)));
             }
             else
             {
                 ibitmod(9, ti, 0);
-                txt(i18n::s.get("core.locale.action.pick_up.you_sell_stolen", itemname(ti, in)));
+                txt(i18n::s.get(
+                    "core.locale.action.pick_up.you_sell_stolen",
+                    itemname(ti, in)));
                 if (gdata_thieves_guild_quota > 0)
                 {
                     gdata_thieves_guild_quota -= sellgold;
@@ -12852,8 +13008,9 @@ int pick_up_item()
                     {
                         gdata_thieves_guild_quota = 0;
                     }
-                    txt(i18n::s.get("core.locale.action.pick_up.thieves_guild_quota",
-                            gdata_thieves_guild_quota));
+                    txt(i18n::s.get(
+                        "core.locale.action.pick_up.thieves_guild_quota",
+                        gdata_thieves_guild_quota));
                 }
             }
             snd(11);
@@ -12872,11 +13029,16 @@ int pick_up_item()
             msgkeep = 1;
             if (invctrl == 22)
             {
-                txt(i18n::s.get("core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
+                txt(i18n::s.get(
+                    "core.locale.action.pick_up.execute",
+                    cdata[cc],
+                    itemname(ti, in)));
             }
             else
             {
-                txt(i18n::s.get("core.locale.action.pick_up.put_in_container", itemname(ti, in)));
+                txt(i18n::s.get(
+                    "core.locale.action.pick_up.put_in_container",
+                    itemname(ti, in)));
             }
         }
         else
@@ -12892,7 +13054,8 @@ int pick_up_item()
             map(inv[ci].position.x, inv[ci].position.y, 4);
         snd(14 + rnd(2));
         msgkeep = 1;
-        txt(i18n::s.get("core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
+        txt(i18n::s.get(
+            "core.locale.action.pick_up.execute", cdata[cc], itemname(ti, in)));
     }
     if (cc == 0)
     {
@@ -12994,7 +13157,8 @@ int drop_item()
                     snd(64);
                     inv[tibk].curse_state = curse_state_t::blessed;
                     txtef(2);
-                    txt(i18n::s.get("core.locale.action.drop.water_is_blessed"));
+                    txt(i18n::s.get(
+                        "core.locale.action.drop.water_is_blessed"));
                 }
             }
         }
@@ -13116,7 +13280,8 @@ turn_result_t do_bash()
             }
             flt();
             itemcreate(-1, inv[ci].param2, x, y, 0);
-            txt(i18n::s.get("core.locale.action.bash.tree.falls_down", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.bash.tree.falls_down", inv[ci]));
             item_stack(-1, ci);
             return turn_result_t::turn_end;
         }
@@ -13140,11 +13305,15 @@ turn_result_t do_bash()
             if (cdata[tc].choked)
             {
                 snd(73);
-                txt(i18n::s.get("core.locale.action.bash.choked.execute", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.action.bash.choked.execute",
+                    cdata[cc],
+                    cdata[tc]));
                 dmghp(tc, sdata(10, cc) * 5, cc);
                 if (cdata[tc].state == 1)
                 {
-                    txt(i18n::s.get("core.locale.action.bash.choked.spits", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.bash.choked.spits", cdata[tc]));
                     txt(i18n::s.get("core.locale.action.bash.choked.dialog"));
                     cdata[tc].choked = 0;
                     chara_mod_impression(tc, 10);
@@ -13153,15 +13322,20 @@ turn_result_t do_bash()
             else
             {
                 snd(73);
-                txt(i18n::s.get("core.locale.action.bash.execute", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.action.bash.execute", cdata[cc], cdata[tc]));
                 hostileaction(cc, tc);
             }
         }
         else
         {
             snd(73);
-            txt(i18n::s.get("core.locale.action.bash.execute", cdata[cc], cdata[tc]));
-            txt(i18n::s.get("core.locale.action.bash.disturbs_sleep", cdata[cc], cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.action.bash.execute", cdata[cc], cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.action.bash.disturbs_sleep",
+                cdata[cc],
+                cdata[tc]));
             modify_karma(cc, -1);
             cdata[tc].emotion_icon = 418;
         }
@@ -13176,14 +13350,16 @@ turn_result_t do_bash()
             map(x, y, 6) = 0;
             spillfrag(x, y, 2);
             flt(calcobjlv(
-                    gdata_current_dungeon_level * (gdata_current_map != mdata_t::map_id_t::shelter_)),
+                    gdata_current_dungeon_level
+                    * (gdata_current_map != mdata_t::map_id_t::shelter_)),
                 calcfixlv(2));
             flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
             if (is_in_fov(cc))
             {
                 snd(73);
-                txt(i18n::s.get("core.locale.action.bash.shatters_pot", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
                 breaking_animation({x, y}).play();
             }
@@ -13237,7 +13413,9 @@ turn_result_t do_bash()
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.action.bash.door.hurt", cdata[cc]));
+                            txt(i18n::s.get(
+                                "core.locale.action.bash.door.hurt",
+                                cdata[cc]));
                         }
                     }
                 }
@@ -13249,7 +13427,8 @@ turn_result_t do_bash()
                         cell_featset(x, y, feat(0), feat(1), feat(2), feat(3));
                         if (is_in_fov(cc))
                         {
-                            txt(i18n::s.get("core.locale.action.bash.door.cracked"));
+                            txt(i18n::s.get(
+                                "core.locale.action.bash.door.cracked"));
                         }
                     }
                 }
@@ -13480,40 +13659,53 @@ turn_result_t proc_movement_event()
                 {
                     encounterlv = 1;
                 }
-                auto valn = i18n::s.get("core.locale.action.move.global.ambush.distance_from_nearest_town",
-                                        p(0))
-                    + " " + i18n::s.get("core.locale.action.move.global.ambush.enemy_strength");
+                auto valn = i18n::s.get(
+                                "core.locale.action.move.global.ambush."
+                                "distance_from_nearest_town",
+                                p(0))
+                    + " "
+                    + i18n::s.get(
+                          "core.locale.action.move.global.ambush.enemy_"
+                          "strength");
                 for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (encounterlv < 5)
                     {
-                        valn += i18n::s.get("core.locale.action.move.global.ambush.rank.putit");
+                        valn += i18n::s.get(
+                            "core.locale.action.move.global.ambush.rank.putit");
                         break;
                     }
                     if (encounterlv < 10)
                     {
-                        valn += i18n::s.get("core.locale.action.move.global.ambush.rank.orc");
+                        valn += i18n::s.get(
+                            "core.locale.action.move.global.ambush.rank.orc");
                         break;
                     }
                     if (encounterlv < 20)
                     {
-                        valn += i18n::s.get("core.locale.action.move.global.ambush.rank.grizzly_bear");
+                        valn += i18n::s.get(
+                            "core.locale.action.move.global.ambush.rank."
+                            "grizzly_bear");
                         break;
                     }
                     if (encounterlv < 30)
                     {
-                        valn += i18n::s.get("core.locale.action.move.global.ambush.rank.drake");
+                        valn += i18n::s.get(
+                            "core.locale.action.move.global.ambush.rank.drake");
                         break;
                     }
                     if (encounterlv < 40)
                     {
-                        valn += i18n::s.get("core.locale.action.move.global.ambush.rank.lich");
+                        valn += i18n::s.get(
+                            "core.locale.action.move.global.ambush.rank.lich");
                         break;
                     }
-                    valn += i18n::s.get("core.locale.action.move.global.ambush.rank.dragon");
+                    valn += i18n::s.get(
+                        "core.locale.action.move.global.ambush.rank.dragon");
                 }
                 valn += u8")"s;
-                txt(i18n::s.get("core.locale.action.move.global.ambush.text") + valn);
+                txt(i18n::s.get("core.locale.action.move.global.ambush.text")
+                    + valn);
                 msg_halt();
                 levelexitby = 4;
                 return turn_result_t::exit_map;
@@ -13582,7 +13774,8 @@ void proc_autopick()
             if (int(op.type) & int(autopick::operation::type_t::no_drop))
             {
                 ibitmod(13, ti, 1);
-                txt(i18n::s.get("core.locale.ui.inv.examine.no_drop.set", inv[ti]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
             if (int(op.type) & int(autopick::operation::type_t::save))
             {
@@ -13723,7 +13916,8 @@ void label_2206()
             if (feat(1) == 15)
             {
                 txt(mapname(feat(2) + feat(3) * 100, true));
-                if (adata(16, feat(2) + feat(3) * 100) == mdata_t::map_id_t::random_dungeon)
+                if (adata(16, feat(2) + feat(3) * 100)
+                    == mdata_t::map_id_t::random_dungeon)
                 {
                     if (config::instance().extrahelp)
                     {
@@ -13756,69 +13950,89 @@ void label_2206()
             }
             if (feat(1) == 24)
             {
-                txt(i18n::s.get("core.locale.action.move.feature.material.spot"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.feature.material.spot"));
             }
             if (feat(1) == 27)
             {
-                txt(i18n::s.get("core.locale.action.move.feature.material.remains"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.feature.material.remains"));
             }
             if (feat(1) == 25)
             {
-                txt(i18n::s.get("core.locale.action.move.feature.material.mining"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.feature.material.mining"));
             }
             if (feat(1) == 26)
             {
-                txt(i18n::s.get("core.locale.action.move.feature.material.spring"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.feature.material.spring"));
             }
             if (feat(1) == 28)
             {
-                txt(i18n::s.get("core.locale.action.move.feature.material.plants"));
+                txt(i18n::s.get(
+                    "core.locale.action.move.feature.material.plants"));
             }
             if (feat(1) == 29)
             {
                 if (feat(2) == 36)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.vegetable");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.vegetable");
                 }
                 if (feat(2) == 37)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.fruit");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.fruit");
                 }
                 if (feat(2) == 38)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.herb");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.herb");
                 }
                 if (feat(2) == 39)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.strange");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.strange");
                 }
                 if (feat(2) == 40)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.artifact");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.artifact");
                 }
                 if (feat(2) == 41)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.gem");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.gem");
                 }
                 if (feat(2) == 42)
                 {
-                    s = i18n::s.get("core.locale.action.move.feature.seed.type.magic");
+                    s = i18n::s.get(
+                        "core.locale.action.move.feature.seed.type.magic");
                 }
                 if (feat == tile_plant)
                 {
-                    txt(i18n::s.get("core.locale.action.move.feature.seed.growth.seed", s(0)));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.feature.seed.growth.seed",
+                        s(0)));
                 }
                 if (feat == tile_plant + 1)
                 {
-                    txt(i18n::s.get("core.locale.action.move.feature.seed.growth.bud", s(0)));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.feature.seed.growth.bud",
+                        s(0)));
                 }
                 if (feat == tile_plant + 2)
                 {
-                    txt(i18n::s.get("core.locale.action.move.feature.seed.growth.tree", s(0)));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.feature.seed.growth.tree",
+                        s(0)));
                 }
                 if (feat == tile_plant + 3)
                 {
-                    txt(i18n::s.get("core.locale.action.move.feature.seed.growth.withered", s(0)));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.feature.seed.growth.withered",
+                        s(0)));
                 }
             }
             if (feat(1) >= 24 && feat(1) <= 28)
@@ -14096,7 +14310,9 @@ void open_new_year_gift()
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.open.new_year_gift.something_jumps_out"));
+                txt(
+                    i18n::s.get("core.locale.action.open.new_year_gift."
+                                "something_jumps_out"));
             }
             for (int cnt = 0, cnt_end = (3 + rnd(3)); cnt < cnt_end; ++cnt)
             {
@@ -14127,7 +14343,8 @@ void open_new_year_gift()
         }
         if (is_in_fov(cc))
         {
-            txt(i18n::s.get("core.locale.action.open.new_year_gift.cursed_letter"));
+            txt(i18n::s.get(
+                "core.locale.action.open.new_year_gift.cursed_letter"));
         }
         efid = 1114;
         efp = 1000;
@@ -14161,7 +14378,8 @@ void open_new_year_gift()
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.open.new_year_gift.younger_sister"));
+                txt(i18n::s.get(
+                    "core.locale.action.open.new_year_gift.younger_sister"));
             }
             flt();
             int stat = chara_create(
@@ -14174,7 +14392,8 @@ void open_new_year_gift()
         }
         if (is_in_fov(cc))
         {
-            txt(i18n::s.get("core.locale.action.open.new_year_gift.something_inside"));
+            txt(i18n::s.get(
+                "core.locale.action.open.new_year_gift.something_inside"));
         }
         flt();
         itemcreate(
@@ -14225,7 +14444,8 @@ void open_new_year_gift()
     }
     if (is_in_fov(cc))
     {
-        txt(i18n::s.get("core.locale.action.open.new_year_gift.something_inside"));
+        txt(i18n::s.get(
+            "core.locale.action.open.new_year_gift.something_inside"));
     }
     flt();
     itemcreate(
@@ -14345,7 +14565,8 @@ void do_ranged_attack()
                     {
                         if (cdata[0].sp < rnd(75))
                         {
-                            txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                            txt(i18n::s.get(
+                                "core.locale.magic.common.too_exhausted"));
                             dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
                             return;
@@ -14477,7 +14698,10 @@ void try_to_melee_attack()
         {
             if (is_in_fov(cc))
             {
-                txt(i18n::s.get("core.locale.action.melee.shield_bash", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.action.melee.shield_bash",
+                    cdata[cc],
+                    cdata[tc]));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
             dmgcon(
@@ -14561,7 +14785,8 @@ label_22191_internal:
     {
     }
     expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits()
-        + cdata[tc].splits2() + (gdata_current_map == mdata_t::map_id_t::show_house);
+        + cdata[tc].splits2()
+        + (gdata_current_map == mdata_t::map_id_t::show_house);
     int hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -14801,7 +15026,8 @@ label_22191_internal:
                         {
                             txtef(8);
                             txt(i18n::s.get(
-                                "core.locale.damage.reactive_attack.ether_thorns",
+                                "core.locale.damage.reactive_attack.ether_"
+                                "thorns",
                                 cdata[cc]));
                         }
                         dmghp(
@@ -14997,7 +15223,8 @@ void proc_weapon_enchantments()
                 if (rnd(25) == 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get("core.locale.action.time_stop.begins", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.action.time_stop.begins", cdata[cc]));
                     gdata_left_turns_of_timestop =
                         inv[cw].enchantments[cnt].power / 100 + 1 + 1;
                 }
@@ -15131,8 +15358,6 @@ void discover_hidden_path()
     cell_featset(refx, refy, 0, 0);
     return;
 }
-
-
 
 
 
@@ -15991,7 +16216,9 @@ void weather_changes()
                         {
                             gdata_weather = 1;
                             txtef(3);
-                            txt(i18n::s.get("core.locale.action.weather.ether_wind.starts"));
+                            txt(
+                                i18n::s.get("core.locale.action.weather.ether_"
+                                            "wind.starts"));
                             gdata_last_etherwind_month = gdata_month;
                             gdata_hours_until_weather_changes = rnd(24) + 24;
                             break;
@@ -16007,11 +16234,13 @@ void weather_changes()
                     if (rnd(4) == 0)
                     {
                         gdata_weather = 3;
-                        txt(i18n::s.get("core.locale.action.weather.rain.draw_cloud"));
+                        txt(i18n::s.get(
+                            "core.locale.action.weather.rain.draw_cloud"));
                         break;
                     }
                 }
-                if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
+                if (gdata_pc_x_in_world_map > 65
+                    || gdata_pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {
@@ -16031,7 +16260,8 @@ void weather_changes()
                     if (rnd(40) == 0)
                     {
                         gdata_weather = 4;
-                        i18n::s.get("core.locale.action.weather.rain.starts_heavy");
+                        i18n::s.get(
+                            "core.locale.action.weather.rain.starts_heavy");
                         break;
                     }
                     if (rnd(60) == 0)
@@ -16053,7 +16283,8 @@ void weather_changes()
                 if (rnd(15) == 0)
                 {
                     gdata_weather = 4;
-                    txt(i18n::s.get("core.locale.action.weather.rain.becomes_heavier"));
+                    txt(i18n::s.get(
+                        "core.locale.action.weather.rain.becomes_heavier"));
                     break;
                 }
             }
@@ -16062,7 +16293,8 @@ void weather_changes()
                 if (rnd(3) == 0)
                 {
                     gdata_weather = 3;
-                    txt(i18n::s.get("core.locale.action.weather.rain.becomes_lighter"));
+                    txt(i18n::s.get(
+                        "core.locale.action.weather.rain.becomes_lighter"));
                     break;
                 }
             }
@@ -16071,7 +16303,8 @@ void weather_changes()
                 if (rnd(2) == 0)
                 {
                     gdata_weather = 0;
-                    txt(i18n::s.get("core.locale.action.weather.ether_wind.stops"));
+                    txt(i18n::s.get(
+                        "core.locale.action.weather.ether_wind.stops"));
                     break;
                 }
             }

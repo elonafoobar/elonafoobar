@@ -452,8 +452,8 @@ void key_check(key_wait_delay_t delay_type)
         {
             if (config::instance().get<bool>("core.config.android.vibrate"))
             {
-                int duration =
-                    config::instance().get<int>("core.config.android.vibrate_duration");
+                int duration = config::instance().get<int>(
+                    "core.config.android.vibrate_duration");
                 snail::android::vibrate(static_cast<long>(duration * 25));
             }
 
@@ -903,7 +903,9 @@ void key_check(key_wait_delay_t delay_type)
                 running = 1;
             }
         }
-        else if (keybd_wait < config::instance().select_fast_start * config::instance().select_wait)
+        else if (
+            keybd_wait < config::instance().select_fast_start
+                * config::instance().select_wait)
         {
             if (keybd_wait % config::instance().select_wait != 0)
             {

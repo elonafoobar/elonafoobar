@@ -117,7 +117,8 @@ void pre_init()
 
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
-    const fs::path config_file = filesystem::dir::exe() / "tests/data/config.hcl";
+    const fs::path config_file =
+        filesystem::dir::exe() / "tests/data/config.hcl";
 
     config::instance().init(config_def_file);
     initialize_config_preload(config_file);

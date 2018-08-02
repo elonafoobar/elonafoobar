@@ -222,8 +222,9 @@ int f_at_m125 = 0;
 int chara_createhack = 0;
 elona_vector1<std::string> usertxt;
 
-static std::unordered_map<int, int> convert_resistances(const sol::table& data,
-                                                        const std::string& id)
+static std::unordered_map<int, int> convert_resistances(
+    const sol::table& data,
+    const std::string& id)
 {
     std::unordered_map<int, int> resistances;
     sol::optional<sol::table> value = data[id];
@@ -263,7 +264,9 @@ static std::string convert_tags(const sol::table& data, const std::string& id)
     return filter;
 }
 
-static std::vector<int> convert_flags(const sol::table& data, const std::string& id)
+static std::vector<int> convert_flags(
+    const sol::table& data,
+    const std::string& id)
 {
     std::vector<int> flag_types;
     sol::optional<sol::table> value = data[id];
@@ -273,8 +276,8 @@ static std::vector<int> convert_flags(const sol::table& data, const std::string&
         for (const auto& kvp : *value)
         {
             std::string variant_name = kvp.second.as<std::string>();
-            int variant_value = lua::lua->get_api_manager()
-                .get_enum_value("CharaFlag", variant_name);
+            int variant_value = lua::lua->get_api_manager().get_enum_value(
+                "CharaFlag", variant_name);
             flag_types.push_back(variant_value);
         }
     }
@@ -282,49 +285,51 @@ static std::vector<int> convert_flags(const sol::table& data, const std::string&
     return flag_types;
 }
 
-character_data character_db_ex::convert(const std::string& id_,
-                                        const sol::table& data,
-                                        lua::lua_env& lua)
+character_data character_db_ex::convert(
+    const std::string& id_,
+    const sol::table& data,
+    lua::lua_env& lua)
 {
-    ELONA_LION_DB_FIELD(id,                         int, -1);
-    ELONA_LION_DB_FIELD(ai_act_sub_freq,            int, 0);
-    ELONA_LION_DB_FIELD(ai_calm,                    int, 0);
-    ELONA_LION_DB_FIELD(ai_dist,                    int, 0);
-    ELONA_LION_DB_FIELD(ai_heal,                    int, 0);
-    ELONA_LION_DB_FIELD(ai_move,                    int, 0);
-    ELONA_LION_DB_FIELD(can_talk,                   int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color,                 "Color", "None");
-    ELONA_LION_DB_FIELD(creaturepack,               int, 0);
-    ELONA_LION_DB_FIELD(cspecialeq,                 int, 0);
-    ELONA_LION_DB_FIELD(damage_reaction_info,       int, 0);
-    ELONA_LION_DB_FIELD(item_type,                  int, 0);
-    ELONA_LION_DB_FIELD(element_of_unarmed_attack,  int, 0);
-    ELONA_LION_DB_FIELD(eqammo_0,                   int, 0);
-    ELONA_LION_DB_FIELD(eqammo_1,                   int, 0);
-    ELONA_LION_DB_FIELD(eqmultiweapon,              int, 0);
-    ELONA_LION_DB_FIELD(eqrange_0,                  int, 0);
-    ELONA_LION_DB_FIELD(eqrange_1,                  int, 0);
-    ELONA_LION_DB_FIELD(eqring1,                    int, 0);
-    ELONA_LION_DB_FIELD(eqtwohand,                  int, 0);
-    ELONA_LION_DB_FIELD(eqweapon1,                  int, 0);
-    ELONA_LION_DB_FIELD(female_image,               int, 0);
-    ELONA_LION_DB_FIELD(fixlv,                      int, 0);
-    ELONA_LION_DB_FIELD(has_random_name,            bool, false);
-    ELONA_LION_DB_FIELD(image,                      int, 0);
-    ELONA_LION_DB_FIELD(level,                      int, 0);
-    ELONA_LION_DB_FIELD(male_image,                 int, 0);
+    ELONA_LION_DB_FIELD(id, int, -1);
+    ELONA_LION_DB_FIELD(ai_act_sub_freq, int, 0);
+    ELONA_LION_DB_FIELD(ai_calm, int, 0);
+    ELONA_LION_DB_FIELD(ai_dist, int, 0);
+    ELONA_LION_DB_FIELD(ai_heal, int, 0);
+    ELONA_LION_DB_FIELD(ai_move, int, 0);
+    ELONA_LION_DB_FIELD(can_talk, int, 0);
+    ELONA_LION_DB_FIELD_ENUM(color, "Color", "None");
+    ELONA_LION_DB_FIELD(creaturepack, int, 0);
+    ELONA_LION_DB_FIELD(cspecialeq, int, 0);
+    ELONA_LION_DB_FIELD(damage_reaction_info, int, 0);
+    ELONA_LION_DB_FIELD(item_type, int, 0);
+    ELONA_LION_DB_FIELD(element_of_unarmed_attack, int, 0);
+    ELONA_LION_DB_FIELD(eqammo_0, int, 0);
+    ELONA_LION_DB_FIELD(eqammo_1, int, 0);
+    ELONA_LION_DB_FIELD(eqmultiweapon, int, 0);
+    ELONA_LION_DB_FIELD(eqrange_0, int, 0);
+    ELONA_LION_DB_FIELD(eqrange_1, int, 0);
+    ELONA_LION_DB_FIELD(eqring1, int, 0);
+    ELONA_LION_DB_FIELD(eqtwohand, int, 0);
+    ELONA_LION_DB_FIELD(eqweapon1, int, 0);
+    ELONA_LION_DB_FIELD(female_image, int, 0);
+    ELONA_LION_DB_FIELD(fixlv, int, 0);
+    ELONA_LION_DB_FIELD(has_random_name, bool, false);
+    ELONA_LION_DB_FIELD(image, int, 0);
+    ELONA_LION_DB_FIELD(level, int, 0);
+    ELONA_LION_DB_FIELD(male_image, int, 0);
     ELONA_LION_DB_FIELD_ENUM(original_relationship, "Relation", "Neutral");
-    ELONA_LION_DB_FIELD(portrait,                   int, 0);
-    ELONA_LION_DB_FIELD(race,                       std::string, "");
-    ELONA_LION_DB_FIELD(class_,                     std::string, "");
-    ELONA_LION_DB_FIELD_ENUM(sex,                   "Gender", "Random");
-    ELONA_LION_DB_FIELD(fltselect,                  int, 0);
-    ELONA_LION_DB_FIELD(category,                   int, 0);
-    ELONA_LION_DB_FIELD(rarity,                     int, 10000);
-    ELONA_LION_DB_FIELD(coefficient,                int, 400);
+    ELONA_LION_DB_FIELD(portrait, int, 0);
+    ELONA_LION_DB_FIELD(race, std::string, "");
+    ELONA_LION_DB_FIELD(class_, std::string, "");
+    ELONA_LION_DB_FIELD_ENUM(sex, "Gender", "Random");
+    ELONA_LION_DB_FIELD(fltselect, int, 0);
+    ELONA_LION_DB_FIELD(category, int, 0);
+    ELONA_LION_DB_FIELD(rarity, int, 10000);
+    ELONA_LION_DB_FIELD(coefficient, int, 400);
     ELONA_LION_DB_FIELD_CALLBACK(corpse_eating_effect);
 
-    std::unordered_map<int, int> resistances = convert_resistances(data, "resistances");
+    std::unordered_map<int, int> resistances =
+        convert_resistances(data, "resistances");
 
     std::vector<int> normal_actions;
     if (auto result = lion::convert_vector<int>(data, "normal_actions"))
@@ -397,7 +402,7 @@ character_data character_db_ex::convert(const std::string& id_,
         coefficient,
         corpse_eating_effect,
         flags,
-        };
+    };
 }
 
 character::character()
@@ -800,7 +805,8 @@ void chara_set_generation_filter()
         fltn(u8"sf"s);
         return;
     }
-    if (mdata_map_type == mdata_t::map_type_t::town || mdata_map_type == mdata_t::map_type_t::guild)
+    if (mdata_map_type == mdata_t::map_type_t::town
+        || mdata_map_type == mdata_t::map_type_t::guild)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltselect = 5;
@@ -932,7 +938,8 @@ void chara_set_generation_filter()
         flttypemajor = 13;
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest_graveyard || gdata_current_map == mdata_t::map_id_t::truce_ground)
+    if (gdata_current_map == mdata_t::map_id_t::lumiest_graveyard
+        || gdata_current_map == mdata_t::map_id_t::truce_ground)
     {
         flt(calcobjlv(20), calcfixlv(2));
         fltselect = 4;
@@ -1930,14 +1937,16 @@ void chara_mod_impression(int cc, int delta)
     if (level1 > level2)
     {
         txtef(8);
-        txt(i18n::s.get("core.locale.chara.impression.lose", cdata[cc], level2));
+        txt(i18n::s.get(
+            "core.locale.chara.impression.lose", cdata[cc], level2));
     }
     else if (level2 > level1)
     {
         if (cdata[cc].relationship != -3)
         {
             txtef(2);
-            txt(i18n::s.get("core.locale.chara.impression.gain", cdata[cc], level2));
+            txt(i18n::s.get(
+                "core.locale.chara.impression.gain", cdata[cc], level2));
         }
     }
 }
@@ -1961,7 +1970,8 @@ void chara_vanquish(int cc)
     cdata[cc].character_role = 0;
     if (cdata[cc].shop_store_id != 0)
     {
-        const auto storage_filename = filesystem::u8path("shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
+        const auto storage_filename = filesystem::u8path(
+            "shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
         const auto storage_filepath = filesystem::dir::tmp() / storage_filename;
         tmpload(storage_filename);
         if (fs::exists(storage_filepath))
@@ -2092,7 +2102,8 @@ void chara_delete(int cc)
         // currently valid. If the state were 0, then chara_killed
         // would have been called to run the chara removal handler for
         // the Lua state. We'll have to run it now.
-        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(cdata[cc]);
+        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(
+            cdata[cc]);
     }
     else
     {
@@ -2356,7 +2367,8 @@ void chara_add_quality_parens()
     }
     else if (fixlv == 5)
     {
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.name_with_title", cdata[rc]);
+        cdatan(0, rc) =
+            i18n::s.get("core.locale.chara.name_with_title", cdata[rc]);
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
 }

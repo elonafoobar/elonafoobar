@@ -157,7 +157,8 @@ void mef_update()
                     {
                         x = rnd(2) + dx - rnd(2);
                         y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
+                        if (x < 0 || y < 0 || x >= mdata_map_width
+                            || y >= mdata_map_height)
                         {
                             f = 0;
                             continue;

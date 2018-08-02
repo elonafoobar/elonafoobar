@@ -1,7 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../spec.hpp"
 #include <iostream>
+#include "../spec.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -9,7 +9,10 @@ using namespace elona;
 class test_spec : public spec::object
 {
 public:
-    test_spec() : spec::object("test") {}
+    test_spec()
+        : spec::object("test")
+    {
+    }
 };
 
 namespace
@@ -219,7 +222,9 @@ test def {
 )"));
 }
 
-TEST_CASE("Test providing non-string default value in enum", "[Spec: Definition]")
+TEST_CASE(
+    "Test providing non-string default value in enum",
+    "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
 test def {
@@ -258,10 +263,12 @@ test def {
 
     REQUIRE(def.is<spec::enum_def>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
-    REQUIRE(def.get_default("core.test.foo").as<std::string>() == "__unknown__");
+    REQUIRE(
+        def.get_default("core.test.foo").as<std::string>() == "__unknown__");
     REQUIRE(def.get_variants("core.test.foo").size() == 1);
 
-    REQUIRE_NOTHROW(def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "baz"));
+    REQUIRE_NOTHROW(
+        def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "baz"));
 
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
     REQUIRE(def.get_default("core.test.foo").as<std::string>() == "baz");
@@ -272,10 +279,13 @@ test def {
     REQUIRE(variants.at(2) == "bar");
     REQUIRE(variants.at(3) == "baz");
 
-    REQUIRE_THROWS(def.inject_enum("core.test.bar", {"foo", "bar", "baz"}, "bar"));
+    REQUIRE_THROWS(
+        def.inject_enum("core.test.bar", {"foo", "bar", "baz"}, "bar"));
 }
 
-TEST_CASE("Test providing invalid default index in injected enum", "[Spec: Definition]")
+TEST_CASE(
+    "Test providing invalid default index in injected enum",
+    "[Spec: Definition]")
 {
     test_spec def = load(R"(
 test def {
@@ -285,7 +295,8 @@ test def {
 }
 )");
 
-    REQUIRE_THROWS(def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "asdfg"));
+    REQUIRE_THROWS(
+        def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, "asdfg"));
     REQUIRE_THROWS(def.inject_enum("core.test.foo", {"foo", "bar", "baz"}, ""));
 }
 
@@ -332,7 +343,9 @@ test def {
 )"));
 }
 
-TEST_CASE("Test defining config section with invalid options", "[Spec: Definition]")
+TEST_CASE(
+    "Test defining config section with invalid options",
+    "[Spec: Definition]")
 {
     REQUIRE(load_fails(R"(
 test def {

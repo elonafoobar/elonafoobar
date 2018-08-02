@@ -8,9 +8,9 @@
 #include "../init.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
+#include "../log.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
-#include "../log.hpp"
 #include "tests.hpp"
 
 using namespace Catch;

@@ -143,26 +143,12 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image_crop(
-    image_base&,
-    int,
-    int,
-    int,
-    int,
-    int,
-    int)
+void renderer::render_image_crop(image_base&, int, int, int, int, int, int)
 {
 }
 
 
-void render_image_crop(
-    ::SDL_Texture*,
-    int,
-    int,
-    int,
-    int,
-    int,
-    int)
+void render_image_crop(::SDL_Texture*, int, int, int, int, int, int)
 {
 }
 

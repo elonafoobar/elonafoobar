@@ -1,8 +1,9 @@
 #pragma once
 
+#include "thirdparty/ordered_map/ordered_map.h"
+
 #define MICROHCL_MAP_TYPE tsl::ordered_map
 #define MICROHCL_MAP_ACCESSOR &it.value()
-#include "thirdparty/ordered_map/ordered_map.h"
 #include "thirdparty/microhcl/hcl.hpp"
 
 #include "filesystem.hpp"
@@ -16,14 +17,16 @@ inline hcl::Value load(std::istream& is)
 {
     hcl::ParseResult parseResult = hcl::parse(is);
 
-    if (!parseResult.valid()) {
+    if (!parseResult.valid())
+    {
         throw std::runtime_error{parseResult.errorReason};
     }
 
     return parseResult.value;
 }
 
-inline hcl::Value load(const fs::path& filepath) {
+inline hcl::Value load(const fs::path& filepath)
+{
     std::ifstream in{filepath.native()};
 
     if (!in)

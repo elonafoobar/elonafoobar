@@ -1,13 +1,13 @@
 #pragma once
+#include <cassert>
+#include <climits>
+#include <unordered_map>
 #include "../filesystem.hpp"
 #include "../lib/noncopyable.hpp"
 #include "../optional.hpp"
 #include "../shared_id.hpp"
 #include "../snail/image.hpp"
 #include "extent.hpp"
-#include <cassert>
-#include <climits>
-#include <unordered_map>
 
 namespace elona
 {
@@ -48,15 +48,29 @@ public:
     };
     struct skyline
     {
-        skyline (int x, int y, int width) : x(x), y(y), width(width) {}
+        skyline(int x, int y, int width)
+            : x(x)
+            , y(y)
+            , width(width)
+        {
+        }
 
         int x;
         int y;
         int width;
 
-        inline int left() const { return x; }
-        inline int top() const { return y; }
-        inline int right() const { return x + width - 1; }
+        inline int left() const
+        {
+            return x;
+        }
+        inline int top() const
+        {
+            return y;
+        }
+        inline int right() const
+        {
+            return x + width - 1;
+        }
     };
 
     /***
@@ -65,10 +79,11 @@ public:
      */
     struct buffer_info
     {
-        buffer_info(pic_loader::page_type type,
-                    int buffer_id,
-                    int width,
-                    int height)
+        buffer_info(
+            pic_loader::page_type type,
+            int buffer_id,
+            int width,
+            int height)
             : type(type)
             , buffer_id(buffer_id)
             , width(width)
@@ -123,7 +138,8 @@ public:
                 if (auto e = fits(w, h, i))
                 {
                     skyline& skyline = skylines[i];
-                    if (e->bottom() < bottom || (e->bottom() == bottom && skyline.width < width))
+                    if (e->bottom() < bottom
+                        || (e->bottom() == bottom && skyline.width < width))
                     {
                         bottom = e->bottom();
                         width = skyline.width;
@@ -148,7 +164,7 @@ public:
         {
             for (size_t i = 1; i < skylines.size(); i++)
             {
-                skyline& prev = skylines[i-1];
+                skyline& prev = skylines[i - 1];
                 skyline& now = skylines[i];
 
                 if (prev.y == now.y)
@@ -170,7 +186,7 @@ public:
 
             for (size_t i = index + 1; i < skylines.size(); i++)
             {
-                skyline& prev = skylines[i-1];
+                skyline& prev = skylines[i - 1];
                 skyline& now = skylines[i];
 
                 assert(prev.left() <= now.left());
@@ -246,11 +262,13 @@ public:
     }
 
 private:
-    buffer_info& add_buffer(page_type type) { return add_buffer(type, 1024, 1024); }
+    buffer_info& add_buffer(page_type type)
+    {
+        return add_buffer(type, 1024, 1024);
+    }
     buffer_info& add_buffer(page_type, int, int);
 
     std::vector<buffer_info> buffers;
     map_type storage;
-
 };
 } // namespace elona

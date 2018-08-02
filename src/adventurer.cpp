@@ -138,41 +138,45 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
     case 1:
         addnewstopic(u8"@01"s, i18n::s.get("core.locale.news.discovery.title"));
         addnews2(
-            i18n::s.get("core.locale.news.discovery.text",
-                        cdatan(1, adventurer),
-                        valn,
-                        mapname(cdata[adventurer].current_map)),
+            i18n::s.get(
+                "core.locale.news.discovery.text",
+                cdatan(1, adventurer),
+                valn,
+                mapname(cdata[adventurer].current_map)),
             1);
         break;
     case 2:
         addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.growth.title"));
         addnews2(
-            i18n::s.get("core.locale.news.growth.text",
-                        cdatan(1, adventurer),
-                        cdata[adventurer].level),
+            i18n::s.get(
+                "core.locale.news.growth.text",
+                cdatan(1, adventurer),
+                cdata[adventurer].level),
             1);
         break;
     case 3:
-        addnewstopic(
-            u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
+        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
         addnews2(
-            i18n::s.get("core.locale.news.recovery.text",
-                        cdatan(1, adventurer)),
+            i18n::s.get(
+                "core.locale.news.recovery.text", cdatan(1, adventurer)),
             1);
         break;
     case 4:
-        addnewstopic(u8"@03"s, i18n::s.get("core.locale.news.accomplishment.title"));
+        addnewstopic(
+            u8"@03"s, i18n::s.get("core.locale.news.accomplishment.title"));
         addnews2(
-            i18n::s.get("core.locale.news.accomplishment.text",
-                        cdatan(1, adventurer),
-                        fame),
+            i18n::s.get(
+                "core.locale.news.accomplishment.text",
+                cdatan(1, adventurer),
+                fame),
             1);
         break;
     case 5:
-        addnewstopic(u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
+        addnewstopic(
+            u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
         addnews2(
-            i18n::s.get("core.locale.news.retirement.text",
-                        cdatan(1, adventurer)),
+            i18n::s.get(
+                "core.locale.news.retirement.text", cdatan(1, adventurer)),
             1);
         break;
     }
@@ -194,7 +198,8 @@ void label_2662()
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
-                txt(i18n::s.get("core.locale.chara.contract_expired", cdata[rc]));
+                txt(i18n::s.get(
+                    "core.locale.chara.contract_expired", cdata[rc]));
             }
         }
         if (cdata[rc].current_map != gdata_current_map)
@@ -239,10 +244,8 @@ void label_2662()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == mdata_t::map_id_t::none
-                    || p == 7
-                    || adata(0, p) == mdata_t::map_type_t::temporary
-                    || p == 9)
+                if (adata(16, p) == mdata_t::map_id_t::none || p == 7
+                    || adata(0, p) == mdata_t::map_type_t::temporary || p == 9)
                 {
                     p = 4;
                 }

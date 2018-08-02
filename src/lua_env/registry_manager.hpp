@@ -28,24 +28,27 @@ public:
     /***
      * Registers a new datatype from the HCL spec file provided.
      */
-    void register_datatype(const std::string& mod_name,
-                           const std::string& datatype_name);
+    void register_datatype(
+        const std::string& mod_name,
+        const std::string& datatype_name);
 
     /***
      * Registers instances of new data for a known datatype from the
      * provided HCL file. Throws if the datatype is not known.
      */
-    void register_data(const std::string& mod_name,
-                       const std::string& datatype_name,
-                       const fs::path& data_file);
+    void register_data(
+        const std::string& mod_name,
+        const std::string& datatype_name,
+        const fs::path& data_file);
 
     /***
      * Obtains the root table for a datatype. For example, to get the
      * raw data of all characters, which have IDs like
      * "core.chara.<xxx>", pass in "core" and "chara" as arguments.
      */
-    sol::optional<sol::table> get_table(const std::string& mod_name,
-                                        const std::string& datatype_name);
+    sol::optional<sol::table> get_table(
+        const std::string& mod_name,
+        const std::string& datatype_name);
 
 private:
     void bind_api();

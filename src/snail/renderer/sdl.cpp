@@ -1,9 +1,9 @@
 #ifdef ANDROID
 #include "../renderer.hpp"
 #endif
-#include "../detail/sdl.hpp"
 #include <iostream>
 #include <sstream>
+#include "../detail/sdl.hpp"
 
 
 namespace elona
@@ -393,13 +393,7 @@ void renderer::render_image_crop(
     int dst_y)
 {
     render_image_crop(
-        image.ptr(),
-        src_x,
-        src_y,
-        src_width,
-        src_height,
-        dst_x,
-        dst_y);
+        image.ptr(), src_x, src_y, src_width, src_height, dst_x, dst_y);
 }
 
 
@@ -430,7 +424,8 @@ void renderer::render_image_crop(
 
     ::SDL_Rect src{src_x, src_y, src_width, src_height};
     ::SDL_Rect dst{dst_x, dst_y, src_width, src_height};
-    detail::enforce_sdl(::SDL_RenderCopyEx(ptr(), image, &src, &dst, 0, 0, ::SDL_FLIP_NONE));
+    detail::enforce_sdl(
+        ::SDL_RenderCopyEx(ptr(), image, &src, &dst, 0, 0, ::SDL_FLIP_NONE));
 }
 
 

@@ -17,7 +17,8 @@ void lua_testcase(const std::string& filename)
     elona::lua::lua->get_api_manager().set_on(*elona::lua::lua);
     REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script_file(
         "tests/lua/"s + filename));
-    REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(R"(assert(lresults()))"));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_state()->safe_script(R"(assert(lresults()))"));
 }
 
 TEST_CASE("test Elona.require", "[Lua: API]")
@@ -35,10 +36,12 @@ assert(type(Rand.coinflip) == "function")
 TEST_CASE("test Elona.require from other mods", "[Lua: API]")
 {
     elona::lua::lua_env lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mods(),
-                                    filesystem::dir::exe() / u8"tests/data/mods/test_require");
+    lua.get_mod_manager().load_mods(
+        filesystem::dir::mods(),
+        filesystem::dir::exe() / u8"tests/data/mods/test_require");
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test_require_from_mods", R"(
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_mod_from_script("test_require_from_mods", R"(
 local Hello = Elona.require("test_require", "Hello")
 assert(Hello ~= nil)
 assert(type(Hello.hello) == "function")

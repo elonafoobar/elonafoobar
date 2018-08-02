@@ -106,8 +106,7 @@ sdl_mixer::sdl_mixer()
         throw sdl_error{"Failed to initialize SDL2Mixer"};
     }
 
-    enforce_mixer(
-        ::Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048));
+    enforce_mixer(::Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048));
 }
 
 

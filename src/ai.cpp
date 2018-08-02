@@ -320,8 +320,11 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 if (sell != 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get("core.locale.ai.ally.sells_items",
-                                    cdata[cc], sell(0), sell(1)));
+                    txt(i18n::s.get(
+                        "core.locale.ai.ally.sells_items",
+                        cdata[cc],
+                        sell(0),
+                        sell(1)));
                 }
             }
             if (rnd(100) == 0)
@@ -331,8 +334,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd(61);
                     txtef(9);
-                    txt(i18n::s.get("core.locale.ai.ally.visits_trainer",
-                                    cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.locale.ai.ally.visits_trainer", cdata[cc]));
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
                         while (1)
@@ -414,7 +417,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 const auto did_swap = cell_swap(cc, tc);
                 if (did_swap && is_in_fov(cc))
                 {
-                    txt(i18n::s.get("core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
                 if (cdata[tc].continuous_action_id == 1)
                 {
@@ -422,7 +426,10 @@ turn_result_t proc_npc_movement_event(bool retreat)
                     {
                         if (is_in_fov(cc))
                         {
-                            txt(i18n::s.get("core.locale.ai.swap.glare", cdata[cc], cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.locale.ai.swap.glare",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                         rowactend(tc);
                     }
@@ -455,8 +462,9 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cc))
                                         {
-                                            txt(i18n::s.get("core.locale.ai.crushes_wall",
-                                                            cdata[cc]));
+                                            txt(i18n::s.get(
+                                                "core.locale.ai.crushes_wall",
+                                                cdata[cc]));
                                         }
                                         return turn_result_t::turn_end;
                                     }
@@ -762,7 +770,8 @@ label_2692_internal:
                 }
             }
             if (gdata_current_map == mdata_t::map_id_t::noyel
-                || gdata_current_map == mdata_t::map_id_t::mansion_of_younger_sister)
+                || gdata_current_map
+                    == mdata_t::map_id_t::mansion_of_younger_sister)
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {
@@ -791,7 +800,9 @@ label_2692_internal:
                                             tlocy = cdata[gdata_fire_giant]
                                                         .position.y;
                                             txtef(9);
-                                            txt(i18n::s.get_enum("core.locale.ai.fire_giant", rnd(4)));
+                                            txt(i18n::s.get_enum(
+                                                "core.locale.ai.fire_giant",
+                                                rnd(4)));
                                             return do_throw_command();
                                         }
                                     }
@@ -843,8 +854,10 @@ label_2692_internal:
                                     if (stat == 1)
                                     {
                                         snd(86);
-                                        txt(i18n::s.get("core.locale.ai.makes_snowman",
-                                                        cdata[cc], inv[ci]));
+                                        txt(i18n::s.get(
+                                            "core.locale.ai.makes_snowman",
+                                            cdata[cc],
+                                            inv[ci]));
                                         return turn_result_t::turn_end;
                                     }
                                 }
@@ -858,7 +871,8 @@ label_2692_internal:
                                     tlocx = cdata[0].position.x;
                                     tlocy = cdata[0].position.y;
                                     txtef(9);
-                                    txt(i18n::s.get_enum("core.locale.ai.snowball", rnd(6)));
+                                    txt(i18n::s.get_enum(
+                                        "core.locale.ai.snowball", rnd(6)));
                                     return do_throw_command();
                                 }
                             }
@@ -956,7 +970,8 @@ label_2692_internal:
                             if (is_in_fov(cc))
                             {
                                 txtef(9);
-                                txt(i18n::s.get_enum("core.locale.ai.snail", rnd(2)));
+                                txt(i18n::s.get_enum(
+                                    "core.locale.ai.snail", rnd(2)));
                             }
                             return do_throw_command();
                         }

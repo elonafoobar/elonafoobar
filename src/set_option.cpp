@@ -33,8 +33,13 @@ public:
 
     virtual ~config_menu_item_base() noexcept = default;
 
-    virtual void change(int) {}
-    virtual std::string get_message() { return ""; }
+    virtual void change(int)
+    {
+    }
+    virtual std::string get_message()
+    {
+        return "";
+    }
 };
 
 
@@ -71,7 +76,10 @@ public:
 
         config::instance().set(key, variable);
     }
-    std::string get_message() { return variable ? yes : no; }
+    std::string get_message()
+    {
+        return variable ? yes : no;
+    }
 
     virtual ~config_menu_item_yesno() noexcept = default;
 };
@@ -82,9 +90,10 @@ class config_menu_item_info : public config_menu_item_base
 public:
     std::string info;
 
-    config_menu_item_info(const std::string& key,
-                          const i18n_key& locale_key,
-                          const std::string& info)
+    config_menu_item_info(
+        const std::string& key,
+        const i18n_key& locale_key,
+        const std::string& info)
         : config_menu_item_base(key, locale_key)
         , info(info)
     {
@@ -92,7 +101,10 @@ public:
 
     virtual ~config_menu_item_info() noexcept = default;
 
-    std::string get_message() { return info; }
+    std::string get_message()
+    {
+        return info;
+    }
 };
 
 
@@ -141,7 +153,9 @@ public:
     {
         choice(std::string value, i18n_key message_key)
             : value(value)
-            , message_key(message_key) {}
+            , message_key(message_key)
+        {
+        }
 
         std::string value;
         i18n_key message_key;
@@ -173,7 +187,9 @@ public:
         }
         if (index == -1)
         {
-            throw std::runtime_error("No such enum variant \"" + default_choice + "\" in \"" + key + "\".");
+            throw std::runtime_error(
+                "No such enum variant \"" + default_choice + "\" in \"" + key
+                + "\".");
         }
         // If the enum variant is injected, but the selected value is
         // still unknown, try to set its index to the first known
@@ -255,7 +271,9 @@ class config_menu_submenu : public config_menu
 {
 public:
     config_menu_submenu(const std::string& title, int width, int height)
-        : config_menu(title, width, height) {}
+        : config_menu(title, width, height)
+    {
+    }
 
     void draw() const
     {
@@ -283,11 +301,12 @@ typedef std::vector<std::unique_ptr<config_menu>> config_screen;
 // Functions for adding items to the config screen.
 
 template <class M>
-static void add_config_menu(const spec_key& key,
-                            const i18n_key& menu_name_key,
-                            const config_def& def,
-                            int width,
-                            config_screen& ret)
+static void add_config_menu(
+    const spec_key& key,
+    const i18n_key& menu_name_key,
+    const config_def& def,
+    int width,
+    config_screen& ret)
 {
     auto children = def.get_children(key);
     int w = width;
@@ -296,14 +315,16 @@ static void add_config_menu(const spec_key& key,
 }
 
 
-static void add_config_item_yesno(const spec_key& key,
-                                  const i18n_key& locale_key,
-                                  bool default_value,
-                                  config_screen& ret)
+static void add_config_item_yesno(
+    const spec_key& key,
+    const i18n_key& locale_key,
+    bool default_value,
+    config_screen& ret)
 {
     i18n_key yes_no;
 
-    // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't Play", etc.)
+    // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't
+    // Play", etc.)
     if (auto text = i18n::s.get_optional(locale_key + ".yes_no"))
     {
         yes_no = *text;
@@ -317,36 +338,30 @@ static void add_config_item_yesno(const spec_key& key,
     std::string yes_text = i18n::s.get(yes_no + ".yes");
     std::string no_text = i18n::s.get(yes_no + ".no");
 
-    ret.back()->items.emplace_back(
-        std::make_unique<config_menu_item_yesno>(
-            key, locale_key,
-            default_value,
-            yes_text, no_text)
-        );
+    ret.back()->items.emplace_back(std::make_unique<config_menu_item_yesno>(
+        key, locale_key, default_value, yes_text, no_text));
 }
 
-static void add_config_item_integer(const spec_key& key,
-                                    const i18n_key& locale_key,
-                                    int default_value,
-                                    const config_def& def,
-                                    config_screen& ret)
+static void add_config_item_integer(
+    const spec_key& key,
+    const i18n_key& locale_key,
+    int default_value,
+    const config_def& def,
+    config_screen& ret)
 {
     int min = def.get_min(key);
     int max = def.get_max(key);
 
-    ret.back()->items.emplace_back(
-        std::make_unique<config_menu_item_integer>(
-            key, locale_key,
-            default_value,
-            min, max, "${_1}")
-        );
+    ret.back()->items.emplace_back(std::make_unique<config_menu_item_integer>(
+        key, locale_key, default_value, min, max, "${_1}"));
 }
 
-static void add_config_item_choice(const spec_key& key,
-                                   const i18n_key& locale_key,
-                                   const std::string& default_value,
-                                   const config_def& def,
-                                   config_screen& ret)
+static void add_config_item_choice(
+    const spec_key& key,
+    const i18n_key& locale_key,
+    const std::string& default_value,
+    const config_def& def,
+    config_screen& ret)
 {
     // Add the translated names of all variants.
     const auto& variants = def.get_variants(key);
@@ -355,26 +370,22 @@ static void add_config_item_choice(const spec_key& key,
     for (const auto& variant : variants)
     {
         auto choice = config_menu_item_choice::choice{
-            variant, locale_key + ".variants." + variant
-        };
+            variant, locale_key + ".variants." + variant};
         choices.emplace_back(choice);
     }
 
     bool translate_variants = def.get_metadata(key).translate_variants;
 
-    ret.back()->items.emplace_back(
-        std::make_unique<config_menu_item_choice>(
-            key, locale_key,
-            default_value, choices,
-            translate_variants)
-        );
+    ret.back()->items.emplace_back(std::make_unique<config_menu_item_choice>(
+        key, locale_key, default_value, choices, translate_variants));
 }
 
-static void add_config_item_section(const spec_key& key,
-                                    const i18n_key& locale_key,
-                                    const std::string section_name,
-                                    const config_def& def,
-                                    config_screen& ret)
+static void add_config_item_section(
+    const spec_key& key,
+    const i18n_key& locale_key,
+    const std::string section_name,
+    const config_def& def,
+    config_screen& ret)
 {
     // EX: "<core.config>.<language>"
     spec_key section_key = key + "." + section_name;
@@ -384,8 +395,8 @@ static void add_config_item_section(const spec_key& key,
         // EX: "<core.locale.config.menu>.<language>"
         i18n_key section_locale_key = locale_key + "." + section_name;
 
-        ret.back()->items.emplace_back(
-            std::make_unique<config_menu_item_base>(section_key, section_locale_key));
+        ret.back()->items.emplace_back(std::make_unique<config_menu_item_base>(
+            section_key, section_locale_key));
     }
 }
 
@@ -408,7 +419,8 @@ void visit_toplevel(config& conf, config_screen& ret)
     // Add the names of top-level config menu sections if they are visible.
     for (const auto& section_name : conf.get_def().get_children(key))
     {
-        add_config_item_section(key, locale_key, section_name, conf.get_def(), ret);
+        add_config_item_section(
+            key, locale_key, section_name, conf.get_def(), ret);
     }
 
     // Add all sections and their config items.
@@ -418,7 +430,10 @@ void visit_toplevel(config& conf, config_screen& ret)
     }
 }
 
-void visit_section(config& conf, const spec_key& current_key, config_screen& ret)
+void visit_section(
+    config& conf,
+    const spec_key& current_key,
+    config_screen& ret)
 {
     // EX: "<core.config>.<language>"
     spec_key key = "core.config." + current_key;
@@ -430,7 +445,8 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
     // Ensure the section exists in the config definition.
     if (!conf.get_def().exists(key))
     {
-        throw std::runtime_error("No such config option \"" + current_key + "\".");
+        throw std::runtime_error(
+            "No such config option \"" + current_key + "\".");
     }
     // Ignore this section if it is not user-visible.
     if (!conf.get_def().get_metadata(key).is_visible())
@@ -439,7 +455,8 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
     }
 
     // Add the submenu.
-    add_config_menu<config_menu_submenu>(key, menu_name_key, conf.get_def(), 440, ret);
+    add_config_menu<config_menu_submenu>(
+        key, menu_name_key, conf.get_def(), 440, ret);
 
     // Visit child config items of this section.
     for (const auto& child : conf.get_def().get_children(key))
@@ -448,14 +465,18 @@ void visit_section(config& conf, const spec_key& current_key, config_screen& ret
     }
 }
 
-void visit_config_item(config& conf, const spec_key& current_key, config_screen& ret)
+void visit_config_item(
+    config& conf,
+    const spec_key& current_key,
+    config_screen& ret)
 {
     spec_key key = "core.config." + current_key;
     i18n_key locale_key = conf.get_def().get_locale_root() + "." + current_key;
 
     if (!conf.get_def().exists(key))
     {
-        throw std::runtime_error("No such config option \"" + current_key + "\".");
+        throw std::runtime_error(
+            "No such config option \"" + current_key + "\".");
     }
     if (!conf.get_def().get_metadata(key).is_visible())
     {
@@ -468,11 +489,13 @@ void visit_config_item(config& conf, const spec_key& current_key, config_screen&
     }
     else if (conf.get_def().is<spec::int_def>(key))
     {
-        add_config_item_integer(key, locale_key, conf.get<int>(key), conf.get_def(), ret);
+        add_config_item_integer(
+            key, locale_key, conf.get<int>(key), conf.get_def(), ret);
     }
     else if (conf.get_def().is<spec::enum_def>(key))
     {
-        add_config_item_choice(key, locale_key, conf.get<std::string>(key), conf.get_def(), ret);
+        add_config_item_choice(
+            key, locale_key, conf.get<std::string>(key), conf.get_def(), ret);
     }
     else if (conf.get_def().is<spec::string_def>(key))
     {
@@ -485,7 +508,8 @@ void visit_config_item(config& conf, const spec_key& current_key, config_screen&
     }
     else if (conf.get_def().is<spec::section_def>(key))
     {
-        throw std::runtime_error("You cannot currently define nested sections.");
+        throw std::runtime_error(
+            "You cannot currently define nested sections.");
     }
     else
     {
@@ -602,7 +626,8 @@ set_option_begin:
                 height);
         }
         pagesize = listmax;
-        display_topic(i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.config.common.menu"), wx + 34, wy + 36);
         if (mode == 10)
         {
             p = 2;
@@ -670,7 +695,8 @@ set_option_begin:
             //         }
             //     }
             // }
-            cs_list(cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
+            cs_list(
+                cs == item_pos, s, wx + 56 + x, wy + 66 + item_pos * 19 - 1, 0);
             if ((true || cnt <= 0) && submenu != 0)
             {
                 pos(wx + 220, wy + 66 + item_pos * 19 - 5);

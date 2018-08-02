@@ -1,20 +1,21 @@
-#include "config_def.hpp"
-#include "filesystem.hpp"
-#include "optional.hpp"
-#include "hcl.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <vector>
+#include "config_def.hpp"
+#include "filesystem.hpp"
+#include "hcl.hpp"
+#include "optional.hpp"
 
 namespace elona
 {
 namespace spec
 {
 
-static hcl::Value& skip_sections(hcl::Value& object,
-                                 const std::vector<std::string> section_names,
-                                 const std::string& hcl_file)
+static hcl::Value& skip_sections(
+    hcl::Value& object,
+    const std::vector<std::string> section_names,
+    const std::string& hcl_file)
 {
     std::string sections;
     hcl::Value* value = &object;
@@ -24,7 +25,9 @@ static hcl::Value& skip_sections(hcl::Value& object,
         std::string name = *it;
         if (!value->is<hcl::Object>() || !value->has(name))
         {
-            throw spec_error(hcl_file, "\"" + sections + "\" object not found at top level"s);
+            throw spec_error(
+                hcl_file,
+                "\"" + sections + "\" object not found at top level"s);
         }
 
         if (sections == "")
@@ -45,10 +48,12 @@ void object::load(std::istream& is, const std::string& hcl_file)
 {
     hcl::ParseResult parseResult = hcl::parse(is);
 
-    if (!parseResult.valid()) {
+    if (!parseResult.valid())
+    {
         std::cerr << parseResult.errorReason << std::endl;
-        throw spec_error(hcl_file, u8"Failed to read " + hcl_file + u8": "
-                         + parseResult.errorReason);
+        throw spec_error(
+            hcl_file,
+            u8"Failed to read " + hcl_file + u8": " + parseResult.errorReason);
     }
 
     std::string top_level_key = "core." + name;
@@ -60,9 +65,10 @@ void object::load(std::istream& is, const std::string& hcl_file)
     items.emplace(top_level_key, result);
 }
 
-section_def object::visit_object(const hcl::Object& object,
-                                 const std::string& current_key,
-                                 const std::string& hcl_file)
+section_def object::visit_object(
+    const hcl::Object& object,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     section_def def{};
 
@@ -76,9 +82,10 @@ section_def object::visit_object(const hcl::Object& object,
     return def;
 }
 
-void object::visit(const hcl::Value& value,
-                   const std::string& current_key,
-                   const std::string& hcl_file)
+void object::visit(
+    const hcl::Value& value,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     if (value.is<hcl::Object>())
     {
@@ -91,9 +98,10 @@ void object::visit(const hcl::Value& value,
     }
 }
 
-item object::visit_bare_value(const hcl::Value& default_value,
-                              const std::string& current_key,
-                              const std::string& hcl_file)
+item object::visit_bare_value(
+    const hcl::Value& default_value,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     item i;
 
@@ -119,9 +127,10 @@ item object::visit_bare_value(const hcl::Value& default_value,
     return i;
 }
 
-void object::visit_item(const hcl::Object& item,
-                        const std::string& current_key,
-                        const std::string& hcl_file)
+void object::visit_item(
+    const hcl::Object& item,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     optional<spec::item> i;
 
@@ -145,7 +154,8 @@ void object::visit_item(const hcl::Object& item,
         }
         else
         {
-            throw spec_error(hcl_file, current_key, "Invalid type " + type + ".");
+            throw spec_error(
+                hcl_file, current_key, "Invalid type " + type + ".");
         }
     }
     else
@@ -161,9 +171,10 @@ void object::visit_item(const hcl::Object& item,
     items.emplace(current_key, *i);
 }
 
-spec::item object::visit_expanded_item(const hcl::Object& item,
-                                       const std::string& current_key,
-                                       const std::string& hcl_file)
+spec::item object::visit_expanded_item(
+    const hcl::Object& item,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     spec::item i;
 
@@ -187,35 +198,40 @@ spec::item object::visit_expanded_item(const hcl::Object& item,
 
 
 
-section_def object::visit_section(const hcl::Object& section,
-                                  const std::string& current_key,
-                                  const std::string& hcl_file)
+section_def object::visit_section(
+    const hcl::Object& section,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     pre_visit_section(current_key, section);
 
     if (section.find("options") == section.end())
     {
-        throw spec_error(hcl_file, current_key, "Section has no field named \"options\".");
+        throw spec_error(
+            hcl_file, current_key, "Section has no field named \"options\".");
     }
     const hcl::Object& options = section.at("options").as<hcl::Object>();
 
     return visit_object(options, current_key, hcl_file);
 }
 
-int_def object::visit_int(int default_value,
-                          const hcl::Object& item,
-                          const std::string& current_key,
-                          const std::string& hcl_file)
+int_def object::visit_int(
+    int default_value,
+    const hcl::Object& item,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     int_def def;
 
     if (item.find("min") == item.end())
     {
-        throw spec_error(hcl_file, current_key, "Integer option has no \"min\" field.");
+        throw spec_error(
+            hcl_file, current_key, "Integer option has no \"min\" field.");
     }
     if (item.find("max") == item.end())
     {
-        throw spec_error(hcl_file, current_key, "Integer option has no \"max\" field.");
+        throw spec_error(
+            hcl_file, current_key, "Integer option has no \"max\" field.");
     }
 
     def.min = item.at("min").as<int>();
@@ -240,15 +256,17 @@ list_def object::visit_list(const hcl::List& default_value)
     return list_def{default_value};
 }
 
-enum_def object::visit_enum(const hcl::Object& item,
-                            const std::string& current_key,
-                            const std::string& hcl_file)
+enum_def object::visit_enum(
+    const hcl::Object& item,
+    const std::string& current_key,
+    const std::string& hcl_file)
 {
     enum_def def{};
 
     if (item.find("default") == item.end())
     {
-        throw spec_error(hcl_file, current_key, "No default enum value provided.");
+        throw spec_error(
+            hcl_file, current_key, "No default enum value provided.");
     }
     if (item.find("variants") == item.end())
     {
@@ -273,9 +291,11 @@ enum_def object::visit_enum(const hcl::Object& item,
 
     if (default_index == -1)
     {
-        throw spec_error(hcl_file, current_key,
-                         "Default enum value " + default_value
-                         + " not provided in enum variant list.");
+        throw spec_error(
+            hcl_file,
+            current_key,
+            "Default enum value " + default_value
+                + " not provided in enum variant list.");
     }
 
     def.variants = variants;

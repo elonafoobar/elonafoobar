@@ -16,11 +16,17 @@ namespace snail
 
 struct quick_action
 {
-    quick_action(std::string text, optional<snail::key> key, int center_x, int center_y)
+    quick_action(
+        std::string text,
+        optional<snail::key> key,
+        int center_x,
+        int center_y)
         : center_x(center_x)
         , center_y(center_y)
         , key(key)
-        , text(text) {}
+        , text(text)
+    {
+    }
 
     int center_x;
     int center_y;
@@ -41,7 +47,8 @@ struct quick_action
 
 class touch_input : public lib::noncopyable
 {
-    enum event_type {
+    enum event_type
+    {
         motion = SDL_FINGERMOTION,
         down = SDL_FINGERDOWN,
         up = SDL_FINGERUP,

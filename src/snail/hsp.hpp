@@ -3,12 +3,12 @@
 #include <string>
 #include "blend_mode.hpp"
 #include "color.hpp"
+#include "filesystem.hpp"
 #include "font.hpp"
 #include "image.hpp"
 #include "rect.hpp"
 #include "size.hpp"
 #include "window.hpp"
-#include "filesystem.hpp"
 
 namespace elona
 {

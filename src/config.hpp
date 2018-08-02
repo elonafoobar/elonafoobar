@@ -1,14 +1,14 @@
 #pragma once
 
-#include "filesystem.hpp"
-#include "lib/noncopyable.hpp"
+#include <iostream>
+#include <string>
 #include "config_def.hpp"
 #include "elona.hpp"
+#include "filesystem.hpp"
+#include "lib/noncopyable.hpp"
 #include "log.hpp"
 #include "snail/window.hpp"
 #include "thirdparty/ordered_map/ordered_map.h"
-#include <string>
-#include <iostream>
 
 
 
@@ -22,7 +22,9 @@ class config
 public:
     static config& instance();
 
-    config() {}
+    config()
+    {
+    }
     ~config() = default;
 
     void init(const fs::path&);
@@ -113,8 +115,9 @@ public:
         return def.get_metadata(key).is_visible();
     }
 
-    void bind_getter(const std::string& key,
-                     std::function<hcl::Value(void)> getter)
+    void bind_getter(
+        const std::string& key,
+        std::function<hcl::Value(void)> getter)
     {
         if (!def.exists(key))
         {
@@ -124,38 +127,46 @@ public:
     }
 
     template <typename T>
-    void bind_setter(const std::string& key,
-                  std::function<void(const T&)> setter)
+    void bind_setter(
+        const std::string& key,
+        std::function<void(const T&)> setter)
     {
         if (!def.exists(key))
         {
             throw std::runtime_error("No such config value " + key);
         }
-        setters[key] = [setter](const hcl::Value& value){ setter(value.as<T>()); };
+        setters[key] = [setter](const hcl::Value& value) {
+            setter(value.as<T>());
+        };
     }
 
-    void inject_enum(const std::string& key,
-                     std::vector<std::string> variants,
-                     std::string default_variant)
+    void inject_enum(
+        const std::string& key,
+        std::vector<std::string> variants,
+        std::string default_variant)
     {
         def.inject_enum(key, variants, default_variant);
 
         auto enum_def = def.get<spec::enum_def>(key);
         if (storage.find(key) != storage.end())
         {
-            // Check if this enum has an invalid value. If so, set it to the default.
+            // Check if this enum has an invalid value. If so, set it to the
+            // default.
             std::string current = get<std::string>(key);
             if (!enum_def.get_index_of(current))
             {
-                ELONA_LOG("Config key "s << key << " had invalid variant "s << current << ". "s <<
-                          "("s << def.type_to_string(key) << ")"s <<
-                          "Setting to "s << enum_def.get_default() << "."s);
+                ELONA_LOG(
+                    "Config key "s
+                    << key << " had invalid variant "s << current << ". "s
+                    << "("s << def.type_to_string(key) << ")"s
+                    << "Setting to "s << enum_def.get_default() << "."s);
                 set(key, enum_def.get_default());
             }
         }
         else
         {
-            set(key, enum_def.get_default()); // Set the enum to its default value.
+            set(key,
+                enum_def.get_default()); // Set the enum to its default value.
         }
     }
 
@@ -169,7 +180,9 @@ public:
         }
         if (!storage.at(key).is<T>())
         {
-            throw std::runtime_error("Expected type \"" + def.type_to_string(key) + "\" for key " + key);
+            throw std::runtime_error(
+                "Expected type \"" + def.type_to_string(key) + "\" for key "
+                + key);
         }
 
         try
@@ -185,7 +198,8 @@ public:
         }
         catch (std::exception& e)
         {
-            throw std::runtime_error("Error on getting config value " + key + ": " + e.what());
+            throw std::runtime_error(
+                "Error on getting config value " + key + ": " + e.what());
         }
     }
 
@@ -237,19 +251,27 @@ public:
         }
     }
 
-    const config_def& get_def() const { return def; }
+    const config_def& get_def() const
+    {
+        return def;
+    }
 
 private:
     void load_defaults(bool);
 
     void visit(const hcl::Value&, const std::string&, const std::string&, bool);
-    void visit_object(const hcl::Object&, const std::string&, const std::string&, bool);
+    void visit_object(
+        const hcl::Object&,
+        const std::string&,
+        const std::string&,
+        bool);
     bool verify_types(const hcl::Value&, const std::string&);
 
     config_def def;
     tsl::ordered_map<std::string, hcl::Value> storage;
     tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
-    tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>> setters;
+    tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
+        setters;
 };
 
 

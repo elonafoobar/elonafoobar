@@ -493,7 +493,8 @@ void map_placeplayer()
 
 void map_randomtile(int prm_941, int prm_942)
 {
-    for (int cnt = 0, cnt_end = (mdata_map_width * mdata_map_height * prm_942 / 100 + 1);
+    for (int cnt = 0,
+             cnt_end = (mdata_map_width * mdata_map_height * prm_942 / 100 + 1);
          cnt < cnt_end;
          ++cnt)
     {
@@ -967,7 +968,9 @@ void map_createroomdoor()
         {
             dx = x + p(cnt);
             dy = y + p((cnt + 2));
-            if ((dx >= 0 && dy >= 0 && dx < mdata_map_width && dy < mdata_map_height) == 0)
+            if ((dx >= 0 && dy >= 0 && dx < mdata_map_width
+                 && dy < mdata_map_height)
+                == 0)
             {
                 f = 0;
                 break;
@@ -1747,7 +1750,8 @@ void generate_debug_map()
         }
     }
 
-    mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "name", 9999);
+    mdatan(0) =
+        i18n::s.get_enum_property("core.locale.map.unique", "name", 9999);
     map_converttile();
 
     mapstartx = 25;
@@ -1960,7 +1964,8 @@ void generate_random_nefia()
             mdata_map_tileset = 7;
             rdtype = 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::crypt_of_the_damned)
+        if (adata(16, gdata_current_map)
+            == mdata_t::map_id_t::crypt_of_the_damned)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 0;
@@ -2184,7 +2189,8 @@ void generate_random_nefia()
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, -1, -1, 0);
     }
-    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 80)); cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 80));
+         cnt < cnt_end;
          ++cnt)
     {
         map_trap(0, 0, gdata_current_dungeon_level);
@@ -2245,7 +2251,8 @@ void initialize_random_nefia_rdtype6()
             map(cnt, p, 0) = 3;
         }
     }
-    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 30)); cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (rnd(mdata_map_width * mdata_map_height / 30));
+         cnt < cnt_end;
          ++cnt)
     {
         x = rnd(mdata_map_width);
@@ -2323,7 +2330,8 @@ int initialize_quest_map_crop()
         {
             tile = 31;
         }
-        size = clamp(dist(dx, dy, mdata_map_width / 2, mdata_map_height / 2) / 8, 0, 8);
+        size = clamp(
+            dist(dx, dy, mdata_map_width / 2, mdata_map_height / 2) / 8, 0, 8);
         crop = choice(isetcrop);
         for (int cnt = dy, cnt_end = cnt + (h); cnt < cnt_end; ++cnt)
         {
@@ -2447,7 +2455,8 @@ int initialize_random_nefia_rdtype4()
         {
             x = cnt;
             map(x, y, 0) = 1;
-            if (x > p && y > p && x + 1 < mdata_map_width - p && y + 1 < mdata_map_height - p)
+            if (x > p && y > p && x + 1 < mdata_map_width - p
+                && y + 1 < mdata_map_height - p)
             {
                 map(x, y, 0) = 100;
             }
@@ -2481,10 +2490,12 @@ int initialize_random_nefia_rdtype4()
     else
     {
         p = rdroomsizemin + 1 + rnd(3);
-        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end;
+             ++cnt)
         {
             y = p + cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2); cnt < cnt_end;
+            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2);
+                 cnt < cnt_end;
                  ++cnt)
             {
                 x = p + cnt;
@@ -2512,7 +2523,8 @@ int initialize_random_nefia_rdtype5()
         {
             x = cnt;
             map(x, y, 0) = 1;
-            if (x > p && y > p && x + 1 < mdata_map_width - p && y + 1 < mdata_map_height - p)
+            if (x > p && y > p && x + 1 < mdata_map_width - p
+                && y + 1 < mdata_map_height - p)
             {
                 map(x, y, 0) = 100;
             }
@@ -2546,10 +2558,12 @@ int initialize_random_nefia_rdtype5()
     else
     {
         p = rdroomsizemin + 1 + rnd(3);
-        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_height - p * 2); cnt < cnt_end;
+             ++cnt)
         {
             y = p + cnt;
-            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2); cnt < cnt_end;
+            for (int cnt = 0, cnt_end = (mdata_map_width - p * 2);
+                 cnt < cnt_end;
                  ++cnt)
             {
                 x = p + cnt;
@@ -2686,7 +2700,8 @@ int initialize_random_nefia_rdtype3()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            if (x == 0 || y == 0 || x + 1 == mdata_map_width || y + 1 == mdata_map_height)
+            if (x == 0 || y == 0 || x + 1 == mdata_map_width
+                || y + 1 == mdata_map_height)
             {
                 continue;
             }
@@ -2727,7 +2742,8 @@ int initialize_quest_map_party()
         for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
         {
             x = cnt;
-            if (x == 0 || y == 0 || x + 1 == mdata_map_width || y + 1 == mdata_map_height)
+            if (x == 0 || y == 0 || x + 1 == mdata_map_width
+                || y + 1 == mdata_map_height)
             {
                 continue;
             }
@@ -3557,10 +3573,12 @@ void initialize_random_nefia_rdtype10()
             break;
         }
     }
-    for (int cnt = 0, cnt_end = (mdata_map_height / 2 - 2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mdata_map_height / 2 - 2); cnt < cnt_end;
+         ++cnt)
     {
         y = cnt * 2;
-        for (int cnt = 0, cnt_end = (mdata_map_width / 2 - 2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata_map_width / 2 - 2); cnt < cnt_end;
+             ++cnt)
         {
             x = cnt * 2;
             if (map(x, y, 0) < 100)
@@ -3880,11 +3898,13 @@ void map_initcustom(const std::string& prm_934)
                 cmapdata(3, cnt) / 1000);
             if (cellobjdata(0, cmapdata(0, cnt)) == 10)
             {
-                mdata_map_stair_up_pos = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                mdata_map_stair_up_pos =
+                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
             if (cellobjdata(0, cmapdata(0, cnt)) == 11)
             {
-                mdata_map_stair_down_pos = cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                mdata_map_stair_down_pos =
+                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
         }
     }

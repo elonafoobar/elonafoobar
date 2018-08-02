@@ -243,13 +243,15 @@ void gain_level(int cc)
             txtef(2);
             if (cc == 0)
             {
-                txt(i18n::s.get("core.locale.chara.gain_level.self",
-                                cdata[cc],
-                                cdata[cc].level));
+                txt(i18n::s.get(
+                    "core.locale.chara.gain_level.self",
+                    cdata[cc],
+                    cdata[cc].level));
             }
             else
             {
-                txt(i18n::s.get("core.locale.chara.gain_level.other", cdata[cc]));
+                txt(i18n::s.get(
+                    "core.locale.chara.gain_level.other", cdata[cc]));
             }
         }
     }

@@ -84,8 +84,8 @@ public:
      */
     sol::table get_api_table();
 
-    int get_enum_value(const std::string& enum_name,
-                       const std::string& variant) const;
+    int get_enum_value(const std::string& enum_name, const std::string& variant)
+        const;
 
 private:
     /***

@@ -1,14 +1,14 @@
 #pragma once
 
 #include <set>
-#include "../character.hpp"
-#include "../lib/noncopyable.hpp"
-#include "../item.hpp"
-#include "lua_env.hpp"
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include "../character.hpp"
+#include "../item.hpp"
+#include "../lib/noncopyable.hpp"
+#include "lua_env.hpp"
 
 namespace elona
 {
@@ -71,7 +71,8 @@ public:
     template <typename T>
     T& get_ref(sol::table handle)
     {
-        sol::object obj = handle_env["Handle"]["get_ref"](handle, T::lua_type());
+        sol::object obj =
+            handle_env["Handle"]["get_ref"](handle, T::lua_type());
         return obj.as<T&>();
     }
 
@@ -107,13 +108,15 @@ public:
         auto& handle_set = handles.at(T::lua_type());
         if (handle_set.find(obj.index) == handle_set.end())
         {
-            // std::cout << "Handle " << obj.index << " not found." << std::endl;
+            // std::cout << "Handle " << obj.index << " not found." <<
+            // std::endl;
             return sol::lua_nil;
         }
 
         // NOTE: currently indexes by the object's integer ID, but
         // this may be phased out in the future.
-        sol::table handle = handle_env["Handle"]["get_handle"](obj, T::lua_type());
+        sol::table handle =
+            handle_env["Handle"]["get_handle"](obj, T::lua_type());
         return handle;
     }
 
@@ -148,7 +151,7 @@ private:
         handle_env["Handle"]["create_handle"](obj, T::lua_type(), uuid);
     }
 
-    template<typename T>
+    template <typename T>
     void remove_handle(T& obj)
     {
         if (handles.find(T::lua_type()) == handles.end())

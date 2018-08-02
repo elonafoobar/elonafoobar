@@ -379,7 +379,8 @@ int calc_rate_to_pierce(int id)
 std::string calcage(int cc)
 {
     int n = gdata_year - cdata[cc].birth_year;
-    return n >= 0 ? std::to_string(n) : i18n::s.get("core.locale.chara.age_unknown");
+    return n >= 0 ? std::to_string(n)
+                  : i18n::s.get("core.locale.chara.age_unknown");
 }
 
 
@@ -1301,7 +1302,8 @@ int calcinitgold(int owner)
 {
     if (owner < 0)
     {
-        return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != mdata_t::map_id_t::shelter_)
+        return rnd(gdata_current_dungeon_level * 25
+                       * (gdata_current_map != mdata_t::map_id_t::shelter_)
                    + 10)
             + 1;
     }
@@ -1538,7 +1540,8 @@ void calcpartyscore2()
         if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
         {
             score += 20 + cdata[cnt].level / 2;
-            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cdata[cnt]));
+            txt(i18n::s.get(
+                "core.locale.quest.party.is_satisfied", cdata[cnt]));
         }
     }
     if (score != 0)

@@ -27,7 +27,7 @@ struct lion_db_traits<music_db>
     static constexpr const char* datatype_name = u8"music";
 };
 
-} // namespace cat
+} // namespace lion
 
 
 

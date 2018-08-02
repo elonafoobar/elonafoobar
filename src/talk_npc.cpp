@@ -10,8 +10,8 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
@@ -64,14 +64,16 @@ talk_result_t talk_inn_eat()
     }
     if (cdata[0].nutrition >= 15000)
     {
-        buff = i18n::s.get("core.locale.talk.npc.innkeeper.eat.not_hungry", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.innkeeper.eat.not_hungry", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     snd(12);
     cdata[0].gold -= calcmealvalue();
     snd(18);
     cdata[0].nutrition = 15000;
-    buff = i18n::s.get("core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
     txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
     show_eating_message();
     chara_anorexia(0);
@@ -100,7 +102,8 @@ talk_result_t talk_wizard_identify(int chatval)
     }
     if (p == 0)
     {
-        buff = i18n::s.get("core.locale.talk.npc.wizard.identify.already", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.wizard.identify.already", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     if (chatval == 15)
@@ -128,8 +131,10 @@ talk_result_t talk_wizard_identify(int chatval)
                 }
             }
         }
-        txt(i18n::s.get("core.locale.talk.npc.wizard.identify.count", p(0), p(1)));
-        buff = i18n::s.get("core.locale.talk.npc.wizard.identify.finished", cdata[tc]);
+        txt(i18n::s.get(
+            "core.locale.talk.npc.wizard.identify.count", p(0), p(1)));
+        buff = i18n::s.get(
+            "core.locale.talk.npc.wizard.identify.finished", cdata[tc]);
     }
     else
     {
@@ -145,16 +150,20 @@ talk_result_t talk_wizard_identify(int chatval)
         magic();
         if (efcancel == 1)
         {
-            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             return talk_result_t::talk_npc;
         }
         if (idtresult == identification_state_t::completely_identified)
         {
-            buff = i18n::s.get("core.locale.talk.npc.wizard.identify.finished", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.wizard.identify.finished", cdata[tc]);
         }
         else
         {
-            buff = i18n::s.get("core.locale.talk.npc.wizard.identify.need_investigate", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.wizard.identify.need_investigate",
+                cdata[tc]);
         }
         cdata[0].gold -= calcidentifyvalue(chatval - 14);
     }
@@ -165,7 +174,8 @@ talk_result_t talk_wizard_identify(int chatval)
 talk_result_t talk_informer_list_adventurers()
 {
     list_adventurers();
-    buff = i18n::s.get("core.locale.talk.npc.informer.show_adventurers", cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.informer.show_adventurers", cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -195,7 +205,8 @@ talk_result_t talk_healer_restore_attributes()
     }
     tc = tcbk;
     talk_start();
-    buff = i18n::s.get("core.locale.talk.npc.healer.restore_attributes", cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.healer.restore_attributes", cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -215,7 +226,8 @@ talk_result_t talk_trade()
     menu_result result = ctrl_inventory();
     if (!result.succeeded)
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
@@ -226,30 +238,32 @@ talk_result_t talk_arena_master(int chatval)
 {
     if (gdata_mount != 0)
     {
-        int stat =
-            cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
+        int stat = cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
         if (stat == 0)
         {
             txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
             return talk_result_t::talk_end;
         }
         cell_setchara(gdata_mount, rtval, rtval(1));
-        txt(i18n::s.get("core.locale.magic.mount.dismount", cdata[gdata_mount]));
+        txt(i18n::s.get(
+            "core.locale.magic.mount.dismount", cdata[gdata_mount]));
         ride_end();
     }
     gdata(74) = calcfame(
         0,
         (220 - gdata(120) / 50)
-        * (100 + clamp(adata(22, gdata_current_map), 0, 50)) / 100
-        + 2);
+                * (100 + clamp(adata(22, gdata_current_map), 0, 50)) / 100
+            + 2);
     listmax = 0;
     randomize(adata(26, gdata_current_map));
     if (chatval == 21)
     {
         if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
-            buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.game_is_over", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.arena_master.enter.game_is_over",
+                cdata[tc]);
             return talk_result_t::talk_npc;
         }
         randomize(adata(24, gdata_current_map));
@@ -285,28 +299,41 @@ talk_result_t talk_arena_master(int chatval)
             break;
         }
         arenaop(1) = cdata[rc].id;
-        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.target",
-                           cdata[rc], chara_refstr(cdata[rc].id, 2), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.arena_master.enter.target",
+            cdata[rc],
+            chara_refstr(cdata[rc].id, 2),
+            cdata[tc]);
     }
     else
     {
         if (adata(27, gdata_current_map) > gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
-            buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.game_is_over", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.arena_master.enter.game_is_over",
+                cdata[tc]);
             return talk_result_t::talk_npc;
         }
         arenaop(0) = 1;
         arenaop(1) = (100 - gdata(120) / 100) / 2 + 1;
-        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.target_group", arenaop(1), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.arena_master.enter.target_group",
+            arenaop(1),
+            cdata[tc]);
     }
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.enter"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.leave"));
+    ELONA_APPEND_RESPONSE(
+        1,
+        i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.enter"));
+    ELONA_APPEND_RESPONSE(
+        0,
+        i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.leave"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     if (arenaop == 0)
@@ -339,15 +366,18 @@ talk_result_t talk_pet_arena_master(int chatval)
     gdata(74) = calcfame(
         0,
         (220 - gdata(121) / 50)
-        * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
-        + 2);
+                * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
+            + 2);
     listmax = 0;
     if (chatval == 40)
     {
         arenaop(0) = 0;
         arenaop(1) = 1;
         arenaop(2) = (100 - gdata(121) / 100) / 3 * 2 + 3;
-        buff = i18n::s.get("core.locale.talk.npc.pet_arena_master.register.target", arenaop(2), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.pet_arena_master.register.target",
+            arenaop(2),
+            cdata[tc]);
     }
     if (chatval == 41)
     {
@@ -355,16 +385,26 @@ talk_result_t talk_pet_arena_master(int chatval)
         arenaop(1) = 2;
         arenaop(2) = (100 - gdata(121) / 100) / 2 + 1;
         arenaop(1) = rnd(7) + 2;
-        buff = i18n::s.get("core.locale.talk.npc.pet_arena_master.register.target_group",
-                           arenaop(1), arenaop(2), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.pet_arena_master.register.target_group",
+            arenaop(1),
+            arenaop(2),
+            cdata[tc]);
     }
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.pet_arena_master.register.choices.enter"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.pet_arena_master.register.choices.leave"));
+    ELONA_APPEND_RESPONSE(
+        1,
+        i18n::s.get(
+            "core.locale.talk.npc.pet_arena_master.register.choices.enter"));
+    ELONA_APPEND_RESPONSE(
+        0,
+        i18n::s.get(
+            "core.locale.talk.npc.pet_arena_master.register.choices.leave"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     DIM2(followerexist, 16);
@@ -376,7 +416,8 @@ talk_result_t talk_pet_arena_master(int chatval)
     int stat = ctrl_ally();
     if (stat == -1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     gdata_executing_immediate_quest_type = 2;
@@ -396,13 +437,17 @@ talk_result_t talk_pet_arena_master(int chatval)
 
 talk_result_t talk_pet_arena_master_score()
 {
-    buff = i18n::s.get("core.locale.talk.npc.arena_master.streak", adata(23, gdata_current_map));
+    buff = i18n::s.get(
+        "core.locale.talk.npc.arena_master.streak",
+        adata(23, gdata_current_map));
     return talk_result_t::talk_npc;
 }
 
 talk_result_t talk_arena_master_score()
 {
-    buff = i18n::s.get("core.locale.talk.npc.arena_master.streak", adata(22, gdata_current_map));
+    buff = i18n::s.get(
+        "core.locale.talk.npc.arena_master.streak",
+        adata(22, gdata_current_map));
     return talk_result_t::talk_npc;
 }
 
@@ -446,13 +491,16 @@ talk_result_t talk_shop_attack()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.shop.attack.dialog", cdata[tc]);
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.shop.attack.choices.attack"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.shop.attack.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        1, i18n::s.get("core.locale.talk.npc.shop.attack.choices.attack"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.shop.attack.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval != 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     go_hostile();
@@ -470,8 +518,10 @@ talk_result_t talk_guard_return_item()
     --inv[p].number;
     if (inv[p].param1 == 0)
     {
-        buff = i18n::s.get("core.locale.talk.npc.guard.lost.empty.dialog", cdata[tc]);
-        ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.guard.lost.empty.response"));
+        buff = i18n::s.get(
+            "core.locale.talk.npc.guard.lost.empty.dialog", cdata[tc]);
+        ELONA_APPEND_RESPONSE(
+            0, i18n::s.get("core.locale.talk.npc.guard.lost.empty.response"));
         chatesc = 1;
         talk_window_query();
         modify_karma(0, -5);
@@ -488,14 +538,20 @@ talk_result_t talk_guard_return_item()
         if (gdata_lost_wallet_count >= 4)
         {
             listmax = 0;
-            buff = i18n::s.get_enum("core.locale.talk.npc.guard.lost.found_often.dialog", 0, cdata[tc]);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.npc.guard.lost.found_often.dialog",
+                0,
+                cdata[tc]);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            buff = i18n::s.get_enum("core.locale.talk.npc.guard.lost.found_often.dialog", 1);
+            buff = i18n::s.get_enum(
+                "core.locale.talk.npc.guard.lost.found_often.dialog", 1);
             ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.npc.guard.lost.found_often.response"));
+                0,
+                i18n::s.get(
+                    "core.locale.talk.npc.guard.lost.found_often.response"));
             chatesc = 1;
             talk_window_query();
             modify_karma(0, -10);
@@ -515,37 +571,48 @@ talk_result_t talk_bartender_call_ally()
         rc = stat;
         if (cdata[rc].state == 1)
         {
-            buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
             return talk_result_t::talk_npc;
         }
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.cost",
-                           calcresurrectvalue(rc), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.bartender.call_ally.cost",
+            calcresurrectvalue(rc),
+            cdata[tc]);
         if (cdata[0].gold >= calcresurrectvalue(rc))
         {
             ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.npc.bartender.call_ally.choices.pay"));
+                1,
+                i18n::s.get(
+                    "core.locale.talk.npc.bartender.call_ally.choices.pay"));
         }
         ELONA_APPEND_RESPONSE(
-            0, i18n::s.get("core.locale.talk.npc.bartender.call_ally.choices.go_back"));
+            0,
+            i18n::s.get(
+                "core.locale.talk.npc.bartender.call_ally.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
             snd(12);
             cdata[0].gold -= calcresurrectvalue(rc);
-            buff = i18n::s.get("core.locale.talk.npc.bartender.call_ally.brings_back",
-                               cdata[tc], cdata[rc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.bartender.call_ally.brings_back",
+                cdata[tc],
+                cdata[rc]);
             revive_character();
         }
         else
         {
-            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.common.you_kidding", cdata[tc]);
         }
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -568,13 +635,16 @@ talk_result_t talk_ally_abandon()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.abandon.prompt", cdata[tc]);
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.yes"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
+    ELONA_APPEND_RESPONSE(
+        1, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.yes"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(i18n::s.get("core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         chara_delete(tc);
         return talk_result_t::talk_end;
@@ -606,18 +676,27 @@ talk_result_t talk_slave_buy(int chatval)
         break;
     }
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.slave_trader.buy.cost",
-                       cnven(cdatan(0, 56)), calcslavevalue(56), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.slave_trader.buy.cost",
+        cnven(cdatan(0, 56)),
+        calcslavevalue(56),
+        cdata[tc]);
     if (cdata[0].gold >= calcslavevalue(56))
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.pay"));
+        ELONA_APPEND_RESPONSE(
+            1,
+            i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        0,
+        i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(i18n::s.get("core.locale.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
+        txt(i18n::s.get(
+            "core.locale.talk.npc.slave_trader.buy.you_buy",
+            cnven(cdatan(0, 56))));
         snd(12);
         cdata[0].gold -= calcslavevalue(56);
         rc = 56;
@@ -626,7 +705,8 @@ talk_result_t talk_slave_buy(int chatval)
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -639,18 +719,24 @@ talk_result_t talk_slave_sell()
     {
         rc = stat;
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.slave_trader.sell.price",
-                           (calcslavevalue(rc) * 2 / 3), cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.slave_trader.sell.price",
+            (calcslavevalue(rc) * 2 / 3),
+            cdata[tc]);
         ELONA_APPEND_RESPONSE(
-            1, i18n::s.get("core.locale.talk.npc.slave_trader.sell.choices.deal"));
+            1,
+            i18n::s.get("core.locale.talk.npc.slave_trader.sell.choices.deal"));
         ELONA_APPEND_RESPONSE(
-            0, i18n::s.get("core.locale.talk.npc.slave_trader.sell.choices.go_back"));
+            0,
+            i18n::s.get(
+                "core.locale.talk.npc.slave_trader.sell.choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
         {
-            txt(i18n::s.get("core.locale.talk.npc.slave_trader.sell.you_sell_off",
-                            cnven(cdatan(0, rc))));
+            txt(i18n::s.get(
+                "core.locale.talk.npc.slave_trader.sell.you_sell_off",
+                cnven(cdatan(0, rc))));
             snd(11);
             earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state == 1)
@@ -666,12 +752,14 @@ talk_result_t talk_slave_sell()
         }
         else
         {
-            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.common.you_kidding", cdata[tc]);
         }
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -680,7 +768,8 @@ talk_result_t talk_ally_marriage()
 {
     if (cdata[tc].impression < 200)
     {
-        buff = i18n::s.get("core.locale.talk.npc.ally.marriage.refuses", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.ally.marriage.refuses", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     cdata[tc].is_married() = true;
@@ -724,7 +813,8 @@ talk_result_t talk_ally_gene()
 talk_result_t talk_innkeeper_shelter()
 {
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.innkeeper.go_to_shelter", cdata[tc]);
+    buff =
+        i18n::s.get("core.locale.talk.npc.innkeeper.go_to_shelter", cdata[tc]);
     tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
@@ -745,13 +835,16 @@ talk_result_t talk_servant_fire()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.servant.fire.prompt", cdata[tc]);
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.servant.fire.choices.yes"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.servant.fire.choices.no"));
+    ELONA_APPEND_RESPONSE(
+        1, i18n::s.get("core.locale.talk.npc.servant.fire.choices.yes"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.servant.fire.choices.no"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
     {
-        txt(i18n::s.get("core.locale.talk.npc.servant.fire.you_dismiss", cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.talk.npc.servant.fire.you_dismiss", cdata[tc]));
         chara_vanquish(tc);
         calccosthire();
         return talk_result_t::talk_end;
@@ -765,13 +858,17 @@ talk_result_t talk_maid_think_of_house_name()
     mdatan(0) = random_title();
     if (rnd(5))
     {
-        mdatan(0) = i18n::s.get_enum("core.locale.talk.npc.maid.think_of_house_name.suffixes",
-                                     rnd(11), mdatan(0));
+        mdatan(0) = i18n::s.get_enum(
+            "core.locale.talk.npc.maid.think_of_house_name.suffixes",
+            rnd(11),
+            mdatan(0));
     }
     screenupdate = -1;
     update_entire_screen();
-    buff = i18n::s.get("core.locale.talk.npc.maid.think_of_house_name.come_up_with",
-                       mdatan(0), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.maid.think_of_house_name.come_up_with",
+        mdatan(0),
+        cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -779,17 +876,26 @@ talk_result_t talk_sister_buy_indulgence()
 {
     if (cdata[0].karma >= -30)
     {
-        buff = i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.karma_is_not_low");
+        buff = i18n::s.get(
+            "core.locale.talk.npc.sister.buy_indulgence.karma_is_not_low");
         return talk_result_t::talk_npc;
     }
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.cost", calcguiltvalue(), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.sister.buy_indulgence.cost",
+        calcguiltvalue(),
+        cdata[tc]);
     if (cdata[0].gold >= calcguiltvalue())
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.choices.buy"));
+        ELONA_APPEND_RESPONSE(
+            1,
+            i18n::s.get(
+                "core.locale.talk.npc.sister.buy_indulgence.choices.buy"));
     }
     ELONA_APPEND_RESPONSE(
-        0, i18n::s.get("core.locale.talk.npc.sister.buy_indulgence.choices.go_back"));
+        0,
+        i18n::s.get(
+            "core.locale.talk.npc.sister.buy_indulgence.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -801,7 +907,8 @@ talk_result_t talk_sister_buy_indulgence()
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -815,14 +922,19 @@ talk_result_t talk_informer_investigate_ally()
     {
         rc = stat;
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.informer.investigate_ally.cost", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.informer.investigate_ally.cost", cdata[tc]);
         if (cdata[0].gold >= 10000)
         {
             ELONA_APPEND_RESPONSE(
-                1, i18n::s.get("core.locale.talk.npc.informer.investigate_ally.choices.pay"));
+                1,
+                i18n::s.get("core.locale.talk.npc.informer.investigate_ally."
+                            "choices.pay"));
         }
         ELONA_APPEND_RESPONSE(
-            0, i18n::s.get("core.locale.talk.npc.informer.investigate_ally.choices.go_back"));
+            0,
+            i18n::s.get("core.locale.talk.npc.informer.investigate_ally."
+                        "choices.go_back"));
         chatesc = 1;
         talk_window_query();
         if (chatval == 1)
@@ -839,12 +951,14 @@ talk_result_t talk_informer_investigate_ally()
         }
         else
         {
-            buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.common.you_kidding", cdata[tc]);
         }
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     tc = tcchat;
     return talk_result_t::talk_npc;
@@ -871,12 +985,17 @@ talk_result_t talk_ally_silence()
 
 talk_result_t talk_adventurer_hire()
 {
-    buff = i18n::s.get("core.locale.talk.npc.adventurer.hire.cost", calchireadv(tc), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.adventurer.hire.cost",
+        calchireadv(tc),
+        cdata[tc]);
     if (cdata[0].gold >= calchireadv(tc))
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.pay"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -890,12 +1009,14 @@ talk_result_t talk_adventurer_hire()
         ++cdata[tc].hire_count;
         snd(64);
         txtef(5);
-        txt(i18n::s.get("core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]));
+        txt(i18n::s.get(
+            "core.locale.talk.npc.adventurer.hire.you_hired", cdata[tc]));
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -904,13 +1025,15 @@ talk_result_t talk_adventurer_join()
 {
     if (cdata[0].level * 3 / 2 + 10 < cdata[tc].level)
     {
-        buff = i18n::s.get("core.locale.talk.npc.adventurer.join.too_weak", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.adventurer.join.too_weak", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     if (cdata[tc].impression >= 200 && cdata[tc].hire_count > 2)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.adventurer.join.accept", cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.adventurer.join.accept", cdata[tc]);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -918,7 +1041,8 @@ talk_result_t talk_adventurer_join()
         f = chara_get_free_slot_ally();
         if (f == 0)
         {
-            buff = i18n::s.get("core.locale.talk.npc.adventurer.join.party_full", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.adventurer.join.party_full", cdata[tc]);
             return talk_result_t::talk_npc;
         }
         rc = tc;
@@ -930,7 +1054,8 @@ talk_result_t talk_adventurer_join()
         create_adventurer();
         return talk_result_t::talk_end;
     }
-    buff = i18n::s.get("core.locale.talk.npc.adventurer.join.not_known", cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.adventurer.join.not_known", cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -938,8 +1063,13 @@ talk_result_t talk_moyer_sell_paels_mom()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.prompt");
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.choices.sell"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        1,
+        i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.choices.sell"));
+    ELONA_APPEND_RESPONSE(
+        0,
+        i18n::s.get(
+            "core.locale.talk.npc.moyer.sell_paels_mom.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -959,7 +1089,8 @@ talk_result_t talk_moyer_sell_paels_mom()
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -983,12 +1114,15 @@ talk_result_t talk_shop_reload_ammo()
         buff = i18n::s.get("core.locale.talk.npc.shop.ammo.no_ammo");
         return talk_result_t::talk_npc;
     }
-    buff = i18n::s.get("core.locale.talk.npc.shop.ammo.cost", calccostreload(0), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.shop.ammo.cost", calccostreload(0), cdata[tc]);
     if (cdata[0].gold >= calccostreload(0))
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.pay"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.pay"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.go_back"));
     chatesc = 1;
     talk_window_query();
     if (chatval == 1)
@@ -1000,7 +1134,8 @@ talk_result_t talk_shop_reload_ammo()
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -1017,19 +1152,23 @@ talk_result_t talk_spell_writer_reserve()
 
 talk_result_t talk_sex()
 {
-    ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
+    ELONA_APPEND_RESPONSE(
+        1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
     buff = i18n::s.get("core.locale.talk.npc.common.sex.prompt", cdata[tc]);
     talk_window_query();
     if (chatval != 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.common.sex.start", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     continuous_action_sex();
@@ -1054,14 +1193,18 @@ talk_result_t talk_prostitute_buy()
     sexvalue = sdata(17, tc) * 25 + 100 + cdata[0].fame / 10;
     if (cdata[0].gold >= sexvalue)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
     }
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
-    buff = i18n::s.get("core.locale.talk.npc.prostitute.buy", sexvalue, cdata[tc]);
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
+    buff =
+        i18n::s.get("core.locale.talk.npc.prostitute.buy", sexvalue, cdata[tc]);
     talk_window_query();
     if (chatval != 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     snd(12);
@@ -1070,7 +1213,8 @@ talk_result_t talk_prostitute_buy()
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.common.sex.start", cdata[tc]);
     tc = tc * 1 + 0;
-    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
+    ELONA_APPEND_RESPONSE(
+        0, i18n::s.get("core.locale.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     cc = tc;
@@ -1105,7 +1249,9 @@ talk_result_t talk_caravan_master_hire()
         if (p(cnt) == 0)
         {
             ELONA_APPEND_RESPONSE(
-                0, i18n::s.get("core.locale.talk.npc.caravan_master.hire.choices.go_back"));
+                0,
+                i18n::s.get("core.locale.talk.npc.caravan_master.hire.choices."
+                            "go_back"));
             break;
         }
         ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
@@ -1114,7 +1260,8 @@ talk_result_t talk_caravan_master_hire()
     talk_window_query();
     if (chatval <= 0)
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     gdata_destination_map = adata(30, chatval);
@@ -1163,35 +1310,57 @@ talk_result_t talk_guard_where_is(int chatval)
     {
         if (rc == tc)
         {
-            s = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             break;
         }
         if (cdata[rc].state != 1)
         {
-            s = i18n::s.get("core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
             break;
         }
         if (p < 6)
         {
-            s = i18n::s.get("core.locale.talk.npc.guard.where_is.very_close", s(0), cdata[rc], cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.guard.where_is.very_close",
+                s(0),
+                cdata[rc],
+                cdata[tc]);
             break;
         }
         if (p < 12)
         {
-            s = i18n::s.get("core.locale.talk.npc.guard.where_is.close", s(0), cdata[rc], cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.guard.where_is.close",
+                s(0),
+                cdata[rc],
+                cdata[tc]);
             break;
         }
         if (p < 20)
         {
-            s = i18n::s.get("core.locale.talk.npc.guard.where_is.moderate", s(0), cdata[rc], cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.guard.where_is.moderate",
+                s(0),
+                cdata[rc],
+                cdata[tc]);
             break;
         }
         if (p < 35)
         {
-            s = i18n::s.get("core.locale.talk.npc.guard.where_is.far", s(0), cdata[rc], cdata[tc]);
+            s = i18n::s.get(
+                "core.locale.talk.npc.guard.where_is.far",
+                s(0),
+                cdata[rc],
+                cdata[tc]);
             break;
         }
-        s = i18n::s.get("core.locale.talk.npc.guard.where_is.very_far", s(0), cdata[rc], cdata[tc]);
+        s = i18n::s.get(
+            "core.locale.talk.npc.guard.where_is.very_far",
+            s(0),
+            cdata[rc],
+            cdata[tc]);
         break;
     }
     buff = s;
@@ -1203,8 +1372,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.hunt",
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.quest_giver.accept.hunt", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1222,8 +1391,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1006)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.harvest",
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.quest_giver.accept.harvest", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1241,8 +1410,8 @@ talk_result_t talk_accepted_quest()
     if (qdata(3, rq) == 1009)
     {
         listmax = 0;
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.accept.party",
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.quest_giver.accept.party", cdata[tc]);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -1288,32 +1457,37 @@ talk_result_t talk_trainer()
     listmax = 0;
     if (csctrl == 2)
     {
-        buff = i18n::s.get("core.locale.talk.npc.trainer.cost.training",
-                           i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-                           calctraincost(csskill, cc),
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.trainer.cost.training",
+            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+            calctraincost(csskill, cc),
+            cdata[tc]);
         if (cdata[0].platinum_coin >= calctraincost(csskill, cc))
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.train.accept");
+            listn(0, listmax) = i18n::s.get(
+                "core.locale.talk.npc.trainer.choices.train.accept");
             ++listmax;
         }
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.trainer.cost.learning",
-                           i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-                           calclearncost(csskill, cc),
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.trainer.cost.learning",
+            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+            calclearncost(csskill, cc),
+            cdata[tc]);
         if (cdata[0].platinum_coin >= calclearncost(csskill, cc))
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.learn.accept");
+            listn(0, listmax) = i18n::s.get(
+                "core.locale.talk.npc.trainer.choices.learn.accept");
             ++listmax;
         }
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.trainer.choices.go_back");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.talk.npc.trainer.choices.go_back");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1327,14 +1501,16 @@ talk_result_t talk_trainer()
                 cc,
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
-            buff = i18n::s.get("core.locale.talk.npc.trainer.finish.training", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.trainer.finish.training", cdata[tc]);
         }
         else
         {
             cdata[0].platinum_coin -= calclearncost(csskill, cc);
             skillgain(cc, csskill);
             ++gdata_number_of_learned_skills_by_trainer;
-            buff = i18n::s.get("core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
         }
     }
     else
@@ -1349,15 +1525,18 @@ talk_result_t talk_trainer()
 talk_result_t talk_invest()
 {
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.shop.invest.ask", calcinvestvalue(), cdata[tc]);
+    buff = i18n::s.get(
+        "core.locale.talk.npc.shop.invest.ask", calcinvestvalue(), cdata[tc]);
     if (cdata[0].gold >= calcinvestvalue())
     {
         list(0, listmax) = 1;
-        listn(0, listmax) = i18n::s.get("core.locale.talk.npc.shop.invest.choices.invest");
+        listn(0, listmax) =
+            i18n::s.get("core.locale.talk.npc.shop.invest.choices.invest");
         ++listmax;
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.shop.invest.choices.reject");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.talk.npc.shop.invest.choices.reject");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1371,7 +1550,8 @@ talk_result_t talk_invest()
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
@@ -1406,17 +1586,19 @@ talk_result_t talk_quest_giver()
 {
     if (qdata(8, rq) == 1)
     {
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.during",
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.quest_giver.about.during", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     quest_set_data(1);
     listmax = 0;
     list(0, listmax) = 1;
-    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.take");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.take");
     ++listmax;
     list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.leave");
+    listn(0, listmax) =
+        i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.leave");
     ++listmax;
     chatesc = 1;
     talk_window_query();
@@ -1438,8 +1620,9 @@ talk_result_t talk_quest_giver()
         }
         if (p >= 5)
         {
-            buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.too_many_unfinished",
-                               cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.quest_giver.about.too_many_unfinished",
+                cdata[tc]);
             return talk_result_t::talk_npc;
         }
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -1463,8 +1646,9 @@ talk_result_t talk_quest_giver()
         {
             if (inv_getfreeid(0) == -1)
             {
-                buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.backpack_full",
-                                   cdata[tc]);
+                buff = i18n::s.get(
+                    "core.locale.talk.npc.quest_giver.about.backpack_full",
+                    cdata[tc]);
                 return talk_result_t::talk_npc;
             }
         }
@@ -1473,8 +1657,9 @@ talk_result_t talk_quest_giver()
             f = chara_get_free_slot_ally();
             if (f == 0)
             {
-                buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.party_full",
-                                   cdata[tc]);
+                buff = i18n::s.get(
+                    "core.locale.talk.npc.quest_giver.about.party_full",
+                    cdata[tc]);
                 return talk_result_t::talk_npc;
             }
             for (int cnt = 0;; ++cnt)
@@ -1524,24 +1709,27 @@ talk_result_t talk_quest_giver()
         {
             return talk_accepted_quest();
         }
-        buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.thanks",
-                           cdata[tc]);
+        buff = i18n::s.get(
+            "core.locale.talk.npc.quest_giver.about.thanks", cdata[tc]);
         if (qdata(3, rq) == 1002)
         {
             ++qdata(15, qdata(10, rq));
             flt();
             itemcreate(
                 0, qdata(11, rq), cdata[0].position.x, cdata[0].position.y, 0);
-            txt(i18n::s.get("core.locale.common.you_put_in_your_backpack", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.common.you_put_in_your_backpack", inv[ci]));
             snd(100);
             refresh_burden_state();
-            buff = i18n::s.get("core.locale.talk.npc.quest_giver.about.here_is_package",
-                               cdata[tc]);
+            buff = i18n::s.get(
+                "core.locale.talk.npc.quest_giver.about.here_is_package",
+                cdata[tc]);
         }
     }
     else
     {
-        buff = i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
+        buff =
+            i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     return talk_result_t::talk_npc;
 }
@@ -1626,14 +1814,17 @@ talk_result_t talk_npc()
         if (gdata_number_of_waiting_guests > 0)
         {
             ELONA_APPEND_RESPONSE(
-                58, i18n::s.get("core.locale.talk.npc.maid.choices.meet_guest"));
+                58,
+                i18n::s.get("core.locale.talk.npc.maid.choices.meet_guest"));
             ELONA_APPEND_RESPONSE(
-                59, i18n::s.get("core.locale.talk.npc.maid.choices.do_not_meet"));
+                59,
+                i18n::s.get("core.locale.talk.npc.maid.choices.do_not_meet"));
         }
     }
     if (cdata[tc].interest > 0 && chatval(1) == 0)
     {
-        ELONA_APPEND_RESPONSE(1, i18n::s.get("core.locale.talk.npc.common.choices.talk"));
+        ELONA_APPEND_RESPONSE(
+            1, i18n::s.get("core.locale.talk.npc.common.choices.talk"));
     }
     if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
@@ -1650,20 +1841,23 @@ talk_result_t talk_npc()
         if (cdata[tc].character_role != 1010
             && cdata[tc].character_role != 1009)
         {
-            ELONA_APPEND_RESPONSE(12, i18n::s.get("core.locale.talk.npc.shop.choices.invest"));
+            ELONA_APPEND_RESPONSE(
+                12, i18n::s.get("core.locale.talk.npc.shop.choices.invest"));
         }
     }
     if (cdata[tc].character_role == 9)
     {
         ELONA_APPEND_RESPONSE(
-            33, i18n::s.get("core.locale.talk.npc.bartender.choices.call_ally"));
+            33,
+            i18n::s.get("core.locale.talk.npc.bartender.choices.call_ally"));
     }
     if (cdata[tc].character_role == 17)
     {
         if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
-                36, i18n::s.get("core.locale.talk.npc.slave_trader.choices.buy"));
+                36,
+                i18n::s.get("core.locale.talk.npc.slave_trader.choices.buy"));
         }
         ELONA_APPEND_RESPONSE(
             37, i18n::s.get("core.locale.talk.npc.slave_trader.choices.sell"));
@@ -1673,7 +1867,8 @@ talk_result_t talk_npc()
         if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
-                57, i18n::s.get("core.locale.talk.npc.horse_keeper.choices.buy"));
+                57,
+                i18n::s.get("core.locale.talk.npc.horse_keeper.choices.buy"));
         }
     }
     if (tc < 16)
@@ -1683,32 +1878,43 @@ talk_result_t talk_npc()
             if (cdata[tc].is_escorted_in_sub_quest() == 0)
             {
                 ELONA_APPEND_RESPONSE(
-                    34, i18n::s.get("core.locale.talk.npc.ally.choices.wait_at_town"));
+                    34,
+                    i18n::s.get(
+                        "core.locale.talk.npc.ally.choices.wait_at_town"));
                 if (cdata[tc].is_married() == 0)
                 {
                     ELONA_APPEND_RESPONSE(
-                        38, i18n::s.get("core.locale.talk.npc.ally.choices.ask_for_marriage"));
+                        38,
+                        i18n::s.get("core.locale.talk.npc.ally.choices.ask_for_"
+                                    "marriage"));
                 }
                 else if (gdata_continuous_active_hours >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
-                        39, i18n::s.get("core.locale.talk.npc.ally.choices.make_gene"));
+                        39,
+                        i18n::s.get(
+                            "core.locale.talk.npc.ally.choices.make_gene"));
                 }
                 if (cdata[tc].can_talk != 0)
                 {
                     if (cdata[tc].is_silent() == 0)
                     {
                         ELONA_APPEND_RESPONSE(
-                            48, i18n::s.get("core.locale.talk.npc.ally.choices.silence.start"));
+                            48,
+                            i18n::s.get("core.locale.talk.npc.ally.choices."
+                                        "silence.start"));
                     }
                     else
                     {
                         ELONA_APPEND_RESPONSE(
-                            48, i18n::s.get("core.locale.talk.npc.ally.choices.silence.stop"));
+                            48,
+                            i18n::s.get("core.locale.talk.npc.ally.choices."
+                                        "silence.stop"));
                     }
                 }
                 ELONA_APPEND_RESPONSE(
-                    35, i18n::s.get("core.locale.talk.npc.ally.choices.abandon"));
+                    35,
+                    i18n::s.get("core.locale.talk.npc.ally.choices.abandon"));
             }
         }
     }
@@ -1721,13 +1927,14 @@ talk_result_t talk_npc()
     {
         ELONA_APPEND_RESPONSE(
             13,
-            i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat")
-             + u8" ("s
+            i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") + u8" ("s
                 + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
         if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
         {
             ELONA_APPEND_RESPONSE(
-                43, i18n::s.get("core.locale.talk.npc.innkeeper.choices.go_to_shelter"));
+                43,
+                i18n::s.get(
+                    "core.locale.talk.npc.innkeeper.choices.go_to_shelter"));
         }
     }
     if (cdata[tc].character_role == 5)
@@ -1750,23 +1957,30 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].character_role == 7)
     {
-        ELONA_APPEND_RESPONSE(17, i18n::s.get("core.locale.talk.npc.trainer.choices.train.ask"));
-        ELONA_APPEND_RESPONSE(30, i18n::s.get("core.locale.talk.npc.trainer.choices.learn.ask"));
+        ELONA_APPEND_RESPONSE(
+            17, i18n::s.get("core.locale.talk.npc.trainer.choices.train.ask"));
+        ELONA_APPEND_RESPONSE(
+            30, i18n::s.get("core.locale.talk.npc.trainer.choices.learn.ask"));
     }
     if (cdata[tc].character_role == 8)
     {
         ELONA_APPEND_RESPONSE(
-            18, i18n::s.get("core.locale.talk.npc.informer.choices.show_adventurers"));
+            18,
+            i18n::s.get(
+                "core.locale.talk.npc.informer.choices.show_adventurers"));
         ELONA_APPEND_RESPONSE(
-            47, i18n::s.get("core.locale.talk.npc.informer.choices.investigate_ally"));
+            47,
+            i18n::s.get(
+                "core.locale.talk.npc.informer.choices.investigate_ally"));
     }
     if (cdata[tc].character_role == 12)
     {
         ELONA_APPEND_RESPONSE(
             19,
-            i18n::s.get("core.locale.talk.npc.healer.choices.restore_attributes")
-            + u8"("s
-                + calcrestorecost() + i18n::_(u8"ui", u8"gold") + u8")"s);
+            i18n::s.get(
+                "core.locale.talk.npc.healer.choices.restore_attributes")
+                + u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold")
+                + u8")"s);
     }
     if (cdata[tc].character_role == 13)
     {
@@ -1775,17 +1989,23 @@ talk_result_t talk_npc()
         if (cdata[tc].is_contracting() == 0)
         {
             ELONA_APPEND_RESPONSE(
-                50, i18n::s.get("core.locale.talk.npc.adventurer.choices.hire"));
+                50,
+                i18n::s.get("core.locale.talk.npc.adventurer.choices.hire"));
             ELONA_APPEND_RESPONSE(
-                51, i18n::s.get("core.locale.talk.npc.adventurer.choices.join"));
+                51,
+                i18n::s.get("core.locale.talk.npc.adventurer.choices.join"));
         }
     }
     if (cdata[tc].character_role == 10)
     {
         ELONA_APPEND_RESPONSE(
-            21, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter_duel"));
+            21,
+            i18n::s.get(
+                "core.locale.talk.npc.arena_master.choices.enter_duel"));
         ELONA_APPEND_RESPONSE(
-            22, i18n::s.get("core.locale.talk.npc.arena_master.choices.enter_rumble"));
+            22,
+            i18n::s.get(
+                "core.locale.talk.npc.arena_master.choices.enter_rumble"));
         ELONA_APPEND_RESPONSE(
             23, i18n::s.get("core.locale.talk.npc.arena_master.choices.score"));
     }
@@ -1793,22 +2013,27 @@ talk_result_t talk_npc()
     {
         ELONA_APPEND_RESPONSE(
             40,
-            i18n::s.get("core.locale.talk.npc.pet_arena_master.choices.register_duel"));
+            i18n::s.get(
+                "core.locale.talk.npc.pet_arena_master.choices.register_duel"));
         ELONA_APPEND_RESPONSE(
             41,
-            i18n::s.get("core.locale.talk.npc.pet_arena_master.choices.register_team"));
+            i18n::s.get(
+                "core.locale.talk.npc.pet_arena_master.choices.register_team"));
         ELONA_APPEND_RESPONSE(
             42, i18n::s.get("core.locale.talk.npc.arena_master.choices.score"));
     }
     if (cdata[tc].character_role == 18)
     {
         ELONA_APPEND_RESPONSE(
-            45, i18n::s.get("core.locale.talk.npc.maid.choices.think_of_house_name"));
+            45,
+            i18n::s.get(
+                "core.locale.talk.npc.maid.choices.think_of_house_name"));
     }
     if (cdata[tc].character_role == 19)
     {
         ELONA_APPEND_RESPONSE(
-            46, i18n::s.get("core.locale.talk.npc.sister.choices.buy_indulgence"));
+            46,
+            i18n::s.get("core.locale.talk.npc.sister.choices.buy_indulgence"));
     }
     int stat = talk_check_trade(tc);
     if (stat)
@@ -1825,7 +2050,9 @@ talk_result_t talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     10000 + cnt,
-                    i18n::s.get("core.locale.talk.npc.guard.choices.where_is", cdata[rtval(cnt)]));
+                    i18n::s.get(
+                        "core.locale.talk.npc.guard.choices.where_is",
+                        cdata[rtval(cnt)]));
             }
         }
         if (itemfind(0, 284) != -1)
@@ -1838,7 +2065,8 @@ talk_result_t talk_npc()
         {
             ELONA_APPEND_RESPONSE(
                 32,
-                i18n::s.get("core.locale.talk.npc.guard.choices.lost_suitcase"));
+                i18n::s.get(
+                    "core.locale.talk.npc.guard.choices.lost_suitcase"));
         }
     }
     if (cdata[tc].character_role == 21)
@@ -1851,7 +2079,9 @@ talk_result_t talk_npc()
         if (gdata_belongs_to_mages_guild != 0)
         {
             ELONA_APPEND_RESPONSE(
-                55, i18n::s.get("core.locale.talk.npc.spell_writer.choices.reserve"));
+                55,
+                i18n::s.get(
+                    "core.locale.talk.npc.spell_writer.choices.reserve"));
         }
     }
     if (cdata[tc].drunk != 0 || 0)
@@ -1880,7 +2110,8 @@ talk_result_t talk_npc()
     if (cdata[tc].character_role == 23)
     {
         ELONA_APPEND_RESPONSE(
-            61, i18n::s.get("core.locale.talk.npc.caravan_master.choices.hire"));
+            61,
+            i18n::s.get("core.locale.talk.npc.caravan_master.choices.hire"));
     }
     f = 0;
     deliver(0) = -1;
@@ -1982,24 +2213,32 @@ talk_result_t talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     26,
-                    i18n::s.get("core.locale.talk.npc.quest_giver.choices.here_is_item", inv[supply]));
+                    i18n::s.get(
+                        "core.locale.talk.npc.quest_giver.choices.here_is_item",
+                        inv[supply]));
             }
             else
             {
                 ELONA_APPEND_RESPONSE(
-                    24, i18n::s.get("core.locale.talk.npc.quest_giver.choices.about_the_work"));
+                    24,
+                    i18n::s.get("core.locale.talk.npc.quest_giver.choices."
+                                "about_the_work"));
             }
         }
         else if (qdata(3, rq) != 0)
         {
             ELONA_APPEND_RESPONSE(
-                24, i18n::s.get("core.locale.talk.npc.quest_giver.choices.about_the_work"));
+                24,
+                i18n::s.get(
+                    "core.locale.talk.npc.quest_giver.choices.about_the_work"));
         }
     }
     if (deliver != -1 && deliver(1) != -1)
     {
         ELONA_APPEND_RESPONSE(
-            25, i18n::s.get("core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
+            25,
+            i18n::s.get(
+                "core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
     }
     if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
@@ -2012,7 +2251,9 @@ talk_result_t talk_npc()
                     && event_id() == -1)
                 {
                     ELONA_APPEND_RESPONSE(
-                        44, i18n::s.get("core.locale.talk.npc.servant.choices.fire"));
+                        44,
+                        i18n::s.get(
+                            "core.locale.talk.npc.servant.choices.fire"));
                 }
             }
         }
@@ -2027,7 +2268,9 @@ talk_result_t talk_npc()
                 if (cdata[rc].state == 1)
                 {
                     ELONA_APPEND_RESPONSE(
-                        52, i18n::s.get("core.locale.talk.npc.moyer.choices.sell_paels_mom"));
+                        52,
+                        i18n::s.get("core.locale.talk.npc.moyer.choices.sell_"
+                                    "paels_mom"));
                 }
             }
         }
@@ -2049,11 +2292,15 @@ talk_result_t talk_npc()
                     listmax = 0;
                     if (chatval == 10)
                     {
-                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.buy", cdata[tc]);
+                        buff = i18n::s.get(
+                            "core.locale.talk.npc.shop.criminal.buy",
+                            cdata[tc]);
                     }
                     else
                     {
-                        buff = i18n::s.get("core.locale.talk.npc.shop.criminal.sell", cdata[tc]);
+                        buff = i18n::s.get(
+                            "core.locale.talk.npc.shop.criminal.sell",
+                            cdata[tc]);
                     }
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));

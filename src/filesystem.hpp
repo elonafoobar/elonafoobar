@@ -66,7 +66,6 @@ std::string to_forward_slashes(const fs::path& path);
 
 
 
-
 struct dir_entries
 {
     enum class type

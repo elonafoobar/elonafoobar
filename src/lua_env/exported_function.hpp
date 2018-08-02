@@ -1,7 +1,7 @@
 #pragma once
 #include "../enums.hpp"
-#include "../variables.hpp"
 #include "../thirdparty/sol2/sol.hpp"
+#include "../variables.hpp"
 
 namespace elona
 {
@@ -12,10 +12,11 @@ namespace lua
 // function.
 struct exported_function
 {
-    exported_function(std::string id,
-                      sol::protected_function func)
+    exported_function(std::string id, sol::protected_function func)
         : id(id)
-        , func(func) {}
+        , func(func)
+    {
+    }
 
     std::string id;
     sol::protected_function func;

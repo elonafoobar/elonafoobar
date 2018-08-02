@@ -1,7 +1,7 @@
 #pragma once
 #include "defines.hpp"
-#include "spec.hpp"
 #include "hcl.hpp"
+#include "spec.hpp"
 
 #include <iostream>
 
@@ -46,21 +46,20 @@ public:
 
         bool is_visible() const
         {
-            switch(platform)
+            switch (platform)
             {
             case option_platform::desktop:
                 return visible && !defines::is_android;
             case option_platform::android:
                 return visible && defines::is_android;
             case option_platform::all:
-            default:
-                return visible;
+            default: return visible;
             }
-
         }
     };
 
-    config_def() : spec::object("config")
+    config_def()
+        : spec::object("config")
     {
         locale_root = "core.locale.config.menu";
     }
@@ -87,9 +86,15 @@ public:
         return spec::object::get_default(key);
     }
 
-    const metadata& get_metadata(const spec_key& key) const { return data.at(key); }
+    const metadata& get_metadata(const spec_key& key) const
+    {
+        return data.at(key);
+    }
 
-    const std::string& get_locale_root() const { return locale_root; }
+    const std::string& get_locale_root() const
+    {
+        return locale_root;
+    }
 
     void post_visit(const spec_key&, const spec::section_def&);
     void pre_visit_section(const spec_key&, const hcl::Object&);
@@ -98,13 +103,13 @@ public:
 
 private:
     /***
-    * Gets the visibility of a config item considering the visibility
-    * of its parent sections. This is needed for determining whether
-    * or not to save certain items based on visibility.
-    */
+     * Gets the visibility of a config item considering the visibility
+     * of its parent sections. This is needed for determining whether
+     * or not to save certain items based on visibility.
+     */
     bool is_child_visible(const spec_key&);
 
     std::string locale_root;
     std::map<std::string, metadata> data;
 };
-}
+} // namespace elona

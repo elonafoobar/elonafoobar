@@ -167,7 +167,8 @@ class character_db_ex : public lion::lion_db<character_db_ex>
 public:
     character_db_ex() = default;
 
-    character_data convert(const std::string&, const sol::table&, lua::lua_env&);
+    character_data
+    convert(const std::string&, const sol::table&, lua::lua_env&);
 };
 
 
@@ -339,10 +340,16 @@ struct character
     void clear();
     void clear_flags();
 
-    operator int() const { return index; }
+    operator int() const
+    {
+        return index;
+    }
 
     // for identifying the type of a Lua reference
-    static std::string lua_type() { return "LuaCharacter"; }
+    static std::string lua_type()
+    {
+        return "LuaCharacter";
+    }
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS

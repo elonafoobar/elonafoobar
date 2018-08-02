@@ -10,8 +10,10 @@
 static sol::table load(elona::lua::lua_env& lua, const fs::path& data_file)
 {
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_data("core", "chara", data_file));
+    REQUIRE_NOTHROW(
+        lua.get_registry_manager().register_datatype("core", "chara"));
+    REQUIRE_NOTHROW(
+        lua.get_registry_manager().register_data("core", "chara", data_file));
     auto table = lua.get_registry_manager().get_table("core", "chara");
     REQUIRE(table);
     return *table;
@@ -21,15 +23,18 @@ TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
+    REQUIRE_NOTHROW(
+        lua.get_registry_manager().register_datatype("core", "chara"));
 
-    REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", "blah"));
+    REQUIRE_THROWS(
+        lua.get_registry_manager().register_data("core", "chara", "blah"));
 }
 
 TEST_CASE("test reading of official chara.hcl", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
-    auto table = load(lua, filesystem::dir::mods() / "core" / "data" / "chara.hcl");
+    auto table =
+        load(lua, filesystem::dir::mods() / "core" / "data" / "chara.hcl");
 
     character_db_ex db;
     REQUIRE_NOTHROW(db.initialize(table, lua));
@@ -59,9 +64,11 @@ TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
 
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
-    REQUIRE_NOTHROW(lua.get_registry_manager().register_datatype("core", "chara"));
+    REQUIRE_NOTHROW(
+        lua.get_registry_manager().register_datatype("core", "chara"));
 
-    REQUIRE_THROWS(lua.get_registry_manager().register_data("core", "chara", data_path));
+    REQUIRE_THROWS(
+        lua.get_registry_manager().register_data("core", "chara", data_path));
 }
 
 TEST_CASE("test registering character", "[Lua: Registry]")

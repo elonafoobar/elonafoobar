@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <boost/flyweight.hpp>
-#include <boost/flyweight/no_tracking.hpp>
 #include <boost/flyweight/no_locking.hpp>
+#include <boost/flyweight/no_tracking.hpp>
 
 namespace elona
 {
@@ -15,6 +15,7 @@ namespace elona
 typedef boost::flyweight<
     std::string,
     boost::flyweights::no_tracking,
-    boost::flyweights::no_locking> shared_id;
+    boost::flyweights::no_locking>
+    shared_id;
 
 } // namespace elona

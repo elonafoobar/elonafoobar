@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../lib/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
@@ -9,7 +10,6 @@
 #include "rect.hpp"
 #include "size.hpp"
 #include "window.hpp"
-#include "../lib/noncopyable.hpp"
 
 
 namespace elona

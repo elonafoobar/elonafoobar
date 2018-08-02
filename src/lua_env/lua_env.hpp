@@ -1,11 +1,11 @@
 #pragma once
 #include "../thirdparty/sol2/sol.hpp"
+#include "api_manager.hpp"
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
-#include "api_manager.hpp"
-#include "registry_manager.hpp"
 #include "mod_manager.hpp"
+#include "registry_manager.hpp"
 
 namespace elona
 {

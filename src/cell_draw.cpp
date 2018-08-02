@@ -614,15 +614,8 @@ optional_ref<extent> prepare_chara_chip(int c_, int dx, int dy)
     boxf(0, 960, rect->width, rect->height);
     pos(0, 960);
     set_color_mod(
-        255 - c_col(0, col_),
-        255 - c_col(1, col_),
-        255 - c_col(2, col_));
-    gcopy(
-        rect->buffer,
-        rect->x,
-        rect->y,
-        rect->width,
-        rect->height);
+        255 - c_col(0, col_), 255 - c_col(1, col_), 255 - c_col(2, col_));
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
     set_color_mod(255, 255, 255);
     gsel(0);
 
@@ -630,78 +623,56 @@ optional_ref<extent> prepare_chara_chip(int c_, int dx, int dy)
 }
 
 
-void draw_chara_chip_sprite_in_world_map(int texture_id,
-                                         int chip_id,
-                                         int x,
-                                         int y,
-                                         int width,
-                                         int height)
+void draw_chara_chip_sprite_in_world_map(
+    int texture_id,
+    int chip_id,
+    int x,
+    int y,
+    int width,
+    int height)
 {
     pos(x + 24, y + 32);
     gmode(6, 85);
     gcopy_c(3, 240, 384, 32, 16, 20, 10);
     pos(x + 24, y + 24 - chara_chips[chip_id].offset_y / 4);
     gmode(2);
-    gcopy_c(
-        texture_id,
-        0,
-        960,
-        width,
-        height,
-        24,
-        height / 2);
+    gcopy_c(texture_id, 0, 960, width, height, 24, height / 2);
 }
 
 
-void draw_chara_chip_sprite_in_water(int texture_id,
-                                     int chip_id,
-                                     int x,
-                                     int y,
-                                     int width,
-                                     int height,
-                                     int ground_)
+void draw_chara_chip_sprite_in_water(
+    int texture_id,
+    int chip_id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int ground_)
 {
     int dy = (chipm(0, ground_) == 3) * -16;
     gmode(4, 100);
-    pos(x,
-        y + 16 - chara_chips[chip_id].offset_y - dy);
-    gcopy(
-        texture_id,
-        0,
-        976,
-        width,
-        height - 16);
+    pos(x, y + 16 - chara_chips[chip_id].offset_y - dy);
+    gcopy(texture_id, 0, 976, width, height - 16);
     gmode(2);
-    pos(x,
-        y - chara_chips[chip_id].offset_y - dy);
-    gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height - 16);
+    pos(x, y - chara_chips[chip_id].offset_y - dy);
+    gcopy(texture_id, 0, 960, width, height - 16);
 }
 
-void draw_chara_chip_sprite(int texture_id,
-                            int chip_id,
-                            int x,
-                            int y,
-                            int width,
-                            int height,
-                            int ground_)
+void draw_chara_chip_sprite(
+    int texture_id,
+    int chip_id,
+    int x,
+    int y,
+    int width,
+    int height,
+    int ground_)
 {
     int dy = (chipm(0, ground_) == 3) * -16;
     gmode(6, 110);
     draw("character_shadow", x + 8, y + 20);
     gmode(2);
-    pos(x,
-        y - chara_chips[chip_id].offset_y - dy);
-    gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height);
+    pos(x, y - chara_chips[chip_id].offset_y - dy);
+    gcopy(texture_id, 0, 960, width, height);
 }
 
 void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
@@ -713,13 +684,11 @@ void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
     }
     else if (chipm(0, ground_) == 3)
     {
-        draw_character_sprite_in_water(
-            c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite_in_water(c_, dx, dy, ani_, cdata[c_].direction);
     }
     else
     {
-        draw_character_sprite(
-            c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite(c_, dx, dy, ani_, cdata[c_].direction);
     }
     gmode(2);
     if (cdata[c_].furious != 0)
@@ -744,8 +713,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 
         if (cdata[c_].emotion_icon != 0)
         {
-            draw_emo(
-                c_, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+            draw_emo(c_, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
         }
     }
     else
@@ -763,13 +731,11 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 
         if (cdata[c_].furious != 0)
         {
-            draw("furious_icon",
-                 dx + 12, dy - chara_chips[p_].offset_y - 12);
+            draw("furious_icon", dx + 12, dy - chara_chips[p_].offset_y - 12);
         }
         if (cdata[c_].emotion_icon != 0)
         {
-            draw_emo(
-                c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
+            draw_emo(c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
         }
     }
     if (cdata[c_].is_hung_on_sand_bag())
@@ -784,15 +750,13 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 bool you_can_see(const character& chara)
 {
     return is_in_fov(chara)
-        && (!chara.is_invisible()
-            || cdata[0].can_see_invisible()
+        && (!chara.is_invisible() || cdata[0].can_see_invisible()
             || chara.wet != 0);
 }
 
 bool hp_bar_visible(const character& chara)
 {
-    return chara.has_been_used_stethoscope()
-        || gdata(94) == chara.index
+    return chara.has_been_used_stethoscope() || gdata(94) == chara.index
         || debug::voldemort;
 }
 
@@ -849,7 +813,13 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         {
             gmode(4, efmap(1, x, y) * 12 + 30);
             pos(dx + 24, dy + 24);
-            grotate(3, mefsubref(0, p_) + efmap(3, x, y) * 32, mefsubref(1, p_), 32, 32, 0.785 * efmap(2, x, y));
+            grotate(
+                3,
+                mefsubref(0, p_) + efmap(3, x, y) * 32,
+                mefsubref(1, p_),
+                32,
+                32,
+                0.785 * efmap(2, x, y));
         }
         else
         {
@@ -915,18 +885,29 @@ void draw_mefs(int x, int y, int dx, int dy, int scrturn_)
         pos(dx, dy - item_chips[item_chip_id].offset_y);
         if (item_chips[item_chip_id].animation > 0)
         {
-            anim_frame = (scrturn_ + mef_id) % item_chips[item_chip_id].animation;
+            anim_frame =
+                (scrturn_ + mef_id) % item_chips[item_chip_id].animation;
         }
         if (mef(1, mef_id) > 10000)
         {
             // Colorized
             auto rect = prepare_item_image(item_chip_id, item_chip_color);
-            gcopy(1, anim_frame * rect->frame_width, 960, inf_tiles, rect->height);
+            gcopy(
+                1,
+                anim_frame * rect->frame_width,
+                960,
+                inf_tiles,
+                rect->height);
         }
         else
         {
             auto rect = draw_get_rect_item(item_chip_id);
-            gcopy(rect->buffer, rect->x + anim_frame * rect->frame_width, rect->y, rect->frame_width, rect->height);
+            gcopy(
+                rect->buffer,
+                rect->x + anim_frame * rect->frame_width,
+                rect->y,
+                rect->frame_width,
+                rect->height);
         }
     }
 }
@@ -938,13 +919,7 @@ void draw_item_chip_in_world_map(int x, int y, const extent& rect)
     pos(x, y);
     gmode(2);
     gcopy_c(
-        1,
-        0,
-        960,
-        rect.frame_width,
-        rect.height,
-        inf_tiles / 2,
-        inf_tiles / 2);
+        1, 0, 960, rect.frame_width, rect.height, inf_tiles / 2, inf_tiles / 2);
 }
 
 
@@ -954,8 +929,7 @@ void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
     gmode(2, alpha);
     if (rect.height == inf_tiles)
     {
-        pos(x + rect.frame_width / 2
-            + item_chips[p_].shadow / 80 + 2,
+        pos(x + rect.frame_width / 2 + item_chips[p_].shadow / 80 + 2,
             y - item_chips[p_].offset_y + 22);
         if (item_chips[p_].offset_y < 24)
         {
@@ -970,8 +944,7 @@ void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
     }
     else
     {
-        pos(x + rect.frame_width / 2
-            + item_chips[p_].shadow / 4,
+        pos(x + rect.frame_width / 2 + item_chips[p_].shadow / 4,
             y - item_chips[p_].offset_y + 46);
         func_2(
             1,
@@ -985,17 +958,17 @@ void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
 }
 
 
-void draw_item_chip_on_ground(int x, int y, const extent& rect, int p_, int scrturn_)
+void draw_item_chip_on_ground(
+    int x,
+    int y,
+    const extent& rect,
+    int p_,
+    int scrturn_)
 {
     pos(x, y);
     if (item_chips[p_].animation == 0)
     {
-        gcopy(
-            1,
-            0,
-            960,
-            rect.frame_width,
-            rect.height);
+        gcopy(1, 0, 960, rect.frame_width, rect.height);
     }
     else
     {
@@ -1051,22 +1024,25 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 auto rect = prepare_item_image(p_, i_, inv[items[i]].param1);
                 if (mdata_map_type == mdata_t::map_type_t::world_map)
                 {
-                    draw_item_chip_in_world_map(dx + (inf_tiles / 2),
-                                                dy + (inf_tiles / 2) - (stack_height / 2),
-                                                **rect);
+                    draw_item_chip_in_world_map(
+                        dx + (inf_tiles / 2),
+                        dy + (inf_tiles / 2) - (stack_height / 2),
+                        **rect);
                 }
                 else
                 {
                     if (config::instance().objectshadow
                         && item_chips[p_].shadow)
                     {
-                        draw_item_chip_shadow(dx, dy - stack_height, **rect, p_, 70);
+                        draw_item_chip_shadow(
+                            dx, dy - stack_height, **rect, p_, 70);
                     }
-                    draw_item_chip_on_ground(dx,
-                                             dy - item_chips[p_].offset_y - stack_height,
-                                             **rect,
-                                             p_,
-                                             scrturn_);
+                    draw_item_chip_on_ground(
+                        dx,
+                        dy - item_chips[p_].offset_y - stack_height,
+                        **rect,
+                        p_,
+                        scrturn_);
                 }
                 stack_height += item_chips[p_].stack_height;
                 if (p_ == 531 && draw_get_rect_chara(i_)->height == 96)
@@ -1089,7 +1065,8 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
             if (mdata_map_type == mdata_t::map_type_t::world_map)
             {
-                draw_item_chip_in_world_map(dx + (inf_tiles / 2), dy + (inf_tiles / 2), **rect);
+                draw_item_chip_in_world_map(
+                    dx + (inf_tiles / 2), dy + (inf_tiles / 2), **rect);
             }
             else
             {
@@ -1097,11 +1074,8 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 {
                     draw_item_chip_shadow(dx, dy, **rect, p_, 80);
                 }
-                draw_item_chip_on_ground(dx,
-                                         dy - item_chips[p_].offset_y,
-                                         **rect,
-                                         p_,
-                                         scrturn_);
+                draw_item_chip_on_ground(
+                    dx, dy - item_chips[p_].offset_y, **rect, p_, scrturn_);
             }
         }
     }

@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include "../filesystem.hpp"
-#include "lua_env.hpp"
 #include "exported_function.hpp"
+#include "lua_env.hpp"
 
 namespace elona
 {
@@ -39,7 +39,8 @@ public:
      * Obtains a Lua callback of the format "core.exports.<name>", if
      * it exists.
      */
-    optional<exported_function> get_exported_function(const std::string& name) const;
+    optional<exported_function> get_exported_function(
+        const std::string& name) const;
 
     bool has_function(const std::string& name) const
     {

@@ -1,13 +1,13 @@
 #include "audio.hpp"
 #include <cmath>
 #include <unordered_map>
-#include "config.hpp"
+#include <boost/math/special_functions/gamma.hpp>
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "snail/application.hpp"
 #include "snail/audio.hpp"
 #include "variables.hpp"
-#include <boost/math/special_functions/gamma.hpp>
 
 
 namespace
@@ -59,13 +59,13 @@ shared_id get_default_music()
     }
     if (adata(0, gdata_current_map) >= mdata_t::map_type_t::dungeon)
     {
-        static const std::vector<std::string> choices =
-            {"core.music.mcDungeon1",
-             "core.music.mcDungeon2",
-             "core.music.mcDungeon3",
-             "core.music.mcDungeon4",
-             "core.music.mcDungeon5",
-             "core.music.mcDungeon6"};
+        static const std::vector<std::string> choices = {
+            "core.music.mcDungeon1",
+            "core.music.mcDungeon2",
+            "core.music.mcDungeon3",
+            "core.music.mcDungeon4",
+            "core.music.mcDungeon5",
+            "core.music.mcDungeon6"};
         music_id = choices[gdata_hour % 6];
     }
     if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
@@ -139,12 +139,12 @@ shared_id get_default_music()
         music_id = "core.music.mcTown6"s;
     }
 
-    if (!music_id || adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
+    if (!music_id
+        || adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
     {
-        static const std::vector<std::string> choices =
-            {"core.music.mcField1",
-             "core.music.mcField2",
-             "core.music.mcField3"};
+        static const std::vector<std::string> choices = {"core.music.mcField1",
+                                                         "core.music.mcField2",
+                                                         "core.music.mcField3"};
         music_id = choices[gdata_day % 3];
     }
 
@@ -180,7 +180,12 @@ namespace elona
 namespace detail
 {
 
-void snd_inner(const sound_data& sound, short angle, unsigned char dist, bool loop, bool allow_duplicate)
+void snd_inner(
+    const sound_data& sound,
+    short angle,
+    unsigned char dist,
+    bool loop,
+    bool allow_duplicate)
 {
     if (!config::instance().sound)
         return;
@@ -340,7 +345,11 @@ void initialize_sound_file()
     }
 }
 
-std::pair<short, unsigned char> sound_calculate_position(int listener_x, int listener_y, int source_x, int source_y)
+std::pair<short, unsigned char> sound_calculate_position(
+    int listener_x,
+    int listener_y,
+    int source_x,
+    int source_y)
 {
     // Larger means it takes more distance for sounds to become quiet.
     const constexpr double distance_factor = 7.0;
@@ -358,7 +367,8 @@ std::pair<short, unsigned char> sound_calculate_position(int listener_x, int lis
 
     short angle = static_cast<short>(angle_raw * 180.0 / M_PI) % 360;
     int dist_raw = dist(listener_x, listener_y, source_x, source_y);
-    double dist_norm = boost::math::gamma_p(distance_factor, static_cast<double>(dist_raw));
+    double dist_norm =
+        boost::math::gamma_p(distance_factor, static_cast<double>(dist_raw));
     unsigned char dist = static_cast<unsigned char>(dist_norm * 255.0);
 
     return {angle, dist};
@@ -375,7 +385,8 @@ std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
         return {0, 0};
     }
 
-    return sound_calculate_position(cdata[0].position.x, cdata[0].position.y, p.x, p.y);
+    return sound_calculate_position(
+        cdata[0].position.x, cdata[0].position.y, p.x, p.y);
 }
 
 
@@ -427,7 +438,9 @@ void sound_play_environmental()
     {
         DSSETVOLUME(13, max_volume * 0.8);
     }
-    else if (gdata_current_dungeon_level == 1 || gdata_current_map == mdata_t::map_id_t::shelter_)
+    else if (
+        gdata_current_dungeon_level == 1
+        || gdata_current_map == mdata_t::map_id_t::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }

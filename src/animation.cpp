@@ -645,8 +645,7 @@ void throwing_object_animation::do_play()
                 960,
                 inf_tiles,
                 inf_tiles,
-                std::atan2(
-                    anix - target.position.x, target.position.y - aniy));
+                std::atan2(anix - target.position.x, target.position.y - aniy));
         }
         redraw();
         gmode(0);

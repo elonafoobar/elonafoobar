@@ -1,13 +1,13 @@
 #include "config_def.hpp"
-#include "defines.hpp"
-#include "filesystem.hpp"
-#include "optional.hpp"
-#include "snail/application.hpp"
-#include "hcl.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <vector>
+#include "defines.hpp"
+#include "filesystem.hpp"
+#include "hcl.hpp"
+#include "optional.hpp"
+#include "snail/application.hpp"
 
 namespace elona
 {
@@ -34,7 +34,9 @@ static void add_platform(config_def::metadata& dat, const hcl::Object& item)
     }
 }
 
-static void set_default_from_platform(config_def::metadata& dat, const hcl::Object& item)
+static void set_default_from_platform(
+    config_def::metadata& dat,
+    const hcl::Object& item)
 {
     // NOTE: Could be generalized, if it were neeed.
     const constexpr char* platform =
@@ -48,20 +50,24 @@ static void set_default_from_platform(config_def::metadata& dat, const hcl::Obje
     }
 }
 
-}
+} // namespace
 
-#define CONFIG_DEF_METADATA(item, name)  \
+#define CONFIG_DEF_METADATA(item, name) \
     if (item.find(#name) != item.end()) \
     { \
         dat.name = item.at(#name).as<bool>(); \
-    } \
+    }
 
-void config_def::post_visit(const spec_key& current_key, const spec::section_def&)
+void config_def::post_visit(
+    const spec_key& current_key,
+    const spec::section_def&)
 {
     data.emplace(current_key, metadata{});
 }
 
-void config_def::pre_visit_section(const spec_key& current_key, const hcl::Object& section)
+void config_def::pre_visit_section(
+    const spec_key& current_key,
+    const hcl::Object& section)
 {
     metadata dat{};
 
@@ -76,12 +82,16 @@ void config_def::pre_visit_section(const spec_key& current_key, const hcl::Objec
     data.emplace(current_key, dat);
 }
 
-void config_def::pre_visit_bare_value(const spec_key& current_key, const hcl::Value&)
+void config_def::pre_visit_bare_value(
+    const spec_key& current_key,
+    const hcl::Value&)
 {
     data.emplace(current_key, metadata{});
 }
 
-void config_def::pre_visit_item(const spec_key& current_key, const hcl::Object& item)
+void config_def::pre_visit_item(
+    const spec_key& current_key,
+    const hcl::Object& item)
 {
     metadata dat{};
 

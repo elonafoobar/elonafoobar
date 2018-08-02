@@ -24,7 +24,7 @@ i18n::store load(const std::string& str)
     REQUIRE_NOTHROW(store.load(ss, "test.hcl"));
     return store;
 }
-}
+} // namespace
 
 TEST_CASE("test formats", "[I18N: Formatting]")
 {
@@ -216,12 +216,12 @@ locale {
 
 TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
 {
-    i18n::store store = load(u8"\
+    i18n::store store = load(
+        u8"\
 locale {\
     ether_disease = \"ｴｰﾃﾙ病\"\
 }\
 "s);
 
-    REQUIRE(
-        store.get(u8"core.locale.ether_disease") == u8"ｴｰﾃﾙ病"s);
+    REQUIRE(store.get(u8"core.locale.ether_disease") == u8"ｴｰﾃﾙ病"s);
 }

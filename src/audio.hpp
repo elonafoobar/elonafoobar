@@ -15,11 +15,14 @@ namespace elona
 namespace detail
 {
 
-void snd_inner(const sound_data& sound,
-               short angle = 0, unsigned char dist = 0,
-               bool loop = false, bool allow_duplicate = true);
+void snd_inner(
+    const sound_data& sound,
+    short angle = 0,
+    unsigned char dist = 0,
+    bool loop = false,
+    bool allow_duplicate = true);
 
-} // namespace
+} // namespace detail
 
 int DSINIT();
 void DSLOADFNAME(const fs::path& filepath, int id);
@@ -39,13 +42,18 @@ void initialize_sound_file();
 std::pair<short, unsigned char> sound_calculate_position(const position_t& p);
 
 template <typename I>
-void snd_at(I sound_id, const position_t& p, bool loop = false, bool allow_duplicate = true)
+void snd_at(
+    I sound_id,
+    const position_t& p,
+    bool loop = false,
+    bool allow_duplicate = true)
 {
     short angle;
     unsigned char dist;
-    std::tie (angle, dist) = sound_calculate_position(p);
+    std::tie(angle, dist) = sound_calculate_position(p);
 
-    detail::snd_inner(**the_sound_db[sound_id], angle, dist, loop, allow_duplicate);
+    detail::snd_inner(
+        **the_sound_db[sound_id], angle, dist, loop, allow_duplicate);
 }
 
 template <typename I>
