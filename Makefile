@@ -69,6 +69,7 @@ clean: FORCE
 format: FORCE
 	$(FIND) src \( -type d -name "thirdparty" -prune \) -or \( -name "*.cpp" -or -name "*.hpp" \) -print0 | \
 		$(XARGS) -n 1 -0 -I{} sh -c "$(FORMAT) -i {}; echo {}"
+	git diff
 	test -z "$$(git status --short)"
 
 ldoc:
