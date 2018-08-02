@@ -13,7 +13,7 @@ import org.libsdl.app.SDLActivity;
 
 public class ElonaFoobarActivity extends SDLActivity
 {
-    private static final String TAG = "ElonaFoobar";
+    private static final String TAG = "Elona foobar";
 
     // *ドクン ドクン*
     private static final long[] VIBRATION_TIMINGS    = {100, 100, 150, 150, 350, 100, 150, 150};
@@ -33,7 +33,7 @@ public class ElonaFoobarActivity extends SDLActivity
             "boost_system",
             "boost_iostreams",
             "snail",
-            "ElonaFoobar"
+            "Elona_foobar"
         };
     }
 

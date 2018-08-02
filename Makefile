@@ -1,9 +1,9 @@
 BIN_DIR := bin
-PROGRAM := $(BIN_DIR)/ElonaFoobar
+PROGRAM := $(BIN_DIR)/Elona_foobar
 TEST_RUNNER := $(BIN_DIR)/test_runner
 BENCH_RUNNER := $(BIN_DIR)/bench_runner
-APK := $(BIN_DIR)/ElonaFoobar-debug.apk
-APK_RELEASE := $(BIN_DIR)/ElonaFoobar-release.apk
+APK := $(BIN_DIR)/Elona_foobar-debug.apk
+APK_RELEASE := $(BIN_DIR)/Elona_foobar-release.apk
 
 FORMAT := clang-format
 FIND := find

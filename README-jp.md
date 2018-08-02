@@ -43,7 +43,7 @@
 ```
 brew install cmake boost sdl2 sdl2_ttf sdl2_mixer sdl2_image lua
 ```
-2. `cd path/to/ElonaFoobar; make`
+2. `cd path/to/Elona_foobar; make`
 
 
 ### Linux
@@ -56,7 +56,7 @@ sudo pacman -S cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer smpeg lua boost timidit
 ```
 sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-def smpeg timidity
 ```
-2. `cd path/to/ElonaFoobar; make`
+2. `cd path/to/Elona_foobar; make`
 
 
 ### Windows
@@ -65,14 +65,14 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 2. `Makefile.win`を編集し、Boostをインストールしたフォルダを指定してください。
 3. `deps\include`と`deps\lib`内に依存ライブラリを展開するために`deps`内にある`download.bat`を実行してください。(`7z.exe`を`PATH`が通ったフォルダに置いておく必要があります)
 4. `Developer Command Prompt for VS 2017`を開いてください。
-5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
+5. `cd path/to/Elona_foobar & nmake -f Makefile.win`
 
-Visual Studioを使ってデバッグする場合は、`bin\ElonaFoobar.sln`を開いてください。
+Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を開いてください。
 
 # How To Play
 
 1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、Foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはFoobarで更新されています。
-2. `bin/ElonaFoobar`(Linux)、`bin/ElonaFoobar.app`(macOS)、`bin\Debug\ElonaFoobar.exe`(Windows)を実行してください
+2. `bin/Elona_foobar`(Linux)、`bin/Elona_foobar.app`(macOS)、`bin\Debug\Elona_foobar.exe`(Windows)を実行してください
 
 
 # How To Contribute

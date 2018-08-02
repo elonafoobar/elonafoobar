@@ -87,7 +87,7 @@ build_script:
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
   - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
-  - ElonaFoobar.exe
+  - Elona_foobar.exe
   - cd %APPVEYOR_BUILD_FOLDER%
   - rd /q /s bin
   - mkdir bin
@@ -97,21 +97,21 @@ build_script:
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - mv bin\%CONFIGURATION% bin\ElonaFoobar
-  - mv CHANGELOG*.md bin\ElonaFoobar
-  - mv README*.md bin\ElonaFoobar
-  - mv LICENSE bin\ElonaFoobar
-  - del bin\ElonaFoobar\*.ilk
-  - del bin\ElonaFoobar\*.pdb
-  - rd /q /s bin\ElonaFoobar\graphic
-  - rd /q /s bin\ElonaFoobar\map
-  - rd /q /s bin\ElonaFoobar\original
-  - rd /q /s bin\ElonaFoobar\sound
-  - rd /q /s bin\ElonaFoobar\user
-  - xcopy /s /e /y runtime\* bin\ElonaFoobar
+  - mv bin\%CONFIGURATION% bin\Elona_foobar
+  - mv CHANGELOG*.md bin\Elona_foobar
+  - mv README*.md bin\Elona_foobar
+  - mv LICENSE bin\Elona_foobar
+  - del bin\Elona_foobar\*.ilk
+  - del bin\Elona_foobar\*.pdb
+  - rd /q /s bin\Elona_foobar\graphic
+  - rd /q /s bin\Elona_foobar\map
+  - rd /q /s bin\Elona_foobar\original
+  - rd /q /s bin\Elona_foobar\sound
+  - rd /q /s bin\Elona_foobar\user
+  - xcopy /s /e /y runtime\* bin\Elona_foobar
   - cd bin
-  - 7z a -y ElonaFoobar-windows.zip ElonaFoobar
+  - 7z a -y Elona_foobar_windows.zip Elona_foobar
 
 artifacts:
-  - path: bin\ElonaFoobar-windows.zip
+  - path: bin\Elona_foobar_windows.zip
 
