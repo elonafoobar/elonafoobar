@@ -1,9 +1,9 @@
 --luacheck: ignore
 project = "Lua API"
 title = "Lua API"
-description = "ElonaFoobar Mod API"
+description = "Elona foobar Mod API"
 full_description = [[
-  Core API for modding ElonaFoobar
+  Core API for modding Elona foobar
 ]]
 no_lua_ref = true
 convert_opt = true

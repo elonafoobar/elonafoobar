@@ -99,7 +99,7 @@ script:
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
        make tests VERBOSE=1;
        cd bin;
-       ./ElonaFoobar;
+       ./Elona_foobar;
     elif [[ "$BUILD_TYPE" == "osx" ]]; then
        make tests VERBOSE=1;
     elif [[ "$BUILD_TYPE" == "android" ]]; then

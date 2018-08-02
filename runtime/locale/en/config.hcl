@@ -389,7 +389,7 @@ DOC
 
             foobar {
                 name = "Ex setting(Foobar)"
-                doc = "Extra config settings added in ElonaFoobar."
+                doc = "Extra config settings added in Elona foobar."
 
                 hp_bar_position {
                     name = "Pets' HP bar"

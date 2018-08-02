@@ -158,7 +158,7 @@ config {
             extra_class = true
         }
 
-        # Extra config settings added in ElonaFoobar.
+        # Extra config settings added in Elona foobar.
         foobar {
             # Position to display the HP bar.
             # One of: "hide", "left", "right"
