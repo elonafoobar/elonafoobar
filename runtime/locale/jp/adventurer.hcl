@@ -2,7 +2,7 @@ locale {
     news {
         discovery {
             title = "アイテム発見"
-            text = "${_1}は${_3}を入手した。"
+            text = "${_1}は${_3}で${_2}を入手した。"
         }
         growth {
             title = "新たなる力"

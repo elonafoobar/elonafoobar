@@ -190,7 +190,7 @@ locale {
             cursed_drink = "${name(_1)} feel${s(_1)} grumpy."
         }
 
-        cook = "You cook ${_1} with ${_itemname(_2, 1)} and make ${_itemname(_3, 1)}."
+        cook = "You cook ${_1} with ${itemname(_2, 1)} and make ${itemname(_3, 1)}."
 
         effect {
             rotten = "Ugh! Rotten food!"

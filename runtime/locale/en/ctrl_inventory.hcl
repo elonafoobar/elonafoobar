@@ -193,7 +193,7 @@ locale {
                 tax {
                     not_enough_money = "You don't have enough money."
                     do_not_have_to = "You don't have to pay your tax yet."
-                    you_pay ="You pay ${_1}."
+                    you_pay = "You pay ${itemname(_1)}."
                 }
 
                 deck = "You add ${itemname(_1, 1)} to your deck."

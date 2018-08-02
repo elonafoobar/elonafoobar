@@ -191,7 +191,7 @@ locale {
                 tax {
                     not_enough_money = "金が足りない…"
                     do_not_have_to = "まだ納税する必要はない。"
-                    you_pay ="${_1}を支払った。"
+                    you_pay = "${itemname(_1)}を支払った。"
                 }
 
                 deck = "${itemname(_1, 1)}をデッキに加えた。"
