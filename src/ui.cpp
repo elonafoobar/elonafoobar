@@ -680,6 +680,7 @@ void render_hud()
 {
     int ap3 = 0;
     int ap2 = 0;
+    gmode(2);
     font(12 - en * 2, snail::font_t::style_t::bold);
     draw("hp_bar_frame", inf_hpx, inf_hpy);
     draw("hp_bar_frame", inf_mpx, inf_mpy);
