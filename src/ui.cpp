@@ -537,8 +537,23 @@ void render_buffs()
 
 void render_clock()
 {
+    const auto& info = get_image_info("clock_hand");
+
+    // Short hand
     draw_rotated(
-        "clock_hand", inf_clockarrowx, inf_clockarrowy, gdata_hour * 30);
+        "clock_hand",
+        inf_clockarrowx,
+        inf_clockarrowy,
+        gdata_hour * 30 + gdata_minute / 2);
+    // Long hand
+    draw_rotated(
+        "clock_hand",
+        inf_clockarrowx,
+        inf_clockarrowy,
+        info.width / 2,
+        info.height,
+        gdata_minute * 6);
+
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
