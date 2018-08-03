@@ -137,7 +137,8 @@ label_20591:
             }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
-                dialog(i18n::s.get("core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
+                dialog(i18n::s.get(
+                    "core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
                 inv[cnt].remove();
                 inv[cnt].id = 0;
                 continue;
@@ -1099,8 +1100,10 @@ label_2061_internal:
             }
             if (inv[ci].number() > 1)
             {
-                txt(i18n::s.get("core.locale.ui.inv.drop.how_many",
-                                inv[ci].number(), inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.drop.how_many",
+                    inv[ci].number(),
+                    inv[ci]));
                 display_msg(screenmsgy, 1);
                 input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
@@ -1228,13 +1231,17 @@ label_2061_internal:
             {
                 if (invctrl == 11)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.buy.how_many",
-                                    inv[ci].number(), inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.buy.how_many",
+                        inv[ci].number(),
+                        inv[ci]));
                 }
                 if (invctrl == 12)
                 {
-                    txt(i18n::s.get("core.locale.ui.inv.sell.how_many",
-                                    inv[ci].number(), inv[ci]));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.sell.how_many",
+                        inv[ci].number(),
+                        inv[ci]));
                 }
                 display_msg(screenmsgy, 2);
                 input_number_dialog(
@@ -1458,9 +1465,13 @@ label_2061_internal:
             reftype = the_item_db[inv[ci].id]->category;
             if (inv[ci].id == 729)
             {
-                txt(i18n::s.get("core.locale.ui.inv.give.present.text", cdata[tc], inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.present.text",
+                    cdata[tc],
+                    inv[ci]));
                 inv[ci].modify_number(-1);
-                txt(i18n::s.get("core.locale.ui.inv.give.present.dialog", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.give.present.dialog", cdata[tc]));
                 chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
@@ -1806,7 +1817,8 @@ label_2061_internal:
                         gdata_mages_guild_quota = 0;
                     }
                     txtef(2);
-                    txt(i18n::s.get("core.locale.ui.inv.put.guild.you_deliver", inv[ci])
+                    txt(i18n::s.get(
+                            "core.locale.ui.inv.put.guild.you_deliver", inv[ci])
                         + u8"("s + (inv[ci].param1 + 1) * inv[ci].number()
                         + u8" Guild Point)"s);
                     if (gdata_mages_guild_quota == 0)
@@ -1822,11 +1834,12 @@ label_2061_internal:
                     qdata(13, gdata_executing_immediate_quest) +=
                         inv[ci].weight * inv[ci].number();
                     txtef(2);
-                    txt(i18n::s.get("core.locale.ui.inv.put.harvest",
-                                    inv[ci],
-                                    cnvweight(inv[ci].weight * inv[ci].number()),
-                                    cnvweight(qdata(13, gdata_executing_immediate_quest)),
-                                    cnvweight(qdata(12, gdata_executing_immediate_quest))));
+                    txt(i18n::s.get(
+                        "core.locale.ui.inv.put.harvest",
+                        inv[ci],
+                        cnvweight(inv[ci].weight * inv[ci].number()),
+                        cnvweight(qdata(13, gdata_executing_immediate_quest)),
+                        cnvweight(qdata(12, gdata_executing_immediate_quest))));
                 }
                 inv[ci].remove();
                 refresh_burden_state();

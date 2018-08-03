@@ -81,10 +81,10 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(
             elona::lua::lua->get_state()->safe_script(R"(item:set_number(3))"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.position.x = 4)"));
-        REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.position.y = 8)"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(item.position.x = 4)"));
+        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
+            R"(item.position.y = 8)"));
 
         REQUIRE(item.number() == 3);
         REQUIRE(item.position.x == 4);

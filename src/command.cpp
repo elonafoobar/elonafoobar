@@ -1966,8 +1966,10 @@ turn_result_t do_use_command()
                         {
                             if (rnd(5) == 0)
                             {
-                                txt(i18n::s.get("core.locale.action.use.leash.other.start.resists",
-                                        cdata[tc]));
+                                txt(i18n::s.get(
+                                    "core.locale.action.use.leash.other.start."
+                                    "resists",
+                                    cdata[tc]));
                                 inv[ci].modify_number(-1);
                                 cell_refresh(
                                     inv[ci].position.x, inv[ci].position.y);

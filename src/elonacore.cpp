@@ -4609,7 +4609,8 @@ void character_drops_item()
             {
                 if (sdata(161, 0) != 0)
                 {
-                    inv[ci].modify_number(rnd(1 + (sdata(161, 0) > cdata[rc].level)));
+                    inv[ci].modify_number(
+                        rnd(1 + (sdata(161, 0) > cdata[rc].level)));
                 }
             }
         }
@@ -4917,7 +4918,8 @@ void food_gets_rotten()
                                         txt(lang(
                                             itemname(cnt)
                                                 + u8"は上手い具合に干された。"s,
-                                            itemname(cnt) + is2(inv[cnt].number())
+                                            itemname(cnt)
+                                                + is2(inv[cnt].number())
                                                 + u8" dried up in the sun."s));
                                         inv[cnt].param3 = gdata_hour
                                             + gdata_day * 24
@@ -4964,7 +4966,8 @@ void food_gets_rotten()
                                             u8"You extract plant seeds from "s
                                                 + itemname(cnt) + u8"."s));
                                         p = rnd(inv[cnt].number()) + 1;
-                                        inv[cnt].modify_number((-inv[cnt].number()));
+                                        inv[cnt].modify_number(
+                                            (-inv[cnt].number()));
                                         flt(calcobjlv(cdata[0].level));
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
@@ -12855,7 +12858,8 @@ int pick_up_item()
                         inv[ci]));
                     if (efid >= 400 && efid < 467)
                     {
-                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number();
+                        spell(efid - 400) +=
+                            inv[ci].count * 5 * inv[ci].number();
                     }
                     else
                     {

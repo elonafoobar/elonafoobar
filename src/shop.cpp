@@ -629,7 +629,8 @@ void shop_refresh()
                     continue;
                 }
             }
-            inv[ci].set_number(inv[ci].number() * (100 + sdata(156, 0) * 10) / 100 + 1);
+            inv[ci].set_number(
+                inv[ci].number() * (100 + sdata(156, 0) * 10) / 100 + 1);
         }
         p = the_item_db[inv[ci].id]->category;
         if (is_cursed(inv[ci].curse_state))
