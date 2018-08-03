@@ -301,9 +301,21 @@ void fmt_internal(
     int count,
     std::vector<optional<std::string>>& formatted)
 {
-    UNUSED(ctxt);
     UNUSED(count);
-    UNUSED(formatted);
+
+    for (size_t i = 0; i < formatted.size(); i++)
+    {
+        hil::Value v = ctxt.hilParts.at(i);
+        if (v.is<hil::FunctionCall>())
+        {
+            hil::FunctionCall func = v.as<hil::FunctionCall>();
+
+            if (func.args.size() == 0)
+            {
+                formatted.at(i) = format_builtins_argless(func);
+            }
+        }
+    }
 }
 
 
