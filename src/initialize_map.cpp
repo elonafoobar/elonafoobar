@@ -69,7 +69,7 @@ label_17401:
         {
             if (cdata[cnt].current_map == gdata_current_map)
             {
-                if (cdata[cnt].state == 9)
+                if (cdata[cnt].state() == character::state::pet_moving_to_map)
                 {
                     cdata[cnt].state = 1;
                     lua::lua->get_handle_manager().create_chara_handle(
@@ -136,7 +136,7 @@ label_1741_internal:
         DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state == 0)
+            if (cdata[cnt].state() == character::state::empty)
             {
                 continue;
             }
@@ -776,7 +776,7 @@ label_1741_internal:
         map_placeplayer();
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[cnt].state == 1)
+            if (cdata[cnt].state() == character::state::alive)
             {
                 if (cdata[cnt].relationship == 10)
                 {
@@ -1626,7 +1626,7 @@ label_1741_internal:
                  cnt < ELONA_MAX_CHARACTERS;
                  ++cnt)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == character::state::alive)
                 {
                     if (cdata[cnt].is_quest_target() == 1)
                     {
@@ -2673,7 +2673,7 @@ label_1741_internal:
         mapupdate = 0;
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state == 0)
+            if (cdata[cnt].state() == character::state::empty)
             {
                 continue;
             }
@@ -2721,7 +2721,7 @@ label_1742_internal:
     }
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state != 3)
+        if (cdata[cnt].state() != character::state::adventurer_in_other_map)
         {
             continue;
         }
@@ -2849,7 +2849,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state == 2)
+            if (cdata[rc].state() == character::state::villager_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -2862,7 +2862,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state != 1)
+            if (cdata[rc].state() != character::state::alive)
             {
                 continue;
             }
@@ -2989,7 +2989,7 @@ label_1744_internal:
             cdata[cnt].hate = 0;
         }
         cdata[cnt].vision_flag = 0;
-        if (cdata[cnt].state != 0)
+        if (cdata[cnt].state() != character::state::empty)
         {
             modify_crowd_density(cnt, 1);
         }
@@ -3340,7 +3340,7 @@ label_1744_internal:
                     {
                         if (cdata[cnt].is_escorted() == 1)
                         {
-                            if (cdata[cnt].state == 1)
+                            if (cdata[cnt].state() == character::state::alive)
                             {
                                 if (cdata[cnt].id == qdata(13, cnt2))
                                 {
@@ -3468,7 +3468,7 @@ label_1744_internal:
                 + 1;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state::alive)
                 {
                     continue;
                 }

@@ -96,7 +96,7 @@ int dmghp(
     {
         attacker_is_player = false;
     }
-    if (victim.state != 1)
+    if (victim.state() != character::state::alive)
     {
         end_dmghp(victim);
         return 0;
@@ -262,7 +262,7 @@ int dmghp(
                 {
                     continue;
                 }
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state::alive)
                 {
                     continue;
                 }
@@ -1068,7 +1068,7 @@ int dmghp(
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
-        if (victim.state == 0)
+        if (victim.state() == character::state::empty)
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
@@ -1116,7 +1116,7 @@ int dmghp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                if (cdata[chara_index].state != 1)
+                if (cdata[chara_index].state() != character::state::alive)
                 {
                     continue;
                 }

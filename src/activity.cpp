@@ -44,7 +44,7 @@ void rowact_item(int prm_790)
 {
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state::alive)
         {
             continue;
         }
@@ -260,7 +260,7 @@ void continuous_action_perform()
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
             for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state::alive)
                 {
                     continue;
                 }
@@ -360,7 +360,7 @@ void continuous_action_perform()
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
                         dmghp(cc, dmg, -8);
-                        if (cdata[cc].state == 0)
+                        if (cdata[cc].state() == character::state::empty)
                         {
                             break;
                         }
@@ -663,7 +663,8 @@ void continuous_action_sex()
         tc -= 10000;
         sexhost = 0;
     }
-    if (cdata[tc].state != 1 || cdata[tc].continuous_action_id != 11)
+    if (cdata[tc].state() != character::state::alive
+        || cdata[tc].continuous_action_id != 11)
     {
         if (is_in_fov(cc))
         {
@@ -890,7 +891,7 @@ void continuous_action_eating_finish()
                     txt(i18n::s.get_enum(
                         "core.locale.food.passed_rotten", rnd(6)));
                     dmghp(cc, 999, -12);
-                    if (cdata[cc].state != 1)
+                    if (cdata[cc].state() != character::state::alive)
                     {
                         if (cdata[cc].relationship > 0)
                         {
@@ -1137,7 +1138,7 @@ void continuous_action_others()
             make_sound(cdata[0].position.x, cdata[0].position.y, 5, 8);
             for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state::alive)
                 {
                     continue;
                 }
@@ -1226,7 +1227,7 @@ void continuous_action_others()
             }
             if (tg != -1)
             {
-                if (cdata[tg].state != 1)
+                if (cdata[tg].state() != character::state::alive)
                 {
                     if (f != 1)
                     {
@@ -1301,7 +1302,8 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state != 1) || inv[ci].number() <= 0)
+        if ((tg != -1 && cdata[tg].state() != character::state::alive)
+            || inv[ci].number() <= 0)
         {
             txt(i18n::s.get("core.locale.activity.steal.abort"));
             rowactend(cc);

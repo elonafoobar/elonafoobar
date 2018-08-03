@@ -290,7 +290,7 @@ void highlight_characters_in_pet_arena()
 {
     for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
     {
-        if (cdata[cc].state != 1)
+        if (cdata[cc].state() != character::state::alive)
             continue;
         if (cc == 0)
             continue;
@@ -576,7 +576,7 @@ void render_skill_trackers()
             continue;
         }
         const auto chara = gdata(750 + i) / 10000;
-        if (chara != 0 && cdata[chara].state != 1)
+        if (chara != 0 && cdata[chara].state() != character::state::alive)
         {
             gdata(750 + i) = 0;
             continue;
@@ -1234,7 +1234,8 @@ void render_hud()
     font(12 - en * 2, snail::font_t::style_t::bold);
     render_hp_bar(cdata[0], inf_hpx, inf_hpy, true);
     render_mp_bar(cdata[0], inf_mpx, inf_mpy, true);
-    if (gdata_mount != 0 && cdata[gdata_mount].state == 1)
+    if (gdata_mount != 0
+        && cdata[gdata_mount].state() == character::state::alive)
     {
         render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
     }

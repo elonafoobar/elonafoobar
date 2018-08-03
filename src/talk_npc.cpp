@@ -191,7 +191,7 @@ talk_result_t talk_healer_restore_attributes()
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state::alive)
         {
             continue;
         }
@@ -569,7 +569,7 @@ talk_result_t talk_bartender_call_ally()
     if (stat != -1)
     {
         rc = stat;
-        if (cdata[rc].state == 1)
+        if (cdata[rc].state() == character::state::alive)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
@@ -739,7 +739,7 @@ talk_result_t talk_slave_sell()
                 cnven(cdatan(0, rc))));
             snd(11);
             earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
-            if (cdata[rc].state == 1)
+            if (cdata[rc].state() == character::state::alive)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             }
@@ -1314,7 +1314,7 @@ talk_result_t talk_guard_where_is(int chatval)
                 "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             break;
         }
-        if (cdata[rc].state != 1)
+        if (cdata[rc].state() != character::state::alive)
         {
             s = i18n::s.get(
                 "core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
@@ -1680,7 +1680,7 @@ talk_result_t talk_quest_giver()
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)
                     {
-                        if (cdata[cnt].state == 0)
+                        if (cdata[cnt].state() == character::state::empty)
                         {
                             continue;
                         }
@@ -2265,7 +2265,7 @@ talk_result_t talk_npc()
             rc = chara_find(222);
             if (rc != 0)
             {
-                if (cdata[rc].state == 1)
+                if (cdata[rc].state() == character::state::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,
