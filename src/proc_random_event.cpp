@@ -244,7 +244,7 @@ void run_random_event(int id, int luck_threshold)
                 --cnt;
                 continue;
             }
-            if (cdata[p].state == 1)
+            if (cdata[p].state() == character::state::alive)
             {
                 txt(i18n::s.get_enum_property(
                     "core.locale.event.popup", "scream", 15, cdata[p]));

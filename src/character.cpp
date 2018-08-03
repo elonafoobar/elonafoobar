@@ -414,6 +414,12 @@ character::character()
 }
 
 
+void character::set_state(character::state new_state)
+{
+    this->state_ = static_cast<int>(new_state);
+}
+
+
 void character::clear()
 {
     character tmp{};
@@ -1006,7 +1012,7 @@ int chara_get_free_slot()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state == 0)
+        if (cdata[cnt].state() == character::state::empty)
         {
             rc = cnt;
             break;
@@ -1022,7 +1028,7 @@ int chara_get_free_slot_ally()
          cnt < cnt_end;
          ++cnt)
     {
-        if (cdata[cnt].state != 0)
+        if (cdata[cnt].state() != character::state::empty)
         {
             continue;
         }
@@ -1856,9 +1862,9 @@ int chara_find(int prm_766)
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state != 2)
+        if (cdata[cnt].state() != character::state::villager_dead)
         {
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state::alive)
             {
                 continue;
             }
@@ -1879,7 +1885,7 @@ int chara_find_ally(int prm_767)
     p_at_m117 = -1;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state::alive)
         {
             continue;
         }
@@ -1962,7 +1968,9 @@ void chara_vanquish(int cc)
     {
         ride_end();
     }
-    else if (cdata[cc].state == 1 || cdata[cc].state == 10)
+    else if (
+        cdata[cc].state() == character::state::alive
+        || cdata[cc].state() == character::state::servant_being_selected)
     {
         map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
     }
@@ -1992,7 +2000,7 @@ bool chara_copy(int cc)
     int slot{};
     for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
     {
-        if (cdata[i].state == 0)
+        if (cdata[i].state() == character::state::empty)
         {
             slot = i;
             break;
@@ -2074,14 +2082,17 @@ void chara_killed(character& chara)
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::character_killed>(handle);
 
-    if (chara.state == 0)
+    if (chara.state() == character::state::empty)
     {
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
         // to clean up character things.
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
     }
-    else if (chara.state == 2 || chara.state == 4 || chara.state == 6)
+    else if (
+        chara.state() == character::state::villager_dead
+        || chara.state() == character::state::adventurer_dead
+        || chara.state() == character::state::pet_dead)
     {
         // This character revives.
     }
@@ -2144,7 +2155,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
-            if (cdata[cnt].state == 0)
+            if (cdata[cnt].state() == character::state::empty)
             {
                 f_at_m125 = 1;
                 tc_at_m125 = cnt;
@@ -2157,7 +2168,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
             {
                 tc_at_m125 = ELONA_MAX_PARTY_CHARACTERS
                     + rnd(ELONA_MAX_OTHER_CHARACTERS);
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == character::state::alive)
                 {
                     if (cdata[cnt].character_role == 0)
                     {

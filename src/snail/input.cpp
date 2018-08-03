@@ -198,7 +198,7 @@ void mouse_t::_handle_event(const ::SDL_MouseButtonEvent& event)
     default: return;
     }
 
-    if (event.state == SDL_PRESSED)
+    if (event.state() == SDL_PRESSED)
         buttons[static_cast<size_t>(button)]._press();
     else
         buttons[static_cast<size_t>(button)]._release();

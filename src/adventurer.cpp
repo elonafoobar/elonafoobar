@@ -204,12 +204,12 @@ void label_2662()
         }
         if (cdata[rc].current_map != gdata_current_map)
         {
-            if (cdata[rc].state == 5)
+            if (cdata[rc].state() == character::state::adventurer_empty)
             {
                 create_adventurer();
                 continue;
             }
-            if (cdata[rc].state == 4)
+            if (cdata[rc].state() == character::state::adventurer_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12

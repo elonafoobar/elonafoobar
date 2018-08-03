@@ -488,7 +488,7 @@ int magic()
                         cc = chainbomblist(chainbomb);
                         tlocx = cdata[cc].position.x;
                         tlocy = cdata[cc].position.y;
-                        if (cdata[cc].state == 1)
+                        if (cdata[cc].state() == character::state::alive)
                         {
                             const auto damage =
                                 calc_skill_damage(efid, cc, efp);
@@ -3792,11 +3792,11 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.swarm"));
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != character::state::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state::alive)
             {
                 continue;
             }
@@ -3843,7 +3843,7 @@ label_2181_internal:
     case 466:
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state::alive)
             {
                 continue;
             }
@@ -3876,11 +3876,11 @@ label_2181_internal:
         miracle_animation().play();
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != character::state::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state::alive)
             {
                 continue;
             }
@@ -3926,7 +3926,7 @@ label_2181_internal:
         }
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state::alive)
             {
                 continue;
             }

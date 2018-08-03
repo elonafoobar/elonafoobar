@@ -351,7 +351,7 @@ void proc_event()
         tc = chara_find(221);
         if (tc != 0)
         {
-            if (cdata[tc].state == 1)
+            if (cdata[tc].state() == character::state::alive)
             {
                 txtef(4);
                 txt(i18n::s.get("core.locale.event.pael"));
@@ -435,7 +435,9 @@ void proc_event()
             for (int j = 0; j < 100; ++j)
             {
                 i = rnd(39) + 16;
-                if (cdata[i].state == 3 && cdata[i].is_contracting() == 0
+                if (cdata[i].state()
+                        == character::state::adventurer_in_other_map
+                    && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
                 {
@@ -494,7 +496,7 @@ void proc_event()
             {
                 c = cnt - 1;
             }
-            if (cdata[c].state != 1)
+            if (cdata[c].state() != character::state::alive)
             {
                 continue;
             }
@@ -576,7 +578,7 @@ void proc_event()
         i = 0;
         for (int cc = 0; cc < 16; ++cc)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != character::state::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -589,7 +591,7 @@ void proc_event()
         i = 0;
         for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != character::state::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -620,7 +622,7 @@ void proc_event()
             tc = 0;
             for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
-                if (cdata[cc].state != 1)
+                if (cdata[cc].state() != character::state::alive)
                     continue;
                 if (cdata[cc].character_role == 18)
                 {
@@ -894,7 +896,7 @@ void proc_event()
         for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
              ++cc)
         {
-            if (cdata[cc].state == 1)
+            if (cdata[cc].state() == character::state::alive)
             {
                 cdata[cc].relationship = -3;
                 cdata[cc].enemy_id = 0;

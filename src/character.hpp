@@ -196,6 +196,23 @@ struct buff_t
 
 struct character
 {
+    enum class state : int
+    {
+        empty = 0,
+        alive = 1,
+        villager_dead = 2,
+        adventurer_in_other_map = 3,
+        adventurer_dead = 4,
+        adventurer_empty_slot = 5,
+        pet_dead = 6,
+        pet_waiting = 7,
+        pet_in_other_map =
+            8, // Ally failed to be placed/not participating in arena
+        pet_moving_to_map = 9, // Set on pets before leaving map, restored to
+                               // "alive" after initialize
+        servant_being_selected = 10,
+    };
+
     character();
 
     // NOTE: Don't add new fields unless you add them to serialization, which
@@ -207,7 +224,6 @@ struct character
     // on creation and load.
     int index = -1;
 
-    int state = 0;
     position_t position;
     position_t next_position;
     int time_to_revive = 0;
@@ -351,6 +367,12 @@ struct character
         return "LuaCharacter";
     }
 
+    character::state state()
+    {
+        return static_cast<character::state>(state_);
+    }
+    void set_state(character::state);
+
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 
@@ -358,7 +380,7 @@ struct character
     template <typename Archive>
     void serialize(Archive& ar)
     {
-        ar(state);
+        ar(state_);
         ar(position);
         ar(next_position);
         ar(time_to_revive);
@@ -488,6 +510,9 @@ struct character
         ar(_205);
         ar(_206);
     }
+
+private:
+    int state_ = 0;
 };
 
 
