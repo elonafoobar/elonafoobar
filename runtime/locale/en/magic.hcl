@@ -56,7 +56,7 @@ locale {
 
         special_attack {
             self = "${name(_1)} cast ${_2}."
-            other = "${name(_1)} ${_2}."
+            other = "${name(_1)}${_2}"
         }
 
         sucks_blood {
