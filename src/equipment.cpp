@@ -158,7 +158,7 @@ void wear_most_valuable_equipment()
         eqdup = 0;
         for (int j = 0; j < 30; ++j)
         {
-            if (cdata_body_part(rc, j) / 10000 == i)
+            if (cdata[rc].body_parts[j] / 10000 == i)
             {
                 bodylist(eqdup) = j + 100;
                 ++eqdup;
@@ -171,7 +171,7 @@ void wear_most_valuable_equipment()
         for (int cnt = 0, cnt_end = (eqdup); cnt < cnt_end; ++cnt)
         {
             body = bodylist(cnt);
-            i = cdata_body_part(rc, body) % 10000;
+            i = cdata[rc].body_parts[body - 100] % 10000;
             if (i == 0)
             {
                 equip_item(rc);
@@ -185,13 +185,14 @@ void wear_most_valuable_equipment()
             }
             if (eqdup > cnt + 1)
             {
-                if (cdata_body_part(rc, bodylist(cnt + 1)) % 10000 == 0)
+                if (cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000 == 0)
                 {
                     f = 0;
                 }
                 else if (
                     inv[i].value
-                    >= inv[cdata_body_part(rc, bodylist(cnt + 1)) % 10000 - 1]
+                    >= inv[cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000
+                           - 1]
                            .value)
                 {
                     f = 0;
@@ -256,21 +257,21 @@ void supply_new_equipment()
             flt(cdata[rc].level, calcfixlv(2));
         }
         mustequip = 0;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            p = cdata_body_part(rc, cnt) / 10000;
+            p = cdata[rc].body_parts[cnt] / 10000;
             if (p == 0)
             {
                 break;
             }
-            if (cdata_body_part(rc, cnt) % 10000 != 0)
+            if (cdata[rc].body_parts[cnt] % 10000 != 0)
             {
                 if (p == 5)
                 {
                     if (haveweapon == 0)
                     {
                         if (the_item_db
-                                [inv[cdata_body_part(rc, cnt) % 10000 - 1].id]
+                                [inv[cdata[rc].body_parts[cnt] % 10000 - 1].id]
                                     ->category
                             == 10000)
                         {
@@ -727,7 +728,7 @@ void supply_initial_equipments()
     }
     for (int i = 0; i < 30; ++i)
     {
-        p = cdata_body_part(rc, i) / 10000;
+        p = cdata[rc].body_parts[i] / 10000;
         if (p == 0)
         {
             break;

@@ -896,13 +896,13 @@ turn_result_t do_change_ammo_command()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 11)
+        if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
-            ci = cdata_body_part(cc, cnt) % 10000 - 1;
+            ci = cdata[cc].body_parts[cnt] % 10000 - 1;
             f = 1;
             break;
         }
@@ -2490,7 +2490,7 @@ turn_result_t do_use_command()
             int stat = transplant_body_parts();
             if (stat != -1)
             {
-                cdata_body_part(rc, stat) = rtval * 10000;
+                cdata[rc].body_parts[stat - 100] = rtval * 10000;
                 txtef(2);
                 txt(i18n::s.get(
                     "core.locale.action.use.gene_machine.gains.body_part",

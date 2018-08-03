@@ -572,13 +572,5 @@ bool belong_to_same_team(const character& c1, const character& c2);
 
 
 
-inline int cdata_body_part_index(int i)
-{
-    return i >= 100 ? i - 100 : i;
-}
-#define cdata_body_part(cc, i) cdata(cc).body_parts[cdata_body_part_index(i)]
-
-
-
 #undef ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 #undef ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR

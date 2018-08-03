@@ -376,7 +376,7 @@ void run_random_event(random_event event)
             tc = 0;
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata_body_part(tc, i) % 10000 == 0)
+                if (cdata[tc].body_parts[i] % 10000 == 0)
                 {
                     continue;
                 }

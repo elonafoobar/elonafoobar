@@ -730,10 +730,10 @@ void create_pcpic(int cc, bool prm_410)
         pcc(5, cc) = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (cdata_body_part(cc, i) % 10000 != 0)
+            if (cdata[cc].body_parts[i] % 10000 != 0)
             {
                 set_pcc_depending_on_equipments(
-                    cc, cdata_body_part(cc, i) % 10000 - 1);
+                    cc, cdata[cc].body_parts[i] % 10000 - 1);
             }
         }
     }

@@ -2544,7 +2544,7 @@ void refresh_speed_correction_value(int cc)
     int number_of_body_parts = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) != 0)
+        if (cdata[cc].body_parts[i] != 0)
         {
             ++number_of_body_parts;
         }
@@ -2565,13 +2565,13 @@ void gain_new_body_part(int cc)
 {
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) != 0)
+        if (cdata[cc].body_parts[i] != 0)
         {
             continue;
         }
         if (rnd(7) == 0)
         {
-            cdata_body_part(cc, i) = 20000;
+            cdata[cc].body_parts[i] = 20000;
             if (cm)
             {
                 break;
@@ -2589,7 +2589,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(9) == 0)
         {
-            cdata_body_part(cc, i) = 30000;
+            cdata[cc].body_parts[i] = 30000;
             if (cm)
             {
                 break;
@@ -2607,7 +2607,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(8) == 0)
         {
-            cdata_body_part(cc, i) = 50000;
+            cdata[cc].body_parts[i] = 50000;
             if (cm)
             {
                 break;
@@ -2625,7 +2625,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(4) == 0)
         {
-            cdata_body_part(cc, i) = 60000;
+            cdata[cc].body_parts[i] = 60000;
             if (cm)
             {
                 break;
@@ -2643,7 +2643,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(6) == 0)
         {
-            cdata_body_part(cc, i) = 70000;
+            cdata[cc].body_parts[i] = 70000;
             if (cm)
             {
                 break;
@@ -2661,7 +2661,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(cc, i) = 80000;
+            cdata[cc].body_parts[i] = 80000;
             if (cm)
             {
                 break;
@@ -2679,7 +2679,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(cc, i) = 90000;
+            cdata[cc].body_parts[i] = 90000;
             if (cm)
             {
                 break;
@@ -2697,7 +2697,7 @@ void gain_new_body_part(int cc)
         }
         if (rnd(1) == 0)
         {
-            cdata_body_part(cc, i) = 10000;
+            cdata[cc].body_parts[i] = 10000;
             if (cm)
             {
                 break;
@@ -4023,8 +4023,9 @@ void character_drops_item()
             }
             if (inv[ci].body_part != 0)
             {
-                cdata_body_part(rc, inv[ci].body_part) =
-                    cdata_body_part(rc, inv[ci].body_part) / 10000 * 10000;
+                cdata[rc].body_parts[inv[ci].body_part - 100] =
+                    cdata[rc].body_parts[inv[ci].body_part - 100] / 10000
+                    * 10000;
                 inv[ci].body_part = 0;
             }
             f = 0;
@@ -4200,8 +4201,8 @@ void character_drops_item()
         }
         if (inv[ci].body_part != 0)
         {
-            cdata_body_part(rc, inv[ci].body_part) =
-                cdata_body_part(rc, inv[ci].body_part) / 10000 * 10000;
+            cdata[rc].body_parts[inv[ci].body_part - 100] =
+                cdata[rc].body_parts[inv[ci].body_part - 100] / 10000 * 10000;
             inv[ci].body_part = 0;
         }
         inv[ci].position.x = cdata[rc].position.x;
@@ -5091,11 +5092,11 @@ void proc_negative_equipments()
 {
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) % 10000 == 0)
+        if (cdata[cc].body_parts[i] % 10000 == 0)
         {
             continue;
         }
-        ci = cdata_body_part(cc, i) % 10000 - 1;
+        ci = cdata[cc].body_parts[i] % 10000 - 1;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci].enchantments[cnt].id == 0)
@@ -9148,15 +9149,15 @@ void equip_melee_weapon()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) / 10000 != 5)
+        if (cdata[cc].body_parts[cnt] / 10000 != 5)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        cw = cdata_body_part(cc, cnt) % 10000 - 1;
+        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         if (inv[cw].dice_x == 0)
         {
             continue;
@@ -9408,17 +9409,17 @@ int can_do_ranged_attack()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 10)
+        if (cdata[cc].body_parts[cnt] / 10000 == 10)
         {
-            cw = cdata_body_part(cc, cnt) % 10000 - 1;
+            cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 11)
+        if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
-            ammo = cdata_body_part(cc, cnt) % 10000 - 1;
+            ammo = cdata[cc].body_parts[cnt] % 10000 - 1;
         }
     }
     if (cw == -1)
@@ -9843,32 +9844,32 @@ void dump_player_info()
         + cnveqweight(cc));
     noteadd(""s);
     listmax = 0;
-    for (int cnt = 100; cnt < 130; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
-        if (cdata_body_part(cc, cnt) != 0)
+        if (cdata[cc].body_parts[cnt] != 0)
         {
             if (trait(206) != 0)
             {
-                if (cdata_body_part(cc, cnt) / 10000 == 2)
+                if (cdata[cc].body_parts[cnt] / 10000 == 2)
                 {
                     continue;
                 }
             }
             if (trait(203) != 0)
             {
-                if (cdata_body_part(cc, cnt) / 10000 == 9)
+                if (cdata[cc].body_parts[cnt] / 10000 == 9)
                 {
                     continue;
                 }
             }
             if (trait(205) != 0)
             {
-                if (cdata_body_part(cc, cnt) / 10000 == 3)
+                if (cdata[cc].body_parts[cnt] / 10000 == 3)
                 {
                     continue;
                 }
             }
-            p(1) = cdata_body_part(cc, cnt);
+            p(1) = cdata[cc].body_parts[cnt];
             q(0) = u8"装備なし"s;
             q(1) = "";
             if (p(1) % 10000 != 0)
@@ -9887,7 +9888,7 @@ void dump_player_info()
             s = i18n::_(
                 u8"ui",
                 u8"body_part",
-                u8"_"s + (cdata_body_part(cc, cnt) / 10000));
+                u8"_"s + (cdata[cc].body_parts[cnt] / 10000));
             if (strmid(s, 0, 2) == u8"　"s)
             {
                 s = strmid(s, 2, 2);
@@ -13165,7 +13166,7 @@ int equip_item(int cc)
     {
         return 0;
     }
-    if (cdata_body_part(cc, body) % 10000 != 0)
+    if (cdata[cc].body_parts[body - 100] % 10000 != 0)
     {
         return 0;
     }
@@ -13179,8 +13180,8 @@ int equip_item(int cc)
         item_identify(inv[ci], identification_state_t::almost_identified);
     }
     inv[ci].body_part = body;
-    cdata_body_part(cc, body) =
-        cdata_body_part(cc, body) / 10000 * 10000 + ci + 1;
+    cdata[cc].body_parts[body - 100] =
+        cdata[cc].body_parts[body - 100] / 10000 * 10000 + ci + 1;
     return 1;
 }
 
@@ -13188,14 +13189,15 @@ int equip_item(int cc)
 
 void unequip_item(int cc)
 {
-    p = cdata_body_part(cc, body) % 10000;
+    p = cdata[cc].body_parts[body - 100] % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
     ci = p - 1;
-    cdata_body_part(cc, body) = cdata_body_part(cc, body) / 10000 * 10000;
+    cdata[cc].body_parts[body - 100] =
+        cdata[cc].body_parts[body - 100] / 10000 * 10000;
     inv[ci].body_part = 0;
     item_stack(cc, ci);
 }
@@ -13204,18 +13206,19 @@ void unequip_item(int cc)
 
 void lost_body_part(int cc)
 {
-    for (int cnt = 100; cnt < 130; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
-        if (cdata_body_part(cc, cnt) / 10000 == body)
+        if (cdata[cc].body_parts[cnt] / 10000 == body)
         {
-            p = cdata_body_part(cc, cnt) % 10000;
+            p = cdata[cc].body_parts[cnt] % 10000;
             if (p == 0)
             {
                 continue;
             }
             --p;
             inv[p].body_part = 0;
-            cdata_body_part(cc, cnt) = cdata_body_part(cc, cnt) / 10000 * 10000;
+            cdata[cc].body_parts[cnt] =
+                cdata[cc].body_parts[cnt] / 10000 * 10000;
         }
     }
     return;
@@ -14685,19 +14688,19 @@ void try_to_melee_attack()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 10)
+        if (cdata[cc].body_parts[cnt] / 10000 == 10)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 11)
+        if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
             continue;
         }
-        cw = cdata_body_part(cc, cnt) % 10000 - 1;
+        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         attackitem = cw;
         if (inv[cw].dice_x > 0)
         {
@@ -15423,7 +15426,7 @@ int transplant_body_parts()
     rtval(1) = -1;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(rc, i) == 0)
+        if (cdata[rc].body_parts[i] == 0)
         {
             rtval(1) = i + 100;
         }
@@ -15432,9 +15435,9 @@ int transplant_body_parts()
     {
         return -1;
     }
-    for (int cnt = 100; cnt < 130; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
-        f = cdata_body_part(tc, cnt) / 10000;
+        f = cdata[tc].body_parts[cnt] / 10000;
         if (f == 11 || f == 10 || f == 4)
         {
             continue;
@@ -15456,11 +15459,11 @@ int transplant_body_parts()
         f = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (cdata_body_part(rc, i) == 0)
+            if (cdata[rc].body_parts[i] == 0)
             {
                 continue;
             }
-            if (cdata_body_part(rc, i) / 10000 == rtval)
+            if (cdata[rc].body_parts[i] / 10000 == rtval)
             {
                 f = 1;
             }
@@ -15478,7 +15481,7 @@ int transplant_body_parts()
     DIM3(dblist, 2, 800);
     for (int i = 0; i < 30; ++i)
     {
-        ++dblist(0, cdata_body_part(tc, i) / 10000);
+        ++dblist(0, cdata[tc].body_parts[i] / 10000);
     }
     for (int cnt = 0; cnt < 25; ++cnt)
     {
@@ -15486,7 +15489,7 @@ int transplant_body_parts()
         f = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (cdata_body_part(rc, i) / 10000 == rtval)
+            if (cdata[rc].body_parts[i] / 10000 == rtval)
             {
                 ++f;
             }

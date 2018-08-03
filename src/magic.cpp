@@ -2895,13 +2895,13 @@ label_2181_internal:
             }
         }
         i = 0;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            if (cdata_body_part(tc, cnt) % 10000 == 0)
+            if (cdata[tc].body_parts[cnt] % 10000 == 0)
             {
                 continue;
             }
-            p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
+            p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
             if (inv[p(i)].curse_state == curse_state_t::blessed)
             {
                 if (rnd(10))
@@ -3240,8 +3240,8 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.garoks_hammer.apply", inv[ci]));
         if (equip != 0)
         {
-            cdata_body_part(cc, equip) =
-                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata[cc].body_parts[equip - 100] =
+                cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
         chara_refresh(cc);
@@ -3323,8 +3323,8 @@ label_2181_internal:
         }
         if (equip != 0)
         {
-            cdata_body_part(cc, equip) =
-                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata[cc].body_parts[equip - 100] =
+                cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
         chara_refresh(cc);

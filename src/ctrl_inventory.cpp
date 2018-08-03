@@ -213,7 +213,7 @@ label_20591:
             }
             if (invctrl == 6)
             {
-                if (iequiploc(cnt) != cdata_body_part(cc, body) / 10000)
+                if (iequiploc(cnt) != cdata[cc].body_parts[body - 100] / 10000)
                 {
                     continue;
                 }
@@ -915,13 +915,13 @@ label_2061_internal:
         pos(x, y);
         mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
         x += 60;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            if (cdata_body_part(tc, cnt) == 0)
+            if (cdata[tc].body_parts[cnt] == 0)
             {
                 continue;
             }
-            p = cdata_body_part(tc, cnt);
+            p = cdata[tc].body_parts[cnt];
             if (p % 10000 != 0)
             {
                 color(50, 50, 200);
@@ -1407,7 +1407,7 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.equip.blessed", cdata[cc]));
                 break;
             }
-            if (cdata_body_part(cc, body) / 10000 == 5)
+            if (cdata[cc].body_parts[body - 100] / 10000 == 5)
             {
                 equip_melee_weapon();
             }
@@ -1762,7 +1762,8 @@ label_2061_internal:
             if (inv[citrade].body_part != 0)
             {
                 p = inv[citrade].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
                 inv[citrade].body_part = 0;
             }
             ti = citrade;
@@ -1917,7 +1918,8 @@ label_2061_internal:
                     goto label_20591;
                 }
                 p = inv[ci].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
                 inv[ci].body_part = 0;
             }
             if (inv[ci].id == 477 || inv[ci].id == 473)

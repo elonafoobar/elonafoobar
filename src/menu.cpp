@@ -3053,38 +3053,38 @@ menu_result menu_equipment()
     mainhand = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) != 0)
+        if (cdata[cc].body_parts[i] != 0)
         {
             if (trait(206) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 2)
+                if (cdata[cc].body_parts[i] / 10000 == 2)
                 {
                     continue;
                 }
             }
             if (trait(203) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 9)
+                if (cdata[cc].body_parts[i] / 10000 == 9)
                 {
                     continue;
                 }
             }
             if (trait(205) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 3)
+                if (cdata[cc].body_parts[i] / 10000 == 3)
                 {
                     continue;
                 }
             }
             if (mainhand == 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 5)
+                if (cdata[cc].body_parts[i] / 10000 == 5)
                 {
                     mainhand = i + 100;
                 }
             }
             list(0, listmax) = i + 100;
-            list(1, listmax) = cdata_body_part(cc, i) / 10000;
+            list(1, listmax) = cdata[cc].body_parts[i] / 10000;
             ++listmax;
         }
     }
@@ -3186,7 +3186,7 @@ label_2052_internal:
             break;
         }
         display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
-        p(1) = cdata_body_part(cc, list(0, p));
+        p(1) = cdata[cc].body_parts[list(0, p) - 100];
         s(0) = u8"-    "s;
         s(1) = u8"-"s;
         if (p(1) % 10000 != 0)
@@ -3228,10 +3228,10 @@ label_2052_internal:
     {
         cs_prev = cs;
         body = p;
-        if (cdata_body_part(cc, body) % 10000 != 0)
+        if (cdata[cc].body_parts[body - 100] % 10000 != 0)
         {
             gdata(808) = 1;
-            ci = cdata_body_part(cc, body) % 10000 - 1;
+            ci = cdata[cc].body_parts[body - 100] % 10000 - 1;
             if (is_cursed(inv[ci].curse_state))
             {
                 txt(i18n::s.get(
@@ -3243,7 +3243,7 @@ label_2052_internal:
             snd(13);
             txtnew();
             txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
-            if (cdata_body_part(cc, body) / 10000 == 5)
+            if (cdata[cc].body_parts[body - 100] / 10000 == 5)
             {
                 equip_melee_weapon();
             }
@@ -3260,9 +3260,9 @@ label_2052_internal:
     if (key == key_identify)
     {
         p = list(0, pagesize * page + cs);
-        if (cdata_body_part(cc, p) % 10000 != 0)
+        if (cdata[cc].body_parts[p - 100] % 10000 != 0)
         {
-            ci = cdata_body_part(cc, p) % 10000 - 1;
+            ci = cdata[cc].body_parts[p - 100] % 10000 - 1;
             cs_prev = cs;
             item_show_description();
             nowindowanime = 1;
@@ -4102,19 +4102,19 @@ void append_accuracy_info(int val0)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 10)
+        if (cdata[cc].body_parts[cnt] / 10000 == 10)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 11)
+        if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
             continue;
         }
-        cw = cdata_body_part(cc, cnt) % 10000 - 1;
+        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         if (inv[cw].dice_x > 0)
         {
             attackskill = inv[cw].skill;
@@ -4416,9 +4416,9 @@ label_196901_internal:
     std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(tc, i) % 10000 != 0)
+        if (cdata[tc].body_parts[i] % 10000 != 0)
         {
-            ci = cdata_body_part(tc, i) % 10000 - 1;
+            ci = cdata[tc].body_parts[i] % 10000 - 1;
             for (const auto& enc : inv[ci].enchantments)
             {
                 if (enc.id == 0)

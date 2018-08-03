@@ -1328,7 +1328,8 @@ void continuous_action_others()
             if (tc != -1)
             {
                 p = inv[ci].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
             }
             inv[ci].body_part = 0;
             chara_refresh(tc);

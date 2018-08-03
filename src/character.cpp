@@ -1294,15 +1294,15 @@ void chara_refresh(int cc)
         {
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata_body_part(cc, i) % 10000 == 0)
+                if (cdata[cc].body_parts[i] % 10000 == 0)
                 {
                     continue;
                 }
-                rp = cdata_body_part(cc, i) % 10000 - 1;
+                rp = cdata[cc].body_parts[i] % 10000 - 1;
                 if (inv[rp].weight >= 1000)
                 {
-                    cdata_body_part(cc, i) =
-                        cdata_body_part(cc, i) / 10000 * 10000;
+                    cdata[cc].body_parts[i] =
+                        cdata[cc].body_parts[i] / 10000 * 10000;
                     inv[rp].body_part = 0;
                 }
             }
@@ -1345,11 +1345,11 @@ void chara_refresh(int cc)
     cdata[cc].cut_counterattack = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) % 10000 == 0)
+        if (cdata[cc].body_parts[i] % 10000 == 0)
         {
             continue;
         }
-        rp = cdata_body_part(cc, i) % 10000 - 1;
+        rp = cdata[cc].body_parts[i] % 10000 - 1;
         cdata[cc].sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
@@ -1367,7 +1367,7 @@ void chara_refresh(int cc)
             cdata[cc].pv += inv[rp].enhancement * 2
                 + (inv[rp].curse_state == curse_state_t::blessed) * 2;
         }
-        else if (cdata_body_part(cc, i) / 10000 == 5)
+        else if (cdata[cc].body_parts[i] / 10000 == 5)
         {
             ++attacknum;
         }
@@ -2036,7 +2036,7 @@ bool chara_copy(int cc)
     cdata[slot].gold = 0;
     for (int i = 0; i < 30; ++i)
     {
-        cdata_body_part(slot, i) = cdata_body_part(slot, i) / 10000 * 10000;
+        cdata[slot].body_parts[i] = cdata[slot].body_parts[i] / 10000 * 10000;
     }
     cdata[slot].original_relationship = -3;
     cdata[slot].has_own_sprite() = false;
@@ -2222,8 +2222,8 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     {
         for (int i = 0; i < 30; ++i)
         {
-            cdata_body_part(tc_at_m125, i) =
-                cdata_body_part(tc_at_m125, i) / 10000 * 10000;
+            cdata[tc_at_m125].body_parts[i] =
+                cdata[tc_at_m125].body_parts[i] / 10000 * 10000;
         }
     }
     if (prm_786 == 1)

@@ -185,12 +185,12 @@ int access_race_info(int dbmode, const std::string& dbidn)
         size_t i{};
         for (const auto& p : data->body_parts)
         {
-            cdata_body_part(rc, i) = p * 10'000;
+            cdata[rc].body_parts[i] = p * 10'000;
             ++i;
         }
-        cdata_body_part(rc, i) = 10 * 10'000;
+        cdata[rc].body_parts[i] = 10 * 10'000;
         ++i;
-        cdata_body_part(rc, i) = 11 * 10'000;
+        cdata[rc].body_parts[i] = 11 * 10'000;
         ++i;
     }
     for (const auto& pair : data->skills)

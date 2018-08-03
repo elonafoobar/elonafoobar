@@ -201,13 +201,13 @@ int item_find(int prm_476, int prm_477, int prm_478)
 int encfind(int cc, int id)
 {
     int power = -1;
-    for (int cnt = 100; cnt < 130; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        int ci = cdata_body_part(cc, cnt) % 10000 - 1;
+        int ci = cdata[cc].body_parts[cnt] % 10000 - 1;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci].enchantments[cnt].id == 0)
@@ -596,8 +596,8 @@ bool chara_unequip(int ci)
     if (owner == -1)
         return false;
 
-    cdata_body_part(owner, body_part) =
-        cdata_body_part(owner, body_part) / 10000 * 10000;
+    cdata[owner].body_parts[body_part - 100] =
+        cdata[owner].body_parts[body_part - 100] / 10000 * 10000;
     inv[ci].body_part = 0;
     return true;
 }
@@ -1556,12 +1556,12 @@ void item_acid(int prm_838, int prm_839)
         ci_at_m138 = -1;
         for (int i = 0; i < 30; ++i)
         {
-            body_at_m138 = cdata_body_part(prm_838, i) / 10000;
+            body_at_m138 = cdata[prm_838].body_parts[i] / 10000;
             if (body_at_m138 == 0)
             {
                 break;
             }
-            p_at_m138 = cdata_body_part(prm_838, i) % 10000 - 1;
+            p_at_m138 = cdata[prm_838].body_parts[i] % 10000 - 1;
             if (p_at_m138 == -1)
             {
                 continue;
@@ -1789,8 +1789,10 @@ int item_fire(int prm_840, int prm_841)
                                     + u8" turn"s + _s2(p_at_m138)
                                     + u8" to dust."s));
                         }
-                        cdata_body_part(prm_840, inv[ci_at_m138].body_part) =
-                            cdata_body_part(prm_840, inv[ci_at_m138].body_part)
+                        cdata[prm_840]
+                            .body_parts[inv[ci_at_m138].body_part - 100] =
+                            cdata[prm_840]
+                                .body_parts[inv[ci_at_m138].body_part - 100]
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
                         chara_refresh(prm_840);
