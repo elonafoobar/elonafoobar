@@ -529,7 +529,8 @@ void continuous_action_perform()
                                     int stat = itemcreate(-1, dbid, x, y, 1);
                                     if (stat != 0)
                                     {
-                                        // NOTE: may cause Lua creation callbacks to run twice.
+                                        // NOTE: may cause Lua creation
+                                        // callbacks to run twice.
                                         inv[ci].modify_number(-1);
                                         cell_refresh(
                                             inv[ci].position.x,
@@ -1390,7 +1391,10 @@ void continuous_action_others()
     }
     if (gdata(91) == 103)
     {
-        txt(i18n::s.get("core.locale.activity.harvest.finish", inv[ci], cnvweight(inv[ci].weight)));
+        txt(i18n::s.get(
+            "core.locale.activity.harvest.finish",
+            inv[ci],
+            cnvweight(inv[ci].weight)));
         in = inv[ci].number();
         pick_up_item();
     }
@@ -1743,8 +1747,11 @@ void spot_digging()
                                     0);
                             }
                             txt(
-                                i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-                            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+                                i18n::s.get("core.locale.common.something_is_"
+                                            "put_on_the_ground"));
+                            autosave = 1
+                                * (gdata_current_map
+                                   != mdata_t::map_id_t::show_house);
                             inv[cnt].modify_number(-1);
                             break;
                         }

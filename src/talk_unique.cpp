@@ -1856,7 +1856,9 @@ talk_result_t talk_unique_paels_mom()
             {
                 int stat = inv_find(559, 0);
                 inv[stat].modify_number(-1);
-                txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.festival.give.you_hand_her"));
+                txt(
+                    i18n::s.get("core.locale.talk.unique.paels_mom.progress."
+                                "festival.give.you_hand_her"));
                 snd(13);
                 modify_karma(0, 20);
                 listmax = 0;
@@ -1927,7 +1929,9 @@ talk_result_t talk_unique_paels_mom()
         {
             int stat = inv_find(559, 0);
             inv[stat].modify_number(-1);
-            txt(i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_life.give.you_hand_her"));
+            txt(
+                i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
+                            "life.give.you_hand_her"));
             snd(13);
             modify_karma(0, 20);
             listmax = 0;
@@ -4066,7 +4070,8 @@ talk_result_t talk_unique_rogue_boss()
             {
                 if (the_item_db[inv[cnt].id]->is_cargo == 1)
                 {
-                    txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[cnt]));
+                    txt(i18n::s.get(
+                        "core.locale.talk.npc.common.hand_over", inv[cnt]));
                     inv[cnt].remove();
                 }
             }
@@ -4346,7 +4351,9 @@ talk_result_t talk_unique_kaneda_bike()
             {
                 int stat = inv_find(771, 0);
                 inv[stat].modify_number(-1);
-                txt(i18n::s.get("core.locale.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"));
+                txt(
+                    i18n::s.get("core.locale.talk.unique.kaneda_bike.before_"
+                                "drug.yes.you_hand_him"));
                 snd(13);
                 listmax = 0;
                 buff = i18n::s.get(

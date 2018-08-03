@@ -3285,9 +3285,10 @@ label_2181_internal:
                     break;
                 }
                 animeload(8, cc);
-                txt(i18n::s.get("core.locale.magic.change_material.artifact_reconstructed",
-                                cdata[cc],
-                                inv[ci]));
+                txt(i18n::s.get(
+                    "core.locale.magic.change_material.artifact_reconstructed",
+                    cdata[cc],
+                    inv[ci]));
                 inv[ci].modify_number(-1);
                 flt();
                 itemcreate(0, inv[ci].id, -1, -1, 0);
@@ -3473,7 +3474,8 @@ label_2181_internal:
                 {
                     if (rnd(4) == 0)
                     {
-                        txt(i18n::s.get("core.locale.magic.fill_charge.explodes", inv[ci]));
+                        txt(i18n::s.get(
+                            "core.locale.magic.fill_charge.explodes", inv[ci]));
                         inv[ci].modify_number(-1);
                         refresh_burden_state();
                         break;
@@ -3532,10 +3534,11 @@ label_2181_internal:
                 animeload(8, cc);
                 p = p * inv[ci].count;
                 gdata_charge_power += p;
-                txt(i18n::s.get("core.locale.magic.draw_charge",
-                                inv[ci],
-                                p(0),
-                                gdata_charge_power));
+                txt(i18n::s.get(
+                    "core.locale.magic.draw_charge",
+                    inv[ci],
+                    p(0),
+                    gdata_charge_power));
                 inv[ci].remove();
                 refresh_burden_state();
             }

@@ -94,7 +94,10 @@ struct item
         return "LuaItem";
     }
 
-    int number() const { return number_; }
+    int number() const
+    {
+        return number_;
+    }
 
     void set_number(int number_);
     void modify_number(int delta);
@@ -139,6 +142,7 @@ struct item
         range::for_each(
             enchantments, [&](auto&& enchantment) { ar(enchantment); });
     }
+
 private:
     static void refresh();
     int number_ = 0;

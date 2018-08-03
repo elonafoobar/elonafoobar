@@ -1588,7 +1588,8 @@ int label_1932()
         else if (rnd(3) == 0)
         {
 
-            txt(i18n::s.get("core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
+            txt(i18n::s.get(
+                "core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         if (chara_unequip(rpref(10 + cnt * 2)))

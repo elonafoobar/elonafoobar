@@ -1670,7 +1670,8 @@ int item_fire(int prm_840, int prm_841)
                                               ci_at_m138,
                                               inv[ci_at_m138].number())
                                         + u8"はこんがりと焼き上がった。"s,
-                                    itemname(ci_at_m138, inv[ci_at_m138].number())
+                                    itemname(
+                                        ci_at_m138, inv[ci_at_m138].number())
                                         + u8" on the ground get"s
                                         + _s2(inv[ci_at_m138].number())
                                         + u8" perfectly broiled."s));
