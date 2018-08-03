@@ -250,3 +250,21 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
     REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", chara) == u8"プチは");
     REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", out_of_fov) == u8"それは");
 }
+
+TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+
+    SECTION("Japanese")
+    {
+        testing::set_japanese();
+        REQUIRE(
+            i18n::fmt_hil("うわああ！${you()}は階段から足を踏み外した。")
+            == u8"うわああ！あなたは階段から足を踏み外した。");
+    }
+    SECTION("English")
+    {
+        testing::set_english();
+        REQUIRE(i18n::fmt_hil("${you()}") == u8"you");
+    }
+}

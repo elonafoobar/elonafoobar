@@ -409,10 +409,9 @@ std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
     return fmt_interpolate_converted(ctxt, formatted);
 }
 
-
 // For testing use
-template <typename Head, typename... Tail>
-std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
+template <typename... Tail>
+std::string fmt_hil(const std::string& hil, Tail&&... tail)
 {
     std::stringstream ss(hil);
 
@@ -427,8 +426,9 @@ std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
         return p.errorReason;
     }
 
-    return fmt_with_context(p.context, head, std::forward<Tail>(tail)...);
+    return fmt_with_context(p.context, std::forward<Tail>(tail)...);
 }
+
 
 
 class store

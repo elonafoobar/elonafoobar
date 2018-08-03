@@ -51,7 +51,7 @@ locale {
 
         special_attack {
             self = "${name(_1)}は${_2}の${_3}"
-            other = "${name(_1)}は${_2}."
+            other = "${name(_1)}は${_2}"
         }
 
         sucks_blood {
