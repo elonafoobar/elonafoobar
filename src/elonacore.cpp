@@ -5657,9 +5657,9 @@ turn_result_t exit_map()
     if (gdata_current_map != gdata_previous_map)
     {
         if (mdata_map_type == mdata_t::map_type_t::town
-            || gdata_departure_date == 0
-            || gdata_previous_map == mdata_t::map_type_t::player_owned
-            || mdata_map_type == mdata_t::map_type_t::guild)
+            || mdata_map_type == mdata_t::map_type_t::guild
+            || gdata_previous_map == mdata_t::map_id_t::your_home
+            || gdata_departure_date == 0)
         {
             gdata_departure_date = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
