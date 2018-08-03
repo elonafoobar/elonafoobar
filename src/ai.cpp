@@ -787,7 +787,7 @@ label_2692_internal:
                             if (rnd(4) == 0)
                             {
                                 if (cdata[gdata_fire_giant].state()
-                                    == character::state::alive)
+                                    == character::state_t::alive)
                                 {
                                     if (is_in_fov(gdata_fire_giant))
                                     {
@@ -986,7 +986,7 @@ label_2692_internal:
             {
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < 97; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::state::alive)
+                    if (cdata[cnt].state() != character::state_t::alive)
                     {
                         continue;
                     }

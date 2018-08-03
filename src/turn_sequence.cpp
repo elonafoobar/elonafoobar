@@ -126,7 +126,7 @@ turn_result_t npc_turn()
             {
                 if (cdata[pcattacker].relationship <= -3)
                 {
-                    if (cdata[pcattacker].state() == character::state::alive)
+                    if (cdata[pcattacker].state() == character::state_t::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -146,7 +146,7 @@ turn_result_t npc_turn()
                     && cdata[cdata[0].enemy_id].relationship <= -3)
                 {
                     if (cdata[cdata[0].enemy_id].state()
-                        == character::state::alive)
+                        == character::state_t::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -177,7 +177,7 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].enemy_id != 0)
     {
-        if (cdata[cdata[cc].enemy_id].state() != character::state::alive)
+        if (cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
         {
             cdata[cc].enemy_id = 0;
             cdata[cc].hate = 0;
@@ -213,7 +213,7 @@ turn_result_t npc_turn()
         }
         i = cdata[cc].enemy_id;
         if (cdata[i].relationship == p
-            && cdata[i].state() == character::state::alive && i >= p(1)
+            && cdata[i].state() == character::state_t::alive && i >= p(1)
             && i < p(1) + p(2))
         {
             if (rnd(10) != 0)
@@ -226,7 +226,7 @@ turn_result_t npc_turn()
         for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
-            if (cdata[i].state() == character::state::alive)
+            if (cdata[i].state() == character::state_t::alive)
             {
                 if (cdata[i].relationship == p)
                 {
@@ -236,12 +236,12 @@ turn_result_t npc_turn()
             }
         }
         if (cdata[cdata[cc].enemy_id].relationship != p
-            || cdata[cdata[cc].enemy_id].state() != character::state::alive)
+            || cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
             {
-                if (cdata[cnt].state() == character::state::alive)
+                if (cdata[cnt].state() == character::state_t::alive)
                 {
                     if (cdata[cnt].relationship == p)
                     {
@@ -274,7 +274,7 @@ turn_result_t npc_turn()
                 if (gdata_released_fire_giant != 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::state::alive)
+                        == character::state_t::alive)
                     {
                         cdata[cc].enemy_id = gdata_fire_giant;
                         cdata[cc].hate = 500;
@@ -736,7 +736,7 @@ turn_result_t turn_begin()
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
-    if (cdata[0].state() != character::state::alive)
+    if (cdata[0].state() != character::state_t::alive)
     {
         return turn_result_t::pc_died;
     }
@@ -754,7 +754,7 @@ turn_result_t turn_begin()
     {
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state() != character::state::alive)
+            if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -818,7 +818,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
         {
-            if (cdata[ct].state() != character::state::alive)
+            if (cdata[ct].state() != character::state_t::alive)
             {
                 ++ct;
                 continue;
@@ -854,7 +854,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state() == character::state::alive)
+                if (cdata[cnt].state() == character::state_t::alive)
                 {
                     gain_healing_and_meditation_experience(cnt);
                 }
@@ -891,7 +891,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::state::alive)
+                    if (cdata[cnt].state() != character::state_t::alive)
                     {
                         continue;
                     }
@@ -942,7 +942,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
     label_2740_internal:
         label_1754();
-        if (cdata[0].state() != character::state::alive)
+        if (cdata[0].state() != character::state_t::alive)
         {
             return turn_result_t::pc_died;
         }
@@ -1032,7 +1032,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::state::alive)
+                    if (cdata[cnt].state() != character::state_t::alive)
                     {
                         continue;
                     }
@@ -1132,7 +1132,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         chara_refresh(cc);
     }
-    if (cdata[cc].state() == character::state::alive)
+    if (cdata[cc].state() == character::state_t::alive)
     {
         if (ct == 0)
         {
@@ -1176,7 +1176,7 @@ void update_emoicon()
 turn_result_t turn_end()
 {
     cc = ct;
-    if (cdata[cc].state() != character::state::alive)
+    if (cdata[cc].state() != character::state_t::alive)
     {
         return turn_result_t::pass_one_turn;
     }
@@ -1226,7 +1226,7 @@ turn_result_t turn_end()
     if (gdata_left_turns_of_timestop > 0)
     {
         --gdata_left_turns_of_timestop;
-        if (cdata[cc].state() != character::state::alive
+        if (cdata[cc].state() != character::state_t::alive
             || gdata_left_turns_of_timestop == 0)
         {
             txtef(9);
@@ -1276,7 +1276,7 @@ turn_result_t pc_turn(bool advance_time)
         {
             dmghp(0, 999999, -14);
         }
-        if (cdata[0].state() != character::state::alive)
+        if (cdata[0].state() != character::state_t::alive)
         {
             return turn_result_t::pc_died;
         }
@@ -1381,7 +1381,7 @@ turn_result_t pc_turn(bool advance_time)
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
-                if (cdata[cc].state() == character::state::alive
+                if (cdata[cc].state() == character::state_t::alive
                     && cdata[cc].relationship == 10)
                 {
                     pet_exists = true;
@@ -1404,13 +1404,14 @@ turn_result_t pc_turn(bool advance_time)
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
-                        && cdata[cc].state() == character::state::pet_dead)
+                        && cdata[cc].state() == character::state_t::pet_dead)
                         continue;
                     if (petarenawin != 1 && followerin(cc) == 1
-                        && cdata[cc].state() == character::state::pet_dead
+                        && cdata[cc].state() == character::state_t::pet_dead
                         && rnd(5) == 0)
                         continue;
-                    cdata[cc].state = followerexist(cc);
+                    cdata[cc].set_state(
+                        static_cast<character::state_t>(followerexist(cc)));
                 }
                 return turn_result_t::exit_map;
             }
@@ -1429,7 +1430,7 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     p = cnt;
                 }
-                if (cdata[p].state() != character::state::alive)
+                if (cdata[p].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -1441,7 +1442,7 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     continue;
                 }
-                if (cdata[camera].state() != character::state::alive
+                if (cdata[camera].state() != character::state_t::alive
                     || camera == 0)
                 {
                     camera = p;

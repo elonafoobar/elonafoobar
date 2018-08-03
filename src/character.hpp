@@ -196,14 +196,14 @@ struct buff_t
 
 struct character
 {
-    enum class state : int
+    enum class state_t : int
     {
         empty = 0,
         alive = 1,
         villager_dead = 2,
         adventurer_in_other_map = 3,
         adventurer_dead = 4,
-        adventurer_empty_slot = 5,
+        adventurer_empty = 5,
         pet_dead = 6,
         pet_waiting = 7,
         pet_in_other_map =
@@ -367,11 +367,11 @@ struct character
         return "LuaCharacter";
     }
 
-    character::state state()
+    character::state_t state()
     {
-        return static_cast<character::state>(state_);
+        return static_cast<character::state_t>(state_);
     }
-    void set_state(character::state);
+    void set_state(character::state_t);
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS

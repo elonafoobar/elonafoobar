@@ -1092,7 +1092,7 @@ void calccosthire()
     {
         if (cdata[cnt].character_role == 0)
             continue;
-        if (cdata[cnt].state() != character::state::alive)
+        if (cdata[cnt].state() != character::state_t::alive)
             continue;
         cost += calchirecost(cnt);
     }
@@ -1268,7 +1268,7 @@ int calclearncost(int skill_id, int cc, bool discount)
 
 int calcresurrectvalue(int pet)
 {
-    return cdata[pet].state() != character::state::pet_dead
+    return cdata[pet].state() != character::state_t::pet_dead
         ? 100
         : cdata[pet].level * cdata[pet].level * 15;
 }
@@ -1498,7 +1498,7 @@ void calcpartyscore()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state() != character::state::alive)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -1534,7 +1534,7 @@ void calcpartyscore2()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state() != character::state::alive)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }

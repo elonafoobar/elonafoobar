@@ -191,7 +191,7 @@ talk_result_t talk_healer_restore_attributes()
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() != character::state::alive)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -410,7 +410,7 @@ talk_result_t talk_pet_arena_master(int chatval)
     DIM2(followerexist, 16);
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        followerexist(cnt) = cdata[cnt].state;
+        followerexist(cnt) = static_cast<int>(cdata[cnt].state());
     }
     allyctrl = 2;
     int stat = ctrl_ally();
@@ -569,7 +569,7 @@ talk_result_t talk_bartender_call_ally()
     if (stat != -1)
     {
         rc = stat;
-        if (cdata[rc].state() == character::state::alive)
+        if (cdata[rc].state() == character::state_t::alive)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
@@ -626,7 +626,7 @@ talk_result_t talk_ally_order_wait()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
-    cdata[tc].state = 7;
+    cdata[tc].set_state(character::state_t::pet_waiting);
     cdata[tc].current_map = 0;
     return talk_result_t::talk_end;
 }
@@ -739,7 +739,7 @@ talk_result_t talk_slave_sell()
                 cnven(cdatan(0, rc))));
             snd(11);
             earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
-            if (cdata[rc].state() == character::state::alive)
+            if (cdata[rc].state() == character::state_t::alive)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             }
@@ -1314,7 +1314,7 @@ talk_result_t talk_guard_where_is(int chatval)
                 "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             break;
         }
-        if (cdata[rc].state() != character::state::alive)
+        if (cdata[rc].state() != character::state_t::alive)
         {
             s = i18n::s.get(
                 "core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
@@ -1680,7 +1680,7 @@ talk_result_t talk_quest_giver()
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)
                     {
-                        if (cdata[cnt].state() == character::state::empty)
+                        if (cdata[cnt].state() == character::state_t::empty)
                         {
                             continue;
                         }
@@ -2265,7 +2265,7 @@ talk_result_t talk_npc()
             rc = chara_find(222);
             if (rc != 0)
             {
-                if (cdata[rc].state() == character::state::alive)
+                if (cdata[rc].state() == character::state_t::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,

@@ -4770,7 +4770,7 @@ label_1970_internal:
                     p = 0;
                 }
             }
-            if (cdata[p].state() != character::state::alive)
+            if (cdata[p].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -5145,7 +5145,7 @@ turn_result_t show_quest_board()
             continue;
         }
         rc = qdata(0, cnt);
-        if (cdata[rc].state() != character::state::alive)
+        if (cdata[rc].state() != character::state_t::alive)
         {
             continue;
         }
@@ -5308,7 +5308,7 @@ label_1978_internal:
         efid = 619;
         magic();
         tc = client;
-        if (cdata[0].state() == character::state::alive)
+        if (cdata[0].state() == character::state_t::alive)
         {
             quest_teleport = true;
             talk_to_npc();
@@ -5358,8 +5358,8 @@ int show_hire_menu()
     {
         if (allyctrl == 2)
         {
-            if (cdata[cnt].state() != character::state::pet_dead
-                && cdata[cnt].state() != character::state::villager_dead)
+            if (cdata[cnt].state() != character::state_t::pet_dead
+                && cdata[cnt].state() != character::state_t::villager_dead)
             {
                 continue;
             }
@@ -5371,13 +5371,13 @@ int show_hire_menu()
                 if (allyctrl == 1)
                 {
                     if (cdata[cnt].state()
-                        != character::state::servant_being_selected)
+                        != character::state_t::servant_being_selected)
                     {
                         continue;
                     }
                 }
             }
-            else if (cdata[cnt].state() != character::state::alive)
+            else if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -5679,7 +5679,7 @@ void list_adventurers()
     cs_bk = -1;
     for (int cnt = 0; cnt < 56; ++cnt)
     {
-        if (cdata[cnt].state() == character::state::empty)
+        if (cdata[cnt].state() == character::state_t::empty)
         {
             continue;
         }
@@ -5756,7 +5756,7 @@ label_1990_internal:
         {
             s = i18n::s.get("core.locale.ui.adventurers.unknown");
         }
-        if (cdata[i].state() == character::state::adventurer_dead)
+        if (cdata[i].state() == character::state_t::adventurer_dead)
         {
             s = i18n::s.get("core.locale.ui.adventurers.hospital");
         }
@@ -6578,20 +6578,20 @@ int ctrl_ally()
     }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() == character::state::empty)
+        if (cdata[cnt].state() == character::state_t::empty)
         {
             continue;
         }
         if (allyctrl == 1)
         {
-            if (cdata[cnt].state() == character::state::pet_dead)
+            if (cdata[cnt].state() == character::state_t::pet_dead)
             {
                 continue;
             }
         }
         if (allyctrl == 3 || allyctrl == 5)
         {
-            if (cdata[cnt].state() != character::state::alive)
+            if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -6642,7 +6642,7 @@ int ctrl_ally()
                 continue;
             }
             i = list(0, cnt);
-            if (cdata[i].state() != character::state::pet_dead)
+            if (cdata[i].state() != character::state_t::pet_dead)
             {
                 followerin(i) = 1;
                 ++p;
@@ -6828,11 +6828,11 @@ label_1961_internal:
                     && gdata_current_map == mdata_t::map_id_t::your_home))
             {
                 s = u8"Lv."s + cdata[i].level + u8" "s;
-                if (cdata[i].state() == character::state::pet_dead)
+                if (cdata[i].state() == character::state_t::pet_dead)
                 {
                     s += i18n::s.get("core.locale.ui.ally_list.dead");
                 }
-                if (cdata[i].state() == character::state::pet_waiting)
+                if (cdata[i].state() == character::state_t::pet_waiting)
                 {
                     if (allyctrl == 0)
                     {
@@ -6846,7 +6846,7 @@ label_1961_internal:
                             + i18n::s.get("core.locale.ui.ally_list.waiting");
                     }
                 }
-                if (cdata[i].state() == character::state::alive)
+                if (cdata[i].state() == character::state_t::alive)
                 {
                     if (allyctrl == 0)
                     {
@@ -6971,7 +6971,7 @@ label_1961_internal:
                 snd(20);
                 return 1;
             }
-            if (cdata[p].state() == character::state::pet_dead)
+            if (cdata[p].state() == character::state_t::pet_dead)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.ally_list.pet_arena.is_dead", cdata[p(0)]));
