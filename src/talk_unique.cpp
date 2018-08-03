@@ -777,7 +777,7 @@ talk_result_t talk_unique_lomias()
     if (chatval == 2)
     {
         tc = chara_find(33);
-        if (tc == 0 || cdata[tc].state() != character::state::alive)
+        if (tc == 0 || cdata[tc].state() != character::state_t::alive)
         {
             tc = chara_find(34);
             hostileaction(0, tc);

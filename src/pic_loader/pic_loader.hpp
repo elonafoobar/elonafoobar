@@ -26,7 +26,7 @@ namespace elona
  * out as follows:
  *
  * - 0: render target
- * - 1: items
+ * - 1: item work buffer (used to be for all items)
  * - 2: interface in casino/tcg
  * - 3: general interface
  * - 4: interface backgrounds

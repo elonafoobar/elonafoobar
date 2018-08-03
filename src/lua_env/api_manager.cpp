@@ -51,7 +51,7 @@ bool Chara::is_alive(lua_character_handle handle)
     try
     {
         auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-        return chara.state() == character::state::alive;
+        return chara.state() == character::state_t::alive;
     }
     catch (...)
     {
@@ -88,7 +88,7 @@ bool Chara::flag(lua_character_handle handle, int flag)
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if (elona::cdata[0].state() == character::state::empty)
+    if (elona::cdata[0].state() == character::state_t::empty)
     {
         return sol::nullopt;
     }
@@ -1180,7 +1180,7 @@ void Debug::dump_characters()
     ELONA_LOG("===== Charas =====")
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (elona::cdata[cnt].state() != character::state::empty)
+        if (elona::cdata[cnt].state() != character::state_t::empty)
             ELONA_LOG(
                 elona::cdata[cnt].index
                 << ") Name: " << elona::name(cnt)
@@ -1271,7 +1271,7 @@ bool LuaCharacter::recruit_as_ally(character& self)
 {
     // can't use Chara methods because they take a handle...
     // TODO: DRY (would need to be far-reaching)
-    if (self.state() == character::state::empty
+    if (self.state() == character::state_t::empty
         || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;

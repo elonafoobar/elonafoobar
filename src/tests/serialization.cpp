@@ -25,7 +25,7 @@ TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 
     save_and_reload();
 
-    REQUIRE(elona::cdata(index).state() != character::state::empty);
+    REQUIRE(elona::cdata(index).state() != character::state_t::empty);
     REQUIRE(elona::cdata(index).position.x == 4);
     REQUIRE(elona::cdata(index).position.y == 8);
     REQUIRE(elona::cdata(index).id == 3);

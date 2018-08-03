@@ -339,7 +339,8 @@ void proc_event()
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
-        cdata[evdata1(evnum - (evnum != 0) * 1)].state = 0;
+        cdata[evdata1(evnum - (evnum != 0) * 1)].set_state(
+            character::state_t::empty);
         flt();
         itemcreate(
             -1,
@@ -351,7 +352,7 @@ void proc_event()
         tc = chara_find(221);
         if (tc != 0)
         {
-            if (cdata[tc].state() == character::state::alive)
+            if (cdata[tc].state() == character::state_t::alive)
             {
                 txtef(4);
                 txt(i18n::s.get("core.locale.event.pael"));
@@ -436,7 +437,7 @@ void proc_event()
             {
                 i = rnd(39) + 16;
                 if (cdata[i].state()
-                        == character::state::adventurer_in_other_map
+                        == character::state_t::adventurer_in_other_map
                     && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
@@ -477,7 +478,7 @@ void proc_event()
                 txt(i18n::s.get("core.locale.event.guest_already_left"));
                 break;
             }
-            cdata[tc].state = 1;
+            cdata[tc].set_state(character::state_t::alive);
             rc = tc;
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
@@ -496,7 +497,7 @@ void proc_event()
             {
                 c = cnt - 1;
             }
-            if (cdata[c].state() != character::state::alive)
+            if (cdata[c].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -578,7 +579,7 @@ void proc_event()
         i = 0;
         for (int cc = 0; cc < 16; ++cc)
         {
-            if (cdata[cc].state() != character::state::alive)
+            if (cdata[cc].state() != character::state_t::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -591,7 +592,7 @@ void proc_event()
         i = 0;
         for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
-            if (cdata[cc].state() != character::state::alive)
+            if (cdata[cc].state() != character::state_t::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -622,7 +623,7 @@ void proc_event()
             tc = 0;
             for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
-                if (cdata[cc].state() != character::state::alive)
+                if (cdata[cc].state() != character::state_t::alive)
                     continue;
                 if (cdata[cc].character_role == 18)
                 {
@@ -896,7 +897,7 @@ void proc_event()
         for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
              ++cc)
         {
-            if (cdata[cc].state() == character::state::alive)
+            if (cdata[cc].state() == character::state_t::alive)
             {
                 cdata[cc].relationship = -3;
                 cdata[cc].enemy_id = 0;

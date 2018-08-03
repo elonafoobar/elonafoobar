@@ -1911,7 +1911,7 @@ turn_result_t do_use_command()
         }
         if (tc > 0 && tc < 16)
         {
-            if (cdata[tc].state() == character::state::alive)
+            if (cdata[tc].state() == character::state_t::alive)
             {
                 gdata(94) = 0;
                 if (cdata[tc].has_been_used_stethoscope() == 1)
@@ -2625,7 +2625,7 @@ turn_result_t do_open_command()
                 if (gdata_released_fire_giant == 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::state::alive)
+                        == character::state_t::alive)
                     {
                         tc = chara_find(203);
                         if (tc != 0)
@@ -2972,7 +2972,7 @@ turn_result_t do_use_stairs_command(int val0)
                     -7);
                 msg_halt();
             }
-            if (cdata[0].state() == character::state::empty)
+            if (cdata[0].state() == character::state_t::empty)
             {
                 return turn_result_t::turn_begin;
             }
