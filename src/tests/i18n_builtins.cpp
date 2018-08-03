@@ -258,8 +258,9 @@ TEST_CASE("test i18n builtin: you()", "[I18N: Builtins]")
     SECTION("Japanese")
     {
         testing::set_japanese();
+        REQUIRE(i18n::fmt_hil("${you()}") == u8"あなた");
         REQUIRE(
-            i18n::fmt_hil("うわああ！${you()}は階段から足を踏み外した。")
+            i18n::fmt_hil(u8"うわああ！${you()}は階段から足を踏み外した。")
             == u8"うわああ！あなたは階段から足を踏み外した。");
     }
     SECTION("English")

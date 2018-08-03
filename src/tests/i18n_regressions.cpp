@@ -14,6 +14,7 @@ using namespace elona;
 TEST_CASE("test foodname", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
+    testing::set_japanese();
 
     {
         item& item = testing::create_item(260);

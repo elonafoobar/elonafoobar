@@ -6403,7 +6403,7 @@ void initialize_adata()
     p = mdata_t::map_id_t::test_world;
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::field;
+    adata(0, p) = mdata_t::map_type_t::world_map;
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
