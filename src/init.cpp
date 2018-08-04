@@ -435,13 +435,30 @@ void initialize_config(const fs::path& config_file)
     load_config(config_file);
 }
 
+void initialize_i18n()
+{
+    const std::string language = jp ? "jp" : "en";
+    i18n::load(language);
+
+    // Load built-in translations in data/locale/(jp|en).
+    std::vector<i18n::store::location> locations{
+        {filesystem::dir::locale() / language, "core"}};
+
+    // Load translations for each mod.
+    for (const auto& pair : lua::lua->get_mod_manager())
+    {
+        const auto& mod = pair.second;
+        if (mod->path)
+        {
+            locations.emplace_back(*mod->path / "locale" / language, mod->name);
+        }
+    }
+    i18n::s.init(locations);
+}
+
 void initialize_elona()
 {
-    i18n::load(jp ? u8"jp" : u8"en");
-    i18n::s.init(
-        jp ? filesystem::dir::locale() / "jp"
-           : filesystem::dir::locale() / "en");
-
+    initialize_i18n();
     initialize_ui_constants();
     gsel(0);
     boxf();

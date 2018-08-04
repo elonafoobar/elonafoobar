@@ -65,8 +65,32 @@ enum class mod_loading_stage_t : unsigned
  */
 class mod_manager
 {
+    using mod_storage_type =
+        std::unordered_map<std::string, std::unique_ptr<mod_info>>;
+
 public:
+    using iterator = mod_storage_type::iterator;
+    using const_iterator = mod_storage_type::const_iterator;
+
     explicit mod_manager(lua_env*);
+
+    // Iterator for mods.
+    iterator begin()
+    {
+        return mods.begin();
+    }
+    iterator end()
+    {
+        return mods.end();
+    }
+    const_iterator begin() const
+    {
+        return mods.begin();
+    }
+    const_iterator end() const
+    {
+        return mods.end();
+    }
 
     /***
      * Scans and loads all mods at the the given mods/ root directory,
@@ -238,7 +262,7 @@ private:
     }
 
 private:
-    std::unordered_map<std::string, std::unique_ptr<mod_info>> mods;
+    mod_storage_type mods;
 
     /***
      * The loading stage the environment is currently in. Used for
