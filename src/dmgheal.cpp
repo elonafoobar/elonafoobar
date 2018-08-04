@@ -96,7 +96,7 @@ int dmghp(
     {
         attacker_is_player = false;
     }
-    if (victim.state != 1)
+    if (victim.state() != character::state_t::alive)
     {
         end_dmghp(victim);
         return 0;
@@ -262,7 +262,7 @@ int dmghp(
                 {
                     continue;
                 }
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -858,18 +858,18 @@ int dmghp(
         }
         if (victim.character_role == 0)
         {
-            victim.state = 0;
+            victim.set_state(character::state_t::empty);
         }
         else if (victim.character_role == 13)
         {
-            victim.state = 4;
+            victim.set_state(character::state_t::adventurer_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
         }
         else
         {
-            victim.state = 2;
+            victim.set_state(character::state_t::villager_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
@@ -878,16 +878,16 @@ int dmghp(
             if (victim < 16)
             {
                 chara_mod_impression(victim, -10);
-                victim.state = 6;
+                victim.set_state(character::state_t::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
                 {
                     event_add(15, victim.id);
-                    victim.state = 0;
+                    victim.set_state(character::state_t::empty);
                 }
                 if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    victim.state = 0;
+                    victim.set_state(character::state_t::empty);
                 }
             }
         }
@@ -1068,7 +1068,7 @@ int dmghp(
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
-        if (victim.state == 0)
+        if (victim.state() == character::state_t::empty)
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
@@ -1116,7 +1116,7 @@ int dmghp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                if (cdata[chara_index].state != 1)
+                if (cdata[chara_index].state() != character::state_t::alive)
                 {
                     continue;
                 }

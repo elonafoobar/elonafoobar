@@ -1990,7 +1990,7 @@ void make_sound(
 {
     for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -2143,7 +2143,7 @@ void incognitobegin()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -2174,7 +2174,7 @@ void incognitoend()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -3450,7 +3450,7 @@ void label_15380()
     cdata[rc].mp = cdata[rc].max_mp / 3;
     cdata[rc].sp = cdata[rc].max_sp / 3;
     cdata[rc].insanity = 0;
-    cdata[rc].state = 1;
+    cdata[rc].set_state(character::state_t::alive);
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
@@ -3577,7 +3577,7 @@ int convertartifact(int prm_930, int prm_931)
         tc_at_m163 = inv_getowner(cnt);
         if (tc_at_m163 != -1)
         {
-            if (cdata[tc_at_m163].state == 0
+            if (cdata[tc_at_m163].state() == character::state_t::empty
                 || cdata[tc_at_m163].character_role == 13)
             {
                 continue;
@@ -4881,7 +4881,7 @@ void food_gets_rotten()
         else
         {
             p = cnt;
-            if (cdata[p].state == 0)
+            if (cdata[p].state() == character::state_t::empty)
             {
                 continue;
             }
@@ -5642,7 +5642,7 @@ turn_result_t exit_map()
             fixstart = 1;
         }
     }
-    if (cdata[0].state == 0)
+    if (cdata[0].state() == character::state_t::empty)
     {
         rc = 0;
         label_1540();
@@ -5750,11 +5750,11 @@ turn_result_t exit_map()
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
         rowactend(cnt);
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
-            if (cdata[cnt].state == 8)
+            if (cdata[cnt].state() == character::state_t::pet_in_other_map)
             {
-                cdata[cnt].state = 1;
+                cdata[cnt].set_state(character::state_t::alive);
                 lua::lua->get_handle_manager().create_chara_handle(
                     cdata[cnt]); // TODO add separate Lua event for revival
             }
@@ -5765,7 +5765,7 @@ turn_result_t exit_map()
         {
             if (cdata[cnt].current_map != 0)
             {
-                cdata[cnt].state = 9;
+                cdata[cnt].set_state(character::state_t::pet_moving_to_map);
             }
         }
     }
@@ -5791,7 +5791,7 @@ turn_result_t exit_map()
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
-            if (cdata[cnt].state != 0)
+            if (cdata[cnt].state() != character::state_t::empty)
             {
                 --npcmemory(1, cdata[cnt].id);
             }
@@ -5830,10 +5830,10 @@ void prepare_charas_for_map_unload()
     // remove living adventurers from the map and set their states
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state == 1)
+        if (cdata[cnt].state() == character::state_t::alive)
         {
             map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
-            cdata[cnt].state = 3;
+            cdata[cnt].set_state(character::state_t::adventurer_in_other_map);
         }
     }
 }
@@ -5934,7 +5934,7 @@ void label_1745()
             {
                 rc = cnt;
                 label_1539();
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -5942,7 +5942,7 @@ void label_1745()
                 {
                     if (rnd(2))
                     {
-                        cdata[cnt].state = 0;
+                        cdata[cnt].set_state(character::state_t::empty);
                         map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
                             0;
                     }
@@ -5995,13 +5995,13 @@ void label_1745()
                  cnt < ELONA_MAX_CHARACTERS;
                  ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state_t::alive)
                 {
                     continue;
                 }
                 if (cdata[cnt].is_temporary() == 1)
                 {
-                    cdata[cnt].state = 0;
+                    cdata[cnt].set_state(character::state_t::empty);
                     map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
                 }
             }
@@ -6045,7 +6045,7 @@ void label_1745()
                      cnt < ELONA_MAX_CHARACTERS;
                      ++cnt)
                 {
-                    if (cdata[cnt].state != 1)
+                    if (cdata[cnt].state() != character::state_t::alive)
                     {
                         continue;
                     }
@@ -7244,7 +7244,7 @@ void label_1754()
     {
         if (gdata_released_fire_giant == 1)
         {
-            if (cdata[gdata_fire_giant].state == 1)
+            if (cdata[gdata_fire_giant].state() == character::state_t::alive)
             {
                 if (gdata_crowd_density < 70)
                 {
@@ -9323,7 +9323,7 @@ void savecycle()
 
 int label_2072()
 {
-    if (cdata[cdata[cc].enemy_id].state != 1)
+    if (cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
     {
         cdata[cc].enemy_id = 0;
     }
@@ -9460,7 +9460,7 @@ void label_2076()
     {
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -9929,7 +9929,7 @@ void dump_player_info()
     noteadd(""s);
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state == 0)
+        if (cdata[cnt].state() == character::state_t::empty)
         {
             continue;
         }
@@ -10000,7 +10000,7 @@ void label_2088()
 {
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state == 1)
+        if (cdata[cnt].state() == character::state_t::alive)
         {
             if (cdata[cnt].position.x < 0
                 || cdata[cnt].position.x >= mdata_map_width
@@ -10328,7 +10328,7 @@ void load_gene_files()
     DIM2(spact, 500);
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        cdata[cnt].state = 0;
+        cdata[cnt].set_state(character::state_t::empty);
     }
     sdata.copy(56, 0);
     sdata.clear(0);
@@ -11215,7 +11215,7 @@ void label_2151()
         {
             if (cdata[cnt].has_made_gene() == 1)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == character::state_t::alive)
                 {
                     tc = cnt;
                     break;
@@ -11834,7 +11834,7 @@ int label_2168()
             }
         }
         dmgmp(cc, mp);
-        if (cdata[cc].state != 1)
+        if (cdata[cc].state() != character::state_t::alive)
         {
             efsource = 0;
             return 1;
@@ -11921,7 +11921,7 @@ int label_2168()
         for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
         {
             magic();
-            if (cdata[tc].state != 1)
+            if (cdata[tc].state() != character::state_t::alive)
             {
                 int stat = label_2072();
                 if (stat == 0)
@@ -12379,7 +12379,7 @@ int label_2174()
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
-                    if (cdata[cnt].state == 1)
+                    if (cdata[cnt].state() == character::state_t::alive)
                     {
                         if (cdata[cnt].relationship == 10)
                         {
@@ -13300,7 +13300,7 @@ turn_result_t do_bash()
                     cdata[cc],
                     cdata[tc]));
                 dmghp(tc, sdata(10, cc) * 5, cc);
-                if (cdata[tc].state == 1)
+                if (cdata[tc].state() == character::state_t::alive)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.bash.choked.spits", cdata[tc]));
@@ -14576,7 +14576,7 @@ void do_ranged_attack()
             ele = 0;
             extraattack = 0;
             do_physical_attack();
-            if (cdata[tc].state != 1)
+            if (cdata[tc].state() != character::state_t::alive)
             {
                 int stat = label_2072();
                 if (stat == 0)
@@ -14741,11 +14741,11 @@ void do_physical_attack()
     int attackdmg;
     int expmodifer = 0;
 label_22191_internal:
-    if (cdata[cc].state != 1)
+    if (cdata[cc].state() != character::state_t::alive)
     {
         return;
     }
-    if (cdata[tc].state != 1)
+    if (cdata[tc].state() != character::state_t::alive)
     {
         return;
     }
@@ -14953,7 +14953,7 @@ label_22191_internal:
                     skillexp(301, 0, 30 / expmodifer, 0, 5);
                 }
             }
-            if (cdata[tc].state == 1)
+            if (cdata[tc].state() == character::state_t::alive)
             {
                 skillexp(
                     chara_armor_class(tc),
@@ -15126,7 +15126,7 @@ label_22191_internal:
     rowact_check(tc);
     if (attackskill != 106)
     {
-        if (cdata[tc].state != 1)
+        if (cdata[tc].state() != character::state_t::alive)
         {
             cw = attackitem;
             if (ibit(10, cw))
@@ -15190,7 +15190,7 @@ void proc_weapon_enchantments()
         {
             p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
             healmp(cc, p / 5);
-            if (cdata[tc].state != 1)
+            if (cdata[tc].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -15261,7 +15261,7 @@ void proc_weapon_enchantments()
                     continue;
                 }
                 ele = enc;
-                if (cdata[tc].state != 1)
+                if (cdata[tc].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -15278,7 +15278,7 @@ void proc_weapon_enchantments()
             }
             if (i == 8)
             {
-                if (cdata[tc].state != 1)
+                if (cdata[tc].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -15317,7 +15317,7 @@ void proc_weapon_enchantments()
     }
     if (ammoproc == 3)
     {
-        if (cdata[tc].state == 1)
+        if (cdata[tc].state() == character::state_t::alive)
         {
             gdata(809) = 1;
             dmghp(

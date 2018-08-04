@@ -420,7 +420,8 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state == 1 || cc.state == 6)
+        if ((cc.state() == character::state_t::alive
+             || cc.state() == character::state_t::pet_dead)
             && cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
@@ -430,9 +431,10 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 name,
                 x,
                 y,
-                cc.state == 1 ? snail::color{255, 255, 255}
-                              : snail::color{255, 35, 35});
-            if (cc.state == 1)
+                cc.state() == character::state_t::alive
+                    ? snail::color{255, 255, 255}
+                    : snail::color{255, 35, 35});
+            if (cc.state() == character::state_t::alive)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;

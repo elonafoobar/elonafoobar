@@ -368,7 +368,8 @@ turn_result_t show_house_board()
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
-            if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
+            if (cdata[cnt].state() == character::state_t::alive
+                || cdata[cnt].state() == character::state_t::villager_dead)
             {
                 if (cdata[cnt].character_role != 0)
                 {
@@ -469,7 +470,8 @@ void prompt_hiring()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
+        if (cdata[cnt].state() == character::state_t::alive
+            || cdata[cnt].state() == character::state_t::villager_dead)
         {
             if (cdata[cnt].character_role != 0)
             {
@@ -505,7 +507,7 @@ void prompt_hiring()
         {
             continue;
         }
-        cdata[rc].state = 10;
+        cdata[rc].set_state(character::state_t::servant_being_selected);
         cdata[rc].character_role = isethirerole(hire);
         if (cdata[rc].id == 1)
         {
@@ -556,7 +558,8 @@ void prompt_hiring()
             {
                 continue;
             }
-            if (cdata[cnt].state != 0 && cdatan(0, cnt) == cdatan(0, rc))
+            if (cdata[cnt].state() != character::state_t::empty
+                && cdatan(0, cnt) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
             }
@@ -580,7 +583,7 @@ void prompt_hiring()
             snd(12);
             cdata[0].gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
-            cdata[tc].state = 1;
+            cdata[tc].set_state(character::state_t::alive);
             lua::lua->get_handle_manager().create_chara_handle(cdata[tc]);
             txtef(2);
             txt(i18n::s.get(
@@ -590,7 +593,7 @@ void prompt_hiring()
     }
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state == 10)
+        if (cdata[cnt].state() == character::state_t::servant_being_selected)
         {
             chara_vanquish(cnt);
         }
@@ -1041,7 +1044,7 @@ void show_shop_log()
         {
             for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state_t::alive)
                 {
                     continue;
                 }
@@ -1427,7 +1430,7 @@ void update_ranch()
     livestock = 0;
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
@@ -1480,7 +1483,7 @@ void update_ranch()
         egg = 0;
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state != 1)
+            if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }

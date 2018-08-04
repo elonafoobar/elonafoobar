@@ -26,7 +26,7 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].state = 0;
+            cdata[i].set_state(character::state_t::empty);
         }
         testing::post_run();
     }

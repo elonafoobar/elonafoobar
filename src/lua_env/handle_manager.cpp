@@ -41,7 +41,7 @@ void handle_manager::bind(lua_env& lua)
 
 void handle_manager::create_chara_handle(character& chara)
 {
-    if (chara.state == 0)
+    if (chara.state() == character::state_t::empty)
     {
         return;
     }
@@ -61,13 +61,13 @@ void handle_manager::create_item_handle(item& item)
 
 void handle_manager::remove_chara_handle(character& chara)
 {
-    if (chara.state == 0)
+    if (chara.state() == character::state_t::empty)
     {
         return;
     }
 
-    // TODO should chara.state == 0 mean the handle is invalid?
-    // Some characters can die and respawn again.
+    // TODO should chara.state() == character::state_t::empty mean the handle is
+    // invalid? Some characters can die and respawn again.
     remove_handle(chara);
 }
 
@@ -80,7 +80,7 @@ void handle_manager::remove_item_handle(item& item)
 // Handlers for brand-new instances of characters/objects being created
 void handle_manager::create_chara_handle_run_callbacks(character& chara)
 {
-    assert(chara.state != 0);
+    assert(chara.state() != character::state_t::empty);
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);

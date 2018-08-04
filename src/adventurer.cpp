@@ -40,7 +40,7 @@ void create_adventurer()
     cdata[rc].relationship = 0;
     cdata[rc].original_relationship = 0;
     cdata[rc]._156 = 100;
-    cdata[rc].state = 3;
+    cdata[rc].set_state(character::state_t::adventurer_in_other_map);
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
     cdatan(0, rc) = randomname();
     cdatan(1, rc) = random_title();
@@ -204,12 +204,12 @@ void label_2662()
         }
         if (cdata[rc].current_map != gdata_current_map)
         {
-            if (cdata[rc].state == 5)
+            if (cdata[rc].state() == character::state_t::adventurer_empty)
             {
                 create_adventurer();
                 continue;
             }
-            if (cdata[rc].state == 4)
+            if (cdata[rc].state() == character::state_t::adventurer_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -218,13 +218,14 @@ void label_2662()
                     if (rnd(3) == 0)
                     {
                         addnews(5, rc);
-                        cdata[rc].state = 0;
+                        cdata[rc].set_state(character::state_t::empty);
                         create_adventurer();
                     }
                     else
                     {
                         addnews(3, rc);
-                        cdata[rc].state = 3;
+                        cdata[rc].set_state(
+                            character::state_t::adventurer_in_other_map);
                     }
                     continue;
                 }

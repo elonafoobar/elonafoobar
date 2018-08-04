@@ -516,7 +516,7 @@ turn_result_t do_pray()
             p = 0;
             for (int cnt = 1; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state != 0)
+                if (cdata[cnt].state() != character::state_t::empty)
                 {
                     if (cdatan(2, cnt) == u8"servant"s)
                     {

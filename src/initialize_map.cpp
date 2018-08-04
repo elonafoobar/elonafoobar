@@ -69,9 +69,9 @@ label_17401:
         {
             if (cdata[cnt].current_map == gdata_current_map)
             {
-                if (cdata[cnt].state == 9)
+                if (cdata[cnt].state() == character::state_t::pet_moving_to_map)
                 {
-                    cdata[cnt].state = 1;
+                    cdata[cnt].set_state(character::state_t::alive);
                     lua::lua->get_handle_manager().create_chara_handle(
                         cdata[cnt]);
                 }
@@ -136,7 +136,7 @@ label_1741_internal:
         DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state == 0)
+            if (cdata[cnt].state() == character::state_t::empty)
             {
                 continue;
             }
@@ -173,7 +173,7 @@ label_1741_internal:
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        cdata[cnt].state = 0;
+        cdata[cnt].set_state(character::state_t::empty);
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
@@ -776,7 +776,7 @@ label_1741_internal:
         map_placeplayer();
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[cnt].state == 1)
+            if (cdata[cnt].state() == character::state_t::alive)
             {
                 if (cdata[cnt].relationship == 10)
                 {
@@ -784,7 +784,8 @@ label_1741_internal:
                     {
                         map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
                             0;
-                        cdata[cnt].state = 8;
+                        cdata[cnt].set_state(
+                            character::state_t::pet_in_other_map);
                     }
                 }
             }
@@ -838,13 +839,13 @@ label_1741_internal:
             }
             if (followerin(cnt) == 0)
             {
-                cdata[cnt].state = 6;
+                cdata[cnt].set_state(character::state_t::pet_dead);
                 cdata[cnt].position.x = 0;
                 cdata[cnt].position.y = 0;
             }
             else
             {
-                cdata[cnt].state = 1;
+                cdata[cnt].set_state(character::state_t::alive);
             }
         }
         map_placeplayer();
@@ -1626,7 +1627,7 @@ label_1741_internal:
                  cnt < ELONA_MAX_CHARACTERS;
                  ++cnt)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == character::state_t::alive)
                 {
                     if (cdata[cnt].is_quest_target() == 1)
                     {
@@ -2673,7 +2674,7 @@ label_1741_internal:
         mapupdate = 0;
         for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
-            if (cdata[cnt].state == 0)
+            if (cdata[cnt].state() == character::state_t::empty)
             {
                 continue;
             }
@@ -2721,7 +2722,7 @@ label_1742_internal:
     }
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state != 3)
+        if (cdata[cnt].state() != character::state_t::adventurer_in_other_map)
         {
             continue;
         }
@@ -2751,7 +2752,7 @@ label_1742_internal:
             continue;
         }
         rc = cnt;
-        cdata[rc].state = 1;
+        cdata[rc].set_state(character::state_t::alive);
         lua::lua->get_handle_manager().create_chara_handle(cdata[rc]);
         if (cdata[cnt].is_contracting() == 1)
         {
@@ -2849,7 +2850,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state == 2)
+            if (cdata[rc].state() == character::state_t::villager_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -2862,7 +2863,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state != 1)
+            if (cdata[rc].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -2989,7 +2990,7 @@ label_1744_internal:
             cdata[cnt].hate = 0;
         }
         cdata[cnt].vision_flag = 0;
-        if (cdata[cnt].state != 0)
+        if (cdata[cnt].state() != character::state_t::empty)
         {
             modify_crowd_density(cnt, 1);
         }
@@ -3340,7 +3341,7 @@ label_1744_internal:
                     {
                         if (cdata[cnt].is_escorted() == 1)
                         {
-                            if (cdata[cnt].state == 1)
+                            if (cdata[cnt].state() == character::state_t::alive)
                             {
                                 if (cdata[cnt].id == qdata(13, cnt2))
                                 {
@@ -3468,7 +3469,7 @@ label_1744_internal:
                 + 1;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cnt].state() != character::state_t::alive)
                 {
                     continue;
                 }

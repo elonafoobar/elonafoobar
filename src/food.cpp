@@ -280,7 +280,7 @@ void chara_vomit(int prm_876)
 
 void eatstatus(curse_state_t curse_state, int eater)
 {
-    if (cdata[eater].state != 1)
+    if (cdata[eater].state() != character::state_t::alive)
         return;
 
     if (is_cursed(curse_state))
@@ -1260,7 +1260,7 @@ void apply_general_eating_effect(int cieat)
                 "core.locale.food.effect.poisoned.dialog", rnd(2)));
         }
         dmghp(cc, rnd(250) + 250, -4);
-        if (cdata[cc].state != 1)
+        if (cdata[cc].state() != character::state_t::alive)
         {
             if (cc != 0)
             {

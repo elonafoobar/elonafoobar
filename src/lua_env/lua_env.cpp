@@ -50,7 +50,7 @@ void lua_env::clear()
 
     for (int i = 0; i < ELONA_MAX_CHARACTERS; i++)
     {
-        if (cdata[i].state != 0)
+        if (cdata[i].state() != character::state_t::empty)
         {
             handle_mgr->remove_chara_handle(cdata[i]);
         }

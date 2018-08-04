@@ -1208,7 +1208,8 @@ void cell_draw()
             int py_ = 0;
 
             // Spot light for PC (bottom a third)
-            if (reph(3) == y && x_ == repw(2) && cdata[0].state == 1)
+            if (reph(3) == y && x_ == repw(2)
+                && cdata[0].state() == character::state_t::alive)
             {
                 px_ =
                     (cdata[0].position.x - scx) * inf_tiles + inf_screenx - 48;
@@ -1226,7 +1227,8 @@ void cell_draw()
                 gcopy(3, 800, 208, 144, 48);
             }
 
-            if (reph(2) == y && x_ == repw(2) && cdata[0].state == 1)
+            if (reph(2) == y && x_ == repw(2)
+                && cdata[0].state() == character::state_t::alive)
             {
                 ground_ = map(cdata[0].position.x, cdata[0].position.y, 0);
                 px_ = (cdata[0].position.x - scx) * inf_tiles + inf_screenx;

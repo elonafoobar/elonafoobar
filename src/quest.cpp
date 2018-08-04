@@ -45,7 +45,7 @@ void quest_place_target()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state == 1)
+        if (cdata[cnt].state() == character::state_t::alive)
         {
             cdata[cnt].is_quest_target() = true;
             cdata[cnt].relationship = -3;
@@ -63,7 +63,7 @@ int quest_targets_remaining()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state == 1)
+        if (cdata[cnt].state() == character::state_t::alive)
         {
             if (cdata[cnt].is_quest_target() == 1)
             {
@@ -179,7 +179,7 @@ void quest_check()
                  cnt < ELONA_MAX_CHARACTERS;
                  ++cnt)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == character::state_t::alive)
                 {
                     ++p_at_m119;
                 }
@@ -445,7 +445,7 @@ void quest_on_map_initialize()
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
-        if (cdata[cnt].state == 0)
+        if (cdata[cnt].state() == character::state_t::empty)
         {
             continue;
         }
@@ -549,7 +549,7 @@ int quest_generate()
             {
                 continue;
             }
-            if (cdata[n].state != 1)
+            if (cdata[n].state() != character::state_t::alive)
             {
                 continue;
             }
@@ -1073,7 +1073,7 @@ void quest_failed(int val0)
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;
-                            if (cdata[tc].state == 1)
+                            if (cdata[tc].state() == character::state_t::alive)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
@@ -1112,7 +1112,7 @@ void quest_failed(int val0)
                                 txt(s);
                                 dmghp(tc, 999999, p);
                             }
-                            cdata[tc].state = 0;
+                            cdata[tc].set_state(character::state_t::empty);
                             break;
                         }
                     }

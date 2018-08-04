@@ -930,7 +930,7 @@ void miracle_animation::do_play()
     am = 0;
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }

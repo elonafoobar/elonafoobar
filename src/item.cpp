@@ -270,7 +270,7 @@ int itemusingfind(int ci, bool disallow_pc)
 {
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state != 1)
+        if (cdata[cnt].state() != character::state_t::alive)
         {
             continue;
         }
