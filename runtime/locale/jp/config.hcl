@@ -330,7 +330,7 @@ locale {
             }
 
             foobar {
-                name = "拡張設定(Foobar)"
+                name = "拡張設定(foobar)"
 
                 hp_bar_position {
                     name = "ペットのHPバー"

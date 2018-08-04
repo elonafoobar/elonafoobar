@@ -388,7 +388,7 @@ DOC
             }
 
             foobar {
-                name = "Ex setting(Foobar)"
+                name = "Ex setting(foobar)"
                 doc = "Extra config settings added in Elona foobar."
 
                 hp_bar_position {

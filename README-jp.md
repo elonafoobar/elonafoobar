@@ -1,4 +1,4 @@
-# Elona Foobar [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status] [![Travis CI Build Status][travis-build-status-svg]][travis-build-status]
+# Elona foobar [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status] [![Travis CI Build Status][travis-build-status-svg]][travis-build-status]
 
 * Elonaのヴァリアントの一つだ
 * それはC++で作られている
@@ -71,7 +71,7 @@ Visual Studioを使ってデバッグする場合は、`bin\Elona_foobar.sln`を
 
 # How To Play
 
-1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、Foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはFoobarで更新されています。
+1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはfoobarで更新されています。
 2. `bin/Elona_foobar`(Linux)、`bin/Elona_foobar.app`(macOS)、`bin\Debug\Elona_foobar.exe`(Windows)を実行してください
 
 
