@@ -229,8 +229,6 @@ void run_random_event(int id, int luck_threshold)
         }
     }
 
-    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id);
-    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id);
     std::string event_bg;
 
     switch (id)
@@ -447,6 +445,8 @@ void run_random_event(int id, int luck_threshold)
         break;
     }
 
+    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id);
+    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id);
     for (int cnt = 0; cnt < listmax; cnt++)
     {
         list(0, cnt) = cnt;
