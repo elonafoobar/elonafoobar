@@ -301,9 +301,21 @@ void fmt_internal(
     int count,
     std::vector<optional<std::string>>& formatted)
 {
-    UNUSED(ctxt);
     UNUSED(count);
-    UNUSED(formatted);
+
+    for (size_t i = 0; i < formatted.size(); i++)
+    {
+        hil::Value v = ctxt.hilParts.at(i);
+        if (v.is<hil::FunctionCall>())
+        {
+            hil::FunctionCall func = v.as<hil::FunctionCall>();
+
+            if (func.args.size() == 0)
+            {
+                formatted.at(i) = format_builtins_argless(func);
+            }
+        }
+    }
 }
 
 
@@ -409,10 +421,9 @@ std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
     return fmt_interpolate_converted(ctxt, formatted);
 }
 
-
 // For testing use
-template <typename Head, typename... Tail>
-std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
+template <typename... Tail>
+std::string fmt_hil(const std::string& hil, Tail&&... tail)
 {
     std::stringstream ss(hil);
 
@@ -427,8 +438,9 @@ std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
         return p.errorReason;
     }
 
-    return fmt_with_context(p.context, head, std::forward<Tail>(tail)...);
+    return fmt_with_context(p.context, std::forward<Tail>(tail)...);
 }
+
 
 
 class store

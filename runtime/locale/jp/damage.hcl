@@ -35,7 +35,7 @@ locale {
             attacks_with = "${kare_wa(_1)}${name(_3)}に${_4}で${_2}。"
             attacks_and = "${kare_wa(_1)}${name(_3)}を${_2}${_4}"
 
-            attacks_unarmed = "${kare_wa(_1)}${name(_3)}に${_2}"
+            attacks_unarmed = "${kare_wa(_3)}${name(_1)}に${_2}"
             attacks_unarmed_and = "${kare_wa(_1)}${name(_3)}を${_2}${_4}"
 
             and = ""
