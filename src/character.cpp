@@ -1805,7 +1805,7 @@ int chara_custom_talk(int cc, int talk_type)
 
         // Example:
         // %txtDialog,EN                              <- start_text
-        // Elona Foobar is one of the Elona variants.
+        // Elona foobar is one of the Elona variants.
         // Elona is one of the rogue-like games.
         // %END                                       <- end_text
         const auto number_of_lines_plus_1 = std::distance(start_text, end_text);

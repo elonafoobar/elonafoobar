@@ -45,7 +45,7 @@ main_menu_result_t main_title_menu()
     color(0, 0, 0);
     color(255, 255, 255);
     pos(20, 38);
-    mes(u8"  Variant Foobar version "s + latest_version.short_string()
+    mes(u8"  Variant foobar version "s + latest_version.short_string()
         + u8"  Developed by KI");
     color(0, 0, 0);
     if (jp)

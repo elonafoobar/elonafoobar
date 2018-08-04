@@ -809,7 +809,7 @@ static void initialize_screen()
     }
 
     title(
-        u8"Elona Foobar version "s + latest_version.short_string(),
+        u8"Elona foobar version "s + latest_version.short_string(),
         display_mode,
         config_get_fullscreen_mode());
 }
