@@ -20,6 +20,11 @@ namespace testing
 const std::string save_dir = "tests/data/save";
 const std::string player_id = "sav_testbed";
 
+fs::path mods_path()
+{
+    return filesystem::dir::exe() / "tests" / "data" / "mods";
+}
+
 void load_previous_savefile()
 {
     elona::testing::reset_state();
@@ -85,7 +90,7 @@ void load_translations(const std::string& hcl)
     i18n::s.clear();
 
     std::stringstream ss(hcl);
-    i18n::s.load(ss, "test.hcl");
+    i18n::s.load(ss, "test.hcl", "test");
 }
 
 void clear_lion_db()

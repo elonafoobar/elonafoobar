@@ -437,8 +437,23 @@ public:
     store(){};
     ~store() = default;
 
-    void init(const fs::path&);
-    void load(std::istream&, const std::string&);
+    struct location
+    {
+        location(fs::path locale_dir, std::string mod_name)
+            : mod_name(mod_name)
+            , locale_dir(locale_dir)
+        {
+        }
+
+        std::string mod_name;
+        fs::path locale_dir;
+    };
+
+    void init(const std::vector<store::location>&);
+
+    // For testing use.
+    void load(std::istream&, const std::string&, const std::string&);
+
     void clear()
     {
         storage.clear();
@@ -603,6 +618,8 @@ public:
     }
 
 private:
+    void load(const fs::path&, const std::string&);
+
     void visit(const hcl::Value&, const std::string&, const std::string&);
     void
     visit_object(const hcl::Object&, const std::string&, const std::string&);

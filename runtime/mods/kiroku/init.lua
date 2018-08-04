@@ -1,16 +1,17 @@
 local Event = Elona.require("Event")
 local GUI = Elona.require("GUI")
+local I18N = Elona.require("I18N")
 
 local function on_chara_killed()
    Store.global.killed = Store.global.killed + 1
    if Store.global.report then
-      GUI.txt("Killed: " .. Store.global.killed .. " so far. ")
+      GUI.txt(I18N.get("kiroku.locale.on_killed", Store.global.killed))
    end
 end
 
 local function on_map_initialized()
    if Store.global.report then
-      GUI.txt("You've killed " .. Store.global.killed .. " things so far. ")
+      GUI.txt(I18N.get("kiroku.locale.report", Store.global.killed))
    end
 end
 
@@ -18,7 +19,7 @@ local function init_store()
    if not Store.global.killed then
       Store.global.killed = 0
    end
-   Store.global.report = false
+   Store.global.report = true
 end
 
 Event.register(Event.EventKind.CharaKilled, on_chara_killed)

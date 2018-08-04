@@ -1,10 +1,13 @@
 #pragma once
 #include <functional>
+#include "filesystem.hpp"
 
 namespace elona
 {
 namespace testing
 {
+
+fs::path mods_path();
 
 void pre_init();
 void post_run();

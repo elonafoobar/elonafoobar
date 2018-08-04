@@ -20,33 +20,35 @@ namespace i18n
 
 i18n::store s;
 
-void store::init(const fs::path& path)
+void store::init(const std::vector<store::location>& locations)
 {
-    storage.clear();
-    for (const auto& entry :
-         filesystem::dir_entries{path, filesystem::dir_entries::type::file})
+    clear();
+
+    for (const auto& loc : locations)
     {
-#ifdef ELONA_OS_WINDOWS
-        std::ifstream ifs(entry.path().native());
-#else
-        std::ifstream ifs(
-            filesystem::make_preferred_path_in_utf8(entry.path()));
-#endif
-        load(ifs, entry.path().string());
+        if (fs::exists(loc.locale_dir))
+        {
+            load(loc.locale_dir, loc.mod_name);
+        }
     }
 }
 
-void store::load(std::istream& is, const std::string& hcl_file)
+void store::load(const fs::path& path, const std::string& mod_name)
 {
-    hcl::ParseResult parseResult = hcl::parse(is);
-
-    if (!parseResult.valid())
+    for (const auto& entry :
+         filesystem::dir_entries{path, filesystem::dir_entries::type::file})
     {
-        std::cerr << parseResult.errorReason << std::endl;
-        throw i18n_error(hcl_file, parseResult.errorReason);
+        std::ifstream ifs(entry.path().native());
+        load(ifs, entry.path().string(), mod_name);
     }
+}
 
-    const hcl::Value& value = parseResult.value;
+void store::load(
+    std::istream& is,
+    const std::string& hcl_file,
+    const std::string& mod_name)
+{
+    const hcl::Value& value = hclutil::load(is);
 
     if (!value.is<hcl::Object>() || !value.has("locale"))
     {
@@ -55,7 +57,7 @@ void store::load(std::istream& is, const std::string& hcl_file)
 
     const hcl::Value locale = value["locale"];
 
-    visit_object(locale.as<hcl::Object>(), "core.locale", hcl_file);
+    visit_object(locale.as<hcl::Object>(), mod_name + ".locale", hcl_file);
 }
 
 void store::visit_object(
