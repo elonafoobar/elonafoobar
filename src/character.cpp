@@ -416,7 +416,7 @@ character::character()
 
 void character::set_state(character::state_t new_state)
 {
-    this->state_ = static_cast<int>(new_state);
+    this->state_ = new_state;
 }
 
 

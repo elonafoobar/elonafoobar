@@ -369,7 +369,7 @@ struct character
 
     character::state_t state()
     {
-        return static_cast<character::state_t>(state_);
+        return state_;
     }
     void set_state(character::state_t);
 
@@ -512,7 +512,7 @@ struct character
     }
 
 private:
-    int state_ = 0;
+    character::state_t state_ = character::state_t::empty;
 };
 
 
