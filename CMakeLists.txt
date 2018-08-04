@@ -279,7 +279,7 @@ else()
     add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
     target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
   else()
-    add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} src/main.cpp)
+    add_executable(${PROJECT_NAME} WIN32 ${CORE_SOURCES} src/main.cpp)
   endif()
 
   if(WIN32)
