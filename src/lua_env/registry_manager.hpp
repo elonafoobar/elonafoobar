@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "../filesystem.hpp"
 #include "lua_env.hpp"
 
@@ -25,12 +26,37 @@ class registry_manager
 public:
     explicit registry_manager(lua_env*);
 
+    struct location
+    {
+        location(std::string mod_name, fs::path data_hcl_file)
+            : mod_name(mod_name)
+            , data_hcl_file(data_hcl_file)
+        {
+        }
+
+        std::string mod_name;
+        fs::path data_hcl_file;
+    };
+
+    /***
+     * Loads the data declared by each mod in a data.hcl file inside
+     * the mod's root directory, if it exists;
+     */
+    void load_mod_data(const std::vector<registry_manager::location>&);
+
     /***
      * Registers a new datatype from the HCL spec file provided.
      */
     void register_datatype(
         const std::string& mod_name,
         const std::string& datatype_name);
+
+    /***
+     * Registers a core datatype whose data is kept in native code.
+     */
+    void register_core_datatype(
+        const std::string& datatype_name,
+        std::function<void(sol::table)> initializer);
 
     /***
      * Registers instances of new data for a known datatype from the
@@ -51,12 +77,16 @@ public:
         const std::string& datatype_name);
 
 private:
+    void load_single_mod_data(const fs::path&, const std::string&);
     void bind_api();
 
     /***
      * The isolated Lua environment where data is stored.
      */
     sol::environment registry_env;
+    bool data_initialized = false;
+    // Initialization functions to call upon loading a core datatype.
+    std::unordered_map<std::string, std::function<void()>> native_initializers;
 
     lua_env* lua_;
 };

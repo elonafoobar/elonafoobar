@@ -1,6 +1,9 @@
 local HCL = require "hclua"
 
 local function register_data(mod_name, datatype_name, filepath, registry)
+   if not registry[mod_name] or not registry[mod_name][datatype_name] then
+      error("Datatype not registered: " .. mod_name .. "." .. datatype_name)
+   end
    local parsed = HCL.parse_file(filepath)
    local data = parsed[datatype_name]
 

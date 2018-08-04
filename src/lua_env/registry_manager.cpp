@@ -24,6 +24,82 @@ register_data = require "private/register_data"
     bind_api();
 }
 
+void registry_manager::load_mod_data(
+    const std::vector<registry_manager::location>& locations)
+{
+    // Load data.hcl in each mod directory.
+    for (const auto& loc : locations)
+    {
+        if (fs::exists(loc.data_hcl_file))
+        {
+            load_single_mod_data(loc.data_hcl_file, loc.mod_name);
+        }
+    }
+
+    // After all data has been collected, run initializers for data
+    // which is stored in C++ instead of Lua.
+    for (const auto& pair : native_initializers)
+    {
+        const std::string& datatype_name = pair.first;
+        const auto& initializer = pair.second;
+        sol::table data_table = Registry["core"][datatype_name];
+
+        initializer(data_table);
+    }
+}
+
+void registry_manager::load_single_mod_data(
+    const fs::path& data_hcl_file,
+    const std::string& mod_name)
+{
+    hcl::Value val = hclutil::load(data_hcl_file);
+
+    auto data = val.find("data");
+    if (!data || data->is<hcl::Object>())
+    {
+        throw std::runtime_error(
+            data_hcl_file.string()
+            + ": No \"data\" section found at top level");
+    }
+
+    for (const auto& pair : data->as<hcl::Object>())
+    {
+        std::string datatype_fqn = pair.first;
+        auto period_pos = datatype_fqn.find(".");
+        if (period_pos == std::string::npos)
+        {
+            throw std::runtime_error(
+                data_hcl_file.string() + ": Bad datatype name \"" + datatype_fqn
+                + "\"")
+        }
+
+        std::string datatype_name = datatype_fqn.substr(0, period_pos);
+        std::string datatype_mod_name = datatype_fqn.substr(period_pos + 1);
+
+        if (!pair.second.is<hcl::List>())
+        {
+            throw std::runtime_error(
+                data_hcl_file.string() + ": Data declaration \"" + datatype_fqn
+                + "\" was not list")
+        }
+
+        for (const auto& file : pair.second.as<hcl::List>())
+        {
+            if (!file.is<std::string>())
+            {
+                throw std::runtime_error(
+                    data_hcl_file.string() + ": Data file in \"" + datatype_fqn
+                    + "\" declaration was not string");
+            }
+
+            register_data(
+                datatype_mod_name,
+                datatype_name,
+                filesystem::dir::for_mod(mod_name));
+        }
+    }
+}
+
 void registry_manager::bind_api()
 {
     sol::table core = lua_->get_api_manager().get_api_table();
@@ -63,6 +139,14 @@ void registry_manager::register_datatype(
             "Mod datatype was already registered: " + datatype_name);
     }
     Registry[mod_name][datatype_name] = lua_->get_state()->create_table();
+}
+
+void registry_manager::register_core_datatype(
+    const std::string& datatype_name,
+    std::function<void()> initializer)
+{
+    register_data("core", datatype_name);
+    native_initializers.insert(datatype_name, initializer);
 }
 
 void registry_manager::register_data(

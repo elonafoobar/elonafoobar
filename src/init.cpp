@@ -376,7 +376,7 @@ sol::table initialize_single_lion_db(
     const fs::path& data_file)
 {
     lua::lua->get_registry_manager().register_datatype("core", type);
-    lua::lua->get_registry_manager().register_data("core", type, data_file);
+    // lua::lua->get_registry_manager().register_data("core", type, data_file);
     auto table = lua::lua->get_registry_manager().get_table("core", type);
     if (!table)
     {
@@ -387,20 +387,36 @@ sol::table initialize_single_lion_db(
     return *table;
 }
 
+static std::vector<lua::registry_manager::location>
+collect_mod_datafile_locations()
+{
+    std::vector<lua::registry_manager::location> locations;
+
+    for (const auto& pair : lua::lua->get_mod_manager())
+    {
+        const auto& mod = pair.second;
+        if (mod->path)
+        {
+            locations.emplace_back(*mod->path / "data.hcl", mod->name);
+        }
+    }
+
+    return locations
+}
+
 void initialize_lion_db()
 {
-    const fs::path data_path = filesystem::dir::mods() / "core" / "data";
+    // Register base game data types. Without these, it wouldn't be
+    // possible to run the game, so they're baked in.
+    lua::lua->get_registry_manager().register_core_datatype(
+        "chara", [](auto table) { the_character_db.initialize(table); });
+    lua::lua->get_registry_manager().register_core_datatype(
+        "sound", [](auto table) { the_sound_db.initialize(table); });
+    lua::lua->get_registry_manager().register_core_datatype(
+        "music", [](auto table) { the_music_db.initialize(table); });
 
-    auto chara_table =
-        initialize_single_lion_db("chara", data_path / "chara.hcl");
-    auto sound_table =
-        initialize_single_lion_db("sound", data_path / "sound.hcl");
-    auto music_table =
-        initialize_single_lion_db("music", data_path / "music.hcl");
-
-    the_character_db.initialize(chara_table);
-    the_sound_db.initialize(sound_table);
-    the_music_db.initialize(music_table);
+    auto locations = collect_mod_datafile_locations();
+    lua::lua->get_registry_manager().load_mod_data(locations);
 }
 
 void initialize_config(const fs::path& config_file)
