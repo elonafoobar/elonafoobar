@@ -1471,7 +1471,7 @@ label_2181_internal:
                     "core.locale.magic.mount.dismount", cdata[gdata_mount]));
                 txtef(9);
                 txt(name(gdata_mount)
-                    + i18n::s.get(
+                    + i18n::s.get_enum(
                           "core.locale.magic.mount.dismount_dialog", rnd(4)));
                 ride_end();
                 break;
@@ -1514,7 +1514,8 @@ label_2181_internal:
             ride_begin(tc);
             txtef(9);
             txt(name(gdata_mount)
-                + i18n::s.get("core.locale.magic.mount.mount.dialog", rnd(4)));
+                + i18n::s.get_enum(
+                      "core.locale.magic.mount.mount.dialog", rnd(4)));
         }
         break;
     case 183:
