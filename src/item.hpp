@@ -48,7 +48,6 @@ struct item
     // creation and load.
     int index = -1;
 
-    int number = 0;
     int value = 0;
     int image = 0;
     int id = 0;
@@ -95,12 +94,21 @@ struct item
         return "LuaItem";
     }
 
+    int number() const
+    {
+        return number_;
+    }
+
+    void set_number(int number_);
+    void modify_number(int delta);
+    void remove();
+
 
     template <typename Archive>
     void serialize(Archive& ar)
     {
         // WARNING: Changing this will break save compatibility!
-        ar(number);
+        ar(number_);
         ar(value);
         ar(image);
         ar(id);
@@ -134,6 +142,10 @@ struct item
         range::for_each(
             enchantments, [&](auto&& enchantment) { ar(enchantment); });
     }
+
+private:
+    static void refresh();
+    int number_ = 0;
 };
 
 
@@ -179,10 +191,10 @@ void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
 void item_acid(int = 0, int = 0);
-void item_remove(item&);
-void item_delete(int = 0);
+void item_delete(int);
 void item_exchange(int = 0, int = 0);
-void item_num(int = 0, int = 0);
+void item_modify_num(item&, int);
+void item_set_num(item&, int);
 void itemturn(int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);

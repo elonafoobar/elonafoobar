@@ -314,7 +314,7 @@ int label_2664()
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         ci = get_random_inv(rc);
-        if (inv[ci].number == 0)
+        if (inv[ci].number() == 0)
         {
             f = 1;
             break;
@@ -323,13 +323,13 @@ int label_2664()
         {
             continue;
         }
-        if (inv[ci].number != 0)
+        if (inv[ci].number() != 0)
         {
             if (cdata[rc].item_which_will_be_used == ci)
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            item_remove(inv[ci]);
+            inv[ci].remove();
             f = 1;
             break;
         }

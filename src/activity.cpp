@@ -529,7 +529,9 @@ void continuous_action_perform()
                                     int stat = itemcreate(-1, dbid, x, y, 1);
                                     if (stat != 0)
                                     {
-                                        --inv[ci].number;
+                                        // NOTE: may cause Lua creation
+                                        // callbacks to run twice.
+                                        inv[ci].modify_number(-1);
                                         cell_refresh(
                                             inv[ci].position.x,
                                             inv[ci].position.y);
@@ -542,7 +544,7 @@ void continuous_action_perform()
                                         throwing_object_animation(cdata[cc])
                                             .play();
                                         cc = ccbk;
-                                        ++inv[ci].number;
+                                        inv[ci].modify_number(1);
                                         cell_refresh(
                                             inv[ci].position.x,
                                             inv[ci].position.y);
@@ -866,15 +868,7 @@ void continuous_action_eating_finish()
     {
         chara_refresh(cc);
     }
-    --inv[ci].number;
-    if (ci >= 5080)
-    {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    }
-    else if (cc == 0)
-    {
-        refresh_burden_state();
-    }
+    inv[ci].modify_number(-1);
     if (cc == 0)
     {
         show_eating_message();
@@ -1265,7 +1259,7 @@ void continuous_action_others()
                     }
                 }
             }
-            if (inv[ci].number <= 0)
+            if (inv[ci].number() <= 0)
             {
                 f = 1;
             }
@@ -1307,7 +1301,7 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state != 1) || inv[ci].number <= 0)
+        if ((tg != -1 && cdata[tg].state != 1) || inv[ci].number() <= 0)
         {
             txt(i18n::s.get("core.locale.activity.steal.abort"));
             rowactend(cc);
@@ -1316,7 +1310,7 @@ void continuous_action_others()
         in = 1;
         if (inv[ci].id == 54)
         {
-            in = inv[ci].number;
+            in = inv[ci].number();
         }
         ti = inv_getfreeid(0);
         if (ti == -1)
@@ -1338,11 +1332,11 @@ void continuous_action_others()
             chara_refresh(tc);
         }
         item_copy(ci, ti);
-        inv[ti].number = in;
+        inv[ti].set_number(in);
         ibitmod(9, ti, 1);
         inv[ti].own_state = 0;
-        inv[ci].number -= in;
-        if (inv[ci].number <= 0)
+        inv[ci].modify_number((-in));
+        if (inv[ci].number() <= 0)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
@@ -1350,8 +1344,8 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            item_remove(inv[ti]);
             earn_gold(cdata[0], in);
+            inv[ti].remove();
         }
         else
         {
@@ -1401,7 +1395,7 @@ void continuous_action_others()
             "core.locale.activity.harvest.finish",
             inv[ci],
             cnvweight(inv[ci].weight)));
-        in = inv[ci].number;
+        in = inv[ci].number();
         pick_up_item();
     }
     if (gdata(91) == 104)
@@ -1695,7 +1689,7 @@ void spot_digging()
     {
         for (const auto& cnt : items(0))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -1758,7 +1752,7 @@ void spot_digging()
                             autosave = 1
                                 * (gdata_current_map
                                    != mdata_t::map_id_t::show_house);
-                            --inv[cnt].number;
+                            inv[cnt].modify_number(-1);
                             break;
                         }
                     }

@@ -90,7 +90,7 @@ talk_result_t talk_wizard_identify(int chatval)
     p = 0;
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number == 0)
+        if (inv[cnt].number() == 0)
         {
             continue;
         }
@@ -115,7 +115,7 @@ talk_result_t talk_wizard_identify(int chatval)
         p(1) = 0;
         for (const auto& cnt : items(0))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -215,7 +215,7 @@ talk_result_t talk_trade()
     invsubroutine = 1;
     for (const auto& cnt : items(tc))
     {
-        if (inv[cnt].number != 0)
+        if (inv[cnt].number() != 0)
         {
             inv[cnt].identification_state =
                 identification_state_t::completely_identified;
@@ -456,12 +456,12 @@ talk_result_t talk_quest_delivery()
     int stat = inv_getfreeid_force();
     ti = stat;
     item_copy(deliver(1), ti);
-    inv[ti].number = 1;
+    inv[ti].set_number(1);
     ci = ti;
     rc = tc;
     chara_set_item_which_will_be_used();
     rq = deliver;
-    --inv[deliver(1)].number;
+    inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[deliver(1)]));
     quest_set_data(3);
     quest_complete();
@@ -474,12 +474,12 @@ talk_result_t talk_quest_supply()
     int stat = inv_getfreeid_force();
     ti = stat;
     item_copy(supply, ti);
-    inv[ti].number = 1;
+    inv[ti].set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
     ci = ti;
     rc = tc;
     chara_set_item_which_will_be_used();
-    --inv[supply].number;
+    inv[supply].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
     quest_complete();
@@ -515,7 +515,7 @@ talk_result_t talk_guard_return_item()
     {
         p = itemfind(0, 283);
     }
-    --inv[p].number;
+    inv[p].modify_number(-1);
     if (inv[p].param1 == 0)
     {
         buff = i18n::s.get(
@@ -2155,7 +2155,7 @@ talk_result_t talk_npc()
                     deliver = cnt;
                     for (const auto& cnt : items(0))
                     {
-                        if (inv[cnt].number == 0)
+                        if (inv[cnt].number() == 0)
                         {
                             continue;
                         }
@@ -2178,7 +2178,7 @@ talk_result_t talk_npc()
             supply = -1;
             for (const auto& cnt : items(0))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }

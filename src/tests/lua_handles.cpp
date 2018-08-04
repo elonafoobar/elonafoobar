@@ -80,13 +80,13 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
         elona::lua::lua->get_state()->set("item", handle);
 
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.number = 3)"));
+            elona::lua::lua->get_state()->safe_script(R"(item:set_number(3))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(item.position.x = 4)"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(item.position.y = 8)"));
 
-        REQUIRE(item.number == 3);
+        REQUIRE(item.number() == 3);
         REQUIRE(item.position.x == 4);
         REQUIRE(item.position.y == 8);
     }
@@ -153,7 +153,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
 
         {
             auto result = elona::lua::lua->get_state()->safe_script(
-                R"(print(item.number))", &sol::script_pass_on_error);
+                R"(print(item.number()))", &sol::script_pass_on_error);
             REQUIRE(!result.valid());
         }
         {

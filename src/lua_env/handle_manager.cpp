@@ -51,7 +51,7 @@ void handle_manager::create_chara_handle(character& chara)
 
 void handle_manager::create_item_handle(item& item)
 {
-    if (item.number == 0)
+    if (item.number() == 0)
     {
         return;
     }
@@ -73,13 +73,6 @@ void handle_manager::remove_chara_handle(character& chara)
 
 void handle_manager::remove_item_handle(item& item)
 {
-    if (item.number == 0)
-    {
-        return;
-    }
-
-    // item.number is set to zero often, but it doesn't always seem to
-    // signify whether or not the item was deleted.
     remove_handle(item);
 }
 
@@ -98,7 +91,7 @@ void handle_manager::create_chara_handle_run_callbacks(character& chara)
 
 void handle_manager::create_item_handle_run_callbacks(item& item)
 {
-    assert(item.number != 0);
+    assert(item.number() != 0);
     create_item_handle(item);
 
     auto handle = get_handle(item);
