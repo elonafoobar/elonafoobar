@@ -1,7 +1,7 @@
 ;#####################################
 {0}
 {pic}	"bg3"
-{mc}	"core.music.mcIntro"
+{mc}	"core.mcIntro"
 {txt}
 Ages ago, in the times when the scars
 of Rehm-Ido still marred the land of Irva,

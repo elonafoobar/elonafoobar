@@ -20,9 +20,14 @@ namespace testing
 const std::string save_dir = "tests/data/save";
 const std::string player_id = "sav_testbed";
 
-fs::path mods_path()
+fs::path get_test_data_path()
 {
-    return filesystem::dir::exe() / "tests" / "data" / "mods";
+    return filesystem::dir::exe() / "tests" / "data";
+}
+
+fs::path get_mods_path()
+{
+    return get_test_data_path() / "mods";
 }
 
 void load_previous_savefile()

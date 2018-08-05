@@ -452,13 +452,13 @@ public:
     struct location
     {
         location(fs::path locale_dir, std::string mod_name)
-            : mod_name(mod_name)
-            , locale_dir(locale_dir)
+            : locale_dir(locale_dir)
+            , mod_name(mod_name)
         {
         }
 
-        std::string mod_name;
         fs::path locale_dir;
+        std::string mod_name;
     };
 
     void init(const std::vector<store::location>&);

@@ -3,7 +3,7 @@
 module "Chara"
 
 --- Checks if a character is alive.
--- @tparam LuaCharacter character (const) LuaCharacter a character
+-- @tparam LuaCharacter character (const) a character
 -- @treturn bool true if the character is alive
 function is_alive(character) end
 

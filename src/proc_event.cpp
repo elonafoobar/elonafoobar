@@ -169,7 +169,7 @@ void proc_event()
         new_ally_joins();
         break;
     case 13:
-        play_music("core.music.mcWedding");
+        play_music("core.mcWedding");
         s = i18n::s.get("core.locale.event.popup.marriage.title");
         buff =
             i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
@@ -246,7 +246,7 @@ void proc_event()
             cdata[tc]));
         break;
     case 5:
-        play_music("core.music.mcVictory");
+        play_music("core.mcVictory");
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;

@@ -371,36 +371,40 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-sol::table initialize_single_lion_db(
-    const std::string& type,
-    const fs::path& data_file)
+static std::vector<lua::registry_manager::location>
+collect_mod_datafile_locations()
 {
-    lua::lua->get_registry_manager().register_datatype("core", type);
-    lua::lua->get_registry_manager().register_data("core", type, data_file);
-    auto table = lua::lua->get_registry_manager().get_table("core", type);
-    if (!table)
+    std::vector<lua::registry_manager::location> locations;
+
+    for (const auto& pair : lua::lua->get_mod_manager())
     {
-        throw std::runtime_error(
-            "Could not load data for type " + type + " at"
-            + data_file.string());
+        const auto& mod = pair.second;
+        if (mod->path)
+        {
+            const auto path = *mod->path / "data.hcl";
+            if (fs::exists(path))
+            {
+                locations.emplace_back(path, mod->name);
+            }
+        }
     }
-    return *table;
+
+    return locations;
 }
 
 void initialize_lion_db()
 {
-    const fs::path data_path = filesystem::dir::mods() / "core" / "data";
+    // Register base game data types. Without these, it wouldn't be
+    // possible to run the game, so they're baked in.
+    lua::lua->get_registry_manager().register_native_datatype(
+        "chara", [](auto table) { the_character_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "sound", [](auto table) { the_sound_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "music", [](auto table) { the_music_db.initialize(table); });
 
-    auto chara_table =
-        initialize_single_lion_db("chara", data_path / "chara.hcl");
-    auto sound_table =
-        initialize_single_lion_db("sound", data_path / "sound.hcl");
-    auto music_table =
-        initialize_single_lion_db("music", data_path / "music.hcl");
-
-    the_character_db.initialize(chara_table);
-    the_sound_db.initialize(sound_table);
-    the_music_db.initialize(music_table);
+    auto locations = collect_mod_datafile_locations();
+    lua::lua->get_registry_manager().load_mod_data(locations);
 }
 
 void initialize_config(const fs::path& config_file)
@@ -450,7 +454,11 @@ void initialize_i18n()
         const auto& mod = pair.second;
         if (mod->path)
         {
-            locations.emplace_back(*mod->path / "locale" / language, mod->name);
+            const auto path = *mod->path / "locale" / language;
+            if (fs::exists(path))
+            {
+                locations.emplace_back(path, mod->name);
+            }
         }
     }
     i18n::s.init(locations);
