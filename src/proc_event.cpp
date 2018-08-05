@@ -16,6 +16,7 @@
 #include "mef.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "random_event.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

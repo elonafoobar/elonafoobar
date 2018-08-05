@@ -119,10 +119,10 @@ set(CORE_SOURCES
   src/message.cpp
   src/network.cpp
   src/proc_event.cpp
-  src/proc_random_event.cpp
   src/quest.cpp
   src/race.cpp
   src/random.cpp
+  src/random_event.cpp
   src/set_item_info.cpp
   src/set_option.cpp
   src/shop.cpp

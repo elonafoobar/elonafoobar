@@ -1,3 +1,4 @@
+#include "random_event.hpp"
 #include <cassert>
 #include "ability.hpp"
 #include "audio.hpp"
@@ -18,10 +19,40 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
-namespace elona
+
+
+namespace
 {
 
-optional<std::pair<int, int>> generate_random_event_mode9()
+
+
+struct random_event
+{
+    int id;
+    int luck_threshold;
+
+
+    bool is_evadable(int luck) const
+    {
+        return luck_threshold != 0 && rnd(luck + 1) > luck_threshold;
+    }
+};
+
+
+
+std::vector<int> fsetremain{
+    25000,
+    57000,
+    57000,
+    77000,
+    53000,
+    52000,
+    57000,
+};
+
+
+
+optional<random_event> generate_random_event_in_sleep()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -100,11 +131,15 @@ optional<std::pair<int, int>> generate_random_event_mode9()
     {
         return none;
     }
-
-    return std::make_pair(id, luck_threshold);
+    else
+    {
+        return random_event{id, luck_threshold};
+    }
 }
 
-optional<std::pair<int, int>> generate_random_event()
+
+
+optional<random_event> generate_random_event()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -123,7 +158,7 @@ optional<std::pair<int, int>> generate_random_event()
     }
     if (mode == 9)
     {
-        return generate_random_event_mode9();
+        return generate_random_event_in_sleep();
     }
     if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
@@ -173,65 +208,55 @@ optional<std::pair<int, int>> generate_random_event()
             id = 15;
             luck_threshold = 80;
         }
-        if (id == 0)
-        {
-            return none;
-        }
-        else
-        {
-            return std::make_pair(id, luck_threshold);
-        }
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    else if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (rnd(40))
         {
             return none;
         }
-        if (id == 0)
-        {
-            return none;
-        }
-        else
-        {
-            return std::make_pair(id, luck_threshold);
-        }
     }
-    if (rnd(25) == 0)
+    else
     {
-        id = 10;
-    }
-    if (rnd(25) == 0)
-    {
-        id = 11;
+        if (rnd(25) == 0)
+        {
+            id = 10;
+        }
+        if (rnd(25) == 0)
+        {
+            id = 11;
+        }
     }
 
     if (id == 0)
     {
         return none;
     }
-
-    return std::make_pair(id, luck_threshold);
+    else
+    {
+        return random_event{id, luck_threshold};
+    }
 }
 
-void run_random_event(int id, int luck_threshold)
+
+
+void run_random_event(random_event event)
 {
-    assert(id != 0);
+    assert(event.id != 0);
+
     cc = 0;
     tc = 0;
     listmax = 0;
-    if (luck_threshold != 0)
+
+    if (event.is_evadable(sdata(19, 0)))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
-        if (rnd(sdata(19, 0) + 1) > luck_threshold)
-        {
-            id = 1;
-        }
+        event.id = 1;
     }
 
     std::string event_bg;
 
-    switch (id)
+    switch (event.id)
     {
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -445,18 +470,21 @@ void run_random_event(int id, int luck_threshold)
         break;
     }
 
-    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id);
-    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id);
+    s = i18n::s.get_enum_property("core.locale.event.popup", "title", event.id);
+    buff =
+        i18n::s.get_enum_property("core.locale.event.popup", "text", event.id);
     for (int cnt = 0; cnt < listmax; cnt++)
     {
         list(0, cnt) = cnt;
         listn(0, cnt) = i18n::s.get_enum_property(
-            "core.locale.event.popup", "choices._" + std::to_string(cnt), id);
+            "core.locale.event.popup",
+            "choices._" + std::to_string(cnt),
+            event.id);
     }
 
     int result = show_random_event_window(event_bg);
 
-    switch (id)
+    switch (event.id)
     {
     case 14:
         if (result == 0)
@@ -474,7 +502,7 @@ void run_random_event(int id, int luck_threshold)
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                flttypemajor = fsetremain(rnd(fsetremain.size()));
+                flttypemajor = choice(fsetremain);
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(i18n::s.get(
@@ -496,7 +524,7 @@ void run_random_event(int id, int luck_threshold)
                 }
                 else
                 {
-                    flttypemajor = fsetremain(rnd(fsetremain.size()));
+                    flttypemajor = choice(fsetremain);
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
@@ -515,16 +543,22 @@ void run_random_event(int id, int luck_threshold)
     load_continuous_action_animation();
 }
 
-int proc_random_event()
+
+
+} // namespace
+
+
+
+namespace elona
 {
-    if (auto pair = generate_random_event())
+
+
+
+void proc_random_event()
+{
+    if (auto e = generate_random_event())
     {
-        run_random_event(pair->first, pair->second);
-        return 1;
-    }
-    else
-    {
-        return 0;
+        run_random_event(*e);
     }
 }
 
@@ -639,4 +673,4 @@ label_1897_internal:
     goto label_1897_internal;
 }
 
-} // Namespace elona
+} // namespace elona

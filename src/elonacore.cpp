@@ -49,6 +49,7 @@
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "random_event.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
@@ -3727,13 +3728,6 @@ void initialize_set_of_random_generation()
     fsetplantunknown(2) = 54000;
     fsetplantunknown(3) = 64000;
     fsetplantunknown(4) = 77000;
-    fsetremain(0) = 25000;
-    fsetremain(1) = 57000;
-    fsetremain(2) = 57000;
-    fsetremain(3) = 77000;
-    fsetremain(4) = 53000;
-    fsetremain(5) = 52000;
-    fsetremain(6) = 57000;
     fsetbarrel(0) = 25000;
     fsetbarrel(1) = 57000;
     fsetbarrel(2) = 53000;
