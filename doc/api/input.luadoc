@@ -45,7 +45,7 @@ function prompt_choice(...) end
 -- else
 --    GUI.txt("Never mind.")
 -- end
-function prompt_number(message, max) end
+function prompt_number(message, max, index) end
 
 --- Prompts the player to enter text.
 -- @tparam string message a message to display
