@@ -26,13 +26,13 @@ end
 
 function eating_effect.iron(eater)
    eat_message(eater, "iron", Enums.Color.Purple)
-   eater:apply_status_ailment(Enums.StatusAilment.Dimmed, 200)
+   eater:apply_ailment(Enums.StatusAilment.Dimmed, 200)
 end
 
 function eating_effect.deformed_eye(eater)
    eat_message(eater, "deformed_eye", Enums.Color.Purple)
    eater:gain_sanity(-25)
-   eater:apply_status_ailment(Enums.StatusAilment.Insane, 500)
+   eater:apply_ailment(Enums.StatusAilment.Insane, 500)
 end
 
 function eating_effect.horse(eater)
@@ -70,7 +70,7 @@ function eating_effect.insanity(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
    eater:modify_resistance(Enums.Element.Mind, 50)
    eater:gain_sanity(-500)
-   eater:apply_status_ailment(Enums.StatusAilment.Insane, 1000)
+   eater:apply_ailment(Enums.StatusAilment.Insane, 1000)
 end
 
 function eating_effect.putit(eater)
@@ -87,7 +87,7 @@ end
 local function eating_effect_poisonous(gain_resist)
    return function(eater)
       eat_message(eater, "poisonous", Enums.Color.Purple)
-      eater:apply_status_ailment(Enums.StatusAilment.Poisoned, 100)
+      eater:apply_ailment(Enums.StatusAilment.Poisoned, 100)
       if gain_resist then
          mod_resist_chance(eater, Enums.Element.Poison, 6)
       end
@@ -120,7 +120,7 @@ end
 
 function eating_effect.grudge(eater)
    eat_message(eater, "grudge", Enums.Color.Purple)
-   eater:apply_status_ailment(Enums.StatusAilment.Confused, 200)
+   eater:apply_ailment(Enums.StatusAilment.Confused, 200)
 end
 
 function eating_effect.calm(eater)
@@ -145,7 +145,7 @@ end
 
 function eating_effect.lightning(eater)
    eat_message(eater, "lightning", Enums.Color.Purple)
-   eater:apply_status_ailment(Enums.StatusAilment.Paralyzed, 300)
+   eater:apply_ailment(Enums.StatusAilment.Paralyzed, 300)
 end
 
 function eating_effect.cat(eater)
@@ -230,7 +230,7 @@ end
 
 function eating_effect.chaos_cloud(eater)
    eat_message(eater, "chaos_cloud", Enums.Color.Purple)
-   eater:apply_status_ailment(Enums.StatusAilment.Confused, 300)
+   eater:apply_ailment(Enums.StatusAilment.Confused, 300)
    mod_resist_chance(eater, Enums.Element.Chaos, 5)
 end
 

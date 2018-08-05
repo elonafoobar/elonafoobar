@@ -1234,6 +1234,7 @@ void gain_skill(character&, int, int);
 void gain_skill_stock(character&, int, int, int);
 void gain_skill_exp(character&, int, int);
 void modify_trait(character&, int, int);
+void modify_resistance(character&, int, int);
 } // namespace LuaCharacter
 
 void LuaCharacter::damage_hp(character& self, int amount)
@@ -1316,6 +1317,15 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
     elona::skillmod(skill, self.index, amount);
 }
 
+
+
+void LuaCharacter::modify_resistance(character& self, int element, int delta)
+{
+    elona::resistmod(self.index, element, delta);
+}
+
+
+
 /***
  * Set up usertype tables in Sol so we can call methods with them.
  */
@@ -1348,6 +1358,8 @@ void init_usertypes(lua_env& lua)
             &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock),
         "gain_skill_exp",
         &LuaCharacter::gain_skill_exp,
+        "modify_resistance",
+        &LuaCharacter::modify_resistance,
         "hp",
         sol::readonly(&character::hp),
         "max_hp",

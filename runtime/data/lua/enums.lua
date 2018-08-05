@@ -28,6 +28,23 @@ Enums.StatusAilment = {
    Sick = 12,
 }
 
+Enums.Element = {
+   Fire = 50,
+   Cold = 51,
+   Lightning = 52,
+   Darkness = 53,
+   Mind = 54,
+   Poison = 55,
+   Nether = 56,
+   Sound = 57,
+   Nerve = 58,
+   Chaos = 59,
+   Magic = 60,
+   Cut = 61,
+   Ether = 62,
+   Acid = 63,
+}
+
 Enums.TileKind = {
    Normal = 0,
    Wall = 1,
