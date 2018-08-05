@@ -751,7 +751,7 @@ int calcattackdmg(int prm_894)
         if (cdata[cc].rate_to_pierce > rnd(100))
         {
             pierce = 100;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(5);
                 txt(i18n::s.get("core.locale.damage.vorpal.melee"));
@@ -763,7 +763,7 @@ int calcattackdmg(int prm_894)
         if (ammoproc == 2)
         {
             pierce = 60;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(5);
                 txt(i18n::s.get("core.locale.damage.vorpal.ranged"));

@@ -313,7 +313,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
         sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cc == 0 || cc < 16)
             {
@@ -353,7 +353,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
         sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cc == 0 || cc < 16)
             {
@@ -401,7 +401,7 @@ int skillmod(int id, int cc, int experience)
         sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cc == 0 || cc < 16)
             {
@@ -442,7 +442,7 @@ int skillmod(int id, int cc, int experience)
         sdata.get(id, cc).potential = growth_at_m77;
         if (cc == 0 || cc < 16)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 if (lvchange_at_m77 != 0)
                 {

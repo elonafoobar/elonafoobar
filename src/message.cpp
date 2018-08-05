@@ -430,7 +430,7 @@ std::string name(int cc)
     {
         return i18n::s.get("core.locale.chara.you");
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return i18n::s.get("core.locale.chara.something");
     }
@@ -463,7 +463,7 @@ std::string aln(int cc)
     {
         return "";
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"それは";
     }
@@ -478,7 +478,7 @@ std::string npcn(int cc)
     {
         return "";
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"それは";
     }
@@ -616,7 +616,7 @@ std::string he(int cc, int prm_321)
     {
         return u8"it"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"it"s;
     }
@@ -669,7 +669,7 @@ std::string his(int cc, int prm_323)
     {
         return u8"its"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"its"s;
     }
@@ -714,7 +714,7 @@ std::string him(int cc, int prm_325)
     {
         return u8"it"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"it"s;
     }
@@ -752,7 +752,7 @@ std::string yourself(int x)
     {
         return u8"itself"s;
     }
-    if (is_in_fov(x) == 0)
+    if (is_in_fov(cdata[x]) == 0)
     {
         return u8"itself"s;
     }
@@ -771,7 +771,7 @@ std::string yourself(int x)
 
 void stxt(int cc, const std::string& str)
 {
-    if (cc == 0 || (is_in_fov(cc) && cdata[0].blind == 0))
+    if (cc == 0 || (is_in_fov(cdata[cc]) && cdata[0].blind == 0))
     {
         txt(str);
     }

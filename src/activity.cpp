@@ -92,7 +92,7 @@ void activity_handle_damage(character& chara)
     }
     if (chara.index != 0 || rtval == 0)
     {
-        if (is_in_fov(chara.index))
+        if (is_in_fov(chara))
         {
             txt(i18n::s.get(
                 "core.locale.activity.cancel.normal",
@@ -221,7 +221,7 @@ void continuous_action_perform()
 
     if (cdata[cc].continuous_action_id == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.perform.start", cdata[cc], inv[ci]));
@@ -242,7 +242,7 @@ void continuous_action_perform()
         ci = cdata[cc].continuous_action_item;
         if (cdata[cc].continuous_action_turn % 10 == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 if (rnd(10) == 0)
                 {
@@ -270,7 +270,7 @@ void continuous_action_perform()
                 {
                     cdata[cnt].interest = 100;
                 }
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     if (cdata[cnt].vision_flag != msync)
                     {
@@ -310,7 +310,7 @@ void continuous_action_perform()
                 {
                     if (cdata[tc].hate == 0)
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txt(i18n::s.get(
                                 "core.locale.activity.perform.gets_angry",
@@ -329,7 +329,7 @@ void continuous_action_perform()
                 }
                 if (cdata[tc].interest <= 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txtef(9);
                         txt(i18n::s.get_enum(
@@ -344,7 +344,7 @@ void continuous_action_perform()
                     if (rnd(3) == 0)
                     {
                         cdata[cc].quality_of_performance -= cdata[tc].level / 2;
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
                             txt(i18n::s.get_enum(
@@ -433,7 +433,7 @@ void continuous_action_perform()
                 {
                     if (rnd(3) == 0)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
                             txt(i18n::s.get_enum(
@@ -559,7 +559,7 @@ void continuous_action_perform()
             if (gold != 0)
             {
                 cdata[cc].tip_gold += gold;
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     snd(11);
                 }
@@ -621,7 +621,7 @@ void continuous_action_perform()
     }
     if (cdata[cc].tip_gold != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.perform.tip",
@@ -649,7 +649,7 @@ void continuous_action_sex()
         cdata[tc].continuous_action_id = 11;
         cdata[tc].continuous_action_turn = cdata[cc].continuous_action_turn * 2;
         cdata[tc].continuous_action_target = cc + 10000;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.take_clothes_off", cdata[cc]));
@@ -666,7 +666,7 @@ void continuous_action_sex()
     if (cdata[tc].state() != character::state_t::alive
         || cdata[tc].continuous_action_id != 11)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.spare_life",
@@ -694,7 +694,7 @@ void continuous_action_sex()
         {
             if (cdata[cc].continuous_action_turn % 5 == 0)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txtef(9);
                     txt(i18n::s.get_enum(
@@ -748,7 +748,7 @@ void continuous_action_sex()
     std::string dialog_tail;
     std::string dialog_after;
 
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txtef(9);
         dialog_head = i18n::s.get_enum(
@@ -759,7 +759,7 @@ void continuous_action_sex()
     {
         if (cdata[tc].gold >= sexvalue)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 dialog_tail =
                     i18n::s.get("core.locale.activity.sex.take", cdata[tc]);
@@ -767,7 +767,7 @@ void continuous_action_sex()
         }
         else
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 dialog_tail = i18n::s.get(
                     "core.locale.activity.sex.take_all_i_have", cdata[tc]);
@@ -819,7 +819,7 @@ void continuous_action_eating()
         cdata[cc].continuous_action_id = 1;
         cdata[cc].continuous_action_turn = 8;
         cdata[cc].continuous_action_item = ci;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             snd(18);
             if (inv[ci].own_state == 1 && cc < 16)
@@ -847,7 +847,7 @@ void continuous_action_eating()
     {
         return;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get("core.locale.activity.eat.finish", cdata[cc], inv[ci]));
     }
@@ -911,7 +911,7 @@ void continuous_action_eating_finish()
     chara_anorexia(cc);
     if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txtef(8);
             txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
@@ -1163,7 +1163,7 @@ void continuous_action_others()
                     }
                 }
                 p = rnd((i + 1))
-                    * (80 + (is_in_fov(cnt) == 0) * 50
+                    * (80 + (is_in_fov(cdata[cnt]) == 0) * 50
                        + dist(
                              cdata[cnt].position.x,
                              cdata[cnt].position.y,
@@ -1177,7 +1177,7 @@ void continuous_action_others()
                 }
                 if (rnd(sdata(13, cnt) + 1) > p)
                 {
-                    if (is_in_fov(cnt))
+                    if (is_in_fov(cdata[cnt]))
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.in_fov",

@@ -230,7 +230,7 @@ void abstract_animation::play()
 
 void failure_to_cast_animation::do_play()
 {
-    if (!is_in_fov(caster.index))
+    if (!is_in_fov(caster))
         return;
 
     snd_at(66, caster.position);
@@ -255,7 +255,7 @@ void bright_aura_animation::do_play()
 {
     constexpr auto max_particles = 15;
 
-    if (is_in_fov(cc.index) == 0)
+    if (is_in_fov(cc) == 0)
         return;
 
     // Load image and play sound.
@@ -615,7 +615,7 @@ void bolt_animation::do_play()
 
 void throwing_object_animation::do_play()
 {
-    if (!is_in_fov(target.index))
+    if (!is_in_fov(target))
         return;
 
     prepare_item_image(aniref, aniref(1));
@@ -660,7 +660,7 @@ void throwing_object_animation::do_play()
 
 void ranged_attack_animation::do_play()
 {
-    if (!is_in_fov(cc))
+    if (!is_in_fov(cdata[cc]))
         return;
 
     int anicol{};
@@ -881,7 +881,7 @@ void melee_attack_animation::do_play()
 void geen_engineering_animation::do_play()
 {
     snd_at(107, cdata[anic].position);
-    if (!is_in_fov(anic))
+    if (!is_in_fov(cdata[anic]))
         return;
 
     gsel(7);

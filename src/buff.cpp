@@ -119,7 +119,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
     }
     if (p_at_m132 == -2)
     {
-        if (is_in_fov(prm_801))
+        if (is_in_fov(cdata[prm_801]))
         {
             txt(i18n::s.get("core.locale.magic.buff.no_effect"));
             return 0;
@@ -172,7 +172,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
         }
         if (f_at_m132 == 1)
         {
-            if (is_in_fov(prm_801))
+            if (is_in_fov(cdata[prm_801]))
             {
                 txt(i18n::s.get(
                     "core.locale.magic.buff.resists", cdata[prm_801]));
@@ -185,7 +185,7 @@ int buff_add(int prm_801, int prm_802, int prm_803, int prm_804)
         }
     }
     if (the_buff_db[prm_802]->type != buff_data::type_t::food
-        && is_in_fov(prm_801))
+        && is_in_fov(cdata[prm_801]))
     {
         txt(lang(
             name(prm_801)
@@ -221,7 +221,7 @@ void buff_delete(int prm_805, int prm_806)
                 std::to_string(cdata[prm_805].buffs[prm_806].id),
                 u8"name")));
     }
-    if (is_in_fov(prm_805))
+    if (is_in_fov(cdata[prm_805]))
     {
         add_damage_popup(
             i18n::_(

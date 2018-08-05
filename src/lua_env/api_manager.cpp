@@ -438,7 +438,7 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
 bool FOV::you_see(lua_character_handle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    return elona::is_in_fov(chara.index);
+    return elona::is_in_fov(chara);
 }
 
 bool FOV::you_see_pos(const position_t& pos)

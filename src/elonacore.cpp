@@ -2003,7 +2003,7 @@ void make_sound(
                 if (cdata[cnt].sleep != 0)
                 {
                     cdata[cnt].sleep = 0;
-                    if (is_in_fov(cnt))
+                    if (is_in_fov(cdata[cnt]))
                     {
                         txt(lang(
                             name(cnt) + u8"は物音に気付き目を覚ました。"s,
@@ -2016,7 +2016,7 @@ void make_sound(
                     {
                         if (rnd(500) == 0)
                         {
-                            if (is_in_fov(cnt))
+                            if (is_in_fov(cdata[cnt]))
                             {
                                 txtef(9);
                                 txt(lang(
@@ -2201,7 +2201,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (is_in_fov(prm_808) == 0)
+    if (is_in_fov(cdata[prm_808]) == 0)
     {
         return;
     }
@@ -2266,7 +2266,7 @@ void animeload(int prm_807, int prm_808)
 
 void animeblood(int cc, int animation_type, int element)
 {
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
         return;
     if (config::instance().animewait == 0)
         return;
@@ -2781,7 +2781,7 @@ void cnvbonus(int prm_895, int prm_896)
 void wet(int cc, int turns)
 {
     cdata[cc].wet += turns;
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(lang(
             name(cc) + u8"は濡れた。"s,
@@ -2859,7 +2859,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(lang(
                 name(cc) + u8"はマナを吸い取られた！"s,
@@ -2877,7 +2877,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cdata[cc].confused != 0)
             {
@@ -2895,7 +2895,7 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(lang(
                 u8"魔力の渦が何かを召喚した！"s,
@@ -2917,7 +2917,7 @@ int try_to_cast_spell()
         }
         return 0;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(lang(
             name(cc) + u8"は奇妙な力に捻じ曲げられた！"s,
@@ -3055,7 +3055,7 @@ void proc_turn_end(int cc)
     {
         if (cdata[cc].choked % 3 == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
             }
@@ -3072,7 +3072,7 @@ void proc_turn_end(int cc)
         --cdata[cc].gravity;
         if (cdata[cc].gravity == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(
                     name(cc) + u8"は重力から抜け出した。"s,
@@ -3086,7 +3086,7 @@ void proc_turn_end(int cc)
         --cdata[cc].furious;
         if (cdata[cc].furious == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(
                     name(cc) + u8"はやや落ち着いた。"s,
@@ -3190,7 +3190,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].insane > 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (rnd(3) == 0)
             {
@@ -5011,7 +5011,7 @@ void damage_by_cursed_equipments()
                 p = cdata[cc].gold;
             }
             cdata[cc].gold -= p;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(lang(
@@ -5032,7 +5032,7 @@ void proc_pregnant()
 {
     if (rnd(15) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(lang(
                 name(cc) + u8"は不安げに腹を押さえた。"s,
@@ -5050,7 +5050,7 @@ void proc_pregnant()
     {
         if (rnd(30) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(
                     u8"何かが"s + name(cc) + u8"の腹を破り飛び出した！"s,
@@ -5124,7 +5124,7 @@ void proc_negative_equipments()
             {
                 if (rnd(4) == 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txtef(8);
                         txt(lang(
@@ -5141,7 +5141,7 @@ void proc_negative_equipments()
             {
                 if (rnd(20) == 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txtef(8);
                         txt(lang(
@@ -5177,7 +5177,7 @@ void proc_negative_equipments()
                                   1,
                                   50))
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
                                 txtef(8);
                                 txt(lang(
@@ -5320,7 +5320,7 @@ void get_pregnant()
 {
     if (encfind(tc, 48) != -1)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             txt(lang(
                 u8"しかしすぐに吐き出した。"s,
@@ -8814,7 +8814,7 @@ int target_position()
                     break;
                 }
                 rc = map(tlocx, tlocy, 1) - 1;
-                if (is_in_fov(rc) == 0)
+                if (is_in_fov(cdata[rc]) == 0)
                 {
                     break;
                 }
@@ -9322,7 +9322,7 @@ int label_2072()
     {
         cdata[cc].enemy_id = 0;
     }
-    else if (is_in_fov(cdata[cc].enemy_id) == 0)
+    else if (is_in_fov(cdata[cdata[cc].enemy_id]) == 0)
     {
         cdata[cc].enemy_id = 0;
     }
@@ -9459,7 +9459,7 @@ void label_2076()
             {
                 continue;
             }
-            if (is_in_fov(cnt) == 0)
+            if (is_in_fov(cdata[cnt]) == 0)
             {
                 continue;
             }
@@ -10924,7 +10924,7 @@ label_21451_internal:
             int stat = can_evade_trap();
             if (stat == 1)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.evade", cdata[cc]));
@@ -10946,7 +10946,7 @@ label_21451_internal:
                     snd(70);
                 }
                 efsource = 5;
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.activate.text",
@@ -10954,7 +10954,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 4)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.blind"));
@@ -10966,7 +10966,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 6)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.paralyze"));
@@ -10978,7 +10978,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 5)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.confuse"));
@@ -10993,7 +10993,7 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     if (encfind(cc, 22) != -1)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txt(lang(
                                 u8"魔法の力がテレポートを防いだ。"s,
@@ -11012,7 +11012,7 @@ label_21451_internal:
                             cdata[cc].next_position.y);
                         if (cellaccess == 1)
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
                                 snd(72);
                                 txt(lang(
@@ -11029,7 +11029,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(
                             i18n::s.get("core.locale.action.move.trap.activate."
@@ -11037,7 +11037,7 @@ label_21451_internal:
                     }
                     if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
                                 "core.locale.action.move.trap.activate.spears."
@@ -11053,7 +11053,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 1)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.poison"));
@@ -11065,7 +11065,7 @@ label_21451_internal:
                 }
                 if (feat(2) == 2)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.trap.activate.sleep"));
@@ -11401,7 +11401,7 @@ void label_2153()
         }
         if (f == 1)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(
                     npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
@@ -11515,7 +11515,7 @@ int decode_book()
         }
         if (cdata[cc].blind != 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.read.cannot_see", cdata[cc]));
@@ -11537,7 +11537,7 @@ int decode_book()
         }
         cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
         cdata[cc].continuous_action_item = ci;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.read.start", cdata[cc], inv[ci]));
@@ -11586,7 +11586,7 @@ int decode_book()
             if (inv[ci].count == 0)
             {
                 inv[ci].modify_number(-1);
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11595,7 +11595,7 @@ int decode_book()
         }
         return 0;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get(
             "core.locale.activity.read.finish", cdata[cc], inv[ci]));
@@ -11611,7 +11611,7 @@ int decode_book()
         ++recipememory(inv[ci].subname);
         item_identify(inv[ci], identification_state_t::partly_identified);
         inv[ci].modify_number(-1);
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11655,7 +11655,7 @@ int decode_book()
         if (inv[ci].count == 0)
         {
             inv[ci].modify_number(-1);
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.read.book.falls_apart", inv[ci]));
@@ -11672,7 +11672,7 @@ int read_normal_book()
 {
     if (cdata[cc].blind != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.read.cannot_see", cdata[cc]));
         }
@@ -11726,7 +11726,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
             }
             if (dmg < 1)
             {
-                if (is_in_fov(prm_1077))
+                if (is_in_fov(cdata[prm_1077]))
                 {
                     txt(lang(
                         name(prm_1077) + u8"は巻き込みを免れた。"s,
@@ -11835,7 +11835,7 @@ int label_2168()
     }
     if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.confused", cdata[cc]));
         }
@@ -11848,7 +11848,7 @@ int label_2168()
             return 1;
         }
     }
-    else if (is_in_fov(cc))
+    else if (is_in_fov(cdata[cc]))
     {
         if (cc == 0)
         {
@@ -11874,7 +11874,7 @@ int label_2168()
     }
     if (buff_find(cc, 2) != -1)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.silenced"));
         }
@@ -11883,7 +11883,7 @@ int label_2168()
     }
     if (rnd(100) >= calcspellfail(efid, cc))
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
             failure_to_cast_animation(cdata[cc]).play();
@@ -11957,7 +11957,7 @@ int drink_potion()
     else
     {
         efstatus = inv[ci].curse_state;
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd_at(17, cdata[tc].position);
             txt(i18n::s.get(
@@ -12119,7 +12119,7 @@ int drink_well()
             {
                 break;
             }
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.drink.well.effect.pregnancy",
@@ -12212,7 +12212,7 @@ int read_scroll()
     efsource = 2;
     if (cdata[cc].blind != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.read.cannot_see", cdata[cc]));
         }
@@ -12223,7 +12223,7 @@ int read_scroll()
     {
         if (rnd(4) != 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.read.scroll.dimmed_or_confused",
@@ -12233,7 +12233,7 @@ int read_scroll()
             return 0;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get(
             "core.locale.action.read.scroll.execute", cdata[cc], inv[ci]));
@@ -12260,7 +12260,7 @@ int label_2172()
 {
     if (inv[ci].count <= 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.zap.execute", inv[ci]));
             txt(i18n::s.get("core.locale.common.nothing_happens"));
@@ -12284,7 +12284,7 @@ int label_2172()
         if ((stat == 0 && the_ability_db[efid]->sdataref3 / 1000 * 1000 == 2000)
             || noeffect == 1)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get("core.locale.action.zap.execute", inv[ci]));
                 txt(i18n::s.get("core.locale.common.nothing_happens"));
@@ -12292,7 +12292,7 @@ int label_2172()
             goto label_2173_internal;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get("core.locale.action.zap.execute", inv[ci]));
     }
@@ -12341,7 +12341,7 @@ int label_2172()
         }
         gain_magic_device_experience(cc);
     }
-    else if (is_in_fov(cc))
+    else if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get("core.locale.action.zap.fail", cdata[cc]));
     }
@@ -12399,7 +12399,7 @@ int label_2174()
         {
             if (rnd(5) == 0)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(lang(
                         name(cc) + u8"は頭を振った。"s,
@@ -12707,7 +12707,7 @@ void heal_both_rider_and_mount()
         healcon(tc(cnt), 7, 30);
         healcon(tc(cnt), 9, 20);
         healsan(tc(cnt), 1);
-        if (is_in_fov(tc(cnt)))
+        if (is_in_fov(cdata[tc(cnt)]))
         {
             add_damage_popup(std::to_string(amount), tc(cnt), {127, 255, 127});
         }
@@ -13330,7 +13330,7 @@ turn_result_t do_bash()
                 calcfixlv(2));
             flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 snd(73);
                 txt(i18n::s.get(
@@ -13385,7 +13385,7 @@ turn_result_t do_bash()
                     {
                         --cdata[cc].attr_adjs[0];
                         chara_refresh(cc);
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(8);
                             txt(i18n::s.get(
@@ -13400,7 +13400,7 @@ turn_result_t do_bash()
                     {
                         --feat(2);
                         cell_featset(x, y, feat(0), feat(1), feat(2), feat(3));
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
                                 "core.locale.action.bash.door.cracked"));
@@ -14282,7 +14282,7 @@ void open_new_year_gift()
     {
         if (rnd(3) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(
                     i18n::s.get("core.locale.action.open.new_year_gift."
@@ -14297,7 +14297,7 @@ void open_new_year_gift()
         }
         if (rnd(3) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get("core.locale.action.open.new_year_gift.trap"));
             }
@@ -14315,7 +14315,7 @@ void open_new_year_gift()
             }
             return;
         }
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.action.open.new_year_gift.cursed_letter"));
@@ -14330,7 +14330,7 @@ void open_new_year_gift()
     {
         if (rnd(4) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(5);
                 txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"));
@@ -14350,7 +14350,7 @@ void open_new_year_gift()
         }
         if (rnd(5) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.open.new_year_gift.younger_sister"));
@@ -14364,7 +14364,7 @@ void open_new_year_gift()
             }
             return;
         }
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.action.open.new_year_gift.something_inside"));
@@ -14380,7 +14380,7 @@ void open_new_year_gift()
     }
     if (rnd(3) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txtef(5);
             txt(i18n::s.get("core.locale.action.open.new_year_gift.ring"));
@@ -14403,7 +14403,7 @@ void open_new_year_gift()
     }
     if (rnd(50) == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.open.new_year_gift.wonderful"));
         }
@@ -14416,7 +14416,7 @@ void open_new_year_gift()
             1);
         return;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get(
             "core.locale.action.open.new_year_gift.something_inside"));
@@ -14474,7 +14474,7 @@ turn_result_t try_to_open_locked_door()
             gain_lock_picking_experience(cc);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.open.door.succeed", cdata[cc]));
             if (mdata_map_tileset == 8)
@@ -14494,7 +14494,7 @@ turn_result_t try_to_open_locked_door()
     else
     {
         ++msgdup;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             snd(22);
             txt(i18n::s.get("core.locale.action.open.door.fail", cdata[cc]));
@@ -14670,7 +14670,7 @@ void try_to_melee_attack()
                 + cdata[cc].has_power_bash() * 5
             > rnd(100))
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.melee.shield_bash",
@@ -14802,7 +14802,7 @@ label_22191_internal:
                     s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
                 }
                 s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     if (rnd(5) == 0)
                     {
@@ -14824,7 +14824,7 @@ label_22191_internal:
                 elep = cdata[cc].element_of_unarmed_attack % 100000;
             }
         }
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             if (extraattack)
             {
@@ -14979,7 +14979,7 @@ label_22191_internal:
                 {
                     if (p == 61)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(8);
                             txt(i18n::s.get(
@@ -14996,7 +14996,7 @@ label_22191_internal:
                     }
                     if (p == 62)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(8);
                             txt(i18n::s.get(
@@ -15030,7 +15030,7 @@ label_22191_internal:
                     tlocy = cdata[cc].position.y;
                     if (p == 63)
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txtef(8);
                             txt(i18n::s.get(
@@ -15062,7 +15062,7 @@ label_22191_internal:
     }
     if (hit == -1)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (extraattack)
             {
@@ -15084,7 +15084,7 @@ label_22191_internal:
     }
     if (hit == -2)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (extraattack)
             {

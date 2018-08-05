@@ -202,7 +202,7 @@ int dmghp(
     victim.hp -= dmg_at_m141;
 
 
-    if (is_in_fov(victim.index))
+    if (is_in_fov(victim))
     {
         const auto color_id = eleinfo(ele, 0);
         const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
@@ -365,7 +365,7 @@ int dmghp(
         }
         if (damage_level == 1)
         {
-            if (is_in_fov(victim.index))
+            if (is_in_fov(victim))
             {
                 txtef(11);
                 txt(i18n::s.get(
@@ -374,7 +374,7 @@ int dmghp(
         }
         if (damage_level == 2)
         {
-            if (is_in_fov(victim.index))
+            if (is_in_fov(victim))
             {
                 txtef(10);
                 txt(i18n::s.get(
@@ -383,7 +383,7 @@ int dmghp(
         }
         if (damage_level >= 3)
         {
-            if (is_in_fov(victim.index))
+            if (is_in_fov(victim))
             {
                 txtef(3);
                 txt(i18n::s.get(
@@ -396,7 +396,7 @@ int dmghp(
             {
                 victim.hp = victim.max_hp;
             }
-            if (is_in_fov(victim.index))
+            if (is_in_fov(victim))
             {
                 txtef(4);
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
@@ -431,7 +431,7 @@ int dmghp(
                         if (runs_away)
                         {
                             victim.fear = rnd(20) + 5;
-                            if (is_in_fov(victim.index))
+                            if (is_in_fov(victim))
                             {
                                 txtef(4);
                                 txt(i18n::s.get(
@@ -649,7 +649,7 @@ int dmghp(
                 {
                     if (rnd(20) == 0)
                     {
-                        if (is_in_fov(victim.index))
+                        if (is_in_fov(victim))
                         {
                             txtef(4);
                             txt(i18n::s.get(
@@ -905,7 +905,7 @@ int dmghp(
         }
         if (victim.breaks_into_debris())
         {
-            if (is_in_fov(victim.index))
+            if (is_in_fov(victim))
             {
                 x = victim.position.x;
                 y = victim.position.y;
@@ -1173,7 +1173,7 @@ void end_dmghp(const character& victim)
 {
     if (victim.is_hung_on_sand_bag())
     {
-        if (is_in_fov(victim.index))
+        if (is_in_fov(victim))
         {
             txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
             if (rnd(20) == 0)

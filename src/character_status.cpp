@@ -192,7 +192,7 @@ void modweight(int cc, int delta, bool force)
     {
         cdata[cc].weight = 1;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         if (delta >= 3)
         {
@@ -215,7 +215,7 @@ void modheight(int cc, int delta)
     {
         cdata[cc].height = 1;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         if (delta > 0)
         {

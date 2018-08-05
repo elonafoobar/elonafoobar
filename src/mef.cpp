@@ -208,7 +208,7 @@ void mef_proc(int tc)
         {
             if (sdata(63, tc) / 50 < 7)
             {
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
                     snd(46);
                     txt(lang(
@@ -233,7 +233,7 @@ void mef_proc(int tc)
     }
     if (mef(0, ef) == 5)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd(6);
             txt(lang(
@@ -257,7 +257,7 @@ void mef_proc(int tc)
     {
         if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 snd(46);
                 txt(lang(
@@ -300,7 +300,7 @@ bool mef_proc_from_movement(int cc)
             if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
                 || cdata[cc].weight > 100)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(lang(
                         name(cc) + u8"は蜘蛛の巣を振り払った。"s,
@@ -311,7 +311,7 @@ bool mef_proc_from_movement(int cc)
             else
             {
                 mef(5, i) = mef(5, i) * 3 / 4;
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(lang(
                         name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
@@ -337,7 +337,7 @@ bool mef_proc_from_physical_attack(int tc)
     {
         if (rnd(2) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(lang(
                     name(cc) + u8"は霧の中の幻影を攻撃した。"s,

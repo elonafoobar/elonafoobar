@@ -749,7 +749,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 
 bool you_can_see(const character& chara)
 {
-    return is_in_fov(chara.index)
+    return is_in_fov(chara)
         && (!chara.is_invisible() || cdata[0].can_see_invisible()
             || chara.wet != 0);
 }

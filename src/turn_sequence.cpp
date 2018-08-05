@@ -49,7 +49,7 @@ turn_result_t npc_turn()
     int searchfov = 0;
     if (cdata[cc].is_hung_on_sand_bag())
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (rnd(30) == 0)
             {
@@ -61,7 +61,7 @@ turn_result_t npc_turn()
         cdata[cc].hate = 0;
         return turn_result_t::turn_end;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         if (cdata[0].blind == 0)
         {
@@ -1060,7 +1060,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                         continue;
                     }
                     tc = cnt;
-                    if (is_in_fov(cc) || is_in_fov(tc))
+                    if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                     {
                         txtef(9);
                         txt(i18n::s.get(
@@ -1074,7 +1074,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     {
                         if (tc != 0)
                         {
-                            if (is_in_fov(cc) || is_in_fov(tc))
+                            if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                             {
                                 txtef(9);
                                 txt(i18n::s.get(

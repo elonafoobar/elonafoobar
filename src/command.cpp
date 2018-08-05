@@ -579,7 +579,7 @@ turn_result_t do_pray_command()
 turn_result_t do_throw_command()
 {
     int ccthrowpotion = 0;
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get(
             "core.locale.action.throw.execute", cdata[cc], inv[ci]));
@@ -717,7 +717,7 @@ turn_result_t do_throw_command()
             if (map(tlocx, tlocy, 1) != 0)
             {
                 tc = map(tlocx, tlocy, 1) - 1;
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.action.throw.hits", cdata[tc]));
@@ -726,7 +726,7 @@ turn_result_t do_throw_command()
                 rowact_check(tc);
                 if (inv[ci].id == 587)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
                         if (tc != 0)
                         {
@@ -740,14 +740,14 @@ turn_result_t do_throw_command()
                 }
                 if (inv[ci].id == 772)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
                         txtef(4);
                         txt(i18n::s.get("core.locale.action.throw.tomato"));
                     }
                     if (inv[ci].param3 == -1)
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txtef(4);
                             txt(i18n::s.get(
@@ -1879,7 +1879,7 @@ turn_result_t do_use_command()
         }
         flt();
         itemcreate(-1, 541, cdata[0].position.x, cdata[0].position.y, 0);
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             snd(86);
             txt(i18n::s.get(
@@ -3313,7 +3313,7 @@ turn_result_t do_eat_command()
         if (tc != cc)
         {
             rowactend(tc);
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.action.eat.snatches", cdata[cc], cdata[tc]));

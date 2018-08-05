@@ -168,7 +168,7 @@ void cure_anorexia(int cc)
         return;
 
     cdata[cc].has_anorexia() = false;
-    if (is_in_fov(cc) || cc < 16)
+    if (is_in_fov(cdata[cc]) || cc < 16)
     {
         txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cdata[cc]));
         snd(65);
@@ -181,7 +181,7 @@ void chara_vomit(int prm_876)
 {
     int p_at_m146 = 0;
     ++cdata[prm_876].anorexia_count;
-    if (is_in_fov(prm_876))
+    if (is_in_fov(cdata[prm_876]))
     {
         snd(104);
         txt(i18n::s.get("core.locale.food.vomits", cdata[prm_876]));
@@ -189,7 +189,7 @@ void chara_vomit(int prm_876)
     if (cdata[prm_876].is_pregnant())
     {
         cdata[prm_876].is_pregnant() = false;
-        if (is_in_fov(prm_876))
+        if (is_in_fov(cdata[prm_876]))
         {
             txt(i18n::s.get(
                 "core.locale.food.spits_alien_children", cdata[prm_876]));
@@ -251,7 +251,7 @@ void chara_vomit(int prm_876)
             if (rnd(5) == 0)
             {
                 cdata[prm_876].has_anorexia() = true;
-                if (is_in_fov(prm_876))
+                if (is_in_fov(cdata[prm_876]))
                 {
                     txt(i18n::s.get(
                         "core.locale.food.anorexia.develops", cdata[prm_876]));
@@ -286,7 +286,7 @@ void eatstatus(curse_state_t curse_state, int eater)
     if (is_cursed(curse_state))
     {
         cdata[eater].nutrition -= 1500;
-        if (is_in_fov(eater))
+        if (is_in_fov(cdata[eater]))
         {
             txt(i18n::s.get("core.locale.food.eat_status.bad", cdata[eater]));
         }
@@ -294,7 +294,7 @@ void eatstatus(curse_state_t curse_state, int eater)
     }
     else if (curse_state == curse_state_t::blessed)
     {
-        if (is_in_fov(eater))
+        if (is_in_fov(cdata[eater]))
         {
             txt(i18n::s.get("core.locale.food.eat_status.good", cdata[eater]));
         }
@@ -327,7 +327,7 @@ void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
 
     if (rnd(prm_882) == 0)
     {
-        if (is_in_fov(drinker))
+        if (is_in_fov(cdata[drinker]))
         {
             txt(i18n::s.get(
                 "core.locale.food.eat_status.cursed_drink", cdata[drinker]));
@@ -1252,7 +1252,7 @@ void apply_general_eating_effect(int cieat)
     }
     if (ibit(14, ci) == 1)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.food.effect.poisoned.text", cdata[cc]));
@@ -1338,7 +1338,7 @@ void apply_general_eating_effect(int cieat)
                     cc,
                     (inv[ci].enchantments[cnt].power / 50 + 1) * 100
                         * (1 + (cc != 0) * 5));
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     if (inv[ci].enchantments[cnt].power / 50 + 1 >= 0)
                     {
@@ -1361,7 +1361,7 @@ void apply_general_eating_effect(int cieat)
             }
             if (enc2 == 6)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.food.effect.growth",
