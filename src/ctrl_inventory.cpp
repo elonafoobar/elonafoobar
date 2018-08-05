@@ -5,6 +5,7 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
+#include "db_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -12,7 +13,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
 #include "shop.hpp"
@@ -220,21 +220,21 @@ label_20591:
             }
             if (invctrl == 7)
             {
-                if (the_item_db[inv[cnt].id]->is_readable == 0)
+                if (!the_item_db[inv[cnt].id]->is_readable)
                 {
                     continue;
                 }
             }
             if (invctrl == 8)
             {
-                if (the_item_db[inv[cnt].id]->is_drinkable == 0)
+                if (!the_item_db[inv[cnt].id]->is_drinkable)
                 {
                     continue;
                 }
             }
             if (invctrl == 9)
             {
-                if (the_item_db[inv[cnt].id]->is_zappable == 0)
+                if (!the_item_db[inv[cnt].id]->is_zappable)
                 {
                     continue;
                 }
@@ -294,7 +294,7 @@ label_20591:
             if (invctrl == 14)
             {
                 if (inv[cnt].function == 0
-                    && the_item_db[inv[cnt].id]->is_usable == 0
+                    && !the_item_db[inv[cnt].id]->is_usable
                     && ibit(10, cnt) == 0)
                 {
                     continue;

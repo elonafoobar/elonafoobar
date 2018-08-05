@@ -1,6 +1,7 @@
 #include "testing.hpp"
 #include <sstream>
 #include "config.hpp"
+#include "db_item.hpp"
 #include "db_music.hpp"
 #include "db_sound.hpp"
 #include "draw.hpp"
@@ -98,19 +99,10 @@ void load_translations(const std::string& hcl)
     i18n::s.load(ss, "test.hcl", "test");
 }
 
-void clear_lion_db()
-{
-    the_character_db.clear();
-    the_sound_db.clear();
-    the_music_db.clear();
-}
-
 void configure_lua()
 {
-    clear_lion_db();
     lua::lua.reset(new lua::lua_env());
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
-    initialize_lion_db();
 
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
@@ -124,6 +116,7 @@ void pre_init()
 
     initialize_cat_db();
     configure_lua();
+    initialize_lion_db();
 
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;

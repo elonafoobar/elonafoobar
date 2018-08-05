@@ -10,6 +10,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
@@ -19,7 +20,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
@@ -1752,12 +1752,11 @@ label_2747:
                 p(0) = 3;
                 p(1) = ci;
             }
-            if (inv[ci].function != 0
-                || the_item_db[inv[ci].id]->is_usable != 0)
+            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[inv[ci].id]->is_readable != 0)
+            if (the_item_db[inv[ci].id]->is_readable)
             {
                 p = 5;
             }

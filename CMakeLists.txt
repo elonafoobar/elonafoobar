@@ -56,8 +56,8 @@ set(CORE_SOURCES
   src/ability.cpp
   src/access_character_info.cpp
   src/access_item_db.cpp
-  src/adventurer.cpp
   src/activity.cpp
+  src/adventurer.cpp
   src/ai.cpp
   src/animation.cpp
   src/audio.cpp
@@ -78,9 +78,10 @@ set(CORE_SOURCES
   src/command.cpp
   src/config.cpp
   src/config_def.cpp
+  src/crafting.cpp
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
-  src/crafting.cpp
+  src/db_item.cpp
   src/db_music.cpp
   src/db_sound.cpp
   src/debug.cpp
@@ -105,9 +106,9 @@ set(CORE_SOURCES
   src/initialize_map.cpp
   src/input.cpp
   src/item.cpp
-  src/item_db.cpp
   src/item_material.cpp
   src/itemgen.cpp
+  src/lion.cpp
   src/log.cpp
   src/magic.cpp
   src/main_menu.cpp
@@ -250,6 +251,7 @@ else()
       src/tests/lua_mods.cpp
       src/tests/lua_registry.cpp
       src/tests/lua_registry_character.cpp
+      src/tests/lua_registry_item.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
       src/tests/i18n.cpp

@@ -6,6 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
@@ -13,7 +14,6 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -420,7 +420,7 @@ void apply_general_eating_effect(int cieat)
         fdlist(1, cnt) = 0;
     }
     nutrition = 2500;
-    if (the_item_db[inv[ci].id]->is_cargo == 1)
+    if (the_item_db[inv[ci].id]->is_cargo)
     {
         nutrition += 2500;
     }

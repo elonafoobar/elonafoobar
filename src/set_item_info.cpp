@@ -1,6 +1,6 @@
+#include "db_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
-#include "item_db.hpp"
 #include "variables.hpp"
 
 

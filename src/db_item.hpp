@@ -3,6 +3,7 @@
 #include <array>
 #include <unordered_map>
 #include "cat.hpp"
+#include "lion.hpp"
 #include "optional.hpp"
 
 
@@ -27,11 +28,11 @@ struct item_data
     int chargelevel;
     std::array<std::string, 4> description_jp;
     std::string description_en;
-    int is_readable;
-    int is_zappable;
-    int is_drinkable;
-    int is_cargo;
-    int is_usable;
+    bool is_readable;
+    bool is_zappable;
+    bool is_drinkable;
+    bool is_cargo;
+    bool is_usable;
     int appearance;
     int expiration_date;
     int level;
@@ -52,35 +53,34 @@ struct item_data
 
 
 
-class item_db;
+class item_db_ex;
 
 
-namespace cat
+namespace lion
 {
 
 template <>
-struct cat_db_traits<item_db>
+struct lion_db_traits<item_db_ex>
 {
-    using id_type = int;
     using data_type = item_data;
-    static constexpr const char* filename = u8"item.lua";
-    static constexpr const char* table_name = u8"item";
+    using legacy_id_type = int;
+    static constexpr const char* datatype_name = u8"item";
 };
 
-} // namespace cat
+} // namespace lion
 
 
-class item_db : public cat::cat_db<item_db>
+
+class item_db_ex : public lion::lion_db<item_db_ex>
 {
 public:
-    item_db() = default;
+    item_db_ex() = default;
 
-    void define(lua_State* L);
+    item_data convert(const std::string&, const sol::table&, lua::lua_env&);
 };
 
 
-
-extern item_db the_item_db;
+extern item_db_ex the_item_db;
 
 
 } // namespace elona

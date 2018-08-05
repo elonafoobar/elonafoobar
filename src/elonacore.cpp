@@ -19,6 +19,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -33,7 +34,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
@@ -1164,7 +1164,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
 
 int cargocheck()
 {
-    if (the_item_db[inv[ci].id]->is_cargo == 0)
+    if (!the_item_db[inv[ci].id]->is_cargo)
     {
         return 1;
     }
@@ -3963,7 +3963,7 @@ void character_drops_item()
             {
                 continue;
             }
-            if (the_item_db[inv[ci].id]->is_cargo == 1)
+            if (the_item_db[inv[ci].id]->is_cargo)
             {
                 if (mdata_map_type != mdata_t::map_type_t::world_map
                     && mdata_map_type != mdata_t::map_type_t::player_owned

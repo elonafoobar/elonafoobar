@@ -1,8 +1,8 @@
 #include "enchantment.hpp"
+#include "db_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
