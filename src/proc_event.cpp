@@ -16,6 +16,7 @@
 #include "mef.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "random_event.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -133,17 +134,18 @@ void proc_event()
         break;
     case 12:
         update_screen();
-        s = i18n::s.get("core.locale.event.popup.reunion_with_pet.title");
-        buff = i18n::s.get("core.locale.event.popup.reunion_with_pet.text");
-        listmax = 4;
-        for (int cnt = 0; cnt < listmax; cnt++)
         {
-            list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum(
-                "core.locale.event.popup.reunion_with_pet.choices", cnt);
-        }
-        {
-            int result = show_random_event_window(u8"bg_re13");
+            std::vector<std::string> choices;
+            for (int i = 0; i < 4; ++i)
+            {
+                choices.push_back(i18n::s.get_enum(
+                    "core.locale.event.popup.reunion_with_pet.choices", i));
+            }
+            int result = show_random_event_window(
+                i18n::s.get("core.locale.event.popup.reunion_with_pet.title"),
+                i18n::s.get("core.locale.event.popup.reunion_with_pet.text"),
+                choices,
+                u8"bg_re13");
             p = 3;
             if (result == 0)
             {
@@ -170,17 +172,11 @@ void proc_event()
         break;
     case 13:
         play_music("core.mcWedding");
-        s = i18n::s.get("core.locale.event.popup.marriage.title");
-        buff =
-            i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
-        listmax = 1;
-        for (int cnt = 0; cnt < listmax; cnt++)
-        {
-            list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum(
-                "core.locale.event.popup.marriage.choices", cnt);
-        }
-        show_random_event_window(u8"bg_re14");
+        show_random_event_window(
+            i18n::s.get("core.locale.event.popup.marriage.title"),
+            i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]),
+            {i18n::s.get_enum("core.locale.event.popup.marriage.choices", 0)},
+            u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
             flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));

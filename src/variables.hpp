@@ -172,9 +172,6 @@ ELONA_EXTERN(bool player_queried_for_input);
 // network.cpp
 ELONA_EXTERN(elona_vector1<std::string> netbuf);
 
-// proc_random_event.cpp
-ELONA_EXTERN(elona_vector1<int> fsetremain);
-
 // activity.cpp
 ELONA_EXTERN(elona_vector1<int> fsetperform);
 
@@ -739,8 +736,6 @@ int place_random_nefias();
 int get_card_info();
 int label_1835();
 int label_1845();
-int proc_random_event();
-int show_random_event_window(const std::string&);
 int label_1898();
 int label_1931();
 int label_1932();

@@ -1,3 +1,4 @@
+#include "random_event.hpp"
 #include <cassert>
 #include "ability.hpp"
 #include "audio.hpp"
@@ -18,13 +19,45 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
-namespace elona
+
+
+namespace
 {
 
-optional<std::pair<int, int>> generate_random_event_mode9()
+
+
+struct random_event
+{
+    int id;
+    int luck_threshold;
+
+
+    bool is_evadable(int luck) const
+    {
+        return luck_threshold != 0 && rnd(luck + 1) > luck_threshold;
+    }
+};
+
+
+
+std::vector<int> fsetremain{
+    25000,
+    57000,
+    57000,
+    77000,
+    53000,
+    52000,
+    57000,
+};
+
+
+
+optional<random_event> generate_random_event_in_sleep()
 {
     int id = 0;
     int luck_threshold = 0;
+
+    return random_event{3, 0};
 
     if (!cdata[0].god_id.empty())
     {
@@ -100,11 +133,15 @@ optional<std::pair<int, int>> generate_random_event_mode9()
     {
         return none;
     }
-
-    return std::make_pair(id, luck_threshold);
+    else
+    {
+        return random_event{id, luck_threshold};
+    }
 }
 
-optional<std::pair<int, int>> generate_random_event()
+
+
+optional<random_event> generate_random_event()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -123,7 +160,7 @@ optional<std::pair<int, int>> generate_random_event()
     }
     if (mode == 9)
     {
-        return generate_random_event_mode9();
+        return generate_random_event_in_sleep();
     }
     if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
@@ -173,67 +210,55 @@ optional<std::pair<int, int>> generate_random_event()
             id = 15;
             luck_threshold = 80;
         }
-        if (id == 0)
-        {
-            return none;
-        }
-        else
-        {
-            return std::make_pair(id, luck_threshold);
-        }
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    else if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (rnd(40))
         {
             return none;
         }
-        if (id == 0)
-        {
-            return none;
-        }
-        else
-        {
-            return std::make_pair(id, luck_threshold);
-        }
     }
-    if (rnd(25) == 0)
+    else
     {
-        id = 10;
-    }
-    if (rnd(25) == 0)
-    {
-        id = 11;
+        if (rnd(25) == 0)
+        {
+            id = 10;
+        }
+        if (rnd(25) == 0)
+        {
+            id = 11;
+        }
     }
 
     if (id == 0)
     {
         return none;
     }
-
-    return std::make_pair(id, luck_threshold);
+    else
+    {
+        return random_event{id, luck_threshold};
+    }
 }
 
-void run_random_event(int id, int luck_threshold)
+
+
+void run_random_event(random_event event)
 {
-    assert(id != 0);
+    assert(event.id != 0);
+
     cc = 0;
     tc = 0;
     listmax = 0;
-    if (luck_threshold != 0)
+
+    if (event.is_evadable(sdata(19, 0)))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
-        if (rnd(sdata(19, 0) + 1) > luck_threshold)
-        {
-            id = 1;
-        }
+        event.id = 1;
     }
 
-    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id);
-    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id);
     std::string event_bg;
 
-    switch (id)
+    switch (event.id)
     {
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -447,16 +472,21 @@ void run_random_event(int id, int luck_threshold)
         break;
     }
 
-    for (int cnt = 0; cnt < listmax; cnt++)
+    std::vector<std::string> choices;
+    for (int i = 0; i < listmax; ++i)
     {
-        list(0, cnt) = cnt;
-        listn(0, cnt) = i18n::s.get_enum_property(
-            "core.locale.event.popup", "choices._" + std::to_string(cnt), id);
+        choices.push_back(i18n::s.get_enum_property(
+            "core.locale.event.popup",
+            "choices._" + std::to_string(i),
+            event.id));
     }
+    int result = show_random_event_window(
+        i18n::s.get_enum_property("core.locale.event.popup", "title", event.id),
+        i18n::s.get_enum_property("core.locale.event.popup", "text", event.id),
+        choices,
+        event_bg);
 
-    int result = show_random_event_window(event_bg);
-
-    switch (id)
+    switch (event.id)
     {
     case 14:
         if (result == 0)
@@ -474,7 +504,7 @@ void run_random_event(int id, int luck_threshold)
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                flttypemajor = fsetremain(rnd(fsetremain.size()));
+                flttypemajor = choice(fsetremain);
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(i18n::s.get(
@@ -496,7 +526,7 @@ void run_random_event(int id, int luck_threshold)
                 }
                 else
                 {
-                    flttypemajor = fsetremain(rnd(fsetremain.size()));
+                    flttypemajor = choice(fsetremain);
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
@@ -515,34 +545,55 @@ void run_random_event(int id, int luck_threshold)
     load_continuous_action_animation();
 }
 
-int proc_random_event()
+
+
+} // namespace
+
+
+
+namespace elona
 {
-    if (auto pair = generate_random_event())
+
+
+
+void proc_random_event()
+{
+    if (auto e = generate_random_event())
     {
-        run_random_event(pair->first, pair->second);
-        return 1;
-    }
-    else
-    {
-        return 0;
+        run_random_event(*e);
     }
 }
 
 
 
-int show_random_event_window(const std::string& file)
+int show_random_event_window(
+    const std::string& title,
+    const std::string& text,
+    const std::vector<std::string> choices,
+    const std::string& background_filename)
 {
-    if (config::instance().skiprandevents)
+    assert(!choices.empty());
+
+    if (config::instance().skiprandevents && choices.size() == 1)
     {
-        if (listmax <= 1)
-        {
-            snd(62);
-            txt(""s + buff);
-            txt(i18n::s.get("core.locale.event.popup.skip", listn(0, 0)));
-            rtval = -1;
-            return rtval;
-        }
+        // Skip this event.
+        snd(62);
+        txt(text);
+        txt(i18n::s.get("core.locale.event.popup.skip", choices[0]));
+        return -1;
     }
+
+
+    buff = text;
+    listmax = 0;
+    for (const auto& choice : choices)
+    {
+        list(0, listmax) = listmax;
+        listn(0, listmax) = choice;
+        ++listmax;
+    }
+
+
     keyhalt = 1;
     cs = 0;
     page = 0;
@@ -563,7 +614,7 @@ int show_random_event_window(const std::string& file)
     gsel(7);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 0);
+    picload(filesystem::dir::graphic() / (background_filename + u8".bmp"), 0);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -572,71 +623,82 @@ int show_random_event_window(const std::string& file)
     talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
     notesel(buff);
     dy = ty + noteinfo() * 15 + 80 + listmax * 20;
-label_1897_internal:
-    gmode(2);
-    window(
-        (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, true);
-    window((windoww - dx) / 2 + inf_screenx, winposy(dy) - 16, dx, dy);
-    wx = (windoww - dx) / 2 + inf_screenx;
-    wy = winposy(dy);
-    gmode(0);
-    pos(wx + 12, wy + 6);
-    gcopy(7, 0, 0, tx, ty);
-    gmode(2);
-    color(240, 230, 220);
-    boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
-    color(0, 0, 0);
-    font(14 - en * 2);
-    q = i18n::s.get("core.locale.event.popup.title", s(0));
-    bmes(q, wx + 40, wy + 16, {245, 235, 225}, {30, 20, 10});
-    color(30, 30, 30);
-    pos(wx + 24, wy + ty + 20);
-    mes(buff);
-    color(0, 0, 0);
-    keyrange = 0;
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+
+    while (1)
     {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        gmode(2);
+        window(
+            (windoww - dx) / 2 + inf_screenx + 4,
+            winposy(dy) - 12,
+            dx,
+            dy,
+            true);
+        window((windoww - dx) / 2 + inf_screenx, winposy(dy) - 16, dx, dy);
+        wx = (windoww - dx) / 2 + inf_screenx;
+        wy = winposy(dy);
+        gmode(0);
+        pos(wx + 12, wy + 6);
+        gcopy(7, 0, 0, tx, ty);
+        gmode(2);
+        boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
+        font(14 - en * 2);
+        bmes(
+            i18n::s.get("core.locale.event.popup.title", title),
+            wx + 40,
+            wy + 16,
+            {245, 235, 225},
+            {30, 20, 10});
+        color(30, 30, 30);
+        pos(wx + 24, wy + ty + 20);
+        mes(buff);
+        color(0, 0, 0);
+        keyrange = 0;
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
-            break;
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            key_list(cnt) = key_select(cnt);
+            ++keyrange;
         }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-    }
-    font(14 - en * 2);
-    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-    {
-        p = cnt;
-        i = list(0, p);
-        display_key(wx + 30, wy + dy + cnt * 20 - listmax * 20 - 52, cnt);
-        q = listn(0, p);
-        cs_list(cs == cnt, q, wx + 60, wy + dy + cnt * 20 - listmax * 20 - 52);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
-    if (chatesc != -1)
-    {
-        if (key == key_cancel)
+        font(14 - en * 2);
+        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
-            snd(40);
-            rtval = chatesc;
+            p = cnt;
+            i = list(0, p);
+            display_key(wx + 30, wy + dy + cnt * 20 - listmax * 20 - 52, cnt);
+            q = listn(0, p);
+            cs_list(
+                cs == cnt, q, wx + 60, wy + dy + cnt * 20 - listmax * 20 - 52);
+        }
+        if (keyrange != 0)
+        {
+            cs_bk = cs;
+        }
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+        cursor_check();
+        ELONA_GET_SELECTED_ITEM(rtval, snd(40));
+        if (chatesc != -1)
+        {
+            if (key == key_cancel)
+            {
+                snd(40);
+                rtval = chatesc;
+            }
+        }
+        if (rtval != -1)
+        {
+            key = "";
+            return rtval;
         }
     }
-    if (rtval != -1)
-    {
-        key = "";
-        return rtval;
-    }
-    goto label_1897_internal;
 }
 
-} // Namespace elona
+
+
+} // namespace elona

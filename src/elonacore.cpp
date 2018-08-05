@@ -49,6 +49,7 @@
 #include "quest.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "random_event.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
@@ -3727,13 +3728,6 @@ void initialize_set_of_random_generation()
     fsetplantunknown(2) = 54000;
     fsetplantunknown(3) = 64000;
     fsetplantunknown(4) = 77000;
-    fsetremain(0) = 25000;
-    fsetremain(1) = 57000;
-    fsetremain(2) = 57000;
-    fsetremain(3) = 77000;
-    fsetremain(4) = 53000;
-    fsetremain(5) = 52000;
-    fsetremain(6) = 57000;
     fsetbarrel(0) = 25000;
     fsetbarrel(1) = 57000;
     fsetbarrel(2) = 53000;
@@ -11224,16 +11218,14 @@ void label_2151()
         }
         if (tc != -1)
         {
-            s = i18n::s.get("core.locale.activity.sleep.new_gene.title");
-            buff = i18n::s.get(
-                "core.locale.activity.sleep.new_gene.text", cdata[tc]);
-            listmax = 0;
-            list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get_enum(
-                "core.locale.activity.sleep.new_gene.choices", 0);
-            ++listmax;
             cdata[tc].has_made_gene() = false;
-            show_random_event_window(u8"bg_re14");
+            show_random_event_window(
+                i18n::s.get("core.locale.activity.sleep.new_gene.title"),
+                i18n::s.get(
+                    "core.locale.activity.sleep.new_gene.text", cdata[tc]),
+                {i18n::s.get_enum(
+                    "core.locale.activity.sleep.new_gene.choices", 0)},
+                u8"bg_re14");
             save_gene();
         }
     }
