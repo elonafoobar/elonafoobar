@@ -36,11 +36,12 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(description_jp_3, std::string, "");
     ELONA_LION_DB_FIELD(description_en, std::string, "");
 
-    ELONA_LION_DB_FIELD(is_readable, int, 0);
-    ELONA_LION_DB_FIELD(is_zappable, int, 0);
-    ELONA_LION_DB_FIELD(is_drinkable, int, 0);
-    ELONA_LION_DB_FIELD(is_cargo, int, 0);
-    ELONA_LION_DB_FIELD(is_usable, int, 0);
+    ELONA_LION_DB_FIELD(is_readable, bool, false);
+    ELONA_LION_DB_FIELD(is_zappable, bool, false);
+    ELONA_LION_DB_FIELD(is_drinkable, bool, false);
+    ELONA_LION_DB_FIELD(is_cargo, bool, false);
+    ELONA_LION_DB_FIELD(is_usable, bool, false);
+
     ELONA_LION_DB_FIELD(appearance, int, 0);
     ELONA_LION_DB_FIELD(expiration_date, int, 0);
     ELONA_LION_DB_FIELD(level, int, 0);
@@ -82,11 +83,12 @@ item_data item_db_ex::convert(
         },
         description_en,
 
-        is_readable,
-        is_zappable,
-        is_drinkable,
-        is_cargo,
-        is_usable,
+        is_readable ? 1 : 0,
+        is_zappable ? 1 : 0,
+        is_drinkable ? 1 : 0,
+        is_cargo ? 1 : 0,
+        is_usable ? 1 : 0,
+
         appearance,
         expiration_date,
         level,
