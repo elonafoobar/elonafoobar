@@ -83,11 +83,11 @@ item_data item_db_ex::convert(
         },
         description_en,
 
-        is_readable ? 1 : 0,
-        is_zappable ? 1 : 0,
-        is_drinkable ? 1 : 0,
-        is_cargo ? 1 : 0,
-        is_usable ? 1 : 0,
+        is_readable,
+        is_zappable,
+        is_drinkable,
+        is_cargo,
+        is_usable,
 
         appearance,
         expiration_date,

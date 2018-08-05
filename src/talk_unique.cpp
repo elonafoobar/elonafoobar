@@ -4068,7 +4068,7 @@ talk_result_t talk_unique_rogue_boss()
         {
             if (inv[cnt].number() > 0)
             {
-                if (the_item_db[inv[cnt].id]->is_cargo == 1)
+                if (the_item_db[inv[cnt].id]->is_cargo)
                 {
                     txt(i18n::s.get(
                         "core.locale.talk.npc.common.hand_over", inv[cnt]));

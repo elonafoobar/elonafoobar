@@ -1752,12 +1752,11 @@ label_2747:
                 p(0) = 3;
                 p(1) = ci;
             }
-            if (inv[ci].function != 0
-                || the_item_db[inv[ci].id]->is_usable != 0)
+            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[inv[ci].id]->is_readable != 0)
+            if (the_item_db[inv[ci].id]->is_readable)
             {
                 p = 5;
             }

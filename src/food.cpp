@@ -420,7 +420,7 @@ void apply_general_eating_effect(int cieat)
         fdlist(1, cnt) = 0;
     }
     nutrition = 2500;
-    if (the_item_db[inv[ci].id]->is_cargo == 1)
+    if (the_item_db[inv[ci].id]->is_cargo)
     {
         nutrition += 2500;
     }

@@ -28,11 +28,11 @@ struct item_data
     int chargelevel;
     std::array<std::string, 4> description_jp;
     std::string description_en;
-    int is_readable;
-    int is_zappable;
-    int is_drinkable;
-    int is_cargo;
-    int is_usable;
+    bool is_readable;
+    bool is_zappable;
+    bool is_drinkable;
+    bool is_cargo;
+    bool is_usable;
     int appearance;
     int expiration_date;
     int level;
