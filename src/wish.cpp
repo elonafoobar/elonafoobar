@@ -351,7 +351,7 @@ bool grant_special_wishing(const std::string& wish)
     else if (wish == u8"死" || wish == u8"death")
     {
         txt(lang(u8"それがお望みなら…", u8"If you wish so..."));
-        dmghp(0, 99999, -11);
+        damage_hp(cdata[0], 99999, -11);
     }
     else if (
         wish == u8"仲間" || wish == u8"friend" || wish == u8"company"

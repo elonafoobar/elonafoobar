@@ -270,7 +270,7 @@ void chara_vomit(int prm_876)
     modify_weight(cdata[prm_876], -(1 + rnd(5)));
     if (cdata[prm_876].nutrition <= 0)
     {
-        dmghp(prm_876, 9999, -3);
+        damage_hp(cdata[prm_876], 9999, -3);
     }
     cdata[prm_876].nutrition -= 3000;
     return;
@@ -302,7 +302,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         {
             buff_add(eater, 19, 100, 500 + rnd(500));
         }
-        healsan(eater, 2);
+        heal_insanity(cdata[eater], 2);
     }
 }
 
@@ -1087,7 +1087,7 @@ void apply_general_eating_effect(int cieat)
                 else
                 {
                     txt(i18n::s.get("core.locale.food.effect.human.dislike"));
-                    damage_insanity(cc, 15);
+                    damage_insanity(cdata[cc], 15);
                     dmgcon(cc, status_ailment_t::insane, 150);
                     if (trait(41) == 0)
                     {
@@ -1248,7 +1248,7 @@ void apply_general_eating_effect(int cieat)
     {
         txt(i18n::s.get(
             "core.locale.food.effect.sisters_love_fueled_lunch", cdata[cc]));
-        healsan(cc, 30);
+        heal_insanity(cdata[cc], 30);
     }
     if (ibit(14, ci) == 1)
     {
@@ -1259,7 +1259,7 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get_enum(
                 "core.locale.food.effect.poisoned.dialog", rnd(2)));
         }
-        dmghp(cc, rnd(250) + 250, -4);
+        damage_hp(cdata[cc], rnd(250) + 250, -4);
         if (cdata[cc].state() != character::state_t::alive)
         {
             if (cc != 0)
@@ -1301,13 +1301,13 @@ void apply_general_eating_effect(int cieat)
         if (enc == 36)
         {
             p = rnd(inv[ci].enchantments[cnt].power / 50 + 1) + 1;
-            healsp(cc, p);
+            heal_sp(cdata[cc], p);
             continue;
         }
         if (enc == 38)
         {
             p = rnd(inv[ci].enchantments[cnt].power / 25 + 1) + 1;
-            healmp(cc, p / 5);
+            heal_mp(cdata[cc], p / 5);
             continue;
         }
         if (enc == 37)

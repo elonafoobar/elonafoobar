@@ -1110,7 +1110,7 @@ void quest_failed(int val0)
                                 }
                                 txtef(9);
                                 txt(s);
-                                dmghp(tc, 999999, p);
+                                damage_hp(cdata[tc], 999999, p);
                             }
                             cdata[tc].set_state(character::state_t::empty);
                             break;

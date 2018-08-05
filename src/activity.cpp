@@ -359,7 +359,7 @@ void continuous_action_perform()
                         {
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
-                        dmghp(cc, dmg, -8);
+                        damage_hp(cdata[cc], dmg, -8);
                         if (cdata[cc].state() == character::state_t::empty)
                         {
                             break;
@@ -679,7 +679,7 @@ void continuous_action_sex()
     }
     if (cc == 0)
     {
-        if (!actionsp(0, 1 + rnd(2)))
+        if (!action_sp(cdata[0], 1 + rnd(2)))
         {
             txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
             rowactend(cc);
@@ -732,7 +732,7 @@ void continuous_action_sex()
                 dmgcon(c, status_ailment_t::paralyzed, 500);
             }
             dmgcon(c, status_ailment_t::insane, 300);
-            healsan(c, 10);
+            heal_insanity(cdata[c], 10);
             skillexp(11, c, 250 + (c >= 57) * 1000);
             skillexp(15, c, 250 + (c >= 57) * 1000);
         }
@@ -890,7 +890,7 @@ void continuous_action_eating_finish()
                     // TODO JP had six options, EN only had five.
                     txt(i18n::s.get_enum(
                         "core.locale.food.passed_rotten", rnd(6)));
-                    dmghp(cc, 999, -12);
+                    damage_hp(cdata[cc], 999, -12);
                     if (cdata[cc].state() != character::state_t::alive)
                     {
                         if (cdata[cc].relationship > 0)
@@ -1098,7 +1098,7 @@ void continuous_action_others()
                 {
                     rowactend(cc);
                     txt(i18n::s.get("core.locale.activity.iron_maiden"));
-                    dmghp(cc, 9999, -18);
+                    damage_hp(cdata[cc], 9999, -18);
                     return;
                 }
             }
@@ -1108,7 +1108,7 @@ void continuous_action_others()
                 {
                     rowactend(cc);
                     txt(i18n::s.get("core.locale.activity.guillotine"));
-                    dmghp(cc, 9999, -19);
+                    damage_hp(cdata[cc], 9999, -19);
                     return;
                 }
             }
@@ -1623,7 +1623,7 @@ void spot_fishing()
         }
         if (rnd(10) == 0)
         {
-            dmgsp(cc, 1);
+            damage_sp(cdata[cc], 1);
         }
         return;
     }
@@ -1803,7 +1803,7 @@ void spot_mining_or_wall()
     {
         if (rnd(5) == 0)
         {
-            dmgsp(cc, 1);
+            damage_sp(cdata[cc], 1);
         }
         ++countdig;
         f = 0;

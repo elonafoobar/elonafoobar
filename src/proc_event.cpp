@@ -333,7 +333,7 @@ void proc_event()
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
     case 20:
-        dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
+        damage_hp(cdata[evdata1(evnum - (evnum != 0) * 1)], 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
         cdata[evdata1(evnum - (evnum != 0) * 1)].set_state(
             character::state_t::empty);
@@ -794,7 +794,7 @@ void proc_event()
                     {
                         tc = map(dx, dy, 1) - 1;
                         dmg = 1000;
-                        dmghp(tc, dmg, -17);
+                        damage_hp(cdata[tc], dmg, -17);
                     }
                     mapitem_fire(dx, dy);
                 }

@@ -6,6 +6,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "db_item.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -1181,7 +1182,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!actionsp(0, 10))
+                    if (!action_sp(cdata[0], 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));
@@ -1201,7 +1202,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!actionsp(0, 10))
+                    if (!action_sp(cdata[0], 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));

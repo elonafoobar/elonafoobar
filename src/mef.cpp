@@ -222,8 +222,12 @@ void mef_proc(int tc)
                         hostileaction(0, tc);
                     }
                 }
-                int stat = dmghp(
-                    tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
+                int stat = damage_hp(
+                    cdata[tc],
+                    rnd(mef(5, ef) / 25 + 5) + 1,
+                    -15,
+                    63,
+                    mef(5, ef));
                 if (stat == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -247,7 +251,8 @@ void mef_proc(int tc)
                 hostileaction(0, tc);
             }
         }
-        int stat = dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+        int stat = damage_hp(
+            cdata[tc], rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
             check_kill(mef(6, ef), tc);

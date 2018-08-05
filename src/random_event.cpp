@@ -273,7 +273,7 @@ void run_random_event(random_event event)
             {
                 txt(i18n::s.get_enum_property(
                     "core.locale.event.popup", "scream", 15, cdata[p]));
-                dmghp(p, 99999, -11);
+                damage_hp(cdata[p], 99999, -11);
                 break;
             }
         }

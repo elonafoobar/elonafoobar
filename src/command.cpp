@@ -2389,7 +2389,7 @@ turn_result_t do_use_command()
         {
             return turn_result_t::turn_end;
         }
-        dmghp(0, 99999, -20);
+        damage_hp(cdata[0], 99999, -20);
         goto label_2229_internal;
     case 33:
         if (inv[ci].subname == 0)
@@ -2574,7 +2574,7 @@ turn_result_t do_use_command()
             "core.locale.action.use.iron_maiden.someone_activates"));
         txtef(9);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
-        dmghp(0, 9999, -18);
+        damage_hp(cdata[0], 9999, -18);
         goto label_2229_internal;
     case 36:
         txt(i18n::s.get("core.locale.action.use.guillotine.use"));
@@ -2583,7 +2583,7 @@ turn_result_t do_use_command()
         txt(i18n::s.get("core.locale.action.use.guillotine.someone_activates"));
         txtef(9);
         txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"));
-        dmghp(0, 9999, -19);
+        damage_hp(cdata[0], 9999, -19);
         goto label_2229_internal;
     case 39:
         txtef(9);
@@ -2979,14 +2979,14 @@ turn_result_t do_use_stairs_command(int val0)
     }
     if (movelevelbystairs == 1)
     {
-        bool ok = actionsp(0, 15);
+        bool ok = action_sp(cdata[0], 15);
         if (!ok || cdata[0].inventory_weight_type >= 3)
         {
             if (!ok || rnd(5 - cdata[0].inventory_weight_type) == 0)
             {
                 txt(i18n::s.get("core.locale.action.use_stairs.lost_balance"));
-                dmghp(
-                    cc,
+                damage_hp(
+                    cdata[cc],
                     cdata[cc].max_hp
                             * (cdata[0].inventory_weight * 10
                                    / cdata[0].max_inventory_weight
@@ -3470,7 +3470,7 @@ turn_result_t do_get_command()
         {
             snd(83);
             txt(i18n::s.get("core.locale.action.get.snow"));
-            if (!actionsp(0, 10))
+            if (!action_sp(cdata[0], 10))
             {
                 txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
                 return turn_result_t::turn_end;

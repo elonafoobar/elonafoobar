@@ -275,7 +275,7 @@ int magic()
                                         cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -390,7 +390,7 @@ int magic()
                                 txt(i18n::s.get(
                                     "core.locale.magic.rain_of_sanity",
                                     cdata[tc]));
-                                healsan(tc, efp / 10);
+                                heal_insanity(cdata[tc], efp / 10);
                                 healcon(tc, 11, 9999);
                             }
                             continue;
@@ -470,13 +470,13 @@ int magic()
                                         cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
                 if (efid == 644)
                 {
-                    dmghp(cc, 99999, -16);
+                    damage_hp(cdata[cc], 99999, -16);
                 }
                 if (chainbomb > 0)
                 {
@@ -528,7 +528,7 @@ int magic()
                             "core.locale.magic.arrow.ally", cdata[tc]));
                     }
                 }
-                dmghp(tc, dmg, cc, ele, elep);
+                damage_hp(cdata[tc], dmg, cc, ele, elep);
                 goto the_end;
             case 4:
                 if (efid == 400)
@@ -661,7 +661,7 @@ int magic()
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
-                dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
+                damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
                     dmgcon(tc, status_ailment_t::fear, elep);
@@ -1063,7 +1063,7 @@ int magic()
                                         cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -1092,7 +1092,7 @@ label_2181_internal:
         txtef(8);
         txt(i18n::s.get_enum(
             "core.locale.magic.insanity", rnd(4), cdata[cc], cdata[tc]));
-        damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
+        damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
         if (mdata_map_type != mdata_t::map_type_t::world_map)
@@ -1334,7 +1334,12 @@ label_2181_internal:
                     cdata[tc]));
             }
         }
-        dmghp(tc, efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
+        damage_hp(
+            cdata[tc],
+            efp * efstatusfix(500, 400, 100, 50) / 1000,
+            -15,
+            63,
+            efp);
         break;
     case 1103:
         if (is_in_fov(cdata[tc]))
@@ -1357,7 +1362,7 @@ label_2181_internal:
             txt(i18n::s.get(
                 "core.locale.magic.restore_stamina.apply", cdata[tc]));
         }
-        healsp(tc, 25);
+        heal_sp(cdata[tc], 25);
         sickifcursed(efstatus, tc, 1);
         break;
     case 1147:
@@ -1368,7 +1373,7 @@ label_2181_internal:
             txt(i18n::s.get(
                 "core.locale.magic.restore_stamina_greater.apply", cdata[tc]));
         }
-        healsp(tc, 100);
+        heal_sp(cdata[tc], 100);
         sickifcursed(efstatus, tc, 1);
         break;
     case 1142:
@@ -1381,11 +1386,11 @@ label_2181_internal:
             }
             if (cdata[tc].hp > 10)
             {
-                dmghp(tc, cdata[tc].hp - rnd(10), -15);
+                damage_hp(cdata[tc], cdata[tc].hp - rnd(10), -15);
             }
             else
             {
-                dmghp(tc, rnd(20000), -15);
+                damage_hp(cdata[tc], rnd(20000), -15);
             }
         }
         else if (is_in_fov(cdata[tc]))
@@ -1422,12 +1427,12 @@ label_2181_internal:
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1445,12 +1450,12 @@ label_2181_internal:
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1556,12 +1561,12 @@ label_2181_internal:
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1591,12 +1596,12 @@ label_2181_internal:
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1691,12 +1696,12 @@ label_2181_internal:
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -2628,7 +2633,7 @@ label_2181_internal:
                     "core.locale.magic.vorpal.ally", cdata[cc], cdata[tc]));
             }
         }
-        dmghp(tc, cdata[tc].max_hp, cc, 658);
+        damage_hp(cdata[tc], cdata[tc].max_hp, cc, 658);
         break;
     case 440:
     case 439:
@@ -2803,7 +2808,7 @@ label_2181_internal:
         }
         break;
     case 621:
-        healmp(tc, efp / 2 + rnd((efp / 2 + 1)));
+        heal_mp(cdata[tc], efp / 2 + rnd((efp / 2 + 1)));
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
@@ -2813,7 +2818,7 @@ label_2181_internal:
         }
         break;
     case 624:
-        healmp(tc, roll(dice1, dice2, bonus));
+        heal_mp(cdata[tc], roll(dice1, dice2, bonus));
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
@@ -3894,7 +3899,7 @@ label_2181_internal:
                 continue;
             }
             tc = cnt;
-            dmghp(tc, 9999999, cc);
+            damage_hp(cdata[tc], 9999999, cc);
         }
         break;
     case 465:
@@ -3919,7 +3924,7 @@ label_2181_internal:
                 {
                     tc = map(dx, dy, 1) - 1;
                     dmg = sdata(16, cc) * efp / 10;
-                    dmghp(tc, dmg, cc, 50, 1000);
+                    damage_hp(cdata[tc], dmg, cc, 50, 1000);
                 }
             }
         }
@@ -4075,7 +4080,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.gaze", cdata[cc], cdata[tc]));
         }
-        dmgmp(tc, rnd(20) + 1);
+        damage_mp(cdata[tc], rnd(20) + 1);
         break;
     case 1133:
         if (is_in_fov(cdata[tc]))
@@ -4152,7 +4157,7 @@ label_2181_internal:
             txt(i18n::s.get(
                 "core.locale.magic.scavenge.eats", cdata[cc], inv[ci]));
         }
-        healhp(cc, cdata[cc].max_hp / 3);
+        heal_hp(cdata[cc], cdata[cc].max_hp / 3);
         continuous_action_eating_finish();
         refresh_burden_state();
         break;

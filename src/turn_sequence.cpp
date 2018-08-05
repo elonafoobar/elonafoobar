@@ -872,7 +872,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cdata[0].continuous_action_id == 0)
             {
-                healsp(0, 2);
+                heal_sp(cdata[0], 2);
             }
         }
         if (gdata_is_returning_or_escaping != 0)
@@ -1001,7 +1001,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cc].buffs[cnt].id == 16)
                 {
-                    dmghp(cc, 9999, -11);
+                    damage_hp(cdata[cc], 9999, -11);
                 }
                 buff_delete(cc, cnt);
                 --cnt;
@@ -1199,8 +1199,8 @@ turn_result_t turn_end()
             if (rnd(20) == 0)
             {
                 txt(i18n::s.get("core.locale.action.backpack_squashing"));
-                dmghp(
-                    cc,
+                damage_hp(
+                    cdata[cc],
                     cdata[cc].max_hp
                             * (cdata[0].inventory_weight * 10
                                    / cdata[0].max_inventory_weight
@@ -1275,7 +1275,7 @@ turn_result_t pc_turn(bool advance_time)
         }
         if (gdata_ether_disease_stage >= 20000)
         {
-            dmghp(0, 999999, -14);
+            damage_hp(cdata[0], 999999, -14);
         }
         if (cdata[0].state() != character::state_t::alive)
         {

@@ -27,50 +27,84 @@
 
 
 
-namespace elona
+namespace
 {
 
 
-int victim;
 int dmg_at_m141 = 0;
 
 
 
-void healhp(int cc, int delta)
+void end_dmghp(const character& victim)
 {
-    cdata[cc].hp += delta;
-    if (cdata[cc].hp > cdata[cc].max_hp)
+    if (victim.is_hung_on_sand_bag())
     {
-        cdata[cc].hp = cdata[cc].max_hp;
+        if (is_in_fov(victim))
+        {
+            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
+            if (rnd(20) == 0)
+            {
+                int picked = rnd(6);
+                txt(i18n::s.get_enum(
+                    "core.locale.damage.sand_bag", picked, victim));
+            }
+        }
+    }
+    gdata(809) = 0;
+    txt3rd = 0;
+}
+
+
+
+void dmgheal_death_by_backpack(character& chara)
+{
+    int heaviest_item_index = -1;
+    int heaviest_weight = 0;
+    std::string heaviest_item_name;
+
+    for (const auto& cnt : items(chara.index))
+    {
+        if (inv[cnt].number() == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].weight > heaviest_weight)
+        {
+            heaviest_item_index = cnt;
+            heaviest_weight = inv[cnt].weight;
+        }
+    }
+    if (heaviest_item_index == -1)
+    {
+        heaviest_item_name = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "backpack", 6);
+    }
+    else
+    {
+        heaviest_item_name = itemname(heaviest_item_index);
+    }
+    txt(i18n::s.get_enum_property(
+        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
+    if (chara.index == 0)
+    {
+        ndeathcause = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
     }
 }
 
 
 
-void healmp(int cc, int delta)
+} // namespace
+
+
+
+namespace elona
 {
-    cdata[cc].mp += delta;
-    if (cdata[cc].mp > cdata[cc].max_mp)
-    {
-        cdata[cc].mp = cdata[cc].max_mp;
-    }
-}
 
 
 
-void healsp(int cc, int delta)
-{
-    cdata[cc].sp += delta;
-    if (cdata[cc].sp > cdata[cc].max_sp)
-    {
-        cdata[cc].sp = cdata[cc].max_sp;
-    }
-}
-
-
-
-int dmghp(
-    int victim_id,
+int damage_hp(
+    character& victim,
     int amount,
     int damage_source,
     int element,
@@ -81,7 +115,6 @@ int dmghp(
     int gained_exp = 0;
     bool attacker_is_player = false;
 
-    character& victim = cdata[victim_id];
     optional<character&> attacker = none;
     if (damage_source >= 0)
     {
@@ -218,8 +251,8 @@ int dmghp(
         {
             if (dmg_at_m141 > 0)
             {
-                healhp(
-                    attacker->index,
+                heal_hp(
+                    *attacker,
                     clamp(
                         rnd(dmg_at_m141 * (150 + element_power * 2) / 1000
                             + 10),
@@ -858,8 +891,8 @@ int dmghp(
             {
                 if (dmg_at_m141 > 0)
                 {
-                    healhp(
-                        cc,
+                    heal_hp(
+                        *attacker,
                         rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
@@ -1169,39 +1202,29 @@ int dmghp(
 
 
 
-void end_dmghp(const character& victim)
+void heal_hp(character& cc, int delta)
 {
-    if (victim.is_hung_on_sand_bag())
+    cc.hp += delta;
+    if (cc.hp > cc.max_hp)
     {
-        if (is_in_fov(victim))
-        {
-            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
-            if (rnd(20) == 0)
-            {
-                int picked = rnd(6);
-                txt(i18n::s.get_enum(
-                    "core.locale.damage.sand_bag", picked, victim));
-            }
-        }
+        cc.hp = cc.max_hp;
     }
-    gdata(809) = 0;
-    txt3rd = 0;
 }
 
 
 
-void dmgmp(int cc, int delta)
+void damage_mp(character& cc, int delta)
 {
-    cdata[cc].mp -= delta;
-    if (cdata[cc].mp < -999999)
+    cc.mp -= delta;
+    if (cc.mp < -999999)
     {
-        cdata[cc].mp = -999999;
+        cc.mp = -999999;
     }
-    if (cdata[cc].mp < 0)
+    if (cc.mp < 0)
     {
-        gain_mana_capacity_experience(cc);
-        int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
-        if (cc == 0)
+        gain_mana_capacity_experience(cc.index);
+        auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
+        if (cc.index == 0)
         {
             if (trait(156) == 1)
             {
@@ -1214,49 +1237,70 @@ void dmgmp(int cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cdata[cc]));
-        dmghp(cc, damage, -2);
+        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cc));
+        damage_hp(cc, damage, -2);
     }
 }
 
 
 
-void dmgsp(int cc, int delta)
+void heal_mp(character& cc, int delta)
 {
-    if (cc != 0 || debug::voldemort)
+    cc.mp += delta;
+    if (cc.mp > cc.max_mp)
+    {
+        cc.mp = cc.max_mp;
+    }
+}
+
+
+
+bool action_sp(character& cc, int sp)
+{
+    if (cc.index != 0 || debug::voldemort)
+        return true;
+
+    damage_sp(cc, sp);
+    return cc.sp >= 50 || cc.sp >= rnd(75);
+}
+
+
+
+void damage_sp(character& cc, int delta)
+{
+    if (cc.index != 0 || debug::voldemort)
         return;
 
-    if (cdata[cc].sp >= -100)
+    if (cc.sp >= -100)
     {
-        cdata[cc].sp -= delta;
+        cc.sp -= delta;
     }
 }
 
 
 
-void healsan(int prm_862, int prm_863)
+void heal_sp(character& cc, int delta)
 {
-    cdata[prm_862].insanity -= prm_863;
-    if (cdata[prm_862].insanity < 0)
+    cc.sp += delta;
+    if (cc.sp > cc.max_sp)
     {
-        cdata[prm_862].insanity = 0;
+        cc.sp = cc.max_sp;
     }
-    return;
 }
 
 
 
-void damage_insanity(int cc, int delta)
+void damage_insanity(character& cc, int delta)
 {
-    if (cdata[cc].quality >= 4)
+    if (cc.quality >= 4)
         return;
 
-    int resistance = std::max(sdata(54, cc) / 50, 1);
+    int resistance = std::max(sdata(54, cc.index) / 50, 1);
     if (resistance > 10)
         return;
 
     delta /= resistance;
-    if (cc < 16)
+    if (cc.index < 16)
     {
         if (trait(166))
         {
@@ -1264,64 +1308,24 @@ void damage_insanity(int cc, int delta)
         }
     }
     delta = std::max(delta, 0);
-    cdata[cc].insanity += delta;
-    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cdata[cc].insanity + 1) > 50)
+    cc.insanity += delta;
+    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
     {
-        dmgcon(cc, status_ailment_t::insane, 100);
+        dmgcon(cc.index, status_ailment_t::insane, 100);
     }
 }
 
 
 
-bool actionsp(int cc, int sp)
+void heal_insanity(character& cc, int delta)
 {
-    if (cc != 0 || debug::voldemort)
-        return true;
-
-    if (cdata[cc].sp < 50 && cdata[cc].sp < rnd(75))
+    cc.insanity -= delta;
+    if (cc.insanity < 0)
     {
-        dmgsp(cc, sp);
-        return false;
-    }
-    dmgsp(cc, sp);
-    return true;
-}
-
-void dmgheal_death_by_backpack(character& chara)
-{
-    int heaviest_item_index = -1;
-    int heaviest_weight = 0;
-    std::string heaviest_item_name;
-
-    for (const auto& cnt : items(chara.index))
-    {
-        if (inv[cnt].number() == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].weight > heaviest_weight)
-        {
-            heaviest_item_index = cnt;
-            heaviest_weight = inv[cnt].weight;
-        }
-    }
-    if (heaviest_item_index == -1)
-    {
-        heaviest_item_name = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "backpack", 6);
-    }
-    else
-    {
-        heaviest_item_name = itemname(heaviest_item_index);
-    }
-    txt(i18n::s.get_enum_property(
-        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
-    if (chara.index == 0)
-    {
-        ndeathcause = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
+        cc.insanity = 0;
     }
 }
+
 
 
 } // namespace elona

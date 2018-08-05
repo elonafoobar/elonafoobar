@@ -2526,11 +2526,11 @@ int try_to_cast_spell()
         }
         if (cc == 0)
         {
-            dmgmp(cc, cdata[cc].max_mp);
+            damage_mp(cdata[cc], cdata[cc].max_mp);
         }
         else
         {
-            dmgmp(cc, cdata[cc].max_mp / 3);
+            damage_mp(cdata[cc], cdata[cc].max_mp / 3);
         }
         return 0;
     }
@@ -2697,12 +2697,12 @@ void proc_turn_end(int cc)
         {
             cdata[cc].emotion_icon = 114;
         }
-        healhp(cc, 1);
-        healmp(cc, 1);
+        heal_hp(cdata[cc], 1);
+        heal_mp(cdata[cc], 1);
     }
     if (cdata[cc].poisoned > 0)
     {
-        dmghp(cc, rnd(2 + sdata(11, cc) / 10), -4);
+        damage_hp(cdata[cc], rnd(2 + sdata(11, cc) / 10), -4);
         healcon(cc, 1, 1);
         if (cdata[cc].poisoned > 0)
         {
@@ -2722,7 +2722,7 @@ void proc_turn_end(int cc)
         ++cdata[cc].choked;
         if (cdata[cc].choked > 15)
         {
-            dmghp(cc, 500, -21);
+            damage_hp(cdata[cc], 500, -21);
         }
         regen = 0;
     }
@@ -2831,8 +2831,8 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].bleeding > 0)
     {
-        dmghp(
-            cc,
+        damage_hp(
+            cdata[cc],
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
         healcon(cc, 9, 1 + cdata[cc].cures_bleeding_quickly() * 3);
@@ -2952,7 +2952,7 @@ void proc_turn_end(int cc)
             {
                 if (cdata[cc].continuous_action_id != 1)
                 {
-                    dmghp(cc, rnd(2) + cdata[0].max_hp / 50, -3);
+                    damage_hp(cdata[cc], rnd(2) + cdata[0].max_hp / 50, -3);
                     if (gdata_play_turns % 10 == 0)
                     {
                         rowact_check(cc);
@@ -2984,7 +2984,7 @@ void proc_turn_end(int cc)
             if (gdata_continuous_active_hours >= 50)
             {
                 regen = 0;
-                dmgsp(cc, 1);
+                damage_sp(cdata[cc], 1);
             }
         }
     }
@@ -3017,11 +3017,11 @@ void proc_turn_end(int cc)
     {
         if (rnd(6) == 0)
         {
-            healhp(cc, rnd(sdata(154, cc) / 3 + 1) + 1);
+            heal_hp(cdata[cc], rnd(sdata(154, cc) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            healmp(cc, rnd(sdata(155, cc) / 2 + 1) + 1);
+            heal_mp(cdata[cc], rnd(sdata(155, cc) / 2 + 1) + 1);
         }
     }
 }
@@ -4647,7 +4647,10 @@ void damage_by_cursed_equipments()
 {
     if (rnd(4) == 0)
     {
-        dmghp(cc, cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100, -5);
+        damage_hp(
+            cdata[cc],
+            cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100,
+            -5);
         return;
     }
     if (mdata_map_type != mdata_t::map_type_t::world_map)
@@ -6961,7 +6964,7 @@ void label_1754()
                 dmg = (6 - r) * (6 - r) * 2;
                 txtef(3);
                 txt(i18n::s.get("core.locale.action.exit_map.it_is_hot"));
-                dmghp(cc, dmg, -9);
+                damage_hp(cdata[cc], dmg, -9);
             }
         }
         return;
@@ -10706,8 +10709,10 @@ label_21451_internal:
                     }
                     else
                     {
-                        dmghp(
-                            cc, rnd(gdata_current_dungeon_level * 2 + 10), -1);
+                        damage_hp(
+                            cdata[cc],
+                            rnd(gdata_current_dungeon_level * 2 + 10),
+                            -1);
                     }
                 }
                 if (feat(2) == 1)
@@ -10744,7 +10749,7 @@ label_21451_internal:
                     aniy = movy;
                     ball_animation(ball_animation::type_t::ball).play();
                     cell_featset(movx, movy, 0);
-                    dmghp(cc, 100 + rnd(200), -1);
+                    damage_hp(cdata[cc], 100 + rnd(200), -1);
                 }
                 efsource = 0;
             }
@@ -10839,7 +10844,7 @@ void label_2151()
             cure_anorexia(tc);
             cdata[tc].anorexia_count = 0;
         }
-        healsan(tc, 10);
+        heal_insanity(cdata[tc], 10);
         if (cdata[tc].has_lay_hand())
         {
             cdata[tc].is_lay_hand_available() = true;
@@ -10974,12 +10979,12 @@ void do_rest()
     {
         if (cdata[cc].continuous_action_turn % 2 == 0)
         {
-            healsp(cc, 1);
+            heal_sp(cdata[cc], 1);
         }
         if (cdata[cc].continuous_action_turn % 3 == 0)
         {
-            healhp(cc, 1);
-            healmp(cc, 1);
+            heal_hp(cdata[cc], 1);
+            heal_mp(cdata[cc], 1);
         }
         return;
     }
@@ -11485,7 +11490,7 @@ int label_2168()
                 mp = rnd(mp * 140 / 100 + 1) + 1;
             }
         }
-        dmgmp(cc, mp);
+        damage_mp(cdata[cc], mp);
         if (cdata[cc].state() != character::state_t::alive)
         {
             efsource = 0;
@@ -11693,7 +11698,7 @@ int drink_well()
                 }
                 else
                 {
-                    dmghp(cc, 9999, -1);
+                    damage_hp(cdata[cc], 9999, -1);
                 }
                 break;
             }
@@ -12078,12 +12083,12 @@ int label_2174()
                 if (cdata[0].sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
                     return 1;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata[0],
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
             skillexp(the_ability_db[efid]->related_basic_attribute, cc, 25);
@@ -12359,13 +12364,13 @@ void heal_both_rider_and_mount()
     for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
     {
         const auto amount = roll(dice1, dice2, bonus);
-        healhp(tc(cnt), amount);
+        heal_hp(cdata[tc(cnt)], amount);
         healcon(tc(cnt), 6);
         healcon(tc(cnt), 1, 50);
         healcon(tc(cnt), 5, 50);
         healcon(tc(cnt), 7, 30);
         healcon(tc(cnt), 9, 20);
-        healsan(tc(cnt), 1);
+        heal_insanity(cdata[tc(cnt)], 1);
         if (is_in_fov(cdata[tc(cnt)]))
         {
             add_damage_popup(std::to_string(amount), tc(cnt), {127, 255, 127});
@@ -12515,7 +12520,7 @@ int pick_up_item()
                     }
                     else
                     {
-                        healmp(0, inv[ci].count * 5 * inv[ci].number());
+                        heal_mp(cdata[0], inv[ci].count * 5 * inv[ci].number());
                     }
                     inv[ci].count = 0;
                 }
@@ -12943,7 +12948,7 @@ turn_result_t do_bash()
                     "core.locale.action.bash.choked.execute",
                     cdata[cc],
                     cdata[tc]));
-                dmghp(tc, sdata(10, cc) * 5, cc);
+                damage_hp(cdata[tc], sdata(10, cc) * 5, cc);
                 if (cdata[tc].state() == character::state_t::alive)
                 {
                     txt(i18n::s.get(
@@ -13162,7 +13167,7 @@ turn_result_t proc_movement_event()
     {
         if (chipm(1, p) == 5)
         {
-            healsan(cc, 1);
+            heal_insanity(cdata[cc], 1);
         }
         addefmap(cdata[cc].position.x, cdata[cc].position.y, 1, 3);
         if (cdata[cc].wet == 0)
@@ -14200,12 +14205,13 @@ void do_ranged_attack()
                         {
                             txt(i18n::s.get(
                                 "core.locale.magic.common.too_exhausted"));
-                            dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
+                            damage_sp(
+                                cdata[0], encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
                             return;
                         }
                     }
-                    dmgsp(0, rnd(encammoref(2, ammoproc) + 1));
+                    damage_sp(cdata[0], rnd(encammoref(2, ammoproc) + 1));
                 }
                 --inv[ammo].enchantments[inv[ammo].count].power;
             }
@@ -14336,7 +14342,7 @@ void try_to_melee_attack()
                     cdata[cc],
                     cdata[tc]));
             }
-            dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
+            damage_hp(cdata[tc], rnd(sdata(168, cc)) + 1, cc);
             dmgcon(
                 tc,
                 status_ailment_t::dimmed,
@@ -14554,7 +14560,7 @@ label_22191_internal:
                 }
             }
         }
-        dmghp(tc, dmg, cc, ele, elep);
+        damage_hp(cdata[tc], dmg, cc, ele, elep);
         if (critical)
         {
             skillexp(186, cc, 60 / expmodifer, 2);
@@ -14620,8 +14626,8 @@ label_22191_internal:
         {
             if (attackrange == 0)
             {
-                dmghp(
-                    cc,
+                damage_hp(
+                    cdata[cc],
                     attackdmg * cdata[tc].cut_counterattack / 100 + 1,
                     tc,
                     61,
@@ -14645,8 +14651,8 @@ label_22191_internal:
                                 "core.locale.damage.reactive_attack.thorns",
                                 cdata[cc]));
                         }
-                        dmghp(
-                            cc,
+                        damage_hp(
+                            cdata[cc],
                             clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
@@ -14663,8 +14669,8 @@ label_22191_internal:
                                 "thorns",
                                 cdata[cc]));
                         }
-                        dmghp(
-                            cc,
+                        damage_hp(
+                            cdata[cc],
                             clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
@@ -14826,19 +14832,19 @@ void proc_weapon_enchantments()
         if (enc == 36)
         {
             p = rnd(inv[cw].enchantments[cnt].power / 50 + 1) + 1;
-            healsp(cc, p);
-            dmgsp(tc, p / 2);
+            heal_sp(cdata[cc], p);
+            damage_sp(cdata[tc], p / 2);
             continue;
         }
         if (enc == 38)
         {
             p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
-            healmp(cc, p / 5);
+            heal_mp(cdata[cc], p / 5);
             if (cdata[tc].state() != character::state_t::alive)
             {
                 continue;
             }
-            dmgmp(tc, p);
+            damage_mp(cdata[tc], p);
             continue;
         }
         if (enc == 37)
@@ -14870,7 +14876,7 @@ void proc_weapon_enchantments()
             if (strutil::contains(s(0), u8"/dragon/"))
             {
                 gdata(809) = 1;
-                dmghp(tc, orgdmg / 2, cc);
+                damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
         }
@@ -14880,7 +14886,7 @@ void proc_weapon_enchantments()
             if (strutil::contains(s(0), u8"/god/"))
             {
                 gdata(809) = 1;
-                dmghp(tc, orgdmg / 2, cc);
+                damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
         }
@@ -14890,7 +14896,7 @@ void proc_weapon_enchantments()
             if (strutil::contains(s(0), u8"/undead/"))
             {
                 gdata(809) = 1;
-                dmghp(tc, orgdmg / 2, cc);
+                damage_hp(cdata[tc], orgdmg / 2, cc);
             }
             continue;
         }
@@ -14910,8 +14916,8 @@ void proc_weapon_enchantments()
                     continue;
                 }
                 gdata(809) = 1;
-                dmghp(
-                    tc,
+                damage_hp(
+                    cdata[tc],
                     rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) / 1000
                         + 1)
                         + 5,
@@ -14964,8 +14970,8 @@ void proc_weapon_enchantments()
         if (cdata[tc].state() == character::state_t::alive)
         {
             gdata(809) = 1;
-            dmghp(
-                tc,
+            damage_hp(
+                cdata[tc],
                 orgdmg * 2 / 3,
                 cc,
                 rnd(11) + 50,

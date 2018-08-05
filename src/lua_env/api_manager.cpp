@@ -1307,7 +1307,7 @@ void LuaCharacter::damage_hp_source(
     int amount,
     damage_source_t source)
 {
-    elona::dmghp(self.index, amount, static_cast<int>(source));
+    elona::damage_hp(self, amount, static_cast<int>(source));
 }
 
 void LuaCharacter::damage_hp_chara(
@@ -1316,7 +1316,7 @@ void LuaCharacter::damage_hp_chara(
     lua_character_handle handle)
 {
     auto other = lua::lua->get_handle_manager().get_ref<character>(handle);
-    elona::dmghp(self.index, amount, other.index);
+    elona::damage_hp(self, amount, other.index);
 }
 
 void LuaCharacter::apply_ailment(
