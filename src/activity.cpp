@@ -2052,44 +2052,47 @@ int search_material_spot()
     return 0;
 }
 
+
+
 void matgetmain(int material_id, int amount, int spot_type)
 {
-    std::string message;
-    std::string verb = "?";
     if (amount == 0)
     {
         amount = 1;
     }
     mat(material_id) += amount;
     snd(21);
-    if (spot_type == 1)
+
+    std::string verb;
+    switch (spot_type)
     {
-        verb = i18n::s.get("core.locale.activity.material.get_verb.dig_up");
-    }
-    if (spot_type == 2)
-    {
-        verb = i18n::s.get("core.locale.activity.material.get_verb.fish_up");
-    }
-    if (spot_type == 3)
-    {
-        verb = i18n::s.get("core.locale.activity.material.get_verb.harvest");
-    }
-    if (spot_type == 5)
-    {
-        verb = i18n::s.get("core.locale.activity.material.get_verb.find");
-    }
-    if (spot_type == 0)
-    {
+    case 0:
         verb = i18n::s.get("core.locale.activity.material.get_verb.get");
+        break;
+    case 1:
+        verb = i18n::s.get("core.locale.activity.material.get_verb.dig_up");
+        break;
+    case 2:
+        verb = i18n::s.get("core.locale.activity.material.get_verb.fish_up");
+        break;
+    case 3:
+        verb = i18n::s.get("core.locale.activity.material.get_verb.harvest");
+        break;
+    case 5:
+        verb = i18n::s.get("core.locale.activity.material.get_verb.find");
+        break;
+    default:
+        verb = i18n::s.get("core.locale.activity.material.get_verb.get");
+        break;
     }
-    txt(i18n::s.get(
-        "core.locale.activity.material.get",
-        verb,
-        amount,
-        matname(material_id)));
+
     txtef(4);
-    txt(message + u8"("s + mat(material_id) + u8") "s);
-    return;
+    txt(i18n::s.get(
+            "core.locale.activity.material.get",
+            verb,
+            amount,
+            matname(material_id))
+        + u8"("s + mat(material_id) + u8") "s);
 }
 
 

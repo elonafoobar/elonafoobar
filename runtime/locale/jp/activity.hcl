@@ -202,9 +202,9 @@ locale {
 
             get_verb {
                 dig_up = "掘り当てた"
-                fish_up = "釣り上げた。"
-                harvest = "採取した。"
-                find = "見つけた。"
+                fish_up = "釣り上げた"
+                harvest = "採取した"
+                find = "見つけた"
                 get = "入手した"
             }
 
