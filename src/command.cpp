@@ -1544,6 +1544,27 @@ turn_result_t do_use_command()
     tc = cc;
     tlocx = cdata[cc].position.x;
     tlocy = cdata[cc].position.y;
+    auto item_data = the_item_db[inv[ci].id];
+
+    if (item_data->on_use_effect)
+    {
+        auto item_handle = lua::lua->get_handle_manager().get_handle(inv[ci]);
+        auto user_handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
+
+        bool success = lua::lua->get_export_manager().call_with_result(
+            *item_data->on_use_effect, false, item_handle, user_handle);
+
+        if (success)
+        {
+            return turn_result_t::turn_end;
+        }
+        else
+        {
+            update_screen();
+            return turn_result_t::pc_turn_user_error;
+        }
+    }
+
     if (ibit(7, ci) == 1)
     {
         if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -1571,15 +1592,15 @@ turn_result_t do_use_command()
         item_separate(ci);
         --inv[ci].count;
     }
-    if (the_item_db[inv[ci].id]->subcategory == 58500)
+    if (item_data->subcategory == 58500)
     {
         return do_plant();
     }
-    if (the_item_db[inv[ci].id]->subcategory == 59500)
+    if (item_data->subcategory == 59500)
     {
         return blending_menu();
     }
-    if (the_item_db[inv[ci].id]->subcategory == 60004)
+    if (item_data->subcategory == 60004)
     {
         if (gdata_continuous_active_hours < 15)
         {
@@ -1628,7 +1649,7 @@ turn_result_t do_use_command()
                 txt(i18n::s.get("core.locale.action.use.living.weird"));
             }
             txt(i18n::s.get("core.locale.action.use.living.it"));
-            reftype = the_item_db[inv[ci].id]->category;
+            reftype = item_data->category;
             listmax = 0;
             for (int cnt = 0; cnt < 3; ++cnt)
             {

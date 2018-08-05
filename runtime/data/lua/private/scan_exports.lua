@@ -27,7 +27,7 @@ local function scan_exports(all_apis)
    for mod_name, api_table in pairs(all_apis) do
       local exports = api_table["Exports"]
       if exports ~= nil and type(exports) == "table" then
-         local base_key = mod_name .. "." .. "exports"
+         local base_key = "exports:" .. mod_name
          for key, value in pairs(scan_recursive(exports, base_key)) do
             all_exports[key] = value
          end
