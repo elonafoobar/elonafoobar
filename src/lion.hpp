@@ -244,10 +244,10 @@ static optional<std::vector<T>> convert_vector(
 #define ELONA_LION_DB_FIELD(name, type, default_value) \
     type name; \
     { \
-        sol::optional<type> value = data[#name]; \
-        if (value) \
+        sol::optional<type> value_ = data[#name]; \
+        if (value_) \
         { \
-            name = *value; \
+            name = *value_; \
         } \
         else \
         { \
@@ -258,10 +258,10 @@ static optional<std::vector<T>> convert_vector(
 #define ELONA_LION_DB_FIELD_REQUIRED(name, type) \
     type name; \
     { \
-        sol::optional<type> value = data[#name]; \
-        if (value) \
+        sol::optional<type> value_ = data[#name]; \
+        if (value_) \
         { \
-            name = *value; \
+            name = *value_; \
         } \
         else \
         { \
@@ -272,31 +272,31 @@ static optional<std::vector<T>> convert_vector(
 #define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value) \
     int name; \
     { \
-        std::string variant; \
-        sol::optional<std::string> value = data[#name]; \
-        if (value) \
+        std::string variant_; \
+        sol::optional<std::string> value_ = data[#name]; \
+        if (value_) \
         { \
-            variant = *value; \
+            variant_ = *value_; \
         } \
         else \
         { \
-            variant = default_value; \
+            variant_ = default_value; \
         } \
-        name = lua.get_api_manager().get_enum_value(enum_type, variant); \
+        name = lua.get_api_manager().get_enum_value(enum_type, variant_); \
     }
 
 #define ELONA_LION_DB_FIELD_CALLBACK(name) \
     optional<std::string> name = none; \
     { \
-        sol::optional<std::string> function_name = data[#name]; \
-        if (function_name) \
+        sol::optional<std::string> function_name_ = data[#name]; \
+        if (function_name_) \
         { \
-            name = *function_name; \
-            if (!lua.get_export_manager().has_function(*function_name)) \
+            name = *function_name_; \
+            if (!lua.get_export_manager().has_function(*function_name_)) \
             { \
                 throw std::runtime_error( \
                     "Error loading " + id_ + "." + #name \
-                    + ": No such callback named " + *function_name); \
+                    + ": No such callback named " + *function_name_); \
             } \
         } \
     }

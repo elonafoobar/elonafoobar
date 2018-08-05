@@ -108,7 +108,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
     REQUIRE(data->_flags[27] == true);
 }
 
-TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
+TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
 {
     elona::lua::lua_env lua;
     auto table = load(lua, "chara_defaults");
@@ -119,7 +119,7 @@ TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
     auto data = db["core.chara:chara_defaults.nothing"];
 
     REQUIRE(data);
-    REQUIRE(data->id == -1);
+    REQUIRE(data->id == 1);
     REQUIRE(data->item_type == 0);
     REQUIRE(data->filter == "");
     REQUIRE(data->level == 0);

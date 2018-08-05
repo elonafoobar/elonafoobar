@@ -269,7 +269,7 @@ character_data character_db_ex::convert(
     const sol::table& data,
     lua::lua_env& lua)
 {
-    ELONA_LION_DB_FIELD(id, int, -1);
+    ELONA_LION_DB_FIELD_REQUIRED(id, int);
     ELONA_LION_DB_FIELD(ai_act_sub_freq, int, 0);
     ELONA_LION_DB_FIELD(ai_calm, int, 0);
     ELONA_LION_DB_FIELD(ai_dist, int, 0);
