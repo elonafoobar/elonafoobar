@@ -11218,16 +11218,14 @@ void label_2151()
         }
         if (tc != -1)
         {
-            s = i18n::s.get("core.locale.activity.sleep.new_gene.title");
-            buff = i18n::s.get(
-                "core.locale.activity.sleep.new_gene.text", cdata[tc]);
-            listmax = 0;
-            list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get_enum(
-                "core.locale.activity.sleep.new_gene.choices", 0);
-            ++listmax;
             cdata[tc].has_made_gene() = false;
-            show_random_event_window(u8"bg_re14");
+            show_random_event_window(
+                i18n::s.get("core.locale.activity.sleep.new_gene.title"),
+                i18n::s.get(
+                    "core.locale.activity.sleep.new_gene.text", cdata[tc]),
+                {i18n::s.get_enum(
+                    "core.locale.activity.sleep.new_gene.choices", 0)},
+                u8"bg_re14");
             save_gene();
         }
     }
