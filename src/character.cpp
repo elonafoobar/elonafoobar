@@ -7,13 +7,13 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
@@ -243,28 +243,7 @@ static std::unordered_map<int, int> convert_resistances(
     return resistances;
 }
 
-// Concatenate tags list into filter (["man", "slime"] -> "/man/slime/")
-static std::string convert_tags(const sol::table& data, const std::string& id)
-{
-    std::string filter = "";
-    sol::optional<sol::table> value = data[id];
-
-    if (value)
-    {
-        for (const auto& pair : *value)
-        {
-            if (filter == ""s)
-            {
-                filter += "/";
-            }
-            filter += pair.second.as<std::string>() + "/";
-        }
-    }
-
-    return filter;
-}
-
-static std::vector<int> convert_flags(
+static std::vector<int> convert_chara_flags(
     const sol::table& data,
     const std::string& id)
 {
@@ -347,7 +326,7 @@ character_data character_db_ex::convert(
         special_actions = *result;
     }
 
-    std::vector<int> flag_types = convert_flags(data, "flags");
+    std::vector<int> flag_types = convert_chara_flags(data, "flags");
 
     // TODO: cannot set bit flags off.
     decltype(character_data::_flags) flags;
@@ -357,7 +336,7 @@ character_data character_db_ex::convert(
     }
 
     // TODO: validate by regex/alphanum-only
-    std::string filter = convert_tags(data, "tags");
+    std::string filter = lion::convert_tags(data, "tags");
 
     return character_data{
         id,

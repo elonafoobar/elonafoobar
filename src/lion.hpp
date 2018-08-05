@@ -206,6 +206,16 @@ protected:
     legacy_map_type by_legacy_id;
 };
 
+/**
+ * Converts a tags list into a filter for use with flt().
+ *
+ * @param data data table
+ * @param id member field inside data table containing a string list
+ * (["man", "slime"])
+ *
+ * @return the filter list ("/man/slime/")
+ */
+std::string convert_tags(const sol::table& data, const std::string& id);
 
 template <typename T>
 static optional<std::vector<T>> convert_vector(

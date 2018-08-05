@@ -13,6 +13,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -24,7 +25,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
@@ -365,7 +365,6 @@ void initialize_cat_db()
     the_buff_db.initialize();
     the_class_db.initialize();
     the_fish_db.initialize();
-    the_item_db.initialize();
     the_item_material_db.initialize();
     the_race_db.initialize();
     the_trait_db.initialize();
@@ -398,6 +397,8 @@ void initialize_lion_db()
     // possible to run the game, so they're baked in.
     lua::lua->get_registry_manager().register_native_datatype(
         "chara", [](auto table) { the_character_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "item", [](auto table) { the_item_db.initialize(table); });
     lua::lua->get_registry_manager().register_native_datatype(
         "sound", [](auto table) { the_sound_db.initialize(table); });
     lua::lua->get_registry_manager().register_native_datatype(

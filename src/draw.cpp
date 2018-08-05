@@ -2,12 +2,12 @@
 #include <cmath>
 #include "character.hpp"
 #include "config.hpp"
+#include "db_item.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "hcl.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "pic_loader/extent.hpp"
