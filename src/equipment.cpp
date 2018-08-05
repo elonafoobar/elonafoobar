@@ -372,7 +372,7 @@ void supply_initial_equipments()
              cnt < cnt_end;
              ++cnt)
         {
-            gain_new_body_part(rc);
+            gain_new_body_part(cdata[rc]);
         }
     }
 

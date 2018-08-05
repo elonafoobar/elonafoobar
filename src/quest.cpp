@@ -1057,7 +1057,7 @@ void quest_failed(int val0)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.quest.deliver.you_commit_a_serious_crime"));
-            modify_karma(0, -20);
+            modify_karma(cdata[0], -20);
         }
         if (qdata(3, rq) == 1007)
         {
@@ -1118,7 +1118,7 @@ void quest_failed(int val0)
                     }
                 }
             }
-            modify_karma(0, -10);
+            modify_karma(cdata[0], -10);
         }
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
@@ -1326,7 +1326,7 @@ void quest_complete()
             itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         }
     }
-    modify_karma(0, 1);
+    modify_karma(cdata[0], 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
     txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));

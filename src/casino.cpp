@@ -1180,7 +1180,7 @@ bool casino_blackjack()
                 winrow = 0;
                 txt(i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.text"));
-                modify_karma(0, -5);
+                modify_karma(cdata[0], -5);
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.response");

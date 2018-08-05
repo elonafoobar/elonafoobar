@@ -524,7 +524,7 @@ talk_result_t talk_guard_return_item()
             0, i18n::s.get("core.locale.talk.npc.guard.lost.empty.response"));
         chatesc = 1;
         talk_window_query();
-        modify_karma(0, -5);
+        modify_karma(cdata[0], -5);
     }
     else
     {
@@ -533,7 +533,7 @@ talk_result_t talk_guard_return_item()
             0, i18n::s.get("core.locale.talk.npc.guard.lost.response"));
         chatesc = 1;
         talk_window_query();
-        modify_karma(0, 5);
+        modify_karma(cdata[0], 5);
         ++gdata_lost_wallet_count;
         if (gdata_lost_wallet_count >= 4)
         {
@@ -554,7 +554,7 @@ talk_result_t talk_guard_return_item()
                     "core.locale.talk.npc.guard.lost.found_often.response"));
             chatesc = 1;
             talk_window_query();
-            modify_karma(0, -10);
+            modify_karma(cdata[0], -10);
         }
     }
     refresh_burden_state();
@@ -902,7 +902,7 @@ talk_result_t talk_sister_buy_indulgence()
     {
         snd(12);
         cdata[0].gold -= calcguiltvalue();
-        modify_karma(0, (cdata[0].karma - -30) * -1 + 1);
+        modify_karma(cdata[0], (cdata[0].karma - -30) * -1 + 1);
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }
     else
@@ -1075,7 +1075,7 @@ talk_result_t talk_moyer_sell_paels_mom()
     if (chatval == 1)
     {
         txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
-        modify_karma(0, -20);
+        modify_karma(cdata[0], -20);
         snd(11);
         earn_gold(cdata[0], 50000);
         gdata_pael_and_her_mom = 1002;
@@ -1498,7 +1498,7 @@ talk_result_t talk_trainer()
         {
             cdata[0].platinum_coin -= calctraincost(csskill, cc);
             modify_potential(
-                cc,
+                cdata[cc],
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             buff = i18n::s.get(

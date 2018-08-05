@@ -2311,7 +2311,7 @@ label_1741_internal:
                  ++cnt)
             {
                 r2 = 1;
-                gain_level(rc);
+                gain_level(cdata[rc]);
             }
             event_add(11);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
@@ -2874,7 +2874,7 @@ label_1742_internal:
                     if (cdata[0].level > cdata[rc].level)
                     {
                         r2 = 1;
-                        gain_level(rc);
+                        gain_level(cdata[rc]);
                     }
                 }
             }

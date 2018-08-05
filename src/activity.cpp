@@ -797,7 +797,7 @@ void continuous_action_sex()
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
             dialog_after += i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground");
-            modify_karma(0, -1);
+            modify_karma(cdata[0], -1);
         }
         else
         {
@@ -895,11 +895,11 @@ void continuous_action_eating_finish()
                     {
                         if (cdata[cc].relationship > 0)
                         {
-                            modify_karma(0, -5);
+                            modify_karma(cdata[0], -5);
                         }
                         else
                         {
-                            modify_karma(0, -1);
+                            modify_karma(cdata[0], -1);
                         }
                     }
                     chara_mod_impression(tc, -25);
@@ -1209,7 +1209,7 @@ void continuous_action_others()
             {
                 txt(i18n::s.get(
                     "core.locale.activity.steal.notice.you_are_found"));
-                modify_karma(0, -5);
+                modify_karma(cdata[0], -5);
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
@@ -1362,7 +1362,7 @@ void continuous_action_others()
             if (rnd(3) == 0)
             {
                 txt(i18n::s.get("core.locale.activity.steal.guilt"));
-                modify_karma(0, -1);
+                modify_karma(cdata[0], -1);
             }
         }
     }

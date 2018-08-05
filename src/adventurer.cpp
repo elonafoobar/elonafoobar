@@ -294,7 +294,7 @@ void label_2662()
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
             r2 = 0;
-            gain_level(rc);
+            gain_level(cdata[rc]);
         }
     }
     notesel(newsbuff);

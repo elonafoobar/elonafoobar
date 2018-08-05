@@ -1282,11 +1282,11 @@ label_2181_internal:
         }
         if (efstatus == curse_state_t::blessed)
         {
-            modheight(tc, rnd(5) + 1);
+            modify_height(cdata[tc], rnd(5) + 1);
         }
         if (is_cursed(efstatus))
         {
-            modheight(tc, (rnd(5) + 1) * -1);
+            modify_height(cdata[tc], (rnd(5) + 1) * -1);
         }
         cdata[tc].nutrition += 1000 * (efp / 100);
         if (tc == 0)
@@ -2036,7 +2036,7 @@ label_2181_internal:
             chara_mod_impression(rc, 15);
             if (rc >= 16)
             {
-                modify_karma(0, 2);
+                modify_karma(cdata[0], 2);
             }
         }
         break;
@@ -2255,7 +2255,7 @@ label_2181_internal:
         {
             cdata[tc].experience = cdata[tc].required_experience;
             r2 = 0;
-            gain_level(tc);
+            gain_level(cdata[tc]);
             if (is_in_fov(cdata[tc]))
             {
                 snd(60);
@@ -2271,7 +2271,7 @@ label_2181_internal:
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
-            update_required_experience(tc);
+            update_required_experience(cdata[tc]);
             txtef(8);
             txt(i18n::s.get("core.locale.magic.descent", cdata[tc]));
         }
@@ -2408,7 +2408,7 @@ label_2181_internal:
                         continue;
                     }
                     modify_potential(
-                        tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                        cdata[tc], p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                     if (cnt2 == 0)
                     {
                         s = i18n::s.get(
@@ -2465,7 +2465,7 @@ label_2181_internal:
         skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
         if (efstatus == curse_state_t::blessed)
         {
-            modify_potential(tc, 18, 15);
+            modify_potential(cdata[tc], 18, 15);
             txtef(2);
             txt(i18n::s.get("core.locale.magic.troll_blood.blessed"));
         }
@@ -2477,7 +2477,9 @@ label_2181_internal:
             for (int cnt = 10; cnt < 18; ++cnt)
             {
                 modify_potential(
-                    tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
+                    cdata[tc],
+                    cnt,
+                    rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
             }
             txt(i18n::s.get(
                 "core.locale.magic.gain_potential.blessed", cdata[tc]));
@@ -2496,7 +2498,9 @@ label_2181_internal:
                     cdata[tc],
                     valn));
                 modify_potential(
-                    tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
+                    cdata[tc],
+                    i,
+                    rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
                 snd(24);
             }
             else
@@ -2506,7 +2510,7 @@ label_2181_internal:
                     cdata[tc],
                     valn));
                 modify_potential(
-                    tc,
+                    cdata[tc],
                     i,
                     (rnd(sdata.get(i, tc).potential / 10 + 10) + 1) * -1);
                 snd(117);
@@ -3981,13 +3985,13 @@ label_2181_internal:
         {
             txtef(2);
             txt(i18n::s.get("core.locale.magic.cure_corruption.apply"));
-            modcorrupt(efp * -10);
+            modify_ether_disease_stage(efp * -10);
         }
         else
         {
             txtef(8);
             txt(i18n::s.get("core.locale.magic.cure_corruption.cursed"));
-            modcorrupt(200);
+            modify_ether_disease_stage(200);
         }
         break;
     case 633:
@@ -3997,7 +4001,7 @@ label_2181_internal:
         }
         txtef(8);
         txt(i18n::s.get("core.locale.magic.eye_of_ether", cdata[cc]));
-        modcorrupt(100);
+        modify_ether_disease_stage(100);
         break;
     case 638:
     case 648:

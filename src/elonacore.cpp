@@ -1281,64 +1281,6 @@ void go_hostile()
 
 
 
-void modify_karma(int cc, int delta)
-{
-    if (trait(162) && delta < 0)
-    {
-        delta = delta * 75 / 100;
-        if (delta == 0)
-            return;
-    }
-    if (trait(169) && delta < 0)
-    {
-        delta = delta * 150 / 100;
-    }
-
-    if (delta >= 0)
-    {
-        txtef(5);
-    }
-    else
-    {
-        txtef(8);
-    }
-    txt(lang(u8"カルマ変動("s + delta + u8") ", u8"Karma("s + delta + u8")"));
-    if (delta > 0)
-    {
-        if (cdata[cc].karma < -30 && cdata[cc].karma + delta >= -30)
-        {
-            txtef(2);
-            txt(lang(
-                u8"あなたの罪は軽くなった。",
-                u8"You are no longer a criminal"));
-        }
-    }
-    else if (delta < 0)
-    {
-        if (cdata[cc].karma >= -30 && cdata[cc].karma + delta < -30)
-        {
-            txtef(8);
-            txt(lang(u8"あなたは今や罪人だ。", u8"You are a criminal now."));
-            go_hostile();
-        }
-    }
-
-    cdata[cc].karma += delta;
-
-    int max = 20;
-    if (trait(162))
-    {
-        max -= 20;
-    }
-    if (trait(169))
-    {
-        max += 20;
-    }
-    cdata[cc].karma = clamp(cdata[cc].karma, -100, max);
-}
-
-
-
 void modrank(int prm_552, int prm_553, int prm_554)
 {
     elona_vector1<int> p_at_m75;
@@ -1403,14 +1345,6 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 
 
-void modify_potential(int cc, int id, int delta)
-{
-    sdata.get(id, cc).potential =
-        clamp(sdata.get(id, cc).potential + delta, 2, 400);
-}
-
-
-
 void skillgain(int cc, int id, int initial_level, int stock)
 {
     if (id >= 400)
@@ -1418,14 +1352,14 @@ void skillgain(int cc, int id, int initial_level, int stock)
         if (cc == 0)
         {
             spell(id - 400) += stock;
-            modify_potential(cc, id, 1);
+            modify_potential(cdata[cc], id, 1);
         }
     }
     if (sdata.get(id, cc).original_level != 0)
     {
         if (id < 400)
         {
-            modify_potential(cc, id, 20);
+            modify_potential(cdata[cc], id, 20);
         }
         return;
     }
@@ -1436,11 +1370,11 @@ void skillgain(int cc, int id, int initial_level, int stock)
     }
     if (id >= 400)
     {
-        modify_potential(cc, id, 200);
+        modify_potential(cdata[cc], id, 200);
     }
     else
     {
-        modify_potential(cc, id, 50);
+        modify_potential(cdata[cc], id, 50);
     }
     sdata.get(id, cc).original_level = clamp(lv, 0, 2000);
     chara_refresh(cc);
@@ -1837,100 +1771,6 @@ void fixaiact(int prm_753)
 
 
 
-void refreshspeed(int cc)
-{
-    cdata[cc].current_speed = sdata(18, cc)
-        * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
-    if (cdata[cc].current_speed < 10)
-    {
-        cdata[cc].current_speed = 10;
-    }
-    cdata[cc].speed_percentage_in_next_turn = 0;
-
-    if (cc != 0 && gdata_mount != cc)
-        return;
-
-    if (gdata_mount != 0)
-    {
-        const auto mount_speed = sdata(18, gdata_mount)
-            * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
-            / 100;
-
-        cdata[0].current_speed = mount_speed * 100
-            / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
-                        - sdata(301, 0) * 2
-                        - (cdata[gdata_mount].is_suitable_for_mount() == 1)
-                            * 50,
-                    100,
-                    1000);
-        if (cdata[gdata_mount].is_unsuitable_for_mount())
-        {
-            cdata[0].current_speed /= 10;
-        }
-        if (gdata_mount == cc)
-        {
-            cdata[cc].current_speed =
-                clamp(sdata(10, cc) + sdata(301, 0), 10, mount_speed);
-            return;
-        }
-    }
-
-    gspdorg = sdata.get(18, 0).original_level;
-
-    if (gdata_mount == 0)
-    {
-        int n = cdata[0].nutrition / 1000 * 1000;
-        if (n < 1000)
-        {
-            cdata[0].speed_percentage_in_next_turn -= 30;
-        }
-        if (n < 2000)
-        {
-            cdata[0].speed_percentage_in_next_turn -= 10;
-        }
-        if (cdata[0].sp < 0)
-        {
-            cdata[0].speed_percentage_in_next_turn -= 30;
-        }
-        if (cdata[0].sp < 25)
-        {
-            cdata[0].speed_percentage_in_next_turn -= 20;
-        }
-        if (cdata[0].sp < 50)
-        {
-            cdata[0].speed_percentage_in_next_turn -= 10;
-        }
-    }
-    if (cdata[0].inventory_weight_type >= 3)
-    {
-        cdata[0].speed_percentage_in_next_turn -= 50;
-    }
-    if (cdata[0].inventory_weight_type == 2)
-    {
-        cdata[0].speed_percentage_in_next_turn -= 30;
-    }
-    if (cdata[0].inventory_weight_type == 1)
-    {
-        cdata[0].speed_percentage_in_next_turn -= 10;
-    }
-    if (mdata_map_type == mdata_t::map_type_t::world_map
-        || mdata_map_type == mdata_t::map_type_t::field)
-    {
-        if (gdata_cargo_weight > gdata_current_cart_limit)
-        {
-            cdata[0].speed_percentage_in_next_turn -=
-                25 + 25 * (gdata_cargo_weight / (gdata_current_cart_limit + 1));
-        }
-    }
-    gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
-    if (gspd < 10)
-    {
-        gspd = 10;
-    }
-}
-
-
-
 void ride_begin(int mount)
 {
     txt(i18n::s.get(
@@ -1942,7 +1782,7 @@ void ride_begin(int mount)
     gdata_mount = mount;
     create_pcpic(0, true);
     rowactend(gdata_mount);
-    refreshspeed(gdata_mount);
+    refresh_speed(cdata[gdata_mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
     if (cdata[gdata_mount].is_suitable_for_mount())
     {
@@ -1963,7 +1803,7 @@ void ride_end()
     rowactend(mount);
     gdata_mount = 0;
     create_pcpic(0, true);
-    refreshspeed(mount);
+    refresh_speed(cdata[mount]);
 }
 
 
@@ -2060,7 +1900,7 @@ void hostileaction(int prm_787, int prm_788)
     {
         if (cdata[prm_788].relationship == 0)
         {
-            modify_karma(0, -2);
+            modify_karma(cdata[0], -2);
         }
         if (cdata[prm_788].id == 202)
         {
@@ -2532,190 +2372,9 @@ void check_kill(int prm_836, int prm_837)
     }
     if (p_at_m137 != 0)
     {
-        modify_karma(0, p_at_m137);
+        modify_karma(cdata[0], p_at_m137);
     }
     return;
-}
-
-
-
-void refresh_speed_correction_value(int cc)
-{
-    int number_of_body_parts = 0;
-    for (int i = 0; i < 30; ++i)
-    {
-        if (cdata[cc].body_parts[i] != 0)
-        {
-            ++number_of_body_parts;
-        }
-    }
-    if (number_of_body_parts > 13)
-    {
-        cdata[cc].speed_correction_value = (number_of_body_parts - 13) * 5;
-    }
-    else
-    {
-        cdata[cc].speed_correction_value = 0;
-    }
-}
-
-
-
-void gain_new_body_part(int cc)
-{
-    for (int i = 0; i < 30; ++i)
-    {
-        if (cdata[cc].body_parts[i] != 0)
-        {
-            continue;
-        }
-        if (rnd(7) == 0)
-        {
-            cdata[cc].body_parts[i] = 20000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_2")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_2") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(9) == 0)
-        {
-            cdata[cc].body_parts[i] = 30000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_3")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_3") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(8) == 0)
-        {
-            cdata[cc].body_parts[i] = 50000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_5")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_5") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(4) == 0)
-        {
-            cdata[cc].body_parts[i] = 60000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_6")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_6") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(6) == 0)
-        {
-            cdata[cc].body_parts[i] = 70000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_7")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_7") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(5) == 0)
-        {
-            cdata[cc].body_parts[i] = 80000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_8")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_8") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(5) == 0)
-        {
-            cdata[cc].body_parts[i] = 90000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_9")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_9") + u8"!"s));
-                break;
-            }
-        }
-        if (rnd(1) == 0)
-        {
-            cdata[cc].body_parts[i] = 10000;
-            if (cm)
-            {
-                break;
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"の身体から新たな"s
-                        + i18n::_(u8"ui", u8"body_part", u8"_1")
-                        + u8"が生えてきた！"s,
-                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
-                        + i18n::_(u8"ui", u8"body_part", u8"_1") + u8"!"s));
-                break;
-            }
-        }
-        break;
-    }
-    refresh_speed_correction_value(cc);
 }
 
 
@@ -3299,7 +2958,7 @@ void proc_turn_end(int cc)
                         rowact_check(cc);
                         if (rnd(50) == 0)
                         {
-                            modweight(cc, -1);
+                            modify_weight(cdata[cc], -1);
                         }
                     }
                 }
@@ -3399,7 +3058,7 @@ void refresh_burden_state()
         }
         cdata[0].inventory_weight_type = 0;
     }
-    refreshspeed(0);
+    refresh_speed(cdata[0]);
     return;
 }
 
@@ -3531,7 +3190,7 @@ void label_1540()
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             r2 = 1;
-            gain_level(rc);
+            gain_level(cdata[rc]);
         }
     }
     if (cdata[rc].id == 326)
@@ -7380,7 +7039,7 @@ void label_1754()
             {
                 txt(lang(
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
-                modify_karma(0, 1);
+                modify_karma(cdata[0], 1);
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
                 {
@@ -8215,7 +7874,7 @@ void supply_income()
                 txt(lang(
                     u8"名声値を"s + p + u8"失った。"s,
                     u8"You lose "s + p + u8" fame."s));
-                modify_karma(0, -30 * 2);
+                modify_karma(cdata[0], -30 * 2);
             }
         }
         else
@@ -10566,7 +10225,7 @@ void load_save_data()
     {
         cdatan(1, 0) = u8"*Debug*"s;
     }
-    refreshspeed(0);
+    refresh_speed(cdata[0]);
     time_begin = timeGetTime() / 1000;
     ELONA_LOG("Load save data end: " << playerid);
 }
@@ -11276,7 +10935,7 @@ void label_2151()
             {
                 break;
             }
-            modify_potential(0, 10 + rnd(8), 1);
+            modify_potential(cdata[0], 10 + rnd(8), 1);
             ++grown;
             if (cnt > 6)
             {
@@ -13311,7 +12970,7 @@ turn_result_t do_bash()
                 "core.locale.action.bash.disturbs_sleep",
                 cdata[cc],
                 cdata[tc]));
-            modify_karma(cc, -1);
+            modify_karma(cdata[cc], -1);
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
@@ -14257,11 +13916,11 @@ void open_box()
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
-        modify_karma(0, -4);
+        modify_karma(cdata[0], -4);
     }
     if (inv[ri].id == 283)
     {
-        modify_karma(0, -8);
+        modify_karma(cdata[0], -8);
     }
     return;
 }

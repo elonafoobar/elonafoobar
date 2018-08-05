@@ -1186,7 +1186,7 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    update_required_experience(rc);
+    update_required_experience(cdata[rc]);
     init_character_skills(rc);
     if (cdata[rc].portrait == 0)
     {
@@ -1705,7 +1705,7 @@ void chara_refresh(int cc)
         cdata[cc].rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refreshspeed(cc);
+    refresh_speed(cdata[cc]);
     cdata[cc].needs_refreshing_status() = false;
 
     auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);

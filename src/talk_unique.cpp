@@ -1860,7 +1860,7 @@ talk_result_t talk_unique_paels_mom()
                     i18n::s.get("core.locale.talk.unique.paels_mom.progress."
                                 "festival.give.you_hand_her"));
                 snd(13);
-                modify_karma(0, 20);
+                modify_karma(cdata[0], 20);
                 listmax = 0;
                 buff = i18n::s.get(
                     "core.locale.talk.unique.paels_mom.progress.festival.give."
@@ -1933,7 +1933,7 @@ talk_result_t talk_unique_paels_mom()
                 i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
                             "life.give.you_hand_her"));
             snd(13);
-            modify_karma(0, 20);
+            modify_karma(cdata[0], 20);
             listmax = 0;
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.end_life.give."
@@ -2092,12 +2092,12 @@ talk_result_t talk_unique_raphael()
         {
             dmgcon(tcbk, status_ailment_t::insane, 1000);
             f = 1;
-            modify_karma(0, 2);
+            modify_karma(cdata[0], 2);
         }
         else
         {
             f = 0;
-            modify_karma(0, -15);
+            modify_karma(cdata[0], -15);
         }
         listmax = 0;
         buff = i18n::s.get(

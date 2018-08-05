@@ -352,7 +352,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                             {
                                 continue;
                             }
-                            modify_potential(cc, p, 4);
+                            modify_potential(cdata[cc], p, 4);
                             break;
                         }
                     }

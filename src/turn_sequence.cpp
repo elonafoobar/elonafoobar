@@ -848,7 +848,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         tnew = 1;
         pcnoise = 0;
-        refreshspeed(0);
+        refresh_speed(cdata[0]);
         p = cdata[0].turn % 10;
         if (p == 1)
         {
@@ -924,7 +924,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.return.you_commit_a_crime"));
-                    modify_karma(0, -10);
+                    modify_karma(cdata[0], -10);
                 }
                 snd(72);
                 txt(i18n::s.get("core.locale.magic.return.door_opens"));
@@ -954,11 +954,12 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     if (gdata_protects_from_etherwind == 0)
                     {
-                        modcorrupt(5 + clamp(gdata_play_turns / 20000, 0, 15));
+                        modify_ether_disease_stage(
+                            5 + clamp(gdata_play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
-                        modcorrupt(5);
+                        modify_ether_disease_stage(5);
                     }
                 }
                 if (gdata_protects_from_etherwind == 0 || rnd(4) == 0)
@@ -978,7 +979,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             if (adata(16, gdata_current_map) != mdata_t::map_id_t::your_home
                 && gdata_current_map != mdata_t::map_id_t::shelter_)
             {
-                modcorrupt(10);
+                modify_ether_disease_stage(10);
             }
         }
     }
@@ -1167,7 +1168,7 @@ void update_emoicon()
             msgalert = 1;
         }
         r2 = 0;
-        gain_level(cc);
+        gain_level(cdata[cc]);
     }
 }
 
@@ -1210,7 +1211,7 @@ turn_result_t turn_end()
             }
         }
         get_hungry(cc);
-        refreshspeed(cc);
+        refresh_speed(cdata[cc]);
     }
     else if (mdata_map_type != mdata_t::map_type_t::world_map)
     {

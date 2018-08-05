@@ -536,7 +536,7 @@ int dmghp(
             {
                 if (victim.index == 0)
                 {
-                    modcorrupt(rnd(element_power + 1));
+                    modify_ether_disease_stage(rnd(element_power + 1));
                 }
             }
             if (element == 63)

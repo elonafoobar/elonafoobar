@@ -315,7 +315,7 @@ void proc_event()
             }
             if (cdata[0].karma < -30)
             {
-                modify_karma(0, 10);
+                modify_karma(cdata[0], 10);
             }
         }
         else
@@ -324,7 +324,7 @@ void proc_event()
         }
         if (gdata_ether_disease_stage >= 20000)
         {
-            modcorrupt(-2000);
+            modify_ether_disease_stage(-2000);
         }
         txt(i18n::s.get("core.locale.event.you_lost_some_money"));
         cdata[0].gold -= cdata[0].gold / 3;
@@ -813,11 +813,11 @@ void proc_event()
         if (mdata_map_type == mdata_t::map_type_t::town
             || mdata_map_type == mdata_t::map_type_t::guild)
         {
-            modify_karma(0, -80 + trait(162) * 60);
+            modify_karma(cdata[0], -80 + trait(162) * 60);
         }
         else
         {
-            modify_karma(0, -10);
+            modify_karma(cdata[0], -10);
         }
         break;
     case 18:

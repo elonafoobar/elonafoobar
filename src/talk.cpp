@@ -523,7 +523,7 @@ talk_result_t talk_house_visitor()
                 {
                     cdata[0].platinum_coin -= calctraincost(csskill, 0, true);
                     modify_potential(
-                        cc,
+                        cdata[cc],
                         csskill,
                         clamp(
                             15 - sdata.get(csskill, cc).potential / 15,
@@ -903,7 +903,7 @@ talk_result_t talk_house_visitor()
             "core.locale.talk.visitor.trainer.potential_expands",
             cdata[0],
             i18n::_(u8"ability", std::to_string(chatval), u8"name")));
-        modify_potential(0, chatval, 10);
+        modify_potential(cdata[0], chatval, 10);
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.visitor.trainer.after", cdata[tc]);
         tc = tc * 1 + 0;
@@ -959,7 +959,7 @@ talk_result_t talk_house_visitor()
             cdata[0].gold -= p;
             snd(12);
             earn_gold(cdata[tc], p);
-            modify_karma(0, 2);
+            modify_karma(cdata[0], 2);
             listmax = 0;
             buff =
                 i18n::s.get("core.locale.talk.visitor.beggar.after", cdata[tc]);

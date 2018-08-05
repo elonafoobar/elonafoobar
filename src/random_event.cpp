@@ -516,7 +516,7 @@ void run_random_event(random_event event)
         {
             txt(i18n::s.get_enum_property(
                 "core.locale.event.popup", "loot", 11));
-            modify_karma(0, -2);
+            modify_karma(cdata[0], -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
                 flt(0, calcfixlv(3));
@@ -537,7 +537,7 @@ void run_random_event(random_event event)
         {
             txt(i18n::s.get_enum_property(
                 "core.locale.event.popup", "bury", 11));
-            modify_karma(0, 5);
+            modify_karma(cdata[0], 5);
         }
     }
 

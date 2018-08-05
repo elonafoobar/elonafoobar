@@ -2945,7 +2945,7 @@ label_2035_internal:
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
             modify_potential(
-                cc,
+                cdata[cc],
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             render_hud();

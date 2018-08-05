@@ -344,7 +344,7 @@ bool grant_special_wishing(const std::string& wish)
             txt(lang(
                 u8"…罪なんて犯してないじゃない。", u8"You aren't a sinner."));
         }
-        modify_karma(0, -cdata[0].karma / 2);
+        modify_karma(cdata[0], -cdata[0].karma / 2);
         txt(lang(
             u8"あら…都合のいいことを言うのね。", u8"What a convenient wish!"));
     }
@@ -648,7 +648,7 @@ bool wish_for_skill(const std::string& input)
                     name + u8"が上昇した！",
                     u8"Your " + name + u8" skill improves!"));
                 skillmod(id, 0, 1000);
-                modify_potential(0, id, 25);
+                modify_potential(cdata[0], id, 25);
             }
         }
         else

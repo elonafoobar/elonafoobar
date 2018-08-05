@@ -2496,7 +2496,7 @@ turn_result_t do_use_command()
                     "core.locale.action.use.gene_machine.gains.body_part",
                     cdata[rc],
                     i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)));
-                refresh_speed_correction_value(rc);
+                refresh_speed_correction_value(cdata[rc]);
             }
         }
         {
@@ -2527,7 +2527,7 @@ turn_result_t do_use_command()
             for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
             {
                 r2 = 1;
-                gain_level(rc);
+                gain_level(cdata[rc]);
             }
             txtef(2);
             txt(i18n::s.get(
@@ -2602,7 +2602,7 @@ turn_result_t do_open_command()
     int refweight = 0;
     if (inv[ci].id == 361)
     {
-        modify_karma(0, -10);
+        modify_karma(cdata[0], -10);
         invctrl(0) = 22;
         invctrl(1) = 0;
         invfile = inv[ci].param1;

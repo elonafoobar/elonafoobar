@@ -58,7 +58,7 @@ void get_hungry(int cc)
             txt(i18n::s.get_enum(
                 "core.locale.food.hunger_status.hungry", rnd(3)));
         }
-        refreshspeed(cc);
+        refresh_speed(cdata[cc]);
     }
 }
 
@@ -267,7 +267,7 @@ void chara_vomit(int prm_876)
         skillmod(17, prm_876, -100);
     }
     dmgcon(prm_876, status_ailment_t::dimmed, 100);
-    modweight(prm_876, -(1 + rnd(5)));
+    modify_weight(cdata[prm_876], -(1 + rnd(5)));
     if (cdata[prm_876].nutrition <= 0)
     {
         dmghp(prm_876, 9999, -3);
@@ -818,8 +818,8 @@ void apply_general_eating_effect(int cieat)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(cc, 10, 2);
-        modify_potential(cc, 11, 2);
+        modify_potential(cdata[cc], 10, 2);
+        modify_potential(cdata[cc], 11, 2);
         if (cc == 0)
         {
             txtef(2);
@@ -878,8 +878,8 @@ void apply_general_eating_effect(int cieat)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(cc, 16, 2);
-        modify_potential(cc, 15, 2);
+        modify_potential(cdata[cc], 16, 2);
+        modify_potential(cdata[cc], 15, 2);
         if (cc == 0)
         {
             txtef(2);
@@ -937,8 +937,8 @@ void apply_general_eating_effect(int cieat)
             fdlist(1, fdmax) = 10;
             ++fdmax;
         }
-        modify_potential(cc, 12, 2);
-        modify_potential(cc, 13, 2);
+        modify_potential(cdata[cc], 12, 2);
+        modify_potential(cdata[cc], 13, 2);
         nutrition = 500;
         if (cc == 0)
         {
@@ -998,8 +998,8 @@ void apply_general_eating_effect(int cieat)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(cc, 17, 2);
-        modify_potential(cc, 14, 2);
+        modify_potential(cdata[cc], 17, 2);
+        modify_potential(cdata[cc], 14, 2);
         if (cc == 0)
         {
             txtef(2);
@@ -1153,8 +1153,8 @@ void apply_general_eating_effect(int cieat)
     {
         if (rnd(10) == 0 || cdata[cc].nutrition >= 12000)
         {
-            modweight(
-                cc,
+            modify_weight(
+                cdata[cc],
                 rnd(3) + 1,
                 cdata[cc].nutrition >= 20000
                     && rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
@@ -1203,7 +1203,7 @@ void apply_general_eating_effect(int cieat)
                 {
                     continue;
                 }
-                modify_potential(cc, cnt, rnd(10) + 1);
+                modify_potential(cdata[cc], cnt, rnd(10) + 1);
             }
         }
     }
@@ -1266,7 +1266,7 @@ void apply_general_eating_effect(int cieat)
             {
                 if (cdata[cc].relationship >= 0)
                 {
-                    modify_karma(0, -1);
+                    modify_karma(cdata[0], -1);
                 }
             }
             return;
@@ -1285,7 +1285,7 @@ void apply_general_eating_effect(int cieat)
                 "core.locale.food.effect.spiked.other", rnd(2), cdata[cc]));
             cdata[cc].emotion_icon = 317;
             chara_mod_impression(cc, 30);
-            modify_karma(0, -10);
+            modify_karma(cdata[0], -10);
             lovemiracle(cc);
         }
         dmgcon(cc, status_ailment_t::dimmed, 500);
