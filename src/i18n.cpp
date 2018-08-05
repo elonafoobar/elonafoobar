@@ -26,10 +26,7 @@ void store::init(const std::vector<store::location>& locations)
 
     for (const auto& loc : locations)
     {
-        if (fs::exists(loc.locale_dir))
-        {
-            load(loc.locale_dir, loc.mod_name);
-        }
+        load(loc.locale_dir, loc.mod_name);
     }
 }
 
@@ -39,6 +36,13 @@ void store::load(const fs::path& path, const std::string& mod_name)
          filesystem::dir_entries{path, filesystem::dir_entries::type::file})
     {
         std::ifstream ifs(entry.path().native());
+        if (!ifs)
+        {
+            throw std::runtime_error{
+                "Failed to open "
+                + filesystem::make_preferred_path_in_utf8(entry.path())};
+        }
+
         load(ifs, entry.path().string(), mod_name);
     }
 }

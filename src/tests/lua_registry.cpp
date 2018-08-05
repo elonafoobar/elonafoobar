@@ -6,31 +6,24 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
+const auto base_path = filesystem::dir::exe() / "tests" / "data" / "registry";
+
 TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 {
-    const fs::path data_file = "tests/data/registry/invalid.hcl";
-
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(
-        lua.get_registry_manager().register_datatype("test", "chara"));
-
-    REQUIRE_THROWS(
-        lua.get_registry_manager().register_data("test", "chara", data_file));
+    REQUIRE_THROWS(lua.get_registry_manager().load_mod_data(
+        {{base_path / "invalid" / "data.hcl", "test"}}));
 }
 
 TEST_CASE("test instantiating character from datatype", "[Lua: Registry]")
 {
-    const fs::path data = "tests/data/registry/putit.hcl";
-
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(
-        lua.get_registry_manager().register_datatype("test", "putit"));
-    REQUIRE_NOTHROW(
-        lua.get_registry_manager().register_data("test", "putit", data));
+    REQUIRE_NOTHROW(lua.get_registry_manager().load_mod_data(
+        {{base_path / "putit" / "data.hcl", "test"}}));
 
     auto table = lua.get_registry_manager().get_table("test", "putit");
     REQUIRE(table != sol::nullopt);
