@@ -102,3 +102,9 @@ function gain_skill(id, initial_level, initial_stock) end
 -- @tparam num id the skill/spell ID
 -- @tparam num amount the amount of experience
 function gain_skill_exp(id, amount) end
+
+--- Modify a character's resistance. Since the effect is permanent,
+--- once your resistance is modified, it will not be reset on refreshing.
+-- @tparam num element the corresponding element
+-- @tparam num delta the amount of increase/decrease
+function modify_resistance(element, delta) end
