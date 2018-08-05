@@ -7,10 +7,10 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-const auto base_path = filesystem::dir::exe() / "tests" / "data" / "registry";
-
 static sol::table load(elona::lua::lua_env& lua, const std::string& name)
 {
+    const auto base_path = testing::get_test_data_path() / "registry";
+
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().register_native_datatype(
@@ -54,6 +54,8 @@ TEST_CASE("test reading invalid callback name", "[Lua: Registry]")
 
 TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
 {
+    const auto base_path = testing::get_test_data_path() / "registry";
+
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 

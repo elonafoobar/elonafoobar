@@ -6,10 +6,10 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-const auto base_path = filesystem::dir::exe() / "tests" / "data" / "registry";
-
 TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 {
+    const auto base_path = testing::get_test_data_path() / "registry";
+
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
@@ -19,6 +19,8 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 
 TEST_CASE("test declaring and loading datatype", "[Lua: Registry]")
 {
+    const auto base_path = testing::get_test_data_path() / "registry";
+
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
@@ -45,6 +47,8 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Registry]")
 
 TEST_CASE("test loading datatype originating from other mod", "[Lua: Registry]")
 {
+    const auto base_path = testing::get_test_data_path() / "registry";
+
     elona::lua::lua_env lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 

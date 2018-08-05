@@ -7,7 +7,8 @@ namespace elona
 namespace testing
 {
 
-fs::path mods_path();
+fs::path get_test_data_path();
+fs::path get_mods_path();
 
 void pre_init();
 void post_run();

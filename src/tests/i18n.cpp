@@ -229,10 +229,11 @@ locale {\
 TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
 {
     i18n::store store;
-    store.init({{testing::mods_path() / "test_i18n_a" / "locale" / "jp",
+    store.init({{testing::get_mods_path() / "test_i18n_a" / "locale" / "jp",
                  "test_i18n_a"},
-                {testing::mods_path() / "test_i18n_b" / "locale" / "jp",
+                {testing::get_mods_path() / "test_i18n_b" / "locale" / "jp",
                  "test_i18n_b"}});
+
 
     REQUIRE(store.get(u8"test_i18n_a.locale.test") == u8"こんばんは"s);
     REQUIRE(store.get(u8"test_i18n_b.locale.test") == u8"こんにちは"s);
