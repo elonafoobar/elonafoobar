@@ -1,8 +1,8 @@
 local HCL = require "hclua"
 
-local function register_data(mod_name, datatype_name, filepath, registry)
-   if registry[mod_name] == nil or registry[mod_name][datatype_name] == nil then
-      error("Datatype not registered: " .. mod_name .. "." .. datatype_name)
+local function register_data(mod_name, datatype_mod_name, datatype_name, filepath, registry)
+   if registry[datatype_mod_name] == nil or registry[datatype_mod_name][datatype_name] == nil then
+      error("Datatype not registered: " .. datatype_mod_name .. "." .. datatype_name)
    end
    local parsed = HCL.parse_file(filepath)
    local data = parsed[datatype_name]
@@ -20,11 +20,28 @@ local function register_data(mod_name, datatype_name, filepath, registry)
       error("Datatype object was list, are there duplicate IDs?")
    end
 
+   local id_prefix = datatype_mod_name .. "." .. datatype_name .. ":"
    for key, value in pairs(data) do
       -- if validate(spec, value) then
-      value._id = key
+
+      -- namespaced by mod declaring datatype and mod declaring data
+      -- core.chara:core.putit
+      local id = mod_name .. "." .. key
+      local full_id = id_prefix .. id
+
+      value._id = id
+      value._full_id = full_id
       value._mod = mod_name
-      registry[mod_name][datatype_name][key] = value
+
+      local datatype_table = registry[datatype_mod_name][datatype_name]
+      if not datatype_table[mod_name] then
+         datatype_table[mod_name] = {}
+      end
+      if datatype_table[mod_name][key] ~= nil then
+         error("Datatype already exists: " .. id)
+      end
+
+      datatype_table[mod_name][key] = value
       -- end
    end
 end

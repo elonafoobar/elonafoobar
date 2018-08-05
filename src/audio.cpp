@@ -47,11 +47,11 @@ shared_id get_default_music()
     }
     if (adata(0, gdata_current_map) == mdata_t::map_type_t::town)
     {
-        music_id = "core.music.mcTown1"s;
+        music_id = "core.music:core.mcTown1"s;
     }
     if (adata(0, gdata_current_map) == mdata_t::map_type_t::player_owned)
     {
-        music_id = "core.music.mcHome"s;
+        music_id = "core.music:core.mcHome"s;
     }
     if (mdata_map_bgm != 0)
     {
@@ -60,12 +60,12 @@ shared_id get_default_music()
     if (adata(0, gdata_current_map) >= mdata_t::map_type_t::dungeon)
     {
         static const std::vector<std::string> choices = {
-            "core.music.mcDungeon1",
-            "core.music.mcDungeon2",
-            "core.music.mcDungeon3",
-            "core.music.mcDungeon4",
-            "core.music.mcDungeon5",
-            "core.music.mcDungeon6"};
+            "core.music:core.mcDungeon1",
+            "core.music:core.mcDungeon2",
+            "core.music:core.mcDungeon3",
+            "core.music:core.mcDungeon4",
+            "core.music:core.mcDungeon5",
+            "core.music:core.mcDungeon6"};
         music_id = choices[gdata_hour % 6];
     }
     if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
@@ -75,7 +75,7 @@ shared_id get_default_music()
         {
             if (adata(20, gdata_current_map) != -1)
             {
-                music_id = "core.music.mcBoss"s;
+                music_id = "core.music:core.mcBoss"s;
             }
         }
     }
@@ -83,68 +83,69 @@ shared_id get_default_music()
     {
         if (gdata_executing_immediate_quest_type == 1001)
         {
-            music_id = "core.music.mcBattle1"s;
+            music_id = "core.music:core.mcBattle1"s;
         }
         if (gdata_executing_immediate_quest_type == 1006)
         {
-            music_id = "core.music.mcVillage1"s;
+            music_id = "core.music:core.mcVillage1"s;
         }
         if (gdata_executing_immediate_quest_type == 1009)
         {
-            music_id = "core.music.mcCasino"s;
+            music_id = "core.music:core.mcCasino"s;
         }
         if (gdata_executing_immediate_quest_type == 1008)
         {
-            music_id = "core.music.mcBoss"s;
+            music_id = "core.music:core.mcBoss"s;
         }
         if (gdata_executing_immediate_quest_type == 1010)
         {
-            music_id = "core.music.mcArena";
+            music_id = "core.music:core.mcArena";
         }
     }
     if (gdata_current_map == mdata_t::map_id_t::arena)
     {
-        music_id = "core.music.mcArena"s;
+        music_id = "core.music:core.mcArena"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::larna)
     {
-        music_id = "core.music.mcVillage1"s;
+        music_id = "core.music:core.mcVillage1"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::port_kapul)
     {
-        music_id = "core.music.mcTown2"s;
+        music_id = "core.music:core.mcTown2"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::lumiest)
     {
-        music_id = "core.music.mcTown2"s;
+        music_id = "core.music:core.mcTown2"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::yowyn)
     {
-        music_id = "core.music.mcVillage1"s;
+        music_id = "core.music:core.mcVillage1"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::derphy)
     {
-        music_id = "core.music.mcTown3"s;
+        music_id = "core.music:core.mcTown3"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::palmia)
     {
-        music_id = "core.music.mcTown4"s;
+        music_id = "core.music:core.mcTown4"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::cyber_dome)
     {
-        music_id = "core.music.mcTown5"s;
+        music_id = "core.music:core.mcTown5"s;
     }
     if (gdata_current_map == mdata_t::map_id_t::noyel)
     {
-        music_id = "core.music.mcTown6"s;
+        music_id = "core.music:core.mcTown6"s;
     }
 
     if (!music_id
         || adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
     {
-        static const std::vector<std::string> choices = {"core.music.mcField1",
-                                                         "core.music.mcField2",
-                                                         "core.music.mcField3"};
+        static const std::vector<std::string> choices = {
+            "core.music:core.mcField1",
+            "core.music:core.mcField2",
+            "core.music:core.mcField3"};
         music_id = choices[gdata_day % 3];
     }
 
@@ -476,7 +477,7 @@ void sound_play_environmental()
 
 void play_music(const char* music_id)
 {
-    shared_id id = shared_id(std::string(music_id));
+    shared_id id = shared_id("core.music:"s + std::string(music_id));
     play_music(id);
 }
 

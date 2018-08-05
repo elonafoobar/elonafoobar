@@ -32,7 +32,7 @@ void registry_manager::bind_api()
     // "add_datatype", "add_data"
 
     Registry.set_function(
-        "get",
+        "get_table",
         sol::overload(
             [this](const std::string& parent, const std::string& module) {
                 return get_table(parent, module);
@@ -74,7 +74,8 @@ void registry_manager::register_native_datatype(
 }
 
 void registry_manager::register_data(
-    const std::string& mod_name,
+    const std::string& originating_mod_name,
+    const std::string& datatype_mod_name,
     const std::string& datatype_name,
     const fs::path& data_file)
 {
@@ -87,18 +88,20 @@ void registry_manager::register_data(
     }
     std::string normalized = filesystem::to_forward_slashes(data_file);
 
-    registry_env.set("_MOD_NAME", mod_name);
+    registry_env.set("_MOD_NAME", originating_mod_name);
+    registry_env.set("_DATATYPE_MOD_NAME", datatype_mod_name);
     registry_env.set("_DATATYPE_NAME", datatype_name);
     registry_env.set("_FILEPATH", normalized);
 
     auto result = lua_->get_state()->safe_script(
         R"(
-register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
+register_data(_MOD_NAME, _DATATYPE_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
 )",
         registry_env,
         &sol::script_pass_on_error);
 
     registry_env.set("_MOD_NAME", sol::lua_nil);
+    registry_env.set("_DATATYPE_MOD_NAME", sol::lua_nil);
     registry_env.set("_DATATYPE_NAME", sol::lua_nil);
     registry_env.set("_FILEPATH", sol::lua_nil);
 
@@ -106,8 +109,9 @@ register_data(_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry)
     {
         sol::error err = result;
         throw std::runtime_error(
-            "Failed loading data for " + mod_name + "." + datatype_name + ": "
-            + err.what());
+            "Failed loading data for " + originating_mod_name
+            + " declaration of " + datatype_mod_name + ":" + datatype_name
+            + ": " + err.what());
     }
 
     steady_clock::time_point end = steady_clock::now();
@@ -154,7 +158,7 @@ void registry_manager::load_mod_data(
         if (!data_table)
         {
             throw std::runtime_error(
-                "core." + datatype_name
+                "core:" + datatype_name
                 + ": core datatype not loaded (this is a bug)");
         }
 
@@ -269,6 +273,7 @@ void registry_manager::load_single_declared_mod_data(
         }
 
         register_data(
+            mod_name,
             datatype_mod_name,
             datatype_name,
             filesystem::make_preferred_path_in_utf8(

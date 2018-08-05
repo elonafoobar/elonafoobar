@@ -1186,7 +1186,7 @@ void quest_team_victorious()
 void quest_all_targets_killed()
 {
     musicloop = 1;
-    play_music("core.music.mcFanfare");
+    play_music("core.mcFanfare");
     gdata(73) = 3;
     if (gdata_executing_immediate_quest_type == 1)
     {

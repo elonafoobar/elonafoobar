@@ -44,13 +44,13 @@ void casino_dealer()
     if (atxid == 1)
     {
         txt(i18n::s.get("core.locale.casino.talk_to_dealer"));
-        play_music("core.music.mcCasino");
+        play_music("core.mcCasino");
         casino_wrapper();
         return;
     }
     if (atxid == 4)
     {
-        play_music("core.music.mcCasino");
+        play_music("core.mcCasino");
         casino_wrapper();
         return;
     }

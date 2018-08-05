@@ -11145,7 +11145,7 @@ void label_2151()
     }
     label_2150();
     musicloop = 1;
-    play_music("core.music.mcCoda");
+    play_music("core.mcCoda");
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -16016,7 +16016,7 @@ label_2682_internal:
     }
     if (s == u8"{mc}"s)
     {
-        shared_id music_id(s(1));
+        shared_id music_id("core.music:"s + s(1));
         play_music(music_id);
         goto label_2682_internal;
     }
@@ -16622,7 +16622,7 @@ void conquer_lesimas()
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
         chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
-        play_music("core.music.mcChaos");
+        play_music("core.mcChaos");
         msg_halt();
         msg_clear();
         txt(u8"「決まっていたことなのだ…遅かれ早かれな」"s);
@@ -16654,7 +16654,7 @@ void conquer_lesimas()
         msg_halt();
     }
     mode = 0;
-    play_music("core.music.mcMarch2");
+    play_music("core.mcMarch2");
     label_1442();
     gsel(4);
     pos(0, 0);

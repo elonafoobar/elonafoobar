@@ -112,31 +112,19 @@ public:
         initialize(table, *lua::lua.get());
     }
 
-    void initialize(sol::table table, lua::lua_env& lua)
+    void initialize(sol::table root_table, lua::lua_env& lua)
     {
         using namespace std::chrono;
         steady_clock::time_point begin = steady_clock::now();
 
-        std::string prefix = "core." + std::string(traits_type::datatype_name);
-        for (const auto& pair : table)
+        // Read tables of this format:
+        // root_table[mod_name][data_id]
+        for (const auto& root_pair : root_table)
         {
-            std::string id = pair.first.as<std::string>();
-            sol::table data = pair.second.as<sol::table>();
+            // root_table[core]
+            sol::table data_for_mod = root_pair.second.as<sol::table>();
 
-            data_type converted = static_cast<T&>(*this).convert(id, data, lua);
-            id_type the_id(prefix + "." + id);
-
-            auto it = by_legacy_id.find(converted.id);
-            if (it != by_legacy_id.end())
-            {
-                throw std::runtime_error(
-                    the_id.get() + ": Legacy id already exists: "s
-                    + std::to_string(converted.id) + " -> "s
-                    + it->second.get());
-            }
-
-            by_legacy_id.emplace(converted.id, the_id);
-            storage.emplace(the_id, converted);
+            initialize_for_mod(data_for_mod, lua);
         }
 
         steady_clock::time_point end = steady_clock::now();
@@ -182,6 +170,35 @@ public:
             return none;
     }
 
+private:
+    void initialize_for_mod(sol::table data_for_mod, lua::lua_env& lua)
+    {
+        for (const auto& pair : data_for_mod)
+        {
+            sol::table data = pair.second.as<sol::table>();
+            std::string id_string = data["_full_id"];
+            id_type id(id_string);
+
+            initialize_single(id, data, lua);
+        }
+    }
+
+    void
+    initialize_single(const id_type& id, sol::table data, lua::lua_env& lua)
+    {
+        data_type converted = static_cast<T&>(*this).convert(id, data, lua);
+
+        auto it = by_legacy_id.find(converted.id);
+        if (it != by_legacy_id.end())
+        {
+            throw std::runtime_error(
+                id.get() + ": Legacy id already exists: "s
+                + std::to_string(converted.id) + " -> "s + it->second.get());
+        }
+
+        by_legacy_id.emplace(converted.id, id);
+        storage.emplace(id, converted);
+    }
 
 protected:
     std::string scope;

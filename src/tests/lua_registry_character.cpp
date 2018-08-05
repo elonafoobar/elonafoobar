@@ -72,7 +72,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
     character_db_ex db;
     db.initialize(table, lua);
 
-    auto data = db["core.chara.spiral_putit"];
+    auto data = db["core.chara:chara.spiral_putit"];
 
     REQUIRE(data);
     REQUIRE(data->id == 500);
@@ -114,7 +114,7 @@ TEST_CASE("test registering with all defaults specified", "[Lua: Registry]")
     character_db_ex db;
     db.initialize(table, lua);
 
-    auto data = db["core.chara.nothing"];
+    auto data = db["core.chara:chara_defaults.nothing"];
 
     REQUIRE(data);
     REQUIRE(data->id == -1);
@@ -168,7 +168,7 @@ TEST_CASE("test character flags", "[Lua: Registry]")
     character_db_ex db;
     db.initialize(table, lua);
 
-    auto data = db["core.chara.nothing"];
+    auto data = db["core.chara:chara_defaults.nothing"];
 
     REQUIRE(data);
     for (size_t i = 0; i < 32 * 30; ++i)

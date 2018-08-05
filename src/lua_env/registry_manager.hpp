@@ -70,10 +70,12 @@ private:
 
     /***
      * Registers instances of new data for a known datatype from the
-     * provided HCL file. Throws if the datatype is not known.
+     * provided HCL file, originating from some arbitrary mod. Throws
+     * if the datatype is not known.
      */
     void register_data(
-        const std::string& mod_name,
+        const std::string& originating_mod_name,
+        const std::string& datatype_mod_name,
         const std::string& datatype_name,
         const fs::path& data_file);
 

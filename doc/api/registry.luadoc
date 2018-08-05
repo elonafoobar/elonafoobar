@@ -1,0 +1,13 @@
+--- Functions for working with the data registry. The registry is set
+--- of immutable Lua tables for storing semi-structured data, like
+--- character or item definitions. It can be expanded by modders to
+--- contain new data types.
+--  @usage local Registry = Elona.require("Registry")
+module "Registry"
+
+--- Gets the root table for a datatype, if it exists.
+-- @tparam string mod_name name of the mod where the data type is declared
+-- @tparam string datatype_name name of the datatype
+-- @treturn[1] table the registry table containing data definitions
+-- @treturn[2] nil
+function get_table(mod_name, datatype_name) end
