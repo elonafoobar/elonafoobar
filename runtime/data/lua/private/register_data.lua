@@ -1,4 +1,17 @@
 local HCL = require "hclua"
+local inspect = require "inspect"
+
+local function shared_keys(a, b)
+   local keys = {}
+
+   for k, _ in pairs(a) do
+      if b[k] ~= nil then
+         keys[#keys+1] = k
+      end
+   end
+
+   return keys
+end
 
 local function register_data(mod_name, datatype_mod_name, datatype_name, filepath, registry)
    if registry[datatype_mod_name] == nil or registry[datatype_mod_name][datatype_name] == nil then
@@ -17,7 +30,8 @@ local function register_data(mod_name, datatype_mod_name, datatype_name, filepat
    end
 
    if data[1] ~= nil then
-      error("Datatype object was list, are there duplicate IDs?")
+      error("Datatype object was list, are there duplicate IDs?\nIDs that were duplicate: " ..
+               inspect(shared_keys(data[1], data[2])))
    end
 
    local id_prefix = datatype_mod_name .. "." .. datatype_name .. ":"

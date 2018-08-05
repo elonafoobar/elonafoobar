@@ -1,4 +1,4 @@
-item _0 {
+item bug {
     id = 0
     image = 33
     value = 1
@@ -39,7 +39,7 @@ item _0 {
     rftags = []
 }
 
-item _1 {
+item long_sword {
     id = 1
     image = 405
     value = 500
@@ -80,7 +80,7 @@ item _1 {
     rftags = []
 }
 
-item _2 {
+item dagger {
     id = 2
     image = 400
     value = 500
@@ -121,7 +121,7 @@ item _2 {
     rftags = []
 }
 
-item _3 {
+item hand_axe {
     id = 3
     image = 499
     value = 500
@@ -162,7 +162,7 @@ item _3 {
     rftags = []
 }
 
-item _4 {
+item club {
     id = 4
     image = 427
     value = 500
@@ -203,7 +203,7 @@ item _4 {
     rftags = []
 }
 
-item _5 {
+item magic_hat {
     id = 5
     image = 477
     value = 1400
@@ -244,7 +244,7 @@ item _5 {
     rftags = []
 }
 
-item _6 {
+item fairy_hat {
     id = 6
     image = 478
     value = 7200
@@ -285,7 +285,7 @@ item _6 {
     rftags = []
 }
 
-item _7 {
+item breastplate {
     id = 7
     image = 396
     value = 600
@@ -326,7 +326,7 @@ item _7 {
     rftags = []
 }
 
-item _8 {
+item robe {
     id = 8
     image = 408
     value = 450
@@ -367,7 +367,7 @@ item _8 {
     rftags = []
 }
 
-item _9 {
+item decorated_gloves {
     id = 9
     image = 449
     value = 1400
@@ -408,7 +408,7 @@ item _9 {
     rftags = []
 }
 
-item _10 {
+item thick_gauntlets {
     id = 10
     image = 450
     value = 400
@@ -449,7 +449,7 @@ item _10 {
     rftags = []
 }
 
-item _11 {
+item heavy_boots {
     id = 11
     image = 418
     value = 480
@@ -490,7 +490,7 @@ item _11 {
     rftags = []
 }
 
-item _12 {
+item composite_boots {
     id = 12
     image = 460
     value = 2200
@@ -531,7 +531,7 @@ item _12 {
     rftags = []
 }
 
-item _13 {
+item decorative_ring {
     id = 13
     image = 407
     value = 450
@@ -572,7 +572,7 @@ item _13 {
     rftags = []
 }
 
-item _14 {
+item scroll_of_identify {
     id = 14
     image = 470
     value = 480
@@ -613,7 +613,7 @@ item _14 {
     rftags = []
 }
 
-item _15 {
+item scroll_of_oracle {
     id = 15
     image = 470
     value = 12000
@@ -654,7 +654,7 @@ item _15 {
     rftags = []
 }
 
-item _16 {
+item scroll_of_teleportation {
     id = 16
     image = 470
     value = 200
@@ -695,7 +695,7 @@ item _16 {
     rftags = []
 }
 
-item _17 {
+item scroll_of_incognito {
     id = 17
     image = 470
     value = 3500
@@ -736,7 +736,7 @@ item _17 {
     rftags = []
 }
 
-item _18 {
+item rod_of_identify {
     id = 18
     image = 471
     value = 1080
@@ -777,7 +777,7 @@ item _18 {
     rftags = []
 }
 
-item _19 {
+item rod_of_teleportation {
     id = 19
     image = 471
     value = 840
@@ -818,7 +818,7 @@ item _19 {
     rftags = []
 }
 
-item _20 {
+item spellbook_of_teleportation {
     id = 20
     image = 429
     value = 3200
@@ -859,7 +859,7 @@ item _20 {
     rftags = []
 }
 
-item _21 {
+item spellbook_of_identify {
     id = 21
     image = 429
     value = 5600
@@ -900,7 +900,7 @@ item _21 {
     rftags = []
 }
 
-item _22 {
+item spellbook_of_uncurse {
     id = 22
     image = 429
     value = 6400
@@ -941,7 +941,7 @@ item _22 {
     rftags = []
 }
 
-item _23 {
+item book_a {
     id = 23
     image = 333
     value = 100
@@ -982,7 +982,7 @@ item _23 {
     rftags = []
 }
 
-item _24 {
+item book_b {
     id = 24
     image = 333
     value = 500
@@ -1023,7 +1023,7 @@ item _24 {
     rftags = []
 }
 
-item _25 {
+item bugged_book {
     id = 25
     image = 333
     value = 100
@@ -1064,7 +1064,7 @@ item _25 {
     rftags = []
 }
 
-item _26 {
+item bottle_of_dirty_water {
     id = 26
     image = 354
     value = 100
@@ -1105,7 +1105,7 @@ item _26 {
     rftags = []
 }
 
-item _27 {
+item potion_of_blindness {
     id = 27
     image = 354
     value = 20
@@ -1146,7 +1146,7 @@ item _27 {
     rftags = []
 }
 
-item _28 {
+item potion_of_confusion {
     id = 28
     image = 354
     value = 30
@@ -1187,7 +1187,7 @@ item _28 {
     rftags = []
 }
 
-item _29 {
+item potion_of_paralysis {
     id = 29
     image = 354
     value = 40
@@ -1228,7 +1228,7 @@ item _29 {
     rftags = []
 }
 
-item _30 {
+item sleeping_drug {
     id = 30
     image = 354
     value = 120
@@ -1269,7 +1269,7 @@ item _30 {
     rftags = []
 }
 
-item _31 {
+item bottle_of_crim_ale {
     id = 31
     image = 354
     value = 280
@@ -1310,7 +1310,7 @@ item _31 {
     rftags = []
 }
 
-item _32 {
+item spellbook_of_ice_bolt {
     id = 32
     image = 429
     value = 3800
@@ -1351,7 +1351,7 @@ item _32 {
     rftags = []
 }
 
-item _33 {
+item spellbook_of_fire_bolt {
     id = 33
     image = 429
     value = 3800
@@ -1392,7 +1392,7 @@ item _33 {
     rftags = []
 }
 
-item _34 {
+item spellbook_of_lightning_bolt {
     id = 34
     image = 429
     value = 3800
@@ -1433,7 +1433,7 @@ item _34 {
     rftags = []
 }
 
-item _35 {
+item earth_crystal {
     id = 35
     image = 211
     value = 450
@@ -1474,7 +1474,7 @@ item _35 {
     rftags = ["ore"]
 }
 
-item _36 {
+item mana_crystal {
     id = 36
     image = 211
     value = 470
@@ -1515,7 +1515,7 @@ item _36 {
     rftags = ["ore"]
 }
 
-item _37 {
+item sun_crystal {
     id = 37
     image = 211
     value = 450
@@ -1556,7 +1556,7 @@ item _37 {
     rftags = ["ore"]
 }
 
-item _38 {
+item gold_bar {
     id = 38
     image = 33
     value = 2000
@@ -1597,7 +1597,7 @@ item _38 {
     rftags = ["ore"]
 }
 
-item _39 {
+item raw_ore_of_rubynus {
     id = 39
     image = 212
     value = 1400
@@ -1638,7 +1638,7 @@ item _39 {
     rftags = ["ore"]
 }
 
-item _40 {
+item raw_ore_of_mika {
     id = 40
     image = 212
     value = 720
@@ -1679,7 +1679,7 @@ item _40 {
     rftags = ["ore"]
 }
 
-item _41 {
+item raw_ore_of_emerald {
     id = 41
     image = 213
     value = 2450
@@ -1720,7 +1720,7 @@ item _41 {
     rftags = ["ore"]
 }
 
-item _42 {
+item raw_ore_of_diamond {
     id = 42
     image = 213
     value = 4200
@@ -1761,7 +1761,7 @@ item _42 {
     rftags = ["ore"]
 }
 
-item _43 {
+item wood_piece {
     id = 43
     image = 239
     value = 10
@@ -1802,7 +1802,7 @@ item _43 {
     rftags = []
 }
 
-item _44 {
+item junk_stone {
     id = 44
     image = 238
     value = 10
@@ -1843,7 +1843,7 @@ item _44 {
     rftags = ["ore"]
 }
 
-item _45 {
+item garbage {
     id = 45
     image = 240
     value = 8
@@ -1884,7 +1884,7 @@ item _45 {
     rftags = []
 }
 
-item _46 {
+item broken_vase {
     id = 46
     image = 241
     value = 6
@@ -1925,7 +1925,7 @@ item _46 {
     rftags = []
 }
 
-item _47 {
+item washing {
     id = 47
     image = 204
     value = 140
@@ -1966,7 +1966,7 @@ item _47 {
     rftags = []
 }
 
-item _48 {
+item bonfire {
     id = 48
     image = 242
     value = 170
@@ -2007,7 +2007,7 @@ item _48 {
     rftags = []
 }
 
-item _49 {
+item flag {
     id = 49
     image = 243
     value = 130
@@ -2048,7 +2048,7 @@ item _49 {
     rftags = []
 }
 
-item _50 {
+item broken_sword {
     id = 50
     image = 244
     value = 10
@@ -2089,7 +2089,7 @@ item _50 {
     rftags = []
 }
 
-item _51 {
+item bone_fragment {
     id = 51
     image = 245
     value = 10
@@ -2130,7 +2130,7 @@ item _51 {
     rftags = []
 }
 
-item _52 {
+item skeleton {
     id = 52
     image = 246
     value = 10
@@ -2171,7 +2171,7 @@ item _52 {
     rftags = []
 }
 
-item _53 {
+item tombstone {
     id = 53
     image = 247
     value = 10
@@ -2212,7 +2212,7 @@ item _53 {
     rftags = []
 }
 
-item _54 {
+item gold_piece {
     id = 54
     image = 433
     value = 1
@@ -2253,7 +2253,7 @@ item _54 {
     rftags = []
 }
 
-item _55 {
+item platinum_coin {
     id = 55
     image = 437
     value = 1
@@ -2294,7 +2294,7 @@ item _55 {
     rftags = []
 }
 
-item _56 {
+item diablo {
     id = 56
     image = 405
     value = 40000
@@ -2335,7 +2335,7 @@ item _56 {
     rftags = []
 }
 
-item _57 {
+item zantetsu {
     id = 57
     image = 501
     value = 40000
@@ -2376,7 +2376,7 @@ item _57 {
     rftags = []
 }
 
-item _58 {
+item long_bow {
     id = 58
     image = 404
     value = 500
@@ -2417,7 +2417,7 @@ item _58 {
     rftags = []
 }
 
-item _59 {
+item knight_shield {
     id = 59
     image = 411
     value = 4800
@@ -2458,7 +2458,7 @@ item _59 {
     rftags = []
 }
 
-item _60 {
+item pistol {
     id = 60
     image = 419
     value = 500
@@ -2499,7 +2499,7 @@ item _60 {
     rftags = []
 }
 
-item _61 {
+item arrow {
     id = 61
     image = 412
     value = 150
@@ -2540,7 +2540,7 @@ item _61 {
     rftags = []
 }
 
-item _62 {
+item bullet {
     id = 62
     image = 420
     value = 150
@@ -2581,7 +2581,7 @@ item _62 {
     rftags = []
 }
 
-item _63 {
+item scythe_of_void {
     id = 63
     image = 421
     value = 50000
@@ -2622,7 +2622,7 @@ item _63 {
     rftags = []
 }
 
-item _64 {
+item mournblade {
     id = 64
     image = 405
     value = 60000
@@ -2663,7 +2663,7 @@ item _64 {
     rftags = []
 }
 
-item _65 {
+item light_cloak {
     id = 65
     image = 422
     value = 250
@@ -2704,7 +2704,7 @@ item _65 {
     rftags = []
 }
 
-item _66 {
+item girdle {
     id = 66
     image = 423
     value = 300
@@ -2745,7 +2745,7 @@ item _66 {
     rftags = []
 }
 
-item _67 {
+item decorative_amulet {
     id = 67
     image = 398
     value = 200
@@ -2786,7 +2786,7 @@ item _67 {
     rftags = []
 }
 
-item _68 {
+item potion_of_cure_minor_wound {
     id = 68
     image = 354
     value = 150
@@ -2827,7 +2827,7 @@ item _68 {
     rftags = []
 }
 
-item _69 {
+item potion_of_cure_major_wound {
     id = 69
     image = 354
     value = 300
@@ -2868,7 +2868,7 @@ item _69 {
     rftags = []
 }
 
-item _70 {
+item potion_of_cure_critical_wound {
     id = 70
     image = 354
     value = 1280
@@ -2909,7 +2909,7 @@ item _70 {
     rftags = []
 }
 
-item _71 {
+item potion_of_healing {
     id = 71
     image = 354
     value = 3000
@@ -2950,7 +2950,7 @@ item _71 {
     rftags = []
 }
 
-item _72 {
+item potion_of_healer {
     id = 72
     image = 354
     value = 5000
@@ -2991,7 +2991,7 @@ item _72 {
     rftags = []
 }
 
-item _73 {
+item ragnarok {
     id = 73
     image = 405
     value = 20000
@@ -3032,7 +3032,7 @@ item _73 {
     rftags = []
 }
 
-item _74 {
+item potion_of_healer_odina {
     id = 74
     image = 354
     value = 7500
@@ -3073,7 +3073,7 @@ item _74 {
     rftags = []
 }
 
-item _75 {
+item potion_of_healer_eris {
     id = 75
     image = 354
     value = 10000
@@ -3114,7 +3114,7 @@ item _75 {
     rftags = []
 }
 
-item _76 {
+item potion_of_healer_jure {
     id = 76
     image = 354
     value = 15000
@@ -3155,7 +3155,7 @@ item _76 {
     rftags = []
 }
 
-item _77 {
+item round_chair {
     id = 77
     image = 237
     value = 80
@@ -3196,7 +3196,7 @@ item _77 {
     rftags = []
 }
 
-item _78 {
+item bookshelf {
     id = 78
     image = 235
     value = 1800
@@ -3237,7 +3237,7 @@ item _78 {
     rftags = []
 }
 
-item _79 {
+item luxury_drawer {
     id = 79
     image = 234
     value = 6400
@@ -3278,7 +3278,7 @@ item _79 {
     rftags = []
 }
 
-item _80 {
+item boring_bed {
     id = 80
     image = 66
     value = 1400
@@ -3319,7 +3319,7 @@ item _80 {
     rftags = []
 }
 
-item _81 {
+item rag_doll {
     id = 81
     image = 67
     value = 240
@@ -3360,7 +3360,7 @@ item _81 {
     rftags = []
 }
 
-item _82 {
+item toy {
     id = 82
     image = 68
     value = 320
@@ -3401,7 +3401,7 @@ item _82 {
     rftags = []
 }
 
-item _83 {
+item modern_table {
     id = 83
     image = 69
     value = 2400
@@ -3442,7 +3442,7 @@ item _83 {
     rftags = []
 }
 
-item _84 {
+item dining_table {
     id = 84
     image = 70
     value = 3800
@@ -3483,7 +3483,7 @@ item _84 {
     rftags = []
 }
 
-item _85 {
+item armor {
     id = 85
     image = 73
     value = 1600
@@ -3524,7 +3524,7 @@ item _85 {
     rftags = []
 }
 
-item _86 {
+item lot_of_goods {
     id = 86
     image = 74
     value = 450
@@ -3565,7 +3565,7 @@ item _86 {
     rftags = []
 }
 
-item _87 {
+item lot_of_accessories {
     id = 87
     image = 75
     value = 720
@@ -3606,7 +3606,7 @@ item _87 {
     rftags = []
 }
 
-item _88 {
+item grand_piano {
     id = 88
     image = 76
     value = 15000
@@ -3647,7 +3647,7 @@ item _88 {
     rftags = []
 }
 
-item _89 {
+item bar_table_alpha {
     id = 89
     image = 78
     value = 1200
@@ -3688,7 +3688,7 @@ item _89 {
     rftags = []
 }
 
-item _90 {
+item bar_table_beta {
     id = 90
     image = 80
     value = 1200
@@ -3729,7 +3729,7 @@ item _90 {
     rftags = []
 }
 
-item _91 {
+item barrel {
     id = 91
     image = 72
     value = 180
@@ -3770,7 +3770,7 @@ item _91 {
     rftags = []
 }
 
-item _92 {
+item modern_chair {
     id = 92
     image = 84
     value = 750
@@ -3811,7 +3811,7 @@ item _92 {
     rftags = []
 }
 
-item _93 {
+item pick {
     id = 93
     image = 85
     value = 160
@@ -3852,7 +3852,7 @@ item _93 {
     rftags = []
 }
 
-item _94 {
+item lantern {
     id = 94
     image = 86
     value = 120
@@ -3893,7 +3893,7 @@ item _94 {
     rftags = []
 }
 
-item _95 {
+item decorative_armor {
     id = 95
     image = 87
     value = 4200
@@ -3934,7 +3934,7 @@ item _95 {
     rftags = []
 }
 
-item _96 {
+item anvil {
     id = 96
     image = 88
     value = 3500
@@ -3975,7 +3975,7 @@ item _96 {
     rftags = []
 }
 
-item _97 {
+item closed_pot {
     id = 97
     image = 89
     value = 140
@@ -4016,7 +4016,7 @@ item _97 {
     rftags = []
 }
 
-item _98 {
+item open_pot {
     id = 98
     image = 90
     value = 120
@@ -4057,7 +4057,7 @@ item _98 {
     rftags = []
 }
 
-item _99 {
+item academic_table {
     id = 99
     image = 91
     value = 1050
@@ -4098,7 +4098,7 @@ item _99 {
     rftags = []
 }
 
-item _100 {
+item rack_of_potions {
     id = 100
     image = 580
     value = 3800
@@ -4139,7 +4139,7 @@ item _100 {
     rftags = []
 }
 
-item _101 {
+item square_chair {
     id = 101
     image = 93
     value = 360
@@ -4180,7 +4180,7 @@ item _101 {
     rftags = []
 }
 
-item _102 {
+item cheap_chair {
     id = 102
     image = 94
     value = 120
@@ -4221,7 +4221,7 @@ item _102 {
     rftags = []
 }
 
-item _103 {
+item cupboard {
     id = 103
     image = 95
     value = 2400
@@ -4262,7 +4262,7 @@ item _103 {
     rftags = []
 }
 
-item _104 {
+item barn {
     id = 104
     image = 96
     value = 750
@@ -4303,7 +4303,7 @@ item _104 {
     rftags = []
 }
 
-item _105 {
+item neat_shelf {
     id = 105
     image = 97
     value = 1800
@@ -4344,7 +4344,7 @@ item _105 {
     rftags = []
 }
 
-item _106 {
+item closet {
     id = 106
     image = 98
     value = 1500
@@ -4385,7 +4385,7 @@ item _106 {
     rftags = []
 }
 
-item _107 {
+item variety_of_tools {
     id = 107
     image = 99
     value = 1050
@@ -4426,7 +4426,7 @@ item _107 {
     rftags = []
 }
 
-item _108 {
+item variety_of_goods {
     id = 108
     image = 100
     value = 1300
@@ -4467,7 +4467,7 @@ item _108 {
     rftags = []
 }
 
-item _109 {
+item well {
     id = 109
     image = 101
     value = 1800
@@ -4508,7 +4508,7 @@ item _109 {
     rftags = []
 }
 
-item _110 {
+item variety_of_clothes {
     id = 110
     image = 102
     value = 1800
@@ -4549,7 +4549,7 @@ item _110 {
     rftags = []
 }
 
-item _111 {
+item furnace {
     id = 111
     image = 103
     value = 4400
@@ -4590,7 +4590,7 @@ item _111 {
     rftags = []
 }
 
-item _112 {
+item oven {
     id = 112
     image = 104
     value = 8500
@@ -4631,7 +4631,7 @@ item _112 {
     rftags = []
 }
 
-item _113 {
+item sign {
     id = 113
     image = 105
     value = 100
@@ -4672,7 +4672,7 @@ item _113 {
     rftags = []
 }
 
-item _114 {
+item crossroad_sign {
     id = 114
     image = 106
     value = 120
@@ -4713,7 +4713,7 @@ item _114 {
     rftags = []
 }
 
-item _115 {
+item board {
     id = 115
     image = 381
     value = 240
@@ -4754,7 +4754,7 @@ item _115 {
     rftags = []
 }
 
-item _116 {
+item spellbook_of_minor_teleportation {
     id = 116
     image = 429
     value = 2400
@@ -4795,7 +4795,7 @@ item _116 {
     rftags = []
 }
 
-item _117 {
+item empty_basket {
     id = 117
     image = 109
     value = 20
@@ -4836,7 +4836,7 @@ item _117 {
     rftags = []
 }
 
-item _118 {
+item spellbook_of_summon_monsters {
     id = 118
     image = 429
     value = 6000
@@ -4877,7 +4877,7 @@ item _118 {
     rftags = []
 }
 
-item _119 {
+item rod_of_cure_minor_wound {
     id = 119
     image = 471
     value = 650
@@ -4918,7 +4918,7 @@ item _119 {
     rftags = []
 }
 
-item _120 {
+item rod_of_magic_missile {
     id = 120
     image = 471
     value = 800
@@ -4959,7 +4959,7 @@ item _120 {
     rftags = []
 }
 
-item _121 {
+item rod_of_summon_monsters {
     id = 121
     image = 471
     value = 700
@@ -5000,7 +5000,7 @@ item _121 {
     rftags = []
 }
 
-item _122 {
+item rod_of_ice_bolt {
     id = 122
     image = 471
     value = 1460
@@ -5041,7 +5041,7 @@ item _122 {
     rftags = []
 }
 
-item _123 {
+item rod_of_fire_bolt {
     id = 123
     image = 471
     value = 1600
@@ -5082,7 +5082,7 @@ item _123 {
     rftags = []
 }
 
-item _124 {
+item show_case_of_breads {
     id = 124
     image = 116
     value = 1400
@@ -5123,7 +5123,7 @@ item _124 {
     rftags = []
 }
 
-item _125 {
+item rod_of_heal {
     id = 125
     image = 471
     value = 4800
@@ -5164,7 +5164,7 @@ item _125 {
     rftags = []
 }
 
-item _126 {
+item beaker {
     id = 126
     image = 118
     value = 80
@@ -5205,7 +5205,7 @@ item _126 {
     rftags = []
 }
 
-item _127 {
+item alchemy_kit {
     id = 127
     image = 119
     value = 1960
@@ -5246,7 +5246,7 @@ item _127 {
     rftags = []
 }
 
-item _128 {
+item pentagram {
     id = 128
     image = 120
     value = 3500
@@ -5287,7 +5287,7 @@ item _128 {
     rftags = []
 }
 
-item _129 {
+item small_foliage_plant {
     id = 129
     image = 121
     value = 850
@@ -5328,7 +5328,7 @@ item _129 {
     rftags = []
 }
 
-item _130 {
+item rose {
     id = 130
     image = 122
     value = 1050
@@ -5369,7 +5369,7 @@ item _130 {
     rftags = []
 }
 
-item _131 {
+item large_foliage_plant {
     id = 131
     image = 123
     value = 1800
@@ -5410,7 +5410,7 @@ item _131 {
     rftags = []
 }
 
-item _132 {
+item sage {
     id = 132
     image = 124
     value = 650
@@ -5451,7 +5451,7 @@ item _132 {
     rftags = []
 }
 
-item _133 {
+item gazania {
     id = 133
     image = 125
     value = 750
@@ -5492,7 +5492,7 @@ item _133 {
     rftags = []
 }
 
-item _134 {
+item nerine {
     id = 134
     image = 126
     value = 880
@@ -5533,7 +5533,7 @@ item _134 {
     rftags = []
 }
 
-item _135 {
+item anemos {
     id = 135
     image = 127
     value = 920
@@ -5574,7 +5574,7 @@ item _135 {
     rftags = []
 }
 
-item _136 {
+item foxtail_grass {
     id = 136
     image = 128
     value = 1500
@@ -5615,7 +5615,7 @@ item _136 {
     rftags = []
 }
 
-item _137 {
+item carnation {
     id = 137
     image = 129
     value = 780
@@ -5656,7 +5656,7 @@ item _137 {
     rftags = []
 }
 
-item _138 {
+item statue_ornamented_with_plants {
     id = 138
     image = 525
     value = 3400
@@ -5697,7 +5697,7 @@ item _138 {
     rftags = []
 }
 
-item _139 {
+item statue_ornamented_with_flowers {
     id = 139
     image = 526
     value = 3900
@@ -5738,7 +5738,7 @@ item _139 {
     rftags = []
 }
 
-item _140 {
+item canvas {
     id = 140
     image = 132
     value = 830
@@ -5779,7 +5779,7 @@ item _140 {
     rftags = []
 }
 
-item _141 {
+item map {
     id = 141
     image = 133
     value = 450
@@ -5820,7 +5820,7 @@ item _141 {
     rftags = []
 }
 
-item _142 {
+item food_maker {
     id = 142
     image = 523
     value = 7800
@@ -5861,7 +5861,7 @@ item _142 {
     rftags = []
 }
 
-item _143 {
+item bundle_of_bows {
     id = 143
     image = 135
     value = 240
@@ -5902,7 +5902,7 @@ item _143 {
     rftags = []
 }
 
-item _144 {
+item bundle_of_weapons {
     id = 144
     image = 136
     value = 940
@@ -5943,7 +5943,7 @@ item _144 {
     rftags = []
 }
 
-item _145 {
+item decorated_cloth {
     id = 145
     image = 137
     value = 1400
@@ -5984,7 +5984,7 @@ item _145 {
     rftags = []
 }
 
-item _146 {
+item decorated_armor {
     id = 146
     image = 138
     value = 1900
@@ -6025,7 +6025,7 @@ item _146 {
     rftags = []
 }
 
-item _147 {
+item statue_of_armor {
     id = 147
     image = 139
     value = 3600
@@ -6066,7 +6066,7 @@ item _147 {
     rftags = []
 }
 
-item _148 {
+item disorderly_book {
     id = 148
     image = 140
     value = 240
@@ -6107,7 +6107,7 @@ item _148 {
     rftags = []
 }
 
-item _149 {
+item lot_of_books {
     id = 149
     image = 141
     value = 320
@@ -6148,7 +6148,7 @@ item _149 {
     rftags = []
 }
 
-item _150 {
+item craft_rack {
     id = 150
     image = 142
     value = 4500
@@ -6189,7 +6189,7 @@ item _150 {
     rftags = []
 }
 
-item _151 {
+item craft_book_shelf {
     id = 151
     image = 143
     value = 4400
@@ -6230,7 +6230,7 @@ item _151 {
     rftags = []
 }
 
-item _152 {
+item lot_of_alcohols {
     id = 152
     image = 144
     value = 350
@@ -6271,7 +6271,7 @@ item _152 {
     rftags = []
 }
 
-item _153 {
+item kitchen {
     id = 153
     image = 145
     value = 1200
@@ -6312,7 +6312,7 @@ item _153 {
     rftags = []
 }
 
-item _154 {
+item washstand {
     id = 154
     image = 146
     value = 1100
@@ -6353,7 +6353,7 @@ item _154 {
     rftags = []
 }
 
-item _155 {
+item kitchen_oven {
     id = 155
     image = 147
     value = 1500
@@ -6394,7 +6394,7 @@ item _155 {
     rftags = []
 }
 
-item _156 {
+item narrow_dining_table {
     id = 156
     image = 148
     value = 1200
@@ -6435,7 +6435,7 @@ item _156 {
     rftags = []
 }
 
-item _157 {
+item elegant_table {
     id = 157
     image = 149
     value = 3500
@@ -6476,7 +6476,7 @@ item _157 {
     rftags = []
 }
 
-item _158 {
+item gorgeous_candlestick {
     id = 158
     image = 150
     value = 800
@@ -6517,7 +6517,7 @@ item _158 {
     rftags = []
 }
 
-item _159 {
+item simple_shelf {
     id = 159
     image = 151
     value = 1200
@@ -6558,7 +6558,7 @@ item _159 {
     rftags = []
 }
 
-item _160 {
+item sewing_kit {
     id = 160
     image = 152
     value = 780
@@ -6599,7 +6599,7 @@ item _160 {
     rftags = []
 }
 
-item _161 {
+item carpenters_tool {
     id = 161
     image = 153
     value = 1250
@@ -6640,7 +6640,7 @@ item _161 {
     rftags = []
 }
 
-item _162 {
+item messy_cloth {
     id = 162
     image = 154
     value = 430
@@ -6681,7 +6681,7 @@ item _162 {
     rftags = []
 }
 
-item _163 {
+item silk_cloth {
     id = 163
     image = 155
     value = 1400
@@ -6722,7 +6722,7 @@ item _163 {
     rftags = []
 }
 
-item _164 {
+item collapsed_grave {
     id = 164
     image = 156
     value = 1800
@@ -6763,7 +6763,7 @@ item _164 {
     rftags = []
 }
 
-item _165 {
+item crumbled_grave {
     id = 165
     image = 157
     value = 1700
@@ -6804,7 +6804,7 @@ item _165 {
     rftags = []
 }
 
-item _166 {
+item grave_of_ornamented_with_flowers {
     id = 166
     image = 158
     value = 3250
@@ -6845,7 +6845,7 @@ item _166 {
     rftags = []
 }
 
-item _167 {
+item brand_new_grave {
     id = 167
     image = 159
     value = 2500
@@ -6886,7 +6886,7 @@ item _167 {
     rftags = []
 }
 
-item _168 {
+item solemn_tomb {
     id = 168
     image = 160
     value = 4400
@@ -6927,7 +6927,7 @@ item _168 {
     rftags = []
 }
 
-item _169 {
+item ancient_tomb {
     id = 169
     image = 161
     value = 6500
@@ -6968,7 +6968,7 @@ item _169 {
     rftags = []
 }
 
-item _170 {
+item old_grave {
     id = 170
     image = 162
     value = 2400
@@ -7009,7 +7009,7 @@ item _170 {
     rftags = []
 }
 
-item _171 {
+item altar {
     id = 171
     image = 163
     value = 1500
@@ -7050,7 +7050,7 @@ item _171 {
     rftags = []
 }
 
-item _172 {
+item ceremony_altar {
     id = 172
     image = 163
     value = 1600
@@ -7091,7 +7091,7 @@ item _172 {
     rftags = []
 }
 
-item _173 {
+item fountain {
     id = 173
     image = 355
     value = 2400
@@ -7132,7 +7132,7 @@ item _173 {
     rftags = []
 }
 
-item _174 {
+item bunk_bed {
     id = 174
     image = 166
     value = 2200
@@ -7173,7 +7173,7 @@ item _174 {
     rftags = []
 }
 
-item _175 {
+item rod_of_lightning_bolt {
     id = 175
     image = 471
     value = 1900
@@ -7214,7 +7214,7 @@ item _175 {
     rftags = []
 }
 
-item _176 {
+item rod_of_slow {
     id = 176
     image = 471
     value = 1500
@@ -7255,7 +7255,7 @@ item _176 {
     rftags = []
 }
 
-item _177 {
+item quwapana {
     id = 177
     image = 169
     value = 80
@@ -7296,7 +7296,7 @@ item _177 {
     rftags = []
 }
 
-item _178 {
+item aloe {
     id = 178
     image = 170
     value = 70
@@ -7337,7 +7337,7 @@ item _178 {
     rftags = []
 }
 
-item _179 {
+item edible_wild_plant {
     id = 179
     image = 171
     value = 60
@@ -7378,7 +7378,7 @@ item _179 {
     rftags = []
 }
 
-item _180 {
+item apple {
     id = 180
     image = 172
     value = 180
@@ -7419,7 +7419,7 @@ item _180 {
     rftags = []
 }
 
-item _181 {
+item grape {
     id = 181
     image = 173
     value = 220
@@ -7460,7 +7460,7 @@ item _181 {
     rftags = []
 }
 
-item _182 {
+item kiwi {
     id = 182
     image = 174
     value = 190
@@ -7501,7 +7501,7 @@ item _182 {
     rftags = []
 }
 
-item _183 {
+item cherry {
     id = 183
     image = 175
     value = 170
@@ -7542,7 +7542,7 @@ item _183 {
     rftags = []
 }
 
-item _184 {
+item guava {
     id = 184
     image = 176
     value = 80
@@ -7583,7 +7583,7 @@ item _184 {
     rftags = []
 }
 
-item _185 {
+item carrot {
     id = 185
     image = 177
     value = 40
@@ -7624,7 +7624,7 @@ item _185 {
     rftags = []
 }
 
-item _186 {
+item radish {
     id = 186
     image = 178
     value = 50
@@ -7665,7 +7665,7 @@ item _186 {
     rftags = []
 }
 
-item _187 {
+item sweet_potato {
     id = 187
     image = 179
     value = 40
@@ -7706,7 +7706,7 @@ item _187 {
     rftags = []
 }
 
-item _188 {
+item lettuce {
     id = 188
     image = 180
     value = 50
@@ -7747,7 +7747,7 @@ item _188 {
     rftags = []
 }
 
-item _189 {
+item stack_of_dishes {
     id = 189
     image = 181
     value = 120
@@ -7788,7 +7788,7 @@ item _189 {
     rftags = []
 }
 
-item _190 {
+item imo {
     id = 190
     image = 182
     value = 70
@@ -7829,7 +7829,7 @@ item _190 {
     rftags = []
 }
 
-item _191 {
+item api_nut {
     id = 191
     image = 183
     value = 80
@@ -7870,7 +7870,7 @@ item _191 {
     rftags = []
 }
 
-item _192 {
+item strawberry {
     id = 192
     image = 184
     value = 260
@@ -7911,7 +7911,7 @@ item _192 {
     rftags = []
 }
 
-item _193 {
+item healthy_leaf {
     id = 193
     image = 185
     value = 240
@@ -7952,7 +7952,7 @@ item _193 {
     rftags = []
 }
 
-item _194 {
+item rainbow_fruit {
     id = 194
     image = 186
     value = 220
@@ -7993,7 +7993,7 @@ item _194 {
     rftags = []
 }
 
-item _195 {
+item qucche {
     id = 195
     image = 187
     value = 100
@@ -8034,7 +8034,7 @@ item _195 {
     rftags = []
 }
 
-item _196 {
+item tangerine {
     id = 196
     image = 188
     value = 130
@@ -8075,7 +8075,7 @@ item _196 {
     rftags = []
 }
 
-item _197 {
+item lemon {
     id = 197
     image = 189
     value = 240
@@ -8116,7 +8116,7 @@ item _197 {
     rftags = []
 }
 
-item _198 {
+item green_pea {
     id = 198
     image = 164
     value = 260
@@ -8157,7 +8157,7 @@ item _198 {
     rftags = []
 }
 
-item _199 {
+item cbocchi {
     id = 199
     image = 191
     value = 80
@@ -8198,7 +8198,7 @@ item _199 {
     rftags = []
 }
 
-item _200 {
+item melon {
     id = 200
     image = 192
     value = 30
@@ -8239,7 +8239,7 @@ item _200 {
     rftags = []
 }
 
-item _201 {
+item leccho {
     id = 201
     image = 193
     value = 70
@@ -8280,7 +8280,7 @@ item _201 {
     rftags = []
 }
 
-item _202 {
+item rod_of_magic_mapping {
     id = 202
     image = 471
     value = 3250
@@ -8321,7 +8321,7 @@ item _202 {
     rftags = []
 }
 
-item _203 {
+item rod_of_cure {
     id = 203
     image = 471
     value = 2600
@@ -8362,7 +8362,7 @@ item _203 {
     rftags = []
 }
 
-item _204 {
+item corpse {
     id = 204
     image = 196
     value = 80
@@ -8403,7 +8403,7 @@ item _204 {
     rftags = []
 }
 
-item _205 {
+item bottle_of_whisky {
     id = 205
     image = 210
     value = 180
@@ -8444,7 +8444,7 @@ item _205 {
     rftags = []
 }
 
-item _206 {
+item ether_dagger {
     id = 206
     image = 400
     value = 60000
@@ -8485,7 +8485,7 @@ item _206 {
     rftags = []
 }
 
-item _207 {
+item bow_of_vinderre {
     id = 207
     image = 404
     value = 60000
@@ -8526,7 +8526,7 @@ item _207 {
     rftags = []
 }
 
-item _208 {
+item worthless_fake_gold_bar {
     id = 208
     image = 33
     value = 1
@@ -8567,7 +8567,7 @@ item _208 {
     rftags = ["ore"]
 }
 
-item _209 {
+item scroll_of_uncurse {
     id = 209
     image = 470
     value = 1050
@@ -8608,7 +8608,7 @@ item _209 {
     rftags = []
 }
 
-item _210 {
+item stone {
     id = 210
     image = 424
     value = 180
@@ -8649,7 +8649,7 @@ item _210 {
     rftags = []
 }
 
-item _211 {
+item sickle {
     id = 211
     image = 421
     value = 500
@@ -8690,7 +8690,7 @@ item _211 {
     rftags = []
 }
 
-item _212 {
+item staff {
     id = 212
     image = 425
     value = 500
@@ -8731,7 +8731,7 @@ item _212 {
     rftags = []
 }
 
-item _213 {
+item spear {
     id = 213
     image = 401
     value = 500
@@ -8772,7 +8772,7 @@ item _213 {
     rftags = []
 }
 
-item _214 {
+item ore_piece {
     id = 214
     image = 209
     value = 180
@@ -8813,7 +8813,7 @@ item _214 {
     rftags = []
 }
 
-item _215 {
+item lot_of_empty_bottles {
     id = 215
     image = 208
     value = 10
@@ -8854,7 +8854,7 @@ item _215 {
     rftags = []
 }
 
-item _216 {
+item basket {
     id = 216
     image = 207
     value = 40
@@ -8895,7 +8895,7 @@ item _216 {
     rftags = []
 }
 
-item _217 {
+item empty_bowl {
     id = 217
     image = 206
     value = 25
@@ -8936,7 +8936,7 @@ item _217 {
     rftags = []
 }
 
-item _218 {
+item bowl {
     id = 218
     image = 203
     value = 30
@@ -8977,7 +8977,7 @@ item _218 {
     rftags = []
 }
 
-item _219 {
+item tight_rope {
     id = 219
     image = 202
     value = 180
@@ -9018,7 +9018,7 @@ item _219 {
     rftags = []
 }
 
-item _220 {
+item dead_fish {
     id = 220
     image = 201
     value = 4
@@ -9059,7 +9059,7 @@ item _220 {
     rftags = []
 }
 
-item _221 {
+item straw {
     id = 221
     image = 200
     value = 7
@@ -9100,7 +9100,7 @@ item _221 {
     rftags = []
 }
 
-item _222 {
+item animal_bone {
     id = 222
     image = 199
     value = 8
@@ -9141,7 +9141,7 @@ item _222 {
     rftags = []
 }
 
-item _223 {
+item pot {
     id = 223
     image = 198
     value = 150
@@ -9182,7 +9182,7 @@ item _223 {
     rftags = []
 }
 
-item _224 {
+item katana {
     id = 224
     image = 431
     value = 500
@@ -9223,7 +9223,7 @@ item _224 {
     rftags = []
 }
 
-item _225 {
+item scimitar {
     id = 225
     image = 502
     value = 500
@@ -9264,7 +9264,7 @@ item _225 {
     rftags = []
 }
 
-item _226 {
+item battle_axe {
     id = 226
     image = 500
     value = 500
@@ -9305,7 +9305,7 @@ item _226 {
     rftags = []
 }
 
-item _227 {
+item hammer {
     id = 227
     image = 504
     value = 500
@@ -9346,7 +9346,7 @@ item _227 {
     rftags = []
 }
 
-item _228 {
+item trident {
     id = 228
     image = 494
     value = 500
@@ -9387,7 +9387,7 @@ item _228 {
     rftags = []
 }
 
-item _229 {
+item long_staff {
     id = 229
     image = 505
     value = 500
@@ -9428,7 +9428,7 @@ item _229 {
     rftags = []
 }
 
-item _230 {
+item short_bow {
     id = 230
     image = 404
     value = 500
@@ -9469,7 +9469,7 @@ item _230 {
     rftags = []
 }
 
-item _231 {
+item machine_gun {
     id = 231
     image = 547
     value = 500
@@ -9510,7 +9510,7 @@ item _231 {
     rftags = []
 }
 
-item _232 {
+item claymore {
     id = 232
     image = 503
     value = 500
@@ -9551,7 +9551,7 @@ item _232 {
     rftags = []
 }
 
-item _233 {
+item ration {
     id = 233
     image = 233
     value = 280
@@ -9592,7 +9592,7 @@ item _233 {
     rftags = []
 }
 
-item _234 {
+item bardiche {
     id = 234
     image = 399
     value = 500
@@ -9633,7 +9633,7 @@ item _234 {
     rftags = []
 }
 
-item _235 {
+item halberd {
     id = 235
     image = 426
     value = 500
@@ -9674,7 +9674,7 @@ item _235 {
     rftags = []
 }
 
-item _236 {
+item scroll_of_return {
     id = 236
     image = 470
     value = 750
@@ -9715,7 +9715,7 @@ item _236 {
     rftags = []
 }
 
-item _237 {
+item figurine_of_warrior {
     id = 237
     image = 222
     value = 2000
@@ -9756,7 +9756,7 @@ item _237 {
     rftags = []
 }
 
-item _238 {
+item figurine_of_sword {
     id = 238
     image = 221
     value = 2000
@@ -9797,7 +9797,7 @@ item _238 {
     rftags = []
 }
 
-item _239 {
+item bejeweled_chest {
     id = 239
     image = 220
     value = 3000
@@ -9838,7 +9838,7 @@ item _239 {
     rftags = []
 }
 
-item _240 {
+item chest {
     id = 240
     image = 220
     value = 1200
@@ -9879,7 +9879,7 @@ item _240 {
     rftags = []
 }
 
-item _241 {
+item safe {
     id = 241
     image = 197
     value = 1000
@@ -9920,7 +9920,7 @@ item _241 {
     rftags = []
 }
 
-item _242 {
+item scroll_of_magical_map {
     id = 242
     image = 470
     value = 480
@@ -9961,7 +9961,7 @@ item _242 {
     rftags = []
 }
 
-item _243 {
+item scroll_of_gain_attribute {
     id = 243
     image = 470
     value = 240000
@@ -10002,7 +10002,7 @@ item _243 {
     rftags = []
 }
 
-item _244 {
+item scroll_of_wonder {
     id = 244
     image = 470
     value = 8000
@@ -10043,7 +10043,7 @@ item _244 {
     rftags = []
 }
 
-item _245 {
+item scroll_of_minor_teleportation {
     id = 245
     image = 470
     value = 200
@@ -10084,7 +10084,7 @@ item _245 {
     rftags = []
 }
 
-item _246 {
+item spellbook_of_magic_mapping {
     id = 246
     image = 429
     value = 8500
@@ -10125,7 +10125,7 @@ item _246 {
     rftags = []
 }
 
-item _247 {
+item spellbook_of_oracle {
     id = 247
     image = 429
     value = 25000
@@ -10166,7 +10166,7 @@ item _247 {
     rftags = []
 }
 
-item _248 {
+item spellbook_of_return {
     id = 248
     image = 429
     value = 8900
@@ -10207,7 +10207,7 @@ item _248 {
     rftags = []
 }
 
-item _249 {
+item spellbook_of_cure_minor_wound {
     id = 249
     image = 429
     value = 4500
@@ -10248,7 +10248,7 @@ item _249 {
     rftags = []
 }
 
-item _250 {
+item spellbook_of_cure_critical_wound {
     id = 250
     image = 429
     value = 9000
@@ -10289,7 +10289,7 @@ item _250 {
     rftags = []
 }
 
-item _251 {
+item spellbook_of_cure_eris {
     id = 251
     image = 429
     value = 15000
@@ -10330,7 +10330,7 @@ item _251 {
     rftags = []
 }
 
-item _252 {
+item spellbook_of_cure_jure {
     id = 252
     image = 429
     value = 35000
@@ -10371,7 +10371,7 @@ item _252 {
     rftags = []
 }
 
-item _253 {
+item bottle_of_beer {
     id = 253
     image = 223
     value = 280
@@ -10412,7 +10412,7 @@ item _253 {
     rftags = []
 }
 
-item _254 {
+item horn {
     id = 254
     image = 224
     value = 2500
@@ -10453,7 +10453,7 @@ item _254 {
     rftags = []
 }
 
-item _255 {
+item campfire {
     id = 255
     image = 349
     value = 1860
@@ -10494,7 +10494,7 @@ item _255 {
     rftags = []
 }
 
-item _256 {
+item portable_cooking_tool {
     id = 256
     image = 226
     value = 1860
@@ -10535,7 +10535,7 @@ item _256 {
     rftags = []
 }
 
-item _257 {
+item spellbook_of_magic_arrow {
     id = 257
     image = 429
     value = 2500
@@ -10576,7 +10576,7 @@ item _257 {
     rftags = []
 }
 
-item _258 {
+item stick_bread {
     id = 258
     image = 117
     value = 280
@@ -10617,7 +10617,7 @@ item _258 {
     rftags = []
 }
 
-item _259 {
+item raw_noodle {
     id = 259
     image = 233
     value = 280
@@ -10658,7 +10658,7 @@ item _259 {
     rftags = []
 }
 
-item _260 {
+item sack_of_flour {
     id = 260
     image = 233
     value = 280
@@ -10699,7 +10699,7 @@ item _260 {
     rftags = []
 }
 
-item _261 {
+item bomb_fish {
     id = 261
     image = 201
     value = 280
@@ -10740,7 +10740,7 @@ item _261 {
     rftags = []
 }
 
-item _262 {
+item poison {
     id = 262
     image = 354
     value = 120
@@ -10781,7 +10781,7 @@ item _262 {
     rftags = []
 }
 
-item _263 {
+item spellbook_of_nether_eye {
     id = 263
     image = 429
     value = 7200
@@ -10822,7 +10822,7 @@ item _263 {
     rftags = []
 }
 
-item _264 {
+item spellbook_of_chaos_eye {
     id = 264
     image = 429
     value = 9600
@@ -10863,7 +10863,7 @@ item _264 {
     rftags = []
 }
 
-item _265 {
+item spellbook_of_nerve_eye {
     id = 265
     image = 429
     value = 6400
@@ -10904,7 +10904,7 @@ item _265 {
     rftags = []
 }
 
-item _266 {
+item wakizashi {
     id = 266
     image = 432
     value = 500
@@ -10945,7 +10945,7 @@ item _266 {
     rftags = []
 }
 
-item _267 {
+item spellbook_of_darkness_beam {
     id = 267
     image = 429
     value = 4500
@@ -10986,7 +10986,7 @@ item _267 {
     rftags = []
 }
 
-item _268 {
+item spellbook_of_illusion_beam {
     id = 268
     image = 429
     value = 5500
@@ -11027,7 +11027,7 @@ item _268 {
     rftags = []
 }
 
-item _269 {
+item spellbook_of_ice_ball {
     id = 269
     image = 429
     value = 5400
@@ -11068,7 +11068,7 @@ item _269 {
     rftags = []
 }
 
-item _270 {
+item spellbook_of_fire_ball {
     id = 270
     image = 429
     value = 5400
@@ -11109,7 +11109,7 @@ item _270 {
     rftags = []
 }
 
-item _271 {
+item spellbook_of_sound_ball {
     id = 271
     image = 429
     value = 8400
@@ -11150,7 +11150,7 @@ item _271 {
     rftags = []
 }
 
-item _272 {
+item spellbook_of_chaos_ball {
     id = 272
     image = 429
     value = 12000
@@ -11191,7 +11191,7 @@ item _272 {
     rftags = []
 }
 
-item _273 {
+item fire_wood {
     id = 273
     image = 231
     value = 10
@@ -11232,7 +11232,7 @@ item _273 {
     rftags = []
 }
 
-item _274 {
+item scarecrow {
     id = 274
     image = 232
     value = 10
@@ -11273,7 +11273,7 @@ item _274 {
     rftags = []
 }
 
-item _275 {
+item broom {
     id = 275
     image = 248
     value = 100
@@ -11314,7 +11314,7 @@ item _275 {
     rftags = []
 }
 
-item _276 {
+item long_pillar {
     id = 276
     image = 524
     value = 2600
@@ -11355,7 +11355,7 @@ item _276 {
     rftags = []
 }
 
-item _277 {
+item broken_pillar {
     id = 277
     image = 82
     value = 1300
@@ -11396,7 +11396,7 @@ item _277 {
     rftags = []
 }
 
-item _278 {
+item street_lamp {
     id = 278
     image = 585
     value = 1200
@@ -11437,7 +11437,7 @@ item _278 {
     rftags = []
 }
 
-item _279 {
+item water_tub {
     id = 279
     image = 249
     value = 380
@@ -11478,7 +11478,7 @@ item _279 {
     rftags = []
 }
 
-item _280 {
+item comfortable_table {
     id = 280
     image = 250
     value = 1800
@@ -11519,7 +11519,7 @@ item _280 {
     rftags = []
 }
 
-item _281 {
+item inner_tube {
     id = 281
     image = 251
     value = 380
@@ -11560,7 +11560,7 @@ item _281 {
     rftags = []
 }
 
-item _282 {
+item mysterious_map {
     id = 282
     image = 252
     value = 380
@@ -11601,7 +11601,7 @@ item _282 {
     rftags = []
 }
 
-item _283 {
+item suitcase {
     id = 283
     image = 253
     value = 380
@@ -11642,7 +11642,7 @@ item _283 {
     rftags = []
 }
 
-item _284 {
+item wallet {
     id = 284
     image = 254
     value = 380
@@ -11683,7 +11683,7 @@ item _284 {
     rftags = []
 }
 
-item _285 {
+item potion_of_restore_body {
     id = 285
     image = 354
     value = 280
@@ -11724,7 +11724,7 @@ item _285 {
     rftags = []
 }
 
-item _286 {
+item potion_of_restore_spirit {
     id = 286
     image = 354
     value = 280
@@ -11765,7 +11765,7 @@ item _286 {
     rftags = []
 }
 
-item _287 {
+item potion_of_potential {
     id = 287
     image = 354
     value = 50000
@@ -11806,7 +11806,7 @@ item _287 {
     rftags = []
 }
 
-item _288 {
+item scroll_of_curse {
     id = 288
     image = 470
     value = 150
@@ -11847,7 +11847,7 @@ item _288 {
     rftags = []
 }
 
-item _289 {
+item spellbook_of_wishing {
     id = 289
     image = 429
     value = 40000
@@ -11888,7 +11888,7 @@ item _289 {
     rftags = []
 }
 
-item _290 {
+item rod_of_wishing {
     id = 290
     image = 471
     value = 300000
@@ -11929,7 +11929,7 @@ item _290 {
     rftags = []
 }
 
-item _291 {
+item well_kept_armor {
     id = 291
     image = 255
     value = 1500
@@ -11970,7 +11970,7 @@ item _291 {
     rftags = []
 }
 
-item _292 {
+item rack_of_good {
     id = 292
     image = 256
     value = 1800
@@ -12011,7 +12011,7 @@ item _292 {
     rftags = []
 }
 
-item _293 {
+item rack_of_accessories {
     id = 293
     image = 257
     value = 2000
@@ -12052,7 +12052,7 @@ item _293 {
     rftags = []
 }
 
-item _294 {
+item towel {
     id = 294
     image = 258
     value = 320
@@ -12093,7 +12093,7 @@ item _294 {
     rftags = []
 }
 
-item _295 {
+item ragged_table {
     id = 295
     image = 259
     value = 890
@@ -12134,7 +12134,7 @@ item _295 {
     rftags = []
 }
 
-item _296 {
+item cabinet {
     id = 296
     image = 260
     value = 2400
@@ -12175,7 +12175,7 @@ item _296 {
     rftags = []
 }
 
-item _297 {
+item luxury_bed {
     id = 297
     image = 261
     value = 4500
@@ -12216,7 +12216,7 @@ item _297 {
     rftags = []
 }
 
-item _298 {
+item vase {
     id = 298
     image = 262
     value = 2000
@@ -12257,7 +12257,7 @@ item _298 {
     rftags = []
 }
 
-item _299 {
+item high_grade_dresser {
     id = 299
     image = 263
     value = 5500
@@ -12298,7 +12298,7 @@ item _299 {
     rftags = []
 }
 
-item _300 {
+item neat_bar_table {
     id = 300
     image = 264
     value = 1900
@@ -12339,7 +12339,7 @@ item _300 {
     rftags = []
 }
 
-item _301 {
+item large_bouquet {
     id = 301
     image = 265
     value = 240
@@ -12380,7 +12380,7 @@ item _301 {
     rftags = []
 }
 
-item _302 {
+item chest_of_clothes {
     id = 302
     image = 266
     value = 1500
@@ -12421,7 +12421,7 @@ item _302 {
     rftags = []
 }
 
-item _303 {
+item giant_bed {
     id = 303
     image = 267
     value = 3800
@@ -12462,7 +12462,7 @@ item _303 {
     rftags = []
 }
 
-item _304 {
+item plain_bed {
     id = 304
     image = 268
     value = 1200
@@ -12503,7 +12503,7 @@ item _304 {
     rftags = []
 }
 
-item _305 {
+item coffin {
     id = 305
     image = 269
     value = 2400
@@ -12544,7 +12544,7 @@ item _305 {
     rftags = []
 }
 
-item _306 {
+item food_processor {
     id = 306
     image = 270
     value = 5200
@@ -12585,7 +12585,7 @@ item _306 {
     rftags = []
 }
 
-item _307 {
+item soft_bed {
     id = 307
     image = 271
     value = 2200
@@ -12626,7 +12626,7 @@ item _307 {
     rftags = []
 }
 
-item _308 {
+item cheap_rack {
     id = 308
     image = 272
     value = 1200
@@ -12667,7 +12667,7 @@ item _308 {
     rftags = []
 }
 
-item _309 {
+item dresser {
     id = 309
     image = 273
     value = 2400
@@ -12708,7 +12708,7 @@ item _309 {
     rftags = []
 }
 
-item _310 {
+item clean_bed {
     id = 310
     image = 274
     value = 1500
@@ -12749,7 +12749,7 @@ item _310 {
     rftags = []
 }
 
-item _311 {
+item bathtub {
     id = 311
     image = 275
     value = 4800
@@ -12790,7 +12790,7 @@ item _311 {
     rftags = []
 }
 
-item _312 {
+item pachisuro_machine {
     id = 312
     image = 276
     value = 2800
@@ -12831,7 +12831,7 @@ item _312 {
     rftags = []
 }
 
-item _313 {
+item casino_table {
     id = 313
     image = 277
     value = 2800
@@ -12872,7 +12872,7 @@ item _313 {
     rftags = []
 }
 
-item _314 {
+item slot_machine {
     id = 314
     image = 278
     value = 2000
@@ -12913,7 +12913,7 @@ item _314 {
     rftags = []
 }
 
-item _315 {
+item darts_board {
     id = 315
     image = 279
     value = 1800
@@ -12954,7 +12954,7 @@ item _315 {
     rftags = []
 }
 
-item _316 {
+item big_foliage_plant {
     id = 316
     image = 280
     value = 3200
@@ -12995,7 +12995,7 @@ item _316 {
     rftags = []
 }
 
-item _317 {
+item old_shelf {
     id = 317
     image = 281
     value = 890
@@ -13036,7 +13036,7 @@ item _317 {
     rftags = []
 }
 
-item _318 {
+item old_bookshelf {
     id = 318
     image = 282
     value = 1020
@@ -13077,7 +13077,7 @@ item _318 {
     rftags = []
 }
 
-item _319 {
+item cheap_bed {
     id = 319
     image = 283
     value = 880
@@ -13118,7 +13118,7 @@ item _319 {
     rftags = []
 }
 
-item _320 {
+item cheap_table {
     id = 320
     image = 284
     value = 900
@@ -13159,7 +13159,7 @@ item _320 {
     rftags = []
 }
 
-item _321 {
+item neat_rack {
     id = 321
     image = 285
     value = 1480
@@ -13200,7 +13200,7 @@ item _321 {
     rftags = []
 }
 
-item _322 {
+item simple_dresser {
     id = 322
     image = 286
     value = 2200
@@ -13241,7 +13241,7 @@ item _322 {
     rftags = []
 }
 
-item _323 {
+item big_cupboard {
     id = 323
     image = 586
     value = 2800
@@ -13282,7 +13282,7 @@ item _323 {
     rftags = []
 }
 
-item _324 {
+item sacred_altar {
     id = 324
     image = 288
     value = 1500
@@ -13323,7 +13323,7 @@ item _324 {
     rftags = []
 }
 
-item _325 {
+item comfortable_bed {
     id = 325
     image = 289
     value = 2800
@@ -13364,7 +13364,7 @@ item _325 {
     rftags = []
 }
 
-item _326 {
+item simple_rack {
     id = 326
     image = 290
     value = 1400
@@ -13405,7 +13405,7 @@ item _326 {
     rftags = []
 }
 
-item _327 {
+item wide_chair {
     id = 327
     image = 291
     value = 600
@@ -13446,7 +13446,7 @@ item _327 {
     rftags = []
 }
 
-item _328 {
+item upright_piano {
     id = 328
     image = 292
     value = 4600
@@ -13487,7 +13487,7 @@ item _328 {
     rftags = []
 }
 
-item _329 {
+item statue_of_cross {
     id = 329
     image = 293
     value = 1500
@@ -13528,7 +13528,7 @@ item _329 {
     rftags = []
 }
 
-item _330 {
+item stump {
     id = 330
     image = 294
     value = 250
@@ -13569,7 +13569,7 @@ item _330 {
     rftags = []
 }
 
-item _331 {
+item dress {
     id = 331
     image = 295
     value = 1440
@@ -13610,7 +13610,7 @@ item _331 {
     rftags = []
 }
 
-item _332 {
+item table {
     id = 332
     image = 296
     value = 1200
@@ -13651,7 +13651,7 @@ item _332 {
     rftags = []
 }
 
-item _333 {
+item cargo_travelers_food {
     id = 333
     image = 297
     value = 40
@@ -13692,7 +13692,7 @@ item _333 {
     rftags = []
 }
 
-item _334 {
+item throne {
     id = 334
     image = 579
     value = 6800
@@ -13733,7 +13733,7 @@ item _334 {
     rftags = []
 }
 
-item _335 {
+item golden_pedestal {
     id = 335
     image = 299
     value = 1200
@@ -13774,7 +13774,7 @@ item _335 {
     rftags = []
 }
 
-item _336 {
+item golden_statue {
     id = 336
     image = 300
     value = 3200
@@ -13815,7 +13815,7 @@ item _336 {
     rftags = []
 }
 
-item _337 {
+item remains_skin {
     id = 337
     image = 301
     value = 100
@@ -13856,7 +13856,7 @@ item _337 {
     rftags = []
 }
 
-item _338 {
+item remains_blood {
     id = 338
     image = 302
     value = 100
@@ -13897,7 +13897,7 @@ item _338 {
     rftags = []
 }
 
-item _339 {
+item remains_eye {
     id = 339
     image = 303
     value = 100
@@ -13938,7 +13938,7 @@ item _339 {
     rftags = []
 }
 
-item _340 {
+item remains_heart {
     id = 340
     image = 304
     value = 100
@@ -13979,7 +13979,7 @@ item _340 {
     rftags = []
 }
 
-item _341 {
+item remains_bone {
     id = 341
     image = 305
     value = 100
@@ -14020,7 +14020,7 @@ item _341 {
     rftags = []
 }
 
-item _342 {
+item fishing_pole {
     id = 342
     image = 306
     value = 1200
@@ -14061,7 +14061,7 @@ item _342 {
     rftags = []
 }
 
-item _343 {
+item rune {
     id = 343
     image = 307
     value = 780
@@ -14102,7 +14102,7 @@ item _343 {
     rftags = []
 }
 
-item _344 {
+item deed {
     id = 344
     image = 308
     value = 50000
@@ -14143,7 +14143,7 @@ item _344 {
     rftags = []
 }
 
-item _345 {
+item moonfish {
     id = 345
     image = 309
     value = 900
@@ -14184,7 +14184,7 @@ item _345 {
     rftags = ["fish"]
 }
 
-item _346 {
+item sardine {
     id = 346
     image = 310
     value = 1200
@@ -14225,7 +14225,7 @@ item _346 {
     rftags = ["fish"]
 }
 
-item _347 {
+item flatfish {
     id = 347
     image = 311
     value = 700
@@ -14266,7 +14266,7 @@ item _347 {
     rftags = ["fish"]
 }
 
-item _348 {
+item manboo {
     id = 348
     image = 312
     value = 1500
@@ -14307,7 +14307,7 @@ item _348 {
     rftags = ["fish"]
 }
 
-item _349 {
+item seabream {
     id = 349
     image = 313
     value = 150
@@ -14348,7 +14348,7 @@ item _349 {
     rftags = ["fish"]
 }
 
-item _350 {
+item salmon {
     id = 350
     image = 314
     value = 170
@@ -14389,7 +14389,7 @@ item _350 {
     rftags = ["fish"]
 }
 
-item _351 {
+item globefish {
     id = 351
     image = 315
     value = 320
@@ -14430,7 +14430,7 @@ item _351 {
     rftags = ["fish"]
 }
 
-item _352 {
+item tuna {
     id = 352
     image = 316
     value = 640
@@ -14471,7 +14471,7 @@ item _352 {
     rftags = ["fish"]
 }
 
-item _353 {
+item cutlassfish {
     id = 353
     image = 317
     value = 620
@@ -14512,7 +14512,7 @@ item _353 {
     rftags = ["fish"]
 }
 
-item _354 {
+item sandborer {
     id = 354
     image = 318
     value = 380
@@ -14553,7 +14553,7 @@ item _354 {
     rftags = ["fish"]
 }
 
-item _355 {
+item gloves_of_vesda {
     id = 355
     image = 414
     value = 40000
@@ -14594,7 +14594,7 @@ item _355 {
     rftags = []
 }
 
-item _356 {
+item blood_moon {
     id = 356
     image = 427
     value = 30000
@@ -14635,7 +14635,7 @@ item _356 {
     rftags = []
 }
 
-item _357 {
+item ring_of_steel_dragon {
     id = 357
     image = 407
     value = 30000
@@ -14676,7 +14676,7 @@ item _357 {
     rftags = []
 }
 
-item _358 {
+item staff_of_insanity {
     id = 358
     image = 425
     value = 30000
@@ -14717,7 +14717,7 @@ item _358 {
     rftags = []
 }
 
-item _359 {
+item rankis {
     id = 359
     image = 426
     value = 30000
@@ -14758,7 +14758,7 @@ item _359 {
     rftags = []
 }
 
-item _360 {
+item palmia_pride {
     id = 360
     image = 407
     value = 30000
@@ -14799,7 +14799,7 @@ item _360 {
     rftags = []
 }
 
-item _361 {
+item shopkeepers_trunk {
     id = 361
     image = 253
     value = 380
@@ -14840,7 +14840,7 @@ item _361 {
     rftags = []
 }
 
-item _362 {
+item scroll_of_greater_identify {
     id = 362
     image = 470
     value = 3500
@@ -14881,7 +14881,7 @@ item _362 {
     rftags = []
 }
 
-item _363 {
+item scroll_of_vanish_curse {
     id = 363
     image = 470
     value = 4400
@@ -14922,7 +14922,7 @@ item _363 {
     rftags = []
 }
 
-item _364 {
+item potion_of_defender {
     id = 364
     image = 354
     value = 150
@@ -14963,7 +14963,7 @@ item _364 {
     rftags = []
 }
 
-item _365 {
+item spellbook_of_holy_shield {
     id = 365
     image = 429
     value = 2800
@@ -15004,7 +15004,7 @@ item _365 {
     rftags = []
 }
 
-item _366 {
+item rod_of_silence {
     id = 366
     image = 471
     value = 1080
@@ -15045,7 +15045,7 @@ item _366 {
     rftags = []
 }
 
-item _367 {
+item spellbook_of_silence {
     id = 367
     image = 429
     value = 8400
@@ -15086,7 +15086,7 @@ item _367 {
     rftags = []
 }
 
-item _368 {
+item potion_of_silence {
     id = 368
     image = 354
     value = 40
@@ -15127,7 +15127,7 @@ item _368 {
     rftags = []
 }
 
-item _369 {
+item spellbook_of_regeneration {
     id = 369
     image = 429
     value = 4400
@@ -15168,7 +15168,7 @@ item _369 {
     rftags = []
 }
 
-item _370 {
+item potion_of_troll_blood {
     id = 370
     image = 354
     value = 800
@@ -15209,7 +15209,7 @@ item _370 {
     rftags = []
 }
 
-item _371 {
+item spellbook_of_resistance {
     id = 371
     image = 429
     value = 7500
@@ -15250,7 +15250,7 @@ item _371 {
     rftags = []
 }
 
-item _372 {
+item potion_of_resistance {
     id = 372
     image = 354
     value = 700
@@ -15291,7 +15291,7 @@ item _372 {
     rftags = []
 }
 
-item _373 {
+item spellbook_of_speed {
     id = 373
     image = 429
     value = 12000
@@ -15332,7 +15332,7 @@ item _373 {
     rftags = []
 }
 
-item _374 {
+item spellbook_of_slow {
     id = 374
     image = 429
     value = 4800
@@ -15373,7 +15373,7 @@ item _374 {
     rftags = []
 }
 
-item _375 {
+item potion_of_speed {
     id = 375
     image = 354
     value = 850
@@ -15414,7 +15414,7 @@ item _375 {
     rftags = []
 }
 
-item _376 {
+item potion_of_slow {
     id = 376
     image = 354
     value = 30
@@ -15455,7 +15455,7 @@ item _376 {
     rftags = []
 }
 
-item _377 {
+item rod_of_speed {
     id = 377
     image = 471
     value = 4200
@@ -15496,7 +15496,7 @@ item _377 {
     rftags = []
 }
 
-item _378 {
+item spellbook_of_hero {
     id = 378
     image = 429
     value = 2600
@@ -15537,7 +15537,7 @@ item _378 {
     rftags = []
 }
 
-item _379 {
+item potion_of_hero {
     id = 379
     image = 354
     value = 450
@@ -15578,7 +15578,7 @@ item _379 {
     rftags = []
 }
 
-item _380 {
+item spellbook_of_weakness {
     id = 380
     image = 429
     value = 2500
@@ -15619,7 +15619,7 @@ item _380 {
     rftags = []
 }
 
-item _381 {
+item spellbook_of_elemental_scar {
     id = 381
     image = 429
     value = 6400
@@ -15660,7 +15660,7 @@ item _381 {
     rftags = []
 }
 
-item _382 {
+item potion_of_weakness {
     id = 382
     image = 354
     value = 30
@@ -15701,7 +15701,7 @@ item _382 {
     rftags = []
 }
 
-item _383 {
+item spellbook_of_holy_veil {
     id = 383
     image = 429
     value = 11000
@@ -15742,7 +15742,7 @@ item _383 {
     rftags = []
 }
 
-item _384 {
+item scroll_of_holy_veil {
     id = 384
     image = 470
     value = 1500
@@ -15783,7 +15783,7 @@ item _384 {
     rftags = []
 }
 
-item _385 {
+item rod_of_holy_light {
     id = 385
     image = 471
     value = 3600
@@ -15824,7 +15824,7 @@ item _385 {
     rftags = []
 }
 
-item _386 {
+item spellbook_of_holy_light {
     id = 386
     image = 429
     value = 3500
@@ -15865,7 +15865,7 @@ item _386 {
     rftags = []
 }
 
-item _387 {
+item spellbook_of_holy_rain {
     id = 387
     image = 429
     value = 9800
@@ -15906,7 +15906,7 @@ item _387 {
     rftags = []
 }
 
-item _388 {
+item scroll_of_holy_light {
     id = 388
     image = 470
     value = 350
@@ -15947,7 +15947,7 @@ item _388 {
     rftags = []
 }
 
-item _389 {
+item scroll_of_holy_rain {
     id = 389
     image = 470
     value = 1400
@@ -15988,7 +15988,7 @@ item _389 {
     rftags = []
 }
 
-item _390 {
+item scroll_of_mana {
     id = 390
     image = 470
     value = 2400
@@ -16029,7 +16029,7 @@ item _390 {
     rftags = []
 }
 
-item _391 {
+item rod_of_mana {
     id = 391
     image = 471
     value = 4100
@@ -16070,7 +16070,7 @@ item _391 {
     rftags = []
 }
 
-item _392 {
+item bottle_of_sulfuric {
     id = 392
     image = 223
     value = 800
@@ -16111,7 +16111,7 @@ item _392 {
     rftags = []
 }
 
-item _393 {
+item gem_cutter {
     id = 393
     image = 319
     value = 2000
@@ -16152,7 +16152,7 @@ item _393 {
     rftags = []
 }
 
-item _394 {
+item material_box {
     id = 394
     image = 438
     value = 500
@@ -16193,7 +16193,7 @@ item _394 {
     rftags = []
 }
 
-item _395 {
+item scroll_of_gain_material {
     id = 395
     image = 470
     value = 3800
@@ -16234,7 +16234,7 @@ item _395 {
     rftags = []
 }
 
-item _396 {
+item spellbook_of_nightmare {
     id = 396
     image = 429
     value = 3400
@@ -16275,7 +16275,7 @@ item _396 {
     rftags = []
 }
 
-item _397 {
+item spellbook_of_knowledge {
     id = 397
     image = 429
     value = 3800
@@ -16316,7 +16316,7 @@ item _397 {
     rftags = []
 }
 
-item _398 {
+item scroll_of_knowledge {
     id = 398
     image = 470
     value = 1800
@@ -16357,7 +16357,7 @@ item _398 {
     rftags = []
 }
 
-item _399 {
+item cargo_rag_doll {
     id = 399
     image = 67
     value = 700
@@ -16398,7 +16398,7 @@ item _399 {
     rftags = []
 }
 
-item _400 {
+item cargo_barrel {
     id = 400
     image = 72
     value = 420
@@ -16439,7 +16439,7 @@ item _400 {
     rftags = []
 }
 
-item _401 {
+item cargo_piano {
     id = 401
     image = 292
     value = 4000
@@ -16480,7 +16480,7 @@ item _401 {
     rftags = []
 }
 
-item _402 {
+item cargo_rope {
     id = 402
     image = 202
     value = 550
@@ -16521,7 +16521,7 @@ item _402 {
     rftags = []
 }
 
-item _403 {
+item cargo_coffin {
     id = 403
     image = 269
     value = 2200
@@ -16562,7 +16562,7 @@ item _403 {
     rftags = []
 }
 
-item _404 {
+item cargo_manboo {
     id = 404
     image = 312
     value = 800
@@ -16603,7 +16603,7 @@ item _404 {
     rftags = []
 }
 
-item _405 {
+item cargo_grave {
     id = 405
     image = 161
     value = 2800
@@ -16644,7 +16644,7 @@ item _405 {
     rftags = []
 }
 
-item _406 {
+item cargo_tuna_fish {
     id = 406
     image = 316
     value = 350
@@ -16685,7 +16685,7 @@ item _406 {
     rftags = []
 }
 
-item _407 {
+item cargo_whisky {
     id = 407
     image = 208
     value = 1400
@@ -16726,7 +16726,7 @@ item _407 {
     rftags = []
 }
 
-item _408 {
+item cargo_noble_toy {
     id = 408
     image = 68
     value = 1200
@@ -16767,7 +16767,7 @@ item _408 {
     rftags = []
 }
 
-item _409 {
+item cargo_inner_tube {
     id = 409
     image = 251
     value = 340
@@ -16808,7 +16808,7 @@ item _409 {
     rftags = []
 }
 
-item _410 {
+item spellbook_of_detect_objects {
     id = 410
     image = 429
     value = 4000
@@ -16849,7 +16849,7 @@ item _410 {
     rftags = []
 }
 
-item _411 {
+item scroll_of_detect_objects {
     id = 411
     image = 470
     value = 350
@@ -16890,7 +16890,7 @@ item _411 {
     rftags = []
 }
 
-item _412 {
+item rod_of_uncurse {
     id = 412
     image = 471
     value = 3800
@@ -16931,7 +16931,7 @@ item _412 {
     rftags = []
 }
 
-item _413 {
+item red_treasure_machine {
     id = 413
     image = 320
     value = 15000
@@ -16972,7 +16972,7 @@ item _413 {
     rftags = []
 }
 
-item _414 {
+item blue_treasure_machine {
     id = 414
     image = 321
     value = 30000
@@ -17013,7 +17013,7 @@ item _414 {
     rftags = []
 }
 
-item _415 {
+item treasure_ball {
     id = 415
     image = 322
     value = 4000
@@ -17054,7 +17054,7 @@ item _415 {
     rftags = []
 }
 
-item _416 {
+item rare_treasure_ball {
     id = 416
     image = 322
     value = 12000
@@ -17095,7 +17095,7 @@ item _416 {
     rftags = []
 }
 
-item _417 {
+item vegetable_seed {
     id = 417
     image = 323
     value = 240
@@ -17136,7 +17136,7 @@ item _417 {
     rftags = []
 }
 
-item _418 {
+item fruit_seed {
     id = 418
     image = 323
     value = 280
@@ -17177,7 +17177,7 @@ item _418 {
     rftags = []
 }
 
-item _419 {
+item herb_seed {
     id = 419
     image = 323
     value = 1800
@@ -17218,7 +17218,7 @@ item _419 {
     rftags = []
 }
 
-item _420 {
+item unknown_seed {
     id = 420
     image = 323
     value = 2500
@@ -17259,7 +17259,7 @@ item _420 {
     rftags = []
 }
 
-item _421 {
+item artifact_seed {
     id = 421
     image = 323
     value = 120000
@@ -17300,7 +17300,7 @@ item _421 {
     rftags = []
 }
 
-item _422 {
+item morgia {
     id = 422
     image = 170
     value = 1050
@@ -17341,7 +17341,7 @@ item _422 {
     rftags = []
 }
 
-item _423 {
+item mareilon {
     id = 423
     image = 170
     value = 800
@@ -17382,7 +17382,7 @@ item _423 {
     rftags = []
 }
 
-item _424 {
+item spenseweed {
     id = 424
     image = 170
     value = 900
@@ -17423,7 +17423,7 @@ item _424 {
     rftags = []
 }
 
-item _425 {
+item curaria {
     id = 425
     image = 170
     value = 680
@@ -17464,7 +17464,7 @@ item _425 {
     rftags = []
 }
 
-item _426 {
+item alraunia {
     id = 426
     image = 170
     value = 1200
@@ -17505,7 +17505,7 @@ item _426 {
     rftags = []
 }
 
-item _427 {
+item stomafillia {
     id = 427
     image = 170
     value = 800
@@ -17546,7 +17546,7 @@ item _427 {
     rftags = []
 }
 
-item _428 {
+item sleeping_bag {
     id = 428
     image = 324
     value = 800
@@ -17587,7 +17587,7 @@ item _428 {
     rftags = []
 }
 
-item _429 {
+item potion_of_weaken_resistance {
     id = 429
     image = 354
     value = 150
@@ -17628,7 +17628,7 @@ item _429 {
     rftags = []
 }
 
-item _430 {
+item scroll_of_growth {
     id = 430
     image = 470
     value = 15000
@@ -17669,7 +17669,7 @@ item _430 {
     rftags = []
 }
 
-item _431 {
+item scroll_of_faith {
     id = 431
     image = 470
     value = 12000
@@ -17710,7 +17710,7 @@ item _431 {
     rftags = []
 }
 
-item _432 {
+item potion_of_mutation {
     id = 432
     image = 354
     value = 5000
@@ -17751,7 +17751,7 @@ item _432 {
     rftags = []
 }
 
-item _433 {
+item potion_of_cure_mutation {
     id = 433
     image = 354
     value = 4000
@@ -17792,7 +17792,7 @@ item _433 {
     rftags = []
 }
 
-item _434 {
+item spellbook_of_mutation {
     id = 434
     image = 429
     value = 20000
@@ -17833,7 +17833,7 @@ item _434 {
     rftags = []
 }
 
-item _435 {
+item banded_mail {
     id = 435
     image = 409
     value = 1500
@@ -17874,7 +17874,7 @@ item _435 {
     rftags = []
 }
 
-item _436 {
+item plate_mail {
     id = 436
     image = 410
     value = 12500
@@ -17915,7 +17915,7 @@ item _436 {
     rftags = []
 }
 
-item _437 {
+item ring_mail {
     id = 437
     image = 440
     value = 2400
@@ -17956,7 +17956,7 @@ item _437 {
     rftags = []
 }
 
-item _438 {
+item composite_mail {
     id = 438
     image = 441
     value = 4500
@@ -17997,7 +17997,7 @@ item _438 {
     rftags = []
 }
 
-item _439 {
+item chain_mail {
     id = 439
     image = 442
     value = 8000
@@ -18038,7 +18038,7 @@ item _439 {
     rftags = []
 }
 
-item _440 {
+item pope_robe {
     id = 440
     image = 443
     value = 9500
@@ -18079,7 +18079,7 @@ item _440 {
     rftags = []
 }
 
-item _441 {
+item light_mail {
     id = 441
     image = 444
     value = 1200
@@ -18120,7 +18120,7 @@ item _441 {
     rftags = []
 }
 
-item _442 {
+item coat {
     id = 442
     image = 445
     value = 2000
@@ -18161,7 +18161,7 @@ item _442 {
     rftags = []
 }
 
-item _443 {
+item breast_plate {
     id = 443
     image = 446
     value = 5500
@@ -18202,7 +18202,7 @@ item _443 {
     rftags = []
 }
 
-item _444 {
+item bulletproof_jacket {
     id = 444
     image = 447
     value = 7200
@@ -18243,7 +18243,7 @@ item _444 {
     rftags = []
 }
 
-item _445 {
+item gloves {
     id = 445
     image = 448
     value = 800
@@ -18284,7 +18284,7 @@ item _445 {
     rftags = []
 }
 
-item _446 {
+item plate_gauntlets {
     id = 446
     image = 414
     value = 1800
@@ -18325,7 +18325,7 @@ item _446 {
     rftags = []
 }
 
-item _447 {
+item light_gloves {
     id = 447
     image = 451
     value = 280
@@ -18366,7 +18366,7 @@ item _447 {
     rftags = []
 }
 
-item _448 {
+item composite_gauntlets {
     id = 448
     image = 452
     value = 950
@@ -18407,7 +18407,7 @@ item _448 {
     rftags = []
 }
 
-item _449 {
+item small_shield {
     id = 449
     image = 453
     value = 500
@@ -18448,7 +18448,7 @@ item _449 {
     rftags = []
 }
 
-item _450 {
+item round_shield {
     id = 450
     image = 454
     value = 1200
@@ -18489,7 +18489,7 @@ item _450 {
     rftags = []
 }
 
-item _451 {
+item shield {
     id = 451
     image = 455
     value = 2500
@@ -18530,7 +18530,7 @@ item _451 {
     rftags = []
 }
 
-item _452 {
+item large_shield {
     id = 452
     image = 456
     value = 7500
@@ -18571,7 +18571,7 @@ item _452 {
     rftags = []
 }
 
-item _453 {
+item kite_shield {
     id = 453
     image = 457
     value = 10000
@@ -18612,7 +18612,7 @@ item _453 {
     rftags = []
 }
 
-item _454 {
+item tower_shield {
     id = 454
     image = 458
     value = 18000
@@ -18653,7 +18653,7 @@ item _454 {
     rftags = []
 }
 
-item _455 {
+item shoes {
     id = 455
     image = 473
     value = 260
@@ -18694,7 +18694,7 @@ item _455 {
     rftags = []
 }
 
-item _456 {
+item boots {
     id = 456
     image = 473
     value = 1500
@@ -18735,7 +18735,7 @@ item _456 {
     rftags = []
 }
 
-item _457 {
+item tight_boots {
     id = 457
     image = 459
     value = 3500
@@ -18776,7 +18776,7 @@ item _457 {
     rftags = []
 }
 
-item _458 {
+item armored_boots {
     id = 458
     image = 461
     value = 4800
@@ -18817,7 +18817,7 @@ item _458 {
     rftags = []
 }
 
-item _459 {
+item composite_girdle {
     id = 459
     image = 474
     value = 2400
@@ -18858,7 +18858,7 @@ item _459 {
     rftags = []
 }
 
-item _460 {
+item plate_girdle {
     id = 460
     image = 474
     value = 3900
@@ -18899,7 +18899,7 @@ item _460 {
     rftags = []
 }
 
-item _461 {
+item armored_cloak {
     id = 461
     image = 475
     value = 1400
@@ -18940,7 +18940,7 @@ item _461 {
     rftags = []
 }
 
-item _462 {
+item cloak {
     id = 462
     image = 476
     value = 3500
@@ -18981,7 +18981,7 @@ item _462 {
     rftags = []
 }
 
-item _463 {
+item feather_hat {
     id = 463
     image = 413
     value = 400
@@ -19022,7 +19022,7 @@ item _463 {
     rftags = []
 }
 
-item _464 {
+item heavy_helm {
     id = 464
     image = 481
     value = 4800
@@ -19063,7 +19063,7 @@ item _464 {
     rftags = []
 }
 
-item _465 {
+item knight_helm {
     id = 465
     image = 480
     value = 2200
@@ -19104,7 +19104,7 @@ item _465 {
     rftags = []
 }
 
-item _466 {
+item helm {
     id = 466
     image = 479
     value = 600
@@ -19145,7 +19145,7 @@ item _466 {
     rftags = []
 }
 
-item _467 {
+item composite_helm {
     id = 467
     image = 482
     value = 9600
@@ -19186,7 +19186,7 @@ item _467 {
     rftags = []
 }
 
-item _468 {
+item peridot {
     id = 468
     image = 488
     value = 4400
@@ -19227,7 +19227,7 @@ item _468 {
     rftags = []
 }
 
-item _469 {
+item talisman {
     id = 469
     image = 487
     value = 4400
@@ -19268,7 +19268,7 @@ item _469 {
     rftags = []
 }
 
-item _470 {
+item neck_guard {
     id = 470
     image = 486
     value = 2200
@@ -19309,7 +19309,7 @@ item _470 {
     rftags = []
 }
 
-item _471 {
+item charm {
     id = 471
     image = 485
     value = 2000
@@ -19350,7 +19350,7 @@ item _471 {
     rftags = []
 }
 
-item _472 {
+item bejeweled_amulet {
     id = 472
     image = 484
     value = 1800
@@ -19391,7 +19391,7 @@ item _472 {
     rftags = []
 }
 
-item _473 {
+item engagement_amulet {
     id = 473
     image = 483
     value = 5000
@@ -19432,7 +19432,7 @@ item _473 {
     rftags = []
 }
 
-item _474 {
+item composite_ring {
     id = 474
     image = 492
     value = 450
@@ -19473,7 +19473,7 @@ item _474 {
     rftags = []
 }
 
-item _475 {
+item armored_ring {
     id = 475
     image = 491
     value = 450
@@ -19514,7 +19514,7 @@ item _475 {
     rftags = []
 }
 
-item _476 {
+item ring {
     id = 476
     image = 490
     value = 450
@@ -19555,7 +19555,7 @@ item _476 {
     rftags = []
 }
 
-item _477 {
+item engagement_ring {
     id = 477
     image = 489
     value = 5200
@@ -19596,7 +19596,7 @@ item _477 {
     rftags = []
 }
 
-item _478 {
+item stethoscope {
     id = 478
     image = 493
     value = 1200
@@ -19637,7 +19637,7 @@ item _478 {
     rftags = []
 }
 
-item _479 {
+item scroll_of_ally {
     id = 479
     image = 470
     value = 9000
@@ -19678,7 +19678,7 @@ item _479 {
     rftags = []
 }
 
-item _480 {
+item rod_of_domination {
     id = 480
     image = 471
     value = 16000
@@ -19719,7 +19719,7 @@ item _480 {
     rftags = []
 }
 
-item _481 {
+item spellbook_of_domination {
     id = 481
     image = 429
     value = 28000
@@ -19760,7 +19760,7 @@ item _481 {
     rftags = []
 }
 
-item _482 {
+item crossbow {
     id = 482
     image = 498
     value = 500
@@ -19801,7 +19801,7 @@ item _482 {
     rftags = []
 }
 
-item _483 {
+item bolt {
     id = 483
     image = 412
     value = 150
@@ -19842,7 +19842,7 @@ item _483 {
     rftags = []
 }
 
-item _484 {
+item spellbook_of_web {
     id = 484
     image = 429
     value = 4500
@@ -19883,7 +19883,7 @@ item _484 {
     rftags = []
 }
 
-item _485 {
+item rod_of_web {
     id = 485
     image = 471
     value = 3500
@@ -19924,7 +19924,7 @@ item _485 {
     rftags = []
 }
 
-item _486 {
+item machine {
     id = 486
     image = 507
     value = 3600
@@ -19965,7 +19965,7 @@ item _486 {
     rftags = []
 }
 
-item _487 {
+item computer {
     id = 487
     image = 508
     value = 4400
@@ -20006,7 +20006,7 @@ item _487 {
     rftags = []
 }
 
-item _488 {
+item training_machine {
     id = 488
     image = 506
     value = 2400
@@ -20047,7 +20047,7 @@ item _488 {
     rftags = []
 }
 
-item _489 {
+item camera {
     id = 489
     image = 509
     value = 1600
@@ -20088,7 +20088,7 @@ item _489 {
     rftags = []
 }
 
-item _490 {
+item microwave_oven {
     id = 490
     image = 510
     value = 3200
@@ -20129,7 +20129,7 @@ item _490 {
     rftags = []
 }
 
-item _491 {
+item server {
     id = 491
     image = 511
     value = 2400
@@ -20170,7 +20170,7 @@ item _491 {
     rftags = []
 }
 
-item _492 {
+item storage {
     id = 492
     image = 512
     value = 3100
@@ -20211,7 +20211,7 @@ item _492 {
     rftags = []
 }
 
-item _493 {
+item trash_can {
     id = 493
     image = 513
     value = 1000
@@ -20252,7 +20252,7 @@ item _493 {
     rftags = []
 }
 
-item _494 {
+item chip {
     id = 494
     image = 515
     value = 1200
@@ -20293,7 +20293,7 @@ item _494 {
     rftags = []
 }
 
-item _495 {
+item blank_disc {
     id = 495
     image = 516
     value = 1000
@@ -20334,7 +20334,7 @@ item _495 {
     rftags = []
 }
 
-item _496 {
+item shot_gun {
     id = 496
     image = 514
     value = 800
@@ -20375,7 +20375,7 @@ item _496 {
     rftags = []
 }
 
-item _497 {
+item pop_corn {
     id = 497
     image = 517
     value = 440
@@ -20416,7 +20416,7 @@ item _497 {
     rftags = []
 }
 
-item _498 {
+item fried_potato {
     id = 498
     image = 518
     value = 350
@@ -20457,7 +20457,7 @@ item _498 {
     rftags = []
 }
 
-item _499 {
+item cyber_snack {
     id = 499
     image = 519
     value = 750
@@ -20498,7 +20498,7 @@ item _499 {
     rftags = []
 }
 
-item _500 {
+item scroll_of_inferior_material {
     id = 500
     image = 470
     value = 600
@@ -20539,7 +20539,7 @@ item _500 {
     rftags = []
 }
 
-item _501 {
+item scroll_of_change_material {
     id = 501
     image = 470
     value = 5000
@@ -20580,7 +20580,7 @@ item _501 {
     rftags = []
 }
 
-item _502 {
+item scroll_of_superior_material {
     id = 502
     image = 470
     value = 20000
@@ -20621,7 +20621,7 @@ item _502 {
     rftags = []
 }
 
-item _503 {
+item figurine {
     id = 503
     image = 531
     value = 1000
@@ -20662,7 +20662,7 @@ item _503 {
     rftags = []
 }
 
-item _504 {
+item card {
     id = 504
     image = 528
     value = 500
@@ -20703,7 +20703,7 @@ item _504 {
     rftags = []
 }
 
-item _505 {
+item little_sisters_diary {
     id = 505
     image = 429
     value = 8000
@@ -20744,7 +20744,7 @@ item _505 {
     rftags = []
 }
 
-item _506 {
+item scroll_of_enchant_weapon {
     id = 506
     image = 470
     value = 8000
@@ -20785,7 +20785,7 @@ item _506 {
     rftags = []
 }
 
-item _507 {
+item scroll_of_greater_enchant_weapon {
     id = 507
     image = 470
     value = 14000
@@ -20826,7 +20826,7 @@ item _507 {
     rftags = []
 }
 
-item _508 {
+item scroll_of_enchant_armor {
     id = 508
     image = 470
     value = 8000
@@ -20867,7 +20867,7 @@ item _508 {
     rftags = []
 }
 
-item _509 {
+item scroll_of_greater_enchant_armor {
     id = 509
     image = 470
     value = 14000
@@ -20908,7 +20908,7 @@ item _509 {
     rftags = []
 }
 
-item _510 {
+item heir_trunk {
     id = 510
     image = 253
     value = 4500
@@ -20949,7 +20949,7 @@ item _510 {
     rftags = []
 }
 
-item _511 {
+item deed_of_heirship {
     id = 511
     image = 308
     value = 10000
@@ -20990,7 +20990,7 @@ item _511 {
     rftags = []
 }
 
-item _512 {
+item laser_gun {
     id = 512
     image = 520
     value = 1500
@@ -21031,7 +21031,7 @@ item _512 {
     rftags = []
 }
 
-item _513 {
+item energy_cell {
     id = 513
     image = 521
     value = 150
@@ -21072,7 +21072,7 @@ item _513 {
     rftags = []
 }
 
-item _514 {
+item rail_gun {
     id = 514
     image = 520
     value = 60000
@@ -21113,7 +21113,7 @@ item _514 {
     rftags = []
 }
 
-item _515 {
+item scroll_of_recharge {
     id = 515
     image = 470
     value = 2500
@@ -21154,7 +21154,7 @@ item _515 {
     rftags = []
 }
 
-item _516 {
+item bottle_of_water {
     id = 516
     image = 354
     value = 280
@@ -21195,7 +21195,7 @@ item _516 {
     rftags = []
 }
 
-item _517 {
+item rod_of_change_creature {
     id = 517
     image = 471
     value = 4500
@@ -21236,7 +21236,7 @@ item _517 {
     rftags = []
 }
 
-item _518 {
+item rod_of_alchemy {
     id = 518
     image = 471
     value = 6000
@@ -21277,7 +21277,7 @@ item _518 {
     rftags = []
 }
 
-item _519 {
+item bottle_of_dye {
     id = 519
     image = 354
     value = 500
@@ -21318,7 +21318,7 @@ item _519 {
     rftags = []
 }
 
-item _520 {
+item wing {
     id = 520
     image = 522
     value = 4500
@@ -21359,7 +21359,7 @@ item _520 {
     rftags = []
 }
 
-item _521 {
+item deed_of_museum {
     id = 521
     image = 308
     value = 140000
@@ -21400,7 +21400,7 @@ item _521 {
     rftags = []
 }
 
-item _522 {
+item deed_of_shop {
     id = 522
     image = 308
     value = 200000
@@ -21441,7 +21441,7 @@ item _522 {
     rftags = []
 }
 
-item _523 {
+item tree_of_beech {
     id = 523
     image = 527
     value = 700
@@ -21482,7 +21482,7 @@ item _523 {
     rftags = []
 }
 
-item _524 {
+item tree_of_cedar {
     id = 524
     image = 593
     value = 500
@@ -21523,7 +21523,7 @@ item _524 {
     rftags = []
 }
 
-item _525 {
+item tree_of_fruitless {
     id = 525
     image = 592
     value = 500
@@ -21564,7 +21564,7 @@ item _525 {
     rftags = []
 }
 
-item _526 {
+item tree_of_fruits {
     id = 526
     image = 591
     value = 2000
@@ -21605,7 +21605,7 @@ item _526 {
     rftags = []
 }
 
-item _527 {
+item dead_tree {
     id = 527
     image = 590
     value = 500
@@ -21646,7 +21646,7 @@ item _527 {
     rftags = []
 }
 
-item _528 {
+item tree_of_zelkova {
     id = 528
     image = 589
     value = 800
@@ -21687,7 +21687,7 @@ item _528 {
     rftags = []
 }
 
-item _529 {
+item tree_of_palm {
     id = 529
     image = 588
     value = 1000
@@ -21728,7 +21728,7 @@ item _529 {
     rftags = []
 }
 
-item _530 {
+item tree_of_ash {
     id = 530
     image = 587
     value = 900
@@ -21769,7 +21769,7 @@ item _530 {
     rftags = []
 }
 
-item _531 {
+item furnance {
     id = 531
     image = 583
     value = 8500
@@ -21810,7 +21810,7 @@ item _531 {
     rftags = []
 }
 
-item _532 {
+item fireplace {
     id = 532
     image = 584
     value = 9400
@@ -21851,7 +21851,7 @@ item _532 {
     rftags = []
 }
 
-item _533 {
+item stove {
     id = 533
     image = 581
     value = 7500
@@ -21892,7 +21892,7 @@ item _533 {
     rftags = []
 }
 
-item _534 {
+item giant_foliage_plant {
     id = 534
     image = 582
     value = 4500
@@ -21933,7 +21933,7 @@ item _534 {
     rftags = []
 }
 
-item _535 {
+item big_table {
     id = 535
     image = 83
     value = 2400
@@ -21974,7 +21974,7 @@ item _535 {
     rftags = []
 }
 
-item _536 {
+item painting_of_madam {
     id = 536
     image = 81
     value = 8500
@@ -22015,7 +22015,7 @@ item _536 {
     rftags = []
 }
 
-item _537 {
+item painting_of_landscape {
     id = 537
     image = 92
     value = 8200
@@ -22056,7 +22056,7 @@ item _537 {
     rftags = []
 }
 
-item _538 {
+item painting_of_sunflower {
     id = 538
     image = 131
     value = 12000
@@ -22097,7 +22097,7 @@ item _538 {
     rftags = []
 }
 
-item _539 {
+item statue_of_cat {
     id = 539
     image = 578
     value = 25000
@@ -22138,7 +22138,7 @@ item _539 {
     rftags = []
 }
 
-item _540 {
+item black_crystal {
     id = 540
     image = 130
     value = 7000
@@ -22179,7 +22179,7 @@ item _540 {
     rftags = []
 }
 
-item _541 {
+item snow_man {
     id = 541
     image = 134
     value = 200
@@ -22220,7 +22220,7 @@ item _541 {
     rftags = []
 }
 
-item _542 {
+item deed_of_farm {
     id = 542
     image = 308
     value = 45000
@@ -22261,7 +22261,7 @@ item _542 {
     rftags = []
 }
 
-item _543 {
+item deed_of_storage_house {
     id = 543
     image = 308
     value = 10000
@@ -22302,7 +22302,7 @@ item _543 {
     rftags = []
 }
 
-item _544 {
+item disc {
     id = 544
     image = 516
     value = 1000
@@ -22343,7 +22343,7 @@ item _544 {
     rftags = []
 }
 
-item _545 {
+item rod_of_wall_creation {
     id = 545
     image = 471
     value = 4000
@@ -22384,7 +22384,7 @@ item _545 {
     rftags = []
 }
 
-item _546 {
+item spellbook_of_wall_creation {
     id = 546
     image = 429
     value = 6800
@@ -22425,7 +22425,7 @@ item _546 {
     rftags = []
 }
 
-item _547 {
+item salary_chest {
     id = 547
     image = 325
     value = 6400
@@ -22466,7 +22466,7 @@ item _547 {
     rftags = []
 }
 
-item _548 {
+item spellbook_of_healing_rain {
     id = 548
     image = 429
     value = 9500
@@ -22507,7 +22507,7 @@ item _548 {
     rftags = []
 }
 
-item _549 {
+item scroll_of_healing_rain {
     id = 549
     image = 470
     value = 3500
@@ -22548,7 +22548,7 @@ item _549 {
     rftags = []
 }
 
-item _550 {
+item spellbook_of_healing_hands {
     id = 550
     image = 429
     value = 5800
@@ -22589,7 +22589,7 @@ item _550 {
     rftags = []
 }
 
-item _551 {
+item rod_of_healing_hands {
     id = 551
     image = 471
     value = 5600
@@ -22630,7 +22630,7 @@ item _551 {
     rftags = []
 }
 
-item _552 {
+item feather {
     id = 552
     image = 326
     value = 18000
@@ -22671,7 +22671,7 @@ item _552 {
     rftags = []
 }
 
-item _553 {
+item gem_seed {
     id = 553
     image = 323
     value = 4500
@@ -22712,7 +22712,7 @@ item _553 {
     rftags = []
 }
 
-item _554 {
+item magical_seed {
     id = 554
     image = 323
     value = 3500
@@ -22753,7 +22753,7 @@ item _554 {
     rftags = []
 }
 
-item _555 {
+item shelter {
     id = 555
     image = 330
     value = 6500
@@ -22794,7 +22794,7 @@ item _555 {
     rftags = []
 }
 
-item _556 {
+item seven_league_boots {
     id = 556
     image = 460
     value = 24000
@@ -22835,7 +22835,7 @@ item _556 {
     rftags = []
 }
 
-item _557 {
+item vindale_cloak {
     id = 557
     image = 422
     value = 18000
@@ -22876,7 +22876,7 @@ item _557 {
     rftags = []
 }
 
-item _558 {
+item aurora_ring {
     id = 558
     image = 489
     value = 17000
@@ -22917,7 +22917,7 @@ item _558 {
     rftags = []
 }
 
-item _559 {
+item potion_of_cure_corruption {
     id = 559
     image = 354
     value = 100000
@@ -22958,7 +22958,7 @@ item _559 {
     rftags = []
 }
 
-item _560 {
+item masters_delivery_chest {
     id = 560
     image = 331
     value = 380
@@ -22999,7 +22999,7 @@ item _560 {
     rftags = []
 }
 
-item _561 {
+item shop_strongbox {
     id = 561
     image = 197
     value = 7200
@@ -23040,7 +23040,7 @@ item _561 {
     rftags = []
 }
 
-item _562 {
+item register {
     id = 562
     image = 332
     value = 1500
@@ -23081,7 +23081,7 @@ item _562 {
     rftags = []
 }
 
-item _563 {
+item textbook {
     id = 563
     image = 334
     value = 4800
@@ -23122,7 +23122,7 @@ item _563 {
     rftags = []
 }
 
-item _564 {
+item spellbook_of_acid_ground {
     id = 564
     image = 429
     value = 7500
@@ -23163,7 +23163,7 @@ item _564 {
     rftags = []
 }
 
-item _565 {
+item rod_of_acid_ground {
     id = 565
     image = 471
     value = 4400
@@ -23204,7 +23204,7 @@ item _565 {
     rftags = []
 }
 
-item _566 {
+item acidproof_liquid {
     id = 566
     image = 354
     value = 1900
@@ -23245,7 +23245,7 @@ item _566 {
     rftags = []
 }
 
-item _567 {
+item fireproof_blanket {
     id = 567
     image = 335
     value = 2400
@@ -23286,7 +23286,7 @@ item _567 {
     rftags = []
 }
 
-item _568 {
+item coldproof_blanket {
     id = 568
     image = 335
     value = 2400
@@ -23327,7 +23327,7 @@ item _568 {
     rftags = []
 }
 
-item _569 {
+item spellbook_of_fire_wall {
     id = 569
     image = 429
     value = 5800
@@ -23368,7 +23368,7 @@ item _569 {
     rftags = []
 }
 
-item _570 {
+item rod_of_fire_wall {
     id = 570
     image = 471
     value = 3800
@@ -23409,7 +23409,7 @@ item _570 {
     rftags = []
 }
 
-item _571 {
+item jerky {
     id = 571
     image = 337
     value = 640
@@ -23450,7 +23450,7 @@ item _571 {
     rftags = []
 }
 
-item _572 {
+item deed_of_ranch {
     id = 572
     image = 308
     value = 80000
@@ -23491,7 +23491,7 @@ item _572 {
     rftags = []
 }
 
-item _573 {
+item egg {
     id = 573
     image = 338
     value = 500
@@ -23532,7 +23532,7 @@ item _573 {
     rftags = []
 }
 
-item _574 {
+item bottle_of_milk {
     id = 574
     image = 339
     value = 1000
@@ -23573,7 +23573,7 @@ item _574 {
     rftags = []
 }
 
-item _575 {
+item shit {
     id = 575
     image = 340
     value = 25
@@ -23614,7 +23614,7 @@ item _575 {
     rftags = []
 }
 
-item _576 {
+item playback_disc {
     id = 576
     image = 516
     value = 1000
@@ -23655,7 +23655,7 @@ item _576 {
     rftags = []
 }
 
-item _577 {
+item molotov {
     id = 577
     image = 223
     value = 400
@@ -23696,7 +23696,7 @@ item _577 {
     rftags = []
 }
 
-item _578 {
+item kitty_bank {
     id = 578
     image = 348
     value = 1400
@@ -23737,7 +23737,7 @@ item _578 {
     rftags = []
 }
 
-item _579 {
+item freezer {
     id = 579
     image = 577
     value = 3800
@@ -23778,7 +23778,7 @@ item _579 {
     rftags = []
 }
 
-item _580 {
+item modern_rack {
     id = 580
     image = 236
     value = 1600
@@ -23819,7 +23819,7 @@ item _580 {
     rftags = []
 }
 
-item _581 {
+item rod_of_make_door {
     id = 581
     image = 471
     value = 2000
@@ -23860,7 +23860,7 @@ item _581 {
     rftags = []
 }
 
-item _582 {
+item spellbook_of_make_door {
     id = 582
     image = 429
     value = 2000
@@ -23901,7 +23901,7 @@ item _582 {
     rftags = []
 }
 
-item _583 {
+item torch {
     id = 583
     image = 352
     value = 200
@@ -23942,7 +23942,7 @@ item _583 {
     rftags = []
 }
 
-item _584 {
+item candle {
     id = 584
     image = 353
     value = 1500
@@ -23983,7 +23983,7 @@ item _584 {
     rftags = []
 }
 
-item _585 {
+item fancy_lamp {
     id = 585
     image = 364
     value = 4500
@@ -24024,7 +24024,7 @@ item _585 {
     rftags = []
 }
 
-item _586 {
+item modern_lamp_a {
     id = 586
     image = 576
     value = 7200
@@ -24065,7 +24065,7 @@ item _586 {
     rftags = []
 }
 
-item _587 {
+item handful_of_snow {
     id = 587
     image = 365
     value = 10
@@ -24106,7 +24106,7 @@ item _587 {
     rftags = []
 }
 
-item _588 {
+item tree_of_naked {
     id = 588
     image = 575
     value = 500
@@ -24147,7 +24147,7 @@ item _588 {
     rftags = []
 }
 
-item _589 {
+item tree_of_fir {
     id = 589
     image = 574
     value = 1800
@@ -24188,7 +24188,7 @@ item _589 {
     rftags = []
 }
 
-item _590 {
+item snow_scarecrow {
     id = 590
     image = 367
     value = 10
@@ -24229,7 +24229,7 @@ item _590 {
     rftags = []
 }
 
-item _591 {
+item mini_snow_man {
     id = 591
     image = 366
     value = 400
@@ -24270,7 +24270,7 @@ item _591 {
     rftags = []
 }
 
-item _592 {
+item snow_barrel {
     id = 592
     image = 368
     value = 180
@@ -24311,7 +24311,7 @@ item _592 {
     rftags = []
 }
 
-item _593 {
+item modern_lamp_b {
     id = 593
     image = 573
     value = 7200
@@ -24352,7 +24352,7 @@ item _593 {
     rftags = []
 }
 
-item _594 {
+item statue_of_holy_cross {
     id = 594
     image = 572
     value = 18000
@@ -24393,7 +24393,7 @@ item _594 {
     rftags = []
 }
 
-item _595 {
+item pillar {
     id = 595
     image = 571
     value = 2500
@@ -24434,7 +24434,7 @@ item _595 {
     rftags = []
 }
 
-item _596 {
+item stained_glass_window {
     id = 596
     image = 369
     value = 1800
@@ -24475,7 +24475,7 @@ item _596 {
     rftags = []
 }
 
-item _597 {
+item cargo_christmas_tree {
     id = 597
     image = 570
     value = 3500
@@ -24516,7 +24516,7 @@ item _597 {
     rftags = []
 }
 
-item _598 {
+item cargo_snow_man {
     id = 598
     image = 134
     value = 1200
@@ -24557,7 +24557,7 @@ item _598 {
     rftags = []
 }
 
-item _599 {
+item christmas_tree {
     id = 599
     image = 570
     value = 4800
@@ -24598,7 +24598,7 @@ item _599 {
     rftags = []
 }
 
-item _600 {
+item giants_shackle {
     id = 600
     image = 370
     value = 1800
@@ -24639,7 +24639,7 @@ item _600 {
     rftags = []
 }
 
-item _601 {
+item empty_bottle {
     id = 601
     image = 371
     value = 100
@@ -24680,7 +24680,7 @@ item _601 {
     rftags = []
 }
 
-item _602 {
+item holy_well {
     id = 602
     image = 372
     value = 185000
@@ -24721,7 +24721,7 @@ item _602 {
     rftags = []
 }
 
-item _603 {
+item presidents_chair {
     id = 603
     image = 373
     value = 12000
@@ -24762,7 +24762,7 @@ item _603 {
     rftags = []
 }
 
-item _604 {
+item green_plant {
     id = 604
     image = 374
     value = 400
@@ -24803,7 +24803,7 @@ item _604 {
     rftags = []
 }
 
-item _605 {
+item money_tree {
     id = 605
     image = 375
     value = 2200
@@ -24844,7 +24844,7 @@ item _605 {
     rftags = []
 }
 
-item _606 {
+item barbecue_set {
     id = 606
     image = 376
     value = 9500
@@ -24885,7 +24885,7 @@ item _606 {
     rftags = []
 }
 
-item _607 {
+item giant_cactus {
     id = 607
     image = 377
     value = 2600
@@ -24926,7 +24926,7 @@ item _607 {
     rftags = []
 }
 
-item _608 {
+item square_window {
     id = 608
     image = 378
     value = 500
@@ -24967,7 +24967,7 @@ item _608 {
     rftags = []
 }
 
-item _609 {
+item window {
     id = 609
     image = 379
     value = 700
@@ -25008,7 +25008,7 @@ item _609 {
     rftags = []
 }
 
-item _610 {
+item triangle_plant {
     id = 610
     image = 380
     value = 1500
@@ -25049,7 +25049,7 @@ item _610 {
     rftags = []
 }
 
-item _611 {
+item house_board {
     id = 611
     image = 107
     value = 3500
@@ -25090,7 +25090,7 @@ item _611 {
     rftags = []
 }
 
-item _612 {
+item nice_window {
     id = 612
     image = 382
     value = 1000
@@ -25131,7 +25131,7 @@ item _612 {
     rftags = []
 }
 
-item _613 {
+item kings_bed {
     id = 613
     image = 569
     value = 35000
@@ -25172,7 +25172,7 @@ item _613 {
     rftags = []
 }
 
-item _614 {
+item flower_arch {
     id = 614
     image = 568
     value = 2000
@@ -25213,7 +25213,7 @@ item _614 {
     rftags = []
 }
 
-item _615 {
+item bill {
     id = 615
     image = 383
     value = 100
@@ -25254,7 +25254,7 @@ item _615 {
     rftags = []
 }
 
-item _616 {
+item tax_masters_tax_box {
     id = 616
     image = 384
     value = 14500
@@ -25295,7 +25295,7 @@ item _616 {
     rftags = []
 }
 
-item _617 {
+item bait {
     id = 617
     image = 569
     value = 1000
@@ -25336,7 +25336,7 @@ item _617 {
     rftags = []
 }
 
-item _618 {
+item fish_a {
     id = 618
     image = 310
     value = 1200
@@ -25377,7 +25377,7 @@ item _618 {
     rftags = ["fish"]
 }
 
-item _619 {
+item fish_b {
     id = 619
     image = 310
     value = 1200
@@ -25418,7 +25418,7 @@ item _619 {
     rftags = []
 }
 
-item _620 {
+item love_potion {
     id = 620
     image = 354
     value = 4500
@@ -25459,7 +25459,7 @@ item _620 {
     rftags = []
 }
 
-item _621 {
+item treasure_map {
     id = 621
     image = 252
     value = 10000
@@ -25500,7 +25500,7 @@ item _621 {
     rftags = []
 }
 
-item _622 {
+item small_medal {
     id = 622
     image = 165
     value = 1
@@ -25541,7 +25541,7 @@ item _622 {
     rftags = ["ore"]
 }
 
-item _623 {
+item cat_sisters_diary {
     id = 623
     image = 429
     value = 15000
@@ -25582,7 +25582,7 @@ item _623 {
     rftags = []
 }
 
-item _624 {
+item girls_diary {
     id = 624
     image = 429
     value = 10000
@@ -25623,7 +25623,7 @@ item _624 {
     rftags = []
 }
 
-item _625 {
+item shrine_gate {
     id = 625
     image = 627
     value = 7500
@@ -25664,7 +25664,7 @@ item _625 {
     rftags = []
 }
 
-item _626 {
+item bottle_of_hermes_blood {
     id = 626
     image = 354
     value = 50000
@@ -25705,7 +25705,7 @@ item _626 {
     rftags = []
 }
 
-item _627 {
+item sages_helm {
     id = 627
     image = 480
     value = 40000
@@ -25746,7 +25746,7 @@ item _627 {
     rftags = []
 }
 
-item _628 {
+item spellbook_of_incognito {
     id = 628
     image = 429
     value = 7000
@@ -25787,7 +25787,7 @@ item _628 {
     rftags = []
 }
 
-item _629 {
+item disguise_set {
     id = 629
     image = 628
     value = 7200
@@ -25828,7 +25828,7 @@ item _629 {
     rftags = []
 }
 
-item _630 {
+item material_kit {
     id = 630
     image = 629
     value = 2500
@@ -25869,7 +25869,7 @@ item _630 {
     rftags = []
 }
 
-item _631 {
+item moon_gate {
     id = 631
     image = 566
     value = 50
@@ -25910,7 +25910,7 @@ item _631 {
     rftags = []
 }
 
-item _632 {
+item flying_scroll {
     id = 632
     image = 470
     value = 40000
@@ -25951,7 +25951,7 @@ item _632 {
     rftags = []
 }
 
-item _633 {
+item panty {
     id = 633
     image = 630
     value = 25000
@@ -25992,7 +25992,7 @@ item _633 {
     rftags = []
 }
 
-item _634 {
+item leash {
     id = 634
     image = 631
     value = 1200
@@ -26033,7 +26033,7 @@ item _634 {
     rftags = []
 }
 
-item _635 {
+item mine {
     id = 635
     image = 632
     value = 7500
@@ -26074,7 +26074,7 @@ item _635 {
     rftags = []
 }
 
-item _636 {
+item lockpick {
     id = 636
     image = 634
     value = 800
@@ -26115,7 +26115,7 @@ item _636 {
     rftags = []
 }
 
-item _637 {
+item skeleton_key {
     id = 637
     image = 633
     value = 150000
@@ -26156,7 +26156,7 @@ item _637 {
     rftags = []
 }
 
-item _638 {
+item scroll_of_escape {
     id = 638
     image = 470
     value = 450
@@ -26197,7 +26197,7 @@ item _638 {
     rftags = []
 }
 
-item _639 {
+item happy_apple {
     id = 639
     image = 172
     value = 100000
@@ -26238,7 +26238,7 @@ item _639 {
     rftags = []
 }
 
-item _640 {
+item unicorn_horn {
     id = 640
     image = 635
     value = 8000
@@ -26279,7 +26279,7 @@ item _640 {
     rftags = []
 }
 
-item _641 {
+item cooler_box {
     id = 641
     image = 636
     value = 7500
@@ -26320,7 +26320,7 @@ item _641 {
     rftags = []
 }
 
-item _642 {
+item rice_barrel {
     id = 642
     image = 637
     value = 500
@@ -26361,7 +26361,7 @@ item _642 {
     rftags = []
 }
 
-item _643 {
+item eastern_bed {
     id = 643
     image = 638
     value = 2500
@@ -26402,7 +26402,7 @@ item _643 {
     rftags = []
 }
 
-item _644 {
+item decorated_window {
     id = 644
     image = 639
     value = 2400
@@ -26443,7 +26443,7 @@ item _644 {
     rftags = []
 }
 
-item _645 {
+item king_drawer {
     id = 645
     image = 640
     value = 9500
@@ -26484,7 +26484,7 @@ item _645 {
     rftags = []
 }
 
-item _646 {
+item menu_board {
     id = 646
     image = 641
     value = 1800
@@ -26525,7 +26525,7 @@ item _646 {
     rftags = []
 }
 
-item _647 {
+item black_board {
     id = 647
     image = 642
     value = 5000
@@ -26566,7 +26566,7 @@ item _647 {
     rftags = []
 }
 
-item _648 {
+item sofa {
     id = 648
     image = 643
     value = 2500
@@ -26607,7 +26607,7 @@ item _648 {
     rftags = []
 }
 
-item _649 {
+item flowerbed {
     id = 649
     image = 644
     value = 1500
@@ -26648,7 +26648,7 @@ item _649 {
     rftags = []
 }
 
-item _650 {
+item toilet {
     id = 650
     image = 645
     value = 1000
@@ -26689,7 +26689,7 @@ item _650 {
     rftags = []
 }
 
-item _651 {
+item craft_cupboard {
     id = 651
     image = 646
     value = 4800
@@ -26730,7 +26730,7 @@ item _651 {
     rftags = []
 }
 
-item _652 {
+item sink {
     id = 652
     image = 647
     value = 3500
@@ -26771,7 +26771,7 @@ item _652 {
     rftags = []
 }
 
-item _653 {
+item junk {
     id = 653
     image = 648
     value = 600
@@ -26812,7 +26812,7 @@ item _653 {
     rftags = []
 }
 
-item _654 {
+item double_bed {
     id = 654
     image = 649
     value = 7500
@@ -26853,7 +26853,7 @@ item _654 {
     rftags = []
 }
 
-item _655 {
+item hero_cheese {
     id = 655
     image = 168
     value = 100000
@@ -26894,7 +26894,7 @@ item _655 {
     rftags = []
 }
 
-item _656 {
+item eastern_lamp {
     id = 656
     image = 650
     value = 3000
@@ -26935,7 +26935,7 @@ item _656 {
     rftags = []
 }
 
-item _657 {
+item eastern_window {
     id = 657
     image = 651
     value = 3500
@@ -26976,7 +26976,7 @@ item _657 {
     rftags = []
 }
 
-item _658 {
+item chochin {
     id = 658
     image = 652
     value = 2500
@@ -27017,7 +27017,7 @@ item _658 {
     rftags = []
 }
 
-item _659 {
+item partition {
     id = 659
     image = 653
     value = 1000
@@ -27058,7 +27058,7 @@ item _659 {
     rftags = []
 }
 
-item _660 {
+item spellbook_of_darkness_arrow {
     id = 660
     image = 429
     value = 3500
@@ -27099,7 +27099,7 @@ item _660 {
     rftags = []
 }
 
-item _661 {
+item dal_i_thalion {
     id = 661
     image = 459
     value = 25000
@@ -27140,7 +27140,7 @@ item _661 {
     rftags = []
 }
 
-item _662 {
+item magic_fruit {
     id = 662
     image = 189
     value = 100000
@@ -27181,7 +27181,7 @@ item _662 {
     rftags = []
 }
 
-item _663 {
+item monster_heart {
     id = 663
     image = 654
     value = 25000
@@ -27222,7 +27222,7 @@ item _663 {
     rftags = []
 }
 
-item _664 {
+item speed_ring {
     id = 664
     image = 489
     value = 50000
@@ -27263,7 +27263,7 @@ item _664 {
     rftags = []
 }
 
-item _665 {
+item statue_of_opatos {
     id = 665
     image = 680
     value = 100000
@@ -27304,7 +27304,7 @@ item _665 {
     rftags = []
 }
 
-item _666 {
+item statue_of_lulwy {
     id = 666
     image = 692
     value = 100000
@@ -27345,7 +27345,7 @@ item _666 {
     rftags = []
 }
 
-item _667 {
+item sisters_love_fueled_lunch {
     id = 667
     image = 391
     value = 900
@@ -27386,7 +27386,7 @@ item _667 {
     rftags = []
 }
 
-item _668 {
+item book_of_rachel {
     id = 668
     image = 333
     value = 4000
@@ -27427,7 +27427,7 @@ item _668 {
     rftags = []
 }
 
-item _669 {
+item cargo_art {
     id = 669
     image = 92
     value = 3800
@@ -27468,7 +27468,7 @@ item _669 {
     rftags = []
 }
 
-item _670 {
+item cargo_canvas {
     id = 670
     image = 132
     value = 750
@@ -27509,7 +27509,7 @@ item _670 {
     rftags = []
 }
 
-item _671 {
+item nuclear_bomb {
     id = 671
     image = 632
     value = 10000
@@ -27550,7 +27550,7 @@ item _671 {
     rftags = []
 }
 
-item _672 {
+item secret_treasure {
     id = 672
     image = 656
     value = 5000
@@ -27591,7 +27591,7 @@ item _672 {
     rftags = []
 }
 
-item _673 {
+item wind_bow {
     id = 673
     image = 404
     value = 35000
@@ -27632,7 +27632,7 @@ item _673 {
     rftags = []
 }
 
-item _674 {
+item winchester_premium {
     id = 674
     image = 514
     value = 35000
@@ -27673,7 +27673,7 @@ item _674 {
     rftags = []
 }
 
-item _675 {
+item kumiromi_scythe {
     id = 675
     image = 421
     value = 35000
@@ -27714,7 +27714,7 @@ item _675 {
     rftags = []
 }
 
-item _676 {
+item elemental_staff {
     id = 676
     image = 425
     value = 35000
@@ -27755,7 +27755,7 @@ item _676 {
     rftags = []
 }
 
-item _677 {
+item holy_lance {
     id = 677
     image = 415
     value = 35000
@@ -27796,7 +27796,7 @@ item _677 {
     rftags = []
 }
 
-item _678 {
+item lucky_dagger {
     id = 678
     image = 400
     value = 35000
@@ -27837,7 +27837,7 @@ item _678 {
     rftags = []
 }
 
-item _679 {
+item gaia_hammer {
     id = 679
     image = 504
     value = 35000
@@ -27878,7 +27878,7 @@ item _679 {
     rftags = []
 }
 
-item _680 {
+item lulwys_gem_stone_of_god_speed {
     id = 680
     image = 657
     value = 50000
@@ -27919,7 +27919,7 @@ item _680 {
     rftags = []
 }
 
-item _681 {
+item jures_gem_stone_of_holy_rain {
     id = 681
     image = 657
     value = 50000
@@ -27960,7 +27960,7 @@ item _681 {
     rftags = []
 }
 
-item _682 {
+item kumiromis_gem_stone_of_rejuvenation {
     id = 682
     image = 657
     value = 50000
@@ -28001,7 +28001,7 @@ item _682 {
     rftags = []
 }
 
-item _683 {
+item gem_stone_of_mani {
     id = 683
     image = 657
     value = 50000
@@ -28042,7 +28042,7 @@ item _683 {
     rftags = []
 }
 
-item _684 {
+item gene_machine {
     id = 684
     image = 691
     value = 20000
@@ -28083,7 +28083,7 @@ item _684 {
     rftags = []
 }
 
-item _685 {
+item monster_ball {
     id = 685
     image = 658
     value = 4500
@@ -28124,7 +28124,7 @@ item _685 {
     rftags = []
 }
 
-item _686 {
+item statue_of_jure {
     id = 686
     image = 690
     value = 100000
@@ -28165,7 +28165,7 @@ item _686 {
     rftags = []
 }
 
-item _687 {
+item ancient_book {
     id = 687
     image = 429
     value = 2000
@@ -28206,7 +28206,7 @@ item _687 {
     rftags = []
 }
 
-item _688 {
+item iron_maiden {
     id = 688
     image = 689
     value = 7500
@@ -28247,7 +28247,7 @@ item _688 {
     rftags = []
 }
 
-item _689 {
+item guillotine {
     id = 689
     image = 688
     value = 5000
@@ -28288,7 +28288,7 @@ item _689 {
     rftags = []
 }
 
-item _690 {
+item pan_flute {
     id = 690
     image = 392
     value = 4500
@@ -28329,7 +28329,7 @@ item _690 {
     rftags = []
 }
 
-item _691 {
+item lute {
     id = 691
     image = 393
     value = 3800
@@ -28370,7 +28370,7 @@ item _691 {
     rftags = []
 }
 
-item _692 {
+item harmonica {
     id = 692
     image = 394
     value = 1500
@@ -28411,7 +28411,7 @@ item _692 {
     rftags = []
 }
 
-item _693 {
+item harp {
     id = 693
     image = 395
     value = 7500
@@ -28452,7 +28452,7 @@ item _693 {
     rftags = []
 }
 
-item _694 {
+item eastern_partition {
     id = 694
     image = 659
     value = 2000
@@ -28493,7 +28493,7 @@ item _694 {
     rftags = []
 }
 
-item _695 {
+item axe_of_destruction {
     id = 695
     image = 399
     value = 50000
@@ -28534,7 +28534,7 @@ item _695 {
     rftags = []
 }
 
-item _696 {
+item spellbook_of_magic_ball {
     id = 696
     image = 429
     value = 14200
@@ -28575,7 +28575,7 @@ item _696 {
     rftags = []
 }
 
-item _697 {
+item spellbook_of_magic_laser {
     id = 697
     image = 429
     value = 12500
@@ -28616,7 +28616,7 @@ item _697 {
     rftags = []
 }
 
-item _698 {
+item potion_of_salt_solution {
     id = 698
     image = 365
     value = 10
@@ -28657,7 +28657,7 @@ item _698 {
     rftags = []
 }
 
-item _699 {
+item little_ball {
     id = 699
     image = 658
     value = 10
@@ -28698,7 +28698,7 @@ item _699 {
     rftags = []
 }
 
-item _700 {
+item town_book {
     id = 700
     image = 532
     value = 750
@@ -28739,7 +28739,7 @@ item _700 {
     rftags = []
 }
 
-item _701 {
+item deck {
     id = 701
     image = 533
     value = 2200
@@ -28780,7 +28780,7 @@ item _701 {
     rftags = []
 }
 
-item _702 {
+item rabbits_tail {
     id = 702
     image = 301
     value = 10000
@@ -28821,7 +28821,7 @@ item _702 {
     rftags = []
 }
 
-item _703 {
+item whistle {
     id = 703
     image = 534
     value = 1400
@@ -28862,7 +28862,7 @@ item _703 {
     rftags = []
 }
 
-item _704 {
+item vomit {
     id = 704
     image = 535
     value = 400
@@ -28903,7 +28903,7 @@ item _704 {
     rftags = []
 }
 
-item _705 {
+item beggars_pendant {
     id = 705
     image = 486
     value = 50
@@ -28944,7 +28944,7 @@ item _705 {
     rftags = []
 }
 
-item _706 {
+item potion_of_descent {
     id = 706
     image = 354
     value = 4500
@@ -28985,7 +28985,7 @@ item _706 {
     rftags = []
 }
 
-item _707 {
+item stradivarius {
     id = 707
     image = 699
     value = 35000
@@ -29026,7 +29026,7 @@ item _707 {
     rftags = []
 }
 
-item _708 {
+item book_of_resurrection {
     id = 708
     image = 429
     value = 6000
@@ -29067,7 +29067,7 @@ item _708 {
     rftags = []
 }
 
-item _709 {
+item scroll_of_contingency {
     id = 709
     image = 470
     value = 3500
@@ -29108,7 +29108,7 @@ item _709 {
     rftags = []
 }
 
-item _710 {
+item spellbook_of_contingency {
     id = 710
     image = 429
     value = 8500
@@ -29149,7 +29149,7 @@ item _710 {
     rftags = []
 }
 
-item _711 {
+item potion_of_evolution {
     id = 711
     image = 354
     value = 12000
@@ -29190,7 +29190,7 @@ item _711 {
     rftags = []
 }
 
-item _712 {
+item deed_of_dungeon {
     id = 712
     image = 308
     value = 500000
@@ -29231,7 +29231,7 @@ item _712 {
     rftags = []
 }
 
-item _713 {
+item shuriken {
     id = 713
     image = 536
     value = 750
@@ -29272,7 +29272,7 @@ item _713 {
     rftags = []
 }
 
-item _714 {
+item grenade {
     id = 714
     image = 537
     value = 550
@@ -29313,7 +29313,7 @@ item _714 {
     rftags = []
 }
 
-item _715 {
+item secret_experience_of_kumiromi {
     id = 715
     image = 657
     value = 6800
@@ -29354,7 +29354,7 @@ item _715 {
     rftags = []
 }
 
-item _716 {
+item vanilla_rock {
     id = 716
     image = 424
     value = 9500
@@ -29395,7 +29395,7 @@ item _716 {
     rftags = []
 }
 
-item _717 {
+item secret_experience_of_lomias {
     id = 717
     image = 657
     value = 6800
@@ -29436,7 +29436,7 @@ item _717 {
     rftags = []
 }
 
-item _718 {
+item shenas_panty {
     id = 718
     image = 630
     value = 94000
@@ -29477,7 +29477,7 @@ item _718 {
     rftags = []
 }
 
-item _719 {
+item claymore_unique {
     id = 719
     image = 698
     value = 45000
@@ -29518,7 +29518,7 @@ item _719 {
     rftags = []
 }
 
-item _720 {
+item happy_bed {
     id = 720
     image = 649
     value = 25000
@@ -29559,7 +29559,7 @@ item _720 {
     rftags = []
 }
 
-item _721 {
+item statue_of_ehekatl {
     id = 721
     image = 687
     value = 100000
@@ -29600,7 +29600,7 @@ item _721 {
     rftags = []
 }
 
-item _722 {
+item arbalest {
     id = 722
     image = 486
     value = 9500
@@ -29641,7 +29641,7 @@ item _722 {
     rftags = []
 }
 
-item _723 {
+item twin_edge {
     id = 723
     image = 486
     value = 9500
@@ -29682,7 +29682,7 @@ item _723 {
     rftags = []
 }
 
-item _724 {
+item music_ticket {
     id = 724
     image = 538
     value = 1
@@ -29723,7 +29723,7 @@ item _724 {
     rftags = ["ore"]
 }
 
-item _725 {
+item kill_kill_piano {
     id = 725
     image = 76
     value = 25000
@@ -29764,7 +29764,7 @@ item _725 {
     rftags = []
 }
 
-item _726 {
+item alud {
     id = 726
     image = 393
     value = 7500
@@ -29805,7 +29805,7 @@ item _726 {
     rftags = []
 }
 
-item _727 {
+item shield_of_thorn {
     id = 727
     image = 453
     value = 17500
@@ -29846,7 +29846,7 @@ item _727 {
     rftags = []
 }
 
-item _728 {
+item crimson_plate {
     id = 728
     image = 474
     value = 15000
@@ -29887,7 +29887,7 @@ item _728 {
     rftags = []
 }
 
-item _729 {
+item gift {
     id = 729
     image = 391
     value = 2500
@@ -29928,7 +29928,7 @@ item _729 {
     rftags = []
 }
 
-item _730 {
+item token_of_friendship {
     id = 730
     image = 538
     value = 1
@@ -29969,7 +29969,7 @@ item _730 {
     rftags = ["ore"]
 }
 
-item _731 {
+item spellbook_of_4_dimensional_pocket {
     id = 731
     image = 429
     value = 8500
@@ -30010,7 +30010,7 @@ item _731 {
     rftags = []
 }
 
-item _732 {
+item spellbook_of_harvest {
     id = 732
     image = 429
     value = 4000
@@ -30051,7 +30051,7 @@ item _732 {
     rftags = []
 }
 
-item _733 {
+item sand_bag {
     id = 733
     image = 563
     value = 4800
@@ -30092,7 +30092,7 @@ item _733 {
     rftags = []
 }
 
-item _734 {
+item small_gamble_chest {
     id = 734
     image = 220
     value = 1200
@@ -30133,7 +30133,7 @@ item _734 {
     rftags = []
 }
 
-item _735 {
+item scythe {
     id = 735
     image = 421
     value = 500
@@ -30174,7 +30174,7 @@ item _735 {
     rftags = []
 }
 
-item _736 {
+item fireproof_liquid {
     id = 736
     image = 354
     value = 1500
@@ -30215,7 +30215,7 @@ item _736 {
     rftags = []
 }
 
-item _737 {
+item scroll_of_name {
     id = 737
     image = 470
     value = 7500
@@ -30256,7 +30256,7 @@ item _737 {
     rftags = []
 }
 
-item _738 {
+item fortune_cookie {
     id = 738
     image = 539
     value = 250
@@ -30297,7 +30297,7 @@ item _738 {
     rftags = []
 }
 
-item _739 {
+item frisias_tail {
     id = 739
     image = 425
     value = 30000
@@ -30338,7 +30338,7 @@ item _739 {
     rftags = []
 }
 
-item _740 {
+item unknown_shell {
     id = 740
     image = 488
     value = 1200
@@ -30379,7 +30379,7 @@ item _740 {
     rftags = []
 }
 
-item _741 {
+item hiryu_to {
     id = 741
     image = 501
     value = 40000
@@ -30420,7 +30420,7 @@ item _741 {
     rftags = []
 }
 
-item _742 {
+item license_of_the_void_explorer {
     id = 742
     image = 308
     value = 15000
@@ -30461,7 +30461,7 @@ item _742 {
     rftags = []
 }
 
-item _743 {
+item plank_of_carneades {
     id = 743
     image = 657
     value = 50000
@@ -30502,7 +30502,7 @@ item _743 {
     rftags = []
 }
 
-item _744 {
+item schrodingers_cat {
     id = 744
     image = 657
     value = 50000
@@ -30536,14 +30536,14 @@ item _744 {
     light = 0
     katakana_name = ""
     original_name_jp = "シュレディンガーの猫"
-    original_name_en = "Schrodinger's cat "
+    original_name_en = "Schrodinger's cat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
 }
 
-item _745 {
+item heart {
     id = 745
     image = 657
     value = 50000
@@ -30584,7 +30584,7 @@ item _745 {
     rftags = []
 }
 
-item _746 {
+item tamers_whip {
     id = 746
     image = 657
     value = 50000
@@ -30625,7 +30625,7 @@ item _746 {
     rftags = []
 }
 
-item _747 {
+item book_of_bokonon {
     id = 747
     image = 333
     value = 4000
@@ -30666,7 +30666,7 @@ item _747 {
     rftags = []
 }
 
-item _748 {
+item summoning_crystal {
     id = 748
     image = 662
     value = 4500
@@ -30707,7 +30707,7 @@ item _748 {
     rftags = []
 }
 
-item _749 {
+item statue_of_creator {
     id = 749
     image = 686
     value = 50
@@ -30748,7 +30748,7 @@ item _749 {
     rftags = []
 }
 
-item _750 {
+item upstairs {
     id = 750
     image = 665
     value = 150000
@@ -30789,7 +30789,7 @@ item _750 {
     rftags = []
 }
 
-item _751 {
+item downstairs {
     id = 751
     image = 664
     value = 150000
@@ -30830,7 +30830,7 @@ item _751 {
     rftags = []
 }
 
-item _752 {
+item new_years_gift {
     id = 752
     image = 666
     value = 1650
@@ -30871,7 +30871,7 @@ item _752 {
     rftags = []
 }
 
-item _753 {
+item kotatsu {
     id = 753
     image = 667
     value = 7800
@@ -30912,7 +30912,7 @@ item _753 {
     rftags = []
 }
 
-item _754 {
+item daruma {
     id = 754
     image = 668
     value = 3200
@@ -30953,7 +30953,7 @@ item _754 {
     rftags = []
 }
 
-item _755 {
+item kagami_mochi {
     id = 755
     image = 669
     value = 2500
@@ -30994,7 +30994,7 @@ item _755 {
     rftags = []
 }
 
-item _756 {
+item mochi {
     id = 756
     image = 670
     value = 800
@@ -31035,7 +31035,7 @@ item _756 {
     rftags = []
 }
 
-item _757 {
+item five_horned_helm {
     id = 757
     image = 480
     value = 15000
@@ -31076,7 +31076,7 @@ item _757 {
     rftags = []
 }
 
-item _758 {
+item mauser_c96_custom {
     id = 758
     image = 419
     value = 25000
@@ -31117,7 +31117,7 @@ item _758 {
     rftags = []
 }
 
-item _759 {
+item lightsabre {
     id = 759
     image = 671
     value = 4800
@@ -31158,7 +31158,7 @@ item _759 {
     rftags = []
 }
 
-item _760 {
+item garoks_hammer {
     id = 760
     image = 629
     value = 75000
@@ -31199,7 +31199,7 @@ item _760 {
     rftags = []
 }
 
-item _761 {
+item goulds_piano {
     id = 761
     image = 76
     value = 35000
@@ -31240,7 +31240,7 @@ item _761 {
     rftags = []
 }
 
-item _762 {
+item festival_wreath {
     id = 762
     image = 672
     value = 760
@@ -31281,7 +31281,7 @@ item _762 {
     rftags = []
 }
 
-item _763 {
+item pedestal {
     id = 763
     image = 673
     value = 3600
@@ -31322,7 +31322,7 @@ item _763 {
     rftags = []
 }
 
-item _764 {
+item counter {
     id = 764
     image = 674
     value = 1200
@@ -31363,7 +31363,7 @@ item _764 {
     rftags = []
 }
 
-item _765 {
+item red_stall {
     id = 765
     image = 685
     value = 3800
@@ -31404,7 +31404,7 @@ item _765 {
     rftags = []
 }
 
-item _766 {
+item blue_stall {
     id = 766
     image = 684
     value = 3800
@@ -31445,7 +31445,7 @@ item _766 {
     rftags = []
 }
 
-item _767 {
+item jures_body_pillow {
     id = 767
     image = 675
     value = 250
@@ -31486,7 +31486,7 @@ item _767 {
     rftags = []
 }
 
-item _768 {
+item new_years_decoration {
     id = 768
     image = 676
     value = 400
@@ -31527,7 +31527,7 @@ item _768 {
     rftags = []
 }
 
-item _769 {
+item miniature_tree {
     id = 769
     image = 677
     value = 1650
@@ -31568,7 +31568,7 @@ item _769 {
     rftags = []
 }
 
-item _770 {
+item bottle_of_soda {
     id = 770
     image = 678
     value = 500
@@ -31609,7 +31609,7 @@ item _770 {
     rftags = []
 }
 
-item _771 {
+item blue_capsule_drug {
     id = 771
     image = 679
     value = 7500
@@ -31650,7 +31650,7 @@ item _771 {
     rftags = []
 }
 
-item _772 {
+item tomato {
     id = 772
     image = 540
     value = 90
@@ -31691,7 +31691,7 @@ item _772 {
     rftags = []
 }
 
-item _773 {
+item large_bookshelf {
     id = 773
     image = 541
     value = 2400
@@ -31732,7 +31732,7 @@ item _773 {
     rftags = []
 }
 
-item _774 {
+item luxury_cabinet {
     id = 774
     image = 683
     value = 7200
@@ -31773,7 +31773,7 @@ item _774 {
     rftags = []
 }
 
-item _775 {
+item special_steamed_meat_bun {
     id = 775
     image = 542
     value = 160
@@ -31814,7 +31814,7 @@ item _775 {
     rftags = []
 }
 
-item _776 {
+item statue_of_kumiromi {
     id = 776
     image = 681
     value = 100000
@@ -31855,7 +31855,7 @@ item _776 {
     rftags = []
 }
 
-item _777 {
+item statue_of_mani {
     id = 777
     image = 682
     value = 100000
@@ -31896,7 +31896,7 @@ item _777 {
     rftags = []
 }
 
-item _778 {
+item luxury_sofa {
     id = 778
     image = 543
     value = 4900
@@ -31937,7 +31937,7 @@ item _778 {
     rftags = []
 }
 
-item _779 {
+item deer_head {
     id = 779
     image = 544
     value = 16000
@@ -31978,7 +31978,7 @@ item _779 {
     rftags = []
 }
 
-item _780 {
+item fur_carpet {
     id = 780
     image = 545
     value = 23000
@@ -32019,7 +32019,7 @@ item _780 {
     rftags = []
 }
 
-item _781 {
+item kitchen_knife {
     id = 781
     image = 546
     value = 2400
@@ -32060,7 +32060,7 @@ item _781 {
     rftags = []
 }
 
-item _782 {
+item dish {
     id = 782
     image = 360
     value = 100
@@ -32101,7 +32101,7 @@ item _782 {
     rftags = []
 }
 
-item _783 {
+item recipe {
     id = 783
     image = 550
     value = 1000
@@ -32142,7 +32142,7 @@ item _783 {
     rftags = []
 }
 
-item _784 {
+item recipe_holder {
     id = 784
     image = 549
     value = 2500
@@ -32183,7 +32183,7 @@ item _784 {
     rftags = []
 }
 
-item _785 {
+item bottle_of_salt {
     id = 785
     image = 553
     value = 80
@@ -32224,7 +32224,7 @@ item _785 {
     rftags = ["flavor"]
 }
 
-item _786 {
+item sack_of_sugar {
     id = 786
     image = 551
     value = 50
@@ -32265,7 +32265,7 @@ item _786 {
     rftags = ["flavor"]
 }
 
-item _787 {
+item puff_puff_bread {
     id = 787
     image = 552
     value = 350
@@ -32306,7 +32306,7 @@ item _787 {
     rftags = []
 }
 
-item _788 {
+item skull_bow {
     id = 788
     image = 402
     value = 2000
@@ -32347,7 +32347,7 @@ item _788 {
     rftags = []
 }
 
-item _789 {
+item pot_for_testing {
     id = 789
     image = 554
     value = 1000
@@ -32388,7 +32388,7 @@ item _789 {
     rftags = []
 }
 
-item _790 {
+item frying_pan_for_testing {
     id = 790
     image = 555
     value = 1000
@@ -32429,7 +32429,7 @@ item _790 {
     rftags = []
 }
 
-item _791 {
+item dragon_slayer {
     id = 791
     image = 697
     value = 72000
@@ -32470,7 +32470,7 @@ item _791 {
     rftags = []
 }
 
-item _792 {
+item putitoro {
     id = 792
     image = 695
     value = 2000
