@@ -7594,62 +7594,58 @@ void item_show_description()
                 i18n::s.get("core.locale.item.desc.bit.eternal_force");
             ++p;
         }
-        if (jp)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
-            for (int cnt = 0; cnt < 3; ++cnt)
+            if (description(cnt) == ""s)
             {
-                if (description(cnt) == ""s)
+                continue;
+            }
+            list(0, p) = 0;
+            listn(0, p) = "";
+            ++p;
+            std::string buf = trim_item_description(description(cnt), false);
+            notesel(buf);
+            for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+            {
+                noteget(q, cnt);
+                constexpr size_t max_width = 66;
+                if (strlen_u(q) > max_width)
                 {
-                    continue;
-                }
-                list(0, p) = 0;
-                listn(0, p) = "";
-                ++p;
-                std::string buf =
-                    trim_item_description(description(cnt), false);
-                notesel(buf);
-                for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-                {
-                    noteget(q, cnt);
-                    constexpr size_t max_width = 66;
-                    if (strlen_u(q) > max_width)
+                    p(2) = 0;
+                    for (size_t i = 0; i < strlen_u(q) / max_width + 1; ++i)
                     {
-                        p(2) = 0;
-                        for (size_t i = 0; i < strlen_u(q) / max_width + 1; ++i)
+                        auto one_line = strutil::take_by_width(
+                            q(0).substr(p(2)), max_width);
+                        p(1) = one_line.size();
+                        if (strutil::starts_with(q, u8"。", p(1) + p(2)))
                         {
-                            auto one_line = strutil::take_by_width(
-                                q(0).substr(p(2)), max_width);
-                            p(1) = one_line.size();
-                            if (strutil::starts_with(q, u8"。", p(1) + p(2)))
-                            {
-                                one_line += u8"。";
-                                p(1) += std::strlen(u8"。");
-                            }
-                            if (strutil::starts_with(q, u8"、", p(1) + p(2)))
-                            {
-                                one_line += u8"、";
-                                p(1) += std::strlen(u8"、");
-                            }
-                            if (strmid(q, p(2), p(1)) == ""s)
-                            {
-                                break;
-                            }
-                            list(0, p) = -1;
-                            listn(0, p) = one_line;
-                            ++p;
-                            p(2) += p(1);
+                            one_line += u8"。";
+                            p(1) += std::strlen(u8"。");
                         }
-                    }
-                    else
-                    {
-                        list(0, p) = 0;
-                        listn(0, p) = q;
-                        if (cnt == noteinfo() - 1)
+                        if (strutil::starts_with(q, u8"、", p(1) + p(2)))
                         {
-                            list(0, p) = -2;
+                            one_line += u8"、";
+                            p(1) += std::strlen(u8"、");
                         }
+                        if (strmid(q, p(2), p(1)) == ""s)
+                        {
+                            break;
+                        }
+                        list(0, p) = -1;
+                        listn(0, p) = one_line;
                         ++p;
+                        p(2) += p(1);
                     }
+                }
+                else
+                {
+                    list(0, p) = 0;
+                    listn(0, p) = q;
+                    if (cnt == noteinfo() - 1)
+                    {
+                        list(0, p) = -2;
+                    }
+                    ++p;
                 }
             }
         }

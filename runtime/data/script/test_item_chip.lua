@@ -5,6 +5,7 @@ local Chara = Elona.require("Chara")
 local Rand = Elona.require("Rand")
 
 local shopkeeper = 1
+local red_putit = 4
 local whom_dwell = 28
 
 local short_pic = 378
@@ -26,13 +27,15 @@ local function setup()
    for i=0,5 do
       for j=0,10 do
          for k=0,2 do
+            local x = 25 - 2 + i
+            local y = 25 - 5 + j
             local id
             if Rand.coinflip() then
                id = items[Rand.rnd(7) + 1]
             else
                id = Rand.rnd(500)
             end
-            local item = Item.create(25 - 2 + i, 25 - 5 + j, id, 1)
+            local item = Item.create(x, y, id, 1)
 
             if id == 503 or id == 504 then
                if Rand.coinflip() then
@@ -40,6 +43,10 @@ local function setup()
                else
                   item.param1 = tall_pic
                end
+            end
+
+            if Rand.one_in(6) then
+               Chara.create(x, y, red_putit)
             end
          end
       end

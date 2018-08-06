@@ -167,7 +167,7 @@ void help_halt()
 
 void txtef(color_index_t color)
 {
-    txtef(static_cast<int>(color));
+    txtef(static_cast<int>(color) % 21);
 }
 
 

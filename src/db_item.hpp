@@ -3,6 +3,7 @@
 #include <array>
 #include <unordered_map>
 #include "cat.hpp"
+#include "enums.hpp"
 #include "lion.hpp"
 #include "optional.hpp"
 
@@ -26,8 +27,6 @@ struct item_data
     int dv;
     int material;
     int chargelevel;
-    std::array<std::string, 4> description_jp;
-    std::string description_en;
     bool is_readable;
     bool is_zappable;
     bool is_drinkable;
@@ -42,13 +41,12 @@ struct item_data
     int rarity;
     int coefficient;
     int light;
-    std::string katakana_name;
-    std::string original_name_jp;
-    std::string original_name_en;
     std::string originalnameref2;
     bool has_random_name;
+    color_index_t color;
     std::string filter;
     std::string rffilter;
+    std::string locale_key_prefix;
 };
 
 

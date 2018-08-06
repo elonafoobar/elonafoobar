@@ -1,6 +1,8 @@
 #include "ability.hpp"
+#include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
@@ -88,7 +90,10 @@ int access_character_info()
         {
             cdata[rc].image = data->female_image;
         }
-        cdata[rc].image += data->color * 1000;
+        {
+            int color = generate_color(data->color, cdata[rc].id);
+            cdata[rc].image += color * 1000;
+        }
         eqammo(0) = data->eqammo_0;
         eqammo(1) = data->eqammo_1;
         eqmultiweapon = data->eqmultiweapon;

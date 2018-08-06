@@ -1554,5 +1554,31 @@ void calcpartyscore2()
 }
 
 
+int generate_color(color_index_t index, int id)
+{
+    int color = static_cast<int>(index);
+    if (index == color_index_t::random_furniture)
+    {
+        color = choice(randcolor);
+    }
+    if (index == color_index_t::random_seeded)
+    {
+        // The choice can't be completely random - it has to be the
+        // same as all other items of this type. So, base it off the
+        // random seed of the current save data.
+        int p = (id % gdata_random_seed) % 6;
+        color = _randcolor(p);
+    }
+    if (index == color_index_t::random_any)
+    {
+        color = rnd(21);
+    }
+
+    // Only accept the first 21 color indices, as the ones after that are
+    // used for random generation.
+    return color % 21;
+}
+
+
 
 } // namespace elona

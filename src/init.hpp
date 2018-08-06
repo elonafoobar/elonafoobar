@@ -7,6 +7,7 @@ namespace elona
 
 void initialize_config(const fs::path&);
 void initialize_cat_db();
+void initialize_i18n();
 void initialize_lion_db();
 void initialize_elona();
 void init_fovlist();

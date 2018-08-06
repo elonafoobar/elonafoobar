@@ -8,7 +8,6 @@
 #include "class.hpp"
 #include "ctrl_file.hpp"
 #include "db_item.hpp"
-#include "draw.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
 #include "fov.hpp"
@@ -349,7 +348,7 @@ character_data character_db_ex::convert(
         ai_move,
         can_talk,
         class_,
-        color,
+        static_cast<color_index_t>(color),
         creaturepack,
         cspecialeq,
         damage_reaction_info,

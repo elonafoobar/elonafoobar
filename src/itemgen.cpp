@@ -210,23 +210,7 @@ int do_create_item(int slot, int x, int y)
     access_item_db(3);
     access_item_db(2);
 
-    inv[ci].color = icolref(inv[ci].id);
-    if (inv[ci].color == static_cast<int>(color_index_t::random_furniture))
-    {
-        inv[ci].color = choice(randcolor);
-    }
-    if (inv[ci].color == static_cast<int>(color_index_t::random_seeded))
-    {
-        // The choice can't be completely random - it has to be the
-        // same as all other items of this type. So, base it off the
-        // random seed of this save data.
-        int p = (inv[ci].id % gdata_random_seed) % 6;
-        inv[ci].color = _randcolor(p);
-    }
-    if (inv[ci].color == static_cast<int>(color_index_t::random_any))
-    {
-        inv[ci].color = rnd(21);
-    }
+    inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
 
     if (inv[ci].id == 24 && inv[ci].param1 == 0)
     {
