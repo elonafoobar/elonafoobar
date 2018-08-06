@@ -52,7 +52,18 @@ enum class color_index_t : int
     light_blue = 17,
     light_purple = 18,
     light_green = 19,
-    yellow_green = 20
+    yellow_green = 20,
+
+    // Cosmetic items
+    random_furniture = 21,
+
+    // Items where the color must be the same for every item of its
+    // type, but the color is based on a random seed (potions, rods,
+    // etc.)
+    random_seeded = 22,
+
+    // Any of the first 21 colors.
+    random_any = 23,
 };
 
 enum class curse_state_t : int

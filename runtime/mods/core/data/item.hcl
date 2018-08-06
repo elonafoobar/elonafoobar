@@ -37,6 +37,7 @@ item bug {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item long_sword {
@@ -78,6 +79,7 @@ item long_sword {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item dagger {
@@ -119,6 +121,7 @@ item dagger {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item hand_axe {
@@ -160,6 +163,7 @@ item hand_axe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item club {
@@ -201,6 +205,7 @@ item club {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item magic_hat {
@@ -242,6 +247,7 @@ item magic_hat {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fairy_hat {
@@ -283,6 +289,7 @@ item fairy_hat {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item breastplate {
@@ -324,6 +331,7 @@ item breastplate {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item robe {
@@ -365,6 +373,7 @@ item robe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item decorated_gloves {
@@ -406,6 +415,7 @@ item decorated_gloves {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item thick_gauntlets {
@@ -447,6 +457,7 @@ item thick_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item heavy_boots {
@@ -488,6 +499,7 @@ item heavy_boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_boots {
@@ -529,6 +541,7 @@ item composite_boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item decorative_ring {
@@ -570,6 +583,7 @@ item decorative_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_identify {
@@ -611,6 +625,7 @@ item scroll_of_identify {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_oracle {
@@ -652,6 +667,7 @@ item scroll_of_oracle {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_teleportation {
@@ -693,6 +709,7 @@ item scroll_of_teleportation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_incognito {
@@ -734,6 +751,7 @@ item scroll_of_incognito {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_identify {
@@ -775,6 +793,7 @@ item rod_of_identify {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_teleportation {
@@ -816,6 +835,7 @@ item rod_of_teleportation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_teleportation {
@@ -857,6 +877,7 @@ item spellbook_of_teleportation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_identify {
@@ -898,6 +919,7 @@ item spellbook_of_identify {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_uncurse {
@@ -939,6 +961,7 @@ item spellbook_of_uncurse {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item book_a {
@@ -980,6 +1003,7 @@ item book_a {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item book_b {
@@ -1021,6 +1045,7 @@ item book_b {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bugged_book {
@@ -1062,6 +1087,7 @@ item bugged_book {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bottle_of_dirty_water {
@@ -1103,6 +1129,7 @@ item bottle_of_dirty_water {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_blindness {
@@ -1144,6 +1171,7 @@ item potion_of_blindness {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_confusion {
@@ -1185,6 +1213,7 @@ item potion_of_confusion {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_paralysis {
@@ -1226,6 +1255,7 @@ item potion_of_paralysis {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item sleeping_drug {
@@ -1267,6 +1297,7 @@ item sleeping_drug {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item bottle_of_crim_ale {
@@ -1308,6 +1339,7 @@ item bottle_of_crim_ale {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_ice_bolt {
@@ -1349,6 +1381,7 @@ item spellbook_of_ice_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_fire_bolt {
@@ -1390,6 +1423,7 @@ item spellbook_of_fire_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_lightning_bolt {
@@ -1431,6 +1465,7 @@ item spellbook_of_lightning_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item earth_crystal {
@@ -1472,6 +1507,7 @@ item earth_crystal {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Yellow
 }
 
 item mana_crystal {
@@ -1513,6 +1549,7 @@ item mana_crystal {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Red
 }
 
 item sun_crystal {
@@ -1554,6 +1591,7 @@ item sun_crystal {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Orange
 }
 
 item gold_bar {
@@ -1595,6 +1633,7 @@ item gold_bar {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
 }
 
 item raw_ore_of_rubynus {
@@ -1636,6 +1675,7 @@ item raw_ore_of_rubynus {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Red
 }
 
 item raw_ore_of_mika {
@@ -1677,6 +1717,7 @@ item raw_ore_of_mika {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
 }
 
 item raw_ore_of_emerald {
@@ -1718,6 +1759,7 @@ item raw_ore_of_emerald {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Green
 }
 
 item raw_ore_of_diamond {
@@ -1759,6 +1801,7 @@ item raw_ore_of_diamond {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Blue
 }
 
 item wood_piece {
@@ -1800,6 +1843,7 @@ item wood_piece {
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
 }
 
 item junk_stone {
@@ -1841,6 +1885,7 @@ item junk_stone {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
 }
 
 item garbage {
@@ -1882,6 +1927,7 @@ item garbage {
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
 }
 
 item broken_vase {
@@ -1923,6 +1969,7 @@ item broken_vase {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item washing {
@@ -1964,6 +2011,7 @@ item washing {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bonfire {
@@ -2005,6 +2053,7 @@ item bonfire {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item flag {
@@ -2046,6 +2095,7 @@ item flag {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item broken_sword {
@@ -2087,6 +2137,7 @@ item broken_sword {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bone_fragment {
@@ -2128,6 +2179,7 @@ item bone_fragment {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item skeleton {
@@ -2169,6 +2221,7 @@ item skeleton {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tombstone {
@@ -2210,6 +2263,7 @@ item tombstone {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item gold_piece {
@@ -2251,6 +2305,7 @@ item gold_piece {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item platinum_coin {
@@ -2292,6 +2347,7 @@ item platinum_coin {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
 }
 
 item diablo {
@@ -2333,6 +2389,7 @@ item diablo {
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
 }
 
 item zantetsu {
@@ -2374,6 +2431,7 @@ item zantetsu {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item long_bow {
@@ -2415,6 +2473,7 @@ item long_bow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item knight_shield {
@@ -2456,6 +2515,7 @@ item knight_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pistol {
@@ -2497,6 +2557,7 @@ item pistol {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item arrow {
@@ -2538,6 +2599,7 @@ item arrow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bullet {
@@ -2579,6 +2641,7 @@ item bullet {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item scythe_of_void {
@@ -2620,6 +2683,7 @@ item scythe_of_void {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item mournblade {
@@ -2661,6 +2725,7 @@ item mournblade {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item light_cloak {
@@ -2702,6 +2767,7 @@ item light_cloak {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item girdle {
@@ -2743,6 +2809,7 @@ item girdle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item decorative_amulet {
@@ -2784,6 +2851,7 @@ item decorative_amulet {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_cure_minor_wound {
@@ -2825,6 +2893,7 @@ item potion_of_cure_minor_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_cure_major_wound {
@@ -2866,6 +2935,7 @@ item potion_of_cure_major_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_cure_critical_wound {
@@ -2907,6 +2977,7 @@ item potion_of_cure_critical_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_healing {
@@ -2948,6 +3019,7 @@ item potion_of_healing {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_healer {
@@ -2989,6 +3061,7 @@ item potion_of_healer {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item ragnarok {
@@ -3030,6 +3103,7 @@ item ragnarok {
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
 }
 
 item potion_of_healer_odina {
@@ -3071,6 +3145,7 @@ item potion_of_healer_odina {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_healer_eris {
@@ -3112,6 +3187,7 @@ item potion_of_healer_eris {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_healer_jure {
@@ -3153,6 +3229,7 @@ item potion_of_healer_jure {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item round_chair {
@@ -3194,6 +3271,7 @@ item round_chair {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bookshelf {
@@ -3235,6 +3313,7 @@ item bookshelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item luxury_drawer {
@@ -3276,6 +3355,7 @@ item luxury_drawer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item boring_bed {
@@ -3317,6 +3397,7 @@ item boring_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item rag_doll {
@@ -3358,6 +3439,7 @@ item rag_doll {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = RandomFurniture
 }
 
 item toy {
@@ -3399,6 +3481,7 @@ item toy {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item modern_table {
@@ -3440,6 +3523,7 @@ item modern_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item dining_table {
@@ -3481,6 +3565,7 @@ item dining_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item armor {
@@ -3522,6 +3607,7 @@ item armor {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item lot_of_goods {
@@ -3563,6 +3649,7 @@ item lot_of_goods {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item lot_of_accessories {
@@ -3604,6 +3691,7 @@ item lot_of_accessories {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item grand_piano {
@@ -3645,6 +3733,7 @@ item grand_piano {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bar_table_alpha {
@@ -3686,6 +3775,7 @@ item bar_table_alpha {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item bar_table_beta {
@@ -3727,6 +3817,7 @@ item bar_table_beta {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item barrel {
@@ -3768,6 +3859,7 @@ item barrel {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item modern_chair {
@@ -3809,6 +3901,7 @@ item modern_chair {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = RandomFurniture
 }
 
 item pick {
@@ -3850,6 +3943,7 @@ item pick {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item lantern {
@@ -3891,6 +3985,7 @@ item lantern {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item decorative_armor {
@@ -3932,6 +4027,7 @@ item decorative_armor {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item anvil {
@@ -3973,6 +4069,7 @@ item anvil {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item closed_pot {
@@ -4014,6 +4111,7 @@ item closed_pot {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item open_pot {
@@ -4055,6 +4153,7 @@ item open_pot {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item academic_table {
@@ -4096,6 +4195,7 @@ item academic_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item rack_of_potions {
@@ -4137,6 +4237,7 @@ item rack_of_potions {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item square_chair {
@@ -4178,6 +4279,7 @@ item square_chair {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item cheap_chair {
@@ -4219,6 +4321,7 @@ item cheap_chair {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item cupboard {
@@ -4260,6 +4363,7 @@ item cupboard {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item barn {
@@ -4301,6 +4405,7 @@ item barn {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item neat_shelf {
@@ -4342,6 +4447,7 @@ item neat_shelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item closet {
@@ -4383,6 +4489,7 @@ item closet {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item variety_of_tools {
@@ -4424,6 +4531,7 @@ item variety_of_tools {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item variety_of_goods {
@@ -4465,6 +4573,7 @@ item variety_of_goods {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item well {
@@ -4506,6 +4615,7 @@ item well {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item variety_of_clothes {
@@ -4547,6 +4657,7 @@ item variety_of_clothes {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item furnace {
@@ -4588,6 +4699,7 @@ item furnace {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item oven {
@@ -4629,6 +4741,7 @@ item oven {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item sign {
@@ -4670,6 +4783,7 @@ item sign {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item crossroad_sign {
@@ -4711,6 +4825,7 @@ item crossroad_sign {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item board {
@@ -4752,6 +4867,7 @@ item board {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_minor_teleportation {
@@ -4793,6 +4909,7 @@ item spellbook_of_minor_teleportation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item empty_basket {
@@ -4834,6 +4951,7 @@ item empty_basket {
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = RandomFurniture
 }
 
 item spellbook_of_summon_monsters {
@@ -4875,6 +4993,7 @@ item spellbook_of_summon_monsters {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_cure_minor_wound {
@@ -4916,6 +5035,7 @@ item rod_of_cure_minor_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_magic_missile {
@@ -4957,6 +5077,7 @@ item rod_of_magic_missile {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_summon_monsters {
@@ -4998,6 +5119,7 @@ item rod_of_summon_monsters {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_ice_bolt {
@@ -5039,6 +5161,7 @@ item rod_of_ice_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_fire_bolt {
@@ -5080,6 +5203,7 @@ item rod_of_fire_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item show_case_of_breads {
@@ -5121,6 +5245,7 @@ item show_case_of_breads {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rod_of_heal {
@@ -5162,6 +5287,7 @@ item rod_of_heal {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item beaker {
@@ -5203,6 +5329,7 @@ item beaker {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item alchemy_kit {
@@ -5244,6 +5371,7 @@ item alchemy_kit {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item pentagram {
@@ -5285,6 +5413,7 @@ item pentagram {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item small_foliage_plant {
@@ -5326,6 +5455,7 @@ item small_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item rose {
@@ -5367,6 +5497,7 @@ item rose {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item large_foliage_plant {
@@ -5408,6 +5539,7 @@ item large_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item sage {
@@ -5449,6 +5581,7 @@ item sage {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item gazania {
@@ -5490,6 +5623,7 @@ item gazania {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item nerine {
@@ -5531,6 +5665,7 @@ item nerine {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item anemos {
@@ -5572,6 +5707,7 @@ item anemos {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item foxtail_grass {
@@ -5613,6 +5749,7 @@ item foxtail_grass {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item carnation {
@@ -5654,6 +5791,7 @@ item carnation {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item statue_ornamented_with_plants {
@@ -5695,6 +5833,7 @@ item statue_ornamented_with_plants {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_ornamented_with_flowers {
@@ -5736,6 +5875,7 @@ item statue_ornamented_with_flowers {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item canvas {
@@ -5777,6 +5917,7 @@ item canvas {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item map {
@@ -5818,6 +5959,7 @@ item map {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item food_maker {
@@ -5859,6 +6001,7 @@ item food_maker {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bundle_of_bows {
@@ -5900,6 +6043,7 @@ item bundle_of_bows {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bundle_of_weapons {
@@ -5941,6 +6085,7 @@ item bundle_of_weapons {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item decorated_cloth {
@@ -5982,6 +6127,7 @@ item decorated_cloth {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item decorated_armor {
@@ -6023,6 +6169,7 @@ item decorated_armor {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item statue_of_armor {
@@ -6064,6 +6211,7 @@ item statue_of_armor {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item disorderly_book {
@@ -6105,6 +6253,7 @@ item disorderly_book {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item lot_of_books {
@@ -6146,6 +6295,7 @@ item lot_of_books {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item craft_rack {
@@ -6187,6 +6337,7 @@ item craft_rack {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item craft_book_shelf {
@@ -6228,6 +6379,7 @@ item craft_book_shelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item lot_of_alcohols {
@@ -6269,6 +6421,7 @@ item lot_of_alcohols {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item kitchen {
@@ -6310,6 +6463,7 @@ item kitchen {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item washstand {
@@ -6351,6 +6505,7 @@ item washstand {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item kitchen_oven {
@@ -6392,6 +6547,7 @@ item kitchen_oven {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item narrow_dining_table {
@@ -6433,6 +6589,7 @@ item narrow_dining_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item elegant_table {
@@ -6474,6 +6631,7 @@ item elegant_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item gorgeous_candlestick {
@@ -6515,6 +6673,7 @@ item gorgeous_candlestick {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item simple_shelf {
@@ -6556,6 +6715,7 @@ item simple_shelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item sewing_kit {
@@ -6597,6 +6757,7 @@ item sewing_kit {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item carpenters_tool {
@@ -6638,6 +6799,7 @@ item carpenters_tool {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item messy_cloth {
@@ -6679,6 +6841,7 @@ item messy_cloth {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item silk_cloth {
@@ -6720,6 +6883,7 @@ item silk_cloth {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item collapsed_grave {
@@ -6761,6 +6925,7 @@ item collapsed_grave {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item crumbled_grave {
@@ -6802,6 +6967,7 @@ item crumbled_grave {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item grave_of_ornamented_with_flowers {
@@ -6843,6 +7009,7 @@ item grave_of_ornamented_with_flowers {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item brand_new_grave {
@@ -6884,6 +7051,7 @@ item brand_new_grave {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item solemn_tomb {
@@ -6925,6 +7093,7 @@ item solemn_tomb {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ancient_tomb {
@@ -6966,6 +7135,7 @@ item ancient_tomb {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item old_grave {
@@ -7007,6 +7177,7 @@ item old_grave {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item altar {
@@ -7048,6 +7219,7 @@ item altar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ceremony_altar {
@@ -7089,6 +7261,7 @@ item ceremony_altar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fountain {
@@ -7130,6 +7303,7 @@ item fountain {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bunk_bed {
@@ -7171,6 +7345,7 @@ item bunk_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rod_of_lightning_bolt {
@@ -7212,6 +7387,7 @@ item rod_of_lightning_bolt {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_slow {
@@ -7253,6 +7429,7 @@ item rod_of_slow {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item quwapana {
@@ -7294,6 +7471,7 @@ item quwapana {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item aloe {
@@ -7335,6 +7513,7 @@ item aloe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item edible_wild_plant {
@@ -7376,6 +7555,7 @@ item edible_wild_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item apple {
@@ -7417,6 +7597,7 @@ item apple {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item grape {
@@ -7458,6 +7639,7 @@ item grape {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kiwi {
@@ -7499,6 +7681,7 @@ item kiwi {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cherry {
@@ -7540,6 +7723,7 @@ item cherry {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item guava {
@@ -7581,6 +7765,7 @@ item guava {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item carrot {
@@ -7622,6 +7807,7 @@ item carrot {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item radish {
@@ -7663,6 +7849,7 @@ item radish {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sweet_potato {
@@ -7704,6 +7891,7 @@ item sweet_potato {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item lettuce {
@@ -7745,6 +7933,7 @@ item lettuce {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item stack_of_dishes {
@@ -7786,6 +7975,7 @@ item stack_of_dishes {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item imo {
@@ -7827,6 +8017,7 @@ item imo {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item api_nut {
@@ -7868,6 +8059,7 @@ item api_nut {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item strawberry {
@@ -7909,6 +8101,7 @@ item strawberry {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item healthy_leaf {
@@ -7950,6 +8143,7 @@ item healthy_leaf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rainbow_fruit {
@@ -7991,6 +8185,7 @@ item rainbow_fruit {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item qucche {
@@ -8032,6 +8227,7 @@ item qucche {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tangerine {
@@ -8073,6 +8269,7 @@ item tangerine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item lemon {
@@ -8114,6 +8311,7 @@ item lemon {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item green_pea {
@@ -8155,6 +8353,7 @@ item green_pea {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cbocchi {
@@ -8196,6 +8395,7 @@ item cbocchi {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item melon {
@@ -8237,6 +8437,7 @@ item melon {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item leccho {
@@ -8278,6 +8479,7 @@ item leccho {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rod_of_magic_mapping {
@@ -8319,6 +8521,7 @@ item rod_of_magic_mapping {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_cure {
@@ -8360,6 +8563,7 @@ item rod_of_cure {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item corpse {
@@ -8401,6 +8605,7 @@ item corpse {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bottle_of_whisky {
@@ -8442,6 +8647,7 @@ item bottle_of_whisky {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ether_dagger {
@@ -8483,6 +8689,7 @@ item ether_dagger {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item bow_of_vinderre {
@@ -8524,6 +8731,7 @@ item bow_of_vinderre {
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
 }
 
 item worthless_fake_gold_bar {
@@ -8565,6 +8773,7 @@ item worthless_fake_gold_bar {
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
 }
 
 item scroll_of_uncurse {
@@ -8606,6 +8815,7 @@ item scroll_of_uncurse {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item stone {
@@ -8647,6 +8857,7 @@ item stone {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sickle {
@@ -8688,6 +8899,7 @@ item sickle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item staff {
@@ -8729,6 +8941,7 @@ item staff {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spear {
@@ -8770,6 +8983,7 @@ item spear {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ore_piece {
@@ -8811,6 +9025,7 @@ item ore_piece {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item lot_of_empty_bottles {
@@ -8852,6 +9067,7 @@ item lot_of_empty_bottles {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item basket {
@@ -8893,6 +9109,7 @@ item basket {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = RandomFurniture
 }
 
 item empty_bowl {
@@ -8934,6 +9151,7 @@ item empty_bowl {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item bowl {
@@ -8975,6 +9193,7 @@ item bowl {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item tight_rope {
@@ -9016,6 +9235,7 @@ item tight_rope {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item dead_fish {
@@ -9057,6 +9277,7 @@ item dead_fish {
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
 }
 
 item straw {
@@ -9098,6 +9319,7 @@ item straw {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item animal_bone {
@@ -9139,6 +9361,7 @@ item animal_bone {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pot {
@@ -9180,6 +9403,7 @@ item pot {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item katana {
@@ -9221,6 +9445,7 @@ item katana {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scimitar {
@@ -9262,6 +9487,7 @@ item scimitar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item battle_axe {
@@ -9303,6 +9529,7 @@ item battle_axe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item hammer {
@@ -9344,6 +9571,7 @@ item hammer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item trident {
@@ -9385,6 +9613,7 @@ item trident {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item long_staff {
@@ -9426,6 +9655,7 @@ item long_staff {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item short_bow {
@@ -9467,6 +9697,7 @@ item short_bow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item machine_gun {
@@ -9508,6 +9739,7 @@ item machine_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item claymore {
@@ -9549,6 +9781,7 @@ item claymore {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ration {
@@ -9590,6 +9823,7 @@ item ration {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bardiche {
@@ -9631,6 +9865,7 @@ item bardiche {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item halberd {
@@ -9672,6 +9907,7 @@ item halberd {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_return {
@@ -9713,6 +9949,7 @@ item scroll_of_return {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item figurine_of_warrior {
@@ -9754,6 +9991,7 @@ item figurine_of_warrior {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item figurine_of_sword {
@@ -9795,6 +10033,7 @@ item figurine_of_sword {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item bejeweled_chest {
@@ -9836,6 +10075,7 @@ item bejeweled_chest {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item chest {
@@ -9877,6 +10117,7 @@ item chest {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item safe {
@@ -9918,6 +10159,7 @@ item safe {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item scroll_of_magical_map {
@@ -9959,6 +10201,7 @@ item scroll_of_magical_map {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_gain_attribute {
@@ -10000,6 +10243,7 @@ item scroll_of_gain_attribute {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_wonder {
@@ -10041,6 +10285,7 @@ item scroll_of_wonder {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_minor_teleportation {
@@ -10082,6 +10327,7 @@ item scroll_of_minor_teleportation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_magic_mapping {
@@ -10123,6 +10369,7 @@ item spellbook_of_magic_mapping {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_oracle {
@@ -10164,6 +10411,7 @@ item spellbook_of_oracle {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_return {
@@ -10205,6 +10453,7 @@ item spellbook_of_return {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_cure_minor_wound {
@@ -10246,6 +10495,7 @@ item spellbook_of_cure_minor_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_cure_critical_wound {
@@ -10287,6 +10537,7 @@ item spellbook_of_cure_critical_wound {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_cure_eris {
@@ -10328,6 +10579,7 @@ item spellbook_of_cure_eris {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_cure_jure {
@@ -10369,6 +10621,7 @@ item spellbook_of_cure_jure {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item bottle_of_beer {
@@ -10410,6 +10663,7 @@ item bottle_of_beer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item horn {
@@ -10451,6 +10705,7 @@ item horn {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item campfire {
@@ -10492,6 +10747,7 @@ item campfire {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item portable_cooking_tool {
@@ -10533,6 +10789,7 @@ item portable_cooking_tool {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_magic_arrow {
@@ -10574,6 +10831,7 @@ item spellbook_of_magic_arrow {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item stick_bread {
@@ -10615,6 +10873,7 @@ item stick_bread {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item raw_noodle {
@@ -10656,6 +10915,7 @@ item raw_noodle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sack_of_flour {
@@ -10697,6 +10957,7 @@ item sack_of_flour {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bomb_fish {
@@ -10738,6 +10999,7 @@ item bomb_fish {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item poison {
@@ -10779,6 +11041,7 @@ item poison {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_nether_eye {
@@ -10820,6 +11083,7 @@ item spellbook_of_nether_eye {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_chaos_eye {
@@ -10861,6 +11125,7 @@ item spellbook_of_chaos_eye {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_nerve_eye {
@@ -10902,6 +11167,7 @@ item spellbook_of_nerve_eye {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item wakizashi {
@@ -10943,6 +11209,7 @@ item wakizashi {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_darkness_beam {
@@ -10984,6 +11251,7 @@ item spellbook_of_darkness_beam {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_illusion_beam {
@@ -11025,6 +11293,7 @@ item spellbook_of_illusion_beam {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_ice_ball {
@@ -11066,6 +11335,7 @@ item spellbook_of_ice_ball {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_fire_ball {
@@ -11107,6 +11377,7 @@ item spellbook_of_fire_ball {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_sound_ball {
@@ -11148,6 +11419,7 @@ item spellbook_of_sound_ball {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_chaos_ball {
@@ -11189,6 +11461,7 @@ item spellbook_of_chaos_ball {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item fire_wood {
@@ -11230,6 +11503,7 @@ item fire_wood {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item scarecrow {
@@ -11271,6 +11545,7 @@ item scarecrow {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item broom {
@@ -11312,6 +11587,7 @@ item broom {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item long_pillar {
@@ -11353,6 +11629,7 @@ item long_pillar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item broken_pillar {
@@ -11394,6 +11671,7 @@ item broken_pillar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item street_lamp {
@@ -11435,6 +11713,7 @@ item street_lamp {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item water_tub {
@@ -11476,6 +11755,7 @@ item water_tub {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item comfortable_table {
@@ -11517,6 +11797,7 @@ item comfortable_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item inner_tube {
@@ -11558,6 +11839,7 @@ item inner_tube {
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
 }
 
 item mysterious_map {
@@ -11599,6 +11881,7 @@ item mysterious_map {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item suitcase {
@@ -11640,6 +11923,7 @@ item suitcase {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item wallet {
@@ -11681,6 +11965,7 @@ item wallet {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_restore_body {
@@ -11722,6 +12007,7 @@ item potion_of_restore_body {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_restore_spirit {
@@ -11763,6 +12049,7 @@ item potion_of_restore_spirit {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_potential {
@@ -11804,6 +12091,7 @@ item potion_of_potential {
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_curse {
@@ -11845,6 +12133,7 @@ item scroll_of_curse {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_wishing {
@@ -11886,6 +12175,7 @@ item spellbook_of_wishing {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_wishing {
@@ -11927,6 +12217,7 @@ item rod_of_wishing {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item well_kept_armor {
@@ -11968,6 +12259,7 @@ item well_kept_armor {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rack_of_good {
@@ -12009,6 +12301,7 @@ item rack_of_good {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rack_of_accessories {
@@ -12050,6 +12343,7 @@ item rack_of_accessories {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item towel {
@@ -12091,6 +12385,7 @@ item towel {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item ragged_table {
@@ -12132,6 +12427,7 @@ item ragged_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cabinet {
@@ -12173,6 +12469,7 @@ item cabinet {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item luxury_bed {
@@ -12214,6 +12511,7 @@ item luxury_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item vase {
@@ -12255,6 +12553,7 @@ item vase {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item high_grade_dresser {
@@ -12296,6 +12595,7 @@ item high_grade_dresser {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item neat_bar_table {
@@ -12337,6 +12637,7 @@ item neat_bar_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item large_bouquet {
@@ -12378,6 +12679,7 @@ item large_bouquet {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item chest_of_clothes {
@@ -12419,6 +12721,7 @@ item chest_of_clothes {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item giant_bed {
@@ -12460,6 +12763,7 @@ item giant_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item plain_bed {
@@ -12501,6 +12805,7 @@ item plain_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item coffin {
@@ -12542,6 +12847,7 @@ item coffin {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item food_processor {
@@ -12583,6 +12889,7 @@ item food_processor {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item soft_bed {
@@ -12624,6 +12931,7 @@ item soft_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cheap_rack {
@@ -12665,6 +12973,7 @@ item cheap_rack {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item dresser {
@@ -12706,6 +13015,7 @@ item dresser {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item clean_bed {
@@ -12747,6 +13057,7 @@ item clean_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bathtub {
@@ -12788,6 +13099,7 @@ item bathtub {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pachisuro_machine {
@@ -12829,6 +13141,7 @@ item pachisuro_machine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item casino_table {
@@ -12870,6 +13183,7 @@ item casino_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item slot_machine {
@@ -12911,6 +13225,7 @@ item slot_machine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item darts_board {
@@ -12952,6 +13267,7 @@ item darts_board {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item big_foliage_plant {
@@ -12993,6 +13309,7 @@ item big_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item old_shelf {
@@ -13034,6 +13351,7 @@ item old_shelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item old_bookshelf {
@@ -13075,6 +13393,7 @@ item old_bookshelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cheap_bed {
@@ -13116,6 +13435,7 @@ item cheap_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cheap_table {
@@ -13157,6 +13477,7 @@ item cheap_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item neat_rack {
@@ -13198,6 +13519,7 @@ item neat_rack {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item simple_dresser {
@@ -13239,6 +13561,7 @@ item simple_dresser {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item big_cupboard {
@@ -13280,6 +13603,7 @@ item big_cupboard {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sacred_altar {
@@ -13321,6 +13645,7 @@ item sacred_altar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item comfortable_bed {
@@ -13362,6 +13687,7 @@ item comfortable_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item simple_rack {
@@ -13403,6 +13729,7 @@ item simple_rack {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item wide_chair {
@@ -13444,6 +13771,7 @@ item wide_chair {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item upright_piano {
@@ -13485,6 +13813,7 @@ item upright_piano {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_cross {
@@ -13526,6 +13855,7 @@ item statue_of_cross {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item stump {
@@ -13567,6 +13897,7 @@ item stump {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item dress {
@@ -13608,6 +13939,7 @@ item dress {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item table {
@@ -13649,6 +13981,7 @@ item table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_travelers_food {
@@ -13690,6 +14023,7 @@ item cargo_travelers_food {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item throne {
@@ -13731,6 +14065,7 @@ item throne {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item golden_pedestal {
@@ -13772,6 +14107,7 @@ item golden_pedestal {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item golden_statue {
@@ -13813,6 +14149,7 @@ item golden_statue {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item remains_skin {
@@ -13854,6 +14191,7 @@ item remains_skin {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item remains_blood {
@@ -13895,6 +14233,7 @@ item remains_blood {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item remains_eye {
@@ -13936,6 +14275,7 @@ item remains_eye {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item remains_heart {
@@ -13977,6 +14317,7 @@ item remains_heart {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item remains_bone {
@@ -14018,6 +14359,7 @@ item remains_bone {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fishing_pole {
@@ -14059,6 +14401,7 @@ item fishing_pole {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rune {
@@ -14100,6 +14443,7 @@ item rune {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deed {
@@ -14141,6 +14485,7 @@ item deed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
 }
 
 item moonfish {
@@ -14182,6 +14527,7 @@ item moonfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item sardine {
@@ -14223,6 +14569,7 @@ item sardine {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item flatfish {
@@ -14264,6 +14611,7 @@ item flatfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item manboo {
@@ -14305,6 +14653,7 @@ item manboo {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item seabream {
@@ -14346,6 +14695,7 @@ item seabream {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item salmon {
@@ -14387,6 +14737,7 @@ item salmon {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item globefish {
@@ -14428,6 +14779,7 @@ item globefish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item tuna {
@@ -14469,6 +14821,7 @@ item tuna {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item cutlassfish {
@@ -14510,6 +14863,7 @@ item cutlassfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item sandborer {
@@ -14551,6 +14905,7 @@ item sandborer {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
 }
 
 item gloves_of_vesda {
@@ -14592,6 +14947,7 @@ item gloves_of_vesda {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item blood_moon {
@@ -14633,6 +14989,7 @@ item blood_moon {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item ring_of_steel_dragon {
@@ -14674,6 +15031,7 @@ item ring_of_steel_dragon {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item staff_of_insanity {
@@ -14715,6 +15073,7 @@ item staff_of_insanity {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rankis {
@@ -14756,6 +15115,7 @@ item rankis {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item palmia_pride {
@@ -14797,6 +15157,7 @@ item palmia_pride {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item shopkeepers_trunk {
@@ -14838,6 +15199,7 @@ item shopkeepers_trunk {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_greater_identify {
@@ -14879,6 +15241,7 @@ item scroll_of_greater_identify {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_vanish_curse {
@@ -14920,6 +15283,7 @@ item scroll_of_vanish_curse {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_defender {
@@ -14961,6 +15325,7 @@ item potion_of_defender {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_holy_shield {
@@ -15002,6 +15367,7 @@ item spellbook_of_holy_shield {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_silence {
@@ -15043,6 +15409,7 @@ item rod_of_silence {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_silence {
@@ -15084,6 +15451,7 @@ item spellbook_of_silence {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_silence {
@@ -15125,6 +15493,7 @@ item potion_of_silence {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_regeneration {
@@ -15166,6 +15535,7 @@ item spellbook_of_regeneration {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_troll_blood {
@@ -15207,6 +15577,7 @@ item potion_of_troll_blood {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_resistance {
@@ -15248,6 +15619,7 @@ item spellbook_of_resistance {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_resistance {
@@ -15289,6 +15661,7 @@ item potion_of_resistance {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_speed {
@@ -15330,6 +15703,7 @@ item spellbook_of_speed {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_slow {
@@ -15371,6 +15745,7 @@ item spellbook_of_slow {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_speed {
@@ -15412,6 +15787,7 @@ item potion_of_speed {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_slow {
@@ -15453,6 +15829,7 @@ item potion_of_slow {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_speed {
@@ -15494,6 +15871,7 @@ item rod_of_speed {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_hero {
@@ -15535,6 +15913,7 @@ item spellbook_of_hero {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_hero {
@@ -15576,6 +15955,7 @@ item potion_of_hero {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_weakness {
@@ -15617,6 +15997,7 @@ item spellbook_of_weakness {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_elemental_scar {
@@ -15658,6 +16039,7 @@ item spellbook_of_elemental_scar {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_weakness {
@@ -15699,6 +16081,7 @@ item potion_of_weakness {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_holy_veil {
@@ -15740,6 +16123,7 @@ item spellbook_of_holy_veil {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_holy_veil {
@@ -15781,6 +16165,7 @@ item scroll_of_holy_veil {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_holy_light {
@@ -15822,6 +16207,7 @@ item rod_of_holy_light {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_holy_light {
@@ -15863,6 +16249,7 @@ item spellbook_of_holy_light {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_holy_rain {
@@ -15904,6 +16291,7 @@ item spellbook_of_holy_rain {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_holy_light {
@@ -15945,6 +16333,7 @@ item scroll_of_holy_light {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_holy_rain {
@@ -15986,6 +16375,7 @@ item scroll_of_holy_rain {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_mana {
@@ -16027,6 +16417,7 @@ item scroll_of_mana {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_mana {
@@ -16068,6 +16459,7 @@ item rod_of_mana {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item bottle_of_sulfuric {
@@ -16109,6 +16501,7 @@ item bottle_of_sulfuric {
     has_random_name = false
     tags = ["nogive"]
     rftags = []
+    color = White
 }
 
 item gem_cutter {
@@ -16150,6 +16543,7 @@ item gem_cutter {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item material_box {
@@ -16191,6 +16585,7 @@ item material_box {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_gain_material {
@@ -16232,6 +16627,7 @@ item scroll_of_gain_material {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_nightmare {
@@ -16273,6 +16669,7 @@ item spellbook_of_nightmare {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_knowledge {
@@ -16314,6 +16711,7 @@ item spellbook_of_knowledge {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_knowledge {
@@ -16355,6 +16753,7 @@ item scroll_of_knowledge {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item cargo_rag_doll {
@@ -16396,6 +16795,7 @@ item cargo_rag_doll {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_barrel {
@@ -16437,6 +16837,7 @@ item cargo_barrel {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_piano {
@@ -16478,6 +16879,7 @@ item cargo_piano {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_rope {
@@ -16519,6 +16921,7 @@ item cargo_rope {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_coffin {
@@ -16560,6 +16963,7 @@ item cargo_coffin {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_manboo {
@@ -16601,6 +17005,7 @@ item cargo_manboo {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_grave {
@@ -16642,6 +17047,7 @@ item cargo_grave {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_tuna_fish {
@@ -16683,6 +17089,7 @@ item cargo_tuna_fish {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_whisky {
@@ -16724,6 +17131,7 @@ item cargo_whisky {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_noble_toy {
@@ -16765,6 +17173,7 @@ item cargo_noble_toy {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_inner_tube {
@@ -16806,6 +17215,7 @@ item cargo_inner_tube {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_detect_objects {
@@ -16847,6 +17257,7 @@ item spellbook_of_detect_objects {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_detect_objects {
@@ -16888,6 +17299,7 @@ item scroll_of_detect_objects {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_uncurse {
@@ -16929,6 +17341,7 @@ item rod_of_uncurse {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item red_treasure_machine {
@@ -16970,6 +17383,7 @@ item red_treasure_machine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item blue_treasure_machine {
@@ -17011,6 +17425,7 @@ item blue_treasure_machine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item treasure_ball {
@@ -17052,6 +17467,7 @@ item treasure_ball {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rare_treasure_ball {
@@ -17093,6 +17509,7 @@ item rare_treasure_ball {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
 }
 
 item vegetable_seed {
@@ -17134,6 +17551,7 @@ item vegetable_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
 }
 
 item fruit_seed {
@@ -17175,6 +17593,7 @@ item fruit_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Yellow
 }
 
 item herb_seed {
@@ -17216,6 +17635,7 @@ item herb_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item unknown_seed {
@@ -17257,6 +17677,7 @@ item unknown_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item artifact_seed {
@@ -17298,6 +17719,7 @@ item artifact_seed {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = Orange
 }
 
 item morgia {
@@ -17339,6 +17761,7 @@ item morgia {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item mareilon {
@@ -17380,6 +17803,7 @@ item mareilon {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spenseweed {
@@ -17421,6 +17845,7 @@ item spenseweed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item curaria {
@@ -17462,6 +17887,7 @@ item curaria {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item alraunia {
@@ -17503,6 +17929,7 @@ item alraunia {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item stomafillia {
@@ -17544,6 +17971,7 @@ item stomafillia {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sleeping_bag {
@@ -17585,6 +18013,7 @@ item sleeping_bag {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_weaken_resistance {
@@ -17626,6 +18055,7 @@ item potion_of_weaken_resistance {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_growth {
@@ -17667,6 +18097,7 @@ item scroll_of_growth {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_faith {
@@ -17708,6 +18139,7 @@ item scroll_of_faith {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_mutation {
@@ -17749,6 +18181,7 @@ item potion_of_mutation {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_cure_mutation {
@@ -17790,6 +18223,7 @@ item potion_of_cure_mutation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_mutation {
@@ -17831,6 +18265,7 @@ item spellbook_of_mutation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item banded_mail {
@@ -17872,6 +18307,7 @@ item banded_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item plate_mail {
@@ -17913,6 +18349,7 @@ item plate_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ring_mail {
@@ -17954,6 +18391,7 @@ item ring_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_mail {
@@ -17995,6 +18433,7 @@ item composite_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item chain_mail {
@@ -18036,6 +18475,7 @@ item chain_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pope_robe {
@@ -18077,6 +18517,7 @@ item pope_robe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item light_mail {
@@ -18118,6 +18559,7 @@ item light_mail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item coat {
@@ -18159,6 +18601,7 @@ item coat {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item breast_plate {
@@ -18200,6 +18643,7 @@ item breast_plate {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bulletproof_jacket {
@@ -18241,6 +18685,7 @@ item bulletproof_jacket {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item gloves {
@@ -18282,6 +18727,7 @@ item gloves {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item plate_gauntlets {
@@ -18323,6 +18769,7 @@ item plate_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item light_gloves {
@@ -18364,6 +18811,7 @@ item light_gloves {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_gauntlets {
@@ -18405,6 +18853,7 @@ item composite_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item small_shield {
@@ -18446,6 +18895,7 @@ item small_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item round_shield {
@@ -18487,6 +18937,7 @@ item round_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item shield {
@@ -18528,6 +18979,7 @@ item shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item large_shield {
@@ -18569,6 +19021,7 @@ item large_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kite_shield {
@@ -18610,6 +19063,7 @@ item kite_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tower_shield {
@@ -18651,6 +19105,7 @@ item tower_shield {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item shoes {
@@ -18692,6 +19147,7 @@ item shoes {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item boots {
@@ -18733,6 +19189,7 @@ item boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tight_boots {
@@ -18774,6 +19231,7 @@ item tight_boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item armored_boots {
@@ -18815,6 +19273,7 @@ item armored_boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_girdle {
@@ -18856,6 +19315,7 @@ item composite_girdle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item plate_girdle {
@@ -18897,6 +19357,7 @@ item plate_girdle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item armored_cloak {
@@ -18938,6 +19399,7 @@ item armored_cloak {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cloak {
@@ -18979,6 +19441,7 @@ item cloak {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item feather_hat {
@@ -19020,6 +19483,7 @@ item feather_hat {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item heavy_helm {
@@ -19061,6 +19525,7 @@ item heavy_helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item knight_helm {
@@ -19102,6 +19567,7 @@ item knight_helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item helm {
@@ -19143,6 +19609,7 @@ item helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_helm {
@@ -19184,6 +19651,7 @@ item composite_helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item peridot {
@@ -19225,6 +19693,7 @@ item peridot {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item talisman {
@@ -19266,6 +19735,7 @@ item talisman {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item neck_guard {
@@ -19307,6 +19777,7 @@ item neck_guard {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item charm {
@@ -19348,6 +19819,7 @@ item charm {
     has_random_name = true
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item bejeweled_amulet {
@@ -19389,6 +19861,7 @@ item bejeweled_amulet {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item engagement_amulet {
@@ -19430,6 +19903,7 @@ item engagement_amulet {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item composite_ring {
@@ -19471,6 +19945,7 @@ item composite_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item armored_ring {
@@ -19512,6 +19987,7 @@ item armored_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item ring {
@@ -19553,6 +20029,7 @@ item ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item engagement_ring {
@@ -19594,6 +20071,7 @@ item engagement_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item stethoscope {
@@ -19635,6 +20113,7 @@ item stethoscope {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_ally {
@@ -19676,6 +20155,7 @@ item scroll_of_ally {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_domination {
@@ -19717,6 +20197,7 @@ item rod_of_domination {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_domination {
@@ -19758,6 +20239,7 @@ item spellbook_of_domination {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item crossbow {
@@ -19799,6 +20281,7 @@ item crossbow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bolt {
@@ -19840,6 +20323,7 @@ item bolt {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_web {
@@ -19881,6 +20365,7 @@ item spellbook_of_web {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_web {
@@ -19922,6 +20407,7 @@ item rod_of_web {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item machine {
@@ -19963,6 +20449,7 @@ item machine {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item computer {
@@ -20004,6 +20491,7 @@ item computer {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item training_machine {
@@ -20045,6 +20533,7 @@ item training_machine {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item camera {
@@ -20086,6 +20575,7 @@ item camera {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
 }
 
 item microwave_oven {
@@ -20127,6 +20617,7 @@ item microwave_oven {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item server {
@@ -20168,6 +20659,7 @@ item server {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item storage {
@@ -20209,6 +20701,7 @@ item storage {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item trash_can {
@@ -20250,6 +20743,7 @@ item trash_can {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item chip {
@@ -20291,6 +20785,7 @@ item chip {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item blank_disc {
@@ -20332,6 +20827,7 @@ item blank_disc {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item shot_gun {
@@ -20373,6 +20869,7 @@ item shot_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item pop_corn {
@@ -20414,6 +20911,7 @@ item pop_corn {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
 }
 
 item fried_potato {
@@ -20455,6 +20953,7 @@ item fried_potato {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
 }
 
 item cyber_snack {
@@ -20496,6 +20995,7 @@ item cyber_snack {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
 }
 
 item scroll_of_inferior_material {
@@ -20537,6 +21037,7 @@ item scroll_of_inferior_material {
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_change_material {
@@ -20578,6 +21079,7 @@ item scroll_of_change_material {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_superior_material {
@@ -20619,6 +21121,7 @@ item scroll_of_superior_material {
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item figurine {
@@ -20660,6 +21163,7 @@ item figurine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item card {
@@ -20701,6 +21205,7 @@ item card {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item little_sisters_diary {
@@ -20742,6 +21247,7 @@ item little_sisters_diary {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_enchant_weapon {
@@ -20783,6 +21289,7 @@ item scroll_of_enchant_weapon {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_greater_enchant_weapon {
@@ -20824,6 +21331,7 @@ item scroll_of_greater_enchant_weapon {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_enchant_armor {
@@ -20865,6 +21373,7 @@ item scroll_of_enchant_armor {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_greater_enchant_armor {
@@ -20906,6 +21415,7 @@ item scroll_of_greater_enchant_armor {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item heir_trunk {
@@ -20947,6 +21457,7 @@ item heir_trunk {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deed_of_heirship {
@@ -20988,6 +21499,7 @@ item deed_of_heirship {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item laser_gun {
@@ -21029,6 +21541,7 @@ item laser_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item energy_cell {
@@ -21070,6 +21583,7 @@ item energy_cell {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item rail_gun {
@@ -21111,6 +21625,7 @@ item rail_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item scroll_of_recharge {
@@ -21152,6 +21667,7 @@ item scroll_of_recharge {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item bottle_of_water {
@@ -21193,6 +21709,7 @@ item bottle_of_water {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rod_of_change_creature {
@@ -21234,6 +21751,7 @@ item rod_of_change_creature {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_alchemy {
@@ -21275,6 +21793,7 @@ item rod_of_alchemy {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item bottle_of_dye {
@@ -21316,6 +21835,7 @@ item bottle_of_dye {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomAny
 }
 
 item wing {
@@ -21357,6 +21877,7 @@ item wing {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deed_of_museum {
@@ -21398,6 +21919,7 @@ item deed_of_museum {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item deed_of_shop {
@@ -21439,6 +21961,7 @@ item deed_of_shop {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item tree_of_beech {
@@ -21480,6 +22003,7 @@ item tree_of_beech {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_cedar {
@@ -21521,6 +22045,7 @@ item tree_of_cedar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_fruitless {
@@ -21562,6 +22087,7 @@ item tree_of_fruitless {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_fruits {
@@ -21603,6 +22129,7 @@ item tree_of_fruits {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item dead_tree {
@@ -21644,6 +22171,7 @@ item dead_tree {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_zelkova {
@@ -21685,6 +22213,7 @@ item tree_of_zelkova {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_palm {
@@ -21726,6 +22255,7 @@ item tree_of_palm {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_ash {
@@ -21767,6 +22297,7 @@ item tree_of_ash {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item furnance {
@@ -21808,6 +22339,7 @@ item furnance {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fireplace {
@@ -21849,6 +22381,7 @@ item fireplace {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item stove {
@@ -21890,6 +22423,7 @@ item stove {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item giant_foliage_plant {
@@ -21931,6 +22465,7 @@ item giant_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item big_table {
@@ -21972,6 +22507,7 @@ item big_table {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item painting_of_madam {
@@ -22013,6 +22549,7 @@ item painting_of_madam {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item painting_of_landscape {
@@ -22054,6 +22591,7 @@ item painting_of_landscape {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item painting_of_sunflower {
@@ -22095,6 +22633,7 @@ item painting_of_sunflower {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_cat {
@@ -22136,6 +22675,7 @@ item statue_of_cat {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item black_crystal {
@@ -22177,6 +22717,7 @@ item black_crystal {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item snow_man {
@@ -22218,6 +22759,7 @@ item snow_man {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deed_of_farm {
@@ -22259,6 +22801,7 @@ item deed_of_farm {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture7
 }
 
 item deed_of_storage_house {
@@ -22300,6 +22843,7 @@ item deed_of_storage_house {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture6
 }
 
 item disc {
@@ -22341,6 +22885,7 @@ item disc {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = RandomFurniture
 }
 
 item rod_of_wall_creation {
@@ -22382,6 +22927,7 @@ item rod_of_wall_creation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_wall_creation {
@@ -22423,6 +22969,7 @@ item spellbook_of_wall_creation {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item salary_chest {
@@ -22464,6 +23011,7 @@ item salary_chest {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_healing_rain {
@@ -22505,6 +23053,7 @@ item spellbook_of_healing_rain {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_healing_rain {
@@ -22546,6 +23095,7 @@ item scroll_of_healing_rain {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_healing_hands {
@@ -22587,6 +23137,7 @@ item spellbook_of_healing_hands {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_healing_hands {
@@ -22628,6 +23179,7 @@ item rod_of_healing_hands {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item feather {
@@ -22669,6 +23221,7 @@ item feather {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item gem_seed {
@@ -22710,6 +23263,7 @@ item gem_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Purple
 }
 
 item magical_seed {
@@ -22751,6 +23305,7 @@ item magical_seed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Cyan
 }
 
 item shelter {
@@ -22792,6 +23347,7 @@ item shelter {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item seven_league_boots {
@@ -22833,6 +23389,7 @@ item seven_league_boots {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item vindale_cloak {
@@ -22874,6 +23431,7 @@ item vindale_cloak {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item aurora_ring {
@@ -22915,6 +23473,7 @@ item aurora_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_cure_corruption {
@@ -22956,6 +23515,7 @@ item potion_of_cure_corruption {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item masters_delivery_chest {
@@ -22997,6 +23557,7 @@ item masters_delivery_chest {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item shop_strongbox {
@@ -23038,6 +23599,7 @@ item shop_strongbox {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item register {
@@ -23079,6 +23641,7 @@ item register {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item textbook {
@@ -23120,6 +23683,7 @@ item textbook {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item spellbook_of_acid_ground {
@@ -23161,6 +23725,7 @@ item spellbook_of_acid_ground {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_acid_ground {
@@ -23202,6 +23767,7 @@ item rod_of_acid_ground {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item acidproof_liquid {
@@ -23243,6 +23809,7 @@ item acidproof_liquid {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item fireproof_blanket {
@@ -23284,6 +23851,7 @@ item fireproof_blanket {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item coldproof_blanket {
@@ -23325,6 +23893,7 @@ item coldproof_blanket {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item spellbook_of_fire_wall {
@@ -23366,6 +23935,7 @@ item spellbook_of_fire_wall {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item rod_of_fire_wall {
@@ -23407,6 +23977,7 @@ item rod_of_fire_wall {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item jerky {
@@ -23448,6 +24019,7 @@ item jerky {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deed_of_ranch {
@@ -23489,6 +24061,7 @@ item deed_of_ranch {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture1
 }
 
 item egg {
@@ -23530,6 +24103,7 @@ item egg {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bottle_of_milk {
@@ -23571,6 +24145,7 @@ item bottle_of_milk {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item shit {
@@ -23612,6 +24187,7 @@ item shit {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item playback_disc {
@@ -23653,6 +24229,7 @@ item playback_disc {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = Red
 }
 
 item molotov {
@@ -23694,6 +24271,7 @@ item molotov {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item kitty_bank {
@@ -23735,6 +24313,7 @@ item kitty_bank {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item freezer {
@@ -23776,6 +24355,7 @@ item freezer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item modern_rack {
@@ -23817,6 +24397,7 @@ item modern_rack {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rod_of_make_door {
@@ -23858,6 +24439,7 @@ item rod_of_make_door {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_make_door {
@@ -23899,6 +24481,7 @@ item spellbook_of_make_door {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item torch {
@@ -23940,6 +24523,7 @@ item torch {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item candle {
@@ -23981,6 +24565,7 @@ item candle {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item fancy_lamp {
@@ -24022,6 +24607,7 @@ item fancy_lamp {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item modern_lamp_a {
@@ -24063,6 +24649,7 @@ item modern_lamp_a {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item handful_of_snow {
@@ -24104,6 +24691,7 @@ item handful_of_snow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_naked {
@@ -24145,6 +24733,7 @@ item tree_of_naked {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tree_of_fir {
@@ -24186,6 +24775,7 @@ item tree_of_fir {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item snow_scarecrow {
@@ -24227,6 +24817,7 @@ item snow_scarecrow {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item mini_snow_man {
@@ -24268,6 +24859,7 @@ item mini_snow_man {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item snow_barrel {
@@ -24309,6 +24901,7 @@ item snow_barrel {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item modern_lamp_b {
@@ -24350,6 +24943,7 @@ item modern_lamp_b {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
 }
 
 item statue_of_holy_cross {
@@ -24391,6 +24985,7 @@ item statue_of_holy_cross {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pillar {
@@ -24432,6 +25027,7 @@ item pillar {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item stained_glass_window {
@@ -24473,6 +25069,7 @@ item stained_glass_window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_christmas_tree {
@@ -24514,6 +25111,7 @@ item cargo_christmas_tree {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_snow_man {
@@ -24555,6 +25153,7 @@ item cargo_snow_man {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item christmas_tree {
@@ -24596,6 +25195,7 @@ item christmas_tree {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item giants_shackle {
@@ -24637,6 +25237,7 @@ item giants_shackle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item empty_bottle {
@@ -24678,6 +25279,7 @@ item empty_bottle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item holy_well {
@@ -24719,6 +25321,7 @@ item holy_well {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item presidents_chair {
@@ -24760,6 +25363,7 @@ item presidents_chair {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item green_plant {
@@ -24801,6 +25405,7 @@ item green_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item money_tree {
@@ -24842,6 +25447,7 @@ item money_tree {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item barbecue_set {
@@ -24883,6 +25489,7 @@ item barbecue_set {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item giant_cactus {
@@ -24924,6 +25531,7 @@ item giant_cactus {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item square_window {
@@ -24965,6 +25573,7 @@ item square_window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item window {
@@ -25006,6 +25615,7 @@ item window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item triangle_plant {
@@ -25047,6 +25657,7 @@ item triangle_plant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item house_board {
@@ -25088,6 +25699,7 @@ item house_board {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item nice_window {
@@ -25129,6 +25741,7 @@ item nice_window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kings_bed {
@@ -25170,6 +25783,7 @@ item kings_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item flower_arch {
@@ -25211,6 +25825,7 @@ item flower_arch {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bill {
@@ -25252,6 +25867,7 @@ item bill {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tax_masters_tax_box {
@@ -25293,6 +25909,7 @@ item tax_masters_tax_box {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bait {
@@ -25334,6 +25951,7 @@ item bait {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fish_a {
@@ -25375,6 +25993,7 @@ item fish_a {
     has_random_name = false
     tags = []
     rftags = ["fish"]
+    color = White
 }
 
 item fish_b {
@@ -25416,6 +26035,7 @@ item fish_b {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item love_potion {
@@ -25457,6 +26077,7 @@ item love_potion {
     has_random_name = false
     tags = ["nogive"]
     rftags = []
+    color = White
 }
 
 item treasure_map {
@@ -25498,6 +26119,7 @@ item treasure_map {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
 }
 
 item small_medal {
@@ -25539,6 +26161,7 @@ item small_medal {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
 }
 
 item cat_sisters_diary {
@@ -25580,6 +26203,7 @@ item cat_sisters_diary {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item girls_diary {
@@ -25621,6 +26245,7 @@ item girls_diary {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item shrine_gate {
@@ -25662,6 +26287,7 @@ item shrine_gate {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bottle_of_hermes_blood {
@@ -25703,6 +26329,7 @@ item bottle_of_hermes_blood {
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item sages_helm {
@@ -25744,6 +26371,7 @@ item sages_helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item spellbook_of_incognito {
@@ -25785,6 +26413,7 @@ item spellbook_of_incognito {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item disguise_set {
@@ -25826,6 +26455,7 @@ item disguise_set {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item material_kit {
@@ -25867,6 +26497,7 @@ item material_kit {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
 }
 
 item moon_gate {
@@ -25908,6 +26539,7 @@ item moon_gate {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item flying_scroll {
@@ -25949,6 +26581,7 @@ item flying_scroll {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item panty {
@@ -25990,6 +26623,7 @@ item panty {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item leash {
@@ -26031,6 +26665,7 @@ item leash {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item mine {
@@ -26072,6 +26707,7 @@ item mine {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
 }
 
 item lockpick {
@@ -26113,6 +26749,7 @@ item lockpick {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item skeleton_key {
@@ -26154,6 +26791,7 @@ item skeleton_key {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scroll_of_escape {
@@ -26195,6 +26833,7 @@ item scroll_of_escape {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item happy_apple {
@@ -26236,6 +26875,7 @@ item happy_apple {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture7
 }
 
 item unicorn_horn {
@@ -26277,6 +26917,7 @@ item unicorn_horn {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
 }
 
 item cooler_box {
@@ -26318,6 +26959,7 @@ item cooler_box {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rice_barrel {
@@ -26359,6 +27001,7 @@ item rice_barrel {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item eastern_bed {
@@ -26400,6 +27043,7 @@ item eastern_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item decorated_window {
@@ -26441,6 +27085,7 @@ item decorated_window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item king_drawer {
@@ -26482,6 +27127,7 @@ item king_drawer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item menu_board {
@@ -26523,6 +27169,7 @@ item menu_board {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item black_board {
@@ -26564,6 +27211,7 @@ item black_board {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sofa {
@@ -26605,6 +27253,7 @@ item sofa {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item flowerbed {
@@ -26646,6 +27295,7 @@ item flowerbed {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item toilet {
@@ -26687,6 +27337,7 @@ item toilet {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item craft_cupboard {
@@ -26728,6 +27379,7 @@ item craft_cupboard {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sink {
@@ -26769,6 +27421,7 @@ item sink {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item junk {
@@ -26810,6 +27463,7 @@ item junk {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item double_bed {
@@ -26851,6 +27505,7 @@ item double_bed {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item hero_cheese {
@@ -26892,6 +27547,7 @@ item hero_cheese {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item eastern_lamp {
@@ -26933,6 +27589,7 @@ item eastern_lamp {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item eastern_window {
@@ -26974,6 +27631,7 @@ item eastern_window {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item chochin {
@@ -27015,6 +27673,7 @@ item chochin {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item partition {
@@ -27056,6 +27715,7 @@ item partition {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item spellbook_of_darkness_arrow {
@@ -27097,6 +27757,7 @@ item spellbook_of_darkness_arrow {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item dal_i_thalion {
@@ -27138,6 +27799,7 @@ item dal_i_thalion {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item magic_fruit {
@@ -27179,6 +27841,7 @@ item magic_fruit {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item monster_heart {
@@ -27220,6 +27883,7 @@ item monster_heart {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item speed_ring {
@@ -27261,6 +27925,7 @@ item speed_ring {
     has_random_name = true
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_opatos {
@@ -27302,6 +27967,7 @@ item statue_of_opatos {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_lulwy {
@@ -27343,6 +28009,7 @@ item statue_of_lulwy {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item sisters_love_fueled_lunch {
@@ -27384,6 +28051,7 @@ item sisters_love_fueled_lunch {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item book_of_rachel {
@@ -27425,6 +28093,7 @@ item book_of_rachel {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
 }
 
 item cargo_art {
@@ -27466,6 +28135,7 @@ item cargo_art {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item cargo_canvas {
@@ -27507,6 +28177,7 @@ item cargo_canvas {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item nuclear_bomb {
@@ -27548,6 +28219,7 @@ item nuclear_bomb {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item secret_treasure {
@@ -27589,6 +28261,7 @@ item secret_treasure {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item wind_bow {
@@ -27630,6 +28303,7 @@ item wind_bow {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture7
 }
 
 item winchester_premium {
@@ -27671,6 +28345,7 @@ item winchester_premium {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item kumiromi_scythe {
@@ -27712,6 +28387,7 @@ item kumiromi_scythe {
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
 }
 
 item elemental_staff {
@@ -27753,6 +28429,7 @@ item elemental_staff {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture9
 }
 
 item holy_lance {
@@ -27794,6 +28471,7 @@ item holy_lance {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item lucky_dagger {
@@ -27835,6 +28513,7 @@ item lucky_dagger {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item gaia_hammer {
@@ -27876,6 +28555,7 @@ item gaia_hammer {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item lulwys_gem_stone_of_god_speed {
@@ -27917,6 +28597,7 @@ item lulwys_gem_stone_of_god_speed {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item jures_gem_stone_of_holy_rain {
@@ -27958,6 +28639,7 @@ item jures_gem_stone_of_holy_rain {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture7
 }
 
 item kumiromis_gem_stone_of_rejuvenation {
@@ -27999,6 +28681,7 @@ item kumiromis_gem_stone_of_rejuvenation {
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
 }
 
 item gem_stone_of_mani {
@@ -28040,6 +28723,7 @@ item gem_stone_of_mani {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item gene_machine {
@@ -28081,6 +28765,7 @@ item gene_machine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item monster_ball {
@@ -28122,6 +28807,7 @@ item monster_ball {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_jure {
@@ -28163,6 +28849,7 @@ item statue_of_jure {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item ancient_book {
@@ -28204,6 +28891,7 @@ item ancient_book {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
 }
 
 item iron_maiden {
@@ -28245,6 +28933,7 @@ item iron_maiden {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item guillotine {
@@ -28286,6 +28975,7 @@ item guillotine {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pan_flute {
@@ -28327,6 +29017,7 @@ item pan_flute {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item lute {
@@ -28368,6 +29059,7 @@ item lute {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item harmonica {
@@ -28409,6 +29101,7 @@ item harmonica {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item harp {
@@ -28450,6 +29143,7 @@ item harp {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item eastern_partition {
@@ -28491,6 +29185,7 @@ item eastern_partition {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item axe_of_destruction {
@@ -28532,6 +29227,7 @@ item axe_of_destruction {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item spellbook_of_magic_ball {
@@ -28573,6 +29269,7 @@ item spellbook_of_magic_ball {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_magic_laser {
@@ -28614,6 +29311,7 @@ item spellbook_of_magic_laser {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_salt_solution {
@@ -28655,6 +29353,7 @@ item potion_of_salt_solution {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item little_ball {
@@ -28696,6 +29395,7 @@ item little_ball {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item town_book {
@@ -28737,6 +29437,7 @@ item town_book {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item deck {
@@ -28778,6 +29479,7 @@ item deck {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item rabbits_tail {
@@ -28819,6 +29521,7 @@ item rabbits_tail {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item whistle {
@@ -28860,6 +29563,7 @@ item whistle {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item vomit {
@@ -28901,6 +29605,7 @@ item vomit {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item beggars_pendant {
@@ -28942,6 +29647,7 @@ item beggars_pendant {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item potion_of_descent {
@@ -28983,6 +29689,7 @@ item potion_of_descent {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item stradivarius {
@@ -29024,6 +29731,7 @@ item stradivarius {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item book_of_resurrection {
@@ -29065,6 +29773,7 @@ item book_of_resurrection {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_contingency {
@@ -29106,6 +29815,7 @@ item scroll_of_contingency {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_contingency {
@@ -29147,6 +29857,7 @@ item spellbook_of_contingency {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item potion_of_evolution {
@@ -29188,6 +29899,7 @@ item potion_of_evolution {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item deed_of_dungeon {
@@ -29229,6 +29941,7 @@ item deed_of_dungeon {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item shuriken {
@@ -29270,6 +29983,7 @@ item shuriken {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item grenade {
@@ -29311,6 +30025,7 @@ item grenade {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item secret_experience_of_kumiromi {
@@ -29352,6 +30067,7 @@ item secret_experience_of_kumiromi {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = Cyan
 }
 
 item vanilla_rock {
@@ -29393,6 +30109,7 @@ item vanilla_rock {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item secret_experience_of_lomias {
@@ -29434,6 +30151,7 @@ item secret_experience_of_lomias {
     has_random_name = false
     tags = []
     rftags = []
+    color = Cyan
 }
 
 item shenas_panty {
@@ -29475,6 +30193,7 @@ item shenas_panty {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item claymore_unique {
@@ -29516,6 +30235,7 @@ item claymore_unique {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item happy_bed {
@@ -29557,6 +30277,7 @@ item happy_bed {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = RandomFurniture
 }
 
 item statue_of_ehekatl {
@@ -29598,6 +30319,7 @@ item statue_of_ehekatl {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item arbalest {
@@ -29639,6 +30361,7 @@ item arbalest {
     has_random_name = false
     tags = []
     rftags = []
+    color = Purple
 }
 
 item twin_edge {
@@ -29680,6 +30403,7 @@ item twin_edge {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item music_ticket {
@@ -29721,6 +30445,7 @@ item music_ticket {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
 }
 
 item kill_kill_piano {
@@ -29762,6 +30487,7 @@ item kill_kill_piano {
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
 }
 
 item alud {
@@ -29803,6 +30529,7 @@ item alud {
     has_random_name = false
     tags = []
     rftags = []
+    color = Yellow
 }
 
 item shield_of_thorn {
@@ -29844,6 +30571,7 @@ item shield_of_thorn {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item crimson_plate {
@@ -29885,6 +30613,7 @@ item crimson_plate {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item gift {
@@ -29926,6 +30655,7 @@ item gift {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
 }
 
 item token_of_friendship {
@@ -29967,6 +30697,7 @@ item token_of_friendship {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
 }
 
 item spellbook_of_4_dimensional_pocket {
@@ -30008,6 +30739,7 @@ item spellbook_of_4_dimensional_pocket {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item spellbook_of_harvest {
@@ -30049,6 +30781,7 @@ item spellbook_of_harvest {
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
 }
 
 item sand_bag {
@@ -30090,6 +30823,7 @@ item sand_bag {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item small_gamble_chest {
@@ -30131,6 +30865,7 @@ item small_gamble_chest {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item scythe {
@@ -30172,6 +30907,7 @@ item scythe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fireproof_liquid {
@@ -30213,6 +30949,7 @@ item fireproof_liquid {
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
 }
 
 item scroll_of_name {
@@ -30254,6 +30991,7 @@ item scroll_of_name {
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
 }
 
 item fortune_cookie {
@@ -30295,6 +31033,7 @@ item fortune_cookie {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item frisias_tail {
@@ -30336,6 +31075,7 @@ item frisias_tail {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item unknown_shell {
@@ -30377,6 +31117,7 @@ item unknown_shell {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item hiryu_to {
@@ -30418,6 +31159,7 @@ item hiryu_to {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item license_of_the_void_explorer {
@@ -30459,6 +31201,7 @@ item license_of_the_void_explorer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item plank_of_carneades {
@@ -30500,6 +31243,7 @@ item plank_of_carneades {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item schrodingers_cat {
@@ -30541,6 +31285,7 @@ item schrodingers_cat {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item heart {
@@ -30582,6 +31327,7 @@ item heart {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item tamers_whip {
@@ -30623,6 +31369,7 @@ item tamers_whip {
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
 }
 
 item book_of_bokonon {
@@ -30664,6 +31411,7 @@ item book_of_bokonon {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
 }
 
 item summoning_crystal {
@@ -30705,6 +31453,7 @@ item summoning_crystal {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_creator {
@@ -30746,6 +31495,7 @@ item statue_of_creator {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item upstairs {
@@ -30787,6 +31537,7 @@ item upstairs {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item downstairs {
@@ -30828,6 +31579,7 @@ item downstairs {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item new_years_gift {
@@ -30869,6 +31621,7 @@ item new_years_gift {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kotatsu {
@@ -30910,6 +31663,7 @@ item kotatsu {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item daruma {
@@ -30951,6 +31705,7 @@ item daruma {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kagami_mochi {
@@ -30992,6 +31747,7 @@ item kagami_mochi {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item mochi {
@@ -31033,6 +31789,7 @@ item mochi {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item five_horned_helm {
@@ -31074,6 +31831,7 @@ item five_horned_helm {
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
 }
 
 item mauser_c96_custom {
@@ -31115,6 +31873,7 @@ item mauser_c96_custom {
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = Grey
 }
 
 item lightsabre {
@@ -31156,6 +31915,7 @@ item lightsabre {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item garoks_hammer {
@@ -31197,6 +31957,7 @@ item garoks_hammer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item goulds_piano {
@@ -31238,6 +31999,7 @@ item goulds_piano {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture2
 }
 
 item festival_wreath {
@@ -31279,6 +32041,7 @@ item festival_wreath {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item pedestal {
@@ -31320,6 +32083,7 @@ item pedestal {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item counter {
@@ -31361,6 +32125,7 @@ item counter {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item red_stall {
@@ -31402,6 +32167,7 @@ item red_stall {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item blue_stall {
@@ -31443,6 +32209,7 @@ item blue_stall {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item jures_body_pillow {
@@ -31484,6 +32251,7 @@ item jures_body_pillow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item new_years_decoration {
@@ -31525,6 +32293,7 @@ item new_years_decoration {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item miniature_tree {
@@ -31566,6 +32335,7 @@ item miniature_tree {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item bottle_of_soda {
@@ -31607,6 +32377,7 @@ item bottle_of_soda {
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
 }
 
 item blue_capsule_drug {
@@ -31648,6 +32419,7 @@ item blue_capsule_drug {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item tomato {
@@ -31689,6 +32461,7 @@ item tomato {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item large_bookshelf {
@@ -31730,6 +32503,7 @@ item large_bookshelf {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item luxury_cabinet {
@@ -31771,6 +32545,7 @@ item luxury_cabinet {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item special_steamed_meat_bun {
@@ -31812,6 +32587,7 @@ item special_steamed_meat_bun {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_kumiromi {
@@ -31853,6 +32629,7 @@ item statue_of_kumiromi {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item statue_of_mani {
@@ -31894,6 +32671,7 @@ item statue_of_mani {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item luxury_sofa {
@@ -31935,6 +32713,7 @@ item luxury_sofa {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item deer_head {
@@ -31976,6 +32755,7 @@ item deer_head {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item fur_carpet {
@@ -32017,6 +32797,7 @@ item fur_carpet {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item kitchen_knife {
@@ -32058,6 +32839,7 @@ item kitchen_knife {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item dish {
@@ -32099,6 +32881,7 @@ item dish {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item recipe {
@@ -32140,6 +32923,7 @@ item recipe {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item recipe_holder {
@@ -32181,6 +32965,7 @@ item recipe_holder {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item bottle_of_salt {
@@ -32222,6 +33007,7 @@ item bottle_of_salt {
     has_random_name = false
     tags = []
     rftags = ["flavor"]
+    color = White
 }
 
 item sack_of_sugar {
@@ -32263,6 +33049,7 @@ item sack_of_sugar {
     has_random_name = false
     tags = []
     rftags = ["flavor"]
+    color = White
 }
 
 item puff_puff_bread {
@@ -32304,6 +33091,7 @@ item puff_puff_bread {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item skull_bow {
@@ -32345,6 +33133,7 @@ item skull_bow {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item pot_for_testing {
@@ -32386,6 +33175,7 @@ item pot_for_testing {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item frying_pan_for_testing {
@@ -32427,6 +33217,7 @@ item frying_pan_for_testing {
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
 }
 
 item dragon_slayer {
@@ -32468,6 +33259,7 @@ item dragon_slayer {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }
 
 item putitoro {
@@ -32509,4 +33301,5 @@ item putitoro {
     has_random_name = false
     tags = []
     rftags = []
+    color = White
 }

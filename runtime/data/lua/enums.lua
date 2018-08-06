@@ -178,7 +178,12 @@ Enums.Color = {
    LightBlue = 17,   -- rgb(225,225,255)
    LightPurple = 18, -- rgb(225,195,255)
    LightGreen = 19,  -- rgb(215,255,215)
-   YellowGreen = 20  -- rgb(210,250,160)
+   YellowGreen = 20, -- rgb(210,250,160)
+
+   -- for items
+   RandomFurniture = 21,
+   RandomSeeded = 22,
+   RandomAny = 23,
 }
 
 return Enums
