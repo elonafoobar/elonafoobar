@@ -11,11 +11,6 @@ item putitoro {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "開発用"
-    description_en = "dev item"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30,11 +25,9 @@ item putitoro {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "プチトロ"
-    original_name_en = "putitoro"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop", "nodownload"]
     rftags = ["fish"]
+    color = White
 }

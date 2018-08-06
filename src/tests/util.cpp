@@ -2,6 +2,7 @@
 
 #include "../enums.hpp"
 #include "../i18n.hpp"
+#include "../init.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../variables.hpp"
@@ -14,19 +15,17 @@ namespace testing
 
 void set_english()
 {
-    i18n::load("en");
-    i18n::s.init({{filesystem::dir::locale() / "en", "core"}});
     elona::jp = 0;
     elona::en = 1;
+    initialize_i18n();
     set_item_info();
 }
 
 void set_japanese()
 {
-    i18n::load("jp");
-    i18n::s.init({{filesystem::dir::locale() / "jp", "core"}});
     elona::jp = 1;
     elona::en = 0;
+    initialize_i18n();
     set_item_info();
 }
 

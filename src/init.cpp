@@ -467,7 +467,6 @@ void initialize_i18n()
 
 void initialize_elona()
 {
-    initialize_i18n();
     initialize_ui_constants();
     gsel(0);
     boxf();
@@ -686,7 +685,6 @@ void initialize_elona()
     SDIM1(iknownnameref);
     SDIM1(ialphanameref);
     DIM2(irandomname, 800);
-    DIM1(icolref);
     DIM2(trate, 8);
     SDIM1(filtern);
     SDIM1(filter_creature);
@@ -840,7 +838,7 @@ static void initialize_screen()
         config_get_fullscreen_mode());
 }
 
-static void initialize_lua()
+static void initialize_mods()
 {
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
     lua::lua->get_api_manager().lock();
@@ -864,7 +862,11 @@ int run()
     initialize_config(config_file);
     init_assets();
 
-    initialize_lua();
+    // Scan all mods and load mod script code.
+    initialize_mods();
+    // Load translations from scanned mods.
+    initialize_i18n();
+    // Load data from scanned mods.
     initialize_lion_db();
 
     initialize_elona();

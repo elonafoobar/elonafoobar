@@ -106,7 +106,7 @@ struct character_data
     int ai_move;
     int can_talk;
     std::string class_;
-    int color;
+    color_index_t color;
     int creaturepack;
     int cspecialeq;
     int damage_reaction_info;

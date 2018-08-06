@@ -116,6 +116,7 @@ void pre_init()
 
     initialize_cat_db();
     configure_lua();
+    initialize_i18n();
     initialize_lion_db();
 
     const fs::path config_def_file =
@@ -150,6 +151,7 @@ void reset_state()
 {
     lua::lua->clear();
     configure_lua();
+    initialize_i18n();
     initialize_elona();
 
     // reset translations

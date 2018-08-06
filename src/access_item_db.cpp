@@ -3,6 +3,7 @@
 #include "db_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -40,16 +41,26 @@ int access_item_db(int dbmode)
         }
         else if (dbmode == 17)
         {
-            if (jp)
+            const auto& locale_key_prefix = info->locale_key_prefix;
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_0"))
             {
-                description(0) = info->description_jp[0];
-                description(1) = info->description_jp[1];
-                description(2) = info->description_jp[2];
-                description(3) = info->description_jp[3];
+                description(0) = *text;
             }
-            else
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_1"))
             {
-                description(3) = info->description_en;
+                description(1) = *text;
+            }
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_2"))
+            {
+                description(2) = *text;
+            }
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_3"))
+            {
+                description(3) = *text;
             }
             return 0;
         }

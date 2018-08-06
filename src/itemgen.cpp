@@ -210,15 +210,8 @@ int do_create_item(int slot, int x, int y)
     access_item_db(3);
     access_item_db(2);
 
-    inv[ci].color = icolref(inv[ci].id);
-    if (inv[ci].color == 1)
-    {
-        inv[ci].color = choice(randcolor);
-    }
-    if (inv[ci].id == 519)
-    {
-        inv[ci].color = rnd(21);
-    }
+    inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
+
     if (inv[ci].id == 24 && inv[ci].param1 == 0)
     {
         inv[ci].param1 = choice(isetbook);

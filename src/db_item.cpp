@@ -1,5 +1,7 @@
 #include "db_item.hpp"
 #include <string>
+#include "i18n.hpp"
+#include "lua_env/lua_env.hpp"
 
 using namespace elona;
 
@@ -30,12 +32,6 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(material, int, 0);
     ELONA_LION_DB_FIELD(chargelevel, int, 0);
 
-    ELONA_LION_DB_FIELD(description_jp_0, std::string, "");
-    ELONA_LION_DB_FIELD(description_jp_1, std::string, "");
-    ELONA_LION_DB_FIELD(description_jp_2, std::string, "");
-    ELONA_LION_DB_FIELD(description_jp_3, std::string, "");
-    ELONA_LION_DB_FIELD(description_en, std::string, "");
-
     ELONA_LION_DB_FIELD(is_readable, bool, false);
     ELONA_LION_DB_FIELD(is_zappable, bool, false);
     ELONA_LION_DB_FIELD(is_drinkable, bool, false);
@@ -52,11 +48,10 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(coefficient, int, 0);
 
     ELONA_LION_DB_FIELD(light, int, 0);
-    ELONA_LION_DB_FIELD(katakana_name, std::string, "");
-    ELONA_LION_DB_FIELD(original_name_jp, std::string, "");
-    ELONA_LION_DB_FIELD(original_name_en, std::string, "");
     ELONA_LION_DB_FIELD(originalnameref2, std::string, "");
     ELONA_LION_DB_FIELD(has_random_name, bool, false);
+    ELONA_LION_DB_FIELD_ENUM(color, "Color", "White");
+    ELONA_LION_DB_FIELD(locale_key_prefix, std::string, "");
 
     std::string filter = lion::convert_tags(data, "tags");
     std::string rffilter = lion::convert_tags(data, "rftags");
@@ -75,14 +70,6 @@ item_data item_db_ex::convert(
         material,
         chargelevel,
 
-        {
-            description_jp_0,
-            description_jp_1,
-            description_jp_2,
-            description_jp_3,
-        },
-        description_en,
-
         is_readable,
         is_zappable,
         is_drinkable,
@@ -98,14 +85,14 @@ item_data item_db_ex::convert(
         rarity,
         coefficient,
         light,
-        katakana_name,
-        original_name_jp,
-        original_name_en,
         originalnameref2,
         has_random_name,
+        static_cast<color_index_t>(color),
 
         filter,
         rffilter,
+
+        locale_key_prefix,
     };
 }
 

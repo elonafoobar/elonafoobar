@@ -201,7 +201,6 @@ ELONA_EXTERN(elona_vector1<int> gdata);
 ELONA_EXTERN(elona_vector1<int> genetemp);
 ELONA_EXTERN(elona_vector1<int> giftvalue);
 ELONA_EXTERN(elona_vector1<int> i);
-ELONA_EXTERN(elona_vector1<int> icolref);
 ELONA_EXTERN(elona_vector1<int> ilight);
 ELONA_EXTERN(elona_vector1<int> invcontainer);
 ELONA_EXTERN(elona_vector1<int> invctrl);

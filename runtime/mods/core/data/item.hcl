@@ -11,11 +11,6 @@ item bug {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = "not used in the game"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30,13 +25,12 @@ item bug {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "黄金"
-    original_name_en = "gold bar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bug
 }
 
 item long_sword {
@@ -52,11 +46,6 @@ item long_sword {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t長い刀身を携えた、斬ることを広く目的とした剣。その他種多様さは今も尚進化を続けているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t細い刀身の剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A double-edged sword"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -71,13 +60,12 @@ item long_sword {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ロングソード"
-    original_name_jp = "長剣"
-    original_name_en = "long sword"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.long_sword
 }
 
 item dagger {
@@ -93,11 +81,6 @@ item dagger {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t古代の氏族が発端の、片手でも簡単に扱えるよう短く軽い小剣。そのシンプルな形状は現在でも変わることなく存り続けている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小型の剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A small double-edged weapon used for close combat,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -112,13 +95,12 @@ item dagger {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ダガー"
-    original_name_jp = "短剣"
-    original_name_en = "dagger"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dagger
 }
 
 item hand_axe {
@@ -134,11 +116,6 @@ item hand_axe {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t片手で扱えるよう軽く作られている斧。武器というより薪を割る等日常的な側面が色濃く残る作りをしているが、その軽さを生かし棍棒の様に使える万能さも持っている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小型の斧だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A small single-bladed axe,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -153,13 +130,12 @@ item hand_axe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハンドアクス"
-    original_name_jp = "手斧"
-    original_name_en = "hand axe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.hand_axe
 }
 
 item club {
@@ -175,11 +151,6 @@ item club {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t殴打する為に作られた簡素な武器。作成方法も使い方も非常にシンプルな為、冒険者にも愛用者が多いという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t素材を削り出して作られた棒だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A blunt weapon with a round end that is sometimes spiked,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -194,13 +165,12 @@ item club {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "クラブ"
-    original_name_jp = "棍棒"
-    original_name_en = "club"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.club
 }
 
 item magic_hat {
@@ -216,11 +186,6 @@ item magic_hat {
     dv = 6
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t魔道士が身につけていそうな三角形の帽子。特に得られる効果はないが、被ることで何となく賢くなった気分にはさせてくれる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t魔法使いのための帽子だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A hat mages often wear,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -235,13 +200,12 @@ item magic_hat {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "マジックハット"
-    original_name_jp = "魔法帽"
-    original_name_en = "magic hat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.magic_hat
 }
 
 item fairy_hat {
@@ -257,11 +221,6 @@ item fairy_hat {
     dv = 7
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t妖精達が身につけるという非常に軽い帽子。か弱き存在と自負する故か、その帽子には外界の変異から身を守る能力が備わっているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t妖精向けの帽子だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An exotic hat crafted by faeries,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -276,13 +235,12 @@ item fairy_hat {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "フェアリーハット"
-    original_name_jp = "フェアリーハット"
-    original_name_en = "fairy hat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fairy_hat
 }
 
 item breastplate {
@@ -298,11 +256,6 @@ item breastplate {
     dv = 6
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t武器の進化に合わせて開発された防具。重量はあるが急所に致命傷を与えない役目は十分に果たしている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t身を守る為に作られた戦闘用の防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An armor that offer's decent protection,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -317,13 +270,12 @@ item breastplate {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "メイル"
-    original_name_jp = "鎧"
-    original_name_en = "breastplate"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.breastplate
 }
 
 item robe {
@@ -339,11 +291,6 @@ item robe {
     dv = 11
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t主に僧侶などが着用する、一枚の布に素材を編み込んだ防具。その製法故身を守るには適さないが、装着者の詠唱を妨害せず、身軽な行動を可能とさせている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t僧侶用の服だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A common robe,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -358,13 +305,12 @@ item robe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ローブ"
-    original_name_jp = "法衣"
-    original_name_en = "robe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.robe
 }
 
 item decorated_gloves {
@@ -380,11 +326,6 @@ item decorated_gloves {
     dv = 7
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t様々な細工が散りばめられた上等な篭手。儀礼的な要素が強いが、それでも装飾によっていくらかの防護にはなる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飾りのついた篭手だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Gloves often worn by nobility,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -399,13 +340,12 @@ item decorated_gloves {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "シニアグローブ"
-    original_name_jp = "細工篭手"
-    original_name_en = "decorated gloves"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.decorated_gloves
 }
 
 item thick_gauntlets {
@@ -421,11 +361,6 @@ item thick_gauntlets {
     dv = 2
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t手首から先を守る為に作られた防具。手先の自由は少々奪われるが手を失うよりはましだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t分厚い篭手だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of gauntlet's made mostly of thick leather,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -440,13 +375,12 @@ item thick_gauntlets {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ライトガントレット"
-    original_name_jp = "厚篭手"
-    original_name_en = "thick gauntlets"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.thick_gauntlets
 }
 
 item heavy_boots {
@@ -462,11 +396,6 @@ item heavy_boots {
     dv = 1
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t沢山の素材片を張り付けた靴。当然通常より重くなっているが、その分防護は硬くなっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重い靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Boot's made for travel,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -481,13 +410,12 @@ item heavy_boots {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーブーツ"
-    original_name_jp = "重靴"
-    original_name_en = "heavy boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.heavy_boots
 }
 
 item composite_boots {
@@ -503,11 +431,6 @@ item composite_boots {
     dv = 1
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た靴。非常に硬く、歩くだけで心地よい音が辺りに響くと言う。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of boot's with an armored mesh,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -522,13 +445,12 @@ item composite_boots {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コンポジットブーツ"
-    original_name_jp = "合成靴"
-    original_name_en = "composite boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_boots
 }
 
 item decorative_ring {
@@ -544,11 +466,6 @@ item decorative_ring {
     dv = 0
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t様々な飾りがとても美しい指輪。かつて、この小さな円の中にどれだけの彩を凝らすかで職人の腕が競われたことがあったという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t幾つかの装飾がされた指輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pretty ring,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -563,13 +480,12 @@ item decorative_ring {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "デコレートリング"
-    original_name_jp = "装飾の指輪"
-    original_name_en = "decorative ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.decorative_ring
 }
 
 item scroll_of_identify {
@@ -585,11 +501,6 @@ item scroll_of_identify {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t未鑑定の品を鑑定する巻物。強力な品の場合鑑定できない場合があるが、そういった場合は魔道士の手を借りよう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t所持アイテムの鑑定を行う巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -604,13 +515,12 @@ item scroll_of_identify {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鑑定の巻物"
-    original_name_en = "identify"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_identify
 }
 
 item scroll_of_oracle {
@@ -626,11 +536,6 @@ item scroll_of_oracle {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t伝説の品の存在を知ることができるとされる巻物。誰が持っているかまでは教えてくれない、神はそこまであなたに親身ではないのだ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t今までに現れた★のつくアイテムの現在地を知ることができる巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -645,13 +550,12 @@ item scroll_of_oracle {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "神託の巻物"
-    original_name_en = "oracle"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_oracle
 }
 
 item scroll_of_teleportation {
@@ -667,11 +571,6 @@ item scroll_of_teleportation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t空間に歪みを作り出すことで一瞬のうちに別の場所に移動することができる巻物。緊急時には便利だが行き先までは指定できないので待ち合わせに遅れた時等には使えないだろう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tランダムな位置へテレポートを行う巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -686,13 +585,12 @@ item scroll_of_teleportation {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "テレポートの巻物"
-    original_name_en = "teleportation"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_teleportation
 }
 
 item scroll_of_incognito {
@@ -708,11 +606,6 @@ item scroll_of_incognito {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t一瞬で別人になりすますことができる巻物。使った時の気分はさながら国を動かす大怪盗だ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスター以外の敵対状況をリセットする巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -727,13 +620,12 @@ item scroll_of_incognito {
     rarity = 70000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "インコグニートの巻物"
-    original_name_en = "incognito"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_incognito
 }
 
 item rod_of_identify {
@@ -749,11 +641,6 @@ item rod_of_identify {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。全てを見透かすような透明な宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで所持アイテムの鑑定を行う魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A wooden rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -768,13 +655,12 @@ item rod_of_identify {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鑑定の杖"
-    original_name_en = "identify"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_identify
 }
 
 item rod_of_teleportation {
@@ -790,11 +676,6 @@ item rod_of_teleportation {
     dv = 0
     material = 0
     chargelevel = 12
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。四角い透き通った緑色の宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることでランダムなテレポートを行う魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of steel,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -809,13 +690,12 @@ item rod_of_teleportation {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "テレポートの杖"
-    original_name_en = "teleportation"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_teleportation
 }
 
 item spellbook_of_teleportation {
@@ -831,11 +711,6 @@ item spellbook_of_teleportation {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「テレポート」という呪文について学ぶことができる魔法書。今すぐ旅に出たいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tテレポートを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A yellowed tome who's words seem to move on their own/"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -850,13 +725,12 @@ item spellbook_of_teleportation {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "テレポートの魔法書"
-    original_name_en = "teleportation"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_teleportation
 }
 
 item spellbook_of_identify {
@@ -872,11 +746,6 @@ item spellbook_of_identify {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「鑑定」という呪文について学ぶことができる魔法書。何でも疑う癖のあるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムを鑑定する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A yellowed tome that contain's the secret of any item,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -891,13 +760,12 @@ item spellbook_of_identify {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鑑定の魔法書"
-    original_name_en = "identify"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_identify
 }
 
 item spellbook_of_uncurse {
@@ -913,11 +781,6 @@ item spellbook_of_uncurse {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「解呪」という呪文について学ぶことができる魔法書。霊の存在を信じるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの呪いを解く呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome often carried by priests,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -932,13 +795,12 @@ item spellbook_of_uncurse {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "解呪の魔法書"
-    original_name_en = "uncurse"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_uncurse
 }
 
 item book_a {
@@ -954,11 +816,6 @@ item book_a {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tノースティリスで広く流通している記録媒体。中には重要なことが書かれているものがあるが、その殆どがとるに値しない端書程度の内容だ。\n#〜本の為の本〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雑多な情報が書かれた本。特に利用できるものはない。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A leather bound book,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -973,13 +830,12 @@ item book_a {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "本"
-    original_name_en = "book"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.book_a
 }
 
 item book_b {
@@ -995,11 +851,6 @@ item book_b {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tノースティリスで広く流通している記録媒体。中には重要なことが書かれているものがあるが、その殆どがとるに値しない端書程度の内容だ。\n#〜本の為の本〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雑多な情報が書かれた本。特に利用できるものはない。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A book with watermark's,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -1014,13 +865,12 @@ item book_b {
     rarity = 2000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "本"
-    original_name_en = "book"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.book_b
 }
 
 item bugged_book {
@@ -1036,11 +886,6 @@ item bugged_book {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = "generated when failed to create an item"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -1055,13 +900,12 @@ item bugged_book {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "バグの本"
-    original_name_en = "bugged book"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bugged_book
 }
 
 item bottle_of_dirty_water {
@@ -1077,11 +921,6 @@ item bottle_of_dirty_water {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tノースティリスにおいて、市民が普段の生活に使用している水を空き瓶に詰めたもの。生活用水であるものの、現在のノースティリスの水質汚染度は高く、おいそれと飲用するべきではないだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飲むと病気になる可能性のあるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A bottle of murky water,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1096,13 +935,12 @@ item bottle_of_dirty_water {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "汚水"
-    original_name_en = "dirty water"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_dirty_water
 }
 
 item potion_of_blindness {
@@ -1118,11 +956,6 @@ item potion_of_blindness {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身がとても辛いことで有名な火蟹のエキスを余す所なく用いた水薬。飲めば忽ち汗が吹き出し目に入り、戦闘どころではなくなってしまう。その発汗作用により痩せる効果があると勘違いされ、しばしば売れるらしい。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\tパンプキン達のエキスを抽出し、透明薬を作り出す研究中に生まれた失敗作。飲むことで透明化することを目的としていたが、モンスターのエキスは真っ先に目に反応し、自分以外を認識できなくさせてしまったのだ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_3 = "\t\t盲目状態を引き起こすポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Sometimes carried by prostitutes,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1137,13 +970,12 @@ item potion_of_blindness {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "盲目のポーション"
-    original_name_en = "blindness"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_blindness
 }
 
 item potion_of_confusion {
@@ -1159,11 +991,6 @@ item potion_of_confusion {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むと頭に激痛を引き起こす水薬。頭痛は一過性のものだが、平衡感覚や読解力、会話能力の著しい低下を誘発させる。また酩酊時の症状と似ている為、誤飲した場合泥酔者と間違われるので取り扱いには注意しよう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = "\t\t\n\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混乱状態を引き起こすポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label says \"\"Please do not drink to identify contents,\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1178,13 +1005,12 @@ item potion_of_confusion {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "混乱のポーション"
-    original_name_en = "confusion"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_confusion
 }
 
 item potion_of_paralysis {
@@ -1200,11 +1026,6 @@ item potion_of_paralysis {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tパラライザーを煎じたものを水薬に混ぜたもの。飲むと肉体に障害をきたすほどの痺れを生じさせる。誤飲してしまっても一過性のものである為心配はないが、癖にならないようにと忠告しておこう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t麻痺状態を引き起こすポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label dictates \"\"For medical use only,\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1219,13 +1040,12 @@ item potion_of_paralysis {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "麻痺のポーション"
-    original_name_en = "paralysis"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_paralysis
 }
 
 item sleeping_drug {
@@ -1241,11 +1061,6 @@ item sleeping_drug {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t甘い香りのする水薬。振りかければどんな猛獣でも忽ち大人しくなるという。不眠症のあなたにも是非とも一本。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t睡眠状態を引き起こすポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label says \"\"Do not inhale,\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1260,13 +1075,12 @@ item sleeping_drug {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "睡眠薬"
-    original_name_en = "sleeping drug"
     originalnameref2 = ""
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.sleeping_drug
 }
 
 item bottle_of_crim_ale {
@@ -1282,11 +1096,6 @@ item bottle_of_crim_ale {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tダルフィで密やかに作られる成分不明の酒。ビアと同様痺れる様な刺激はあるが、果実めいた香りが後味を綺麗に整える。尚、この酒は飲み続けていると幻覚を引き起こすとも言われるが詳細は不明。\n#〜奥深い酒の世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飲むと酔っぱらう飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "crim is some kind of addictive berry"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -1301,13 +1110,12 @@ item bottle_of_crim_ale {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "クリムエール"
-    original_name_en = "crim ale"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_crim_ale
 }
 
 item spellbook_of_ice_bolt {
@@ -1323,11 +1131,6 @@ item spellbook_of_ice_bolt {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「アイスボルト」という呪文について学ぶことができる魔法書。暑がりなあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t氷属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "The tome is cool to the touch,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -1342,13 +1145,12 @@ item spellbook_of_ice_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "アイスボルトの魔法書"
-    original_name_en = "ice bolt"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_ice_bolt
 }
 
 item spellbook_of_fire_bolt {
@@ -1364,11 +1166,6 @@ item spellbook_of_fire_bolt {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ファイアボルト」という呪文について学ぶことができる魔法書。寒がりなあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t炎属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "The tome is strangely warm,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -1383,13 +1180,12 @@ item spellbook_of_fire_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ファイアボルトの魔法書"
-    original_name_en = "fire bolt"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_fire_bolt
 }
 
 item spellbook_of_lightning_bolt {
@@ -1405,11 +1201,6 @@ item spellbook_of_lightning_bolt {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ライトニングボルト」という呪文について学ぶことができる魔法書。いつでも雷を見たいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雷属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome let's off a static discharge,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -1424,13 +1215,12 @@ item spellbook_of_lightning_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ライトニングボルトの魔法書"
-    original_name_en = "lightning bolt"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_lightning_bolt
 }
 
 item earth_crystal {
@@ -1446,11 +1236,6 @@ item earth_crystal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大地の力を封じ込めたとされる橙色の結晶。光に透かすと、内部にたくさん走ったヒビに反射してとてもきれいだ。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t橙色をした鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1465,13 +1250,12 @@ item earth_crystal {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大地の結晶"
-    original_name_en = "earth crystal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Yellow
+    locale_key_prefix = core.locale.item.earth_crystal
 }
 
 item mana_crystal {
@@ -1487,11 +1271,6 @@ item mana_crystal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t魔力を封じ込めたとされる赤色の結晶。鉱物自体も純粋な魔力と同様に透き通っている。緊急時には魔道士がこれを砕いてその身に宿したいう話もあるそうだ。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t魔術を操る力を封じ込めたとされる赤色の結晶。他の結晶とは違い人工的に作られていて、かの光り輝く異世界の剣はこの結晶を削り出して力の源にしているという噂もある。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_3 = "\t\t赤色をした鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1506,13 +1285,12 @@ item mana_crystal {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔力の結晶"
-    original_name_en = "mana crystal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Red
+    locale_key_prefix = core.locale.item.mana_crystal
 }
 
 item sun_crystal {
@@ -1528,11 +1306,6 @@ item sun_crystal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t太陽の力を封じ込めたとされる黄色の結晶。光に透かすと、微かに大気のうねりのような動きを鉱物の中に見て取ることができる。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t黄色をした鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1547,13 +1320,12 @@ item sun_crystal {
     rarity = 1000000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "太陽の結晶"
-    original_name_en = "sun crystal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Orange
+    locale_key_prefix = core.locale.item.sun_crystal
 }
 
 item gold_bar {
@@ -1569,11 +1341,6 @@ item gold_bar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t決して錆びることのない輝ける鉱物。非常に加工しやすく、また独特の明るい色は古来から富と力の象徴として権力者に好まれている。その神秘性からしばしば研究の対象となることもあるらしい。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t黄金色の輝く鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1588,13 +1355,12 @@ item gold_bar {
     rarity = 500000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "金塊"
-    original_name_en = "gold bar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.gold_bar
 }
 
 item raw_ore_of_rubynus {
@@ -1610,11 +1376,6 @@ item raw_ore_of_rubynus {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tルビナスの要素が多く含まれた珍しい鉱物。加工の過程を経て、その大きさは極端に小さくなってしまうので、原石の大きさに対してそれほど価値はないとされる。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tルビナスの要素が含まれる鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1629,13 +1390,12 @@ item raw_ore_of_rubynus {
     rarity = 500000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "ルビナスの原石"
-    original_name_en = "rubynus"
     originalnameref2 = "raw ore"
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Red
+    locale_key_prefix = core.locale.item.raw_ore_of_rubynus
 }
 
 item raw_ore_of_mika {
@@ -1651,11 +1411,6 @@ item raw_ore_of_mika {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t淡い光を放つ白く小さな鉱物。幾星霜の時を経てじっくりと楕円に近い球体を作り上げていくその様は、石の真珠と評されるほど美しい。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t白い色をした鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1670,13 +1425,12 @@ item raw_ore_of_mika {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ミカ"
-    original_name_en = "mika"
     originalnameref2 = "raw ore"
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.raw_ore_of_mika
 }
 
 item raw_ore_of_emerald {
@@ -1692,11 +1446,6 @@ item raw_ore_of_emerald {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tエメラルドの要素が多く含まれた珍しい鉱物。加工の過程を経て、その大きさは極端に小さくなってしまうので、原石の大きさに対してそれほど価値はないとされる。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tエメラルドの要素が含まれる鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1711,13 +1460,12 @@ item raw_ore_of_emerald {
     rarity = 400000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "エメラルドの原石"
-    original_name_en = "emerald"
     originalnameref2 = "raw ore"
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Green
+    locale_key_prefix = core.locale.item.raw_ore_of_emerald
 }
 
 item raw_ore_of_diamond {
@@ -1733,11 +1481,6 @@ item raw_ore_of_diamond {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tダイヤモンドの要素が多く含まれた珍しい鉱物。加工の過程を経て、その大きさは極端に小さくなってしまうので、原石の大きさに対してそれほど価値はないとされる。\n#〜ヴェルニース鉱物図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tダイヤモンドの要素が含まれる鉱石だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1752,13 +1495,12 @@ item raw_ore_of_diamond {
     rarity = 250000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "ダイヤモンドの原石"
-    original_name_en = "diamond"
     originalnameref2 = "raw ore"
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = Blue
+    locale_key_prefix = core.locale.item.raw_ore_of_diamond
 }
 
 item wood_piece {
@@ -1774,11 +1516,6 @@ item wood_piece {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t破砕された木の欠片。全く役に立たないが、子供の興味を引くくらいにはなるだろう。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t破損した木の破片だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Not dry enough to burn easily,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1793,13 +1530,12 @@ item wood_piece {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "木片"
-    original_name_en = "wood piece"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.wood_piece
 }
 
 item junk_stone {
@@ -1815,11 +1551,6 @@ item junk_stone {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t希少価値がまるでない石くれ。そこらへんにいくらでも転がっているが、こういうものを集めている子供も多いようだ。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとるに足らない小石だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "A useless stone that seems to break apart into sand when touched,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1834,13 +1565,12 @@ item junk_stone {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クズ石"
-    original_name_en = "junk stone"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.junk_stone
 }
 
 item garbage {
@@ -1856,11 +1586,6 @@ item garbage {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t枯れた草が一纏めに丸まったもの。非常に硬いので牧草代わりに使うことはできないが、子供に与えると一心不乱に蹴飛ばし続けて遊ぶのだという。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t乾燥した草の束だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Stinky,,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1875,13 +1600,12 @@ item garbage {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クズ"
-    original_name_en = "garbage"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.garbage
 }
 
 item broken_vase {
@@ -1897,11 +1621,6 @@ item broken_vase {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t割れてしまって使用することができなくなったつぼ。全く価値はないが、そこに幾らかの可能性を見出し、半ば挑戦的に買っていく芸術家もいるとか。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t使い物にならない破損したつぼだ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Why would you take the time to collect the broken pieces?!?"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1916,13 +1635,12 @@ item broken_vase {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "割れたつぼ"
-    original_name_en = "broken vase"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.broken_vase
 }
 
 item washing {
@@ -1938,11 +1656,6 @@ item washing {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t汚れた衣服が突っ込まれたたらい。こんな物を欲しがる者がいるのか甚だ不思議だが、それでもある種の掃除好きにはたまらないものがあるらしい。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tかごに入った汚れた衣服だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "North Tyris law's have harsh penalties for polluting water,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1957,13 +1670,12 @@ item washing {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "洗物"
-    original_name_en = "washing"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.washing
 }
 
 item bonfire {
@@ -1979,11 +1691,6 @@ item bonfire {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t柱の先に炎を入れておく鉄のかごを取り付けた簡素な照明。その武骨な作りはどことなく野性的な印象を与える。近年そういった効果も狙って店舗に設置している料理店もあるらしい。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = "\t\t簡易的に作られた照明。それは常に周囲を強く照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡素な照明器具。常に周囲を明るく照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "You smell something strange burning,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -1998,13 +1705,12 @@ item bonfire {
     rarity = 1000000
     coefficient = 100
     light = 2
-    katakana_name = ""
-    original_name_jp = "かがり台"
-    original_name_en = "bonfire"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bonfire
 }
 
 item flag {
@@ -2020,11 +1726,6 @@ item flag {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t風を受けその身をはためかせる布。色や模様が多様であり、各街それぞれに特徴が違うので旅先の思い出として、観光客に人気の商品の一つである。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t布で作られた装飾品だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Come's with it's own support so it does not touch the ground,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2039,13 +1740,12 @@ item flag {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "旗"
-    original_name_en = "flag"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.flag
 }
 
 item broken_sword {
@@ -2061,11 +1761,6 @@ item broken_sword {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t真中から二つに折れてしまった刀剣。どんな価値ある武器でさえこうなってしまえば終わりである。ノースティリスには武器屋はあるが、鍛冶屋はないのだ。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t真中から二つに折れてしまった刀剣。風雨に晒されはこぼれも酷くもはや価値は微塵も無いが、それでも子供に与えると一生懸命戦士の真似事をするのだから面白い。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_3 = "\t\t使い物にならない破損した剣だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The material's can probably be salvaged,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2080,13 +1775,12 @@ item broken_sword {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "折れた刃"
-    original_name_en = "broken sword"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.broken_sword
 }
 
 item bone_fragment {
@@ -2102,11 +1796,6 @@ item bone_fragment {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t風化した何かの骨。呪術や水薬精製など、使用する機会は割とあるのだがいかんせん供給過多なので、価値としても二束三文である。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「う〜、わんわん！わん！　…くぅん」\n#〜子犬の『ポピー』の言葉〜\n"
-    description_jp_3 = "\t\t打ち捨てられた何かの骨だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Some bone's are valuable"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2121,13 +1810,12 @@ item bone_fragment {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "骨"
-    original_name_en = "bone fragment"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bone_fragment
 }
 
 item skeleton {
@@ -2143,11 +1831,6 @@ item skeleton {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t風化した人間の骨。呪術や水薬精製など、使用する機会は割とあるのだがいかんせん供給過多なので、価値としても二束三文である。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t打ち捨てられた人の骨だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Bones of an unknown creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2162,13 +1845,12 @@ item skeleton {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "骸"
-    original_name_en = "skeleton"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.skeleton
 }
 
 item tombstone {
@@ -2184,11 +1866,6 @@ item tombstone {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古の言語が刻まれた硬い板。読み解くことはできないが、歴史に触れたい市民が稀に購入するようだ。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「自分の放った言葉が悠久の存在となるのは、一体どんな気分なのでしょうね」\n#〜歴史を学ぶ『エリステア』の言葉〜\n"
-    description_jp_3 = "\t\t文字の書かれた石の板だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Please do not kick the tombstones,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2203,13 +1880,12 @@ item tombstone {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "石碑"
-    original_name_en = "tombstone"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tombstone
 }
 
 item gold_piece {
@@ -2225,11 +1901,6 @@ item gold_piece {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t世界で広く流通している通貨。昨今において物々交換に代わる方法として確立されたが、弊害として財が一か所に集中しやすい為、主に旅先で盗人に狙われやすく富豪達は更に価値のある貨幣の発行を国に求めている。\n#〜世界のコイン・ティリス編〜\n"
-    description_jp_1 = "\t\t大陸で公に使用されている金貨だ。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t世界共通の通貨だ。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_en = "Standard currency of North Tyris,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2244,13 +1915,12 @@ item gold_piece {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "金貨"
-    original_name_en = "gold piece"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.gold_piece
 }
 
 item platinum_coin {
@@ -2266,11 +1936,6 @@ item platinum_coin {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な時に使用される白金の硬貨。貨幣として使用することはできないがまた逆もしかり。主な使用用途は、自分の感謝の気持ちを代わりに表す時等。この使用法は広く認知されており、かなりの枚数が流通している。\n#〜世界のコイン・ティリス編〜\n"
-    description_jp_1 = "\t\t綺麗に輝く特殊な硬貨だ。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\tスキルをトレイナーに鍛えてもらう時等に用いる硬貨だ。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_en = "Rare coin's used by the guild's for currency,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2285,13 +1950,12 @@ item platinum_coin {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "プラチナ硬貨"
-    original_name_en = "platinum coin"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.platinum_coin
 }
 
 item diablo {
@@ -2307,11 +1971,6 @@ item diablo {
     dv = -3
     material = 9
     chargelevel = 0
-    description_jp_0 = "\t\t「悪魔」と言う名を冠した畏れ多き剣。その黒い刃は斬られた者の精神ばかりか、時の流れさえ乱すのだとされている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「その武器の事は聞いている。災いを抱く黒き竜から生れし剣で、切り裂く刃は時間さえ断ち切るとか。それが真実かどうか知らないが、本当なら是非ともお目にかかりたいものだ。俺の力に値する武器かもしれんしな」\n#〜ザナンの紅血『ロイター』の言葉〜\n"
-    description_jp_3 = "\t\t時を止める長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "This sword seems to be sentient,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2326,13 +1985,12 @@ item diablo {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ディアボロス》"
-    original_name_en = "<Diablo>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
+    locale_key_prefix = core.locale.item.diablo
 }
 
 item zantetsu {
@@ -2348,11 +2006,6 @@ item zantetsu {
     dv = 0
     material = 25
     chargelevel = 0
-    description_jp_0 = "\t\t\t\tこの世に切れぬ者など無いと謳われる一振りの奇跡。噂通りどんな物でも切り貫くが、話によると弾力性に富む灰色\nの食物だけは、切ることができないらしい。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t何でも貫くといわれる長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "Sword rumored to cut through anything,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2367,13 +2020,12 @@ item zantetsu {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《斬鉄剣》"
-    original_name_en = "<Zantetsu>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.zantetsu
 }
 
 item long_bow {
@@ -2389,11 +2041,6 @@ item long_bow {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t射程を延ばす為に身の丈を越えるほどの大きさをもった弓。通常でも十分の射程があるが、角度をつけることで超長距離の射程から敵に一撃を加えることができるという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t矢束と共に使用する射撃武器。距離によって威力が増減する。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A bow specifically designed to shoot further than a short bow,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2408,13 +2055,12 @@ item long_bow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ロングボウ"
-    original_name_jp = "長弓"
-    original_name_en = "long bow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.long_bow
 }
 
 item knight_shield {
@@ -2430,11 +2076,6 @@ item knight_shield {
     dv = -2
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t騎士用に作られた格調高い盾。使う者に合わせ、趣向を凝らした彫金と飾りが付けられているが、単なる儀礼用ではなく、一定の防護も備わっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t騎士用の盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A shield given to knights,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2449,13 +2090,12 @@ item knight_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "カイトシールド"
-    original_name_jp = "騎士盾"
-    original_name_en = "knight shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.knight_shield
 }
 
 item pistol {
@@ -2471,11 +2111,6 @@ item pistol {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t重量感ある小型の銃器。誰にでも扱えるよう設計されているが、銃身の短さ故に射程はそれほど長くないだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弾と共に使用する射撃武器。距離によって威力が減衰する。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Made by Cyber Dome In"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2490,13 +2125,12 @@ item pistol {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "リボルバー"
-    original_name_jp = "拳銃"
-    original_name_en = "pistol"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pistol
 }
 
 item arrow {
@@ -2512,11 +2146,6 @@ item arrow {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t弓に用いる為の矢を束ねたもの。束ねているので素材によっては非常に重く、携行には注意が必要である。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弓と共に使用する武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Hand forged arrows,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2531,13 +2160,12 @@ item arrow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "アロー"
-    original_name_jp = "矢束"
-    original_name_en = "arrow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.arrow
 }
 
 item bullet {
@@ -2553,11 +2181,6 @@ item bullet {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t銃から発射される為に加工された小さな玉。これが無ければどれ程高名な銃であろうと、ただの筒でしかない。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t銃と共に使用する武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Made by Cyber Dome In"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2572,13 +2195,12 @@ item bullet {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "バレット"
-    original_name_jp = "弾丸"
-    original_name_en = "bullet"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bullet
 }
 
 item scythe_of_void {
@@ -2594,11 +2216,6 @@ item scythe_of_void {
     dv = 0
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t何重もの強化魔法が掛けられた大鎌。扱う者の魔力を強化し、自身を究極の存在に近しめるとされたが、長らく世から失われて久しい。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t相手のマナを吸い取る大鎌だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "This weapon's very existence defies all logic,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2613,13 +2230,12 @@ item scythe_of_void {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《虚無の大鎌》"
-    original_name_en = "<Scythe of Void>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.scythe_of_void
 }
 
 item mournblade {
@@ -2635,11 +2251,6 @@ item mournblade {
     dv = -4
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t邪を祓う為に更に強大な邪を用いる、という考えから生み出された黒の剣。これには兄弟ともいうべく剣が存在し、それぞれを両手に握れば世界ですら破壊し得る程の力を得るのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tストームブリンガーという兄弟剣が存在するといわれる長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "An evil black sword surrounded with an aura of dread,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2654,13 +2265,12 @@ item mournblade {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《モーンブレイド》"
-    original_name_en = "<Mournblade>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.mournblade
 }
 
 item light_cloak {
@@ -2676,11 +2286,6 @@ item light_cloak {
     dv = 4
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t鎧の上から羽織る薄い布生地。幾多の素材を織り込むことで布自体の強度を増している。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t軽い外套だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Designed for children and smaller races,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2695,13 +2300,12 @@ item light_cloak {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "マント"
-    original_name_jp = "軽外套"
-    original_name_en = "light cloak"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.light_cloak
 }
 
 item girdle {
@@ -2717,11 +2321,6 @@ item girdle {
     dv = 3
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t行動を阻害しないようにしつつ、下半身を守る為考案された防具。寒い季節になると軽い素材のこれを身につける婦人もいるようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t腰を守る為の防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A type of belt,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2736,13 +2335,12 @@ item girdle {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ガードル"
-    original_name_jp = "腰当"
-    original_name_en = "girdle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.girdle
 }
 
 item decorative_amulet {
@@ -2758,11 +2356,6 @@ item decorative_amulet {
     dv = 0
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t首元に飾る装身具。材質形状様々なものがあるが、往々にして希少な素材で作られたものが高価である。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t美しい装飾がほどこされた首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A cute amulet,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -2777,13 +2370,12 @@ item decorative_amulet {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ネックレス"
-    original_name_jp = "装飾首輪"
-    original_name_en = "decorative amulet"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.decorative_amulet
 }
 
 item potion_of_cure_minor_wound {
@@ -2799,11 +2391,6 @@ item potion_of_cure_minor_wound {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tゴブリンシャーマンの持つ杖から魔力を抽出して生成された水薬。元々がゴブリンの持つ杖なので、効力的にもたかが知れている。冒険者の中には渇きを凌ぐ為だけに携帯している者もいるらしい。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -2818,13 +2405,12 @@ item potion_of_cure_minor_wound {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "軽傷治癒のポーション"
-    original_name_en = "cure minor wound"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_cure_minor_wound
 }
 
 item potion_of_cure_major_wound {
@@ -2840,11 +2426,6 @@ item potion_of_cure_major_wound {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t万病に効くと呼ばれるありとあらゆる薬草を一か所にまとめ、それを無理矢理煮詰め上げたいかにもそれらしい水薬。味の方は強烈に苦く、何やら効果を感じさせるが実際の効果はそれほどでもない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -2859,13 +2440,12 @@ item potion_of_cure_major_wound {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "重傷治癒のポーション"
-    original_name_en = "cure major wound"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_cure_major_wound
 }
 
 item potion_of_cure_critical_wound {
@@ -2881,11 +2461,6 @@ item potion_of_cure_critical_wound {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t静謐な山から湧きだした水にコブラのエキスと癒し手の祈りの言葉を込めた水薬。実際そこそこの回復をするが、この効果がエキスによるものか祈りによるものかは知る由はない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -2900,13 +2475,12 @@ item potion_of_cure_critical_wound {
     rarity = 1000000
     coefficient = 50
     light = 0
-    katakana_name = ""
-    original_name_jp = "致命傷治癒のポーション"
-    original_name_en = "cure critical wound"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_cure_critical_wound
 }
 
 item potion_of_healing {
@@ -2922,11 +2496,6 @@ item potion_of_healing {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t分かりやすい名前をしたもっともらしい水薬。効果の程もそれなりで広がる傷を防ぐのには有効だが、継続的な創傷に対しては少々心もとないと言える。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -2941,13 +2510,12 @@ item potion_of_healing {
     rarity = 700000
     coefficient = 50
     light = 0
-    katakana_name = ""
-    original_name_jp = "体力回復のポーション"
-    original_name_en = "healing"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_healing
 }
 
 item potion_of_healer {
@@ -2963,11 +2531,6 @@ item potion_of_healer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t癒し手達が古来から粛々と守ってきた生薬を粉にし、水薬に混ぜたもの。いたく怪しいものであるが、効果としてはしっかりとしたもので、緊急時にはいくつか携帯しておきたいものである。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -2982,13 +2545,12 @@ item potion_of_healer {
     rarity = 600000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "癒し手のポーション"
-    original_name_en = "healer"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_healer
 }
 
 item ragnarok {
@@ -3004,11 +2566,6 @@ item ragnarok {
     dv = -1
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t小高い丘にひっそりと刺さっていたという長剣。その黒い刀身は様々な敵を屠ってきたのだろうが、刀は決して黙して語らない。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t世界の終末を招くといわれる長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "It's said that only a god can use it's true power,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3023,13 +2580,12 @@ item ragnarok {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ラグナロク》"
-    original_name_en = "<Ragnarok>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
+    locale_key_prefix = core.locale.item.ragnarok
 }
 
 item potion_of_healer_odina {
@@ -3045,11 +2601,6 @@ item potion_of_healer_odina {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t高名な癒し手であるオディナの名を冠した霊験あらたかな水薬。薬は青みがかかった透明色で、仄かに甘い香りを漂わせる。その為、この薬を香水代わりにつけるといった流行も生み出された。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t偉大な癒し手、オディナの名を冠した高価な水薬。透き通った海の様な色をした薬液に傷を一度浸せば、まるで砂浜に書いた文字のように、傷口を消し去ってしまうと言われている。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion made by a talented alchemist cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -3064,13 +2615,12 @@ item potion_of_healer_odina {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "癒し手オディナのポーション"
-    original_name_en = "healer <Odina>"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_healer_odina
 }
 
 item potion_of_healer_eris {
@@ -3086,11 +2636,6 @@ item potion_of_healer_eris {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「白き癒し手」エリスの名の通り、乳白色をした水薬。今までの水薬と違い、抽出物ではなく魔力を直接水に化合している。その為速効性が高く、瀕死の重傷者さえも治癒させる力を秘めているという。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion made by a talented alchemist cure's some wounds,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -3105,13 +2650,12 @@ item potion_of_healer_eris {
     rarity = 250000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "白き癒し手エリスのポーション"
-    original_name_en = "healer <Eris>"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_healer_eris
 }
 
 item potion_of_healer_jure {
@@ -3127,11 +2671,6 @@ item potion_of_healer_jure {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t聖なる癒し手の名を持つ恐れ多き水薬。もはや何が調合されているか分からず、薬液は玉虫色の輝きを見せているが、一度口にすれば、夢であったかの如く傷が癒えると言う。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPと状態異常を回復するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion who's formula was created by Jure herself,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -3146,13 +2685,12 @@ item potion_of_healer_jure {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "聖なる癒し手ジュアのポーション"
-    original_name_en = "healer <Jure>"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_healer_jure
 }
 
 item round_chair {
@@ -3168,11 +2706,6 @@ item round_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t座る部分が円形の椅子。四角い椅子とどちらが良いかは、殆ど好みの問題だろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A chair for a small child or a fairy,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3187,13 +2720,12 @@ item round_chair {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "丸椅子"
-    original_name_en = "round chair"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.round_chair
 }
 
 item bookshelf {
@@ -3209,11 +2741,6 @@ item bookshelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t家具屋でよく売られている書物を収める為の棚。特に目立った悪い点もいい点も無く、無難な出来栄えとなっている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t極普通の本を収める為の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Because there is no public library in Nort Tyris,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3228,13 +2755,12 @@ item bookshelf {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "普通の本棚"
-    original_name_en = "bookshelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bookshelf
 }
 
 item luxury_drawer {
@@ -3250,11 +2776,6 @@ item luxury_drawer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tしっとりとした面持ちの格調ある箪笥。人は誰しもこの箪笥の中に隠し財産をしまっておくのだという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t良い素材で作られた箪笥だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A place to keep your spare clothes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3269,13 +2790,12 @@ item luxury_drawer {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "高級箪笥"
-    original_name_en = "luxury drawer"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.luxury_drawer
 }
 
 item boring_bed {
@@ -3291,11 +2811,6 @@ item boring_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t比較的安価な材質でできた寝具。市民の殆どはこれで寝起きしているという、ごく一般的なベッドだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A refurbished be"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3310,13 +2825,12 @@ item boring_bed {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "安物ベッド"
-    original_name_en = "boring bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.boring_bed
 }
 
 item rag_doll {
@@ -3332,11 +2846,6 @@ item rag_doll {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t布の中に綿をつめて縫い上げた人形。そこには綿の他に様々な思い出も詰め込まれているという。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tふわふわの人形。使用することができる。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A cute stuffed teddy bear,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3351,13 +2860,12 @@ item rag_doll {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ぬいぐるみ"
-    original_name_en = "rag doll"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.rag_doll
 }
 
 item toy {
@@ -3373,11 +2881,6 @@ item toy {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t主に子供が遊ぶ為に用いる遊具。時代がすすむにつれ、より複雑に、より高級になっていくので、いつの世も大人を悩ます頭痛の種である。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t子供用の遊具だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A child's toy,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3392,13 +2895,12 @@ item toy {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "玩具"
-    original_name_en = "toy"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.toy
 }
 
 item modern_table {
@@ -3414,11 +2916,6 @@ item modern_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t洒落た雰囲気が漂う、今風のテーブル。現在の人気は一色に染め上げたシンプルなタイプ、らしい。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t今風の食卓だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A table made with Cyber Dome technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3433,13 +2930,12 @@ item modern_table {
     rarity = 400000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "モダンテーブル"
-    original_name_en = "modern table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.modern_table
 }
 
 item dining_table {
@@ -3455,11 +2951,6 @@ item dining_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食事をする為に用いるテーブル。ほどほどの広さがあり、皿が有る程度乗っても重なり合う心配はないだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t食事を取る為に作られた机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A hand crafted dining table,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3474,13 +2965,12 @@ item dining_table {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ダイニングテーブル"
-    original_name_en = "dining table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.dining_table
 }
 
 item armor {
@@ -3496,11 +2986,6 @@ item armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t横一列に陳列された鎧。大きく試着不可と書かれている為、装備することはできない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鎧が陳列された小棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Armor on display,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3515,13 +3000,12 @@ item armor {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "様々な鎧"
-    original_name_en = "armor"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.armor
 }
 
 item lot_of_goods {
@@ -3537,11 +3021,6 @@ item lot_of_goods {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t山ほどの品が整然と収納された棚。選びやすいよう同じ種類に纏められている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雑貨が陳列された小棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A display case for various gift items,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3556,13 +3035,12 @@ item lot_of_goods {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "たくさんの雑貨"
-    original_name_en = "goods"
     originalnameref2 = "lot"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lot_of_goods
 }
 
 item lot_of_accessories {
@@ -3578,11 +3056,6 @@ item lot_of_accessories {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t綺麗に装飾品を陳列した小棚。見易いように二段になっている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t装飾品が陳列された小棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A display case for various gift items,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3597,13 +3070,12 @@ item lot_of_accessories {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "色とりどりの装飾品"
-    original_name_en = "accessories"
     originalnameref2 = "lot"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lot_of_accessories
 }
 
 item grand_piano {
@@ -3619,11 +3091,6 @@ item grand_piano {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t非常に重い鍵盤楽器。かつてこのピアノを背負って旅を続けた、一人の演奏家がいたという。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t巨大でとても重い楽器。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A beautifully crafted piano,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3638,13 +3105,12 @@ item grand_piano {
     rarity = 100000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "グランドピアノ"
-    original_name_en = "grand piano"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.grand_piano
 }
 
 item bar_table_alpha {
@@ -3660,11 +3126,6 @@ item bar_table_alpha {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t酒場に設置される為に作られた机。大人の雰囲気漂う、落ち着いた家具だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t酒場向けの机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A table holding alcohol,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3679,13 +3140,12 @@ item bar_table_alpha {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "バーテーブルα"
-    original_name_en = "bar table alpha"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.bar_table_alpha
 }
 
 item bar_table_beta {
@@ -3701,11 +3161,6 @@ item bar_table_beta {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t酒場に設置される為に作られた机。怪しい雰囲気漂う、落ち着いた家具だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t酒場向けの机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A table with coasters and peanut boxes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3720,13 +3175,12 @@ item bar_table_beta {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "バーテーブルβ"
-    original_name_en = "bar table beta"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.bar_table_beta
 }
 
 item barrel {
@@ -3742,11 +3196,6 @@ item barrel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t水分を蓄えておくために作られた容器。大抵は酒が詰められているが、盗み飲みをしようとした冒険者が誤ってスライムの詰まったタルを開けてしまったという話もあるので、無暗に開けるのは止めた方がいいだろう。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t液体を保持しておく容器。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A barrel for storing items,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3761,13 +3210,12 @@ item barrel {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "タル"
-    original_name_en = "barrel"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.barrel
 }
 
 item modern_chair {
@@ -3783,11 +3231,6 @@ item modern_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t誰もが一瞬心奪われるという椅子。触り心地もしっとりとしていて、まさに理想の椅子といえよう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t美しい加工の椅子。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A chair made in Asseria,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3802,13 +3245,12 @@ item modern_chair {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "お洒落な椅子"
-    original_name_en = "modern chair"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.modern_chair
 }
 
 item pick {
@@ -3824,11 +3266,6 @@ item pick {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t掘削用の工具。しかし、特になくても掘ることはできる。ティリスの民は屈強なのだ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t掘削用の道具。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A pick sometimes used for mining,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3843,13 +3280,12 @@ item pick {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "つるはし"
-    original_name_en = "pick"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.pick
 }
 
 item lantern {
@@ -3865,11 +3301,6 @@ item lantern {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t淡い光を灯す手持ち用の照明器具。手に持つだけで気分は大探検家だ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t携帯しやすい簡易照明。夜間周囲をやや明るく照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A light source,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3884,13 +3315,12 @@ item lantern {
     rarity = 1000000
     coefficient = 100
     light = 4
-    katakana_name = ""
-    original_name_jp = "ランタン"
-    original_name_en = "lantern"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lantern
 }
 
 item decorative_armor {
@@ -3906,11 +3336,6 @@ item decorative_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t丁寧に磨かれた鎧。しかし良く見るとメッキで塗装されているだけの粗悪品の様だ。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t立派な鎧。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A set of decorative armor,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3925,13 +3350,12 @@ item decorative_armor {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "飾り物の鎧"
-    original_name_en = "decorative armor"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.decorative_armor
 }
 
 item anvil {
@@ -3947,11 +3371,6 @@ item anvil {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t金属を鍛錬する為に用いる金属製の台。本来の使用法とは別に、槌で叩いて楽器にするという作り話の様な使われ方もあるらしい。\n#〜より良い業物を目指して〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t精錬用の台。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "An anvil used for blacksmithing,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -3966,13 +3385,12 @@ item anvil {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "金床"
-    original_name_en = "anvil"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.anvil
 }
 
 item closed_pot {
@@ -3988,11 +3406,6 @@ item closed_pot {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t固く封じられたつぼ。中が気になるが、がっちりと封じられているので開けることはできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t口の閉じたつぼ。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A covered pot,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4007,13 +3420,12 @@ item closed_pot {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "密封されたつぼ"
-    original_name_en = "closed pot"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.closed_pot
 }
 
 item open_pot {
@@ -4029,11 +3441,6 @@ item open_pot {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t口の開いたつぼ。非常に壊れやすいので、中に何か入れるといった使い方はできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t口の開いたつぼ。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "An uncovered pot,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4048,13 +3455,12 @@ item open_pot {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "開いているつぼ"
-    original_name_en = "open pot"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.open_pot
 }
 
 item academic_table {
@@ -4070,11 +3476,6 @@ item academic_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t勉学を励むに適した机。固い素材でできているが、よく見ると机の隅に小刀で削られたと思われる誰かのいたずら書きが彫られている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t勉強をする為に作られた机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A desk used for student's in Asseria school's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4089,13 +3490,12 @@ item academic_table {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "勉強机"
-    original_name_en = "academic table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.academic_table
 }
 
 item rack_of_potions {
@@ -4111,11 +3511,6 @@ item rack_of_potions {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tポーションを保管しておくために作られたやや小さめの棚。どれがどのポーションかは並べた当人にしか分からないので、下手に取り出さない方が良いだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tポーションを収める為の棚。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A potions rack,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4130,13 +3525,12 @@ item rack_of_potions {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ポーションの棚"
-    original_name_en = "potions"
     originalnameref2 = "rack"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rack_of_potions
 }
 
 item square_chair {
@@ -4152,11 +3546,6 @@ item square_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t座る部分が四角形の椅子。丸い椅子とどちらが良いかは、殆ど好みの問題だろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "An everyday chair,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4171,13 +3560,12 @@ item square_chair {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "四角い椅子"
-    original_name_en = "square chair"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.square_chair
 }
 
 item cheap_chair {
@@ -4193,11 +3581,6 @@ item cheap_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t比較的安価な材質で出来た椅子。市民の殆どはこれを使っているという、ごく一般的な椅子だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "More like a foot stool,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4212,13 +3595,12 @@ item cheap_chair {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "安物の椅子"
-    original_name_en = "cheap chair"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.cheap_chair
 }
 
 item cupboard {
@@ -4234,11 +3616,6 @@ item cupboard {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食器を入れる為に作られた棚。自由な間仕切りが付いていることで、多様な種類の食器をしまうことができる。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t食器を収める為の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A cupboard to store dishes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4253,13 +3630,12 @@ item cupboard {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "食器棚"
-    original_name_en = "cupboard"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cupboard
 }
 
 item barn {
@@ -4275,11 +3651,6 @@ item barn {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t当面必要ない物をしまう為の家具。中に物が詰まっている為、使用することはできない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t物を詰めておくための家具。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4294,13 +3665,12 @@ item barn {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "物置"
-    original_name_en = "barn"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.barn
 }
 
 item neat_shelf {
@@ -4316,11 +3686,6 @@ item neat_shelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t書物も収納できるように作られた棚。収納に購入者のセンスが光る、自由度の高い家具である。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t本立てのついた棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A shelf containing book's on crafting,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4335,13 +3700,12 @@ item neat_shelf {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "本たてつきの棚"
-    original_name_en = "neat shelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.neat_shelf
 }
 
 item closet {
@@ -4357,11 +3721,6 @@ item closet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何でも収まるよう段と段とに余裕を持たせた棚。普通の棚と共に、広く愛用されている家具だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t収納用の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A closet for storing items,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4376,13 +3735,12 @@ item closet {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "収納棚"
-    original_name_en = "closet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.closet
 }
 
 item variety_of_tools {
@@ -4398,11 +3756,6 @@ item variety_of_tools {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t雑多な日用品が載せられた小棚。可動性の家具であり、目につきやすい位置に調節することが可能だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t道具の乗った小棚。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4417,13 +3770,12 @@ item variety_of_tools {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "いろんな道具"
-    original_name_en = "tools"
     originalnameref2 = "variety"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.variety_of_tools
 }
 
 item variety_of_goods {
@@ -4439,11 +3791,6 @@ item variety_of_goods {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t雑多な雑貨が載せられた小棚。可動性の家具であり、目につきやすい位置に調節することが可能だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雑貨の乗った小棚。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4458,13 +3805,12 @@ item variety_of_goods {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "いろんな雑貨"
-    original_name_en = "goods"
     originalnameref2 = "variety"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.variety_of_goods
 }
 
 item well {
@@ -4480,11 +3826,6 @@ item well {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t市民の生命線であり、気軽に水が飲める設備。ご婦人方の社交場であるがノースティリスは浄水技術に乏しく、飲んだ水によるトラブルも目立つ。それ故殺菌の為か、雨の日にはしばしば燃えている光景を目にする。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水を湛える設備。飲むことができる。\n#〜鑑定報告書：＜設備＞カテゴリ〜\n"
-    description_en = "Toss a coin in,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -4499,13 +3840,12 @@ item well {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "井戸"
-    original_name_en = "well"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.well
 }
 
 item variety_of_clothes {
@@ -4521,11 +3861,6 @@ item variety_of_clothes {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t雑多な衣服が載せられた小棚。可動性の家具であり、目につきやすい位置に調節することが可能だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t衣服の乗った小棚。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4540,13 +3875,12 @@ item variety_of_clothes {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "いろんな洋服"
-    original_name_en = "clothes"
     originalnameref2 = "variety"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.variety_of_clothes
 }
 
 item furnace {
@@ -4562,11 +3896,6 @@ item furnace {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t流動した金属が注ぎ込まれた炉。それらの金属は非常に赤赤しく燃え盛り、周囲を明るく照らしている。\n#〜より良い業物を目指して〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t赤熱した金属の入った炉。常に周囲を明るく照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A furnace used for smithing,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4581,13 +3910,12 @@ item furnace {
     rarity = 100000
     coefficient = 100
     light = 2
-    katakana_name = ""
-    original_name_jp = "溶解炉"
-    original_name_en = "furnace"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.furnace
 }
 
 item oven {
@@ -4603,11 +3931,6 @@ item oven {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食品を蒸し焼きにする調理器具。内部に食材を入れて調理する為、何より調理人の感覚がものをいう器具だろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為の家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A dwarven oven,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4622,13 +3945,12 @@ item oven {
     rarity = 150000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "オーブン"
-    original_name_en = "oven"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.oven
 }
 
 item sign {
@@ -4644,11 +3966,6 @@ item sign {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t目印として用いられる板。良く似た名前のものが存在するので、類似品に注意すること。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t目印用の板だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Sig"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4663,13 +3980,12 @@ item sign {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "標識"
-    original_name_en = "sign"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sign
 }
 
 item crossroad_sign {
@@ -4685,11 +4001,6 @@ item crossroad_sign {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t道等の方向を示す板。良く似た名前のものが存在するので、類似品に注意すること。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t未知の方向を示す板だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Oop'"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4704,13 +4015,12 @@ item crossroad_sign {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "道標"
-    original_name_en = "crossroad sign"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.crossroad_sign
 }
 
 item board {
@@ -4726,11 +4036,6 @@ item board {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t市井の情報が書かれた板。そこには街で起きた些細な事件やゴシップが貼り付けられている。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t情報の書かれた板。読むことはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A note on this board read's \"\"Wante"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4745,13 +4050,12 @@ item board {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "掲示板"
-    original_name_en = "board"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.board
 }
 
 item spellbook_of_minor_teleportation {
@@ -4767,11 +4071,6 @@ item spellbook_of_minor_teleportation {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ショートテレポート」という呪文について学ぶことができる魔法書。歩くのが面倒なあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t近距離のテレポートを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "The word's in this tome do not seem to stay in one place,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -4786,13 +4085,12 @@ item spellbook_of_minor_teleportation {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ショートテレポートの魔法書"
-    original_name_en = "minor teleportation"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_minor_teleportation
 }
 
 item empty_basket {
@@ -4808,11 +4106,6 @@ item empty_basket {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t中に何も入っていないバスケット。主に屋外で食事を取る時に入れ物代わりに用いる物で、その殆どが使い捨てだ。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中身の入っていない編みかごだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "This basket is made out of wicker,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -4827,13 +4120,12 @@ item empty_basket {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "空のバスケット"
-    original_name_en = "empty basket"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.empty_basket
 }
 
 item spellbook_of_summon_monsters {
@@ -4849,11 +4141,6 @@ item spellbook_of_summon_monsters {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「モンスター召喚」という呪文について学ぶことができる魔法書。動物好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスターを召喚する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "You can swear you hear growling,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -4868,13 +4155,12 @@ item spellbook_of_summon_monsters {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "モンスター召喚の魔法書"
-    original_name_en = "summon monsters"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_summon_monsters
 }
 
 item rod_of_cure_minor_wound {
@@ -4890,11 +4176,6 @@ item rod_of_cure_minor_wound {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。球状の小さな赤い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者のHPを回復する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A wooden rod with a cloth grip,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -4909,13 +4190,12 @@ item rod_of_cure_minor_wound {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "軽傷治療の杖"
-    original_name_en = "cure minor wound"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_cure_minor_wound
 }
 
 item rod_of_magic_missile {
@@ -4931,11 +4211,6 @@ item rod_of_magic_missile {
     dv = 0
     material = 0
     chargelevel = 10
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。半透明の白い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に無属性の矢を放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of iron,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -4950,13 +4225,12 @@ item rod_of_magic_missile {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "マジックミサイルの杖"
-    original_name_en = "magic missile"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_magic_missile
 }
 
 item rod_of_summon_monsters {
@@ -4972,11 +4246,6 @@ item rod_of_summon_monsters {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。何かの骨から作られた球体が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで周辺に敵対的なモンスターを召喚する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A heavy rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -4991,13 +4260,12 @@ item rod_of_summon_monsters {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "サモンモンスターの杖"
-    original_name_en = "summon monsters"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_summon_monsters
 }
 
 item rod_of_ice_bolt {
@@ -5013,11 +4281,6 @@ item rod_of_ice_bolt {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。半透明の青い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に氷属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of wood,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -5032,13 +4295,12 @@ item rod_of_ice_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "氷の視線の杖"
-    original_name_en = "ice bolt"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_ice_bolt
 }
 
 item rod_of_fire_bolt {
@@ -5054,11 +4316,6 @@ item rod_of_fire_bolt {
     dv = 0
     material = 0
     chargelevel = 10
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。半透明の赤い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に炎属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of metal,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -5073,13 +4330,12 @@ item rod_of_fire_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "炎の衝撃の杖"
-    original_name_en = "fire bolt"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_fire_bolt
 }
 
 item show_case_of_breads {
@@ -5095,11 +4351,6 @@ item show_case_of_breads {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t見易い位置に配置できるように工夫されたパン屋の為の棚。値札が大きく貼られているのでつまみ食いは止めた方がいいだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tパンを並べる棚。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A shelf of bread's for display,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5114,13 +4365,12 @@ item show_case_of_breads {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "パンの陳列棚"
-    original_name_en = "breads"
     originalnameref2 = "show case"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.show_case_of_breads
 }
 
 item rod_of_heal {
@@ -5136,11 +4386,6 @@ item rod_of_heal {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。絡みあった蛇のような模様が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者のHPを回復する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A decorated wooden rod with a cloth grip,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -5155,13 +4400,12 @@ item rod_of_heal {
     rarity = 250000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "生命の杖"
-    original_name_en = "heal"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_heal
 }
 
 item beaker {
@@ -5177,11 +4421,6 @@ item beaker {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t液体を保持する為に用いられる容器。どんな液体が入っていたのか知れたものではないので、使用するのはやめておこう。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t液体を入れる為の特殊な瓶。使用することはできない。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "Fragile scientific equipment,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5196,13 +4435,12 @@ item beaker {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ビーカー"
-    original_name_en = "beaker"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.beaker
 }
 
 item alchemy_kit {
@@ -5218,11 +4456,6 @@ item alchemy_kit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t錬金術を行うに当たって必要な基本キット。当然ながら技術が無ければ扱うことはできない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t錬金術の際に必要な道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "An alchemy kit with tool's for basic alchemy,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5237,13 +4470,12 @@ item alchemy_kit {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "錬金術の道具"
-    original_name_en = "alchemy kit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.alchemy_kit
 }
 
 item pentagram {
@@ -5259,11 +4491,6 @@ item pentagram {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古の文字が刻まれた特殊な円陣。現在では形骸化しており、専ら部屋を飾るお洒落として用いられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t地面に描かれた円陣だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "An ancient religious symbol now containing six points!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5278,13 +4505,12 @@ item pentagram {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "魔法陣"
-    original_name_en = "pentagram"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.pentagram
 }
 
 item small_foliage_plant {
@@ -5300,11 +4526,6 @@ item small_foliage_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t可愛らしい葉をした鉢植え。一人暮らしの令嬢の家には、大抵この植物があるのだという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "Plant's in a pot,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5319,13 +4540,12 @@ item small_foliage_plant {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "小さい観葉植物"
-    original_name_en = "small foliage plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.small_foliage_plant
 }
 
 item rose {
@@ -5341,11 +4561,6 @@ item rose {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t淡い色の花を咲かせる鉢植え。病気や害虫に強く、比較的育てやすい鉢植えだといえる。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A symbol of love,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5360,13 +4575,12 @@ item rose {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "木香薔薇"
-    original_name_en = "rose"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.rose
 }
 
 item large_foliage_plant {
@@ -5382,11 +4596,6 @@ item large_foliage_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t立派に育った鉢植え。すくすく育つこの種の植物を、繁栄の証と考えて贈り物にする地方もあるそうだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A decorative plant,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5401,13 +4610,12 @@ item large_foliage_plant {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大きい観葉植物"
-    original_name_en = "large foliage plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.large_foliage_plant
 }
 
 item sage {
@@ -5423,11 +4631,6 @@ item sage {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t一本の茎から沢山の花を咲かせる鉢植え。甘い蜜を持っているとされるが、ノースティリスにおいてそれはしばしば猛毒に代わっているので、決して舐めたりしないように。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "An herb used to season food,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5442,13 +4645,12 @@ item sage {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サルビアの花"
-    original_name_en = "sage"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.sage
 }
 
 item gazania {
@@ -5464,11 +4666,6 @@ item gazania {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t目も覚めるような鮮やかな黄色の花を咲かせる鉢植え。まるでブローチと見紛う程の大きな花に成長するのもこの鉢植えの特徴だ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "Decorative flowers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5483,13 +4680,12 @@ item gazania {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ガザニアの花"
-    original_name_en = "gazania"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.gazania
 }
 
 item nerine {
@@ -5505,11 +4701,6 @@ item nerine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t育てるのに少しコツがいる鉢植え。別名花の宝石ともいわれるこの鉢植えは、まるで飴細工のような綺麗な色の花を咲かせるという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "Decorative flowers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5524,13 +4715,12 @@ item nerine {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ネリネの花"
-    original_name_en = "nerine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.nerine
 }
 
 item anemos {
@@ -5546,11 +4736,6 @@ item anemos {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t鮮やかな色の花を咲かせる鉢植え。その色は様々で、見る者をとても楽しませるという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「え、くれるの？わーい大好き〜」\n#〜無邪気な少女『グウェン』の言葉〜\n"
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5565,13 +4750,12 @@ item anemos {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アネモネの花"
-    original_name_en = "anemos"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.anemos
 }
 
 item foxtail_grass {
@@ -5587,11 +4771,6 @@ item foxtail_grass {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特定の動物の興味を引き付けて離さない鉢植え。適当な場所に置いておくといつの間にか猫だかりができる、という話だ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "Has seed's that can be dangerous to your pets,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5606,13 +4785,12 @@ item foxtail_grass {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "猫じゃらし"
-    original_name_en = "foxtail grass"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.foxtail_grass
 }
 
 item carnation {
@@ -5628,11 +4806,6 @@ item carnation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t慎ましやかな花を咲かせる鉢植え。その控えめな感じが謙虚さの証であるとして、記念日の贈り物として使われることがある。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「あたしこの花が大好きなの。だってほら、花びらが飛び散る鮮血みたいじゃない？」\n#〜爆弾魔『ノエル』の言葉〜\n"
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A symbol of love toward's one's parent's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5647,13 +4820,12 @@ item carnation {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カーネーションの花"
-    original_name_en = "carnation"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.carnation
 }
 
 item statue_ornamented_with_plants {
@@ -5669,11 +4841,6 @@ item statue_ornamented_with_plants {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t天頂に植物があしらわれた立派な柱。これは古代の建築様式を復元したものであるという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t植物の乗った柱だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A pillar designed after one's common in Eludernia,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5688,13 +4855,12 @@ item statue_ornamented_with_plants {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "植物で飾られた柱"
-    original_name_en = "statue ornamented with plants"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_ornamented_with_plants
 }
 
 item statue_ornamented_with_flowers {
@@ -5710,11 +4876,6 @@ item statue_ornamented_with_flowers {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t天頂に花があしらわれた立派な柱。これは古代の建築様式を復元したものであるという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t花の乗った柱だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A pillar designed after one's common in Eludernia,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5729,13 +4890,12 @@ item statue_ornamented_with_flowers {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "花で飾られた柱"
-    original_name_en = "statue ornamented with flowers"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_ornamented_with_flowers
 }
 
 item canvas {
@@ -5751,11 +4911,6 @@ item canvas {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t絵を書く為に必要な道具が一通りそろった用具。絵心があるならば使って見るといいだろう。あくまで絵心があればの話だが。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t絵を描く為の道具。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A canvas used for painting on,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5770,13 +4925,12 @@ item canvas {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絵描き道具"
-    original_name_en = "canvas"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.canvas
 }
 
 item map {
@@ -5792,11 +4946,6 @@ item map {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大陸全土が描かれた地図。冒険者達もそうでない者も、これを読むことでまだ見ぬ彼の地へ思いをはせるのだ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大陸の描かれた地図。使用することはできない。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A map of Elona,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5811,13 +4960,12 @@ item map {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "地図"
-    original_name_en = "map"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.map
 }
 
 item food_maker {
@@ -5833,11 +4981,6 @@ item food_maker {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t焼く、蒸す、煮る、全てを万能にこなす、優れた調理器具。非常に大きく重量もあるので購入に尻込みしてしまうが、その分実力は折り紙つきである。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為の優れた家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A tool used to cook food in Asseria,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5852,13 +4995,12 @@ item food_maker {
     rarity = 150000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "調理機"
-    original_name_en = "food maker"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.food_maker
 }
 
 item bundle_of_bows {
@@ -5874,11 +5016,6 @@ item bundle_of_bows {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大小様々な重ねられた弓。あくまでもまとめ売り用らしく、個別に売ることはしていないようだ。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重ねられた弓。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A display of bows,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5893,13 +5030,12 @@ item bundle_of_bows {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "たくさんの弓"
-    original_name_en = "bows"
     originalnameref2 = "bundle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bundle_of_bows
 }
 
 item bundle_of_weapons {
@@ -5915,11 +5051,6 @@ item bundle_of_weapons {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t展示用に束ねられた武具。あくまでもまとめ売り用らしく、個別に売ることはしていないようだ。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t束ねられた武器。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A display of weapons,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5934,13 +5065,12 @@ item bundle_of_weapons {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "武器の束"
-    original_name_en = "weapons"
     originalnameref2 = "bundle"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.bundle_of_weapons
 }
 
 item decorated_cloth {
@@ -5956,11 +5086,6 @@ item decorated_cloth {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t陳列用に配置された服。大きく試着不可と書かれている為、装備することはできない。\n#〜パルミア春夏物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t展示用の服。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A decorative cloth often used as a clothing store display,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -5975,13 +5100,12 @@ item decorated_cloth {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "飾られた服"
-    original_name_en = "decorated cloth"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.decorated_cloth
 }
 
 item decorated_armor {
@@ -5997,11 +5121,6 @@ item decorated_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t陳列用に配置された鎧。大きく試着不可と書かれている為、装備することはできない。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t展示用の鎧。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A decorative cloth often used as a display for armor stores,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6016,13 +5135,12 @@ item decorated_armor {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "飾られた鎧"
-    original_name_en = "decorated armor"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.decorated_armor
 }
 
 item statue_of_armor {
@@ -6038,11 +5156,6 @@ item statue_of_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t厳めしい雰囲気を身に纏う全身鎧。いかにも曰くありげな装備品のように見えるが実際の所レプリカなので装備することはできない。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t全身鎧の彫像。装備することはできない。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A shelf or armor,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6057,13 +5170,12 @@ item statue_of_armor {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鎧の像"
-    original_name_en = "armor"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.statue_of_armor
 }
 
 item disorderly_book {
@@ -6079,11 +5191,6 @@ item disorderly_book {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読了後、片づけられなかった本。殆どが大衆雑誌なので、特に読むべき情報はないだろう。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t散乱した本。使用することはできない。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "This is just a mess!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6098,13 +5205,12 @@ item disorderly_book {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "散らかった本"
-    original_name_en = "disorderly book"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.disorderly_book
 }
 
 item lot_of_books {
@@ -6120,11 +5226,6 @@ item lot_of_books {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読了後、床に丁寧に重ねられた本。殆どが専門的な本なので、特に読むべき情報はないだろう。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重ねられた本。使用することはできない。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A disorderly stacks of book's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6139,13 +5240,12 @@ item lot_of_books {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "本の山"
-    original_name_en = "books"
     originalnameref2 = "lot"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.lot_of_books
 }
 
 item craft_rack {
@@ -6161,11 +5261,6 @@ item craft_rack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tその道のプロが精魂込めて作り上げた箪笥。一見シンプルに見えるが、普段見えない裏側に匠の遊び心が隠れている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t匠の作った箪笥だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A nicely crafted piece of furniture,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6180,13 +5275,12 @@ item craft_rack {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "名工箪笥"
-    original_name_en = "craft rack"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.craft_rack
 }
 
 item craft_book_shelf {
@@ -6202,11 +5296,6 @@ item craft_book_shelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tその道のプロが精魂込めて作り上げた本棚。一見シンプルに見えるが、普段見えない部分に匠の遊び心が隠れている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t匠の作った本用の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A nicely crafted bookshelf,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6221,13 +5310,12 @@ item craft_book_shelf {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "名工本棚"
-    original_name_en = "craft book shelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.craft_book_shelf
 }
 
 item lot_of_alcohols {
@@ -6243,11 +5331,6 @@ item lot_of_alcohols {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t両手に余るほどの沢山の酒。飲みきれないので使用することはできない。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t手に余るほどの傷んだ酒。使用することはできない。\n#〜鑑定報告書：＜廃物＞カテゴリ〜\n"
-    description_en = "Often found in bar's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6262,13 +5345,12 @@ item lot_of_alcohols {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "飲みきれないほどの酒"
-    original_name_en = "alcohols"
     originalnameref2 = "lot"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lot_of_alcohols
 }
 
 item kitchen {
@@ -6284,11 +5366,6 @@ item kitchen {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食材の下拵えに適した調理台。我慢しきれずこの場で料理を作ってしまうせっかちな人もいるのだとか。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為にも使える家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Part of a kitchen set,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6303,13 +5380,12 @@ item kitchen {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "調理台"
-    original_name_en = "kitchen"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.kitchen
 }
 
 item washstand {
@@ -6325,11 +5401,6 @@ item washstand {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食材の下拵えに適した流し台。我慢しきれずこの場で料理を作ってしまうせっかちな人もいるのだとか。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為にも使える家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "The water is dirty…"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6344,13 +5415,12 @@ item washstand {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "流し台"
-    original_name_en = "sink"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.washstand
 }
 
 item kitchen_oven {
@@ -6366,11 +5436,6 @@ item kitchen_oven {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tコンロが備え付けられた調理台。一台で２つの事ができる為、朝が忙しい御婦人方に専らの人気だ。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為にも使える家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "The other half of a kitchen set,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6385,13 +5450,12 @@ item kitchen_oven {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "コンロ付き調理台"
-    original_name_en = "kitchen oven"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.kitchen_oven
 }
 
 item narrow_dining_table {
@@ -6407,11 +5471,6 @@ item narrow_dining_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t主婦達の期待に答え小型化を実現した食卓。フルコースを食べるのでない限り、この位の大きさで十分なのだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t食事を取る為に作られた狭い机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A dining room table,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6426,13 +5485,12 @@ item narrow_dining_table {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "狭い食卓"
-    original_name_en = "narrow dining table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.narrow_dining_table
 }
 
 item elegant_table {
@@ -6448,11 +5506,6 @@ item elegant_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tご婦人方の憧れである雰囲気あるテーブル。ただのテーブルなのに気品に満ちあふれている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t貴族用の机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Keep your elbows off the table!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6467,13 +5520,12 @@ item elegant_table {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "上品なテーブル"
-    original_name_en = "elegant table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.elegant_table
 }
 
 item gorgeous_candlestick {
@@ -6489,11 +5541,6 @@ item gorgeous_candlestick {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t装飾品という面に重きを置いた燭台。台座にもふんだんに贅沢な加工がなされており、キャンドルが不要な程光り輝いている。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t美しい加工の燭台。夜間、周囲を明るく照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "An ornamental candlestick,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6508,13 +5555,12 @@ item gorgeous_candlestick {
     rarity = 1000000
     coefficient = 100
     light = 3
-    katakana_name = ""
-    original_name_jp = "絢爛な燭台"
-    original_name_en = "gorgeous candlestick"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.gorgeous_candlestick
 }
 
 item simple_shelf {
@@ -6530,11 +5576,6 @@ item simple_shelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tどこからどう見ても棚そのものだ。それ以上でもそれ以下でもない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tシンプルな棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A shelf for your dining room,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6549,13 +5590,12 @@ item simple_shelf {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "単なる棚"
-    original_name_en = "simple shelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.simple_shelf
 }
 
 item sewing_kit {
@@ -6571,11 +5611,6 @@ item sewing_kit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t裁縫を行うに当たって必要な基本セット。当然ながら技術が無ければ扱うことはできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t裁縫の際に必要な道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "An sewing kit intended for clothing repair,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6590,13 +5625,12 @@ item sewing_kit {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "裁縫セット"
-    original_name_en = "sewing kit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.sewing_kit
 }
 
 item carpenters_tool {
@@ -6612,11 +5646,6 @@ item carpenters_tool {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大工を行うに当たって必要な基本工具。当然ながら技術が無ければ扱うことはできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大工の際に必要な道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Used to craft some wooden items,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6631,13 +5660,12 @@ item carpenters_tool {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大工道具"
-    original_name_en = "carpenter's tool"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.carpenters_tool
 }
 
 item messy_cloth {
@@ -6653,11 +5681,6 @@ item messy_cloth {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t地上に散らばった衣服。洗濯前の脱ぎ散らかしなのか、洗濯後の整頓前なのか、どちらであるかは定かではない。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t散乱した服。使用することはできない。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "A pile of laundry,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6672,13 +5695,12 @@ item messy_cloth {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "散らばった衣類"
-    original_name_en = "messy cloth"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.messy_cloth
 }
 
 item silk_cloth {
@@ -6694,11 +5716,6 @@ item silk_cloth {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t絹で織られた反物。売約済みと大きく書かれているので使用することはできない。\n#〜パルミア春夏物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t糸を織り上げたもの。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Silk cloth woven by faeries,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6713,13 +5730,12 @@ item silk_cloth {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絹の生地"
-    original_name_en = "silk cloth"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.silk_cloth
 }
 
 item collapsed_grave {
@@ -6735,11 +5751,6 @@ item collapsed_grave {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t人の手から離れて大分経つ墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A common style grave that has started to crumble,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6754,13 +5765,12 @@ item collapsed_grave {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "風化した墓"
-    original_name_en = "collapsed grave"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.collapsed_grave
 }
 
 item crumbled_grave {
@@ -6776,11 +5786,6 @@ item crumbled_grave {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tいよいよ自分用の墓が欲しくなった墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A common style grave that has been destroyed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6795,13 +5800,12 @@ item crumbled_grave {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "崩れた墓"
-    original_name_en = "crumbled grave"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.crumbled_grave
 }
 
 item grave_of_ornamented_with_flowers {
@@ -6817,11 +5821,6 @@ item grave_of_ornamented_with_flowers {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t花に埋め尽くされた美しい墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A recent grave with flowers for the departed… The name is still readable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6836,13 +5835,12 @@ item grave_of_ornamented_with_flowers {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "花で飾られた墓"
-    original_name_en = "ornamented with flowers"
     originalnameref2 = "grave"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.grave_of_ornamented_with_flowers
 }
 
 item brand_new_grave {
@@ -6858,11 +5856,6 @@ item brand_new_grave {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t立派な石碑と見紛う程の墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A recent grave… The name is still readable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6877,13 +5870,12 @@ item brand_new_grave {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "新品の墓"
-    original_name_en = "brand new grave"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.brand_new_grave
 }
 
 item solemn_tomb {
@@ -6899,11 +5891,6 @@ item solemn_tomb {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t思わず息を飲んで後ずさってしまう程の墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A tome of a rich or heroic figure,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6918,13 +5905,12 @@ item solemn_tomb {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "荘厳な墓"
-    original_name_en = "solemn tomb"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.solemn_tomb
 }
 
 item ancient_tomb {
@@ -6940,11 +5926,6 @@ item ancient_tomb {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古の権力者の為に作られた巨大な墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "An ancient Euldernan style tomb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -6959,13 +5940,12 @@ item ancient_tomb {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "古墳"
-    original_name_en = "ancient tomb"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ancient_tomb
 }
 
 item old_grave {
@@ -6981,11 +5961,6 @@ item old_grave {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tそこに歴史を感じる墓。当然ながら非常に重いので持ち上げてみようと思わない方がいいだろう。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "An old norland tomb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7000,13 +5975,12 @@ item old_grave {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "古めかしい墓"
-    original_name_en = "old grave"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.old_grave
 }
 
 item altar {
@@ -7022,11 +5996,6 @@ item altar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t厳かな雰囲気を醸し出す、石でできた巨大な構造物。ここで祈ることにより神と交感できると言われている。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t神を讃えた壇。捧げ物を捧げることができる。\n#〜鑑定報告書：＜壇＞カテゴリ〜\n"
-    description_en = "An altar to the god's"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7041,13 +6010,12 @@ item altar {
     rarity = 1000000
     coefficient = 100
     light = 13
-    katakana_name = ""
-    original_name_jp = "祭壇"
-    original_name_en = "altar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.altar
 }
 
 item ceremony_altar {
@@ -7063,11 +6031,6 @@ item ceremony_altar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t捧げ物をする為だけの最低限の設備が備わった簡素な祭壇。ここで祈ることにより神と交感できると言われている。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡易的な祭壇。捧げ物を捧げることができる。\n#〜鑑定報告書：＜壇＞カテゴリ〜\n"
-    description_en = "An altar for ritual's to give tribute to the gods,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7082,13 +6045,12 @@ item ceremony_altar {
     rarity = 1000000
     coefficient = 100
     light = 13
-    katakana_name = ""
-    original_name_jp = "儀式用の祭壇"
-    original_name_en = "ceremony altar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ceremony_altar
 }
 
 item fountain {
@@ -7104,11 +6066,6 @@ item fountain {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t辺りに清浄な音とひんやりとした空間を作り出す避暑設備。聞こえはいいが、結局のところノースティリスの水が循環している訳で、お世辞にも清浄といえるものではないだろう。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水を使用する設備。飲むことができる。\n#〜鑑定報告書：＜設備＞カテゴリ〜\n"
-    description_en = "Throw a coin in,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -7123,13 +6080,12 @@ item fountain {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "噴水"
-    original_name_en = "fountain"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fountain
 }
 
 item bunk_bed {
@@ -7145,11 +6101,6 @@ item bunk_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t縦に重ねられた効率的な寝具。宿屋に備え付けられていることが多く、冒険者達が泊った際に、しばしばどちらが上で寝るか喧嘩をしている光景を目にするという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A makeshift bunk be"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7164,13 +6115,12 @@ item bunk_bed {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "二段ベッド"
-    original_name_en = "bunk bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bunk_bed
 }
 
 item rod_of_lightning_bolt {
@@ -7186,11 +6136,6 @@ item rod_of_lightning_bolt {
     dv = 0
     material = 0
     chargelevel = 10
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。半透明の黄色い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に雷属性のボルトを放つ魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of bronze,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -7205,13 +6150,12 @@ item rod_of_lightning_bolt {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "稲妻の軌跡の杖"
-    original_name_en = "lightning bolt"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_lightning_bolt
 }
 
 item rod_of_slow {
@@ -7227,11 +6171,6 @@ item rod_of_slow {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。不透明な赤い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象者を鈍足状態にする魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod with a silver tip,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -7246,13 +6185,12 @@ item rod_of_slow {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鈍足の杖"
-    original_name_en = "slow"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_slow
 }
 
 item quwapana {
@@ -7268,11 +6206,6 @@ item quwapana {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t葉っぱそのものをもいで食べるという、世にも珍しい南国の植物。齧った時の触感や適度な水分と程よい酸味は、あなたにきっと初めての経験を与えてくれるだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetation,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7287,13 +6220,12 @@ item quwapana {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クワパナ"
-    original_name_en = "quwapana"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.quwapana
 }
 
 item aloe {
@@ -7309,11 +6241,6 @@ item aloe {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t瑞々しい葉をもつ植物。古来医療にも用いられたとされる果肉には整腸作用があるとされるが、確たる結論には至っていない。ノースティリスでは果肉に若干の甘みを含む為、果実と同様に扱っている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetation,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7328,13 +6255,12 @@ item aloe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アロエ"
-    original_name_en = "aloe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.aloe
 }
 
 item edible_wild_plant {
@@ -7350,11 +6276,6 @@ item edible_wild_plant {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t野に生えている野草と呼ばれる野菜の一種。その素朴な味は自然を愛する者にとって、とてつもない贅沢な味と言えるだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7369,13 +6290,12 @@ item edible_wild_plant {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "山菜"
-    original_name_en = "edible wild plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.edible_wild_plant
 }
 
 item apple {
@@ -7391,11 +6311,6 @@ item apple {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t瑞々しい赤い色をした果物。古来より知恵の源や、幸運の結晶等と言われるほど我々との歴史は深く、伴って様々な調理方法が生まれいる。しかしながら、どういう訳かリンゴからアップルパイだけは作れないのだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7410,13 +6325,12 @@ item apple {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "リンゴ"
-    original_name_en = "apple"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.apple
 }
 
 item grape {
@@ -7432,11 +6346,6 @@ item grape {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t連なった実をつける紺色の果物。一粒は子供の口に入るほど小さいが、一度食べれば特有の甘みを含んだ香りが口の中一杯に広がり、忽ちこの果実の虜となるであろう。酒を造る際にも使われることがあるらしい。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7451,13 +6360,12 @@ item grape {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ブドウ"
-    original_name_en = "grape"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.grape
 }
 
 item kiwi {
@@ -7473,11 +6381,6 @@ item kiwi {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t常夏の国からやってきたさわやかな酸味を感じさせる果物。動物の毛を思われる外皮に対し果肉は鮮やかな緑色をしており、見る者の興味を誘う。身が柔らかいので生食に適しているだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7492,13 +6395,12 @@ item kiwi {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "キウイ"
-    original_name_en = "kiwi"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kiwi
 }
 
 item cherry {
@@ -7514,11 +6416,6 @@ item cherry {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t赤い宝石とも呼ばれる、小さく可愛らしい果実を携える果物。その実は甘いものから酸っぱいものまで様々だが、中でもヨウィン近郊のものは、小ぶりながら非常に甘い一級品と言われている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7533,13 +6430,12 @@ item cherry {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "さくらんぼ"
-    original_name_en = "cherry"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cherry
 }
 
 item guava {
@@ -7555,11 +6451,6 @@ item guava {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t南国から伝わったとされる桃色の果肉が目に鮮やかな果物。非常に甘酸っぱく食欲を誘う味だが、匂いが独特である為好む者を選ぶという。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7574,13 +6465,12 @@ item guava {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "グアバ"
-    original_name_en = "guava"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.guava
 }
 
 item carrot {
@@ -7596,11 +6486,6 @@ item carrot {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t赤い角の様な形状の野菜。加熱すると仄かな甘みが出るのが特徴。生、過熱と万能な野菜だが、過熱の際の甘みが逆に苦手な者もいる為、人に出す時は注意しよう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7615,13 +6500,12 @@ item carrot {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "キャロット"
-    original_name_en = "carrot"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.carrot
 }
 
 item radish {
@@ -7637,11 +6521,6 @@ item radish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t白さが特徴の野菜。切っただけでも溢れるほど水分が豊富。子供の頃にこれらの野菜を使ってチャンバラごっこをやって二人仲良く怒られた者も少なくないだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7656,13 +6535,12 @@ item radish {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大根"
-    original_name_en = "radish"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.radish
 }
 
 item sweet_potato {
@@ -7678,11 +6556,6 @@ item sweet_potato {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t肥大した根の部分を食する野菜。カボチより更に生食に向かず「生で食べるはイークのみ」と時の権力者に言わしめたほど。されどそれ以外の調理には良く合い、蒸した際は高級な菓子と紛う程の甘さを生じる種もある。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7697,13 +6570,12 @@ item sweet_potato {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "さつまいも"
-    original_name_en = "sweet potato"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sweet_potato
 }
 
 item lettuce {
@@ -7719,11 +6591,6 @@ item lettuce {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tまるで束ねた葉っぱの様な野菜。生食はやや苦みを生じるものもあるが、専らサラダなどに用いられるのがポピュラーな使われ方。火を通す調理法もあるがそちらはあまり浸透していないようだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7738,13 +6605,12 @@ item lettuce {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "レタス"
-    original_name_en = "lettuce"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.lettuce
 }
 
 item stack_of_dishes {
@@ -7760,11 +6626,6 @@ item stack_of_dishes {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t同じ種類の皿が重ねられた家具。急なお客が来る時に便利だが、慌てて躓いて割ってしまった、なんてことにならないように床に置くのは止めた方がいいだろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重ねられた皿だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A set of decorative dishes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7779,13 +6640,12 @@ item stack_of_dishes {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "食器の山"
-    original_name_en = "dish"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stack_of_dishes
 }
 
 item imo {
@@ -7801,11 +6661,6 @@ item imo {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t茎の地下部分を食する野菜。さつまいもよりやや小ぶりだが、こちらは熱しても甘くならず、専ら日常の主食と扱われる。生食以外ならばありとあらゆる料理法に対応した万能な野菜だ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7820,13 +6675,12 @@ item imo {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "イーモ"
-    original_name_en = "imo"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.imo
 }
 
 item api_nut {
@@ -7842,11 +6696,6 @@ item api_nut {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tノースティリス全域に生育する果実樹が落とす果実。微かに渋みを伴った甘味を生ずるが、干すと渋みが抜ける代わりに甘味が増し、更に若干の酸味が伴うという。保存性が非常に高く、携行する冒険者も少なくない。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A nut used to make candy"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7861,13 +6710,12 @@ item api_nut {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アピの実"
-    original_name_en = "api nut"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.api_nut
 }
 
 item strawberry {
@@ -7883,11 +6731,6 @@ item strawberry {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t小さな形状をした赤き果物。果肉は酸味があり、疲れた肉体に心地よい刺激を与えてくれるが、熱を加えると酸味が失せ、代わりに、身を包む程のゆったりとした甘味があなたの舌の上で踊ることだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7902,13 +6745,12 @@ item strawberry {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "苺"
-    original_name_en = "strawberry"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.strawberry
 }
 
 item healthy_leaf {
@@ -7924,11 +6766,6 @@ item healthy_leaf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古来、肉体向上に利くとされた様々な野草の中の一種。民間療法の延長上で食される野菜の為、速効性など無く寧ろ効能さえ怪しい。味は滅法苦いが、稀にそれがたまらないという珍しい者もいる。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetation,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7943,13 +6780,12 @@ item healthy_leaf {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "薬草"
-    original_name_en = "healthy leaf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.healthy_leaf
 }
 
 item rainbow_fruit {
@@ -7965,11 +6801,6 @@ item rainbow_fruit {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t光の加減で様々な色に見えるという貴重な果物。外見だけでなく、味の方も未熟から完熟にかけ様々な味に移りゆく為、好む者も多い。半面、調理側は求める味を探すのが困難という問題も抱えている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -7984,13 +6815,12 @@ item rainbow_fruit {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "万色フルーツ"
-    original_name_en = "rainbow fruit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rainbow_fruit
 }
 
 item qucche {
@@ -8006,11 +6836,6 @@ item qucche {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t日の沈まぬ国からやってきたとされる小ぶりな果物。まるで小さな太陽と見紛う程の鮮やかな橙色は果肉も同様で、味はそう言った類の果実の例に漏れなく、非常に酸味の利いた甘さをしている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8025,13 +6850,12 @@ item qucche {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クッチェ"
-    original_name_en = "qucche"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.qucche
 }
 
 item tangerine {
@@ -8047,11 +6871,6 @@ item tangerine {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t非常に瑞々しい果肉を含んだ果物。その水分は、喉の渇きを癒すに十分すぎる程であり、当然ながらそれに沿った調理法が好ましいと言えよう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8066,13 +6885,12 @@ item tangerine {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "夏ミカン"
-    original_name_en = "tangerine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tangerine
 }
 
 item lemon {
@@ -8088,11 +6906,6 @@ item lemon {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t刺激的な味を秘めた紡錘形の果実。その味は筆舌に筆舌に尽くし難い程酸っぱく、大凡の果実のように食後の口直しとして直接食べることは止めておいた方がよいだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8107,13 +6920,12 @@ item lemon {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "レモン"
-    original_name_en = "lemon"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.lemon
 }
 
 item green_pea {
@@ -8129,11 +6941,6 @@ item green_pea {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t小さな粒状の野菜。可食の種である為栄養価は抜群。主にスープ等に用いられることが多く、その鮮やかな緑色は非常に食欲をそそる。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8148,13 +6955,12 @@ item green_pea {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "グリーンピース"
-    original_name_en = "green pea"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.green_pea
 }
 
 item cbocchi {
@@ -8170,11 +6976,6 @@ item cbocchi {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t非常に硬い皮を持ったウリの仲間。その特徴から生食には向かず、火を通すのが一般的といわれている。またパンプキンなるモンスターと関連があるとしきりに主張する輩がいるが、世間には認められていないようだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8189,13 +6990,12 @@ item cbocchi {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カボチ"
-    original_name_en = "cbocchi"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cbocchi
 }
 
 item melon {
@@ -8211,11 +7011,6 @@ item melon {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t水分を多く含む楕円状の野菜。水分や触感を楽しむ生食もいいが、煮こんだ際の程良い口どけは忘れ難いものがある。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8230,13 +7025,12 @@ item melon {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ウリ"
-    original_name_en = "melon"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.melon
 }
 
 item leccho {
@@ -8252,11 +7046,6 @@ item leccho {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tレタスに非常によく似た野菜。やや葉に歯ごたえがあり、生よりも火を通す料理に向いている。その点を逆手にとり、焼いた肉をこの葉に巻いて食べるスタイルも近年確立されている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of vegetable,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8271,13 +7060,12 @@ item leccho {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "レッチョ"
-    original_name_en = "leccho"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.leccho
 }
 
 item rod_of_magic_mapping {
@@ -8293,11 +7081,6 @@ item rod_of_magic_mapping {
     dv = 0
     material = 0
     chargelevel = 9
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。螺旋状の模様が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで未探索の箇所を明らかにする魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod plated with adamantium,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -8312,13 +7095,12 @@ item rod_of_magic_mapping {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "千里眼の杖"
-    original_name_en = "magic mapping"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_magic_mapping
 }
 
 item rod_of_cure {
@@ -8334,11 +7116,6 @@ item rod_of_cure {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。小さく赤い宝石が３つ取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者のHPを回復する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A wooden rod with a cloth grip,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -8353,13 +7130,12 @@ item rod_of_cure {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "癒しの杖"
-    original_name_en = "cure"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_cure
 }
 
 item corpse {
@@ -8375,11 +7151,6 @@ item corpse {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tそのまま口に入れるのは憚られる生物のあるがままの姿。ここからどう調理していくかが、調理人の腕の見せ所だろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A corpse of an unknown creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8394,13 +7165,12 @@ item corpse {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "死体"
-    original_name_en = "corpse"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.corpse
 }
 
 item bottle_of_whisky {
@@ -8416,11 +7186,6 @@ item bottle_of_whisky {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t麦を発酵させた後、蒸留させた酒。ノイエルで多く飲まれているが、主な交易先のポート・カプールでも人気である。飲み方にいくつか方法はあれど、真の男ならストレートで飲むのが望ましいとされている。\n#〜奥深い酒の世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飲むと酔っぱらう飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A bottle of dwarven whiskey,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -8435,13 +7200,12 @@ item bottle_of_whisky {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ウィスキー"
-    original_name_en = "whisky"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_whisky
 }
 
 item ether_dagger {
@@ -8457,11 +7221,6 @@ item ether_dagger {
     dv = 4
     material = 8
     chargelevel = 0
-    description_jp_0 = "\t\t未知なる鉱物を用いて作られた短剣。非常に軽く、そこから繰り出される素早い剣閃は、まるで棚引く紐を振り回しているようにも見えるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雷の力を秘めた短剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "This dagger seems to be made out of wind,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8476,13 +7235,12 @@ item ether_dagger {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《エーテルダガー》"
-    original_name_en = "<Ether Dagger>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.ether_dagger
 }
 
 item bow_of_vinderre {
@@ -8498,11 +7256,6 @@ item bow_of_vinderre {
     dv = 0
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t森の民の英知が詰まったとされる長弓。狙った獲物を逃がさぬよう、幾つかの工夫が凝らされているようだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t敵を引き寄せる力を持つ長弓だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8517,13 +7270,12 @@ item bow_of_vinderre {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《異形の森の弓》"
-    original_name_en = "<Bow of Vinderre>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Grey
+    locale_key_prefix = core.locale.item.bow_of_vinderre
 }
 
 item worthless_fake_gold_bar {
@@ -8539,11 +7291,6 @@ item worthless_fake_gold_bar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t鑑定すると落胆を禁じえない罪作りな鉱物。わざとらしい程に輝くそれは、主に子供か、価値の分かっていない者に感謝の意を込められて贈られるのだという。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t模造品だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "What a waste of time……,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8558,13 +7305,12 @@ item worthless_fake_gold_bar {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "途方も価値のない錆びた偽物の金塊"
-    original_name_en = "worthless fake gold bar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.worthless_fake_gold_bar
 }
 
 item scroll_of_uncurse {
@@ -8580,11 +7326,6 @@ item scroll_of_uncurse {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身につけた装備品の呪いを解く巻物。呪いが強力すぎる場合解呪に失敗するが、そうなった時は何か別の手を考えよう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの呪いを解く巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -8599,13 +7340,12 @@ item scroll_of_uncurse {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "解呪の巻物"
-    original_name_en = "uncurse"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_uncurse
 }
 
 item stone {
@@ -8621,11 +7361,6 @@ item stone {
     dv = 0
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t路傍に転がる鉄の様に硬い小石を武器として幾つか集めたもの。投げられれば確かに痛いが、所詮小石なのでこけおどしにしか過ぎない。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t整えられた幾らかの小片。戦闘に一定の効果をもたらすが、所詮は小石なので対した威力は期待できないだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_3 = "\t\t投擲用武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "It's just a stone"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8640,13 +7375,12 @@ item stone {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ストーン"
-    original_name_jp = "小石"
-    original_name_en = "stone"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stone
 }
 
 item sickle {
@@ -8662,11 +7396,6 @@ item sickle {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t本来は草などを刈る為に用いる武器。戦場においてこの武器は首を狩る為に用いられるので、恐怖の対象とされている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t農業用の用具だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A farmer's tool for harvesting crops,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8681,13 +7410,12 @@ item sickle {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "シックル"
-    original_name_jp = "鎌"
-    original_name_en = "sickle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sickle
 }
 
 item staff {
@@ -8703,11 +7431,6 @@ item staff {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t魔法の補佐をする為に生まれた棒。武器とはおおよそ言い難い外見をしているが、それでも力一杯これで叩けば恐らく相手は昏倒することだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t魔法を補佐する為の棒だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A staff used in a variety of ways,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8722,13 +7445,12 @@ item staff {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "スタッフ"
-    original_name_jp = "杖"
-    original_name_en = "staff"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.staff
 }
 
 item spear {
@@ -8744,11 +7466,6 @@ item spear {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t長い柄の先に尖った切っ先を持つ武器。シンプルな構造ながら誰にでも扱うことができ、長い柄を活かして中距離で戦うことを可能にさせている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t細長い槍だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A polearm with a sharp point,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8763,13 +7480,12 @@ item spear {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "スピア"
-    original_name_jp = "長槍"
-    original_name_en = "spear"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.spear
 }
 
 item ore_piece {
@@ -8785,11 +7501,6 @@ item ore_piece {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t僅かに鉱物が含まれる岩の塊。含有量が非常に少ないので金銭的価値はないが、これを赤熱させたものを料理や浴場で用いる等、一応それなりに使用法があるらしい。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t殆ど岩でできている鉱物だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Pretty worthless,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8804,13 +7515,12 @@ item ore_piece {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鉱石の欠片"
-    original_name_en = "ore piece"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.ore_piece
 }
 
 item lot_of_empty_bottles {
@@ -8826,11 +7536,6 @@ item lot_of_empty_bottles {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大小様々な中身の入っていないビン。水分を保持するにはいささか小さすぎるが、子供の目を引くには十分だろう。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一か所に集められた欠けた空き瓶。使用することはできない。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "They still smell of alcohol,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8845,13 +7550,12 @@ item lot_of_empty_bottles {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "たくさんの空のビン"
-    original_name_en = "empty bottles"
     originalnameref2 = "lot"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lot_of_empty_bottles
 }
 
 item basket {
@@ -8867,11 +7571,6 @@ item basket {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t草木の蔓で作られた編みかご。保持性はいくらか持ち合わせているが、目が粗いので水を汲むといった行為に使用することはできない。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t編みかごだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "It's empty,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8886,13 +7585,12 @@ item basket {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "バスケット"
-    original_name_en = "basket"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.basket
 }
 
 item empty_bowl {
@@ -8908,11 +7606,6 @@ item empty_bowl {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t中に何も入っていない空の鉢。食器にしてみたり、植物を入れて飾って見たり、使い道は人それぞれだ。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中身の入っていない器だ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "It's empty,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8927,13 +7620,12 @@ item empty_bowl {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "空っぽの鉢"
-    original_name_en = "empty bowl"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.empty_bowl
 }
 
 item bowl {
@@ -8949,11 +7641,6 @@ item bowl {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t椀より広く浅く作られた器。中に物が詰まっているが、食べ物ではないのでお腹がすいても食べることはできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中身の入っている器だ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "I'm not sure I want to eat this,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -8968,13 +7655,12 @@ item bowl {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鉢"
-    original_name_en = "bowl"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.bowl
 }
 
 item tight_rope {
@@ -8990,11 +7676,6 @@ item tight_rope {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tどんなに引っ張っても解れることのない屈強なロープ。あくまでも物品に対して使用する道具なので、人に括りつける等といった用途には不向きの様だ。\n#〜巻かれる為の長いもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「おいおい、何を怒っているんだ。私は聞かれた通り答えたまでだ。感謝こそすれ、罵られる筋合いはないと思うが。それに私は『使え』なんて言ってないぞ。『試してみるのも数ある選択の一つだ』とは言ったがね」\n#〜異形の森の使者『ロミアス』の言葉〜\n"
-    description_jp_3 = "\t\tしようすることができる。\n#〜鑑定報告書：＜刑具＞カテゴリ〜\n"
-    description_en = "You start to practice your knots on this piece of rope,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9009,13 +7690,12 @@ item tight_rope {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "頑丈なロープ"
-    original_name_en = "tight rope"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.tight_rope
 }
 
 item dead_fish {
@@ -9031,11 +7711,6 @@ item dead_fish {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t乾燥した魚の亡骸。水につけても勿論食べることはできない無価値なものだが、子供に与えると手に持ち、さながら伝説の生き物のように動かして遊ぶという。\n#〜子供を騙す１００のテクニック・おみやげ編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t干からびた魚。使用することはできない。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Hiding one of these is a popular prank in North Tyris…"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9050,13 +7725,12 @@ item dead_fish {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "魚の死骸"
-    original_name_en = "dead fish"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dead_fish
 }
 
 item straw {
@@ -9072,11 +7746,6 @@ item straw {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t農作物の茎を干して乾燥させたもの。通常牧畜の飼料ともなるものだが、ノースティリスにおけるそれが興味をまるで示さないのは、彼らがマナーをわきまえる紳士的な牧畜だからかもしれない。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t草を乾して束ねたもの。一定の弾力性があるので寝ることに使えそうだが、体についた藁を取る作業で一日を追われてしまうので、これを用いて休息を取るのは止めた方がいいだろう。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_3 = "\t\t乾燥させた草を束ねたものだ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "This can be useful to the right person,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9091,13 +7760,12 @@ item straw {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "藁"
-    original_name_en = "straw"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.straw
 }
 
 item animal_bone {
@@ -9113,11 +7781,6 @@ item animal_bone {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t風化した動物の骨。呪術や水薬精製など使用する機会は割とあるのだが、いかんせん供給過多なので価値としても二束三文である。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t打ち捨てられた動物の骨だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Probably leftovers from a meal,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9132,13 +7795,12 @@ item animal_bone {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "動物の骨"
-    original_name_en = "animal bone"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.animal_bone
 }
 
 item pot {
@@ -9154,11 +7816,6 @@ item pot {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t中に材料を放りこんで、使用するだけで料理が完成するという画期的な調理器具。ただし、やはりと言うべきか単に放りこんでいるだけなので、複雑な料理は作りにくいようだ。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡易的な調理器具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Useful for cooking!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9173,13 +7830,12 @@ item pot {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鍋"
-    original_name_en = "pot"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pot
 }
 
 item katana {
@@ -9195,11 +7851,6 @@ item katana {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t異国の戦闘集団が好んで用いたとされる長剣。独特の反りがあり、それぞれに独特の銘と刀工の魂が込められているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t異国から来た細身の剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A unique curved sword made through a folding process,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9214,13 +7865,12 @@ item katana {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "カタナ"
-    original_name_jp = "刀"
-    original_name_en = "katana"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.katana
 }
 
 item scimitar {
@@ -9236,11 +7886,6 @@ item scimitar {
     dv = 2
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t海にはびこる盗賊集団が扱う刃先が両刃の剣。戦場でも扱いやすい様、やや小振りの刀身で身幅が広く剣を防げるよう作られている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t刃が湾曲した短剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A curved sword,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9255,13 +7900,12 @@ item scimitar {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "カットラス"
-    original_name_jp = "海賊刀"
-    original_name_en = "scimitar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.scimitar
 }
 
 item battle_axe {
@@ -9277,11 +7921,6 @@ item battle_axe {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t戦闘用に開発された斧。刃も大きめに作られた為重量を増し、結果として両手で扱わなければいけなくなっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t戦闘用に加工された斧だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A large double-bladed axe"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9296,13 +7935,12 @@ item battle_axe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "バトルアクス"
-    original_name_jp = "戦斧"
-    original_name_en = "battle axe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.battle_axe
 }
 
 item hammer {
@@ -9318,11 +7956,6 @@ item hammer {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t鍛冶用から戦闘用に加工された大型の槌。大きく振り上げた先から叩きつける一撃は、どんな敵も叩きつぶすという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重量感ある槌だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A tool that is sometimes adopted as a weapon"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9337,13 +7970,12 @@ item hammer {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハンマー"
-    original_name_jp = "大槌"
-    original_name_en = "hammer"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.hammer
 }
 
 item trident {
@@ -9359,11 +7991,6 @@ item trident {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t元々は魚を取る為に考え出された槍。柄の先が３つに分かれていることで相手に当たりやすくなる上、至近に受けた傷によって治癒を遅らせるという効果も考えられているようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t先が３つに分かれた槍だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A three pronged polearm,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9378,13 +8005,12 @@ item trident {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "トライデント"
-    original_name_jp = "三叉槍"
-    original_name_en = "trident"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.trident
 }
 
 item long_staff {
@@ -9400,11 +8026,6 @@ item long_staff {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\tある程度の長さを持った棒。特に刃も付いていないので殺傷性は低いが、その軽さから振り回したり、魔力を込める媒体として扱われることが多い。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t細長い棒だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A staff used primarily as a weapon and sometimes for magic,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9419,13 +8040,12 @@ item long_staff {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ロッド"
-    original_name_jp = "長棒"
-    original_name_en = "long staff"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.long_staff
 }
 
 item short_bow {
@@ -9441,11 +8061,6 @@ item short_bow {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t狩猟用として開発された全長が短めの弓。扱いには熟練を要するが、コツさえ掴めば狩人達の信頼おける友となり得るだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t矢束と共に使用する射撃武器。距離によって威力が減衰する。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A standard easy to use bow,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9460,13 +8075,12 @@ item short_bow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ショートボウ"
-    original_name_jp = "短弓"
-    original_name_en = "short bow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.short_bow
 }
 
 item machine_gun {
@@ -9482,11 +8096,6 @@ item machine_gun {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t連続発射する為に作られた銃身の長い銃器。大きさや重量から多少人を選ぶが、それでも弓とは違い格段に操作しやすいと言える。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弾と共に使用する射撃武器。距離による減衰は殆どない。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Made by Cyber Dome In"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9501,13 +8110,12 @@ item machine_gun {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "マシンガン"
-    original_name_jp = "機関銃"
-    original_name_en = "machine gun"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.machine_gun
 }
 
 item claymore {
@@ -9523,11 +8131,6 @@ item claymore {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t両手で扱うことを前提とした巨大な剣。重量はあるが決してその重みに任せて敵を叩き潰すのではなく、断ち切ることを目的とする切れ味のよい武器である。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重量感ある剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A large sword normally held in two hand's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9542,13 +8145,12 @@ item claymore {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "クレイモア"
-    original_name_jp = "大剣"
-    original_name_en = "claymore"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.claymore
 }
 
 item ration {
@@ -9564,11 +8166,6 @@ item ration {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古来兵士が戦場に赴く際、常に携帯していたと言われている食糧。携帯食故保存性が極めて高く、全く腐らないという特性を持つが、それに比例してか味の方は絶望的な出来栄えである。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A ratio"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9583,13 +8180,12 @@ item ration {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "兵糧"
-    original_name_en = "ration"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ration
 }
 
 item bardiche {
@@ -9605,11 +8201,6 @@ item bardiche {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t戦斧より更に大きな刃を取り付けた斧。それはもはや長い棒に幅広の剣が取り付けてあるようにさえ見えるが、重量故斬るというより叩きつぶすように使うのが主らしい。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t刃先の広い斧だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A single-bladed axe resembling a polearm,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9624,13 +8215,12 @@ item bardiche {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "バルディッシュ"
-    original_name_jp = "大斧"
-    original_name_en = "bardiche"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bardiche
 }
 
 item halberd {
@@ -9646,11 +8236,6 @@ item halberd {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\tこれ一本で斬る、突く、叩くといった多様な戦い方ができる槍。古代、人と人との戦いが絶えなかった頃、この武器は使い方同様、多様な人種によって使用されていたという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t複数の使い方ができる槍だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A weapon resembling a spear with the head of an axe,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9665,13 +8250,12 @@ item halberd {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハルバード"
-    original_name_jp = "鉾槍"
-    original_name_en = "halberd"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.halberd
 }
 
 item scroll_of_return {
@@ -9687,11 +8271,6 @@ item scroll_of_return {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特定の場所と繋がる門を呼びだす巻物。誤って使用した場合でも慌てず騒がず、再度読むと取り消すことができる。当然ながら２枚消費するが、勉強代と思って諦めよう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t数ターン後に特定の場所にテレポートできる巻物。新たに読むと中止できる。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -9706,13 +8285,12 @@ item scroll_of_return {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "帰還の巻物"
-    original_name_en = "return"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_return
 }
 
 item figurine_of_warrior {
@@ -9728,11 +8306,6 @@ item figurine_of_warrior {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t精巧に作られた戦士を模した可動型人形。値は張るものの、様々な動きに対応できる為、子供達の憧れの的だという。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「フハハハハ！スゴいぞー！カッコイイぞー！」\n#〜街の子供のセスの言葉〜\n"
-    description_jp_3 = "\t\t狂戦士の模造品だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9747,13 +8320,12 @@ item figurine_of_warrior {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フィギア『狂戦士』"
-    original_name_en = "warrior"
     originalnameref2 = "figurine"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.figurine_of_warrior
 }
 
 item figurine_of_sword {
@@ -9769,11 +8341,6 @@ item figurine_of_sword {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実際の武器と見紛う程の調度品。大地に刺さった剣をイメージして造られたものだが、過去これを強引に武器として扱った勇士がいたとかいないとか。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t剣の模造品だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9788,13 +8355,12 @@ item figurine_of_sword {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フィギア『伝説の剣』"
-    original_name_en = "sword"
     originalnameref2 = "figurine"
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.figurine_of_sword
 }
 
 item bejeweled_chest {
@@ -9810,11 +8376,6 @@ item bejeweled_chest {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t宝飾品で彩られた輝く宝箱。見た目に反して以外と軽く、外装の煌びやかさも手伝って小物入れとして購入していく客もいるようだ。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「俺はずっとここで盗品の品定めをしているが、過去に二度程驚いたことがある。一度目は黄金の巨神像を持ってきたマスターに。そして二度目は、財宝の中身ではなく外身を持ってきたようなお前のような奴にだ」\n#〜盗賊ギルドの番人『アビス』の言葉〜\n"
-    description_jp_3 = "\t\t金品が入った箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "An ancient jeweled chest,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9829,13 +8390,12 @@ item bejeweled_chest {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "宝石で飾られた宝箱"
-    original_name_en = "bejeweled chest"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.bejeweled_chest
 }
 
 item chest {
@@ -9851,11 +8411,6 @@ item chest {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t主にネフィアに安置されているというアイテムの保管された箱。解錠できなかった冒険者が力任せに強奪していかないように非常に重く作られている。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t金品が入った非常に重い箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A heavy chest,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9870,13 +8425,12 @@ item chest {
     rarity = 500000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "宝箱"
-    original_name_en = "chest"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.chest
 }
 
 item safe {
@@ -9892,11 +8446,6 @@ item safe {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「中に希望が入っているか、それとも絶望か。ただ一つだけ分かることは、保管している人間にとっては絶望でしかないことだろうね」\n#〜稀代の怪盗『マークス』の言葉〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t金品が入った箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "It might not be safe to carry…"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -9911,13 +8460,12 @@ item safe {
     rarity = 500000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "金庫"
-    original_name_en = "safe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.safe
 }
 
 item scroll_of_magical_map {
@@ -9933,11 +8481,6 @@ item scroll_of_magical_map {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t周辺の地形を瞬時に読み取る巻物。主にネフィア用の巻物なので、気になるあの娘の家に侵入して使うという不届きな使い方はできない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tダンジョンの未探索部分を明らかにする巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -9952,13 +8495,12 @@ item scroll_of_magical_map {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔法の地図"
-    original_name_en = "magical map"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_magical_map
 }
 
 item scroll_of_gain_attribute {
@@ -9974,11 +8516,6 @@ item scroll_of_gain_attribute {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで新たな能力を得るとされる貴重な巻物。遠く、異国の地ではこれらの巻物のことをヒデンショと読んでいたという。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t所持していないスキルを得る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -9993,13 +8530,12 @@ item scroll_of_gain_attribute {
     rarity = 25000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "能力獲得の巻物"
-    original_name_en = "gain attribute"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_gain_attribute
 }
 
 item scroll_of_wonder {
@@ -10015,11 +8551,6 @@ item scroll_of_wonder {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t頭に突然魔法の知識が浮かぶ巻物。実に不思議である。あくまで不思議であるからインスパイア等では決してない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t頭に突然魔法の知識が浮かぶ巻物。一説では、神々が自らの魔法を忘れないようにしたためた本から落ちた、ページの切れはしだと考えられている。\n#〜魔具全典〜\n"
-    description_jp_3 = "\t\t魔法の知識を得る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10034,13 +8565,12 @@ item scroll_of_wonder {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "不思議な巻物"
-    original_name_en = "wonder"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_wonder
 }
 
 item scroll_of_minor_teleportation {
@@ -10056,11 +8586,6 @@ item scroll_of_minor_teleportation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t空間に小さな歪みを作り出すことで一瞬のうちに移動することができる巻物。効力がやや弱い為、人と別れる際に使用してすぐ傍にまた現れてしまい気まずい思いをした、という笑い話もあるようだ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t短距離のテレポートを行う巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10075,13 +8600,12 @@ item scroll_of_minor_teleportation {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ショートテレポートの巻物"
-    original_name_en = "minor teleportation"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_minor_teleportation
 }
 
 item spellbook_of_magic_mapping {
@@ -10097,11 +8621,6 @@ item spellbook_of_magic_mapping {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「魔法の地図」という呪文について学ぶことができる魔法書。道に迷いやすいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t未探索の箇所を明らかにする呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that make's you aware of your surroundings,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10116,13 +8635,12 @@ item spellbook_of_magic_mapping {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔法の地図の魔法書"
-    original_name_en = "magic mapping"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_magic_mapping
 }
 
 item spellbook_of_oracle {
@@ -10138,11 +8656,6 @@ item spellbook_of_oracle {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「神託」という呪文について学ぶことができる魔法書。占い好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t今までに現れた★のつくアイテムの現在地を知る呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome of prophecys,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10157,13 +8670,12 @@ item spellbook_of_oracle {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "神託の魔法書"
-    original_name_en = "oracle"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_oracle
 }
 
 item spellbook_of_return {
@@ -10179,11 +8691,6 @@ item spellbook_of_return {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「帰還」という呪文について学ぶことができる魔法書。度々ホームシックにかかるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特定の場所にテレポートする呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that allow's a person to return to specific places containing a rift,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10198,13 +8705,12 @@ item spellbook_of_return {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "帰還の魔法書"
-    original_name_en = "return"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_return
 }
 
 item spellbook_of_cure_minor_wound {
@@ -10220,11 +8726,6 @@ item spellbook_of_cure_minor_wound {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「軽傷治癒」という呪文について学ぶことができる魔法書。生傷の絶えないあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPを回復する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome has carefully been taken care of,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10239,13 +8740,12 @@ item spellbook_of_cure_minor_wound {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "軽傷治癒の魔法書"
-    original_name_en = "cure minor wound"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_cure_minor_wound
 }
 
 item spellbook_of_cure_critical_wound {
@@ -10261,11 +8761,6 @@ item spellbook_of_cure_critical_wound {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「致命傷治癒」という呪文について学ぶことができる魔法書。度々事故にあう不幸なあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPを回復する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome has been carefully preserved,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10280,13 +8775,12 @@ item spellbook_of_cure_critical_wound {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "致命傷治癒の魔法書"
-    original_name_en = "cure critical wound"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_cure_critical_wound
 }
 
 item spellbook_of_cure_eris {
@@ -10302,11 +8796,6 @@ item spellbook_of_cure_eris {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「エリスの癒し」という呪文について学ぶことができる魔法書。奇跡の生還を遂げたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPを回復する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome of arcane healing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10321,13 +8810,12 @@ item spellbook_of_cure_eris {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "エリスの癒しの魔法書"
-    original_name_en = "cure <Eris>"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_cure_eris
 }
 
 item spellbook_of_cure_jure {
@@ -10343,11 +8831,6 @@ item spellbook_of_cure_jure {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「ジュアの癒し」という呪文について学ぶことができる魔法書。九死に一生を得たいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tHPを回復する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome of word's written by jure herself,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10362,13 +8845,12 @@ item spellbook_of_cure_jure {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ジュアの癒しの魔法書"
-    original_name_en = "cure <Jure>"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_cure_jure
 }
 
 item bottle_of_beer {
@@ -10384,11 +8866,6 @@ item bottle_of_beer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t麦を原料に発酵させた酒。舌が痺れるような飲み心地と長い間残り続けるすっきりとした苦みが特徴。ヴェルニースの酒場に行けば炭鉱夫が湯水のように飲んでいる姿を目にすることができるだろう。\n#〜奥深い酒の世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飲むと酔っぱらう飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A bottle of beer,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -10403,13 +8880,12 @@ item bottle_of_beer {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ビア"
-    original_name_en = "beer"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_beer
 }
 
 item horn {
@@ -10425,11 +8901,6 @@ item horn {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t高らかな音を鳴らす角笛。基本的に単音しか出せないが、その雄々しい音色は人々の心を十分に揺さぶるだろう。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A horn imported from Marr Nis Farra,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10444,13 +8915,12 @@ item horn {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ホーン"
-    original_name_en = "horn"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.horn
 }
 
 item campfire {
@@ -10466,11 +8936,6 @@ item campfire {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t調理器具としてだけでなく、照明にもなり、置くだけで優しい炎の音まで演出する一石三鳥の優れ物。しかしながら調理器具の観点から見れば些か力不足であり、結局はインテリアとして扱われることが多い。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理にも使えるな照明器具。それは常に周囲を照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Due to magic these log's never burn up,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10485,13 +8950,12 @@ item campfire {
     rarity = 1000000
     coefficient = 100
     light = 1
-    katakana_name = ""
-    original_name_jp = "焚き火"
-    original_name_en = "campfire"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.campfire
 }
 
 item portable_cooking_tool {
@@ -10507,11 +8971,6 @@ item portable_cooking_tool {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用するだけで一通りの料理ができる小型の調理セット。とは言え利点はその軽さだけなので、プロを目指すならばもっと値の張る調理器具を買うことをお勧めする。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡易的な調理器具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A cooking set popular among adventurers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10526,13 +8985,12 @@ item portable_cooking_tool {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "携帯調理道具"
-    original_name_en = "portable cooking tool"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.portable_cooking_tool
 }
 
 item spellbook_of_magic_arrow {
@@ -10548,11 +9006,6 @@ item spellbook_of_magic_arrow {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「魔法の矢」という呪文について学ぶことができる魔法書。魔法の本質に触れたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t無属正の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that teaches how to use magical energy,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10567,13 +9020,12 @@ item spellbook_of_magic_arrow {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔法の矢の魔法書"
-    original_name_en = "magic arrow"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_magic_arrow
 }
 
 item stick_bread {
@@ -10589,11 +9041,6 @@ item stick_bread {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t細い棒状をしたやや小振りのパン。通常のパンより小さいのでそこまで腹は満たせないだろうが、小腹がすいた時等にそっと齧る分にはこれでも十分そうだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A loaf of baked bread,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10608,13 +9055,12 @@ item stick_bread {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "スティックパン"
-    original_name_en = "stick bread"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stick_bread
 }
 
 item raw_noodle {
@@ -10630,11 +9076,6 @@ item raw_noodle {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tあらゆる麺に対応することのできる麺の祖たる物質。非常に傷みやすいことでも有名。稀にこのまま食する者もいるが、曰く「独特の優しくやや甘い味が忘れられない」そうだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "This would taste better cooked,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10649,13 +9090,12 @@ item raw_noodle {
     rarity = 5000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "生麺"
-    original_name_en = "raw noodle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.raw_noodle
 }
 
 item sack_of_flour {
@@ -10671,11 +9111,6 @@ item sack_of_flour {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t小麦を挽いた粉。加工することによって様々なパンが作られる。稀にそのまま食する奇特な人物もいるが、何か故あってのことだろうから、そっとしておいてあげよう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Flour used for baking,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10690,13 +9125,12 @@ item sack_of_flour {
     rarity = 5000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "小麦粉"
-    original_name_en = "flour"
     originalnameref2 = "sack"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sack_of_flour
 }
 
 item bomb_fish {
@@ -10712,11 +9146,6 @@ item bomb_fish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tノースティリスで最もポピュラーとされる魚の一種。小骨が多いが割合さっぱりした味で、どんな料理にも合うようだ。近種に、絶命時はじけるものも存在すると言われている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fish,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10731,13 +9160,12 @@ item bomb_fish {
     rarity = 5000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "はじけ魚"
-    original_name_en = "bomb fish"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bomb_fish
 }
 
 item poison {
@@ -10753,11 +9181,6 @@ item poison {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tピラミッドに生息すると言われるダイオウサソリの尻尾から抽出した毒を汚水で薄めた水薬。服用すれば当然毒に侵されるが、腐った魚のようなこの匂いでは誰も好き好んでは飲まないだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t毒状態を引き起こすポーション。食物に混ぜることができる。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Warning"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -10772,13 +9195,12 @@ item poison {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "毒薬"
-    original_name_en = "poison"
     originalnameref2 = ""
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.poison
 }
 
 item spellbook_of_nether_eye {
@@ -10794,11 +9216,6 @@ item spellbook_of_nether_eye {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「地獄の吐息」という呪文について学ぶことができる魔法書。宴会芸を身につけたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「地獄の吐息」という呪文について学ぶことができる魔法書。悪魔ぶりたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_3 = "\t\t地獄属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "You feel like the world of the dead has it's eye on you,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10813,13 +9230,12 @@ item spellbook_of_nether_eye {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "地獄の吐息の魔法書"
-    original_name_en = "nether eye"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_nether_eye
 }
 
 item spellbook_of_chaos_eye {
@@ -10835,11 +9251,6 @@ item spellbook_of_chaos_eye {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「混沌の瞳」という呪文について学ぶことができる魔法書。流し眼を練習しているあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混沌属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome makes no sense,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10854,13 +9265,12 @@ item spellbook_of_chaos_eye {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "混沌の瞳の魔法書"
-    original_name_en = "chaos eye"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_chaos_eye
 }
 
 item spellbook_of_nerve_eye {
@@ -10876,11 +9286,6 @@ item spellbook_of_nerve_eye {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「麻痺の矢」という呪文について学ぶことができる魔法書。運命の出会いと勘違いしやすいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t神経属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "Reading this tome make's your eye twitch,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10895,13 +9300,12 @@ item spellbook_of_nerve_eye {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "麻痺の矢の魔法書"
-    original_name_en = "nerve eye"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_nerve_eye
 }
 
 item wakizashi {
@@ -10917,11 +9321,6 @@ item wakizashi {
     dv = 1
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t異国にて秘密裏に育った諜報組織が用いる、やや小振りながら手に馴染むよう加工された小剣。その刃は光に反射しないよう黒く染められているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特殊な集団が用いる短剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A short sword usually worn together with a katana,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -10936,13 +9335,12 @@ item wakizashi {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ニンジャソード"
-    original_name_jp = "忍刀"
-    original_name_en = "wakizashi"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.wakizashi
 }
 
 item spellbook_of_darkness_beam {
@@ -10958,11 +9356,6 @@ item spellbook_of_darkness_beam {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「暗黒の光線」という呪文について学ぶことができる魔法書。周りを威圧する眼光を持つあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t暗黒属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome seems to bend light,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -10977,13 +9370,12 @@ item spellbook_of_darkness_beam {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "暗黒の光線の魔法書"
-    original_name_en = "darkness beam"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_darkness_beam
 }
 
 item spellbook_of_illusion_beam {
@@ -10999,11 +9391,6 @@ item spellbook_of_illusion_beam {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「幻影の光線」という呪文について学ぶことができる魔法書。魅惑的なウインクのできるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t幻惑属性のボルトを唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that hurt's your eyes when read,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11018,13 +9405,12 @@ item spellbook_of_illusion_beam {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "幻影の光線の魔法書"
-    original_name_en = "illusion beam"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_illusion_beam
 }
 
 item spellbook_of_ice_ball {
@@ -11040,11 +9426,6 @@ item spellbook_of_ice_ball {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「アイスボール」という呪文について学ぶことができる魔法書。辺りを涼しくしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t氷属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome is cold,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11059,13 +9440,12 @@ item spellbook_of_ice_ball {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "アイスボールの魔法書"
-    original_name_en = "ice ball"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_ice_ball
 }
 
 item spellbook_of_fire_ball {
@@ -11081,11 +9461,6 @@ item spellbook_of_fire_ball {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ファイアボール」という呪文について学ぶことができる魔法書。辺りを暖かくしたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t炎属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome is hot,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11100,13 +9475,12 @@ item spellbook_of_fire_ball {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ファイアボールの魔法書"
-    original_name_en = "fire ball"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_fire_ball
 }
 
 item spellbook_of_sound_ball {
@@ -11122,11 +9496,6 @@ item spellbook_of_sound_ball {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「轟音の波動」という呪文について学ぶことができる魔法書。大音量で騒ぎたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t音波属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "You can swear you hear a buzzing sound from this tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11141,13 +9510,12 @@ item spellbook_of_sound_ball {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "轟音の波動の魔法書"
-    original_name_en = "sound ball"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_sound_ball
 }
 
 item spellbook_of_chaos_ball {
@@ -11163,11 +9531,6 @@ item spellbook_of_chaos_ball {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「混沌の渦」という呪文について学ぶことができる魔法書。めちゃくちゃに騒ぎたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混沌属性の範囲魔法呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "You find this tome confusing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11182,13 +9545,12 @@ item spellbook_of_chaos_ball {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "混沌の渦の魔法書"
-    original_name_en = "chaos ball"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_chaos_ball
 }
 
 item fire_wood {
@@ -11204,11 +9566,6 @@ item fire_wood {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t燃料とするべく一定の高さに整えられ乾燥処理を施された木材。非常によく燃える為、日常生活において一定の価値は持ち得ているが、日用品故、高価なものではないと言える。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tかまどにくべる為に切られた木片だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Dried wood ready for burning,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11223,13 +9580,12 @@ item fire_wood {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "薪"
-    original_name_en = "fire wood"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.fire_wood
 }
 
 item scarecrow {
@@ -11245,11 +9601,6 @@ item scarecrow {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t両手を大きく広げ害獣を威嚇する、農地の守護者。その足が地面に突き刺さっているのは決してその場から離れることなく命令を従事しようとする意志の現れだろう。\n#〜嘘と勘違いされる全くの作り話・第２巻〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t畑においておく鳥よけだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Used by farmers to keep bird's away from their crop's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11264,13 +9615,12 @@ item scarecrow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "かかし"
-    original_name_en = "scarecrow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.scarecrow
 }
 
 item broom {
@@ -11286,11 +9636,6 @@ item broom {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t掃除をする際に用いる用具。古来魔法使いを象徴するとされ忌み嫌われてきたが、現在は専ら子供達のチャンバラ用の遊具と化している。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t掃除用の道具だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Useful for cleaning,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11305,13 +9650,12 @@ item broom {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ほうき"
-    original_name_en = "broom"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.broom
 }
 
 item long_pillar {
@@ -11327,11 +9671,6 @@ item long_pillar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t天へ真っすぐ伸びた、雄々しく、とても重い柱だ。微動だにしないその姿は、大地の神を思い起こさせる。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t長くて太い柱。それはとても重い。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A pillar designed after one's common in Eludernia,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11346,13 +9685,12 @@ item long_pillar {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "長い柱"
-    original_name_en = "long pillar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.long_pillar
 }
 
 item broken_pillar {
@@ -11368,11 +9706,6 @@ item broken_pillar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何らかの理由により根元から折れてしまった、とても重い柱だ。その独自の形は、どことなく芸術性を感じる。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t折れてしまった柱。それはとても重い。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A pillar designed after one's common in Eluderni"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11387,13 +9720,12 @@ item broken_pillar {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "折れた柱"
-    original_name_en = "broken pillar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.broken_pillar
 }
 
 item street_lamp {
@@ -11409,11 +9741,6 @@ item street_lamp {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tそれは第二の月明かり。彼らはいつでも休むことなく道行く人々に影を作っているのだ。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t備え付けられた灯。夜間、周囲を明るく照らす。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A lamp that decorates the street's of Asseria,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11428,13 +9755,12 @@ item street_lamp {
     rarity = 200000
     coefficient = 100
     light = 5
-    katakana_name = ""
-    original_name_jp = "街灯"
-    original_name_en = "street lamp"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.street_lamp
 }
 
 item water_tub {
@@ -11450,11 +9776,6 @@ item water_tub {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t水が並々張られたとても重い用具。主に家畜用の物なので、さしもの冒険者もこれには手をつけないらしい。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水の入った凄く重い桶だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A warning label read's \"\"Not suitable for golems\""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11469,13 +9790,12 @@ item water_tub {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "水桶"
-    original_name_en = "water tub"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.water_tub
 }
 
 item comfortable_table {
@@ -11491,11 +9811,6 @@ item comfortable_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t温かみのある円形のテーブル。椅子を使わずに使用したくなったり、手をかけてテーブルをひっくり返したくなったりするのは、一体どういう訳なのだろうか。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tシックな机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A table often used in one's house,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11510,13 +9825,12 @@ item comfortable_table {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "落ち着くテーブル"
-    original_name_en = "comfortable table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.comfortable_table
 }
 
 item inner_tube {
@@ -11532,11 +9846,6 @@ item inner_tube {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t泳げない者が主に使用する浮力を増す為の用具。ポート・カプールにおいて街の子供がしばしば使用しているのが見受けられる。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t救命用の道具だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Such an odd design,,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11551,13 +9860,12 @@ item inner_tube {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "浮き輪"
-    original_name_en = "inner tube"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.inner_tube
 }
 
 item mysterious_map {
@@ -11573,11 +9881,6 @@ item mysterious_map {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t謎めいた雰囲気を持つ地図。意味深であるだけで、特に目立った効果は持っていないという。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雰囲気ある地図。使用することはできない。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A map with no recognizable landmarks,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11592,13 +9895,12 @@ item mysterious_map {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "意味深な地図"
-    original_name_en = "mysterious map"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.mysterious_map
 }
 
 item suitcase {
@@ -11614,11 +9916,6 @@ item suitcase {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「このカバンは自分のものだ。いや、昔持っていたんだ。いや、持っていた記憶がある、いや、買いたかった−、いや待てよ。ああそうだ思い出した、どこかの老紳士が置いたカバンだった。つまりは自分のものだ」\n#〜こそどろのグリドの言葉〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t金品が入ったカバン。開けることができる。\n#〜鑑定報告書：＜遺失物＞カテゴリ〜\n"
-    description_en = "A suitcase lost by a traveler, "
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11633,13 +9930,12 @@ item suitcase {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カバン(落し物)"
-    original_name_en = "suitcase"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.suitcase
 }
 
 item wallet {
@@ -11655,11 +9951,6 @@ item wallet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「おやこんな所に財布が。良かった、無くなったかと思って心配していたんだ。こないだ無くした自分のものと似てるって？そりゃそうだよ、何故なら僕は沢山財布を持ってるから」\n#〜ならずもののオネストの言葉〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t金品が入った袋。開けることができる。\n#〜鑑定報告書：＜遺失物＞カテゴリ〜\n"
-    description_en = "A wallet lost by a traveler,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11674,13 +9965,12 @@ item wallet {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "財布(落し物)"
-    original_name_en = "wallet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.wallet
 }
 
 item potion_of_restore_body {
@@ -11696,11 +9986,6 @@ item potion_of_restore_body {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むことにより肉体に作用していた悪い影響を平常時まで回復させることのできる水薬。あくまでもいつもの自分に戻るだけなので、スラっとしていたあの頃に戻る、等といった使い方はできない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t低下している肉体的な能力の低下を治すポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that restores physical stats,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -11715,13 +10000,12 @@ item potion_of_restore_body {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "肉体復活のポーション"
-    original_name_en = "restore body"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_restore_body
 }
 
 item potion_of_restore_spirit {
@@ -11737,11 +10021,6 @@ item potion_of_restore_spirit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むことにより精神に作用していた悪い影響を平常時まで回復させることのできる水薬。あくまでもいつもの自分に戻るだけなので、格好よかったあの頃に戻る、等といった使い方はできない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t低下している精神的な能力の低下を治すポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A potion that restores spiritual stats,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -11756,13 +10035,12 @@ item potion_of_restore_spirit {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "精神復活のポーション"
-    original_name_en = "restore spirit"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_restore_spirit
 }
 
 item potion_of_potential {
@@ -11778,11 +10056,6 @@ item potion_of_potential {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t体の中の神経器官を内側から刺激することにより、恒久的な成長を遂げるポーション。じわじわと体が温かくなるこの薬は長寿に非常に有益とされ、しばしば大富豪が街を訪れては買っていくという。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t基本的な潜在能力のうち１つが上昇するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A valuable potion,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -11797,13 +10070,12 @@ item potion_of_potential {
     rarity = 80000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "潜在能力のポーション"
-    original_name_en = "potential"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_potential
 }
 
 item scroll_of_curse {
@@ -11819,11 +10091,6 @@ item scroll_of_curse {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身につけた装備品に呪いかける危険な巻物。使用した際に稀に効果を発揮しないで塵となる場合があるが、恐らくは日頃の行いの結果だろう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムを呪う巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11838,13 +10105,12 @@ item scroll_of_curse {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "呪縛の巻物"
-    original_name_en = "curse"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_curse
 }
 
 item spellbook_of_wishing {
@@ -11860,11 +10126,6 @@ item spellbook_of_wishing {
     dv = 0
     material = 0
     chargelevel = 1
-    description_jp_0 = "\t\t「願い」という呪文について学ぶことができる珍しい魔法書。奇跡を信じるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t願いを言う機会が与えられる呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome is ancient and has a crushing aura of power,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -11879,13 +10140,12 @@ item spellbook_of_wishing {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "願いの魔法書"
-    original_name_en = "wishing"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_wishing
 }
 
 item rod_of_wishing {
@@ -11901,11 +10161,6 @@ item rod_of_wishing {
     dv = 0
     material = 0
     chargelevel = 1
-    description_jp_0 = "\t\t特定の魔法が封じ込められた貴重な杖。猫の目の様な宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで願いを言う機会が与えられる魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A dragon scale rod with a diamond tip,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -11920,13 +10175,12 @@ item rod_of_wishing {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "願いの杖"
-    original_name_en = "wishing"
     originalnameref2 = "rod"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_wishing
 }
 
 item well_kept_armor {
@@ -11942,11 +10196,6 @@ item well_kept_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t綺麗に磨かれ万事に備えられた武具。その全てに売約済と書かれているので、勝手に装備することはできない。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t整った武具。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "Oiled and polished decorative armor"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -11961,13 +10210,12 @@ item well_kept_armor {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "整備された武具"
-    original_name_en = "well kept armor"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.well_kept_armor
 }
 
 item rack_of_good {
@@ -11983,11 +10231,6 @@ item rack_of_good {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t様々な日用品を所狭しと詰め込んだ棚。絶妙なバランスで積み重なっているので、そこからアイテムを取り出すことはできない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t日用品が載せられた棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Products for display or sale,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12002,13 +10245,12 @@ item rack_of_good {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "日用品の棚"
-    original_name_en = "good"
     originalnameref2 = "rack"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rack_of_good
 }
 
 item rack_of_accessories {
@@ -12024,11 +10266,6 @@ item rack_of_accessories {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t様々な装飾品を所狭しと詰め込んだ棚。絶妙なバランスで積み重なっているので、そこからアイテムを取り出すことはできない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t装飾品が載せられた棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Products for display or sale,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12043,13 +10280,12 @@ item rack_of_accessories {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "装飾品の棚"
-    original_name_en = "accessories"
     originalnameref2 = "rack"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rack_of_accessories
 }
 
 item towel {
@@ -12065,11 +10301,6 @@ item towel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t吸水性に富んだ糸織物。柔軟剤は使っていない。\n#〜パルミア秋冬物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t綿で作られた織物だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Soft fluffy towels!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12084,13 +10315,12 @@ item towel {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "タオル"
-    original_name_en = "towel"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.towel
 }
 
 item ragged_table {
@@ -12106,11 +10336,6 @@ item ragged_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t長年使いこまれ、多少ガタがきている机。それでも使い続けるのは、使い慣れているということもあるが、一重に愛着からだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t傾いた机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A rustic table,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12125,13 +10350,12 @@ item ragged_table {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ぼろい机"
-    original_name_en = "ragged table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ragged_table
 }
 
 item cabinet {
@@ -12147,11 +10371,6 @@ item cabinet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t酒類を保管しておく為に作られた戸棚。こっそり取り出して飲むのは、楽しみに取っておいた人に物凄く恨まれる行為なので止めておこう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t酒用の戸棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "The drawer is locked,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12166,13 +10385,12 @@ item cabinet {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "お酒のキャビネット"
-    original_name_en = "cabinet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cabinet
 }
 
 item luxury_bed {
@@ -12188,11 +10406,6 @@ item luxury_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t質の高い素材を余すところなく使った格調高い寝具。その滑らかな感触はこれが美術品であるかのように錯覚させる。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A bed made in Asseria,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12207,13 +10420,12 @@ item luxury_bed {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "高級ベッド"
-    original_name_en = "luxury bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.luxury_bed
 }
 
 item vase {
@@ -12229,11 +10441,6 @@ item vase {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tいかにも高そうな素材で焼き上げられた花瓶。その表面は輝く程につやつやしている。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t良い素材で作られた花瓶だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A vase on a night stand,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12248,13 +10455,12 @@ item vase {
     rarity = 500000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "高価な花瓶"
-    original_name_en = "vase"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.vase
 }
 
 item high_grade_dresser {
@@ -12270,11 +10476,6 @@ item high_grade_dresser {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tお高い感じがする鏡台。女性達の憧れる家具の一つである。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tその身を映す高価な鏡。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A beautifully crafted dresser,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12289,13 +10490,12 @@ item high_grade_dresser {
     rarity = 150000
     coefficient = 100
     light = 8
-    katakana_name = ""
-    original_name_jp = "高級ミラー"
-    original_name_en = "high grade dresser"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.high_grade_dresser
 }
 
 item neat_bar_table {
@@ -12311,11 +10511,6 @@ item neat_bar_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t酒場に設置される為に作られた立派な机。より収納性を増しながらも、大きさは据え置きを保っている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t沢山入る戸棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A bar table with rack's of alcohol and wine,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12330,13 +10525,12 @@ item neat_bar_table {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "高収納バーテーブル"
-    original_name_en = "neat bar table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.neat_bar_table
 }
 
 item large_bouquet {
@@ -12352,11 +10546,6 @@ item large_bouquet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t切り花を一つにまとめた雑貨。しばしば気持ちのこもった贈り物として用いられる。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「俺ほどの美男子になると、女の方から寄ってくるもんだが、それでも自分からアプローチしたい時は、大抵こいつを使う。女ってもんは物に弱いからな、俺の最も愛する女性もそう言ってたよ」\n#〜女たらしの『ラファエロ』の言葉〜\n"
-    description_jp_3 = "\t\t束ねられた生花だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A beautiful bouquet of flowers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12371,13 +10560,12 @@ item large_bouquet {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大きな花束"
-    original_name_en = "large bouquet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.large_bouquet
 }
 
 item chest_of_clothes {
@@ -12393,11 +10581,6 @@ item chest_of_clothes {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t衣服を収めることを専門とする箪笥。通常のものより若干幅広に作られており、季節別に収納できるようになっている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t衣類用の箪笥だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A clean set of clothing,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12412,13 +10595,12 @@ item chest_of_clothes {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "衣類箪笥"
-    original_name_en = "clothes"
     originalnameref2 = "chest"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.chest_of_clothes
 }
 
 item giant_bed {
@@ -12434,11 +10616,6 @@ item giant_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t大の字に寝てもなお余りある寝具。急なお客が来た際に、皆纏めて寝かしつける時に便利である。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A large and elegant bed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12453,13 +10630,12 @@ item giant_bed {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "巨大なベッド"
-    original_name_en = "giant bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.giant_bed
 }
 
 item plain_bed {
@@ -12475,11 +10651,6 @@ item plain_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t所々ガタが来ている寝具。横になるだけでギシギシうるさいので、神経質な人は寝ることができないだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A bed made in Cyber Dome,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12494,13 +10665,12 @@ item plain_bed {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "粗末なベッド"
-    original_name_en = "plain bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.plain_bed
 }
 
 item coffin {
@@ -12516,11 +10686,6 @@ item coffin {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生ある者は本来用いない寝具。少なくとも雨風はしのげるので、仕方なく使用する冒険者もいるようだ。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「寝具にしておくには勿体ない程とっても硬くて、入っていればどの方向からも攻撃を寄せ付けません。難点は、攻撃する時にそこから出なければいけない所でしょうか」\n#〜見習い騎士『アインク』の言葉〜\n"
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "It would be disrespectful of the deceased to sleep in this"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12535,13 +10700,12 @@ item coffin {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "棺桶"
-    original_name_en = "coffin"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.coffin
 }
 
 item food_processor {
@@ -12557,11 +10721,6 @@ item food_processor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t鋭い刃で食品を破砕する優れた調理器具。かつてパルミアにおいて非常に高価なこの器具を売る為に、少々わざとらしい寸劇を交える２人組の商人がいたらしい。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為の優れた家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A miracle of technology!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12576,13 +10735,12 @@ item food_processor {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フードプロセッサー"
-    original_name_en = "food processor"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.food_processor
 }
 
 item soft_bed {
@@ -12598,11 +10756,6 @@ item soft_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t目に優しい色彩が気分を落ち着かせる寝具。余計な機能が一切ないシンプルなベッドなので、意外と男性人気も高いようだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A soft bed meant for a child,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12617,13 +10770,12 @@ item soft_bed {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "落ち着くベッド"
-    original_name_en = "soft bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.soft_bed
 }
 
 item cheap_rack {
@@ -12639,11 +10791,6 @@ item cheap_rack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t簡素な作りをしている棚。お手頃な価格なので、一人で生活しているならばこの位で十分だろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡素なつくりの棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "An ordinary inexpensive rack,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12658,13 +10805,12 @@ item cheap_rack {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "簡易棚"
-    original_name_en = "cheap rack"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cheap_rack
 }
 
 item dresser {
@@ -12680,11 +10826,6 @@ item dresser {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t世間一般に用いられる鏡台。基本的に装飾の多さで価値が決まる家具なので、機能的にはこれでも申し分ないだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tその身を映す鏡。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A common dresser,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12699,13 +10840,12 @@ item dresser {
     rarity = 250000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "鏡台"
-    original_name_en = "dresser"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dresser
 }
 
 item clean_bed {
@@ -12721,11 +10861,6 @@ item clean_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tシーツの裾までパリッとした寝具。その清潔さは、しばしば白き癒し手になぞらえて売られるほどだという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "At least it's clean,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12740,13 +10875,12 @@ item clean_bed {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "清潔なベッド"
-    original_name_en = "clean bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.clean_bed
 }
 
 item bathtub {
@@ -12762,11 +10896,6 @@ item bathtub {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t湯を貯め、浸かることで体を癒す家具。そこに泡を浮かべて楽しむのが貴族達の間で流行っているそうだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水が入った家具。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A porcelain bathtub,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12781,13 +10910,12 @@ item bathtub {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "風呂"
-    original_name_en = "bathtub"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bathtub
 }
 
 item pachisuro_machine {
@@ -12803,11 +10931,6 @@ item pachisuro_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t小さな金属球を用いる遊技台。一人でも少しの時間で遊べるが、ついつい熱が入りすぎて気づいたら夜だった、ということもあるらしい。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小さい玉で遊ぶ台。使用することができる。\n#〜鑑定報告書：＜遊技台＞カテゴリ〜\n"
-    description_en = "Similar to a slot machine,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12822,13 +10945,12 @@ item pachisuro_machine {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "パチスロマシーン"
-    original_name_en = "pachisuro machine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pachisuro_machine
 }
 
 item casino_table {
@@ -12844,11 +10966,6 @@ item casino_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t様々な大人の遊びが楽しめる遊技台。何でもできると謳っているが、店員は頑としてブラックジャックしかさせてくれない。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t色々なもので遊ぶ台。使用することができる。\n#〜鑑定報告書：＜遊技台＞カテゴリ〜\n"
-    description_en = "It's no fun without other people,,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12863,13 +10980,12 @@ item casino_table {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カジノテーブル"
-    original_name_en = "casino table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.casino_table
 }
 
 item slot_machine {
@@ -12885,11 +11001,6 @@ item slot_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t絵柄を揃えて楽しむ遊技台。３つの枠に７が揃った時、天から謎の奇声が轟くという伝説があるらしい。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t数合わせで遊ぶ台。使用することができる。\n#〜鑑定報告書：＜遊技台＞カテゴリ〜\n"
-    description_en = "Do you want to try it?"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12904,13 +11015,12 @@ item slot_machine {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "スロットマシーン"
-    original_name_en = "slot machine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.slot_machine
 }
 
 item darts_board {
@@ -12926,11 +11036,6 @@ item darts_board {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t狙った位置に矢を刺して楽しむ遊技台。投擲の腕が上がったかどうか、腕試し代わりに遊んで行く冒険者もいるのだとか。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t投擲で遊ぶ台。使用することができる。\n#〜鑑定報告書：＜遊技台＞カテゴリ〜\n"
-    description_en = "A note read's \"\"Please do not play drunk!\""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12945,13 +11050,12 @@ item darts_board {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ダーツ"
-    original_name_en = "darts board"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.darts_board
 }
 
 item big_foliage_plant {
@@ -12967,11 +11071,6 @@ item big_foliage_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t青々と茂った葉が目立つ鉢植え。真横に伸びた瑞々しい葉は、実に生命力に溢れている。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "The leaves look fake,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -12986,13 +11085,12 @@ item big_foliage_plant {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "特大の観葉植物"
-    original_name_en = "big foliage plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.big_foliage_plant
 }
 
 item old_shelf {
@@ -13008,11 +11106,6 @@ item old_shelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tどことなく懐かしい雰囲気を感じる棚。その肌触りは幼少の頃、確かに触れた木の温もりに似ている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t埃のたまった棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "It look's like it's going to fall apart!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13027,13 +11120,12 @@ item old_shelf {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "古い棚"
-    original_name_en = "old shelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.old_shelf
 }
 
 item old_bookshelf {
@@ -13049,11 +11141,6 @@ item old_bookshelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t収まった書物さえ曰くありげに感じる程古くなった本棚。独特の傷み具合が古美術好きにはたまらなくいいのだという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t古めかしい本用の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "You see large crack's in the wood,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13068,13 +11155,12 @@ item old_bookshelf {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "古い本棚"
-    original_name_en = "old bookshelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.old_bookshelf
 }
 
 item cheap_bed {
@@ -13090,11 +11176,6 @@ item cheap_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t必要最低限の機能のみ備えた寝具。寝るというより目を瞑って時間を過ごす為に用いられる、とまで評されるこのベッドを使っても、余り疲れは取れないだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "A bed made out of recycled parts…,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13109,13 +11190,12 @@ item cheap_bed {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "簡易ベッド"
-    original_name_en = "cheap bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cheap_bed
 }
 
 item cheap_table {
@@ -13131,11 +11211,6 @@ item cheap_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t芸術的意図からあえて凹凸の付けられた机。その特性上精密な作業には不向きだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tいびつな机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A table made out of recycled wood,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13150,13 +11225,12 @@ item cheap_table {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "でこぼこした机"
-    original_name_en = "cheap table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cheap_table
 }
 
 item neat_rack {
@@ -13172,11 +11246,6 @@ item neat_rack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t埃一つない清潔な棚。数年間はこの状態が続くと評判の為、無精な客が良く買っていくという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小ざっぱりとした棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A rack with a framed set of glass doors,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13191,13 +11260,12 @@ item neat_rack {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "小奇麗な棚"
-    original_name_en = "neat rack"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.neat_rack
 }
 
 item simple_dresser {
@@ -13213,11 +11281,6 @@ item simple_dresser {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t機能美を極端にまで追求した鏡台。鏡が付いていればそれでいい、そう思わせる程思い切った家具である。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tその身を映す鏡。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A dresser often made for children,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13232,13 +11295,12 @@ item simple_dresser {
     rarity = 200000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "シンプルな鏡台"
-    original_name_en = "simple dresser"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.simple_dresser
 }
 
 item big_cupboard {
@@ -13254,11 +11316,6 @@ item big_cupboard {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t通常のものより大きく作られた食器棚。主に沢山の客を呼んでパーティーを開く貴族の為の家具だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大きめな食器用の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Holds a lot of dishes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13273,13 +11330,12 @@ item big_cupboard {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "大きい食器棚"
-    original_name_en = "big cupboard"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.big_cupboard
 }
 
 item sacred_altar {
@@ -13295,11 +11351,6 @@ item sacred_altar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t光り輝く小さな祭壇。どちらかというと調度品的要素が強い為、捧げ物をすることはできないようだ。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小型の祭壇。使用することはできない。\n#〜鑑定報告書：＜壇＞カテゴリ〜\n"
-    description_en = "An altar with a holy aura,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13314,13 +11365,12 @@ item sacred_altar {
     rarity = 200000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "神聖な祭壇"
-    original_name_en = "sacred altar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sacred_altar
 }
 
 item comfortable_bed {
@@ -13336,11 +11386,6 @@ item comfortable_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t手が沈みこむほど柔らかい寝具。程良く沈み込むベッドに、太陽の匂い一杯の掛け布団が合わさると、まるで自分が赤ん坊の頃に戻ったかのような奇妙な感覚に包まれるという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "An average bed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13355,13 +11400,12 @@ item comfortable_bed {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ふかふかのベッド"
-    original_name_en = "comfortable bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.comfortable_bed
 }
 
 item simple_rack {
@@ -13377,11 +11421,6 @@ item simple_rack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t機能美を究極までに追求した棚。無駄な機能が一切ついていない、実に潔い家具である。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tすっきりした棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13396,13 +11435,12 @@ item simple_rack {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "シンプルな棚"
-    original_name_en = "simple rack"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.simple_rack
 }
 
 item wide_chair {
@@ -13418,11 +11456,6 @@ item wide_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t固い材質で作られた横長の椅子。屋外に設置されてあると、稀にその上で昼寝をしている者がいるという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t横に長い椅子。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13437,13 +11470,12 @@ item wide_chair {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "長椅子"
-    original_name_en = "wide chair"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.wide_chair
 }
 
 item upright_piano {
@@ -13459,11 +11491,6 @@ item upright_piano {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t長方形の黒い箱のような鍵盤楽器。グランドピアノより軽くはあるが、それでもなお余りある重量を誇るので長旅には適さないだろう。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A piano commonly found in bar's"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13478,13 +11505,12 @@ item upright_piano {
     rarity = 200000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "アップライトピアノ"
-    original_name_en = "upright piano"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.upright_piano
 }
 
 item statue_of_cross {
@@ -13500,11 +11526,6 @@ item statue_of_cross {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t威光を感じさせる調度品。霊験あらたかな為か、はたまた毎日磨かれているせいか。それは夜、周囲を明るく照らす。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t象徴的な建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "An ancient symbol,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13519,13 +11540,12 @@ item statue_of_cross {
     rarity = 1000000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "十字架"
-    original_name_en = "cross"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_cross
 }
 
 item stump {
@@ -13541,11 +11561,6 @@ item stump {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何の変哲もない木の切り株。武骨な中に自然の荒々しさがあり家の椅子代わりに最適！等と巧みに売りつけようとする輩がいるらしいが、座れはすれど実際の所ガラクタなので引っかからないようにしよう。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t切断された樹木の残った部分。使用することができる。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The remains of a tree that has been cut out of the ground and is used as a seat,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13560,13 +11575,12 @@ item stump {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "切り株"
-    original_name_en = "stump"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stump
 }
 
 item dress {
@@ -13582,11 +11596,6 @@ item dress {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t最新モデルの美しい織物。非常にデリケートに出来ているので、試着することすらできない。\n#〜パルミア秋冬物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t目に鮮やかな衣服。装備することはできない。\n#〜鑑定報告書：＜調度品＞カテゴリ〜\n"
-    description_en = "A lovely dress,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13601,13 +11610,12 @@ item dress {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ドレス"
-    original_name_en = "dress"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dress
 }
 
 item table {
@@ -13623,11 +11631,6 @@ item table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t物が載せられているテーブル。大きさからするとテーブルというより机といった方が正しいだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t作業を行う為の足のついた平板だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A common table,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13642,13 +11645,12 @@ item table {
     rarity = 20000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "テーブル"
-    original_name_en = "table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.table
 }
 
 item cargo_travelers_food {
@@ -13664,11 +11666,6 @@ item cargo_travelers_food {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t荷車に積み込むタイプの食糧。保存性が極めて高い上、味も悪くはない。しかしこの手のタイプは質より量、旅においては、しばしば詰め込んだ量の方が味を凌駕するものなのだ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t荷車に積み込むタイプの食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Travel rations often used by merchants,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13683,13 +11680,12 @@ item cargo_travelers_food {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "旅糧(荷車)"
-    original_name_en = "traveler's food"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_travelers_food
 }
 
 item throne {
@@ -13705,11 +11701,6 @@ item throne {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t王が座る為だけに作られた立派な椅子。量産性は考えていないので、贅を極めた作りとなっている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Built for royalty,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13724,13 +11715,12 @@ item throne {
     rarity = 150000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "王座"
-    original_name_en = "throne"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.throne
 }
 
 item golden_pedestal {
@@ -13746,11 +11736,6 @@ item golden_pedestal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t黄金の円柱に草花をあしらった煌びやかな芸術品。細やかな彫刻もさることながら、その素材故、夜になると周囲の光を浴びて尚一層輝くという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tキャンドル用の台座。夜間周囲を明るく照らす。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A pedestal decorated with gold leaf,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13765,13 +11750,12 @@ item golden_pedestal {
     rarity = 400000
     coefficient = 100
     light = 3
-    katakana_name = ""
-    original_name_jp = "金の飾台"
-    original_name_en = "golden pedestal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.golden_pedestal
 }
 
 item golden_statue {
@@ -13787,11 +11771,6 @@ item golden_statue {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t富の象徴を模った派手に輝く黄金の像。家に何個も置いていると、久々に来た友人から成金呼ばわりされるという。\n#〜嘘と勘違いされる全くの作り話・第２巻〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常にけばけばしい彫像だ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A statue common in Asseria style casino's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13806,13 +11785,12 @@ item golden_statue {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "金の像"
-    original_name_en = "golden statue"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.golden_statue
 }
 
 item remains_skin {
@@ -13828,11 +11806,6 @@ item remains_skin {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t敵を破砕した際に飛び散った生物の皮。特に価値はないが服や鞄に加工できる為、そこそこの値で売れる。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の皮だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The skin of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13847,13 +11820,12 @@ item remains_skin {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "皮"
-    original_name_en = "skin"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.remains_skin
 }
 
 item remains_blood {
@@ -13869,11 +11841,6 @@ item remains_blood {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t敵を破砕した際に飛び散った生物の体液。特に価値はないが水薬等に加工できる為、そこそこの値で売れる。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の体液だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The blood of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13888,13 +11855,12 @@ item remains_blood {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "体液"
-    original_name_en = "blood"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.remains_blood
 }
 
 item remains_eye {
@@ -13910,11 +11876,6 @@ item remains_eye {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t敵を破砕した際に飛び散った生物の瞳。特に価値はないが装飾品や薬に加工できる為、そこそこの値で売れる。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の瞳だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The eye of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13929,13 +11890,12 @@ item remains_eye {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "瞳"
-    original_name_en = "eye"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.remains_eye
 }
 
 item remains_heart {
@@ -13951,11 +11911,6 @@ item remains_heart {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t敵を破砕した際に飛び散った生物の心臓。特に価値はないが水薬や呪術に使用できる為、そこそこの値で売れる。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の心臓だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The heart of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -13970,13 +11925,12 @@ item remains_heart {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "心臓"
-    original_name_en = "heart"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.remains_heart
 }
 
 item remains_bone {
@@ -13992,11 +11946,6 @@ item remains_bone {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t敵を破砕した際に飛び散った生物の骨片。特に価値はないが水薬や呪術に使用できる為、そこそこの値で売れる。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の骨片だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "The bone's of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14011,13 +11960,12 @@ item remains_bone {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "骨片"
-    original_name_en = "bone"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.remains_bone
 }
 
 item fishing_pole {
@@ -14033,11 +11981,6 @@ item fishing_pole {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t魚を釣る為に必要な道具。休日のポート・カプールの波止場には大物を釣り上げることを夢見て、幾人もの釣り人、もとい観光客がその手に握りしめ、孤軍奮闘しているという。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「魚を釣るには餌もそうだが何よりこいつが重要だ。後は簡単、竿を振ってじっと待つだけ。そうそう、当然ながらスキルを持っていなければただの待ちぼうけだからな」\n#〜釣り自慢のフィッシャーの言葉〜\n"
-    description_jp_3 = "\t\t釣りの際に必要な道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A pole used for bait fishing,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14052,13 +11995,12 @@ item fishing_pole {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "釣竿"
-    original_name_en = "fishing pole"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fishing_pole
 }
 
 item rune {
@@ -14074,11 +12016,6 @@ item rune {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古代文字の書かれた石。使用すると、この世界ではないどこかの入り口が開くとされている。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t使用することでショウルームに行くことができる道具だ。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A magical rune that warp's reality,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14093,13 +12030,12 @@ item rune {
     rarity = 1000000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "懐かしいルーン"
-    original_name_en = "rune"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rune
 }
 
 item deed {
@@ -14115,11 +12051,6 @@ item deed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t家を購入する為の手続きとして必要な権利書。冒険者といえど、常に野宿というわけにはいかないのだ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで家を建てることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = ""
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -14134,13 +12065,12 @@ item deed {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "権利書"
-    original_name_en = "deed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
+    locale_key_prefix = core.locale.item.deed
 }
 
 item moonfish {
@@ -14156,11 +12086,6 @@ item moonfish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\tまるで錐のような尖った口が特徴の生命力あふれる魚。ムーンフィッシュの名は、釣り上げた際に必死に抵抗する様が三日月を力ずくで捕らえるように見えた事から名づけられた。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A beautiful fish as pale as the moon,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14175,13 +12100,12 @@ item moonfish {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ムーンフィッシュ"
-    original_name_en = "moonfish"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.moonfish
 }
 
 item sardine {
@@ -14197,11 +12121,6 @@ item sardine {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t古来「ポート・カプールの生きた宝石」と評される事もあった魚。それは味もさることながら、鮮度を保つことが非常に困難であり、調理人達が宝石の様にこの魚を扱っていたからだと言われている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A small oily fish,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14216,13 +12135,12 @@ item sardine {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サーディン"
-    original_name_en = "sardine"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.sardine
 }
 
 item flatfish {
@@ -14238,11 +12156,6 @@ item flatfish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t名の通り平坦で四角い形状をした魚。過去パルミアにおいて紙の不足した時代に、これを代用したという話があるが全くの嘘である。その長い尾をペンとして用いたという話に至っては言うまでもない。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "An odd fish that lay's on it's side,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14257,13 +12170,12 @@ item flatfish {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フラットフィッシュ"
-    original_name_en = "flatfish"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.flatfish
 }
 
 item manboo {
@@ -14279,11 +12191,6 @@ item manboo {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t圧倒する存在感を持った魚。長らく口にされることはなかったが「食べないより食べて埋れ」を身上とする或る料理人が意を決して食したが、毒はなく割と繊細な味をしていることが近年わかった。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14298,13 +12205,12 @@ item manboo {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マンボー"
-    original_name_en = "manboo"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.manboo
 }
 
 item seabream {
@@ -14320,11 +12226,6 @@ item seabream {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t鮮やかな鱗が見る者さえも楽しませてくれる魚。味の方も確かなもので、幽妙な味は古来から貴重とされている。異国ではめでたい席に丸々焼き上げて出すことが習わしとされているそうだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14339,13 +12240,12 @@ item seabream {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "シーブリーム"
-    original_name_en = "seabream"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.seabream
 }
 
 item salmon {
@@ -14361,11 +12261,6 @@ item salmon {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t大人の肩幅程の海水魚。時期によって味の善し悪しが格段に違う。絶妙な頃に水揚げされたものは身の色が鮮やかな桃色で、特徴的なその色は過去、染料屋の一声で染料の種類に加えられたほどだ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A fish with unique spawning habits,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14380,13 +12275,12 @@ item salmon {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サーモン"
-    original_name_en = "salmon"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.salmon
 }
 
 item globefish {
@@ -14402,11 +12296,6 @@ item globefish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t茶褐色をした魚。浅い海底に生息し、息を潜め獲物を待つという。その名の由来は全体の形状が手に装着するグローブに似ていた為、と言われている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t自分の身に危険が迫ると体を膨らませて敵を威嚇する魚。非常に美味しいのだが、肝に致死性の毒が含まれている為調理に危険を伴う。不幸にも毒にあたったとしても、なに、３日もすれば大丈夫だろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A fish that can inflate itself into a round ball,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14421,13 +12310,12 @@ item globefish {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "グローブフィッシュ"
-    original_name_en = "globefish"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.globefish
 }
 
 item tuna {
@@ -14443,11 +12331,6 @@ item tuna {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t広く分布するが、ポート・カプール近海に生息するものが有名。身は鮮やかな赤であり刺身にすると美味だが、火を通すことによりさながら肉の様な触感も味わえる、１尾で二度おいしい魚である。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A carnivorous fish,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14462,13 +12345,12 @@ item tuna {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ツナ"
-    original_name_en = "tuna"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.tuna
 }
 
 item cutlassfish {
@@ -14484,11 +12366,6 @@ item cutlassfish {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t日の光を反射しギラギラと輝く様を舶刀「カトラス」になぞらえた魚。その名の通りとても細長く、体に鱗がないのが特徴。味は淡白である為、繊細な料理に向いていると言える。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A fish that look's something like an Eel,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14503,13 +12380,12 @@ item cutlassfish {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カトラスフィッシュ"
-    original_name_en = "cutlassfish"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.cutlassfish
 }
 
 item sandborer {
@@ -14525,11 +12401,6 @@ item sandborer {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t両手に収まるほどの小柄な魚。大がかりな料理には不向きだがフライやてんぷら等に適している。巷の噂によれば、パルミアではこれとイーモのフライを携帯して食べるのがトレンドだとか。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14544,13 +12415,12 @@ item sandborer {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サンドボーラー"
-    original_name_en = "sandborer"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.sandborer
 }
 
 item gloves_of_vesda {
@@ -14566,11 +12436,6 @@ item gloves_of_vesda {
     dv = 5
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t火炎竜を素材に用いたと言われる篭手。噂に違わず常に炎に包まれているが、着用者は燃えるどころか、熱ささえ感じないという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t貫通能力に長けた篭手だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14585,13 +12450,12 @@ item gloves_of_vesda {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《火炎竜ヴェスダの篭手》"
-    original_name_en = "<Gloves of Vesda>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.gloves_of_vesda
 }
 
 item blood_moon {
@@ -14607,11 +12471,6 @@ item blood_moon {
     dv = 0
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t血塗られた満月のような鉄球が取り付けられた棍棒。その球体には相手の精神を吸収し、その力を火炎へと還元する魔法がかけられているという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t相手のマナを吸い取る棍棒だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14626,13 +12485,12 @@ item blood_moon {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ブラッドムーン》"
-    original_name_en = "<Blood Moon>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.blood_moon
 }
 
 item ring_of_steel_dragon {
@@ -14648,11 +12506,6 @@ item ring_of_steel_dragon {
     dv = 0
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t鋼鉄竜の骨から作られたとされる武骨な指輪。身につければ自らが鋼鉄竜となったと錯覚させる程の強大な力を得るという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tPVが非常に高い指輪だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14667,13 +12520,12 @@ item ring_of_steel_dragon {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《鋼鉄竜の指輪》"
-    original_name_en = "<Ring of Steel Dragon>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ring_of_steel_dragon
 }
 
 item staff_of_insanity {
@@ -14689,11 +12541,6 @@ item staff_of_insanity {
     dv = 15
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t闇に堕ちた者のみ手にする資格があるとされる杖。そこには過去の所有者達の魂が込められているとされ、攻撃の際にそれはしばしば悪夢となって降りかかる。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「過去、破滅を望んだ魔道士が手にした杖と聞いているよ。あの頃はなんて愚かしい人間がいたものだと笑っていたが、今なら気持ちが何となくわかる気がする。彼もきっと失いすぎたのだろうね」\n#〜悩める魔術士『レントン』の言葉〜\n"
-    description_jp_3 = "\t\t相手の精神を崩壊させる杖だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14708,13 +12555,12 @@ item staff_of_insanity {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《狂気の杖》"
-    original_name_en = "<Staff of Insanity>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.staff_of_insanity
 }
 
 item rankis {
@@ -14730,11 +12576,6 @@ item rankis {
     dv = 6
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t地獄の炎で鍛え上げられたとされる驚異の槍。鍛えるにつれ徐々に地獄の力を吸い込んだこの槍は、振るわれることで地獄の門を開くのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t地獄の力を持った鉾槍だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14749,13 +12590,12 @@ item rankis {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ランキス》"
-    original_name_en = "<Rankis>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.rankis
 }
 
 item palmia_pride {
@@ -14771,11 +12611,6 @@ item palmia_pride {
     dv = 15
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t青緑色の宝石を携えた小さくかわいらしい指輪。秘められた力によって、所有者の気品を高めるという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t運勢の上がる指輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14790,13 +12625,12 @@ item palmia_pride {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《パルミア・プライド》"
-    original_name_en = "<Palmia Pride>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.palmia_pride
 }
 
 item shopkeepers_trunk {
@@ -14812,11 +12646,6 @@ item shopkeepers_trunk {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t行商人が自ら苦労して集めた逸品が詰め込まれたカバン。防犯の為、登録者以外が開けると著しく不安を煽る魔法が掛けられているという。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t武器防具が入ったカバン。開けることができる。\n#〜鑑定報告書：＜遺失物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -14831,13 +12660,12 @@ item shopkeepers_trunk {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "商人のカバン"
-    original_name_en = "shopkeeper's trunk"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shopkeepers_trunk
 }
 
 item scroll_of_greater_identify {
@@ -14853,11 +12681,6 @@ item scroll_of_greater_identify {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t未鑑定の品を鑑定する巻物。より強力であるが、それでも鑑定できない場合は大人しく魔道士に調査してもらおう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t未鑑定のアイテムを鑑定する巻物。より強力だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -14872,13 +12695,12 @@ item scroll_of_greater_identify {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "*鑑定*の巻物"
-    original_name_en = "greater identify"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_greater_identify
 }
 
 item scroll_of_vanish_curse {
@@ -14894,11 +12716,6 @@ item scroll_of_vanish_curse {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身につけた装備品の呪いを解く巻物。より強力である為解呪に失敗することはない、はずだ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの呪いを解く巻物。より強力だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -14913,13 +12730,12 @@ item scroll_of_vanish_curse {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "*解呪*の巻物"
-    original_name_en = "vanish curse"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_vanish_curse
 }
 
 item potion_of_defender {
@@ -14935,11 +12751,6 @@ item potion_of_defender {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t突然自らが全てを護る盾となった気になる水薬。薬に含まれる成分により、多少の不安も意に介さなくなるようだ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的にDVを上げ、恐怖に耐性を得ることができるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A magical potion that can protect you from harm,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -14954,13 +12765,12 @@ item potion_of_defender {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "防衛者のポーション"
-    original_name_en = "defender"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_defender
 }
 
 item spellbook_of_holy_shield {
@@ -14976,11 +12786,6 @@ item spellbook_of_holy_shield {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「聖なる盾」という呪文について学ぶことができる魔法書。ガードが甘いあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的にDVを上げ、恐怖に耐性を得る呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A yellowed tome with a holy aura,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -14995,13 +12800,12 @@ item spellbook_of_holy_shield {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "聖なる盾の魔法書"
-    original_name_en = "holy shield"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_holy_shield
 }
 
 item rod_of_silence {
@@ -15017,11 +12821,6 @@ item rod_of_silence {
     dv = 0
     material = 0
     chargelevel = 7
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。黒く濁った宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象を沈黙状態にする魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A mica tipped rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -15036,13 +12835,12 @@ item rod_of_silence {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "沈黙の杖"
-    original_name_en = "silence"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_silence
 }
 
 item spellbook_of_silence {
@@ -15058,11 +12856,6 @@ item spellbook_of_silence {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「沈黙の霧」という呪文について学ぶことができる魔法書。おしゃべりな友人を持ったあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象を沈黙状態にする呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome who's word's are impossible to pronounce for most creatures,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15077,13 +12870,12 @@ item spellbook_of_silence {
     rarity = 600000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "沈黙の霧の魔法書"
-    original_name_en = "silence"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_silence
 }
 
 item potion_of_silence {
@@ -15099,11 +12891,6 @@ item potion_of_silence {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t沈黙の霧をかき集めたものを蒸留し、残った固形物の方をすり潰して作られた水薬。一度飲むと喉に異物感を覚え、魔法の詠唱どころではなくなる危険な代物だ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t沈黙状態を引き起こすポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "…,,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15118,13 +12905,12 @@ item potion_of_silence {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "沈黙のポーション"
-    original_name_en = "silence"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_silence
 }
 
 item spellbook_of_regeneration {
@@ -15140,11 +12926,6 @@ item spellbook_of_regeneration {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「リジェネレーション」という呪文について学ぶことができる魔法書。怪我の治りが遅いあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に治癒力を上げる呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that look's like new,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15159,13 +12940,12 @@ item spellbook_of_regeneration {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "リジェネレーションの魔法書"
-    original_name_en = "regeneration"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_regeneration
 }
 
 item potion_of_troll_blood {
@@ -15181,11 +12961,6 @@ item potion_of_troll_blood {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t突然自らが屈強なトロールになった気になる水薬。肉体の方も同様の錯覚を起こすのか、効果が切れるまで服用者の新陳代謝が物凄いことになる。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に治癒力を上げるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Tastes worse than it smell's,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15200,13 +12975,12 @@ item potion_of_troll_blood {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トロールの血"
-    original_name_en = "troll blood"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_troll_blood
 }
 
 item spellbook_of_resistance {
@@ -15222,11 +12996,6 @@ item spellbook_of_resistance {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「元素保護」という呪文について学ぶことができる魔法書。自然の脅威から身を守りたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t元素の耐性を一時的に上げる呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that seems undamaged by the weather,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15241,13 +13010,12 @@ item spellbook_of_resistance {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "元素保護の魔法書"
-    original_name_en = "resistance"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_resistance
 }
 
 item potion_of_resistance {
@@ -15263,11 +13031,6 @@ item potion_of_resistance {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t三属性のドラゴンの牙を煎じて混ぜている為、服用すればそれらの属性に非常に強くなると謳う水薬。実際の効能はそれほどでもないので恐らくは火炎樹当たりの皮を使っているのだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に火・冷・雷属性の耐性を得るポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A magical potion that can protect you from harm,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15282,13 +13045,12 @@ item potion_of_resistance {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "元素耐性のポーション"
-    original_name_en = "resistance"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_resistance
 }
 
 item spellbook_of_speed {
@@ -15304,11 +13066,6 @@ item spellbook_of_speed {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「加速」という呪文について学ぶことができる魔法書。ライバルに差をつけたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t加速状態を引き起こす呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A hastily written tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15323,13 +13080,12 @@ item spellbook_of_speed {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "加速の魔法書"
-    original_name_en = "speed"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_speed
 }
 
 item spellbook_of_slow {
@@ -15345,11 +13101,6 @@ item spellbook_of_slow {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「鈍足」という呪文について学ぶことができる魔法書。ライバルの足を引っ張りたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鈍足状態を引き起こす呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A yellowed tome that's pages seem to move slowly,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15364,13 +13115,12 @@ item spellbook_of_slow {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鈍足の魔法書"
-    original_name_en = "slow"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_slow
 }
 
 item potion_of_speed {
@@ -15386,11 +13136,6 @@ item potion_of_speed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むと突然時間の流れを肌で感じるような錯覚を覚える水薬。思考するだけで行動が容易についてくる非常に有り難い水薬だが、乱用の結果無精になり息をするのを忘れた、ということにはならないように。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に加速状態になるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A magical potion that increases your speed temporarily,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15405,13 +13150,12 @@ item potion_of_speed {
     rarity = 700000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "加速のポーション"
-    original_name_en = "speed"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_speed
 }
 
 item potion_of_slow {
@@ -15427,11 +13171,6 @@ item potion_of_slow {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むと突然鉛を飲み込んだかのように体が重くなり、反面、周りの世界が急速に動き出しているように錯覚する危険な水薬。その非日常的な世界に思いをはせ、半ば中毒的に飲む輩が近年問題とされている。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に鈍足状態になるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "An item often carried by thieves,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15446,13 +13185,12 @@ item potion_of_slow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鈍足のポーション"
-    original_name_en = "slow"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_slow
 }
 
 item rod_of_speed {
@@ -15468,11 +13206,6 @@ item rod_of_speed {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。不透明な青い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者を一定時間加速状態にする魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of glass,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -15487,13 +13220,12 @@ item rod_of_speed {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "加速の杖"
-    original_name_en = "speed"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_speed
 }
 
 item spellbook_of_hero {
@@ -15509,11 +13241,6 @@ item spellbook_of_hero {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「英雄」という呪文について学ぶことができる魔法書。英雄気分に浸りたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t筋力と器用さの向上と、恐怖と混乱に耐性を得る呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "Strangely reading this book gives you a slight adrenalin rush,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15528,13 +13255,12 @@ item spellbook_of_hero {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "英雄の魔法書"
-    original_name_en = "hero"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_hero
 }
 
 item potion_of_hero {
@@ -15550,11 +13276,6 @@ item potion_of_hero {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t突然自らに軍神が降臨したかのような錯覚を覚える水薬。無論一時的なものだが確かな効果があるものなので、新人ガードが仕事時に緊張せぬよう日夜携帯しているとかいないとか。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t筋力と器用さの向上と、恐怖と混乱に耐性を得ることができるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label warn's \"\"Can give a false sense of confidence,\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15569,13 +13290,12 @@ item potion_of_hero {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "英雄気分のポーション"
-    original_name_en = "hero"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_hero
 }
 
 item spellbook_of_weakness {
@@ -15591,11 +13311,6 @@ item spellbook_of_weakness {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「脆弱の霧」という呪文について学ぶことができる魔法書。力自慢が過ぎる友人を持ったあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象の肉体的な耐性を一時的に下げる呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A battered tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15610,13 +13325,12 @@ item spellbook_of_weakness {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "脆弱の霧の魔法書"
-    original_name_en = "weakness"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_weakness
 }
 
 item spellbook_of_elemental_scar {
@@ -15632,11 +13346,6 @@ item spellbook_of_elemental_scar {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「元素の傷跡」という呪文について学ぶことができる魔法書。自然の脅威を知りたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象の元素の耐性を一時的に下げる呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A weathered and warped tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15651,13 +13360,12 @@ item spellbook_of_elemental_scar {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "元素の傷跡の魔法書"
-    original_name_en = "elemental scar"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_elemental_scar
 }
 
 item potion_of_weakness {
@@ -15673,11 +13381,6 @@ item potion_of_weakness {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むと突然過去の過ちを思い出し、防御が疎かになってしまうという危険な水薬。抽出方法は不明だが、きっと瓶の中一杯に銀眼の斬殺者の罵倒が詰め込まれているのだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的にPVとDVを下げるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A strangely colored potion,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -15692,13 +13395,12 @@ item potion_of_weakness {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "脆弱のポーション"
-    original_name_en = "weakness"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_weakness
 }
 
 item spellbook_of_holy_veil {
@@ -15714,11 +13416,6 @@ item spellbook_of_holy_veil {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ホーリーヴェイル」という呪文について学ぶことができる魔法書。体の弱いあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一定時間呪いに対する抵抗を得る呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome on religious spell's,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15733,13 +13430,12 @@ item spellbook_of_holy_veil {
     rarity = 200000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ホーリーヴェイルの魔法書"
-    original_name_en = "holy veil"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_holy_veil
 }
 
 item scroll_of_holy_veil {
@@ -15755,11 +13451,6 @@ item scroll_of_holy_veil {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身に降りかかる呪いを防ぐという聖なる衣を一時的に展開する巻物だ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一定時間呪いに対する抵抗を得る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15774,13 +13465,12 @@ item scroll_of_holy_veil {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ホーリーヴェイルの巻物"
-    original_name_en = "holy veil"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_holy_veil
 }
 
 item rod_of_holy_light {
@@ -15796,11 +13486,6 @@ item rod_of_holy_light {
     dv = 0
     material = 0
     chargelevel = 6
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。冷たさを感じさせる青い宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者に呪いに対する抵抗を得る衣を張る魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A gold plated rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -15815,13 +13500,12 @@ item rod_of_holy_light {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "浄化の杖"
-    original_name_en = "holy light"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_holy_light
 }
 
 item spellbook_of_holy_light {
@@ -15837,11 +13521,6 @@ item spellbook_of_holy_light {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「清浄なる光」という呪文について学ぶことができる魔法書。体調の優れぬあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t自らの呪いを一つ打ち消し、呪いへの抵抗を得る呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome with a calming glow,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15856,13 +13535,12 @@ item spellbook_of_holy_light {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "清浄なる光の魔法書"
-    original_name_en = "holy light"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_holy_light
 }
 
 item spellbook_of_holy_rain {
@@ -15878,11 +13556,6 @@ item spellbook_of_holy_rain {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「全浄化」という呪文について学ぶことができる魔法書。滅入った気分のあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t自らの呪いを全て打ち消し、呪いへの抵抗を得る呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A slightly damp tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15897,13 +13570,12 @@ item spellbook_of_holy_rain {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "全浄化の魔法書"
-    original_name_en = "holy rain"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_holy_rain
 }
 
 item scroll_of_holy_light {
@@ -15919,11 +13591,6 @@ item scroll_of_holy_light {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身にかかった呪いを１つ打ち消し、更に聖なる衣を一時的に展開する巻物。尚、勝手が違うのか装備品の呪いは打ち消すことはできない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t身にかかった呪いを１つ打ち消し、一定時間呪いに対する抵抗を得る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15938,13 +13605,12 @@ item scroll_of_holy_light {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "清浄なる光の巻物"
-    original_name_en = "holy light"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_holy_light
 }
 
 item scroll_of_holy_rain {
@@ -15960,11 +13626,6 @@ item scroll_of_holy_rain {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身にかかった呪いを全て打ち消し、更に聖なる衣を一時的に展開する巻物。尚、勝手が違うのか装備品の呪いは打ち消すことはできない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t身にかかった呪いを全て打ち消し、一定時間呪いに対する抵抗を得る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -15979,13 +13640,12 @@ item scroll_of_holy_rain {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "全浄化の巻物"
-    original_name_en = "holy rain"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_holy_rain
 }
 
 item scroll_of_mana {
@@ -16001,11 +13661,6 @@ item scroll_of_mana {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで一瞬のうちに肉体をマナで満たす巻物。緊急時に一巻持っていると思った以上に役立つらしい。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tMPを回復する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16020,13 +13675,12 @@ item scroll_of_mana {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔力の巻物"
-    original_name_en = "mana"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_mana
 }
 
 item rod_of_mana {
@@ -16042,11 +13696,6 @@ item rod_of_mana {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。八面体に整えられた深紅の宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者のMPを回復する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod wrapped in dawn cloth,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -16061,13 +13710,12 @@ item rod_of_mana {
     rarity = 200000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔力の杖"
-    original_name_en = "mana"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_mana
 }
 
 item bottle_of_sulfuric {
@@ -16083,11 +13731,6 @@ item bottle_of_sulfuric {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tスライムの体液に良く似た特徴を持った水薬。なんでも溶かすスライム同様、触れた素材を錆びさせる性質を持つ。人体にも勿論有害な為、喉が渇いたからといって決して飲まないこと。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t肉体を溶かす液体だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A clear odorless liquid,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -16102,13 +13745,12 @@ item bottle_of_sulfuric {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "硫酸"
-    original_name_en = "sulfuric"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = ["nogive"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_sulfuric
 }
 
 item gem_cutter {
@@ -16124,11 +13766,6 @@ item gem_cutter {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t宝石加工を行うに当たって必要な基本ツール。当然ながら技術が無ければ扱うことはできない。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t宝石加工の際に必要な道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Some magical material's are just that hard to cut!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16143,13 +13780,12 @@ item gem_cutter {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "宝石加工ツール"
-    original_name_en = "gem cutter"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.gem_cutter
 }
 
 item material_box {
@@ -16165,11 +13801,6 @@ item material_box {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t開けると素材が飛び出す黒い箱。多様な品が一気に飛び出すが、どうやってこの箱におさまっているのかは誰一人知らないという。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tマテリアルの入った箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A box filled with materials,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16184,13 +13815,12 @@ item material_box {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "素材箱"
-    original_name_en = "material box"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.material_box
 }
 
 item scroll_of_gain_material {
@@ -16206,11 +13836,6 @@ item scroll_of_gain_material {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むと空からマテリアルが落ちてくる奇妙な巻物。何故巻物を読むとマテリアルが降ってくるのか、この関連性は未だ以て不明である。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tマテリアルが手に入る巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16225,13 +13850,12 @@ item scroll_of_gain_material {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "マテリアル生成の巻物"
-    original_name_en = "gain material"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_gain_material
 }
 
 item spellbook_of_nightmare {
@@ -16247,11 +13871,6 @@ item spellbook_of_nightmare {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「ナイトメア」という呪文について学ぶことができる魔法書。ついつい寝過すあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象の精神的な耐性を一時的に下げる呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that has an aura of dread,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16266,13 +13885,12 @@ item spellbook_of_nightmare {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ナイトメアの魔法書"
-    original_name_en = "nightmare"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_nightmare
 }
 
 item spellbook_of_knowledge {
@@ -16288,11 +13906,6 @@ item spellbook_of_knowledge {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「知者の加護」という呪文について学ぶことができる魔法書。試験に臨むあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読書の補佐をする呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "An insightful tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16307,13 +13920,12 @@ item spellbook_of_knowledge {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "知者の加護の魔法書"
-    original_name_en = "knowledge"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_knowledge
 }
 
 item scroll_of_knowledge {
@@ -16329,11 +13941,6 @@ item scroll_of_knowledge {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t一時的に賢くなれる巻物。試験の季節になると碌に勉強もせず、この巻物を当てにした客で道具屋が一時的に賑わうという。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一定時間読書をする為に必要な要素を上昇させる巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16348,13 +13955,12 @@ item scroll_of_knowledge {
     rarity = 600000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "知恵の巻物"
-    original_name_en = "knowledge"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_knowledge
 }
 
 item cargo_rag_doll {
@@ -16370,11 +13976,6 @@ item cargo_rag_doll {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t丁寧に包まれた交易品。開封してしまうと価値が下がる為、使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of children's toy's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16389,13 +13990,12 @@ item cargo_rag_doll {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "特産ぬいぐるみ(荷車)"
-    original_name_en = "rag doll"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_rag_doll
 }
 
 item cargo_barrel {
@@ -16411,11 +14011,6 @@ item cargo_barrel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tこちらが移りこむほどに磨き上げられた交易品。一つ一つが手作りの豪華仕様となっている。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of barrels,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16430,13 +14025,12 @@ item cargo_barrel {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "匠のタル(荷車)"
-    original_name_en = "barrel"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_barrel
 }
 
 item cargo_piano {
@@ -16452,11 +14046,6 @@ item cargo_piano {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t色鮮やかなとても重い交易品。音は出るが所詮観賞用に作られた代物なので、まともに使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重い交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of piano's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16471,13 +14060,12 @@ item cargo_piano {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "装飾ピアノ(荷車)"
-    original_name_en = "piano"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_piano
 }
 
 item cargo_rope {
@@ -16493,11 +14081,6 @@ item cargo_rope {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tきつく束ねられた交易品。解れたら大変なので、使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of rope,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16512,13 +14095,12 @@ item cargo_rope {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ロープ(荷車)"
-    original_name_en = "rope"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_rope
 }
 
 item cargo_coffin {
@@ -16534,11 +14116,6 @@ item cargo_coffin {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t質の高い木材を使った、丁寧な作りの交易品。先約がいるので、使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of coffin's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16553,13 +14130,12 @@ item cargo_coffin {
     rarity = 700000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "棺桶(荷車)"
-    original_name_en = "coffin"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_coffin
 }
 
 item cargo_manboo {
@@ -16575,11 +14151,6 @@ item cargo_manboo {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t個人で食すには余りにも巨大なマンボー。主に交易品として取引される。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of fish,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16594,13 +14165,12 @@ item cargo_manboo {
     rarity = 1500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マンボー(荷車)"
-    original_name_en = "manboo"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_manboo
 }
 
 item cargo_grave {
@@ -16616,11 +14186,6 @@ item cargo_grave {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t石で造られたとても重い交易品。無茶をして墓運びが墓に埋もれる、等ということにならないように。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても重い交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of grave materials,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16635,13 +14200,12 @@ item cargo_grave {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "墓(荷車)"
-    original_name_en = "grave"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_grave
 }
 
 item cargo_tuna_fish {
@@ -16657,11 +14221,6 @@ item cargo_tuna_fish {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t個人で食すには余りにも巨大なツナ。主に交易品として取引される。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of fish,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16676,13 +14235,12 @@ item cargo_tuna_fish {
     rarity = 2000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ツナ(荷車)"
-    original_name_en = "tuna fish"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_tuna_fish
 }
 
 item cargo_whisky {
@@ -16698,11 +14256,6 @@ item cargo_whisky {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t貰うと嬉しい交易品。開封すると価値が大幅に落ちる為、使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of alcohol,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16717,13 +14270,12 @@ item cargo_whisky {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "銘酒セット(荷車)"
-    original_name_en = "whisky"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_whisky
 }
 
 item cargo_noble_toy {
@@ -16739,11 +14291,6 @@ item cargo_noble_toy {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t複雑な機巧を備えた、見るものを楽しませる交易品。重たいので取り扱いには注意が必要だ。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of children's toy's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16758,13 +14305,12 @@ item cargo_noble_toy {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "貴族の玩具(荷車)"
-    original_name_en = "noble toy"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_noble_toy
 }
 
 item cargo_inner_tube {
@@ -16780,11 +14326,6 @@ item cargo_inner_tube {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t浮き輪を幾つかのまとまりで束ねた交易品。捌きにくくなる為、ばら売りはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of ship materials,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16799,13 +14340,12 @@ item cargo_inner_tube {
     rarity = 1500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "浮き輪(荷車)"
-    original_name_en = "inner tube"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_inner_tube
 }
 
 item spellbook_of_detect_objects {
@@ -16821,11 +14361,6 @@ item spellbook_of_detect_objects {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「物質感知」という呪文について学ぶことができる魔法書。探偵志望のあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tフィールド内の扉などを発見する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "Make's you feel like a treasure hunter,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16840,13 +14375,12 @@ item spellbook_of_detect_objects {
     rarity = 600000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "物質感知の魔法書"
-    original_name_en = "detect objects"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_detect_objects
 }
 
 item scroll_of_detect_objects {
@@ -16862,11 +14396,6 @@ item scroll_of_detect_objects {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何かがある箇所を察知させる巻物。確実に何があるかわかるわけではないので有効性は高くないと言える。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tダンジョンの中の扉等を感知する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -16881,13 +14410,12 @@ item scroll_of_detect_objects {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "物質感知の巻物"
-    original_name_en = "detect objects"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_detect_objects
 }
 
 item rod_of_uncurse {
@@ -16903,11 +14431,6 @@ item rod_of_uncurse {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。細かい文字のような模様が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者の持つアイテムの呪いを解く魔法の杖。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod wrapped in spirit cloth,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -16922,13 +14445,12 @@ item rod_of_uncurse {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "解呪の杖"
-    original_name_en = "uncurse"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_uncurse
 }
 
 item red_treasure_machine {
@@ -16944,11 +14466,6 @@ item red_treasure_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国の硬貨を使用することで、アイテムの入った球体を排出する機械。何故だか知らないが子供達がその辺にたむろしていることが多いらしい。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tガシャポンの玉を排出する機械。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A treasure machine accepting rare coins,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -16963,13 +14480,12 @@ item red_treasure_machine {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "赤のガシャポン"
-    original_name_en = "red treasure machine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.red_treasure_machine
 }
 
 item blue_treasure_machine {
@@ -16985,11 +14501,6 @@ item blue_treasure_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国の硬貨を使用することで、アイテムの入った球体を排出する機械。赤のものより価値の高いマテリアルが必要だが、その分出てくる商品にも期待できるだろう。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tガシャポンの玉を排出する機械。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A treasure machine accepting very rare coins,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17004,13 +14515,12 @@ item blue_treasure_machine {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "青のガシャポン"
-    original_name_en = "blue treasure machine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.blue_treasure_machine
 }
 
 item treasure_ball {
@@ -17026,11 +14536,6 @@ item treasure_ball {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何らかのアイテムが収められた球体。その中には「期待」という名の希望が詰め込まれている。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムが詰まった球体。開けることができる。\n#〜鑑定報告書：＜容器＞カテゴリ〜\n"
-    description_en = "I'm sure there's something good inside,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17045,13 +14550,12 @@ item treasure_ball {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ガシャポンの玉"
-    original_name_en = "treasure ball"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.treasure_ball
 }
 
 item rare_treasure_ball {
@@ -17067,11 +14571,6 @@ item rare_treasure_ball {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何らかのアイテムが収められた球体。その中には「欲望」という名の希望が詰め込まれている。\n#〜遊技大典・全年齢対応版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムが詰まった球体。開けることができる。\n#〜鑑定報告書：＜容器＞カテゴリ〜\n"
-    description_en = "This contains a rare treasure,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17086,13 +14585,12 @@ item rare_treasure_ball {
     rarity = 25000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ガシャポンの玉(レア)"
-    original_name_en = "rare treasure ball"
     originalnameref2 = ""
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rare_treasure_ball
 }
 
 item vegetable_seed {
@@ -17108,11 +14606,6 @@ item vegetable_seed {
     dv = 0
     material = 36
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによって野菜が収穫できる種。種故に食べることができるが、そうするくらいなら少し成長を待ってあげてほしい。今日よりも明日なんだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t野菜の木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17127,13 +14620,12 @@ item vegetable_seed {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "野菜の種"
-    original_name_en = "vegetable seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
+    locale_key_prefix = core.locale.item.vegetable_seed
 }
 
 item fruit_seed {
@@ -17149,11 +14641,6 @@ item fruit_seed {
     dv = 0
     material = 37
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによって果物が収穫できる種。種故に食べることができるが、そうするくらいなら少し成長を待ってあげてほしい。今日よりも明日なんだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t果物の木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17168,13 +14655,12 @@ item fruit_seed {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "果物の種"
-    original_name_en = "fruit seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Yellow
+    locale_key_prefix = core.locale.item.fruit_seed
 }
 
 item herb_seed {
@@ -17190,11 +14676,6 @@ item herb_seed {
     dv = 0
     material = 38
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによってハーブが収穫できる種。種故に食べることができるが、所詮は種なので未来の可能性を投げうってまで得られる満腹度は手に入らないだろう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tハーブの木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17209,13 +14690,12 @@ item herb_seed {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ハーブの種"
-    original_name_en = "herb seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.herb_seed
 }
 
 item unknown_seed {
@@ -17231,11 +14711,6 @@ item unknown_seed {
     dv = 0
     material = 39
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによって様々なものが収穫できる種。種故に食べることができるが、所詮は種なので未来の可能性を投げうってまで得られる満腹度は手に入らないだろう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t謎の木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17250,13 +14725,12 @@ item unknown_seed {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "謎の種"
-    original_name_en = "unknown seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.unknown_seed
 }
 
 item artifact_seed {
@@ -17272,11 +14746,6 @@ item artifact_seed {
     dv = 0
     material = 40
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによってアーティファクトが収穫できる種。種故に食べることができるが、所詮は種なので未来の可能性を投げうってまで得られる満腹度は手に入らないだろう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアーティファクトの木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17291,13 +14760,12 @@ item artifact_seed {
     rarity = 20000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アーティファクトの種"
-    original_name_en = "artifact seed"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.artifact_seed
 }
 
 item morgia {
@@ -17313,11 +14781,6 @@ item morgia {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t野性味溢れる香りを漂わせることで有名なハーブ。食欲減退に効果があるとされ、軽病の際には薬膳料理として食されることもあるという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t筋力と耐久の能力値を上昇させる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17332,13 +14795,12 @@ item morgia {
     rarity = 80000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "モージア"
-    original_name_en = "morgia"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.morgia
 }
 
 item mareilon {
@@ -17354,11 +14816,6 @@ item mareilon {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t刺激的な香りを漂わせることで有名なハーブ。希少な為広く使用はされないが、他の香辛料にも劣らぬその香りは高級料理のアクセントとして使われることもあるほどだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t魔力と意思の能力値を上昇させる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17373,13 +14830,12 @@ item mareilon {
     rarity = 80000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マレイロン"
-    original_name_en = "mareilon"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.mareilon
 }
 
 item spenseweed {
@@ -17395,11 +14851,6 @@ item spenseweed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t清々しい香りを漂わせることで有名なハーブ。その香りは嗅いだ者の精神を落ちつける効果がある為、大事な仕事や試験の前に奮発して購入していく市民も多いという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t器用と感覚の能力値を上昇させる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17414,13 +14865,12 @@ item spenseweed {
     rarity = 80000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "スペンスウィード"
-    original_name_en = "spenseweed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.spenseweed
 }
 
 item curaria {
@@ -17436,11 +14886,6 @@ item curaria {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t白くて小さい花をつけることで有名なハーブ。繁殖力が他のそれに比べて高い為、自生していることも多くその点から庶民的なハーブともいえよう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t全基礎能力を少し上昇させる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17455,13 +14900,12 @@ item curaria {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "キュラリア"
-    original_name_en = "curaria"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.curaria
 }
 
 item alraunia {
@@ -17477,11 +14921,6 @@ item alraunia {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t甘く優しい香りを漂わせることで有名なハーブ。その香りは貴族達にも人気で、大抵の貴婦人達はハーブ園でこれを栽培し、その身に香りを宿した後、舞踏会へ赴くのだという。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t習得と魅力の能力値を上昇させる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17496,13 +14935,12 @@ item alraunia {
     rarity = 80000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アルローニア"
-    original_name_en = "alraunia"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.alraunia
 }
 
 item stomafillia {
@@ -17518,11 +14956,6 @@ item stomafillia {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t厚ぼったく瑞々しい葉を持つことで有名なハーブ。古代、乾燥させたこれに水を与えた所、質量以上に膨れ上がったという記録が残っている。現在ではそれを逆手に取って、非常食として携行する者もいるようだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を大きく回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of herb,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17537,13 +14970,12 @@ item stomafillia {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ストマフィリア"
-    original_name_en = "stomafillia"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stomafillia
 }
 
 item sleeping_bag {
@@ -17559,11 +14991,6 @@ item sleeping_bag {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t野外で寝ることを主な目的とした簡易的な寝具。眠い時はこれにすっぽり収まることで外界から遮断され、一時的な安寧を得ることができよう。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡易的な寝具。使用することができる。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Useful for camping and sleeping in moldy dungeons!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17578,13 +15005,12 @@ item sleeping_bag {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "寝袋"
-    original_name_en = "sleeping bag"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sleeping_bag
 }
 
 item potion_of_weaken_resistance {
@@ -17600,11 +15026,6 @@ item potion_of_weaken_resistance {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t自らが身につけた大切な何かを失ってしまうという非常に危険な水薬。決して興味本位で友人に投げてはいけない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t食事をすることで得た特殊な耐性を失わせるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label informs you \"\"can cause harmful side effects,\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -17619,13 +15040,12 @@ item potion_of_weaken_resistance {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "失耐性のポーション"
-    original_name_en = "weaken resistance"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_weaken_resistance
 }
 
 item scroll_of_growth {
@@ -17641,11 +15061,6 @@ item scroll_of_growth {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで肉体の成長を促すとされる貴重な巻物。何故巻物を読むだけで効果があるのか不明だが、読んだ後赤面している冒険者もいるので、実の所そういう物なのかもしれない。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t肉体を成長させる魔法がかけられた貴重な巻物。読むことであなたは更に強靭になるだろう。\n#〜魔具全典〜\n"
-    description_jp_3 = "\t\tスキル１つの潜在能力を上げる巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -17660,13 +15075,12 @@ item scroll_of_growth {
     rarity = 80000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "成長の巻物"
-    original_name_en = "growth"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_growth
 }
 
 item scroll_of_faith {
@@ -17682,11 +15096,6 @@ item scroll_of_faith {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t神との対話を行うことで、信仰を深めることができる巻物。巻き物というより神へ宛てた手紙の様なものなのだろう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t信仰の深さが増す巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -17701,13 +15110,12 @@ item scroll_of_faith {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "信仰の巻物"
-    original_name_en = "faith"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_faith
 }
 
 item potion_of_mutation {
@@ -17723,11 +15131,6 @@ item potion_of_mutation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲むと突然人成らざる成長をする水薬。興味本位に飲むのは止めよう。人間を止めたいあなたにだけオススメ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t肉体を変異させるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Mutates your genetic makeup,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -17742,13 +15145,12 @@ item potion_of_mutation {
     rarity = 200000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "突然変異のポーション"
-    original_name_en = "mutation"
     originalnameref2 = "potion"
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_mutation
 }
 
 item potion_of_cure_mutation {
@@ -17764,11 +15166,6 @@ item potion_of_cure_mutation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t変わり果てた自らを顧みることができる非常に稀有な水薬。残念ながらエーテル病は治すことはできないが、身に降りかかった様々な症状を治癒できることだろう。そう、良質な変成でさえも。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t身についた変異をいくつか取り去るポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Cures mutated gene's,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -17783,13 +15180,12 @@ item potion_of_cure_mutation {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "変異治療のポーション"
-    original_name_en = "cure mutation"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_cure_mutation
 }
 
 item spellbook_of_mutation {
@@ -17805,11 +15201,6 @@ item spellbook_of_mutation {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「自己変容」という呪文について学ぶことができる魔法書。自分を変えたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t自分に突然変異を起こす呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome appears to have leg's,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -17824,13 +15215,12 @@ item spellbook_of_mutation {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "自己変容の魔法書"
-    original_name_en = "mutation"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_mutation
 }
 
 item banded_mail {
@@ -17846,11 +15236,6 @@ item banded_mail {
     dv = 5
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t非常に分厚く作られた鎧。層が厚い為、並大抵の攻撃は物ともしないが、代わりに素早さが失われている。軽鎧とどちらを取るかは冒険者の好みと言ったところだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t分厚い鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A form of mail reinforced with leather,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17865,13 +15250,12 @@ item banded_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーメイル"
-    original_name_jp = "厚鎧"
-    original_name_en = "banded mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.banded_mail
 }
 
 item plate_mail {
@@ -17887,11 +15271,6 @@ item plate_mail {
     dv = 6
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t鎖帷子の上に甲冑を重ねた見るからに重そうな鎧。防御力は絶大なものがあるが、代償として相当な重量は覚悟した方がいいだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常に重い鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An armor forged by dwarves,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17906,13 +15285,12 @@ item plate_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "プレートメイル"
-    original_name_jp = "重層鎧"
-    original_name_en = "plate mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.plate_mail
 }
 
 item ring_mail {
@@ -17928,11 +15306,6 @@ item ring_mail {
     dv = 6
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t布でできた鎧に幾つもの輪を縫い合わせた鎧。表面状の多数の輪には、剣の一撃を弾く特性があるという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t輪を束ねて作った鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Leather armor with metal ring's sewn on,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17947,13 +15320,12 @@ item ring_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ラメラーメイル"
-    original_name_jp = "輪鎧"
-    original_name_en = "ring mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ring_mail
 }
 
 item composite_mail {
@@ -17969,11 +15341,6 @@ item composite_mail {
     dv = 7
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た鎧。服の上からベストの様に着込むことができる利便性を持つ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A sturdy armor,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -17988,13 +15355,12 @@ item composite_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ブリガンダイン"
-    original_name_jp = "合成鎧"
-    original_name_en = "composite mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_mail
 }
 
 item chain_mail {
@@ -18010,11 +15376,6 @@ item chain_mail {
     dv = 7
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t鱗のような小さな素材片を紐で繋ぎ合せて作られた鎧。その構造から柔軟である上、強固であるという特性を持つ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t薄片を束ねて作った鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An armor made of small linked ring's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18029,13 +15390,12 @@ item chain_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "スプリントメイル"
-    original_name_jp = "綴り鎧"
-    original_name_en = "chain mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.chain_mail
 }
 
 item pope_robe {
@@ -18051,11 +15411,6 @@ item pope_robe {
     dv = 18
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\tより高位のものが身につける為に織られた法衣。多少重くはなったがそれでも鎧よりは軽い防具だ。様々な刺繍や特殊な織り方で整えられた結果、法衣より堅固なものとなっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t法王のために作られた服だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A robe from ancient time's that has an aura of peace,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18070,13 +15425,12 @@ item pope_robe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ローブ"
-    original_name_jp = "法王衣"
-    original_name_en = "pope robe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pope_robe
 }
 
 item light_mail {
@@ -18092,11 +15446,6 @@ item light_mail {
     dv = 10
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t特定の部位にのみ金属を張り付けた鎧。軽い為に素早く、かつ柔軟に動くことができるが頑強さは失われている。厚鎧とどちらを取るかは冒険者の好みと言ったところだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t軽い鎧だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A mail made of leather with thin plating,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18111,13 +15460,12 @@ item light_mail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ライトアーマ"
-    original_name_jp = "軽鎧"
-    original_name_en = "light mail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.light_mail
 }
 
 item coat {
@@ -18133,11 +15481,6 @@ item coat {
     dv = 13
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t服の中に素材片を埋め込み強化を図った防具。一見すると通常の服に見える為、洒落た冒険者が装備していることがままある。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t攻撃を防ぐために作られた服だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A coat often worn when cold,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18152,13 +15495,12 @@ item coat {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コート"
-    original_name_jp = "防護服"
-    original_name_en = "coat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.coat
 }
 
 item breast_plate {
@@ -18174,11 +15516,6 @@ item breast_plate {
     dv = 15
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t胴に板状の素材をくくりつけた防具。素材そのままを使っている為、使う種類が性能に直結しているが、それは即ち重量もそれに直結しているということなので素材選びには十分注意しよう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t前面に金属が付けられた服だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An armor designed to protect the chest,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18193,13 +15530,12 @@ item breast_plate {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ブレストプレート"
-    original_name_jp = "胴衣"
-    original_name_en = "breast plate"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.breast_plate
 }
 
 item bulletproof_jacket {
@@ -18215,11 +15551,6 @@ item bulletproof_jacket {
     dv = 14
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t服の中に多数の素材片を埋め込み強化を図った防具。イェルスの民には日常的にこの服を着ている変わり者もいるらしい。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t銃弾を防ぐために作られた服だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Protects from more than just bullets,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18234,13 +15565,12 @@ item bulletproof_jacket {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コーテッドアーマ"
-    original_name_jp = "防弾服"
-    original_name_en = "bulletproof jacket"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bulletproof_jacket
 }
 
 item gloves {
@@ -18256,11 +15586,6 @@ item gloves {
     dv = 5
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t防寒具的な意味合いも持つ防具。それだけでなく、武器の滑り止めとしての効果も少なからず持つという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t掌にぴったり装着する防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A thick pair of gloves,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18275,13 +15600,12 @@ item gloves {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "グローブ"
-    original_name_jp = "手袋"
-    original_name_en = "gloves"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.gloves
 }
 
 item plate_gauntlets {
@@ -18297,11 +15621,6 @@ item plate_gauntlets {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t何より防護に重点を置いて作られた武骨な小手。やや重いがそれでも尚余りある性能を持っている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常に重い篭手だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of plated gauntlets,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18316,13 +15635,12 @@ item plate_gauntlets {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーガントレット"
-    original_name_jp = "重層篭手"
-    original_name_en = "plate gauntlets"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.plate_gauntlets
 }
 
 item light_gloves {
@@ -18338,11 +15656,6 @@ item light_gloves {
     dv = 3
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t肌にぴったりくっつくように作られた手袋。非常に軽く、付けていることを忘れてしまうほどだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t薄めの手袋だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of gloves with a soft inner lining,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18357,13 +15670,12 @@ item light_gloves {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ライトグローブ"
-    original_name_jp = "軽手袋"
-    original_name_en = "light gloves"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.light_gloves
 }
 
 item composite_gauntlets {
@@ -18379,11 +15691,6 @@ item composite_gauntlets {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た篭手。主に甲冑に合わせて身につけるものとされる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い篭手だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of gauntlets made out of a composite mesh,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18398,13 +15705,12 @@ item composite_gauntlets {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ガントレット"
-    original_name_jp = "合成篭手"
-    original_name_en = "composite gauntlets"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_gauntlets
 }
 
 item small_shield {
@@ -18420,11 +15726,6 @@ item small_shield {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t通常のものより小型の盾。腕に装着することで、携行の不便さとそれに伴った重量の軽量化に成功しているが、その代わり防御に使える範囲はかなり狭まっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t軽装向けの盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A small reinforced shield,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18439,13 +15740,12 @@ item small_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "バックラー"
-    original_name_jp = "小盾"
-    original_name_en = "small shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.small_shield
 }
 
 item round_shield {
@@ -18461,11 +15761,6 @@ item round_shield {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t中心に重心が取り付けられた丸型の盾。その特異な丸型は、戦地へ赴く際に地面に当たって歩行が阻害されぬよう考えだされた結果だと言われている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t丸い盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Used to block hostile weapons,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18480,13 +15775,12 @@ item round_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ラウンドシールド"
-    original_name_jp = "丸型盾"
-    original_name_en = "round shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.round_shield
 }
 
 item shield {
@@ -18502,11 +15796,6 @@ item shield {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t攻撃を防ぐために考案された防具。鎧と違い自らの手に持つことで、襲いかかる暴力に相対することができる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t手に装備するタイプの防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A shield with a crest,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18521,13 +15810,12 @@ item shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "シールド"
-    original_name_jp = "盾"
-    original_name_en = "shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shield
 }
 
 item large_shield {
@@ -18543,11 +15831,6 @@ item large_shield {
     dv = 2
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た盾。やや重いという欠点はあるが、それに有り余る効果を発揮してくれるだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A large circular shield,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18562,13 +15845,12 @@ item large_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コンポジットシールド"
-    original_name_jp = "合成盾"
-    original_name_en = "large shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.large_shield
 }
 
 item kite_shield {
@@ -18584,11 +15866,6 @@ item kite_shield {
     dv = -3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t大きな長方形をした盾。体を覆う程の大きさを誇る為、敵を遮蔽する為の簡易壁ともなるがその分弊害も多く、扱うには熟練を要するという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t長い盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A shield shaped like a kite,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18603,13 +15880,12 @@ item kite_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "タワーシールド"
-    original_name_jp = "長盾"
-    original_name_en = "kite shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kite_shield
 }
 
 item tower_shield {
@@ -18625,11 +15901,6 @@ item tower_shield {
     dv = -1
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t非常に分厚く作られた盾。当然ながら重量は半端なものではなく、一度地に落としたら手元に戻すのに数人の力が必要とさえいわれている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常に重い盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "It's like your very on portable wall!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18644,13 +15915,12 @@ item tower_shield {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーシールド"
-    original_name_jp = "重層盾"
-    original_name_en = "tower shield"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tower_shield
 }
 
 item shoes {
@@ -18666,11 +15936,6 @@ item shoes {
     dv = 3
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t足を守る為に簡易的に作られた防具。戦闘用にはやや心もとないが、日常的に使用するにはこれくらいで十分だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t足を接地面から守る簡素な防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of shoes,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18685,13 +15950,12 @@ item shoes {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "サンダル"
-    original_name_jp = "履物"
-    original_name_en = "shoes"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shoes
 }
 
 item boots {
@@ -18707,11 +15971,6 @@ item boots {
     dv = 5
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t足をすっぽりと覆った履物。戦闘用にはやや心もとないが、日常的に使用するにはこれくらいで十分だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t足先を守る防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A standard pair of boot's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18726,13 +15985,12 @@ item boots {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ブーツ"
-    original_name_jp = "靴"
-    original_name_en = "boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.boots
 }
 
 item tight_boots {
@@ -18748,11 +16006,6 @@ item tight_boots {
     dv = 6
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\tしっかりと作られた靴。その丁寧な作りは、職人の強い思いが感じられる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t分厚い靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A tight fitting pair of boot's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18767,13 +16020,12 @@ item tight_boots {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "タイトブーツ"
-    original_name_jp = "厚靴"
-    original_name_en = "tight boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tight_boots
 }
 
 item armored_boots {
@@ -18789,11 +16041,6 @@ item armored_boots {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t足から脚まですっぽりと覆った靴。隙も漏らさぬその構造は完璧な防護を図るが、やはりそういった類のものはどれも重いようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鎧状に作られた靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A pair of boot's with armored plating,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18808,13 +16055,12 @@ item armored_boots {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "アーマードブーツ"
-    original_name_jp = "装甲靴"
-    original_name_en = "armored boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.armored_boots
 }
 
 item composite_girdle {
@@ -18830,11 +16076,6 @@ item composite_girdle {
     dv = 5
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た腰当。素材の長所を伸ばした結果か、通常のものより軽めに仕上がっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い腰当だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A girdle with straps designed to keep loose clothing out of the way,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18849,13 +16090,12 @@ item composite_girdle {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コンポジットガードル"
-    original_name_jp = "合成腰当"
-    original_name_en = "composite girdle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_girdle
 }
 
 item plate_girdle {
@@ -18871,11 +16111,6 @@ item plate_girdle {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t何層も重ねることで防護を上げた腰当。重量が増した上、重なった部位と部位とがぶつかり騒音をもたらすという弊害もある。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t幾つも連なった腰当だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A reinforced girdle,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18890,13 +16125,12 @@ item plate_girdle {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーガードル"
-    original_name_jp = "重層腰当"
-    original_name_en = "plate girdle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.plate_girdle
 }
 
 item armored_cloak {
@@ -18912,11 +16146,6 @@ item armored_cloak {
     dv = 5
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t素材を織り込んだ布の裏に固い金属を張り付けた外套。身に纏うことで幾らかの攻撃を防ぐことができる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t戦闘用に加工された外套だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A reinforced cloak designed for protection,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18931,13 +16160,12 @@ item armored_cloak {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "コーテッドクローク"
-    original_name_jp = "防護外套"
-    original_name_en = "armored cloak"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.armored_cloak
 }
 
 item cloak {
@@ -18953,11 +16181,6 @@ item cloak {
     dv = 7
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t体に巻きつけるゆったりとした布生地。幾多の素材を織り込むことで布自体の強度を増している。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t背中に羽織る防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A heavy cloak designed for travel,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -18972,13 +16195,12 @@ item cloak {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "クローク"
-    original_name_jp = "外套"
-    original_name_en = "cloak"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cloak
 }
 
 item feather_hat {
@@ -18994,11 +16216,6 @@ item feather_hat {
     dv = 5
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t鳥類の羽飾りがついたお洒落な帽子。吟遊詩人が良く身につけているが、それは彼らが自らの歌声を鳥のそれになぞらえているからだとか。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t羽のついた帽子だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A hat with a feather often worn by nobles,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19013,13 +16230,12 @@ item feather_hat {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハット"
-    original_name_jp = "羽帽子"
-    original_name_en = "feather hat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.feather_hat
 }
 
 item heavy_helm {
@@ -19035,11 +16251,6 @@ item heavy_helm {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t通常のものより厚めに作られた兜。防御力は確かに上がっているが、その分重量を犠牲にしている為身につける際には注意が必要だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重量がある兜だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A helm designed for good protection,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19054,13 +16265,12 @@ item heavy_helm {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘビーヘルム"
-    original_name_jp = "重兜"
-    original_name_en = "heavy helm"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.heavy_helm
 }
 
 item knight_helm {
@@ -19076,11 +16286,6 @@ item knight_helm {
     dv = 1
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t騎士用に作られた格調高い兜。使う者に合わせ、趣向を凝らした彫金と飾りが付けられているが、単なる儀礼用ではなく、一定の防護も備わっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t騎士用の兜だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A helm made for knights,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19095,13 +16300,12 @@ item knight_helm {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "バーガネット"
-    original_name_jp = "騎士兜"
-    original_name_en = "knight helm"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.knight_helm
 }
 
 item helm {
@@ -19117,11 +16321,6 @@ item helm {
     dv = 3
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t頭部を守る為に作られた防具。帽子より防護する範囲が広くなったが当然重量は増している。長時間使用していて肩凝りになった、などという笑い話もあるようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t頭部を守る為の防具だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A standard helm,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19136,13 +16335,12 @@ item helm {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ヘルム"
-    original_name_jp = "兜"
-    original_name_en = "helm"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.helm
 }
 
 item composite_helm {
@@ -19158,11 +16356,6 @@ item composite_helm {
     dv = 5
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な素材をかけ合わせてより強固な防護を得た兜。素材の持つ長所を生かし、短所を補うといったこれらのパターンは多く見られるが、重量という無二の短所を補った逸品は少ないようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t固い兜だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A very sturdy helm,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19177,13 +16370,12 @@ item composite_helm {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハイヘルム"
-    original_name_jp = "合金兜"
-    original_name_en = "composite helm"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_helm
 }
 
 item peridot {
@@ -19199,11 +16391,6 @@ item peridot {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t中心部に鮮やかな緑色をした宝石をあしらった装飾品。特徴的な卵形にカットされたそれは、夜においてもなお光り輝き、類まれなる生命力の象徴であるという人もいる。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「まぁ、なんて可愛らしい形なのかしら。丸くて緑色でその中に仄かに赤色が入ってて、一面透明なキャンバスの様な彼にぴったりだわ。きっとこの首飾りをあの人がみたら…いやぁん！」\n#〜妄想少女『リアナ』の言葉〜\n"
-    description_jp_3 = "\t\t宝石のついた首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A gem attached to a neck chain,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19218,13 +16405,12 @@ item peridot {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ペリドット"
-    original_name_jp = "ペリドット"
-    original_name_en = "peridot"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.peridot
 }
 
 item talisman {
@@ -19240,11 +16426,6 @@ item talisman {
     dv = 4
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な魔法が内に込められた装身具。直接的な防護は期待できないが、往々にして特殊な能力を秘めているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t魔力のこめられた首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A talisman said to ward off evil,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19259,13 +16440,12 @@ item talisman {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "タリスマン"
-    original_name_jp = "護符"
-    original_name_en = "talisman"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.talisman
 }
 
 item neck_guard {
@@ -19281,11 +16461,6 @@ item neck_guard {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t首を守る為に作られた装身具。装着するというより装備するといった表現が近く、やや武骨な作りとなっている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t身を守る為の首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Sometimes the only thing between an enemy sword and your neck,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19300,13 +16475,12 @@ item neck_guard {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ネックガード"
-    original_name_jp = "首当て"
-    original_name_en = "neck guard"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.neck_guard
 }
 
 item charm {
@@ -19322,11 +16496,6 @@ item charm {
     dv = 0
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t魔除け的な意味合いが強い小さな装身具。その飾りには様々な思いが込められているという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t想いのこめられた首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A good luck charm,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19341,13 +16510,12 @@ item charm {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "チャーム"
-    original_name_jp = "お守り"
-    original_name_en = "charm"
     originalnameref2 = ""
     has_random_name = true
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.charm
 }
 
 item bejeweled_amulet {
@@ -19363,11 +16531,6 @@ item bejeweled_amulet {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t表面を磨き上げた装身具。どちらかといえば宝飾品というべきもので、しばしば贈答用として用いられている。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t磨き上げられた首輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An amulet that show's one's wealth"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19382,13 +16545,12 @@ item bejeweled_amulet {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ポリシュドネックレス"
-    original_name_jp = "細工首輪"
-    original_name_en = "bejeweled amulet"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bejeweled_amulet
 }
 
 item engagement_amulet {
@@ -19404,11 +16566,6 @@ item engagement_amulet {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t婚礼の儀において、伴侶となる者へ送られる愛のこめられた首輪。当然ながらこの首輪は伴侶の所有物となるので、無理やり取り上げようものなら激しい怒りを買うこととなろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t上げた人との友好度が上がる首輪。帰ってくることはない。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "An amulet that show's one's love,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19423,13 +16580,12 @@ item engagement_amulet {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = "ウェディングネックレス"
-    original_name_jp = "結婚首輪"
-    original_name_en = "engagement amulet"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.engagement_amulet
 }
 
 item composite_ring {
@@ -19445,11 +16601,6 @@ item composite_ring {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t多様な素材を混ぜ合わせ、より高みを目指した指輪。耐久性に富む為斬新な試みをした作品も多く、通常のものよりはやや値段が張るようだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t様々な金属を合わせてより重みを増した指輪。一説によると夫の不倫に怒った妻が、夫を叩きのめすことのみに執着した結果生み出されたのだとか。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_3 = "\t\t固い指輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A ring made out of composite,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19464,13 +16615,12 @@ item composite_ring {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ハイリング"
-    original_name_jp = "合金指輪"
-    original_name_en = "composite ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.composite_ring
 }
 
 item armored_ring {
@@ -19486,11 +16636,6 @@ item armored_ring {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\tより指を守ることに特化した指輪。装飾品としての価値は低いが、身を守る際にはこちらの方が良いと言えるだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指にはめる加工品だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Protects a portion of your finger,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19505,13 +16650,12 @@ item armored_ring {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ガードリング"
-    original_name_jp = "指当て"
-    original_name_en = "armored ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.armored_ring
 }
 
 item ring {
@@ -19527,11 +16671,6 @@ item ring {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t指にはめる輪状の装具。儀礼的なことに用いる簡素なものや、重大な魔力が封じ込められたもの等、その種類は多様であるという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指にはめる輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A plain ring,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19546,13 +16685,12 @@ item ring {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "リング"
-    original_name_jp = "指輪"
-    original_name_en = "ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ring
 }
 
 item engagement_ring {
@@ -19568,11 +16706,6 @@ item engagement_ring {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t婚礼の儀において、伴侶となる者へ送られる愛のこめられた指輪。当然ながらこの首輪は伴侶の所有物となるので、無理やり取り上げようものなら激しい怒りを買うこととなろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t上げた人との友好度が上がる指輪。帰ってくることはない。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A ring given to show one's intent to marry,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19587,13 +16720,12 @@ item engagement_ring {
     rarity = 700000
     coefficient = 100
     light = 0
-    katakana_name = "エンゲージリング"
-    original_name_jp = "結婚指輪"
-    original_name_en = "engagement ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.engagement_ring
 }
 
 item stethoscope {
@@ -19609,11 +16741,6 @@ item stethoscope {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用することにより、体調が立ちどころにわかるという医療用具。子供の頃は誰しもお医者さんごっこなる行為をしたかもしれないが、良識ある冒険者は決して良からぬことに使わぬように。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象のHPが分かる道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A real one can be used to check your health,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19628,13 +16755,12 @@ item stethoscope {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "聴診器"
-    original_name_en = "stethoscope"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stethoscope
 }
 
 item scroll_of_ally {
@@ -19650,11 +16776,6 @@ item scroll_of_ally {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tどこからともなく助けとなる仲間がやってくる巻物。良く見ると巻物の隅に小さな文字で「別途料金有」と書かれているとかいないとか。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t友好的なキャラクターを仲間として呼び出す巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -19669,13 +16790,12 @@ item scroll_of_ally {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "援軍の巻物"
-    original_name_en = "ally"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_ally
 }
 
 item rod_of_domination {
@@ -19691,11 +16811,6 @@ item rod_of_domination {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。生き物の目の様な巨大な紫色の宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象を支配下に置く魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of rubynus,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -19710,13 +16825,12 @@ item rod_of_domination {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "支配の杖"
-    original_name_en = "domination"
     originalnameref2 = "rod"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_domination
 }
 
 item spellbook_of_domination {
@@ -19732,11 +16846,6 @@ item spellbook_of_domination {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「支配」という呪文について学ぶことができる魔法書。気になるあの子と仲良くなりたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象を味方に引き入れる呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that seems to break your will,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -19751,13 +16860,12 @@ item spellbook_of_domination {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "支配の魔法書"
-    original_name_en = "domination"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_domination
 }
 
 item crossbow {
@@ -19773,11 +16881,6 @@ item crossbow {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t簡単に矢を発射できるように考案された弓。熟練を要することなく誰にでも扱えるのが利点だが、逆に装填準備にかなりの力と時間がかかってしまう為、一長一短といえよう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tクロスボウの矢束と共に使用する射撃武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A ranged weapon designed to shoot straight and pierce armor,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19792,13 +16895,12 @@ item crossbow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "クロスボウ"
-    original_name_jp = "機械弓"
-    original_name_en = "crossbow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.crossbow
 }
 
 item bolt {
@@ -19814,11 +16916,6 @@ item bolt {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t機械弓に用いられる四角い矢じりのついた細い棒状の矢弾。重量はあるが、機械弓に装填できるのはこれのみである。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t機械弓と共に使用する武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Standard equipment for hunting rabbit's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19833,13 +16930,12 @@ item bolt {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ボルト"
-    original_name_jp = "クロスボウの矢束"
-    original_name_en = "bolt"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bolt
 }
 
 item spellbook_of_web {
@@ -19855,11 +16951,6 @@ item spellbook_of_web {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「蜘蛛の巣」という呪文について学ぶことができる魔法書。変わった装飾を楽しみたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象に蜘蛛の巣を張る呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "You can swear you see spider's crawling over this tome out of the corner of your eye,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -19874,13 +16965,12 @@ item spellbook_of_web {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "蜘蛛の巣の魔法書"
-    original_name_en = "web"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_web
 }
 
 item rod_of_web {
@@ -19896,11 +16986,6 @@ item rod_of_web {
     dv = 0
     material = 0
     chargelevel = 8
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。杖の部分に格子状の模様が刻み込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に蜘蛛の巣を張る魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod wrapped in silk,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -19915,13 +17000,12 @@ item rod_of_web {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "蜘蛛の巣の杖"
-    original_name_en = "web"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_web
 }
 
 item machine {
@@ -19937,11 +17021,6 @@ item machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tチカチカ光る奇妙な物体。用途は不明だが部屋の装飾品になるとして、稀に富豪が買っていくという。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t不定期な明滅と定期的な異音がする。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19956,13 +17035,12 @@ item machine {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "電子機械"
-    original_name_en = "machine"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.machine
 }
 
 item computer {
@@ -19978,11 +17056,6 @@ item computer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t鈍い音を響かせる奇妙な箱。開ける箇所が無いので、中に物を詰めることはできない。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t古代の頭脳だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian computer technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -19997,13 +17070,12 @@ item computer {
     rarity = 300000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "コンピューター"
-    original_name_en = "computer"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.computer
 }
 
 item training_machine {
@@ -20019,11 +17091,6 @@ item training_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「１日５分、１日５分でいいんですお試し下さい！あなたのその太った醜いボディーも、１日５分これで鍛えるだけで何とか解消されます！効果は未知数！」\n#〜トレーニングマシーンの隅にかけられた謎の説明文〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t使用することで肉体に成長を促すことのできる機械。体が資本のパルミア警備隊の中には、わざわざ購入して自宅で使用している者までいるという。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_3 = "\t\t主能力を鍛える道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Asserian health equipment,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20038,13 +17105,12 @@ item training_machine {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トレーニングマシーン"
-    original_name_en = "training machine"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.training_machine
 }
 
 item camera {
@@ -20060,11 +17126,6 @@ item camera {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t存在を封じ込めることができるという驚異の装置。現在は壊れているのか使用することはできない。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t被写体を撮影する道具。使用することはできない。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian photography technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20079,13 +17140,12 @@ item camera {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カメラ"
-    original_name_en = "camera"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.camera
 }
 
 item microwave_oven {
@@ -20101,11 +17161,6 @@ item microwave_oven {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t収納したものに強力な熱を加えて破壊するという驚異の箱。現在は壊れているのか使用することはできない。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t壊れている調理器具。使用することはできない。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian cooking technolog"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20120,13 +17175,12 @@ item microwave_oven {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "レンジ"
-    original_name_en = "microwave oven"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.microwave_oven
 }
 
 item server {
@@ -20142,11 +17196,6 @@ item server {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古の記憶が封じられているとされる謎の記憶装置。そういう噂だが、その記憶を開封できた者は未だ存在しない。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t情報を入れる為の箱だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian computer technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20161,13 +17210,12 @@ item server {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サーバー"
-    original_name_en = "server"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.server
 }
 
 item storage {
@@ -20183,11 +17231,6 @@ item storage {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何かを保管する際に用いる円柱状の金属体。その目的は現在失われている為、専らはゴミなどが入っていたりする。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t何かを入れる為の箱だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "You do not know how to open it,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20202,13 +17245,12 @@ item storage {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ストレージ"
-    original_name_en = "storage"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.storage
 }
 
 item trash_can {
@@ -20224,11 +17266,6 @@ item trash_can {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特定の廃棄物を納める為に作られた箱。サイバードームにあるこれに、特定のもの以外を入れると住人が嫌な顔をするという。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「さあさお立会い、手に入れてきたこの一品。そこいらのもんじゃないよ。まず色がいい、それにこの形。何やら楽しげだ。それにここだけの話、こいつには秘密があって…おっと、それは買ってからのお楽しみ」\n#〜見世物屋の『モイアー』がガラクタを売り付ける際の口上〜\n"
-    description_jp_3 = "\t\tカンを捨てる為の箱だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "North Tyris law's make it illegal to search,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20243,13 +17280,12 @@ item trash_can {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トラッシュカン"
-    original_name_en = "trash can"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.trash_can
 }
 
 item chip {
@@ -20265,11 +17301,6 @@ item chip {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t規則性のある模様が刻み込まれた謎の小片。非常に美しく装飾品であると推定されるが、装備することはできない。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t何かの情報片だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian computer technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20284,13 +17315,12 @@ item chip {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "チップ"
-    original_name_en = "chip"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.chip
 }
 
 item blank_disc {
@@ -20306,11 +17336,6 @@ item blank_disc {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t未使用状態の円盤。使用することができないので何の価値も無い代物だが、稀に観光で訪れたヨウィンの農民が土産として買っていくという。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tデータが入っていない円盤。使用することはできない。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "Asserian computer technology,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20325,13 +17350,12 @@ item blank_disc {
     rarity = 500000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ブランクディスク"
-    original_name_en = "blank disc"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.blank_disc
 }
 
 item shot_gun {
@@ -20347,11 +17371,6 @@ item shot_gun {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t広域に飛散する弾を発射する為の銃器。近距離においては比類なき威力を発揮するが、離れるにつれその威力が加速度的に落ちるので扱いには注意が必要だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弾と共に使用する射撃武器。飛距離は殆どない。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Made by Cyber Dome In"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20366,13 +17385,12 @@ item shot_gun {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "ショットガン"
-    original_name_jp = "散弾銃"
-    original_name_en = "shot gun"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shot_gun
 }
 
 item pop_corn {
@@ -20388,11 +17406,6 @@ item pop_corn {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tとある野菜を独自の製法で造り変えた、若者に大人気のスナック。現在この製法は一部の業者が独占している為市場に出回らないが、土産として買っていく客が多いので業者はそれで満足らしい。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Buttery popcorn,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20407,13 +17420,12 @@ item pop_corn {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ポップコーン"
-    original_name_en = "pop corn"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pop_corn
 }
 
 item fried_potato {
@@ -20429,11 +17441,6 @@ item fried_potato {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特定の野菜をを油で揚げた若者に大人気のスナック。現在この製法は一部の業者が独占して握っている為市場に出回らないが、業者も何故か企業拡大を目指さない為、経済的には奇妙な均衡が保たれている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Greasy fries!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20448,13 +17455,12 @@ item fried_potato {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フライドポテト"
-    original_name_en = "fried potato"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fried_potato
 }
 
 item cyber_snack {
@@ -20470,11 +17476,6 @@ item cyber_snack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t素材も製法も一切不明！でもおいしい！という謎の一品。口にするのは殆ど子供だが、稀に口にした大人でさえもスナック独特の、体に悪そうな味の虜になってしまうという。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "potato chips,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20489,13 +17490,12 @@ item cyber_snack {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サイバースナック"
-    original_name_en = "cyber snack"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cyber_snack
 }
 
 item scroll_of_inferior_material {
@@ -20511,11 +17511,6 @@ item scroll_of_inferior_material {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t材質を変化させる巻物。大抵は粗悪な材質へと変化するが、それを逆手に取る冒険者もいるらしい。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの素材を変化させる巻物。大抵は粗悪だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20530,13 +17525,12 @@ item scroll_of_inferior_material {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "劣悪素材の巻物"
-    original_name_en = "inferior material"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["neg"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_inferior_material
 }
 
 item scroll_of_change_material {
@@ -20552,11 +17546,6 @@ item scroll_of_change_material {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t材質を変化させる巻物。錬金術師の殆どがこの巻物を足がかりに自らの研究を進めているのはいうまでも無い。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの素材を変化させる巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20571,13 +17560,12 @@ item scroll_of_change_material {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "素材変化の巻物"
-    original_name_en = "change material"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_change_material
 }
 
 item scroll_of_superior_material {
@@ -20593,11 +17581,6 @@ item scroll_of_superior_material {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t材質を変化させる巻物。より強力で貴重な素材へ変化しやすいが、どのように巻物が素材に作用しているのかは聞いてはいけない。それらは全て「魔法」がやってくれることなのだ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムの素材を変化させる巻物。より強力だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20612,13 +17595,12 @@ item scroll_of_superior_material {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "*素材変化*の巻物"
-    original_name_en = "superior material"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_superior_material
 }
 
 item figurine {
@@ -20634,11 +17616,6 @@ item figurine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t犠牲者の生き写しとも思える程、精巧に作られた像。その姿は今にも動き出しそうなほどに生気を孕んでいる。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスターの姿を模った彫像だ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A statue of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20653,13 +17630,12 @@ item figurine {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "はく製"
-    original_name_en = "figurine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.figurine
 }
 
 item card {
@@ -20675,11 +17651,6 @@ item card {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t倒した敵の情報が克明に記述された紙片。身長体重は勿論、特徴等も細かく書かれているが、そういった情報収集的に使われることは少なく、艶のある材質も手伝って専らは収集用や遊戯用に用いられているという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の情報が書かれた紙だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A card of a creature,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20694,13 +17665,12 @@ item card {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カード"
-    original_name_en = "card"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.card
 }
 
 item little_sisters_diary {
@@ -20716,11 +17686,6 @@ item little_sisters_diary {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t妹が書いた日記。中には日々感じたことや、最近のお気に入り、美味しかった食べ物等について２日飛ばしで書かれている。\n#〜本の為の本・児童書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t妹をペットにすることができる本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A diary written in with crayon,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20735,13 +17700,12 @@ item little_sisters_diary {
     rarity = 25000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "妹の日記"
-    original_name_en = "little sister's diary"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.little_sisters_diary
 }
 
 item scroll_of_enchant_weapon {
@@ -20757,11 +17721,6 @@ item scroll_of_enchant_weapon {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで武器に黄金の衣を纏わせる巻物。これにより武器の強度が増し、一段階強くなると言われている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t武器を強化する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20776,13 +17735,12 @@ item scroll_of_enchant_weapon {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "武器強化の巻物"
-    original_name_en = "enchant weapon"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_enchant_weapon
 }
 
 item scroll_of_greater_enchant_weapon {
@@ -20798,11 +17756,6 @@ item scroll_of_greater_enchant_weapon {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで武器に黄金の衣を纏わせる巻物。通常のものより強力であり、性能の限界を超えて強くなると言われている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t武器を強化する巻物。より強力だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20817,13 +17770,12 @@ item scroll_of_greater_enchant_weapon {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "*武器強化*の巻物"
-    original_name_en = "greater enchant weapon"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_greater_enchant_weapon
 }
 
 item scroll_of_enchant_armor {
@@ -20839,11 +17791,6 @@ item scroll_of_enchant_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで防具に黄金の衣を纏わせる巻物。これにより防具の強度が増し、一段階強くなると言われている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t防具を強化する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20858,13 +17805,12 @@ item scroll_of_enchant_armor {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "防具強化の巻物"
-    original_name_en = "enchant armor"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_enchant_armor
 }
 
 item scroll_of_greater_enchant_armor {
@@ -20880,11 +17826,6 @@ item scroll_of_greater_enchant_armor {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで防具に黄金の衣を纏わせる巻物。通常のものより強力であり、性能の限界を超えて強くなると言われている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t防具を強化する巻物。より強力だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20899,13 +17840,12 @@ item scroll_of_greater_enchant_armor {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "*防具強化*の巻物"
-    original_name_en = "greater enchant armor"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_greater_enchant_armor
 }
 
 item heir_trunk {
@@ -20921,11 +17861,6 @@ item heir_trunk {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古ぼけたカバン。その中には志半ばで大陸から去っていった者達の残した品々が収められている。受け取るには然るべき手続きを踏まなければならない。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t過去のキャラの残した遺品を受け取る為のカバン。開けることができる。\n#〜鑑定報告書：＜遺失物＞カテゴリ〜\n"
-    description_en = "A magical trunk that can connect to \"\"fourth dimensional inheritance storage\"\" for a small fee,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -20940,13 +17875,12 @@ item heir_trunk {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "形見のカバン"
-    original_name_en = "heir trunk"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.heir_trunk
 }
 
 item deed_of_heirship {
@@ -20962,11 +17896,6 @@ item deed_of_heirship {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t形見のカバンの中身を受け取る権利を持った証書。これを読むことによって最終的な形見の受け取りが受理される。\n#〜死にゆく者へ贈る書〜\n"
-    description_jp_1 = "\t\t読むことで幾つかの遺産を受け取る権利が得られる証書だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで形見のカバンの中身を取り出すことができる権利書だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A deed of heirship,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -20981,13 +17910,12 @@ item deed_of_heirship {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "遺産相続の権利書"
-    original_name_en = "heirship"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.deed_of_heirship
 }
 
 item laser_gun {
@@ -21003,11 +17931,6 @@ item laser_gun {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t特殊な弾丸を装填することで、発射孔から質量のある光線を発射する銃器。距離が延びるごとに威力が衰える他の射撃武器とは違い、殆ど威力が衰えない優れものだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弾と共に使用する射撃武器。距離による減衰は殆どない。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A remnant of ancient times,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21022,13 +17945,12 @@ item laser_gun {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = "レーザーガン"
-    original_name_jp = "光子銃"
-    original_name_en = "laser gun"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.laser_gun
 }
 
 item energy_cell {
@@ -21044,11 +17966,6 @@ item energy_cell {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t高エネルギー体を特殊な技術で銃弾へと加工したもの。使用するには専用の銃器が必要だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t銃と共に使用する武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Do not tamper with lens,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21063,13 +17980,12 @@ item energy_cell {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "エネルギーセル"
-    original_name_jp = "光子弾"
-    original_name_en = "energy cell"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.energy_cell
 }
 
 item rail_gun {
@@ -21085,11 +18001,6 @@ item rail_gun {
     dv = 0
     material = 8
     chargelevel = 0
-    description_jp_0 = "\t\t高速化された物質を射出する超重量装置。複雑な機構もさることながら、特殊な素材を加工することで軽量化に成功している。しかしどちらも現在では失われた技術の為、量産することは不可能だろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t様々な魔法効果を持つ光子銃だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21104,13 +18015,12 @@ item rail_gun {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《レールガン》"
-    original_name_en = "<Rail Gun>"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rail_gun
 }
 
 item scroll_of_recharge {
@@ -21126,11 +18036,6 @@ item scroll_of_recharge {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t魔力の失われた物品に再び魔力を吹き込むことができる巻物。この巻物は非常に取り扱いが難しく、上手く読みこなすことができなかった場合、それは物品の破滅を意味している。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特定のアイテムの使用残数を回復する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -21145,13 +18050,12 @@ item scroll_of_recharge {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "充填の巻物"
-    original_name_en = "recharge"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_recharge
 }
 
 item bottle_of_water {
@@ -21167,11 +18071,6 @@ item bottle_of_water {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tティリスにおいて、混じり気のない水は貴重な物である。蒸留技術がありながら水を生産できない訳は、潜在的に液体に混じるエーテルの存在にある。日常的に空気中に溢れるそれを取り除くには非常な労力がかかるのだ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特に効果の無いポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A bottle of pure water,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -21186,13 +18085,12 @@ item bottle_of_water {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "水"
-    original_name_en = "water"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_water
 }
 
 item rod_of_change_creature {
@@ -21208,11 +18106,6 @@ item rod_of_change_creature {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。神聖幾何学模様が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象を再構築する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of ether,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -21227,13 +18120,12 @@ item rod_of_change_creature {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "変化の杖"
-    original_name_en = "change creature"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_change_creature
 }
 
 item rod_of_alchemy {
@@ -21249,11 +18141,6 @@ item rod_of_alchemy {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。自分の尾を咥えた竜が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで指定したアイテムを再構築する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A rod made out of emerald,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -21268,13 +18155,12 @@ item rod_of_alchemy {
     rarity = 450000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "錬金術の杖"
-    original_name_en = "alchemy"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_alchemy
 }
 
 item bottle_of_dye {
@@ -21290,11 +18176,6 @@ item bottle_of_dye {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t浸すことにより対象物を独自の色に染め上げることのできる、多様な色を持つ液体。当然ながら飲料ではないので飲まないことをお勧めするが、鮮やかな自分に出会いたいなら止めはしない。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混ぜた物に色をつけるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Expertly made dye that work's on most materials,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -21309,13 +18190,12 @@ item bottle_of_dye {
     rarity = 2000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "染料"
-    original_name_en = "dye"
     originalnameref2 = "bottle"
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomAny
+    locale_key_prefix = core.locale.item.bottle_of_dye
 }
 
 item wing {
@@ -21331,11 +18211,6 @@ item wing {
     dv = 9
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t鳥の羽を模した装具。背中の攻撃を防ぐことができるが、あくまでも外見を彩る為に作られている。尚、微小ながら宙に浮くといった効果も持つ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t背中に付ける羽飾りだ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A marvel of genetic engineering,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21350,13 +18225,12 @@ item wing {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = "ウィング"
-    original_name_jp = "翼"
-    original_name_en = "wing"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.wing
 }
 
 item deed_of_museum {
@@ -21372,11 +18246,6 @@ item deed_of_museum {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t博物館を建てる権利が得られる証書。国から得られる給料は微々たるものだが、自分で集めた収集品を一手に公開するのはコレクター冥利に尽きるというものだろう。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで博物館を建てることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "A deed for a museum,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -21391,13 +18260,12 @@ item deed_of_museum {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "博物館の権利書"
-    original_name_en = "museum"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.deed_of_museum
 }
 
 item deed_of_shop {
@@ -21413,11 +18281,6 @@ item deed_of_shop {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t店を建てる権利が得られる証書。かつて、ついつい熱が入って自分の装備まで売ってしまい、そのまま店主となった冒険者がいたとかいないとか。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで店を建てることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "A deed for a shop,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -21432,13 +18295,12 @@ item deed_of_shop {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "店の権利書"
-    original_name_en = "shop"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.deed_of_shop
 }
 
 item tree_of_beech {
@@ -21454,11 +18316,6 @@ item tree_of_beech {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実を落とさない落葉樹。成長するに従って根から毒素を出して周りの樹木を枯らしてしまうということが近年分かり、魔術師ギルドが水薬に使用できないかどうか、目下研究中である。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t落葉樹だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21473,13 +18330,12 @@ item tree_of_beech {
     rarity = 3000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ブナの木"
-    original_name_en = "beech"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_beech
 }
 
 item tree_of_cedar {
@@ -21495,11 +18351,6 @@ item tree_of_cedar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実を落とさない常緑樹。誰かに詠唱を妨害されていると思ったらこの木の花粉だったという話はままある。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t常緑樹だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree with a scented wood,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21514,13 +18365,12 @@ item tree_of_cedar {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "スギの木"
-    original_name_en = "cedar"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_cedar
 }
 
 item tree_of_fruitless {
@@ -21536,11 +18386,6 @@ item tree_of_fruitless {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t待てど暮らせど果実を実らせる気がない樹木。諦めて果実の実った樹木を探そう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t果実の無くなった樹木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A tree with no fruit's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21555,13 +18400,12 @@ item tree_of_fruitless {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "果実のない木"
-    original_name_en = "fruitless"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_fruitless
 }
 
 item tree_of_fruits {
@@ -21577,11 +18421,6 @@ item tree_of_fruits {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t体当たりすることで果実を落とす樹木。調子に乗って何度も体当たりするとしばらくは実が手に入らなくなるので気をつけよう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t果実を落とす樹木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A fruit tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21596,13 +18435,12 @@ item tree_of_fruits {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "果実の木"
-    original_name_en = "fruits"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_fruits
 }
 
 item dead_tree {
@@ -21618,11 +18456,6 @@ item dead_tree {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t完全に枯れてしまった古木。非常に可燃性が高いので付近での火遊びはしないようにしよう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「色々考えられさせますね。これは確かにただの朽ちた木ですが、見識を変えれば我々にも、かの森にもなるのです。時が過ぎていく中でこの映写機が写すのは、果たしてどちらでしょうね」\n#〜青い髪の『ヴァリウス』の言葉〜\n"
-    description_jp_3 = "\t\t枯れた樹木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A tree that has died from bad weather,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21637,13 +18470,12 @@ item dead_tree {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "枯れ木"
-    original_name_en = "dead tree"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dead_tree
 }
 
 item tree_of_zelkova {
@@ -21659,11 +18491,6 @@ item tree_of_zelkova {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実を落とさない落葉樹。非常に良質で、主に木材として様々な家具へと加工されている。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t落葉樹だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21678,13 +18505,12 @@ item tree_of_zelkova {
     rarity = 1500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ケヤキの木"
-    original_name_en = "zelkova"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_zelkova
 }
 
 item tree_of_palm {
@@ -21700,11 +18526,6 @@ item tree_of_palm {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t南国由来の樹木。実は硬く巨大な砲丸のようだと言われているが、ノースティリスにおいてこれらの樹木は実を宿さないようだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t南国の樹木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A tree found in warm climates,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21719,13 +18540,12 @@ item tree_of_palm {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ヤシの木"
-    original_name_en = "palm"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_palm
 }
 
 item tree_of_ash {
@@ -21741,11 +18561,6 @@ item tree_of_ash {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実を落とさない落葉樹。非常に硬く、主に木材として様々な家具へと加工されている。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t落葉樹だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21760,13 +18575,12 @@ item tree_of_ash {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トネリコの木"
-    original_name_en = "ash"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_ash
 }
 
 item furnance {
@@ -21782,11 +18596,6 @@ item furnance {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t金属を溶かす為の炉。内部は常に赤熱した木材で温められている。\n#〜より良い業物を目指して〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t金属を暖める建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "Some furnaces are used to heat an area and others are used for metalwork,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21801,13 +18610,12 @@ item furnance {
     rarity = 100000
     coefficient = 100
     light = 6
-    katakana_name = ""
-    original_name_jp = "溶鉱炉"
-    original_name_en = "furnance"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.furnance
 }
 
 item fireplace {
@@ -21823,11 +18631,6 @@ item fireplace {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t室内を暖める為に用いる暖房器具。炉の中でパチパチと音を立てて燃え盛る炎は、心底冷えた体をゆっくり溶かしてくれるだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t部屋を暖める家具だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Used to heat a house,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21842,13 +18645,12 @@ item fireplace {
     rarity = 100000
     coefficient = 100
     light = 6
-    katakana_name = ""
-    original_name_jp = "暖炉"
-    original_name_en = "fireplace"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fireplace
 }
 
 item stove {
@@ -21864,11 +18666,6 @@ item stove {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食材の煮炊きに使う設備。いつ見ても使われているので、料理をすることはできない。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t煮炊きに使う窯。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A stove useful for cooking food,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21883,13 +18680,12 @@ item stove {
     rarity = 100000
     coefficient = 100
     light = 6
-    katakana_name = ""
-    original_name_jp = "かまど"
-    original_name_en = "stove"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stove
 }
 
 item giant_foliage_plant {
@@ -21905,11 +18701,6 @@ item giant_foliage_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t天井に届きそうな程背の高い鉢植え。どの茎も皆一身に太陽の方へと伸びている。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A plant used for decoration,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21924,13 +18715,12 @@ item giant_foliage_plant {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "巨大な観葉植物"
-    original_name_en = "giant foliage plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.giant_foliage_plant
 }
 
 item big_table {
@@ -21946,11 +18736,6 @@ item big_table {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t突然の客人にも対応できる寛容なテーブル。その懐の深さは見習いたいものだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tとても大きな机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -21965,13 +18750,12 @@ item big_table {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "巨大なテーブル"
-    original_name_en = "big table"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.big_table
 }
 
 item painting_of_madam {
@@ -21987,11 +18771,6 @@ item painting_of_madam {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t高名な画家が描いたとされる人物画。憂いを帯びたその表情は、見る者の心を揺り動かす何かを持っているという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t女性の絵が書いてある。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A copy of a painting by a famous Yerles artist,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22006,13 +18785,12 @@ item painting_of_madam {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絵画《マダム》"
-    original_name_en = "madam"
     originalnameref2 = "painting"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.painting_of_madam
 }
 
 item painting_of_landscape {
@@ -22028,11 +18806,6 @@ item painting_of_landscape {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t高名な画家が描いたとされる風景画。どこか懐かしい雰囲気を思い起こさせるこの絵に、人は誰しも郷里を重ねるのだという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t風景の絵が書いてある。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A painting of a landscape,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22047,13 +18820,12 @@ item painting_of_landscape {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絵画《風景》"
-    original_name_en = "landscape"
     originalnameref2 = "painting"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.painting_of_landscape
 }
 
 item painting_of_sunflower {
@@ -22069,11 +18841,6 @@ item painting_of_sunflower {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t高名な画家が描いたとされる静物画。キャンバス一杯に描かれた幾輪ものひまわりが、見る者の目と心を引き付けて離さないという。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t植物の絵が書いてある。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A painting of a sunflower,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22088,13 +18855,12 @@ item painting_of_sunflower {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絵画《ひまわり》"
-    original_name_en = "sunflower"
     originalnameref2 = "painting"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.painting_of_sunflower
 }
 
 item statue_of_cat {
@@ -22110,11 +18876,6 @@ item statue_of_cat {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t頂上部に可愛らしい猫が模られた石柱。その愛嬌ある後ろ姿は、猫本来の気まぐれさを芸術家が感じ取って彫ったとされている。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「以前ヴェルニースに行ったのですが、いたんですよアレが！　恐ろしい尻尾とあの耳、考えただけでも震えが止まらない…。一体誰があんな石柱を作ったのでしょう。こちらを向いていないのが唯一の救いでしたよ」\n#〜猫嫌いの『タム』の言葉〜\n"
-    description_jp_3 = "\t\t猫を模った柱だ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A painting of a cat,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22129,13 +18890,12 @@ item statue_of_cat {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "猫の像"
-    original_name_en = "cat"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_cat
 }
 
 item black_crystal {
@@ -22151,11 +18911,6 @@ item black_crystal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t邪気を祓うといわれる巨大な鉱物。日の光を乱反射し燦然と輝くそれは、古来から魔術において重要な位置を占める存在であるといわれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t巨大な黒い鉱物だ。\n#〜鑑定報告書：＜鉱物＞カテゴリ〜\n"
-    description_en = "A black crystal,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22170,13 +18925,12 @@ item black_crystal {
     rarity = 500000
     coefficient = 100
     light = 7
-    katakana_name = ""
-    original_name_jp = "黒水晶"
-    original_name_en = "black crystal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.black_crystal
 }
 
 item snow_man {
@@ -22192,11 +18946,6 @@ item snow_man {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t非常に愉快な表情をした雪像。雪が降ると子供達が集まって思い思いの雪だるまを作っては互いに見せ合うという。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雪で作られた雪像だ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A snow man,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22211,13 +18960,12 @@ item snow_man {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "雪だるま"
-    original_name_en = "snow man"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.snow_man
 }
 
 item deed_of_farm {
@@ -22233,11 +18981,6 @@ item deed_of_farm {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t畑を作る権利が得られる証書。農作王にキミはなる！　がこの権利書に大きく書かれた売り文句だ。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t畑を作る権利が得られる証書。ここで冒険を忘れてひと時の安息を得るのもいいだろう。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_3 = "\t\t読むことで畑を作ることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "A deed for a farm,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22252,13 +18995,12 @@ item deed_of_farm {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "畑の権利書"
-    original_name_en = "farm"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = LightBlue
+    locale_key_prefix = core.locale.item.deed_of_farm
 }
 
 item deed_of_storage_house {
@@ -22274,11 +19016,6 @@ item deed_of_storage_house {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t倉庫を建てる権利が得られる証書。手持ちが一杯になり始めたら借りてみるといい。月々の契約料もお忘れなく。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで倉庫を建てることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "A deed for a storage house,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22293,13 +19030,12 @@ item deed_of_storage_house {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "倉庫の権利書"
-    original_name_en = "storage house"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = PaleRed
+    locale_key_prefix = core.locale.item.deed_of_storage_house
 }
 
 item disc {
@@ -22315,11 +19051,6 @@ item disc {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t音楽が収められた円盤。使用することで封入された特定の音楽を奏でるが、残念ながら今日において使用法以外の全ての技術は忘れ去られてしまった。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t音楽のデータが刻まれた円盤。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A message is written on it saying \"\"Please do not throw,\""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22334,13 +19065,12 @@ item disc {
     rarity = 1500000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ディスク"
-    original_name_en = "disc"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.disc
 }
 
 item rod_of_wall_creation {
@@ -22356,11 +19086,6 @@ item rod_of_wall_creation {
     dv = 0
     material = 0
     chargelevel = 7
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。鉱物のように光る宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に壁を作り出す魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A wall made out of obsidian,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -22375,13 +19100,12 @@ item rod_of_wall_creation {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "壁生成の杖"
-    original_name_en = "wall creation"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_wall_creation
 }
 
 item spellbook_of_wall_creation {
@@ -22397,11 +19121,6 @@ item spellbook_of_wall_creation {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「壁生成」という呪文について学ぶことができる魔法書。一人になりたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象に壁を生成する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome seems to be heavier than it is,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22416,13 +19135,12 @@ item spellbook_of_wall_creation {
     rarity = 600000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "壁生成の魔法書"
-    original_name_en = "wall creation"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_wall_creation
 }
 
 item salary_chest {
@@ -22438,11 +19156,6 @@ item salary_chest {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t月に二回、得た給料を受け取る為の箱。不測の事態で箱を失っても給料はきちんと振り込まれる。しかし、パルミアの役人は融通が利かないということを憶えておくといいだろう。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t与えられた給料を受け取る為の箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A salary chest for freelance employment,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22457,13 +19170,12 @@ item salary_chest {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "給料箱"
-    original_name_en = "salary chest"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.salary_chest
 }
 
 item spellbook_of_healing_rain {
@@ -22479,11 +19191,6 @@ item spellbook_of_healing_rain {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「治癒の雨」という呪文について学ぶことができる魔法書。仲間を愛するあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t周囲の味方のHPを回復する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A slightly damp tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22498,13 +19205,12 @@ item spellbook_of_healing_rain {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "治癒の雨の魔法書"
-    original_name_en = "healing rain"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_healing_rain
 }
 
 item scroll_of_healing_rain {
@@ -22520,11 +19226,6 @@ item scroll_of_healing_rain {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t周囲の味方に癒しの効果のある雨を降らせる巻物。遥か昔、日照りにあえぐ村人に癒しの女神が恥じらいながら授けたとされる逸話が今日でも残っている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t周囲の味方の体力が回復する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22539,13 +19240,12 @@ item scroll_of_healing_rain {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "治癒の雨の巻物"
-    original_name_en = "healing rain"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_healing_rain
 }
 
 item spellbook_of_healing_hands {
@@ -22561,11 +19261,6 @@ item spellbook_of_healing_hands {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「癒しの手」という呪文について学ぶことができる魔法書。誰とでもわけ隔てなく接するあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t自分、もしくは隣接した味方のHPを回復する呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A handy tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -22580,13 +19275,12 @@ item spellbook_of_healing_hands {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "癒しの手の魔法書"
-    original_name_en = "healing hands"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_healing_hands
 }
 
 item rod_of_healing_hands {
@@ -22602,11 +19296,6 @@ item rod_of_healing_hands {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。絡みあった蔦のような模様が彫り込まれている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで自分、または隣接者のHPを回復する魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A silver plated rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -22621,13 +19310,12 @@ item rod_of_healing_hands {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "癒しの手の杖"
-    original_name_en = "healing hands"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_healing_hands
 }
 
 item feather {
@@ -22643,11 +19331,6 @@ item feather {
     dv = 4
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\tコウモリの羽を模した装具。背中の攻撃を防ぐことができるが、あくまでも外見を彩る為に作られている。尚、微小ながら宙に浮くといった効果も持つ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t背中に付ける羽飾りだ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A product of magic,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22662,13 +19345,12 @@ item feather {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = "フェザー"
-    original_name_jp = "羽"
-    original_name_en = "feather"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.feather
 }
 
 item gem_seed {
@@ -22684,11 +19366,6 @@ item gem_seed {
     dv = 0
     material = 41
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによって鉱石が収穫できる種。種故に食べることができるが、そうするくらいなら少し成長を待ってあげてほしい。今日よりも明日なんだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t宝石の木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22703,13 +19380,12 @@ item gem_seed {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "宝石の種"
-    original_name_en = "gem seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Purple
+    locale_key_prefix = core.locale.item.gem_seed
 }
 
 item magical_seed {
@@ -22725,11 +19401,6 @@ item magical_seed {
     dv = 0
     material = 42
     chargelevel = 0
-    description_jp_0 = "\t\t地面に蒔くことによって杖が収穫できる種。種故に食べることができるが、そうするくらいなら少し成長を待ってあげてほしい。今日よりも明日なんだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t魔法の木に成長する種。食べることも使用することもできる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of seed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22744,13 +19415,12 @@ item magical_seed {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔法の木の種"
-    original_name_en = "magical seed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Cyan
+    locale_key_prefix = core.locale.item.magical_seed
 }
 
 item shelter {
@@ -22766,11 +19436,6 @@ item shelter {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t緊急時に設置することができる簡易的なシェルター。ひとしきり危機をやり過ごした後は、拾うことで再利用が可能な万能機具だ。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t時間を少しかけて設置する避難所。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "This kit can be used to build a shelter that protects you from the weather!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22785,13 +19450,12 @@ item shelter {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "シェルター"
-    original_name_en = "shelter"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shelter
 }
 
 item seven_league_boots {
@@ -22807,11 +19471,6 @@ item seven_league_boots {
     dv = 7
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t長距離を一瞬で駆け抜けることができる魔法が掛けられた靴。その話は伊達ではなく、さる高名な行商人はこの靴のお陰で世界を股にかけ、現在の地位を手に入れたのだとか。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t旅の歩みを非常に速める靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Rare boot's magically enhanced to allow faster travel,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22826,13 +19485,12 @@ item seven_league_boots {
     rarity = 25000
     coefficient = 100
     light = 0
-    katakana_name = "セブンリーグブーツ"
-    original_name_jp = "セブンリーグブーツ"
-    original_name_en = "seven league boots"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.seven_league_boots
 }
 
 item vindale_cloak {
@@ -22848,11 +19506,6 @@ item vindale_cloak {
     dv = 7
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t異形の森から巻き起こる忌むべき風を防ぐという外套。あくまでも風による変異を防ぐ為の物なので、日常的な変異や雨風はしのげないだろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tエーテルの嵐から身を守る外套だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "made in vindale"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22867,13 +19520,12 @@ item vindale_cloak {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = "ヴィンデールクローク"
-    original_name_jp = "ヴィンデールクローク"
-    original_name_en = "vindale cloak"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.vindale_cloak
 }
 
 item aurora_ring {
@@ -22889,11 +19541,6 @@ item aurora_ring {
     dv = 2
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t周辺の季候を感じ取り、悪天候に合わせて効果を発揮する指輪。その際指輪は柔らかい光を放ち、周囲に静穏を保つ力場を作り出すのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t悪天候でも歩みが遅れなくなる指輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "Protects you from bad weather,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22908,13 +19555,12 @@ item aurora_ring {
     rarity = 25000
     coefficient = 100
     light = 0
-    katakana_name = "オーロラリング"
-    original_name_jp = "オーロラリング"
-    original_name_en = "aurora ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.aurora_ring
 }
 
 item potion_of_cure_corruption {
@@ -22930,11 +19576,6 @@ item potion_of_cure_corruption {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生活している以上必然的に罹る、エーテル病を唯一直せる奇跡の水薬。喩え目が増えていようが、手から毒が滴ろうがたちどころに治療できるが、貴重な品故常に鑑定だけは心がけておきたい。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tエーテル病を治すことができる貴重なポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label read's \"\"For use in curing harmful diseases only\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -22949,13 +19590,12 @@ item potion_of_cure_corruption {
     rarity = 30000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "エーテル抗体のポーション"
-    original_name_en = "cure corruption"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_cure_corruption
 }
 
 item masters_delivery_chest {
@@ -22971,11 +19611,6 @@ item masters_delivery_chest {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t指定された品を納入する為の特別な箱。何でもかんでも投棄されないよう、投入口に少し工夫がなされているらしい。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指定された物品を収める箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -22990,13 +19625,12 @@ item masters_delivery_chest {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "主の納入箱"
-    original_name_en = "master's delivery chest"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.masters_delivery_chest
 }
 
 item shop_strongbox {
@@ -23012,11 +19646,6 @@ item shop_strongbox {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t店の売り上げを一手に引き受ける特別な金庫。防犯の為、店以外の場所では決して開かないシステムになっている。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t店を経営するにおいて必要不可欠な金庫。ここに売上金が全て収められる。「不慮の事故で無くしてもご安心あれ。経済の要、パルミア大使館で全て揃います」\n#〜ティリス武具大全、広告のページ〜\n"
-    description_jp_3 = "\t\t店の売り上げが入った金庫。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A chest containing your shop's profit"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23031,13 +19660,12 @@ item shop_strongbox {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "店の金庫"
-    original_name_en = "shop strongbox"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shop_strongbox
 }
 
 item register {
@@ -23053,11 +19681,6 @@ item register {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t金品を売買する際に不可欠な機械。防犯の為、登録した一人にしか使用できないシステムになっている。\n#〜脱冒険者から始める商いライフ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t人を配属するにおいて必要不可欠な機械。ここで仲間の配属先が変更できる。「もし不慮の事故で無くしてもご安心あれ。経済の要、パルミア大使館で全て揃います」\n#〜ティリス武具大全、広告のページ〜\n"
-    description_jp_3 = "\t\t配属先を変更する為の道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Needed to run a shop,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23072,13 +19695,12 @@ item register {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "レジスター"
-    original_name_en = "register"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.register
 }
 
 item textbook {
@@ -23094,11 +19716,6 @@ item textbook {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t読むことで書かれている技術を鍛えられる書物。学び舎が無い辺境の村ではこういった書物が教師の代わりだという。\n#〜本の為の本・指導書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指定されたスキルの潜在値を上昇させる本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A textbook used to study a trade,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -23113,13 +19730,12 @@ item textbook {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "学習書"
-    original_name_en = "textbook"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.textbook
 }
 
 item spellbook_of_acid_ground {
@@ -23135,11 +19751,6 @@ item spellbook_of_acid_ground {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「酸の海」という呪文について学ぶことができる魔法書。弱アルカリ性のあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象に酸の海を生成する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "The pages of this tome are tinted green,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -23154,13 +19765,12 @@ item spellbook_of_acid_ground {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "酸の海の魔法書"
-    original_name_en = "acid ground"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_acid_ground
 }
 
 item rod_of_acid_ground {
@@ -23176,11 +19786,6 @@ item rod_of_acid_ground {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。宝石が付いておらず、先の尖った長細い棒の様である。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に酸の海を作り出す魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A mithril rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -23195,13 +19800,12 @@ item rod_of_acid_ground {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "酸の滴る杖"
-    original_name_en = "acid ground"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_acid_ground
 }
 
 item acidproof_liquid {
@@ -23217,11 +19821,6 @@ item acidproof_liquid {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t浸したものに耐酸性の保護膜を塗布する水薬。あくまでも物品にしか効果がないので、飲んだところで、あなたの内臓は飲みすぎた日の強烈な胃酸に対して何ら耐性を得ることはないだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混ぜた物を酸から守るポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Use on an item to protect it from acid,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -23236,13 +19835,12 @@ item acidproof_liquid {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "耐酸性コーティング液"
-    original_name_en = "acidproof liquid"
     originalnameref2 = ""
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.acidproof_liquid
 }
 
 item fireproof_blanket {
@@ -23258,11 +19856,6 @@ item fireproof_blanket {
     dv = 0
     material = 0
     chargelevel = 12
-    description_jp_0 = "\t\t迫りくる火炎に対して開発された毛布。燃焼状態におけるアイテムの炭化を完全に防ぐが、ものには限界があるので過信は禁物である。\n#〜パルミア春夏物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t燃焼によるアイテムの消滅を防ぐブランケットだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Produced to protect the user from hot areas while sleeping but has found more use protecting one's equipment!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23277,13 +19870,12 @@ item fireproof_blanket {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "耐火ブランケット"
-    original_name_en = "fireproof blanket"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.fireproof_blanket
 }
 
 item coldproof_blanket {
@@ -23299,11 +19891,6 @@ item coldproof_blanket {
     dv = 0
     material = 0
     chargelevel = 12
-    description_jp_0 = "\t\t吹きすさぶ氷刃に対して開発された毛布。氷結における水薬の破損を完全に防ぐが、ものには限界があるので過信は禁物である。\n#〜パルミア秋冬物コレクション〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t氷結によるアイテムの破損を防ぐブランケットだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Produced to protect from cold areas while sleeping but has found more use protecting one's equipment!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23318,13 +19905,12 @@ item coldproof_blanket {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "耐冷ブランケット"
-    original_name_en = "coldproof blanket"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.coldproof_blanket
 }
 
 item spellbook_of_fire_wall {
@@ -23340,11 +19926,6 @@ item spellbook_of_fire_wall {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「炎の壁」という呪文について学ぶことができる魔法書。万年冷え症のあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象に炎の壁を生成する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome is warm,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -23359,13 +19940,12 @@ item spellbook_of_fire_wall {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "炎の壁の魔法書"
-    original_name_en = "fire wall"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_fire_wall
 }
 
 item rod_of_fire_wall {
@@ -23381,11 +19961,6 @@ item rod_of_fire_wall {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。透明の中に赤い色が混ざり込んだ宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで対象に炎の壁を作り出す魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A platinum rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -23400,13 +19975,12 @@ item rod_of_fire_wall {
     rarity = 700000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "炎の壁の杖"
-    original_name_en = "fire wall"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_fire_wall
 }
 
 item jerky {
@@ -23422,11 +19996,6 @@ item jerky {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生肉が痛まぬよう塩漬けにし、天日で干すことにより携帯性と日持ちを増したもの。申し訳程度の料理ではあるが、意外とクリムエールと合うらしく、屈強な男達がしばしば酒場で齧っている。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Dried out travel ration's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23441,13 +20010,12 @@ item jerky {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "干し肉"
-    original_name_en = "jerky"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.jerky
 }
 
 item deed_of_ranch {
@@ -23463,11 +20031,6 @@ item deed_of_ranch {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t牧場を作る権利が得られる証書。あなたの新たな物語はここで始まる、がこの権利書に大きく書かれた売り文句だ。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで牧場を作ることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "A deed for a ranch,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -23482,13 +20045,12 @@ item deed_of_ranch {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "牧場の権利書"
-    original_name_en = "ranch"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = Gold
+    locale_key_prefix = core.locale.item.deed_of_ranch
 }
 
 item egg {
@@ -23504,11 +20066,6 @@ item egg {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生命の源が詰まった楕円状の物体。当然ながら栄養素の塊である。ノースティリスの卵は腐らないので、あなたは今すぐこれを割り成長の糧にしてもよいし、手元に置いて我が家のインテリアの一部として飾ってもよい。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "This egg would taste better cooked,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23523,13 +20080,12 @@ item egg {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "卵"
-    original_name_en = "egg"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.egg
 }
 
 item bottle_of_milk {
@@ -23545,11 +20101,6 @@ item bottle_of_milk {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生物から絞り出すことで抽出される乳白色の液体。非常に栄養価が高く、成長に大きく関わると考えられている。残念ながら調理には向かないが、愛飲している者は少なくない。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t腹を膨らますことができる飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Mil"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -23564,13 +20115,12 @@ item bottle_of_milk {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "乳"
-    original_name_en = "milk"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_milk
 }
 
 item shit {
@@ -23586,11 +20136,6 @@ item shit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t生物から産み落とされた褐色の物体。匂いもあり忌み嫌われる存在だが、狂気に囚われたのか、中には取りつかれたかのようにある一定の種の物を集めている者もいるそうだ。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生物の排泄物だ。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "Stinky…,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23605,13 +20150,12 @@ item shit {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フン"
-    original_name_en = "shit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shit
 }
 
 item playback_disc {
@@ -23627,11 +20171,6 @@ item playback_disc {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t映像が収められた円盤。使用することで過去の記録を映像として呼び起こすことができるが、残念ながら今日において使用法以外の全ての技術は忘れ去られてしまった。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t映像のデータが刻まれた円盤。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A mysterious disc that seems to play your memories,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23646,13 +20185,12 @@ item playback_disc {
     rarity = 200000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ムービーディスク"
-    original_name_en = "playback disc"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.playback_disc
 }
 
 item molotov {
@@ -23668,11 +20206,6 @@ item molotov {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t明らかに対象を火炎で燃やす意図を持つ危険な水薬。投げることで指定した範囲に火柱を立てることができるが、危険な火遊びは保護者同伴で、水を確保した上でしよう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t炎の壁を発生させる液体だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label on the bottle states \"\"Light before throwing\"\","
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -23687,13 +20220,12 @@ item molotov {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "火炎瓶"
-    original_name_en = "molotov"
     originalnameref2 = ""
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.molotov
 }
 
 item kitty_bank {
@@ -23709,11 +20241,6 @@ item kitty_bank {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用する度一定の金額を入れ、保管しておくことができる箱。使う度に少しずつ重くなっていくのは、きっと貯める幸せによるところなのだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指定された額ごとに貯金できる箱。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Please don't break me,…, Nyu?"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23728,13 +20255,12 @@ item kitty_bank {
     rarity = 300000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "貯金箱"
-    original_name_en = "kitty bank"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kitty_bank
 }
 
 item freezer {
@@ -23750,11 +20276,6 @@ item freezer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食材を半永久的に保管することができる叡智の結晶。しかしながら、この家具にはある秘密が存在する。なんと、何台所持していても扉の先は同じ空間にしか繋がらないのだ！\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t１０種の食物を腐らすことなく保持する箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A freezer to keep your food from spoiling,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23769,13 +20290,12 @@ item freezer {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "冷蔵庫"
-    original_name_en = "freezer"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.freezer
 }
 
 item modern_rack {
@@ -23791,11 +20311,6 @@ item modern_rack {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t世間一般に広く流通している棚。期待以上の事には使えないが、必要最低限の事はこなす、無難な家具だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一般的な棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23810,13 +20325,12 @@ item modern_rack {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "普通の棚"
-    original_name_en = "modern rack"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.modern_rack
 }
 
 item rod_of_make_door {
@@ -23832,11 +20346,6 @@ item rod_of_make_door {
     dv = 0
     material = 0
     chargelevel = 6
-    description_jp_0 = "\t\t特定の魔法が封じ込められた杖。不透明な白い球状をした宝石が取り付けられている。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t振ることで近距離に扉を作り出す魔法の杖だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "A pearl tipped rod,"
     is_readable = false
     is_zappable = true
     is_drinkable = false
@@ -23851,13 +20360,12 @@ item rod_of_make_door {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "扉生成の杖"
-    original_name_en = "make door"
     originalnameref2 = "rod"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.rod_of_make_door
 }
 
 item spellbook_of_make_door {
@@ -23873,11 +20381,6 @@ item spellbook_of_make_door {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「扉生成」という呪文について学ぶことができる魔法書。誰かの心の扉を開きたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t対象に扉を生成する呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome is yellowed and warped,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -23892,13 +20395,12 @@ item spellbook_of_make_door {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "扉生成の魔法書"
-    original_name_en = "make door"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_make_door
 }
 
 item torch {
@@ -23914,11 +20416,6 @@ item torch {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tいつの世も人は火と共に合った。火があるから空間を温める熱を得、火があるから夜を照らす光を得た。今やあなたは文明の火種と共にあるのだ！\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「片手に握りしめるだけで、あなたのネフィアライフはぐっと冒険者チックになります。あなたも是非ともこの優れたライトアップツールをお試しください」\n#〜ヴェルニースの雑貨店に張られた広告〜\n"
-    description_jp_3 = "\t\t手に持つ簡易照明。常に周囲を照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "This enchanted torch will never burn out,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23933,13 +20430,12 @@ item torch {
     rarity = 1000000
     coefficient = 100
     light = 1
-    katakana_name = ""
-    original_name_jp = "松明"
-    original_name_en = "torch"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.torch
 }
 
 item candle {
@@ -23955,11 +20451,6 @@ item candle {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tロウで作られた雰囲気の出る照明。その小さな揺らめく炎は、恋する二人の距離を一層近しいものにするという。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tロウで作られた簡易照明。常に周囲を照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A creepy set of candles,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -23974,13 +20465,12 @@ item candle {
     rarity = 250000
     coefficient = 100
     light = 12
-    katakana_name = ""
-    original_name_jp = "キャンドル"
-    original_name_en = "candle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.candle
 }
 
 item fancy_lamp {
@@ -23996,11 +20486,6 @@ item fancy_lamp {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tかつて世紀の天才が作ったという照明器具。その斬新なつくりは、今でも貴族達の間で人気の一つである。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t高名な芸術家によって作られた簡易照明。夜間、周囲を明るく照らす。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A lamp from Asseria,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24015,13 +20500,12 @@ item fancy_lamp {
     rarity = 200000
     coefficient = 100
     light = 3
-    katakana_name = ""
-    original_name_jp = "奇抜なランプ"
-    original_name_en = "fancy lamp"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fancy_lamp
 }
 
 item modern_lamp_a {
@@ -24037,11 +20521,6 @@ item modern_lamp_a {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t小洒落た装飾がなされた街灯。夜になると自らの光で淡く輝き、辺りを華やかに演出する。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t備え付けられた灯。夜間、周囲を明るく照らす。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "An Asserian lamp,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24056,13 +20535,12 @@ item modern_lamp_a {
     rarity = 200000
     coefficient = 100
     light = 14
-    katakana_name = ""
-    original_name_jp = "モダンな街灯"
-    original_name_en = "modern lamp"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.modern_lamp_a
 }
 
 item handful_of_snow {
@@ -24078,11 +20556,6 @@ item handful_of_snow {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t空から舞い降りる白い粒をかき集め、ひと塊にしたもの。この物質はとても冷ややかで、投げると即座に水に変質するが、所持している限りは決して変容しないという非常に稀有な性質を持つ。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t沢山集めると雪だるまを作ることができる物体だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Some snow,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -24097,13 +20570,12 @@ item handful_of_snow {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "雪"
-    original_name_en = "snow"
     originalnameref2 = "handful"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.handful_of_snow
 }
 
 item tree_of_naked {
@@ -24119,11 +20591,6 @@ item tree_of_naked {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t葉が全て落ちてしまった樹木。とても寒そうに見えるが、これが彼らなりの冬の越し方なのだ。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t葉の無い樹木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24138,13 +20605,12 @@ item tree_of_naked {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "葉の散った木"
-    original_name_en = "naked"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_naked
 }
 
 item tree_of_fir {
@@ -24160,11 +20626,6 @@ item tree_of_fir {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t実を落とさない常緑樹。寒い季節になるとこれらの木に様々な飾りをし、さる聖人を祝う祭りがノイエルで行われるらしい。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t常緑樹だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A type of tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24179,13 +20640,12 @@ item tree_of_fir {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "モミの木"
-    original_name_en = "fir"
     originalnameref2 = "tree"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tree_of_fir
 }
 
 item snow_scarecrow {
@@ -24201,11 +20661,6 @@ item snow_scarecrow {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t頭に白い帽子をかぶったお洒落なかかし。農地を守護することに飽きたかかしが思い切って都会デビューした姿がこれと言われている。\n#〜嘘と勘違いされる全くの作り話・第２巻〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雪をかぶったかかしだ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Is there a need for one in the snow?"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24220,13 +20675,12 @@ item snow_scarecrow {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "雪かかし"
-    original_name_en = "snow scarecrow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.snow_scarecrow
 }
 
 item mini_snow_man {
@@ -24242,11 +20696,6 @@ item mini_snow_man {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t身近に雪を感じたいという意見から生み出された小型の雪だるま。その愛らしい表情は小さくなっても変わることなく世界を見つめ続けている。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小さな雪だるまだ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A small snowman,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24261,13 +20710,12 @@ item mini_snow_man {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ミニ雪だるま"
-    original_name_en = "mini snow man"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.mini_snow_man
 }
 
 item snow_barrel {
@@ -24283,11 +20731,6 @@ item snow_barrel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t寒空に置かれ、白い化粧で身を飾ったタル。その姿はある種の芸術品と見紛う程だ。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t雪の掛った液体を保持しておく容器。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A barrel with snow on it,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24302,13 +20745,12 @@ item snow_barrel {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "雪をかぶったタル"
-    original_name_en = "snow barrel"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.snow_barrel
 }
 
 item modern_lamp_b {
@@ -24324,11 +20766,6 @@ item modern_lamp_b {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t雪のお陰でお洒落に磨きがかかった街灯。雪降る夜、長身の紳士が優しく照らす光は、恋する二人に火を灯すという。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t備え付けられた灯。夜間、周囲を明るく照らす。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "An Asserian lamp,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24343,13 +20780,12 @@ item modern_lamp_b {
     rarity = 100000
     coefficient = 100
     light = 15
-    katakana_name = ""
-    original_name_jp = "雪をかぶったモダンな街灯"
-    original_name_en = "modern lamp"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.modern_lamp_b
 }
 
 item statue_of_holy_cross {
@@ -24365,11 +20801,6 @@ item statue_of_holy_cross {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t尊き存在の力と権力を体現した調度品。その大きさは見る者を圧倒させ、自ずとひざまずいてしまう程だという。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大きく輝く十字架だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = "A holy symbol from ancient times,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24384,13 +20815,12 @@ item statue_of_holy_cross {
     rarity = 50000
     coefficient = 100
     light = 15
-    katakana_name = ""
-    original_name_jp = "聖なる十字架"
-    original_name_en = "holy cross"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_holy_cross
 }
 
 item pillar {
@@ -24406,11 +20836,6 @@ item pillar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t天井を支える目的に特化した柱。その独特な形状により通常の柱よりずっと重い重量を支えることができる。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重い柱だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24425,13 +20850,12 @@ item pillar {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "扇形の柱"
-    original_name_en = "pillar"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pillar
 }
 
 item stained_glass_window {
@@ -24447,11 +20871,6 @@ item stained_glass_window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t芸術家の粋を集めた偉大な作品。それを通して差し込む光は、人々に感動と驚きを与える。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t外から光を取りこむ家具。夜間、周囲をやや弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A expensive stained glass window often used to decorate chapel's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24466,13 +20885,12 @@ item stained_glass_window {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ステンドグラス"
-    original_name_en = "stained glass window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stained_glass_window
 }
 
 item cargo_christmas_tree {
@@ -24488,11 +20906,6 @@ item cargo_christmas_tree {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t伐採したモミの木に幾多の飾りをつけたとても重い交易品。ノイエルまで足を運べない人が自宅でお祝いをする為に買っていくという。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重い交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of pine tree's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24507,13 +20920,12 @@ item cargo_christmas_tree {
     rarity = 600000
     coefficient = 100
     light = 16
-    katakana_name = ""
-    original_name_jp = "直送クリスマスツリー(荷車)"
-    original_name_en = "christmas tree"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_christmas_tree
 }
 
 item cargo_snow_man {
@@ -24529,11 +20941,6 @@ item cargo_snow_man {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t雪で作られた可愛らしい交易品。そのとぼけた表情に癒しを感じ、購入していくものが多いという。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of snow men,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24548,13 +20955,12 @@ item cargo_snow_man {
     rarity = 800000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "スノーマン(荷車)"
-    original_name_en = "snow man"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_snow_man
 }
 
 item christmas_tree {
@@ -24570,11 +20976,6 @@ item christmas_tree {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t幾多の飾りがつけられたモミの木。取り付けられた鮮やかな装飾品によって、それはあたかも自らの力で光っているかの如く、周囲を明るく照らす。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t飾られたモミの木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = "A tree used for an ancient holiday,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24589,13 +20990,12 @@ item christmas_tree {
     rarity = 100000
     coefficient = 100
     light = 16
-    katakana_name = ""
-    original_name_jp = "クリスマスツリー"
-    original_name_en = "christmas tree"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.christmas_tree
 }
 
 item giants_shackle {
@@ -24611,11 +21011,6 @@ item giants_shackle {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t金属でできた巨大で頑強な枷。押しても引いてもびくともしないように見えるが、どうやら繋ぎ目が少し緩んでいるようにも見える。\n#〜囚人達が選ぶ、人気商品ベスト５０〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t巨人を繋ぎとめている枷。開けることができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "I would not want to be attached to those!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24630,13 +21025,12 @@ item giants_shackle {
     rarity = 100000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "巨人の足枷"
-    original_name_en = "giant's shackle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.giants_shackle
 }
 
 item empty_bottle {
@@ -24652,11 +21046,6 @@ item empty_bottle {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何かが入っていた、或いは入ることを待ちわびている空の瓶。このままでは何の役にも立たないが、非常用の水分として井戸などから水を汲むことができる。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水を汲むことができる瓶だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "An empty bottle,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24671,13 +21060,12 @@ item empty_bottle {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "空き瓶"
-    original_name_en = "empty bottle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.empty_bottle
 }
 
 item holy_well {
@@ -24693,11 +21081,6 @@ item holy_well {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t世界に一か所のみ存在するという、聖なる水を湛えた井戸。決して汚すことなかれ、もし軽い気持ちで水薬を投げようものならあなたはきっと後悔するであろう。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t聖なる水を湛えた井戸。飲むことができる。\n#〜鑑定報告書：＜設備＞カテゴリ〜\n"
-    description_en = "A note read's \"\"Please do not taint the town's water supply\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -24712,13 +21095,12 @@ item holy_well {
     rarity = 50000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "聖なる井戸"
-    original_name_en = "holy well"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.holy_well
 }
 
 item presidents_chair {
@@ -24734,11 +21116,6 @@ item presidents_chair {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tゆったりとした座り心地を提供する威厳ある椅子。聞くところによると左手にシルバーキャット、右手にウィスキーを持つのがこの椅子の正式な座り方らしい。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A rare chair made for Asseria's elite,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24753,13 +21130,12 @@ item presidents_chair {
     rarity = 10000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "ボスチェア"
-    original_name_en = "president's chair"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.presidents_chair
 }
 
 item green_plant {
@@ -24775,11 +21151,6 @@ item green_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t目の疲れを取ってくれるという鉢植え。それが対外的による物なのか体内摂取によるものなのかは、売っている人間にしか知る由はない。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A plant used for decoration,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24794,13 +21165,12 @@ item green_plant {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "目に優しい植物"
-    original_name_en = "green plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.green_plant
 }
 
 item money_tree {
@@ -24816,11 +21186,6 @@ item money_tree {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t南国気分を味わえる鉢植え。お金が無い時はこの鉢植えを買って、是非とも南国へ行った気分に浸ろう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "Money grow's on this tree,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24835,13 +21200,12 @@ item money_tree {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "パキラ"
-    original_name_en = "money tree"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.money_tree
 }
 
 item barbecue_set {
@@ -24857,11 +21221,6 @@ item barbecue_set {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t直火を用いる優れた調理器具。これで調理した際に広がる香ばしい匂いは、食べる者にとって最高の調味料となろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t調理する為の優れた家具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "An amazing set of cooking tool's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24876,13 +21235,12 @@ item barbecue_set {
     rarity = 150000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "バーベキューセット"
-    original_name_en = "barbecue set"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.barbecue_set
 }
 
 item giant_cactus {
@@ -24898,11 +21256,6 @@ item giant_cactus {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t愛嬌のある形をした植物。夜、人々が寝静まった頃、この植物はそっと鉢から抜けだし街の外を自由に駆け回っている、という作り話が近年パルミアで人々の笑いを誘っている。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t観賞用の鉢植えだ。\n#〜鑑定報告書：＜鉢＞カテゴリ〜\n"
-    description_en = "A decorative cactus,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24917,13 +21270,12 @@ item giant_cactus {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "巨大サボテン"
-    original_name_en = "giant cactus"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.giant_cactus
 }
 
 item square_window {
@@ -24939,11 +21291,6 @@ item square_window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t硬い金属の枠組みが特徴的の窓。その硬さはかつて何処かの収容所で採用されたほどだという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t外から光を取りこむ家具。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24958,13 +21305,12 @@ item square_window {
     rarity = 600000
     coefficient = 100
     light = 17
-    katakana_name = ""
-    original_name_jp = "格子窓"
-    original_name_en = "square window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.square_window
 }
 
 item window {
@@ -24980,11 +21326,6 @@ item window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t広く見かける一般的な窓。これといって目立つ特徴はないが、比較的手に入りやすいので広く流通している。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t外から光を取りこむ家具。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -24999,13 +21340,12 @@ item window {
     rarity = 500000
     coefficient = 100
     light = 17
-    katakana_name = ""
-    original_name_jp = "窓"
-    original_name_en = "window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.window
 }
 
 item triangle_plant {
@@ -25021,11 +21361,6 @@ item triangle_plant {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t程良く人の手が入った植物。どれだけ時間がたってもその形状が崩れないのは、恐らく人知れず綺麗に刈り取っていく辻庭師がいるからなのだろう。\n#〜ティリス園芸図鑑〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t角度をつけて刈り取られた木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25040,13 +21375,12 @@ item triangle_plant {
     rarity = 600000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "三角木"
-    original_name_en = "triangle plant"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.triangle_plant
 }
 
 item house_board {
@@ -25062,11 +21396,6 @@ item house_board {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t様々な図面が詳細に書かれた板。所有する建築物で使用することで、無駄な筋力を使うことなく家の配置替えをすることができる優れものだ。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t部屋の内装を変更できる板。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25081,13 +21410,12 @@ item house_board {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ハウスボード"
-    original_name_en = "house board"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.house_board
 }
 
 item nice_window {
@@ -25103,11 +21431,6 @@ item nice_window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tくつろげる空間を演出する窓。窓枠から差し込む暖かな光は、一時の安らぎをあなたに提供するだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t外から光を取りこむ家具。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25122,13 +21445,12 @@ item nice_window {
     rarity = 400000
     coefficient = 100
     light = 17
-    katakana_name = ""
-    original_name_jp = "アットホームな窓"
-    original_name_en = "nice window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.nice_window
 }
 
 item kings_bed {
@@ -25144,11 +21466,6 @@ item kings_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t国王御用達の誉れ高い寝具。柔らかな眠り心地はいうまでも無く、様々な贅を凝らして作られたこのベッドは、家具を愛する者にとって最大の憧れである。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t王様御用達の優れたベッド。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25163,13 +21480,12 @@ item kings_bed {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "王様ベッド"
-    original_name_en = "king's bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kings_bed
 }
 
 item flower_arch {
@@ -25185,11 +21501,6 @@ item flower_arch {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t花で飾られた弓形の建造物。潜り抜ける際に若干の気恥ずかしさを感じるのは一体何故だろうか。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t花が飾られた半円状の建造物だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25204,13 +21515,12 @@ item flower_arch {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フラワーアーチ"
-    original_name_en = "flower arch"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.flower_arch
 }
 
 item bill {
@@ -25226,11 +21536,6 @@ item bill {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t決まった時期に金を求めるという悪魔の紙。燃やすなどして消滅させても無駄だ。奴らは仲間を連れ、一ヶ月後再びやってくる…。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t収めるべき税金の額が書かれた紙だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25245,13 +21550,12 @@ item bill {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "請求書"
-    original_name_en = "bill"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bill
 }
 
 item tax_masters_tax_box {
@@ -25267,11 +21571,6 @@ item tax_masters_tax_box {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t指定された税金を納める為の特別な箱。月に一度はパルミア大使館を訪れよう。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t請求書と付随された金額を収める為の箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "Pay your taxes here,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25286,13 +21585,12 @@ item tax_masters_tax_box {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "徴税士の納税箱"
-    original_name_en = "tax master's tax box"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tax_masters_tax_box
 }
 
 item bait {
@@ -25308,11 +21606,6 @@ item bait {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = "Bait for a fishing pole,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25327,13 +21620,12 @@ item bait {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = ""
-    original_name_en = "bait"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bait
 }
 
 item fish_a {
@@ -25349,11 +21641,6 @@ item fish_a {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25368,13 +21655,12 @@ item fish_a {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = ""
-    original_name_en = ""
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = ["fish"]
+    color = White
+    locale_key_prefix = core.locale.item.fish_a
 }
 
 item fish_b {
@@ -25390,11 +21676,6 @@ item fish_b {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25409,13 +21690,12 @@ item fish_b {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = ""
-    original_name_en = ""
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fish_b
 }
 
 item love_potion {
@@ -25431,11 +21711,6 @@ item love_potion {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t名前だけで何やらときめきを感じさせる魅惑の水薬。デリカシーのない者は直接手渡そうとして手痛い平手を食らうが、そういう趣味のある人はご自由に。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t人の友好度を上げるポーション。食物に混ぜることができる。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A label read's \"\"To be used only on livestock\""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -25450,13 +21725,12 @@ item love_potion {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "媚薬"
-    original_name_en = "love potion"
     originalnameref2 = ""
     has_random_name = false
     tags = ["nogive"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.love_potion
 }
 
 item treasure_map {
@@ -25472,11 +21746,6 @@ item treasure_map {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t世界のどこかに埋められているという、隠されし財宝の在処が記された地図。断片的な情報の為に発掘は困難を極めるが、どうにかその場所を見つけた時あなたは達成感にも似た感動を得るだろう。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tマップのどこかに隠された財宝の書かれた地図だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A map from sources unknown that lead's to treasure,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -25491,13 +21760,12 @@ item treasure_map {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "宝の地図"
-    original_name_en = "treasure map"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.treasure_map
 }
 
 item small_medal {
@@ -25513,11 +21781,6 @@ item small_medal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古代使用されていたとされる小さな硬貨。学術的価値しかない為流通はしていないが、その希少性から特に集めているという収集家も多いらしい。\n#〜世界のコイン・ティリス編〜\n"
-    description_jp_1 = "\t\tどこかにコレクターがいると言われるメダルだ。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t取るに足らない古銭。収集者がいるらしい。\n#〜鑑定報告書：＜貨幣＞カテゴリ〜\n"
-    description_en = "Dwarven currency rarely found outside of their homeland,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25532,13 +21795,12 @@ item small_medal {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "小さなメダル"
-    original_name_en = "small medal"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.small_medal
 }
 
 item cat_sisters_diary {
@@ -25554,11 +21816,6 @@ item cat_sisters_diary {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t妹の秘密が隠された日記。中には口では決して言えないあんなことやそんなことが書かれているとされ、研究家たちを騒がせている。\n#〜本の為の本・児童書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t妹猫をペットにすることができる本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "Nyo reading!"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -25573,13 +21830,12 @@ item cat_sisters_diary {
     rarity = 1000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "妹の秘密の日記"
-    original_name_en = "cat sister's diary"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.cat_sisters_diary
 }
 
 item girls_diary {
@@ -25595,11 +21851,6 @@ item girls_diary {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tお嬢様がしたためたとされる日記。中には彼女の煌びやかな生活内容と、幾らかの可愛らしい趣味が事細かに書かれているという。\n#〜本の為の本・児童書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tお嬢様をペットにすることができる本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A girl's dairy"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -25614,13 +21865,12 @@ item girls_diary {
     rarity = 5000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "お嬢様の日記"
-    original_name_en = "girl's diary"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.girls_diary
 }
 
 item shrine_gate {
@@ -25636,11 +21886,6 @@ item shrine_gate {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国の神の領域を主張するという木製の門。赤色に染められたそれは、何処となく生命の躍動を感じさせる。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t異国の神を迎える門だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25655,13 +21900,12 @@ item shrine_gate {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鳥居"
-    original_name_en = "shrine gate"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shrine_gate
 }
 
 item bottle_of_hermes_blood {
@@ -25677,11 +21921,6 @@ item bottle_of_hermes_blood {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t瓶を通してでも高熱を帯びていると分かる異様な液体。意を決してそれを飲み込んだ時、あなたはそこに過去のあなたを見るだろう！\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t速度が恒久的に上昇するポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A rare item that increases your speed,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -25696,13 +21935,12 @@ item bottle_of_hermes_blood {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ヘルメスの血"
-    original_name_en = "hermes blood"
     originalnameref2 = "bottle"
     has_random_name = true
     tags = ["spshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.bottle_of_hermes_blood
 }
 
 item sages_helm {
@@ -25718,11 +21956,6 @@ item sages_helm {
     dv = 4
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t賢者がより高みを目指す為に製作した兜。身につけることで知識が深まり、本来見えない存在まで見ることができるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t見えない者を見ることができる兜だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25737,13 +21970,12 @@ item sages_helm {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《賢者の兜》"
-    original_name_en = "<Sage's Helm>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.sages_helm
 }
 
 item spellbook_of_incognito {
@@ -25759,11 +21991,6 @@ item spellbook_of_incognito {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t「インコグニート」という呪文について学ぶことができる魔法書。悪戯好きなあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスター以外の敵対状況をリセットする呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome who's word's often mean another thing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -25778,13 +22005,12 @@ item spellbook_of_incognito {
     rarity = 200000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "インコグニートの魔法書"
-    original_name_en = "incognito"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_incognito
 }
 
 item disguise_set {
@@ -25800,11 +22026,6 @@ item disguise_set {
     dv = 0
     material = 0
     chargelevel = 4
-    description_jp_0 = "\t\t一瞬の早着替えで他人になり済まし、難を逃れることができる道具。喩え時間が無い場合でも、使用した際に勢いよく白い霧が吹き出し変装する時間を与えてくれるので、安心して使うことができる。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「初めて盗みをやった時、俺はまだ10にもなっていなかった。その時は生きる為に必死なだけだったが、今でもあの時と同じくらい大胆なつもりさ。ただ、ちょっと知恵はついたがね」\n#〜盗賊ギルドマスター『シン』の言葉〜\n"
-    description_jp_3 = "\t\tモンスター以外の敵対状況をリセットする道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Disguise kit - with instructions,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25819,13 +22040,12 @@ item disguise_set {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "変装セット"
-    original_name_en = "disguise set"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.disguise_set
 }
 
 item material_kit {
@@ -25841,11 +22061,6 @@ item material_kit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t物質の素材を全く違う特定の素材に叩き上げることができる槌。この奇跡の品は雪原にひっそりと住む兄弟の職人達による作品であり、かつ使用道具とされている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t指定された素材に作り直す槌だ。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "This hard to produce item can change the material of many items!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25860,13 +22075,12 @@ item material_kit {
     rarity = 5000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "素材槌"
-    original_name_en = "material kit"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.material_kit
 }
 
 item moon_gate {
@@ -25882,11 +22096,6 @@ item moon_gate {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t何やら危険な感じのする門。怪しく揺らめく光の中から、時折異形の姿や悲鳴が聞こえることがあるという。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t使用することでランダムなショウルームを訪れるゲートだ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25901,13 +22110,12 @@ item moon_gate {
     rarity = 400000
     coefficient = 100
     light = 18
-    katakana_name = ""
-    original_name_jp = "ムーンゲート"
-    original_name_en = "moon gate"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.moon_gate
 }
 
 item flying_scroll {
@@ -25923,11 +22131,6 @@ item flying_scroll {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t所持品１つの重量を軽くすることができる貴重な巻物。普段なかなか目にしない理由は、この巻物がさながら渡り鳥の様に空を飛んでいるからだ、という説がある。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tバックパックの中のアイテム１つの重量を軽くする巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -25942,13 +22145,12 @@ item flying_scroll {
     rarity = 25000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "羽の生えた巻物"
-    original_name_en = "flying scroll"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.flying_scroll
 }
 
 item panty {
@@ -25964,11 +22166,6 @@ item panty {
     dv = 0
     material = 1001
     chargelevel = 0
-    description_jp_0 = "\t\t乙女の為に専用の職人が織り上げたという「武器」。何故下着が武器となるのか、それは食らってみれば自ずと理解できるだろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t女性の着用していた下着だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A fitting weapon for those who fight dirty,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -25983,13 +22180,12 @@ item panty {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = "パンツ"
-    original_name_jp = "ギャルのパンティー"
-    original_name_en = "panty"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.panty
 }
 
 item leash {
@@ -26005,11 +22201,6 @@ item leash {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用することで対象を縛る紐。その場にいてほしい時等、寂しがり屋のあなたにお勧めだが、誰かれ構わず縛っていると怒られてしまうかもしれないぞ。\n#〜巻かれる為の長いもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t敵意のない者を縛って遠くに行かないようにする道具。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A leather leash for your pets!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26024,13 +22215,12 @@ item leash {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "紐"
-    original_name_en = "leash"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.leash
 }
 
 item mine {
@@ -26046,11 +22236,6 @@ item mine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用することで地面に埋まり、完全に見えなくなる兵器。何も知らずにその場所を踏みつけたら最後、跡形も無く消し飛ぶという。そう、それはたとえあなたが踏んだとしても…。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t踏んだ者を爆砕する爆弾だ。使用することができる。\n#〜鑑定報告書：＜爆弾＞カテゴリ〜\n"
-    description_en = "The warning label read's \"\"Do not step on mine when armed\""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26065,13 +22250,12 @@ item mine {
     rarity = 250000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "地雷"
-    original_name_en = "mine"
     originalnameref2 = ""
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.mine
 }
 
 item lockpick {
@@ -26087,11 +22271,6 @@ item lockpick {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t鍵を開ける際に必須ともいうべき道具。時々壊れてしまうのが玉に疵だが、腕が良ければどんな宝箱だって開けることができるだろう。開ける鍵は有っても閉める鍵なんて、この世界には無いのだ。\n#〜今日から君も冒険者・旅用マニュアル〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鍵開けの際に必要な道具。壊れることがある。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A questionable item not intended for public use,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26106,13 +22285,12 @@ item lockpick {
     rarity = 2000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ロックピック"
-    original_name_en = "lockpick"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.lockpick
 }
 
 item skeleton_key {
@@ -26128,11 +22306,6 @@ item skeleton_key {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tロックピックと併用することで解錠しやすくさせる特別な品。どんな鍵穴に差し込んでもピタリと合うことから旧時代の遺物ではないかと推測されている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鍵開けの成功率を飛躍的に上昇させる道具だ。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = "An item stolen from a legendary locksmith,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26147,13 +22320,12 @@ item skeleton_key {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "スケルトンキー"
-    original_name_en = "skeleton key"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.skeleton_key
 }
 
 item scroll_of_escape {
@@ -26169,11 +22341,6 @@ item scroll_of_escape {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t外へとつながる門を呼びだす巻物。誤って使用した場合、再度読むと取り消すことができる。当然ながら２枚消費するが、勉強代と思って諦めよう。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t数ターン後にダンジョンから脱出できる巻物。新たに読むと中止できる。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -26188,13 +22355,12 @@ item scroll_of_escape {
     rarity = 500000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "脱出の巻物"
-    original_name_en = "escape"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_escape
 }
 
 item happy_apple {
@@ -26210,11 +22376,6 @@ item happy_apple {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t仄かに金色に輝く珍しいリンゴ。中にはたっぷりの密と幸運が含まれているとされ、過去この奇跡の果物を求め人々は大陸をさまよい歩いたという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = "\t\t幸せが詰め込まれたとされる、奇跡のリンゴだ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t運勢が大きく上昇する食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A magical fruit said to come from Ehekatl's garden,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26229,13 +22390,12 @@ item happy_apple {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "幸運のリンゴ"
-    original_name_en = "happy apple"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = LightBlue
+    locale_key_prefix = core.locale.item.happy_apple
 }
 
 item unicorn_horn {
@@ -26251,11 +22411,6 @@ item unicorn_horn {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t幻の一角獣の角。煎じて飲み下すことで体内の不安や狂気を取り去ってくれるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t自身と周囲の味方の狂気度を下げる道具だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "Known for it's amazing healing properties unicorn horn's are also a reminder of how Elonians have driven the species into near extinction,,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26270,13 +22425,12 @@ item unicorn_horn {
     rarity = 40000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ユニコーンの角"
-    original_name_en = "unicorn horn"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.unicorn_horn
 }
 
 item cooler_box {
@@ -26292,11 +22446,6 @@ item cooler_box {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食べ物を腐らせることなく保管できる機械仕掛けの箱。極めて便利な品物だが４種類しか入らないので、大勢でピクニックに行く時はご注意あれ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t４種の食物を腐らすことなく保持する箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "A cooler box"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26311,13 +22460,12 @@ item cooler_box {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クーラーボックス"
-    original_name_en = "cooler box"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cooler_box
 }
 
 item rice_barrel {
@@ -26333,11 +22481,6 @@ item rice_barrel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t穀物が詰まった藁製の袋。風通しが良く穀物が傷みにくい為、広く使われている。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t穀物が入った袋だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A barrel for holding rice,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26352,13 +22495,12 @@ item rice_barrel {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "米俵"
-    original_name_en = "rice barrel"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.rice_barrel
 }
 
 item eastern_bed {
@@ -26374,11 +22516,6 @@ item eastern_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国から伝わりし地面に直接布を敷く寝具。布越しとはいえ堅い地面と背中合わせなので、寝心地はそれほど良くないようだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t簡易的な寝具。使用することができる。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A useful bed of eastern design,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26393,13 +22530,12 @@ item eastern_bed {
     rarity = 200000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "布団"
-    original_name_en = "eastern bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.eastern_bed
 }
 
 item decorated_window {
@@ -26415,11 +22551,6 @@ item decorated_window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t間仕切りが付けられた室内用窓。覗きを嫌うレイディー達がこぞって買っていくという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t間仕切りのついた窓。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26434,13 +22565,12 @@ item decorated_window {
     rarity = 200000
     coefficient = 100
     light = 17
-    katakana_name = ""
-    original_name_jp = "カーテン付きの窓"
-    original_name_en = "decorated window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.decorated_window
 }
 
 item king_drawer {
@@ -26456,11 +22586,6 @@ item king_drawer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t国王御用達の誉れ高い箪笥。機能性を損なう程に鮮やかな装飾がなされている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t王様御用達の箪笥だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "It even has a book shelf!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26475,13 +22600,12 @@ item king_drawer {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "王様箪笥"
-    original_name_en = "king drawer"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.king_drawer
 }
 
 item menu_board {
@@ -26497,11 +22621,6 @@ item menu_board {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t品書が書かれた板。お店のオススメなる料理が書かれているが、それがどこの街のものかは定かではない。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tメニューが書かれた板だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "A menu for a restaurant,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26516,13 +22635,12 @@ item menu_board {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "メニューボード"
-    original_name_en = "menu board"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.menu_board
 }
 
 item black_board {
@@ -26538,11 +22656,6 @@ item black_board {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t白墨で書かれた文字を書き消しできる巨大な板。大抵の学び舎にはこの板が備え付けられているという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t書き消し自由な板。使用することはできない。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = "Technophile's use this to teach,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26557,13 +22670,12 @@ item black_board {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "黒板"
-    original_name_en = "black board"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.black_board
 }
 
 item sofa {
@@ -26579,11 +22691,6 @@ item sofa {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tゆったりとした安定感抜群の長椅子。我が家でくつろぐには最適な家具だろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A finely crafted sofa,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26598,13 +22705,12 @@ item sofa {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ソファー"
-    original_name_en = "sofa"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.sofa
 }
 
 item flowerbed {
@@ -26620,11 +22726,6 @@ item flowerbed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t小さな花達を守る為、簡易な塀が取り付けられている花壇だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t間仕切りのついた花壇だ。\n#〜鑑定報告書：＜壇＞カテゴリ〜\n"
-    description_en = "A beautiful bed of flowers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26639,13 +22740,12 @@ item flowerbed {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "フェンス付き花壇"
-    original_name_en = "flowerbed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.flowerbed
 }
 
 item toilet {
@@ -26661,11 +22761,6 @@ item toilet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t当然ながらノースティリスにもトイレは存在する。それも水洗だ。しかし喉が渇いているからといってこのような所で渇きを満たそうとする者はかなりの変わり者か、全てを捨て去った者だけだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t水を使用する設備。飲むことができる。\n#〜鑑定報告書：＜設備＞カテゴリ〜\n"
-    description_en = "You can drink from it but I don't recommend it,,,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -26680,13 +22775,12 @@ item toilet {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トイレ"
-    original_name_en = "toilet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.toilet
 }
 
 item craft_cupboard {
@@ -26702,11 +22796,6 @@ item craft_cupboard {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tその道のプロが精魂込めて作り上げた食器棚。一見シンプルに見えるが、普段見えない部分に匠の遊び心が隠れている。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t匠の作った食器用の棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "A place to store your fine china,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26721,13 +22810,12 @@ item craft_cupboard {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "名工食器棚"
-    original_name_en = "craft cupboard"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.craft_cupboard
 }
 
 item sink {
@@ -26743,11 +22831,6 @@ item sink {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t水周りの仕事を一手に引き受ける流し台。非常に巨大で重量もある為持ち運びには注意が必要だ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大きな流し台だ。使用することはできない。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = "Has it's own water filtration system,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26762,13 +22845,12 @@ item sink {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "シンク"
-    original_name_en = "sink"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sink
 }
 
 item junk {
@@ -26784,11 +22866,6 @@ item junk {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t不用品をかき集め、うず高く積んだとても重い物体。本来持ち運ぶようなものではないが、どうしても持ち運ばなければならない事情がある時は、廃品の一部にならないように細心の注意を払おう。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特に使い道はない。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = "One man's junk is another man's treasure!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26803,13 +22880,12 @@ item junk {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "廃品"
-    original_name_en = "junk"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.junk
 }
 
 item double_bed {
@@ -26825,11 +22901,6 @@ item double_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t２人用のやや幅広な寝具。想定人数は２人だが詰めれば４人までいけるので、困窮にあえぐ冒険者の一団が金額を折半して皆でこのベッドに寝ることもあるようだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t眠る為の家具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26844,13 +22915,12 @@ item double_bed {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ダブルベッド"
-    original_name_en = "double bed"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.double_bed
 }
 
 item hero_cheese {
@@ -26866,11 +22936,6 @@ item hero_cheese {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食べると生命力がみなぎるとされる、香しいチーズ。古の時代より、勇猛果敢な英雄達が好んで食べていたとされる。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = "\t\t食べると生命力がみなぎるとされる、香しいチーズだ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t生命力が上昇する食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of cheese eaten by hero's"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26885,13 +22950,12 @@ item hero_cheese {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "英雄チーズ"
-    original_name_en = "hero cheese"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.hero_cheese
 }
 
 item eastern_lamp {
@@ -26907,11 +22971,6 @@ item eastern_lamp {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t照明を安置する為の石造りの構造物。これが一台あるだけで周囲が厳かな雰囲気に包まれるという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t異国の重い照明。常に周囲を照らす。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26926,13 +22985,12 @@ item eastern_lamp {
     rarity = 500000
     coefficient = 100
     light = 13
-    katakana_name = ""
-    original_name_jp = "灯篭"
-    original_name_en = "eastern lamp"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.eastern_lamp
 }
 
 item eastern_window {
@@ -26948,11 +23006,6 @@ item eastern_window {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国情緒あふれる丸型の窓。取り付ければ何となく外国を訪れている気分にさせるという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t円形をした窓。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -26967,13 +23020,12 @@ item eastern_window {
     rarity = 500000
     coefficient = 100
     light = 17
-    katakana_name = ""
-    original_name_jp = "東洋の窓"
-    original_name_en = "eastern window"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.eastern_window
 }
 
 item chochin {
@@ -26989,11 +23041,6 @@ item chochin {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t持ち運びやすいように作られた照明器具。装飾品としても扱われる他、異国では、ガードが夜警の為に持ち歩いているという話だ。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t異国の簡易照明。夜間、周囲を弱く照らす。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27008,13 +23055,12 @@ item chochin {
     rarity = 500000
     coefficient = 100
     light = 19
-    katakana_name = ""
-    original_name_jp = "提灯"
-    original_name_en = "chochin"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.chochin
 }
 
 item partition {
@@ -27030,11 +23076,6 @@ item partition {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t折りたたむことができる、雰囲気ある間仕切り。かつて異国の若い僧侶がこれの一つに封じ込まれた虎を倒そうとしたことがあるとか。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t和風の間仕切りだ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27049,13 +23090,12 @@ item partition {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "パーティション"
-    original_name_en = "partition"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.partition
 }
 
 item spellbook_of_darkness_arrow {
@@ -27071,11 +23111,6 @@ item spellbook_of_darkness_arrow {
     dv = 0
     material = 0
     chargelevel = 5
-    description_jp_0 = "\t\t「暗黒の矢」という呪文について学ぶことができる魔法書。クールに決めたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t暗黒属性の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "This tome seems to carefully bend light,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -27090,13 +23125,12 @@ item spellbook_of_darkness_arrow {
     rarity = 1000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "暗黒の矢の魔法書"
-    original_name_en = "darkness arrow"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_darkness_arrow
 }
 
 item dal_i_thalion {
@@ -27112,11 +23146,6 @@ item dal_i_thalion {
     dv = 16
     material = 1
     chargelevel = 0
-    description_jp_0 = "\t\t革で作られたしっかりとした靴。思ったより足に馴染み、長旅における唯一無二の友となるだろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t旅の歩みを早める靴だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27131,13 +23160,12 @@ item dal_i_thalion {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ダル=イ=サリオン》"
-    original_name_en = "<Dal-i-thalion>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.dal_i_thalion
 }
 
 item magic_fruit {
@@ -27153,11 +23181,6 @@ item magic_fruit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t食べると頭に知識の泉が湧くとされる果実。さる高名な魔法使いはこの果実を恒久的に手に入れられるよう、自らの知識を全て費やして研究したが、結局繁殖させるには至らなかったという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = "\t\t食べると頭に知識の泉が湧くとされる果実だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\tマナが上昇する食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A type of fruit,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27172,13 +23195,12 @@ item magic_fruit {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マジックフルーツ"
-    original_name_en = "magic fruit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.magic_fruit
 }
 
 item monster_heart {
@@ -27194,11 +23216,6 @@ item monster_heart {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t今もなお鼓動し続ける謎の心臓。所持しているだけで敵の心をも自分の物にすると言われている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t所持するだけでモンスターの支配成功率が上昇する道具だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = "Help's to tame monsters,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27213,13 +23230,12 @@ item monster_heart {
     rarity = 800000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "モンスターハート"
-    original_name_en = "monster heart"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.monster_heart
 }
 
 item speed_ring {
@@ -27235,11 +23251,6 @@ item speed_ring {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t装着者の速度を飛躍的に上げるという指輪。一説には風の女神の力が込められているとか、内部に緻密な古代技術が詰め込まれている等、色々言われているが詳しいことはわかっていない。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t人を常に加速させる魔力が込められた指輪。老化するという弊害はないので、愛用している冒険者も多いようだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_3 = "\t\t速度が上昇する指輪だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = "A rare magical ring that increases your speed,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27254,13 +23265,12 @@ item speed_ring {
     rarity = 30000
     coefficient = 100
     light = 0
-    katakana_name = "スピードリング"
-    original_name_jp = "スピードの指輪"
-    original_name_en = "speed ring"
     originalnameref2 = ""
     has_random_name = true
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.speed_ring
 }
 
 item statue_of_opatos {
@@ -27276,11 +23286,6 @@ item statue_of_opatos {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、大地の神を模った彫像。その躍動感ある姿勢は、どことなく雄々しい。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大地の神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "You feel the ground shake slightly at this statue,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27295,13 +23300,12 @@ item statue_of_opatos {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "オパートス像"
-    original_name_en = "Opatos"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_opatos
 }
 
 item statue_of_lulwy {
@@ -27317,11 +23321,6 @@ item statue_of_lulwy {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、風の女神を模った彫像。流れるように作られた肢体は、どことなく美しい。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t風の女神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = "A beautiful statue of a winged goddess,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27336,13 +23335,12 @@ item statue_of_lulwy {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ルルウィ像"
-    original_name_en = "Lulwy"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_lulwy
 }
 
 item sisters_love_fueled_lunch {
@@ -27358,11 +23356,6 @@ item sisters_love_fueled_lunch {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tあなたの為だけに妹が作ったお弁当。愛があるので決して腐らない。食べるだけで周囲にマイナスイオンが発生し、驚異的なリラクゼーション効果があると言われているが、未だ私は食べたことが無い…。\n#〜妹研究の第一人者モクシスの研究論文〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t狂気度が減少する食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "It even has cookies!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27377,13 +23370,12 @@ item sisters_love_fueled_lunch {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "妹が愛を込めて作ったお弁当"
-    original_name_en = "sister's love fueled lunch"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sisters_love_fueled_lunch
 }
 
 item book_of_rachel {
@@ -27399,11 +23391,6 @@ item book_of_rachel {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t童話作家、レイチェルが描いた童話集。独特の温かみある文章と挿絵は読んだ者に心に触れる何かを与えるという。\n#〜本の為の本・児童書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tある童話作家の書いた本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A book decorated with pictures,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -27418,13 +23405,12 @@ item book_of_rachel {
     rarity = 50000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "レイチェルの絵本"
-    original_name_en = "book"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.book_of_rachel
 }
 
 item cargo_art {
@@ -27440,11 +23426,6 @@ item cargo_art {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t様々な芸術家が書いた絵を一絡げにした交易品。そうは言っても最低限の保管はされている為、取引先で開いたらまるで価値のないものになっていた、といったトラブルは起こっていないようだ。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of art supplies,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27459,13 +23440,12 @@ item cargo_art {
     rarity = 150000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "絵画(荷車)"
-    original_name_en = "art"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_art
 }
 
 item cargo_canvas {
@@ -27481,11 +23461,6 @@ item cargo_canvas {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t一通りの絵画用具が詰まった交易品。開封すると絵具などが周囲に散らばってしまう為、使用することはできない。\n#〜エウダーナに学ぶ必勝交易法〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t交易品だ。\n#〜鑑定報告書：＜交易品＞カテゴリ〜\n"
-    description_en = "A cargo of canvas,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27500,13 +23475,12 @@ item cargo_canvas {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "お絵かきセット(荷車)"
-    original_name_en = "canvas"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.cargo_canvas
 }
 
 item nuclear_bomb {
@@ -27522,11 +23496,6 @@ item nuclear_bomb {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「それ自体が悪なのではない、使ったものが悪なのだ」\n#〜説明書の最後のページに書かれた文字〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一定時間後広範囲に壊滅的な破壊を加える爆弾だ。\n#〜鑑定報告書：＜爆弾＞カテゴリ〜\n"
-    description_en = "A horrifying weapon of destruction from ancient times,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27541,13 +23510,12 @@ item nuclear_bomb {
     rarity = 250000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "原子爆弾『Cat's Cradle』"
-    original_name_en = "nuclear bomb"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.nuclear_bomb
 }
 
 item secret_treasure {
@@ -27563,11 +23531,6 @@ item secret_treasure {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用することで自らの肉体に新たな変化をもたらすとされる宝石だ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = "\t\t使用することで特殊なフィートを得ることができる宝石だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特殊な能力を秘めた宝石。使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = "This strange object seems to slightly shift it's shape,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27582,13 +23545,12 @@ item secret_treasure {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "秘宝"
-    original_name_en = "secret treasure"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.secret_treasure
 }
 
 item wind_bow {
@@ -27604,11 +23566,6 @@ item wind_bow {
     dv = 0
     material = 8
     chargelevel = 0
-    description_jp_0 = "\t\t未知の素材で出来た長弓。身に付けた者に風の加護を与え、一度弓引けばそこに風の女神の姿を見るという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t風の神から下賜される弓だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27623,13 +23580,12 @@ item wind_bow {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ウィンドボウ》"
-    original_name_en = "<Wind Bow>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = LightBlue
+    locale_key_prefix = core.locale.item.wind_bow
 }
 
 item winchester_premium {
@@ -27645,11 +23601,6 @@ item winchester_premium {
     dv = 0
     material = 13
     chargelevel = 0
-    description_jp_0 = "\t\t銃の名工が作り上げたとされる、光に乱反射する散弾銃。銃口から勢いよく放出される特殊な硝煙は、詠唱を妨げる特殊な力を持つという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t機械の神から下賜される散弾銃だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27664,13 +23615,12 @@ item winchester_premium {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ウィンチェスター・プレミアム》"
-    original_name_en = "<Winchester Premium>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.winchester_premium
 }
 
 item kumiromi_scythe {
@@ -27686,11 +23636,6 @@ item kumiromi_scythe {
     dv = 0
     material = 14
     chargelevel = 0
-    description_jp_0 = "\t\t農業を営む者でこのお伽噺を知らぬ者はいないだろう。かつて日照り続きで作物が取れなかった頃、どこからともなくそれは現れ、やがて周辺が緑に覆われたという話を。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t収穫の神から下賜される大鎌だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27705,13 +23650,12 @@ item kumiromi_scythe {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《クミロミサイズ》"
-    original_name_en = "<Kumiromi Scythe>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
+    locale_key_prefix = core.locale.item.kumiromi_scythe
 }
 
 item elemental_staff {
@@ -27727,11 +23671,6 @@ item elemental_staff {
     dv = 11
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t三種の宝石が飾り付けられた黒い杖。宝石それぞれが元素の象徴とされ、それは扱う者の魔法力を飛躍的に増大させるのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t元素の神から下賜される杖だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27746,13 +23685,12 @@ item elemental_staff {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《エレメンタルスタッフ》"
-    original_name_en = "<Elemental Staff>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = LightGreen
+    locale_key_prefix = core.locale.item.elemental_staff
 }
 
 item holy_lance {
@@ -27768,11 +23706,6 @@ item holy_lance {
     dv = 4
     material = 25
     chargelevel = 0
-    description_jp_0 = "\t\t一片の曇りも無い聖なる槍。一度敵を突けば、あなたはそこに癒しの女神の力の片鱗を見ることとなるだろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t癒しの女神から下賜される槍だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27787,13 +23720,12 @@ item holy_lance {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ホーリーランス》"
-    original_name_en = "<Holy Lance>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.holy_lance
 }
 
 item lucky_dagger {
@@ -27809,11 +23741,6 @@ item lucky_dagger {
     dv = 18
     material = 21
     chargelevel = 0
-    description_jp_0 = "\t\t古来から幸運の証であるミカを削り出して作られた短剣。一説によれば幸運の女神が魚を捌く際、誤って地上に落としたものだと言われている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t幸運の女神から下賜される短剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27828,13 +23755,12 @@ item lucky_dagger {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ラッキーダガー》"
-    original_name_en = "<Lucky Dagger>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.lucky_dagger
 }
 
 item gaia_hammer {
@@ -27850,11 +23776,6 @@ item gaia_hammer {
     dv = 0
     material = 31
     chargelevel = 0
-    description_jp_0 = "\t\t堂々たる風格を持った巨大で重い槌。その槌を奮う姿は、さながら大地の神が顕現しているかのようだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大地の神から下賜される槌だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27869,13 +23790,12 @@ item gaia_hammer {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《大地の大槌》"
-    original_name_en = "<Gaia Hammer>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.gaia_hammer
 }
 
 item lulwys_gem_stone_of_god_speed {
@@ -27891,11 +23811,6 @@ item lulwys_gem_stone_of_god_speed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t風の女神がもたらした奇跡の宝玉。時の風を感じ取れる力を持つという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t一時的に速度を上昇させる宝玉。使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27910,13 +23825,12 @@ item lulwys_gem_stone_of_god_speed {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ルルウィの神速の宝玉"
-    original_name_en = "god speed"
     originalnameref2 = "Lulwy's gem stone"
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.lulwys_gem_stone_of_god_speed
 }
 
 item jures_gem_stone_of_holy_rain {
@@ -27932,11 +23846,6 @@ item jures_gem_stone_of_holy_rain {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t癒しの女神がもたらした奇跡の宝玉。周囲に生命力を振りまく力を持つという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t周囲の味方のHPが回復する宝玉。使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27951,13 +23860,12 @@ item jures_gem_stone_of_holy_rain {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ジュアの聖なる雨の宝玉"
-    original_name_en = "holy rain"
     originalnameref2 = "Jure's gem stone"
     has_random_name = false
     tags = []
     rftags = []
+    color = LightBlue
+    locale_key_prefix = core.locale.item.jures_gem_stone_of_holy_rain
 }
 
 item kumiromis_gem_stone_of_rejuvenation {
@@ -27973,11 +23881,6 @@ item kumiromis_gem_stone_of_rejuvenation {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t収穫の神がもたらした奇跡の宝玉。局所的な豊穣を与える力を持つという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t農作物の育成を促進する宝玉。使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -27992,13 +23895,12 @@ item kumiromis_gem_stone_of_rejuvenation {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クミロミの活性化の宝玉"
-    original_name_en = "rejuvenation"
     originalnameref2 = "Kumiromi's gem stone"
     has_random_name = false
     tags = []
     rftags = []
+    color = Green
+    locale_key_prefix = core.locale.item.kumiromis_gem_stone_of_rejuvenation
 }
 
 item gem_stone_of_mani {
@@ -28014,11 +23916,6 @@ item gem_stone_of_mani {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t機械仕掛けの神がもたらした奇跡の宝玉。物質を違う物へと変貌させてしまう力を持つという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムを再構築する宝玉。使用することができる。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28033,13 +23930,12 @@ item gem_stone_of_mani {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マニの再構築の宝玉"
-    original_name_en = "Mani"
     originalnameref2 = "gem stone"
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.gem_stone_of_mani
 }
 
 item gene_machine {
@@ -28055,11 +23951,6 @@ item gene_machine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t透明な円柱形をした奇妙な機械。その正体は生物から遺伝子情報を取り出し、２つを掛け合わせて新たな生物を作り出すことができるという、何とも常軌を逸する悪魔の機械なのだ。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t２体のペットを１体にする機械。使用することができる。\n#〜鑑定報告書：＜遺物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28074,13 +23965,12 @@ item gene_machine {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "遺伝子複合機"
-    original_name_en = "gene machine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.gene_machine
 }
 
 item monster_ball {
@@ -28096,11 +23986,6 @@ item monster_ball {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t投げることで弱った敵を捕獲する機械仕掛けの玉。詳しい製法は不明だが、遺伝子学の隆盛がこの道具の進化に大いに関わっていると考えられている。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスターを捕獲できる玉。投げることができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A strange item invented by a mad scientist…,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28115,13 +24000,12 @@ item monster_ball {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "モンスターボール"
-    original_name_en = "monster ball"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.monster_ball
 }
 
 item statue_of_jure {
@@ -28137,11 +24021,6 @@ item statue_of_jure {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、癒しの女神を模った彫像。その控えめな姿勢は、どことなく清楚さを感じる。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t癒しの女神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28156,13 +24035,12 @@ item statue_of_jure {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ジュア像"
-    original_name_en = "Jure"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_jure
 }
 
 item ancient_book {
@@ -28178,11 +24056,6 @@ item ancient_book {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t多様なことが書かれた貴重な文献。読み解くことで高位の存在に触れ得ると考えられている。\n#〜本の為の本・解読書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t古代の知識が書き込まれた書。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A book written in a dead language,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -28197,13 +24070,12 @@ item ancient_book {
     rarity = 5000000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "古書物"
-    original_name_en = "ancient book"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.ancient_book
 }
 
 item iron_maiden {
@@ -28219,11 +24091,6 @@ item iron_maiden {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tかつて拷問用に存在した世にも恐ろしき刑具。前面が左右に開く構造で、その内部には血に飢えた鉄針が中心へ向かって突き出ている。話によれば動き出すものもあるらしく、興味本位で触らない方がいいだろう。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = "\t\t見た目にも恐ろしい家具。触らぬ方がよいだろう。\n#〜鑑定報告書：＜家具？＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\tしようすることができる。\n#〜鑑定報告書：＜刑具＞カテゴリ〜\n"
-    description_en = "A device of pure pain!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28238,13 +24105,12 @@ item iron_maiden {
     rarity = 5000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "アイアンメイデン"
-    original_name_en = "iron maiden"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.iron_maiden
 }
 
 item guillotine {
@@ -28260,11 +24126,6 @@ item guillotine {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tかつて処刑用に存在した世にも恐ろしき刑具。余りにシンプルな構造なそれは犠牲者の首を落とす為だけに作られている。今は使われていないようだが決して油断する勿れ。刃は常にあなたの頭上で鈍く光っている。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = "\t\t見た目にも恐ろしい家具。触らぬ方がよいだろう。\n#〜鑑定報告書：＜家具？＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\tしようすることができる。\n#〜鑑定報告書：＜刑具＞カテゴリ〜\n"
-    description_en = "You are sure to get ahead in life with one of these!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28279,13 +24140,12 @@ item guillotine {
     rarity = 5000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ギロチン"
-    original_name_en = "guillotine"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.guillotine
 }
 
 item pan_flute {
@@ -28301,11 +24161,6 @@ item pan_flute {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t幾つかの管を重ねた管楽器。音程が安定しにくく、これを扱う演奏家は絶えず調律する必要があるという。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A type of instrument designed after (but larger than) fairy made flute's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28320,13 +24175,12 @@ item pan_flute {
     rarity = 350000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "パンフルート"
-    original_name_en = "pan flute"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.pan_flute
 }
 
 item lute {
@@ -28342,11 +24196,6 @@ item lute {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t掻き鳴らすことで音を発す弦楽器。卵を縦半分に切ったような特異な形状は、内部に音を反響させ、音色に深みを与えることに一役買っている。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A lute is a common musical instrument among bard's,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28361,13 +24210,12 @@ item lute {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "リュート"
-    original_name_en = "lute"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.lute
 }
 
 item harmonica {
@@ -28383,11 +24231,6 @@ item harmonica {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t軽い音で旋律を奏でる特殊な楽器。小さな体から発せられる楽しげな音は、聞いている方まで楽しくさせるという。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "A harmonica commonly found in Culdia,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28402,13 +24245,12 @@ item harmonica {
     rarity = 500000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ハーモニカ"
-    original_name_en = "harmonica"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.harmonica
 }
 
 item harp {
@@ -28424,11 +24266,6 @@ item harp {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t両手で持ち弦を弾いて音を出す弦楽器。持ち運びには適さないが、そのゆったりとした音は聴衆を優雅な気分にさせることだろう。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = "An expertly crafted harp favored by the Erea of Vindale,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28443,13 +24280,12 @@ item harp {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ハープ"
-    original_name_en = "harp"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.harp
 }
 
 item eastern_partition {
@@ -28465,11 +24301,6 @@ item eastern_partition {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t部屋の仕切りとして用いられる家具。お洒落な雰囲気を家に醸し出すことができる。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t空間用の仕切りだ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28484,13 +24315,12 @@ item eastern_partition {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "間仕切り"
-    original_name_en = "eastern partition"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.eastern_partition
 }
 
 item axe_of_destruction {
@@ -28506,11 +24336,6 @@ item axe_of_destruction {
     dv = 0
     material = 15
     chargelevel = 0
-    description_jp_0 = "\t\tまるで血塗られているかの如く赤き大斧。そこから繰り出される一撃は、どんなものでも貫き砕くという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tクリティカルが出やすい大斧だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28525,13 +24350,12 @@ item axe_of_destruction {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《破壊の斧》"
-    original_name_en = "<Axe of Destruction>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.axe_of_destruction
 }
 
 item spellbook_of_magic_ball {
@@ -28547,11 +24371,6 @@ item spellbook_of_magic_ball {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「魔力の嵐」という呪文について学ぶことができる魔法書。雨の日に外に出たがるあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t範囲的な無属正攻撃の呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that teaches how to manipulate magic energy by sheer force of will, "
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -28566,13 +24385,12 @@ item spellbook_of_magic_ball {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔力の嵐の魔法書"
-    original_name_en = "magic ball"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_magic_ball
 }
 
 item spellbook_of_magic_laser {
@@ -28588,11 +24406,6 @@ item spellbook_of_magic_laser {
     dv = 0
     material = 0
     chargelevel = 2
-    description_jp_0 = "\t\t「魔力の集積」という呪文について学ぶことができる魔法書。指からビームを出したいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t威力の高い無属正の矢を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome that teaches how to focus magic energy"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -28607,13 +24420,12 @@ item spellbook_of_magic_laser {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "魔力の集積の魔法書"
-    original_name_en = "magic laser"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_magic_laser
 }
 
 item potion_of_salt_solution {
@@ -28629,11 +24441,6 @@ item potion_of_salt_solution {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t塩分が過分に含まれた水薬。完全に混ざり切っている為料理に使用することはできないが、街の清掃員達はこれを害虫駆除用に多数携行しているという。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t塩辛いだけのポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Some salt,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -28648,13 +24455,12 @@ item potion_of_salt_solution {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "食塩水"
-    original_name_en = "salt solution"
     originalnameref2 = "potion"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.potion_of_salt_solution
 }
 
 item little_ball {
@@ -28670,11 +24476,6 @@ item little_ball {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t特別な存在を捕らえる為に作られた、怪しく光る機械仕掛けの玉。内部に快適な空間を作り出そうと、相当な機構的に無茶をしている為、投擲に失敗するだけで壊れて無くなってしまう。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tリトルシスターを捕獲できる玉。投げることができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "This ball give's you unique powers…"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28689,13 +24490,12 @@ item little_ball {
     rarity = 400000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "リトル捕獲玉"
-    original_name_en = "little ball"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.little_ball
 }
 
 item town_book {
@@ -28711,11 +24511,6 @@ item town_book {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t街の情勢が書かれた本。しかしながらノースティリスでは自由を尊重している為、制度の書かれたこの本は無用の長物と化しているらしい。\n#〜本の為の本・歴史書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t街の情勢を知る本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = ""
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -28730,13 +24525,12 @@ item town_book {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "タウンブック"
-    original_name_en = "town book"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.town_book
 }
 
 item deck {
@@ -28752,11 +24546,6 @@ item deck {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tカードを保管しておくための容れ物。貴族達の中にはコレクションに飽き足らず、これを用いた遊戯を考え出す者まで現れたという。\n#〜打切上等！箱マニア・創刊号〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tカードを収納できる箱。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "A deck of card'"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28771,13 +24560,12 @@ item deck {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "デッキ"
-    original_name_en = "deck"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.deck
 }
 
 item rabbits_tail {
@@ -28793,11 +24581,6 @@ item rabbits_tail {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t古来から幸運の証とされてきた兎の尾の部分。装飾品にする地方もあるらしいが、食することによって直接幸運を取りこむと考えるのが古から伝わるノースティリスの教えだ。\n#〜鉄の胃袋を求めて・完食列伝〜\n"
-    description_jp_1 = "\t\t幸運の証とされるうさぎのしっぽ。食べることができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t運勢が上昇する食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "A tail said to bring luck,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28812,13 +24595,12 @@ item rabbits_tail {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "うさぎのしっぽ"
-    original_name_en = "rabbit's tail"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.rabbits_tail
 }
 
 item whistle {
@@ -28834,11 +24616,6 @@ item whistle {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t使用することで周囲に高音を響かせる笛。どんなに眠った者でもたちどころに起こすその音は、さながら終末を呼び起こす災厄の角笛の様だ。…少なくとも眠っていた者にとっては。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t周囲に高音を響かせる笛。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Useful for waking people up or just playing pranks,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28853,13 +24630,12 @@ item whistle {
     rarity = 75000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ホイッスル"
-    original_name_en = "whistle"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.whistle
 }
 
 item vomit {
@@ -28875,11 +24651,6 @@ item vomit {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t調子に乗って飲みすぎたり、傷んだものを食べてしまったり。その様な際に肉体がとる自衛的行動によって生み出された悲劇の物質。水薬ではないが一応飲める。一応、飲める…。\n#〜鉄の胃袋を求めて・完食列伝〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「生きている以上吐くことだってあるだろうな。だがな、街の中に吐くことだけは決して許さん。もし俺の眼の前でやってみろ、その場で即座におまえの口に押し戻してやるからな！」\n#〜掃除屋『バルザック』の言葉〜\n"
-    description_jp_3 = "\t\t飲むことができる物体だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Why did you pick this up?,,,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -28894,13 +24665,12 @@ item vomit {
     rarity = 10000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ゲロゲロ"
-    original_name_en = "vomit"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.vomit
 }
 
 item beggars_pendant {
@@ -28916,11 +24686,6 @@ item beggars_pendant {
     dv = 8
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t鉄で出来たみすぼらしい首飾り。装飾品というより何かの札のようにも見えるが、これは下賤な者達にとって味方か敵かを区別する目印であるからだとされる。\n#〜情報屋ウィーゼムの調べた情報〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t不幸な出来事から身を守る首輪だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -28935,13 +24700,12 @@ item beggars_pendant {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《乞食のペンダント》"
-    original_name_en = "<Beggar's Pendant>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.beggars_pendant
 }
 
 item potion_of_descent {
@@ -28957,11 +24721,6 @@ item potion_of_descent {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t飲んだ瞬間、自分が今まで積み上げてきた何かが崩れ去っていったかのような感覚に陥る非常に危険なポーション。気をつけるがいい、あなたは今や過去のあなただ！\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tレベルを下げるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "A strange potion,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -28976,13 +24735,12 @@ item potion_of_descent {
     rarity = 4000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "下落のポーション"
-    original_name_en = "descent"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_descent
 }
 
 item stradivarius {
@@ -28998,11 +24756,6 @@ item stradivarius {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t演奏の名手の元に訪れるという伝説のヴァイオリン。その音色は聴衆の心に大きく響き、奏者へ感謝の贈り物をする者が後を絶たないという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tおひねりの質が上がる演奏用の道具。使用することができる。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = "A legendary instrument,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29017,13 +24770,12 @@ item stradivarius {
     rarity = 400000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ストラディバリウス》"
-    original_name_en = "<Stradivarius>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.stradivarius
 }
 
 item book_of_resurrection {
@@ -29039,11 +24791,6 @@ item book_of_resurrection {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t失われた存在を呼び戻すとされる貴重な書物。皮肉なことに、古代この書物を巡って大きな戦争があり、多くの生命が失われたという。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t死んでいる者を復活させる本。読むことができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = "A book said to hold the secret's of life itself,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -29058,13 +24805,12 @@ item book_of_resurrection {
     rarity = 3000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "復活の書"
-    original_name_en = "resurrection"
     originalnameref2 = "book"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.book_of_resurrection
 }
 
 item scroll_of_contingency {
@@ -29080,11 +24826,6 @@ item scroll_of_contingency {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t気分屋な死神と契約することで一時的に死なない肉体を得る貴重な巻物。しかし気をつけてほしい、死神は気まぐれだ。くれぐれも死神の気分を損ねないように…。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t致命傷を負った時、確率でそのダメージ分回復する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -29099,13 +24840,12 @@ item scroll_of_contingency {
     rarity = 3000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "契約の巻物"
-    original_name_en = "contingency"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_contingency
 }
 
 item spellbook_of_contingency {
@@ -29121,11 +24861,6 @@ item spellbook_of_contingency {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「契約」という呪文について学ぶことができる魔法書。死神と友達になりたいあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t致命傷を負った時、確率でそのダメージ分回復する呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "An ancient tome,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -29140,13 +24875,12 @@ item spellbook_of_contingency {
     rarity = 300000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "契約の魔法書"
-    original_name_en = "contingency"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_contingency
 }
 
 item potion_of_evolution {
@@ -29162,11 +24896,6 @@ item potion_of_evolution {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t自らの肉体を合理的に再構築させる効果を持つ水薬。成分は不明だが、謎のドームの一団が秘密の一端を握っているらしい、ということだけ分かっている。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t有効的な変異を得ることができるポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "You say it's evolution?"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -29181,13 +24910,12 @@ item potion_of_evolution {
     rarity = 5000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "進化のポーション"
-    original_name_en = "evolution"
     originalnameref2 = "potion"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.potion_of_evolution
 }
 
 item deed_of_dungeon {
@@ -29203,11 +24931,6 @@ item deed_of_dungeon {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tその地にダンジョンを作る権利が得られる証書。ダンジョン依存症となった冒険者が買っていくという。\n#〜ダルフィ不動産・商品カタログ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことで住居としてのダンジョンを作ることができる権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = ""
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -29222,13 +24945,12 @@ item deed_of_dungeon {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ダンジョンの権利書"
-    original_name_en = "dungeon"
     originalnameref2 = "deed"
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.deed_of_dungeon
 }
 
 item shuriken {
@@ -29244,11 +24966,6 @@ item shuriken {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t異国の諜報組織が用いる、刃のある投擲武器。形は千差万別だが、どの武器にも満遍なく止血を遅らせる毒が塗られており、当たった相手に出血を被らせるという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t相手に出血を起こさせる投擲用武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A Hira-Shuriken,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29263,13 +24980,12 @@ item shuriken {
     rarity = 200000
     coefficient = 100
     light = 0
-    katakana_name = "スター"
-    original_name_jp = "手裏剣"
-    original_name_en = "shuriken"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.shuriken
 }
 
 item grenade {
@@ -29285,11 +25001,6 @@ item grenade {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t投擲用に作られた小型の爆弾。弓なりに着弾した後、大規模な範囲で爆散する為影響は広範囲に与えられるが、同時に敵味方構わず威力を奮うので扱いには注意が必要だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t着弾すると周囲に爆風を起こす投擲用武器だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "Made by Cyber Dome In"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29304,13 +25015,12 @@ item grenade {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = "グレネード"
-    original_name_jp = "手榴弾"
-    original_name_en = "grenade"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.grenade
 }
 
 item secret_experience_of_kumiromi {
@@ -29326,11 +25036,6 @@ item secret_experience_of_kumiromi {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t収穫の神が与えたもう一度の奇跡。使用すると光を放ち、そこで得も言われぬ経験をすることができるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t使用することで、新たなフィートを得ることができる宝石だ。\n#〜鑑定報告書：＜宝珠＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29345,13 +25050,12 @@ item secret_experience_of_kumiromi {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クミロミの秘密の経験"
-    original_name_en = "Kumiromi"
     originalnameref2 = "secret experience"
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = Cyan
+    locale_key_prefix = core.locale.item.secret_experience_of_kumiromi
 }
 
 item vanilla_rock {
@@ -29367,11 +25071,6 @@ item vanilla_rock {
     dv = 0
     material = 31
     chargelevel = 0
-    description_jp_0 = "\t\tアダマンタイト鉱石の欠片。比較的粗悪な部類なので装飾品にもならず、こうして投擲武器として使うのが関の山である。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t重い石ころ。装備することができる。\n#〜鑑定報告書：＜廃品＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29386,13 +25085,12 @@ item vanilla_rock {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《バニラロック》"
-    original_name_en = "<Vanilla Rock>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.vanilla_rock
 }
 
 item secret_experience_of_lomias {
@@ -29408,11 +25106,6 @@ item secret_experience_of_lomias {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t見ているだけで不快な気分を感じる謎の宝石。使用することができるが、効果の程を確認した者はいないという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t使用することで、今後に何か変化をもたらす宝石だ。\n#〜鑑定報告書：＜宝珠＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29427,13 +25120,12 @@ item secret_experience_of_lomias {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ロミアスの秘密の経験"
-    original_name_en = "Lomias"
     originalnameref2 = "secret experience"
     has_random_name = false
     tags = []
     rftags = []
+    color = Cyan
+    locale_key_prefix = core.locale.item.secret_experience_of_lomias
 }
 
 item shenas_panty {
@@ -29449,11 +25141,6 @@ item shenas_panty {
     dv = 0
     material = 2
     chargelevel = 0
-    description_jp_0 = "\t\t前面に小さいリボンをあしらった可愛らしい清楚な布切れ。往々にして本人ではなく他の誰かが所持しているが、そのことについて気付いていないのはシーナ本人だけであるという。\n#〜情報屋ウィーゼムの調べた情報〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「炭鉱街を訪れた際、私は恋に落ちた。しかし話しかける勇気はなく、代わりに去る高名な盗賊に頼んでこれを手に入れたのさ。これで私と彼女はいつでも一緒。どうだ、うらやましいだろう！」\n#〜貴族のラスター、最後の言葉〜\n"
-    description_jp_3 = "\t\tシーナの使用していた下着だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29468,13 +25155,12 @@ item shenas_panty {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《シーナのパンティー》"
-    original_name_en = "<Shena's Panty>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.shenas_panty
 }
 
 item claymore_unique {
@@ -29490,11 +25176,6 @@ item claymore_unique {
     dv = 0
     material = 25
     chargelevel = 0
-    description_jp_0 = "\t\t飾り気のない巨大な銀の十字剣。刀身に謎の刻印がされている以外一切の装飾はなく、単純に敵を切り払うことのみに特化したその作りは、一種の畏怖さえも感じる。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常に大きく武骨な大剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29509,13 +25190,12 @@ item claymore_unique {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《クレイモア》"
-    original_name_en = "<Claymore>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.claymore_unique
 }
 
 item happy_bed {
@@ -29531,11 +25211,6 @@ item happy_bed {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t神の落とし物とも言われる、非常に上質なベッド。その優しい肌触りは寝る者の心を豊かにするという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t非常に優れた寝具。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = "It is said that you will sleep better in one of these"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29550,13 +25225,12 @@ item happy_bed {
     rarity = 2000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "幸せのベッド"
-    original_name_en = "happy bed"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.happy_bed
 }
 
 item statue_of_ehekatl {
@@ -29572,11 +25246,6 @@ item statue_of_ehekatl {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、幸運な女神を模った彫像。その屈託ない笑顔は、どことなく愛くるしい。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t幸運の女神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29591,13 +25260,12 @@ item statue_of_ehekatl {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "エヘカトル像"
-    original_name_en = "Ehekatl"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_ehekatl
 }
 
 item arbalest {
@@ -29613,11 +25281,6 @@ item arbalest {
     dv = 0
     material = 33
     chargelevel = 0
-    description_jp_0 = "\t\t折れたクロスボウの矢のような紫色の首飾り。これを身につけていると、どこからともなく援護射撃が飛んでくるのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t追加射撃の機会を得られる首輪だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29632,13 +25295,12 @@ item arbalest {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《アルバレスト》"
-    original_name_en = "<Arbalest>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Purple
+    locale_key_prefix = core.locale.item.arbalest
 }
 
 item twin_edge {
@@ -29654,11 +25316,6 @@ item twin_edge {
     dv = 0
     material = 21
     chargelevel = 0
-    description_jp_0 = "\t\t小さな双剣のような首飾り。身につけるとまるで腕が二本増えたかのような素早い身のこなしを得るという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t追加打撃の機会を得られる首輪だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29673,13 +25330,12 @@ item twin_edge {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《ツインエッジ》"
-    original_name_en = "<Twin Edge>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.twin_edge
 }
 
 item music_ticket {
@@ -29695,11 +25351,6 @@ item music_ticket {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tいくつかの楽器が描かれた謎のチケット。そこには演奏家の夢と聴衆の感謝が込められている。\n#〜玲瓏たるイルヴァの調べ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特に効果の無い紙だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "Ticket's given out to promising musicians,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29714,13 +25365,12 @@ item music_ticket {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "音楽チケット"
-    original_name_en = "music ticket"
     originalnameref2 = ""
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.music_ticket
 }
 
 item kill_kill_piano {
@@ -29736,11 +25386,6 @@ item kill_kill_piano {
     dv = 0
     material = 32
     chargelevel = 0
-    description_jp_0 = "\t\t楽器とは名ばかりの投擲武器。巨大な金塊と見紛うべきそれは、かつて幾多の演奏者を屠ってきたのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t暗殺用の重いピアノだ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29755,13 +25400,12 @@ item kill_kill_piano {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《キルキルピアノ》"
-    original_name_en = "<Kill Kill Piano>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Orange
+    locale_key_prefix = core.locale.item.kill_kill_piano
 }
 
 item alud {
@@ -29777,11 +25421,6 @@ item alud {
     dv = -1
     material = 43
     chargelevel = 0
-    description_jp_0 = "\t\t古の時代、素晴らしい音色を響かせていたとされるリュート。しかし今日においてそれは単に経年を感じさせない非常に強固な木材を元にした優れた盾として扱われ、最早当時の様な音色を響かせることはないだろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t鉄壁を誇る楽器の形状の盾だ。\n#〜鑑定報告書：＜盾＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29796,13 +25435,12 @@ item alud {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《アル・ウード》"
-    original_name_en = "<Al'ud>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Yellow
+    locale_key_prefix = core.locale.item.alud
 }
 
 item shield_of_thorn {
@@ -29818,11 +25456,6 @@ item shield_of_thorn {
     dv = 0
     material = 33
     chargelevel = 0
-    description_jp_0 = "\t\t表面に大小様々な棘が付けられた見るからに痛そうな盾。身を守るには少々力不足だが、これを力一杯叩きつけられた時、哀れな敵は苦痛に悶絶することとなろう。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t出血を促す盾だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29837,13 +25470,12 @@ item shield_of_thorn {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《棘の盾》"
-    original_name_en = "<Shield of Thorn>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.shield_of_thorn
 }
 
 item crimson_plate {
@@ -29859,11 +25491,6 @@ item crimson_plate {
     dv = 2
     material = 7
     chargelevel = 0
-    description_jp_0 = "\t\t古の金属を鱗状に繋ぎ合せた腰当。特殊な赤い薬品が塗ってあり、装備した者の所持品と肉体を守ってくれるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t出血と炎上を防ぐ腰当だ。\n#〜鑑定報告書：＜防具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29878,13 +25505,12 @@ item crimson_plate {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《紅凛》"
-    original_name_en = "<Crimson Plate>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.crimson_plate
 }
 
 item gift {
@@ -29900,11 +25526,6 @@ item gift {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t自らの気持ちを代わりに伝える時に用いる贈答品。無論、使用することはできない。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t人に渡すと友好度が上がるアイテムだ。\n#〜鑑定報告書：＜その他＞カテゴリ〜\n"
-    description_en = "It's hard to open,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29919,13 +25540,12 @@ item gift {
     rarity = 5000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "おみやげ"
-    original_name_en = "gift"
     originalnameref2 = ""
     has_random_name = false
     tags = ["spshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.gift
 }
 
 item token_of_friendship {
@@ -29941,11 +25561,6 @@ item token_of_friendship {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t金では買えない価値があるとされる紙きれ。ミミズの這ったような字で「友情」と書かれている。\n#〜私の愛する幾千ものガラクタ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特に効果の無い紙だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A token given only to friends,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -29960,13 +25575,12 @@ item token_of_friendship {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "友情の証"
-    original_name_en = "friendship"
     originalnameref2 = "token"
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
+    color = White
+    locale_key_prefix = core.locale.item.token_of_friendship
 }
 
 item spellbook_of_4_dimensional_pocket {
@@ -29982,11 +25596,6 @@ item spellbook_of_4_dimensional_pocket {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「四次元ポケット」という呪文について学ぶことができる魔法書。片づけられない性格のあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tアイテムを保持しておく領域を召喚する呪文を唱える為に必要な本だ。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome on alternate dimension"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -30001,13 +25610,12 @@ item spellbook_of_4_dimensional_pocket {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "四次元ポケットの魔法書"
-    original_name_en = "4 dimensional pocket"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_4_dimensional_pocket
 }
 
 item spellbook_of_harvest {
@@ -30023,11 +25631,6 @@ item spellbook_of_harvest {
     dv = 0
     material = 0
     chargelevel = 3
-    description_jp_0 = "\t\t「魔術師の収穫」という呪文について学ぶことができる魔法書。突然の出費が続いたあなたに。\n#〜本の為の本・魔法書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t空から金貨が降ってくる呪文を唱える為に必要な本。読むことができる。\n#〜鑑定報告書：＜書物＞カテゴリ〜\n"
-    description_en = "A tome on secret form's of magical alchemy,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -30042,13 +25645,12 @@ item spellbook_of_harvest {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "収穫の魔法書"
-    original_name_en = "harvest"
     originalnameref2 = "spellbook"
     has_random_name = true
     tags = []
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.spellbook_of_harvest
 }
 
 item sand_bag {
@@ -30064,11 +25666,6 @@ item sand_bag {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t日々のストレスの解消や、自らを鍛える為に作られた縦長の運動器具。ノースティリスにおけるそれと一般的な物とのささやかな違いは、材質に砂ではなく弱った犠牲者を用いることであろうか。\n#〜家庭を彩る日用雑貨〜\n"
-    description_jp_1 = "\t\t使用することで弱った敵を紐に括りつけ、意のままに扱うことができる道具だ。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_jp_2 = ""
-    description_jp_3 = "\t\t弱ったモンスターを吊るしあげる道具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Attach your own punching bag!"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30083,13 +25680,12 @@ item sand_bag {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "サンドバッグ"
-    original_name_en = "sand bag"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.sand_bag
 }
 
 item small_gamble_chest {
@@ -30105,11 +25701,6 @@ item small_gamble_chest {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t「一握りの幸運者に極上の経験を！どちら様もロックピックを御持参して挑戦下さい」\n#〜箱裏に書かれた注意書き〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中に小銭、稀に大金の入った箱。開けることができる。\n#〜鑑定報告書：＜箱＞カテゴリ〜\n"
-    description_en = "Popular among gamblers,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30124,13 +25715,12 @@ item small_gamble_chest {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "小さな宝くじ箱"
-    original_name_en = "small gamble chest"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.small_gamble_chest
 }
 
 item scythe {
@@ -30146,11 +25736,6 @@ item scythe {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t柄の長い大きな鎌。刃は鎌より湾曲していないが、柄を両手で掴み、勢いよく奮うことで敵の戦意と部位を刈り取っていくという。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大きく湾曲した刃を持った刀剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = "A farmer's tool that has largely replaced sickles,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30165,13 +25750,12 @@ item scythe {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = "サイズ"
-    original_name_jp = "大鎌"
-    original_name_en = "scythe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.scythe
 }
 
 item fireproof_liquid {
@@ -30187,11 +25771,6 @@ item fireproof_liquid {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t浸したものに耐炎の保護膜を塗布する水薬。あくまでも物品にしか効果がないので、飲んだところで、あなたの内臓はアツアツの物を食べた時に生ずる火傷に何ら抵抗を示さないだろう。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t混ぜた物を炎から守るポーションだ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = "Use on an item to protect it from fire,"
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -30206,13 +25785,12 @@ item fireproof_liquid {
     rarity = 300000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "耐熱コーティング液"
-    original_name_en = "fireproof liquid"
     originalnameref2 = ""
     has_random_name = true
     tags = ["nogive"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.fireproof_liquid
 }
 
 item scroll_of_name {
@@ -30228,11 +25806,6 @@ item scroll_of_name {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t装備品の異名をつけ直すことができる貴重な巻物。気分を変えたい時、武器から名前を変えてほしいと頼まれた時等、使われ方は様々だ。\n#〜魔具全典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t☆のついた武器防具の名前を変更する巻物だ。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = "A magical scroll with arcane writing,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -30247,13 +25820,12 @@ item scroll_of_name {
     rarity = 2000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "名前の巻物"
-    original_name_en = "name"
     originalnameref2 = "scroll"
     has_random_name = true
     tags = ["noshop"]
     rftags = []
+    color = RandomSeeded
+    locale_key_prefix = core.locale.item.scroll_of_name
 }
 
 item fortune_cookie {
@@ -30269,11 +25841,6 @@ item fortune_cookie {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tあなたもわたしもフォーチュン！フォーチュン！　そっと一口食べたなら、きっと幸せ届きます。あーっと全部食べたなら、神のお告げがあなたの元へ。\n#〜袋の裏に書かれた端書〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。食べた後に占いを聞くことができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = "Will tell you your fortune,"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30288,13 +25855,12 @@ item fortune_cookie {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "フォーチュンクッキー"
-    original_name_en = "fortune cookie"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fortune_cookie
 }
 
 item frisias_tail {
@@ -30310,11 +25876,6 @@ item frisias_tail {
     dv = 0
     material = 8
     chargelevel = 0
-    description_jp_0 = "\t\t巨大な猫の尻尾の彫像、と見紛う程の杖。人では振るえない程の重さだが、使いこなす者が現れた時この武器は使用者に比類なき魔力を授けるだろう。それと少しばかりの気まぐれを。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t強大な魔力を秘めた非常に重い杖だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30329,13 +25890,12 @@ item frisias_tail {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《フリージアの尻尾》"
-    original_name_en = "<Frisia's Tail>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.frisias_tail
 }
 
 item unknown_shell {
@@ -30351,11 +25911,6 @@ item unknown_shell {
     dv = 2
     material = 21
     chargelevel = 0
-    description_jp_0 = "\t\t螺旋が美しい、ミカで作られた貝型の装身具。誰が作ったか等一切不明で、一説には神々の落とし物ともいわれる。耳元にそっと当てると誰かの話し声が聞こえるそうだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t神の発言を聞くことができる首輪だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30370,13 +25925,12 @@ item unknown_shell {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《謎の貝》"
-    original_name_en = "<Unknown Shell>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.unknown_shell
 }
 
 item hiryu_to {
@@ -30392,11 +25946,6 @@ item hiryu_to {
     dv = 0
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t竜を撃退する為に作られた特殊な刀剣。その刀身は鮮血に濡れているかの如く怪しく光り、電撃を生じる程の鋭い一撃で、日夜竜を屠っているのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t竜に絶大な効果を持つ長剣だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30411,13 +25960,12 @@ item hiryu_to {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《飛竜刀》"
-    original_name_en = "<Hiryu-To>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.hiryu_to
 }
 
 item license_of_the_void_explorer {
@@ -30433,11 +25981,6 @@ item license_of_the_void_explorer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tすくつを探索することができる許可証。そこには数多の財宝と幾千もの亡骸が眠っているという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t読むことですくつに入ることが許される権利書だ。\n#〜鑑定報告書：＜証書＞カテゴリ〜\n"
-    description_en = "This will allow you to explore the void that has been found recently in the south-west,"
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -30452,13 +25995,12 @@ item license_of_the_void_explorer {
     rarity = 1000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "すくつ探索許可証"
-    original_name_en = "the void explorer"
     originalnameref2 = "license"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.license_of_the_void_explorer
 }
 
 item plank_of_carneades {
@@ -30474,11 +26016,6 @@ item plank_of_carneades {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t倫理と生命という重りを載せて、秤の様に揺れ動くといわれる板。単なるみすぼらしい板にしか見えないが、所持者が窮地に陥った時、究極の選択をさせる為眼前に現れるという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30493,13 +26030,12 @@ item plank_of_carneades {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カルネアデスの板"
-    original_name_en = "Carneades"
     originalnameref2 = "plank"
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.plank_of_carneades
 }
 
 item schrodingers_cat {
@@ -30515,11 +26051,6 @@ item schrodingers_cat {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t存在しない猫が入れられた箱。いや、猫は存在しないのかもしれない。ひょっとしたら存在して存在しないのかもしれないが、それもこの箱を開けてみるまでは分からないだろう。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30534,13 +26065,12 @@ item schrodingers_cat {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "シュレディンガーの猫"
-    original_name_en = "Schrodinger's cat"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.schrodingers_cat
 }
 
 item heart {
@@ -30556,11 +26086,6 @@ item heart {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t２つの相容れない感情に苦悩する心を、特殊な素材を用いて表した芸術作品。互いに絡み合った素材達は、さながら本物の心臓の様に微動するのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30575,13 +26100,12 @@ item heart {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "こころ"
-    original_name_en = "heart"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.heart
 }
 
 item tamers_whip {
@@ -30597,11 +26121,6 @@ item tamers_whip {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tサーカスの団長等が用いる革製の良くしなる鞭。一度振るえばどんな猛獣であろうと従順になるだろう。\n#〜巻かれる為の長いもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30616,13 +26135,12 @@ item tamers_whip {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "調教鞭"
-    original_name_en = "tamer's whip"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Red
+    locale_key_prefix = core.locale.item.tamers_whip
 }
 
 item book_of_bokonon {
@@ -30638,11 +26156,6 @@ item book_of_bokonon {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t非常に変わっているとされる一団の掲げる宗教書。そのページを開いた時あなたは知るだろう、それが真実であり、真っ赤な嘘であることを。\n#〜本の為の本・歴史書編〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -30657,13 +26170,12 @@ item book_of_bokonon {
     rarity = 50000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ボコノンの書"
-    original_name_en = "Bokonon"
     originalnameref2 = "book"
     has_random_name = false
     tags = ["noshop"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.book_of_bokonon
 }
 
 item summoning_crystal {
@@ -30679,11 +26191,6 @@ item summoning_crystal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t悠久の時が作り上げた巨大な水晶。その光は見る者の心を投影し、現世に現すという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tショウルームで使用できる水晶だ。\n#〜鑑定報告書：＜魔道具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30698,13 +26205,12 @@ item summoning_crystal {
     rarity = 20000
     coefficient = 0
     light = 10
-    katakana_name = ""
-    original_name_jp = "召喚石"
-    original_name_en = "summoning crystal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.summoning_crystal
 }
 
 item statue_of_creator {
@@ -30720,11 +26226,6 @@ item statue_of_creator {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t名も知らぬ芸術家が作った何ともいえぬ彫像。どうみても奇妙な格好をした人物像なのだが、側面に「創造主」と彫られているので恐らくこれが創造主の姿なのだろう。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tショウルームで使用できる彫像だ。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30739,13 +26240,12 @@ item statue_of_creator {
     rarity = 800000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "創造主の像"
-    original_name_en = "Creator"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_creator
 }
 
 item upstairs {
@@ -30761,11 +26261,6 @@ item upstairs {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t地上へおかえり！この優れた道具は、一瞬にして外界へと繋がる道を作ってしまうのだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t上る為の石段。潜ることができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30780,13 +26275,12 @@ item upstairs {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "昇り階段"
-    original_name_en = "upstairs"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.upstairs
 }
 
 item downstairs {
@@ -30802,11 +26296,6 @@ item downstairs {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t地下へようこそ！この優れた道具は、一瞬にして地下空間に繋がる道を作ってしまうのだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t下る為の石段。潜ることができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30821,13 +26310,12 @@ item downstairs {
     rarity = 20000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "降り階段"
-    original_name_en = "downstairs"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.downstairs
 }
 
 item new_years_gift {
@@ -30843,11 +26331,6 @@ item new_years_gift {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t年に一度、懇意にしている相手にこれを贈る国があるという。貰った時は感謝の言葉を述べてから勢いよく開けよう。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中に様々なものが詰まった袋。開けることができる。\n#〜鑑定報告書：＜縁起物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30862,13 +26345,12 @@ item new_years_gift {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "お年玉"
-    original_name_en = "new year's gift"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.new_years_gift
 }
 
 item kotatsu {
@@ -30884,11 +26366,6 @@ item kotatsu {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t寒い季節に使用される暖房家具。潜り込むと気分は洞窟探検者、そんなことを言いながらそのまま中で眠りこける子供が後を絶たないという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t寒い季節用の机。潜ることができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30903,13 +26380,12 @@ item kotatsu {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "こたつ"
-    original_name_en = "kotatsu"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.kotatsu
 }
 
 item daruma {
@@ -30925,11 +26401,6 @@ item daruma {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t縁起物とされる赤い色の玩具。異国では眼が書かれていない物が主流で、願いがかなう度にそこに黒い染料で目を書き入れるのだという。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tユニークな形の人形だ。\n#〜鑑定報告書：＜縁起物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30944,13 +26415,12 @@ item daruma {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "だるま"
-    original_name_en = "daruma"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.daruma
 }
 
 item kagami_mochi {
@@ -30966,11 +26436,6 @@ item kagami_mochi {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祝いの品々で飾られた特別な餅。神の祝福を受けたありがたい餅だが、気にすることなく食すことができる。しかし、神といえど餅の詰まりはどうすることもできない。食べる時は身の周りに十分気をつけよう。\n#〜貰って嬉しい贈り物あれこれ〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。のどに詰まることがある。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30985,13 +26450,12 @@ item kagami_mochi {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "鏡もち"
-    original_name_en = "kagami mochi"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kagami_mochi
 }
 
 item mochi {
@@ -31007,11 +26471,6 @@ item mochi {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t異国から伝わりし白い悪魔。香ばしい匂いと柔らかい触感で人を手招きするが、食べたが最後、奴は喉元で急に歩みを止め、突然食べた者の行動と意識を奪うのだ！　もしそうなった時は近くの人に助けてもらおう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物。のどに詰まることがある。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31026,13 +26485,12 @@ item mochi {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "もち"
-    original_name_en = "mochi"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.mochi
 }
 
 item five_horned_helm {
@@ -31048,11 +26506,6 @@ item five_horned_helm {
     dv = 2
     material = 20
     chargelevel = 0
-    description_jp_0 = "\t\t前方に突き出た角が特徴の黒々と光った兜。一本の角だけ異常に長いのは、考案元の生物の特徴をそのまま真似たからだと言われている。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t攻撃的な性能を持った兜だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31067,13 +26520,12 @@ item five_horned_helm {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《五本角の兜》"
-    original_name_en = "<Five Horned Helm>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = core.locale.item.five_horned_helm
 }
 
 item mauser_c96_custom {
@@ -31089,11 +26541,6 @@ item mauser_c96_custom {
     dv = 0
     material = 10
     chargelevel = 0
-    description_jp_0 = "\t\t弾を込める作業を機械化することに成功した拳銃を改良したもの。悠久の時を経、残念ながら改良元は全て失われてしまったが、この銃だけは未だ健在である。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t見えない者さえ打ちぬく拳銃だ。\n#〜鑑定報告書：＜秘宝＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31108,13 +26555,12 @@ item mauser_c96_custom {
     rarity = 1000000
     coefficient = 100
     light = 9
-    katakana_name = ""
-    original_name_jp = "《マウザーC96カスタム》"
-    original_name_en = "<Mauser C96 Custom>"
     originalnameref2 = ""
     has_random_name = false
     tags = ["sf"]
     rftags = []
+    color = Grey
+    locale_key_prefix = core.locale.item.mauser_c96_custom
 }
 
 item lightsabre {
@@ -31130,11 +26576,6 @@ item lightsabre {
     dv = 0
     material = 8
     chargelevel = 0
-    description_jp_0 = "\t\t燦然と光り輝く刀身を持つ異様な長剣。製法は全くの不明だが、聞くところによると異世界の騎士が一人前になる際に、自らの力を示す為一人で作り上げるのだという。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t光り輝く刀剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31149,13 +26590,12 @@ item lightsabre {
     rarity = 2000
     coefficient = 100
     light = 9
-    katakana_name = "ライトセーバー"
-    original_name_jp = "ライトセーバー"
-    original_name_en = "lightsabre"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.lightsabre
 }
 
 item garoks_hammer {
@@ -31171,11 +26611,6 @@ item garoks_hammer {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tどんなガラクタだろうが、たちまち一点物に作り変えるという名工ガロクの槌。ただし、職人の気難しい気質がそのまま槌に宿っている為、こちらの希望は聞き入れてくれないようだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t武器防具を☆化することができる槌。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31190,13 +26625,12 @@ item garoks_hammer {
     rarity = 5000
     coefficient = 0
     light = 9
-    katakana_name = ""
-    original_name_jp = "ガロクの槌"
-    original_name_en = "Garok's hammer"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.garoks_hammer
 }
 
 item goulds_piano {
@@ -31212,11 +26646,6 @@ item goulds_piano {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t孤高の天才作曲家の愛用していたピアノ。既存の曲を独自に解釈した彼の作風をこのピアノは潜在的に受け継いでおり、演奏する際それが音色となって現れるようだ。\n#〜イルヴァ幻想辞典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t聴衆を酔わす演奏用の道具。使用することができる。\n#〜鑑定報告書：＜楽器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31231,13 +26660,12 @@ item goulds_piano {
     rarity = 100000
     coefficient = 100
     light = 10
-    katakana_name = ""
-    original_name_jp = "《グールドのピアノ》"
-    original_name_en = "<Gould's Piano>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White2
+    locale_key_prefix = core.locale.item.goulds_piano
 }
 
 item festival_wreath {
@@ -31253,11 +26681,6 @@ item festival_wreath {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祝い事の為に特別に作られた飾り。各々が思い思いの花で編み上げているので、その形は多様に富んでいる。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t特別な日の為に作られた冠だ。\n#〜鑑定報告書：＜縁起物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31272,13 +26695,12 @@ item festival_wreath {
     rarity = 5000
     coefficient = 100
     light = 16
-    katakana_name = ""
-    original_name_jp = "聖夜祭の花冠"
-    original_name_en = "festival wreath"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.festival_wreath
 }
 
 item pedestal {
@@ -31294,11 +26716,6 @@ item pedestal {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t一つ上の世界を見た気になる、ちょっとした段差。何かを主張したい時はここに立って話すといいだろう。\n#〜街中の名脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tうず高く盛り上がった台だ。\n#〜鑑定報告書：＜壇＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31313,13 +26730,12 @@ item pedestal {
     rarity = 40000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "台座"
-    original_name_en = "pedestal"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.pedestal
 }
 
 item counter {
@@ -31335,11 +26751,6 @@ item counter {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t対話や会計等に用いる、仕切りを兼ねた家具。この家具越しに会話するとさながら店を開いた気分になるという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t店用の机だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31354,13 +26765,12 @@ item counter {
     rarity = 25000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カウンター"
-    original_name_en = "counter"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.counter
 }
 
 item red_stall {
@@ -31376,11 +26786,6 @@ item red_stall {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祭りの際、物を販売する為に簡易的に作られた露店。通る時に何やら酸味の混じった香ばしい匂いがすることがある。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t祭事用の簡易的な店だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31395,13 +26800,12 @@ item red_stall {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "赤い屋根の屋台"
-    original_name_en = "red stall"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.red_stall
 }
 
 item blue_stall {
@@ -31417,11 +26821,6 @@ item blue_stall {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祭りの際、物を販売する為に簡易的に作られた露店。通る時に何やら涼しげな音がすることがある。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t祭事用の簡易的な店だ。\n#〜鑑定報告書：＜建造物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31436,13 +26835,12 @@ item blue_stall {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "青い屋根の屋台"
-    original_name_en = "blue stall"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.blue_stall
 }
 
 item jures_body_pillow {
@@ -31458,11 +26856,6 @@ item jures_body_pillow {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t癒しの女神が描かれた優しい抱き心地の枕。長い棒状のそれを抱くことで信者のみならず、使った者全てを女神自らが眠りの淵へ誘ってくれるという。\n#〜あなたの見知らぬ世界〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t癒しの女神が描かれた枕。使用することができる。\n#〜鑑定報告書：＜寝具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31477,13 +26870,12 @@ item jures_body_pillow {
     rarity = 25000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ジュアの抱き枕"
-    original_name_en = "Jure's body pillow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.jures_body_pillow
 }
 
 item new_years_decoration {
@@ -31499,11 +26891,6 @@ item new_years_decoration {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祝い事の為に特別に作られた飾り。異国の神が降り立つ為の目印であると考えられている。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t新年に向けて作られた厳かな飾りだ。\n#〜鑑定報告書：＜縁起物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31518,13 +26905,12 @@ item new_years_decoration {
     rarity = 5000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "正月飾り"
-    original_name_en = "new year's decoration"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.new_years_decoration
 }
 
 item miniature_tree {
@@ -31540,11 +26926,6 @@ item miniature_tree {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t小型のクリスマスツリー。祭りを祝いたいが樹木を家に置くスペースが無い、といった事情にお答えした一般家庭用のツリーだ。\n#〜ノースティリス紀行・冬版〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t小さなモミの木だ。\n#〜鑑定報告書：＜樹木＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31559,13 +26940,12 @@ item miniature_tree {
     rarity = 5000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ミニチュアツリー"
-    original_name_en = "miniature tree"
     originalnameref2 = ""
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.miniature_tree
 }
 
 item bottle_of_soda {
@@ -31581,11 +26961,6 @@ item bottle_of_soda {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t祭りの出店等で販売される、子供でも飲むことができる舌を騒がす水薬。程良く甘いその味は、飲むだけで何だか疲れが吹き飛ぶようだ。\n#〜飲めるのみもの、飲めないのみもの〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t疲れを取ることができる飲み物だ。\n#〜鑑定報告書：＜液体＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -31600,13 +26975,12 @@ item bottle_of_soda {
     rarity = 400000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ラムネ"
-    original_name_en = "soda"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = ["fest"]
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_soda
 }
 
 item blue_capsule_drug {
@@ -31622,11 +26996,6 @@ item blue_capsule_drug {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t青い素材で作られた小さな円筒形の物質。肉体を活性化させる食べ物という噂だが、その見た目から進んで食べてみようと思う者はいないようだ。\n#〜別冊ヨウィン・未知の知識を追え！〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = ""
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = true
@@ -31641,13 +27010,12 @@ item blue_capsule_drug {
     rarity = 5000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "ブルーカプセルドラッグ"
-    original_name_en = "blue capsule drug"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.blue_capsule_drug
 }
 
 item tomato {
@@ -31663,11 +27031,6 @@ item tomato {
     dv = 0
     material = 35
     chargelevel = 0
-    description_jp_0 = "\t\t太陽の恵みを一身に受けた酸味の強い野菜。色々な調理法のある野菜だが、変わった所では、生の状態を輪切りにして、砂糖をつけて食べたりする食べ方もあるとか。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t真っ赤な色をした円形の野菜。専ら生食で食べられるが、過熱することによって酸味が少し和らぎ、代わりに旨みが生じるので、料理のソースに使われることも少なくない。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_3 = "\t\t満腹度を回復することができる食物。調理することができる。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31682,13 +27045,12 @@ item tomato {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "トマト"
-    original_name_en = "tomato"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.tomato
 }
 
 item large_bookshelf {
@@ -31704,11 +27066,6 @@ item large_bookshelf {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tありとあらゆる種類の書物が入りそうな本棚。話によれば、去る歴史研究家が飽和した本を整理する為に理想的な家具を注文したのが発端だという。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t大型の本棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31723,13 +27080,12 @@ item large_bookshelf {
     rarity = 400000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "おっきな本棚"
-    original_name_en = "large bookshelf"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.large_bookshelf
 }
 
 item luxury_cabinet {
@@ -31745,11 +27101,6 @@ item luxury_cabinet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t非常に触り心地の良い、格調高い戸棚。どことなく大人の雰囲気を醸し出している。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t高価な戸棚だ。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31764,13 +27115,12 @@ item luxury_cabinet {
     rarity = 150000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "高級キャビネット"
-    original_name_en = "luxury cabinet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.luxury_cabinet
 }
 
 item special_steamed_meat_bun {
@@ -31786,11 +27136,6 @@ item special_steamed_meat_bun {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t口に放り込むと溢れんばかりの肉汁であなたを満たす、とてもおいしい料理。素材に何が使われているかなんて、聞くだけ野暮ってものだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t「フム。口に入れた時の食感、そこから勢いよく溢れだすジューシーな肉汁、後を引くような独特の味。この料理は私が今まで食べた中で最高位に値するよ。…ところで、これには何の肉が使われているのかね」\n#〜偉大なる料理評論家グラトナの言葉〜\n"
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31805,13 +27150,12 @@ item special_steamed_meat_bun {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "特製肉まんじゅう"
-    original_name_en = "special steamed meat bun"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.special_steamed_meat_bun
 }
 
 item statue_of_kumiromi {
@@ -31827,11 +27171,6 @@ item statue_of_kumiromi {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、収穫の神を模った彫像。その愁いを帯びた表情は、どことなく凛々しい。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t収穫の神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31846,13 +27185,12 @@ item statue_of_kumiromi {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "クミロミ像"
-    original_name_en = "Kumiromi"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_kumiromi
 }
 
 item statue_of_mani {
@@ -31868,11 +27206,6 @@ item statue_of_mani {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tさる高名な芸術家が作った、機械仕掛けの神を模った彫像。所々複雑に作られた箇所が、どことなくかっこいい。\n#〜ルミエスト美術目録〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t機械仕掛けの神を模った彫像。使用することができる。\n#〜鑑定報告書：＜彫像＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31887,13 +27220,12 @@ item statue_of_mani {
     rarity = 800000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "マニ像"
-    original_name_en = "Mani"
     originalnameref2 = "statue"
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.statue_of_mani
 }
 
 item luxury_sofa {
@@ -31909,11 +27241,6 @@ item luxury_sofa {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t非常に肌触りのよい毛皮を用いた、見るからに高そうな長椅子。座り心地は抜群だが些かデリケートな家具なので、手入れには非常に神経を使うだろう。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t座る為の家具。使用することができる。\n#〜鑑定報告書：＜家具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31928,13 +27255,12 @@ item luxury_sofa {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "高級ソファー"
-    original_name_en = "luxury sofa"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.luxury_sofa
 }
 
 item deer_head {
@@ -31950,11 +27276,6 @@ item deer_head {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t仕留めた獣の頭部に特殊な加工処理を施し調度品としたもの。飾るだけには飽き足らず、自ら狩ったものを加工することで所有欲を満たす貴族もいるようだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t獣を加工した家具だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -31969,13 +27290,12 @@ item deer_head {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "鹿の剥製"
-    original_name_en = "deer head"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.deer_head
 }
 
 item fur_carpet {
@@ -31991,11 +27311,6 @@ item fur_carpet {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t仕留めた猛獣の皮をなめして調度品としたもの。丸々一頭贅沢に使ったその佇まいは、そこに未だ野性が残っていると思わせるほどだ。\n#〜ノースティリス大家具事典〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t獣を加工した家具だ。\n#〜鑑定報告書：＜美術品＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32010,13 +27325,12 @@ item fur_carpet {
     rarity = 10000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "毛皮の敷物"
-    original_name_en = "fur carpet"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.fur_carpet
 }
 
 item kitchen_knife {
@@ -32032,11 +27346,6 @@ item kitchen_knife {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t食材を捌く為に用いられる小型の短刀。本来の用途は家庭用だが刃はしっかり研がれている為、戦闘に使うこともできるだろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t主に調理に用いられる短剣だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32051,13 +27360,12 @@ item kitchen_knife {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = "包丁"
-    original_name_jp = "包丁"
-    original_name_en = "kitchen knife"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.kitchen_knife
 }
 
 item dish {
@@ -32073,11 +27381,6 @@ item dish {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t料理を載せる為に用いる平坦な食器。ピンからキリまであり、日常的に広く使われる物から、馬が買えてしまうような驚くべき価値のものも存在するという。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t料理等を載せる平たい器だ。\n#〜鑑定報告書：＜用具＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32092,13 +27395,12 @@ item dish {
     rarity = 250000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "皿"
-    original_name_en = "dish"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dish
 }
 
 item recipe {
@@ -32114,11 +27416,6 @@ item recipe {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t調理人達の優れたセンスと秘密の技術が封じ込まれた紙片。これさえあれば一流の調理人にも劣らぬ知識を得ることができるだろう。…技術がそれに追いつくかは別として。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t複雑な料理の書かれた紙。使用することができる。\n#〜鑑定報告書：＜紙片＞カテゴリ〜\n"
-    description_en = ""
     is_readable = true
     is_zappable = false
     is_drinkable = false
@@ -32133,13 +27430,12 @@ item recipe {
     rarity = 50000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "レシピ"
-    original_name_en = "recipe"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.recipe
 }
 
 item recipe_holder {
@@ -32155,11 +27451,6 @@ item recipe_holder {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t調理人達の知識を纏めておくためのもの。その格調ある外装は調理人達の憧れであり、また自身が立派でありたいという思いの表れでもあるのだろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t中に調理関連のアイテムの詰まった本。開けることができる。\n#〜鑑定報告書：＜書類＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32174,13 +27465,12 @@ item recipe_holder {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "レシピホルダー"
-    original_name_en = "recipe holder"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.recipe_holder
 }
 
 item bottle_of_salt {
@@ -32196,11 +27486,6 @@ item bottle_of_salt {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t料理の善し悪しを決定づける基本的調味料の一つ。塩味を加えることは勿論、少量を用いることで食材の持つ旨味と甘味を引き出す効果を持つ優れた調味料だ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t料理に欠かせない調味料だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32215,13 +27500,12 @@ item bottle_of_salt {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "塩"
-    original_name_en = "salt"
     originalnameref2 = "bottle"
     has_random_name = false
     tags = []
     rftags = ["flavor"]
+    color = White
+    locale_key_prefix = core.locale.item.bottle_of_salt
 }
 
 item sack_of_sugar {
@@ -32237,11 +27521,6 @@ item sack_of_sugar {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t料理の善し悪しを決定づける基本的調味料の一つ。甘味を加えることは勿論、少量を用いることで食材の持つ旨味と塩味を引き出す効果を持つ優れた調味料だ。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t料理に欠かせない調味料だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32256,13 +27535,12 @@ item sack_of_sugar {
     rarity = 100000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "砂糖"
-    original_name_en = "sugar"
     originalnameref2 = "sack"
     has_random_name = false
     tags = []
     rftags = ["flavor"]
+    color = White
+    locale_key_prefix = core.locale.item.sack_of_sugar
 }
 
 item puff_puff_bread {
@@ -32278,11 +27556,6 @@ item puff_puff_bread {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\t工程に独自の要素を加えることで、よりふんわりとした触感を得たパン。その柔らかさは触った時もさることながら、口にすれば一層はっきりとわかるだろう。\n#〜移り変わりゆくティリスの食〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t満腹度を回復することができる食物だ。\n#〜鑑定報告書：＜食物＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32297,13 +27570,12 @@ item puff_puff_bread {
     rarity = 100000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "ふかふかパン"
-    original_name_en = "puff puff bread"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.puff_puff_bread
 }
 
 item skull_bow {
@@ -32319,11 +27591,6 @@ item skull_bow {
     dv = 0
     material = 1000
     chargelevel = 0
-    description_jp_0 = "\t\t巨大な生物の骨から削り出したとされる短弓。骨から作られているので軽くて丈夫で、手にもなじみやすいと、いいことずくめだ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_1 = ""
-    description_jp_2 = "\t\t生物の骨を削り出したものを基礎に、他の素材を重ね合わせることで柔軟さと強靭さを兼ね合わせた短弓。引き絞る際に余計な力がかからないように加工された優れた逸品だ。\n#〜明日から使えるあなたの為の武具集〜\n"
-    description_jp_3 = "\t\t骨を加工した弓だ。\n#〜鑑定報告書：＜武器＞カテゴリ〜\n"
-    description_en = ""
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32338,13 +27605,12 @@ item skull_bow {
     rarity = 50000
     coefficient = 100
     light = 0
-    katakana_name = "スカルボウ"
-    original_name_jp = "骨弓"
-    original_name_en = "skull bow"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.skull_bow
 }
 
 item pot_for_testing {
@@ -32360,11 +27626,6 @@ item pot_for_testing {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tより複雑な調理に用いられるナベ。色々な物をいっぺんに詰め込み、ヘラで掻きまわして暫く煮込めば料理の完成である。最早ナベと名を借りた再構築装置なのかもしれない。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t複雑な作業用の調理器具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "dev item"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32379,13 +27640,12 @@ item pot_for_testing {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "テスト用ナベ"
-    original_name_en = "pot for testing"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.pot_for_testing
 }
 
 item frying_pan_for_testing {
@@ -32401,11 +27661,6 @@ item frying_pan_for_testing {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = "\t\tより複雑な調理に用いられるフライパン。どんなに様々な具材を入れても一応完成にこぎつけるのは、一重にこの調理器具のお陰と言ってもよいだろう。\n#〜料理を支える脇役達〜\n"
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\t複雑な作業用の調理器具。使用することができる。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "dev item"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32420,13 +27675,12 @@ item frying_pan_for_testing {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "テスト用フライパン"
-    original_name_en = "frying pan for testing"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = RandomFurniture
+    locale_key_prefix = core.locale.item.frying_pan_for_testing
 }
 
 item dragon_slayer {
@@ -32442,11 +27696,6 @@ item dragon_slayer {
     dv = -42
     material = 10
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "開発用"
-    description_en = "dev item"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32461,13 +27710,12 @@ item dragon_slayer {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "《ドラゴンころし》"
-    original_name_en = "<Dragon Slayer>"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.dragon_slayer
 }
 
 item putitoro {
@@ -32483,11 +27731,6 @@ item putitoro {
     dv = 0
     material = 0
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "開発用"
-    description_en = "dev item"
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -32502,11 +27745,10 @@ item putitoro {
     rarity = 150000
     coefficient = 0
     light = 0
-    katakana_name = ""
-    original_name_jp = "プチトロ"
-    original_name_en = "putitoro"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = White
+    locale_key_prefix = core.locale.item.putitoro
 }

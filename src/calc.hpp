@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "enums.hpp"
 #include "optional.hpp"
 
 
@@ -61,6 +62,8 @@ int calcspellcoststock(int = 0, int = 0);
 int calcscore();
 void calcpartyscore();
 void calcpartyscore2();
+
+int generate_color(color_index_t index, int id);
 
 
 } // namespace elona
