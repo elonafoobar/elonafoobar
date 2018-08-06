@@ -56,7 +56,7 @@ void begin_to_believe_god();
 void label_1958();
 void label_1964();
 int ctrl_ally();
-void label_2022();
+void show_book_window();
 int change_npc_tone();
 void item_show_description();
 

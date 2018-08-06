@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "cat.hpp"
 #include "enums.hpp"
+#include "i18n.hpp"
 #include "lion.hpp"
 #include "optional.hpp"
 
@@ -46,7 +47,7 @@ struct item_data
     color_index_t color;
     std::string filter;
     std::string rffilter;
-    std::string locale_key_prefix;
+    i18n_key locale_key_prefix;
 };
 
 

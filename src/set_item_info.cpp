@@ -30,8 +30,16 @@ void set_item_info()
 
         ioriginalnameref(data.id) =
             i18n::s.get(data.locale_key_prefix + ".name");
-        ialphanameref(data.id) =
-            i18n::s.get(data.locale_key_prefix + ".katakana_name");
+
+        if (auto text =
+                i18n::s.get_optional(data.locale_key_prefix + ".katakana_name"))
+        {
+            ialphanameref(data.id) = *text;
+        }
+        else
+        {
+            ialphanameref(data.id) = "";
+        }
 
         if (auto text = i18n::s.get_optional(
                 data.locale_key_prefix + ".unidentified_name"))

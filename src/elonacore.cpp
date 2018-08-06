@@ -1043,13 +1043,13 @@ void load_random_title_table()
 
 
 
-void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
+void getinheritance(int prm_440, elona_vector1<int>& inhlist_, int& inhmax_)
 {
     int p_at_m42 = 0;
     int f_at_m42 = 0;
     randomize(inv[prm_440].turn + 1);
-    DIM2(prm_441, 15);
-    prm_442 = 0;
+    DIM2(inhlist_, 15);
+    inhmax_ = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         p_at_m42 = rnd(15);
@@ -1058,9 +1058,9 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
             continue;
         }
         f_at_m42 = 0;
-        for (int cnt = 0, cnt_end = (prm_442 + 1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (inhmax_ + 1); cnt < cnt_end; ++cnt)
         {
-            if (p_at_m42 == prm_441(cnt))
+            if (p_at_m42 == inhlist_(cnt))
             {
                 f_at_m42 = 1;
                 break;
@@ -1070,10 +1070,10 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
         {
             continue;
         }
-        if (rnd(4) > prm_442 || inv[prm_440].enchantments[p_at_m42].power < 0)
+        if (rnd(4) > inhmax_ || inv[prm_440].enchantments[p_at_m42].power < 0)
         {
-            prm_441(prm_442) = p_at_m42;
-            ++prm_442;
+            inhlist_(inhmax_) = p_at_m42;
+            ++inhmax_;
         }
     }
     randomize();
@@ -11703,7 +11703,7 @@ int read_normal_book()
     }
     tc = cc;
     item_identify(inv[ci], identification_state_t::partly_identified);
-    label_2022();
+    show_book_window();
     return 1;
 }
 
