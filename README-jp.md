@@ -90,6 +90,8 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 
 ## サードパーティーライブラリ
 
+* microhcl: src/thirdparty/microhcl/LICENSEを参照してください。
+* microhil: src/thirdparty/microhil/LICENSEを参照してください。
 * Catch2: src/thirdparty/catch2/LICENSEを参照してください。
 * hayai: src/thirdparty/hayai/LICENSEを参照してください。
 * sol2: src/thirdparty/sol2/LICENSEを参照してください。
