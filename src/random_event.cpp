@@ -495,7 +495,7 @@ void run_random_event(random_event event)
             txt(i18n::s.get_enum(
                 "core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
             show_eating_message();
-            chara_anorexia(0);
+            chara_anorexia(cdata[0]);
         }
         break;
     case 10:

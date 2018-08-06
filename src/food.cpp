@@ -31,37 +31,6 @@ int fdmax = 0;
 elona_vector2<int> fdlist;
 
 
-void get_hungry(int cc)
-{
-    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
-        return;
-
-    int p = cdata[cc].nutrition / 1000;
-    cdata[cc].nutrition -= 8;
-    if (cdata[cc].nutrition / 1000 != p)
-    {
-        if (p == 1)
-        {
-            msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.starving", rnd(2)));
-        }
-        else if (p == 2)
-        {
-            msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.very_hungry", rnd(2)));
-        }
-        else if (p == 5)
-        {
-            msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.hungry", rnd(3)));
-        }
-        refresh_speed(cdata[cc]);
-    }
-}
-
 
 void show_eating_message()
 {
@@ -162,118 +131,115 @@ void eat_rotten_food()
 
 
 
-void cure_anorexia(int cc)
+void cure_anorexia(character& cc)
 {
-    if (cdata[cc].has_anorexia() == 0)
+    if (!cc.has_anorexia())
         return;
 
-    cdata[cc].has_anorexia() = false;
-    if (is_in_fov(cdata[cc]) || cc < 16)
+    cc.has_anorexia() = false;
+    if (is_in_fov(cc) || cc.index < 16)
     {
-        txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cdata[cc]));
+        txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cc));
         snd(65);
     }
 }
 
 
 
-void chara_vomit(int prm_876)
+void chara_vomit(character& cc)
 {
-    int p_at_m146 = 0;
-    ++cdata[prm_876].anorexia_count;
-    if (is_in_fov(cdata[prm_876]))
+    ++cc.anorexia_count;
+
+    if (is_in_fov(cc))
     {
         snd(104);
-        txt(i18n::s.get("core.locale.food.vomits", cdata[prm_876]));
+        txt(i18n::s.get("core.locale.food.vomits", cc));
     }
-    if (cdata[prm_876].is_pregnant())
+
+    if (cc.is_pregnant())
     {
-        cdata[prm_876].is_pregnant() = false;
-        if (is_in_fov(cdata[prm_876]))
+        cc.is_pregnant() = false;
+        if (is_in_fov(cc))
         {
-            txt(i18n::s.get(
-                "core.locale.food.spits_alien_children", cdata[prm_876]));
+            txt(i18n::s.get("core.locale.food.spits_alien_children", cc));
         }
     }
-    if (cdata[prm_876].buffs[0].id != 0)
+
+    // Lose food buff.
+    for (size_t i = 0; i < cc.buffs.size();)
     {
-        for (int cnt = 0; cnt < 16; ++cnt)
+        if (cc.buffs[i].id == 0)
         {
-            if (cdata[prm_876].buffs[cnt].id == 0)
-            {
-                break;
-            }
-            if (the_buff_db[cdata[prm_876].buffs[cnt].id]->type
-                == buff_data::type_t::food)
-            {
-                buff_delete(cdata[prm_876], cnt);
-                --cnt;
-                continue;
-            }
+            break;
+        }
+        if (the_buff_db[cc.buffs[i].id]->type == buff_data::type_t::food)
+        {
+            buff_delete(cc, i);
+        }
+        else
+        {
+            ++i;
         }
     }
+
+    // Vomit.
     if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
-        p_at_m146 = 2;
-        for (const auto& cnt : items(-1))
+        auto p = 2;
+        for (const auto& i : items(-1))
         {
-            if (inv[cnt].number() > 0)
+            if (inv[i].number() > 0)
             {
-                if (inv[cnt].id == 704)
+                if (inv[i].id == 704)
                 {
-                    ++p_at_m146;
+                    ++p;
                 }
             }
         }
-        if (rnd(p_at_m146 * p_at_m146 * p_at_m146) == 0 || prm_876 == 0)
+        if (rnd(p * p * p) == 0 || cc.index == 0)
         {
             flt();
-            int stat = itemcreate(
-                -1,
-                704,
-                cdata[prm_876].position.x,
-                cdata[prm_876].position.y,
-                0);
+            int stat = itemcreate(-1, 704, cc.position.x, cc.position.y, 0);
             if (stat != 0)
             {
-                if (prm_876 != 0)
+                if (cc.index != 0)
                 {
-                    inv[ci].subname = cdata[prm_876].id;
+                    inv[ci].subname = cc.id;
                 }
             }
         }
     }
-    if (cdata[prm_876].has_anorexia() == 0)
+
+    if (cc.has_anorexia())
     {
-        if ((prm_876 < 16 && cdata[prm_876].anorexia_count > 10)
-            || (prm_876 >= 16 && rnd(4) == 0))
+        skillmod(10, cc.index, -50);
+        skillmod(11, cc.index, -75);
+        skillmod(17, cc.index, -100);
+    }
+    else
+    {
+        if ((cc.index < 16 && cc.anorexia_count > 10)
+            || (cc.index >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
-                cdata[prm_876].has_anorexia() = true;
-                if (is_in_fov(cdata[prm_876]))
+                cc.has_anorexia() = true;
+                if (is_in_fov(cc))
                 {
-                    txt(i18n::s.get(
-                        "core.locale.food.anorexia.develops", cdata[prm_876]));
+                    txt(i18n::s.get("core.locale.food.anorexia.develops", cc));
                     snd(65);
                 }
             }
         }
     }
-    else
+
+    dmgcon(cc.index, status_ailment_t::dimmed, 100);
+    modify_weight(cc, -(1 + rnd(5)));
+    if (cc.nutrition <= 0)
     {
-        skillmod(10, prm_876, -50);
-        skillmod(11, prm_876, -75);
-        skillmod(17, prm_876, -100);
+        damage_hp(cc, 9999, -3);
     }
-    dmgcon(prm_876, status_ailment_t::dimmed, 100);
-    modify_weight(cdata[prm_876], -(1 + rnd(5)));
-    if (cdata[prm_876].nutrition <= 0)
-    {
-        damage_hp(cdata[prm_876], 9999, -3);
-    }
-    cdata[prm_876].nutrition -= 3000;
-    return;
+    cc.nutrition -= 3000;
 }
 
 
@@ -290,7 +256,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         {
             txt(i18n::s.get("core.locale.food.eat_status.bad", cdata[eater]));
         }
-        chara_vomit(eater);
+        chara_vomit(cdata[eater]);
     }
     else if (curse_state == curse_state_t::blessed)
     {
@@ -308,31 +274,58 @@ void eatstatus(curse_state_t curse_state, int eater)
 
 
 
-int chara_anorexia(int prm_879)
+void chara_anorexia(character& cc)
 {
-    if (cdata[prm_879].has_anorexia() == 0)
+    if (cc.has_anorexia())
     {
-        return 0;
+        chara_vomit(cc);
     }
-    chara_vomit(prm_879);
-    return 1;
 }
 
 
 
-void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
+void get_sick_if_cursed(curse_state_t curse_state, character& drinker)
 {
     if (!is_cursed(curse_state))
         return;
 
-    if (rnd(prm_882) == 0)
+    if (is_in_fov(drinker))
     {
-        if (is_in_fov(cdata[drinker]))
+        txt(i18n::s.get("core.locale.food.eat_status.cursed_drink", drinker));
+    }
+    dmgcon(drinker.index, status_ailment_t::sick, 200);
+}
+
+
+
+void get_hungry(character& cc)
+{
+    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
+        return;
+
+    int p = cc.nutrition / 1000;
+    cc.nutrition -= 8;
+    if (cc.nutrition / 1000 != p)
+    {
+        if (p == 1)
         {
-            txt(i18n::s.get(
-                "core.locale.food.eat_status.cursed_drink", cdata[drinker]));
+            msgalert = 1;
+            txt(i18n::s.get_enum(
+                "core.locale.food.hunger_status.starving", rnd(2)));
         }
-        dmgcon(drinker, status_ailment_t::sick, 200);
+        else if (p == 2)
+        {
+            msgalert = 1;
+            txt(i18n::s.get_enum(
+                "core.locale.food.hunger_status.very_hungry", rnd(2)));
+        }
+        else if (p == 5)
+        {
+            msgalert = 1;
+            txt(i18n::s.get_enum(
+                "core.locale.food.hunger_status.hungry", rnd(3)));
+        }
+        refresh_speed(cc);
     }
 }
 

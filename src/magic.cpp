@@ -569,7 +569,10 @@ int magic()
                 {
                     healcon(tc, 12, 5 + rnd(5));
                 }
-                sickifcursed(efstatus, tc, 3);
+                if (rnd(3) == 0)
+                {
+                    get_sick_if_cursed(efstatus, cdata[tc]);
+                }
                 bright_aura_animation(
                     cdata[tc], bright_aura_animation::type_t::healing)
                     .play();
@@ -679,7 +682,7 @@ int magic()
                         txtef(8);
                         txt(i18n::s.get("core.locale.magic.hunger", cdata[tc]));
                     }
-                    get_hungry(tc);
+                    get_hungry(cdata[tc]);
                 }
                 if (efid == 613)
                 {
@@ -1354,7 +1357,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.water.other"));
             }
         }
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1146:
         if (is_in_fov(cdata[tc]))
@@ -1364,7 +1367,7 @@ label_2181_internal:
                 "core.locale.magic.restore_stamina.apply", cdata[tc]));
         }
         heal_sp(cdata[tc], 25);
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1147:
         if (is_in_fov(cdata[tc]))
@@ -1375,7 +1378,7 @@ label_2181_internal:
                 "core.locale.magic.restore_stamina_greater.apply", cdata[tc]));
         }
         heal_sp(cdata[tc], 100);
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1142:
         if (cdatan(2, tc) == u8"snail"s)
@@ -1412,7 +1415,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.dirty_water.other"));
             }
         }
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 300:
         if (gdata_executing_immediate_quest_type == 1008

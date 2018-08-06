@@ -908,7 +908,7 @@ void continuous_action_eating_finish()
             }
         }
     }
-    chara_anorexia(cc);
+    chara_anorexia(cdata[cc]);
     if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
     {
         if (is_in_fov(cdata[cc]))

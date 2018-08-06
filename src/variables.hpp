@@ -1164,7 +1164,7 @@ void setunid(int = 0, int = 0);
 void showcard();
 void showcardholder();
 void showcardpile();
-void sickifcursed(curse_state_t, int, int);
+
 void skillgain(int = 0, int = 0, int = 0, int = 0);
 void skillinit(int = 0, int = 0, int = 0);
 std::string snarmor(const std::string&);

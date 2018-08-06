@@ -1099,7 +1099,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         if (rnd(60) == 0)
         {
-            chara_vomit(cc);
+            chara_vomit(cdata[cc]);
             return turn_result_t::turn_end;
         }
     }
@@ -1210,7 +1210,7 @@ turn_result_t turn_end()
                     -6);
             }
         }
-        get_hungry(cc);
+        get_hungry(cdata[cc]);
         refresh_speed(cdata[cc]);
     }
     else if (mdata_map_type != mdata_t::map_type_t::world_map)

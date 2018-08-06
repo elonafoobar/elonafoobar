@@ -76,7 +76,7 @@ talk_result_t talk_inn_eat()
         "core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
     txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
     show_eating_message();
-    chara_anorexia(0);
+    chara_anorexia(cdata[0]);
     return talk_result_t::talk_npc;
 }
 

@@ -10841,7 +10841,7 @@ void label_2151()
         }
         if (cdata[tc].anorexia_count < 0)
         {
-            cure_anorexia(tc);
+            cure_anorexia(cdata[tc]);
             cdata[tc].anorexia_count = 0;
         }
         heal_insanity(cdata[tc], 10);
@@ -11653,7 +11653,7 @@ int drink_potion()
         {
             if (rnd(5) == 0)
             {
-                chara_vomit(tc);
+                chara_vomit(cdata[tc]);
             }
         }
     }
