@@ -6399,4 +6399,4 @@ locale {
             description_3 = "開発用"
         }
     }
-
+}
