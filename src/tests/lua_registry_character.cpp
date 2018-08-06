@@ -1,6 +1,7 @@
 #include "../thirdparty/catch2/catch.hpp"
 
 #include "../character.hpp"
+#include "../enums.hpp"
 #include "../filesystem.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
@@ -101,7 +102,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
         REQUIRE(data->resistances == expected);
     }
 
-    REQUIRE(data->color == 4);
+    REQUIRE(data->color == color_index_t::blue);
     REQUIRE(data->sex == 1);
     REQUIRE(data->original_relationship == -3);
     REQUIRE(data->_flags[22] == true);
@@ -141,7 +142,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
         REQUIRE(data->resistances == expected);
     }
 
-    REQUIRE(data->color == 0);
+    REQUIRE(data->color == color_index_t::none);
     REQUIRE(data->sex == -1);
     REQUIRE(data->original_relationship == 0);
     REQUIRE(data->_flags[22] == false);
