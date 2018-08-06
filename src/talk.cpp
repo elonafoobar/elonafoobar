@@ -742,7 +742,7 @@ talk_result_t talk_house_visitor()
                 txt(i18n::s.get(
                     "core.locale.talk.visitor.adventurer.conversation.hold",
                     cdata[tc]));
-                chara_mod_impression(tc, 10);
+                chara_modify_impression(cdata[tc], 10);
                 return talk_result_t::talk_end;
             }
         }
@@ -771,7 +771,7 @@ talk_result_t talk_house_visitor()
             txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
             dmgcon(tc, status_ailment_t::drunk, 1000);
             dmgcon(cc, status_ailment_t::drunk, 1000);
-            chara_mod_impression(tc, 15);
+            chara_modify_impression(cdata[tc], 15);
             return talk_result_t::talk_end;
         }
         listmax = 0;

@@ -538,7 +538,6 @@ private:
 extern cdata_t cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
-int chara_create_internal();
 void initialize_character();
 bool chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
@@ -547,17 +546,17 @@ bool chara_copy(int cc);
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
 void chara_killed(character&);
-int chara_find(int = 0);
-int chara_find_ally(int = 0);
+int chara_find(int id);
+int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(int);
 int chara_custom_talk(int = 0, int = 0);
 std::string chara_refstr(int = 0, int = 0);
 int chara_impression_level(int = 0);
-void chara_mod_impression(int = 0, int = 0);
-void chara_set_item_which_will_be_used();
-int chara_armor_class(int = 0);
+void chara_modify_impression(character& cc, int delta);
+void chara_set_item_which_will_be_used(character& cc);
+int chara_armor_class(const character& cc);
 
 void initialize_character_filters();
 void chara_set_generation_filter();

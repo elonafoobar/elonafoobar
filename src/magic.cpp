@@ -1215,7 +1215,7 @@ label_2181_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.magic.love_potion.cursed", cdata[tc]));
-                chara_mod_impression(tc, -15);
+                chara_modify_impression(cdata[tc], -15);
             }
             obvious = 0;
             break;
@@ -1224,7 +1224,7 @@ label_2181_internal:
         if (potionspill || potionthrow)
         {
             txt(i18n::s.get("core.locale.magic.love_potion.spill", cdata[tc]));
-            chara_mod_impression(tc, clamp(efp / 15, 0, 15));
+            chara_modify_impression(cdata[tc], clamp(efp / 15, 0, 15));
             dmgcon(tc, status_ailment_t::dimmed, 100);
             lovemiracle(tc);
             break;
@@ -1237,7 +1237,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.love_potion.other", cdata[tc]));
             lovemiracle(tc);
-            chara_mod_impression(tc, clamp(efp / 4, 0, 25));
+            chara_modify_impression(cdata[tc], clamp(efp / 4, 0, 25));
         }
         dmgcon(tc, status_ailment_t::dimmed, 500);
         break;
@@ -2038,7 +2038,7 @@ label_2181_internal:
         cdata[rc].emotion_icon = 317;
         if (cc == 0)
         {
-            chara_mod_impression(rc, 15);
+            chara_modify_impression(cdata[rc], 15);
             if (rc >= 16)
             {
                 modify_karma(cdata[0], 2);

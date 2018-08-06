@@ -459,7 +459,7 @@ talk_result_t talk_quest_delivery()
     inv[ti].set_number(1);
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used();
+    chara_set_item_which_will_be_used(cdata[tc]);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -478,7 +478,7 @@ talk_result_t talk_quest_supply()
     cdata[tc].was_passed_item_by_you_just_now() = true;
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used();
+    chara_set_item_which_will_be_used(cdata[tc]);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
@@ -1794,11 +1794,11 @@ talk_result_t talk_npc()
                         {
                             if (rnd(sdata(17, 0) + 1) > 10)
                             {
-                                chara_mod_impression(tc, rnd(3));
+                                chara_modify_impression(cdata[tc], rnd(3));
                             }
                             else
                             {
-                                chara_mod_impression(tc, rnd(3) * -1);
+                                chara_modify_impression(cdata[tc], rnd(3) * -1);
                             }
                         }
                     }

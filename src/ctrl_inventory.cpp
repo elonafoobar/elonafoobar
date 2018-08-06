@@ -1473,7 +1473,7 @@ label_2061_internal:
                 inv[ci].modify_number(-1);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.give.present.dialog", cdata[tc]));
-                chara_mod_impression(tc, giftvalue(inv[ci].param4));
+                chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1609,7 +1609,7 @@ label_2061_internal:
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.engagement", cdata[tc]));
-                    chara_mod_impression(tc, 15);
+                    chara_modify_impression(cdata[tc], 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
@@ -1625,7 +1625,7 @@ label_2061_internal:
                         "core.locale.ui.inv.give.love_potion.dialog",
                         rnd(3),
                         cdata[tc]));
-                    chara_mod_impression(tc, -20);
+                    chara_modify_impression(cdata[tc], -20);
                     cdata[tc].emotion_icon = 318;
                     inv[ci].modify_number(-1);
                     goto label_20591;
@@ -1636,7 +1636,7 @@ label_2061_internal:
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
-                chara_set_item_which_will_be_used();
+                chara_set_item_which_will_be_used(cdata[tc]);
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
@@ -1931,7 +1931,7 @@ label_2061_internal:
                     cdata[tc],
                     inv[ci]));
                 snd(65);
-                chara_mod_impression(tc, -20);
+                chara_modify_impression(cdata[tc], -20);
                 cdata[tc].emotion_icon = 318;
                 inv[ci].modify_number(-1);
                 goto label_20591;

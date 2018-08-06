@@ -2346,7 +2346,7 @@ void check_kill(int prm_836, int prm_837)
                 }
                 if (cdata[prm_837].character_role == 13)
                 {
-                    chara_mod_impression(prm_837, -25);
+                    chara_modify_impression(cdata[prm_837], -25);
                 }
             }
         }
@@ -2358,13 +2358,13 @@ void check_kill(int prm_836, int prm_837)
                 {
                     if (rnd(2))
                     {
-                        chara_mod_impression(prm_836, 1);
+                        chara_modify_impression(cdata[prm_836], 1);
                         cdata[prm_836].emotion_icon = 317;
                     }
                 }
                 else if (rnd(10) == 0)
                 {
-                    chara_mod_impression(prm_836, 1);
+                    chara_modify_impression(cdata[prm_836], 1);
                     cdata[prm_836].emotion_icon = 317;
                 }
             }
@@ -2381,7 +2381,7 @@ void check_kill(int prm_836, int prm_837)
 
 std::string cnveqweight(int cc)
 {
-    int id = chara_armor_class(cc);
+    int id = chara_armor_class(cdata[cc]);
     if (id == 169)
     {
         return lang(u8"(重装備)"s, u8"(Heavy)"s);
@@ -12955,7 +12955,7 @@ turn_result_t do_bash()
                         "core.locale.action.bash.choked.spits", cdata[tc]));
                     txt(i18n::s.get("core.locale.action.bash.choked.dialog"));
                     cdata[tc].choked = 0;
-                    chara_mod_impression(tc, 10);
+                    chara_modify_impression(cdata[tc], 10);
                 }
             }
             else
@@ -14606,7 +14606,7 @@ label_22191_internal:
             if (cdata[tc].state() == character::state_t::alive)
             {
                 skillexp(
-                    chara_armor_class(tc),
+                    chara_armor_class(cdata[tc]),
                     tc,
                     clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
                         / expmodifer,

@@ -922,7 +922,7 @@ int damage_hp(
         {
             if (victim.index < 16)
             {
-                chara_mod_impression(victim.index, -10);
+                chara_modify_impression(victim, -10);
                 victim.set_state(character::state_t::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)

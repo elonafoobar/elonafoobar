@@ -1284,7 +1284,7 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get_enum(
                 "core.locale.food.effect.spiked.other", rnd(2), cdata[cc]));
             cdata[cc].emotion_icon = 317;
-            chara_mod_impression(cc, 30);
+            chara_modify_impression(cdata[cc], 30);
             modify_karma(cdata[0], -10);
             lovemiracle(cc);
         }

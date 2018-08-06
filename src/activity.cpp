@@ -791,7 +791,7 @@ void continuous_action_sex()
         cdata[tc].gold -= sexvalue;
         if (cc == 0)
         {
-            chara_mod_impression(tc, 5);
+            chara_modify_impression(cdata[tc], 5);
             flt();
             itemcreate(
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
@@ -902,7 +902,7 @@ void continuous_action_eating_finish()
                             modify_karma(cdata[0], -1);
                         }
                     }
-                    chara_mod_impression(tc, -25);
+                    chara_modify_impression(cdata[tc], -25);
                     return;
                 }
             }
@@ -1193,13 +1193,13 @@ void continuous_action_others()
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.dialog.guard"));
-                        chara_mod_impression(cnt, -5);
+                        chara_modify_impression(cdata[cnt], -5);
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.dialog.other"));
-                        chara_mod_impression(cnt, -5);
+                        chara_modify_impression(cdata[cnt], -5);
                     }
                     cdata[cnt].emotion_icon = 520;
                     f = 1;
@@ -1219,7 +1219,7 @@ void continuous_action_others()
                         {
                             cdata[tg].relationship = -2;
                             hostileaction(0, tg);
-                            chara_mod_impression(tg, -20);
+                            chara_modify_impression(cdata[tg], -20);
                         }
                     }
                 }
