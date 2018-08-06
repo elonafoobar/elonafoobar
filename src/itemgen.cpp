@@ -374,11 +374,11 @@ int do_create_item(int slot, int x, int y)
             + 5;
         if (inv[ci].id == 283)
         {
-            inv[ci].param1 = (rnd(10) + 1) * (cdata[0].level / 10 + 1);
+            inv[ci].param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
         }
         if (inv[ci].id == 415 || inv[ci].id == 416)
         {
-            inv[ci].param1 = cdata[0].level;
+            inv[ci].param1 = cdata.player().level;
         }
         inv[ci].param2 =
             rnd(std::abs(gdata_current_dungeon_level)

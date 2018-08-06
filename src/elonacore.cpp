@@ -530,10 +530,10 @@ void initialize_building_daga()
 
 void initialize_pc_character()
 {
-    cdata[0].quality = 2;
-    cdata[0].relationship = 10;
-    cdata[0].original_relationship = 10;
-    cdata[0].has_own_sprite() = true;
+    cdata.player().quality = 2;
+    cdata.player().relationship = 10;
+    cdata.player().original_relationship = 10;
+    cdata.player().has_own_sprite() = true;
     flt();
     itemcreate(0, 333, -1, -1, 0);
     inv[ci].set_number(8);
@@ -576,8 +576,8 @@ void initialize_pc_character()
         itemcreate(0, 378, -1, -1, 0);
     }
     gain_race_feat();
-    cdata[0].skill_bonus = 5 + trait(154);
-    cdata[0].total_skill_bonus = 5 + trait(154);
+    cdata.player().skill_bonus = 5 + trait(154);
+    cdata.player().total_skill_bonus = 5 + trait(154);
     for (const auto& cnt : items(0))
     {
         if (inv[cnt].number() == 0)
@@ -1900,7 +1900,7 @@ void hostileaction(int prm_787, int prm_788)
     {
         if (cdata[prm_788].relationship == 0)
         {
-            modify_karma(cdata[0], -2);
+            modify_karma(cdata.player(), -2);
         }
         if (cdata[prm_788].id == 202)
         {
@@ -2021,7 +2021,7 @@ void incognitoend()
         }
         if (cdata[cnt].character_role == 14)
         {
-            if (cdata[0].karma < -30)
+            if (cdata.player().karma < -30)
             {
                 cdata[cnt].relationship = -3;
                 cdata[cnt].hate = 80;
@@ -2372,7 +2372,7 @@ void check_kill(int prm_836, int prm_837)
     }
     if (p_at_m137 != 0)
     {
-        modify_karma(cdata[0], p_at_m137);
+        modify_karma(cdata.player(), p_at_m137);
     }
     return;
 }
@@ -2562,7 +2562,7 @@ int try_to_cast_spell()
         }
         for (int cnt = 0, cnt_end = (2 + rnd(3)); cnt < cnt_end; ++cnt)
         {
-            flt(calcobjlv(cdata[0].level * 3 / 2 + 3), calcfixlv(2));
+            flt(calcobjlv(cdata.player().level * 3 / 2 + 3), calcfixlv(2));
             int stat =
                 chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
             if (stat != 0)
@@ -2952,7 +2952,8 @@ void proc_turn_end(int cc)
             {
                 if (cdata[cc].continuous_action_id != 1)
                 {
-                    damage_hp(cdata[cc], rnd(2) + cdata[0].max_hp / 50, -3);
+                    damage_hp(
+                        cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
                     if (gdata_play_turns % 10 == 0)
                     {
                         rowact_check(cc);
@@ -3030,35 +3031,39 @@ void proc_turn_end(int cc)
 
 void refresh_burden_state()
 {
-    cdata[0].inventory_weight = clamp(inv_weight(0), 0, 20000000)
+    cdata.player().inventory_weight = clamp(inv_weight(0), 0, 20000000)
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
-    cdata[0].max_inventory_weight =
+    cdata.player().max_inventory_weight =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (cdata[0].inventory_weight > cdata[0].max_inventory_weight * 2)
+        if (cdata.player().inventory_weight
+            > cdata.player().max_inventory_weight * 2)
         {
-            cdata[0].inventory_weight_type = 4;
+            cdata.player().inventory_weight_type = 4;
             break;
         }
-        if (cdata[0].inventory_weight > cdata[0].max_inventory_weight)
+        if (cdata.player().inventory_weight
+            > cdata.player().max_inventory_weight)
         {
-            cdata[0].inventory_weight_type = 3;
+            cdata.player().inventory_weight_type = 3;
             break;
         }
-        if (cdata[0].inventory_weight > cdata[0].max_inventory_weight / 4 * 3)
+        if (cdata.player().inventory_weight
+            > cdata.player().max_inventory_weight / 4 * 3)
         {
-            cdata[0].inventory_weight_type = 2;
+            cdata.player().inventory_weight_type = 2;
             break;
         }
-        if (cdata[0].inventory_weight > cdata[0].max_inventory_weight / 2)
+        if (cdata.player().inventory_weight
+            > cdata.player().max_inventory_weight / 2)
         {
-            cdata[0].inventory_weight_type = 1;
+            cdata.player().inventory_weight_type = 1;
             break;
         }
-        cdata[0].inventory_weight_type = 0;
+        cdata.player().inventory_weight_type = 0;
     }
-    refresh_speed(cdata[0]);
+    refresh_speed(cdata.player());
     return;
 }
 
@@ -3067,8 +3072,8 @@ void refresh_burden_state()
 void revive_character()
 {
     do_chara_revival();
-    cxinit = cdata[0].position.x;
-    cyinit = cdata[0].position.y;
+    cxinit = cdata.player().position.x;
+    cyinit = cdata.player().position.y;
     chara_place();
     cdata[rc].current_map = 0;
     snd(64);
@@ -4492,7 +4497,7 @@ void character_drops_item()
             54,
             cdata[rc].position.x,
             cdata[rc].position.y,
-            2500 + rnd((cdata[0].fame + 1000)));
+            2500 + rnd((cdata.player().fame + 1000)));
     }
     if (cdata[rc].id == 351 || cdata[rc].id == 352)
     {
@@ -4609,7 +4614,7 @@ void food_gets_rotten()
                             }
                             if (p == 0)
                             {
-                                if (cdata[0].god_id == core_god::kumiromi)
+                                if (cdata.player().god_id == core_god::kumiromi)
                                 {
                                     i = the_item_db[inv[cnt].id]->subcategory;
                                     if (rnd(3) == 0)
@@ -4622,7 +4627,7 @@ void food_gets_rotten()
                                         p = rnd(inv[cnt].number()) + 1;
                                         inv[cnt].modify_number(
                                             (-inv[cnt].number()));
-                                        flt(calcobjlv(cdata[0].level));
+                                        flt(calcobjlv(cdata.player().level));
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
                                         p = 0;
@@ -4850,7 +4855,7 @@ void proc_negative_equipments()
                                  cnt < cnt_end;
                                  ++cnt)
                             {
-                                flt(calcobjlv(cdata[0].level * 3 / 2 + 3),
+                                flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                                     calcfixlv(2));
                                 chara_create(
                                     -1,
@@ -4872,8 +4877,8 @@ void proc_negative_equipments()
 
 void auto_identify()
 {
-    if (cdata[0].confused != 0 || cdata[0].sleep != 0 || cdata[0].paralyzed != 0
-        || cdata[0].choked != 0)
+    if (cdata.player().confused != 0 || cdata.player().sleep != 0
+        || cdata.player().paralyzed != 0 || cdata.player().choked != 0)
     {
         return;
     }
@@ -5080,7 +5085,7 @@ turn_result_t exit_map()
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(201) = 1;
                         ghelp = 1;
@@ -5129,7 +5134,7 @@ turn_result_t exit_map()
     }
     if (levelexitby == 4)
     {
-        cell_featread(cdata[0].position.x, cdata[0].position.y);
+        cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (gdata_current_map == mdata_t::map_id_t::your_home)
         {
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
@@ -5153,7 +5158,7 @@ turn_result_t exit_map()
             f = 1;
             gdata_entrance_type = 1;
             mdata_map_stair_down_pos =
-                cdata[0].position.y * 1000 + cdata[0].position.x;
+                cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
                 ++gdata_current_dungeon_level;
@@ -5171,7 +5176,7 @@ turn_result_t exit_map()
             f = 1;
             gdata_entrance_type = 2;
             mdata_map_stair_up_pos =
-                cdata[0].position.y * 1000 + cdata[0].position.x;
+                cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
                 --gdata_current_dungeon_level;
@@ -5299,7 +5304,7 @@ turn_result_t exit_map()
             fixstart = 1;
         }
     }
-    if (cdata[0].state() == character::state_t::empty)
+    if (cdata.player().state() == character::state_t::empty)
     {
         rc = 0;
         label_1540();
@@ -6852,7 +6857,7 @@ int place_random_nefias()
         adata(30, p) = gdata(850);
         if (rnd(3))
         {
-            adata(17, p) = rnd(cdata[0].level + 5) + 1;
+            adata(17, p) = rnd(cdata.player().level + 5) + 1;
         }
         else
         {
@@ -7038,11 +7043,11 @@ void label_1754()
     {
         if (rnd(50) == 0)
         {
-            if (cdata[0].karma < -30)
+            if (cdata.player().karma < -30)
             {
                 txt(lang(
                     u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
-                modify_karma(cdata[0], 1);
+                modify_karma(cdata.player(), 1);
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
                 {
@@ -7050,7 +7055,7 @@ void label_1754()
                 }
             }
         }
-        if (cdata[0].karma >= -30)
+        if (cdata.player().karma >= -30)
         {
             if (rnd(1000) == 0)
             {
@@ -7076,9 +7081,9 @@ void label_1754()
     {
         if (gdata_weather == 2 || gdata_weather == 4 || gdata_weather == 1)
         {
-            if (cdata[0].nutrition < 5000)
+            if (cdata.player().nutrition < 5000)
             {
-                if (cdata[0].has_anorexia() == 0)
+                if (cdata.player().has_anorexia() == 0)
                 {
                     snd(18);
                     txt(lang(
@@ -7782,12 +7787,12 @@ void supply_income()
             ++income(1);
         }
     }
-    if (cdata[0].fame > 0)
+    if (cdata.player().fame > 0)
     {
-        p = clamp(cdata[0].fame / 10, 100, 25000);
-        if (cdata[0].fame >= 25000)
+        p = clamp(cdata.player().fame / 10, 100, 25000);
+        if (cdata.player().fame >= 25000)
         {
-            p += (cdata[0].fame - 25000) / 100;
+            p += (cdata.player().fame - 25000) / 100;
         }
         income += p;
         flt();
@@ -7811,7 +7816,7 @@ void supply_income()
     }
     if (gdata_day == 1)
     {
-        if (cdata[0].level > 5)
+        if (cdata.player().level > 5)
         {
             autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
             p = -1;
@@ -7877,7 +7882,7 @@ void supply_income()
                 txt(lang(
                     u8"名声値を"s + p + u8"失った。"s,
                     u8"You lose "s + p + u8" fame."s));
-                modify_karma(cdata[0], -30 * 2);
+                modify_karma(cdata.player(), -30 * 2);
             }
         }
         else
@@ -7896,7 +7901,7 @@ void supply_income()
         {
             if (mode == 0)
             {
-                if (cdata[0].continuous_action_turn == 0)
+                if (cdata.player().continuous_action_turn == 0)
                 {
                     gdata(216) = 1;
                     ghelp = 16;
@@ -7981,11 +7986,17 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (prm_1059 == 0)
     {
         if (fov_los(
-                cdata[0].position.x, cdata[0].position.y, prm_1057, prm_1058)
+                cdata.player().position.x,
+                cdata.player().position.y,
+                prm_1057,
+                prm_1058)
                 == 0
             || dist(
-                   cdata[0].position.x, cdata[0].position.y, prm_1057, prm_1058)
-                > cdata[0].vision_distance / 2)
+                   cdata.player().position.x,
+                   cdata.player().position.y,
+                   prm_1057,
+                   prm_1058)
+                > cdata.player().vision_distance / 2)
         {
             bmes(
                 i18n::s.get("core.locale.action.target.out_of_sight"),
@@ -7999,8 +8010,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (map(prm_1057, prm_1058, 1) != 0)
     {
         i_at_m186 = map(prm_1057, prm_1058, 1) - 1;
-        if (cdata[i_at_m186].is_invisible() == 0 || cdata[0].can_see_invisible()
-            || cdata[i_at_m186].wet)
+        if (cdata[i_at_m186].is_invisible() == 0
+            || cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
@@ -8011,8 +8022,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                     "core.locale.action.target.you_are_targeting",
                     cdata[i_at_m186],
                     dist(
-                        cdata[0].position.x,
-                        cdata[0].position.y,
+                        cdata.player().position.x,
+                        cdata.player().position.y,
                         cdata[i_at_m186].position.x,
                         cdata[i_at_m186].position.y)),
                 100,
@@ -8121,7 +8132,7 @@ turn_result_t step_into_gate()
         {
             if (mode == 0)
             {
-                if (cdata[0].continuous_action_turn == 0)
+                if (cdata.player().continuous_action_turn == 0)
                 {
                     gdata(217) = 1;
                     ghelp = 17;
@@ -8408,7 +8419,7 @@ int target_position()
     else
     {
         scposval = 1;
-        if (cdata[0].enemy_id == 0)
+        if (cdata.player().enemy_id == 0)
         {
             label_2072();
         }
@@ -8425,7 +8436,7 @@ int target_position()
             {
                 continue;
             }
-            if (list(0, cnt) == cdata[0].enemy_id)
+            if (list(0, cnt) == cdata.player().enemy_id)
             {
                 tlocx = cdata[list(0, cnt)].position.x;
                 tlocy = cdata[list(0, cnt)].position.y;
@@ -8490,7 +8501,7 @@ int target_position()
                     break;
                 }
                 if ((cdata[rc].is_invisible() == 0
-                     || cdata[0].can_see_invisible() || cdata[rc].wet)
+                     || cdata.player().can_see_invisible() || cdata[rc].wet)
                     == 0)
                 {
                     break;
@@ -8581,23 +8592,23 @@ int target_position()
             int stat = key_direction();
             if (stat == 1)
             {
-                cdata[0].position.x += kdx;
-                cdata[0].position.y += kdy;
-                if (cdata[0].position.x < 0)
+                cdata.player().position.x += kdx;
+                cdata.player().position.y += kdy;
+                if (cdata.player().position.x < 0)
                 {
-                    cdata[0].position.x = 0;
+                    cdata.player().position.x = 0;
                 }
-                else if (cdata[0].position.x >= mdata_map_width)
+                else if (cdata.player().position.x >= mdata_map_width)
                 {
-                    cdata[0].position.x = mdata_map_width - 1;
+                    cdata.player().position.x = mdata_map_width - 1;
                 }
-                if (cdata[0].position.y < 0)
+                if (cdata.player().position.y < 0)
                 {
-                    cdata[0].position.y = 0;
+                    cdata.player().position.y = 0;
                 }
-                else if (cdata[0].position.y >= mdata_map_height)
+                else if (cdata.player().position.y >= mdata_map_height)
                 {
-                    cdata[0].position.y = mdata_map_height - 1;
+                    cdata.player().position.y = mdata_map_height - 1;
                 }
             }
             tlocx = clamp(tx + scx, 0, mdata_map_width - 1);
@@ -8684,7 +8695,7 @@ int target_position()
                 snd(20);
                 if (rc > 0)
                 {
-                    cdata[0].enemy_id = rc;
+                    cdata.player().enemy_id = rc;
                     txt(i18n::s.get(
                         "core.locale.action.look.target", cdata[rc]));
                 }
@@ -9412,30 +9423,31 @@ void dump_player_info()
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
-        + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8" "s + calcage(0)
-        + u8"歳"s + u8"  "s + cdata[0].height + u8"cm"s + u8" "s
-        + cdata[0].weight + u8"kg"s);
+        + i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex) + u8" "s
+        + calcage(0) + u8"歳"s + u8"  "s + cdata.player().height + u8"cm"s
+        + u8" "s + cdata.player().weight + u8"kg"s);
     noteadd(""s);
     noteadd(
         fixtxt(
             u8"種族       : "s + i18n::_(u8"race", cdatan(2, 0), u8"name"), 30)
         + fixtxt(
-              (u8"信仰      : "s + i18n::_(u8"god", cdata[0].god_id, u8"name")),
+              (u8"信仰      : "s
+               + i18n::_(u8"god", cdata.player().god_id, u8"name")),
               32));
     noteadd(
         fixtxt(u8"職業       : "s + classname, 30)
         + fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(
-        fixtxt(u8"レベル     : "s + cdata[0].level, 30)
+        fixtxt(u8"レベル     : "s + cdata.player().level, 30)
         + fixtxt((u8"経過日数  : "s + gdata_play_days), 32));
     noteadd(
-        fixtxt(u8"残りBP     : "s + cdata[0].skill_bonus, 30)
+        fixtxt(u8"残りBP     : "s + cdata.player().skill_bonus, 30)
         + fixtxt((u8"経過ターン: "s + gdata_play_turns), 32));
     noteadd(
-        fixtxt(u8"金貨       : "s + cdata[0].gold, 30)
+        fixtxt(u8"金貨       : "s + cdata.player().gold, 30)
         + fixtxt((u8"殺害数    : "s + gdata_kill_count), 32));
     noteadd(
-        fixtxt(u8"プラチナ   : "s + cdata[0].platinum_coin, 30)
+        fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30)
         + fixtxt(
               (u8"最深到達  : "s + gdata_deepest_dungeon_level + u8"階相当"s),
               32));
@@ -9449,12 +9461,12 @@ void dump_player_info()
         + sdata.get(2, 0).original_level + u8")"s;
     s(2) = u8"マナ      : "s + sdata(3, 0) + u8"("s
         + sdata.get(3, 0).original_level + u8")"s;
-    s(3) = u8"狂気度    : "s + cdata[0].insanity;
-    s(4) = u8"速度      : "s + cdata[0].current_speed;
-    s(5) = u8"名声度    : "s + cdata[0].fame;
-    s(6) = u8"カルマ    : "s + cdata[0].karma;
-    s(7) = u8"DV        : "s + cdata[0].dv;
-    s(8) = u8"PV        : "s + cdata[0].pv;
+    s(3) = u8"狂気度    : "s + cdata.player().insanity;
+    s(4) = u8"速度      : "s + cdata.player().current_speed;
+    s(5) = u8"名声度    : "s + cdata.player().fame;
+    s(6) = u8"カルマ    : "s + cdata.player().karma;
+    s(7) = u8"DV        : "s + cdata.player().dv;
+    s(8) = u8"PV        : "s + cdata.player().pv;
     s(9) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
     {
@@ -9798,7 +9810,7 @@ void migrate_save_data(const fs::path& save_dir)
         return;
     }
     gdata_version = 1220;
-    cdata[0].has_own_sprite() = true;
+    cdata.player().has_own_sprite() = true;
     initialize_recipememory();
 
     // TODO: Delete these lines when v1.0.0 stable is released.
@@ -9966,9 +9978,9 @@ void get_inheritance()
     {
         i = 40;
     }
-    earn_gold(cdata[0], clamp(cdata[56].gold / 100, 1000, 100000));
-    earn_platinum(cdata[0], p);
-    cdata[0].skill_bonus += i;
+    earn_gold(cdata.player(), clamp(cdata.tmp().gold / 100, 1000, 100000));
+    earn_platinum(cdata.player(), p);
+    cdata.player().skill_bonus += i;
     for (int cnt = 0; cnt < 400; ++cnt)
     {
         mat(cnt) = mat(cnt) / 3;
@@ -10228,7 +10240,7 @@ void load_save_data()
     {
         cdatan(1, 0) = u8"*Debug*"s;
     }
-    refresh_speed(cdata[0]);
+    refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;
     ELONA_LOG("Load save data end: " << playerid);
 }
@@ -10289,8 +10301,8 @@ turn_result_t do_enter_strange_gate()
     snd(49);
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = 35;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
@@ -10303,8 +10315,8 @@ int ask_direction()
 {
     snd(26);
     gsel(4);
-    x = (cdata[0].position.x - scx) * inf_tiles + inf_screenx - 48;
-    y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny - 48;
+    x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
+    y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny - 48;
     gmode(0);
     pos(0, 0);
     gcopy(0, x, y, 144, 144);
@@ -10313,8 +10325,8 @@ int ask_direction()
 label_2128_internal:
     ++t;
     gmode(4, 200 - t / 2 % 20 * (t / 2 % 20));
-    x = (cdata[0].position.x - scx) * inf_tiles + inf_screenx + 24;
-    y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 24;
+    x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
+    y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
     {
         draw_rotated("direction_arrow", x, y - 48, 0);
@@ -10333,8 +10345,8 @@ label_2128_internal:
     gmode(2);
     await(config::instance().wait1);
     key_check(key_wait_delay_t::walk_run);
-    x = cdata[0].position.x;
-    y = cdata[0].position.y;
+    x = cdata.player().position.x;
+    y = cdata.player().position.y;
     if (key == key_alter)
     {
         goto label_2128_internal;
@@ -10414,12 +10426,12 @@ label_2128_internal:
     {
         if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
         {
-            x = cdata[0].position.x;
-            y = cdata[0].position.y;
+            x = cdata.player().position.x;
+            y = cdata.player().position.y;
             keyhalt = 1;
             return 0;
         }
-        if (x == cdata[0].position.x && y == cdata[0].position.y)
+        if (x == cdata.player().position.x && y == cdata.player().position.y)
         {
             return 0;
         }
@@ -10531,8 +10543,8 @@ label_21451_internal:
     {
         if (gdata_mount != 0)
         {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
+            cdata[gdata_mount].position.x = cdata.player().position.x;
+            cdata[gdata_mount].position.y = cdata.player().position.y;
         }
     }
     movx = cdata[cc].position.x;
@@ -10800,7 +10812,7 @@ void label_2151()
     }
     if (gdata_catches_god_signal)
     {
-        txtgod(cdata[0].god_id, 10);
+        txtgod(cdata.player().god_id, 10);
     }
     label_2150();
     musicloop = 1;
@@ -10902,13 +10914,13 @@ void label_2151()
     txtef(2);
     txt(i18n::s.get("core.locale.activity.sleep.slept_for", timeslept));
     f = 0;
-    if (cdata[0].continuous_action_item == -1)
+    if (cdata.player().continuous_action_item == -1)
     {
         f = 1;
     }
     else
     {
-        ci = cdata[0].continuous_action_item;
+        ci = cdata.player().continuous_action_item;
         if (inv[ci].param1 == 0 || inv[ci].number() == 0
             || the_item_db[inv[ci].id]->subcategory != 60004)
         {
@@ -10940,7 +10952,7 @@ void label_2151()
             {
                 break;
             }
-            modify_potential(cdata[0], 10 + rnd(8), 1);
+            modify_potential(cdata.player(), 10 + rnd(8), 1);
             ++grown;
             if (cnt > 6)
             {
@@ -11047,7 +11059,7 @@ void label_2153()
             * 100 / (100 + gdata_seven_league_boot_effect + sdata(182, 0));
         return;
     }
-    if (cdata[0].nutrition <= 5000)
+    if (cdata.player().nutrition <= 5000)
     {
         f = 0;
         for (const auto& cnt : items(cc))
@@ -11082,7 +11094,8 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
+                if (cdata.player().is_floating() == 0
+                    || cdata.player().gravity > 0)
                 {
                     txtef(9);
                     txt(i18n::s.get_enum(
@@ -11100,9 +11113,9 @@ void label_2153()
                 cdata[cc].continuous_action_turn += 50;
             }
         }
-        if (cdata[0].nutrition <= 2000)
+        if (cdata.player().nutrition <= 2000)
         {
-            if (cdata[0].has_anorexia() == 0)
+            if (cdata.player().has_anorexia() == 0)
             {
                 snd(18);
                 txt(i18n::s.get(
@@ -11122,7 +11135,8 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
+                if (cdata.player().is_floating() == 0
+                    || cdata.player().gravity > 0)
                 {
                     txtef(9);
                     txt(i18n::s.get_enum(
@@ -11132,7 +11146,7 @@ void label_2153()
                     cdata[cc].continuous_action_turn += 5;
                 }
             }
-            if (cdata[0].confused == 0)
+            if (cdata.player().confused == 0)
             {
                 if (rnd(500) == 0)
                 {
@@ -11141,15 +11155,15 @@ void label_2153()
                         "core.locale.action.move.global.weather.heavy_rain."
                         "message",
                         rnd(3)));
-                    cdata[0].confused = 10;
+                    cdata.player().confused = 10;
                 }
             }
             else if (rnd(5) == 0)
             {
-                cdata[0].confused = 10;
+                cdata.player().confused = 10;
             }
         }
-        cdata[0].blind = 3;
+        cdata.player().blind = 3;
     }
     if (cdata[cc].continuous_action_turn > 0)
     {
@@ -11485,7 +11499,7 @@ int label_2168()
         mp = calcspellcostmp(efid, cc);
         if (cc == 0)
         {
-            if (cdata[0].god_id == core_god::ehekatl)
+            if (cdata.player().god_id == core_god::ehekatl)
             {
                 mp = rnd(mp * 140 / 100 + 1) + 1;
             }
@@ -12078,17 +12092,18 @@ int label_2174()
     {
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     return 1;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
             skillexp(the_ability_db[efid]->related_basic_attribute, cc, 25);
@@ -12275,7 +12290,7 @@ int label_2175()
                 obvious = 0;
                 return 0;
             }
-            tc = cdata[0].enemy_id;
+            tc = cdata.player().enemy_id;
             if (cdata[tc].relationship >= 0)
             {
                 int stat = label_2073();
@@ -12447,7 +12462,7 @@ int pick_up_item()
         {
             if (inv[ci].own_state == 4)
             {
-                if (cdata[0].continuous_action_id == 0)
+                if (cdata.player().continuous_action_id == 0)
                 {
                     if (!inv_getspace(0))
                     {
@@ -12520,7 +12535,9 @@ int pick_up_item()
                     }
                     else
                     {
-                        heal_mp(cdata[0], inv[ci].count * 5 * inv[ci].number());
+                        heal_mp(
+                            cdata.player(),
+                            inv[ci].count * 5 * inv[ci].number());
                     }
                     inv[ci].count = 0;
                 }
@@ -12614,7 +12631,7 @@ int pick_up_item()
                 "core.locale.action.pick_up.you_buy", itemname(ti, in)));
             sellgold = calcitemvalue(ti, 0) * in;
             snd(12);
-            cdata[0].gold -= sellgold;
+            cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
             if (the_item_db[inv[ti].id]->category == 92000)
             {
@@ -12649,7 +12666,7 @@ int pick_up_item()
                 }
             }
             snd(11);
-            earn_gold(cdata[0], sellgold);
+            earn_gold(cdata.player(), sellgold);
             cdata[tc].gold -= sellgold;
             if (cdata[tc].gold < 0)
             {
@@ -13214,12 +13231,12 @@ turn_result_t proc_movement_event()
                         encounter = 2;
                     }
                 }
-                if (rnd(220 + cdata[0].level * 10
+                if (rnd(220 + cdata.player().level * 10
                         - clamp(
                               gdata_cargo_weight * 150
                                   / (gdata_current_cart_limit + 1),
                               0,
-                              (210 + cdata[0].level * 10)))
+                              (210 + cdata.player().level * 10)))
                     == 0)
                 {
                     encounter = 4;
@@ -13250,7 +13267,7 @@ turn_result_t proc_movement_event()
             }
             if (encounter == 4)
             {
-                encounterlv = cdata[0].fame / 1000;
+                encounterlv = cdata.player().fame / 1000;
                 if (encounterlv == 0)
                 {
                     encounterlv = 1;
@@ -13266,8 +13283,8 @@ turn_result_t proc_movement_event()
                 msg_halt();
                 gdata_previous_map2 = gdata_current_map;
                 gdata_previous_dungeon_level = gdata_current_dungeon_level;
-                gdata_previous_x = cdata[0].position.x;
-                gdata_previous_y = cdata[0].position.y;
+                gdata_previous_x = cdata.player().position.x;
+                gdata_previous_y = cdata.player().position.y;
                 levelexitby = 4;
                 return turn_result_t::exit_map;
             }
@@ -13281,7 +13298,7 @@ turn_result_t proc_movement_event()
             {
                 p = dist_town();
                 encounterlv = p * 3 / 2 - 10;
-                if (cdata[0].level <= 5)
+                if (cdata.player().level <= 5)
                 {
                     encounterlv /= 2;
                 }
@@ -13373,15 +13390,15 @@ void proc_autopick()
     {
         if (inv[ci].number() == 0)
             continue;
-        if (inv[ci].position != cdata[0].position)
+        if (inv[ci].position != cdata.player().position)
             continue;
         if (inv[ci].own_state > 0)
             continue;
 
         item_checkknown(ci);
 
-        const auto x = cdata[0].position.x;
-        const auto y = cdata[0].position.y;
+        const auto x = cdata.player().position.x;
+        const auto y = cdata.player().position.y;
 
         bool did_something = true;
         const auto op = autopick::instance().get_operation(inv[ci]);
@@ -13478,10 +13495,10 @@ void label_2206()
     {
         gdata(60) = -1;
         gdata(61) = -1;
-        x = cdata[0].position.x;
-        y = cdata[0].position.y;
-        if (key_shift && gdata(30) == 0 && cdata[0].confused == 0
-            && cdata[0].dimmed == 0)
+        x = cdata.player().position.x;
+        y = cdata.player().position.y;
+        if (key_shift && gdata(30) == 0 && cdata.player().confused == 0
+            && cdata.player().dimmed == 0)
         {
             if (mdata_map_type != mdata_t::map_type_t::world_map)
             {
@@ -13498,7 +13515,7 @@ void label_2206()
         }
         if (map(x, y, 4) != 0)
         {
-            if (cdata[0].blind == 0)
+            if (cdata.player().blind == 0)
             {
                 txt(txtitemoncell(x, y));
                 proc_autopick();
@@ -13530,7 +13547,7 @@ void label_2206()
                     rnd(2));
                 if (keybd_wait <= config::instance().walkwait
                             * config::instance().startrun
-                    || cdata[0].turn % 2 == 0
+                    || cdata.player().turn % 2 == 0
                     || mdata_map_type == mdata_t::map_type_t::world_map)
                 {
                     snd(83 + foot % 3);
@@ -13564,7 +13581,7 @@ void label_2206()
                         {
                             if (mode == 0)
                             {
-                                if (cdata[0].continuous_action_turn == 0)
+                                if (cdata.player().continuous_action_turn == 0)
                                 {
                                     gdata(206) = 1;
                                     ghelp = 6;
@@ -13682,7 +13699,7 @@ void label_2206()
                     {
                         if (mode == 0)
                         {
-                            if (cdata[0].continuous_action_turn == 0)
+                            if (cdata.player().continuous_action_turn == 0)
                             {
                                 gdata(205) = 1;
                                 ghelp = 5;
@@ -13892,7 +13909,8 @@ void open_box()
                 in = rnd(20000) + 10000;
             }
         }
-        itemcreate(-1, dbid, cdata[0].position.x, cdata[0].position.y, in);
+        itemcreate(
+            -1, dbid, cdata.player().position.x, cdata.player().position.y, in);
     }
     randomize();
     f = 0;
@@ -13913,7 +13931,8 @@ void open_box()
     if (f)
     {
         flt();
-        itemcreate(-1, 622, cdata[0].position.x, cdata[0].position.y, 1);
+        itemcreate(
+            -1, 622, cdata.player().position.x, cdata.player().position.y, 1);
     }
     snd(24);
     txt(i18n::s.get("core.locale.action.open.goods", inv[ri]));
@@ -13921,11 +13940,11 @@ void open_box()
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
-        modify_karma(cdata[0], -4);
+        modify_karma(cdata.player(), -4);
     }
     if (inv[ri].id == 283)
     {
-        modify_karma(cdata[0], -8);
+        modify_karma(cdata.player(), -8);
     }
     return;
 }
@@ -13954,7 +13973,7 @@ void open_new_year_gift()
             }
             for (int cnt = 0, cnt_end = (3 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata[0].level * 3 / 2 + 3), calcfixlv(2));
+                flt(calcobjlv(cdata.player().level * 3 / 2 + 3), calcfixlv(2));
                 chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
             }
             return;
@@ -13967,8 +13986,8 @@ void open_new_year_gift()
             }
             for (int cnt = 0; cnt < 6; ++cnt)
             {
-                tlocx = cdata[0].position.x + rnd(3) - rnd(3);
-                tlocy = cdata[0].position.y - rnd(3) + rnd(3);
+                tlocx = cdata.player().position.x + rnd(3) - rnd(3);
+                tlocy = cdata.player().position.y - rnd(3) + rnd(3);
                 if (tlocx < 0 || tlocx >= mdata_map_width || tlocy < 0
                     || tlocy >= mdata_map_height)
                 {
@@ -14037,8 +14056,8 @@ void open_new_year_gift()
         itemcreate(
             -1,
             choice(isetgiftminor),
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             1);
         return;
     }
@@ -14075,8 +14094,8 @@ void open_new_year_gift()
         itemcreate(
             -1,
             choice(isetgiftgrand),
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             1);
         return;
     }
@@ -14087,7 +14106,11 @@ void open_new_year_gift()
     }
     flt();
     itemcreate(
-        -1, choice(isetgiftmajor), cdata[0].position.x, cdata[0].position.y, 1);
+        -1,
+        choice(isetgiftmajor),
+        cdata.player().position.x,
+        cdata.player().position.y,
+        1);
     return;
 }
 
@@ -14199,19 +14222,20 @@ void do_ranged_attack()
                 ammoproc = inv[ammo].enchantments[inv[ammo].count].id % 10000;
                 if (cc == 0)
                 {
-                    if (cdata[0].sp < 50)
+                    if (cdata.player().sp < 50)
                     {
-                        if (cdata[0].sp < rnd(75))
+                        if (cdata.player().sp < rnd(75))
                         {
                             txt(i18n::s.get(
                                 "core.locale.magic.common.too_exhausted"));
                             damage_sp(
-                                cdata[0], encammoref(2, ammoproc) / 2 + 1);
+                                cdata.player(),
+                                encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
                             return;
                         }
                     }
-                    damage_sp(cdata[0], rnd(encammoref(2, ammoproc) + 1));
+                    damage_sp(cdata.player(), rnd(encammoref(2, ammoproc) + 1));
                 }
                 --inv[ammo].enchantments[inv[ammo].count].power;
             }
@@ -15197,7 +15221,8 @@ turn_result_t do_plant()
         return turn_result_t::pc_turn_user_error;
     }
     int val0;
-    if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
+    if (chipm(0, map(cdata.player().position.x, cdata.player().position.y, 0))
+        == 2)
     {
         val0 = 1;
     }
@@ -15326,7 +15351,7 @@ void harvest_plant(int val)
     }
     if (sdata(180, 0) < rnd(p + 1) || rnd(5) == 0 || feat(2) == 40)
     {
-        map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+        map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
         return;
     }
     feat = tile_plant;
@@ -15402,15 +15427,15 @@ void initialize_economy()
     }
     bkdata(0) = gdata_current_map;
     bkdata(1) = gdata_current_dungeon_level;
-    bkdata(2) = cdata[0].position.x;
-    bkdata(3) = cdata[0].position.y;
+    bkdata(2) = cdata.player().position.x;
+    bkdata(3) = cdata.player().position.y;
     snd(44);
     save_game();
     mode = 11;
-    cdata[0].position.x = 0;
-    cdata[0].position.y = 0;
-    scx = cdata[0].position.x;
-    scy = cdata[0].position.y;
+    cdata.player().position.x = 0;
+    cdata.player().position.y = 0;
+    scx = cdata.player().position.x;
+    scy = cdata.player().position.y;
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) == mdata_t::map_id_t::none)
@@ -15479,8 +15504,8 @@ void initialize_economy()
     }
     gdata_current_map = bkdata(0);
     gdata_current_dungeon_level = bkdata(1);
-    cdata[0].position.x = bkdata(2);
-    cdata[0].position.y = bkdata(3);
+    cdata.player().position.x = bkdata(2);
+    cdata.player().position.y = bkdata(3);
     gdata(79) = 1;
     mode = 3;
     mapsubroutine = 1;
@@ -15834,8 +15859,8 @@ void weather_changes()
     }
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
-        gdata_pc_x_in_world_map = cdata[0].position.x;
-        gdata_pc_y_in_world_map = cdata[0].position.y;
+        gdata_pc_x_in_world_map = cdata.player().position.x;
+        gdata_pc_y_in_world_map = cdata.player().position.y;
     }
     --gdata_hours_until_weather_changes;
     weather_changes_by_location();
@@ -15965,7 +15990,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata[0].continuous_action_turn == 0)
+                        if (cdata.player().continuous_action_turn == 0)
                         {
                             gdata(211) = 1;
                             ghelp = 11;
@@ -15983,7 +16008,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata[0].continuous_action_turn == 0)
+                        if (cdata.player().continuous_action_turn == 0)
                         {
                             gdata(212) = 1;
                             ghelp = 12;
@@ -16001,7 +16026,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata[0].continuous_action_turn == 0)
+                        if (cdata.player().continuous_action_turn == 0)
                         {
                             gdata(213) = 1;
                             ghelp = 13;
@@ -16055,7 +16080,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(209) = 1;
                         ghelp = 9;
@@ -16065,7 +16090,7 @@ void weather_changes()
             }
         }
     }
-    if (cdata[0].nutrition < 5000)
+    if (cdata.player().nutrition < 5000)
     {
         if (config::instance().extrahelp)
         {
@@ -16073,7 +16098,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(210) = 1;
                         ghelp = 10;
@@ -16163,26 +16188,26 @@ void weather_changes()
         {
             if (rnd(40) == 0)
             {
-                --cdata[0].piety_point;
+                --cdata.player().piety_point;
             }
-            cdata[0].praying_point += 4;
+            cdata.player().praying_point += 4;
         }
         else
         {
             if (rnd(5) == 0)
             {
-                --cdata[0].piety_point;
+                --cdata.player().piety_point;
             }
-            cdata[0].praying_point += 32;
+            cdata.player().praying_point += 32;
         }
     }
-    if (cdata[0].piety_point < 0)
+    if (cdata.player().piety_point < 0)
     {
-        cdata[0].piety_point = 0;
+        cdata.player().piety_point = 0;
     }
-    if (cdata[0].continuous_action_turn != 0)
+    if (cdata.player().continuous_action_turn != 0)
     {
-        if (cdata[0].continuous_action_id != 3)
+        if (cdata.player().continuous_action_id != 3)
         {
             update_screen();
         }
@@ -16231,7 +16256,11 @@ optional<turn_result_t> check_angband()
             for (int i = 0; i < 10; ++i)
             {
                 flt();
-                chara_create(-1, 37, cdata[0].position.x, cdata[0].position.y);
+                chara_create(
+                    -1,
+                    37,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
             }
             gdata_angband_flag = -1;
             update_screen();
@@ -16271,7 +16300,8 @@ void conquer_lesimas()
         msg_clear();
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
-        chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 23, cdata.player().position.x, cdata.player().position.y);
         play_music("core.mcChaos");
         msg_halt();
         msg_clear();

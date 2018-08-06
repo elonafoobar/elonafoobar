@@ -249,8 +249,8 @@ int dist_town()
             if (adata(0, feat(2)) == mdata_t::map_type_t::town)
             {
                 i_at_m165 = dist(
-                    cdata[0].position.x,
-                    cdata[0].position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
                     x_at_m165,
                     y_at_m165);
                 if (i_at_m165 < p_at_m165)
@@ -456,8 +456,8 @@ void map_placeplayer()
         {
             if (gdata_mount == cnt)
             {
-                cdata[gdata_mount].position.x = cdata[0].position.x;
-                cdata[gdata_mount].position.y = cdata[0].position.y;
+                cdata[gdata_mount].position.x = cdata.player().position.x;
+                cdata[gdata_mount].position.y = cdata.player().position.y;
                 continue;
             }
         }
@@ -1455,7 +1455,7 @@ void map_randsite(int prm_971, int prm_972)
         }
         if (rnd(18) == 0)
         {
-            flt(calcobjlv(rnd(cdata[0].level + 10)), calcfixlv(3));
+            flt(calcobjlv(rnd(cdata.player().level + 10)), calcfixlv(3));
             flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, x_at_m169, y_at_m169, 0);
             return;
@@ -2374,7 +2374,8 @@ int initialize_quest_map_crop()
     mapstarty = rnd(mdata_map_height / 3) + mdata_map_height / 3;
     map_placeplayer();
     flt();
-    itemcreate(-1, 560, cdata[0].position.x + 1, cdata[0].position.y, 0);
+    itemcreate(
+        -1, 560, cdata.player().position.x + 1, cdata.player().position.y, 0);
     inv[ci].own_state = 1;
     for (int cnt = 0, cnt_end = (70 + rnd(20)); cnt < cnt_end; ++cnt)
     {

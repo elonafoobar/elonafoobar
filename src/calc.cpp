@@ -685,7 +685,7 @@ int calcattackdmg(int prm_894)
     {
         if (trait(207))
         {
-            dmgfix += 5 + cdata[0].level * 2 / 3;
+            dmgfix += 5 + cdata.player().level * 2 / 3;
         }
     }
     if (prm_894 == 1)
@@ -856,8 +856,8 @@ int calcitemvalue(int ci, int situation)
         }
         else
         {
-            ret = cdata[0].level / 5
-                    * ((gdata_random_seed + ci * 31) % cdata[0].level + 4)
+            ret = cdata.player().level / 5
+                    * ((gdata_random_seed + ci * 31) % cdata.player().level + 4)
                 + 10;
         }
     }
@@ -904,7 +904,10 @@ int calcitemvalue(int ci, int situation)
         if (situation == 0)
         {
             ret += clamp(
-                cdata[0].fame / 40 + ret * (cdata[0].fame / 80) / 100, 0, 800);
+                cdata.player().fame / 40
+                    + ret * (cdata.player().fame / 80) / 100,
+                0,
+                800);
         }
     }
     if (inv[ci].weight < 0)
@@ -1030,7 +1033,8 @@ int calcinvestvalue()
 
 int calcguiltvalue()
 {
-    return -(cdata[0].karma + 30) * (cdata[0].fame / 2 + cdata[0].level * 200);
+    return -(cdata.player().karma + 30)
+        * (cdata.player().fame / 2 + cdata.player().level * 200);
 }
 
 
@@ -1099,8 +1103,8 @@ void calccosthire()
     }
     cost = cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1128,8 +1132,8 @@ int calccostbuilding()
 
     return cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1140,13 +1144,13 @@ int calccostbuilding()
 int calccosttax()
 {
     int cost{};
-    cost += cdata[0].gold / 1000;
-    cost += cdata[0].fame;
-    cost += cdata[0].level * 200;
+    cost += cdata.player().gold / 1000;
+    cost += cdata.player().fame;
+    cost += cdata.player().level * 200;
     return cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1477,7 +1481,7 @@ int calcspellcoststock(int id, int cc)
 
 int calcscore()
 {
-    int score = cdata[0].level * cdata[0].level
+    int score = cdata.player().level * cdata.player().level
         + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
         + gdata_kill_count;
     if (gdata_death_count > 1)

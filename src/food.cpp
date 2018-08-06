@@ -1259,7 +1259,7 @@ void apply_general_eating_effect(int cieat)
             {
                 if (cdata[cc].relationship >= 0)
                 {
-                    modify_karma(cdata[0], -1);
+                    modify_karma(cdata.player(), -1);
                 }
             }
             return;
@@ -1278,7 +1278,7 @@ void apply_general_eating_effect(int cieat)
                 "core.locale.food.effect.spiked.other", rnd(2), cdata[cc]));
             cdata[cc].emotion_icon = 317;
             chara_modify_impression(cdata[cc], 30);
-            modify_karma(cdata[0], -10);
+            modify_karma(cdata.player(), -10);
             lovemiracle(cc);
         }
         dmgcon(cc, status_ailment_t::dimmed, 500);

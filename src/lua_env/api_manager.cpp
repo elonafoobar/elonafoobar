@@ -94,14 +94,14 @@ bool Chara::flag(lua_character_handle handle, int flag)
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if (elona::cdata[0].state() == character::state_t::empty)
+    if (elona::cdata.player().state() == character::state_t::empty)
     {
         return sol::nullopt;
     }
     else
     {
         lua_character_handle handle =
-            lua::lua->get_handle_manager().get_handle(elona::cdata[0]);
+            lua::lua->get_handle_manager().get_handle(elona::cdata.player());
         return handle;
     }
 }

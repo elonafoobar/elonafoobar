@@ -434,9 +434,9 @@ std::string name(int cc)
     {
         return i18n::s.get("core.locale.chara.something");
     }
-    if (cdata[0].blind != 0
-        || (cdata[cc].is_invisible() == 1 && cdata[0].can_see_invisible() == 0
-            && cdata[cc].wet == 0))
+    if (cdata.player().blind != 0
+        || (cdata[cc].is_invisible() == 1
+            && cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
     {
         return i18n::s.get("core.locale.chara.something");
     }
@@ -771,7 +771,7 @@ std::string yourself(int x)
 
 void stxt(int cc, const std::string& str)
 {
-    if (cc == 0 || (is_in_fov(cdata[cc]) && cdata[0].blind == 0))
+    if (cc == 0 || (is_in_fov(cdata[cc]) && cdata.player().blind == 0))
     {
         txt(str);
     }

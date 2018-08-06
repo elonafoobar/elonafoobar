@@ -63,7 +63,7 @@ turn_result_t npc_turn()
     }
     if (is_in_fov(cdata[cc]) == 0)
     {
-        if (cdata[0].blind == 0)
+        if (cdata.player().blind == 0)
         {
             if (rnd(4) == 0)
             {
@@ -142,20 +142,20 @@ turn_result_t npc_turn()
             }
             if (cdata[cc].enemy_id == 0)
             {
-                if (cdata[0].enemy_id != 0
-                    && cdata[cdata[0].enemy_id].relationship <= -3)
+                if (cdata.player().enemy_id != 0
+                    && cdata[cdata.player().enemy_id].relationship <= -3)
                 {
-                    if (cdata[cdata[0].enemy_id].state()
+                    if (cdata[cdata.player().enemy_id].state()
                         == character::state_t::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
                                 cdata[cc].position.y,
-                                cdata[cdata[0].enemy_id].position.x,
-                                cdata[cdata[0].enemy_id].position.y))
+                                cdata[cdata.player().enemy_id].position.x,
+                                cdata[cdata.player().enemy_id].position.y))
                         {
                             cdata[cc].hate = 5;
-                            cdata[cc].enemy_id = cdata[0].enemy_id;
+                            cdata[cc].enemy_id = cdata.player().enemy_id;
                         }
                     }
                 }
@@ -323,13 +323,16 @@ turn_result_t npc_turn()
             {
                 if (rnd(4) == 0)
                 {
-                    if (cdata[0].position.x > cdata[cc].position.x - 10
-                        && cdata[0].position.x < cdata[cc].position.x + 10)
+                    if (cdata.player().position.x > cdata[cc].position.x - 10
+                        && cdata.player().position.x
+                            < cdata[cc].position.x + 10)
                     {
-                        if (cdata[0].position.y > cdata[cc].position.y - 10
-                            && cdata[0].position.y < cdata[cc].position.y + 10)
+                        if (cdata.player().position.y
+                                > cdata[cc].position.y - 10
+                            && cdata.player().position.y
+                                < cdata[cc].position.y + 10)
                         {
-                            if (cdata[0].continuous_action_id != 6)
+                            if (cdata.player().continuous_action_id != 6)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -348,17 +351,17 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].relationship >= 0)
     {
-        if (cdata[0].choked)
+        if (cdata.player().choked)
         {
             if (dist(
-                    cdata[0].position.x,
-                    cdata[0].position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
                     cdata[cc].position.x,
                     cdata[cc].position.y)
                 == 1)
             {
-                x = cdata[0].position.x;
-                y = cdata[0].position.y;
+                x = cdata.player().position.x;
+                y = cdata.player().position.y;
                 return do_bash();
             }
         }
@@ -726,17 +729,18 @@ turn_result_t turn_begin()
     int spd = 0;
     ct = 0;
     mef_update();
-    gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
+    gspd = cdata.player().current_speed
+        * (100 + cdata.player().speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
     }
-    turncost = (mdata_map_turn_cost - cdata[0].turn_cost) / gspd + 1;
+    turncost = (mdata_map_turn_cost - cdata.player().turn_cost) / gspd + 1;
     if (event_was_set())
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
-    if (cdata[0].state() != character::state_t::alive)
+    if (cdata.player().state() != character::state_t::alive)
     {
         return turn_result_t::pc_died;
     }
@@ -744,9 +748,9 @@ turn_result_t turn_begin()
     bool update_turn_cost = true;
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
-        if (cdata[0].continuous_action_turn > 2)
+        if (cdata.player().continuous_action_turn > 2)
         {
-            cdata[0].turn_cost = mdata_map_turn_cost;
+            cdata.player().turn_cost = mdata_map_turn_cost;
             update_turn_cost = false;
         }
     }
@@ -848,8 +852,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         tnew = 1;
         pcnoise = 0;
-        refresh_speed(cdata[0]);
-        p = cdata[0].turn % 10;
+        refresh_speed(cdata.player());
+        p = cdata.player().turn % 10;
         if (p == 1)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
@@ -870,9 +874,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (p == 4)
         {
-            if (cdata[0].continuous_action_id == 0)
+            if (cdata.player().continuous_action_id == 0)
             {
-                heal_sp(cdata[0], 2);
+                heal_sp(cdata.player(), 2);
             }
         }
         if (gdata_is_returning_or_escaping != 0)
@@ -905,7 +909,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     txt(i18n::s.get("core.locale.magic.return.prevented.ally"));
                     goto label_2740_internal;
                 }
-                if (1 && cdata[0].inventory_weight_type >= 4)
+                if (1 && cdata.player().inventory_weight_type >= 4)
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.return.prevented.overweight"));
@@ -924,7 +928,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.return.you_commit_a_crime"));
-                    modify_karma(cdata[0], -10);
+                    modify_karma(cdata.player(), -10);
                 }
                 snd(72);
                 txt(i18n::s.get("core.locale.magic.return.door_opens"));
@@ -942,7 +946,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
     label_2740_internal:
         label_1754();
-        if (cdata[0].state() != character::state_t::alive)
+        if (cdata.player().state() != character::state_t::alive)
         {
             return turn_result_t::pc_died;
         }
@@ -1194,7 +1198,7 @@ turn_result_t turn_end()
                 continuous_action_others();
             }
         }
-        if (cdata[0].inventory_weight_type >= 3)
+        if (cdata.player().inventory_weight_type >= 3)
         {
             if (rnd(20) == 0)
             {
@@ -1202,8 +1206,8 @@ turn_result_t turn_end()
                 damage_hp(
                     cdata[cc],
                     cdata[cc].max_hp
-                            * (cdata[0].inventory_weight * 10
-                                   / cdata[0].max_inventory_weight
+                            * (cdata.player().inventory_weight * 10
+                                   / cdata.player().max_inventory_weight
                                + 10)
                             / 200
                         + 1,
@@ -1260,24 +1264,24 @@ turn_result_t pc_turn(bool advance_time)
         {
             if (rnd(1000) == 0)
             {
-                txtgod(cdata[0].god_id, 12);
+                txtgod(cdata.player().god_id, 12);
             }
         }
         gdata(808) = 0;
         tgloc = 0;
         if (gdata_mount != 0)
         {
-            cdata[gdata_mount].position = cdata[0].position;
+            cdata[gdata_mount].position = cdata.player().position;
         }
         if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
-            map(cdata[0].position.x, cdata[0].position.y, 1) = 1;
+            map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
         }
         if (gdata_ether_disease_stage >= 20000)
         {
-            damage_hp(cdata[0], 999999, -14);
+            damage_hp(cdata.player(), 999999, -14);
         }
-        if (cdata[0].state() != character::state_t::alive)
+        if (cdata.player().state() != character::state_t::alive)
         {
             return turn_result_t::pc_died;
         }
@@ -1286,12 +1290,12 @@ turn_result_t pc_turn(bool advance_time)
             await(config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
-                y = cdata[0].position.y + dy;
+                y = cdata.player().position.y + dy;
                 if (y < 0 || y <= mdata_map_height)
                     continue;
                 for (int dx = -1; dx <= 1; ++dx)
                 {
-                    x = cdata[0].position.x + dx;
+                    x = cdata.player().position.x + dx;
                     if (x < 0 || x <= mdata_map_width)
                         continue;
                     if (map(x, y, 1) != 0)
@@ -1304,10 +1308,10 @@ turn_result_t pc_turn(bool advance_time)
                     }
                 }
             }
-            x = cdata[0].position.x;
-            y = cdata[0].position.y;
-            cdata[0].next_position.x = x + dirxy(0, gdata(35));
-            cdata[0].next_position.y = y + dirxy(1, gdata(35));
+            x = cdata.player().position.x;
+            y = cdata.player().position.y;
+            cdata.player().next_position.x = x + dirxy(0, gdata(35));
+            cdata.player().next_position.y = y + dirxy(1, gdata(35));
             if (map(x, y, 5) != 0)
             {
                 gdata(30) = 0;
@@ -1348,7 +1352,8 @@ turn_result_t pc_turn(bool advance_time)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata[0].next_position.x, cdata[0].next_position.y);
+            cell_check(
+                cdata.player().next_position.x, cdata.player().next_position.y);
             if (cellaccess == 0)
             {
                 if (cellchara >= 16 || cellchara == -1)
@@ -1418,7 +1423,7 @@ turn_result_t pc_turn(bool advance_time)
             }
         label_2744_internal:
             await(config::instance().wait1);
-            cdata[0].direction = 0;
+            cdata.player().direction = 0;
             key_check();
             f = 0;
             for (int cnt = 0; cnt < 16; ++cnt)
@@ -1512,11 +1517,11 @@ turn_result_t pc_turn(bool advance_time)
             efid = 408;
             magic();
         }
-        if (cdata[cdata[0].enemy_id].is_invisible() == 1
-            && cdata[0].can_see_invisible() == 0
-            && cdata[cdata[0].enemy_id].wet == 0)
+        if (cdata[cdata.player().enemy_id].is_invisible() == 1
+            && cdata.player().can_see_invisible() == 0
+            && cdata[cdata.player().enemy_id].wet == 0)
         {
-            cdata[0].enemy_id = 0;
+            cdata.player().enemy_id = 0;
         }
         t = 1;
         keylog = "";
@@ -1529,7 +1534,7 @@ label_2747:
     {
         if (gdata_catches_god_signal)
         {
-            txtgod(cdata[0].god_id, 11);
+            txtgod(cdata.player().god_id, 11);
         }
         firstturn = 0;
     }
@@ -1798,7 +1803,7 @@ label_2747:
         }
         if (p == 3)
         {
-            if (!cdata[0].god_id.empty())
+            if (!cdata.player().god_id.empty())
             {
                 key = key_offer;
             }
@@ -2239,73 +2244,73 @@ label_2747:
     if (key == key_north)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 0;
     }
     if (key == key_south)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 4;
     }
     if (key == key_west)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y;
         gdata(35) = 1;
         dirsub = 6;
     }
     if (key == key_east)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y;
         gdata(35) = 2;
         dirsub = 2;
     }
     if (key == key_northwest)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 7;
     }
     if (key == key_northeast)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 1;
     }
     if (key == key_southwest)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 5;
     }
     if (key == key_southeast)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 3;
     }
-    cdata[0].direction = gdata(35);
+    cdata.player().direction = gdata(35);
     if (p == 1)
     {
         // Autodig
-        int x = cdata[0].next_position.x;
-        int y = cdata[0].next_position.y;
+        int x = cdata.player().next_position.x;
+        int y = cdata.player().next_position.y;
         if (foobar_data.is_autodig_enabled)
         {
             if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height

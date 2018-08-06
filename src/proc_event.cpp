@@ -83,7 +83,8 @@ void proc_event()
     case 1:
         conquer_lesimas();
         flt();
-        chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 23, cdata.player().position.x, cdata.player().position.y);
         break;
     case 27:
         if (gdata_current_map == mdata_t::map_id_t::show_house)
@@ -165,7 +166,7 @@ void proc_event()
             }
         }
         flt();
-        initlv = cdata[0].level * 2 / 3 + 1;
+        initlv = cdata.player().level * 2 / 3 + 1;
         novoidlv = 1;
         chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         new_ally_joins();
@@ -181,12 +182,18 @@ void proc_event()
         {
             flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
             flttypemajor = choice(fsetchest);
-            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         }
-        itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 559, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         itemcreate(
-            -1, 55, cdata[0].position.x, cdata[0].position.y, rnd(3) + 2);
+            -1,
+            55,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            rnd(3) + 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
         break;
@@ -246,22 +253,26 @@ void proc_event()
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;
-        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 236, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 236, cdata.player().position.x, cdata.player().position.y, 0);
         nostack = 1;
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y);
         inv[ci].set_number(200 + inv[ci].number() * 5);
         flt();
         itemcreate(
             -1,
             55,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
-        itemcreate(-1, 239, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 0;
         txtef(2);
         txt(i18n::s.get("core.locale.quest.completed"));
@@ -271,7 +282,7 @@ void proc_event()
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
-        cdata[0].fame += gdata(74);
+        cdata.player().fame += gdata(74);
         if (gdata_current_map == mdata_t::map_id_t::the_void)
         {
             adata(20, gdata_current_map) = 0;
@@ -304,7 +315,7 @@ void proc_event()
         }
         break;
     case 6:
-        if (cdata[0].level > 5)
+        if (cdata.player().level > 5)
         {
             for (int i = 10; i < 18; ++i)
             {
@@ -313,9 +324,9 @@ void proc_event()
                     skillexp(i, 0, -500);
                 }
             }
-            if (cdata[0].karma < -30)
+            if (cdata.player().karma < -30)
             {
-                modify_karma(cdata[0], 10);
+                modify_karma(cdata.player(), 10);
             }
         }
         else
@@ -327,7 +338,7 @@ void proc_event()
             modify_ether_disease_stage(-2000);
         }
         txt(i18n::s.get("core.locale.event.you_lost_some_money"));
-        cdata[0].gold -= cdata[0].gold / 3;
+        cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
@@ -401,7 +412,8 @@ void proc_event()
                 {
                     chara_create(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
-                    cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
+                    cdata[rc].shop_rank =
+                        clamp(cdata.player().fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
@@ -476,8 +488,8 @@ void proc_event()
             }
             cdata[tc].set_state(character::state_t::alive);
             rc = tc;
-            cxinit = cdata[0].position.x;
-            cyinit = cdata[0].position.y;
+            cxinit = cdata.player().position.x;
+            cyinit = cdata.player().position.y;
             chara_place();
         }
         cdata[tc].visited_just_now() = true;
@@ -813,11 +825,11 @@ void proc_event()
         if (mdata_map_type == mdata_t::map_type_t::town
             || mdata_map_type == mdata_t::map_type_t::guild)
         {
-            modify_karma(cdata[0], -80 + trait(162) * 60);
+            modify_karma(cdata.player(), -80 + trait(162) * 60);
         }
         else
         {
-            modify_karma(cdata[0], -10);
+            modify_karma(cdata.player(), -10);
         }
         break;
     case 18:
@@ -908,8 +920,9 @@ void proc_event()
         for (int i = 0; i < 3; ++i)
         {
             flt();
-            initlv = cdata[0].level;
-            chara_create(-1, 215, cdata[0].position.x, cdata[0].position.y);
+            initlv = cdata.player().level;
+            chara_create(
+                -1, 215, cdata.player().position.x, cdata.player().position.y);
         }
         break;
     }

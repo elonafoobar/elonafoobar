@@ -779,7 +779,7 @@ main_menu_result_t character_making_customize_appearance()
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        cdata[0].has_own_sprite() = true;
+        cdata.player().has_own_sprite() = true;
         int stat = change_appearance();
         if (stat == 0)
         {
@@ -941,7 +941,7 @@ main_menu_result_t character_making_final_phase()
     }
     snd(101);
     cdatan(0, rc) = cmname;
-    cdata[0].gold = 400 + rnd(200);
+    cdata.player().gold = 400 + rnd(200);
     if (geneuse != ""s)
     {
         get_inheritance();
@@ -954,8 +954,9 @@ main_menu_result_t character_making_final_phase()
         }
     }
     mode = 5;
-    cdata[0].index = 0;
-    lua::lua->get_handle_manager().create_chara_handle_run_callbacks(cdata[0]);
+    cdata.player().index = 0;
+    lua::lua->get_handle_manager().create_chara_handle_run_callbacks(
+        cdata.player());
     return main_menu_result_t::initialize_game;
 }
 

@@ -927,17 +927,17 @@ void initialize_debug_globals()
     gdata_home_scale = 0;
     gdata_number_of_waiting_guests = 2;
     gdata_charge_power = 1000;
-    cdata[0].god_id = core_god::int2godid(2);
-    cdata[0].piety_point = 1000;
-    cdata[0].praying_point = 1000;
+    cdata.player().god_id = core_god::int2godid(2);
+    cdata.player().piety_point = 1000;
+    cdata.player().praying_point = 1000;
     gdata_pael_and_her_mom = 1000;
-    earn_gold(cdata[0], 1000000);
-    cdata[0].platinum_coin = 30;
-    cdata[0].fame = 65000;
+    earn_gold(cdata.player(), 1000000);
+    cdata.player().platinum_coin = 30;
+    cdata.player().fame = 65000;
     gdata_main_quest_flag = 100;
     chara_refresh(0);
 
-    cdata[0].can_cast_rapid_magic() = true;
+    cdata.player().can_cast_rapid_magic() = true;
     mode = 0;
     refresh_burden_state();
     for (int cnt = 0; cnt < 55; ++cnt)

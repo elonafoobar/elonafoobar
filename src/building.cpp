@@ -146,8 +146,8 @@ void initialize_home_adata()
     }
     if (gdata_home_scale != 0)
     {
-        adata(1, p) = cdata[0].position.x;
-        adata(2, p) = cdata[0].position.y;
+        adata(1, p) = cdata.player().position.x;
+        adata(2, p) = cdata.player().position.y;
     }
     adata(30, p) = gdata(850);
     return;
@@ -161,7 +161,7 @@ turn_result_t build_new_building()
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
-    cell_featread(cdata[0].position.x, cdata[0].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(0) != 0)
     {
         txt(i18n::s.get("core.locale.building.cannot_build_it_here"));
@@ -215,8 +215,8 @@ turn_result_t build_new_building()
     }
     ctrl_file(file_operation_t::_13);
     p = area;
-    adata(1, p) = cdata[0].position.x;
-    adata(2, p) = cdata[0].position.y;
+    adata(1, p) = cdata.player().position.x;
+    adata(2, p) = cdata.player().position.y;
     adata(0, p) = mdata_t::map_type_t::player_owned;
     adata(11, p) = 1;
     adata(12, p) = 0;
@@ -574,14 +574,14 @@ void prompt_hiring()
     {
         tc = stat;
         txtnew();
-        if (cdata[0].gold < calchirecost(tc) * 20)
+        if (cdata.player().gold < calchirecost(tc) * 20)
         {
             txt(i18n::s.get("core.locale.building.not_enough_money"));
         }
         else
         {
             snd(12);
-            cdata[0].gold -= calchirecost(tc) * 20;
+            cdata.player().gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
             cdata[tc].set_state(character::state_t::alive);
             lua::lua->get_handle_manager().create_chara_handle(cdata[tc]);
@@ -630,7 +630,7 @@ void fill_tile(int x, int y, int from, int to)
 
 void start_home_map_mode()
 {
-    const auto pc_position_prev = cdata[0].position;
+    const auto pc_position_prev = cdata.player().position;
     homemapmode = 1;
 
     prepare_house_board_tiles();
@@ -638,8 +638,8 @@ void start_home_map_mode()
     txtnew();
     txt(i18n::s.get("core.locale.building.home.design.help"));
 
-    tlocinitx = cdata[0].position.x;
-    tlocinity = cdata[0].position.y;
+    tlocinitx = cdata.player().position.x;
+    tlocinity = cdata.player().position.y;
     tile = 0;
     while (1)
     {
@@ -672,7 +672,7 @@ void start_home_map_mode()
     }
 
     homemapmode = 0;
-    cdata[0].position = pc_position_prev;
+    cdata.player().position = pc_position_prev;
 }
 
 
@@ -872,14 +872,14 @@ void prompt_ally_staying()
 void try_extend_shop()
 {
     txtnew();
-    if (cdata[0].gold < calcshopreform())
+    if (cdata.player().gold < calcshopreform())
     {
         txt(i18n::s.get("core.locale.building.not_enough_money"));
     }
     else
     {
         snd(12);
-        cdata[0].gold -= calcshopreform();
+        cdata.player().gold -= calcshopreform();
         mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
         txtef(2);
         txt(i18n::s.get(
@@ -1209,25 +1209,25 @@ void calc_collection_value(bool val0)
     fixlv = 2;
     dbmode = 3;
     access_character_info();
-    ++dblist(val0 ? 1 : 0, cdata[56].id);
+    ++dblist(val0 ? 1 : 0, cdata.tmp().id);
     if (fixlv == 6)
     {
-        rtval = 70 + cdata[56].level;
+        rtval = 70 + cdata.tmp().level;
     }
     else
     {
-        rtval = cdata[56].level / 10 + 2;
-        if (draw_get_rect_chara(cdata[56].image % 1000)->height > inf_tiles)
+        rtval = cdata.tmp().level / 10 + 2;
+        if (draw_get_rect_chara(cdata.tmp().image % 1000)->height > inf_tiles)
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = the_character_db[cdata[56].id]->rarity / 1000;
+        p = the_character_db[cdata.tmp().id]->rarity / 1000;
         if (p < 80)
         {
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val0 ? 1 : 0, cdata[56].id) > 1)
+    if (dblist(val0 ? 1 : 0, cdata.tmp().id) > 1)
     {
         rtval /= 3;
         if (rtval > 15)

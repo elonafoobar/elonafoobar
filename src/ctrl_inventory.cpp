@@ -887,8 +887,8 @@ label_2061_internal:
     s += "  ("s
         + i18n::s.get(
               "core.locale.ui.inv.window.total_weight",
-              cnvweight(cdata[0].inventory_weight),
-              cnvweight(cdata[0].max_inventory_weight),
+              cnvweight(cdata.player().inventory_weight),
+              cnvweight(cdata.player().max_inventory_weight),
               cnvweight(gdata_cargo_weight))
         + ")"s;
     if (invctrl == 25)
@@ -1182,7 +1182,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!action_sp(cdata[0], 10))
+                    if (!action_sp(cdata.player(), 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));
@@ -1202,7 +1202,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!action_sp(cdata[0], 10))
+                    if (!action_sp(cdata.player(), 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));
@@ -1291,7 +1291,7 @@ label_2061_internal:
                 }
                 if (invctrl == 11)
                 {
-                    if (calcitemvalue(ci, 0) * in > cdata[0].gold)
+                    if (calcitemvalue(ci, 0) * in > cdata.player().gold)
                     {
                         screenupdate = -1;
                         update_screen();
@@ -1363,7 +1363,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            if (cdata[0].nutrition > 10000)
+            if (cdata.player().nutrition > 10000)
             {
                 txt(i18n::s.get_enum(
                     "core.locale.ui.inv.eat.too_bloated", rnd(3)));
@@ -1849,7 +1849,7 @@ label_2061_internal:
             }
             if (invctrl(1) == 2)
             {
-                if (cdata[0].gold < inv[ci].subname)
+                if (cdata.player().gold < inv[ci].subname)
                 {
                     snd(27);
                     txt(i18n::s.get(
@@ -1863,7 +1863,7 @@ label_2061_internal:
                         "core.locale.ui.inv.put.tax.do_not_have_to"));
                     goto label_20591;
                 }
-                cdata[0].gold -= inv[ci].subname;
+                cdata.player().gold -= inv[ci].subname;
                 snd(12);
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
@@ -1950,7 +1950,7 @@ label_2061_internal:
                 "core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
-                earn_gold(cdata[0], in);
+                earn_gold(cdata.player(), in);
                 inv[ci].remove();
             }
             else

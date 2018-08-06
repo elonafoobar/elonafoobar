@@ -332,8 +332,10 @@ void highlight_characters_in_pet_arena()
 
 void render_pc_position_in_minimap()
 {
-    const auto x = clamp(120 * cdata[0].position.x / mdata_map_width, 2, 112);
-    const auto y = clamp(84 * cdata[0].position.y / mdata_map_height, 2, 76);
+    const auto x =
+        clamp(120 * cdata.player().position.x / mdata_map_width, 2, 112);
+    const auto y =
+        clamp(84 * cdata.player().position.y / mdata_map_height, 2, 76);
 
     raderx = x;
     radery = y;
@@ -409,7 +411,7 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            if (cdata[0].attr_adjs[i] < 0)
+            if (cdata.player().attr_adjs[i] < 0)
             {
                 color(200, 0, 0);
             }
@@ -447,7 +449,7 @@ void render_basic_attributes_and_pv_dv()
             // PV/DV
             pos(x + 14, y);
             gcopy(3, 0, 440, 64, 16);
-            mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
+            mes(""s + cdata.player().dv + u8"/"s + cdata.player().pv);
         }
     }
 }
@@ -470,7 +472,7 @@ void _render_gold_or_platinum(
 void render_gold()
 {
     _render_gold_or_platinum(
-        cdata[0].gold, windoww - 240, inf_ver - 16, "gold_coin", "gp");
+        cdata.player().gold, windoww - 240, inf_ver - 16, "gold_coin", "gp");
 }
 
 
@@ -478,7 +480,7 @@ void render_gold()
 void render_platinum()
 {
     _render_gold_or_platinum(
-        cdata[0].platinum_coin,
+        cdata.player().platinum_coin,
         windoww - 120,
         inf_ver - 16,
         "platinum_coin",
@@ -489,8 +491,9 @@ void render_platinum()
 
 void render_character_level()
 {
-    const auto lvl = cdata[0].level;
-    const auto exp = cdata[0].required_experience - cdata[0].experience;
+    const auto lvl = cdata.player().level;
+    const auto exp =
+        cdata.player().required_experience - cdata.player().experience;
 
     draw("character_level_icon", 4, inf_ver - 16);
     bmes(u8"Lv"s + lvl + u8"/"s + exp, 32, inf_ver - 14);
@@ -512,7 +515,7 @@ void render_buffs()
     const auto x = windoww - 40;
     auto y = inf_ver - 40;
 
-    for (const auto& buff : cdata[0].buffs)
+    for (const auto& buff : cdata.player().buffs)
     {
         if (buff.id == 0)
             break;
@@ -691,7 +694,7 @@ void render_status_ailments()
     auto y = inf_ver - 50;
 
     y = render_one_status_ailment(
-        cdata[0].nutrition / 1000,
+        cdata.player().nutrition / 1000,
         x,
         y,
         [](auto nutrition) { return !(5 <= nutrition && nutrition <= 9); },
@@ -709,7 +712,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        cdata[0].sick,
+        cdata.player().sick,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -720,7 +723,7 @@ void render_status_ailments()
         {80, 120, 0});
 
     y = render_one_status_ailment(
-        cdata[0].poisoned,
+        cdata.player().poisoned,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -731,7 +734,7 @@ void render_status_ailments()
         {0, 150, 0});
 
     y = render_one_status_ailment(
-        cdata[0].sleep,
+        cdata.player().sleep,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -742,7 +745,7 @@ void render_status_ailments()
         {0, 50, 50});
 
     y = render_one_status_ailment(
-        cdata[0].blind,
+        cdata.player().blind,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -750,7 +753,7 @@ void render_status_ailments()
         {100, 100, 0});
 
     y = render_one_status_ailment(
-        cdata[0].paralyzed,
+        cdata.player().paralyzed,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -758,7 +761,7 @@ void render_status_ailments()
         {0, 100, 100});
 
     y = render_one_status_ailment(
-        cdata[0].choked,
+        cdata.player().choked,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -766,7 +769,7 @@ void render_status_ailments()
         {0, 100, 100});
 
     y = render_one_status_ailment(
-        cdata[0].confused,
+        cdata.player().confused,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -774,7 +777,7 @@ void render_status_ailments()
         {100, 0, 100});
 
     y = render_one_status_ailment(
-        cdata[0].fear,
+        cdata.player().fear,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -782,7 +785,7 @@ void render_status_ailments()
         {100, 0, 100});
 
     y = render_one_status_ailment(
-        cdata[0].dimmed,
+        cdata.player().dimmed,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -795,7 +798,7 @@ void render_status_ailments()
         {0, 100, 100});
 
     y = render_one_status_ailment(
-        cdata[0].furious,
+        cdata.player().furious,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -806,7 +809,7 @@ void render_status_ailments()
         {150, 0, 0});
 
     y = render_one_status_ailment(
-        cdata[0].bleeding,
+        cdata.player().bleeding,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -819,7 +822,7 @@ void render_status_ailments()
         {150, 0, 0});
 
     y = render_one_status_ailment(
-        cdata[0].insane,
+        cdata.player().insane,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -832,7 +835,7 @@ void render_status_ailments()
         {150, 100, 0});
 
     y = render_one_status_ailment(
-        cdata[0].drunk,
+        cdata.player().drunk,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -840,7 +843,7 @@ void render_status_ailments()
         {100, 0, 100});
 
     y = render_one_status_ailment(
-        cdata[0].wet,
+        cdata.player().wet,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -848,7 +851,7 @@ void render_status_ailments()
         {0, 0, 160});
 
     y = render_one_status_ailment(
-        cdata[0].gravity,
+        cdata.player().gravity,
         x,
         y,
         [](auto turn) { return turn != 0; },
@@ -873,7 +876,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        cdata[0].sp,
+        cdata.player().sp,
         x,
         y,
         [](auto sp) { return sp < 50; },
@@ -889,7 +892,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        cdata[0].inventory_weight_type,
+        cdata.player().inventory_weight_type,
         x,
         y,
         [](auto state) { return state != 0; },
@@ -1232,8 +1235,8 @@ void render_hud()
 
     // HP/MP bar
     font(12 - en * 2, snail::font_t::style_t::bold);
-    render_hp_bar(cdata[0], inf_hpx, inf_hpy, true);
-    render_mp_bar(cdata[0], inf_mpx, inf_mpy, true);
+    render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
+    render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
     if (gdata_mount != 0
         && cdata[gdata_mount].state() == character::state_t::alive)
     {
@@ -1252,13 +1255,13 @@ void render_hud()
     render_character_level();
 
     // Set transparency of UI parts.
-    if (cdata[0].position.x < 6)
+    if (cdata.player().position.x < 6)
     {
         if (mode != 9)
         {
             if (mdata_map_type != mdata_t::map_type_t::world_map)
             {
-                if (cdata[0].continuous_action_id == 0)
+                if (cdata.player().continuous_action_id == 0)
                 {
                     gmode(4, 150);
                 }
@@ -1302,22 +1305,22 @@ void load_continuous_action_animation()
 {
     gsel(9);
     pos(0, 0);
-    if (cdata[0].continuous_action_id == 5)
+    if (cdata.player().continuous_action_id == 5)
     {
         picload(filesystem::dir::graphic() / u8"anime1.bmp");
     }
-    if (cdata[0].continuous_action_id == 7)
+    if (cdata.player().continuous_action_id == 7)
     {
         if (rowactre)
         {
             picload(filesystem::dir::graphic() / u8"anime2.bmp");
         }
     }
-    if (cdata[0].continuous_action_id == 8)
+    if (cdata.player().continuous_action_id == 8)
     {
         picload(filesystem::dir::graphic() / u8"anime3.bmp");
     }
-    if (cdata[0].continuous_action_id == 9)
+    if (cdata.player().continuous_action_id == 9)
     {
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
@@ -1333,14 +1336,14 @@ void render_autoturn_animation()
         load_continuous_action_animation();
     }
     if (msgtemp != ""s
-        || (cdata[0].continuous_action_id == 7 && rowactre == 0
+        || (cdata.player().continuous_action_id == 7 && rowactre == 0
             && fishanime == 0))
     {
         label_1433();
         msgtemp = "";
         render_hud();
     }
-    if (cdata[0].continuous_action_id == 7)
+    if (cdata.player().continuous_action_id == 7)
     {
         if (rowactre == 0 && config::instance().animewait != 0)
         {
@@ -1358,9 +1361,10 @@ void render_autoturn_animation()
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
 
-    if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
-        || cdata[0].continuous_action_id == 8
-        || (cdata[0].continuous_action_id == 7 && rowactre != 0))
+    if (cdata.player().continuous_action_id == 9
+        || cdata.player().continuous_action_id == 5
+        || cdata.player().continuous_action_id == 8
+        || (cdata.player().continuous_action_id == 7 && rowactre != 0))
     {
         if (config::instance().animewait != 0)
         {
@@ -1371,7 +1375,7 @@ void render_autoturn_animation()
                 {
                     gmode(0);
                     pos(sx + 2, sy - 102);
-                    if (cdata[0].continuous_action_id == 5)
+                    if (cdata.player().continuous_action_id == 5)
                     {
                         if (cnt == 2)
                         {
@@ -1380,7 +1384,7 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(config::instance().animewait * 2);
                     }
-                    if (cdata[0].continuous_action_id == 7)
+                    if (cdata.player().continuous_action_id == 7)
                     {
                         if (racount == 0)
                         {
@@ -1392,7 +1396,7 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
                         await(config::instance().animewait * 2.5);
                     }
-                    if (cdata[0].continuous_action_id == 8)
+                    if (cdata.player().continuous_action_id == 8)
                     {
                         if (cnt == 4)
                         {
@@ -1401,7 +1405,7 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(config::instance().animewait * 2.75);
                     }
-                    if (cdata[0].continuous_action_id == 9)
+                    if (cdata.player().continuous_action_id == 9)
                     {
                         if (cnt == 2)
                         {
@@ -1476,17 +1480,17 @@ void update_scrolling_info()
     {
         if (scroll)
         {
-            sx(0) = cdata[0].next_position.x - scx;
-            sx(1) = cdata[0].next_position.x;
-            sy(0) = cdata[0].next_position.y - scy;
-            sy(1) = cdata[0].next_position.y;
+            sx(0) = cdata.player().next_position.x - scx;
+            sx(1) = cdata.player().next_position.x;
+            sy(0) = cdata.player().next_position.y - scy;
+            sy(1) = cdata.player().next_position.y;
         }
         else
         {
-            sx(0) = cdata[0].position.x - scx;
-            sx(1) = cdata[0].position.x;
-            sy(0) = cdata[0].position.y - scy;
-            sy(1) = cdata[0].position.y;
+            sx(0) = cdata.player().position.x - scx;
+            sx(1) = cdata.player().position.x;
+            sy(0) = cdata.player().position.y - scy;
+            sy(1) = cdata.player().position.y;
         }
     }
     else
@@ -1554,10 +1558,10 @@ void update_slight()
     slight.clear();
     ++msync;
 
-    position_t center{cdata[0].position.x - (fov_max + 2) / 2,
-                      (fov_max + 2) / 2 - cdata[0].position.y};
-    sy(2) = cdata[0].position.y - fov_max / 2;
-    sy(3) = cdata[0].position.y + fov_max / 2;
+    position_t center{cdata.player().position.x - (fov_max + 2) / 2,
+                      (fov_max + 2) / 2 - cdata.player().position.y};
+    sy(2) = cdata.player().position.y - fov_max / 2;
+    sy(3) = cdata.player().position.y + fov_max / 2;
 
     if (config::instance().scroll)
     {
@@ -1616,9 +1620,10 @@ void update_slight()
             {
                 goto label_1430_internal;
             }
-            if (cdata[0].blind != 0)
+            if (cdata.player().blind != 0)
             {
-                if (sx != cdata[0].position.x || sy != cdata[0].position.y)
+                if (sx != cdata.player().position.x
+                    || sy != cdata.player().position.y)
                 {
                     goto label_1431_internal;
                 }
@@ -1629,7 +1634,10 @@ void update_slight()
                     && sx < fovlist[sy + center.y][1] + center.x)
                 {
                     if (fov_los(
-                            cdata[0].position.x, cdata[0].position.y, sx, sy))
+                            cdata.player().position.x,
+                            cdata.player().position.y,
+                            sx,
+                            sy))
                     {
                     label_1430_internal:
                         mapsync(sx, sy) = msync;
@@ -1697,11 +1705,13 @@ void label_1438()
 {
     int scxbk2 = 0;
     int scybk2 = 0;
-    if (std::abs(cdata[0].next_position.x - cdata[0].position.x) > 1)
+    if (std::abs(cdata.player().next_position.x - cdata.player().position.x)
+        > 1)
     {
         return;
     }
-    if (std::abs(cdata[0].next_position.y - cdata[0].position.y) > 1)
+    if (std::abs(cdata.player().next_position.y - cdata.player().position.y)
+        > 1)
     {
         return;
     }
@@ -1710,7 +1720,9 @@ void label_1438()
     {
         scrollp = 6;
         keybd_wait = 1000;
-        if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
+        if (chipm(
+                0, map(cdata.player().position.x, cdata.player().position.y, 0))
+            == 4)
         {
             scrollp = 9;
         }
@@ -1743,10 +1755,10 @@ void label_1438()
         {
             ++scrturn;
         }
-        sxfix = (cdata[0].next_position.x - cdata[0].position.x) * cnt
-            * inf_tiles / scrollp * -1;
-        syfix = (cdata[0].next_position.y - cdata[0].position.y) * cnt
-            * inf_tiles / scrollp * -1;
+        sxfix = (cdata.player().next_position.x - cdata.player().position.x)
+            * cnt * inf_tiles / scrollp * -1;
+        syfix = (cdata.player().next_position.y - cdata.player().position.y)
+            * cnt * inf_tiles / scrollp * -1;
         gsel(4);
         pos(0, 0);
         gmode(0);
@@ -1916,8 +1928,8 @@ void render_fishing_animation()
     fishdir(1) = 1;
     fishdir(2) = 3;
     fishdir(3) = 2;
-    fishdir = fishdir(cdata[0].direction);
-    randomize(cdata[0].turn / 3);
+    fishdir = fishdir(cdata.player().direction);
+    randomize(cdata.player().turn / 3);
     gmode(2);
     if (fishanime == 4)
     {
@@ -1925,8 +1937,8 @@ void render_fishing_animation()
         sy = (fishy - scy) * inf_tiles + inf_screeny;
         if (fishanime(1) > 15)
         {
-            sx += (cdata[0].position.x - fishx) * 8 * (fishanime(1) - 15);
-            sy += (cdata[0].position.y - fishy) * 8 * (fishanime(1) - 15)
+            sx += (cdata.player().position.x - fishx) * 8 * (fishanime(1) - 15);
+            sy += (cdata.player().position.y - fishy) * 8 * (fishanime(1) - 15)
                 + fishanime(1);
             pos(sx, sy - 44);
             gcopy(9, 144 + fishanime(1) / 2 % 2 * 48, 0, 48, 48);
@@ -1943,7 +1955,7 @@ void render_fishing_animation()
         }
         return;
     }
-    sx = (cdata[0].position.x - scx) * inf_tiles + inf_screenx + 20;
+    sx = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 20;
     if (fishdir == 1)
     {
         sx -= 48;
@@ -1952,7 +1964,7 @@ void render_fishing_animation()
     {
         sx += 48;
     }
-    sy = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 20;
+    sy = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 20;
     if (fishdir == 0)
     {
         sy += 48;
@@ -1972,8 +1984,8 @@ void render_fishing_animation()
     }
     pos(sx, sy - 5 + ap);
     gcopy(9, 116, 18, 14, 10 - ap);
-    sx = (cdata[0].position.x - scx) * inf_tiles + inf_screenx;
-    sy = (cdata[0].position.y - scy) * inf_tiles + inf_screeny;
+    sx = (cdata.player().position.x - scx) * inf_tiles + inf_screenx;
+    sy = (cdata.player().position.y - scy) * inf_tiles + inf_screeny;
     gmode(2);
     if (fishdir == 0)
     {

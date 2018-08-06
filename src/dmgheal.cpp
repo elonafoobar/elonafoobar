@@ -220,7 +220,7 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.index == 0 && cdata[0].god_id == core_god::opatos)
+    if (victim.index == 0 && cdata.player().god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
@@ -985,7 +985,7 @@ int damage_hp(
             if (attacker->index < 16)
             {
                 attacker->enemy_id = 0;
-                cdata[0].enemy_id = 0;
+                cdata.player().enemy_id = 0;
                 gdata(94) = 0;
             }
         }
@@ -1183,7 +1183,7 @@ int damage_hp(
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata[0].god_id, 9);
+                    txtgod(cdata.player().god_id, 9);
                 }
             }
         }

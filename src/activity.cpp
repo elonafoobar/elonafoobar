@@ -679,7 +679,7 @@ void continuous_action_sex()
     }
     if (cc == 0)
     {
-        if (!action_sp(cdata[0], 1 + rnd(2)))
+        if (!action_sp(cdata.player(), 1 + rnd(2)))
         {
             txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
             rowactend(cc);
@@ -797,7 +797,7 @@ void continuous_action_sex()
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
             dialog_after += i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground");
-            modify_karma(cdata[0], -1);
+            modify_karma(cdata.player(), -1);
         }
         else
         {
@@ -895,11 +895,11 @@ void continuous_action_eating_finish()
                     {
                         if (cdata[cc].relationship > 0)
                         {
-                            modify_karma(cdata[0], -5);
+                            modify_karma(cdata.player(), -5);
                         }
                         else
                         {
-                            modify_karma(cdata[0], -1);
+                            modify_karma(cdata.player(), -1);
                         }
                     }
                     chara_modify_impression(cdata[tc], -25);
@@ -1135,7 +1135,8 @@ void continuous_action_others()
             {
                 i = i * 5 / 10;
             }
-            make_sound(cdata[0].position.x, cdata[0].position.y, 5, 8);
+            make_sound(
+                cdata.player().position.x, cdata.player().position.y, 5, 8);
             for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state() != character::state_t::alive)
@@ -1149,8 +1150,8 @@ void continuous_action_others()
                 if (dist(
                         cdata[cnt].position.x,
                         cdata[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 5)
                 {
                     continue;
@@ -1167,8 +1168,8 @@ void continuous_action_others()
                        + dist(
                              cdata[cnt].position.x,
                              cdata[cnt].position.y,
-                             cdata[0].position.x,
-                             cdata[0].position.y)
+                             cdata.player().position.x,
+                             cdata.player().position.y)
                            * 20)
                     / 100;
                 if (cnt < 57)
@@ -1209,7 +1210,7 @@ void continuous_action_others()
             {
                 txt(i18n::s.get(
                     "core.locale.activity.steal.notice.you_are_found"));
-                modify_karma(cdata[0], -5);
+                modify_karma(cdata.player(), -5);
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
@@ -1347,7 +1348,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            earn_gold(cdata[0], in);
+            earn_gold(cdata.player(), in);
             inv[ti].remove();
         }
         else
@@ -1357,12 +1358,12 @@ void continuous_action_others()
         }
         refresh_burden_state();
         skillexp(300, 0, clamp(inv[ti].weight / 25, 0, 450) + 50);
-        if (cdata[0].karma >= -30)
+        if (cdata.player().karma >= -30)
         {
             if (rnd(3) == 0)
             {
                 txt(i18n::s.get("core.locale.activity.steal.guilt"));
-                modify_karma(cdata[0], -1);
+                modify_karma(cdata.player(), -1);
             }
         }
     }
@@ -1385,8 +1386,8 @@ void continuous_action_others()
         chatteleport = 1;
         gdata_previous_map2 = gdata_current_map;
         gdata_previous_dungeon_level = gdata_current_dungeon_level;
-        gdata_previous_x = cdata[0].position.x;
-        gdata_previous_y = cdata[0].position.y;
+        gdata_previous_x = cdata.player().position.x;
+        gdata_previous_y = cdata.player().position.y;
         gdata_destination_map = 30;
         gdata_destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
@@ -1426,7 +1427,7 @@ void select_random_fish()
     {
         return;
     }
-    ci = cdata[0].continuous_action_item;
+    ci = cdata.player().continuous_action_item;
     int dbmax = 0;
     int dbsum = 0;
     for (const auto fish : the_fish_db)
@@ -1544,7 +1545,7 @@ void spot_fishing()
         {
             fishanime = 2;
             snd(46);
-            cdata[0].emotion_icon = 220;
+            cdata.player().emotion_icon = 220;
             if (config::instance().animewait != 0)
             {
                 for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
@@ -1619,7 +1620,7 @@ void spot_fishing()
             rowactend(cc);
             get_fish();
             gain_fishing_experience(0);
-            cdata[0].emotion_icon = 306;
+            cdata.player().emotion_icon = 306;
         }
         if (rnd(10) == 0)
         {
@@ -1700,9 +1701,9 @@ void spot_digging()
             {
                 if (inv[cnt].param1 != 0)
                 {
-                    if (inv[cnt].param1 == cdata[0].position.x)
+                    if (inv[cnt].param1 == cdata.player().position.x)
                     {
-                        if (inv[cnt].param2 == cdata[0].position.y)
+                        if (inv[cnt].param2 == cdata.player().position.y)
                         {
                             snd(23);
                             txtef(5);
@@ -1715,27 +1716,27 @@ void spot_digging()
                             itemcreate(
                                 -1,
                                 622,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 2 + rnd(3));
                             flt();
                             itemcreate(
                                 -1,
                                 55,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 1 + rnd(3));
                             flt();
                             itemcreate(
                                 -1,
                                 54,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 rnd(10000) + 2000);
                             for (int cnt = 0, cnt_end = (4); cnt < cnt_end;
                                  ++cnt)
                             {
-                                flt(calcobjlv(cdata[0].level + 10),
+                                flt(calcobjlv(cdata.player().level + 10),
                                     calcfixlv(3));
                                 if (cnt == 0)
                                 {
@@ -1745,8 +1746,8 @@ void spot_digging()
                                 itemcreate(
                                     -1,
                                     0,
-                                    cdata[0].position.x,
-                                    cdata[0].position.y,
+                                    cdata.player().position.x,
+                                    cdata.player().position.y,
                                     0);
                             }
                             txt(
@@ -1922,7 +1923,7 @@ turn_result_t do_dig_after_sp_check()
 
 int search_material_spot()
 {
-    if (map(cdata[0].position.x, cdata[0].position.y, 6) == 0)
+    if (map(cdata.player().position.x, cdata.player().position.y, 6) == 0)
     {
         return 0;
     }
@@ -1950,7 +1951,7 @@ int search_material_spot()
     }
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
-        atxlv = cdata[0].level / 2 + rnd(10);
+        atxlv = cdata.player().level / 2 + rnd(10);
         if (atxlv > 30)
         {
             atxlv = 30 + rnd((rnd(atxlv - 30) + 1));
@@ -1972,7 +1973,7 @@ int search_material_spot()
             atxspot = 11;
         }
     }
-    cell_featread(cdata[0].position.x, cdata[0].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(1) == 27)
     {
         atxlv += sdata(161, 0) / 3;
@@ -2048,7 +2049,7 @@ int search_material_spot()
         }
         txt(s);
         rowactend(cc);
-        map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+        map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
     }
     return 0;
 }

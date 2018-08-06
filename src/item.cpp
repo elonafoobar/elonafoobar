@@ -153,8 +153,8 @@ int item_find(int prm_476, int prm_477, int prm_478)
             }
             if (p_at_m52(2) == 0)
             {
-                if (inv[cnt].position.x != cdata[0].position.x
-                    || inv[cnt].position.y != cdata[0].position.y)
+                if (inv[cnt].position.x != cdata.player().position.x
+                    || inv[cnt].position.y != cdata.player().position.y)
                 {
                     continue;
                 }

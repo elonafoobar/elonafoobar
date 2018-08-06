@@ -530,6 +530,18 @@ struct cdata_t
     }
 
 
+    character& player()
+    {
+        return (*this)[0];
+    }
+
+
+    character& tmp()
+    {
+        return (*this)[56];
+    }
+
+
 private:
     std::vector<character> storage;
 };

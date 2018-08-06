@@ -66,27 +66,27 @@ void trait_format_other_parameterized(
             case 202:
                 // "You have sores on your face. [CHR${_1}]"
                 traitrefn(index) = i18n::s.get_enum(
-                    full_prefix, cnt, level * (4 + cdata[0].level / 5));
+                    full_prefix, cnt, level * (4 + cdata.player().level / 5));
                 break;
             case 203:
                 // "Your feet transformed into hooves. [SPD+${_1} Can't wear
                 // boots]"
-                traitrefn(index) =
-                    i18n::s.get_enum(full_prefix, cnt, 20 + cdata[0].level / 2);
+                traitrefn(index) = i18n::s.get_enum(
+                    full_prefix, cnt, 20 + cdata.player().level / 2);
                 break;
             case 204:
                 // "You have 4 eyes. [PER+${_1} CHR${_2}]"
                 traitrefn(index) = i18n::s.get_enum(
                     full_prefix,
                     cnt,
-                    (5 + cdata[0].level / 3),
-                    (5 + cdata[0].level / 3) * -1);
+                    (5 + cdata.player().level / 3),
+                    (5 + cdata.player().level / 3) * -1);
                 break;
             case 205:
                 // "You have grown feather. [SPD+${_1} Weight-20% Can't wear
                 // cloaks]"
                 traitrefn(index) = i18n::s.get_enum(
-                    full_prefix, cnt, (12 + cdata[0].level / 4));
+                    full_prefix, cnt, (12 + cdata.player().level / 4));
                 break;
             case 206:
                 // "Your neck is extremely thick. [CHR${_1} PV+${_2} Can't wear
@@ -94,8 +94,8 @@ void trait_format_other_parameterized(
                 traitrefn(index) = i18n::s.get_enum(
                     full_prefix,
                     cnt,
-                    (5 + cdata[0].level / 5) * -1,
-                    (12 + cdata[0].level));
+                    (5 + cdata.player().level / 5) * -1,
+                    (12 + cdata.player().level));
                 break;
             case 207:
                 // "Desire for violence arises within you. [DV${_1} Dmg
@@ -103,8 +103,8 @@ void trait_format_other_parameterized(
                 traitrefn(index) = i18n::s.get_enum(
                     full_prefix,
                     cnt,
-                    (15 + cdata[0].level * 3 / 2) * -1,
-                    (5 + cdata[0].level * 2 / 3));
+                    (15 + cdata.player().level * 3 / 2) * -1,
+                    (5 + cdata.player().level * 2 / 3));
                 break;
             case 208:
                 // "Your head has grown huge. [CON${_1} DEX${_2} LER+${_3}
@@ -112,28 +112,28 @@ void trait_format_other_parameterized(
                 traitrefn(index) = i18n::s.get_enum(
                     full_prefix,
                     cnt,
-                    (5 + cdata[0].level / 3) * -1,
-                    (4 + cdata[0].level / 4) * -1,
-                    (6 + cdata[0].level / 2),
-                    (2 + cdata[0].level / 6));
+                    (5 + cdata.player().level / 3) * -1,
+                    (4 + cdata.player().level / 4) * -1,
+                    (6 + cdata.player().level / 2),
+                    (2 + cdata.player().level / 6));
                 break;
             case 211:
                 // "You suffer debilitation. [HP-15% STR${_1}]"
                 traitrefn(index) = i18n::s.get_enum(
-                    full_prefix, cnt, (4 + cdata[0].level / 2) * -1);
+                    full_prefix, cnt, (4 + cdata.player().level / 2) * -1);
                 break;
             case 212:
                 // "You have dementia. [MP-15% MAG${_1}]"
                 traitrefn(index) = i18n::s.get_enum(
-                    full_prefix, cnt, (4 + cdata[0].level / 2) * -1);
+                    full_prefix, cnt, (4 + cdata.player().level / 2) * -1);
                 break;
             case 213:
                 // "You are covered by heavy carapace. [PV+${_1} SPD${_2}]"
                 traitrefn(index) = i18n::s.get_enum(
                     full_prefix,
                     cnt,
-                    (15 + cdata[0].level / 2),
-                    (20 + cdata[0].level / 2) * -1);
+                    (15 + cdata.player().level / 2),
+                    (20 + cdata.player().level / 2) * -1);
                 break;
             default:
                 traitrefn(index) = i18n::s.get_enum(full_prefix, cnt);
@@ -337,7 +337,7 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 43)
     {
-        cdata[0].has_power_bash() = true;
+        cdata.player().has_power_bash() = true;
         return 1;
     }
     if (tid == 44)
@@ -406,14 +406,18 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 7)
     {
-        cdata[0].pv =
-            clamp(cdata[0].pv + trait(tid) * 5, int{cdata[0].pv > 0}, 9999);
+        cdata.player().pv = clamp(
+            cdata.player().pv + trait(tid) * 5,
+            int{cdata.player().pv > 0},
+            9999);
         return 1;
     }
     if (tid == 8)
     {
-        cdata[0].dv =
-            clamp(cdata[0].dv + trait(tid) * 4, int{cdata[0].dv > 0}, 9999);
+        cdata.player().dv = clamp(
+            cdata.player().dv + trait(tid) * 4,
+            int{cdata.player().dv > 0},
+            9999);
         return 1;
     }
     if (tid == 10)
@@ -428,7 +432,7 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 25)
     {
-        cdata[0].pv += trait(tid) * 3;
+        cdata.player().pv += trait(tid) * 3;
         return 1;
     }
     if (tid == 26)
@@ -548,9 +552,9 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 161)
     {
-        if (cdata[0].dv > 0)
+        if (cdata.player().dv > 0)
         {
-            cdata[0].dv = cdata[0].dv * 125 / 100 + 50;
+            cdata.player().dv = cdata.player().dv * 125 / 100 + 50;
         }
         return 1;
     }
@@ -619,7 +623,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 202)
     {
         sdata(17, 0) = clamp(
-            sdata(17, 0) + trait(tid) * (4 + cdata[0].level / 5),
+            sdata(17, 0) + trait(tid) * (4 + cdata.player().level / 5),
             int{sdata(17, 0) > 0},
             9999);
         return 1;
@@ -627,7 +631,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 203)
     {
         sdata(18, 0) = clamp(
-            sdata(18, 0) + (20 + cdata[0].level / 2),
+            sdata(18, 0) + (20 + cdata.player().level / 2),
             int{sdata(18, 0) > 0},
             9999);
         return 1;
@@ -635,20 +639,20 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 204)
     {
         sdata(17, 0) = clamp(
-            sdata(17, 0) + (5 + cdata[0].level / 3) * -1,
+            sdata(17, 0) + (5 + cdata.player().level / 3) * -1,
             int{sdata(17, 0) > 0},
             9999);
         sdata(13, 0) = clamp(
-            sdata(13, 0) + (5 + cdata[0].level / 3),
+            sdata(13, 0) + (5 + cdata.player().level / 3),
             int{sdata(13, 0) > 0},
             9999);
         return 1;
     }
     if (tid == 205)
     {
-        cdata[0].is_floating() = true;
+        cdata.player().is_floating() = true;
         sdata(18, 0) = clamp(
-            sdata(18, 0) + (12 + cdata[0].level / 4),
+            sdata(18, 0) + (12 + cdata.player().level / 4),
             int{sdata(18, 0) > 0},
             9999);
         return 1;
@@ -656,33 +660,33 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 206)
     {
         sdata(17, 0) = clamp(
-            sdata(17, 0) + (5 + cdata[0].level / 5) * -1,
+            sdata(17, 0) + (5 + cdata.player().level / 5) * -1,
             int{sdata(17, 0) > 0},
             9999);
-        cdata[0].pv += 12 + cdata[0].level;
+        cdata.player().pv += 12 + cdata.player().level;
         return 1;
     }
     if (tid == 207)
     {
-        cdata[0].dv += (15 + cdata[0].level * 3 / 2) * -1;
+        cdata.player().dv += (15 + cdata.player().level * 3 / 2) * -1;
         return 1;
     }
     if (tid == 208)
     {
         sdata(11, 0) = clamp(
-            sdata(11, 0) + (5 + cdata[0].level / 3) * -1,
+            sdata(11, 0) + (5 + cdata.player().level / 3) * -1,
             int{sdata(11, 0) > 0},
             9999);
         sdata(12, 0) = clamp(
-            sdata(12, 0) + (4 + cdata[0].level / 4) * -1,
+            sdata(12, 0) + (4 + cdata.player().level / 4) * -1,
             int{sdata(12, 0) > 0},
             9999);
         sdata(14, 0) = clamp(
-            sdata(14, 0) + (6 + cdata[0].level / 2),
+            sdata(14, 0) + (6 + cdata.player().level / 2),
             int{sdata(14, 0) > 0},
             9999);
         sdata(15, 0) = clamp(
-            sdata(15, 0) + (2 + cdata[0].level / 6),
+            sdata(15, 0) + (2 + cdata.player().level / 6),
             int{sdata(15, 0) > 0},
             9999);
         return 1;
@@ -698,7 +702,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 211)
     {
         sdata(10, 0) = clamp(
-            sdata(10, 0) + (4 + cdata[0].level / 2) * -1,
+            sdata(10, 0) + (4 + cdata.player().level / 2) * -1,
             int{sdata(10, 0) > 0},
             9999);
         sdata(2, 0) = clamp(sdata(2, 0) + -15, int{sdata(2, 0) > 0}, 9999);
@@ -707,7 +711,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 212)
     {
         sdata(16, 0) = clamp(
-            sdata(16, 0) + (4 + cdata[0].level / 2) * -1,
+            sdata(16, 0) + (4 + cdata.player().level / 2) * -1,
             int{sdata(16, 0) > 0},
             9999);
         sdata(3, 0) = clamp(sdata(3, 0) + -15, int{sdata(3, 0) > 0}, 9999);
@@ -716,10 +720,10 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 213)
     {
         sdata(18, 0) = clamp(
-            sdata(18, 0) + (20 + cdata[0].level / 2) * -1,
+            sdata(18, 0) + (20 + cdata.player().level / 2) * -1,
             int{sdata(18, 0) > 0},
             9999);
-        cdata[0].pv += 15 + cdata[0].level / 2;
+        cdata.player().pv += 15 + cdata.player().level / 2;
         return 1;
     }
     if (tid == 214)

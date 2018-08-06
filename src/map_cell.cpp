@@ -151,8 +151,8 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     {
         if (gdata_mount)
         {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
+            cdata[gdata_mount].position.x = cdata.player().position.x;
+            cdata[gdata_mount].position.y = cdata.player().position.y;
         }
     }
     return true;

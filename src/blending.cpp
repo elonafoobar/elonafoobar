@@ -1299,8 +1299,8 @@ int blendcheckmat(int prm_1044)
                     if (dist(
                             inv[cnt].position.x,
                             inv[cnt].position.y,
-                            cdata[0].position.x,
-                            cdata[0].position.y)
+                            cdata.player().position.x,
+                            cdata.player().position.y)
                         > 4)
                     {
                         continue;
@@ -1387,8 +1387,8 @@ int blendmatnum(int prm_1045, int prm_1046)
                 if (dist(
                         inv[cnt].position.x,
                         inv[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 4)
                 {
                     continue;
@@ -1471,8 +1471,8 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                 if (dist(
                         inv[cnt].position.x,
                         inv[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 4)
                 {
                     continue;
@@ -1626,8 +1626,8 @@ void label_1933()
             int stat = itemcreate(
                 -1,
                 rpdata(0, rpid),
-                cdata[0].position.x,
-                cdata[0].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y,
                 0);
             if (stat != 0)
             {

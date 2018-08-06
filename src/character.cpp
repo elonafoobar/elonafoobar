@@ -270,9 +270,9 @@ bool chara_place_internal(
             }
             if (enemy_respawn && i < 20)
             {
-                const auto threshold = cdata[0].vision_distance / 2;
-                if (std::abs(cdata[0].position.x - x) <= threshold
-                    && std::abs(cdata[0].position.y - x) <= threshold)
+                const auto threshold = cdata.player().vision_distance / 2;
+                if (std::abs(cdata.player().position.x - x) <= threshold
+                    && std::abs(cdata.player().position.y - x) <= threshold)
                 {
                     // Too close
                     continue;
@@ -1102,7 +1102,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    flt(calcobjlv(cdata[0].level), calcfixlv(2));
+    flt(calcobjlv(cdata.player().level), calcfixlv(2));
     return;
 }
 
@@ -1121,7 +1121,7 @@ bool chara_place()
 
     if (gdata_mount != 0 && gdata_mount == rc)
     {
-        cdata[rc].position = cdata[0].position;
+        cdata[rc].position = cdata.player().position;
         return true;
     }
 
@@ -2139,8 +2139,8 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     if (prm_784 == gdata_mount)
     {
         ride_end();
-        cdata[prm_784].position.x = cdata[0].position.x;
-        cdata[prm_784].position.y = cdata[0].position.y;
+        cdata[prm_784].position.x = cdata.player().position.x;
+        cdata[prm_784].position.y = cdata.player().position.y;
     }
     if (tc_at_m125 == -1)
     {
@@ -2266,8 +2266,8 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         {
             rc = tc_at_m125;
             cdata[tc_at_m125].set_state(character::state_t::alive);
-            cxinit = cdata[0].position.x;
-            cyinit = cdata[0].position.y;
+            cxinit = cdata.player().position.x;
+            cyinit = cdata.player().position.y;
             chara_place();
         }
         cdata[tc_at_m125].enemy_id = 0;

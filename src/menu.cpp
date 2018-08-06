@@ -2932,7 +2932,7 @@ label_2035_internal:
                 result.succeeded = false;
                 return result;
             }
-            if (cdata[0].skill_bonus < 1 || p < 0 || p < 100)
+            if (cdata.player().skill_bonus < 1 || p < 0 || p < 100)
             {
                 goto label_2034_internal;
             }
@@ -2941,7 +2941,7 @@ label_2035_internal:
                 snd(27);
                 goto label_2034_internal;
             }
-            --cdata[0].skill_bonus;
+            --cdata.player().skill_bonus;
             snd(19);
             skillexp(csskill, cc, 400, 2, 1000);
             modify_potential(
@@ -4872,16 +4872,17 @@ menu_result menu_journal()
         noteadd(""s);
     }
     gold = 0;
-    p = clamp(cdata[0].fame / 10, 100, 25000);
-    if (cdata[0].fame >= 25000)
+    p = clamp(cdata.player().fame / 10, 100, 25000);
+    if (cdata.player().fame >= 25000)
     {
-        p += (cdata[0].fame - 25000) / 100;
+        p += (cdata.player().fame - 25000) / 100;
     }
     gold += p;
     noteadd(u8" - Title & Ranking - "s);
     noteadd(""s);
     noteadd(
-        i18n::s.get("core.locale.ui.journal.rank.fame") + ": " + cdata[0].fame);
+        i18n::s.get("core.locale.ui.journal.rank.fame") + ": "
+        + cdata.player().fame);
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
@@ -5110,7 +5111,7 @@ turn_result_t show_quest_board()
         {
             if (mode == 0)
             {
-                if (cdata[0].continuous_action_turn == 0)
+                if (cdata.player().continuous_action_turn == 0)
                 {
                     gdata(204) = 1;
                     ghelp = 4;
@@ -5241,17 +5242,17 @@ label_1978_internal:
         p(1) = 14;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (cdata[0].level * 2 < qdata(5, rq))
+            if (cdata.player().level * 2 < qdata(5, rq))
             {
                 color(205, 0, 0);
                 break;
             }
-            if (cdata[0].level * 3 / 2 < qdata(5, rq))
+            if (cdata.player().level * 3 / 2 < qdata(5, rq))
             {
                 color(140, 80, 0);
                 break;
             }
-            if (cdata[0].level < qdata(5, rq))
+            if (cdata.player().level < qdata(5, rq))
             {
                 color(0, 0, 205);
                 break;
@@ -5308,7 +5309,7 @@ label_1978_internal:
         efid = 619;
         magic();
         tc = client;
-        if (cdata[0].state() == character::state_t::alive)
+        if (cdata.player().state() == character::state_t::alive)
         {
             quest_teleport = true;
             talk_to_npc();
@@ -6449,7 +6450,7 @@ void begin_to_believe_god()
     keylog = "";
     listmax = 0;
     chatesc = 2;
-    if (!cdata[0].god_id.empty())
+    if (!cdata.player().god_id.empty())
     {
         if (inv[ci].param1 == 0)
         {
@@ -7050,16 +7051,17 @@ void label_1964()
     buff = "";
     notesel(buff);
     chara_delete(56);
-    cdata[56].piety_point = cdata[0].piety_point;
-    cdata[56].god_id = cdata[0].god_id;
+    cdata.tmp().piety_point = cdata.player().piety_point;
+    cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, rc) = 1;
     }
     apply_god_blessing(56);
-    if (!cdata[0].god_id.empty())
+    if (!cdata.player().god_id.empty())
     {
-        buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
+        buff += u8"<title1>◆ "s
+            + i18n::_(u8"god", cdata.player().god_id, u8"name")
             + u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

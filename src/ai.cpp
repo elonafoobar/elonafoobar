@@ -869,8 +869,8 @@ label_2692_internal:
                                 int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
+                                    tlocx = cdata.player().position.x;
+                                    tlocy = cdata.player().position.y;
                                     txtef(9);
                                     txt(i18n::s.get_enum(
                                         "core.locale.ai.snowball", rnd(6)));
@@ -962,8 +962,8 @@ label_2692_internal:
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
+                        tlocx = cdata.player().position.x;
+                        tlocy = cdata.player().position.y;
                         flt();
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)

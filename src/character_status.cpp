@@ -95,7 +95,7 @@ void modify_ether_disease_stage(int delta)
                 {
                     if (mode == 0)
                     {
-                        if (cdata[0].continuous_action_turn == 0)
+                        if (cdata.player().continuous_action_turn == 0)
                         {
                             gdata(215) = 1;
                             ghelp = 15;
@@ -360,7 +360,7 @@ void refresh_speed(character& cc)
             * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
             / 100;
 
-        cdata[0].current_speed = mount_speed * 100
+        cdata.player().current_speed = mount_speed * 100
             / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
                         - sdata(301, 0) * 2
                         - (cdata[gdata_mount].is_suitable_for_mount() == 1)
@@ -369,7 +369,7 @@ void refresh_speed(character& cc)
                     1000);
         if (cdata[gdata_mount].is_unsuitable_for_mount())
         {
-            cdata[0].current_speed /= 10;
+            cdata.player().current_speed /= 10;
         }
         if (gdata_mount == cc.index)
         {
@@ -383,50 +383,51 @@ void refresh_speed(character& cc)
 
     if (gdata_mount == 0)
     {
-        int n = cdata[0].nutrition / 1000 * 1000;
+        int n = cdata.player().nutrition / 1000 * 1000;
         if (n < 1000)
         {
-            cdata[0].speed_percentage_in_next_turn -= 30;
+            cdata.player().speed_percentage_in_next_turn -= 30;
         }
         if (n < 2000)
         {
-            cdata[0].speed_percentage_in_next_turn -= 10;
+            cdata.player().speed_percentage_in_next_turn -= 10;
         }
-        if (cdata[0].sp < 0)
+        if (cdata.player().sp < 0)
         {
-            cdata[0].speed_percentage_in_next_turn -= 30;
+            cdata.player().speed_percentage_in_next_turn -= 30;
         }
-        if (cdata[0].sp < 25)
+        if (cdata.player().sp < 25)
         {
-            cdata[0].speed_percentage_in_next_turn -= 20;
+            cdata.player().speed_percentage_in_next_turn -= 20;
         }
-        if (cdata[0].sp < 50)
+        if (cdata.player().sp < 50)
         {
-            cdata[0].speed_percentage_in_next_turn -= 10;
+            cdata.player().speed_percentage_in_next_turn -= 10;
         }
     }
-    if (cdata[0].inventory_weight_type >= 3)
+    if (cdata.player().inventory_weight_type >= 3)
     {
-        cdata[0].speed_percentage_in_next_turn -= 50;
+        cdata.player().speed_percentage_in_next_turn -= 50;
     }
-    if (cdata[0].inventory_weight_type == 2)
+    if (cdata.player().inventory_weight_type == 2)
     {
-        cdata[0].speed_percentage_in_next_turn -= 30;
+        cdata.player().speed_percentage_in_next_turn -= 30;
     }
-    if (cdata[0].inventory_weight_type == 1)
+    if (cdata.player().inventory_weight_type == 1)
     {
-        cdata[0].speed_percentage_in_next_turn -= 10;
+        cdata.player().speed_percentage_in_next_turn -= 10;
     }
     if (mdata_map_type == mdata_t::map_type_t::world_map
         || mdata_map_type == mdata_t::map_type_t::field)
     {
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
-            cdata[0].speed_percentage_in_next_turn -=
+            cdata.player().speed_percentage_in_next_turn -=
                 25 + 25 * (gdata_cargo_weight / (gdata_current_cart_limit + 1));
         }
     }
-    gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
+    gspd = cdata.player().current_speed
+        * (100 + cdata.player().speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;

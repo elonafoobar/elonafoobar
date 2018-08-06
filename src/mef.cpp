@@ -146,8 +146,8 @@ void mef_update()
                         if (dist(
                                 dx,
                                 dy,
-                                cdata[0].position.x,
-                                cdata[0].position.y)
+                                cdata.player().position.x,
+                                cdata.player().position.y)
                             < 6)
                         {
                             sound = 6;

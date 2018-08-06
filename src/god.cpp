@@ -59,34 +59,34 @@ int modpiety(int prm_1035)
 {
     if (gdata_god_rank == 4)
     {
-        if (cdata[0].piety_point >= 4000)
+        if (cdata.player().piety_point >= 4000)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god_id, 8);
+            txtgod(cdata.player().god_id, 8);
         }
     }
     if (gdata_god_rank == 2)
     {
-        if (cdata[0].piety_point >= 2500)
+        if (cdata.player().piety_point >= 2500)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god_id, 7);
+            txtgod(cdata.player().god_id, 7);
         }
     }
     if (gdata_god_rank == 0)
     {
-        if (cdata[0].piety_point >= 1500)
+        if (cdata.player().piety_point >= 1500)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god_id, 7);
+            txtgod(cdata.player().god_id, 7);
         }
     }
-    if (sdata(181, 0) * 100 < cdata[0].piety_point)
+    if (sdata(181, 0) * 100 < cdata.player().piety_point)
     {
         txt(i18n::s.get("core.locale.god.indifferent"));
         return 0;
     }
-    cdata[0].piety_point += prm_1035
+    cdata.player().piety_point += prm_1035
         / (1 + (gdata_current_map == mdata_t::map_id_t::show_house) * 9);
     return 1;
 }
@@ -400,14 +400,14 @@ void label_1888()
         gmode(2);
         render_hud();
         redraw();
-        if (!cdata[0].god_id.empty())
+        if (!cdata.player().god_id.empty())
         {
             mode = 9;
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.god.enraged",
-                i18n::_(u8"god", cdata[0].god_id, u8"name")));
-            txtgod(cdata[0].god_id, 1);
+                i18n::_(u8"god", cdata.player().god_id, u8"name")));
+            txtgod(cdata.player().god_id, 1);
             redraw();
             efid = 622;
             efp = 10000;
@@ -417,7 +417,7 @@ void label_1888()
             mode = 0;
             await(config::instance().animewait * 20);
         }
-        cdata[0].god_id = core_god::int2godid(inv[ci].param1);
+        cdata.player().god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
         msg_halt();
     }
@@ -429,13 +429,13 @@ void label_1888()
 
 void switch_religion()
 {
-    cdata[0].piety_point = 0;
-    cdata[0].praying_point = 500;
+    cdata.player().piety_point = 0;
+    cdata.player().praying_point = 500;
     gdata_god_rank = 0;
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
-    if (cdata[0].god_id.empty())
+    if (cdata.player().god_id.empty())
     {
         txtef(5);
         txt(i18n::s.get("core.locale.god.switch.unbeliever"));
@@ -448,20 +448,20 @@ void switch_religion()
         txtef(5);
         txt(i18n::s.get(
             "core.locale.god.switch.follower",
-            i18n::_(u8"god", cdata[0].god_id, u8"name")));
-        if (cdata[0].god_id == core_god::itzpalt)
+            i18n::_(u8"god", cdata.player().god_id, u8"name")));
+        if (cdata.player().god_id == core_god::itzpalt)
         {
             spact(24) = 1;
         }
-        if (cdata[0].god_id == core_god::jure)
+        if (cdata.player().god_id == core_god::jure)
         {
             spact(23) = 1;
         }
-        if (cdata[0].god_id == core_god::lulwy)
+        if (cdata.player().god_id == core_god::lulwy)
         {
             spact(25) = 1;
         }
-        txtgod(cdata[0].god_id, 5);
+        txtgod(cdata.player().god_id, 5);
     }
     return;
 }
@@ -470,7 +470,7 @@ void switch_religion()
 
 turn_result_t do_pray()
 {
-    if (cdata[0].god_id.empty())
+    if (cdata.player().god_id.empty())
     {
         txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
         return turn_result_t::turn_end;
@@ -486,12 +486,12 @@ turn_result_t do_pray()
     }
     txt(i18n::s.get(
         "core.locale.god.pray.you_pray_to",
-        i18n::_(u8"god", cdata[0].god_id, u8"name")));
-    if (cdata[0].piety_point < 200 || cdata[0].praying_point < 1000)
+        i18n::_(u8"god", cdata.player().god_id, u8"name")));
+    if (cdata.player().piety_point < 200 || cdata.player().praying_point < 1000)
     {
         i18n::s.get(
             "core.locale.god.pray.indifferent",
-            i18n::_(u8"god", cdata[0].god_id, u8"name"));
+            i18n::_(u8"god", cdata.player().god_id, u8"name"));
         return turn_result_t::turn_end;
     }
     animode = 100;
@@ -505,11 +505,11 @@ turn_result_t do_pray()
     efp = 200;
     tc = 0;
     magic();
-    cdata[0].praying_point = 0;
-    cdata[0].piety_point = cdata[0].piety_point * 85 / 100;
+    cdata.player().praying_point = 0;
+    cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
     if (gdata_god_rank % 2 == 1)
     {
-        txtgod(cdata[0].god_id, 6);
+        txtgod(cdata.player().god_id, 6);
         if (gdata_god_rank == 1)
         {
             f = 0;
@@ -554,37 +554,37 @@ turn_result_t do_pray()
             flt();
             dbid = 0;
             txtef(4);
-            if (cdata[0].god_id == core_god::mani)
+            if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 262;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.mani"));
             }
-            if (cdata[0].god_id == core_god::lulwy)
+            if (cdata.player().god_id == core_god::lulwy)
             {
                 dbid = 263;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.lulwy"));
             }
-            if (cdata[0].god_id == core_god::itzpalt)
+            if (cdata.player().god_id == core_god::itzpalt)
             {
                 dbid = 264;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.itzpalt"));
             }
-            if (cdata[0].god_id == core_god::ehekatl)
+            if (cdata.player().god_id == core_god::ehekatl)
             {
                 dbid = 260;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.ehekatl"));
             }
-            if (cdata[0].god_id == core_god::opatos)
+            if (cdata.player().god_id == core_god::opatos)
             {
                 dbid = 265;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.opatos"));
             }
-            if (cdata[0].god_id == core_god::jure)
+            if (cdata.player().god_id == core_god::jure)
             {
                 dbid = 266;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.jure"));
             }
-            if (cdata[0].god_id == core_god::kumiromi)
+            if (cdata.player().god_id == core_god::kumiromi)
             {
                 dbid = 261;
                 txt(i18n::s.get("core.locale.god.pray.servant.desc.kumiromi"));
@@ -598,19 +598,19 @@ turn_result_t do_pray()
         {
             flt();
             dbid = 0;
-            if (cdata[0].god_id == core_god::lulwy)
+            if (cdata.player().god_id == core_god::lulwy)
             {
                 dbid = 680;
             }
-            if (cdata[0].god_id == core_god::jure)
+            if (cdata.player().god_id == core_god::jure)
             {
                 dbid = 681;
             }
-            if (cdata[0].god_id == core_god::kumiromi)
+            if (cdata.player().god_id == core_god::kumiromi)
             {
                 dbid = 682;
             }
-            if (cdata[0].god_id == core_god::mani)
+            if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 683;
             }
@@ -621,32 +621,44 @@ turn_result_t do_pray()
                     dbid = 559;
                 }
                 itemcreate(
-                    -1, dbid, cdata[0].position.x, cdata[0].position.y, 0);
+                    -1,
+                    dbid,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0);
             }
             else
             {
                 nostack = 1;
                 itemcreate(
-                    -1, 672, cdata[0].position.x, cdata[0].position.y, 0);
-                if (cdata[0].god_id == core_god::itzpalt)
+                    -1,
+                    672,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0);
+                if (cdata.player().god_id == core_god::itzpalt)
                 {
                     inv[ci].param1 = 165;
                 }
-                if (cdata[0].god_id == core_god::ehekatl)
+                if (cdata.player().god_id == core_god::ehekatl)
                 {
                     inv[ci].param1 = 163;
                 }
-                if (cdata[0].god_id == core_god::opatos)
+                if (cdata.player().god_id == core_god::opatos)
                 {
                     inv[ci].param1 = 164;
                 }
             }
-            if (cdata[0].god_id == core_god::jure)
+            if (cdata.player().god_id == core_god::jure)
             {
                 flt();
                 nostack = 1;
                 itemcreate(
-                    -1, 672, cdata[0].position.x, cdata[0].position.y, 0);
+                    -1,
+                    672,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0);
                 inv[ci].param1 = 166;
             }
             txt(i18n::s.get(
@@ -656,31 +668,31 @@ turn_result_t do_pray()
         {
             flt();
             dbid = 0;
-            if (cdata[0].god_id == core_god::mani)
+            if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 674;
             }
-            if (cdata[0].god_id == core_god::lulwy)
+            if (cdata.player().god_id == core_god::lulwy)
             {
                 dbid = 673;
             }
-            if (cdata[0].god_id == core_god::itzpalt)
+            if (cdata.player().god_id == core_god::itzpalt)
             {
                 dbid = 676;
             }
-            if (cdata[0].god_id == core_god::ehekatl)
+            if (cdata.player().god_id == core_god::ehekatl)
             {
                 dbid = 678;
             }
-            if (cdata[0].god_id == core_god::opatos)
+            if (cdata.player().god_id == core_god::opatos)
             {
                 dbid = 679;
             }
-            if (cdata[0].god_id == core_god::jure)
+            if (cdata.player().god_id == core_god::jure)
             {
                 dbid = 677;
             }
-            if (cdata[0].god_id == core_god::kumiromi)
+            if (cdata.player().god_id == core_god::kumiromi)
             {
                 dbid = 675;
             }
@@ -688,7 +700,12 @@ turn_result_t do_pray()
             {
                 dbid = 621;
             }
-            itemcreate(-1, dbid, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                dbid,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
         }

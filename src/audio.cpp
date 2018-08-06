@@ -381,13 +381,13 @@ std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
     {
         return {0, 0};
     }
-    if (cdata[0].state() == character::state_t::empty)
+    if (cdata.player().state() == character::state_t::empty)
     {
         return {0, 0};
     }
 
     return sound_calculate_position(
-        cdata[0].position.x, cdata[0].position.y, p.x, p.y);
+        cdata.player().position.x, cdata.player().position.y, p.x, p.y);
 }
 
 

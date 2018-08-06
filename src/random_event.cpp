@@ -59,7 +59,7 @@ optional<random_event> generate_random_event_in_sleep()
 
     return random_event{3, 0};
 
-    if (!cdata[0].god_id.empty())
+    if (!cdata.player().god_id.empty())
     {
         if (rnd(12) == 0)
         {
@@ -164,7 +164,7 @@ optional<random_event> generate_random_event()
     }
     if (mdata_map_type != mdata_t::map_type_t::world_map)
     {
-        if (cdata[0].continuous_action_id != 0)
+        if (cdata.player().continuous_action_id != 0)
         {
             return none;
         }
@@ -285,7 +285,7 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re10";
         break;
     case 13:
-        cdata[0].nutrition -= 5000;
+        cdata.player().nutrition -= 5000;
         listmax = 1;
         event_bg = u8"bg_re10";
         break;
@@ -400,8 +400,8 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re5";
         break;
     case 8:
-        p = rnd(cdata[0].gold / 8 + 1);
-        if (cdata[0].is_protected_from_thieves())
+        p = rnd(cdata.player().gold / 8 + 1);
+        if (cdata.player().is_protected_from_thieves())
         {
             p = 0;
         }
@@ -409,7 +409,7 @@ void run_random_event(random_event event)
         {
             txt(i18n::s.get_enum_property(
                 "core.locale.event.popup", "you_lose", 8, p(0)));
-            cdata[0].gold -= p;
+            cdata.player().gold -= p;
         }
         else
         {
@@ -450,13 +450,13 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re4";
         break;
     case 9:
-        earn_platinum(cdata[0], 1);
+        earn_platinum(cdata.player(), 1);
         listmax = 1;
         event_bg = u8"bg_re1";
         break;
     case 16:
-        p = rnd(cdata[0].gold / 10 + 1000) + 1;
-        earn_gold(cdata[0], p);
+        p = rnd(cdata.player().gold / 10 + 1000) + 1;
+        earn_gold(cdata.player(), p);
         txt(i18n::s.get_enum_property(
             "core.locale.event.popup", "you_pick_up", 16, p(0)));
         listmax = 1;
@@ -491,11 +491,11 @@ void run_random_event(random_event event)
     case 14:
         if (result == 0)
         {
-            cdata[0].nutrition = 15000;
+            cdata.player().nutrition = 15000;
             txt(i18n::s.get_enum(
                 "core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
             show_eating_message();
-            chara_anorexia(cdata[0]);
+            chara_anorexia(cdata.player());
         }
         break;
     case 10:
@@ -505,7 +505,12 @@ void run_random_event(random_event event)
             {
                 flt();
                 flttypemajor = choice(fsetremain);
-                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+                itemcreate(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0);
             }
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
@@ -516,7 +521,7 @@ void run_random_event(random_event event)
         {
             txt(i18n::s.get_enum_property(
                 "core.locale.event.popup", "loot", 11));
-            modify_karma(cdata[0], -2);
+            modify_karma(cdata.player(), -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
                 flt(0, calcfixlv(3));
@@ -528,7 +533,12 @@ void run_random_event(random_event event)
                 {
                     flttypemajor = choice(fsetremain);
                 }
-                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+                itemcreate(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0);
             }
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
@@ -537,7 +547,7 @@ void run_random_event(random_event event)
         {
             txt(i18n::s.get_enum_property(
                 "core.locale.event.popup", "bury", 11));
-            modify_karma(cdata[0], 5);
+            modify_karma(cdata.player(), 5);
         }
     }
 

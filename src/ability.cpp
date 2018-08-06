@@ -568,7 +568,7 @@ void gain_investing_experience(int cc)
 
 void gain_weight_lifting_experience(int cc)
 {
-    if (cdata[0].inventory_weight_type == 0)
+    if (cdata.player().inventory_weight_type == 0)
     {
         return;
     }

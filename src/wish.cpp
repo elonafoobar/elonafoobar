@@ -200,7 +200,8 @@ void wish_for_character()
     inputlog = strutil::remove_str(inputlog, u8"summon");
     dbid = select_wished_character(inputlog);
     flt();
-    chara_create(-1, dbid, cdata[0].position.x, cdata[0].position.y);
+    chara_create(
+        -1, dbid, cdata.player().position.x, cdata.player().position.y);
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     txt(cdatan(0, rc) + " is summoned.");
 }
@@ -212,11 +213,12 @@ void wish_for_card()
     flt();
     chara_create(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 504, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
+    itemcreate(
+        -1, 504, cdata.player().position.x, cdata.player().position.y, 0);
+    inv[ci].subname = cdata.tmp().id;
+    inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
+    cell_refresh(cdata.player().position.x, cdata.player().position.y);
     txt(lang(
         u8"足元に" + itemname(ci) + u8"が転がってきた。",
         "" + itemname(ci) + u8" appear" + _s2(inv[ci].number())
@@ -230,11 +232,12 @@ void wish_for_figure()
     flt();
     chara_create(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 503, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
+    itemcreate(
+        -1, 503, cdata.player().position.x, cdata.player().position.y, 0);
+    inv[ci].subname = cdata.tmp().id;
+    inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
+    cell_refresh(cdata.player().position.x, cdata.player().position.y);
     txt(lang(
         u8"足元に" + itemname(ci) + u8"が転がってきた。",
         "" + itemname(ci) + u8" appear" + _s2(inv[ci].number())
@@ -261,7 +264,8 @@ bool grant_special_wishing(const std::string& wish)
     {
         txt(lang(u8"「うみみゅみゅぁ！」", u8"\"Meeewmew!\""));
         flt();
-        chara_create(-1, 331, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 331, cdata.player().position.x, cdata.player().position.y);
     }
     else if (wish == u8"ルルウィ" || wish == u8"lulwy")
     {
@@ -269,25 +273,29 @@ bool grant_special_wishing(const std::string& wish)
             u8"「アタシを呼びつけるとは生意気ね。」",
             u8"\"You dare to call my name?\""));
         flt();
-        chara_create(-1, 306, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 306, cdata.player().position.x, cdata.player().position.y);
     }
     else if (wish == u8"オパートス" || wish == u8"opatos")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        chara_create(-1, 338, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 338, cdata.player().position.x, cdata.player().position.y);
     }
     else if (wish == u8"クミロミ" || wish == u8"kumiromi")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        chara_create(-1, 339, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 339, cdata.player().position.x, cdata.player().position.y);
     }
     else if (wish == u8"マニ" || wish == u8"mani")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        chara_create(-1, 342, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 342, cdata.player().position.x, cdata.player().position.y);
     }
     else if (
         wish == u8"若さ" || wish == u8"若返り" || wish == u8"年"
@@ -295,10 +303,10 @@ bool grant_special_wishing(const std::string& wish)
         || wish == u8"beauty")
     {
         txt(lang(u8"ふぅん…そんな願いでいいんだ。", u8"A typical wish."));
-        cdata[0].birth_year += 20;
-        if (cdata[0].birth_year + 12 > gdata_year)
+        cdata.player().birth_year += 20;
+        if (cdata.player().birth_year + 12 > gdata_year)
         {
-            cdata[0].birth_year = gdata_year - 12;
+            cdata.player().birth_year = gdata_year - 12;
         }
     }
     else if (
@@ -328,30 +336,32 @@ bool grant_special_wishing(const std::string& wish)
         wish == u8"性転換" || wish == u8"性" || wish == u8"異性"
         || wish == u8"sex")
     {
-        cdata[0].sex = !cdata[0].sex;
+        cdata.player().sex = !cdata.player().sex;
 
         txt(lang(
-            name(0) + u8"は" + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex)
+            name(0) + u8"は"
+                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex)
                 + u8"になった！ …もう後戻りはできないわよ。",
             name(0) + u8" become "
-                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8"!"));
+                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex)
+                + u8"!"));
     }
     else if (
         wish == u8"贖罪" || wish == u8"redemption" || wish == u8"atonement")
     {
-        if (cdata[0].karma >= 0)
+        if (cdata.player().karma >= 0)
         {
             txt(lang(
                 u8"…罪なんて犯してないじゃない。", u8"You aren't a sinner."));
         }
-        modify_karma(cdata[0], -cdata[0].karma / 2);
+        modify_karma(cdata.player(), -cdata.player().karma / 2);
         txt(lang(
             u8"あら…都合のいいことを言うのね。", u8"What a convenient wish!"));
     }
     else if (wish == u8"死" || wish == u8"death")
     {
         txt(lang(u8"それがお望みなら…", u8"If you wish so..."));
-        damage_hp(cdata[0], 99999, -11);
+        damage_hp(cdata.player(), 99999, -11);
     }
     else if (
         wish == u8"仲間" || wish == u8"friend" || wish == u8"company"
@@ -370,9 +380,9 @@ bool grant_special_wishing(const std::string& wish)
         itemcreate(
             -1,
             54,
-            cdata[0].position.x,
-            cdata[0].position.y,
-            (cdata[0].level / 3 + 1) * 10000);
+            cdata.player().position.x,
+            cdata.player().position.y,
+            (cdata.player().level / 3 + 1) * 10000);
     }
     else if (
         wish == u8"メダル" || wish == u8"小さなメダル"
@@ -383,7 +393,11 @@ bool grant_special_wishing(const std::string& wish)
         txt(lang(u8"小さなメダルが降ってきた！", u8"A small coin appears."));
         flt();
         itemcreate(
-            -1, 622, cdata[0].position.x, cdata[0].position.y, 3 + rnd(3));
+            -1,
+            622,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            3 + rnd(3));
     }
     else if (
         wish == u8"プラチナ" || wish == u8"プラチナ硬貨" || wish == u8"platina"
@@ -392,7 +406,8 @@ bool grant_special_wishing(const std::string& wish)
         txtef(5);
         txt(lang(u8"プラチナ硬貨が降ってきた！", u8"Platinum pieces appear."));
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
     }
     else if (gdata_wizard)
     {
@@ -400,7 +415,7 @@ bool grant_special_wishing(const std::string& wish)
         {
             txtef(5);
             txt(u8"fame +1,000,000");
-            cdata[0].fame += 1'000'000;
+            cdata.player().fame += 1'000'000;
         }
         else
         {
@@ -493,7 +508,7 @@ bool wish_for_item(const std::string& input)
 
         const auto id = *opt_id;
 
-        flt(cdata[0].level + 10, 4);
+        flt(cdata.player().level + 10, 4);
         if (id == 558 || id == 556 || id == 557 || id == 664)
         {
             fixlv = calcfixlv(3);
@@ -524,7 +539,8 @@ bool wish_for_item(const std::string& input)
 
         if (inv[ci].id == 54)
         {
-            inv[ci].set_number(cdata[0].level * cdata[0].level * 50 + 20000);
+            inv[ci].set_number(
+                cdata.player().level * cdata.player().level * 50 + 20000);
         }
         else if (inv[ci].id == 55)
         {
@@ -648,7 +664,7 @@ bool wish_for_skill(const std::string& input)
                     name + u8"が上昇した！",
                     u8"Your " + name + u8" skill improves!"));
                 skillmod(id, 0, 1000);
-                modify_potential(cdata[0], id, 25);
+                modify_potential(cdata.player(), id, 25);
             }
         }
         else

@@ -1426,17 +1426,18 @@ label_2181_internal:
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1449,17 +1450,18 @@ label_2181_internal:
     case 301:
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1467,8 +1469,8 @@ label_2181_internal:
         {
             if (tc == cc)
             {
-                int stat =
-                    cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
+                int stat = cell_findspace(
+                    cdata.player().position.x, cdata.player().position.y, 1);
                 if (stat == 0)
                 {
                     txt(i18n::s.get(
@@ -1560,17 +1562,18 @@ label_2181_internal:
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1595,17 +1598,18 @@ label_2181_internal:
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1667,45 +1671,48 @@ label_2181_internal:
             update_screen();
             return 0;
         }
-        if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 3)
+        if (chipm(
+                0, map(cdata.player().position.x, cdata.player().position.y, 0))
+            == 3)
         {
             txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
             update_screen();
             return 0;
         }
-        if (cdata[0].position.x - x > 0)
+        if (cdata.player().position.x - x > 0)
         {
-            cdata[0].direction = 1;
+            cdata.player().direction = 1;
         }
-        if (cdata[0].position.x - x < 0)
+        if (cdata.player().position.x - x < 0)
         {
-            cdata[0].direction = 2;
+            cdata.player().direction = 2;
         }
-        if (cdata[0].position.y - y > 0)
+        if (cdata.player().position.y - y > 0)
         {
-            cdata[0].direction = 3;
+            cdata.player().direction = 3;
         }
-        if (cdata[0].position.y - y < 0)
+        if (cdata.player().position.y - y < 0)
         {
-            cdata[0].direction = 0;
+            cdata.player().direction = 0;
         }
-        gdata(35) = cdata[0].direction;
+        gdata(35) = cdata.player().direction;
         fishx = x;
         fishy = y;
         addefmap(fishx, fishy, 1, 3);
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                    damage_sp(cdata[0], the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             damage_sp(
-                cdata[0],
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1998,9 +2005,13 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.resurrection.cursed"));
             for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata[0].level), calcfixlv(3));
+                flt(calcobjlv(cdata.player().level), calcfixlv(3));
                 fltn(u8"undead"s);
-                chara_create(-1, 0, cdata[0].position.x, cdata[0].position.y);
+                chara_create(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
             }
             obvious = 0;
             break;
@@ -2045,7 +2056,7 @@ label_2181_internal:
             chara_modify_impression(cdata[rc], 15);
             if (rc >= 16)
             {
-                modify_karma(cdata[0], 2);
+                modify_karma(cdata.player(), 2);
             }
         }
         break;
@@ -2358,7 +2369,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (cdata[0].god_id.empty())
+        if (cdata.player().god_id.empty())
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2372,7 +2383,7 @@ label_2181_internal:
             skillexp(181, 0, -1000);
             break;
         }
-        if (cdata[0].god_id.empty())
+        if (cdata.player().god_id.empty())
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2382,7 +2393,7 @@ label_2181_internal:
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.magic.faith.apply",
-                i18n::_(u8"god", cdata[0].god_id, u8"name")));
+                i18n::_(u8"god", cdata.player().god_id, u8"name")));
             if (efstatus == curse_state_t::blessed)
             {
                 txt(i18n::s.get("core.locale.magic.faith.blessed"));
@@ -2390,7 +2401,7 @@ label_2181_internal:
             animode = 100 + tc;
             miracle_animation().play();
             snd(120);
-            cdata[0].praying_point += 500;
+            cdata.player().praying_point += 500;
             modpiety(75);
             skillexp(
                 181,
@@ -3008,7 +3019,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
-        flt(cdata[0].level / 2 + 5, 3);
+        flt(cdata.player().level / 2 + 5, 3);
         p = 0;
         if (rnd(3) == 0)
         {
