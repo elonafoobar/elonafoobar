@@ -1508,7 +1508,7 @@ talk_result_t talk_trainer()
         else
         {
             cdata.player().platinum_coin -= calclearncost(csskill, cc);
-            skillgain(cc, csskill);
+            chara_gain_skill(cdata[cc], csskill);
             ++gdata_number_of_learned_skills_by_trainer;
             buff = i18n::s.get(
                 "core.locale.talk.npc.trainer.finish.learning", cdata[tc]);

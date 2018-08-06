@@ -1655,9 +1655,9 @@ void label_1933()
             {
                 break;
             }
-            skillexp(
+            chara_gain_skill_exp(
+                cdata.player(),
                 rpdata(10 + cnt * 2, rpid),
-                0,
                 50 + rpdata((11 + cnt * 2), rpid) + rpref(2) / 10000 * 25,
                 2,
                 50);

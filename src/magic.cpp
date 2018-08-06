@@ -2225,7 +2225,7 @@ label_2181_internal:
                             s = i18n::s.get(
                                 "core.locale.magic.gain_knowledge.furthermore");
                         }
-                        skillgain(0, p, 1, 200);
+                        chara_gain_skill(cdata.player(), p, 1, 200);
                         txtef(2);
                         txt(s
                             + i18n::s.get(
@@ -2306,7 +2306,7 @@ label_2181_internal:
                     {
                         if (sdata(cnt, tc) != 0)
                         {
-                            skillexp(cnt, tc, -1000);
+                            chara_gain_skill_exp(cdata[tc], cnt, -1000);
                         }
                     }
                 }
@@ -2330,7 +2330,7 @@ label_2181_internal:
                             continue;
                         }
                     }
-                    skillgain(tc, p, 1);
+                    chara_gain_skill(cdata[tc], p, 1);
                     if (is_in_fov(cdata[tc]))
                     {
                         snd(24);
@@ -2354,7 +2354,7 @@ label_2181_internal:
                         txt(i18n::s.get(
                             "core.locale.magic.common.it_is_cursed"));
                     }
-                    skillexp(p, tc, -1000);
+                    chara_gain_skill_exp(cdata[tc], p, -1000);
                     break;
                 }
             }
@@ -2380,7 +2380,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.faith.doubt"));
             snd(117);
             animeload(14, 0);
-            skillexp(181, 0, -1000);
+            chara_gain_skill_exp(cdata.player(), 181, -1000);
             break;
         }
         if (cdata.player().god_id.empty())
@@ -2403,9 +2403,9 @@ label_2181_internal:
             snd(120);
             cdata.player().praying_point += 500;
             modpiety(75);
-            skillexp(
+            chara_gain_skill_exp(
+                cdata.player(),
                 181,
-                0,
                 1000 + (efstatus == curse_state_t::blessed) * 750,
                 6,
                 1000);
@@ -2475,14 +2475,16 @@ label_2181_internal:
         break;
     case 1106:
         i = rnd(10) + 10;
-        skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
+        chara_gain_skill_exp(
+            cdata[tc], i, efstatusfix(-2000, -2000, -1000, -250));
         bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
             .play();
         chara_refresh(tc);
         break;
     case 1139:
         txt(i18n::s.get("core.locale.magic.troll_blood.apply", cdata[tc]));
-        skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
+        chara_gain_skill_exp(
+            cdata[tc], 18, efstatusfix(-4000, -1000, 8000, 12000));
         if (efstatus == curse_state_t::blessed)
         {
             modify_potential(cdata[tc], 18, 15);

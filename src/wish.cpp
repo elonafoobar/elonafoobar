@@ -656,14 +656,14 @@ bool wish_for_skill(const std::string& input)
                 txt(lang(
                     name + u8"の技術を会得した！",
                     u8"You learn " + name + u8"!"));
-                skillgain(0, id, 1);
+                chara_gain_skill(cdata.player(), id, 1);
             }
             else
             {
                 txt(lang(
                     name + u8"が上昇した！",
                     u8"Your " + name + u8" skill improves!"));
-                skillmod(id, 0, 1000);
+                chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
                 modify_potential(cdata.player(), id, 25);
             }
         }

@@ -508,7 +508,7 @@ talk_result_t talk_house_visitor()
                 {
                     cdata.player().platinum_coin -=
                         calclearncost(csskill, 0, true);
-                    skillgain(cc, csskill);
+                    chara_gain_skill(cdata[cc], csskill);
                     ++gdata_number_of_learned_skills_by_trainer;
                     listmax = 0;
                     buff = i18n::s.get(

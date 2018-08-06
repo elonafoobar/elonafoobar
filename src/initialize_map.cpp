@@ -3518,7 +3518,12 @@ label_1744_internal:
                     "core.locale.map.since_leaving.walked.you_and_allies",
                     gdata_distance_between_town));
             }
-            skillexp(182, 0, 25 + gdata_distance_between_town * 2 / 3, 0, 1000);
+            chara_gain_skill_exp(
+                cdata.player(),
+                182,
+                25 + gdata_distance_between_town * 2 / 3,
+                0,
+                1000);
             gdata_distance_between_town = 0;
         }
     }

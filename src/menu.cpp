@@ -2943,7 +2943,7 @@ label_2035_internal:
             }
             --cdata.player().skill_bonus;
             snd(19);
-            skillexp(csskill, cc, 400, 2, 1000);
+            chara_gain_skill_exp(cdata[cc], csskill, 400, 2, 1000);
             modify_potential(
                 cdata[cc],
                 csskill,

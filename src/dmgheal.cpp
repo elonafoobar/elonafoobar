@@ -1141,7 +1141,7 @@ int damage_hp(
             {
                 rollanatomy = 1;
             }
-            skillexp(161, attacker->index, 10 + rollanatomy * 4);
+            chara_gain_skill_exp(*attacker, 161, 10 + rollanatomy * 4);
         }
         rc = victim.index;
         character_drops_item();

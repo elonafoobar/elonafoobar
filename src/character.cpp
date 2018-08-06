@@ -1166,7 +1166,7 @@ void initialize_character()
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     update_required_experience(cdata[rc]);
-    init_character_skills(rc);
+    chara_init_common_skills(cdata[rc]);
     if (cdata[rc].portrait == 0)
     {
         cdata[rc].portrait = rnd(32);

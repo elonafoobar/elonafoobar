@@ -1162,7 +1162,8 @@ void show_shop_log()
                       sold,
                       s(0)));
         }
-        skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
+        chara_gain_skill_exp(
+            cdata[worker], 156, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {

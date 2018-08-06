@@ -1711,7 +1711,7 @@ label_2747:
             {
                 if (i != 426 && i != 427)
                 {
-                    skillgain(0, i, 100, 10000);
+                    chara_gain_skill(cdata.player(), i, 100, 10000);
                 }
             }
             goto label_2747;

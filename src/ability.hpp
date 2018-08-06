@@ -109,9 +109,26 @@ private:
 extern skill_data sdata;
 
 
+struct character;
 
-int skillexp(int id, int cc, int experience, int prm_572 = 0, int prm_573 = 0);
-int skillmod(int id, int cc, int experience);
+void chara_init_skill(character& cc, int id, int initial_level);
+void chara_init_common_skills(character& cc);
+
+void chara_gain_skill(
+    character& cc,
+    int id,
+    int initial_level = 0,
+    int stock = 0);
+void gain_special_action();
+
+void chara_gain_fixed_skill_exp(character& cc, int id, int experience);
+void chara_gain_skill_exp(
+    character& cc,
+    int id,
+    int experience,
+    int experience_divisor_of_related_basic_attribute = 0,
+    int experience_divisor_of_character_level = 0);
+
 void gain_digging_experience();
 void gain_literacy_experience();
 void gain_negotiation_experience(int cc);

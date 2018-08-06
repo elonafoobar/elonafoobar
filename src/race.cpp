@@ -195,7 +195,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
     }
     for (const auto& pair : data->skills)
     {
-        skillinit(pair.first, rc, pair.second);
+        chara_init_skill(cdata[rc], pair.first, pair.second);
     }
     for (const auto& pair : data->resistances)
     {

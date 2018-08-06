@@ -321,7 +321,7 @@ void proc_event()
             {
                 if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
-                    skillexp(i, 0, -500);
+                    chara_gain_skill_exp(cdata.player(), i, -500);
                 }
             }
             if (cdata.player().karma < -30)

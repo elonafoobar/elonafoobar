@@ -1035,8 +1035,8 @@ turn_result_t quest_pc_died_during_immediate_quest()
 {
     rc = 0;
     label_1540();
-    skillexp(17, 0, -500);
-    skillexp(15, 0, -500);
+    chara_gain_skill_exp(cdata.player(), 17, -500);
+    chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
     return turn_result_t::exit_map;

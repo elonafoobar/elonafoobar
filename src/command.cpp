@@ -2510,7 +2510,7 @@ turn_result_t do_use_command()
                     {
                         break;
                     }
-                    skillgain(rc, rtval(cnt), 1);
+                    chara_gain_skill(cdata[rc], rtval(cnt), 1);
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.action.use.gene_machine.gains.ability",
@@ -2551,13 +2551,13 @@ turn_result_t do_use_command()
                 {
                     p = (list(1, p) - sdata.get(i, rc).original_level) * 500;
                     p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
-                    skillmod(i, rc, p);
+                    chara_gain_fixed_skill_exp(cdata[rc], i, p);
                 }
             }
         }
         chara_vanquish(tc);
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
-        skillexp(151, 0, 1200);
+        chara_gain_skill_exp(cdata.player(), 151, 1200);
         randomize();
         screenupdate = -1;
         update_screen();

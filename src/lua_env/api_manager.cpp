@@ -1365,7 +1365,7 @@ void LuaCharacter::gain_skill_stock(
     {
         return;
     }
-    elona::skillgain(self.index, skill, initial_level, initial_stock);
+    elona::chara_gain_skill(self, skill, initial_level, initial_stock);
 }
 
 void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
@@ -1374,7 +1374,7 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
     {
         return;
     }
-    elona::skillmod(skill, self.index, amount);
+    elona::chara_gain_fixed_skill_exp(self, skill, amount);
 }
 
 

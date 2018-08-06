@@ -633,7 +633,7 @@ void continuous_action_perform()
     int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
     if (experience > 0)
     {
-        skillexp(183, cc, experience, 0, 0);
+        chara_gain_skill_exp(cdata[cc], 183, experience, 0, 0);
     }
     return;
 }
@@ -733,14 +733,14 @@ void continuous_action_sex()
             }
             dmgcon(c, status_ailment_t::insane, 300);
             heal_insanity(cdata[c], 10);
-            skillexp(11, c, 250 + (c >= 57) * 1000);
-            skillexp(15, c, 250 + (c >= 57) * 1000);
+            chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
+            chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
         }
         if (rnd(15) == 0)
         {
             dmgcon(c, status_ailment_t::sick, 200);
         }
-        skillexp(17, c, 250 + (c >= 57) * 1000);
+        chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
     sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
 
@@ -1027,27 +1027,27 @@ void continuous_action_others()
         {
             if (rnd(5) == 0)
             {
-                skillexp(180, 0, 20, 4);
+                chara_gain_skill_exp(cdata.player(), 180, 20, 4);
             }
             if (rnd(6) == 0)
             {
                 if (rnd(55) > sdata.get(10, cc).original_level + 25)
                 {
-                    skillexp(10, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 10, 50);
                 }
             }
             if (rnd(8) == 0)
             {
                 if (rnd(55) > sdata.get(11, cc).original_level + 28)
                 {
-                    skillexp(11, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 11, 50);
                 }
             }
             if (rnd(10) == 0)
             {
                 if (rnd(55) > sdata.get(15, cc).original_level + 30)
                 {
-                    skillexp(15, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 15, 50);
                 }
             }
             if (rnd(4) == 0)
@@ -1082,12 +1082,12 @@ void continuous_action_others()
             {
                 if (rnd(p) == 0)
                 {
-                    skillexp(inv[ci].param1, cc, 25);
+                    chara_gain_skill_exp(cdata[cc], inv[ci].param1, 25);
                 }
             }
             else if (rnd(p) == 0)
             {
-                skillexp(randattb(), cc, 25);
+                chara_gain_skill_exp(cdata[cc], randattb(), 25);
             }
         }
         if (gdata(91) == 105)
@@ -1357,7 +1357,8 @@ void continuous_action_others()
             snd(14 + rnd(2));
         }
         refresh_burden_state();
-        skillexp(300, 0, clamp(inv[ti].weight / 25, 0, 450) + 50);
+        chara_gain_skill_exp(
+            cdata.player(), 300, clamp(inv[ti].weight / 25, 0, 450) + 50);
         if (cdata.player().karma >= -30)
         {
             if (rnd(3) == 0)
@@ -2005,7 +2006,7 @@ int search_material_spot()
                     break;
                 }
                 i = 1;
-                skillexp(163, 0, 40);
+                chara_gain_skill_exp(cdata.player(), 163, 40);
             }
             if (atxspot == 13)
             {
@@ -2016,7 +2017,7 @@ int search_material_spot()
                     break;
                 }
                 i = 2;
-                skillexp(185, 0, 40);
+                chara_gain_skill_exp(cdata.player(), 185, 40);
             }
             if (atxspot == 15)
             {
@@ -2027,7 +2028,7 @@ int search_material_spot()
                     break;
                 }
                 i = 3;
-                skillexp(180, 0, 30);
+                chara_gain_skill_exp(cdata.player(), 180, 30);
             }
             matgetmain(random_material(atxlv, 0), 1, i);
         }

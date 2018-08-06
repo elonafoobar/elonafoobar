@@ -301,7 +301,7 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re4";
         break;
     case 18:
-        skillexp(181, 0, 1000, 6, 1000);
+        chara_gain_skill_exp(cdata.player(), 181, 1000, 6, 1000);
         listmax = 1;
         event_bg = u8"bg_re12";
         break;
@@ -440,12 +440,12 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re4";
         break;
     case 6:
-        skillexp(154, 0, 1000);
+        chara_gain_skill_exp(cdata.player(), 154, 1000);
         listmax = 1;
         event_bg = u8"bg_re4";
         break;
     case 7:
-        skillexp(155, 0, 1000);
+        chara_gain_skill_exp(cdata.player(), 155, 1000);
         listmax = 1;
         event_bg = u8"bg_re4";
         break;

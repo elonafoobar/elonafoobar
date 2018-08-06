@@ -212,9 +212,9 @@ void chara_vomit(character& cc)
 
     if (cc.has_anorexia())
     {
-        skillmod(10, cc.index, -50);
-        skillmod(11, cc.index, -75);
-        skillmod(17, cc.index, -100);
+        chara_gain_fixed_skill_exp(cc, 10, -50);
+        chara_gain_fixed_skill_exp(cc, 11, -75);
+        chara_gain_fixed_skill_exp(cc, 17, -100);
     }
     else
     {
@@ -381,7 +381,7 @@ void cook()
     int rank = inv[ci].param2;
     if (rank > 2)
     {
-        skillexp(184, cc, 30 + rank * 5);
+        chara_gain_skill_exp(cdata[cc], 184, 30 + rank * 5);
     }
     refresh_burden_state();
     return;
@@ -1130,7 +1130,8 @@ void apply_general_eating_effect(int cieat)
         }
         if (i > 0)
         {
-            skillexp(fdlist(0, cnt), cc, fdlist(1, cnt) * i / 100);
+            chara_gain_skill_exp(
+                cdata[cc], fdlist(0, cnt), fdlist(1, cnt) * i / 100);
         }
     }
     if (inv[ci].curse_state == curse_state_t::blessed)
@@ -1179,14 +1180,14 @@ void apply_general_eating_effect(int cieat)
                     + 1)
                 < 2000)
             {
-                skillmod(2, cc, 1000);
+                chara_gain_fixed_skill_exp(cdata[cc], 2, 1000);
             }
             if (rnd(sdata.get(3, cc).original_level
                         * sdata.get(3, cc).original_level
                     + 1)
                 < 2000)
             {
-                skillmod(3, cc, 1000);
+                chara_gain_fixed_skill_exp(cdata[cc], 3, 1000);
             }
             for (int cnt = 100; cnt < 400; ++cnt)
             {
@@ -1203,23 +1204,23 @@ void apply_general_eating_effect(int cieat)
     if (inv[ci].id == 755)
     {
         txt(i18n::s.get("core.locale.food.effect.hero_cheese"));
-        skillmod(19, cc, 2000);
+        chara_gain_fixed_skill_exp(cdata[cc], 19, 2000);
     }
     if (inv[ci].id == 702)
     {
-        skillmod(19, cc, 1000);
+        chara_gain_fixed_skill_exp(cdata[cc], 19, 1000);
     }
     if (inv[ci].id == 639)
     {
-        skillmod(19, cc, 20000);
+        chara_gain_fixed_skill_exp(cdata[cc], 19, 20000);
     }
     if (inv[ci].id == 655)
     {
-        skillmod(2, cc, 3000);
+        chara_gain_fixed_skill_exp(cdata[cc], 2, 3000);
     }
     if (inv[ci].id == 662)
     {
-        skillmod(3, cc, 3000);
+        chara_gain_fixed_skill_exp(cdata[cc], 3, 3000);
     }
     if (inv[ci].id == 738)
     {
@@ -1326,9 +1327,9 @@ void apply_general_eating_effect(int cieat)
             enc = enc % 10000;
             if (enc2 == 1)
             {
-                skillexp(
+                chara_gain_skill_exp(
+                    cdata[cc],
                     enc,
-                    cc,
                     (inv[ci].enchantments[cnt].power / 50 + 1) * 100
                         * (1 + (cc != 0) * 5));
                 if (is_in_fov(cdata[cc]))

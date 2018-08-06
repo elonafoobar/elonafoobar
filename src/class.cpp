@@ -1,4 +1,5 @@
 #include "class.hpp"
+#include "ability.hpp"
 #include "cat.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -44,7 +45,7 @@ int access_class_info(int dbmode, const std::string& dbidn)
     cequipment = data->equipment_type;
     for (const auto& pair : data->skills)
     {
-        skillinit(pair.first, rc, pair.second);
+        chara_init_skill(cdata[rc], pair.first, pair.second);
     }
 
     return 0;

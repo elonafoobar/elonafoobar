@@ -1345,43 +1345,6 @@ void modrank(int prm_552, int prm_553, int prm_554)
 
 
 
-void skillgain(int cc, int id, int initial_level, int stock)
-{
-    if (id >= 400)
-    {
-        if (cc == 0)
-        {
-            spell(id - 400) += stock;
-            modify_potential(cdata[cc], id, 1);
-        }
-    }
-    if (sdata.get(id, cc).original_level != 0)
-    {
-        if (id < 400)
-        {
-            modify_potential(cdata[cc], id, 20);
-        }
-        return;
-    }
-    int lv = sdata.get(id, cc).original_level + initial_level;
-    if (lv < 1)
-    {
-        lv = 1;
-    }
-    if (id >= 400)
-    {
-        modify_potential(cdata[cc], id, 200);
-    }
-    else
-    {
-        modify_potential(cdata[cc], id, 50);
-    }
-    sdata.get(id, cc).original_level = clamp(lv, 0, 2000);
-    chara_refresh(cc);
-}
-
-
-
 int getworker(int map_id, int prm_579)
 {
     int ret = -1;
@@ -3200,7 +3163,7 @@ void label_1540()
     }
     if (cdata[rc].id == 326)
     {
-        skillmod(183, rc, 1000);
+        chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
     }
     chara_refresh(rc);
     return;
@@ -4911,7 +4874,7 @@ void auto_identify()
                     u8"You appraise "s + s + u8" as "s + itemname(ci)
                         + u8"."s));
             }
-            skillexp(162, 0, 50);
+            chara_gain_skill_exp(cdata.player(), 162, 50);
         }
         if (inv[ci].identification_state
             <= identification_state_t::partly_identified)
@@ -4933,7 +4896,7 @@ void auto_identify()
                 }
                 item_identify(
                     inv[ci], identification_state_t::almost_identified);
-                skillexp(162, 0, 50);
+                chara_gain_skill_exp(cdata.player(), 162, 50);
             }
         }
     }
@@ -7051,7 +7014,7 @@ void label_1754()
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
                 {
-                    skillmod(p, 0, -300);
+                    chara_gain_fixed_skill_exp(cdata.player(), p, -300);
                 }
             }
         }
@@ -11309,8 +11272,8 @@ int decode_book()
     }
     else
     {
-        skillgain(
-            cc,
+        chara_gain_skill(
+            cdata[cc],
             efid,
             1,
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
@@ -11411,10 +11374,10 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
                         u8"The spell passes through "s + name(prm_1077)
                             + u8"."s));
                 }
-                skillexp(188, prm_1076, 8, 4);
+                chara_gain_skill_exp(cdata[prm_1076], 188, 8, 4);
                 return 1;
             }
-            skillexp(188, prm_1076, 30, 2);
+            chara_gain_skill_exp(cdata[prm_1076], 188, 30, 2);
         }
     }
     return 0;
@@ -11783,11 +11746,11 @@ int drink_well()
             p = rnd(8) + 10;
             if (rnd(5) > 2)
             {
-                skillmod(p, cc, 1000);
+                chara_gain_fixed_skill_exp(cdata[cc], p, 1000);
             }
             else
             {
-                skillmod(p, cc, -1000);
+                chara_gain_fixed_skill_exp(cdata[cc], p, -1000);
             }
             break;
         }
@@ -11919,7 +11882,7 @@ int read_scroll()
     if (inv[ci].id != 621)
     {
         inv[ci].modify_number(-1);
-        skillexp(150, cc, 25, 2);
+        chara_gain_skill_exp(cdata[cc], 150, 25, 2);
     }
     magic();
     if (cc == 0)
@@ -12106,7 +12069,8 @@ int label_2174()
                 cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
-            skillexp(the_ability_db[efid]->related_basic_attribute, cc, 25);
+            chara_gain_skill_exp(
+                cdata[cc], the_ability_db[efid]->related_basic_attribute, 25);
         }
     }
     efp = calcspellpower(efid, cc);
@@ -13034,7 +12998,8 @@ turn_result_t do_bash()
                 txt(i18n::s.get("core.locale.action.bash.door.destroyed"));
                 if (feat(2) > sdata(10, cc))
                 {
-                    skillexp(10, cc, (feat(2) - sdata(10, cc)) * 15);
+                    chara_gain_skill_exp(
+                        cdata[cc], 10, (feat(2) - sdata(10, cc)) * 15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
                 return turn_result_t::turn_end;
@@ -14587,58 +14552,59 @@ label_22191_internal:
         damage_hp(cdata[tc], dmg, cc, ele, elep);
         if (critical)
         {
-            skillexp(186, cc, 60 / expmodifer, 2);
+            chara_gain_skill_exp(cdata[cc], 186, 60 / expmodifer, 2);
             critical = 0;
         }
         if (rtdmg > cdata[tc].max_hp / 20 || rtdmg > sdata(154, tc)
             || rnd(5) == 0)
         {
-            skillexp(
+            chara_gain_skill_exp(
+                cdata[cc],
                 attackskill,
-                cc,
                 clamp((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
                     / expmodifer,
                 0,
                 4);
             if (attackrange == 0)
             {
-                skillexp(152, cc, 20 / expmodifer, 0, 4);
+                chara_gain_skill_exp(cdata[cc], 152, 20 / expmodifer, 0, 4);
                 if (cdata[cc].equipment_type & 2)
                 {
-                    skillexp(167, cc, 20 / expmodifer, 0, 4);
+                    chara_gain_skill_exp(cdata[cc], 167, 20 / expmodifer, 0, 4);
                 }
                 if (cdata[cc].equipment_type & 4)
                 {
-                    skillexp(166, cc, 20 / expmodifer, 0, 4);
+                    chara_gain_skill_exp(cdata[cc], 166, 20 / expmodifer, 0, 4);
                 }
             }
             else if (attackskill == 111)
             {
-                skillexp(152, cc, 10 / expmodifer, 0, 4);
+                chara_gain_skill_exp(cdata[cc], 152, 10 / expmodifer, 0, 4);
             }
             else
             {
-                skillexp(189, cc, 25 / expmodifer, 0, 4);
+                chara_gain_skill_exp(cdata[cc], 189, 25 / expmodifer, 0, 4);
             }
             if (cc == 0)
             {
                 if (gdata_mount != 0)
                 {
-                    skillexp(301, 0, 30 / expmodifer, 0, 5);
+                    chara_gain_skill_exp(
+                        cdata.player(), 301, 30 / expmodifer, 0, 5);
                 }
             }
             if (cdata[tc].state() == character::state_t::alive)
             {
-                skillexp(
+                chara_gain_skill_exp(
+                    cdata[tc],
                     chara_armor_class(cdata[tc]),
-                    tc,
                     clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
                         / expmodifer,
                     0,
                     5);
                 if (cdata[tc].equipment_type & 1)
                 {
-                    skillexp(168, tc, 40 / expmodifer, 0, 4);
+                    chara_gain_skill_exp(cdata[tc], 168, 40 / expmodifer, 0, 4);
                 }
             }
         }
@@ -14745,8 +14711,8 @@ label_22191_internal:
         {
             p = clamp((sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
                 / expmodifer;
-            skillexp(173, tc, p, 0, 4);
-            skillexp(187, tc, p, 0, 4);
+            chara_gain_skill_exp(cdata[tc], 173, p, 0, 4);
+            chara_gain_skill_exp(cdata[tc], 187, p, 0, 4);
         }
     }
     if (hit == -1)
@@ -15252,7 +15218,7 @@ turn_result_t do_plant()
         29,
         inv[ci].material,
         feat(3));
-    skillexp(180, 0, 300);
+    chara_gain_skill_exp(cdata.player(), 180, 300);
     return turn_result_t::turn_end;
 }
 
@@ -15372,7 +15338,7 @@ void harvest_plant(int val)
 
 void label_2236()
 {
-    skillexp(180, 0, 75);
+    chara_gain_skill_exp(cdata.player(), 180, 75);
     snd(55);
     flt(sdata(180, 0) / 2 + 15, 2);
     dbid = 0;
