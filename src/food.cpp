@@ -206,7 +206,7 @@ void chara_vomit(int prm_876)
             if (the_buff_db[cdata[prm_876].buffs[cnt].id]->type
                 == buff_data::type_t::food)
             {
-                buff_delete(prm_876, cnt);
+                buff_delete(cdata[prm_876], cnt);
                 --cnt;
                 continue;
             }
@@ -300,7 +300,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         }
         if (rnd(5) == 0)
         {
-            buff_add(eater, 19, 100, 500 + rnd(500));
+            buff_add(cdata[eater], 19, 100, 500 + rnd(500));
         }
         heal_insanity(cdata[eater], 2);
     }
@@ -1369,7 +1369,7 @@ void apply_general_eating_effect(int cieat)
                         i18n::_(u8"ability", std::to_string(enc), u8"name")));
                 }
                 buff_add(
-                    cc,
+                    cdata[cc],
                     20 + (enc - 10),
                     (inv[ci].enchantments[cnt].power / 50 + 1) * 5
                         * (1 + (cc != 0) * 2),

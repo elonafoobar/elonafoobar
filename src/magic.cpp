@@ -123,7 +123,8 @@ int magic()
                         }
                     }
                 }
-                buff_add(tc, p, efp, calc_buff_duration(p, efp));
+                buff_add(
+                    cdata[tc], p, efp, calc_buff_duration(p, efp), cdata[cc]);
                 if (efid == 447)
                 {
                     if (efstatus == curse_state_t::blessed)
@@ -1746,13 +1747,13 @@ label_2181_internal:
             }
             if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
             {
-                buff_delete(tc, i);
+                buff_delete(cdata[tc], i);
                 ++p;
                 --cnt;
                 continue;
             }
         }
-        buff_add(tc, 10, efp, 5 + efp / 30);
+        buff_add(cdata[tc], 10, efp, 5 + efp / 30, cdata[cc]);
         animeload(11, tc);
         break;
     case 1120:
@@ -3974,9 +3975,9 @@ label_2181_internal:
                 txt(i18n::s.get(
                     "core.locale.magic.cheer.is_excited", cdata[tc]));
             }
-            buff_add(tc, 5, sdata(17, cc) * 5 + 50, 15);
-            buff_add(tc, 7, sdata(17, cc) * 5 + 100, 60);
-            buff_add(tc, 18, 1500, 30);
+            buff_add(cdata[tc], 5, sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            buff_add(cdata[tc], 7, sdata(17, cc) * 5 + 100, 60, cdata[cc]);
+            buff_add(cdata[tc], 18, 1500, 30, cdata[cc]);
         }
         break;
     case 1131:

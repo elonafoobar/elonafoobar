@@ -352,7 +352,7 @@ void run_random_event(random_event event)
         event_bg = u8"bg_re15";
         break;
     case 20:
-        buff_add(tc, 19, 777, 1500);
+        buff_add(cdata[tc], 19, 777, 1500);
         listmax = 1;
         event_bg = u8"bg_re12";
         break;

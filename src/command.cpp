@@ -2255,7 +2255,7 @@ turn_result_t do_use_command()
         snd(64);
         txtef(5);
         txt(i18n::s.get("core.locale.action.use.statue.ehekatl"));
-        buff_add(tc, 19, 77, 2500);
+        buff_add(cdata[tc], 19, 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));

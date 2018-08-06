@@ -200,10 +200,7 @@ int damage_hp(
     {
         if (victim.hp - dmg_at_m141 <= 0)
         {
-            if (clamp(
-                    25 + victim.buffs[buff_find(victim.index, 18)].power / 17,
-                    25,
-                    80)
+            if (clamp(25 + buff_find(victim, 18)->power / 17, 25, 80)
                 >= rnd(100))
             {
                 dmg_at_m141 *= -1;
@@ -1173,7 +1170,7 @@ int damage_hp(
                     }
                     if (cdata[chara_index].buffs[buff_index].id == 16)
                     {
-                        buff_delete(chara_index, buff_index);
+                        buff_delete(cdata[chara_index], buff_index);
                         --buff_index;
                         continue;
                     }

@@ -3157,7 +3157,7 @@ void label_15390()
             {
                 continue;
             }
-            buff_delete(rc, cnt);
+            buff_delete(cdata[rc], cnt);
             --cnt;
             continue;
         }
@@ -11536,7 +11536,7 @@ int label_2168()
                     u8"_"s + cdata[cc].special_attack_type)));
         }
     }
-    if (buff_find(cc, 2) != -1)
+    if (buff_has(cdata[cc], 2))
     {
         if (is_in_fov(cdata[cc]))
         {

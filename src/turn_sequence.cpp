@@ -1003,7 +1003,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     damage_hp(cdata[cc], 9999, -11);
                 }
-                buff_delete(cc, cnt);
+                buff_delete(cdata[cc], cnt);
                 --cnt;
                 continue;
             }

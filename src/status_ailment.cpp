@@ -81,7 +81,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
     case status_ailment_t::confused:
         if (cdata[cc].is_immune_to_confusion())
             return;
-        if (buff_find(cc, 7) != -1)
+        if (buff_has(cdata[cc], 7))
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
             return;
@@ -184,9 +184,9 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
     case status_ailment_t::fear:
         if (cdata[cc].is_immune_to_fear())
             return;
-        if (buff_find(cc, 1) != -1)
+        if (buff_has(cdata[cc], 1))
             return;
-        if (buff_find(cc, 7) != -1)
+        if (buff_has(cdata[cc], 7))
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
             return;
