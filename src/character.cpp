@@ -540,6 +540,10 @@ void character::clear_flags()
 cdata_t::cdata_t()
     : storage(ELONA_MAX_CHARACTERS)
 {
+    for (size_t i = 0; i < storage.size(); ++i)
+    {
+        storage[i].index = static_cast<int>(i);
+    }
 }
 
 
