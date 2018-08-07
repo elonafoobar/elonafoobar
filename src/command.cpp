@@ -1546,13 +1546,16 @@ turn_result_t do_use_command()
     tlocy = cdata[cc].position.y;
     auto item_data = the_item_db[inv[ci].id];
 
-    if (item_data->on_use_effect)
+    if (item_data->on_use_callback)
     {
         auto item_handle = lua::lua->get_handle_manager().get_handle(inv[ci]);
         auto user_handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
 
+        assert(item_handle != sol::lua_nil);
+        assert(user_handle != sol::lua_nil);
+
         bool success = lua::lua->get_export_manager().call_with_result(
-            *item_data->on_use_effect, false, item_handle, user_handle);
+            *item_data->on_use_callback, false, item_handle, user_handle);
 
         if (success)
         {

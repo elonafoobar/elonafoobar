@@ -1,3 +1,3 @@
 chara spiral_putit {
-    corpse_eating_effect = asdfg
+    corpse_eating_callback = asdfg
 }

@@ -325,11 +325,11 @@ int access_character_info()
     default: break;
     }
 
-    if (dbmode == 12 && data->corpse_eating_effect)
+    if (dbmode == 12 && data->corpse_eating_callback)
     {
         auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
         lua::lua->get_export_manager().call(
-            *data->corpse_eating_effect, handle);
+            *data->corpse_eating_callback, handle);
         return -1;
     }
 

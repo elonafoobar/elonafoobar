@@ -304,7 +304,7 @@ character_data character_db_ex::convert(
     ELONA_LION_DB_FIELD(category, int, 0);
     ELONA_LION_DB_FIELD(rarity, int, 10000);
     ELONA_LION_DB_FIELD(coefficient, int, 400);
-    ELONA_LION_DB_FIELD_CALLBACK(corpse_eating_effect);
+    ELONA_LION_DB_FIELD_CALLBACK(corpse_eating_callback);
 
     std::unordered_map<int, int> resistances =
         convert_resistances(data, "resistances");
@@ -378,7 +378,7 @@ character_data character_db_ex::convert(
         category,
         rarity,
         coefficient,
-        corpse_eating_effect,
+        corpse_eating_callback,
         flags,
     };
 }

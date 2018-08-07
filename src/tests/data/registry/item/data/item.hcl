@@ -30,4 +30,5 @@ item putitoro {
     tags = ["noshop", "nodownload"]
     rftags = ["fish"]
     color = White
+    locale_key_prefix = core.locale.item.putitoro
 }
