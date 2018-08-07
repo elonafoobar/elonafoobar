@@ -100,24 +100,16 @@ public:
             return sol::lua_nil;
         }
 
-        if (handles.find(T::lua_type()) == handles.end())
-        {
-            return sol::lua_nil;
-        }
-
-        auto& handle_set = handles.at(T::lua_type());
-        if (handle_set.find(obj.index) == handle_set.end())
-        {
-            // std::cout << "Handle " << obj.index << " not found." <<
-            // std::endl;
-            return sol::lua_nil;
-        }
-
         // NOTE: currently indexes by the object's integer ID, but
         // this may be phased out in the future.
-        sol::table handle =
+        sol::optional<sol::table> handle =
             handle_env["Handle"]["get_handle"](obj, T::lua_type());
-        return handle;
+
+        if (!handle)
+        {
+            return sol::lua_nil;
+        }
+        return *handle;
     }
 
     void clear_all_handles();
@@ -133,20 +125,6 @@ private:
     template <typename T>
     void create_handle(T& obj)
     {
-        if (handles.find(T::lua_type()) == handles.end())
-        {
-            handles.emplace(T::lua_type(), std::set<int>());
-        }
-
-        auto& handle_set = handles.at(T::lua_type());
-
-        if (handle_set.find(obj.index) != handle_set.end())
-        {
-            handle_env["Handle"]["assert_valid"](obj, T::lua_type());
-            return;
-        }
-        handle_set.emplace(obj.index);
-
         std::string uuid = boost::lexical_cast<std::string>(uuid_generator());
         handle_env["Handle"]["create_handle"](obj, T::lua_type(), uuid);
     }
@@ -154,25 +132,11 @@ private:
     template <typename T>
     void remove_handle(T& obj)
     {
-        if (handles.find(T::lua_type()) == handles.end())
-        {
-            handles.emplace(T::lua_type(), std::set<int>());
-        }
-
-        auto& handle_set = handles.at(T::lua_type());
-
-        if (handle_set.find(obj.index) == handle_set.end())
-        {
-            handle_env["Handle"]["assert_invalid"](obj, T::lua_type());
-            return;
-        }
-        handle_set.erase(obj.index);
         handle_env["Handle"]["remove_handle"](obj, T::lua_type());
     }
 
     void bind(lua_env&);
 
-    std::unordered_map<std::string, std::set<int>> handles;
     boost::uuids::random_generator uuid_generator;
 
     /***

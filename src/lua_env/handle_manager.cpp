@@ -120,7 +120,6 @@ void handle_manager::remove_item_handle_run_callbacks(item& item)
 
 void handle_manager::clear_all_handles()
 {
-    handles.clear();
     handle_env["Handle"]["clear"]();
 }
 

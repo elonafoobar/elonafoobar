@@ -1,5 +1,5 @@
 item counter {
-    id = 3456
+    id = 900
     image = 515
     value = 780
     weight = 500
@@ -11,11 +11,6 @@ item counter {
     dv = 0
     material = 31
     chargelevel = 0
-    description_jp_0 = ""
-    description_jp_1 = ""
-    description_jp_2 = ""
-    description_jp_3 = "\t\tモンスターの殺害数を追跡する道具だ。\n#〜鑑定報告書：＜器具＞カテゴリ〜\n"
-    description_en = "Tracks the number of monsters you've defeated."
     is_readable = false
     is_zappable = false
     is_drinkable = false
@@ -30,13 +25,12 @@ item counter {
     rarity = 1000000
     coefficient = 100
     light = 0
-    katakana_name = ""
-    original_name_jp = "カウンター"
-    original_name_en = "counter"
     originalnameref2 = ""
     has_random_name = false
     tags = []
     rftags = []
+    color = Blue
+    locale_key_prefix = kiroku.locale.item.counter
 
     on_use_callback = exports:kiroku.on_use.counter
 }

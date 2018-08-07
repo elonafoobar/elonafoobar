@@ -5,12 +5,10 @@ local I18N = Elona.require("I18N")
 -- local Registry = Elona.require("Registry")
 
 local function report()
-   if Store.global.report then
-      GUI.txt(I18N.get("kiroku.locale.report", Store.global.killed))
+   GUI.txt(I18N.get("kiroku.locale.report", Store.global.killed))
 
-      -- local something = Registry.get_table("kiroku", "test").kiroku.something
-      -- GUI.txt("Test: " .. something.blah .. " : " .. something.color)
-   end
+   -- local something = Registry.get_table("kiroku", "test").kiroku.something
+   -- GUI.txt("Test: " .. something.blah .. " : " .. something.color)
 end
 
 local function on_chara_killed()
@@ -35,10 +33,11 @@ function Exports.on_use.counter(item, chara)
    GUI.txtef(Enums.Color.Gold)
    GUI.txt(item.name .. " : " .. chara.name)
    report()
+   return true
 end
 
 Event.register(Event.EventKind.CharaKilled, on_chara_killed)
-Event.register(Event.EventKind.MapInitialized, report)
+Event.register(Event.EventKind.MapInitialized, function() if Store.global.report then report() end end)
 Event.register(Event.EventKind.AllModsLoaded, init_store)
 
 return {

@@ -13076,11 +13076,6 @@ int pick_up_item()
         refresh_burden_state();
     }
 
-    if (inv[ci].number() <= 0)
-    {
-        inv[ci].remove();
-    }
-
     return 1;
 }
 
@@ -13157,11 +13152,6 @@ int drop_item()
     {
         mdata_map_play_campfire_sound = 1;
         play_music();
-    }
-
-    if (inv[ti].number() <= 0)
-    {
-        inv[ti].remove();
     }
 
     return 1;

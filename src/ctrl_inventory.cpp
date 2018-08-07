@@ -135,7 +135,7 @@ label_20591:
             {
                 inv[cnt].function = 9;
             }
-            if (inv[cnt].id >= 800 || inv[cnt].id < 0)
+            if (inv[cnt].id >= maxitemid || inv[cnt].id < 0)
             {
                 dialog(i18n::s.get(
                     "core.locale.ui.inv.common.invalid", cnt, inv[cnt].id));
