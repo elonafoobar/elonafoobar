@@ -5355,12 +5355,12 @@ int show_hire_menu()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
         if (allyctrl == 2)
         {
-            if (cdata[cnt].state() != character::state_t::pet_dead
-                && cdata[cnt].state() != character::state_t::villager_dead)
+            if (cnt.state() != character::state_t::pet_dead
+                && cnt.state() != character::state_t::villager_dead)
             {
                 continue;
             }
@@ -5371,35 +5371,35 @@ int show_hire_menu()
             {
                 if (allyctrl == 1)
                 {
-                    if (cdata[cnt].state()
+                    if (cnt.state()
                         != character::state_t::servant_being_selected)
                     {
                         continue;
                     }
                 }
             }
-            else if (cdata[cnt].state() != character::state_t::alive)
+            else if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cnt < 16)
+            if (cnt.index < 16)
             {
-                if (cdata[cnt].current_map != gdata_current_map)
+                if (cnt.current_map != gdata_current_map)
                 {
                     continue;
                 }
             }
         }
-        if (cnt == 0)
+        if (cnt.index == 0)
         {
             continue;
         }
-        if (cdata[cnt].is_escorted_in_sub_quest() == 1)
+        if (cnt.is_escorted_in_sub_quest() == 1)
         {
             continue;
         }
-        list(0, listmax) = cnt;
-        list(1, listmax) = -cdata[cnt].level;
+        list(0, listmax) = cnt.index;
+        list(1, listmax) = -cnt.level;
         ++listmax;
     }
     sort_list_by_column1();

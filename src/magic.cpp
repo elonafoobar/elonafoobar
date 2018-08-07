@@ -3817,25 +3817,25 @@ label_2181_internal:
     case 631:
         txtef(4);
         txt(i18n::s.get("core.locale.magic.swarm"));
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
             if (cdata[cc].state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            if (belong_to_same_team(cdata[cc], cdata[cnt]))
+            if (belong_to_same_team(cdata[cc], cnt))
             {
                 continue;
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
@@ -3868,21 +3868,21 @@ label_2181_internal:
         }
         break;
     case 466:
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            if (cdata[cnt].is_immune_to_mine())
+            if (cnt.is_immune_to_mine())
             {
                 continue;
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) > 4)
@@ -3901,21 +3901,21 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.mewmewmew"));
         animode = 0;
         miracle_animation().play();
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
             if (cdata[cc].state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            tc = cnt;
+            tc = cnt.index;
             damage_hp(cdata[tc], 9999999, cc);
         }
         break;
@@ -3951,19 +3951,19 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.cheer.apply", cdata[cc]));
         }
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
             if (cc < 16)
             {
-                if (cnt >= 16)
+                if (cnt.index >= 16)
                 {
                     continue;
                 }
@@ -3972,7 +3972,7 @@ label_2181_internal:
                     continue;
                 }
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)

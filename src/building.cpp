@@ -365,13 +365,12 @@ turn_result_t show_house_board()
     if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         p = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].state() == character::state_t::alive
-                || cdata[cnt].state() == character::state_t::villager_dead)
+            if (cnt.state() == character::state_t::alive
+                || cnt.state() == character::state_t::villager_dead)
             {
-                if (cdata[cnt].character_role != 0)
+                if (cnt.character_role != 0)
                 {
                     ++p;
                 }
@@ -467,13 +466,12 @@ void prompt_hiring()
 {
     txtnew();
     p = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive
-            || cdata[cnt].state() == character::state_t::villager_dead)
+        if (cnt.state() == character::state_t::alive
+            || cnt.state() == character::state_t::villager_dead)
         {
-            if (cdata[cnt].character_role != 0)
+            if (cnt.character_role != 0)
             {
                 ++p;
             }
@@ -551,15 +549,14 @@ void prompt_hiring()
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cnt == rc)
+            if (cnt.index == rc)
             {
                 continue;
             }
-            if (cdata[cnt].state() != character::state_t::empty
-                && cdatan(0, cnt) == cdatan(0, rc))
+            if (cnt.state() != character::state_t::empty
+                && cdatan(0, cnt.index) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
             }
@@ -591,11 +588,11 @@ void prompt_hiring()
             snd(64);
         }
     }
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() == character::state_t::servant_being_selected)
+        if (cnt.state() == character::state_t::servant_being_selected)
         {
-            chara_vanquish(cnt);
+            chara_vanquish(cnt.index);
         }
     }
     calccosthire();
@@ -1042,20 +1039,20 @@ void show_shop_log()
         }
         if (area == gdata_current_map)
         {
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& cnt : cdata.all())
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cnt.state() != character::state_t::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].continuous_action_id == 0
-                    || cdata[cnt].continuous_action_turn == 0)
+                if (cnt.continuous_action_id == 0
+                    || cnt.continuous_action_turn == 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].continuous_action_item == ci)
+                if (cnt.continuous_action_item == ci)
                 {
-                    rowactend(cnt);
+                    rowactend(cnt.index);
                 }
             }
         }
@@ -1415,6 +1412,8 @@ void calc_home_rank()
     return;
 }
 
+
+
 int cbreeder(int prm_984)
 {
     std::string s_at_m173;
@@ -1425,17 +1424,19 @@ int cbreeder(int prm_984)
     return p_at_m173;
 }
 
+
+
 void update_ranch()
 {
     worker = getworker(gdata_current_map);
     livestock = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].is_livestock() == 0)
+        if (cnt.is_livestock() == 0)
         {
             continue;
         }
@@ -1482,13 +1483,13 @@ void update_ranch()
         }
     label_1734_internal:
         egg = 0;
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cdata[cnt].is_livestock() == 0)
+            if (cnt.is_livestock() == 0)
             {
                 continue;
             }
@@ -1498,7 +1499,7 @@ void update_ranch()
             {
                 continue;
             }
-            flt(calcobjlv(cdata[cnt].level), 2);
+            flt(calcobjlv(cnt.level), 2);
             p = rnd(5);
             f = 0;
             if (rnd(egg + 1) > 2)
@@ -1539,7 +1540,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt) == u8"chicken"s)
+                if (cdatan(2, cnt.index) == u8"chicken"s)
                 {
                     if (rnd(20) == 0)
                     {
@@ -1552,12 +1553,10 @@ void update_ranch()
                     int stat = itemcreate(-1, 573, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
-                        inv[ci].weight = cdata[cnt].weight * 10 + 250;
-                        inv[ci].value = clamp(
-                            cdata[cnt].weight * cdata[cnt].weight / 10000,
-                            200,
-                            40000);
+                        inv[ci].subname = cnt.id;
+                        inv[ci].weight = cnt.weight * 10 + 250;
+                        inv[ci].value =
+                            clamp(cnt.weight * cnt.weight / 10000, 200, 40000);
                     }
                 }
                 continue;
@@ -1568,7 +1567,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt) == u8"sheep"s)
+                if (cdatan(2, cnt.index) == u8"sheep"s)
                 {
                     if (rnd(20) == 0)
                     {
@@ -1581,7 +1580,7 @@ void update_ranch()
                     int stat = itemcreate(-1, 574, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
+                        inv[ci].subname = cnt.id;
                     }
                 }
                 continue;
@@ -1597,12 +1596,10 @@ void update_ranch()
                     int stat = itemcreate(-1, 575, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
-                        inv[ci].weight = cdata[cnt].weight * 40 + 300;
-                        inv[ci].value = clamp(
-                            cdata[cnt].weight * cdata[cnt].weight / 5000,
-                            1,
-                            20000);
+                        inv[ci].subname = cnt.id;
+                        inv[ci].weight = cnt.weight * 40 + 300;
+                        inv[ci].value =
+                            clamp(cnt.weight * cnt.weight / 5000, 1, 20000);
                     }
                 }
                 continue;
@@ -1626,7 +1623,8 @@ void update_ranch()
             }
         }
     }
-    return;
 }
+
+
 
 } // namespace elona

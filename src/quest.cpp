@@ -40,18 +40,18 @@ int quest_is_return_forbidden()
     return f;
 }
 
+
+
 void quest_place_target()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cnt.state() == character::state_t::alive)
         {
-            cdata[cnt].is_quest_target() = true;
-            cdata[cnt].relationship = -3;
+            cnt.is_quest_target() = true;
+            cnt.relationship = -3;
         }
     }
-    return;
 }
 
 
@@ -60,12 +60,11 @@ int quest_targets_remaining()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cnt.state() == character::state_t::alive)
         {
-            if (cdata[cnt].is_quest_target() == 1)
+            if (cnt.is_quest_target() == 1)
             {
                 ++f_at_m119;
             }
@@ -175,11 +174,9 @@ void quest_check()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cnt.state() == character::state_t::alive)
                 {
                     ++p_at_m119;
                 }
@@ -442,22 +439,21 @@ void quest_set_data(int val0)
 
 void quest_on_map_initialize()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::empty)
+        if (cnt.state() == character::state_t::empty)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 0)
+        if (cnt.character_role == 0)
         {
             continue;
         }
-        if (cdata[cnt].quality == 6)
+        if (cnt.quality == 6)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 3)
+        if (cnt.character_role == 3)
         {
             continue;
         }
@@ -470,7 +466,7 @@ void quest_on_map_initialize()
                 break;
             }
         }
-        int cnt2 = cnt;
+        int cnt2 = cnt.index;
         for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (qdata(0, cnt) == cnt2)
@@ -486,13 +482,12 @@ void quest_on_map_initialize()
         {
             break;
         }
-        qdata(0, i) = cnt;
+        qdata(0, i) = cnt.index;
         qdata(1, i) = gdata_current_map;
-        qname(i) = cdatan(0, cnt);
-        cdata[cnt].related_quest_id = i + 1;
+        qname(i) = cdatan(0, cnt.index);
+        cnt.related_quest_id = i + 1;
         gdata_number_of_existing_quests = i + 1;
     }
-    return;
 }
 
 

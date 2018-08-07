@@ -1092,14 +1092,13 @@ void generatemoney(int cc)
 void calccosthire()
 {
     int cost{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].character_role == 0)
+        if (cnt.character_role == 0)
             continue;
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
             continue;
-        cost += calchirecost(cnt);
+        cost += calchirecost(cnt.index);
     }
     cost = cost
         * clamp(
@@ -1500,18 +1499,17 @@ int calcscore()
 void calcpartyscore()
 {
     int score = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53)
+        if (cnt.impression >= 53)
         {
-            score += cdata[cnt].level + 5;
+            score += cnt.level + 5;
         }
-        if (cdata[cnt].impression < 50)
+        if (cnt.impression < 50)
         {
             score -= 20;
         }
@@ -1536,18 +1534,16 @@ void calcpartyscore()
 void calcpartyscore2()
 {
     int score{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
+        if (cnt.impression >= 53 && cnt.quality >= 4)
         {
-            score += 20 + cdata[cnt].level / 2;
-            txt(i18n::s.get(
-                "core.locale.quest.party.is_satisfied", cdata[cnt]));
+            score += 20 + cnt.level / 2;
+            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cnt));
         }
     }
     if (score != 0)

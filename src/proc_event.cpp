@@ -629,13 +629,13 @@ void proc_event()
         if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
-            for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (auto&& cc : cdata.all())
             {
-                if (cdata[cc].state() != character::state_t::alive)
+                if (cc.state() != character::state_t::alive)
                     continue;
-                if (cdata[cc].character_role == 18)
+                if (cc.character_role == 18)
                 {
-                    tc = cc;
+                    tc = cc.index;
                     break;
                 }
             }
@@ -902,14 +902,13 @@ void proc_event()
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.alarm"));
-        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-             ++cc)
+        for (auto&& cc : cdata.others())
         {
-            if (cdata[cc].state() == character::state_t::alive)
+            if (cc.state() == character::state_t::alive)
             {
-                cdata[cc].relationship = -3;
-                cdata[cc].enemy_id = 0;
-                cdata[cc].hate = 250;
+                cc.relationship = -3;
+                cc.enemy_id = 0;
+                cc.hate = 250;
             }
         }
         break;

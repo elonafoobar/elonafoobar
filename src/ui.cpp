@@ -288,18 +288,18 @@ void draw_minimap_pixel(int x, int y)
 
 void highlight_characters_in_pet_arena()
 {
-    for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
+    for (auto&& cc : cdata.all())
     {
-        if (cdata[cc].state() != character::state_t::alive)
+        if (cc.state() != character::state_t::alive)
             continue;
-        if (cc == 0)
+        if (cc.index == 0)
             continue;
         snail::color color{0};
-        if (cdata[cc].relationship == 10)
+        if (cc.relationship == 10)
         {
             color = {127, 127, 255, 32};
         }
-        else if (cdata[cc].relationship == -3)
+        else if (cc.relationship == -3)
         {
             color = {255, 127, 127, 32};
         }
@@ -307,8 +307,8 @@ void highlight_characters_in_pet_arena()
         {
             continue;
         }
-        const int x = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
-        const int y = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+        const int x = (cc.position.x - scx) * inf_tiles + inf_screenx;
+        const int y = (cc.position.y - scy) * inf_tiles + inf_screeny;
         if (0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles && 0 <= y
             && y < (inf_screenh - 1) * inf_tiles)
         {
@@ -318,7 +318,7 @@ void highlight_characters_in_pet_arena()
                 inf_tiles,
                 inf_tiles + (y < 0) * inf_screeny,
                 color);
-            if (cc == camera)
+            if (cc.index == camera)
             {
                 gmode(4, 120);
                 draw("camera", x + 36, y + 32);
@@ -515,7 +515,7 @@ void render_buffs()
     const auto x = windoww - 40;
     auto y = inf_ver - 40;
 
-    for (const auto& buff : cdata.player().buffs)
+    for (auto&& buff : cdata.player().buffs)
     {
         if (buff.id == 0)
             break;

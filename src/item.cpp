@@ -268,20 +268,19 @@ std::vector<int> itemlist(int owner, int id)
 
 int itemusingfind(int ci, bool disallow_pc)
 {
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_id != 0
-            && cdata[cnt].continuous_action_id != 11
-            && cdata[cnt].continuous_action_turn > 0
-            && cdata[cnt].continuous_action_item == ci)
+        if (cnt.continuous_action_id != 0 && cnt.continuous_action_id != 11
+            && cnt.continuous_action_turn > 0
+            && cnt.continuous_action_item == ci)
         {
-            if (!disallow_pc || cnt != 0)
+            if (!disallow_pc || cnt.index != 0)
             {
-                return cnt;
+                return cnt.index;
             }
         }
     }

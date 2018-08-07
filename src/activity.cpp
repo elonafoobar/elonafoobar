@@ -42,29 +42,28 @@ void rowact_check(int prm_789)
 
 void rowact_item(int prm_790)
 {
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cc : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cc.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_turn <= 0)
+        if (cc.continuous_action_turn <= 0)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_id == 1
-            || cdata[cnt].continuous_action_id == 2)
+        if (cc.continuous_action_id == 1 || cc.continuous_action_id == 2)
         {
-            if (cdata[cnt].continuous_action_item == prm_790)
+            if (cc.continuous_action_item == prm_790)
             {
-                rowactend(cnt);
-                txt(i18n::s.get(
-                    "core.locale.activity.cancel.item", cdata[cnt]));
+                rowactend(cc.index);
+                txt(i18n::s.get("core.locale.activity.cancel.item", cc));
             }
         }
     }
-    return;
 }
+
+
 
 void rowactend(int cc)
 {
@@ -72,6 +71,7 @@ void rowactend(int cc)
     cdata[cc].continuous_action_turn = 0;
     cdata[cc].continuous_action_item = 0;
 }
+
 
 
 void activity_handle_damage(character& chara)
@@ -258,21 +258,21 @@ void continuous_action_perform()
         {
             gold = 0;
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& audience : cdata.all())
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (audience.state() != character::state_t::alive)
                 {
                     continue;
                 }
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
-                    >= cdata[cnt].time_interest_revive)
+                    >= audience.time_interest_revive)
                 {
-                    cdata[cnt].interest = 100;
+                    audience.interest = 100;
                 }
                 if (is_in_fov(cdata[cc]))
                 {
-                    if (cdata[cnt].vision_flag != msync)
+                    if (audience.vision_flag != msync)
                     {
                         continue;
                     }
@@ -281,27 +281,27 @@ void continuous_action_perform()
                     dist(
                         cdata[cc].position.x,
                         cdata[cc].position.y,
-                        cdata[cnt].position.x,
-                        cdata[cnt].position.y)
+                        audience.position.x,
+                        audience.position.y)
                     > 3)
                 {
                     continue;
                 }
-                if (cdata[cnt].interest <= 0)
+                if (audience.interest <= 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].sleep > 0)
+                if (audience.sleep > 0)
                 {
                     continue;
                 }
-                x = cdata[cnt].position.x;
-                y = cdata[cnt].position.y;
+                x = audience.position.x;
+                y = audience.position.y;
                 if (map(x, y, 1) == 0)
                 {
                     continue;
                 }
-                tc = cnt;
+                tc = audience.index;
                 if (tc == cc)
                 {
                     continue;

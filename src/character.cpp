@@ -1717,18 +1717,18 @@ int relationbetween(int c1, int c2)
 
 int chara_find(int id)
 {
-    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
+    for (auto&& i : cdata.others())
     {
-        if (cdata[i].state() != character::state_t::villager_dead)
+        if (i.state() != character::state_t::villager_dead)
         {
-            if (cdata[i].state() != character::state_t::alive)
+            if (i.state() != character::state_t::alive)
             {
                 continue;
             }
         }
-        if (cdata[i].id == id)
+        if (i.id == id)
         {
-            return i;
+            return i.index;
         }
     }
     return 0;
@@ -1756,11 +1756,11 @@ int chara_find_ally(int id)
 
 int chara_get_free_slot()
 {
-    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
+    for (auto&& i : cdata.others())
     {
-        if (cdata[i].state() == character::state_t::empty)
+        if (i.state() == character::state_t::empty)
         {
-            return i;
+            return i.index;
         }
     }
     return -1;
@@ -1991,11 +1991,11 @@ void chara_vanquish(int cc)
 bool chara_copy(int cc)
 {
     int slot{};
-    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
+    for (auto&& i : cdata.others())
     {
-        if (cdata[i].state() == character::state_t::empty)
+        if (i.state() == character::state_t::empty)
         {
-            slot = i;
+            slot = i.index;
             break;
         }
     }
@@ -2145,13 +2145,12 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     if (tc_at_m125 == -1)
     {
         f_at_m125 = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].state() == character::state_t::empty)
+            if (cnt.state() == character::state_t::empty)
             {
                 f_at_m125 = 1;
-                tc_at_m125 = cnt;
+                tc_at_m125 = cnt.index;
                 break;
             }
         }

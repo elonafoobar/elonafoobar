@@ -513,6 +513,33 @@ private:
 
 
 
+struct cdata_slice
+{
+    using iterator = std::vector<character>::iterator;
+
+    cdata_slice(const iterator& begin, const iterator& end)
+        : _begin(begin)
+        , _end(end)
+    {
+    }
+
+    iterator begin()
+    {
+        return _begin;
+    }
+
+    iterator end()
+    {
+        return _end;
+    }
+
+private:
+    const iterator _begin;
+    const iterator _end;
+};
+
+
+
 struct cdata_t
 {
     cdata_t();
@@ -540,6 +567,38 @@ struct cdata_t
     {
         return (*this)[56];
     }
+
+
+
+    cdata_slice all()
+    {
+        return {std::begin(storage), std::end(storage)};
+    }
+
+
+    cdata_slice pets()
+    {
+        return {std::begin(storage) + 1, std::begin(storage) + 16};
+    }
+
+
+    cdata_slice pc_and_pets()
+    {
+        return {std::begin(storage), std::begin(storage) + 16};
+    }
+
+
+    cdata_slice adventurers()
+    {
+        return {std::begin(storage) + 16, std::begin(storage) + 56};
+    }
+
+
+    cdata_slice others()
+    {
+        return {std::begin(storage) + 57, std::end(storage)};
+    }
+
 
 
 private:

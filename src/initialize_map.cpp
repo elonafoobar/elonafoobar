@@ -134,18 +134,17 @@ label_1741_internal:
     {
         maxnpcbk = 0;
         DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() == character::state_t::empty)
+            if (cnt.state() == character::state_t::empty)
             {
                 continue;
             }
-            if ((cdata[cnt].character_role >= 1000
-                 && cdata[cnt].character_role < 2000)
-                || cdata[cnt].character_role == 2003)
+            if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
+                || cnt.character_role == 2003)
             {
-                rolebk(0, maxnpcbk) = cdata[cnt].character_role;
-                rolebk(1, maxnpcbk) = cdata[cnt].shop_rank;
+                rolebk(0, maxnpcbk) = cnt.character_role;
+                rolebk(1, maxnpcbk) = cnt.shop_rank;
                 ++maxnpcbk;
             }
         }
@@ -170,10 +169,9 @@ label_1741_internal:
         }
     }
     mdata_map_next_regenerate_date = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        cdata[cnt].set_state(character::state_t::empty);
+        cnt.set_state(character::state_t::empty);
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
@@ -887,12 +885,11 @@ label_1741_internal:
                 enemyteam = rc;
             }
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].relationship == -3)
+            if (cnt.relationship == -3)
             {
-                cdata[cnt].has_been_used_stethoscope() = true;
+                cnt.has_been_used_stethoscope() = true;
             }
         }
     }
@@ -971,14 +968,12 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(file_operation_t::_17);
-                for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                     cnt < ELONA_MAX_CHARACTERS;
-                     ++cnt)
+                for (auto&& cnt : cdata.others())
                 {
-                    cdata[cnt].position.x = mdata_map_width / 2;
-                    cdata[cnt].position.y = mdata_map_height / 2;
-                    cdata[cnt].initial_position.x = mdata_map_width / 2;
-                    cdata[cnt].initial_position.y = mdata_map_height / 2;
+                    cnt.position.x = mdata_map_width / 2;
+                    cnt.position.y = mdata_map_height / 2;
+                    cnt.initial_position.x = mdata_map_width / 2;
+                    cnt.initial_position.y = mdata_map_height / 2;
                 }
             }
             if (gdata_home_scale == 5)
@@ -1636,15 +1631,13 @@ label_1741_internal:
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cnt.state() == character::state_t::alive)
                 {
-                    if (cdata[cnt].is_quest_target() == 1)
+                    if (cnt.is_quest_target() == 1)
                     {
-                        list(0, listmax) = cnt;
+                        list(0, listmax) = cnt.index;
                         ++listmax;
                     }
                 }
@@ -2698,17 +2691,16 @@ label_1741_internal:
             label_1749();
         }
         mapupdate = 0;
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() == character::state_t::empty)
+            if (cnt.state() == character::state_t::empty)
             {
                 continue;
             }
-            if ((cdata[cnt].character_role >= 1000
-                 && cdata[cnt].character_role < 2000)
-                || cdata[cnt].character_role == 2003)
+            if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
+                || cnt.character_role == 2003)
             {
-                int cnt2 = cnt;
+                int cnt2 = cnt.index;
                 for (int cnt = 0, cnt_end = (maxnpcbk); cnt < cnt_end; ++cnt)
                 {
                     if (cdata[cnt2].character_role == rolebk(0, cnt))
@@ -2865,9 +2857,9 @@ label_1742_internal:
                 map(cnt, y, 1) = 0;
             }
         }
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            rc = cnt;
+            rc = cnt.index;
             cdata[rc].was_passed_item_by_you_just_now() = false;
             if (rc < 57)
             {
@@ -3002,23 +2994,23 @@ label_1744_internal:
     }
     label_1745();
     gdata_crowd_density = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        cdata[cnt].turn_cost = 0;
-        if (cdata[cnt].id == 343)
+        cnt.turn_cost = 0;
+        if (cnt.id == 343)
         {
-            getunid(cnt);
-            chara_refresh(cnt);
+            getunid(cnt.index);
+            chara_refresh(cnt.index);
         }
         if (noaggrorefresh == 0)
         {
-            cdata[cnt].enemy_id = 0;
-            cdata[cnt].hate = 0;
+            cnt.enemy_id = 0;
+            cnt.hate = 0;
         }
-        cdata[cnt].vision_flag = 0;
-        if (cdata[cnt].state() != character::state_t::empty)
+        cnt.vision_flag = 0;
+        if (cnt.state() != character::state_t::empty)
         {
-            modify_crowd_density(cnt, 1);
+            modify_crowd_density(cnt.index, 1);
         }
     }
     cdata.player().current_map = gdata_current_map;
@@ -3411,13 +3403,13 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].is_livestock() == 1)
+            if (cnt.is_livestock() == 1)
             {
-                cdata[cnt].hate = 0;
-                cdata[cnt].relationship = -1;
-                cdata[cnt].original_relationship = -1;
+                cnt.hate = 0;
+                cnt.relationship = -1;
+                cnt.original_relationship = -1;
             }
         }
     }

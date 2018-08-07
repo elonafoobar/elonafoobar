@@ -1267,14 +1267,14 @@ void cutname(std::string& utf8_string, int max_length_charwise)
 
 void go_hostile()
 {
-    for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
+    for (auto&& cc : cdata.others())
     {
-        if (cdata[cc].character_role == 14 || cdata[cc].character_role == 16
-            || cdata[cc].character_role == 1010)
+        if (cc.character_role == 14 || cc.character_role == 16
+            || cc.character_role == 1010)
         {
-            cdata[cc].relationship = -3;
-            cdata[cc].hate = 80;
-            cdata[cc].emotion_icon = 218;
+            cc.relationship = -3;
+            cc.hate = 80;
+            cc.emotion_icon = 218;
         }
     }
 }
@@ -1905,19 +1905,18 @@ void hostileaction(int prm_787, int prm_788)
         {
             txtef(3);
             txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& cnt : cdata.all())
             {
-                if (cdata[cnt].is_livestock() == 1)
+                if (cnt.is_livestock() == 1)
                 {
-                    cdata[cnt].enemy_id = 0;
-                    cdata[cnt].hate = 20;
-                    cdata[cnt].emotion_icon = 318;
+                    cnt.enemy_id = 0;
+                    cnt.hate = 20;
+                    cnt.emotion_icon = 318;
                 }
             }
         }
     }
     rowactend(prm_788);
-    return;
 }
 
 
@@ -1926,19 +1925,17 @@ void wake_up()
 {
     if (gdata_hour >= 7 && gdata_hour <= 22)
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].sleep > 0)
+            if (cnt.sleep > 0)
             {
                 if (rnd(10))
                 {
-                    cdata[cnt].sleep = 0;
+                    cnt.sleep = 0;
                 }
             }
         }
     }
-    return;
 }
 
 
@@ -5413,12 +5410,11 @@ turn_result_t exit_map()
         }
 
         // forget about all NPCs that were here
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].state() != character::state_t::empty)
+            if (cnt.state() != character::state_t::empty)
             {
-                --npcmemory(1, cdata[cnt].id);
+                --npcmemory(1, cnt.id);
             }
         }
     }
@@ -5553,23 +5549,20 @@ void label_1745()
                     }
                 }
             }
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                rc = cnt;
+                rc = cnt.index;
                 label_1539();
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cnt.state() != character::state_t::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].is_temporary() == 1)
+                if (cnt.is_temporary() == 1)
                 {
                     if (rnd(2))
                     {
-                        cdata[cnt].set_state(character::state_t::empty);
-                        map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
-                            0;
+                        cnt.set_state(character::state_t::empty);
+                        map(cnt.position.x, cnt.position.y, 1) = 0;
                     }
                 }
             }
@@ -5616,18 +5609,16 @@ void label_1745()
         }
         if (adata(16, gdata_current_map) == mdata_t::map_id_t::your_home)
         {
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cnt.state() != character::state_t::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].is_temporary() == 1)
+                if (cnt.is_temporary() == 1)
                 {
-                    cdata[cnt].set_state(character::state_t::empty);
-                    map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
+                    cnt.set_state(character::state_t::empty);
+                    map(cnt.position.x, cnt.position.y, 1) = 0;
                 }
             }
         }
@@ -5666,33 +5657,31 @@ void label_1745()
                 || mdata_map_type == mdata_t::map_type_t::guild
                 || gdata_current_map == mdata_t::map_id_t::your_home)
             {
-                for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                     cnt < ELONA_MAX_CHARACTERS;
-                     ++cnt)
+                for (auto&& cnt : cdata.others())
                 {
-                    if (cdata[cnt].state() != character::state_t::alive)
+                    if (cnt.state() != character::state_t::alive)
                     {
                         continue;
                     }
-                    generatemoney(cnt);
-                    if (cdata[cnt].id == 326)
+                    generatemoney(cnt.index);
+                    if (cnt.id == 326)
                     {
-                        if (itemfind(cnt, 60005, 1) == -1)
+                        if (itemfind(cnt.index, 60005, 1) == -1)
                         {
                             if (rnd(150) == 0)
                             {
                                 flt();
-                                itemcreate(cnt, 707, -1, -1, 0);
+                                itemcreate(cnt.index, 707, -1, -1, 0);
                             }
                             else
                             {
-                                flt(calcobjlv(cdata[cnt].level), calcfixlv());
+                                flt(calcobjlv(cnt.level), calcfixlv());
                                 flttypeminor = 60005;
-                                itemcreate(cnt, 0, -1, -1, 0);
+                                itemcreate(cnt.index, 0, -1, -1, 0);
                             }
                         }
                     }
-                    rc = cnt;
+                    rc = cnt.index;
                     if (rnd(5) == 0)
                     {
                         supply_new_equipment();
@@ -5719,7 +5708,6 @@ void label_1745()
         mdata_map_next_restock_date = gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
     }
-    return;
 }
 
 
@@ -7065,9 +7053,9 @@ void label_1754()
         else if (mdata_map_turn_cost == 1000000)
         {
             mdata_map_turn_cost = 10000;
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& cnt : cdata.all())
             {
-                cdata[cnt].turn_cost = 0;
+                cnt.turn_cost = 0;
             }
             txt(lang(
                 u8"もうシェルターの中にいる必要は無い。"s,
@@ -7464,12 +7452,11 @@ void label_1755()
     }
     else
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].only_christmas() == 1)
+            if (cnt.only_christmas() == 1)
             {
-                chara_vanquish(cnt);
+                chara_vanquish(cnt.index);
             }
         }
     }
@@ -9089,28 +9076,28 @@ void label_2076()
     listmax = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (is_in_fov(cdata[cnt]) == 0)
+            if (is_in_fov(cnt) == 0)
             {
                 continue;
             }
             if (cc == 0 || cdata[cc].relationship >= 0)
             {
-                if (cdata[cnt].relationship == 10)
+                if (cnt.relationship == 10)
                 {
-                    if (cnt == 0)
+                    if (cnt.index == 0)
                     {
                         continue;
                     }
                 }
             }
-            x = cdata[cnt].position.x;
-            y = cdata[cnt].position.y;
+            x = cnt.position.x;
+            y = cnt.position.y;
             if (x == cdata[cc].position.x && y == cdata[cc].position.y)
             {
                 continue;
@@ -9119,17 +9106,17 @@ void label_2076()
             {
                 continue;
             }
-            if (cdata[cnt].is_invisible() == 1)
+            if (cnt.is_invisible() == 1)
             {
                 if (cdata[cc].can_see_invisible() == 0)
                 {
-                    if (cdata[cnt].wet == 0)
+                    if (cnt.wet == 0)
                     {
                         continue;
                     }
                 }
             }
-            list(0, listmax) = cnt;
+            list(0, listmax) = cnt.index;
             list(1, listmax) = x;
             list(2, listmax) = y;
             ++listmax;
@@ -9630,17 +9617,15 @@ void remove_card_and_figures()
 
 void label_2088()
 {
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cnt.state() == character::state_t::alive)
         {
-            if (cdata[cnt].position.x < 0
-                || cdata[cnt].position.x >= mdata_map_width
-                || cdata[cnt].position.y < 0
-                || cdata[cnt].position.y >= mdata_map_height)
+            if (cnt.position.x < 0 || cnt.position.x >= mdata_map_width
+                || cnt.position.y < 0 || cnt.position.y >= mdata_map_height)
             {
-                cdata[cnt].position.x = 0;
-                cdata[cnt].position.y = 0;
+                cnt.position.x = 0;
+                cnt.position.y = 0;
             }
         }
     }
@@ -9660,7 +9645,6 @@ void label_2088()
         event_add(17);
         calccosthire();
     }
-    return;
 }
 
 
@@ -9958,9 +9942,9 @@ void load_gene_files()
     ctrl_file(file_operation_t::_15);
     DIM2(spell, 200);
     DIM2(spact, 500);
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        cdata[cnt].set_state(character::state_t::empty);
+        cnt.set_state(character::state_t::empty);
     }
     sdata.copy(56, 0);
     sdata.clear(0);
@@ -10004,12 +9988,11 @@ void load_gene_files()
         inv[cnt].body_part = 0;
         item_copy(cnt, inv_getfreeid(-1));
     }
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        chara_delete(cnt);
+        chara_delete(cnt.index);
     }
     gdata_play_time = genetemp(805);
-    return;
 }
 
 

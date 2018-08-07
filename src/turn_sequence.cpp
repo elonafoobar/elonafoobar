@@ -756,19 +756,18 @@ turn_result_t turn_begin()
     }
     if (update_turn_cost)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            spd = cdata[cnt].current_speed * (100 + cdata[cnt].speed_percentage)
-                / 100;
+            spd = cnt.current_speed * (100 + cnt.speed_percentage) / 100;
             if (spd < 10)
             {
                 spd = 10;
             }
-            cdata[cnt].turn_cost += spd * turncost;
+            cnt.turn_cost += spd * turncost;
         }
     }
 
@@ -1035,17 +1034,17 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cc != 0)
             {
-                for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+                for (auto&& cnt : cdata.all())
                 {
-                    if (cdata[cnt].state() != character::state_t::alive)
+                    if (cnt.state() != character::state_t::alive)
                     {
                         continue;
                     }
                     if (dist(
                             cdata[cc].position.x,
                             cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y)
+                            cnt.position.x,
+                            cnt.position.y)
                         > 5)
                     {
                         continue;
@@ -1053,18 +1052,18 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     if (fov_los(
                             cdata[cc].position.x,
                             cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y)
+                            cnt.position.x,
+                            cnt.position.y)
                         == 0)
                     {
                         continue;
                     }
-                    if (cnt == cc || rnd(3)
+                    if (cnt.index == cc || rnd(3)
                         || mdata_map_type == mdata_t::map_type_t::world_map)
                     {
                         continue;
                     }
-                    tc = cnt;
+                    tc = cnt.index;
                     if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                     {
                         txtef(9);
