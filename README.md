@@ -100,6 +100,8 @@ contents in this repository. Note that images, sounds and fonts are not included
 
 ## Thirdparty libraries
 
+* microhcl: see src/thirdparty/microhcl/LICENSE.
+* microhil: see src/thirdparty/microhil/LICENSE.
 * Catch2: see src/thirdparty/catch2/LICENSE.
 * hayai: see src/thirdparty/hayai/LICENSE.
 * sol2: see src/thirdparty/sol2/LICENSE.
