@@ -1203,6 +1203,120 @@ void Math::bind(sol::table& Elona)
 }
 
 
+namespace Animation
+{
+void play_failure_to_cast(lua_character_handle);
+void play_breath(lua_character_handle, int);
+void play_ball(bool);
+void play_bolt(lua_character_handle, int);
+void play_throwing_object(lua_character_handle);
+void play_swarm(lua_character_handle);
+void play_ranged_attack();
+void play_melee_attack();
+void play_gene_engineering();
+void play_miracle();
+void play_meteor();
+void play_ragnarok();
+void play_breaking(const position_t&);
+
+void bind(sol::table& Elona);
+} // namespace Animation
+
+void Animation::play_failure_to_cast(lua_character_handle handle)
+{
+    auto& caster = lua::lua->get_handle_manager().get_ref<character>(handle);
+    failure_to_cast_animation(caster).play();
+}
+
+void Animation::play_breath(lua_character_handle handle, int element)
+{
+    auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
+    breath_animation(attacker, element).play();
+}
+
+void Animation::play_ball(bool is_atomic_bomb)
+{
+    auto type = is_atomic_bomb ? ball_animation::type_t::atomic_bomb
+                               : ball_animation::type_t::ball;
+    ball_animation(type).play();
+}
+
+void Animation::play_bolt(lua_character_handle handle, int element)
+{
+    auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
+    bolt_animation(attacker, element).play();
+}
+
+void Animation::play_throwing_object(lua_character_handle handle)
+{
+    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
+    throwing_object_animation(target, element).play();
+}
+
+void Animation::play_swarm(lua_character_handle handle)
+{
+    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
+    swarm_animation(target, element).play();
+}
+
+void Animation::play_ranged_attack(int type)
+{
+    auto anim_type = static_cast<ranged_attack_animation::type_t>(type);
+    ranged_attack_animation(anim_type).play();
+}
+
+void Animation::play_melee_attack()
+{
+    melee_attack_animation().play();
+}
+
+void Animation::play_gene_engineering()
+{
+    geen_engineering_animation().play();
+}
+
+void Animation::play_miracle()
+{
+    miracle_animation().play();
+}
+
+void Animation::play_meteor()
+{
+    meteor_animation().play();
+}
+
+void Animation::play_ragnarok()
+{
+    ragnarok_animation().play();
+}
+
+void Animation::play_breaking(const position_t& position)
+{
+    breaking_animation(position).play();
+}
+
+void Animation::bind(sol::table& Elona)
+{
+    sol::table Animation = Elona.create_named("Animation");
+    Animation.set_function(
+        "play_failure_to_cast", Animation::play_failure_to_cast);
+    Animation.set_function("play_breath", Animation::play_breath);
+    Animation.set_function("play_ball", Animation::play_ball);
+    Animation.set_function("play_bolt", Animation::play_bolt);
+    Animation.set_function(
+        "play_throwing_object", Animation::play_throwing_object);
+    Animation.set_function("play_swarm", Animation::play_swarm);
+    Animation.set_function("play_ranged_attack", Animation::play_ranged_attack);
+    Animation.set_function("play_melee_attack", Animation::play_melee_attack);
+    Animation.set_function(
+        "play_gene_engineering", Animation::play_gene_engineering);
+    Animation.set_function("play_miracle", Animation::play_miracle);
+    Animation.set_function("play_meteor", Animation::play_meteor);
+    Animation.set_function("play_ragnarok", Animation::play_ragnarok);
+    Animation.set_function("play_breaking", Animation::play_breaking);
+}
+
+
 namespace Debug
 {
 void log(const std::string&);
@@ -1502,6 +1616,7 @@ api_manager::api_manager(lua_env* lua)
     GUI::bind(core);
     I18N::bind(core);
     Map::bind(core);
+    Animation::bind(core);
     Debug::bind(core);
 
     // register usertypes globally, so the handle manager can get at them.

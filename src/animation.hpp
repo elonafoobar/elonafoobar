@@ -189,8 +189,8 @@ class ranged_attack_animation : public abstract_animation
 public:
     enum class type_t
     {
-        magic_arrow,
-        distant_attack,
+        magic_arrow = 0,
+        distant_attack = 1,
         bow = 108,
         crossbow = 109,
         firearm = 110,
