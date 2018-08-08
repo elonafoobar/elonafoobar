@@ -170,12 +170,6 @@ struct inventory
     inventory();
 
 
-    item& operator()(int index)
-    {
-        return storage[index];
-    }
-
-
     item& operator[](int index)
     {
         return storage[index];

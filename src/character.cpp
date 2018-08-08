@@ -1350,7 +1350,7 @@ void chara_refresh(int cc)
     }
     if (cc == 0)
     {
-        cdata(cc).clear_flags();
+        cdata[cc].clear_flags();
         if (trait(161) != 0)
         {
             for (int i = 0; i < 30; ++i)

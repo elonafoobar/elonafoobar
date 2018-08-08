@@ -560,12 +560,6 @@ struct cdata_t
     cdata_t();
 
 
-    character& operator()(int index)
-    {
-        return storage[index];
-    }
-
-
     character& operator[](int index)
     {
         return storage[index];

@@ -82,7 +82,7 @@ inventory::inventory()
 int ibit(size_t type, int ci)
 {
     assert(type < sizeof(item::flags) * 8);
-    return inv(ci).flags & (1 << type) ? 1 : 0;
+    return inv[ci].flags & (1 << type) ? 1 : 0;
 }
 
 
@@ -92,11 +92,11 @@ void ibitmod(size_t type, int ci, int on)
     assert(type < sizeof(item::flags) * 8);
     if (on)
     {
-        inv(ci).flags |= 1 << type;
+        inv[ci].flags |= 1 << type;
     }
     else
     {
-        inv(ci).flags &= ~(1 << type);
+        inv[ci].flags &= ~(1 << type);
     }
 }
 

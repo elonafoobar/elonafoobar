@@ -322,7 +322,7 @@ int cat_cdata(lua_State* L)
 {
     int cc = luaL_checknumber(L, 1);
 
-    cat::userdata<character>::push_new(L, &cdata(cc));
+    cat::userdata<character>::push_new(L, &cdata[cc]);
     luaL_setmetatable(L, "elona__cdata");
 
     return 1;
