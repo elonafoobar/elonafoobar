@@ -2826,7 +2826,7 @@ talk_result_t talk_unique_mia()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         gdata_mias_dream = 1000;
-        chara_relocate(chara_find_ally(246), -1);
+        chara_relocate(cdata[chara_find_ally(246)], none);
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
         cdata[rc].character_role = 3;

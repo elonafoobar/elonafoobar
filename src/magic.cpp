@@ -3600,7 +3600,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.change.apply", cdata[tc]));
             flt(calcobjlv(cdata[tc].level + 3), 2);
             chara_create(56, 0, -3, 0);
-            chara_relocate(56, tc, 1);
+            chara_relocate(cdata.tmp(), tc(0), chara_relocate_mode::change);
             cdata[tc].enemy_id = cc;
             cdata[tc].is_quest_target() = false;
             quest_check();

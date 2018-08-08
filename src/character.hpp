@@ -611,7 +611,27 @@ extern cdata_t cdata;
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 void initialize_character();
 bool chara_place();
-int chara_relocate(int = 0, int = 0, int = 0);
+
+
+enum class chara_relocate_mode
+{
+    normal,
+    change,
+};
+
+
+/**
+ * Relocate `source` to `destination_slot`. `source` character will be
+ * destroyed.
+ * @param source The relocated character.
+ * @param destination_slot The slot of the character relocated from `source`. If
+ * you specify `none`, find an empty slot in cdata.others().
+ */
+void chara_relocate(
+    character& source,
+    optional<int> destination_slot,
+    chara_relocate_mode mode = chara_relocate_mode::normal);
+
 void chara_refresh(int);
 
 

@@ -15474,8 +15474,8 @@ int new_ally_joins()
         txt(i18n::s.get("core.locale.action.ally_joins.party_full"));
         return -1;
     }
-    int stat = chara_relocate(rc, f);
-    oc = stat;
+    oc = rc;
+    chara_relocate(cdata[rc], f);
     cdata[rc].relationship = 10;
     cdata[rc].original_relationship = 10;
     cdata[rc].character_role = 0;

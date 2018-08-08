@@ -194,6 +194,37 @@ optional<position_t> get_free_space(
 
 
 
+int chara_get_free_slot_force()
+{
+    int ret = chara_get_free_slot();
+    if (ret != -1)
+    {
+        return ret;
+    }
+
+    std::vector<int> slots;
+    for (auto&& cc : cdata.others())
+    {
+        if (cc.state() == character::state_t::alive && cc.character_role == 0)
+        {
+            slots.push_back(cc.index);
+        }
+    }
+
+    if (slots.empty())
+    {
+        // FIXME: do not throw exception.
+        throw std::runtime_error("chara_get_free_slot_force() failed");
+    }
+
+    ret = choice(slots);
+    // Force to destroy the character in `ret`.
+    chara_vanquish(ret);
+    return ret;
+}
+
+
+
 } // namespace
 
 
@@ -390,8 +421,6 @@ character_db_ex the_character_db;
 cdata_t cdata;
 
 
-int p_at_m117 = 0;
-int f_at_m125 = 0;
 elona_vector1<std::string> usertxt;
 
 static std::unordered_map<int, int> convert_resistances(
@@ -2078,7 +2107,7 @@ bool chara_copy(const character& source)
     // Restore overwritten .index field.
     destination.index = slot;
 
-    // Place `desitination` to the found free space.
+    // Place `destination` to the found free space.
     map(x, y, 1) = slot + 1;
     destination.position = *pos;
 
@@ -2170,48 +2199,21 @@ void chara_delete(int cc)
 }
 
 
-int chara_relocate(int prm_784, int prm_785, int prm_786)
+
+void chara_relocate(
+    character& source,
+    optional<int> destination_slot,
+    chara_relocate_mode mode)
 {
-    int tc_at_m125 = 0;
-    int p_at_m125 = 0;
-    int invrangecc_at_m125 = 0;
-    int cnt2_at_m125 = 0;
-    tc_at_m125 = prm_785;
-    if (prm_784 == gdata_mount)
+    if (source.index == gdata_mount)
     {
         ride_end();
-        cdata[prm_784].position.x = cdata.player().position.x;
-        cdata[prm_784].position.y = cdata.player().position.y;
+        source.position = cdata.player().position;
     }
-    if (tc_at_m125 == -1)
-    {
-        f_at_m125 = 0;
-        for (auto&& cnt : cdata.others())
-        {
-            if (cnt.state() == character::state_t::empty)
-            {
-                f_at_m125 = 1;
-                tc_at_m125 = cnt.index;
-                break;
-            }
-        }
-        if (f_at_m125 == 0)
-        {
-            for (int cnt = 0;; ++cnt)
-            {
-                tc_at_m125 = ELONA_MAX_PARTY_CHARACTERS
-                    + rnd(ELONA_MAX_OTHER_CHARACTERS);
-                if (cdata[cnt].state() == character::state_t::alive)
-                {
-                    if (cdata[cnt].character_role == 0)
-                    {
-                        break;
-                    }
-                }
-            }
-            chara_vanquish(tc_at_m125);
-        }
-    }
+
+    const auto slot =
+        destination_slot ? *destination_slot : chara_get_free_slot_force();
+    auto& destination = cdata[slot];
 
     // Backups for changing
     position_t position;
@@ -2221,134 +2223,136 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     int hate;
     int enemy_id;
     int hp;
-    if (prm_786 == 1)
+    if (mode == chara_relocate_mode::change)
     {
-        // Change
-        position = cdata[tc_at_m125].position;
-        initial_position = cdata[tc_at_m125].initial_position;
-        relationship = cdata[tc_at_m125].relationship;
-        original_relationship = cdata[tc_at_m125].original_relationship;
-        hate = cdata[tc_at_m125].hate;
-        enemy_id = cdata[tc_at_m125].enemy_id;
-        hp = cdata[tc_at_m125].hp;
+        position = destination.position;
+        initial_position = destination.initial_position;
+        relationship = destination.relationship;
+        original_relationship = destination.original_relationship;
+        hate = destination.hate;
+        enemy_id = destination.enemy_id;
+        hp = destination.hp;
     }
-    cdata[prm_784].item_which_will_be_used = 0;
-    cdata[prm_784].is_livestock() = false;
-    const auto tmp = inv_getheader(prm_784);
+
+    // Copy `source`'s inventory to `destination`.
+    const auto tmp = inv_getheader(source.index);
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
-    p_at_m125 = invhead;
-    invrangecc_at_m125 = invrange;
-    for (const auto& cnt : items(tc_at_m125))
+    int p = invhead;
+    for (const auto& cnt : items(slot))
     {
-        cnt2_at_m125 = cnt;
-        if (cnt == invrangecc_at_m125)
+        if (cnt == invrange)
         {
             break;
         }
-        if (cc == prm_784)
+        if (cc == source.index)
         {
-            if (ci == p_at_m125)
+            if (ci == p)
             {
-                ci = cnt2_at_m125;
+                ci = cnt;
             }
         }
-        inv(cnt2_at_m125) = inv(p_at_m125);
-        inv(p_at_m125).clear();
+        inv[cnt] = inv[p];
+        inv[p].clear();
         inv[cnt].body_part = 0;
-        ++p_at_m125;
+        ++p;
     }
 
+    // Clear some fields which should not be copied.
+    source.item_which_will_be_used = 0;
+    source.is_livestock() = false;
+
     // TODO handle transferring through Lua robustly
-    // lua::lua->remove_chara_handle_run_callbacks(cdata[prm_784]);
+    // lua::lua->remove_chara_handle_run_callbacks(source);
 
-    sdata.copy(tc_at_m125, prm_784);
-    sdata.clear(prm_784);
-    cdata(tc_at_m125) = cdata(prm_784);
-    cdata(prm_784).clear();
+    // Copy from `source` to `destination` and clear `source`
+    sdata.copy(slot, source.index);
+    sdata.clear(source.index);
 
-    cdata(tc_at_m125).index = tc_at_m125;
+    destination = cdata(source.index);
+    source.clear();
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
-        cdatan(cnt, prm_784) = "";
+        cdatan(cnt, slot) = cdatan(cnt, source.index);
+        cdatan(cnt, source.index) = "";
     }
+
+    // Restore overwritten .index field.
+    destination.index = slot;
+
+    // Unequip all gears.
+    for (size_t i = 0; i < destination.body_parts.size(); ++i)
     {
-        for (int i = 0; i < 30; ++i)
-        {
-            cdata[tc_at_m125].body_parts[i] =
-                cdata[tc_at_m125].body_parts[i] / 10000 * 10000;
-        }
+        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
     }
-    if (prm_786 == 1)
+
+    if (mode == chara_relocate_mode::change)
     {
-        // Change
-        cdata[tc_at_m125].set_state(character::state_t::alive);
-        cdata[tc_at_m125].position = position;
-        cdata[tc_at_m125].initial_position = initial_position;
-        cdata[tc_at_m125].relationship = relationship;
-        cdata[tc_at_m125].original_relationship = original_relationship;
-        cdata[tc_at_m125].hate = hate;
-        cdata[tc_at_m125].enemy_id = enemy_id;
-        cdata[tc_at_m125].hp = hp;
-        map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
-            tc_at_m125 + 1;
+        destination.set_state(character::state_t::alive);
+        destination.position = position;
+        destination.initial_position = initial_position;
+        destination.relationship = relationship;
+        destination.original_relationship = original_relationship;
+        destination.hate = hate;
+        destination.enemy_id = enemy_id;
+        destination.hp = hp;
+        map(destination.position.x, destination.position.y, 1) = slot + 1;
     }
     else
     {
-        if (prm_784 != 56)
+        if (source.index != 56)
         {
-            map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
-                tc_at_m125 + 1;
+            map(destination.position.x, destination.position.y, 1) = slot + 1;
         }
         else
         {
-            rc = tc_at_m125;
-            cdata[tc_at_m125].set_state(character::state_t::alive);
+            rc = slot;
+            destination.set_state(character::state_t::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
             chara_place();
         }
-        cdata[tc_at_m125].enemy_id = 0;
-        cdata[tc_at_m125].hate = 0;
+        destination.enemy_id = 0;
+        destination.hate = 0;
     }
-    if (tc_at_m125 < 16)
+
+    // Lose resistance.
+    if (slot < 16)
     {
-        for (int cnt = 50; cnt < 61; ++cnt)
+        for (int element = 50; element < 61; ++element)
         {
-            p_at_m125 = 100;
-            if (sdata.get(cnt, tc_at_m125).original_level >= 500
-                || sdata.get(cnt, tc_at_m125).original_level <= 100)
+            auto resistance = 100;
+            if (sdata.get(element, slot).original_level >= 500
+                || sdata.get(element, slot).original_level <= 100)
             {
-                p_at_m125 = sdata.get(cnt, tc_at_m125).original_level;
+                resistance = sdata.get(element, slot).original_level;
             }
-            if (p_at_m125 > 500)
+            if (resistance > 500)
             {
-                p_at_m125 = 500;
+                resistance = 500;
             }
-            sdata.get(cnt, tc_at_m125).original_level = p_at_m125;
-            sdata.get(cnt, tc_at_m125).experience = 0;
-            sdata.get(cnt, tc_at_m125).potential = 0;
+            sdata.get(element, slot).original_level = resistance;
+            sdata.get(element, slot).experience = 0;
+            sdata.get(element, slot).potential = 0;
         }
     }
-    rc = tc_at_m125;
+
+    rc = slot;
     wear_most_valuable_equipment_for_all_body_parts();
-    chara_refresh(tc_at_m125);
+    chara_refresh(slot);
 
     // TODO handle transferring through Lua robustly
-    // lua::lua->create_chara_handle_run_callbacks(cdata[tc_at_m125]);
+    // lua::lua->create_chara_handle_run_callbacks(destination);
 
-    if (tc_at_m125 < 57)
+    if (slot < 57)
     {
-        modify_crowd_density(prm_784, -1);
+        modify_crowd_density(source.index, -1);
     }
-    if (prm_784 < 57)
+    if (source.index < 57)
     {
-        modify_crowd_density(tc_at_m125, 1);
+        modify_crowd_density(slot, 1);
     }
-
-    return prm_784;
 }
 
 
