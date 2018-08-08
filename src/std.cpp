@@ -322,8 +322,8 @@ int dialog(const std::string& message, int option)
 #elif defined(ELONA_OS_MACOS)
     return dialog_macos(message, option);
 #else
-    UNUSED(message);
     UNUSED(option);
+    std::cout << message << std::endl;
     return 0;
 #endif
 }

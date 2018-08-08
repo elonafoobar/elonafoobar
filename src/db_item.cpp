@@ -51,10 +51,17 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(originalnameref2, std::string, "");
     ELONA_LION_DB_FIELD(has_random_name, bool, false);
     ELONA_LION_DB_FIELD_ENUM(color, "Color", "White");
-    ELONA_LION_DB_FIELD(locale_key_prefix, std::string, "");
+    ELONA_LION_DB_FIELD_REQUIRED(locale_key_prefix, std::string);
+
+    ELONA_LION_DB_FIELD_CALLBACK(on_use_callback);
 
     std::string filter = lion::convert_tags(data, "tags");
     std::string rffilter = lion::convert_tags(data, "rftags");
+
+    if (on_use_callback)
+    {
+        is_usable = true;
+    }
 
     return item_data{
         id,
@@ -93,6 +100,7 @@ item_data item_db_ex::convert(
         rffilter,
 
         locale_key_prefix,
+        on_use_callback,
     };
 }
 

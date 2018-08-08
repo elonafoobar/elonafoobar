@@ -48,6 +48,7 @@ struct item_data
     std::string filter;
     std::string rffilter;
     i18n_key locale_key_prefix;
+    optional<std::string> on_use_callback;
 };
 
 

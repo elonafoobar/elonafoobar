@@ -247,6 +247,7 @@ else()
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
       src/tests/lua_events.cpp
+      src/tests/lua_exports.cpp
       src/tests/lua_handles.cpp
       src/tests/lua_mods.cpp
       src/tests/lua_registry.cpp

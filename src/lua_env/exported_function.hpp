@@ -34,7 +34,7 @@ struct exported_function
     }
 
     template <typename Retval, typename... Args>
-    sol::optional<Retval> call_with_result(Args&&... args) const
+    Retval call_with_result(Retval default_value, Args&&... args) const
     {
         auto result = func.call(std::forward<Args>(args)...);
         if (!result.valid())
@@ -42,10 +42,30 @@ struct exported_function
             sol::error err = result;
             txtef(color_index_t::red);
             txt(id + ": Script callback error: " + err.what());
-            return sol::nullopt;
+            return default_value;
         }
 
-        return result.get();
+        try
+        {
+            sol::optional<Retval> ret =
+                result.template get<sol::optional<Retval>>();
+            if (ret)
+            {
+                return *ret;
+            }
+            else
+            {
+                txtef(color_index_t::red);
+                txt(id + ": Script callback error: incorrect type returned");
+                return default_value;
+            }
+        }
+        catch (const std::exception& e)
+        {
+            txtef(color_index_t::red);
+            txt(id + ": Script callback error: " + e.what());
+            return default_value;
+        }
     }
 };
 

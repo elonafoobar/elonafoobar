@@ -340,3 +340,19 @@ TEST_CASE(
             R"(assert(chara ~= chara3))"));
     }
 }
+
+TEST_CASE(
+    "Test validity of handles for items that are picked up",
+    "[Lua: Handles]")
+{
+    start_in_debug_map();
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 1));
+    elona::cc = 0;
+    elona::in = inv[ci].number();
+
+    REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
+    REQUIRE(pick_up_item() == 1);
+    REQUIRE(handle_mgr.get_handle(inv[elona::ti]) != sol::lua_nil);
+}

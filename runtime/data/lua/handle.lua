@@ -143,7 +143,7 @@ end
 function Handle.get_handle(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
-   if not handle.kind == kind then
+   if handle and not handle.kind == kind then
       print(debug.traceback())
       error("Error: handle is of wrong type: wanted " .. kind .. ", got " .. handle.kind)
       return nil
@@ -153,10 +153,11 @@ function Handle.get_handle(cpp_ref, kind)
 end
 
 function Handle.create_handle(cpp_ref, kind, uuid)
-   if handles_by_index[kind][cpp_ref.index] ~= nil then
-      error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
-      return nil
-   end
+   -- TEMP until serialization feature is added
+   -- if handles_by_index[kind][cpp_ref.index] ~= nil then
+   --    error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
+   --    return nil
+   -- end
 
    local handle = {
       uuid = uuid,
@@ -176,7 +177,6 @@ function Handle.remove_handle(cpp_ref, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    if handle == nil then
-      error("Handle doesn't exist: " .. kind .. ":" .. cpp_ref.index, 2)
       return
    end
 

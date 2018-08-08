@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
+#include "../enums.hpp"
 #include "../filesystem.hpp"
+#include "../variables.hpp"
 #include "exported_function.hpp"
 #include "lua_env.hpp"
 
@@ -29,15 +31,15 @@ public:
      * inside the API tables returned by mods. They will then be
      * accessable by the id
      *
-     * "<mod_name>.exports.<namespaces>.<...>"
+     * "exports:<mod_name>.<namespaces>.<...>"
      *
      * corresponding to the nested table layout of the Exports table.
      */
     void register_all_exports();
 
     /***
-     * Obtains a Lua callback of the format "core.exports.<name>", if
-     * it exists.
+     * Obtains a Lua callback where name is like
+     * "exports:<mod_name>.<namespaces>", if it exists.
      */
     optional<exported_function> get_exported_function(
         const std::string& name) const;
@@ -53,6 +55,30 @@ public:
         if (auto func = get_exported_function(name))
         {
             func->call(std::forward<Args>(args)...);
+        }
+        else
+        {
+            txtef(color_index_t::red);
+            txt(name + ": Script callback error: no such exported function was found");
+        }
+    }
+
+    template <typename Retval, typename... Args>
+    Retval call_with_result(
+        const std::string& name,
+        Retval default_value,
+        Args&&... args) const
+    {
+        if (auto func = get_exported_function(name))
+        {
+            return func->call_with_result(
+                default_value, std::forward<Args>(args)...);
+        }
+        else
+        {
+            txtef(color_index_t::red);
+            txt(name + ": Script callback error: no such exported function was found");
+            return default_value;
         }
     }
 

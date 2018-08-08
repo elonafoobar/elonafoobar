@@ -4,6 +4,7 @@
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../character.hpp"
+#include "../db_item.hpp"
 #include "../dmgheal.hpp"
 #include "../enchantment.hpp"
 #include "../fov.hpp"
@@ -42,6 +43,11 @@ int count();
 sol::optional<lua_character_handle> player();
 sol::optional<lua_character_handle> create(const position_t&, int);
 sol::optional<lua_character_handle> create_xy(int, int, int);
+sol::optional<lua_character_handle> create_from_id(
+    const position_t&,
+    const std::string&);
+sol::optional<lua_character_handle>
+create_from_id_xy(int, int, const std::string&);
 
 void bind(sol::table& Elona);
 }; // namespace Chara
@@ -122,6 +128,25 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
     }
 }
 
+sol::optional<lua_character_handle> Chara::create_from_id(
+    const position_t& position,
+    const std::string& id)
+{
+    return Chara::create_from_id_xy(position.x, position.y, id);
+}
+
+sol::optional<lua_character_handle>
+Chara::create_from_id_xy(int x, int y, const std::string& id)
+{
+    auto full_id = "core.chara:" + id;
+    auto data = the_character_db[full_id];
+    if (!data)
+    {
+        throw sol::error("No such character " + id);
+    }
+    return Chara::create_xy(x, y, data->id);
+}
+
 void Chara::bind(sol::table& Elona)
 {
     sol::table Chara = Elona.create_named("Chara");
@@ -132,7 +157,12 @@ void Chara::bind(sol::table& Elona)
     Chara.set_function("flag", Chara::flag);
     Chara.set_function("player", Chara::player);
     Chara.set_function(
-        "create", sol::overload(Chara::create, Chara::create_xy));
+        "create",
+        sol::overload(
+            Chara::create,
+            Chara::create_xy,
+            Chara::create_from_id,
+            Chara::create_from_id_xy));
 }
 
 namespace Pos
@@ -478,10 +508,14 @@ void Rand::bind(sol::table& Elona)
 namespace Item
 {
 int count();
-sol::optional<lua_item_handle> create(const position_t&, int, int);
-sol::optional<lua_item_handle> create_xy(int, int, int, int);
 bool has_enchantment(const lua_item_handle, int);
 void remove(lua_item_handle);
+sol::optional<lua_item_handle> create(const position_t&, int, int);
+sol::optional<lua_item_handle> create_xy(int, int, int, int);
+sol::optional<lua_item_handle>
+create_from_id(const position_t&, const std::string&, int);
+sol::optional<lua_item_handle>
+create_from_id_xy(int, int, const std::string&, int);
 
 void bind(sol::table& Elona);
 } // namespace Item
@@ -489,6 +523,18 @@ void bind(sol::table& Elona);
 int Item::count()
 {
     return inv_sum(-1);
+}
+
+bool Item::has_enchantment(const lua_item_handle handle, int id)
+{
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    return elona::encfindspec(item_ref.index, id);
+}
+
+void Item::remove(lua_item_handle handle)
+{
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    item_ref.remove();
 }
 
 sol::optional<lua_item_handle>
@@ -512,23 +558,37 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
     }
 }
 
-bool Item::has_enchantment(const lua_item_handle handle, int id)
+sol::optional<lua_item_handle> Item::create_from_id(
+    const position_t& position,
+    const std::string& id,
+    int number)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
-    return elona::encfindspec(item_ref.index, id);
+    return Item::create_from_id_xy(position.x, position.y, id, number);
 }
 
-void Item::remove(lua_item_handle handle)
+sol::optional<lua_character_handle>
+Item::create_from_id_xy(int x, int y, const std::string& id, int number)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
-    item_ref.remove();
+    auto full_id = "core.item:" + id;
+    auto data = the_item_db[full_id];
+    if (!data)
+    {
+        throw sol::error("No such item " + id);
+    }
+    return Item::create_xy(x, y, data->id, number);
 }
 
 void Item::bind(sol::table& Elona)
 {
     sol::table Item = Elona.create_named("Item");
     Item.set_function("count", Item::count);
-    Item.set_function("create", sol::overload(Item::create, Item::create_xy));
+    Item.set_function(
+        "create",
+        sol::overload(
+            Item::create,
+            Item::create_xy,
+            Item::create_from_id,
+            Item::create_from_id_xy));
     Item.set_function("remove", Item::remove);
     Item.set_function("has_enchantment", Item::has_enchantment);
 }

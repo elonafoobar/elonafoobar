@@ -452,9 +452,16 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
+    bool created_new = inv[b].number() == 0;
+
     inv[b] = inv[a];
     // Restore "index".
     inv[b].index = b;
+
+    if (created_new)
+    {
+        lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[b]);
+    }
 }
 
 
