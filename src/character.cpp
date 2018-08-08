@@ -2075,6 +2075,9 @@ bool chara_copy(const character& source)
         cdatan(i, slot) = cdatan(i, source.index);
     }
 
+    // Restore overwritten .index field.
+    destination.index = slot;
+
     // Place `desitination` to the found free space.
     map(x, y, 1) = slot + 1;
     destination.position = *pos;
