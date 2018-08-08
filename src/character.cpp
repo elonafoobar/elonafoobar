@@ -143,6 +143,57 @@ int chara_create_internal()
 
 
 
+bool is_in_map(const position_t& position)
+{
+    const auto x = position.x;
+    const auto y = position.y;
+    return 0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height;
+}
+
+
+
+position_t get_random_position(const position_t& base_position, int n)
+{
+    return {base_position.x - rnd(n) + rnd(n),
+            base_position.y - rnd(n) + rnd(n)};
+}
+
+
+
+optional<position_t> get_free_space(
+    const position_t& base_position,
+    int number_of_trials)
+{
+    for (int i = 0; i < number_of_trials; ++i)
+    {
+        const auto pos = get_random_position(base_position, 2);
+        const auto x = pos.x;
+        const auto y = pos.y;
+        if (!is_in_map(pos))
+        {
+            continue;
+        }
+        if (map(x, y, 6) != 0)
+        {
+            if (chipm(7, map(x, y, 6) % 1000) & 4)
+            {
+                continue;
+            }
+        }
+        if (map(x, y, 1) == 0)
+        {
+            if (!(chipm(7, map(x, y, 0)) & 4))
+            {
+                return pos;
+            }
+        }
+    }
+
+    return none;
+}
+
+
+
 } // namespace
 
 
@@ -1994,84 +2045,66 @@ void chara_vanquish(int cc)
 
 
 
-bool chara_copy(int cc)
+bool chara_copy(const character& source)
 {
-    int slot{};
-    for (auto&& i : cdata.others())
+    // Find empty slot.
+    const auto slot = chara_get_free_slot();
+    if (slot == -1)
     {
-        if (i.state() == character::state_t::empty)
-        {
-            slot = i.index;
-            break;
-        }
-    }
-    if (slot == 0)
         return false;
+    }
+    auto& destination = cdata[slot];
 
-    bool placed{};
-    int x;
-    int y;
-
-    for (int i = 0; i < 4; ++i)
+    // Find free space.
+    const auto pos = get_free_space(source.position, 4);
+    if (!pos)
     {
-        y = cdata[cc].position.y - rnd(2) + rnd(2);
-        if (y < 0 || y >= mdata_map_height)
-        {
-            continue;
-        }
-        x = cdata[cc].position.x - rnd(2) + rnd(2);
-        if (x < 0 || x >= mdata_map_width)
-        {
-            continue;
-        }
-        if (map(x, y, 6) != 0)
-        {
-            if (chipm(7, map(x, y, 6) % 1000) & 4)
-            {
-                continue;
-            }
-        }
-        if (map(x, y, 1) == 0)
-        {
-            if (!(chipm(7, map(x, y, 0)) & 4))
-            {
-                placed = true;
-                break;
-            }
-        }
-    }
-    if (!placed)
         return false;
+    }
+    const auto x = pos->x;
+    const auto y = pos->y;
 
+    // Delete completely the previous character in `slot`.
     chara_delete(slot);
-    sdata.copy(slot, cc);
-    cdata(slot) = cdata(cc);
+
+    // Copy from `source` to `destination`.
+    destination = cdata[source.index];
+    sdata.copy(slot, source.index);
     for (int i = 0; i < 10; ++i)
     {
-        cdatan(i, slot) = cdatan(i, cc);
+        cdatan(i, slot) = cdatan(i, source.index);
     }
-    map(x, y, 1) = slot + 1;
-    cdata[slot].position.x = x;
-    cdata[slot].position.y = y;
-    cdata[slot].impression = 0;
-    cdata[slot].gold = 0;
-    for (int i = 0; i < 30; ++i)
-    {
-        cdata[slot].body_parts[i] = cdata[slot].body_parts[i] / 10000 * 10000;
-    }
-    cdata[slot].original_relationship = -3;
-    cdata[slot].has_own_sprite() = false;
-    cdata[slot].is_livestock() = false;
-    cdata[slot].is_married() = false;
-    cdata[slot].is_ridden() = false;
-    cdata[slot].needs_refreshing_status() = true;
-    cdata[slot].is_hung_on_sand_bag() = false;
 
+    // Place `desitination` to the found free space.
+    map(x, y, 1) = slot + 1;
+    destination.position = *pos;
+
+    // Reset some fields which should not be copied.
+    destination.impression = 0;
+    destination.gold = 0;
+    destination.original_relationship = -3;
+    destination.has_own_sprite() = false;
+    destination.is_livestock() = false;
+    destination.is_married() = false;
+    destination.is_ridden() = false;
+    destination.needs_refreshing_status() = true;
+    destination.is_hung_on_sand_bag() = false;
+
+    // Unequip all gears.
+    for (size_t i = 0; i < destination.body_parts.size(); ++i)
+    {
+        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
+    }
+
+    // Increase crowd density.
     modify_crowd_density(slot, 1);
-    ++npcmemory(1, cdata[slot].id);
+    // Increase the generation counter.
+    ++npcmemory(1, destination.id);
 
     return true;
 }
+
+
 
 void chara_killed(character& chara)
 {
@@ -2130,8 +2163,7 @@ void chara_delete(int cc)
         cdatan(cnt, cc) = "";
     }
     sdata.clear(cc);
-    cdata(cc).clear();
-    return;
+    cdata[cc].clear();
 }
 
 

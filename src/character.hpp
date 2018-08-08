@@ -613,7 +613,15 @@ void initialize_character();
 bool chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
-bool chara_copy(int cc);
+
+
+/**
+ * Copy `source` character to a new slot.
+ * @param source The character copied from.
+ * @return true if `source` was successfully copied; otherwise, false.
+ */
+bool chara_copy(const character& source);
+
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
 void chara_killed(character&);
