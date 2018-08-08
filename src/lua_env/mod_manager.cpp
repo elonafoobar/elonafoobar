@@ -319,16 +319,15 @@ void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
 
     // Add a custom version of "require" for use within mods. (Not
     // added for scripts/console environment)
-    if (mod.path)
+    if (mod.chunk_cache)
     {
         auto state = lua_->get_state();
-        fs::path mod_path = *mod.path;
-        table["require"] = [state, mod_path](
-                               const std::string& path,
+        auto& chunk_cache = *mod.chunk_cache;
+        table["require"] = [state, &chunk_cache](
+                               const std::string& name,
                                sol::this_environment this_env) {
             sol::environment env = this_env;
-            const fs::path full_path = mod_path / (path + ".lua");
-            return state->script_file(full_path.string(), env);
+            return chunk_cache.require(name, env, *state);
         };
     }
 }

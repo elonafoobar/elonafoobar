@@ -4,6 +4,7 @@
 #include <vector>
 #include "../filesystem.hpp"
 #include "../optional.hpp"
+#include "loaded_chunk_cache.hpp"
 #include "lua_env.hpp"
 
 namespace elona
@@ -35,6 +36,11 @@ struct mod_info
 
         store_local = state->create_table();
         store_global = state->create_table();
+
+        if (path)
+        {
+            chunk_cache = loaded_chunk_cache{*path};
+        }
     }
     mod_info(const mod_info&) = delete;
     mod_info& operator=(const mod_info&) = delete;
@@ -42,6 +48,7 @@ struct mod_info
 
     std::string name;
     optional<fs::path> path;
+    optional<loaded_chunk_cache> chunk_cache;
     sol::environment env;
     sol::table store_local;
     sol::table store_global;
