@@ -522,9 +522,11 @@ void character::set_state(character::state_t new_state)
 
 void character::clear()
 {
+    const auto index_save = index;
     character tmp{};
     using std::swap;
     swap(*this, tmp);
+    index = index_save;
 }
 
 
