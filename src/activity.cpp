@@ -42,29 +42,28 @@ void rowact_check(int prm_789)
 
 void rowact_item(int prm_790)
 {
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cc : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cc.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_turn <= 0)
+        if (cc.continuous_action_turn <= 0)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_id == 1
-            || cdata[cnt].continuous_action_id == 2)
+        if (cc.continuous_action_id == 1 || cc.continuous_action_id == 2)
         {
-            if (cdata[cnt].continuous_action_item == prm_790)
+            if (cc.continuous_action_item == prm_790)
             {
-                rowactend(cnt);
-                txt(i18n::s.get(
-                    "core.locale.activity.cancel.item", cdata[cnt]));
+                rowactend(cc.index);
+                txt(i18n::s.get("core.locale.activity.cancel.item", cc));
             }
         }
     }
-    return;
 }
+
+
 
 void rowactend(int cc)
 {
@@ -74,9 +73,10 @@ void rowactend(int cc)
 }
 
 
+
 void activity_handle_damage(character& chara)
 {
-    if (chara == 0)
+    if (chara.index == 0)
     {
         if (chara.continuous_action_id != 1 && chara.continuous_action_id != 2
             && chara.continuous_action_id != 3)
@@ -90,17 +90,17 @@ void activity_handle_damage(character& chara)
             prompt_stop_continuous_action();
         }
     }
-    if (chara != 0 || rtval == 0)
+    if (chara.index != 0 || rtval == 0)
     {
         if (is_in_fov(chara))
         {
             txt(i18n::s.get(
                 "core.locale.activity.cancel.normal",
-                cdata[chara],
+                chara,
                 i18n::_(
                     u8"ui", u8"action", u8"_"s + chara.continuous_action_id)));
         }
-        rowactend(chara);
+        rowactend(chara.index);
     }
     screenupdate = -1;
     update_screen();
@@ -221,7 +221,7 @@ void continuous_action_perform()
 
     if (cdata[cc].continuous_action_id == 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.perform.start", cdata[cc], inv[ci]));
@@ -242,7 +242,7 @@ void continuous_action_perform()
         ci = cdata[cc].continuous_action_item;
         if (cdata[cc].continuous_action_turn % 10 == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 if (rnd(10) == 0)
                 {
@@ -258,21 +258,21 @@ void continuous_action_perform()
         {
             gold = 0;
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& audience : cdata.all())
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (audience.state() != character::state_t::alive)
                 {
                     continue;
                 }
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
-                    >= cdata[cnt].time_interest_revive)
+                    >= audience.time_interest_revive)
                 {
-                    cdata[cnt].interest = 100;
+                    audience.interest = 100;
                 }
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    if (cdata[cnt].vision_flag != msync)
+                    if (audience.vision_flag != msync)
                     {
                         continue;
                     }
@@ -281,27 +281,27 @@ void continuous_action_perform()
                     dist(
                         cdata[cc].position.x,
                         cdata[cc].position.y,
-                        cdata[cnt].position.x,
-                        cdata[cnt].position.y)
+                        audience.position.x,
+                        audience.position.y)
                     > 3)
                 {
                     continue;
                 }
-                if (cdata[cnt].interest <= 0)
+                if (audience.interest <= 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].sleep > 0)
+                if (audience.sleep > 0)
                 {
                     continue;
                 }
-                x = cdata[cnt].position.x;
-                y = cdata[cnt].position.y;
+                x = audience.position.x;
+                y = audience.position.y;
                 if (map(x, y, 1) == 0)
                 {
                     continue;
                 }
-                tc = cnt;
+                tc = audience.index;
                 if (tc == cc)
                 {
                     continue;
@@ -310,7 +310,7 @@ void continuous_action_perform()
                 {
                     if (cdata[tc].hate == 0)
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txt(i18n::s.get(
                                 "core.locale.activity.perform.gets_angry",
@@ -329,7 +329,7 @@ void continuous_action_perform()
                 }
                 if (cdata[tc].interest <= 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         txtef(9);
                         txt(i18n::s.get_enum(
@@ -344,7 +344,7 @@ void continuous_action_perform()
                     if (rnd(3) == 0)
                     {
                         cdata[cc].quality_of_performance -= cdata[tc].level / 2;
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
                             txt(i18n::s.get_enum(
@@ -359,7 +359,7 @@ void continuous_action_perform()
                         {
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
-                        dmghp(cc, dmg, -8);
+                        damage_hp(cdata[cc], dmg, -8);
                         if (cdata[cc].state() == character::state_t::empty)
                         {
                             break;
@@ -433,14 +433,14 @@ void continuous_action_perform()
                 {
                     if (rnd(3) == 0)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
                             txt(i18n::s.get_enum(
                                 "core.locale.activity.perform.dialog.interest",
+                                rnd(4),
                                 cdata[tc],
-                                cdata[cc],
-                                rnd(4)));
+                                cdata[cc]));
                         }
                         cdata[cc].quality_of_performance += cdata[tc].level + 5;
                         if (cc == 0)
@@ -559,7 +559,7 @@ void continuous_action_perform()
             if (gold != 0)
             {
                 cdata[cc].tip_gold += gold;
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     snd(11);
                 }
@@ -621,7 +621,7 @@ void continuous_action_perform()
     }
     if (cdata[cc].tip_gold != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.perform.tip",
@@ -633,7 +633,7 @@ void continuous_action_perform()
     int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
     if (experience > 0)
     {
-        skillexp(183, cc, experience, 0, 0);
+        chara_gain_skill_exp(cdata[cc], 183, experience, 0, 0);
     }
     return;
 }
@@ -649,7 +649,7 @@ void continuous_action_sex()
         cdata[tc].continuous_action_id = 11;
         cdata[tc].continuous_action_turn = cdata[cc].continuous_action_turn * 2;
         cdata[tc].continuous_action_target = cc + 10000;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.take_clothes_off", cdata[cc]));
@@ -666,7 +666,7 @@ void continuous_action_sex()
     if (cdata[tc].state() != character::state_t::alive
         || cdata[tc].continuous_action_id != 11)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.sex.spare_life",
@@ -679,7 +679,7 @@ void continuous_action_sex()
     }
     if (cc == 0)
     {
-        if (!actionsp(0, 1 + rnd(2)))
+        if (!action_sp(cdata.player(), 1 + rnd(2)))
         {
             txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
             rowactend(cc);
@@ -694,7 +694,7 @@ void continuous_action_sex()
         {
             if (cdata[cc].continuous_action_turn % 5 == 0)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
                     txtef(9);
                     txt(i18n::s.get_enum(
@@ -732,15 +732,15 @@ void continuous_action_sex()
                 dmgcon(c, status_ailment_t::paralyzed, 500);
             }
             dmgcon(c, status_ailment_t::insane, 300);
-            healsan(c, 10);
-            skillexp(11, c, 250 + (c >= 57) * 1000);
-            skillexp(15, c, 250 + (c >= 57) * 1000);
+            heal_insanity(cdata[c], 10);
+            chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
+            chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
         }
         if (rnd(15) == 0)
         {
             dmgcon(c, status_ailment_t::sick, 200);
         }
-        skillexp(17, c, 250 + (c >= 57) * 1000);
+        chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
     sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
 
@@ -748,7 +748,7 @@ void continuous_action_sex()
     std::string dialog_tail;
     std::string dialog_after;
 
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txtef(9);
         dialog_head = i18n::s.get_enum(
@@ -759,7 +759,7 @@ void continuous_action_sex()
     {
         if (cdata[tc].gold >= sexvalue)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 dialog_tail =
                     i18n::s.get("core.locale.activity.sex.take", cdata[tc]);
@@ -767,7 +767,7 @@ void continuous_action_sex()
         }
         else
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 dialog_tail = i18n::s.get(
                     "core.locale.activity.sex.take_all_i_have", cdata[tc]);
@@ -791,13 +791,13 @@ void continuous_action_sex()
         cdata[tc].gold -= sexvalue;
         if (cc == 0)
         {
-            chara_mod_impression(tc, 5);
+            chara_modify_impression(cdata[tc], 5);
             flt();
             itemcreate(
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
             dialog_after += i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground");
-            modify_karma(0, -1);
+            modify_karma(cdata.player(), -1);
         }
         else
         {
@@ -819,7 +819,7 @@ void continuous_action_eating()
         cdata[cc].continuous_action_id = 1;
         cdata[cc].continuous_action_turn = 8;
         cdata[cc].continuous_action_item = ci;
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             snd(18);
             if (inv[ci].own_state == 1 && cc < 16)
@@ -847,7 +847,7 @@ void continuous_action_eating()
     {
         return;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(cdata[cc]))
     {
         txt(i18n::s.get("core.locale.activity.eat.finish", cdata[cc], inv[ci]));
     }
@@ -890,28 +890,28 @@ void continuous_action_eating_finish()
                     // TODO JP had six options, EN only had five.
                     txt(i18n::s.get_enum(
                         "core.locale.food.passed_rotten", rnd(6)));
-                    dmghp(cc, 999, -12);
+                    damage_hp(cdata[cc], 999, -12);
                     if (cdata[cc].state() != character::state_t::alive)
                     {
                         if (cdata[cc].relationship > 0)
                         {
-                            modify_karma(0, -5);
+                            modify_karma(cdata.player(), -5);
                         }
                         else
                         {
-                            modify_karma(0, -1);
+                            modify_karma(cdata.player(), -1);
                         }
                     }
-                    chara_mod_impression(tc, -25);
+                    chara_modify_impression(cdata[tc], -25);
                     return;
                 }
             }
         }
     }
-    chara_anorexia(cc);
+    chara_anorexia(cdata[cc]);
     if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txtef(8);
             txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
@@ -1027,27 +1027,27 @@ void continuous_action_others()
         {
             if (rnd(5) == 0)
             {
-                skillexp(180, 0, 20, 4);
+                chara_gain_skill_exp(cdata.player(), 180, 20, 4);
             }
             if (rnd(6) == 0)
             {
                 if (rnd(55) > sdata.get(10, cc).original_level + 25)
                 {
-                    skillexp(10, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 10, 50);
                 }
             }
             if (rnd(8) == 0)
             {
                 if (rnd(55) > sdata.get(11, cc).original_level + 28)
                 {
-                    skillexp(11, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 11, 50);
                 }
             }
             if (rnd(10) == 0)
             {
                 if (rnd(55) > sdata.get(15, cc).original_level + 30)
                 {
-                    skillexp(15, cc, 50);
+                    chara_gain_skill_exp(cdata[cc], 15, 50);
                 }
             }
             if (rnd(4) == 0)
@@ -1082,12 +1082,12 @@ void continuous_action_others()
             {
                 if (rnd(p) == 0)
                 {
-                    skillexp(inv[ci].param1, cc, 25);
+                    chara_gain_skill_exp(cdata[cc], inv[ci].param1, 25);
                 }
             }
             else if (rnd(p) == 0)
             {
-                skillexp(randattb(), cc, 25);
+                chara_gain_skill_exp(cdata[cc], randattb(), 25);
             }
         }
         if (gdata(91) == 105)
@@ -1098,7 +1098,7 @@ void continuous_action_others()
                 {
                     rowactend(cc);
                     txt(i18n::s.get("core.locale.activity.iron_maiden"));
-                    dmghp(cc, 9999, -18);
+                    damage_hp(cdata[cc], 9999, -18);
                     return;
                 }
             }
@@ -1108,7 +1108,7 @@ void continuous_action_others()
                 {
                     rowactend(cc);
                     txt(i18n::s.get("core.locale.activity.guillotine"));
-                    dmghp(cc, 9999, -19);
+                    damage_hp(cdata[cc], 9999, -19);
                     return;
                 }
             }
@@ -1135,7 +1135,8 @@ void continuous_action_others()
             {
                 i = i * 5 / 10;
             }
-            make_sound(cdata[0].position.x, cdata[0].position.y, 5, 8);
+            make_sound(
+                cdata.player().position.x, cdata.player().position.y, 5, 8);
             for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state() != character::state_t::alive)
@@ -1149,8 +1150,8 @@ void continuous_action_others()
                 if (dist(
                         cdata[cnt].position.x,
                         cdata[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 5)
                 {
                     continue;
@@ -1163,12 +1164,12 @@ void continuous_action_others()
                     }
                 }
                 p = rnd((i + 1))
-                    * (80 + (is_in_fov(cnt) == 0) * 50
+                    * (80 + (is_in_fov(cdata[cnt]) == 0) * 50
                        + dist(
                              cdata[cnt].position.x,
                              cdata[cnt].position.y,
-                             cdata[0].position.x,
-                             cdata[0].position.y)
+                             cdata.player().position.x,
+                             cdata.player().position.y)
                            * 20)
                     / 100;
                 if (cnt < 57)
@@ -1177,7 +1178,7 @@ void continuous_action_others()
                 }
                 if (rnd(sdata(13, cnt) + 1) > p)
                 {
-                    if (is_in_fov(cnt))
+                    if (is_in_fov(cdata[cnt]))
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.in_fov",
@@ -1193,13 +1194,13 @@ void continuous_action_others()
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.dialog.guard"));
-                        chara_mod_impression(cnt, -5);
+                        chara_modify_impression(cdata[cnt], -5);
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.activity.steal.notice.dialog.other"));
-                        chara_mod_impression(cnt, -5);
+                        chara_modify_impression(cdata[cnt], -5);
                     }
                     cdata[cnt].emotion_icon = 520;
                     f = 1;
@@ -1209,7 +1210,7 @@ void continuous_action_others()
             {
                 txt(i18n::s.get(
                     "core.locale.activity.steal.notice.you_are_found"));
-                modify_karma(0, -5);
+                modify_karma(cdata.player(), -5);
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
@@ -1219,7 +1220,7 @@ void continuous_action_others()
                         {
                             cdata[tg].relationship = -2;
                             hostileaction(0, tg);
-                            chara_mod_impression(tg, -20);
+                            chara_modify_impression(cdata[tg], -20);
                         }
                     }
                 }
@@ -1328,7 +1329,8 @@ void continuous_action_others()
             if (tc != -1)
             {
                 p = inv[ci].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
             }
             inv[ci].body_part = 0;
             chara_refresh(tc);
@@ -1346,7 +1348,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            earn_gold(cdata[0], in);
+            earn_gold(cdata.player(), in);
             inv[ti].remove();
         }
         else
@@ -1355,13 +1357,14 @@ void continuous_action_others()
             snd(14 + rnd(2));
         }
         refresh_burden_state();
-        skillexp(300, 0, clamp(inv[ti].weight / 25, 0, 450) + 50);
-        if (cdata[0].karma >= -30)
+        chara_gain_skill_exp(
+            cdata.player(), 300, clamp(inv[ti].weight / 25, 0, 450) + 50);
+        if (cdata.player().karma >= -30)
         {
             if (rnd(3) == 0)
             {
                 txt(i18n::s.get("core.locale.activity.steal.guilt"));
-                modify_karma(0, -1);
+                modify_karma(cdata.player(), -1);
             }
         }
     }
@@ -1384,8 +1387,8 @@ void continuous_action_others()
         chatteleport = 1;
         gdata_previous_map2 = gdata_current_map;
         gdata_previous_dungeon_level = gdata_current_dungeon_level;
-        gdata_previous_x = cdata[0].position.x;
-        gdata_previous_y = cdata[0].position.y;
+        gdata_previous_x = cdata.player().position.x;
+        gdata_previous_y = cdata.player().position.y;
         gdata_destination_map = 30;
         gdata_destination_dungeon_level = inv[ci].count;
         levelexitby = 2;
@@ -1425,7 +1428,7 @@ void select_random_fish()
     {
         return;
     }
-    ci = cdata[0].continuous_action_item;
+    ci = cdata.player().continuous_action_item;
     int dbmax = 0;
     int dbsum = 0;
     for (const auto fish : the_fish_db)
@@ -1543,7 +1546,7 @@ void spot_fishing()
         {
             fishanime = 2;
             snd(46);
-            cdata[0].emotion_icon = 220;
+            cdata.player().emotion_icon = 220;
             if (config::instance().animewait != 0)
             {
                 for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
@@ -1618,11 +1621,11 @@ void spot_fishing()
             rowactend(cc);
             get_fish();
             gain_fishing_experience(0);
-            cdata[0].emotion_icon = 306;
+            cdata.player().emotion_icon = 306;
         }
         if (rnd(10) == 0)
         {
-            dmgsp(cc, 1);
+            damage_sp(cdata[cc], 1);
         }
         return;
     }
@@ -1699,9 +1702,9 @@ void spot_digging()
             {
                 if (inv[cnt].param1 != 0)
                 {
-                    if (inv[cnt].param1 == cdata[0].position.x)
+                    if (inv[cnt].param1 == cdata.player().position.x)
                     {
-                        if (inv[cnt].param2 == cdata[0].position.y)
+                        if (inv[cnt].param2 == cdata.player().position.y)
                         {
                             snd(23);
                             txtef(5);
@@ -1714,27 +1717,27 @@ void spot_digging()
                             itemcreate(
                                 -1,
                                 622,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 2 + rnd(3));
                             flt();
                             itemcreate(
                                 -1,
                                 55,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 1 + rnd(3));
                             flt();
                             itemcreate(
                                 -1,
                                 54,
-                                cdata[0].position.x,
-                                cdata[0].position.y,
+                                cdata.player().position.x,
+                                cdata.player().position.y,
                                 rnd(10000) + 2000);
                             for (int cnt = 0, cnt_end = (4); cnt < cnt_end;
                                  ++cnt)
                             {
-                                flt(calcobjlv(cdata[0].level + 10),
+                                flt(calcobjlv(cdata.player().level + 10),
                                     calcfixlv(3));
                                 if (cnt == 0)
                                 {
@@ -1744,8 +1747,8 @@ void spot_digging()
                                 itemcreate(
                                     -1,
                                     0,
-                                    cdata[0].position.x,
-                                    cdata[0].position.y,
+                                    cdata.player().position.x,
+                                    cdata.player().position.y,
                                     0);
                             }
                             txt(
@@ -1802,7 +1805,7 @@ void spot_mining_or_wall()
     {
         if (rnd(5) == 0)
         {
-            dmgsp(cc, 1);
+            damage_sp(cdata[cc], 1);
         }
         ++countdig;
         f = 0;
@@ -1921,7 +1924,7 @@ turn_result_t do_dig_after_sp_check()
 
 int search_material_spot()
 {
-    if (map(cdata[0].position.x, cdata[0].position.y, 6) == 0)
+    if (map(cdata.player().position.x, cdata.player().position.y, 6) == 0)
     {
         return 0;
     }
@@ -1949,7 +1952,7 @@ int search_material_spot()
     }
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
-        atxlv = cdata[0].level / 2 + rnd(10);
+        atxlv = cdata.player().level / 2 + rnd(10);
         if (atxlv > 30)
         {
             atxlv = 30 + rnd((rnd(atxlv - 30) + 1));
@@ -1971,7 +1974,7 @@ int search_material_spot()
             atxspot = 11;
         }
     }
-    cell_featread(cdata[0].position.x, cdata[0].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(1) == 27)
     {
         atxlv += sdata(161, 0) / 3;
@@ -2003,7 +2006,7 @@ int search_material_spot()
                     break;
                 }
                 i = 1;
-                skillexp(163, 0, 40);
+                chara_gain_skill_exp(cdata.player(), 163, 40);
             }
             if (atxspot == 13)
             {
@@ -2014,7 +2017,7 @@ int search_material_spot()
                     break;
                 }
                 i = 2;
-                skillexp(185, 0, 40);
+                chara_gain_skill_exp(cdata.player(), 185, 40);
             }
             if (atxspot == 15)
             {
@@ -2025,7 +2028,7 @@ int search_material_spot()
                     break;
                 }
                 i = 3;
-                skillexp(180, 0, 30);
+                chara_gain_skill_exp(cdata.player(), 180, 30);
             }
             matgetmain(random_material(atxlv, 0), 1, i);
         }
@@ -2047,7 +2050,7 @@ int search_material_spot()
         }
         txt(s);
         rowactend(cc);
-        map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+        map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
     }
     return 0;
 }

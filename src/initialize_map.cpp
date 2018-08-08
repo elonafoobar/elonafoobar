@@ -134,18 +134,17 @@ label_1741_internal:
     {
         maxnpcbk = 0;
         DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() == character::state_t::empty)
+            if (cnt.state() == character::state_t::empty)
             {
                 continue;
             }
-            if ((cdata[cnt].character_role >= 1000
-                 && cdata[cnt].character_role < 2000)
-                || cdata[cnt].character_role == 2003)
+            if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
+                || cnt.character_role == 2003)
             {
-                rolebk(0, maxnpcbk) = cdata[cnt].character_role;
-                rolebk(1, maxnpcbk) = cdata[cnt].shop_rank;
+                rolebk(0, maxnpcbk) = cnt.character_role;
+                rolebk(1, maxnpcbk) = cnt.shop_rank;
                 ++maxnpcbk;
             }
         }
@@ -170,10 +169,9 @@ label_1741_internal:
         }
     }
     mdata_map_next_regenerate_date = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        cdata[cnt].set_state(character::state_t::empty);
+        cnt.set_state(character::state_t::empty);
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
@@ -327,7 +325,11 @@ label_1741_internal:
         for (int cnt = 0; cnt < 0; ++cnt)
         {
             flt();
-            chara_create(-1, 0, cdata[0].position.x, cdata[0].position.y + 5);
+            chara_create(
+                -1,
+                0,
+                cdata.player().position.x,
+                cdata.player().position.y + 5);
         }
         for (int cnt = 0; cnt < 100; ++cnt)
         {
@@ -335,7 +337,8 @@ label_1741_internal:
             y = rnd(mdata_map_height);
         }
         flt();
-        chara_create(-1, 41, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 41, cdata.player().position.x, cdata.player().position.y);
         cdata[rc].character_role = 22;
         cdata[rc].is_livestock() = true;
     }
@@ -796,8 +799,8 @@ label_1741_internal:
             chara_create(
                 -1,
                 arenaop(1),
-                cdata[0].position.x - 1,
-                cdata[0].position.y - 4);
+                cdata.player().position.x - 1,
+                cdata.player().position.y - 4);
             cdata[rc].hate = 30;
             cdata[rc].relationship = -3;
             cdata[rc].relationship = -3;
@@ -810,7 +813,10 @@ label_1741_internal:
             {
                 flt(arenaop(1), 2);
                 chara_create(
-                    -1, 0, cdata[0].position.x - 1, cdata[0].position.y - 5);
+                    -1,
+                    0,
+                    cdata.player().position.x - 1,
+                    cdata.player().position.y - 5);
                 cdata[rc].relationship = -3;
                 cdata[rc].original_relationship = -3;
                 cdata[rc].hate = 30;
@@ -879,12 +885,11 @@ label_1741_internal:
                 enemyteam = rc;
             }
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].relationship == -3)
+            if (cnt.relationship == -3)
             {
-                cdata[cnt].has_been_used_stethoscope() = true;
+                cnt.has_been_used_stethoscope() = true;
             }
         }
     }
@@ -963,14 +968,12 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(file_operation_t::_17);
-                for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                     cnt < ELONA_MAX_CHARACTERS;
-                     ++cnt)
+                for (auto&& cnt : cdata.others())
                 {
-                    cdata[cnt].position.x = mdata_map_width / 2;
-                    cdata[cnt].position.y = mdata_map_height / 2;
-                    cdata[cnt].initial_position.x = mdata_map_width / 2;
-                    cdata[cnt].initial_position.y = mdata_map_height / 2;
+                    cnt.position.x = mdata_map_width / 2;
+                    cnt.position.y = mdata_map_height / 2;
+                    cnt.initial_position.x = mdata_map_width / 2;
+                    cnt.initial_position.y = mdata_map_height / 2;
                 }
             }
             if (gdata_home_scale == 5)
@@ -1009,7 +1012,12 @@ label_1741_internal:
         else
         {
             flt();
-            itemcreate(-1, 219, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                219,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
         }
         initialize_home_mdata();
     }
@@ -1623,15 +1631,13 @@ label_1741_internal:
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cnt.state() == character::state_t::alive)
                 {
-                    if (cdata[cnt].is_quest_target() == 1)
+                    if (cnt.is_quest_target() == 1)
                     {
-                        list(0, listmax) = cnt;
+                        list(0, listmax) = cnt.index;
                         ++listmax;
                     }
                 }
@@ -1952,7 +1958,11 @@ label_1741_internal:
             for (int cnt = 0; cnt < 10; ++cnt)
             {
                 flt();
-                chara_create(-1, 204, cdata[0].position.x, cdata[0].position.y);
+                chara_create(
+                    -1,
+                    204,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
                 cdata[rc].relationship = 10;
                 cdata[rc].original_relationship = 10;
             }
@@ -2264,7 +2274,8 @@ label_1741_internal:
             mdata_map_max_crowd_density = 0;
             flt();
             initlv = encounterlv;
-            chara_create(-1, 302, cdata[0].position.x, cdata[0].position.y);
+            chara_create(
+                -1, 302, cdata.player().position.x, cdata.player().position.y);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
             {
                 flt();
@@ -2289,7 +2300,10 @@ label_1741_internal:
             {
                 flt(qdata(5, rq), 3);
                 int stat = chara_create(
-                    -1, 0, cdata[0].position.x, cdata[0].position.y);
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
                 if (stat != 0)
                 {
                     cdata[rc].hate = 30;
@@ -2311,7 +2325,7 @@ label_1741_internal:
                  ++cnt)
             {
                 r2 = 1;
-                gain_level(rc);
+                gain_level(cdata[rc]);
             }
             event_add(11);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
@@ -2326,7 +2340,7 @@ label_1741_internal:
         if (encounter == 1)
         {
             p = rnd(9);
-            if (cdata[0].level <= 5)
+            if (cdata.player().level <= 5)
             {
                 p = rnd(3);
             }
@@ -2343,7 +2357,10 @@ label_1741_internal:
                 if (cnt < 4)
                 {
                     chara_create(
-                        -1, 0, cdata[0].position.x, cdata[0].position.y);
+                        -1,
+                        0,
+                        cdata.player().position.x,
+                        cdata.player().position.y);
                 }
                 else
                 {
@@ -2409,13 +2426,15 @@ label_1741_internal:
         }
         if (gdata_current_dungeon_level == 3)
         {
-            chara_create(-1, 139, cdata[0].position.x, cdata[0].position.y);
+            chara_create(
+                -1, 139, cdata.player().position.x, cdata.player().position.y);
             cdata[rc].character_role = 3;
             cdata[rc].ai_calm = 3;
         }
         if (gdata_current_dungeon_level == 17)
         {
-            chara_create(-1, 146, cdata[0].position.x, cdata[0].position.y);
+            chara_create(
+                -1, 146, cdata.player().position.x, cdata.player().position.y);
             cdata[rc].character_role = 3;
             cdata[rc].ai_calm = 3;
         }
@@ -2672,17 +2691,16 @@ label_1741_internal:
             label_1749();
         }
         mapupdate = 0;
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() == character::state_t::empty)
+            if (cnt.state() == character::state_t::empty)
             {
                 continue;
             }
-            if ((cdata[cnt].character_role >= 1000
-                 && cdata[cnt].character_role < 2000)
-                || cdata[cnt].character_role == 2003)
+            if ((cnt.character_role >= 1000 && cnt.character_role < 2000)
+                || cnt.character_role == 2003)
             {
-                int cnt2 = cnt;
+                int cnt2 = cnt.index;
                 for (int cnt = 0, cnt_end = (maxnpcbk); cnt < cnt_end; ++cnt)
                 {
                     if (cdata[cnt2].character_role == rolebk(0, cnt))
@@ -2711,8 +2729,8 @@ label_1742_internal:
     {
         if (gdata_main_quest_flag == 180)
         {
-            cdata[0].position.x = adata(1, 11);
-            cdata[0].position.y = adata(2, 11);
+            cdata.player().position.x = adata(1, 11);
+            cdata.player().position.y = adata(2, 11);
             gdata(35) = 1;
             gdata(60) = -1;
             msg_newline();
@@ -2756,8 +2774,8 @@ label_1742_internal:
         lua::lua->get_handle_manager().create_chara_handle(cdata[rc]);
         if (cdata[cnt].is_contracting() == 1)
         {
-            cxinit = cdata[0].position.x;
-            cyinit = cdata[0].position.y;
+            cxinit = cdata.player().position.x;
+            cyinit = cdata.player().position.y;
             chara_place();
         }
         else
@@ -2839,9 +2857,9 @@ label_1742_internal:
                 map(cnt, y, 1) = 0;
             }
         }
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            rc = cnt;
+            rc = cnt.index;
             cdata[rc].was_passed_item_by_you_just_now() = false;
             if (rc < 57)
             {
@@ -2869,12 +2887,12 @@ label_1742_internal:
             }
             if (cdata[rc].character_role == 14)
             {
-                if (cdata[0].karma < -30)
+                if (cdata.player().karma < -30)
                 {
-                    if (cdata[0].level > cdata[rc].level)
+                    if (cdata.player().level > cdata[rc].level)
                     {
                         r2 = 1;
-                        gain_level(rc);
+                        gain_level(cdata[rc]);
                     }
                 }
             }
@@ -2898,9 +2916,9 @@ label_1742_internal:
                 }
                 if (cdata[rc].character_role == 14)
                 {
-                    if (cdata[0].karma < -30)
+                    if (cdata.player().karma < -30)
                     {
-                        if (cdata[0].is_incognito() == 0)
+                        if (cdata.player().is_incognito() == 0)
                         {
                             cdata[rc].hate = 200;
                             cdata[rc].relationship = -3;
@@ -2976,33 +2994,33 @@ label_1744_internal:
     }
     label_1745();
     gdata_crowd_density = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        cdata[cnt].turn_cost = 0;
-        if (cdata[cnt].id == 343)
+        cnt.turn_cost = 0;
+        if (cnt.id == 343)
         {
-            getunid(cnt);
-            chara_refresh(cnt);
+            getunid(cnt.index);
+            chara_refresh(cnt.index);
         }
         if (noaggrorefresh == 0)
         {
-            cdata[cnt].enemy_id = 0;
-            cdata[cnt].hate = 0;
+            cnt.enemy_id = 0;
+            cnt.hate = 0;
         }
-        cdata[cnt].vision_flag = 0;
-        if (cdata[cnt].state() != character::state_t::empty)
+        cnt.vision_flag = 0;
+        if (cnt.state() != character::state_t::empty)
         {
-            modify_crowd_density(cnt, 1);
+            modify_crowd_density(cnt.index, 1);
         }
     }
-    cdata[0].current_map = gdata_current_map;
-    cdata[0].current_dungeon_level = gdata_current_dungeon_level;
+    cdata.player().current_map = gdata_current_map;
+    cdata.player().current_dungeon_level = gdata_current_dungeon_level;
     raderx = -1;
     radery = -1;
     raderw = 120 / mdata_map_width + 2;
     raderh = 84 / mdata_map_height + 2;
-    scx = cdata[0].position.x;
-    scy = cdata[0].position.y;
+    scx = cdata.player().position.x;
+    scy = cdata.player().position.y;
     msync = 1;
     label_1746();
     label_1439();
@@ -3296,7 +3314,7 @@ label_1744_internal:
     }
     wake_up();
     pcattacker = 0;
-    cdata[0].enemy_id = 0;
+    cdata.player().enemy_id = 0;
     gdata(94) = 0;
     mode = 0;
     screenupdate = -1;
@@ -3385,13 +3403,13 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].is_livestock() == 1)
+            if (cnt.is_livestock() == 1)
             {
-                cdata[cnt].hate = 0;
-                cdata[cnt].relationship = -1;
-                cdata[cnt].original_relationship = -1;
+                cnt.hate = 0;
+                cnt.relationship = -1;
+                cnt.original_relationship = -1;
             }
         }
     }
@@ -3403,7 +3421,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(202) = 1;
                         ghelp = 2;
@@ -3421,7 +3439,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(203) = 1;
                         ghelp = 3;
@@ -3439,7 +3457,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(214) = 1;
                         ghelp = 14;
@@ -3464,8 +3482,8 @@ label_1744_internal:
                 mapname(gdata_left_town_map),
                 cnvdate(gdata_departure_date, false)));
             p = 0;
-            exp = cdata[0].level * gdata_distance_between_town * sdata(182, 0)
-                    / 100
+            exp = cdata.player().level * gdata_distance_between_town
+                    * sdata(182, 0) / 100
                 + 1;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
@@ -3492,7 +3510,12 @@ label_1744_internal:
                     "core.locale.map.since_leaving.walked.you_and_allies",
                     gdata_distance_between_town));
             }
-            skillexp(182, 0, 25 + gdata_distance_between_town * 2 / 3, 0, 1000);
+            chara_gain_skill_exp(
+                cdata.player(),
+                182,
+                25 + gdata_distance_between_town * 2 / 3,
+                0,
+                1000);
             gdata_distance_between_town = 0;
         }
     }

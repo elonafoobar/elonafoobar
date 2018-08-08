@@ -31,7 +31,7 @@ void create_all_adventurers()
 void create_adventurer()
 {
     flt(0, 4);
-    initlv = rnd(60 + cdata[0].level) + 1;
+    initlv = rnd(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
@@ -294,7 +294,7 @@ void label_2662()
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
             r2 = 0;
-            gain_level(rc);
+            gain_level(cdata[rc]);
         }
     }
     notesel(newsbuff);

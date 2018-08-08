@@ -6,6 +6,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "db_item.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -213,7 +214,7 @@ label_20591:
             }
             if (invctrl == 6)
             {
-                if (iequiploc(cnt) != cdata_body_part(cc, body) / 10000)
+                if (iequiploc(cnt) != cdata[cc].body_parts[body - 100] / 10000)
                 {
                     continue;
                 }
@@ -886,8 +887,8 @@ label_2061_internal:
     s += "  ("s
         + i18n::s.get(
               "core.locale.ui.inv.window.total_weight",
-              cnvweight(cdata[0].inventory_weight),
-              cnvweight(cdata[0].max_inventory_weight),
+              cnvweight(cdata.player().inventory_weight),
+              cnvweight(cdata.player().max_inventory_weight),
               cnvweight(gdata_cargo_weight))
         + ")"s;
     if (invctrl == 25)
@@ -915,13 +916,13 @@ label_2061_internal:
         pos(x, y);
         mes(i18n::s.get("core.locale.ui.inv.take_ally.window.equip"));
         x += 60;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            if (cdata_body_part(tc, cnt) == 0)
+            if (cdata[tc].body_parts[cnt] == 0)
             {
                 continue;
             }
-            p = cdata_body_part(tc, cnt);
+            p = cdata[tc].body_parts[cnt];
             if (p % 10000 != 0)
             {
                 color(50, 50, 200);
@@ -1181,7 +1182,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!actionsp(0, 10))
+                    if (!action_sp(cdata.player(), 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));
@@ -1201,7 +1202,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    if (!actionsp(0, 10))
+                    if (!action_sp(cdata.player(), 10))
                     {
                         txt(i18n::s.get(
                             "core.locale.magic.common.too_exhausted"));
@@ -1290,7 +1291,7 @@ label_2061_internal:
                 }
                 if (invctrl == 11)
                 {
-                    if (calcitemvalue(ci, 0) * in > cdata[0].gold)
+                    if (calcitemvalue(ci, 0) * in > cdata.player().gold)
                     {
                         screenupdate = -1;
                         update_screen();
@@ -1362,7 +1363,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            if (cdata[0].nutrition > 10000)
+            if (cdata.player().nutrition > 10000)
             {
                 txt(i18n::s.get_enum(
                     "core.locale.ui.inv.eat.too_bloated", rnd(3)));
@@ -1407,7 +1408,7 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.equip.blessed", cdata[cc]));
                 break;
             }
-            if (cdata_body_part(cc, body) / 10000 == 5)
+            if (cdata[cc].body_parts[body - 100] / 10000 == 5)
             {
                 equip_melee_weapon();
             }
@@ -1472,7 +1473,7 @@ label_2061_internal:
                 inv[ci].modify_number(-1);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.give.present.dialog", cdata[tc]));
-                chara_mod_impression(tc, giftvalue(inv[ci].param4));
+                chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1608,7 +1609,7 @@ label_2061_internal:
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.give.engagement", cdata[tc]));
-                    chara_mod_impression(tc, 15);
+                    chara_modify_impression(cdata[tc], 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
@@ -1624,7 +1625,7 @@ label_2061_internal:
                         "core.locale.ui.inv.give.love_potion.dialog",
                         rnd(3),
                         cdata[tc]));
-                    chara_mod_impression(tc, -20);
+                    chara_modify_impression(cdata[tc], -20);
                     cdata[tc].emotion_icon = 318;
                     inv[ci].modify_number(-1);
                     goto label_20591;
@@ -1635,7 +1636,7 @@ label_2061_internal:
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
-                chara_set_item_which_will_be_used();
+                chara_set_item_which_will_be_used(cdata[tc]);
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
@@ -1762,7 +1763,8 @@ label_2061_internal:
             if (inv[citrade].body_part != 0)
             {
                 p = inv[citrade].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
                 inv[citrade].body_part = 0;
             }
             ti = citrade;
@@ -1847,7 +1849,7 @@ label_2061_internal:
             }
             if (invctrl(1) == 2)
             {
-                if (cdata[0].gold < inv[ci].subname)
+                if (cdata.player().gold < inv[ci].subname)
                 {
                     snd(27);
                     txt(i18n::s.get(
@@ -1861,7 +1863,7 @@ label_2061_internal:
                         "core.locale.ui.inv.put.tax.do_not_have_to"));
                     goto label_20591;
                 }
-                cdata[0].gold -= inv[ci].subname;
+                cdata.player().gold -= inv[ci].subname;
                 snd(12);
                 txtef(2);
                 txt(i18n::s.get("core.locale.ui.inv.put.tax.you_pay", inv[ci]));
@@ -1917,7 +1919,8 @@ label_2061_internal:
                     goto label_20591;
                 }
                 p = inv[ci].body_part;
-                cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
+                cdata[tc].body_parts[p - 100] =
+                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
                 inv[ci].body_part = 0;
             }
             if (inv[ci].id == 477 || inv[ci].id == 473)
@@ -1928,7 +1931,7 @@ label_2061_internal:
                     cdata[tc],
                     inv[ci]));
                 snd(65);
-                chara_mod_impression(tc, -20);
+                chara_modify_impression(cdata[tc], -20);
                 cdata[tc].emotion_icon = 318;
                 inv[ci].modify_number(-1);
                 goto label_20591;
@@ -1947,7 +1950,7 @@ label_2061_internal:
                 "core.locale.ui.inv.take_ally.you_take", itemname(ci, in)));
             if (inv[ci].id == 54)
             {
-                earn_gold(cdata[0], in);
+                earn_gold(cdata.player(), in);
                 inv[ci].remove();
             }
             else

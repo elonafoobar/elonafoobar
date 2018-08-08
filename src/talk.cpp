@@ -54,7 +54,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(207) = 1;
                         ghelp = 7;
@@ -74,7 +74,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata[0].continuous_action_turn == 0)
+                    if (cdata.player().continuous_action_turn == 0)
                     {
                         gdata(208) = 1;
                         ghelp = 8;
@@ -300,7 +300,11 @@ talk_result_t talk_house_visitor()
             }
             flt();
             int stat = itemcreate(
-                -1, 752, cdata[0].position.x, cdata[0].position.y, 0);
+                -1,
+                752,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             if (stat != 0)
             {
                 inv[ci].param3 = cdata[tc].impression + rnd(50);
@@ -405,7 +409,11 @@ talk_result_t talk_house_visitor()
                     cdata[tc].is_best_friend() = true;
                     flt();
                     itemcreate(
-                        -1, 730, cdata[0].position.x, cdata[0].position.y, 0);
+                        -1,
+                        730,
+                        cdata.player().position.x,
+                        cdata.player().position.y,
+                        0);
                     txt(i18n::s.get(
                         "core.locale.talk.visitor.receive",
                         inv[ci],
@@ -443,7 +451,7 @@ talk_result_t talk_house_visitor()
                         std::to_string(calclearncost(csskill, cc, true))
                             + i18n::_(u8"ui", u8"platinum"),
                         cdata[tc]);
-                    if (cdata[0].platinum_coin
+                    if (cdata.player().platinum_coin
                         >= calclearncost(csskill, cc, true))
                     {
                         list(0, listmax) = 1;
@@ -462,7 +470,7 @@ talk_result_t talk_house_visitor()
                         std::to_string(calclearncost(csskill, cc, true))
                             + i18n::_(u8"ui", u8"platinum"),
                         cdata[tc]);
-                    if (cdata[0].platinum_coin
+                    if (cdata.player().platinum_coin
                         >= calctraincost(csskill, cc, true))
                     {
                         list(0, listmax) = 2;
@@ -498,8 +506,9 @@ talk_result_t talk_house_visitor()
                 snd(12);
                 if (chatval == 1)
                 {
-                    cdata[0].platinum_coin -= calclearncost(csskill, 0, true);
-                    skillgain(cc, csskill);
+                    cdata.player().platinum_coin -=
+                        calclearncost(csskill, 0, true);
+                    chara_gain_skill(cdata[cc], csskill);
                     ++gdata_number_of_learned_skills_by_trainer;
                     listmax = 0;
                     buff = i18n::s.get(
@@ -521,9 +530,10 @@ talk_result_t talk_house_visitor()
                 }
                 if (chatval == 2)
                 {
-                    cdata[0].platinum_coin -= calctraincost(csskill, 0, true);
+                    cdata.player().platinum_coin -=
+                        calctraincost(csskill, 0, true);
                     modify_potential(
-                        cc,
+                        cdata[cc],
                         csskill,
                         clamp(
                             15 - sdata.get(csskill, cc).potential / 15,
@@ -589,7 +599,11 @@ talk_result_t talk_house_visitor()
                     }
                     flt();
                     itemcreate(
-                        -1, p, cdata[0].position.x, cdata[0].position.y, 0);
+                        -1,
+                        p,
+                        cdata.player().position.x,
+                        cdata.player().position.y,
+                        0);
                     txt(i18n::s.get(
                         "core.locale.talk.visitor.receive",
                         inv[ci],
@@ -724,7 +738,7 @@ talk_result_t talk_house_visitor()
                 listmax = 0;
                 buff = i18n::s.get(
                     "core.locale.talk.visitor.adventurer.conversation.dialog",
-                    cdata[0],
+                    cdata.player(),
                     cdata[tc]);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
@@ -742,7 +756,7 @@ talk_result_t talk_house_visitor()
                 txt(i18n::s.get(
                     "core.locale.talk.visitor.adventurer.conversation.hold",
                     cdata[tc]));
-                chara_mod_impression(tc, 10);
+                chara_modify_impression(cdata[tc], 10);
                 return talk_result_t::talk_end;
             }
         }
@@ -771,7 +785,7 @@ talk_result_t talk_house_visitor()
             txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
             dmgcon(tc, status_ailment_t::drunk, 1000);
             dmgcon(cc, status_ailment_t::drunk, 1000);
-            chara_mod_impression(tc, 15);
+            chara_modify_impression(cdata[tc], 15);
             return talk_result_t::talk_end;
         }
         listmax = 0;
@@ -860,7 +874,7 @@ talk_result_t talk_house_visitor()
         listn(0, listmax) =
             i18n::s.get("core.locale.talk.visitor.trainer.choices.not_today");
         ++listmax;
-        if (cdata[0].platinum_coin >= plat)
+        if (cdata.player().platinum_coin >= plat)
         {
             for (int cnt = 0; cnt < 8; ++cnt)
             {
@@ -896,14 +910,14 @@ talk_result_t talk_house_visitor()
             }
             return talk_result_t::talk_end;
         }
-        cdata[0].platinum_coin -= plat;
+        cdata.player().platinum_coin -= plat;
         snd(61);
         txtef(2);
         txt(i18n::s.get(
             "core.locale.talk.visitor.trainer.potential_expands",
-            cdata[0],
+            cdata.player(),
             i18n::_(u8"ability", std::to_string(chatval), u8"name")));
-        modify_potential(0, chatval, 10);
+        modify_potential(cdata.player(), chatval, 10);
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.visitor.trainer.after", cdata[tc]);
         tc = tc * 1 + 0;
@@ -939,7 +953,7 @@ talk_result_t talk_house_visitor()
         }
         return talk_result_t::talk_end;
     case 2000:
-        if (cdata[0].gold > 0)
+        if (cdata.player().gold > 0)
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -953,13 +967,13 @@ talk_result_t talk_house_visitor()
         talk_window_query();
         if (chatval == 1)
         {
-            p = cdata[0].gold / 20 + 1;
+            p = cdata.player().gold / 20 + 1;
             txt(i18n::s.get(
                 "core.locale.talk.visitor.beggar.spare", p(0), cdata[tc]));
-            cdata[0].gold -= p;
+            cdata.player().gold -= p;
             snd(12);
             earn_gold(cdata[tc], p);
-            modify_karma(0, 2);
+            modify_karma(cdata.player(), 2);
             listmax = 0;
             buff =
                 i18n::s.get("core.locale.talk.visitor.beggar.after", cdata[tc]);
@@ -1215,7 +1229,7 @@ talk_result_t talk_game_begin()
 {
     if (lomiaseaster)
     {
-        cdata[0].blind = 100;
+        cdata.player().blind = 100;
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.lomias.begin.easter_egg", 0);
@@ -1357,7 +1371,7 @@ talk_result_t talk_game_begin()
         pos(0, 0);
         picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
-        cdata[0].blind = 0;
+        cdata.player().blind = 0;
         txt(i18n::s.get(
             "core.locale.talk.unique.lomias.begin.easter_egg.was_dream"));
     }

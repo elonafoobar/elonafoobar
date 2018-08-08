@@ -58,7 +58,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
 
     SECTION("Characters")
     {
-        character& chara = elona::cdata[0];
+        character& chara = elona::cdata.player();
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(

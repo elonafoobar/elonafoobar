@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "cat.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
@@ -14,10 +15,45 @@ using namespace elona;
 
 namespace
 {
-int lv_at_m77 = 0;
-int exp_at_m77 = 0;
-int growth_at_m77 = 0;
-int lvchange_at_m77 = 0;
+
+
+
+int increase_potential(int potential, int level_delta)
+{
+    for (int i = 0; i < level_delta; ++i)
+    {
+        potential = std::min(static_cast<int>(potential * 1.1) + 1, 400);
+    }
+    return potential;
+}
+
+
+
+int decrease_potential(int potential, int level_delta)
+{
+    for (int i = 0; i < level_delta; ++i)
+    {
+        potential = std::max(static_cast<int>(potential * 0.9), 1);
+    }
+    return potential;
+}
+
+
+
+void set_ability(
+    character& cc,
+    int id,
+    int original_level,
+    int experience,
+    int potential)
+{
+    sdata.get(id, cc.index).original_level = clamp(original_level, 0, 2000);
+    sdata.get(id, cc.index).experience = experience;
+    sdata.get(id, cc.index).potential = potential;
+}
+
+
+
 } // namespace
 
 
@@ -74,10 +110,12 @@ void skill_data::copy(int tc, int cc)
     range::copy(storage[cc], std::begin(storage[tc]));
 }
 
-void skillinit(int id, int cc, int initial_level)
+
+
+void chara_init_skill(character& cc, int id, int initial_level)
 {
-    int potential = 0;
-    int original_level = sdata.get(id, cc).original_level;
+    int original_level = sdata.get(id, cc.index).original_level;
+    int potential;
     if (id >= 100)
     {
         potential = initial_level * 5;
@@ -98,19 +136,19 @@ void skillinit(int id, int cc, int initial_level)
             potential = 400;
         }
     }
-    int level = 0;
+    int level;
     if (id == 18)
     {
-        level = initial_level * (100 + cdata[cc].level * 2) / 100;
+        level = initial_level * (100 + cc.level * 2) / 100;
     }
     else
     {
-        level = potential * potential * cdata[cc].level / 45000 + initial_level
-            + cdata[cc].level / 3;
+        level = potential * potential * cc.level / 45000 + initial_level
+            + cc.level / 3;
     }
-    if (cdata[cc].level > 1)
+    if (cc.level > 1)
     {
-        potential = std::exp(std::log(0.9) * cdata[cc].level) * potential;
+        potential = std::exp(std::log(0.9) * cc.level) * potential;
     }
     if (potential < 1)
     {
@@ -125,62 +163,97 @@ void skillinit(int id, int cc, int initial_level)
     {
         level = 2000 - original_level;
     }
-    sdata.get(id, cc).original_level += clamp(level, 0, 2000);
-    sdata.get(id, cc).potential += potential;
+    sdata.get(id, cc.index).original_level += clamp(level, 0, 2000);
+    sdata.get(id, cc.index).potential += potential;
 }
 
 
 
-void init_character_skills(int cc)
+void chara_init_common_skills(character& cc)
 {
-    for (int cnt = 50; cnt < 61; ++cnt)
+    for (int element = 50; element < 61; ++element)
     {
-        p = cdata[cc].level * 4 + 96;
-        if (p > 300)
+        auto level = cc.level * 4 + 96;
+        if (level > 300)
         {
-            p = 300;
+            level = 300;
         }
-        if (sdata(cnt, cc) != 0)
+        if (sdata(element, cc.index) != 0)
         {
-            if (sdata(cnt, cc) < 100 || sdata(cnt, cc) >= 500)
+            if (sdata(element, cc.index) < 100
+                || sdata(element, cc.index) >= 500)
             {
-                p = sdata(cnt, cc);
+                level = sdata(element, cc.index);
             }
             else
             {
-                p += sdata(cnt, cc);
+                level += sdata(element, cc.index);
             }
         }
-        if ((cnt == 60 && p < 500) || cc == 0)
+        if ((element == 60 && level < 500) || cc.index == 0)
         {
-            p = 100;
+            level = 100;
         }
-        sdata.get(cnt, cc).original_level = clamp(p(0), 1, 2000);
-        sdata.get(cnt, cc).experience = 0;
-        sdata.get(cnt, cc).potential = 0;
+        sdata.get(element, cc.index).original_level = clamp(level, 1, 2000);
+        sdata.get(element, cc.index).experience = 0;
+        sdata.get(element, cc.index).potential = 0;
     }
 
-    skillinit(100, cc, 4);
-    skillinit(101, cc, 4);
-    skillinit(103, cc, 4);
-    skillinit(102, cc, 4);
-    skillinit(104, cc, 4);
-    skillinit(105, cc, 4);
-    skillinit(107, cc, 4);
-    skillinit(108, cc, 4);
-    skillinit(111, cc, 4);
-    skillinit(109, cc, 4);
-    skillinit(173, cc, 4);
-    skillinit(154, cc, 4);
-    skillinit(155, cc, 4);
-    skillinit(106, cc, 4);
-    skillinit(157, cc, 4);
-    skillinit(181, cc, 4);
-    skillinit(171, cc, 4);
-    skillinit(170, cc, 4);
-    skillinit(169, cc, 4);
-    skillinit(168, cc, 3);
-    skillinit(19, cc, 50);
+    chara_init_skill(cc, 100, 4);
+    chara_init_skill(cc, 101, 4);
+    chara_init_skill(cc, 103, 4);
+    chara_init_skill(cc, 102, 4);
+    chara_init_skill(cc, 104, 4);
+    chara_init_skill(cc, 105, 4);
+    chara_init_skill(cc, 107, 4);
+    chara_init_skill(cc, 108, 4);
+    chara_init_skill(cc, 111, 4);
+    chara_init_skill(cc, 109, 4);
+    chara_init_skill(cc, 173, 4);
+    chara_init_skill(cc, 154, 4);
+    chara_init_skill(cc, 155, 4);
+    chara_init_skill(cc, 106, 4);
+    chara_init_skill(cc, 157, 4);
+    chara_init_skill(cc, 181, 4);
+    chara_init_skill(cc, 171, 4);
+    chara_init_skill(cc, 170, 4);
+    chara_init_skill(cc, 169, 4);
+    chara_init_skill(cc, 168, 3);
+    chara_init_skill(cc, 19, 50);
+}
+
+
+
+void chara_gain_skill(character& cc, int id, int initial_level, int stock)
+{
+    if (id >= 400)
+    {
+        if (cc.index == 0)
+        {
+            spell(id - 400) += stock;
+            modify_potential(cc, id, 1);
+        }
+    }
+    if (sdata.get(id, cc.index).original_level != 0)
+    {
+        if (id < 400)
+        {
+            modify_potential(cc, id, 20);
+        }
+        return;
+    }
+    if (id >= 400)
+    {
+        modify_potential(cc, id, 200);
+    }
+    else
+    {
+        modify_potential(cc, id, 50);
+    }
+    sdata.get(id, cc.index).original_level =
+        clamp(sdata.get(id, cc.index).original_level + initial_level, 1, 2000);
+
+    chara_refresh(cc.index);
 }
 
 
@@ -217,263 +290,220 @@ void gain_special_action()
                 i18n::_(u8"ability", std::to_string(631), u8"name")));
         }
     }
-    return;
 }
 
 
 
-int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
+void chara_gain_fixed_skill_exp(character& cc, int id, int experience)
 {
-    int exp2_at_m77 = 0;
-    if (sdata.get(id, cc).original_level == 0)
+    auto lv = sdata.get(id, cc.index).original_level;
+    auto exp = sdata.get(id, cc.index).experience + experience;
+    auto potential = sdata.get(id, cc.index).potential;
+
+    if (potential == 0)
+        return;
+
+    if (exp >= 1000)
     {
-        return 0;
-    }
-    if (experience == 0)
-    {
-        return 0;
-    }
-    if (the_ability_db[id]->related_basic_attribute != 0)
-    {
-        skillexp(
-            the_ability_db[id]->related_basic_attribute,
-            cc,
-            experience / (2 + prm_572));
-    }
-    lv_at_m77 = sdata.get(id, cc).original_level;
-    growth_at_m77 = sdata.get(id, cc).potential;
-    if (growth_at_m77 == 0)
-    {
-        return 0;
-    }
-    if (experience > 0)
-    {
-        exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (id >= 10 && id <= 19)
+        const auto lv_delta = exp / 1000;
+        lv += lv_delta;
+        exp = exp % 1000;
+        potential = decrease_potential(potential, lv_delta);
+        set_ability(cc, id, lv, exp, potential);
+        if (is_in_fov(cc))
         {
-            if (cdata[cc].growth_buffs[id - 10] > 0)
+            if (cc.index == 0 || cc.index < 16)
             {
-                exp_at_m77 =
-                    exp_at_m77 * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
+                snd(61);
+                txtef(2);
+            }
+            txt(txtskillchange(id, cc.index, true));
+        }
+        chara_refresh(cc.index);
+        return;
+    }
+    if (exp < 0)
+    {
+        auto lv_delta = -exp / 1000 + 1;
+        exp = 1000 + exp % 1000;
+        if (lv - lv_delta < 1)
+        {
+            lv_delta = lv - 1;
+            if (lv == 1)
+            {
+                if (lv_delta == 0)
+                {
+                    exp = 0;
+                }
             }
         }
-        if (exp_at_m77 == 0)
+        lv -= lv_delta;
+        potential = increase_potential(potential, lv_delta);
+        set_ability(cc, id, lv, exp, potential);
+        if (cc.index == 0 || cc.index < 16)
         {
-            if (rnd(lv_at_m77 / 10 + 1) == 0)
+            if (is_in_fov(cc))
             {
-                exp_at_m77 = 1;
+                if (lv_delta != 0)
+                {
+                    txtef(3);
+                    txt(txtskillchange(id, cc.index, false));
+                }
+            }
+        }
+        chara_refresh(cc.index);
+        return;
+    }
+    set_ability(cc, id, lv, exp, potential);
+}
+
+
+
+void chara_gain_skill_exp(
+    character& cc,
+    int id,
+    int experience,
+    int experience_divisor_of_related_basic_attribute,
+    int experience_divisor_of_character_level)
+{
+    if (sdata.get(id, cc.index).original_level == 0)
+        return;
+    if (experience == 0)
+        return;
+
+    if (the_ability_db[id]->related_basic_attribute != 0)
+    {
+        chara_gain_skill_exp(
+            cc,
+            the_ability_db[id]->related_basic_attribute,
+            experience / (2 + experience_divisor_of_related_basic_attribute));
+    }
+
+    auto lv = sdata.get(id, cc.index).original_level;
+    auto potential = sdata.get(id, cc.index).potential;
+    if (potential == 0)
+        return;
+
+    int exp;
+    if (experience > 0)
+    {
+        exp = experience * potential / (100 + lv * 15);
+        if (id >= 10 && id <= 19)
+        {
+            if (cc.growth_buffs[id - 10] > 0)
+            {
+                exp = exp * (100 + cc.growth_buffs[id - 10]) / 100;
+            }
+        }
+        if (exp == 0)
+        {
+            if (rnd(lv / 10 + 1) == 0)
+            {
+                exp = 1;
             }
             else
             {
-                return 0;
+                return;
             }
         }
     }
     else
     {
-        exp_at_m77 = experience;
+        exp = experience;
     }
     if (gdata_current_map == mdata_t::map_id_t::show_house)
     {
-        exp_at_m77 /= 5;
+        exp /= 5;
     }
-    if (exp_at_m77 > 0)
+    if (exp > 0)
     {
         if (id >= 100)
         {
-            if (prm_573 != 1000)
+            if (experience_divisor_of_character_level != 1000)
             {
-                exp2_at_m77 =
-                    rnd(double(cdata[cc].required_experience) * exp_at_m77
-                            / 1000 / (cdata[cc].level + prm_573)
+                const auto lvl_exp =
+                    rnd(double(cc.required_experience) * exp / 1000
+                            / (cc.level + experience_divisor_of_character_level)
                         + 1)
                     + rnd(2);
-                cdata[cc].experience += exp2_at_m77;
-                if (cc == 0)
+                cc.experience += lvl_exp;
+                if (cc.index == 0)
                 {
-                    gdata_sleep_experience += exp2_at_m77;
+                    gdata_sleep_experience += lvl_exp;
                 }
             }
         }
     }
-    exp_at_m77 += sdata.get(id, cc).experience;
-    if (exp_at_m77 >= 1000)
+    exp += sdata.get(id, cc.index).experience;
+    if (exp >= 1000)
     {
-        lvchange_at_m77 = exp_at_m77 / 1000;
-        exp_at_m77 = exp_at_m77 % 1000;
-        lv_at_m77 += lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = growth_at_m77 * 0.9;
-            if (growth_at_m77 < 1)
-            {
-                growth_at_m77 = 1;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
+        const auto lv_delta = exp / 1000;
+        exp = exp % 1000;
+        lv += lv_delta;
+        potential = decrease_potential(potential, lv_delta);
+        set_ability(cc, id, lv, exp, potential);
         if (is_in_fov(cc))
         {
-            if (cc == 0 || cc < 16)
+            if (cc.index == 0 || cc.index < 16)
             {
                 snd(61);
                 txtef(2);
                 msgalert = 1;
             }
-            txt(txtskillchange(id, cc, true));
+            txt(txtskillchange(id, cc.index, true));
         }
-        chara_refresh(cc);
-        return 1;
+        chara_refresh(cc.index);
+        return;
     }
-    if (exp_at_m77 < 0)
+    if (exp < 0)
     {
-        lvchange_at_m77 = -exp_at_m77 / 1000 + 1;
-        exp_at_m77 = 1000 + exp_at_m77 % 1000;
-        if (lv_at_m77 - lvchange_at_m77 < 1)
+        auto lv_delta = -exp / 1000 + 1;
+        exp = 1000 + exp % 1000;
+        if (lv - lv_delta < 1)
         {
-            lvchange_at_m77 = lv_at_m77 - 1;
-            if (lv_at_m77 == 1)
+            lv_delta = lv - 1;
+            if (lv == 1)
             {
-                if (lvchange_at_m77 == 0)
+                if (lv_delta == 0)
                 {
-                    exp_at_m77 = 0;
+                    exp = 0;
                 }
             }
         }
-        lv_at_m77 -= lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
-            if (growth_at_m77 > 400)
-            {
-                growth_at_m77 = 400;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
+        lv -= lv_delta;
+        potential = increase_potential(potential, lv_delta);
+        set_ability(cc, id, lv, exp, potential);
         if (is_in_fov(cc))
         {
-            if (cc == 0 || cc < 16)
+            if (cc.index == 0 || cc.index < 16)
             {
-                if (lvchange_at_m77 != 0)
+                if (lv_delta != 0)
                 {
                     msgalert = 1;
                     txtef(3);
-                    txt(txtskillchange(id, cc, false));
+                    txt(txtskillchange(id, cc.index, false));
                 }
             }
         }
-        chara_refresh(cc);
-        return 1;
+        chara_refresh(cc.index);
+        return;
     }
-    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-    sdata.get(id, cc).experience = exp_at_m77;
-    sdata.get(id, cc).potential = growth_at_m77;
-    return 0;
-}
 
-
-
-int skillmod(int id, int cc, int experience)
-{
-    lv_at_m77 = sdata.get(id, cc).original_level;
-    exp_at_m77 = sdata.get(id, cc).experience + experience;
-    growth_at_m77 = sdata.get(id, cc).potential;
-    if (growth_at_m77 == 0)
-    {
-        return 0;
-    }
-    if (exp_at_m77 >= 1000)
-    {
-        lvchange_at_m77 = exp_at_m77 / 1000;
-        lv_at_m77 += lvchange_at_m77;
-        exp_at_m77 = exp_at_m77 % 1000;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = growth_at_m77 * 0.9;
-            if (growth_at_m77 < 1)
-            {
-                growth_at_m77 = 1;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
-        {
-            if (cc == 0 || cc < 16)
-            {
-                snd(61);
-                txtef(2);
-            }
-            txt(txtskillchange(id, cc, true));
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    if (exp_at_m77 < 0)
-    {
-        lvchange_at_m77 = -exp_at_m77 / 1000 + 1;
-        exp_at_m77 = 1000 + exp_at_m77 % 1000;
-        if (lv_at_m77 - lvchange_at_m77 < 1)
-        {
-            lvchange_at_m77 = lv_at_m77 - 1;
-            if (lv_at_m77 == 1)
-            {
-                if (lvchange_at_m77 == 0)
-                {
-                    exp_at_m77 = 0;
-                }
-            }
-        }
-        lv_at_m77 -= lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
-            if (growth_at_m77 > 400)
-            {
-                growth_at_m77 = 400;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (cc == 0 || cc < 16)
-        {
-            if (is_in_fov(cc))
-            {
-                if (lvchange_at_m77 != 0)
-                {
-                    txtef(3);
-                    txt(txtskillchange(id, cc, false));
-                }
-            }
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-    sdata.get(id, cc).experience = exp_at_m77;
-    sdata.get(id, cc).potential = growth_at_m77;
-    return 0;
+    set_ability(cc, id, lv, exp, potential);
 }
 
 
 
 void gain_digging_experience()
 {
-    skillexp(163, 0, 100);
-    return;
+    chara_gain_skill_exp(cdata.player(), 163, 100);
 }
 
 
 
 void gain_literacy_experience()
 {
-    skillexp(150, 0, 15, 10, 100);
-    return;
+    chara_gain_skill_exp(cdata.player(), 150, 15, 10, 100);
 }
 
 
@@ -482,8 +512,11 @@ void gain_negotiation_experience(int cc)
 {
     if (r2 >= (sdata(156, cc) + 10) * (sdata(156, cc) + 10))
     {
-        skillexp(
-            156, cc, clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000), 10);
+        chara_gain_skill_exp(
+            cdata[cc],
+            156,
+            clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
+            10);
     }
 }
 
@@ -491,14 +524,14 @@ void gain_negotiation_experience(int cc)
 
 void gain_lock_picking_experience(int cc)
 {
-    skillexp(158, cc, 100);
+    chara_gain_skill_exp(cdata[cc], 158, 100);
 }
 
 
 
 void gain_detection_experience(int cc)
 {
-    skillexp(159, cc, gdata_current_dungeon_level * 2 + 20);
+    chara_gain_skill_exp(cdata[cc], 159, gdata_current_dungeon_level * 2 + 20);
 }
 
 
@@ -507,12 +540,13 @@ void gain_casting_experience(int cc)
 {
     if (cc == 0)
     {
-        skillexp(r2, cc, the_ability_db[r2]->cost * 4 + 20, 4, 5);
-        skillexp(172, cc, the_ability_db[r2]->cost + 10, 5);
+        chara_gain_skill_exp(
+            cdata[cc], r2, the_ability_db[r2]->cost * 4 + 20, 4, 5);
+        chara_gain_skill_exp(cdata[cc], 172, the_ability_db[r2]->cost + 10, 5);
     }
     else
     {
-        skillexp(172, cc, the_ability_db[r2]->cost + 10, 5);
+        chara_gain_skill_exp(cdata[cc], 172, the_ability_db[r2]->cost + 10, 5);
     }
 }
 
@@ -520,7 +554,8 @@ void gain_casting_experience(int cc)
 
 void gain_mana_capacity_experience(int cc)
 {
-    skillexp(164, cc, std::abs(cdata[cc].mp) * 200 / (cdata[cc].max_mp + 1));
+    chara_gain_skill_exp(
+        cdata[cc], 164, std::abs(cdata[cc].mp) * 200 / (cdata[cc].max_mp + 1));
 }
 
 
@@ -531,14 +566,14 @@ void gain_healing_and_meditation_experience(int cc)
     {
         if (sdata(154, cc) < sdata(11, cc))
         {
-            skillexp(154, cc, 5 + sdata(154, cc) / 5, 1000);
+            chara_gain_skill_exp(cdata[cc], 154, 5 + sdata(154, cc) / 5, 1000);
         }
     }
     if (cdata[cc].mp != cdata[cc].max_mp)
     {
         if (sdata(155, cc) < sdata(16, cc))
         {
-            skillexp(155, cc, 5 + sdata(155, cc) / 5, 1000);
+            chara_gain_skill_exp(cdata[cc], 155, 5 + sdata(155, cc) / 5, 1000);
         }
     }
 }
@@ -554,21 +589,21 @@ void gain_stealth_experience(int cc)
             return;
         }
     }
-    skillexp(157, cc, 2, 0, 1000);
+    chara_gain_skill_exp(cdata[cc], 157, 2, 0, 1000);
 }
 
 
 
 void gain_investing_experience(int cc)
 {
-    skillexp(160, cc, 600);
+    chara_gain_skill_exp(cdata[cc], 160, 600);
 }
 
 
 
 void gain_weight_lifting_experience(int cc)
 {
-    if (cdata[0].inventory_weight_type == 0)
+    if (cdata.player().inventory_weight_type == 0)
     {
         return;
     }
@@ -579,7 +614,7 @@ void gain_weight_lifting_experience(int cc)
             return;
         }
     }
-    skillexp(153, cc, 4, 0, 1000);
+    chara_gain_skill_exp(cdata[cc], 153, 4, 0, 1000);
 }
 
 
@@ -588,7 +623,7 @@ void gain_magic_device_experience(int cc)
 {
     if (cc == 0)
     {
-        skillexp(174, cc, 40);
+        chara_gain_skill_exp(cdata[cc], 174, 40);
     }
 }
 
@@ -596,29 +631,29 @@ void gain_magic_device_experience(int cc)
 
 void gain_fishing_experience(int cc)
 {
-    skillexp(185, cc, 100);
+    chara_gain_skill_exp(cdata[cc], 185, 100);
 }
 
 
 
 void gain_memorization_experience(int cc)
 {
-    skillexp(165, cc, 10 + the_ability_db[efid]->sdataref4 / 5);
+    chara_gain_skill_exp(
+        cdata[cc], 165, 10 + the_ability_db[efid]->sdataref4 / 5);
 }
 
 
 
 void gain_crafting_experience(int skill)
 {
-    skillexp(skill, 0, 50 + r2 * 20);
+    chara_gain_skill_exp(cdata.player(), skill, 50 + r2 * 20);
 }
 
 
 
 void gain_disarm_trap_experience()
 {
-    skillexp(175, cc, 50);
-    return;
+    chara_gain_skill_exp(cdata[cc], 175, 50);
 }
 
 

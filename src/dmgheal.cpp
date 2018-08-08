@@ -27,50 +27,84 @@
 
 
 
-namespace elona
+namespace
 {
 
 
-int victim;
 int dmg_at_m141 = 0;
 
 
 
-void healhp(int cc, int delta)
+void end_dmghp(const character& victim)
 {
-    cdata[cc].hp += delta;
-    if (cdata[cc].hp > cdata[cc].max_hp)
+    if (victim.is_hung_on_sand_bag())
     {
-        cdata[cc].hp = cdata[cc].max_hp;
+        if (is_in_fov(victim))
+        {
+            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
+            if (rnd(20) == 0)
+            {
+                int picked = rnd(6);
+                txt(i18n::s.get_enum(
+                    "core.locale.damage.sand_bag", picked, victim));
+            }
+        }
+    }
+    gdata(809) = 0;
+    txt3rd = 0;
+}
+
+
+
+void dmgheal_death_by_backpack(character& chara)
+{
+    int heaviest_item_index = -1;
+    int heaviest_weight = 0;
+    std::string heaviest_item_name;
+
+    for (const auto& cnt : items(chara.index))
+    {
+        if (inv[cnt].number() == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].weight > heaviest_weight)
+        {
+            heaviest_item_index = cnt;
+            heaviest_weight = inv[cnt].weight;
+        }
+    }
+    if (heaviest_item_index == -1)
+    {
+        heaviest_item_name = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "backpack", 6);
+    }
+    else
+    {
+        heaviest_item_name = itemname(heaviest_item_index);
+    }
+    txt(i18n::s.get_enum_property(
+        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
+    if (chara.index == 0)
+    {
+        ndeathcause = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
     }
 }
 
 
 
-void healmp(int cc, int delta)
+} // namespace
+
+
+
+namespace elona
 {
-    cdata[cc].mp += delta;
-    if (cdata[cc].mp > cdata[cc].max_mp)
-    {
-        cdata[cc].mp = cdata[cc].max_mp;
-    }
-}
 
 
 
-void healsp(int cc, int delta)
-{
-    cdata[cc].sp += delta;
-    if (cdata[cc].sp > cdata[cc].max_sp)
-    {
-        cdata[cc].sp = cdata[cc].max_sp;
-    }
-}
-
-
-
-int dmghp(
-    int victim_id,
+int damage_hp(
+    character& victim,
     int amount,
     int damage_source,
     int element,
@@ -81,7 +115,6 @@ int dmghp(
     int gained_exp = 0;
     bool attacker_is_player = false;
 
-    character& victim = cdata[victim_id];
     optional<character&> attacker = none;
     if (damage_source >= 0)
     {
@@ -111,7 +144,7 @@ int dmghp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = sdata(element, victim) / 50;
+        int resistance = sdata(element, victim.index) / 50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -125,7 +158,7 @@ int dmghp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim) / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
     }
     if (attacker_is_player)
     {
@@ -167,8 +200,7 @@ int dmghp(
     {
         if (victim.hp - dmg_at_m141 <= 0)
         {
-            if (clamp(
-                    25 + victim.buffs[buff_find(victim, 18)].power / 17, 25, 80)
+            if (clamp(25 + buff_find(victim, 18)->power / 17, 25, 80)
                 >= rnd(100))
             {
                 dmg_at_m141 *= -1;
@@ -188,12 +220,12 @@ int dmghp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim == 0 && cdata[0].god_id == core_god::opatos)
+    if (victim.index == 0 && cdata.player().god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && victim == 0)
+    if (debug::voldemort && victim.index == 0)
     {
         dmg_at_m141 = 0;
     }
@@ -206,7 +238,7 @@ int dmghp(
         const auto r = static_cast<uint8_t>(255 - c_col(0, color_id));
         const auto g = static_cast<uint8_t>(255 - c_col(1, color_id));
         const auto b = static_cast<uint8_t>(255 - c_col(2, color_id));
-        add_damage_popup(std::to_string(dmg_at_m141), victim, {r, g, b});
+        add_damage_popup(std::to_string(dmg_at_m141), victim.index, {r, g, b});
     }
 
 
@@ -216,8 +248,8 @@ int dmghp(
         {
             if (dmg_at_m141 > 0)
             {
-                healhp(
-                    attacker->index,
+                heal_hp(
+                    *attacker,
                     clamp(
                         rnd(dmg_at_m141 * (150 + element_power * 2) / 1000
                             + 10),
@@ -226,7 +258,7 @@ int dmghp(
             }
         }
     }
-    if (victim == 0)
+    if (victim.index == 0)
     {
         gdata(30) = 0;
         if (victim.hp < 0)
@@ -254,11 +286,11 @@ int dmghp(
     }
     if (victim.hp < 0)
     {
-        if (victim < 16)
+        if (victim.index < 16)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (victim == cnt)
+                if (victim.index == cnt)
                 {
                     continue;
                 }
@@ -279,7 +311,7 @@ int dmghp(
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
-                animode = 100 + victim;
+                animode = 100 + victim.index;
                 miracle_animation().play();
                 snd(120);
                 break;
@@ -298,7 +330,7 @@ int dmghp(
         }
         if (gdata(809) == 1)
         {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim, element);
+            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
             goto label_1369_internal;
         }
         if (damage_level > 0)
@@ -358,7 +390,7 @@ int dmghp(
                     victim,
                     attacker_is_player));
             }
-            rowact_check(victim);
+            rowact_check(victim.index);
             goto label_1369_internal;
         }
         if (damage_level == 1)
@@ -401,10 +433,10 @@ int dmghp(
             }
         }
     label_1369_internal:
-        rowact_check(victim);
+        rowact_check(victim.index);
         if (victim.hp < victim.max_hp / 5)
         {
-            if (victim != 0)
+            if (victim.index != 0)
             {
                 if (victim.fear == 0)
                 {
@@ -448,35 +480,35 @@ int dmghp(
                 if (rnd(10) < element_power / 75 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::blinded,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::paralyzed,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::confused,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::poisoned,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        victim,
+                        victim.index,
                         status_ailment_t::sleep,
                         rnd(element_power / 3 * 2 + 1));
                 }
@@ -491,57 +523,67 @@ int dmghp(
             if (element == 53)
             {
                 dmgcon(
-                    victim, status_ailment_t::blinded, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::blinded,
+                    rnd(element_power + 1));
             }
             if (element == 58)
             {
                 dmgcon(
-                    victim,
+                    victim.index,
                     status_ailment_t::paralyzed,
                     rnd(element_power + 1));
             }
             if (element == 54)
             {
                 dmgcon(
-                    victim, status_ailment_t::confused, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::confused,
+                    rnd(element_power + 1));
             }
             if (element == 57)
             {
                 dmgcon(
-                    victim, status_ailment_t::confused, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::confused,
+                    rnd(element_power + 1));
             }
             if (element == 55)
             {
                 dmgcon(
-                    victim, status_ailment_t::poisoned, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::poisoned,
+                    rnd(element_power + 1));
             }
             if (element == 61)
             {
                 dmgcon(
-                    victim, status_ailment_t::bleeding, rnd(element_power + 1));
+                    victim.index,
+                    status_ailment_t::bleeding,
+                    rnd(element_power + 1));
             }
             if (element == 62)
             {
-                if (victim == 0)
+                if (victim.index == 0)
                 {
-                    modcorrupt(rnd(element_power + 1));
+                    modify_ether_disease_stage(rnd(element_power + 1));
                 }
             }
             if (element == 63)
             {
-                if (victim == 0 || rnd(3) == 0)
+                if (victim.index == 0 || rnd(3) == 0)
                 {
-                    item_acid(victim, -1);
+                    item_acid(victim.index, -1);
                 }
             }
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim, -1);
+            item_fire(victim.index, -1);
         }
         if (element == 51)
         {
-            item_cold(victim, -1);
+            item_cold(victim.index, -1);
         }
         if (victim.sleep != 0)
         {
@@ -554,10 +596,10 @@ int dmghp(
         }
         if (attacker_is_player)
         {
-            hostileaction(0, victim);
-            gdata(94) = victim;
+            hostileaction(0, victim.index);
+            gdata(94) = victim.index;
         }
-        if (victim == 0)
+        if (victim.index == 0)
         {
             if (config::instance().sound)
             {
@@ -671,7 +713,7 @@ int dmghp(
             }
             if (!attacker_is_player)
             {
-                if (attacker->enemy_id == victim)
+                if (attacker->enemy_id == victim.index)
                 {
                     if (rnd(3) == 0)
                     {
@@ -681,7 +723,7 @@ int dmghp(
             }
             if (apply_hate)
             {
-                if (victim != 0)
+                if (victim.index != 0)
                 {
                     victim.enemy_id = attacker->index;
                     if (victim.hate == 0)
@@ -717,14 +759,14 @@ int dmghp(
         {
             if (element)
             {
-                if (victim >= 16 && gdata(809) == 2)
+                if (victim.index >= 16 && gdata(809) == 2)
                 {
                     txtcontinue();
-                    txteledmg(1, attacker_is_player, victim, element);
+                    txteledmg(1, attacker_is_player, victim.index, element);
                 }
                 else
                 {
-                    txteledmg(2, attacker_is_player, victim, element);
+                    txteledmg(2, attacker_is_player, victim.index, element);
                 }
             }
             else
@@ -732,7 +774,7 @@ int dmghp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -752,7 +794,7 @@ int dmghp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -770,7 +812,7 @@ int dmghp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -788,7 +830,7 @@ int dmghp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim >= 16 && gdata(809) == 2)
+                    if (victim.index >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
@@ -820,7 +862,7 @@ int dmghp(
 
                 txt(i18n::s.get_enum_property(
                     "core.locale.death_by.other", "text", death_kind, victim));
-                if (victim == 0)
+                if (victim.index == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property(
                         "core.locale.death_by.other",
@@ -846,13 +888,13 @@ int dmghp(
             {
                 if (dmg_at_m141 > 0)
                 {
-                    healhp(
-                        cc,
+                    heal_hp(
+                        *attacker,
                         rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
         }
-        if (gdata_mount != victim || victim == 0)
+        if (gdata_mount != victim.index || victim.index == 0)
         {
             cell_removechara(victim.position.x, victim.position.y);
         }
@@ -873,11 +915,11 @@ int dmghp(
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
-            if (victim < 16)
+            if (victim.index < 16)
             {
-                chara_mod_impression(victim, -10);
+                chara_modify_impression(victim, -10);
                 victim.set_state(character::state_t::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
@@ -898,21 +940,21 @@ int dmghp(
                 x = victim.position.x;
                 y = victim.position.y;
                 snd_at(45, victim.position, false, false);
-                animeblood(victim, 1, element);
+                animeblood(victim.index, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             snd_at(8 + rnd(2), victim.position, false, false);
-            animeblood(victim, 0, element);
+            animeblood(victim.index, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim == 0)
+        if (victim.index == 0)
         {
             ++gdata_death_count;
         }
-        if (victim == gdata(94))
+        if (victim.index == gdata(94))
         {
             gdata(94) = 0;
         }
@@ -920,7 +962,7 @@ int dmghp(
         {
             if (!attacker_is_player)
             {
-                chara_custom_talk(*attacker, 103);
+                chara_custom_talk(attacker->index, 103);
             }
             gained_exp = clamp(victim.level, 1, 200)
                     * clamp((victim.level + 1), 1, 200)
@@ -943,11 +985,11 @@ int dmghp(
             if (attacker->index < 16)
             {
                 attacker->enemy_id = 0;
-                cdata[0].enemy_id = 0;
+                cdata.player().enemy_id = 0;
                 gdata(94) = 0;
             }
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
             if (gdata_current_map != mdata_t::map_id_t::show_house)
             {
@@ -1034,7 +1076,7 @@ int dmghp(
                             == adata(10, gdata_current_map)
                         || gdata_current_map == mdata_t::map_id_t::the_void)
                     {
-                        if (adata(20, gdata_current_map) == victim
+                        if (adata(20, gdata_current_map) == victim.index
                             && victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
@@ -1051,7 +1093,7 @@ int dmghp(
                 }
                 else if (gdata_current_map == mdata_t::map_id_t::the_void)
                 {
-                    if (adata(20, gdata_current_map) == victim
+                    if (adata(20, gdata_current_map) == victim.index
                         && victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);
@@ -1059,11 +1101,11 @@ int dmghp(
                 }
             }
         }
-        if (victim != 0)
+        if (victim.index != 0)
         {
             ++npcmemory(0, victim.id);
-            chara_custom_talk(victim, 102);
-            if (victim < 16)
+            chara_custom_talk(victim.index, 102);
+            if (victim.index < 16)
             {
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
@@ -1072,17 +1114,17 @@ int dmghp(
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
-            modify_crowd_density(victim, -1);
+            modify_crowd_density(victim.index, -1);
         }
         if (gdata_mount)
         {
-            if (victim == gdata_mount)
+            if (victim.index == gdata_mount)
             {
                 txt(i18n::s.get("core.locale.damage.get_off_corpse", victim));
                 ride_end();
             }
         }
-        check_kill(damage_source, victim);
+        check_kill(damage_source, victim.index);
         catitem = 0;
         rollanatomy = 0;
         if (rnd(60) == 0)
@@ -1099,9 +1141,9 @@ int dmghp(
             {
                 rollanatomy = 1;
             }
-            skillexp(161, attacker->index, 10 + rollanatomy * 4);
+            chara_gain_skill_exp(*attacker, 161, 10 + rollanatomy * 4);
         }
-        rc = victim;
+        rc = victim.index;
         character_drops_item();
         if (gdata_current_map == mdata_t::map_id_t::pet_arena)
         {
@@ -1128,7 +1170,7 @@ int dmghp(
                     }
                     if (cdata[chara_index].buffs[buff_index].id == 16)
                     {
-                        buff_delete(chara_index, buff_index);
+                        buff_delete(cdata[chara_index], buff_index);
                         --buff_index;
                         continue;
                     }
@@ -1141,7 +1183,7 @@ int dmghp(
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata[0].god_id, 9);
+                    txtgod(cdata.player().god_id, 9);
                 }
             }
         }
@@ -1157,39 +1199,29 @@ int dmghp(
 
 
 
-void end_dmghp(const character& victim)
+void heal_hp(character& cc, int delta)
 {
-    if (victim.is_hung_on_sand_bag())
+    cc.hp += delta;
+    if (cc.hp > cc.max_hp)
     {
-        if (is_in_fov(victim))
-        {
-            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
-            if (rnd(20) == 0)
-            {
-                int picked = rnd(6);
-                txt(i18n::s.get_enum(
-                    "core.locale.damage.sand_bag", picked, victim));
-            }
-        }
+        cc.hp = cc.max_hp;
     }
-    gdata(809) = 0;
-    txt3rd = 0;
 }
 
 
 
-void dmgmp(int cc, int delta)
+void damage_mp(character& cc, int delta)
 {
-    cdata[cc].mp -= delta;
-    if (cdata[cc].mp < -999999)
+    cc.mp -= delta;
+    if (cc.mp < -999999)
     {
-        cdata[cc].mp = -999999;
+        cc.mp = -999999;
     }
-    if (cdata[cc].mp < 0)
+    if (cc.mp < 0)
     {
-        gain_mana_capacity_experience(cc);
-        int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
-        if (cc == 0)
+        gain_mana_capacity_experience(cc.index);
+        auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
+        if (cc.index == 0)
         {
             if (trait(156) == 1)
             {
@@ -1202,49 +1234,70 @@ void dmgmp(int cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cdata[cc]));
-        dmghp(cc, damage, -2);
+        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cc));
+        damage_hp(cc, damage, -2);
     }
 }
 
 
 
-void dmgsp(int cc, int delta)
+void heal_mp(character& cc, int delta)
 {
-    if (cc != 0 || debug::voldemort)
+    cc.mp += delta;
+    if (cc.mp > cc.max_mp)
+    {
+        cc.mp = cc.max_mp;
+    }
+}
+
+
+
+bool action_sp(character& cc, int sp)
+{
+    if (cc.index != 0 || debug::voldemort)
+        return true;
+
+    damage_sp(cc, sp);
+    return cc.sp >= 50 || cc.sp >= rnd(75);
+}
+
+
+
+void damage_sp(character& cc, int delta)
+{
+    if (cc.index != 0 || debug::voldemort)
         return;
 
-    if (cdata[cc].sp >= -100)
+    if (cc.sp >= -100)
     {
-        cdata[cc].sp -= delta;
+        cc.sp -= delta;
     }
 }
 
 
 
-void healsan(int prm_862, int prm_863)
+void heal_sp(character& cc, int delta)
 {
-    cdata[prm_862].insanity -= prm_863;
-    if (cdata[prm_862].insanity < 0)
+    cc.sp += delta;
+    if (cc.sp > cc.max_sp)
     {
-        cdata[prm_862].insanity = 0;
+        cc.sp = cc.max_sp;
     }
-    return;
 }
 
 
 
-void damage_insanity(int cc, int delta)
+void damage_insanity(character& cc, int delta)
 {
-    if (cdata[cc].quality >= 4)
+    if (cc.quality >= 4)
         return;
 
-    int resistance = std::max(sdata(54, cc) / 50, 1);
+    int resistance = std::max(sdata(54, cc.index) / 50, 1);
     if (resistance > 10)
         return;
 
     delta /= resistance;
-    if (cc < 16)
+    if (cc.index < 16)
     {
         if (trait(166))
         {
@@ -1252,64 +1305,24 @@ void damage_insanity(int cc, int delta)
         }
     }
     delta = std::max(delta, 0);
-    cdata[cc].insanity += delta;
-    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cdata[cc].insanity + 1) > 50)
+    cc.insanity += delta;
+    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
     {
-        dmgcon(cc, status_ailment_t::insane, 100);
+        dmgcon(cc.index, status_ailment_t::insane, 100);
     }
 }
 
 
 
-bool actionsp(int cc, int sp)
+void heal_insanity(character& cc, int delta)
 {
-    if (cc != 0 || debug::voldemort)
-        return true;
-
-    if (cdata[cc].sp < 50 && cdata[cc].sp < rnd(75))
+    cc.insanity -= delta;
+    if (cc.insanity < 0)
     {
-        dmgsp(cc, sp);
-        return false;
-    }
-    dmgsp(cc, sp);
-    return true;
-}
-
-void dmgheal_death_by_backpack(character& chara)
-{
-    int heaviest_item_index = -1;
-    int heaviest_weight = 0;
-    std::string heaviest_item_name;
-
-    for (const auto& cnt : items(chara.index))
-    {
-        if (inv[cnt].number() == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].weight > heaviest_weight)
-        {
-            heaviest_item_index = cnt;
-            heaviest_weight = inv[cnt].weight;
-        }
-    }
-    if (heaviest_item_index == -1)
-    {
-        heaviest_item_name = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "backpack", 6);
-    }
-    else
-    {
-        heaviest_item_name = itemname(heaviest_item_index);
-    }
-    txt(i18n::s.get_enum_property(
-        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
-    if (chara.index == 0)
-    {
-        ndeathcause = i18n::s.get_enum_property(
-            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
+        cc.insanity = 0;
     }
 }
+
 
 
 } // namespace elona

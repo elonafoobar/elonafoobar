@@ -356,10 +356,6 @@ struct character
     void clear();
     void clear_flags();
 
-    operator int() const
-    {
-        return index;
-    }
 
     // for identifying the type of a Lua reference
     static std::string lua_type()
@@ -511,8 +507,50 @@ struct character
         ar(_206);
     }
 
+
+    static void copy(const character& from, character& to)
+    {
+        const auto index_save = to.index;
+        to = from;
+        to.index = index_save;
+    }
+
+
 private:
     character::state_t state_ = character::state_t::empty;
+
+
+    character(const character&) = default;
+    character(character&&) = default;
+    character& operator=(const character&) = default;
+    character& operator=(character&&) = default;
+};
+
+
+
+struct cdata_slice
+{
+    using iterator = std::vector<character>::iterator;
+
+    cdata_slice(const iterator& begin, const iterator& end)
+        : _begin(begin)
+        , _end(end)
+    {
+    }
+
+    iterator begin()
+    {
+        return _begin;
+    }
+
+    iterator end()
+    {
+        return _end;
+    }
+
+private:
+    const iterator _begin;
+    const iterator _end;
 };
 
 
@@ -522,16 +560,54 @@ struct cdata_t
     cdata_t();
 
 
-    character& operator()(int index)
-    {
-        return storage[index];
-    }
-
-
     character& operator[](int index)
     {
         return storage[index];
     }
+
+
+    character& player()
+    {
+        return (*this)[0];
+    }
+
+
+    character& tmp()
+    {
+        return (*this)[56];
+    }
+
+
+
+    cdata_slice all()
+    {
+        return {std::begin(storage), std::end(storage)};
+    }
+
+
+    cdata_slice pets()
+    {
+        return {std::begin(storage) + 1, std::begin(storage) + 16};
+    }
+
+
+    cdata_slice pc_and_pets()
+    {
+        return {std::begin(storage), std::begin(storage) + 16};
+    }
+
+
+    cdata_slice adventurers()
+    {
+        return {std::begin(storage) + 16, std::begin(storage) + 56};
+    }
+
+
+    cdata_slice others()
+    {
+        return {std::begin(storage) + 57, std::end(storage)};
+    }
+
 
 
 private:
@@ -542,26 +618,53 @@ private:
 extern cdata_t cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
-int chara_create_internal();
 void initialize_character();
 bool chara_place();
-int chara_relocate(int = 0, int = 0, int = 0);
+
+
+enum class chara_relocate_mode
+{
+    normal,
+    change,
+};
+
+
+/**
+ * Relocate `source` to `destination_slot`. `source` character will be
+ * destroyed.
+ * @param source The relocated character.
+ * @param destination_slot The slot of the character relocated from `source`. If
+ * you specify `none`, find an empty slot in cdata.others().
+ */
+void chara_relocate(
+    character& source,
+    optional<int> destination_slot,
+    chara_relocate_mode mode = chara_relocate_mode::normal);
+
 void chara_refresh(int);
-bool chara_copy(int cc);
+
+
+/**
+ * Copy `source` character to a new slot.
+ * @param source The character copied from.
+ * @return true if `source` was successfully copied; otherwise, false.
+ */
+bool chara_copy(const character& source);
+
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
 void chara_killed(character&);
-int chara_find(int = 0);
-int chara_find_ally(int = 0);
+int chara_find(int id);
+int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(int);
 int chara_custom_talk(int = 0, int = 0);
 std::string chara_refstr(int = 0, int = 0);
 int chara_impression_level(int = 0);
-void chara_mod_impression(int = 0, int = 0);
-void chara_set_item_which_will_be_used();
-int chara_armor_class(int = 0);
+void chara_modify_impression(character& cc, int delta);
+void chara_set_item_which_will_be_used(character& cc);
+int chara_armor_class(const character& cc);
 
 void initialize_character_filters();
 void chara_set_generation_filter();
@@ -573,14 +676,6 @@ bool belong_to_same_team(const character& c1, const character& c2);
 
 
 } // namespace elona
-
-
-
-inline int cdata_body_part_index(int i)
-{
-    return i >= 100 ? i - 100 : i;
-}
-#define cdata_body_part(cc, i) cdata(cc).body_parts[cdata_body_part_index(i)]
 
 
 

@@ -560,11 +560,11 @@ void show_damage_popups()
                 continue;
             }
             if (dist(
-                    cdata[0].position.x,
-                    cdata[0].position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
                     cc.position.x,
                     cc.position.y)
-                > cdata[0].vision_distance / 2)
+                > cdata.player().vision_distance / 2)
             {
                 ++damage_popup.frame;
                 continue;
@@ -730,10 +730,10 @@ void create_pcpic(int cc, bool prm_410)
         pcc(5, cc) = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (cdata_body_part(cc, i) % 10000 != 0)
+            if (cdata[cc].body_parts[i] % 10000 != 0)
             {
                 set_pcc_depending_on_equipments(
-                    cc, cdata_body_part(cc, i) % 10000 - 1);
+                    cc, cdata[cc].body_parts[i] % 10000 - 1);
             }
         }
     }

@@ -484,11 +484,11 @@ void render_cloud()
     for (size_t i = 0; i < clouds.size(); ++i)
     {
         gmode(5, 7 + i * 2);
-        int x = (clouds[i].x0 - cdata[0].position.x * inf_tiles + sxfix) * 100
-                / (40 + i * 5)
+        int x = (clouds[i].x0 - cdata.player().position.x * inf_tiles + sxfix)
+                * 100 / (40 + i * 5)
             + scrturn * 100 / (50 + i * 20);
-        int y = (clouds[i].y0 - cdata[0].position.y * inf_tiles + syfix) * 100
-            / (40 + i * 5);
+        int y = (clouds[i].y0 - cdata.player().position.y * inf_tiles + syfix)
+            * 100 / (40 + i * 5);
         x = x % (windoww + clouds[i].width) - clouds[i].width;
         y = y % (inf_very + clouds[i].height) - clouds[i].height;
         int height = clouds[i].height;
@@ -750,7 +750,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 bool you_can_see(const character& chara)
 {
     return is_in_fov(chara)
-        && (!chara.is_invisible() || cdata[0].can_see_invisible()
+        && (!chara.is_invisible() || cdata.player().can_see_invisible()
             || chara.wet != 0);
 }
 
@@ -1161,17 +1161,17 @@ void cell_draw()
     }
 
     repw(2) = repw(1);
-    reph(2) = cdata[0].position.y + (syfix < 0);
+    reph(2) = cdata.player().position.y + (syfix < 0);
     reph(3) = reph(2) + 1;
 
-    if (cdata[0].position.y == mdata_map_height - 2)
+    if (cdata.player().position.y == mdata_map_height - 2)
     {
         if (syfix < 0)
         {
             --reph(3);
         }
     }
-    if (cdata[0].position.y == mdata_map_height - 1)
+    if (cdata.player().position.y == mdata_map_height - 1)
     {
         if (syfix > 0)
         {
@@ -1209,15 +1209,16 @@ void cell_draw()
 
             // Spot light for PC (bottom a third)
             if (reph(3) == y && x_ == repw(2)
-                && cdata[0].state() == character::state_t::alive)
+                && cdata.player().state() == character::state_t::alive)
             {
-                px_ =
-                    (cdata[0].position.x - scx) * inf_tiles + inf_screenx - 48;
+                px_ = (cdata.player().position.x - scx) * inf_tiles
+                    + inf_screenx - 48;
                 if (scxbk == scx)
                 {
                     px_ -= sxfix;
                 }
-                py_ = (cdata[0].position.y + 1 - scy) * inf_tiles + inf_screeny;
+                py_ = (cdata.player().position.y + 1 - scy) * inf_tiles
+                    + inf_screeny;
                 if (scybk == scy)
                 {
                     py_ -= syfix;
@@ -1228,15 +1229,18 @@ void cell_draw()
             }
 
             if (reph(2) == y && x_ == repw(2)
-                && cdata[0].state() == character::state_t::alive)
+                && cdata.player().state() == character::state_t::alive)
             {
-                ground_ = map(cdata[0].position.x, cdata[0].position.y, 0);
-                px_ = (cdata[0].position.x - scx) * inf_tiles + inf_screenx;
+                ground_ = map(
+                    cdata.player().position.x, cdata.player().position.y, 0);
+                px_ =
+                    (cdata.player().position.x - scx) * inf_tiles + inf_screenx;
                 if (scxbk == scx)
                 {
                     px_ -= sxfix;
                 }
-                py_ = (cdata[0].position.y - scy) * inf_tiles + inf_screeny;
+                py_ =
+                    (cdata.player().position.y - scy) * inf_tiles + inf_screeny;
                 if (scybk == scy)
                 {
                     py_ -= syfix;
@@ -1249,24 +1253,24 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata[0].continuous_action_id == 7)
+                    if (cdata.player().continuous_action_id == 7)
                     {
                         ani_ = 0;
                     }
                     else
                     {
-                        ani_ = cdata[0].turn % 4 * 32;
+                        ani_ = cdata.player().turn % 4 * 32;
                     }
                     if (mdata_map_type == mdata_t::map_type_t::world_map)
                     {
                         draw_character_sprite_in_world_map(
-                            0, px_, py_, ani_, cdata[0].direction);
+                            0, px_, py_, ani_, cdata.player().direction);
                     }
                     else if (chipm(0, ground_) == 3)
                     {
                         // TODO アイコン位置が不自然(ただし本家から)
                         draw_character_sprite_in_water(
-                            0, px_, py_, ani_, cdata[0].direction);
+                            0, px_, py_, ani_, cdata.player().direction);
                     }
                     else
                     {
@@ -1283,16 +1287,16 @@ void cell_draw()
                             }
                         }
                         draw_character_sprite(
-                            0, px_, py_, ani_, cdata[0].direction, dy);
+                            0, px_, py_, ani_, cdata.player().direction, dy);
                         py_ += dy;
                     }
                     gmode(2);
                 }
-                if (cdata[0].furious != 0)
+                if (cdata.player().furious != 0)
                 {
                     draw("furious_icon", px_, py_ - 24);
                 }
-                if (cdata[0].emotion_icon != 0)
+                if (cdata.player().emotion_icon != 0)
                 {
                     draw_emo(0, px_ + 4, py_ - 32);
                 }
@@ -1352,8 +1356,8 @@ void cell_draw()
                     light_ -= (6
                                - clamp(
                                      dist(
-                                         cdata[0].position.x,
-                                         cdata[0].position.y,
+                                         cdata.player().position.x,
+                                         cdata.player().position.y,
                                          x_,
                                          y),
                                      0,

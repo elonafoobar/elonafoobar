@@ -352,7 +352,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                             {
                                 continue;
                             }
-                            modify_potential(cc, p, 4);
+                            modify_potential(cdata[cc], p, 4);
                             break;
                         }
                     }
@@ -415,7 +415,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
             if (cdata[cc].enemy_id != tc)
             {
                 const auto did_swap = cell_swap(cc, tc);
-                if (did_swap && is_in_fov(cc))
+                if (did_swap && is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
                         "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
@@ -424,7 +424,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 {
                     if (cdata[tc].continuous_action_turn > 0)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
                                 "core.locale.ai.swap.glare",
@@ -460,7 +460,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                         snd(45);
                                         breaking_animation({x, y}).play();
                                         spillfrag(x, y, 2);
-                                        if (is_in_fov(cc))
+                                        if (is_in_fov(cdata[cc]))
                                         {
                                             txt(i18n::s.get(
                                                 "core.locale.ai.crushes_wall",
@@ -660,7 +660,7 @@ turn_result_t ai_proc_misc_map_events()
     }
     if (cdata[cc].drunk != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cdatan(2, cc) == u8"cat"s)
             {
@@ -775,7 +775,7 @@ label_2692_internal:
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         if (chipm(
                                 0,
@@ -789,7 +789,7 @@ label_2692_internal:
                                 if (cdata[gdata_fire_giant].state()
                                     == character::state_t::alive)
                                 {
-                                    if (is_in_fov(gdata_fire_giant))
+                                    if (is_in_fov(cdata[gdata_fire_giant]))
                                     {
                                         flt();
                                         int stat =
@@ -869,8 +869,8 @@ label_2692_internal:
                                 int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
+                                    tlocx = cdata.player().position.x;
+                                    tlocy = cdata.player().position.y;
                                     txtef(9);
                                     txt(i18n::s.get_enum(
                                         "core.locale.ai.snowball", rnd(6)));
@@ -950,7 +950,7 @@ label_2692_internal:
         }
         if (cdata[cc].id == 320 || cdata[cc].id == 280)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 tc = 0;
                 distance = dist(
@@ -962,13 +962,13 @@ label_2692_internal:
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
+                        tlocx = cdata.player().position.x;
+                        tlocy = cdata.player().position.y;
                         flt();
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
                                 txtef(9);
                                 txt(i18n::s.get_enum(

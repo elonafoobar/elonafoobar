@@ -143,9 +143,24 @@ struct item
             enchantments, [&](auto&& enchantment) { ar(enchantment); });
     }
 
+
+    static void copy(const item& from, item& to)
+    {
+        const auto index_save = to.index;
+        to = from;
+        to.index = index_save;
+    }
+
+
 private:
     static void refresh();
     int number_ = 0;
+
+
+    item(const item&) = default;
+    item(item&&) = default;
+    item& operator=(const item&) = default;
+    item& operator=(item&&) = default;
 };
 
 
@@ -153,12 +168,6 @@ private:
 struct inventory
 {
     inventory();
-
-
-    item& operator()(int index)
-    {
-        return storage[index];
-    }
 
 
     item& operator[](int index)

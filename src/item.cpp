@@ -39,11 +39,13 @@ item::item()
 {
 }
 
+
+
 void item::clear()
 {
-    item tmp;
-    std::swap(*this, tmp);
+    copy({}, *this);
 }
+
 
 
 bool item::almost_equals(const item& other, bool ignore_position)
@@ -80,7 +82,7 @@ inventory::inventory()
 int ibit(size_t type, int ci)
 {
     assert(type < sizeof(item::flags) * 8);
-    return inv(ci).flags & (1 << type) ? 1 : 0;
+    return inv[ci].flags & (1 << type) ? 1 : 0;
 }
 
 
@@ -90,11 +92,11 @@ void ibitmod(size_t type, int ci, int on)
     assert(type < sizeof(item::flags) * 8);
     if (on)
     {
-        inv(ci).flags |= 1 << type;
+        inv[ci].flags |= 1 << type;
     }
     else
     {
-        inv(ci).flags &= ~(1 << type);
+        inv[ci].flags &= ~(1 << type);
     }
 }
 
@@ -153,8 +155,8 @@ int item_find(int prm_476, int prm_477, int prm_478)
             }
             if (p_at_m52(2) == 0)
             {
-                if (inv[cnt].position.x != cdata[0].position.x
-                    || inv[cnt].position.y != cdata[0].position.y)
+                if (inv[cnt].position.x != cdata.player().position.x
+                    || inv[cnt].position.y != cdata.player().position.y)
                 {
                     continue;
                 }
@@ -201,13 +203,13 @@ int item_find(int prm_476, int prm_477, int prm_478)
 int encfind(int cc, int id)
 {
     int power = -1;
-    for (int cnt = 100; cnt < 130; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        int ci = cdata_body_part(cc, cnt) % 10000 - 1;
+        int ci = cdata[cc].body_parts[cnt] % 10000 - 1;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci].enchantments[cnt].id == 0)
@@ -268,20 +270,19 @@ std::vector<int> itemlist(int owner, int id)
 
 int itemusingfind(int ci, bool disallow_pc)
 {
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].continuous_action_id != 0
-            && cdata[cnt].continuous_action_id != 11
-            && cdata[cnt].continuous_action_turn > 0
-            && cdata[cnt].continuous_action_item == ci)
+        if (cnt.continuous_action_id != 0 && cnt.continuous_action_id != 11
+            && cnt.continuous_action_turn > 0
+            && cnt.continuous_action_item == ci)
         {
-            if (!disallow_pc || cnt != 0)
+            if (!disallow_pc || cnt.index != 0)
             {
-                return cnt;
+                return cnt.index;
             }
         }
     }
@@ -454,9 +455,7 @@ void item_copy(int a, int b)
 
     bool created_new = inv[b].number() == 0;
 
-    inv[b] = inv[a];
-    // Restore "index".
-    inv[b].index = b;
+    item::copy(inv[a], inv[b]);
 
     if (created_new)
     {
@@ -468,12 +467,12 @@ void item_copy(int a, int b)
 
 void item_exchange(int a, int b)
 {
-    using std::swap;
-    swap(inv[a], inv[b]);
-    // Restore "index".
-    inv[a].index = a;
-    inv[b].index = b;
+    item tmp;
+    item::copy(inv[a], tmp);
+    item::copy(inv[b], inv[a]);
+    item::copy(tmp, inv[b]);
 }
+
 
 
 void item::remove()
@@ -596,8 +595,8 @@ bool chara_unequip(int ci)
     if (owner == -1)
         return false;
 
-    cdata_body_part(owner, body_part) =
-        cdata_body_part(owner, body_part) / 10000 * 10000;
+    cdata[owner].body_parts[body_part - 100] =
+        cdata[owner].body_parts[body_part - 100] / 10000 * 10000;
     inv[ci].body_part = 0;
     return true;
 }
@@ -1556,12 +1555,12 @@ void item_acid(int prm_838, int prm_839)
         ci_at_m138 = -1;
         for (int i = 0; i < 30; ++i)
         {
-            body_at_m138 = cdata_body_part(prm_838, i) / 10000;
+            body_at_m138 = cdata[prm_838].body_parts[i] / 10000;
             if (body_at_m138 == 0)
             {
                 break;
             }
-            p_at_m138 = cdata_body_part(prm_838, i) % 10000 - 1;
+            p_at_m138 = cdata[prm_838].body_parts[i] % 10000 - 1;
             if (p_at_m138 == -1)
             {
                 continue;
@@ -1686,7 +1685,7 @@ int item_fire(int prm_840, int prm_841)
                         }
                         if (prm_840 != -1)
                         {
-                            if (is_in_fov(prm_840))
+                            if (is_in_fov(cdata[prm_840]))
                             {
                                 txtef(11);
                                 txt(lang(
@@ -1742,7 +1741,7 @@ int item_fire(int prm_840, int prm_841)
                 {
                     if (inv[ti_at_m138].number() > 0)
                     {
-                        if (is_in_fov(prm_840))
+                        if (is_in_fov(cdata[prm_840]))
                         {
                             txt(lang(
                                 itemname(ti_at_m138, 1) + u8"が"s
@@ -1759,7 +1758,7 @@ int item_fire(int prm_840, int prm_841)
                         else if (rnd(20) == 0)
                         {
                             inv[ti_at_m138].modify_number(-1);
-                            if (is_in_fov(prm_840))
+                            if (is_in_fov(cdata[prm_840]))
                             {
                                 txt(lang(
                                     itemname(ti_at_m138, 1)
@@ -1777,7 +1776,7 @@ int item_fire(int prm_840, int prm_841)
                 {
                     if (inv[ci_at_m138].body_part != 0)
                     {
-                        if (is_in_fov(prm_840))
+                        if (is_in_fov(cdata[prm_840]))
                         {
                             txtef(8);
                             txt(lang(
@@ -1789,13 +1788,15 @@ int item_fire(int prm_840, int prm_841)
                                     + u8" turn"s + _s2(p_at_m138)
                                     + u8" to dust."s));
                         }
-                        cdata_body_part(prm_840, inv[ci_at_m138].body_part) =
-                            cdata_body_part(prm_840, inv[ci_at_m138].body_part)
+                        cdata[prm_840]
+                            .body_parts[inv[ci_at_m138].body_part - 100] =
+                            cdata[prm_840]
+                                .body_parts[inv[ci_at_m138].body_part - 100]
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
                         chara_refresh(prm_840);
                     }
-                    else if (is_in_fov(prm_840))
+                    else if (is_in_fov(cdata[prm_840]))
                     {
                         txtef(8);
                         txt(lang(

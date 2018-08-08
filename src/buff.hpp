@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include "cat.hpp"
+#include "optional.hpp"
 
 
 
@@ -60,10 +61,19 @@ public:
 extern buff_db the_buff_db;
 
 
+struct character;
+struct buff_t;
 
-int buff_find(int prm_799, int prm_800);
-int buff_add(int prm_801, int prm_802, int prm_803, int prm_804);
-void buff_delete(int prm_805, int prm_806);
+
+bool buff_has(const character& cc, int id);
+optional_ref<const buff_t> buff_find(const character& cc, int id);
+void buff_add(
+    character& cc,
+    int id,
+    int power,
+    int turns,
+    optional_ref<const character> doer = none);
+void buff_delete(character& cc, int prm_806);
 
 
 

@@ -238,7 +238,7 @@ void resistmod(int cc, int element, int delta)
 
 void txteledmg(int type, int attacker, int target, int element)
 {
-    if (type == 0 && is_in_fov(target))
+    if (type == 0 && is_in_fov(cdata[target]))
     {
         auto text = i18n::s.get_enum_optional(
             "core.locale.element.damage"s, element, cdata[target]);

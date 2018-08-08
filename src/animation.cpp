@@ -263,13 +263,13 @@ void bright_aura_animation::do_play()
     {
     case type_t::debuff:
         prepare_item_image(8, 0);
-        snd_at(38, cdata[cc].position);
+        snd_at(38, cc.position);
         break;
     case type_t::offering: prepare_item_image(9, 0); break;
     case type_t::healing:
     case type_t::healing_rain:
         prepare_item_image(7, 0);
-        snd_at(33, cdata[cc].position);
+        snd_at(33, cc.position);
         break;
     }
 
@@ -660,7 +660,7 @@ void throwing_object_animation::do_play()
 
 void ranged_attack_animation::do_play()
 {
-    if (!is_in_fov(cc))
+    if (!is_in_fov(cdata[cc]))
         return;
 
     int anicol{};
@@ -881,7 +881,7 @@ void melee_attack_animation::do_play()
 void geen_engineering_animation::do_play()
 {
     snd_at(107, cdata[anic].position);
-    if (!is_in_fov(anic))
+    if (!is_in_fov(cdata[anic]))
         return;
 
     gsel(7);
@@ -928,32 +928,32 @@ void miracle_animation::do_play()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
         if (animode == 0)
         {
-            if (cnt == cc)
+            if (cnt.index == cc)
             {
                 continue;
             }
         }
         if (animode >= 100)
         {
-            if (cnt != animode - 100)
+            if (cnt.index != animode - 100)
             {
                 continue;
             }
         }
-        ax(am) = (cdata[cnt].position.x - scx) * inf_tiles + inf_screenx - 24;
+        ax(am) = (cnt.position.x - scx) * inf_tiles + inf_screenx - 24;
         if (am != 0)
         {
             ax(am) += 4 - rnd(8);
         }
-        ay(am) = (cdata[cnt].position.y - scy) * inf_tiles + inf_screeny + 32;
+        ay(am) = (cnt.position.y - scy) * inf_tiles + inf_screeny + 32;
         if (ay(am) < 0 || ay(am) > inf_screenh * inf_tiles + inf_screeny)
         {
             continue;

@@ -368,7 +368,7 @@ void casino_acquire_items()
     }
     if (f == 1)
     {
-        if (cdata[0].hp >= 0)
+        if (cdata.player().hp >= 0)
         {
             txt(i18n::s.get("core.locale.casino.can_acquire"));
             screenupdate = -1;
@@ -418,7 +418,7 @@ void casino_random_site()
         }
         if (mdata_map_type == mdata_t::map_type_t::world_map)
         {
-            atxlv = cdata[0].level;
+            atxlv = cdata.player().level;
             if (4 <= gdata(62) && gdata(62) < 9)
             {
                 atxid(1) = 2;
@@ -506,7 +506,7 @@ void casino_random_site()
         atxspot = 11;
     }
 label_1875:
-    if (atxap <= 0 || cdata[0].hp < 0)
+    if (atxap <= 0 || cdata.player().hp < 0)
     {
         label_1877();
         return;
@@ -739,7 +739,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
             snd(2);
-            dmghp(0, cdata[0].max_hp * 5 / 100, -10);
+            damage_hp(cdata.player(), cdata.player().max_hp * 5 / 100, -10);
         }
         else
         {
@@ -749,7 +749,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
             snd(2);
-            dmghp(0, cdata[0].max_hp * 10 / 100, -10);
+            damage_hp(cdata.player(), cdata.player().max_hp * 10 / 100, -10);
         }
         atxthrough = 1;
         goto label_1875;
@@ -764,7 +764,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"痛っ！蚊に刺された。"s);
             snd(2);
-            dmghp(0, cdata[0].max_hp * 5 / 100, -10);
+            damage_hp(cdata.player(), cdata.player().max_hp * 5 / 100, -10);
         }
         else
         {
@@ -774,7 +774,7 @@ label_1876_internal:
             atxpic(3) = 96;
             noteadd(u8"うっ！ヘビに噛まれた。"s);
             snd(2);
-            dmghp(0, cdata[0].max_hp * 10 / 100, -10);
+            damage_hp(cdata.player(), cdata.player().max_hp * 10 / 100, -10);
         }
         atxthrough = 1;
         goto label_1875;
@@ -831,7 +831,7 @@ label_1876_internal:
 void label_1877()
 {
     atxinit();
-    if (cdata[0].hp >= 0)
+    if (cdata.player().hp >= 0)
     {
         noteadd(u8"探索を終えた。"s);
         list(0, listmax) = 0;
@@ -1180,7 +1180,7 @@ bool casino_blackjack()
                 winrow = 0;
                 txt(i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.text"));
-                modify_karma(0, -5);
+                modify_karma(cdata.player(), -5);
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::s.get(
                     "core.locale.casino.blackjack.game.cheat.response");

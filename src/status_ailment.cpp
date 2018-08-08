@@ -65,7 +65,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].blind == 0)
         {
             cdata[cc].blind = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -81,7 +81,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
     case status_ailment_t::confused:
         if (cdata[cc].is_immune_to_confusion())
             return;
-        if (buff_find(cc, 7) != -1)
+        if (buff_has(cdata[cc], 7))
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
             return;
@@ -92,7 +92,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].confused == 0)
         {
             cdata[cc].confused = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -117,7 +117,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].paralyzed == 0)
         {
             cdata[cc].paralyzed = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -143,7 +143,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].poisoned == 0)
         {
             cdata[cc].poisoned = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -168,7 +168,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].sleep == 0)
         {
             cdata[cc].sleep = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -184,9 +184,9 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
     case status_ailment_t::fear:
         if (cdata[cc].is_immune_to_fear())
             return;
-        if (buff_find(cc, 1) != -1)
+        if (buff_has(cdata[cc], 1))
             return;
-        if (buff_find(cc, 7) != -1)
+        if (buff_has(cdata[cc], 7))
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
             return;
@@ -198,7 +198,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         {
             cdata[cc].fear = turn;
         }
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.status_ailment.fear.apply", cdata[cc]));
@@ -216,7 +216,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].dimmed == 0)
         {
             cdata[cc].dimmed = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -240,7 +240,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].bleeding == 0)
         {
             cdata[cc].bleeding = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -260,7 +260,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].drunk == 0)
         {
             cdata[cc].drunk = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
                     "core.locale.status_ailment.drunk.apply", cdata[cc]));
@@ -278,7 +278,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].insane == 0)
         {
             cdata[cc].insane = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -298,7 +298,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         if (cdata[cc].sick == 0)
         {
             cdata[cc].sick = turn;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
                 txt(i18n::s.get(
@@ -335,7 +335,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].fear <= 0)
             {
                 cdata[prm_827].fear = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.fear.heal", cdata[cc]));
@@ -359,7 +359,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].blind <= 0)
             {
                 cdata[prm_827].blind = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.blinded.heal", cdata[cc]));
@@ -383,7 +383,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].confused <= 0)
             {
                 cdata[prm_827].confused = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.confused.heal", cdata[cc]));
@@ -407,7 +407,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].paralyzed <= 0)
             {
                 cdata[prm_827].paralyzed = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.paralyzed.heal",
@@ -432,7 +432,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].poisoned <= 0)
             {
                 cdata[prm_827].poisoned = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.poisoned.heal", cdata[cc]));
@@ -456,7 +456,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].sleep <= 0)
             {
                 cdata[prm_827].sleep = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.sleep.heal", cdata[cc]));
@@ -480,7 +480,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].dimmed <= 0)
             {
                 cdata[prm_827].dimmed = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.dimmed.heal", cdata[cc]));
@@ -503,7 +503,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].bleeding <= 0)
             {
                 cdata[prm_827].bleeding = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.bleeding.heal", cdata[cc]));
@@ -526,7 +526,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].drunk <= 0)
             {
                 cdata[prm_827].drunk = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.drunk.heal", cdata[cc]));
@@ -549,7 +549,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].insane <= 0)
             {
                 cdata[prm_827].insane = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.insane.heal", cdata[cc]));
@@ -572,7 +572,7 @@ void healcon(int prm_827, int prm_828, int prm_829)
             if (cdata[prm_827].sick <= 0)
             {
                 cdata[prm_827].sick = 0;
-                if (is_in_fov(prm_827))
+                if (is_in_fov(cdata[prm_827]))
                 {
                     txt(i18n::s.get(
                         "core.locale.status_ailment.sick.heal", cdata[cc]));

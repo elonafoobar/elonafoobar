@@ -94,14 +94,14 @@ bool Chara::flag(lua_character_handle handle, int flag)
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if (elona::cdata[0].state() == character::state_t::empty)
+    if (elona::cdata.player().state() == character::state_t::empty)
     {
         return sol::nullopt;
     }
     else
     {
         lua_character_handle handle =
-            lua::lua->get_handle_manager().get_handle(elona::cdata[0]);
+            lua::lua->get_handle_manager().get_handle(elona::cdata.player());
         return handle;
     }
 }
@@ -240,9 +240,9 @@ void Magic::cast(
 
     try
     {
-        auto caster =
+        auto& caster =
             lua::lua->get_handle_manager().get_ref<character>(caster_handle);
-        auto target =
+        auto& target =
             lua::lua->get_handle_manager().get_ref<character>(target_handle);
         elona::cc = caster.index;
         elona::tc = target.index;
@@ -438,7 +438,7 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
 bool FOV::you_see(lua_character_handle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    return elona::is_in_fov(chara.index);
+    return elona::is_in_fov(chara);
 }
 
 bool FOV::you_see_pos(const position_t& pos)
@@ -1307,7 +1307,7 @@ void LuaCharacter::damage_hp_source(
     int amount,
     damage_source_t source)
 {
-    elona::dmghp(self.index, amount, static_cast<int>(source));
+    elona::damage_hp(self, amount, static_cast<int>(source));
 }
 
 void LuaCharacter::damage_hp_chara(
@@ -1315,8 +1315,8 @@ void LuaCharacter::damage_hp_chara(
     int amount,
     lua_character_handle handle)
 {
-    auto other = lua::lua->get_handle_manager().get_ref<character>(handle);
-    elona::dmghp(self.index, amount, other.index);
+    auto& other = lua::lua->get_handle_manager().get_ref<character>(handle);
+    elona::damage_hp(self, amount, other.index);
 }
 
 void LuaCharacter::apply_ailment(
@@ -1365,7 +1365,7 @@ void LuaCharacter::gain_skill_stock(
     {
         return;
     }
-    elona::skillgain(self.index, skill, initial_level, initial_stock);
+    elona::chara_gain_skill(self, skill, initial_level, initial_stock);
 }
 
 void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
@@ -1374,7 +1374,7 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
     {
         return;
     }
-    elona::skillmod(skill, self.index, amount);
+    elona::chara_gain_fixed_skill_exp(self, skill, amount);
 }
 
 

@@ -40,18 +40,18 @@ int quest_is_return_forbidden()
     return f;
 }
 
+
+
 void quest_place_target()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cnt.state() == character::state_t::alive)
         {
-            cdata[cnt].is_quest_target() = true;
-            cdata[cnt].relationship = -3;
+            cnt.is_quest_target() = true;
+            cnt.relationship = -3;
         }
     }
-    return;
 }
 
 
@@ -60,12 +60,11 @@ int quest_targets_remaining()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cnt.state() == character::state_t::alive)
         {
-            if (cdata[cnt].is_quest_target() == 1)
+            if (cnt.is_quest_target() == 1)
             {
                 ++f_at_m119;
             }
@@ -175,11 +174,9 @@ void quest_check()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cnt.state() == character::state_t::alive)
                 {
                     ++p_at_m119;
                 }
@@ -442,22 +439,21 @@ void quest_set_data(int val0)
 
 void quest_on_map_initialize()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::empty)
+        if (cnt.state() == character::state_t::empty)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 0)
+        if (cnt.character_role == 0)
         {
             continue;
         }
-        if (cdata[cnt].quality == 6)
+        if (cnt.quality == 6)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 3)
+        if (cnt.character_role == 3)
         {
             continue;
         }
@@ -470,7 +466,7 @@ void quest_on_map_initialize()
                 break;
             }
         }
-        int cnt2 = cnt;
+        int cnt2 = cnt.index;
         for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (qdata(0, cnt) == cnt2)
@@ -486,13 +482,12 @@ void quest_on_map_initialize()
         {
             break;
         }
-        qdata(0, i) = cnt;
+        qdata(0, i) = cnt.index;
         qdata(1, i) = gdata_current_map;
-        qname(i) = cdatan(0, cnt);
-        cdata[cnt].related_quest_id = i + 1;
+        qname(i) = cdatan(0, cnt.index);
+        cnt.related_quest_id = i + 1;
         gdata_number_of_existing_quests = i + 1;
     }
-    return;
 }
 
 
@@ -591,13 +586,13 @@ int quest_generate()
         }
         return 0;
     }
-    if (cdata[0].fame >= 30000)
+    if (cdata.player().fame >= 30000)
     {
         if (rnd(13) == 0)
         {
-            qdata(5, rq) =
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+            qdata(5, rq) = rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
             minlevel = clamp(qdata(5, rq) / 7, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
@@ -613,7 +608,7 @@ int quest_generate()
                 }
                 break;
             }
-            qdata(12, rq) = cdata[56].id;
+            qdata(12, rq) = cdata.tmp().id;
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                    + gdata_year * 24 * 30 * 12);
@@ -627,13 +622,13 @@ int quest_generate()
             return 0;
         }
     }
-    if (cdata[0].fame >= 50000)
+    if (cdata.player().fame >= 50000)
     {
         if (rnd(20) == 0)
         {
-            qdata(5, rq) =
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+            qdata(5, rq) = rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
             minlevel = clamp(qdata(5, rq) / 4, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
@@ -649,7 +644,7 @@ int quest_generate()
                 }
                 break;
             }
-            qdata(12, rq) = cdata[56].id;
+            qdata(12, rq) = cdata.tmp().id;
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                    + gdata_year * 24 * 30 * 12);
@@ -693,7 +688,8 @@ int quest_generate()
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
+                rnd(cdata.player().level + 10)
+                    + rnd((cdata.player().fame / 500 + 1)) + 1,
                 1,
                 80);
         }
@@ -734,7 +730,7 @@ int quest_generate()
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
             int(1.5 * std::sqrt(sdata(183, 0))) + 1,
-            cdata[0].fame / 1000 + 10);
+            cdata.player().fame / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                + gdata_year * 24 * 30 * 12);
@@ -753,7 +749,8 @@ int quest_generate()
         || (gdata_current_map == mdata_t::map_id_t::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
-            rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
+            rnd(cdata.player().level + 5) + rnd((cdata.player().fame / 800 + 1))
+                + 1,
             1,
             50);
         qdata(2, rq) = (rnd(6) + 2) * 24
@@ -772,10 +769,11 @@ int quest_generate()
     if (rnd(8) == 0)
     {
         qdata(5, rq) = clamp(
-            rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
+            rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 500 + 1)) + 1,
             1,
             80);
-        qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+        qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                + gdata_year * 24 * 30 * 12);
@@ -919,7 +917,7 @@ int quest_generate()
         get_random_item_id();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
-        qdata(5, rq) = clamp(rnd(cdata[0].level + 5) + 1, 1, 30);
+        qdata(5, rq) = clamp(rnd(cdata.player().level + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
         return 0;
     }
@@ -936,15 +934,16 @@ void quest_gen_scale_by_level()
     {
         return;
     }
-    if (cdata[0].level >= qdata(5, rq))
+    if (cdata.player().level >= qdata(5, rq))
     {
-        qdata(6, rq) =
-            qdata(6, rq) * 100 / (100 + (cdata[0].level - qdata(5, rq)) * 10);
+        qdata(6, rq) = qdata(6, rq) * 100
+            / (100 + (cdata.player().level - qdata(5, rq)) * 10);
     }
     else
     {
         qdata(6, rq) = qdata(6, rq)
-            * (100 + clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
+            * (100
+               + clamp((qdata(5, rq) - cdata.player().level) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -1031,8 +1030,8 @@ turn_result_t quest_pc_died_during_immediate_quest()
 {
     rc = 0;
     label_1540();
-    skillexp(17, 0, -500);
-    skillexp(15, 0, -500);
+    chara_gain_skill_exp(cdata.player(), 17, -500);
+    chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
     return turn_result_t::exit_map;
@@ -1057,7 +1056,7 @@ void quest_failed(int val0)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.quest.deliver.you_commit_a_serious_crime"));
-            modify_karma(0, -20);
+            modify_karma(cdata.player(), -20);
         }
         if (qdata(3, rq) == 1007)
         {
@@ -1096,8 +1095,8 @@ void quest_failed(int val0)
                                         "deadline",
                                         cdata[tc]);
                                     mef_add(
-                                        cdata[0].position.x,
-                                        cdata[0].position.y,
+                                        cdata.player().position.x,
+                                        cdata.player().position.y,
                                         5,
                                         24,
                                         rnd(15) + 25,
@@ -1110,7 +1109,7 @@ void quest_failed(int val0)
                                 }
                                 txtef(9);
                                 txt(s);
-                                dmghp(tc, 999999, p);
+                                damage_hp(cdata[tc], 999999, p);
                             }
                             cdata[tc].set_state(character::state_t::empty);
                             break;
@@ -1118,7 +1117,7 @@ void quest_failed(int val0)
                     }
                 }
             }
-            modify_karma(0, -10);
+            modify_karma(cdata.player(), -10);
         }
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
@@ -1152,7 +1151,7 @@ void quest_team_victorious()
         txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"));
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
-        cdata[0].fame += gdata(74);
+        cdata.player().fame += gdata(74);
         modrank(1, 100, 2);
         ++adata(23, gdata_previous_map2);
         if (adata(23, gdata_previous_map2) % 20 == 0)
@@ -1196,7 +1195,7 @@ void quest_all_targets_killed()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         modrank(0, 100, 2);
-        cdata[0].fame += gdata(74);
+        cdata.player().fame += gdata(74);
         txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
         ++adata(22, gdata_previous_map2);
@@ -1248,7 +1247,8 @@ void quest_complete()
     if (p != 0)
     {
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, p);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, p);
     }
     if (qdata(3, rq) == 1002)
     {
@@ -1260,10 +1260,10 @@ void quest_complete()
     }
     if (qdata(3, rq) == 1008 || qdata(3, rq) == 1010)
     {
-        p = 2 + (rnd(100) < rnd(cdata[0].fame / 5000 + 1));
+        p = 2 + (rnd(100) < rnd(cdata.player().fame / 5000 + 1));
     }
     flt();
-    itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, p);
+    itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, p);
     if (qdata(3, rq) == 1009)
     {
         if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
@@ -1272,8 +1272,8 @@ void quest_complete()
             itemcreate(
                 -1,
                 724,
-                cdata[0].position.x,
-                cdata[0].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y,
                 1 + qdata(13, rq) / 10);
         }
     }
@@ -1295,7 +1295,8 @@ void quest_complete()
                     fixlv = 4;
                 }
             }
-            flt((qdata(5, rq) + cdata[0].level) / 2 + 1, calcfixlv(fixlv));
+            flt((qdata(5, rq) + cdata.player().level) / 2 + 1,
+                calcfixlv(fixlv));
             if (qdata(7, rq) < 10000)
             {
                 if (qdata(7, rq) == 1)
@@ -1323,16 +1324,17 @@ void quest_complete()
             {
                 flttypemajor = qdata(7, rq);
             }
-            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         }
     }
-    modify_karma(0, 1);
+    modify_karma(cdata.player(), 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
     txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
     txtef(2);
     txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
-    cdata[0].fame += gdata(74);
+    cdata.player().fame += gdata(74);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (qdata(3, rq) == 1002)
     {

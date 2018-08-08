@@ -16,7 +16,7 @@ using namespace elona;
 TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
@@ -43,7 +43,7 @@ TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
@@ -70,7 +70,7 @@ TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
@@ -98,7 +98,7 @@ TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
@@ -112,7 +112,7 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     elona::cdatan(0, you.index) = u8"Orville";
     update_slight();
@@ -171,7 +171,7 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
@@ -190,7 +190,7 @@ TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
@@ -202,7 +202,7 @@ TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
     you.sex = 0;
@@ -216,7 +216,7 @@ TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
@@ -229,7 +229,7 @@ TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     elona::cdatan(0, chara.index) = "Putit the mochi vendor";
     update_slight();
@@ -241,7 +241,7 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_japanese();
-    character& you = elona::cdata[0];
+    character& you = elona::cdata.player();
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();

@@ -685,14 +685,15 @@ int calcattackdmg(int prm_894)
     {
         if (trait(207))
         {
-            dmgfix += 5 + cdata[0].level * 2 / 3;
+            dmgfix += 5 + cdata.player().level * 2 / 3;
         }
     }
     if (prm_894 == 1)
     {
         return damage;
     }
-    prot = cdata[tc].pv + sdata(chara_armor_class(tc), tc) + sdata(12, tc) / 10;
+    prot = cdata[tc].pv + sdata(chara_armor_class(cdata[tc]), tc)
+        + sdata(12, tc) / 10;
     if (prot > 0)
     {
         prot2 = prot / 4;
@@ -751,7 +752,7 @@ int calcattackdmg(int prm_894)
         if (cdata[cc].rate_to_pierce > rnd(100))
         {
             pierce = 100;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(5);
                 txt(i18n::s.get("core.locale.damage.vorpal.melee"));
@@ -763,7 +764,7 @@ int calcattackdmg(int prm_894)
         if (ammoproc == 2)
         {
             pierce = 60;
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 txtef(5);
                 txt(i18n::s.get("core.locale.damage.vorpal.ranged"));
@@ -855,8 +856,8 @@ int calcitemvalue(int ci, int situation)
         }
         else
         {
-            ret = cdata[0].level / 5
-                    * ((gdata_random_seed + ci * 31) % cdata[0].level + 4)
+            ret = cdata.player().level / 5
+                    * ((gdata_random_seed + ci * 31) % cdata.player().level + 4)
                 + 10;
         }
     }
@@ -903,7 +904,10 @@ int calcitemvalue(int ci, int situation)
         if (situation == 0)
         {
             ret += clamp(
-                cdata[0].fame / 40 + ret * (cdata[0].fame / 80) / 100, 0, 800);
+                cdata.player().fame / 40
+                    + ret * (cdata.player().fame / 80) / 100,
+                0,
+                800);
         }
     }
     if (inv[ci].weight < 0)
@@ -1029,7 +1033,8 @@ int calcinvestvalue()
 
 int calcguiltvalue()
 {
-    return -(cdata[0].karma + 30) * (cdata[0].fame / 2 + cdata[0].level * 200);
+    return -(cdata.player().karma + 30)
+        * (cdata.player().fame / 2 + cdata.player().level * 200);
 }
 
 
@@ -1087,19 +1092,18 @@ void generatemoney(int cc)
 void calccosthire()
 {
     int cost{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].character_role == 0)
+        if (cnt.character_role == 0)
             continue;
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
             continue;
-        cost += calchirecost(cnt);
+        cost += calchirecost(cnt.index);
     }
     cost = cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1127,8 +1131,8 @@ int calccostbuilding()
 
     return cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1139,13 +1143,13 @@ int calccostbuilding()
 int calccosttax()
 {
     int cost{};
-    cost += cdata[0].gold / 1000;
-    cost += cdata[0].fame;
-    cost += cdata[0].level * 200;
+    cost += cdata.player().gold / 1000;
+    cost += cdata.player().fame;
+    cost += cdata.player().level * 200;
     return cost
         * clamp(
-               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
-                   - (cdata[0].karma >= 20) * 5,
+               100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata.player().karma >= 20) * 5,
                25,
                200)
         / 100;
@@ -1365,7 +1369,7 @@ int calcspellfail(int id, int cc)
 
     int penalty = 4;
 
-    int armor_skill = chara_armor_class(cc);
+    int armor_skill = chara_armor_class(cdata[cc]);
     if (armor_skill == 169)
     {
         penalty = 17 - sdata(169, cc) / 5;
@@ -1476,7 +1480,7 @@ int calcspellcoststock(int id, int cc)
 
 int calcscore()
 {
-    int score = cdata[0].level * cdata[0].level
+    int score = cdata.player().level * cdata.player().level
         + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
         + gdata_kill_count;
     if (gdata_death_count > 1)
@@ -1495,18 +1499,17 @@ int calcscore()
 void calcpartyscore()
 {
     int score = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53)
+        if (cnt.impression >= 53)
         {
-            score += cdata[cnt].level + 5;
+            score += cnt.level + 5;
         }
-        if (cdata[cnt].impression < 50)
+        if (cnt.impression < 50)
         {
             score -= 20;
         }
@@ -1531,18 +1534,16 @@ void calcpartyscore()
 void calcpartyscore2()
 {
     int score{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
+        if (cnt.impression >= 53 && cnt.quality >= 4)
         {
-            score += 20 + cdata[cnt].level / 2;
-            txt(i18n::s.get(
-                "core.locale.quest.party.is_satisfied", cdata[cnt]));
+            score += 20 + cnt.level / 2;
+            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cnt));
         }
     }
     if (score != 0)

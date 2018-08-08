@@ -57,32 +57,32 @@ talk_result_t talk_shop_sell()
 
 talk_result_t talk_inn_eat()
 {
-    if (cdata[0].gold < calcmealvalue())
+    if (cdata.player().gold < calcmealvalue())
     {
         buff = i18n::_(u8"ui", u8"no_gold");
         return talk_result_t::talk_npc;
     }
-    if (cdata[0].nutrition >= 15000)
+    if (cdata.player().nutrition >= 15000)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.innkeeper.eat.not_hungry", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     snd(12);
-    cdata[0].gold -= calcmealvalue();
+    cdata.player().gold -= calcmealvalue();
     snd(18);
-    cdata[0].nutrition = 15000;
+    cdata.player().nutrition = 15000;
     buff = i18n::s.get(
         "core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
     txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
     show_eating_message();
-    chara_anorexia(0);
+    chara_anorexia(cdata.player());
     return talk_result_t::talk_npc;
 }
 
 talk_result_t talk_wizard_identify(int chatval)
 {
-    if (cdata[0].gold < calcidentifyvalue(chatval - 14))
+    if (cdata.player().gold < calcidentifyvalue(chatval - 14))
     {
         buff = i18n::_(u8"ui", u8"no_gold");
         return talk_result_t::talk_npc;
@@ -108,7 +108,7 @@ talk_result_t talk_wizard_identify(int chatval)
     }
     if (chatval == 15)
     {
-        cdata[0].gold -= calcidentifyvalue(1);
+        cdata.player().gold -= calcidentifyvalue(1);
         p(0) = 0;
         p(1) = 0;
         p(0) = 0;
@@ -165,7 +165,7 @@ talk_result_t talk_wizard_identify(int chatval)
                 "core.locale.talk.npc.wizard.identify.need_investigate",
                 cdata[tc]);
         }
-        cdata[0].gold -= calcidentifyvalue(chatval - 14);
+        cdata.player().gold -= calcidentifyvalue(chatval - 14);
     }
     snd(12);
     return talk_result_t::talk_npc;
@@ -181,13 +181,13 @@ talk_result_t talk_informer_list_adventurers()
 
 talk_result_t talk_healer_restore_attributes()
 {
-    if (cdata[0].gold < calcrestorecost())
+    if (cdata.player().gold < calcrestorecost())
     {
         buff = i18n::_(u8"ui", u8"no_gold");
         return talk_result_t::talk_npc;
     }
     snd(12);
-    cdata[0].gold -= calcrestorecost();
+    cdata.player().gold -= calcrestorecost();
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
@@ -238,7 +238,8 @@ talk_result_t talk_arena_master(int chatval)
 {
     if (gdata_mount != 0)
     {
-        int stat = cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
+        int stat = cell_findspace(
+            cdata.player().position.x, cdata.player().position.y, 1);
         if (stat == 0)
         {
             txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
@@ -352,8 +353,8 @@ talk_result_t talk_arena_master(int chatval)
     gdata(73) = 1;
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = 6;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
@@ -426,8 +427,8 @@ talk_result_t talk_pet_arena_master(int chatval)
     gdata(73) = 1;
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = 40;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
@@ -459,7 +460,7 @@ talk_result_t talk_quest_delivery()
     inv[ti].set_number(1);
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used();
+    chara_set_item_which_will_be_used(cdata[tc]);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -478,7 +479,7 @@ talk_result_t talk_quest_supply()
     cdata[tc].was_passed_item_by_you_just_now() = true;
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used();
+    chara_set_item_which_will_be_used(cdata[tc]);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.locale.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
@@ -524,7 +525,7 @@ talk_result_t talk_guard_return_item()
             0, i18n::s.get("core.locale.talk.npc.guard.lost.empty.response"));
         chatesc = 1;
         talk_window_query();
-        modify_karma(0, -5);
+        modify_karma(cdata.player(), -5);
     }
     else
     {
@@ -533,7 +534,7 @@ talk_result_t talk_guard_return_item()
             0, i18n::s.get("core.locale.talk.npc.guard.lost.response"));
         chatesc = 1;
         talk_window_query();
-        modify_karma(0, 5);
+        modify_karma(cdata.player(), 5);
         ++gdata_lost_wallet_count;
         if (gdata_lost_wallet_count >= 4)
         {
@@ -554,7 +555,7 @@ talk_result_t talk_guard_return_item()
                     "core.locale.talk.npc.guard.lost.found_often.response"));
             chatesc = 1;
             talk_window_query();
-            modify_karma(0, -10);
+            modify_karma(cdata.player(), -10);
         }
     }
     refresh_burden_state();
@@ -580,7 +581,7 @@ talk_result_t talk_bartender_call_ally()
             "core.locale.talk.npc.bartender.call_ally.cost",
             calcresurrectvalue(rc),
             cdata[tc]);
-        if (cdata[0].gold >= calcresurrectvalue(rc))
+        if (cdata.player().gold >= calcresurrectvalue(rc))
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -596,7 +597,7 @@ talk_result_t talk_bartender_call_ally()
         if (chatval == 1)
         {
             snd(12);
-            cdata[0].gold -= calcresurrectvalue(rc);
+            cdata.player().gold -= calcresurrectvalue(rc);
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.brings_back",
                 cdata[tc],
@@ -657,7 +658,7 @@ talk_result_t talk_slave_buy(int chatval)
 {
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        flt(cdata[0].level / 2 + 5);
+        flt(cdata.player().level / 2 + 5);
         fixlv = 2;
         if (chatval == 36)
         {
@@ -668,7 +669,7 @@ talk_result_t talk_slave_buy(int chatval)
             fltn(u8"horse"s);
         }
         chara_create(56, 0, -3, 0);
-        if (cdata[56].level == 0)
+        if (cdata.tmp().level == 0)
         {
             chara_vanquish(56);
             continue;
@@ -681,7 +682,7 @@ talk_result_t talk_slave_buy(int chatval)
         cnven(cdatan(0, 56)),
         calcslavevalue(56),
         cdata[tc]);
-    if (cdata[0].gold >= calcslavevalue(56))
+    if (cdata.player().gold >= calcslavevalue(56))
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -698,7 +699,7 @@ talk_result_t talk_slave_buy(int chatval)
             "core.locale.talk.npc.slave_trader.buy.you_buy",
             cnven(cdatan(0, 56))));
         snd(12);
-        cdata[0].gold -= calcslavevalue(56);
+        cdata.player().gold -= calcslavevalue(56);
         rc = 56;
         new_ally_joins();
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
@@ -738,7 +739,7 @@ talk_result_t talk_slave_sell()
                 "core.locale.talk.npc.slave_trader.sell.you_sell_off",
                 cnven(cdatan(0, rc))));
             snd(11);
-            earn_gold(cdata[0], calcslavevalue(rc) * 2 / 3);
+            earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
             if (cdata[rc].state() == character::state_t::alive)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
@@ -821,8 +822,8 @@ talk_result_t talk_innkeeper_shelter()
     ELONA_TALK_SCENE_CUT();
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = 30;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
@@ -874,7 +875,7 @@ talk_result_t talk_maid_think_of_house_name()
 
 talk_result_t talk_sister_buy_indulgence()
 {
-    if (cdata[0].karma >= -30)
+    if (cdata.player().karma >= -30)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.sister.buy_indulgence.karma_is_not_low");
@@ -885,7 +886,7 @@ talk_result_t talk_sister_buy_indulgence()
         "core.locale.talk.npc.sister.buy_indulgence.cost",
         calcguiltvalue(),
         cdata[tc]);
-    if (cdata[0].gold >= calcguiltvalue())
+    if (cdata.player().gold >= calcguiltvalue())
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -901,8 +902,8 @@ talk_result_t talk_sister_buy_indulgence()
     if (chatval == 1)
     {
         snd(12);
-        cdata[0].gold -= calcguiltvalue();
-        modify_karma(0, (cdata[0].karma - -30) * -1 + 1);
+        cdata.player().gold -= calcguiltvalue();
+        modify_karma(cdata.player(), (cdata.player().karma - -30) * -1 + 1);
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }
     else
@@ -924,7 +925,7 @@ talk_result_t talk_informer_investigate_ally()
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.npc.informer.investigate_ally.cost", cdata[tc]);
-        if (cdata[0].gold >= 10000)
+        if (cdata.player().gold >= 10000)
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -940,7 +941,7 @@ talk_result_t talk_informer_investigate_ally()
         if (chatval == 1)
         {
             snd(12);
-            cdata[0].gold -= 10000;
+            cdata.player().gold -= 10000;
             cc = rc;
             csctrl = 4;
             snd(26);
@@ -989,7 +990,7 @@ talk_result_t talk_adventurer_hire()
         "core.locale.talk.npc.adventurer.hire.cost",
         calchireadv(tc),
         cdata[tc]);
-    if (cdata[0].gold >= calchireadv(tc))
+    if (cdata.player().gold >= calchireadv(tc))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.pay"));
@@ -1001,7 +1002,7 @@ talk_result_t talk_adventurer_hire()
     if (chatval == 1)
     {
         snd(12);
-        cdata[0].gold -= calchireadv(tc);
+        cdata.player().gold -= calchireadv(tc);
         cdata[tc].relationship = 10;
         cdata[tc].is_contracting() = true;
         cdata[tc].period_of_contract = gdata_hour + gdata_day * 24
@@ -1023,7 +1024,7 @@ talk_result_t talk_adventurer_hire()
 
 talk_result_t talk_adventurer_join()
 {
-    if (cdata[0].level * 3 / 2 + 10 < cdata[tc].level)
+    if (cdata.player().level * 3 / 2 + 10 < cdata[tc].level)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.adventurer.join.too_weak", cdata[tc]);
@@ -1075,9 +1076,9 @@ talk_result_t talk_moyer_sell_paels_mom()
     if (chatval == 1)
     {
         txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
-        modify_karma(0, -20);
+        modify_karma(cdata.player(), -20);
         snd(11);
-        earn_gold(cdata[0], 50000);
+        earn_gold(cdata.player(), 50000);
         gdata_pael_and_her_mom = 1002;
         rc = chara_find(222);
         cdata[rc].ai_calm = 3;
@@ -1116,7 +1117,7 @@ talk_result_t talk_shop_reload_ammo()
     }
     buff = i18n::s.get(
         "core.locale.talk.npc.shop.ammo.cost", calccostreload(0), cdata[tc]);
-    if (cdata[0].gold >= calccostreload(0))
+    if (cdata.player().gold >= calccostreload(0))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.pay"));
@@ -1128,7 +1129,7 @@ talk_result_t talk_shop_reload_ammo()
     if (chatval == 1)
     {
         snd(12);
-        cdata[0].gold -= calccostreload(0);
+        cdata.player().gold -= calccostreload(0);
         p = calccostreload(0, true);
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
     }
@@ -1190,8 +1191,8 @@ talk_result_t talk_result_maid_chase_out()
 
 talk_result_t talk_prostitute_buy()
 {
-    sexvalue = sdata(17, tc) * 25 + 100 + cdata[0].fame / 10;
-    if (cdata[0].gold >= sexvalue)
+    sexvalue = sdata(17, tc) * 25 + 100 + cdata.player().fame / 10;
+    if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
@@ -1281,8 +1282,8 @@ talk_result_t talk_guard_where_is(int chatval)
     talk_guide_quest_client();
     rc = rtval(chatval - 10000);
     p = direction(
-        cdata[0].position.x,
-        cdata[0].position.y,
+        cdata.player().position.x,
+        cdata.player().position.y,
         cdata[rc].position.x,
         cdata[rc].position.y);
     if (p == 1)
@@ -1302,8 +1303,8 @@ talk_result_t talk_guard_where_is(int chatval)
         s = i18n::s.get("core.locale.talk.npc.guard.where_is.direction.south");
     }
     p = dist(
-        cdata[0].position.x,
-        cdata[0].position.y,
+        cdata.player().position.x,
+        cdata.player().position.y,
         cdata[rc].position.x,
         cdata[rc].position.y);
     for (int cnt = 0; cnt < 1; ++cnt)
@@ -1432,8 +1433,8 @@ talk_result_t talk_accepted_quest()
     gdata(73) = 1;
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = 13;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
@@ -1462,7 +1463,7 @@ talk_result_t talk_trainer()
             i18n::_(u8"ability", std::to_string(csskill), u8"name"),
             calctraincost(csskill, cc),
             cdata[tc]);
-        if (cdata[0].platinum_coin >= calctraincost(csskill, cc))
+        if (cdata.player().platinum_coin >= calctraincost(csskill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = i18n::s.get(
@@ -1477,7 +1478,7 @@ talk_result_t talk_trainer()
             i18n::_(u8"ability", std::to_string(csskill), u8"name"),
             calclearncost(csskill, cc),
             cdata[tc]);
-        if (cdata[0].platinum_coin >= calclearncost(csskill, cc))
+        if (cdata.player().platinum_coin >= calclearncost(csskill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = i18n::s.get(
@@ -1496,9 +1497,9 @@ talk_result_t talk_trainer()
         snd(12);
         if (csctrl == 2)
         {
-            cdata[0].platinum_coin -= calctraincost(csskill, cc);
+            cdata.player().platinum_coin -= calctraincost(csskill, cc);
             modify_potential(
-                cc,
+                cdata[cc],
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             buff = i18n::s.get(
@@ -1506,8 +1507,8 @@ talk_result_t talk_trainer()
         }
         else
         {
-            cdata[0].platinum_coin -= calclearncost(csskill, cc);
-            skillgain(cc, csskill);
+            cdata.player().platinum_coin -= calclearncost(csskill, cc);
+            chara_gain_skill(cdata[cc], csskill);
             ++gdata_number_of_learned_skills_by_trainer;
             buff = i18n::s.get(
                 "core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
@@ -1527,7 +1528,7 @@ talk_result_t talk_invest()
     listmax = 0;
     buff = i18n::s.get(
         "core.locale.talk.npc.shop.invest.ask", calcinvestvalue(), cdata[tc]);
-    if (cdata[0].gold >= calcinvestvalue())
+    if (cdata.player().gold >= calcinvestvalue())
     {
         list(0, listmax) = 1;
         listn(0, listmax) =
@@ -1543,7 +1544,7 @@ talk_result_t talk_invest()
     if (chatval == 1)
     {
         snd(12);
-        cdata[0].gold -= calcinvestvalue();
+        cdata.player().gold -= calcinvestvalue();
         gain_investing_experience(0);
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
@@ -1716,7 +1717,11 @@ talk_result_t talk_quest_giver()
             ++qdata(15, qdata(10, rq));
             flt();
             itemcreate(
-                0, qdata(11, rq), cdata[0].position.x, cdata[0].position.y, 0);
+                0,
+                qdata(11, rq),
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             txt(i18n::s.get(
                 "core.locale.common.you_put_in_your_backpack", inv[ci]));
             snd(100);
@@ -1794,11 +1799,11 @@ talk_result_t talk_npc()
                         {
                             if (rnd(sdata(17, 0) + 1) > 10)
                             {
-                                chara_mod_impression(tc, rnd(3));
+                                chara_modify_impression(cdata[tc], rnd(3));
                             }
                             else
                             {
-                                chara_mod_impression(tc, rnd(3) * -1);
+                                chara_modify_impression(cdata[tc], rnd(3) * -1);
                             }
                         }
                     }
@@ -2284,7 +2289,8 @@ talk_result_t talk_npc()
              && cdata[tc].character_role < 2000)
             || cdata[tc].character_role == 2003)
         {
-            if (cdata[0].karma < -30 && cdata[0].is_incognito() == 0)
+            if (cdata.player().karma < -30
+                && cdata.player().is_incognito() == 0)
             {
                 if (gdata_current_map != mdata_t::map_id_t::derphy
                     && gdata_current_map != mdata_t::map_id_t::your_home)

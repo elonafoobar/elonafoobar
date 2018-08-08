@@ -146,8 +146,8 @@ void initialize_home_adata()
     }
     if (gdata_home_scale != 0)
     {
-        adata(1, p) = cdata[0].position.x;
-        adata(2, p) = cdata[0].position.y;
+        adata(1, p) = cdata.player().position.x;
+        adata(2, p) = cdata.player().position.y;
     }
     adata(30, p) = gdata(850);
     return;
@@ -161,7 +161,7 @@ turn_result_t build_new_building()
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
-    cell_featread(cdata[0].position.x, cdata[0].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(0) != 0)
     {
         txt(i18n::s.get("core.locale.building.cannot_build_it_here"));
@@ -215,8 +215,8 @@ turn_result_t build_new_building()
     }
     ctrl_file(file_operation_t::_13);
     p = area;
-    adata(1, p) = cdata[0].position.x;
-    adata(2, p) = cdata[0].position.y;
+    adata(1, p) = cdata.player().position.x;
+    adata(2, p) = cdata.player().position.y;
     adata(0, p) = mdata_t::map_type_t::player_owned;
     adata(11, p) = 1;
     adata(12, p) = 0;
@@ -365,13 +365,12 @@ turn_result_t show_house_board()
     if (gdata_current_map == mdata_t::map_id_t::your_home)
     {
         p = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cdata[cnt].state() == character::state_t::alive
-                || cdata[cnt].state() == character::state_t::villager_dead)
+            if (cnt.state() == character::state_t::alive
+                || cnt.state() == character::state_t::villager_dead)
             {
-                if (cdata[cnt].character_role != 0)
+                if (cnt.character_role != 0)
                 {
                     ++p;
                 }
@@ -467,13 +466,12 @@ void prompt_hiring()
 {
     txtnew();
     p = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state() == character::state_t::alive
-            || cdata[cnt].state() == character::state_t::villager_dead)
+        if (cnt.state() == character::state_t::alive
+            || cnt.state() == character::state_t::villager_dead)
         {
-            if (cdata[cnt].character_role != 0)
+            if (cnt.character_role != 0)
             {
                 ++p;
             }
@@ -551,15 +549,14 @@ void prompt_hiring()
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
+        for (auto&& cnt : cdata.others())
         {
-            if (cnt == rc)
+            if (cnt.index == rc)
             {
                 continue;
             }
-            if (cdata[cnt].state() != character::state_t::empty
-                && cdatan(0, cnt) == cdatan(0, rc))
+            if (cnt.state() != character::state_t::empty
+                && cdatan(0, cnt.index) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
             }
@@ -574,14 +571,14 @@ void prompt_hiring()
     {
         tc = stat;
         txtnew();
-        if (cdata[0].gold < calchirecost(tc) * 20)
+        if (cdata.player().gold < calchirecost(tc) * 20)
         {
             txt(i18n::s.get("core.locale.building.not_enough_money"));
         }
         else
         {
             snd(12);
-            cdata[0].gold -= calchirecost(tc) * 20;
+            cdata.player().gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
             cdata[tc].set_state(character::state_t::alive);
             lua::lua->get_handle_manager().create_chara_handle(cdata[tc]);
@@ -591,11 +588,11 @@ void prompt_hiring()
             snd(64);
         }
     }
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() == character::state_t::servant_being_selected)
+        if (cnt.state() == character::state_t::servant_being_selected)
         {
-            chara_vanquish(cnt);
+            chara_vanquish(cnt.index);
         }
     }
     calccosthire();
@@ -630,7 +627,7 @@ void fill_tile(int x, int y, int from, int to)
 
 void start_home_map_mode()
 {
-    const auto pc_position_prev = cdata[0].position;
+    const auto pc_position_prev = cdata.player().position;
     homemapmode = 1;
 
     prepare_house_board_tiles();
@@ -638,8 +635,8 @@ void start_home_map_mode()
     txtnew();
     txt(i18n::s.get("core.locale.building.home.design.help"));
 
-    tlocinitx = cdata[0].position.x;
-    tlocinity = cdata[0].position.y;
+    tlocinitx = cdata.player().position.x;
+    tlocinity = cdata.player().position.y;
     tile = 0;
     while (1)
     {
@@ -672,7 +669,7 @@ void start_home_map_mode()
     }
 
     homemapmode = 0;
-    cdata[0].position = pc_position_prev;
+    cdata.player().position = pc_position_prev;
 }
 
 
@@ -872,14 +869,14 @@ void prompt_ally_staying()
 void try_extend_shop()
 {
     txtnew();
-    if (cdata[0].gold < calcshopreform())
+    if (cdata.player().gold < calcshopreform())
     {
         txt(i18n::s.get("core.locale.building.not_enough_money"));
     }
     else
     {
         snd(12);
-        cdata[0].gold -= calcshopreform();
+        cdata.player().gold -= calcshopreform();
         mdata_map_max_item_count = clamp(mdata_map_max_item_count + 10, 1, 400);
         txtef(2);
         txt(i18n::s.get(
@@ -1042,20 +1039,20 @@ void show_shop_log()
         }
         if (area == gdata_current_map)
         {
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (auto&& cnt : cdata.all())
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cnt.state() != character::state_t::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].continuous_action_id == 0
-                    || cdata[cnt].continuous_action_turn == 0)
+                if (cnt.continuous_action_id == 0
+                    || cnt.continuous_action_turn == 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].continuous_action_item == ci)
+                if (cnt.continuous_action_item == ci)
                 {
-                    rowactend(cnt);
+                    rowactend(cnt.index);
                 }
             }
         }
@@ -1162,7 +1159,8 @@ void show_shop_log()
                       sold,
                       s(0)));
         }
-        skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
+        chara_gain_skill_exp(
+            cdata[worker], 156, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -1209,25 +1207,25 @@ void calc_collection_value(bool val0)
     fixlv = 2;
     dbmode = 3;
     access_character_info();
-    ++dblist(val0 ? 1 : 0, cdata[56].id);
+    ++dblist(val0 ? 1 : 0, cdata.tmp().id);
     if (fixlv == 6)
     {
-        rtval = 70 + cdata[56].level;
+        rtval = 70 + cdata.tmp().level;
     }
     else
     {
-        rtval = cdata[56].level / 10 + 2;
-        if (draw_get_rect_chara(cdata[56].image % 1000)->height > inf_tiles)
+        rtval = cdata.tmp().level / 10 + 2;
+        if (draw_get_rect_chara(cdata.tmp().image % 1000)->height > inf_tiles)
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = the_character_db[cdata[56].id]->rarity / 1000;
+        p = the_character_db[cdata.tmp().id]->rarity / 1000;
         if (p < 80)
         {
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val0 ? 1 : 0, cdata[56].id) > 1)
+    if (dblist(val0 ? 1 : 0, cdata.tmp().id) > 1)
     {
         rtval /= 3;
         if (rtval > 15)
@@ -1414,6 +1412,8 @@ void calc_home_rank()
     return;
 }
 
+
+
 int cbreeder(int prm_984)
 {
     std::string s_at_m173;
@@ -1424,17 +1424,19 @@ int cbreeder(int prm_984)
     return p_at_m173;
 }
 
+
+
 void update_ranch()
 {
     worker = getworker(gdata_current_map);
     livestock = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cnt.state() != character::state_t::alive)
         {
             continue;
         }
-        if (cdata[cnt].is_livestock() == 0)
+        if (cnt.is_livestock() == 0)
         {
             continue;
         }
@@ -1481,13 +1483,13 @@ void update_ranch()
         }
     label_1734_internal:
         egg = 0;
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state() != character::state_t::alive)
+            if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cdata[cnt].is_livestock() == 0)
+            if (cnt.is_livestock() == 0)
             {
                 continue;
             }
@@ -1497,7 +1499,7 @@ void update_ranch()
             {
                 continue;
             }
-            flt(calcobjlv(cdata[cnt].level), 2);
+            flt(calcobjlv(cnt.level), 2);
             p = rnd(5);
             f = 0;
             if (rnd(egg + 1) > 2)
@@ -1538,7 +1540,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt) == u8"chicken"s)
+                if (cdatan(2, cnt.index) == u8"chicken"s)
                 {
                     if (rnd(20) == 0)
                     {
@@ -1551,12 +1553,10 @@ void update_ranch()
                     int stat = itemcreate(-1, 573, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
-                        inv[ci].weight = cdata[cnt].weight * 10 + 250;
-                        inv[ci].value = clamp(
-                            cdata[cnt].weight * cdata[cnt].weight / 10000,
-                            200,
-                            40000);
+                        inv[ci].subname = cnt.id;
+                        inv[ci].weight = cnt.weight * 10 + 250;
+                        inv[ci].value =
+                            clamp(cnt.weight * cnt.weight / 10000, 200, 40000);
                     }
                 }
                 continue;
@@ -1567,7 +1567,7 @@ void update_ranch()
                 {
                     f = 1;
                 }
-                if (cdatan(2, cnt) == u8"sheep"s)
+                if (cdatan(2, cnt.index) == u8"sheep"s)
                 {
                     if (rnd(20) == 0)
                     {
@@ -1580,7 +1580,7 @@ void update_ranch()
                     int stat = itemcreate(-1, 574, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
+                        inv[ci].subname = cnt.id;
                     }
                 }
                 continue;
@@ -1596,12 +1596,10 @@ void update_ranch()
                     int stat = itemcreate(-1, 575, x, y, 0);
                     if (stat)
                     {
-                        inv[ci].subname = cdata[cnt].id;
-                        inv[ci].weight = cdata[cnt].weight * 40 + 300;
-                        inv[ci].value = clamp(
-                            cdata[cnt].weight * cdata[cnt].weight / 5000,
-                            1,
-                            20000);
+                        inv[ci].subname = cnt.id;
+                        inv[ci].weight = cnt.weight * 40 + 300;
+                        inv[ci].value =
+                            clamp(cnt.weight * cnt.weight / 5000, 1, 20000);
                     }
                 }
                 continue;
@@ -1625,7 +1623,8 @@ void update_ranch()
             }
         }
     }
-    return;
 }
+
+
 
 } // namespace elona

@@ -69,8 +69,8 @@ Event.register(Event.EventKind.CharaDamaged, my_chara_hurt_handler)
         .get_mod("test_chara_hurt")
         ->env.set("idx", idx);
 
-    elona::dmghp(idx, 4, -1);
-    elona::healhp(idx, 45);
+    elona::damage_hp(cdata[idx], 4, -1);
+    elona::heal_hp(cdata[idx], 45);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_hurt", R"(assert(Store.global.hurt_idx == idx))"));
@@ -132,7 +132,7 @@ Event.register(Event.EventKind.CharaKilled, my_chara_killed_handler)
         .get_mod("test_chara_killed")
         ->env.set("idx", idx);
 
-    elona::dmghp(idx, chara.max_hp + 1, -11);
+    elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_killed", R"(assert(Store.global.killed_idx == idx))"));
@@ -173,7 +173,7 @@ Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
     // Make this character a townsperson.
     chara.character_role = 13;
 
-    elona::dmghp(idx, chara.max_hp + 1, -11);
+    elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
@@ -219,7 +219,7 @@ Event.register(Event.EventKind.CharaRemoved, my_chara_removed_handler)
     // Give this character a role besides a townsperson.
     chara.character_role = 2002;
 
-    elona::dmghp(idx, chara.max_hp + 1, -11);
+    elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_special_chara_killed",

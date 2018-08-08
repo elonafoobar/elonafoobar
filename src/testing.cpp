@@ -78,8 +78,8 @@ void run_in_temporary_map(int map, int level, std::function<void()> f)
 {
     gdata_previous_map2 = gdata_current_map;
     gdata_previous_dungeon_level = gdata_current_dungeon_level;
-    gdata_previous_x = cdata[0].position.x;
-    gdata_previous_y = cdata[0].position.y;
+    gdata_previous_x = cdata.player().position.x;
+    gdata_previous_y = cdata.player().position.y;
     gdata_destination_map = map;
     gdata_destination_dungeon_level = level;
     levelexitby = 2;

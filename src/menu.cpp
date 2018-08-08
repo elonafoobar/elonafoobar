@@ -2932,7 +2932,7 @@ label_2035_internal:
                 result.succeeded = false;
                 return result;
             }
-            if (cdata[0].skill_bonus < 1 || p < 0 || p < 100)
+            if (cdata.player().skill_bonus < 1 || p < 0 || p < 100)
             {
                 goto label_2034_internal;
             }
@@ -2941,11 +2941,11 @@ label_2035_internal:
                 snd(27);
                 goto label_2034_internal;
             }
-            --cdata[0].skill_bonus;
+            --cdata.player().skill_bonus;
             snd(19);
-            skillexp(csskill, cc, 400, 2, 1000);
+            chara_gain_skill_exp(cdata[cc], csskill, 400, 2, 1000);
             modify_potential(
-                cc,
+                cdata[cc],
                 csskill,
                 clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             render_hud();
@@ -3053,38 +3053,38 @@ menu_result menu_equipment()
     mainhand = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(cc, i) != 0)
+        if (cdata[cc].body_parts[i] != 0)
         {
             if (trait(206) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 2)
+                if (cdata[cc].body_parts[i] / 10000 == 2)
                 {
                     continue;
                 }
             }
             if (trait(203) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 9)
+                if (cdata[cc].body_parts[i] / 10000 == 9)
                 {
                     continue;
                 }
             }
             if (trait(205) != 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 3)
+                if (cdata[cc].body_parts[i] / 10000 == 3)
                 {
                     continue;
                 }
             }
             if (mainhand == 0)
             {
-                if (cdata_body_part(cc, i) / 10000 == 5)
+                if (cdata[cc].body_parts[i] / 10000 == 5)
                 {
                     mainhand = i + 100;
                 }
             }
             list(0, listmax) = i + 100;
-            list(1, listmax) = cdata_body_part(cc, i) / 10000;
+            list(1, listmax) = cdata[cc].body_parts[i] / 10000;
             ++listmax;
         }
     }
@@ -3186,7 +3186,7 @@ label_2052_internal:
             break;
         }
         display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
-        p(1) = cdata_body_part(cc, list(0, p));
+        p(1) = cdata[cc].body_parts[list(0, p) - 100];
         s(0) = u8"-    "s;
         s(1) = u8"-"s;
         if (p(1) % 10000 != 0)
@@ -3228,10 +3228,10 @@ label_2052_internal:
     {
         cs_prev = cs;
         body = p;
-        if (cdata_body_part(cc, body) % 10000 != 0)
+        if (cdata[cc].body_parts[body - 100] % 10000 != 0)
         {
             gdata(808) = 1;
-            ci = cdata_body_part(cc, body) % 10000 - 1;
+            ci = cdata[cc].body_parts[body - 100] % 10000 - 1;
             if (is_cursed(inv[ci].curse_state))
             {
                 txt(i18n::s.get(
@@ -3243,7 +3243,7 @@ label_2052_internal:
             snd(13);
             txtnew();
             txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
-            if (cdata_body_part(cc, body) / 10000 == 5)
+            if (cdata[cc].body_parts[body - 100] / 10000 == 5)
             {
                 equip_melee_weapon();
             }
@@ -3260,9 +3260,9 @@ label_2052_internal:
     if (key == key_identify)
     {
         p = list(0, pagesize * page + cs);
-        if (cdata_body_part(cc, p) % 10000 != 0)
+        if (cdata[cc].body_parts[p - 100] % 10000 != 0)
         {
-            ci = cdata_body_part(cc, p) % 10000 - 1;
+            ci = cdata[cc].body_parts[p - 100] % 10000 - 1;
             cs_prev = cs;
             item_show_description();
             nowindowanime = 1;
@@ -4102,19 +4102,19 @@ void append_accuracy_info(int val0)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata_body_part(cc, cnt) % 10000 == 0)
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 10)
+        if (cdata[cc].body_parts[cnt] / 10000 == 10)
         {
             continue;
         }
-        if (cdata_body_part(cc, cnt) / 10000 == 11)
+        if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
             continue;
         }
-        cw = cdata_body_part(cc, cnt) % 10000 - 1;
+        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         if (inv[cw].dice_x > 0)
         {
             attackskill = inv[cw].skill;
@@ -4416,9 +4416,9 @@ label_196901_internal:
     std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(tc, i) % 10000 != 0)
+        if (cdata[tc].body_parts[i] % 10000 != 0)
         {
-            ci = cdata_body_part(tc, i) % 10000 - 1;
+            ci = cdata[tc].body_parts[i] % 10000 - 1;
             for (const auto& enc : inv[ci].enchantments)
             {
                 if (enc.id == 0)
@@ -4872,16 +4872,17 @@ menu_result menu_journal()
         noteadd(""s);
     }
     gold = 0;
-    p = clamp(cdata[0].fame / 10, 100, 25000);
-    if (cdata[0].fame >= 25000)
+    p = clamp(cdata.player().fame / 10, 100, 25000);
+    if (cdata.player().fame >= 25000)
     {
-        p += (cdata[0].fame - 25000) / 100;
+        p += (cdata.player().fame - 25000) / 100;
     }
     gold += p;
     noteadd(u8" - Title & Ranking - "s);
     noteadd(""s);
     noteadd(
-        i18n::s.get("core.locale.ui.journal.rank.fame") + ": " + cdata[0].fame);
+        i18n::s.get("core.locale.ui.journal.rank.fame") + ": "
+        + cdata.player().fame);
     noteadd(""s);
     for (int cnt = 0; cnt < 9; ++cnt)
     {
@@ -5110,7 +5111,7 @@ turn_result_t show_quest_board()
         {
             if (mode == 0)
             {
-                if (cdata[0].continuous_action_turn == 0)
+                if (cdata.player().continuous_action_turn == 0)
                 {
                     gdata(204) = 1;
                     ghelp = 4;
@@ -5241,17 +5242,17 @@ label_1978_internal:
         p(1) = 14;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (cdata[0].level * 2 < qdata(5, rq))
+            if (cdata.player().level * 2 < qdata(5, rq))
             {
                 color(205, 0, 0);
                 break;
             }
-            if (cdata[0].level * 3 / 2 < qdata(5, rq))
+            if (cdata.player().level * 3 / 2 < qdata(5, rq))
             {
                 color(140, 80, 0);
                 break;
             }
-            if (cdata[0].level < qdata(5, rq))
+            if (cdata.player().level < qdata(5, rq))
             {
                 color(0, 0, 205);
                 break;
@@ -5308,7 +5309,7 @@ label_1978_internal:
         efid = 619;
         magic();
         tc = client;
-        if (cdata[0].state() == character::state_t::alive)
+        if (cdata.player().state() == character::state_t::alive)
         {
             quest_teleport = true;
             talk_to_npc();
@@ -5354,12 +5355,12 @@ int show_hire_menu()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (auto&& cnt : cdata.all())
     {
         if (allyctrl == 2)
         {
-            if (cdata[cnt].state() != character::state_t::pet_dead
-                && cdata[cnt].state() != character::state_t::villager_dead)
+            if (cnt.state() != character::state_t::pet_dead
+                && cnt.state() != character::state_t::villager_dead)
             {
                 continue;
             }
@@ -5370,35 +5371,35 @@ int show_hire_menu()
             {
                 if (allyctrl == 1)
                 {
-                    if (cdata[cnt].state()
+                    if (cnt.state()
                         != character::state_t::servant_being_selected)
                     {
                         continue;
                     }
                 }
             }
-            else if (cdata[cnt].state() != character::state_t::alive)
+            else if (cnt.state() != character::state_t::alive)
             {
                 continue;
             }
-            if (cnt < 16)
+            if (cnt.index < 16)
             {
-                if (cdata[cnt].current_map != gdata_current_map)
+                if (cnt.current_map != gdata_current_map)
                 {
                     continue;
                 }
             }
         }
-        if (cnt == 0)
+        if (cnt.index == 0)
         {
             continue;
         }
-        if (cdata[cnt].is_escorted_in_sub_quest() == 1)
+        if (cnt.is_escorted_in_sub_quest() == 1)
         {
             continue;
         }
-        list(0, listmax) = cnt;
-        list(1, listmax) = -cdata[cnt].level;
+        list(0, listmax) = cnt.index;
+        list(1, listmax) = -cnt.level;
         ++listmax;
     }
     sort_list_by_column1();
@@ -6449,7 +6450,7 @@ void begin_to_believe_god()
     keylog = "";
     listmax = 0;
     chatesc = 2;
-    if (!cdata[0].god_id.empty())
+    if (!cdata.player().god_id.empty())
     {
         if (inv[ci].param1 == 0)
         {
@@ -7050,16 +7051,17 @@ void label_1964()
     buff = "";
     notesel(buff);
     chara_delete(56);
-    cdata[56].piety_point = cdata[0].piety_point;
-    cdata[56].god_id = cdata[0].god_id;
+    cdata.tmp().piety_point = cdata.player().piety_point;
+    cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, rc) = 1;
     }
     apply_god_blessing(56);
-    if (!cdata[0].god_id.empty())
+    if (!cdata.player().god_id.empty())
     {
-        buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
+        buff += u8"<title1>◆ "s
+            + i18n::_(u8"god", cdata.player().god_id, u8"name")
             + u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

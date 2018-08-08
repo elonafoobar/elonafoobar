@@ -46,7 +46,7 @@ talk_result_t talk_unique_orphe()
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.orphe.dialog",
             0,
-            i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex));
+            i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex));
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
@@ -99,7 +99,7 @@ talk_result_t talk_unique_whom_dwell_in_the_vanity()
 
 talk_result_t talk_unique_loyter()
 {
-    if (cdata[0].fame < 20000)
+    if (cdata.player().fame < 20000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.fame_too_low");
@@ -191,7 +191,7 @@ talk_result_t talk_unique_loyter()
         ELONA_TALK_SCENE_CUT();
         gdata_nightmare = 2;
         mdata_map_stair_down_pos =
-            cdata[0].position.y * 1000 + cdata[0].position.x;
+            cdata.player().position.y * 1000 + cdata.player().position.x;
         gdata_destination_map = 5;
         gdata_destination_dungeon_level = 5;
         levelexitby = 2;
@@ -202,13 +202,20 @@ talk_result_t talk_unique_loyter()
     {
         flt();
         nostack = 1;
-        itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
         fixmaterial = 15;
         change_item_material();
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 100000);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            100000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -290,13 +297,17 @@ talk_result_t talk_unique_miches()
     if (gdata_putit_attacks == 2)
     {
         flt(calcobjlv(10), calcfixlv(3));
-        itemcreate(-1, 449, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 449, cdata.player().position.x, cdata.player().position.y, 0);
         flt(calcobjlv(10), calcfixlv(3));
-        itemcreate(-1, 66, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 66, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 3000);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 3000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -379,16 +390,20 @@ talk_result_t talk_unique_shena()
     if (gdata_thieves_hideout == 2)
     {
         flt();
-        itemcreate(-1, 18, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 18, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].count = 12;
         flt();
         nostack = 1;
-        itemcreate(-1, 685, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 685, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 5;
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 1500);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 1500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -575,7 +590,12 @@ talk_result_t talk_unique_lomias()
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
             flt();
-            itemcreate(-1, 14, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                14,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
             listmax = 0;
@@ -668,11 +688,21 @@ talk_result_t talk_unique_lomias()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(-1, 240, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                240,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             inv[ci].param1 = 35;
             inv[ci].param2 = 25;
             flt();
-            itemcreate(-1, 636, cdata[0].position.x, cdata[0].position.y, 2);
+            itemcreate(
+                -1,
+                636,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                2);
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
@@ -766,7 +796,8 @@ talk_result_t talk_unique_lomias()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 204, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 204, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].subname = 9;
         inv[ci].identification_state =
             identification_state_t::completely_identified;
@@ -827,7 +858,8 @@ talk_result_t talk_unique_lomias()
         {
             flt();
             flttypemajor = 60000;
-            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         }
     }
     if (chatval == 3)
@@ -876,13 +908,16 @@ talk_result_t talk_unique_lomias()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 58, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 58, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].curse_state = curse_state_t::cursed;
         flt();
-        itemcreate(-1, 61, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 61, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].curse_state = curse_state_t::none;
         flt();
-        itemcreate(-1, 363, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 363, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].identification_state =
             identification_state_t::completely_identified;
         inv[ci].curse_state = curse_state_t::blessed;
@@ -920,11 +955,13 @@ talk_result_t talk_unique_lomias()
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            chara_create(-1, 3, cdata[0].position.x, cdata[0].position.y);
+            chara_create(
+                -1, 3, cdata.player().position.x, cdata.player().position.y);
             cdata[rc].does_not_search_enemy() = true;
         }
         flt();
-        itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 68, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].identification_state =
             identification_state_t::completely_identified;
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -1011,13 +1048,17 @@ talk_result_t talk_unique_xabi()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 2500);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 2500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 3);
         flt();
-        itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 559, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 621, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 621, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
@@ -1145,7 +1186,8 @@ talk_result_t talk_unique_erystia()
         txt(i18n::s.get(
             "core.locale.talk.unique.erystia.all_stones.you_receive"));
         flt();
-        itemcreate(-1, 360, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 360, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         gdata_main_quest_flag = 125;
         return talk_result_t::talk_end;
@@ -1809,11 +1851,18 @@ talk_result_t talk_unique_paels_mom()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 639, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 639, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 20000);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            20000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 4);
         snd(51);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
@@ -1860,7 +1909,7 @@ talk_result_t talk_unique_paels_mom()
                     i18n::s.get("core.locale.talk.unique.paels_mom.progress."
                                 "festival.give.you_hand_her"));
                 snd(13);
-                modify_karma(0, 20);
+                modify_karma(cdata.player(), 20);
                 listmax = 0;
                 buff = i18n::s.get(
                     "core.locale.talk.unique.paels_mom.progress.festival.give."
@@ -1933,7 +1982,7 @@ talk_result_t talk_unique_paels_mom()
                 i18n::s.get("core.locale.talk.unique.paels_mom.progress.end_"
                             "life.give.you_hand_her"));
             snd(13);
-            modify_karma(0, 20);
+            modify_karma(cdata.player(), 20);
             listmax = 0;
             buff = i18n::s.get(
                 "core.locale.talk.unique.paels_mom.progress.end_life.give."
@@ -2092,12 +2141,12 @@ talk_result_t talk_unique_raphael()
         {
             dmgcon(tcbk, status_ailment_t::insane, 1000);
             f = 1;
-            modify_karma(0, 2);
+            modify_karma(cdata.player(), 2);
         }
         else
         {
             f = 0;
-            modify_karma(0, -15);
+            modify_karma(cdata.player(), -15);
         }
         listmax = 0;
         buff = i18n::s.get(
@@ -2121,7 +2170,12 @@ talk_result_t talk_unique_raphael()
         if (gdata_wife_collector == 1)
         {
             flt();
-            itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
+            itemcreate(
+                -1,
+                54,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                5000);
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             snd(44);
@@ -2132,9 +2186,11 @@ talk_result_t talk_unique_raphael()
         chara_vanquish(rc);
         snd(51);
         flt();
-        itemcreate(-1, 640, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 640, cdata.player().position.x, cdata.player().position.y, 2);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         listmax = 0;
         buff = i18n::s.get(
@@ -2209,11 +2265,14 @@ talk_result_t talk_unique_ainc()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 661, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 661, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 5000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2324,11 +2383,14 @@ talk_result_t talk_unique_rilian()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 641, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 641, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 2500);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 2500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2402,13 +2464,20 @@ talk_result_t talk_unique_tam()
     {
         flt();
         nostack = 1;
-        itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
         fixmaterial = 24;
         change_item_material();
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 25500);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            25500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2439,7 +2508,7 @@ talk_result_t talk_unique_gilbert()
         ELONA_TALK_SCENE_CUT();
         return talk_result_t::talk_end;
     }
-    if (cdata[0].fame < 5000)
+    if (cdata.player().fame < 5000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.fame_too_low");
@@ -2523,7 +2592,7 @@ talk_result_t talk_unique_gilbert()
         ELONA_TALK_SCENE_CUT();
         gdata_defense_line = 2;
         mdata_map_stair_down_pos =
-            cdata[0].position.y * 1000 + cdata[0].position.x;
+            cdata.player().position.y * 1000 + cdata.player().position.x;
         gdata_destination_map = 12;
         gdata_destination_dungeon_level = 4;
         levelexitby = 2;
@@ -2533,11 +2602,18 @@ talk_result_t talk_unique_gilbert()
     if (gdata_defense_line == 3)
     {
         flt();
-        itemcreate(-1, 655, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 655, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 10000);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            10000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2632,7 +2708,7 @@ talk_result_t talk_unique_arnord()
         ELONA_TALK_SCENE_CUT();
         gdata_kamikaze_attack = 2;
         mdata_map_stair_down_pos =
-            cdata[0].position.y * 1000 + cdata[0].position.x;
+            cdata.player().position.y * 1000 + cdata.player().position.x;
         gdata_destination_map = 11;
         gdata_destination_dungeon_level = 25;
         levelexitby = 2;
@@ -2642,11 +2718,14 @@ talk_result_t talk_unique_arnord()
     if (gdata_kamikaze_attack == 3)
     {
         flt();
-        itemcreate(-1, 662, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 662, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 7500);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 7500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2732,11 +2811,14 @@ talk_result_t talk_unique_mia()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 663, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 663, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 5000);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 5000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 3);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 3);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -2744,7 +2826,7 @@ talk_result_t talk_unique_mia()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         gdata_mias_dream = 1000;
-        chara_relocate(chara_find_ally(246), -1);
+        chara_relocate(cdata[chara_find_ally(246)], none);
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
         cdata[rc].character_role = 3;
@@ -2902,13 +2984,33 @@ talk_result_t talk_unique_renton()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(-1, 666, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                666,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             flt();
-            itemcreate(-1, 655, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                655,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             flt();
-            itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 20000);
+            itemcreate(
+                -1,
+                54,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                20000);
             flt();
-            itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
+            itemcreate(
+                -1,
+                55,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                5);
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
             txt(i18n::s.get(
@@ -2935,7 +3037,7 @@ talk_result_t talk_unique_marks()
         ELONA_TALK_SCENE_CUT();
         return talk_result_t::talk_end;
     }
-    if (cdata[0].fame < 3000)
+    if (cdata.player().fame < 3000)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.fame_too_low");
@@ -2954,7 +3056,7 @@ talk_result_t talk_unique_marks()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        if (cdata[0].gold >= 20000)
+        if (cdata.player().gold >= 20000)
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -2978,10 +3080,11 @@ talk_result_t talk_unique_marks()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.journal_updated"));
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        cdata[0].gold -= 20000;
+        cdata.player().gold -= 20000;
         snd(12);
         flt();
-        itemcreate(-1, 24, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 24, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param1 = 13;
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.marks.quest.pay");
@@ -3019,10 +3122,12 @@ talk_result_t talk_unique_noel()
     {
         flt();
         nostack = 1;
-        itemcreate(-1, 672, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 672, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param1 = 162;
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 6);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 6);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -3073,7 +3178,7 @@ talk_result_t talk_unique_noel()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
-    if (cdata[0].gold >= 12000)
+    if (cdata.player().gold >= 12000)
     {
         ELONA_APPEND_RESPONSE(
             1,
@@ -3094,10 +3199,11 @@ talk_result_t talk_unique_noel()
         return talk_result_t::talk_end;
     }
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-    cdata[0].gold -= 12000;
+    cdata.player().gold -= 12000;
     snd(12);
     flt();
-    itemcreate(-1, 671, cdata[0].position.x, cdata[0].position.y, 0);
+    itemcreate(
+        -1, 671, cdata.player().position.x, cdata.player().position.y, 0);
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.noel.quest.buy_nuke.buy");
     tc = tc * 1 + 0;
@@ -3140,7 +3246,8 @@ talk_result_t talk_unique_icolle()
         }
         flt();
         nostack = 1;
-        itemcreate(-1, 685, cdata[0].position.x, cdata[0].position.y, 6);
+        itemcreate(
+            -1, 685, cdata.player().position.x, cdata.player().position.y, 6);
         inv[ci].param2 = 5;
         snd(44);
         txtef(2);
@@ -3217,11 +3324,14 @@ talk_result_t talk_unique_icolle()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         flt();
-        itemcreate(-1, 684, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 684, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 2500);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, 2500);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 2);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -3297,15 +3407,23 @@ talk_result_t talk_unique_balzak()
     if (gdata_sewer_sweeping == 2)
     {
         flt();
-        itemcreate(-1, 686, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 686, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         nostack = 1;
-        itemcreate(-1, 685, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 685, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 30;
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 15000);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            15000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -3488,20 +3606,21 @@ talk_result_t talk_unique_lexus()
         gdata_mages_guild_quota2 = 0;
         flt(51 - gdata(128) / 200);
         flttypemajor = 54000;
-        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         itemcreate(
             -1,
             54,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             10000 - gdata(128) + 1000);
         flt();
         itemcreate(
             -1,
             55,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             clamp(4 - gdata(128) / 2500, 1, 4));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
@@ -3678,20 +3797,21 @@ talk_result_t talk_unique_abyss()
         gdata_thieves_guild_quota2 = 0;
         flt(51 - gdata(128) / 200);
         flttypemajor = 60000;
-        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         itemcreate(
             -1,
             54,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             10000 - gdata(128) + 1000);
         flt();
         itemcreate(
             -1,
             55,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             clamp(3 - gdata(128) / 3000, 1, 3));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
@@ -3757,22 +3877,22 @@ talk_result_t talk_unique_doria()
                 {
                     flt(10);
                     chara_create(56, 0, -3, 0);
-                    if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
+                    if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
                     {
                         continue;
                     }
-                    if (cdata[56].relationship != -3)
+                    if (cdata.tmp().relationship != -3)
                     {
                         continue;
                     }
-                    if (cdata[56].quality >= 4)
+                    if (cdata.tmp().quality >= 4)
                     {
                         continue;
                     }
                     break;
                 }
                 gdata_fighters_guild_quota = 15;
-                gdata_fighters_guild_target = cdata[56].id;
+                gdata_fighters_guild_target = cdata.tmp().id;
                 chara_vanquish(56);
                 listmax = 0;
                 buff = i18n::s.get_enum(
@@ -3865,24 +3985,24 @@ talk_result_t talk_unique_doria()
     {
         while (1)
         {
-            flt(cdata[0].level + 10);
+            flt(cdata.player().level + 10);
             chara_create(56, 0, -3, 0);
-            if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
+            if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
             {
                 continue;
             }
-            if (cdata[56].relationship != -3)
+            if (cdata.tmp().relationship != -3)
             {
                 continue;
             }
-            if (cdata[56].quality >= 4)
+            if (cdata.tmp().quality >= 4)
             {
                 continue;
             }
             break;
         }
         gdata_fighters_guild_quota = 2 + rnd(3);
-        gdata_fighters_guild_target = cdata[56].id;
+        gdata_fighters_guild_target = cdata.tmp().id;
         chara_vanquish(56);
         gdata_fighters_guild_quota2 = 1;
         snd(44);
@@ -3915,20 +4035,21 @@ talk_result_t talk_unique_doria()
         gdata_fighters_guild_quota2 = 0;
         flt(51 - gdata(128) / 200, calcfixlv(3));
         flttypemajor = 10000;
-        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         itemcreate(
             -1,
             54,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             10000 - gdata(128) + 1000);
         flt();
         itemcreate(
             -1,
             55,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             clamp(4 - gdata(128) / 2500, 1, 4));
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
@@ -4013,13 +4134,20 @@ talk_result_t talk_unique_conery()
         ELONA_TALK_SCENE_CUT();
         flt();
         nostack = 1;
-        itemcreate(-1, 630, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 630, cdata.player().position.x, cdata.player().position.y, 0);
         fixmaterial = 31;
         change_item_material();
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, 50000);
+        itemcreate(
+            -1,
+            54,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            50000);
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 4);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 4);
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -4034,7 +4162,7 @@ talk_result_t talk_unique_conery()
 
 talk_result_t talk_unique_rogue_boss()
 {
-    if (cdata[0].gold <= 10)
+    if (cdata.player().gold <= 10)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -4056,14 +4184,14 @@ talk_result_t talk_unique_rogue_boss()
     buff = i18n::s.get(
         "core.locale.talk.unique.rogue_boss.ambush.dialog",
         gdatan(1),
-        (cdata[0].gold / 5),
+        (cdata.player().gold / 5),
         cdata[tc]);
     chatesc = 0;
     talk_window_query();
     if (chatval == 0)
     {
         snd(12);
-        cdata[0].gold -= cdata[0].gold / 5;
+        cdata.player().gold -= cdata.player().gold / 5;
         for (const auto& cnt : items(0))
         {
             if (inv[cnt].number() > 0)
@@ -4111,7 +4239,8 @@ talk_result_t talk_unique_strange_scientist()
         ELONA_TALK_SCENE_CUT();
         gdata_little_sister = 0;
         flt();
-        itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 699, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         snd(44);
         txtef(2);
@@ -4199,7 +4328,7 @@ talk_result_t talk_unique_strange_scientist()
                     }
                     if (f)
                     {
-                        flt(cdata[0].level * 3 / 2, calcfixlv(3));
+                        flt(cdata.player().level * 3 / 2, calcfixlv(3));
                         int stat = itemcreate(-1, cnt, -1, -1, 0);
                         if (stat == 1)
                         {
@@ -4251,7 +4380,12 @@ talk_result_t talk_unique_strange_scientist()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             flt();
-            itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1,
+                699,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
             return talk_result_t::talk_end;
@@ -4384,7 +4518,7 @@ talk_result_t talk_unique_part_time_worker()
     {
         return talk_result_t::talk_end;
     }
-    if (cdata[0].god_id == core_god::jure)
+    if (cdata.player().god_id == core_god::jure)
     {
         listmax = 0;
         buff = i18n::s.get(
@@ -4428,8 +4562,13 @@ talk_result_t talk_unique_part_time_worker()
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
             flt();
-            itemcreate(-1, 767, cdata[0].position.x, cdata[0].position.y, 0);
-            cdata[0].god_id = core_god::int2godid(6);
+            itemcreate(
+                -1,
+                767,
+                cdata.player().position.x,
+                cdata.player().position.y,
+                0);
+            cdata.player().god_id = core_god::int2godid(6);
             switch_religion();
             return talk_result_t::talk_end;
         }
