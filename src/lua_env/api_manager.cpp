@@ -240,9 +240,9 @@ void Magic::cast(
 
     try
     {
-        auto caster =
+        auto& caster =
             lua::lua->get_handle_manager().get_ref<character>(caster_handle);
-        auto target =
+        auto& target =
             lua::lua->get_handle_manager().get_ref<character>(target_handle);
         elona::cc = caster.index;
         elona::tc = target.index;
@@ -1315,7 +1315,7 @@ void LuaCharacter::damage_hp_chara(
     int amount,
     lua_character_handle handle)
 {
-    auto other = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& other = lua::lua->get_handle_manager().get_ref<character>(handle);
     elona::damage_hp(self, amount, other.index);
 }
 

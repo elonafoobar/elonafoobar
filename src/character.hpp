@@ -507,8 +507,23 @@ struct character
         ar(_206);
     }
 
+
+    static void copy(const character& from, character& to)
+    {
+        const auto index_save = to.index;
+        to = from;
+        to.index = index_save;
+    }
+
+
 private:
     character::state_t state_ = character::state_t::empty;
+
+
+    character(const character&) = default;
+    character(character&&) = default;
+    character& operator=(const character&) = default;
+    character& operator=(character&&) = default;
 };
 
 

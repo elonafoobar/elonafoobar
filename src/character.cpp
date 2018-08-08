@@ -602,11 +602,7 @@ void character::set_state(character::state_t new_state)
 
 void character::clear()
 {
-    const auto index_save = index;
-    character tmp{};
-    using std::swap;
-    swap(*this, tmp);
-    index = index_save;
+    copy({}, *this);
 }
 
 
@@ -2097,15 +2093,12 @@ bool chara_copy(const character& source)
     chara_delete(slot);
 
     // Copy from `source` to `destination`.
-    destination = cdata[source.index];
+    character::copy(source, destination);
     sdata.copy(slot, source.index);
     for (int i = 0; i < 10; ++i)
     {
         cdatan(i, slot) = cdatan(i, source.index);
     }
-
-    // Restore overwritten .index field.
-    destination.index = slot;
 
     // Place `destination` to the found free space.
     map(x, y, 1) = slot + 1;
@@ -2270,7 +2263,7 @@ void chara_relocate(
     sdata.copy(slot, source.index);
     sdata.clear(source.index);
 
-    destination = cdata(source.index);
+    character::copy(source, destination);
     source.clear();
 
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -2278,9 +2271,6 @@ void chara_relocate(
         cdatan(cnt, slot) = cdatan(cnt, source.index);
         cdatan(cnt, source.index) = "";
     }
-
-    // Restore overwritten .index field.
-    destination.index = slot;
 
     // Unequip all gears.
     for (size_t i = 0; i < destination.body_parts.size(); ++i)

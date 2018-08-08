@@ -9948,7 +9948,7 @@ void load_gene_files()
     }
     sdata.copy(56, 0);
     sdata.clear(0);
-    cdata(56) = cdata(0);
+    character::copy(cdata.player(), cdata.tmp());
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
