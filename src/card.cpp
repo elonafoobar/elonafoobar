@@ -164,7 +164,9 @@ reset_page:
         if (card(0, list(0, pagesize * page + cs))
             && (p != -1 || key == key_identify))
         {
-            item tmp = inv[ci];
+            const int ci_save = ci;
+            item tmp;
+            item::copy(inv[ci], tmp);
             inv[ci].set_number(0);
             itemcreate(0, 504, -1, -1, 0);
             inv[ci].subname = list(0, pagesize * page + cs);
@@ -175,7 +177,7 @@ reset_page:
             int cs_bk = cs;
             item_show_description();
             inv[ci].set_number(0);
-            inv[tmp.index] = tmp;
+            item::copy(tmp, inv[ci_save]);
             pagesize = pagesize_bk;
             page = page_bk;
             cs = cs_bk;

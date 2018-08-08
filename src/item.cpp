@@ -39,11 +39,13 @@ item::item()
 {
 }
 
+
+
 void item::clear()
 {
-    item tmp;
-    std::swap(*this, tmp);
+    copy({}, *this);
 }
+
 
 
 bool item::almost_equals(const item& other, bool ignore_position)
@@ -453,9 +455,7 @@ void item_copy(int a, int b)
 
     bool created_new = inv[b].number() == 0;
 
-    inv[b] = inv[a];
-    // Restore "index".
-    inv[b].index = b;
+    item::copy(inv[a], inv[b]);
 
     if (created_new)
     {
@@ -467,12 +467,12 @@ void item_copy(int a, int b)
 
 void item_exchange(int a, int b)
 {
-    using std::swap;
-    swap(inv[a], inv[b]);
-    // Restore "index".
-    inv[a].index = a;
-    inv[b].index = b;
+    item tmp;
+    item::copy(inv[a], tmp);
+    item::copy(inv[b], inv[a]);
+    item::copy(tmp, inv[b]);
 }
+
 
 
 void item::remove()

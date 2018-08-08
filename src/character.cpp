@@ -2245,9 +2245,8 @@ void chara_relocate(
                 ci = cnt;
             }
         }
-        inv[cnt] = inv[p];
+        item::copy(inv[p], inv[cnt]);
         inv[p].clear();
-        inv[cnt].index = cnt;
         inv[cnt].body_part = 0;
         ++p;
     }
