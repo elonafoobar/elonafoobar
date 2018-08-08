@@ -2254,6 +2254,7 @@ void chara_relocate(
         }
         inv[cnt] = inv[p];
         inv[p].clear();
+        inv[cnt].index = cnt;
         inv[cnt].body_part = 0;
         ++p;
     }
