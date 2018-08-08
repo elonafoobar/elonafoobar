@@ -218,3 +218,41 @@ Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
 }
+
+TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
+{
+    elona::lua::lua_env lua;
+    lua.get_mod_manager().load_mods(
+        filesystem::dir::mods(),
+        filesystem::dir::exe() / u8"tests/data/mods/test_require_chunks");
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require_chunks", R"(
+local a = require("data/script")
+local b = require("data/script")
+
+assert(a.value() == 0)
+assert(b.value() == 0)
+
+a.increment_locally()
+
+assert(a.value() == 1)
+assert(b.value() == 1)
+)"));
+}
+
+TEST_CASE(
+    "Test requiring Lua chunk outside of current directory",
+    "[Lua: Mods]")
+{
+    elona::lua::lua_env lua;
+    lua.get_mod_manager().load_mods(
+        filesystem::dir::mods(),
+        filesystem::dir::exe() / u8"tests/data/mods/test_require");
+
+    // Attempts to load a file outside the mod's directory.
+    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require", R"(
+local a = require("../test_require_chunks/data/script")
+
+assert(a == nil)
+)"));
+}
