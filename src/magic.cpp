@@ -193,6 +193,8 @@ int magic()
             {
             case 10:
                 ranged_attack_animation(
+                    cdata[cc],
+                    cdata[tc],
                     ranged_attack_animation::type_t::distant_attack)
                     .play();
                 try_to_melee_attack();
@@ -304,10 +306,12 @@ int magic()
                 }
                 if (efid != 404 && efid != 637)
                 {
-                    aniref = range_;
-                    anix = tlocx;
-                    aniy = tlocy;
-                    ball_animation(ball_animation::type_t::ball).play();
+                    ball_animation(
+                        {tlocx, tlocy},
+                        range_,
+                        ball_animation::type_t::ball,
+                        ele)
+                        .play();
                 }
                 for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                      ++cnt)
@@ -511,6 +515,8 @@ int magic()
                 goto the_end;
             case 2:
                 ranged_attack_animation(
+                    cdata[cc],
+                    cdata[tc],
                     ranged_attack_animation::type_t::magic_arrow)
                     .play();
                 dmg = roll(dice1, dice2, bonus);

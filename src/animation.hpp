@@ -1,5 +1,6 @@
 #pragma once
 
+#include "optional.hpp"
 #include "position.hpp"
 
 
@@ -28,6 +29,7 @@ protected:
 
 
 struct character;
+struct item;
 
 class failure_to_cast_animation : public abstract_animation
 {
@@ -109,8 +111,15 @@ public:
     };
 
 
-    ball_animation(type_t type)
-        : type(type)
+    ball_animation(
+        const position_t& position,
+        int range,
+        type_t type,
+        int element = 0)
+        : position(position)
+        , range(range)
+        , type(type)
+        , element(element)
     {
     }
 
@@ -120,7 +129,10 @@ protected:
 
 
 private:
+    const position_t& position;
+    int range;
     type_t type;
+    int element;
 };
 
 
@@ -128,9 +140,10 @@ private:
 class bolt_animation : public abstract_animation
 {
 public:
-    bolt_animation(const character& attacker, int element)
+    bolt_animation(const character& attacker, int element, int effect_id)
         : attacker(attacker)
         , element(element)
+        , effect_id(effect_id)
     {
     }
 
@@ -142,6 +155,7 @@ protected:
 private:
     const character& attacker;
     int element;
+    int effect_id;
 };
 
 
@@ -149,8 +163,15 @@ private:
 class throwing_object_animation : public abstract_animation
 {
 public:
-    throwing_object_animation(const character& target)
-        : target(target)
+    throwing_object_animation(
+        const position_t& origin,
+        const character& target,
+        int item_chip,
+        int item_color)
+        : origin(origin)
+        , target(target)
+        , item_chip(item_chip)
+        , item_color(item_color)
     {
     }
 
@@ -160,7 +181,10 @@ protected:
 
 
 private:
+    const position_t& origin;
     const character& target;
+    int item_chip;
+    int item_color;
 };
 
 
@@ -198,8 +222,15 @@ public:
     };
 
 
-    ranged_attack_animation(type_t type)
-        : type(type)
+    ranged_attack_animation(
+        const character& attacker,
+        const character& target,
+        type_t type,
+        const optional<item&> fired = none)
+        : attacker(attacker)
+        , target(target)
+        , type(type)
+        , fired(fired)
     {
     }
 
@@ -209,7 +240,10 @@ protected:
 
 
 private:
+    const character& attacker;
+    const character& target;
     type_t type;
+    const optional<item&> fired;
 };
 
 
@@ -217,27 +251,45 @@ private:
 class melee_attack_animation : public abstract_animation
 {
 public:
-    melee_attack_animation()
+    melee_attack_animation(
+        const character& target,
+        int attack_skill,
+        int damage_percent,
+        bool is_critical)
+        : target(target)
+        , attack_skill(attack_skill)
+        , damage_percent(damage_percent)
+        , is_critical(is_critical)
     {
     }
 
 
 protected:
     virtual void do_play() override;
+
+private:
+    const character& target;
+    int attack_skill;
+    int damage_percent;
+    bool is_critical;
 };
 
 
 
-class geen_engineering_animation : public abstract_animation
+class gene_engineering_animation : public abstract_animation
 {
 public:
-    geen_engineering_animation()
+    gene_engineering_animation(const character& target)
+        : target(target)
     {
     }
 
 
 protected:
     virtual void do_play() override;
+
+private:
+    const character& target;
 };
 
 
@@ -293,8 +345,9 @@ protected:
 class breaking_animation : public abstract_animation
 {
 public:
-    breaking_animation(const position_t& position)
+    breaking_animation(const position_t& position, int type)
         : position(position)
+        , type(type)
     {
     }
 
@@ -305,6 +358,7 @@ protected:
 
 private:
     position_t position;
+    int type;
 };
 
 

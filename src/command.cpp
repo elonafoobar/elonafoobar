@@ -608,11 +608,9 @@ turn_result_t do_throw_command()
             }
         }
     }
-    aniref(0) = inv[ci].image;
-    aniref(1) = inv[ci].color;
-    anix = tlocx;
-    aniy = tlocy;
-    throwing_object_animation(cdata[cc]).play();
+    throwing_object_animation(
+        {tlocx, tlocy}, cdata[cc], inv[ci].image, inv[ci].color)
+        .play();
     ti = inv_getfreeid(-1);
     inv[ci].modify_number(-1);
     if (inv[ci].id == 685)
@@ -2486,7 +2484,7 @@ turn_result_t do_use_command()
             cdata[rc],
             cdata[tc]));
         anic = rc;
-        geen_engineering_animation().play();
+        gene_engineering_animation(cdata[anic]).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)

@@ -1213,7 +1213,7 @@ void play_throwing_object(lua_character_handle);
 void play_swarm(lua_character_handle);
 void play_ranged_attack();
 void play_melee_attack();
-void play_gene_engineering();
+void play_gene_engineering(lua_character_handle);
 void play_miracle();
 void play_meteor();
 void play_ragnarok();
@@ -1270,9 +1270,10 @@ void Animation::play_melee_attack()
     melee_attack_animation().play();
 }
 
-void Animation::play_gene_engineering()
+void Animation::play_gene_engineering(lua_character_handle handle)
 {
-    geen_engineering_animation().play();
+    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
+    gene_engineering_animation(target).play();
 }
 
 void Animation::play_miracle()

@@ -771,10 +771,9 @@ void proc_event()
         tlocy = evdata2(evnum - (evnum != 0) * 1);
         range_ = 31;
         ele = 59;
-        aniref = range_;
-        anix = tlocx;
-        aniy = tlocy;
-        ball_animation(ball_animation::type_t::atomic_bomb).play();
+        ball_animation(
+            {tlocx, tlocy}, range_, ball_animation::type_t::atomic_bomb, ele)
+            .play();
         update_screen();
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {

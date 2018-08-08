@@ -10702,10 +10702,9 @@ label_21451_internal:
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.activate.mine"));
-                    aniref = 0;
-                    anix = movx;
-                    aniy = movy;
-                    ball_animation(ball_animation::type_t::ball).play();
+                    ball_animation(
+                        {movx, movy}, 0, ball_animation::type_t::ball, ele)
+                        .play();
                     cell_featset(movx, movy, 0);
                     damage_hp(cdata[cc], 100 + rnd(200), -1);
                 }
@@ -14387,9 +14386,11 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        aniref = cw;
         ranged_attack_animation(
-            static_cast<ranged_attack_animation::type_t>(attackskill))
+            cdata[cc],
+            cdata[tc],
+            static_cast<ranged_attack_animation::type_t>(attackskill),
+            inv[cw])
             .play();
     }
     if (attacknum > 1 || cc != 0)
@@ -14416,8 +14417,10 @@ label_22191_internal:
         {
             if (config::instance().attackanime)
             {
-                aniref = dmg * 100 / cdata[tc].max_hp;
-                melee_attack_animation().play();
+                int damage_percent = dmg * 100 / cdata[tc].max_hp;
+                melee_attack_animation(
+                    cdata[tc], attackskill, damage_percent, critical)
+                    .play();
             }
         }
         if (attackskill != 106)
