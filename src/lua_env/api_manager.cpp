@@ -1206,10 +1206,12 @@ void Math::bind(sol::table& Elona)
 namespace Animation
 {
 void play_failure_to_cast(lua_character_handle);
+void play_bright_aura(lua_character_handle, int);
 void play_breath(lua_character_handle, int);
-void play_ball(bool);
+void play_ball_atomic_bomb(const position_t&, int);
+void play_ball_magic(const position_t&, int, int);
 void play_bolt(lua_character_handle, int);
-void play_throwing_object(lua_character_handle);
+void play_throwing_object(const position_t&, lua_character_handle, int, int);
 void play_swarm(lua_character_handle);
 void play_ranged_attack();
 void play_melee_attack();
@@ -1228,29 +1230,46 @@ void Animation::play_failure_to_cast(lua_character_handle handle)
     failure_to_cast_animation(caster).play();
 }
 
+void Animation::play_breath(lua_character_handle handle, int type)
+{
+    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto anim_type = static_cast<bright_aura_animation::type_t>(type);
+    bright_aura_animation(target, anim_type).play();
+}
+
 void Animation::play_breath(lua_character_handle handle, int element)
 {
     auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
     breath_animation(attacker, element).play();
 }
 
-void Animation::play_ball(bool is_atomic_bomb)
+void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
 {
-    auto type = is_atomic_bomb ? ball_animation::type_t::atomic_bomb
-                               : ball_animation::type_t::ball;
-    ball_animation(type).play();
+    ball_animation(pos, range, ball_animation::type_t::atomic_bomb).play();
 }
 
-void Animation::play_bolt(lua_character_handle handle, int element)
+void Animation::play_ball_magic(const position_t& pos, int range, int element)
+{
+    ball_animation(pos, range, ball_animation::type_t::ball, element).play();
+}
+
+void Animation::play_bolt(
+    lua_character_handle handle,
+    int element,
+    int distance)
 {
     auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
-    bolt_animation(attacker, element).play();
+    bolt_animation(attacker, element, distance).play();
 }
 
-void Animation::play_throwing_object(lua_character_handle handle)
+void Animation::play_throwing_object(
+    const position_t& origin,
+    lua_character_handle handle,
+    int item_chip,
+    int item_color)
 {
     auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
-    throwing_object_animation(target, element).play();
+    throwing_object_animation(origin, target, item_chip, item_color).play();
 }
 
 void Animation::play_swarm(lua_character_handle handle)
@@ -1259,21 +1278,30 @@ void Animation::play_swarm(lua_character_handle handle)
     swarm_animation(target, element).play();
 }
 
-void Animation::play_ranged_attack(int type)
+void Animation::play_ranged_attack(
+    const position_t& start,
+    const position_t& end,
+    int type)
 {
     auto anim_type = static_cast<ranged_attack_animation::type_t>(type);
-    ranged_attack_animation(anim_type).play();
+    ranged_attack_animation(start, end, anim_type).play();
 }
 
-void Animation::play_melee_attack()
+void Animation::play_melee_attack(
+    const position_t& pos,
+    bool debris,
+    int attack_skill,
+    int damage_percent,
+    bool is_critical)
 {
-    melee_attack_animation().play();
+    melee_attack_animation(
+        pos, debris, attack_skill, damage_percent, is_critical)
+        .play();
 }
 
-void Animation::play_gene_engineering(lua_character_handle handle)
+void Animation::play_gene_engineering(const position_t& pos)
 {
-    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
-    gene_engineering_animation(target).play();
+    gene_engineering_animation(pos).play();
 }
 
 void Animation::play_miracle()

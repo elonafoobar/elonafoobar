@@ -208,7 +208,10 @@ int magic()
                     goto the_end;
                 }
             }
-                bolt_animation(cdata[cc], ele).play();
+                {
+                    int distance = the_ability_db[efid]->sdataref3 % 1000 + 1;
+                    bolt_animation(cdata[cc], ele).play();
+                }
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 for (int cnt = 0; cnt < 20; ++cnt)

@@ -62,8 +62,8 @@ public:
     };
 
 
-    bright_aura_animation(const character& cc, type_t type)
-        : cc(cc)
+    bright_aura_animation(const character& target, type_t type)
+        : target(target)
         , type(type)
     {
     }
@@ -74,7 +74,7 @@ protected:
 
 
 private:
-    const character& cc;
+    const character& target;
     type_t type;
 };
 
@@ -140,10 +140,10 @@ private:
 class bolt_animation : public abstract_animation
 {
 public:
-    bolt_animation(const character& attacker, int element, int effect_id)
+    bolt_animation(const character& attacker, int element, int distance)
         : attacker(attacker)
         , element(element)
-        , effect_id(effect_id)
+        , distance(distance)
     {
     }
 
@@ -155,7 +155,7 @@ protected:
 private:
     const character& attacker;
     int element;
-    int effect_id;
+    int distance;
 };
 
 

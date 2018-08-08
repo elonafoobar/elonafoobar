@@ -255,7 +255,7 @@ void bright_aura_animation::do_play()
 {
     constexpr auto max_particles = 15;
 
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(target) == 0)
         return;
 
     // Load image and play sound.
@@ -273,7 +273,7 @@ void bright_aura_animation::do_play()
         break;
     }
 
-    const auto base_pos = rendering_base_position(cc);
+    const auto base_pos = rendering_base_position(target);
 
     // Store part of the previous screen.
     gsel(4);
@@ -544,8 +544,7 @@ void bolt_animation::do_play()
                 ap(20) = 4;
                 continue;
             }
-            if (dist(x, y, attacker.position)
-                > the_ability_db[effect_id]->sdataref3 % 1000 + 1)
+            if (dist(x, y, attacker.position) > distance)
             {
                 ap(t) = -2;
                 ap(20) = 4;
