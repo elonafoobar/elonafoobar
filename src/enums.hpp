@@ -2,6 +2,7 @@
 
 
 
+// NOTE: If anything is changed, be sure to update lua_env/lua_enums.hpp.
 namespace elona
 {
 

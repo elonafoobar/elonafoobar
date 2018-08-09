@@ -23,7 +23,7 @@ enum class element_t
     nerve = 58,
     magic = 60,
     cut = 61,
-    ehter = 62,
+    ether = 62,
     acid = 63,
 };
 
