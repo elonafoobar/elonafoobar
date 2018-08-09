@@ -9,10 +9,14 @@
 
 --- Constructs a new LuaPosition.
 -- @treturn LuaPosition a LuaPosition of value (0, 0)
+-- @usage local LuaPosition = Elona.require("LuaPosition")
+--local pos = LuaPosition.new()
 function new() end
 
 --- Constructs a new LuaPosition.
 -- @tparam num x the x coordinate
 -- @tparam num y the y coordinate
--- @treturn LuaPosition the created LuaPosition
+-- @treturn LuaPosition a LuaPosition of value (x, y)
+-- @usage local LuaPosition = Elona.require("LuaPosition")
+--local pos = LuaPosition.new(4, 8)
 function new(x, y) end
