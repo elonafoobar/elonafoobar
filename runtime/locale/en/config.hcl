@@ -145,7 +145,7 @@ locale {
                     yes_no = core.locale.config.common.yes_no.high_low
                 }
                 object_shadows {
-                    name = "object Shadow"
+                    name = "Object Shadow"
                     doc = "Display shadows under items on the ground."
                     yes_no = core.locale.config.common.yes_no.slow_fast
                 }

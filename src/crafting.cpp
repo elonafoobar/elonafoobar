@@ -1166,7 +1166,7 @@ label_1857_internal:
         flt(calcobjlv(sdata(matval, 0)), calcfixlv(fixlv));
         nostack = 1;
         itemcreate(0, p, -1, -1, 0);
-        txt(i18n::s.get("core.locale.crafting.you_produced", inv[ci]));
+        txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
         item_stack(0, ci, 0);
         r2 = matuse;
         gain_crafting_experience(matval);

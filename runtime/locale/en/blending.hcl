@@ -18,7 +18,7 @@ locale {
             required_skills = "Required Skills:"
             required_equipment = "Required equipment:"
             havent_identified = "You haven't identified it yet."
-            no_inheritance_effects = "No inheritance effects"
+            no_inherited_effects = "No inherited effects"
         }
 
         prompt {

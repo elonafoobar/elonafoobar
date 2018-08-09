@@ -21,6 +21,6 @@ locale {
         }
 
         you_do_not_meet_requirements = "生産の条件を満たしてない。"
-        you_produced = "${itemname(_1, 1)}を製造した。"
+        you_crafted = "${itemname(_1, 1)}を製造した。"
     }
 }

@@ -11,7 +11,7 @@ locale {
 
             skills {
                 _178 = "Alchemy"
-                _176 = "Carpentory"
+                _176 = "Carpentry"
                 _179 = "Jewelling"
                 _177 = "Tailoring"
             }
@@ -21,6 +21,6 @@ locale {
         }
 
         you_do_not_meet_requirements = "You don't meet requirements to create the item."
-        you_produced = "You producted ${itemname(_1, 1)}."
+        you_crafted = "You crafted ${itemname(_1, 1)}."
     }
 }

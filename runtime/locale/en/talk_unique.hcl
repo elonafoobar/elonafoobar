@@ -607,7 +607,7 @@ locale {
                     do_it = "Great! I'm sure he's lost in that cave he always plays in. The cave is just outside the east side of town. Thanks in advance."
                     bye = "Poppy..."
                     waiting = "Where's Poppy?"
-                    end = "Poppy you're safe！ Thank you adventurer, you can have this..."
+                    end = "Poppy you're safe! Thank you adventurer, you can have this..."
                 }
             }
 
@@ -622,7 +622,7 @@ locale {
                         no = "None of my business."
                     }
 
-                    yes = "Thank God. My house is south from hear. Be careful, for it is unknown what inhabits my home."
+                    yes = "Thank God. My house is south from here. Be careful, for it is unknown what inhabits my home."
                     no = "Uh...fine..."
                     waiting = "Is my home safe from the cats?"
                     end = "What? An evil cat tamer? My God...I have no idea why such a creature took over my home. But uh...thanks anyway."

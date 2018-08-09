@@ -238,7 +238,7 @@ locale {
             prefix {
                 type_a {
                     _0 = "Beginner's "
-                    _1 = "Adventurer's"
+                    _1 = "Adventurer's "
                     _2 = "Dangerous "
                     _3 = "Fearful "
                     _4 = "King's "

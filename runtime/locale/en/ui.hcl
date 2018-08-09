@@ -393,13 +393,12 @@ locale {
         politics {
             law = "Law"
             global = "Global"
-            law_of = "Law of ${_1})"
+            law_of = "Law of ${_1}"
 
-            # TODO
-            name = "この国の首都は${_1}だ。"
-            taxes = "この街の消費税は${_1}%だ。"
-            well_pollution = "この街の井戸水の汚染は深刻だ(死者${_1}人）。"
-            lawless = "この街では殺人が許される。"
+            name = "The capital of this country is ${_1}."
+            taxes = "The consumption tax in this city is ${_1}%."
+            well_pollution = "The well is polluted. (${_1} people have died)"
+            lawless = "Murder is allowed in this city."
         }
 
         ally_list {

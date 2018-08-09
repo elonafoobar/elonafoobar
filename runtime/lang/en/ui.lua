@@ -200,6 +200,14 @@ ui.sex2 = {
   _0 = "boy",
   _1 = "girl",
 }
+ui.onii = {
+  _0 = "brother",
+  _1 = "sister",
+}
+ui.syujin = {
+  _0 = "my master",
+  _1 = "my lady",
+}
 ui.male = "male"
 ui.female = "female"
 ui.bye = "Bye bye."
@@ -325,7 +333,7 @@ ui.cheer_up_message = {
   _3 = "Kumiromi worries, \"Are you...okay..?\"",
   _4 = "Lulwy sneers, \"You're tougher than I thought, little kitty.\"",
   _5 = "Larnneire cries, \"No...before it is too late...\"",
-  _6 = "Lomias grins, \"Tt hasn't even started yet... hasn't it?\"",
+  _6 = "Lomias grins, \"It hasn't even started yet... hasn't it?\"",
   _7 = "Lulwy warns you, \"Have a rest, kitty. If you are broken, you're no use to me.\"",
   _8 = "Lulwy laughs, \"I guess there's no use warning you. Alright. Do as you please, kitty.\"",
   _12 = "Opatos laughs, \"Muwahahahahahaha!\"",
@@ -340,16 +348,16 @@ ui.autodig = {
 
 ui.autopick = {
   do_you_really_pick_up = function(_, item_name)
-    return "Do you really pick " .. item_name .. " up?"
+    return "Pick up " .. item_name .. "?"
   end,
   do_you_really_destroy = function(_, item_name)
-    return "Do you really destroy " .. item_name .. "?"
+    return "Destroy " .. item_name .. "?"
   end,
   destroyed = function(_, item_name)
-    return "" .. item_name .. " is destroyed."
+    return item_name .. " was destroyed."
   end,
   do_you_really_open = function(_, item_name)
-    return "Do you really open " .. item_name .. "?"
+    return "Open " .. item_name .. "?"
   end,
 }
 

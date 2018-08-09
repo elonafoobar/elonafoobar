@@ -47,7 +47,7 @@ locale {
                 name = "Name"
 
                 resist = "Fi Co Li Da Mi Po Nt So Nr Ch Ma"
-                total_weight = "Weight ${_1}/${_2} Cargo ${_3}"
+                total_weight = "Weight ${_1}/${_2}  Cargo ${_3}"
 
                 ground = "Ground"
                 main_hand = "Main hand"

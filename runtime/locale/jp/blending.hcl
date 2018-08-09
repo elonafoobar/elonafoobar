@@ -18,7 +18,7 @@ locale {
             required_skills = "必要なスキル:"
             required_equipment = "必要な機材:"
             havent_identified = "このアイテムは鑑定されていない。"
-            no_inheritance_effects = "継承効果なし"
+            no_inherited_effects = "継承効果なし"
         }
 
         prompt {

@@ -661,7 +661,7 @@ If you vomit too much in a short period, you will suffer anorexia. When you get 
 A blessed potion of restore body or restore spirit will enchance your body or spirit.
 Throw cursed potions of restore body or restore spirit at powerful opponents.
 You *should* bless the hermes blood before drinking it!
-It would be really bad if something wrong happenes when you cast the return spell.
+It would be really bad if something wrong happens when you cast the return spell.
 %END
 
 %COOKIE2,JP

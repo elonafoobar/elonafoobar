@@ -75,7 +75,7 @@ locale {
             _46 = "disturbs your growth."
             _47 = "attracts monsters."
             _48 = "prevents aliens from entering your body."
-            _49 = "increases the qualitiy of reward."
+            _49 = "increases the quality of reward."
             _50 = "increases the chance of extra melee attack."
             _51 = "increases the chance of extra ranged attack."
             _52 = "decreases physical damage you take."

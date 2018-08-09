@@ -56,7 +56,7 @@ locale {
             _1 {
                 text = "Mani is a clockwork god of machinery. Those faithful to Mani<br>receive immense knowledge of machines and learn a way to use them<br>effectively.<p>"
                 offering = "Corpses/Guns/Machinery<p>"
-                bonus = "DEX/PER/Gun/Jeweller/Lockpick/Carpentry<p>"
+                bonus = "DEX/PER/Gun/Healing/Detection/Jeweller/Lockpick/Carpentry<p>"
                 ability = "Mani's decomposition (Passive: Extract materials<br>from traps.)<p>"
             }
 
@@ -96,7 +96,7 @@ locale {
             _6 {
                 text = "Jure is a god of healing. Those faithful to Jure can heal wounds.<p><p>"
                 offering = "Corpses/Ores<p>"
-                bonus = "WIL/Healing/Anatomy/Cooking/Magic Device/Magic Capacity<p>"
+                bonus = "WIL/Healing/Meditation/Anatomy/Cooking/Magic Device/Magic Capacity<p>"
                 ability = "Prayer of Jure (Heal yourself.)<p>"
             }
 

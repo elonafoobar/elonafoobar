@@ -142,7 +142,7 @@ locale {
             displace {
                 text = "You displace ${name(_1)}."
                 dialog {
-                    _0 = "\"Ops, sorry.\""
+                    _0 = "\"Oops, sorry.\""
                     _1 = "\"Watch it.\""
                 }
             }
@@ -186,6 +186,7 @@ locale {
                         magic = "magic"
                     }
                     growth {
+                        # TODO They always use "a" even if "${_1}" begins with a vowel.
                         seed = "A ${_1} seed is planted."
                         bud = "A ${_1} bud is growing."
                         tree = "A ${_1} tree has bore a lot of fruit."
@@ -600,13 +601,13 @@ locale {
 
                 natural_potion = "You draw water from the well into the empty bottle."
                 natural_potion_dry = "${itemname(_1)} is dry."
-                natural_potion_drop = "Ops! You drop the empty bottle into the well..."
+                natural_potion_drop = "Oops! You drop the empty bottle into the well..."
             }
         }
 
         plant {
             cannot_plant_it_here = "You can't plant it here."
-            in_field = "You plant ${itemname(_1, 1)}."
+            on_field = "You plant ${itemname(_1, 1)} on the field."
             execute = "You plant ${itemname(_1, 1)}."
             new_plant_grows = "A new plant grows!"
             harvest = "You harvest ${itemname(_1, 1)}."

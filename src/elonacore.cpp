@@ -15185,7 +15185,7 @@ turn_result_t do_plant()
     try_to_grow_plant(val0);
     if (val0)
     {
-        s = i18n::s.get("core.locale.action.plant.in_field", inv[ci]);
+        s = i18n::s.get("core.locale.action.plant.on_field", inv[ci]);
     }
     else
     {
