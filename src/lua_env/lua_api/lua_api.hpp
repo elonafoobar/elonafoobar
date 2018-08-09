@@ -1,7 +1,8 @@
 #pragma once
+#include "lua_api_common.hpp"
+
 #include "lua_api_animation.hpp"
 #include "lua_api_chara.hpp"
-#include "lua_api_common.hpp"
 #include "lua_api_debug.hpp"
 #include "lua_api_fov.hpp"
 #include "lua_api_gui.hpp"

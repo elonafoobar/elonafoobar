@@ -168,6 +168,11 @@ set(CORE_SOURCES
   src/lua_env/lua_api/lua_api_trait.cpp
   src/lua_env/lua_api/lua_api_world.cpp
 
+  src/lua_env/lua_class/lua_class_character.cpp
+  src/lua_env/lua_class/lua_class.cpp
+  src/lua_env/lua_class/lua_class_item.cpp
+  src/lua_env/lua_class/lua_class_position.cpp
+
   src/pic_loader/pic_loader.cpp
 
   src/version.cpp
