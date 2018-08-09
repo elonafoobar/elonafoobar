@@ -88,9 +88,6 @@ public:
      */
     sol::table get_api_table();
 
-    int get_enum_value(const std::string& enum_name, const std::string& variant)
-        const;
-
 private:
     /***
      * Returns true if the Elona table has already been loaded into

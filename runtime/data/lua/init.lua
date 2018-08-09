@@ -2,7 +2,6 @@
 --- Don't change anything here unless you know what you're doing!
 
 Elona.core.Debug.inspect = require "inspect"
-Elona.core.Enums = require "enums"
 Elona.core.HCL = require "hclua"
 Elona.core.Iter = require "iter"
 Elona.core.Math = require "math_ext"

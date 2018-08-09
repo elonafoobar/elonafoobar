@@ -63,9 +63,9 @@ local function run_life()
          for x = 1, Map.height() do
             local tile
             if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
-               tile = Map.generate_tile(Enums.TileKind.Wall)
+               tile = Map.generate_tile("Wall")
             else
-               tile = Map.generate_tile(Enums.TileKind.Room)
+               tile = Map.generate_tile("Room")
             end
             Map.set_tile(x, y, tile)
             Map.set_tile_memory(x, y, tile)
@@ -113,9 +113,9 @@ Next we iterate over every x-y pair in the map. Since there is only ever one map
 ```
             local tile
             if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
-               tile = Map.generate_tile(Enums.TileKind.Wall)
+               tile = Map.generate_tile("Wall")
             else
-               tile = Map.generate_tile(Enums.TileKind.Room)
+               tile = Map.generate_tile("Room")
             end
             Map.set_tile(x, y, tile)
             Map.set_tile_memory(x, y, tile)
