@@ -208,7 +208,7 @@ locale {
 
             _2 {
                 title = "Wizard's Dream"
-                text = "In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishs. You feel the effects of a faint headache."
+                text = "In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishes. You feel the effects of a faint headache."
 
                 choices {
                     _0 = "A weird dream."

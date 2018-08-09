@@ -32,7 +32,7 @@ locale {
             dialog {
                 interest {
                     _0 = "${name(_1)} clap${s(_1)}."
-                    _1 = "${name(_1)} listene${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
+                    _1 = "${name(_1)} listen${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
                     _2 = "\"Bravo!\""
                     _3 = "\"Nice song.\""
                     _4 = "\"Scut!\""
@@ -212,7 +212,7 @@ locale {
             }
 
             lose = "You lose ${_1} ${_2}${s(_1)}."
-            lose_total = "(Total:${_1}) "
+            lose_total = "(Total: ${_1}) "
 
             digging {
                 fails = "Your mining attempt fails."

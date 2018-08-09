@@ -60,7 +60,7 @@ locale {
             name = "breastplate"
             description {
                 main {
-                    text = "An armor that offer's decent protection,"
+                    text = "An armor that offers decent protection,"
                 }
             }
         }
@@ -84,7 +84,7 @@ locale {
             name = "thick gauntlets"
             description {
                 main {
-                    text = "A pair of gauntlet's made mostly of thick leather,"
+                    text = "A pair of gauntlets made mostly of thick leather,"
                 }
             }
         }
@@ -92,7 +92,7 @@ locale {
             name = "heavy boots"
             description {
                 main {
-                    text = "Boot's made for travel,"
+                    text = "Boots made for travel,"
                 }
             }
         }
@@ -100,7 +100,7 @@ locale {
             name = "composite boots"
             description {
                 main {
-                    text = "A pair of boot's with an armored mesh,"
+                    text = "A pair of boots with an armored mesh,"
                 }
             }
         }
@@ -164,7 +164,7 @@ locale {
             name = "teleportation"
             description {
                 main {
-                    text = "A yellowed tome who's words seem to move on their own/"
+                    text = "A yellowed tome whose words seem to move on their own/"
                 }
             }
         }
@@ -172,7 +172,7 @@ locale {
             name = "identify"
             description {
                 main {
-                    text = "A yellowed tome that contain's the secret of any item,"
+                    text = "A yellowed tome that contains the secret of any item,"
                 }
             }
         }
@@ -198,7 +198,7 @@ locale {
             unidentified_name = "book"
             description {
                 main {
-                    text = "A book with watermark's,"
+                    text = "A book with watermarks,"
                 }
             }
         }
@@ -281,7 +281,7 @@ locale {
             name = "lightning bolt"
             description {
                 main {
-                    text = "This tome let's off a static discharge,"
+                    text = "This tome lets off a static discharge,"
                 }
             }
         }
@@ -345,7 +345,7 @@ locale {
             name = "washing"
             description {
                 main {
-                    text = "North Tyris law's have harsh penalties for polluting water,"
+                    text = "North Tyris laws have harsh penalties for polluting water,"
                 }
             }
         }
@@ -361,7 +361,7 @@ locale {
             name = "flag"
             description {
                 main {
-                    text = "Come's with it's own support so it does not touch the ground,"
+                    text = "Comes with its own support so it does not touch the ground,"
                 }
             }
         }
@@ -369,7 +369,7 @@ locale {
             name = "broken sword"
             description {
                 main {
-                    text = "The material's can probably be salvaged,"
+                    text = "The materials can probably be salvaged,"
                 }
             }
         }
@@ -377,7 +377,7 @@ locale {
             name = "bone fragment"
             description {
                 main {
-                    text = "Some bone's are valuable"
+                    text = "Some bones are valuable"
                 }
             }
         }
@@ -409,7 +409,7 @@ locale {
             name = "platinum coin"
             description {
                 main {
-                    text = "Rare coin's used by the guild's for currency,"
+                    text = "Rare coins used by the guilds for currency,"
                 }
             }
         }
@@ -517,7 +517,7 @@ locale {
             name = "cure minor wound"
             description {
                 main {
-                    text = "A potion that cure's some wounds,"
+                    text = "A potion that cures some wounds,"
                 }
             }
         }
@@ -525,7 +525,7 @@ locale {
             name = "cure major wound"
             description {
                 main {
-                    text = "A potion that cure's some wounds,"
+                    text = "A potion that cures some wounds,"
                 }
             }
         }
@@ -533,7 +533,7 @@ locale {
             name = "cure critical wound"
             description {
                 main {
-                    text = "A potion that cure's some wounds,"
+                    text = "A potion that cures some wounds,"
                 }
             }
         }
@@ -541,7 +541,7 @@ locale {
             name = "healing"
             description {
                 main {
-                    text = "A potion that cure's some wounds,"
+                    text = "A potion that cures some wounds,"
                 }
             }
         }
@@ -549,7 +549,7 @@ locale {
             name = "healer"
             description {
                 main {
-                    text = "A potion that cure's some wounds,"
+                    text = "A potion that cures some wounds,"
                 }
             }
         }
@@ -558,7 +558,7 @@ locale {
             unidentified_name = "sword that ends all"
             description {
                 main {
-                    text = "It's said that only a god can use it's true power,"
+                    text = "It's said that only a god can use its true power,"
                 }
             }
         }
@@ -566,7 +566,7 @@ locale {
             name = "healer <Odina>"
             description {
                 main {
-                    text = "A potion made by a talented alchemist cure's some wounds,"
+                    text = "A potion made by a talented alchemist cures some wounds,"
                 }
             }
         }
@@ -574,7 +574,7 @@ locale {
             name = "healer <Eris>"
             description {
                 main {
-                    text = "A potion made by a talented alchemist cure's some wounds,"
+                    text = "A potion made by a talented alchemist cures some wounds,"
                 }
             }
         }
@@ -582,7 +582,7 @@ locale {
             name = "healer <Jure>"
             description {
                 main {
-                    text = "A potion who's formula was created by Jure herself,"
+                    text = "A potion whose formula was created by Jure herself,"
                 }
             }
         }
@@ -766,7 +766,7 @@ locale {
             name = "academic table"
             description {
                 main {
-                    text = "A desk used for student's in Asseria school's,"
+                    text = "A desk used for students in Asseria schools,"
                 }
             }
         }
@@ -809,7 +809,7 @@ locale {
             name = "neat shelf"
             description {
                 main {
-                    text = "A shelf containing book's on crafting,"
+                    text = "A shelf containing books on crafting,"
                 }
             }
         }
@@ -874,7 +874,7 @@ locale {
             name = "board"
             description {
                 main {
-                    text = "A note on this board read's \"\"Wante"
+                    text = "A note on this board reads \"\"Wante"
                 }
             }
         }
@@ -882,7 +882,7 @@ locale {
             name = "minor teleportation"
             description {
                 main {
-                    text = "The word's in this tome do not seem to stay in one place,"
+                    text = "The words in this tome do not seem to stay in one place,"
                 }
             }
         }
@@ -946,7 +946,7 @@ locale {
             name = "breads"
             description {
                 main {
-                    text = "A shelf of bread's for display,"
+                    text = "A shelf of bread for display,"
                 }
             }
         }
@@ -970,7 +970,7 @@ locale {
             name = "alchemy kit"
             description {
                 main {
-                    text = "An alchemy kit with tool's for basic alchemy,"
+                    text = "An alchemy kit with tools for basic alchemy,"
                 }
             }
         }
@@ -986,7 +986,7 @@ locale {
             name = "small foliage plant"
             description {
                 main {
-                    text = "Plant's in a pot,"
+                    text = "Plants in a pot,"
                 }
             }
         }
@@ -1042,7 +1042,7 @@ locale {
             name = "foxtail grass"
             description {
                 main {
-                    text = "Has seed's that can be dangerous to your pets,"
+                    text = "Has seeds that can be dangerous to your pets,"
                 }
             }
         }
@@ -1050,7 +1050,7 @@ locale {
             name = "carnation"
             description {
                 main {
-                    text = "A symbol of love toward's one's parent's,"
+                    text = "A symbol of love towards one's parents,"
                 }
             }
         }
@@ -1146,7 +1146,7 @@ locale {
             name = "books"
             description {
                 main {
-                    text = "A disorderly stacks of book's,"
+                    text = "A disorderly stacks of books,"
                 }
             }
         }
@@ -1170,7 +1170,7 @@ locale {
             name = "alcohols"
             description {
                 main {
-                    text = "Often found in bar's,"
+                    text = "Often found in bars,"
                 }
             }
         }
@@ -1322,7 +1322,7 @@ locale {
             name = "altar"
             description {
                 main {
-                    text = "An altar to the god's"
+                    text = "An altar to the gods"
                 }
             }
         }
@@ -1330,7 +1330,7 @@ locale {
             name = "ceremony altar"
             description {
                 main {
-                    text = "An altar for ritual's to give tribute to the gods,"
+                    text = "An altar for rituals to give tribute to the gods,"
                 }
             }
         }
@@ -1595,7 +1595,7 @@ locale {
             unidentified_name = "clear liquid"
             description {
                 main {
-                    text = "A bottle of dwarven whiskey,"
+                    text = "A bottle of dwarven whisky,"
                 }
             }
         }
@@ -1609,7 +1609,7 @@ locale {
             }
         }
         bow_of_vinderre {
-            name = "<Bow of Vinderre>"
+            name = "<Bow of Vindale>"
             unidentified_name = "shaking bow"
         }
         worthless_fake_gold_bar {
@@ -1809,7 +1809,7 @@ locale {
             name = "claymore"
             description {
                 main {
-                    text = "A large sword normally held in two hand's,"
+                    text = "A large sword normally held in two hands,"
                 }
             }
         }
@@ -1911,7 +1911,7 @@ locale {
             name = "magic mapping"
             description {
                 main {
-                    text = "A tome that make's you aware of your surroundings,"
+                    text = "A tome that makes you aware of your surroundings,"
                 }
             }
         }
@@ -1927,7 +1927,7 @@ locale {
             name = "return"
             description {
                 main {
-                    text = "A tome that allow's a person to return to specific places containing a rift,"
+                    text = "A tome that allows a person to return to specific places containing a rift,"
                 }
             }
         }
@@ -1959,7 +1959,7 @@ locale {
             name = "cure <Jure>"
             description {
                 main {
-                    text = "A tome of word's written by jure herself,"
+                    text = "A tome of words written by Jure herself,"
                 }
             }
         }
@@ -1984,7 +1984,7 @@ locale {
             name = "campfire"
             description {
                 main {
-                    text = "Due to magic these log's never burn up,"
+                    text = "Due to magic these logs never burn up,"
                 }
             }
         }
@@ -2048,7 +2048,7 @@ locale {
             name = "nether eye"
             description {
                 main {
-                    text = "You feel like the world of the dead has it's eye on you,"
+                    text = "You feel like the world of the dead has its eye on you,"
                 }
             }
         }
@@ -2064,7 +2064,7 @@ locale {
             name = "nerve eye"
             description {
                 main {
-                    text = "Reading this tome make's your eye twitch,"
+                    text = "Reading this tome makes your eye twitch,"
                 }
             }
         }
@@ -2088,7 +2088,7 @@ locale {
             name = "illusion beam"
             description {
                 main {
-                    text = "A tome that hurt's your eyes when read,"
+                    text = "A tome that hurts your eyes when read,"
                 }
             }
         }
@@ -2136,7 +2136,7 @@ locale {
             name = "scarecrow"
             description {
                 main {
-                    text = "Used by farmers to keep bird's away from their crop's,"
+                    text = "Used by farmers to keep birds away from their crops,"
                 }
             }
         }
@@ -2168,7 +2168,7 @@ locale {
             name = "street lamp"
             description {
                 main {
-                    text = "A lamp that decorates the street's of Asseria,"
+                    text = "A lamp that decorates the streets of Asseria,"
                 }
             }
         }
@@ -2176,7 +2176,7 @@ locale {
             name = "water tub"
             description {
                 main {
-                    text = "A warning label read's \"\"Not suitable for golems\""
+                    text = "A warning label reads \"\"Not suitable for golems\""
                 }
             }
         }
@@ -2344,7 +2344,7 @@ locale {
             name = "neat bar table"
             description {
                 main {
-                    text = "A bar table with rack's of alcohol and wine,"
+                    text = "A bar table with racks of alcohol and wine,"
                 }
             }
         }
@@ -2464,7 +2464,7 @@ locale {
             name = "darts board"
             description {
                 main {
-                    text = "A note read's \"\"Please do not play drunk!\""
+                    text = "A note reads \"\"Please do not play drunk!\""
                 }
             }
         }
@@ -2480,7 +2480,7 @@ locale {
             name = "old shelf"
             description {
                 main {
-                    text = "It look's like it's going to fall apart!"
+                    text = "It looks like it's going to fall apart!"
                 }
             }
         }
@@ -2488,7 +2488,7 @@ locale {
             name = "old bookshelf"
             description {
                 main {
-                    text = "You see large crack's in the wood,"
+                    text = "You see large cracks in the wood,"
                 }
             }
         }
@@ -2558,7 +2558,7 @@ locale {
             name = "upright piano"
             description {
                 main {
-                    text = "A piano commonly found in bar's"
+                    text = "A piano commonly found in bars"
                 }
             }
         }
@@ -2622,7 +2622,7 @@ locale {
             name = "golden statue"
             description {
                 main {
-                    text = "A statue common in Asseria style casino's,"
+                    text = "A statue common in Asseria style casinos,"
                 }
             }
         }
@@ -2662,7 +2662,7 @@ locale {
             name = "bone"
             description {
                 main {
-                    text = "The bone's of a creature,"
+                    text = "The bones of a creature,"
                 }
             }
         }
@@ -2678,7 +2678,7 @@ locale {
             name = "rune"
             description {
                 main {
-                    text = "A magical rune that warp's reality,"
+                    text = "A magical rune that warps reality,"
                 }
             }
         }
@@ -2705,7 +2705,7 @@ locale {
             name = "flatfish"
             description {
                 main {
-                    text = "An odd fish that lay's on it's side,"
+                    text = "An odd fish that lays on its side,"
                 }
             }
         }
@@ -2743,7 +2743,7 @@ locale {
             name = "cutlassfish"
             description {
                 main {
-                    text = "A fish that look's something like an Eel,"
+                    text = "A fish that looks something like an Eel,"
                 }
             }
         }
@@ -2821,7 +2821,7 @@ locale {
             name = "silence"
             description {
                 main {
-                    text = "A tome who's word's are impossible to pronounce for most creatures,"
+                    text = "A tome whose words are impossible to pronounce for most creatures,"
                 }
             }
         }
@@ -2837,7 +2837,7 @@ locale {
             name = "regeneration"
             description {
                 main {
-                    text = "A tome that look's like new,"
+                    text = "A tome that looks like new,"
                 }
             }
         }
@@ -2845,7 +2845,7 @@ locale {
             name = "troll blood"
             description {
                 main {
-                    text = "Tastes worse than it smell's,"
+                    text = "Tastes worse than it smells,"
                 }
             }
         }
@@ -2917,7 +2917,7 @@ locale {
             name = "hero"
             description {
                 main {
-                    text = "A label warn's \"\"Can give a false sense of confidence,\""
+                    text = "A label warns \"\"Can give a false sense of confidence,\""
                 }
             }
         }
@@ -2949,7 +2949,7 @@ locale {
             name = "holy veil"
             description {
                 main {
-                    text = "A tome on religious spell's,"
+                    text = "A tome on religious spells,"
                 }
             }
         }
@@ -3030,7 +3030,7 @@ locale {
             name = "gem cutter"
             description {
                 main {
-                    text = "Some magical material's are just that hard to cut!"
+                    text = "Some magical materials are just that hard to cut!"
                 }
             }
         }
@@ -3078,7 +3078,7 @@ locale {
             name = "rag doll"
             description {
                 main {
-                    text = "A cargo of children's toy's,"
+                    text = "A cargo of children's toys,"
                 }
             }
         }
@@ -3094,7 +3094,7 @@ locale {
             name = "piano"
             description {
                 main {
-                    text = "A cargo of piano's,"
+                    text = "A cargo of pianos,"
                 }
             }
         }
@@ -3110,7 +3110,7 @@ locale {
             name = "coffin"
             description {
                 main {
-                    text = "A cargo of coffin's,"
+                    text = "A cargo of coffins,"
                 }
             }
         }
@@ -3150,7 +3150,7 @@ locale {
             name = "noble toy"
             description {
                 main {
-                    text = "A cargo of children's toy's,"
+                    text = "A cargo of children's toys,"
                 }
             }
         }
@@ -3166,7 +3166,7 @@ locale {
             name = "detect objects"
             description {
                 main {
-                    text = "Make's you feel like a treasure hunter,"
+                    text = "Makes you feel like a treasure hunter,"
                 }
             }
         }
@@ -3350,7 +3350,7 @@ locale {
             name = "cure mutation"
             description {
                 main {
-                    text = "Cures mutated gene's,"
+                    text = "Cures mutated genes,"
                 }
             }
         }
@@ -3358,7 +3358,7 @@ locale {
             name = "mutation"
             description {
                 main {
-                    text = "This tome appears to have leg's,"
+                    text = "This tome appears to have legs,"
                 }
             }
         }
@@ -3382,7 +3382,7 @@ locale {
             name = "ring mail"
             description {
                 main {
-                    text = "Leather armor with metal ring's sewn on,"
+                    text = "Leather armor with metal rings sewn on,"
                 }
             }
         }
@@ -3398,7 +3398,7 @@ locale {
             name = "chain mail"
             description {
                 main {
-                    text = "An armor made of small linked ring's,"
+                    text = "An armor made of small linked rings,"
                 }
             }
         }
@@ -3406,7 +3406,7 @@ locale {
             name = "pope robe"
             description {
                 main {
-                    text = "A robe from ancient time's that has an aura of peace,"
+                    text = "A robe from ancient times that has an aura of peace,"
                 }
             }
         }
@@ -3534,7 +3534,7 @@ locale {
             name = "boots"
             description {
                 main {
-                    text = "A standard pair of boot's,"
+                    text = "A standard pair of boots,"
                 }
             }
         }
@@ -3542,7 +3542,7 @@ locale {
             name = "tight boots"
             description {
                 main {
-                    text = "A tight fitting pair of boot's,"
+                    text = "A tight fitting pair of boots,"
                 }
             }
         }
@@ -3550,7 +3550,7 @@ locale {
             name = "armored boots"
             description {
                 main {
-                    text = "A pair of boot's with armored plating,"
+                    text = "A pair of boots with armored plating,"
                 }
             }
         }
@@ -3662,7 +3662,7 @@ locale {
             name = "bejeweled amulet"
             description {
                 main {
-                    text = "An amulet that show's one's wealth"
+                    text = "An amulet that shows one's wealth"
                 }
             }
         }
@@ -3670,7 +3670,7 @@ locale {
             name = "engagement amulet"
             description {
                 main {
-                    text = "An amulet that show's one's love,"
+                    text = "An amulet that shows one's love,"
                 }
             }
         }
@@ -3750,7 +3750,7 @@ locale {
             name = "bolt"
             description {
                 main {
-                    text = "Standard equipment for hunting rabbit's,"
+                    text = "Standard equipment for hunting rabbits,"
                 }
             }
         }
@@ -3758,7 +3758,7 @@ locale {
             name = "web"
             description {
                 main {
-                    text = "You can swear you see spider's crawling over this tome out of the corner of your eye,"
+                    text = "You can swear you see spiders crawling over this tome out of the corner of your eye,"
                 }
             }
         }
@@ -3830,7 +3830,7 @@ locale {
             name = "trash can"
             description {
                 main {
-                    text = "North Tyris law's make it illegal to search,"
+                    text = "North Tyris laws make it illegal to search,"
                 }
             }
         }
@@ -4035,7 +4035,7 @@ locale {
             name = "dye"
             description {
                 main {
-                    text = "Expertly made dye that work's on most materials,"
+                    text = "Expertly made dye that works on most materials,"
                 }
             }
         }
@@ -4083,7 +4083,7 @@ locale {
             name = "fruitless"
             description {
                 main {
-                    text = "A tree with no fruit's,"
+                    text = "A tree with no fruits,"
                 }
             }
         }
@@ -4131,7 +4131,7 @@ locale {
             name = "furnance"
             description {
                 main {
-                    text = "Some furnaces are used to heat an area and others are used for metalwork,"
+                    text = "Some furnances are used to heat an area and others are used for metalwork,"
                 }
             }
         }
@@ -4326,7 +4326,7 @@ locale {
             name = "seven league boots"
             description {
                 main {
-                    text = "Rare boot's magically enhanced to allow faster travel,"
+                    text = "Rare boots magically enhanced to allow faster travel,"
                 }
             }
         }
@@ -4350,7 +4350,7 @@ locale {
             name = "cure corruption"
             description {
                 main {
-                    text = "A label read's \"\"For use in curing harmful diseases only\""
+                    text = "A label reads \"\"For use in curing harmful diseases only\""
                 }
             }
         }
@@ -4443,7 +4443,7 @@ locale {
             name = "jerky"
             description {
                 main {
-                    text = "Dried out travel ration's,"
+                    text = "Dried out travel rations,"
                 }
             }
         }
@@ -4633,7 +4633,7 @@ locale {
             name = "stained glass window"
             description {
                 main {
-                    text = "A expensive stained glass window often used to decorate chapel's,"
+                    text = "A expensive stained glass window often used to decorate chapels,"
                 }
             }
         }
@@ -4641,7 +4641,7 @@ locale {
             name = "christmas tree"
             description {
                 main {
-                    text = "A cargo of pine tree's,"
+                    text = "A cargo of pine trees,"
                 }
             }
         }
@@ -4683,7 +4683,7 @@ locale {
             name = "holy well"
             description {
                 main {
-                    text = "A note read's \"\"Please do not taint the town's water supply\""
+                    text = "A note reads \"\"Please do not taint the town's water supply\""
                 }
             }
         }
@@ -4708,7 +4708,7 @@ locale {
             name = "money tree"
             description {
                 main {
-                    text = "Money grow's on this tree,"
+                    text = "Money grows on this tree,"
                 }
             }
         }
@@ -4716,7 +4716,7 @@ locale {
             name = "barbecue set"
             description {
                 main {
-                    text = "An amazing set of cooking tool's,"
+                    text = "An amazing set of cooking tools,"
                 }
             }
         }
@@ -4781,7 +4781,7 @@ locale {
             unidentified_name = "clear liquid"
             description {
                 main {
-                    text = "A label read's \"\"To be used only on livestock\""
+                    text = "A label reads \"\"To be used only on livestock\""
                 }
             }
         }
@@ -4790,7 +4790,7 @@ locale {
             unidentified_name = "crumbling paper"
             description {
                 main {
-                    text = "A map from sources unknown that lead's to treasure,"
+                    text = "A map from sources unknown that leads to treasure,"
                 }
             }
         }
@@ -4815,7 +4815,7 @@ locale {
             name = "girl's diary"
             description {
                 main {
-                    text = "A girl's dairy"
+                    text = "A girl's diary"
                 }
             }
         }
@@ -4839,7 +4839,7 @@ locale {
             name = "incognito"
             description {
                 main {
-                    text = "A tome who's word's often mean another thing,"
+                    text = "A tome whose words often mean another thing,"
                 }
             }
         }
@@ -4890,7 +4890,7 @@ locale {
             name = "mine"
             description {
                 main {
-                    text = "The warning label read's \"\"Do not step on mine when armed\""
+                    text = "The warning label reads \"\"Do not step on mine when armed\""
                 }
             }
         }
@@ -4932,7 +4932,7 @@ locale {
             name = "unicorn horn"
             description {
                 main {
-                    text = "Known for it's amazing healing properties unicorn horn's are also a reminder of how Elonians have driven the species into near extinction,,"
+                    text = "Known for it's amazing healing properties unicorn horns are also a reminder of how Elonians have driven the species into near extinction,,"
                 }
             }
         }
@@ -4950,7 +4950,7 @@ locale {
             unidentified_name = "mysterious cheese"
             description {
                 main {
-                    text = "A type of cheese eaten by hero's"
+                    text = "A type of cheese eaten by heros"
                 }
             }
         }
@@ -4993,7 +4993,7 @@ locale {
             name = "black board"
             description {
                 main {
-                    text = "Technophile's use this to teach,"
+                    text = "Technophiles use this to teach,"
                 }
             }
         }
@@ -5033,7 +5033,7 @@ locale {
             name = "sink"
             description {
                 main {
-                    text = "Has it's own water filtration system,"
+                    text = "Has its own water filtration system,"
                 }
             }
         }
@@ -5066,7 +5066,7 @@ locale {
             unidentified_name = "beating heart"
             description {
                 main {
-                    text = "Help's to tame monsters,"
+                    text = "Helps to tame monsters,"
                 }
             }
         }
@@ -5142,7 +5142,7 @@ locale {
             unidentified_name = "mysterious jewel"
             description {
                 main {
-                    text = "This strange object seems to slightly shift it's shape,"
+                    text = "This strange object seems to slightly shift its shape,"
                 }
             }
         }
@@ -5234,7 +5234,7 @@ locale {
             name = "pan flute"
             description {
                 main {
-                    text = "A type of instrument designed after (but larger than) fairy made flute's,"
+                    text = "A type of instrument designed after (but larger than) fairy made flutes,"
                 }
             }
         }
@@ -5242,7 +5242,7 @@ locale {
             name = "lute"
             description {
                 main {
-                    text = "A lute is a common musical instrument among bard's,"
+                    text = "A lute is a common musical instrument among bards,"
                 }
             }
         }
@@ -5298,7 +5298,7 @@ locale {
             unidentified_name = "mechanical ball"
             description {
                 main {
-                    text = "This ball give's you unique powers…"
+                    text = "This ball gives you unique powers…"
                 }
             }
         }
@@ -5363,7 +5363,7 @@ locale {
             name = "resurrection"
             description {
                 main {
-                    text = "A book said to hold the secret's of life itself,"
+                    text = "A book said to hold the secrets of life itself,"
                 }
             }
         }
@@ -5455,7 +5455,7 @@ locale {
             unidentified_name = "some kind of ticket"
             description {
                 main {
-                    text = "Ticket's given out to promising musicians,"
+                    text = "Tickets given out to promising musicians,"
                 }
             }
         }

@@ -36,9 +36,11 @@ locale {
         magic_reaction_hurts = "Magic reaction hurts ${name(_1)}!"
 
         weapon {
+            # TODO: When the <verb> is "slash"/"smash", the text lacks "e".
             # <attacker> <verb>s something with his <weapon>.
             attacks_with = "${name(_1)} ${_2}${s(_1)} ${name(_3)} with ${his(_1)} ${_4}."
 
+            # TODO: When the <verb> is "slash"/"smash", the text lacks "e".
             # <attacker> <verb>s something and <...>
             attacks_and = "${name(_1)} ${_2}${s(_1)} ${name(_3)} ${_4}"
 

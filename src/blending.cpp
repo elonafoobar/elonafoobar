@@ -644,7 +644,7 @@ void window_recipe_(
     else
     {
         pos(dx_at_m184, dy_at_m184);
-        mes(i18n::s.get("core.locale.blending.window.no_inheritance_effects"));
+        mes(i18n::s.get("core.locale.blending.window.no_inherited_effects"));
         dy_at_m184 += 16;
         ++p_at_m184;
     }

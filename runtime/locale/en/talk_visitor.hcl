@@ -2,7 +2,7 @@ locale {
     talk {
         visitor {
             wanted_to_say_hi = "I just wanted to say hi."
-            receive = "You receive ${itemname(_1, 1)}."
+            receive = "You receive ${itemname(_1, 1)} from ${name(_2)}!"
 
             choices {
                 yes = "Yes."

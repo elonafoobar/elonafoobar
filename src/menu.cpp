@@ -7086,10 +7086,10 @@ label_1965_internal:
     {
         page = 0;
     }
-    s(0) = u8"自己の分析"s;
+    s(0) = lang(u8"自己の分析", u8"Analyze Self");
     s(1) = strhint2 + strhint3b;
     display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
-    s = u8"分析結果"s;
+    s = lang(u8"分析結果", u8"Analysis Result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

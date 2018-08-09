@@ -806,7 +806,7 @@ locale {
         _167 {
             positive {
                 levels {
-                    _0 = "You moe."
+                    _0 = "You are cute."
                 }
             }
         }

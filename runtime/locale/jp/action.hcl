@@ -604,7 +604,7 @@ locale {
 
         plant {
             cannot_plant_it_here = "この場所には埋められない。"
-            in_field = "畑に${itemname(_1, 1)}を埋めた。"
+            on_field = "畑に${itemname(_1, 1)}を埋めた。"
             execute = "${itemname(_1, 1)}を埋めた。"
             new_plant_grows = "新しい芽が息吹いている！"
             harvest = "${itemname(_1, 1)}を収穫した。"
