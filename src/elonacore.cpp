@@ -1365,6 +1365,10 @@ int getworker(int map_id, int prm_579)
 
 int route_info(int& prm_612, int& prm_613, int prm_614)
 {
+    if (maxroute == 0)
+    {
+        return -1;
+    }
     if (route(0, prm_614 % maxroute) == 1)
     {
         prm_612 += route(1, prm_614 % maxroute);
@@ -10702,10 +10706,9 @@ label_21451_internal:
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.activate.mine"));
-                    aniref = 0;
-                    anix = movx;
-                    aniy = movy;
-                    ball_animation(ball_animation::type_t::ball).play();
+                    ball_animation(
+                        {movx, movy}, 0, ball_animation::type_t::ball, ele)
+                        .play();
                     cell_featset(movx, movy, 0);
                     damage_hp(cdata[cc], 100 + rnd(200), -1);
                 }
@@ -11510,7 +11513,7 @@ int label_2168()
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
-            failure_to_cast_animation(cdata[cc]).play();
+            failure_to_cast_animation(cdata[cc].position).play();
         }
         efsource = 0;
         return 1;
@@ -14387,9 +14390,13 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        aniref = cw;
         ranged_attack_animation(
-            static_cast<ranged_attack_animation::type_t>(attackskill))
+            cdata[cc].position,
+            cdata[tc].position,
+            static_cast<ranged_attack_animation::type_t>(attackskill),
+            the_item_db[inv[cw].id]->subcategory,
+            inv[cw].image % 1000,
+            inv[cw].image / 1000)
             .play();
     }
     if (attacknum > 1 || cc != 0)
@@ -14416,8 +14423,14 @@ label_22191_internal:
         {
             if (config::instance().attackanime)
             {
-                aniref = dmg * 100 / cdata[tc].max_hp;
-                melee_attack_animation().play();
+                int damage_percent = dmg * 100 / cdata[tc].max_hp;
+                melee_attack_animation(
+                    cdata[tc].position,
+                    cdata[tc].breaks_into_debris(),
+                    attackskill,
+                    damage_percent,
+                    critical)
+                    .play();
             }
         }
         if (attackskill != 106)

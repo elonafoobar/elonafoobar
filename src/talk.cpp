@@ -359,11 +359,9 @@ talk_result_t talk_house_visitor()
                     snd(91);
                     ccbk = cc;
                     cc = tc;
-                    aniref(0) = 223;
-                    aniref(1) = 0;
-                    anix = tlocx;
-                    aniy = tlocy;
-                    throwing_object_animation(cdata[cc]).play();
+                    throwing_object_animation(
+                        {tlocx, tlocy}, cdata[cc].position, 223, 0)
+                        .play();
                     cc = ccbk;
                     mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                     mapitem_fire(tlocx, tlocy);

@@ -110,7 +110,8 @@ int magic()
                 else if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
                     bright_aura_animation(
-                        cdata[tc], bright_aura_animation::type_t::debuff)
+                        cdata[tc].position,
+                        bright_aura_animation::type_t::debuff)
                         .play();
                 }
                 if (efid == 625 || efid == 446)
@@ -193,6 +194,8 @@ int magic()
             {
             case 10:
                 ranged_attack_animation(
+                    cdata[cc].position,
+                    cdata[tc].position,
                     ranged_attack_animation::type_t::distant_attack)
                     .play();
                 try_to_melee_attack();
@@ -206,7 +209,12 @@ int magic()
                     goto the_end;
                 }
             }
-                bolt_animation(cdata[cc], ele).play();
+                {
+                    int distance = the_ability_db[efid]->sdataref3 % 1000 + 1;
+                    bolt_animation(
+                        cdata[cc].position, {tlocx, tlocy}, ele, distance)
+                        .play();
+                }
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 for (int cnt = 0; cnt < 20; ++cnt)
@@ -304,10 +312,12 @@ int magic()
                 }
                 if (efid != 404 && efid != 637)
                 {
-                    aniref = range_;
-                    anix = tlocx;
-                    aniy = tlocy;
-                    ball_animation(ball_animation::type_t::ball).play();
+                    ball_animation(
+                        {tlocx, tlocy},
+                        range_,
+                        ball_animation::type_t::ball,
+                        ele)
+                        .play();
                 }
                 for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                      ++cnt)
@@ -355,7 +365,7 @@ int magic()
                             if (f == 1)
                             {
                                 bright_aura_animation(
-                                    cdata[tc],
+                                    cdata[tc].position,
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
                                 if (is_in_fov(cdata[tc]))
@@ -385,7 +395,7 @@ int magic()
                             if (f == 1)
                             {
                                 bright_aura_animation(
-                                    cdata[tc],
+                                    cdata[tc].position,
                                     bright_aura_animation::type_t::healing_rain)
                                     .play();
                                 txt(i18n::s.get(
@@ -511,6 +521,8 @@ int magic()
                 goto the_end;
             case 2:
                 ranged_attack_animation(
+                    cdata[cc].position,
+                    cdata[tc].position,
                     ranged_attack_animation::type_t::magic_arrow)
                     .play();
                 dmg = roll(dice1, dice2, bonus);
@@ -574,7 +586,7 @@ int magic()
                     get_sick_if_cursed(efstatus, cdata[tc]);
                 }
                 bright_aura_animation(
-                    cdata[tc], bright_aura_animation::type_t::healing)
+                    cdata[tc].position, bright_aura_animation::type_t::healing)
                     .play();
                 goto the_end;
             case 6:
@@ -1010,7 +1022,8 @@ int magic()
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 breath_list();
-                breath_animation(cdata[cc], ele).play();
+                breath_animation(cdata[cc].position, {tlocx, tlocy}, ele)
+                    .play();
                 for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
@@ -1770,7 +1783,8 @@ label_2181_internal:
         txtef(5);
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
-        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::healing)
+        bright_aura_animation(
+            cdata[tc].position, bright_aura_animation::type_t::healing)
             .play();
         break;
     case 1117:
@@ -2477,7 +2491,8 @@ label_2181_internal:
         i = rnd(10) + 10;
         chara_gain_skill_exp(
             cdata[tc], i, efstatusfix(-2000, -2000, -1000, -250));
-        bright_aura_animation(cdata[tc], bright_aura_animation::type_t::debuff)
+        bright_aura_animation(
+            cdata[tc].position, bright_aura_animation::type_t::debuff)
             .play();
         chara_refresh(tc);
         break;
@@ -2830,7 +2845,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
             bright_aura_animation(
-                cdata[tc], bright_aura_animation::type_t::healing)
+                cdata[tc].position, bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -2840,7 +2855,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
             bright_aura_animation(
-                cdata[tc], bright_aura_animation::type_t::healing)
+                cdata[tc].position, bright_aura_animation::type_t::healing)
                 .play();
         }
         break;
@@ -3848,7 +3863,7 @@ label_2181_internal:
             {
                 continue;
             }
-            swarm_animation(cdata[tc]).play();
+            swarm_animation(cdata[tc].position).play();
             try_to_melee_attack();
         }
         break;
