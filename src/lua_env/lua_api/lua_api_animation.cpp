@@ -20,8 +20,9 @@ void Animation::play_bright_aura(const position_t& target_pos, int kind)
 void Animation::play_breath(
     const position_t& attacker_pos,
     const position_t& target_pos,
-    int element)
+    const enum_string& element_name)
 {
+    element_t element = enums::Element.ensure_from_string(element_name);
     breath_animation(attacker_pos, target_pos, element).play();
 }
 
@@ -38,9 +39,10 @@ void Animation::play_ball_magic(const position_t& pos, int range, int element)
 void Animation::play_bolt(
     const position_t& attacker_pos,
     const position_t& target_pos,
-    int element,
+    const enum_string& element_name,
     int distance)
 {
+    element_t element = enums::Element.ensure_from_string(element_name);
     bolt_animation(attacker_pos, target_pos, element, distance).play();
 }
 

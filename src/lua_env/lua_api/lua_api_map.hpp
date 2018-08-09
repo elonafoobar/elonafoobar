@@ -26,7 +26,7 @@ position_t bound_within(const position_t&);
 
 position_t random_pos();
 
-int generate_tile(tile_kind_t);
+int generate_tile(const enum_string&);
 
 void set_tile(const position_t&, int);
 void set_tile_xy(int, int, int);

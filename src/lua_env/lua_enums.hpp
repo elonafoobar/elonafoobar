@@ -13,6 +13,8 @@ namespace elona
 namespace lua
 {
 
+typedef std::string enum_string;
+
 template <typename T>
 class enum_map
 {
@@ -26,6 +28,20 @@ public:
     }
 
 public:
+    enum_string convert_to_string(T val)
+    {
+        for (const auto& pair : storage)
+        {
+            if (pair->second == val)
+            {
+                return pair->first;
+            }
+        }
+
+        assert(false);
+        return "";
+    }
+
     T get_from_string(const std::string& key, T default_val)
     {
         auto it = storage.find(key);
@@ -61,6 +77,7 @@ namespace enums
 {
 extern enum_map<damage_source_t> DamageSource;
 extern enum_map<color_index_t> Color;
+extern enum_map<curse_state_t> CurseState;
 extern enum_map<identification_state_t> IdentifyState;
 extern enum_map<status_ailment_t> StatusAilment;
 extern enum_map<element_t> Element;

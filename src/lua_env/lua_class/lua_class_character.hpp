@@ -10,14 +10,14 @@ namespace lua
 namespace LuaCharacter
 {
 void damage_hp(character&, int);
-void damage_hp_source(character&, int, damage_source_t);
+void damage_hp_source(character&, int, const enum_string&);
 void damage_hp_chara(character&, int, lua_character_handle handle);
 
-void apply_ailment(character&, status_ailment_t, int);
+void apply_ailment(character&, const enum_string&, int);
 
 bool recruit_as_ally(character&);
 
-void set_flag(character&, int, bool);
+void set_flag(character&, const enum_string&, bool);
 
 void gain_skill(character&, int, int);
 void gain_skill_stock(character&, int, int, int);
@@ -26,7 +26,7 @@ void gain_skill_exp(character&, int, int);
 
 void modify_trait(character&, int, int);
 
-void modify_resistance(character&, int, int);
+void modify_resistance(character&, const enum_string&, int);
 
 void modify_sanity(character&, int);
 

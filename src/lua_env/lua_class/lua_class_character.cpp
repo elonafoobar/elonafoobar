@@ -19,8 +19,10 @@ void LuaCharacter::damage_hp(character& self, int amount)
 void LuaCharacter::damage_hp_source(
     character& self,
     int amount,
-    damage_source_t source)
+    const enum_string& source_name)
 {
+    damage_source_t source =
+        enums::DamageSource.ensure_from_string(source_name);
     elona::damage_hp(self, amount, static_cast<int>(source));
 }
 
@@ -35,17 +37,17 @@ void LuaCharacter::damage_hp_chara(
 
 void LuaCharacter::apply_ailment(
     character& self,
-    status_ailment_t ailment,
+    const enum_string& ailment_name,
     int power)
 {
     assert(power > 0);
+    status_ailment_t ailment =
+        enums::StatusAilment.ensure_from_string(ailment_name);
     elona::dmgcon(self.index, ailment, power);
 }
 
 bool LuaCharacter::recruit_as_ally(character& self)
 {
-    // can't use Chara methods because they take a handle...
-    // TODO: DRY (would need to be far-reaching)
     if (self.state() == character::state_t::empty
         || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
@@ -55,13 +57,14 @@ bool LuaCharacter::recruit_as_ally(character& self)
     return new_ally_joins() == 1;
 }
 
-void LuaCharacter::set_flag(character& self, int flag, bool value)
+void LuaCharacter::set_flag(
+    character& self,
+    const std::string& flag_name,
+    bool is_setting)
 {
-    if (flag < 5 || flag > 991 || (flag > 32 && flag < 960))
-    {
-        return;
-    }
-    self._flags[flag] = value ? 1 : 0;
+    int flag = enums::CharaFlag.ensure_from_string(flag_name);
+    int new_value = (is_setting ? 1 : 0);
+    self._flags[flag] = new_value;
 }
 
 void LuaCharacter::gain_skill(character& self, int skill, int initial_level)
@@ -91,8 +94,12 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
     elona::chara_gain_fixed_skill_exp(self, skill, amount);
 }
 
-void LuaCharacter::modify_resistance(character& self, int element, int delta)
+void LuaCharacter::modify_resistance(
+    character& self,
+    const enum_string& element_name,
+    int delta)
 {
+    element_t element = enums::Element.ensure_from_string(element_name);
     elona::resistmod(self.index, element, delta);
 }
 
@@ -208,7 +215,14 @@ void LuaCharacter::bind(sol::state& lua)
         "name",
         sol::property([](character& c) { return elona::cdatan(0, c.index); }),
         "experience",
-        &character::experience);
+        &character::experience
+
+        "sex",
+        sol::property(
+            [](character& c) { return enums::Gender.convert_to_string(c.sex); },
+            [](character& c, enum_string& s) {
+                c.sex = enums::Gender.get_from_string(s)
+            }));
 
     lua.set_usertype(character::lua_type(), LuaCharacter);
 }

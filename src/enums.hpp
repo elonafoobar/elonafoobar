@@ -55,7 +55,8 @@ enum class color_index_t : int
     light_green = 19,
     yellow_green = 20,
 
-    // Cosmetic items
+    // Items that are generated with a specific subset of colors.
+    // Mainly used for furniture.
     random_furniture = 21,
 
     // Items where the color must be the same for every item of its

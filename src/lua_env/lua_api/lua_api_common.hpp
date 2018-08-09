@@ -1,6 +1,7 @@
 #pragma once
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../../variables.hpp"
+#include "../lua_enums.hpp"
 #include "../lua_env.hpp"
 
 struct position_t;

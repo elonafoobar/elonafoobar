@@ -10,18 +10,15 @@ void GUI::txt(const std::string& message)
     elona::txt(message);
 }
 
-void GUI::txt_txtef(const std::string& message, color_index_t color)
+void GUI::txt_txtef(const std::string& message, const enum_string& color_name)
 {
-    GUI::txtef(color);
+    GUI::txtef(color_name);
     elona::txt(message);
 }
 
-void GUI::txtef(color_index_t color)
+void GUI::txtef(const enum_string& color_name)
 {
-    if (color < color_index_t::none || color > color_index_t::yellow_green)
-    {
-        return;
-    }
+    color_index_t color = enums::Color.ensure_from_string(color_name);
     elona::txtef(color);
 }
 

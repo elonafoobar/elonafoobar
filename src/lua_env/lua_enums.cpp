@@ -62,6 +62,14 @@ enum_map<color_index_t> Color{
         {"RandomAny", color_index_t::random_any},
     }};
 
+enum_map<curse_state_t> CurseState{"CurseState",
+                                   {
+                                       {"Doomed", curse_state_t::doomed},
+                                       {"Cursed", curse_state_t::cursed},
+                                       {"None", curse_state_t::none},
+                                       {"Blessed", curse_state_t::blessed},
+                                   }};
+
 enum_map<identification_state_t> IdentifyState{
     "IdentifyState",
     {
