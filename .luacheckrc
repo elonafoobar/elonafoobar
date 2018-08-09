@@ -173,6 +173,11 @@ stds.elona = {
                     "rectangle_iter", "rectangle_iter_step"
                  }
               },
+              Animation = {
+                 fields = {
+                    "play_failure_to_cast", "play_bright_aura", "play_breath", "play_ball_atomic_bomb", "play_ball_magic", "play_bolt", "play_throwing_object", "play_swarm", "play_ranged_attack", "play_melee_attack", "play_gene_engineering", "play_miracle", "play_meteor", "play_ragnarok", "play_breaking"
+                 }
+              },
               Registry = {
                  fields = {
                     "on_event",
@@ -198,9 +203,11 @@ stds.elona = {
         Store = {
            fields = {
               map_local = {
+                 read_only = false,
                  other_fields = true
               },
               global = {
+                 read_only = false,
                  other_fields = true
               }
            }
