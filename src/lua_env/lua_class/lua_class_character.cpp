@@ -148,5 +148,5 @@ void LuaCharacter::bind(sol::state& lua)
     lua.set_usertype(character::lua_type(), LuaCharacter);
 }
 
-}
-}
+} // namespace lua
+} // namespace elona

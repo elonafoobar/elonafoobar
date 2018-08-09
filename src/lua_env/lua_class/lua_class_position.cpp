@@ -18,5 +18,5 @@ void LuaPosition::bind(sol::state& lua)
     lua.set_usertype("LuaPosition", LuaPosition);
 }
 
-}
-}
+} // namespace lua
+} // namespace elona

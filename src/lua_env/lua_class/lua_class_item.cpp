@@ -41,5 +41,5 @@ void LuaItem::bind(sol::state& lua)
     lua.set_usertype(item::lua_type(), LuaItem);
 }
 
-}
-}
+} // namespace lua
+} // namespace elona

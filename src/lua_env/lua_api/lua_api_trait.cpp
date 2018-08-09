@@ -1,6 +1,6 @@
 #include "lua_api_trait.hpp"
-#include "../../trait.hpp"
 #include "../../audio.hpp"
+#include "../../trait.hpp"
 
 namespace elona
 {

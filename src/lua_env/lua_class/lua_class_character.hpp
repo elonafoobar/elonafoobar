@@ -1,6 +1,6 @@
 #pragma once
-#include "../lua_api/lua_api_common.hpp"
 #include "../../status_ailment.hpp"
+#include "../lua_api/lua_api_common.hpp"
 
 namespace elona
 {
@@ -32,5 +32,5 @@ void modify_resistance(character&, int, int);
 void bind(sol::state&);
 } // namespace LuaCharacter
 
-}
-}
+} // namespace lua
+} // namespace elona

@@ -1,5 +1,5 @@
-#include "../../character.hpp"
 #include "lua_api_chara.hpp"
+#include "../../character.hpp"
 
 namespace elona
 {

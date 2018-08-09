@@ -17,5 +17,5 @@ void LuaApiClasses::bind_api(sol::state& lua, sol::table& core)
     core["LuaPosition"] = lua["LuaPosition"];
 }
 
-}
-}
+} // namespace lua
+} // namespace elona

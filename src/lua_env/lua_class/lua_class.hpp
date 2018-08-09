@@ -21,7 +21,7 @@ namespace LuaApiClasses
 {
 void bind(sol::state&);
 void bind_api(sol::state&, sol::table&);
-}
+} // namespace LuaApiClasses
 
-}
-}
+} // namespace lua
+} // namespace elona

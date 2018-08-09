@@ -11,5 +11,5 @@ namespace LuaItem
 void bind(sol::state&);
 }
 
-}
-}
+} // namespace lua
+} // namespace elona

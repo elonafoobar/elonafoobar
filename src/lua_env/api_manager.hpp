@@ -13,17 +13,24 @@ namespace lua
 class lua_env;
 struct mod_info;
 
+/***
+ * Keeps track of built-in and mod-provided API bindings. APIs are
+ * organized as tables inside a Lua environment, namespaced by mod and
+ * API name. To access them from mods, a global table named "Elona" is
+ * bound to each mod so that "Elona.require" can be called to retrieve
+ * a reference to an API table loaded in this manager.
+ */
 class api_manager
 {
 public:
     /***
-     * Exposes the core API table ("Elona") from the isolated Lua API
+     * Exposes the root API table ("Elona") from the isolated Lua API
      * environment by table reference.
      */
     static sol::table bind(lua_env&);
 
     /***
-     * Exposes the core API table ("Elona") from the isolated Lua API
+     * Exposes the root API table ("Elona") from the isolated Lua API
      * environment to the global lua state.
      *
      * For testing use only.

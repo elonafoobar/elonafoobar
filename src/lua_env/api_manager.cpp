@@ -5,11 +5,6 @@
 
 #include <iterator>
 
-/***
- * See doc/api for the API documentation.
- * Be sure to update it if you change anything here.
- * LDoc is completely broken when it comes to parsing C++.
- */
 namespace elona
 {
 namespace lua
@@ -168,5 +163,5 @@ sol::table api_manager::get_api_table()
     return api_env["Elona"]["core"];
 }
 
-} // namespace elona
+} // namespace lua
 } // namespace elona

@@ -23,4 +23,4 @@ void Pos::bind(sol::table& api_table)
 }
 
 } // namespace lua
-} // namespace lua
+} // namespace elona
