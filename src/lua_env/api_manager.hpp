@@ -10,9 +10,6 @@ namespace elona
 namespace lua
 {
 
-typedef sol::table lua_character_handle;
-typedef sol::table lua_item_handle;
-
 class lua_env;
 struct mod_info;
 
