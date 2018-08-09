@@ -2484,8 +2484,7 @@ turn_result_t do_use_command()
             "core.locale.action.use.gene_machine.has_inherited",
             cdata[rc],
             cdata[tc]));
-        anic = rc;
-        gene_engineering_animation(cdata[anic].position).play();
+        gene_engineering_animation(cdata[rc].position).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)

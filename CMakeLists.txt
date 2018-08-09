@@ -141,6 +141,7 @@ set(CORE_SOURCES
   src/ui.cpp
   src/variables.cpp
   src/wish.cpp
+
   src/lua_env/api_manager.cpp
   src/lua_env/event_manager.cpp
   src/lua_env/export_manager.cpp
@@ -148,7 +149,32 @@ set(CORE_SOURCES
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
   src/lua_env/registry_manager.cpp
+
+  src/lua_env/lua_api/lua_api_animation.cpp
+  src/lua_env/lua_api/lua_api_chara.cpp
+  src/lua_env/lua_api/lua_api.cpp
+  src/lua_env/lua_api/lua_api_debug.cpp
+  src/lua_env/lua_api/lua_api_fov.cpp
+  src/lua_env/lua_api/lua_api_gui.cpp
+  src/lua_env/lua_api/lua_api_i18n.cpp
+  src/lua_env/lua_api/lua_api_input.cpp
+  src/lua_env/lua_api/lua_api_item.cpp
+  src/lua_env/lua_api/lua_api_magic.cpp
+  src/lua_env/lua_api/lua_api_map.cpp
+  src/lua_env/lua_api/lua_api_math.cpp
+  src/lua_env/lua_api/lua_api_pos.cpp
+  src/lua_env/lua_api/lua_api_rand.cpp
+  src/lua_env/lua_api/lua_api_skill.cpp
+  src/lua_env/lua_api/lua_api_trait.cpp
+  src/lua_env/lua_api/lua_api_world.cpp
+
+  src/lua_env/lua_class/lua_class_character.cpp
+  src/lua_env/lua_class/lua_class.cpp
+  src/lua_env/lua_class/lua_class_item.cpp
+  src/lua_env/lua_class/lua_class_position.cpp
+
   src/pic_loader/pic_loader.cpp
+
   src/version.cpp
   )
 
