@@ -230,13 +230,13 @@ void abstract_animation::play()
 
 void failure_to_cast_animation::do_play()
 {
-    if (!is_in_fov(caster))
+    if (!is_in_fov(caster_pos))
         return;
 
-    snd_at(66, caster.position);
+    snd_at(66, caster_pos);
 
     do_animation(
-        rendering_base_position_center(caster),
+        rendering_base_position_center(caster_pos),
         "failure_to_cast_effect",
         12,
         [](const auto& key, const auto& center, auto t) {
@@ -255,7 +255,7 @@ void bright_aura_animation::do_play()
 {
     constexpr auto max_particles = 15;
 
-    if (is_in_fov(target) == 0)
+    if (!is_in_fov(target_pos))
         return;
 
     // Load image and play sound.
@@ -263,17 +263,17 @@ void bright_aura_animation::do_play()
     {
     case type_t::debuff:
         prepare_item_image(8, 0);
-        snd_at(38, cc.position);
+        snd_at(38, target_pos);
         break;
     case type_t::offering: prepare_item_image(9, 0); break;
     case type_t::healing:
     case type_t::healing_rain:
         prepare_item_image(7, 0);
-        snd_at(33, cc.position);
+        snd_at(33, target_pos);
         break;
     }
 
-    const auto base_pos = rendering_base_position(target);
+    const auto base_pos = rendering_base_position(target_pos);
 
     // Store part of the previous screen.
     gsel(4);
@@ -337,7 +337,7 @@ void bright_aura_animation::do_play()
 void breath_animation::do_play()
 {
     // Play sound.
-    snd_at(35, attacker.position);
+    snd_at(35, attacker_pos);
 
     // Prepare image.
     gsel(7);
@@ -363,7 +363,7 @@ void breath_animation::do_play()
         {
             const auto dx = position.x;
             const auto dy = position.y;
-            if (!fov_los(attacker.position.x, attacker.position.y, dx, dy))
+            if (!fov_los(attacker_pos.x, attacker_pos.y, dx, dy))
             {
                 continue;
             }
@@ -383,8 +383,8 @@ void breath_animation::do_play()
                     inf_tiles,
                     inf_tiles,
                     std::atan2(
-                        tlocx - attacker.position.x,
-                        attacker.position.y - tlocy));
+                        target_pos.x - attacker_pos.x,
+                        attacker_pos.y - target_pos.y));
                 clear_color_modulator(7);
                 did_draw = true;
             }
@@ -399,7 +399,7 @@ void breath_animation::do_play()
     // Play sound
     if (const auto se = eleinfo(element, 1))
     {
-        snd_at(se, attacker.position, false, false);
+        snd_at(se, attacker_pos, false, false);
     }
 }
 
@@ -513,7 +513,7 @@ void bolt_animation::do_play()
     elona_vector1<int> ax;
     elona_vector1<int> ay;
 
-    snd_at(37, attacker.position);
+    snd_at(37, attacker_pos);
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime6.bmp");
@@ -525,8 +525,8 @@ void bolt_animation::do_play()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
 
-    int x = attacker.position.x;
-    int y = attacker.position.y;
+    int x = attacker_pos.x;
+    int y = attacker_pos.y;
     ap(20) = -1;
     for (int t = 0; t < 20; ++t)
     {
@@ -544,7 +544,7 @@ void bolt_animation::do_play()
                 ap(20) = 4;
                 continue;
             }
-            if (dist(x, y, attacker.position) > distance)
+            if (dist(x, y, attacker_pos) > distance)
             {
                 ap(t) = -2;
                 ap(20) = 4;
@@ -590,8 +590,8 @@ void bolt_animation::do_play()
                     inf_tiles,
                     inf_tiles,
                     std::atan2(
-                        tlocx - attacker.position.x,
-                        attacker.position.y - tlocy));
+                        target_pos.x - attacker_pos.x,
+                        attacker_pos.y - target_pos.y));
                 clear_color_modulator(7);
                 did_draw = true;
             }
@@ -606,7 +606,7 @@ void bolt_animation::do_play()
 
     if (const auto sound = eleinfo(element, 1))
     {
-        snd_at(sound, attacker.position, false, false);
+        snd_at(sound, attacker_pos, false, false);
     }
 }
 
@@ -614,18 +614,18 @@ void bolt_animation::do_play()
 
 void throwing_object_animation::do_play()
 {
-    if (!is_in_fov(target))
+    if (!is_in_fov(target_pos))
         return;
 
     prepare_item_image(item_chip, item_color);
-    int x = (target.position.x - scx) * inf_tiles;
-    int y = (target.position.y - scy) * inf_tiles;
-    int p = dist(target.position, origin.x, origin.y) / 2 + 1;
+    int x = (target_pos.x - scx) * inf_tiles;
+    int y = (target_pos.y - scy) * inf_tiles;
+    int p = dist(target_pos, attacker_pos.x, attacker_pos.y) / 2 + 1;
 
     for (int t = 0; t < p; ++t)
     {
-        x -= (target.position.x - origin.x) * inf_tiles / p;
-        y -= (target.position.y - origin.y) * inf_tiles / p;
+        x -= (target_pos.x - attacker_pos.x) * inf_tiles / p;
+        y -= (target_pos.y - attacker_pos.y) * inf_tiles / p;
 
         gsel(4);
         gmode(0);
@@ -645,8 +645,8 @@ void throwing_object_animation::do_play()
                 inf_tiles,
                 inf_tiles,
                 std::atan2(
-                    origin.x - target.position.x,
-                    target.position.y - origin.y));
+                    attacker_pos.x - target_pos.x,
+                    target_pos.y - attacker_pos.y));
         }
         redraw();
         gmode(0);
@@ -661,12 +661,11 @@ void throwing_object_animation::do_play()
 
 void ranged_attack_animation::do_play()
 {
-    if (!is_in_fov(attacker))
+    if (!is_in_fov(attacker_pos))
         return;
 
     int anicol{};
     int anisound{};
-    const auto& chara_pos = attacker.position;
     if (type == type_t::magic_arrow)
     {
         anicol = eleinfo(ele, 0);
@@ -676,52 +675,49 @@ void ranged_attack_animation::do_play()
     if (type == type_t::distant_attack)
     {
         prepare_item_image(23, 0);
-        snd_at(29, chara_pos);
+        snd_at(29, attacker_pos);
     }
     if (type == type_t::bow)
     {
         prepare_item_image(1, anicol);
-        snd_at(29, chara_pos);
+        snd_at(29, attacker_pos);
     }
     if (type == type_t::crossbow)
     {
         prepare_item_image(2, anicol);
-        snd_at(29, chara_pos);
+        snd_at(29, attacker_pos);
     }
     if (type == type_t::firearm)
     {
-        ap = the_item_db[*fired]->subcategory;
-        if (ap == 24021)
+        if (fired_item_subcategory == 24021)
         {
             prepare_item_image(13, anicol);
-            snd_at(42, chara_pos);
+            snd_at(42, attacker_pos);
         }
-        if (ap == 24020)
+        if (fired_item_subcategory == 24020)
         {
             prepare_item_image(2, anicol);
-            snd_at(30, chara_pos);
+            snd_at(30, attacker_pos);
         }
     }
     if (type == type_t::throwing)
     {
-        int item_chip = fired->image % 1000;
-        int item_color = fired->image / 1000;
-        prepare_item_image(item_chip, item_color);
-        snd_at(31, chara_pos);
+        prepare_item_image(fired_item_image, fired_item_color);
+        snd_at(31, attacker_pos);
     }
     if (type == type_t::magic_arrow)
     {
-        snd_at(36, chara_pos);
+        snd_at(36, attacker_pos);
     }
 
-    int ax = (attacker.position.x - scx) * inf_tiles;
-    int ay = (attacker.position.y - scy) * inf_tiles + inf_screeny + 8;
-    int ap = dist(attacker.position, target.position) / 2 + 1;
+    int ax = (attacker_pos.x - scx) * inf_tiles;
+    int ay = (attacker_pos.y - scy) * inf_tiles + inf_screeny + 8;
+    int ap = dist(attacker_pos, target_pos) / 2 + 1;
 
     for (int t = 0; t < ap; ++t)
     {
-        ax -= (attacker.position.x - target.position.x) * inf_tiles / ap;
-        ay -= (attacker.position.y - target.position.y) * inf_tiles / ap;
+        ax -= (attacker_pos.x - target_pos.x) * inf_tiles / ap;
+        ay -= (attacker_pos.y - target_pos.y) * inf_tiles / ap;
 
         gsel(4);
         gmode(0);
@@ -739,8 +735,7 @@ void ranged_attack_animation::do_play()
             inf_tiles,
             inf_tiles,
             std::atan2(
-                target.position.x - attacker.position.x,
-                attacker.position.y - target.position.y));
+                target_pos.x - attacker_pos.x, attacker_pos.y - target_pos.y));
 
         redraw();
         gmode(0);
@@ -752,7 +747,7 @@ void ranged_attack_animation::do_play()
 
     if (anisound)
     {
-        snd_at(anisound, target.position, false, false);
+        snd_at(anisound, target_pos, false, false);
     }
 }
 
@@ -760,10 +755,10 @@ void ranged_attack_animation::do_play()
 
 void swarm_animation::do_play()
 {
-    snd_at(2, target.position);
+    snd_at(2, target_pos);
 
     do_animation(
-        rendering_base_position_center(target),
+        rendering_base_position_center(target_pos),
         "swarm_effect",
         4,
         [](const auto& key, const auto& center, auto t) {
@@ -799,7 +794,7 @@ void melee_attack_animation::do_play()
     {
         damage_percent = 20;
     }
-    if (target.breaks_into_debris())
+    if (debris)
     {
         anix1 = 1104;
     }
@@ -816,8 +811,8 @@ void melee_attack_animation::do_play()
         sx(cnt) = rnd(24) - 12;
         sy(cnt) = rnd(8);
     }
-    int anidx = (target.position.x - scx) * inf_tiles + inf_screenx;
-    int anidy = (target.position.y - scy) * inf_tiles + inf_screeny;
+    int anidx = (position.x - scx) * inf_tiles + inf_screenx;
+    int anidy = (position.y - scy) * inf_tiles + inf_screeny;
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -883,8 +878,8 @@ void melee_attack_animation::do_play()
 
 void gene_engineering_animation::do_play()
 {
-    snd_at(107, target.position);
-    if (!is_in_fov(target))
+    snd_at(107, position);
+    if (!is_in_fov(position))
         return;
 
     gsel(7);
@@ -896,8 +891,8 @@ void gene_engineering_animation::do_play()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
 
-    int anidx = (target.position.x - scx) * inf_tiles + inf_screenx - 24;
-    int anidy = (target.position.y - scy) * inf_tiles + inf_screeny - 60;
+    int anidx = (position.x - scx) * inf_tiles + inf_screenx - 24;
+    int anidy = (position.y - scy) * inf_tiles + inf_screeny - 60;
     for (int t = 0; t < 10; ++t)
     {
         pos(0, 0);

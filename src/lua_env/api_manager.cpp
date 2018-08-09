@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include "../ability.hpp"
+#include "../animation.hpp"
 #include "../audio.hpp"
 #include "../character.hpp"
 #include "../db_item.hpp"
@@ -1205,17 +1206,23 @@ void Math::bind(sol::table& Elona)
 
 namespace Animation
 {
-void play_failure_to_cast(lua_character_handle);
-void play_bright_aura(lua_character_handle, int);
-void play_breath(lua_character_handle, int);
+void play_failure_to_cast(const position_t&);
+void play_bright_aura(const position_t&, int);
+void play_breath(const position_t&, const position_t&, int);
 void play_ball_atomic_bomb(const position_t&, int);
 void play_ball_magic(const position_t&, int, int);
-void play_bolt(lua_character_handle, int);
-void play_throwing_object(const position_t&, lua_character_handle, int, int);
-void play_swarm(lua_character_handle);
-void play_ranged_attack();
-void play_melee_attack();
-void play_gene_engineering(lua_character_handle);
+void play_bolt(const position_t&, const position_t&, int, int);
+void play_throwing_object(const position_t&, const position_t&, int, int);
+void play_swarm(const position_t&);
+void play_ranged_attack(
+    const position_t&,
+    const position_t&,
+    int,
+    int,
+    int,
+    int);
+void play_melee_attack(const position_t&, bool, int, int, bool);
+void play_gene_engineering(const position_t&);
 void play_miracle();
 void play_meteor();
 void play_ragnarok();
@@ -1224,23 +1231,23 @@ void play_breaking(const position_t&);
 void bind(sol::table& Elona);
 } // namespace Animation
 
-void Animation::play_failure_to_cast(lua_character_handle handle)
+void Animation::play_failure_to_cast(const position_t& caster_pos)
 {
-    auto& caster = lua::lua->get_handle_manager().get_ref<character>(handle);
-    failure_to_cast_animation(caster).play();
+    failure_to_cast_animation(caster_pos).play();
 }
 
-void Animation::play_breath(lua_character_handle handle, int type)
+void Animation::play_bright_aura(const position_t& target_pos, int kind)
 {
-    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
-    auto anim_type = static_cast<bright_aura_animation::type_t>(type);
-    bright_aura_animation(target, anim_type).play();
+    auto anim_type = static_cast<bright_aura_animation::type_t>(kind);
+    bright_aura_animation(target_pos, anim_type).play();
 }
 
-void Animation::play_breath(lua_character_handle handle, int element)
+void Animation::play_breath(
+    const position_t& attacker_pos,
+    const position_t& target_pos,
+    int element)
 {
-    auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
-    breath_animation(attacker, element).play();
+    breath_animation(attacker_pos, target_pos, element).play();
 }
 
 void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
@@ -1254,48 +1261,57 @@ void Animation::play_ball_magic(const position_t& pos, int range, int element)
 }
 
 void Animation::play_bolt(
-    lua_character_handle handle,
+    const position_t& attacker_pos,
+    const position_t& target_pos,
     int element,
     int distance)
 {
-    auto& attacker = lua::lua->get_handle_manager().get_ref<character>(handle);
-    bolt_animation(attacker, element, distance).play();
+    bolt_animation(attacker_pos, target_pos, element, distance).play();
 }
 
 void Animation::play_throwing_object(
-    const position_t& origin,
-    lua_character_handle handle,
+    const position_t& attacker_pos,
+    const position_t& target_pos,
     int item_chip,
     int item_color)
 {
-    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
-    throwing_object_animation(origin, target, item_chip, item_color).play();
+    throwing_object_animation(target_pos, attacker_pos, item_chip, item_color)
+        .play();
 }
 
-void Animation::play_swarm(lua_character_handle handle)
+void Animation::play_swarm(const position_t& target_pos)
 {
-    auto& target = lua::lua->get_handle_manager().get_ref<character>(handle);
-    swarm_animation(target, element).play();
+    swarm_animation(target_pos).play();
 }
 
 void Animation::play_ranged_attack(
-    const position_t& start,
-    const position_t& end,
-    int type)
+    const position_t& attacker_pos,
+    const position_t& target_pos,
+    int kind,
+    int fired_item_subcategory,
+    int fired_item_image,
+    int fired_item_color)
 {
-    auto anim_type = static_cast<ranged_attack_animation::type_t>(type);
-    ranged_attack_animation(start, end, anim_type).play();
+    auto anim_type = static_cast<ranged_attack_animation::type_t>(kind);
+    ranged_attack_animation(
+        attacker_pos,
+        target_pos,
+        anim_type,
+        fired_item_subcategory,
+        fired_item_image,
+        fired_item_color)
+        .play();
 }
 
 void Animation::play_melee_attack(
-    const position_t& pos,
+    const position_t& target_pos,
     bool debris,
     int attack_skill,
     int damage_percent,
     bool is_critical)
 {
     melee_attack_animation(
-        pos, debris, attack_skill, damage_percent, is_critical)
+        target_pos, debris, attack_skill, damage_percent, is_critical)
         .play();
 }
 
@@ -1319,9 +1335,9 @@ void Animation::play_ragnarok()
     ragnarok_animation().play();
 }
 
-void Animation::play_breaking(const position_t& position)
+void Animation::play_breaking(const position_t& pos)
 {
-    breaking_animation(position).play();
+    breaking_animation(pos).play();
 }
 
 void Animation::bind(sol::table& Elona)
@@ -1329,8 +1345,11 @@ void Animation::bind(sol::table& Elona)
     sol::table Animation = Elona.create_named("Animation");
     Animation.set_function(
         "play_failure_to_cast", Animation::play_failure_to_cast);
+    Animation.set_function("play_bright_aura", Animation::play_bright_aura);
     Animation.set_function("play_breath", Animation::play_breath);
-    Animation.set_function("play_ball", Animation::play_ball);
+    Animation.set_function(
+        "play_ball_atomic_bomb", Animation::play_ball_atomic_bomb);
+    Animation.set_function("play_ball_magic", Animation::play_ball_magic);
     Animation.set_function("play_bolt", Animation::play_bolt);
     Animation.set_function(
         "play_throwing_object", Animation::play_throwing_object);
@@ -1650,6 +1669,10 @@ api_manager::api_manager(lua_env* lua)
 
     // register usertypes globally, so the handle manager can get at them.
     init_usertypes(*lua);
+
+    // TODO hack to bind position_t constructor, because otherwise
+    // there would be no way of creating a position_t from a mod.
+    Elona["core"]["LuaPosition"] = (*lua->get_state())["LuaPosition"];
 }
 
 bool api_manager::is_loaded()

@@ -609,7 +609,7 @@ turn_result_t do_throw_command()
         }
     }
     throwing_object_animation(
-        {tlocx, tlocy}, cdata[cc], inv[ci].image, inv[ci].color)
+        {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
     ti = inv_getfreeid(-1);
     inv[ci].modify_number(-1);
@@ -998,7 +998,8 @@ turn_result_t do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    bright_aura_animation(cdata[tc], bright_aura_animation::type_t::offering)
+    bright_aura_animation(
+        cdata[tc].position, bright_aura_animation::type_t::offering)
         .play();
     tc = tcbk;
     int stat = item_find(60002);
@@ -2484,7 +2485,7 @@ turn_result_t do_use_command()
             cdata[rc],
             cdata[tc]));
         anic = rc;
-        gene_engineering_animation(cdata[anic]).play();
+        gene_engineering_animation(cdata[anic].position).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)

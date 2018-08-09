@@ -96,9 +96,7 @@ private:
 
     /***
      * An isolated Lua environment where all C++ function bindings are
-     * kept. This currently does not include usertype tables, because
-     * some parts of the API implemented in Lua have to get at them
-     * somehow, but that could be easily arranged sometime.
+     * kept.
      */
     sol::environment api_env;
 

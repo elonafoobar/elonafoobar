@@ -360,8 +360,8 @@ talk_result_t talk_house_visitor()
                     ccbk = cc;
                     cc = tc;
                     throwing_object_animation(
-                        {tlocx, tlocy}, cdata[cc], 223, 0);
-                    .play();
+                        {tlocx, tlocy}, cdata[cc].position, 223, 0)
+                        .play();
                     cc = ccbk;
                     mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                     mapitem_fire(tlocx, tlocy);

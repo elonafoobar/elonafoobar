@@ -539,7 +539,7 @@ void continuous_action_perform()
                                         cc = tc;
                                         throwing_object_animation(
                                             inv[ci].position,
-                                            cdata[cc],
+                                            cdata[cc].position,
                                             inv[ci].image,
                                             inv[ci].color)
                                             .play();
