@@ -998,6 +998,7 @@ void wait_key_released()
         result = stick(stick_key::mouse_left | stick_key::mouse_right);
         if (result == 0)
         {
+            await(config::instance().wait1);
             key_check();
             if (key(0).empty())
             {
