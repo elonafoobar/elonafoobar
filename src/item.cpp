@@ -77,6 +77,10 @@ bool item::almost_equals(const item& other, bool ignore_position)
 inventory::inventory()
     : storage(5480)
 {
+    for (size_t i = 0; i < storage.size(); ++i)
+    {
+        storage[i].index = static_cast<int>(i);
+    }
 }
 
 int ibit(size_t type, int ci)
@@ -453,13 +457,17 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
-    bool created_new = inv[b].number() == 0;
+    bool was_empty = inv[b].number() == 0;
 
     item::copy(inv[a], inv[b]);
 
-    if (created_new)
+    if (was_empty && inv[b].number() != 0)
     {
         lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[b]);
+    }
+    else if (!was_empty && inv[b].number() == 0)
+    {
+        inv[b].remove();
     }
 }
 
@@ -471,6 +479,8 @@ void item_exchange(int a, int b)
     item::copy(inv[a], tmp);
     item::copy(inv[b], inv[a]);
     item::copy(tmp, inv[b]);
+
+    lua::lua->get_handle_manager().swap_handles<item>(inv[b], inv[a]);
 }
 
 
@@ -500,10 +510,13 @@ void item_refresh(item& i)
     }
     if (i.index >= 5080 && mode != 6)
     {
+        // Refresh the cell the item is on if it's on the ground.
         cell_refresh(i.position.x, i.position.y);
     }
     else if (i.index < 200)
     {
+        // Refresh the player's burden state if the item is in their
+        // inventory.
         refresh_burden_state();
     }
 }
@@ -512,28 +525,19 @@ void item_refresh(item& i)
 
 void item::modify_number(int delta)
 {
-    bool num_was_zero = this->number_ == 0;
-
-    this->number_ += delta;
-    item_refresh(*this);
-
-    bool created_new = num_was_zero && this->number_ > 0;
-    if (created_new)
-    {
-        lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);
-    }
+    this->set_number(this->number_ + delta);
 }
 
 
 
 void item::set_number(int number_)
 {
-    bool num_was_zero = this->number_ == 0;
+    bool item_was_empty = this->number_ <= 0;
 
-    this->number_ = number_;
+    this->number_ = std::max(number_, 0);
     item_refresh(*this);
 
-    bool created_new = num_was_zero && this->number_ > 0;
+    bool created_new = item_was_empty && this->number_ > 0;
     if (created_new)
     {
         lua::lua->get_handle_manager().create_item_handle_run_callbacks(*this);

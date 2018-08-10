@@ -24,10 +24,15 @@ class lua_env;
  * forgetting to check they're still valid.
  *
  * The handles are represented as Lua tables stored in an isolated Lua
- * environment. The handle manager acts as the interface for providing
- * references to the handles to other Lua environments.
+ * environment. Each handle acts as a reference to an object whose
+ * memory is managed by C++. The C++ reference is not stored on the
+ * handle; it acts as a unique identifier for that object instance,
+ * but to gain access to the C++ reference the handle manager must be
+ * used, where it will check for validity. The handle manager also
+ * acts as the interface for providing handles to other Lua
+ * environments.
  *
- * See mods/core/handle.lua for more information.
+ * See data/lua/handle.lua for more information.
  */
 class handle_manager : public lib::noncopyable
 {
@@ -40,8 +45,8 @@ public:
      * If the handle already exists, handle_set is instead checked for
      * validity.
      */
-    void create_chara_handle(character& chara);
-    void create_item_handle(item& item);
+    void create_chara_handle(const character& chara);
+    void create_item_handle(const item& item);
 
     /***
      * Removes an existing handle in the isolated handle environment.
@@ -49,8 +54,8 @@ public:
      * If the handle doesn't exist in this manager's handle list, handle_set
      * is checked that the handle is invalid.
      */
-    void remove_chara_handle(character& chara);
-    void remove_item_handle(item& item);
+    void remove_chara_handle(const character& chara);
+    void remove_item_handle(const item& item);
 
 
     /***
@@ -58,10 +63,10 @@ public:
      * creation/removal event callbacks using the event manager
      * instance.
      */
-    void create_chara_handle_run_callbacks(character&);
-    void create_item_handle_run_callbacks(item&);
-    void remove_chara_handle_run_callbacks(character&);
-    void remove_item_handle_run_callbacks(item&);
+    void create_chara_handle_run_callbacks(const character&);
+    void create_item_handle_run_callbacks(const item&);
+    void remove_chara_handle_run_callbacks(const character&);
+    void remove_item_handle_run_callbacks(const item&);
 
 
     /***
@@ -79,7 +84,7 @@ public:
     template <typename T>
     bool handle_is(sol::table handle)
     {
-        return handle["kind"] == T::lua_type();
+        return handle["__kind"] == T::lua_type();
     }
 
     bool handle_is_valid(sol::table handle)
@@ -102,15 +107,57 @@ public:
 
         // NOTE: currently indexes by the object's integer ID, but
         // this may be phased out in the future.
-        sol::optional<sol::table> handle =
+        sol::object handle =
             handle_env["Handle"]["get_handle"](obj, T::lua_type());
-
-        if (!handle)
+        if (!handle.is<sol::table>())
         {
             return sol::lua_nil;
         }
-        return *handle;
+        return handle;
     }
+
+
+    sol::table
+    get_handle_range(const std::string& kind, int index_start, int index_end)
+    {
+        return handle_env["Handle"]["get_handle_range"](
+            kind, index_start, index_end);
+    }
+
+    void
+    clear_handle_range(const std::string& kind, int index_start, int index_end)
+    {
+        handle_env["Handle"]["clear_handle_range"](
+            kind, index_start, index_end);
+    }
+
+    void merge_handles(const std::string& kind, sol::table handles)
+    {
+        handle_env["Handle"]["merge_handles"](kind, handles);
+    }
+
+    template <typename T>
+    void relocate_handle(const T& obj, int new_index)
+    {
+        handle_env["Handle"]["relocate_handle"](obj, new_index, T::lua_type());
+    }
+
+    template <typename T>
+    void swap_handles(const T& obj_a, const T& obj_b)
+    {
+        handle_env["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
+    }
+
+    template <typename T>
+    void resolve_handle(T& obj)
+    {
+        auto handle = get_handle<T>(obj);
+        if (handle != sol::lua_nil)
+        {
+            handle_env["Handle"]["set_ref"](handle, obj);
+        }
+    }
+
 
     void clear_all_handles();
 

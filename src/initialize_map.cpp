@@ -72,8 +72,6 @@ label_17401:
                 if (cdata[cnt].state() == character::state_t::pet_moving_to_map)
                 {
                     cdata[cnt].set_state(character::state_t::alive);
-                    lua::lua->get_handle_manager().create_chara_handle(
-                        cdata[cnt]);
                 }
             }
         }
@@ -2771,7 +2769,6 @@ label_1742_internal:
         }
         rc = cnt;
         cdata[rc].set_state(character::state_t::alive);
-        lua::lua->get_handle_manager().create_chara_handle(cdata[rc]);
         if (cdata[cnt].is_contracting() == 1)
         {
             cxinit = cdata.player().position.x;

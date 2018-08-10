@@ -3079,12 +3079,10 @@ void label_15380()
     cdata[rc].mp = cdata[rc].max_mp / 3;
     cdata[rc].sp = cdata[rc].max_sp / 3;
     cdata[rc].insanity = 0;
-    cdata[rc].set_state(character::state_t::alive);
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua->get_handle_manager().create_chara_handle(
-        cdata[rc]); // TODO add separate Lua event for revival
+    cdata[rc].set_state(character::state_t::alive);
     return;
 }
 
@@ -5381,8 +5379,6 @@ turn_result_t exit_map()
             if (cdata[cnt].state() == character::state_t::pet_in_other_map)
             {
                 cdata[cnt].set_state(character::state_t::alive);
-                lua::lua->get_handle_manager().create_chara_handle(
-                    cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
