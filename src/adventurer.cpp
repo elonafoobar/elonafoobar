@@ -184,7 +184,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
 }
 
 
-void label_2662()
+void adventurer_update()
 {
     for (int cnt = 16; cnt < 55; ++cnt)
     {
@@ -270,7 +270,7 @@ void label_2662()
         {
             if (adata(0, cdata[rc].current_map) != mdata_t::map_type_t::town)
             {
-                label_2664();
+                adventurer_discover_equipment();
             }
         }
         if (rnd(10) == 0)
@@ -289,7 +289,7 @@ void label_2662()
             int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
-            label_2664();
+            adventurer_discover_equipment();
         }
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
@@ -309,7 +309,7 @@ void label_2662()
 }
 
 
-int label_2664()
+int adventurer_discover_equipment()
 {
     f = 0;
     for (int cnt = 0; cnt < 10; ++cnt)

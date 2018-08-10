@@ -370,7 +370,7 @@ void proc_event()
         }
         break;
     case 7:
-        label_1444();
+        event_7_setup();
         wait_key_pressed();
         screenupdate = -1;
         update_entire_screen();

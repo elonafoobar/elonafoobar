@@ -108,7 +108,7 @@ int modpiety(int prm_1035);
 void set_npc_religion();
 void apply_god_blessing(int cc);
 std::string get_god_description();
-void label_1888();
+void god_proc_switching_penalty();
 void switch_religion();
 turn_result_t do_pray();
 turn_result_t do_offer();

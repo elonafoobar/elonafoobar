@@ -390,7 +390,7 @@ std::string get_god_description()
 
 
 
-void label_1888()
+void god_proc_switching_penalty()
 {
     if (rtval == 0)
     {

@@ -364,7 +364,7 @@ void makecardlist()
             }
         }
     }
-    label_1844();
+    tcg_proc_ai_elist();
     return;
 }
 
@@ -558,7 +558,7 @@ void tcgdraw()
     while (1)
     {
         ++t_at_tcg;
-        label_1825();
+        tcg_draw_deck_editor();
         anime_at_tcg = 0;
         font(12 + en - en * 2);
         color(255, 255, 255);
@@ -769,7 +769,6 @@ void tcgdraw()
         if (screenupdate_at_tcg == -1)
         {
             screenupdate_at_tcg = 0;
-            label_1773();
             return;
         }
         else
@@ -779,17 +778,9 @@ void tcgdraw()
         }
         if (anime_at_tcg == 0)
         {
-            label_1773();
             return;
         }
     }
-}
-
-
-
-void label_1773()
-{
-    return;
 }
 
 
@@ -948,7 +939,7 @@ void gravecard(int prm_1006)
     }
     makecardlist();
     cardpos(card_at_tcg(1, prm_1006), -1);
-    label_1823();
+    tcg_update_mana();
     return;
 }
 
@@ -1259,7 +1250,7 @@ void saccard(int prm_1019, int prm_1020)
     makecardlist();
     card_at_tcg(0, prm_1019) = 4;
     makecardlist();
-    label_1823();
+    tcg_update_mana();
     efllistadd(
         2,
         1,
@@ -1282,7 +1273,7 @@ void opencard(int prm_1021)
 
 
 
-void label_1793()
+void tcg_show_refs()
 {
     SDIM3(cdrefn_at_tcg, 50, 4);
     p_at_tcg = 0;
@@ -1347,13 +1338,13 @@ void actionproc()
                             }
                         }
                         selectmode_at_tcg = 1;
-                        label_1836();
+                        tcg_prompt_action();
                         selectmode_at_tcg = -1;
                     }
                     else
                     {
                         aiblock_at_tcg = 1;
-                        label_18462();
+                        tcg_proc_ai();
                         aiblock_at_tcg = 0;
                     }
                     chainmode_at_tcg = 0;
@@ -1367,7 +1358,7 @@ void actionproc()
         --stack_at_tcg;
         if (stack_at_tcg < 0)
         {
-            label_1802();
+            tcg_clear_stack();
             return;
         }
         ac_at_tcg = cardstack_at_tcg(0, stack_at_tcg);
@@ -1437,11 +1428,11 @@ void actionproc()
         case 1:
             deckmode_at_tcg = 1;
             deckrefn_at_tcg = cardn_at_tcg(0, ac_at_tcg);
-            label_1828();
+            tcg_draw_menu();
             break;
         case 0:
             deckmode_at_tcg = 2;
-            label_1828();
+            tcg_draw_menu();
             break;
         }
 
@@ -1457,7 +1448,7 @@ void actionproc()
 
 
 
-void label_1802()
+void tcg_clear_stack()
 {
     stack_at_tcg = 0;
     return;
@@ -1527,7 +1518,7 @@ int putcard(int prm_1024, int prm_1025)
         makecardlist();
         card_at_tcg(0, prm_1024) = 4;
         makecardlist();
-        label_1823();
+        tcg_update_mana();
         return 1;
     }
     p_at_tcg = getspotsum(prm_1025);
@@ -1577,7 +1568,7 @@ void tcginit()
     turn_at_tcg = 0;
     efllistmax_at_tcg = 10;
     cardmode_at_tcg = 0;
-    label_1793();
+    tcg_show_refs();
     DIM3(card_at_tcg, 50, maxcard_at_tcg);
     SDIM4(cardn_at_tcg, 16, 2, maxcard_at_tcg);
     DIM3(cpdata_at_tcg, 20, 2);
@@ -1646,7 +1637,7 @@ void tcginit()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
-    label_1826();
+    tcg_prepare_cnt2();
     tcgdrawbg();
     return;
 }
@@ -1825,7 +1816,7 @@ void tcgdeck()
         calcdecksize();
         deckmode_at_tcg(0) = 0;
         deckmode_at_tcg(1) = rtval_at_tcg;
-        label_1828();
+        tcg_draw_menu();
     }
 }
 
@@ -1873,25 +1864,25 @@ void tcgmain()
     while (1)
     {
         cpisme();
-        label_1816();
+        tcg_phase_one();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1817();
+        tcg_phase_two();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1818();
+        tcg_phase_three();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1819();
+        tcg_phase_four();
         if (ct_at_tcg == 0)
         {
             ct_at_tcg = 1;
@@ -1905,14 +1896,14 @@ void tcgmain()
 
 
 
-void label_1815()
+void tcg_game_over()
 {
     return;
 }
 
 
 
-void label_1816()
+void tcg_phase_one()
 {
     phase_at_tcg = 0;
     ++turn_at_tcg;
@@ -1940,7 +1931,7 @@ void label_1816()
 
 
 
-void label_1817()
+void tcg_phase_two()
 {
     phase_at_tcg = 1;
     tcgdraw();
@@ -1952,7 +1943,7 @@ void label_1817()
 
 
 
-void label_1818()
+void tcg_phase_three()
 {
     phase_at_tcg = 2;
     tcgdraw();
@@ -1960,19 +1951,19 @@ void label_1818()
     if (cp_at_tcg == player_at_tcg)
     {
         selectmode_at_tcg = 0;
-        label_1836();
+        tcg_prompt_action();
     }
     else
     {
         selectmode_at_tcg = -1;
-        label_18462();
+        tcg_proc_ai();
     }
     return;
 }
 
 
 
-void label_1819()
+void tcg_phase_four()
 {
     phase_at_tcg = 3;
     if (cp_at_tcg == player_at_tcg)
@@ -2105,7 +2096,7 @@ void cslinedown()
 
 
 
-void label_1823()
+void tcg_update_mana()
 {
     elona_vector1<int> mana_at_tcg;
     int m_at_tcg = 0;
@@ -2194,7 +2185,7 @@ void label_1823()
 
 
 
-void label_1824()
+void tcg_draw_selection()
 {
     font(12 + en - en * 2);
     gmode(2);
@@ -2281,7 +2272,7 @@ void label_1824()
 
 
 
-void label_1825()
+void tcg_draw_deck_editor()
 {
     gmode(0);
     pos(basex_at_tcg, basey_at_tcg);
@@ -2405,7 +2396,7 @@ void label_1825()
 
 
 
-void label_1826()
+void tcg_prepare_cnt2()
 {
     gmode(4, 180);
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -2418,7 +2409,7 @@ void label_1826()
 
 
 
-void label_1827()
+void tcg_update_page()
 {
     if (dsc_at_tcg < 0)
     {
@@ -2442,7 +2433,7 @@ void label_1827()
 
 
 
-void label_1828()
+void tcg_draw_menu()
 {
     gsel(4);
     pos(0, 0);
@@ -2559,10 +2550,10 @@ label_1829_internal:
             break;
         }
     }
-    label_1827();
+    tcg_update_page();
 label_1830_internal:
-    label_1825();
-    label_1824();
+    tcg_draw_deck_editor();
+    tcg_draw_selection();
     redraw();
     await(30);
     key_check();
@@ -2606,7 +2597,7 @@ label_1830_internal:
         dsc_at_tcg -= 8;
         snd(5);
     }
-    label_1827();
+    tcg_update_page();
     if (key == key_enter)
     {
         if (dlistmax_at_tcg == 0)
@@ -2627,8 +2618,8 @@ label_1830_internal:
             }
         label_1831_internal:
             calcdecksize();
-            label_1825();
-            label_1824();
+            tcg_draw_deck_editor();
+            tcg_draw_selection();
             act_at_tcg(0) = 0;
             act_at_tcg(1) = 0;
             act_at_tcg(2) = 0;
@@ -2650,7 +2641,7 @@ label_1830_internal:
                     goto label_1833_internal;
                 }
             }
-            label_1840();
+            tcg_update_selection();
             if (f_at_tcg == 0)
             {
                 if (act_at_tcg(0))
@@ -2677,7 +2668,7 @@ label_1830_internal:
         }
         rtval_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
         rtval_at_tcg = 1;
-        label_1835();
+        tcg_draw_background();
         return;
     }
     if (key == key_cancel)
@@ -2710,7 +2701,7 @@ label_1830_internal:
             }
         }
         rtval_at_tcg = 0;
-        label_1835();
+        tcg_draw_background();
         return;
     }
     goto label_1830_internal;
@@ -2718,18 +2709,18 @@ label_1830_internal:
 
 
 
-int label_1835()
+int tcg_draw_background()
 {
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
-    label_1826();
+    tcg_prepare_cnt2();
     return rtval_at_tcg;
 }
 
 
 
-void label_1836()
+void tcg_prompt_action()
 {
     if (selectmode_at_tcg == 0)
     {
@@ -2804,7 +2795,7 @@ void label_1836()
         {
             if (cs_at_tcg == -1)
             {
-                label_1839();
+                tcg_clear_cursor();
                 return;
             }
             act_at_tcg(0) = 0;
@@ -2887,7 +2878,7 @@ void label_1836()
             snd(40);
             cardhelp(s_at_tcg, 10);
             tcgdraw();
-            label_1840();
+            tcg_update_selection();
             cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
             key = "";
             if (f_at_tcg == -1)
@@ -2905,7 +2896,7 @@ void label_1836()
                     if (selectmode_at_tcg == 1)
                     {
                         attacktarget_at_tcg = cc_at_tcg;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
@@ -2915,7 +2906,7 @@ void label_1836()
                     actionproc();
                     if (gameover())
                     {
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
@@ -2939,13 +2930,13 @@ void label_1836()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     actionproc();
                     if (gameover())
                     {
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                 }
@@ -2973,7 +2964,7 @@ void label_1836()
                 putcard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
                 if (gameover())
                 {
-                    label_1839();
+                    tcg_clear_cursor();
                     return;
                 }
                 if (card_at_tcg(9, cc_at_tcg) == 20)
@@ -2986,14 +2977,14 @@ void label_1836()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     actionproc();
                 }
                 if (gameover())
                 {
-                    label_1839();
+                    tcg_clear_cursor();
                     return;
                 }
             }
@@ -3005,7 +2996,7 @@ void label_1836()
         }
         if (key == key_cancel || key_escape)
         {
-            label_1839();
+            tcg_clear_cursor();
             return;
         }
         if (key == u8"s"s)
@@ -3027,7 +3018,7 @@ void label_1836()
 
 
 
-void label_1839()
+void tcg_clear_cursor()
 {
     cursor_at_tcg = 0;
     return;
@@ -3035,7 +3026,7 @@ void label_1839()
 
 
 
-void label_1840()
+void tcg_update_selection()
 {
     p_at_tcg = 0;
     i_at_tcg = 0;
@@ -3102,25 +3093,25 @@ void label_1840()
         if (key == key_north)
         {
             f_at_tcg = 0;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key == key_south)
         {
             f_at_tcg = 1;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key == key_enter)
         {
             f_at_tcg = 2;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key != ""s)
         {
             f_at_tcg = -1;
-            label_1842();
+            tcg_card_selected();
             return;
         }
     }
@@ -3128,14 +3119,14 @@ void label_1840()
 
 
 
-void label_1842()
+void tcg_card_selected()
 {
     return;
 }
 
 
 
-void label_1844()
+void tcg_proc_ai_elist()
 {
     emax_at_tcg = 0;
     for (int cnt = 0, cnt_end = (clistmax_at_tcg(ch_at_tcg)); cnt < cnt_end;
@@ -3229,7 +3220,7 @@ void label_1844()
 
 
 
-int label_1845()
+int tcg_try_sacrifice()
 {
     if (sac_at_tcg > 0)
     {
@@ -3274,7 +3265,7 @@ int label_1845()
 
 
 
-void label_18462()
+void tcg_proc_ai()
 {
     int ec_at_tcg = 0;
 
@@ -3289,23 +3280,23 @@ void label_18462()
             {
                 cpdata_at_tcg(4, 0) = 0;
             }
-            label_1844();
+            tcg_proc_ai_elist();
             ec_at_tcg = 0;
             init = false;
         }
         if (gameover())
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         if (ec_at_tcg >= emax_at_tcg)
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         if (elist_at_tcg(0, ec_at_tcg) <= 0)
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         cc_at_tcg = elist_at_tcg(1, ec_at_tcg);
@@ -3316,7 +3307,7 @@ void label_18462()
                 putcard(cc_at_tcg, cp_at_tcg);
                 if (gameover())
                 {
-                    label_1848();
+                    tcg_proc_ai_sacrifice();
                     return;
                 }
                 if (card_at_tcg(9, cc_at_tcg) == 20)
@@ -3329,7 +3320,7 @@ void label_18462()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1848();
+                        tcg_proc_ai_sacrifice();
                         return;
                     }
                     actionproc();
@@ -3339,7 +3330,7 @@ void label_18462()
             }
             else
             {
-                int stat = label_1845();
+                int stat = tcg_try_sacrifice();
                 if (stat == 1)
                 {
                     init = true;
@@ -3358,7 +3349,7 @@ void label_18462()
         if (elist_at_tcg(2, ec_at_tcg) == -2)
         {
             attacktarget_at_tcg = cc_at_tcg;
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         ++ec_at_tcg;
@@ -3367,16 +3358,16 @@ void label_18462()
 
 
 
-void label_1848()
+void tcg_proc_ai_sacrifice()
 {
     if (aiblock_at_tcg == 0)
     {
         if (sac_at_tcg == 0)
         {
-            int stat = label_1845();
+            int stat = tcg_try_sacrifice();
             if (stat == 1)
             {
-                label_18462();
+                tcg_proc_ai();
                 return;
             }
         }

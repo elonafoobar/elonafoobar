@@ -90,7 +90,7 @@ void talk_to_npc()
     if (scenemode == 0)
     {
         snd(99);
-        label_1745();
+        map_proc_regen_and_update();
     }
     cs = 0;
     chatflag = 0;

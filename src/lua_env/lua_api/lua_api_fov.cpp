@@ -40,7 +40,7 @@ void FOV::refresh()
     syfix = 0;
     update_scrolling_info();
     update_slight();
-    label_1433();
+    ui_render_non_hud();
 }
 
 void FOV::bind(sol::table& api_table)
