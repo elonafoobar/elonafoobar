@@ -12717,7 +12717,7 @@ int drop_item()
     itemturn(ci);
     int stat = item_stack(-1, ci);
     const auto tibk = ti; // TODO: refactor
-    if (stat == 0 || dropval == 0)
+    if (stat == 0)
     {
         ti = inv_getfreeid(-1);
         if (ti == -1)
