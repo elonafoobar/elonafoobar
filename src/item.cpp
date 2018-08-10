@@ -77,6 +77,10 @@ bool item::almost_equals(const item& other, bool ignore_position)
 inventory::inventory()
     : storage(5480)
 {
+    for (size_t i = 0; i < storage.size(); ++i)
+    {
+        storage[i].index = static_cast<int>(i);
+    }
 }
 
 int ibit(size_t type, int ci)

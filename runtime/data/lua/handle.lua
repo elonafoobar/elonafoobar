@@ -220,7 +220,6 @@ end
 --- __index field with the new value. The handle must be valid and the
 --- target index must not be occupied already.
 function Handle.relocate_handle(cpp_ref, new_index, kind)
-   print("RELOCATE " .. cpp_ref.index .. " "  .. new_index)
    local handle = handles_by_index[kind][cpp_ref.index]
    assert(Handle.is_valid(handle))
    -- assert(not Handle.is_valid(handles_by_index[kind][new_index]))
@@ -233,7 +232,6 @@ end
 --- Exchanges the positions of two handles and updates their __index
 --- fields with the new values. Both handles must be valid.
 function Handle.swap_handles(cpp_ref_a, cpp_ref_b, kind)
-   print("SWAP " .. cpp_ref_a.index .. " "  .. cpp_ref_b.index)
    local handle_a = handles_by_index[kind][cpp_ref_a.index]
    local handle_b = handles_by_index[kind][cpp_ref_b.index]
    assert(Handle.is_valid(handle_a))
@@ -273,7 +271,6 @@ end
 
 function Handle.get_handle_range(kind, index_start, index_end)
    local ret = {}
-   print("RANGE " .. index_start .. " " .. index_end)
    for index, handle in Handle.iter(kind, index_start, index_end) do
       ret[index] = handle
    end
@@ -281,7 +278,6 @@ function Handle.get_handle_range(kind, index_start, index_end)
 end
 
 function Handle.clear_handle_range(kind, index_start, index_end)
-   print("CLEARRANGE " .. index_start .. " " .. index_end)
    for index=index_start, index_end do
       local handle = handles_by_index[kind][index]
       if handle ~= nil then

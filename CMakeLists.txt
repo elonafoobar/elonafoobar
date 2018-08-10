@@ -281,6 +281,7 @@ else()
       src/tests/lua_registry_item.cpp
       src/tests/lua_serialization.cpp
       src/tests/elonacore.cpp
+      src/tests/item.cpp
       src/tests/i18n.cpp
       src/tests/i18n_builtins.cpp
       src/tests/i18n_regressions.cpp

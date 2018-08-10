@@ -350,7 +350,7 @@ TEST_CASE(
 
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 1));
     elona::cc = 0;
-    elona::in = inv[ci].number();
+    elona::in = inv[elona::ci].number();
 
     REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
     REQUIRE(pick_up_item() == 1);
