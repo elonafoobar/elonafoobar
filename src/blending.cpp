@@ -447,7 +447,7 @@ void window_recipe_(
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
-    dy_at_m184 = y + 48;
+    dy_at_m184 = prm_1052 + 48;
     font(12 - en * 2, snail::font_t::style_t::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(i18n::s.get("core.locale.blending.window.procedure"));
