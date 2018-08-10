@@ -5,6 +5,7 @@
 #include "config.hpp"
 #include "db_item.hpp"
 #include "draw.hpp"
+#include "element.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "item.hpp"

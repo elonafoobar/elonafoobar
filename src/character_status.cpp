@@ -6,6 +6,7 @@
 #include "config.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "menu.hpp"
 #include "random.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
