@@ -45,8 +45,8 @@ public:
      * If the handle already exists, handle_set is instead checked for
      * validity.
      */
-    void create_chara_handle(character& chara);
-    void create_item_handle(item& item);
+    void create_chara_handle(const character& chara);
+    void create_item_handle(const item& item);
 
     /***
      * Removes an existing handle in the isolated handle environment.
@@ -54,8 +54,8 @@ public:
      * If the handle doesn't exist in this manager's handle list, handle_set
      * is checked that the handle is invalid.
      */
-    void remove_chara_handle(character& chara);
-    void remove_item_handle(item& item);
+    void remove_chara_handle(const character& chara);
+    void remove_item_handle(const item& item);
 
 
     /***
@@ -63,10 +63,10 @@ public:
      * creation/removal event callbacks using the event manager
      * instance.
      */
-    void create_chara_handle_run_callbacks(character&);
-    void create_item_handle_run_callbacks(item&);
-    void remove_chara_handle_run_callbacks(character&);
-    void remove_item_handle_run_callbacks(item&);
+    void create_chara_handle_run_callbacks(const character&);
+    void create_item_handle_run_callbacks(const item&);
+    void remove_chara_handle_run_callbacks(const character&);
+    void remove_item_handle_run_callbacks(const item&);
 
 
     /***

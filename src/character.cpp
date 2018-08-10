@@ -135,8 +135,6 @@ int chara_create_internal()
     cdata[rc].index = rc;
     initialize_character();
 
-    lua::lua->get_handle_manager().create_chara_handle_run_callbacks(cdata[rc]);
-
     rtval = rc;
     return 1;
 }
@@ -388,7 +386,6 @@ void failed_to_place_character(character& cc)
     {
         txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
         cc.set_state(character::state_t::empty);
-        chara_killed(cc);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
         modify_crowd_density(cc.index, -1);
@@ -396,14 +393,12 @@ void failed_to_place_character(character& cc)
     if (cc.character_role != 0)
     {
         cc.set_state(character::state_t::villager_dead);
-        chara_killed(cc);
     }
     if (cc.character_role == 13)
     {
         cc.set_state(character::state_t::adventurer_dead);
         cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
-        chara_killed(cc);
     }
 }
 
@@ -596,7 +591,24 @@ character::character()
 
 void character::set_state(character::state_t new_state)
 {
+    bool was_alive = !this->is_dead();
+    bool was_empty = this->state_ == character::state_t::empty;
+
     this->state_ = new_state;
+
+    if (was_alive && this->is_dead())
+    {
+        chara_killed(*this);
+    }
+
+    if (was_empty && this->state_ != character::state_t::empty)
+    {
+        lua::lua->get_handle_manager().create_chara_handle_run_callbacks(*this);
+    }
+    else if (!was_empty && this->state_ == character::state_t::empty)
+    {
+        chara_remove(*this);
+    }
 }
 
 
@@ -1227,7 +1239,6 @@ void initialize_character()
     {
         chara_add_quality_parens();
     }
-    cdata[rc].set_state(character::state_t::alive);
     cdata[rc].interest = 100;
     cdata[rc].impression = 50;
     cdata[rc].vision_distance = 14;
@@ -1270,6 +1281,9 @@ void initialize_character()
     {
         cdata[rc].is_lay_hand_available() = true;
     }
+
+    cdata[rc].set_state(character::state_t::alive);
+
     cm = 0;
     return;
 }
@@ -2070,13 +2084,13 @@ void chara_vanquish(int cc)
 
 
 
-bool chara_copy(const character& source)
+int chara_copy(const character& source)
 {
     // Find empty slot.
     const auto slot = chara_get_free_slot();
     if (slot == -1)
     {
-        return false;
+        return -1;
     }
     auto& destination = cdata[slot];
 
@@ -2084,7 +2098,7 @@ bool chara_copy(const character& source)
     const auto pos = get_free_space(source.position, 4);
     if (!pos)
     {
-        return false;
+        return -1;
     }
     const auto x = pos->x;
     const auto y = pos->y;
@@ -2099,6 +2113,8 @@ bool chara_copy(const character& source)
     {
         cdatan(i, slot) = cdatan(i, source.index);
     }
+    lua::lua->get_handle_manager().create_chara_handle_run_callbacks(
+        destination);
 
     // Place `destination` to the found free space.
     map(x, y, 1) = slot + 1;
@@ -2126,15 +2142,13 @@ bool chara_copy(const character& source)
     // Increase the generation counter.
     ++npcmemory(1, destination.id);
 
-    return true;
+    return slot;
 }
 
 
 
 void chara_killed(character& chara)
 {
-    // Regardless of whether or not this character will revive, run
-    // the character killed callback.
     auto handle = lua::lua->get_handle_manager().get_handle(chara);
     lua::lua->get_event_manager()
         .run_callbacks<lua::event_kind_t::character_killed>(handle);
@@ -2161,22 +2175,19 @@ void chara_killed(character& chara)
 
 
 
+void chara_remove(character& chara)
+{
+    chara.set_state(character::state_t::empty);
+    lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
+}
+
+
+
 void chara_delete(int cc)
 {
-    auto state = cdata[cc].state();
-    if (cc != -1 && cdata[cc].index != -1 && state != character::state_t::empty)
+    if (cc != -1)
     {
-        // This character slot was previously occupied and is
-        // currently valid. If the state were 0, then chara_killed
-        // would have been called to run the chara removal handler for
-        // the Lua state. We'll have to run it now.
-        lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(
-            cdata[cc]);
-    }
-    else
-    {
-        // This character slot is invalid, so the removal callback
-        // must have been ran already.
+        chara_remove(cdata[cc]);
     }
 
     for (const auto& cnt : items(cc))
@@ -2255,15 +2266,15 @@ void chara_relocate(
     source.item_which_will_be_used = 0;
     source.is_livestock() = false;
 
-    lua::lua->get_handle_manager().relocate_handle<character>(
-        source, tc_at_m125);
-
     // Copy from `source` to `destination` and clear `source`
     sdata.copy(slot, source.index);
     sdata.clear(source.index);
 
     character::copy(source, destination);
     source.clear();
+
+    // Relocate the corresponding Lua reference.
+    lua::lua->get_handle_manager().relocate_handle<character>(source, slot);
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -2331,9 +2342,6 @@ void chara_relocate(
     rc = slot;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(slot);
-
-    // TODO handle transferring through Lua robustly
-    // lua::lua->create_chara_handle_run_callbacks(destination);
 
     if (slot < 57)
     {

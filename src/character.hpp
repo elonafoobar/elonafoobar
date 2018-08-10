@@ -363,7 +363,15 @@ struct character
         return "LuaCharacter";
     }
 
-    character::state_t state()
+    bool is_dead()
+    {
+        return state_ == character::state_t::empty
+            || state_ == character::state_t::pet_dead
+            || state_ == character::state_t::villager_dead
+            || state_ == character::state_t::adventurer_dead;
+    }
+
+    character::state_t state() const
     {
         return state_;
     }
@@ -647,11 +655,13 @@ void chara_refresh(int);
 /**
  * Copy `source` character to a new slot.
  * @param source The character copied from.
- * @return true if `source` was successfully copied; otherwise, false.
+ * @return the character slot copied to if `source` was successfully copied;
+ * otherwise, -1.
  */
-bool chara_copy(const character& source);
+int chara_copy(const character& source);
 
 void chara_delete(int = 0);
+void chara_remove(character&);
 void chara_vanquish(int = 0);
 void chara_killed(character&);
 int chara_find(int id);

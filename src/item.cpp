@@ -453,13 +453,17 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
-    bool created_new = inv[b].number() == 0;
+    bool was_empty = inv[b].number() == 0;
 
     item::copy(inv[a], inv[b]);
 
-    if (created_new)
+    if (was_empty && inv[b].number() != 0)
     {
         lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[b]);
+    }
+    else if (!was_empty && inv[b].number() == 0)
+    {
+        inv[b].remove();
     }
 }
 

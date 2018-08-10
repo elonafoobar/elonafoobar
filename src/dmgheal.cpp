@@ -640,7 +640,7 @@ int damage_hp(
                 {
                     if (mdata_map_type != mdata_t::map_type_t::world_map)
                     {
-                        if (chara_copy(victim))
+                        if (chara_copy(victim) != -1)
                         {
                             txt(i18n::s.get(
                                 "core.locale.damage.splits", victim));
@@ -661,7 +661,7 @@ int damage_hp(
                     {
                         if (mdata_map_type != mdata_t::map_type_t::world_map)
                         {
-                            if (chara_copy(victim))
+                            if (chara_copy(victim) != -1)
                             {
                                 txt(i18n::s.get(
                                     "core.locale.damage.splits", victim));
@@ -1189,7 +1189,6 @@ int damage_hp(
         }
 
         end_dmghp(victim);
-        chara_killed(victim);
 
         return 0;
     }

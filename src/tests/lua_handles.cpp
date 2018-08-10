@@ -354,6 +354,7 @@ TEST_CASE(
 
     REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
     REQUIRE(pick_up_item() == 1);
+    REQUIRE(handle_mgr.get_handle(inv[elona::ci]) == sol::lua_nil);
     REQUIRE(handle_mgr.get_handle(inv[elona::ti]) != sol::lua_nil);
 }
 
@@ -377,7 +378,33 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
 }
 
-TEST_CASE("Test removal of character causing handle removal", "[Lua: Handles]")
+TEST_CASE("Test copying of character handles", "[Lua: Handles]")
+{
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    auto handle = handle_mgr.get_handle(chara);
+
+    int tc = chara_copy(chara);
+    character& copy = elona::cdata[tc];
+    sol::table handle_copy = handle_mgr.get_handle(copy);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle_mgr.handle_is_valid(handle_copy) == true);
+
+    // Copying will create a handle with a unique UUID if no item
+    // existed before at the new index.
+    REQUIRE(
+        handle["__uuid"].get<std::string>()
+        != handle_copy["__uuid"].get<std::string>());
+
+    // Assert that copying to an existing character will not try to
+    // overwrite the existing handle.
+    REQUIRE_NOTHROW(elona::character::copy(chara, copy));
+}
+
+TEST_CASE("Test deletion of character causing handle removal", "[Lua: Handles]")
 {
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
@@ -388,6 +415,31 @@ TEST_CASE("Test removal of character causing handle removal", "[Lua: Handles]")
     chara_delete(chara.index);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+}
+
+TEST_CASE(
+    "Test state change of character causing handle removal",
+    "[Lua: Handles]")
+{
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    auto handle = handle_mgr.get_handle(chara);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+
+    // State is set to empty.
+    chara.set_state(character::state_t::empty);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // State becomes non-empty again. Character counts as recreated.
+    chara.set_state(character::state_t::alive);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == false);
+
+    // The handle has been replaced, so retrieve it again.
+    handle = handle_mgr.get_handle(chara);
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 }
 
 TEST_CASE(
@@ -483,7 +535,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     int ti = elona::inv_getfreeid(-1);
     REQUIRE(handle_mgr.get_handle(elona::inv[ti]) == sol::lua_nil);
 
-    elona::item::copy(elona::ci, ti);
+    elona::item_copy(elona::ci, ti);
     item& copy = elona::inv[ti];
     sol::table handle_copy = handle_mgr.get_handle(copy);
 

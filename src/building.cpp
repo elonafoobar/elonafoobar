@@ -581,7 +581,6 @@ void prompt_hiring()
             cdata.player().gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
             cdata[tc].set_state(character::state_t::alive);
-            lua::lua->get_handle_manager().create_chara_handle(cdata[tc]);
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));
