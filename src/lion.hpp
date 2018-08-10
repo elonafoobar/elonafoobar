@@ -275,8 +275,8 @@ static optional<std::vector<T>> convert_vector(
         sol::optional<std::string> value_ = data[#name]; \
         if (value_) \
         { \
-            name = \
-                lua::enums::enum_map.get_from_string(*value_, default_value); \
+            name = lua::LuaEnums::enum_map.get_from_string( \
+                *value_, default_value); \
         } \
         else \
         { \

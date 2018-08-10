@@ -28,6 +28,9 @@ api_manager::api_manager(lua_env* lua)
     // constructors.
     LuaApiClasses::bind(*lua->get_state());
     LuaApiClasses::bind_api(*lua->get_state(), core);
+
+    // Bind enums to the Enums table.
+    LuaEnums::bind(core);
 }
 
 bool api_manager::is_loaded()

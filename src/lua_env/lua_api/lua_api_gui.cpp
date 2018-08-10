@@ -18,7 +18,7 @@ void GUI::txt_txtef(const std::string& message, const enum_string& color_name)
 
 void GUI::txtef(const enum_string& color_name)
 {
-    color_index_t color = enums::Color.ensure_from_string(color_name);
+    color_index_t color = LuaEnums::Color.ensure_from_string(color_name);
     elona::txtef(color);
 }
 

@@ -1,6 +1,7 @@
 #include "db_item.hpp"
 #include <string>
 #include "i18n.hpp"
+#include "lua_env/lua_enums.hpp"
 #include "lua_env/lua_env.hpp"
 
 using namespace elona;

@@ -7,6 +7,7 @@
 #include "../map_cell.hpp"
 #include "../optional.hpp"
 #include "../status_ailment.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 
 namespace elona
 {
@@ -32,14 +33,14 @@ public:
     {
         for (const auto& pair : storage)
         {
-            if (pair->second == val)
+            if (pair.second == val)
             {
-                return pair->first;
+                return pair.first;
             }
         }
 
         assert(false);
-        return "";
+        return "<invalid enum>";
     }
 
     T get_from_string(const std::string& key, T default_val)
@@ -53,7 +54,7 @@ public:
             return default_val;
         }
 
-        return *it;
+        return it->second;
     }
 
     T ensure_from_string(const std::string& key)
@@ -65,7 +66,27 @@ public:
                 "Enum value " + key + " for " + name + " not found.");
         }
 
-        return *it;
+        return it->second;
+    }
+
+    void bind(sol::table& Enums)
+    {
+        sol::table enum_table = Enums.create();
+        for (const auto& pair : storage)
+        {
+            // Enum values will always be strings in Lua.
+            // Enums.EnumName.EnumMember = "EnumMember"
+            enum_table.set(pair.first, pair.first);
+        }
+
+        // Make the enums table read-only. Taken from sol::table.new_enum.
+        sol::table metatable = Enums.create_with(
+            sol::meta_function::new_index,
+            sol::detail::fail_on_newindex,
+            sol::meta_function::index,
+            enum_table);
+
+        Enums.create_named(name, sol::metatable_key, metatable);
     }
 
 private:
@@ -73,7 +94,7 @@ private:
     map_type storage;
 };
 
-namespace enums
+namespace LuaEnums
 {
 extern enum_map<damage_source_t> DamageSource;
 extern enum_map<color_index_t> Color;
@@ -85,7 +106,9 @@ extern enum_map<tile_kind_t> TileKind;
 extern enum_map<int> Gender;
 extern enum_map<int> Relation;
 extern enum_map<int> CharaFlag;
-} // namespace enums
+
+void bind(sol::table&);
+} // namespace LuaEnums
 
 } // namespace lua
 } // namespace elona

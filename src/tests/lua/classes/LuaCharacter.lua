@@ -55,14 +55,14 @@ lrun("test LuaCharacter:modify_resistance", function()
         Testing.start_in_debug_map()
 
         local putit = Chara.create(0, 0, 3)
-        lequal(Skill.level(Enums.Element.Fire, putit), 100)
-        lequal(Skill.level(Enums.Element.Cold, putit), 100)
+        lequal(Skill.resistance(Enums.Element.Fire, putit), 100)
+        lequal(Skill.resistance(Enums.Element.Cold, putit), 100)
 
         putit:modify_resistance(Enums.Element.Fire, 50)
         putit:modify_resistance(Enums.Element.Cold, -50)
 
-        lequal(Skill.level(Enums.Element.Fire, putit), 150)
-        lequal(Skill.level(Enums.Element.Cold, putit), 50)
+        lequal(Skill.resistance(Enums.Element.Fire, putit), 150)
+        lequal(Skill.resistance(Enums.Element.Cold, putit), 50)
 end)
 
 assert(lresults())

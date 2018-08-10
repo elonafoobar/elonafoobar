@@ -4,6 +4,7 @@
 #include "../../character_status.hpp"
 #include "../../dmgheal.hpp"
 #include "../../element.hpp"
+#include "../../enums.hpp"
 #include "../../food.hpp"
 
 namespace elona
@@ -13,7 +14,7 @@ namespace lua
 
 void LuaCharacter::damage_hp(character& self, int amount)
 {
-    LuaCharacter::damage_hp_source(self, amount, damage_source_t::unseen_hand);
+    LuaCharacter::damage_hp_source(self, amount, "UnseenHand");
 }
 
 void LuaCharacter::damage_hp_source(
@@ -22,7 +23,7 @@ void LuaCharacter::damage_hp_source(
     const enum_string& source_name)
 {
     damage_source_t source =
-        enums::DamageSource.ensure_from_string(source_name);
+        LuaEnums::DamageSource.ensure_from_string(source_name);
     elona::damage_hp(self, amount, static_cast<int>(source));
 }
 
@@ -42,7 +43,7 @@ void LuaCharacter::apply_ailment(
 {
     assert(power > 0);
     status_ailment_t ailment =
-        enums::StatusAilment.ensure_from_string(ailment_name);
+        LuaEnums::StatusAilment.ensure_from_string(ailment_name);
     elona::dmgcon(self.index, ailment, power);
 }
 
@@ -62,7 +63,7 @@ void LuaCharacter::set_flag(
     const std::string& flag_name,
     bool is_setting)
 {
-    int flag = enums::CharaFlag.ensure_from_string(flag_name);
+    int flag = LuaEnums::CharaFlag.ensure_from_string(flag_name);
     int new_value = (is_setting ? 1 : 0);
     self._flags[flag] = new_value;
 }
@@ -99,8 +100,8 @@ void LuaCharacter::modify_resistance(
     const enum_string& element_name,
     int delta)
 {
-    element_t element = enums::Element.ensure_from_string(element_name);
-    elona::resistmod(self.index, element, delta);
+    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    elona::resistmod(self.index, static_cast<int>(element), delta);
 }
 
 void LuaCharacter::modify_sanity(character& self, int delta)
@@ -215,13 +216,15 @@ void LuaCharacter::bind(sol::state& lua)
         "name",
         sol::property([](character& c) { return elona::cdatan(0, c.index); }),
         "experience",
-        &character::experience
+        &character::experience,
 
         "sex",
         sol::property(
-            [](character& c) { return enums::Gender.convert_to_string(c.sex); },
-            [](character& c, enum_string& s) {
-                c.sex = enums::Gender.get_from_string(s)
+            [](character& c) {
+                return LuaEnums::Gender.convert_to_string(c.sex);
+            },
+            [](character& c, const enum_string& s) {
+                c.sex = LuaEnums::Gender.ensure_from_string(s);
             }));
 
     lua.set_usertype(character::lua_type(), LuaCharacter);

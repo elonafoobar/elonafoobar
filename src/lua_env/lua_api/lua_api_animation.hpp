@@ -19,7 +19,7 @@ void play_ball_atomic_bomb(const position_t&, int);
 
 void play_ball_magic(const position_t&, int, int);
 
-void play_bolt(const position_t&, const position_t&, int, int);
+void play_bolt(const position_t&, const position_t&, const enum_string&, int);
 
 void play_throwing_object(const position_t&, const position_t&, int, int);
 

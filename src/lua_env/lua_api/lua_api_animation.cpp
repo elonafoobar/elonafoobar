@@ -22,8 +22,9 @@ void Animation::play_breath(
     const position_t& target_pos,
     const enum_string& element_name)
 {
-    element_t element = enums::Element.ensure_from_string(element_name);
-    breath_animation(attacker_pos, target_pos, element).play();
+    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    breath_animation(attacker_pos, target_pos, static_cast<int>(element))
+        .play();
 }
 
 void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
@@ -42,8 +43,10 @@ void Animation::play_bolt(
     const enum_string& element_name,
     int distance)
 {
-    element_t element = enums::Element.ensure_from_string(element_name);
-    bolt_animation(attacker_pos, target_pos, element, distance).play();
+    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    bolt_animation(
+        attacker_pos, target_pos, static_cast<int>(element), distance)
+        .play();
 }
 
 void Animation::play_throwing_object(

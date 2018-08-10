@@ -5,7 +5,7 @@ namespace elona
 namespace lua
 {
 
-namespace enums
+namespace LuaEnums
 {
 enum_map<damage_source_t> DamageSource{
     "DamageSource",
@@ -207,7 +207,24 @@ enum_map<int> CharaFlag{
         {"HasLearnedWords", 990},
         {"OnlyChristmas", 991},
     }};
-} // namespace enums
+
+} // namespace LuaEnums
+
+void LuaEnums::bind(sol::table& core)
+{
+    sol::table Enums = core.create_named("Enums");
+
+    DamageSource.bind(Enums);
+    Color.bind(Enums);
+    CurseState.bind(Enums);
+    IdentifyState.bind(Enums);
+    StatusAilment.bind(Enums);
+    Element.bind(Enums);
+    TileKind.bind(Enums);
+    Gender.bind(Enums);
+    Relation.bind(Enums);
+    CharaFlag.bind(Enums);
+}
 
 } // namespace lua
 } // namespace elona

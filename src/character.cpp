@@ -13,6 +13,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/lua_enums.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
@@ -452,7 +453,7 @@ static std::vector<int> convert_chara_flags(
         {
             std::string variant_name = kvp.second.as<std::string>();
             int variant_value =
-                lua::enums::CharaFlags.ensure_from_string(variant_name);
+                lua::LuaEnums::CharaFlag.ensure_from_string(variant_name);
             flag_types.push_back(variant_value);
         }
     }

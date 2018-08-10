@@ -15,7 +15,7 @@ bool is_player(lua_character_handle);
 
 bool is_ally(lua_character_handle);
 
-bool flag(lua_character_handle, int);
+bool flag(lua_character_handle, const enum_string&);
 
 int count();
 

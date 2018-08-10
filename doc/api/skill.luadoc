@@ -10,3 +10,9 @@ module "Skill"
 -- @tparam LuaCharacter chara the character to get skill information from
 -- @treturn num the character's skill/spell level
 function level(id, chara) end
+
+--- Obtains a character's resistance level for an element.
+-- @tparam Enums.Element element the element
+-- @tparam LuaCharacter chara the character to get resistance information from
+-- @treturn num the character's resistance level
+function resistance(element, chara) end
