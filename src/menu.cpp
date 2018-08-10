@@ -46,6 +46,8 @@
 #include "ui/ui_menu_composite_message.hpp"
 #include "ui/ui_menu_composite_town.hpp"
 
+
+
 namespace elona
 {
 
@@ -158,10 +160,7 @@ void text_set()
     _randcolor(3) = 5;
     _randcolor(4) = 6;
     _randcolor(5) = 3;
-    homepage = lang(
-        u8"http://homepage3.nifty.com/rfish/index.html"s,
-        u8"http://homepage3.nifty.com/rfish/index_e.html"s);
-    strblank = lang("", u8" "s);
+    homepage = i18n::s.get("core.locale.system.lafrontier_homepage");
 }
 
 void show_quick_menu()
@@ -505,12 +504,13 @@ void show_ex_help()
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, u8"%"s + ghelp + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(
+        buff, 0, u8"%"s + ghelp + u8","s + i18n::s.get("core.locale.meta.tag"));
     if (p == -1)
     {
         dialog(
             u8"help index not found %"s + ghelp + u8","s
-            + lang(u8"JP"s, u8"EN"s));
+            + i18n::s.get("core.locale.meta.tag"));
         return;
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -1702,10 +1702,10 @@ label_1965_internal:
     {
         page = 0;
     }
-    s(0) = lang(u8"自己の分析", u8"Analyze Self");
+    s(0) = i18n::s.get("core.locale.ui.analysis.title");
     s(1) = strhint2 + strhint3b;
     display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
-    s = lang(u8"分析結果", u8"Analysis Result");
+    s = i18n::s.get("core.locale.ui.analysis.result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

@@ -107,5 +107,7 @@ locale {
 
             shade = "シェイド"
         }
+
+        garbage = "残りカス"
     }
 }

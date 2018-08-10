@@ -385,7 +385,9 @@ std::string txtbuilding(int prm_368, int prm_369)
     int p_at_m32 = 0;
     std::string s_at_m32;
     p_at_m32 = bddata(0, prm_368, prm_369);
-    s_at_m32 = i18n::s.get("core.locale.map.you_see", bdrefn(p_at_m32));
+    s_at_m32 = i18n::s.get(
+        "core.locale.map.you_see",
+        i18n::s.get_enum("core.locate.map.misc_location", p_at_m32));
     return s_at_m32;
 }
 
@@ -913,7 +915,8 @@ void parse_talk_file()
         {
             buff(0) += tmp + '\n';
         }
-        p = instr(buff, 0, u8"%DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
+        p = instr(
+            buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.locale.meta.tag"));
         buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     }
     notedel(0);
@@ -940,7 +943,7 @@ void read_talk_file(const std::string& valn)
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, valn + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(buff, 0, valn + u8","s + i18n::s.get("core.locale.meta.tag"));
     parse_talk_file();
     return;
 }
@@ -969,33 +972,43 @@ void get_npc_talk()
             if (gdata_number_of_waiting_guests > 0)
             {
                 talkref = 1;
-                p = instr(buff, 0, u8"%MAID,"s + lang(u8"JP"s, u8"EN"s));
+                p = instr(
+                    buff, 0, u8"%MAID,"s + i18n::s.get("core.locale.meta.tag"));
                 break;
             }
         }
         if (cdata[tc].interest <= 0)
         {
-            p = instr(buff, 0, u8"%BORED,"s + lang(u8"JP"s, u8"EN"s));
+            p = instr(
+                buff, 0, u8"%BORED,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (tc < 16)
         {
-            p = instr(buff, 0, u8"%ALLY_DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
+            p = instr(
+                buff,
+                0,
+                u8"%ALLY_DEFAULT,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (cdata[tc].id == 335)
         {
-            p = instr(buff, 0, u8"%BITCH,"s + lang(u8"JP"s, u8"EN"s));
+            p = instr(
+                buff, 0, u8"%BITCH,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (cdata[tc].character_role == 1015)
         {
-            p = instr(buff, 0, u8"%MOYER,"s + lang(u8"JP"s, u8"EN"s));
+            p = instr(
+                buff, 0, u8"%MOYER,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (cdata[tc].character_role == 17)
         {
-            p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
+            p = instr(
+                buff,
+                0,
+                u8"%SLAVEKEEPER,"s + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if ((cdata[tc].character_role >= 1000
@@ -1004,7 +1017,10 @@ void get_npc_talk()
         {
             if (rnd(3))
             {
-                p = instr(buff, 0, u8"%SHOPKEEPER,"s + lang(u8"JP"s, u8"EN"s));
+                p = instr(
+                    buff,
+                    0,
+                    u8"%SHOPKEEPER,"s + i18n::s.get("core.locale.meta.tag"));
                 break;
             }
         }
@@ -1012,7 +1028,10 @@ void get_npc_talk()
         {
             if (rnd(3) == 0)
             {
-                p = instr(buff, 0, u8"%RUMOR,LOOT,"s + lang(u8"JP"s, u8"EN"s));
+                p = instr(
+                    buff,
+                    0,
+                    u8"%RUMOR,LOOT,"s + i18n::s.get("core.locale.meta.tag"));
                 break;
             }
         }
@@ -1026,7 +1045,7 @@ void get_npc_talk()
                         buff,
                         0,
                         u8"%FEST,"s + gdata_current_map + u8","s
-                            + lang(u8"JP"s, u8"EN"s));
+                            + i18n::s.get("core.locale.meta.tag"));
                     break;
                 }
             }
@@ -1037,7 +1056,7 @@ void get_npc_talk()
                 buff,
                 0,
                 u8"%PERSONALITY,"s + cdata[tc].personality + u8","s
-                    + lang(u8"JP"s, u8"EN"s));
+                    + i18n::s.get("core.locale.meta.tag"));
             break;
         }
         if (rnd(3))
@@ -1046,13 +1065,14 @@ void get_npc_talk()
                 buff,
                 0,
                 u8"%AREA,"s + gdata_current_map + u8","s
-                    + lang(u8"JP"s, u8"EN"s));
+                    + i18n::s.get("core.locale.meta.tag"));
             break;
         }
     }
     if (p == -1)
     {
-        p = instr(buff, 0, u8"%DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
+        p = instr(
+            buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.locale.meta.tag"));
     }
     parse_talk_file();
     return;
@@ -2077,7 +2097,7 @@ void parse_quest_board_text(int val0)
     elona_vector1<std::string> buff2;
     notesel(buffboard);
     SDIM1(buff2);
-    p = instr(buffboard, 0, s + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(buffboard, 0, s + u8","s + i18n::s.get("core.locale.meta.tag"));
     buff2 = strmid(buffboard, p, instr(buffboard, p, u8"%END"s));
     notesel(buff2);
     if (noteinfo() <= 1)

@@ -247,8 +247,6 @@ locale {
                 deteriorates = "${name(_1)}${his_owned(_1)} ${_2} deteriorates."
             }
 
-            growth = "${name(_1)}${his_owned(_1)} ${_2} enters a period of rapid growth."
-
             corpse {
                 iron = "It's too hard! ${name(_1)}${his_owned(_1)} stomach screams."
                 deformed_eye = "It tastes really, really strange."

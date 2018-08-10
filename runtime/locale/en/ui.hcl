@@ -460,6 +460,11 @@ locale {
             }
         }
 
+        analysis {
+            title = "Analyze Self"
+            result = "Analysis Result"
+        }
+
         manual {
             topic = "Topic"
             keys {
@@ -521,5 +526,7 @@ locale {
                 }
             }
         }
+
+        assign_shortcut = "You have assigned the shortcut to {${_1}} key."
     }
 }

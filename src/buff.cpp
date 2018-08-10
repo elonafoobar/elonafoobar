@@ -204,17 +204,11 @@ void buff_add(
         // Messages of fodd buff are shown elsewhere.
         if (the_buff_db[id]->type != buff_data::type_t::food)
         {
-            txt(lang(
-                name(cc.index)
-                    + i18n::_(u8"buff", std::to_string(id), u8"message_0"),
-                name(cc.index) + u8" "s
-                    + i18n::_(u8"buff", std::to_string(id), u8"message_0")
-                    + _s(cc.index)
-                    + i18n::_(u8"buff", std::to_string(id), u8"message_1")));
+            txt(i18n::s.get_enum_property("core.locale.buff", id, "apply", cc));
         }
 
         add_damage_popup(
-            i18n::_(u8"buff", std::to_string(id), u8"name"),
+            i18n::s.get_enum_property("core.locale.buff", "name", id),
             cc.index,
             {255, 255, 255});
     }
@@ -233,12 +227,14 @@ void buff_delete(character& cc, int slot)
         txtef(8);
         txt(i18n::s.get(
             "core.locale.magic.buff.ends",
-            i18n::_(u8"buff", std::to_string(cc.buffs[slot].id), u8"name")));
+            i18n::s.get_enum_property(
+                "core.locale.buff", "name", cc.buffs[slot].id)));
     }
     if (is_in_fov(cc))
     {
         add_damage_popup(
-            i18n::_(u8"buff", std::to_string(cc.buffs[slot].id), u8"name"),
+            i18n::s.get_enum_property(
+                "core.locale.buff", "name", cc.buffs[slot].id),
             cc.index,
             {191, 191, 191});
     }

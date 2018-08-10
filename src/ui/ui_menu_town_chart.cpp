@@ -100,7 +100,10 @@ void ui_menu_town_chart::draw()
             ++keyrange;
             display_key(x - 30, y + 21, cnt);
             font(12 + sizefix - en * 2);
-            bmes(cnven(popostname(p)), x - 2, y + jp * 2);
+            bmes(
+                i18n::s.get_enum("core.locale.politics.post", p),
+                x - 2,
+                y + jp * 2);
             font(14 - en * 2);
             if (podata(0 + cnt, _city) == 0)
             {

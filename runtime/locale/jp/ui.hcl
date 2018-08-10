@@ -459,6 +459,11 @@ locale {
             }
         }
 
+        analysis {
+            title = "自己の分析"
+            result = "分析結果"
+        }
+
         manual {
             topic = "項目"
             keys {
@@ -520,5 +525,7 @@ locale {
                 }
             }
         }
+
+        assign_shortcut = "{${_1}}キーにショートカットを割り当てた。"
     }
 }

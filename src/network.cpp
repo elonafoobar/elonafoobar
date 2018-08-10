@@ -651,7 +651,7 @@ label_14001_internal:
     }
     listmax = 0;
     net_read(5);
-    txt(lang(listn(0, 1), listn(0, 2)));
+    // Disable: txt(lang(listn(0, 1), listn(0, 2)));
     listmax = 0;
     list(0, listmax) = -999;
     list(1, listmax) = 0;

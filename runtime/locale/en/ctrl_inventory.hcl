@@ -202,12 +202,7 @@ locale {
             }
 
             take_ally {
-                refuse_dialog {
-                    _0 = "\"No!\""
-                    _1 = "\"It's mine.\""
-                    _2 = "\"Get off!\""
-                    _3 = "\"Never.\""
-                }
+                refuse_dialog = "\"It's mine.\""
 
                 cursed = "${itemname(_1)} is cursed and can't be taken off."
                 swallows_ring = "${name(_1)} swallows ${itemname(_2, 1)} angrily."
@@ -241,6 +236,8 @@ locale {
                     medal = "Medal"
                 }
             }
+
+            cannot_use_cargo_items = "You can only use cargo items on the surface."
         }
     }
 }

@@ -244,15 +244,14 @@ void modify_karma(character& cc, int delta)
     {
         txtef(8);
     }
-    txt(lang(u8"カルマ変動("s + delta + u8") ", u8"Karma("s + delta + u8")"));
+    txt(i18n::s.get("core.locale.chara_status.karma.changed", delta));
     if (delta > 0)
     {
         if (cc.karma < -30 && cc.karma + delta >= -30)
         {
             txtef(2);
-            txt(lang(
-                u8"あなたの罪は軽くなった。",
-                u8"You are no longer a criminal"));
+            txt(i18n::s.get(
+                "core.locale.chara_status.karma.you_are_no_longer_criminal"));
         }
     }
     else if (delta < 0)
@@ -260,7 +259,8 @@ void modify_karma(character& cc, int delta)
         if (cc.karma >= -30 && cc.karma + delta < -30)
         {
             txtef(8);
-            txt(lang(u8"あなたは今や罪人だ。", u8"You are a criminal now."));
+            txt(i18n::s.get(
+                "core.locale.chara_status.karma.you_are_criminal_now"));
             go_hostile();
         }
     }
@@ -481,12 +481,10 @@ void gain_new_body_part(character& cc)
     cc.body_parts[slot] = body_part * 10000;
     if (!cm)
     {
-        txt(lang(
-            name(cc.index) + u8"の身体から新たな"s
-                + i18n::_(u8"ui", u8"body_part", u8"_"s + body_part)
-                + u8"が生えてきた！"s,
-            name(cc.index) + u8" grow"s + _s(cc.index) + u8" a new "s
-                + i18n::_(u8"ui", u8"body_part", u8"_"s + body_part) + u8"!"s));
+        txt(i18n::s.get(
+            "core.locale.chara_status.gain_new_body_part",
+            cc,
+            i18n::_(u8"ui", u8"body_part", u8"_"s + body_part)));
     }
 
     refresh_speed_correction_value(cc);

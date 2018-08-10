@@ -107,5 +107,7 @@ locale {
 
             shade = "shade"
         }
+
+        garbage = "a garbage"
     }
 }

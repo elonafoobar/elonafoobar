@@ -5,6 +5,7 @@
 #include "../character.hpp"
 #include "../elona.hpp"
 #include "../filesystem.hpp"
+#include "../i18n.hpp"
 #include "../log.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
@@ -230,9 +231,7 @@ void mod_manager::run_startup_script(const std::string& name)
 
     ELONA_LOG("Loaded startup script " << name);
     txtef(8);
-    txt(lang(
-        u8"スクリプト"s + name + u8"が読み込まれました。"s,
-        u8"Loaded script "s + name + u8". "s));
+    txt(i18n::s.get("core.locale.mod.loaded_script", name));
     txtnew();
 
     this->mods.emplace("script", std::move(script_mod));

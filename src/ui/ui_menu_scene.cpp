@@ -2,6 +2,7 @@
 #include "../audio.hpp"
 #include "../i18n.hpp"
 
+static std::string lang(const std::string& a, const std::string& b) { return jp ? a : b; }
 
 namespace elona
 {

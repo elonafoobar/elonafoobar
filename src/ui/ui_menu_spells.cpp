@@ -210,9 +210,7 @@ static void _assign_shortcut(int sc_, int spell_id)
         }
     }
     gdata(40 + sc_) = spell_id;
-    txt(lang(
-        u8"{"s + sc_ + u8"}キーにショートカットを割り当てた。"s,
-        u8"You have assigned the shortcut to {"s + sc_ + u8"} key."s));
+    txt(i18n::s.get("core.locale.ui.assign_shortcut", sc_));
     display_msg(inf_screeny + inf_tiles);
 }
 

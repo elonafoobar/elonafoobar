@@ -1,0 +1,5 @@
+locale {
+    meta {
+        tag = "EN"
+    }
+}

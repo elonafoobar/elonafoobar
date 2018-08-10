@@ -248,7 +248,10 @@ std::string format_builtins_string(
 
 std::string format_builtins_integer(const hil::FunctionCall& func, int value)
 {
+    // For plural
     ELONA_DEFINE_I18N_BUILTIN("s", value == 1 ? u8""s : u8"s"s);
+    // For third person singular
+    ELONA_DEFINE_I18N_BUILTIN("s2", value == 1 ? u8"s"s : u8""s);
 
     return UNKNOWN_FUNCTION("integer");
 }
