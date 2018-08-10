@@ -2255,8 +2255,8 @@ void chara_relocate(
     source.item_which_will_be_used = 0;
     source.is_livestock() = false;
 
-    // TODO handle transferring through Lua robustly
-    // lua::lua->remove_chara_handle_run_callbacks(source);
+    lua::lua->get_handle_manager().relocate_handle<character>(
+        source, tc_at_m125);
 
     // Copy from `source` to `destination` and clear `source`
     sdata.copy(slot, source.index);
