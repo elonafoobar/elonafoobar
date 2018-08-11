@@ -29,7 +29,6 @@ item bug {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bug
 }
 
@@ -64,7 +63,6 @@ item long_sword {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.long_sword
 }
 
@@ -99,7 +97,6 @@ item dagger {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dagger
 }
 
@@ -134,7 +131,6 @@ item hand_axe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.hand_axe
 }
 
@@ -169,7 +165,6 @@ item club {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.club
 }
 
@@ -204,7 +199,6 @@ item magic_hat {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.magic_hat
 }
 
@@ -239,7 +233,6 @@ item fairy_hat {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fairy_hat
 }
 
@@ -274,7 +267,6 @@ item breastplate {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.breastplate
 }
 
@@ -309,7 +301,6 @@ item robe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.robe
 }
 
@@ -344,7 +335,6 @@ item decorated_gloves {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.decorated_gloves
 }
 
@@ -379,7 +369,6 @@ item thick_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.thick_gauntlets
 }
 
@@ -414,7 +403,6 @@ item heavy_boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.heavy_boots
 }
 
@@ -449,7 +437,6 @@ item composite_boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_boots
 }
 
@@ -484,7 +471,6 @@ item decorative_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.decorative_ring
 }
 
@@ -834,7 +820,6 @@ item book_a {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.book_a
 }
 
@@ -869,7 +854,6 @@ item book_b {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.book_b
 }
 
@@ -904,7 +888,6 @@ item bugged_book {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bugged_book
 }
 
@@ -939,7 +922,6 @@ item bottle_of_dirty_water {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_dirty_water
 }
 
@@ -1114,7 +1096,6 @@ item bottle_of_crim_ale {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_crim_ale
 }
 
@@ -1359,7 +1340,6 @@ item gold_bar {
     has_random_name = false
     tags = []
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.gold_bar
 }
 
@@ -1429,7 +1409,6 @@ item raw_ore_of_mika {
     has_random_name = false
     tags = []
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.raw_ore_of_mika
 }
 
@@ -1534,7 +1513,6 @@ item wood_piece {
     has_random_name = false
     tags = ["fish"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.wood_piece
 }
 
@@ -1569,7 +1547,6 @@ item junk_stone {
     has_random_name = false
     tags = []
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.junk_stone
 }
 
@@ -1604,7 +1581,6 @@ item garbage {
     has_random_name = false
     tags = ["fish"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.garbage
 }
 
@@ -1639,7 +1615,6 @@ item broken_vase {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.broken_vase
 }
 
@@ -1674,7 +1649,6 @@ item washing {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.washing
 }
 
@@ -1709,7 +1683,6 @@ item bonfire {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bonfire
 }
 
@@ -1744,7 +1717,6 @@ item flag {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.flag
 }
 
@@ -1779,7 +1751,6 @@ item broken_sword {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.broken_sword
 }
 
@@ -1814,7 +1785,6 @@ item bone_fragment {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bone_fragment
 }
 
@@ -1849,7 +1819,6 @@ item skeleton {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.skeleton
 }
 
@@ -1884,7 +1853,6 @@ item tombstone {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tombstone
 }
 
@@ -1919,7 +1887,6 @@ item gold_piece {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.gold_piece
 }
 
@@ -1954,7 +1921,6 @@ item platinum_coin {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.platinum_coin
 }
 
@@ -2059,7 +2025,6 @@ item long_bow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.long_bow
 }
 
@@ -2094,7 +2059,6 @@ item knight_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.knight_shield
 }
 
@@ -2129,7 +2093,6 @@ item pistol {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pistol
 }
 
@@ -2164,7 +2127,6 @@ item arrow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.arrow
 }
 
@@ -2199,7 +2161,6 @@ item bullet {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bullet
 }
 
@@ -2304,7 +2265,6 @@ item light_cloak {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.light_cloak
 }
 
@@ -2339,7 +2299,6 @@ item girdle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.girdle
 }
 
@@ -2374,7 +2333,6 @@ item decorative_amulet {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.decorative_amulet
 }
 
@@ -2724,7 +2682,6 @@ item round_chair {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.round_chair
 }
 
@@ -2759,7 +2716,6 @@ item bookshelf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bookshelf
 }
 
@@ -2794,7 +2750,6 @@ item luxury_drawer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.luxury_drawer
 }
 
@@ -3109,7 +3064,6 @@ item grand_piano {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.grand_piano
 }
 
@@ -3214,7 +3168,6 @@ item barrel {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.barrel
 }
 
@@ -3529,7 +3482,6 @@ item rack_of_potions {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rack_of_potions
 }
 
@@ -3634,7 +3586,6 @@ item cupboard {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cupboard
 }
 
@@ -3669,7 +3620,6 @@ item barn {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.barn
 }
 
@@ -3704,7 +3654,6 @@ item neat_shelf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.neat_shelf
 }
 
@@ -3774,7 +3723,6 @@ item variety_of_tools {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.variety_of_tools
 }
 
@@ -3809,7 +3757,6 @@ item variety_of_goods {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.variety_of_goods
 }
 
@@ -3844,7 +3791,6 @@ item well {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.well
 }
 
@@ -3914,7 +3860,6 @@ item furnace {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.furnace
 }
 
@@ -3949,7 +3894,6 @@ item oven {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.oven
 }
 
@@ -3984,7 +3928,6 @@ item sign {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sign
 }
 
@@ -4019,7 +3962,6 @@ item crossroad_sign {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.crossroad_sign
 }
 
@@ -4054,7 +3996,6 @@ item board {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.board
 }
 
@@ -4369,7 +4310,6 @@ item show_case_of_breads {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.show_case_of_breads
 }
 
@@ -4859,7 +4799,6 @@ item statue_ornamented_with_plants {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_ornamented_with_plants
 }
 
@@ -4894,7 +4833,6 @@ item statue_ornamented_with_flowers {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_ornamented_with_flowers
 }
 
@@ -4999,7 +4937,6 @@ item food_maker {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.food_maker
 }
 
@@ -5034,7 +4971,6 @@ item bundle_of_bows {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bundle_of_bows
 }
 
@@ -5209,7 +5145,6 @@ item disorderly_book {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.disorderly_book
 }
 
@@ -5244,7 +5179,6 @@ item lot_of_books {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.lot_of_books
 }
 
@@ -5489,7 +5423,6 @@ item narrow_dining_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.narrow_dining_table
 }
 
@@ -5559,7 +5492,6 @@ item gorgeous_candlestick {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.gorgeous_candlestick
 }
 
@@ -5769,7 +5701,6 @@ item collapsed_grave {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.collapsed_grave
 }
 
@@ -5804,7 +5735,6 @@ item crumbled_grave {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.crumbled_grave
 }
 
@@ -5839,7 +5769,6 @@ item grave_of_ornamented_with_flowers {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.grave_of_ornamented_with_flowers
 }
 
@@ -5874,7 +5803,6 @@ item brand_new_grave {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.brand_new_grave
 }
 
@@ -5909,7 +5837,6 @@ item solemn_tomb {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.solemn_tomb
 }
 
@@ -5944,7 +5871,6 @@ item ancient_tomb {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ancient_tomb
 }
 
@@ -5979,7 +5905,6 @@ item old_grave {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.old_grave
 }
 
@@ -6014,7 +5939,6 @@ item altar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.altar
 }
 
@@ -6049,7 +5973,6 @@ item ceremony_altar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ceremony_altar
 }
 
@@ -6084,7 +6007,6 @@ item fountain {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fountain
 }
 
@@ -6119,7 +6041,6 @@ item bunk_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bunk_bed
 }
 
@@ -6224,7 +6145,6 @@ item quwapana {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.quwapana
 }
 
@@ -6259,7 +6179,6 @@ item aloe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.aloe
 }
 
@@ -6294,7 +6213,6 @@ item edible_wild_plant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.edible_wild_plant
 }
 
@@ -6329,7 +6247,6 @@ item apple {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.apple
 }
 
@@ -6364,7 +6281,6 @@ item grape {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.grape
 }
 
@@ -6399,7 +6315,6 @@ item kiwi {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kiwi
 }
 
@@ -6434,7 +6349,6 @@ item cherry {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cherry
 }
 
@@ -6469,7 +6383,6 @@ item guava {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.guava
 }
 
@@ -6504,7 +6417,6 @@ item carrot {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.carrot
 }
 
@@ -6539,7 +6451,6 @@ item radish {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.radish
 }
 
@@ -6574,7 +6485,6 @@ item sweet_potato {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sweet_potato
 }
 
@@ -6609,7 +6519,6 @@ item lettuce {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.lettuce
 }
 
@@ -6644,7 +6553,6 @@ item stack_of_dishes {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stack_of_dishes
 }
 
@@ -6679,7 +6587,6 @@ item imo {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.imo
 }
 
@@ -6714,7 +6621,6 @@ item api_nut {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.api_nut
 }
 
@@ -6749,7 +6655,6 @@ item strawberry {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.strawberry
 }
 
@@ -6784,7 +6689,6 @@ item healthy_leaf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.healthy_leaf
 }
 
@@ -6819,7 +6723,6 @@ item rainbow_fruit {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rainbow_fruit
 }
 
@@ -6854,7 +6757,6 @@ item qucche {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.qucche
 }
 
@@ -6889,7 +6791,6 @@ item tangerine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tangerine
 }
 
@@ -6924,7 +6825,6 @@ item lemon {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.lemon
 }
 
@@ -6959,7 +6859,6 @@ item green_pea {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.green_pea
 }
 
@@ -6994,7 +6893,6 @@ item cbocchi {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cbocchi
 }
 
@@ -7029,7 +6927,6 @@ item melon {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.melon
 }
 
@@ -7064,7 +6961,6 @@ item leccho {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.leccho
 }
 
@@ -7169,7 +7065,6 @@ item corpse {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.corpse
 }
 
@@ -7204,7 +7099,6 @@ item bottle_of_whisky {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_whisky
 }
 
@@ -7309,7 +7203,6 @@ item worthless_fake_gold_bar {
     has_random_name = false
     tags = []
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.worthless_fake_gold_bar
 }
 
@@ -7379,7 +7272,6 @@ item stone {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stone
 }
 
@@ -7414,7 +7306,6 @@ item sickle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sickle
 }
 
@@ -7449,7 +7340,6 @@ item staff {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.staff
 }
 
@@ -7484,7 +7374,6 @@ item spear {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.spear
 }
 
@@ -7729,7 +7618,6 @@ item dead_fish {
     has_random_name = false
     tags = ["fish"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dead_fish
 }
 
@@ -7764,7 +7652,6 @@ item straw {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.straw
 }
 
@@ -7799,7 +7686,6 @@ item animal_bone {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.animal_bone
 }
 
@@ -7834,7 +7720,6 @@ item pot {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pot
 }
 
@@ -7869,7 +7754,6 @@ item katana {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.katana
 }
 
@@ -7904,7 +7788,6 @@ item scimitar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.scimitar
 }
 
@@ -7939,7 +7822,6 @@ item battle_axe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.battle_axe
 }
 
@@ -7974,7 +7856,6 @@ item hammer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.hammer
 }
 
@@ -8009,7 +7890,6 @@ item trident {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.trident
 }
 
@@ -8044,7 +7924,6 @@ item long_staff {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.long_staff
 }
 
@@ -8079,7 +7958,6 @@ item short_bow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.short_bow
 }
 
@@ -8114,7 +7992,6 @@ item machine_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.machine_gun
 }
 
@@ -8149,7 +8026,6 @@ item claymore {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.claymore
 }
 
@@ -8184,7 +8060,6 @@ item ration {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ration
 }
 
@@ -8219,7 +8094,6 @@ item bardiche {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bardiche
 }
 
@@ -8254,7 +8128,6 @@ item halberd {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.halberd
 }
 
@@ -8884,7 +8757,6 @@ item bottle_of_beer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_beer
 }
 
@@ -8919,7 +8791,6 @@ item horn {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.horn
 }
 
@@ -8954,7 +8825,6 @@ item campfire {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.campfire
 }
 
@@ -8989,7 +8859,6 @@ item portable_cooking_tool {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.portable_cooking_tool
 }
 
@@ -9059,7 +8928,6 @@ item stick_bread {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stick_bread
 }
 
@@ -9094,7 +8962,6 @@ item raw_noodle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.raw_noodle
 }
 
@@ -9129,7 +8996,6 @@ item sack_of_flour {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sack_of_flour
 }
 
@@ -9164,7 +9030,6 @@ item bomb_fish {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bomb_fish
 }
 
@@ -9339,7 +9204,6 @@ item wakizashi {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.wakizashi
 }
 
@@ -9654,7 +9518,6 @@ item broom {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.broom
 }
 
@@ -9689,7 +9552,6 @@ item long_pillar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.long_pillar
 }
 
@@ -9724,7 +9586,6 @@ item broken_pillar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.broken_pillar
 }
 
@@ -9759,7 +9620,6 @@ item street_lamp {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.street_lamp
 }
 
@@ -9794,7 +9654,6 @@ item water_tub {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.water_tub
 }
 
@@ -9829,7 +9688,6 @@ item comfortable_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.comfortable_table
 }
 
@@ -9864,7 +9722,6 @@ item inner_tube {
     has_random_name = false
     tags = ["fish"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.inner_tube
 }
 
@@ -9899,7 +9756,6 @@ item mysterious_map {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.mysterious_map
 }
 
@@ -9934,7 +9790,6 @@ item suitcase {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.suitcase
 }
 
@@ -9969,7 +9824,6 @@ item wallet {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.wallet
 }
 
@@ -10214,7 +10068,6 @@ item well_kept_armor {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.well_kept_armor
 }
 
@@ -10249,7 +10102,6 @@ item rack_of_good {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rack_of_good
 }
 
@@ -10284,7 +10136,6 @@ item rack_of_accessories {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rack_of_accessories
 }
 
@@ -10319,7 +10170,6 @@ item towel {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.towel
 }
 
@@ -10354,7 +10204,6 @@ item ragged_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ragged_table
 }
 
@@ -10389,7 +10238,6 @@ item cabinet {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cabinet
 }
 
@@ -10424,7 +10272,6 @@ item luxury_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.luxury_bed
 }
 
@@ -10459,7 +10306,6 @@ item vase {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.vase
 }
 
@@ -10494,7 +10340,6 @@ item high_grade_dresser {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.high_grade_dresser
 }
 
@@ -10529,7 +10374,6 @@ item neat_bar_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.neat_bar_table
 }
 
@@ -10564,7 +10408,6 @@ item large_bouquet {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.large_bouquet
 }
 
@@ -10599,7 +10442,6 @@ item chest_of_clothes {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.chest_of_clothes
 }
 
@@ -10634,7 +10476,6 @@ item giant_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.giant_bed
 }
 
@@ -10669,7 +10510,6 @@ item plain_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.plain_bed
 }
 
@@ -10704,7 +10544,6 @@ item coffin {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.coffin
 }
 
@@ -10739,7 +10578,6 @@ item food_processor {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.food_processor
 }
 
@@ -10774,7 +10612,6 @@ item soft_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.soft_bed
 }
 
@@ -10809,7 +10646,6 @@ item cheap_rack {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cheap_rack
 }
 
@@ -10844,7 +10680,6 @@ item dresser {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dresser
 }
 
@@ -10879,7 +10714,6 @@ item clean_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.clean_bed
 }
 
@@ -10914,7 +10748,6 @@ item bathtub {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bathtub
 }
 
@@ -10949,7 +10782,6 @@ item pachisuro_machine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pachisuro_machine
 }
 
@@ -10984,7 +10816,6 @@ item casino_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.casino_table
 }
 
@@ -11019,7 +10850,6 @@ item slot_machine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.slot_machine
 }
 
@@ -11054,7 +10884,6 @@ item darts_board {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.darts_board
 }
 
@@ -11089,7 +10918,6 @@ item big_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.big_foliage_plant
 }
 
@@ -11124,7 +10952,6 @@ item old_shelf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.old_shelf
 }
 
@@ -11159,7 +10986,6 @@ item old_bookshelf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.old_bookshelf
 }
 
@@ -11194,7 +11020,6 @@ item cheap_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cheap_bed
 }
 
@@ -11229,7 +11054,6 @@ item cheap_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cheap_table
 }
 
@@ -11264,7 +11088,6 @@ item neat_rack {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.neat_rack
 }
 
@@ -11299,7 +11122,6 @@ item simple_dresser {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.simple_dresser
 }
 
@@ -11334,7 +11156,6 @@ item big_cupboard {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.big_cupboard
 }
 
@@ -11369,7 +11190,6 @@ item sacred_altar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sacred_altar
 }
 
@@ -11404,7 +11224,6 @@ item comfortable_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.comfortable_bed
 }
 
@@ -11439,7 +11258,6 @@ item simple_rack {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.simple_rack
 }
 
@@ -11474,7 +11292,6 @@ item wide_chair {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.wide_chair
 }
 
@@ -11509,7 +11326,6 @@ item upright_piano {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.upright_piano
 }
 
@@ -11544,7 +11360,6 @@ item statue_of_cross {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_cross
 }
 
@@ -11579,7 +11394,6 @@ item stump {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stump
 }
 
@@ -11614,7 +11428,6 @@ item dress {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dress
 }
 
@@ -11649,7 +11462,6 @@ item table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.table
 }
 
@@ -11684,7 +11496,6 @@ item cargo_travelers_food {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_travelers_food
 }
 
@@ -11719,7 +11530,6 @@ item throne {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.throne
 }
 
@@ -11754,7 +11564,6 @@ item golden_pedestal {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.golden_pedestal
 }
 
@@ -11789,7 +11598,6 @@ item golden_statue {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.golden_statue
 }
 
@@ -11824,7 +11632,6 @@ item remains_skin {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.remains_skin
 }
 
@@ -11859,7 +11666,6 @@ item remains_blood {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.remains_blood
 }
 
@@ -11894,7 +11700,6 @@ item remains_eye {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.remains_eye
 }
 
@@ -11929,7 +11734,6 @@ item remains_heart {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.remains_heart
 }
 
@@ -11964,7 +11768,6 @@ item remains_bone {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.remains_bone
 }
 
@@ -11999,7 +11802,6 @@ item fishing_pole {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fishing_pole
 }
 
@@ -12034,7 +11836,6 @@ item rune {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rune
 }
 
@@ -12104,7 +11905,6 @@ item moonfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.moonfish
 }
 
@@ -12139,7 +11939,6 @@ item sardine {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.sardine
 }
 
@@ -12174,7 +11973,6 @@ item flatfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.flatfish
 }
 
@@ -12209,7 +12007,6 @@ item manboo {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.manboo
 }
 
@@ -12244,7 +12041,6 @@ item seabream {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.seabream
 }
 
@@ -12279,7 +12075,6 @@ item salmon {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.salmon
 }
 
@@ -12314,7 +12109,6 @@ item globefish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.globefish
 }
 
@@ -12349,7 +12143,6 @@ item tuna {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.tuna
 }
 
@@ -12384,7 +12177,6 @@ item cutlassfish {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.cutlassfish
 }
 
@@ -12419,7 +12211,6 @@ item sandborer {
     has_random_name = false
     tags = ["fish"]
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.sandborer
 }
 
@@ -12524,7 +12315,6 @@ item ring_of_steel_dragon {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ring_of_steel_dragon
 }
 
@@ -12559,7 +12349,6 @@ item staff_of_insanity {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.staff_of_insanity
 }
 
@@ -12629,7 +12418,6 @@ item palmia_pride {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.palmia_pride
 }
 
@@ -12664,7 +12452,6 @@ item shopkeepers_trunk {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shopkeepers_trunk
 }
 
@@ -13749,7 +13536,6 @@ item bottle_of_sulfuric {
     has_random_name = false
     tags = ["nogive"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_sulfuric
 }
 
@@ -13819,7 +13605,6 @@ item material_box {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.material_box
 }
 
@@ -13994,7 +13779,6 @@ item cargo_rag_doll {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_rag_doll
 }
 
@@ -14029,7 +13813,6 @@ item cargo_barrel {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_barrel
 }
 
@@ -14064,7 +13847,6 @@ item cargo_piano {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_piano
 }
 
@@ -14099,7 +13881,6 @@ item cargo_rope {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_rope
 }
 
@@ -14134,7 +13915,6 @@ item cargo_coffin {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_coffin
 }
 
@@ -14169,7 +13949,6 @@ item cargo_manboo {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_manboo
 }
 
@@ -14204,7 +13983,6 @@ item cargo_grave {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_grave
 }
 
@@ -14239,7 +14017,6 @@ item cargo_tuna_fish {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_tuna_fish
 }
 
@@ -14274,7 +14051,6 @@ item cargo_whisky {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_whisky
 }
 
@@ -14309,7 +14085,6 @@ item cargo_noble_toy {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_noble_toy
 }
 
@@ -14344,7 +14119,6 @@ item cargo_inner_tube {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_inner_tube
 }
 
@@ -14484,7 +14258,6 @@ item red_treasure_machine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.red_treasure_machine
 }
 
@@ -14519,7 +14292,6 @@ item blue_treasure_machine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.blue_treasure_machine
 }
 
@@ -14554,7 +14326,6 @@ item treasure_ball {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.treasure_ball
 }
 
@@ -14589,7 +14360,6 @@ item rare_treasure_ball {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rare_treasure_ball
 }
 
@@ -14799,7 +14569,6 @@ item morgia {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.morgia
 }
 
@@ -14834,7 +14603,6 @@ item mareilon {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.mareilon
 }
 
@@ -14869,7 +14637,6 @@ item spenseweed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.spenseweed
 }
 
@@ -14904,7 +14671,6 @@ item curaria {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.curaria
 }
 
@@ -14939,7 +14705,6 @@ item alraunia {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.alraunia
 }
 
@@ -14974,7 +14739,6 @@ item stomafillia {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stomafillia
 }
 
@@ -15009,7 +14773,6 @@ item sleeping_bag {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sleeping_bag
 }
 
@@ -15254,7 +15017,6 @@ item banded_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.banded_mail
 }
 
@@ -15289,7 +15051,6 @@ item plate_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.plate_mail
 }
 
@@ -15324,7 +15085,6 @@ item ring_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ring_mail
 }
 
@@ -15359,7 +15119,6 @@ item composite_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_mail
 }
 
@@ -15394,7 +15153,6 @@ item chain_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.chain_mail
 }
 
@@ -15429,7 +15187,6 @@ item pope_robe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pope_robe
 }
 
@@ -15464,7 +15221,6 @@ item light_mail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.light_mail
 }
 
@@ -15499,7 +15255,6 @@ item coat {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.coat
 }
 
@@ -15534,7 +15289,6 @@ item breast_plate {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.breast_plate
 }
 
@@ -15569,7 +15323,6 @@ item bulletproof_jacket {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bulletproof_jacket
 }
 
@@ -15604,7 +15357,6 @@ item gloves {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.gloves
 }
 
@@ -15639,7 +15391,6 @@ item plate_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.plate_gauntlets
 }
 
@@ -15674,7 +15425,6 @@ item light_gloves {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.light_gloves
 }
 
@@ -15709,7 +15459,6 @@ item composite_gauntlets {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_gauntlets
 }
 
@@ -15744,7 +15493,6 @@ item small_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.small_shield
 }
 
@@ -15779,7 +15527,6 @@ item round_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.round_shield
 }
 
@@ -15814,7 +15561,6 @@ item shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shield
 }
 
@@ -15849,7 +15595,6 @@ item large_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.large_shield
 }
 
@@ -15884,7 +15629,6 @@ item kite_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kite_shield
 }
 
@@ -15919,7 +15663,6 @@ item tower_shield {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tower_shield
 }
 
@@ -15954,7 +15697,6 @@ item shoes {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shoes
 }
 
@@ -15989,7 +15731,6 @@ item boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.boots
 }
 
@@ -16024,7 +15765,6 @@ item tight_boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tight_boots
 }
 
@@ -16059,7 +15799,6 @@ item armored_boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.armored_boots
 }
 
@@ -16094,7 +15833,6 @@ item composite_girdle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_girdle
 }
 
@@ -16129,7 +15867,6 @@ item plate_girdle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.plate_girdle
 }
 
@@ -16164,7 +15901,6 @@ item armored_cloak {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.armored_cloak
 }
 
@@ -16199,7 +15935,6 @@ item cloak {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cloak
 }
 
@@ -16234,7 +15969,6 @@ item feather_hat {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.feather_hat
 }
 
@@ -16269,7 +16003,6 @@ item heavy_helm {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.heavy_helm
 }
 
@@ -16304,7 +16037,6 @@ item knight_helm {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.knight_helm
 }
 
@@ -16339,7 +16071,6 @@ item helm {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.helm
 }
 
@@ -16374,7 +16105,6 @@ item composite_helm {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_helm
 }
 
@@ -16409,7 +16139,6 @@ item peridot {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.peridot
 }
 
@@ -16444,7 +16173,6 @@ item talisman {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.talisman
 }
 
@@ -16479,7 +16207,6 @@ item neck_guard {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.neck_guard
 }
 
@@ -16514,7 +16241,6 @@ item charm {
     has_random_name = true
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.charm
 }
 
@@ -16549,7 +16275,6 @@ item bejeweled_amulet {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bejeweled_amulet
 }
 
@@ -16584,7 +16309,6 @@ item engagement_amulet {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.engagement_amulet
 }
 
@@ -16619,7 +16343,6 @@ item composite_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.composite_ring
 }
 
@@ -16654,7 +16377,6 @@ item armored_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.armored_ring
 }
 
@@ -16689,7 +16411,6 @@ item ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ring
 }
 
@@ -16724,7 +16445,6 @@ item engagement_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.engagement_ring
 }
 
@@ -16759,7 +16479,6 @@ item stethoscope {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stethoscope
 }
 
@@ -16899,7 +16618,6 @@ item crossbow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.crossbow
 }
 
@@ -16934,7 +16652,6 @@ item bolt {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bolt
 }
 
@@ -17039,7 +16756,6 @@ item machine {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.machine
 }
 
@@ -17074,7 +16790,6 @@ item computer {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.computer
 }
 
@@ -17109,7 +16824,6 @@ item training_machine {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.training_machine
 }
 
@@ -17144,7 +16858,6 @@ item camera {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.camera
 }
 
@@ -17179,7 +16892,6 @@ item microwave_oven {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.microwave_oven
 }
 
@@ -17214,7 +16926,6 @@ item server {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.server
 }
 
@@ -17249,7 +16960,6 @@ item storage {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.storage
 }
 
@@ -17284,7 +16994,6 @@ item trash_can {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.trash_can
 }
 
@@ -17319,7 +17028,6 @@ item chip {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.chip
 }
 
@@ -17354,7 +17062,6 @@ item blank_disc {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.blank_disc
 }
 
@@ -17389,7 +17096,6 @@ item shot_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shot_gun
 }
 
@@ -17424,7 +17130,6 @@ item pop_corn {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pop_corn
 }
 
@@ -17459,7 +17164,6 @@ item fried_potato {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fried_potato
 }
 
@@ -17494,7 +17198,6 @@ item cyber_snack {
     has_random_name = false
     tags = ["sf", "fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cyber_snack
 }
 
@@ -17634,7 +17337,6 @@ item figurine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.figurine
 }
 
@@ -17669,7 +17371,6 @@ item card {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.card
 }
 
@@ -17879,7 +17580,6 @@ item heir_trunk {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.heir_trunk
 }
 
@@ -17914,7 +17614,6 @@ item deed_of_heirship {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.deed_of_heirship
 }
 
@@ -17949,7 +17648,6 @@ item laser_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.laser_gun
 }
 
@@ -17984,7 +17682,6 @@ item energy_cell {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.energy_cell
 }
 
@@ -18019,7 +17716,6 @@ item rail_gun {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rail_gun
 }
 
@@ -18089,7 +17785,6 @@ item bottle_of_water {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_water
 }
 
@@ -18229,7 +17924,6 @@ item wing {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.wing
 }
 
@@ -18334,7 +18028,6 @@ item tree_of_beech {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_beech
 }
 
@@ -18369,7 +18062,6 @@ item tree_of_cedar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_cedar
 }
 
@@ -18404,7 +18096,6 @@ item tree_of_fruitless {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_fruitless
 }
 
@@ -18439,7 +18130,6 @@ item tree_of_fruits {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_fruits
 }
 
@@ -18474,7 +18164,6 @@ item dead_tree {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dead_tree
 }
 
@@ -18509,7 +18198,6 @@ item tree_of_zelkova {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_zelkova
 }
 
@@ -18544,7 +18232,6 @@ item tree_of_palm {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_palm
 }
 
@@ -18579,7 +18266,6 @@ item tree_of_ash {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_ash
 }
 
@@ -18614,7 +18300,6 @@ item furnance {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.furnance
 }
 
@@ -18649,7 +18334,6 @@ item fireplace {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fireplace
 }
 
@@ -18684,7 +18368,6 @@ item stove {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stove
 }
 
@@ -18719,7 +18402,6 @@ item giant_foliage_plant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.giant_foliage_plant
 }
 
@@ -18754,7 +18436,6 @@ item big_table {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.big_table
 }
 
@@ -18789,7 +18470,6 @@ item painting_of_madam {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.painting_of_madam
 }
 
@@ -18824,7 +18504,6 @@ item painting_of_landscape {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.painting_of_landscape
 }
 
@@ -18859,7 +18538,6 @@ item painting_of_sunflower {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.painting_of_sunflower
 }
 
@@ -18894,7 +18572,6 @@ item statue_of_cat {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_cat
 }
 
@@ -18929,7 +18606,6 @@ item black_crystal {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.black_crystal
 }
 
@@ -18964,7 +18640,6 @@ item snow_man {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.snow_man
 }
 
@@ -19174,7 +18849,6 @@ item salary_chest {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.salary_chest
 }
 
@@ -19349,7 +19023,6 @@ item feather {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.feather
 }
 
@@ -19454,7 +19127,6 @@ item shelter {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shelter
 }
 
@@ -19489,7 +19161,6 @@ item seven_league_boots {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.seven_league_boots
 }
 
@@ -19524,7 +19195,6 @@ item vindale_cloak {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.vindale_cloak
 }
 
@@ -19559,7 +19229,6 @@ item aurora_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.aurora_ring
 }
 
@@ -19629,7 +19298,6 @@ item masters_delivery_chest {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.masters_delivery_chest
 }
 
@@ -19664,7 +19332,6 @@ item shop_strongbox {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shop_strongbox
 }
 
@@ -19699,7 +19366,6 @@ item register {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.register
 }
 
@@ -19734,7 +19400,6 @@ item textbook {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.textbook
 }
 
@@ -20014,7 +19679,6 @@ item jerky {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.jerky
 }
 
@@ -20084,7 +19748,6 @@ item egg {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.egg
 }
 
@@ -20119,7 +19782,6 @@ item bottle_of_milk {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_milk
 }
 
@@ -20154,7 +19816,6 @@ item shit {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shit
 }
 
@@ -20259,7 +19920,6 @@ item kitty_bank {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kitty_bank
 }
 
@@ -20294,7 +19954,6 @@ item freezer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.freezer
 }
 
@@ -20329,7 +19988,6 @@ item modern_rack {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.modern_rack
 }
 
@@ -20434,7 +20092,6 @@ item torch {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.torch
 }
 
@@ -20504,7 +20161,6 @@ item fancy_lamp {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fancy_lamp
 }
 
@@ -20539,7 +20195,6 @@ item modern_lamp_a {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.modern_lamp_a
 }
 
@@ -20574,7 +20229,6 @@ item handful_of_snow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.handful_of_snow
 }
 
@@ -20609,7 +20263,6 @@ item tree_of_naked {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_naked
 }
 
@@ -20644,7 +20297,6 @@ item tree_of_fir {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tree_of_fir
 }
 
@@ -20714,7 +20366,6 @@ item mini_snow_man {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.mini_snow_man
 }
 
@@ -20749,7 +20400,6 @@ item snow_barrel {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.snow_barrel
 }
 
@@ -20784,7 +20434,6 @@ item modern_lamp_b {
     has_random_name = false
     tags = ["sf"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.modern_lamp_b
 }
 
@@ -20819,7 +20468,6 @@ item statue_of_holy_cross {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_holy_cross
 }
 
@@ -20854,7 +20502,6 @@ item pillar {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pillar
 }
 
@@ -20889,7 +20536,6 @@ item stained_glass_window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stained_glass_window
 }
 
@@ -20924,7 +20570,6 @@ item cargo_christmas_tree {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_christmas_tree
 }
 
@@ -20959,7 +20604,6 @@ item cargo_snow_man {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_snow_man
 }
 
@@ -20994,7 +20638,6 @@ item christmas_tree {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.christmas_tree
 }
 
@@ -21029,7 +20672,6 @@ item giants_shackle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.giants_shackle
 }
 
@@ -21064,7 +20706,6 @@ item empty_bottle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.empty_bottle
 }
 
@@ -21099,7 +20740,6 @@ item holy_well {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.holy_well
 }
 
@@ -21134,7 +20774,6 @@ item presidents_chair {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.presidents_chair
 }
 
@@ -21169,7 +20808,6 @@ item green_plant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.green_plant
 }
 
@@ -21204,7 +20842,6 @@ item money_tree {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.money_tree
 }
 
@@ -21239,7 +20876,6 @@ item barbecue_set {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.barbecue_set
 }
 
@@ -21274,7 +20910,6 @@ item giant_cactus {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.giant_cactus
 }
 
@@ -21309,7 +20944,6 @@ item square_window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.square_window
 }
 
@@ -21344,7 +20978,6 @@ item window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.window
 }
 
@@ -21379,7 +21012,6 @@ item triangle_plant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.triangle_plant
 }
 
@@ -21414,7 +21046,6 @@ item house_board {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.house_board
 }
 
@@ -21449,7 +21080,6 @@ item nice_window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.nice_window
 }
 
@@ -21484,7 +21114,6 @@ item kings_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kings_bed
 }
 
@@ -21519,7 +21148,6 @@ item flower_arch {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.flower_arch
 }
 
@@ -21554,7 +21182,6 @@ item bill {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bill
 }
 
@@ -21589,7 +21216,6 @@ item tax_masters_tax_box {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tax_masters_tax_box
 }
 
@@ -21624,7 +21250,6 @@ item bait {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bait
 }
 
@@ -21659,7 +21284,6 @@ item fish_a {
     has_random_name = false
     tags = []
     rftags = ["fish"]
-    color = White
     locale_key_prefix = core.locale.item.fish_a
 }
 
@@ -21694,7 +21318,6 @@ item fish_b {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fish_b
 }
 
@@ -21729,7 +21352,6 @@ item love_potion {
     has_random_name = false
     tags = ["nogive"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.love_potion
 }
 
@@ -21764,7 +21386,6 @@ item treasure_map {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.treasure_map
 }
 
@@ -21799,7 +21420,6 @@ item small_medal {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.small_medal
 }
 
@@ -21904,7 +21524,6 @@ item shrine_gate {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shrine_gate
 }
 
@@ -22044,7 +21663,6 @@ item disguise_set {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.disguise_set
 }
 
@@ -22079,7 +21697,6 @@ item material_kit {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.material_kit
 }
 
@@ -22114,7 +21731,6 @@ item moon_gate {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.moon_gate
 }
 
@@ -22184,7 +21800,6 @@ item panty {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.panty
 }
 
@@ -22219,7 +21834,6 @@ item leash {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.leash
 }
 
@@ -22254,7 +21868,6 @@ item mine {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.mine
 }
 
@@ -22289,7 +21902,6 @@ item lockpick {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.lockpick
 }
 
@@ -22324,7 +21936,6 @@ item skeleton_key {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.skeleton_key
 }
 
@@ -22429,7 +22040,6 @@ item unicorn_horn {
     has_random_name = false
     tags = ["noshop", "spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.unicorn_horn
 }
 
@@ -22464,7 +22074,6 @@ item cooler_box {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cooler_box
 }
 
@@ -22499,7 +22108,6 @@ item rice_barrel {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.rice_barrel
 }
 
@@ -22534,7 +22142,6 @@ item eastern_bed {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.eastern_bed
 }
 
@@ -22569,7 +22176,6 @@ item decorated_window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.decorated_window
 }
 
@@ -22604,7 +22210,6 @@ item king_drawer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.king_drawer
 }
 
@@ -22639,7 +22244,6 @@ item menu_board {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.menu_board
 }
 
@@ -22674,7 +22278,6 @@ item black_board {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.black_board
 }
 
@@ -22814,7 +22417,6 @@ item craft_cupboard {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.craft_cupboard
 }
 
@@ -22849,7 +22451,6 @@ item sink {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sink
 }
 
@@ -22884,7 +22485,6 @@ item junk {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.junk
 }
 
@@ -22989,7 +22589,6 @@ item eastern_lamp {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.eastern_lamp
 }
 
@@ -23024,7 +22623,6 @@ item eastern_window {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.eastern_window
 }
 
@@ -23059,7 +22657,6 @@ item chochin {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.chochin
 }
 
@@ -23234,7 +22831,6 @@ item monster_heart {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.monster_heart
 }
 
@@ -23269,7 +22865,6 @@ item speed_ring {
     has_random_name = true
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.speed_ring
 }
 
@@ -23304,7 +22899,6 @@ item statue_of_opatos {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_opatos
 }
 
@@ -23339,7 +22933,6 @@ item statue_of_lulwy {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_lulwy
 }
 
@@ -23374,7 +22967,6 @@ item sisters_love_fueled_lunch {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sisters_love_fueled_lunch
 }
 
@@ -23409,7 +23001,6 @@ item book_of_rachel {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.book_of_rachel
 }
 
@@ -23444,7 +23035,6 @@ item cargo_art {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_art
 }
 
@@ -23479,7 +23069,6 @@ item cargo_canvas {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.cargo_canvas
 }
 
@@ -23514,7 +23103,6 @@ item nuclear_bomb {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.nuclear_bomb
 }
 
@@ -23549,7 +23137,6 @@ item secret_treasure {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.secret_treasure
 }
 
@@ -23724,7 +23311,6 @@ item holy_lance {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.holy_lance
 }
 
@@ -23969,7 +23555,6 @@ item gene_machine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.gene_machine
 }
 
@@ -24004,7 +23589,6 @@ item monster_ball {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.monster_ball
 }
 
@@ -24039,7 +23623,6 @@ item statue_of_jure {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_jure
 }
 
@@ -24074,7 +23657,6 @@ item ancient_book {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.ancient_book
 }
 
@@ -24109,7 +23691,6 @@ item iron_maiden {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.iron_maiden
 }
 
@@ -24144,7 +23725,6 @@ item guillotine {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.guillotine
 }
 
@@ -24179,7 +23759,6 @@ item pan_flute {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.pan_flute
 }
 
@@ -24214,7 +23793,6 @@ item lute {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.lute
 }
 
@@ -24249,7 +23827,6 @@ item harmonica {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.harmonica
 }
 
@@ -24284,7 +23861,6 @@ item harp {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.harp
 }
 
@@ -24319,7 +23895,6 @@ item eastern_partition {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.eastern_partition
 }
 
@@ -24459,7 +24034,6 @@ item potion_of_salt_solution {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.potion_of_salt_solution
 }
 
@@ -24529,7 +24103,6 @@ item town_book {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.town_book
 }
 
@@ -24564,7 +24137,6 @@ item deck {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.deck
 }
 
@@ -24634,7 +24206,6 @@ item whistle {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.whistle
 }
 
@@ -24669,7 +24240,6 @@ item vomit {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.vomit
 }
 
@@ -24704,7 +24274,6 @@ item beggars_pendant {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.beggars_pendant
 }
 
@@ -24774,7 +24343,6 @@ item stradivarius {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.stradivarius
 }
 
@@ -24984,7 +24552,6 @@ item shuriken {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.shuriken
 }
 
@@ -25019,7 +24586,6 @@ item grenade {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.grenade
 }
 
@@ -25089,7 +24655,6 @@ item vanilla_rock {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.vanilla_rock
 }
 
@@ -25194,7 +24759,6 @@ item claymore_unique {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.claymore_unique
 }
 
@@ -25264,7 +24828,6 @@ item statue_of_ehekatl {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_ehekatl
 }
 
@@ -25369,7 +24932,6 @@ item music_ticket {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.music_ticket
 }
 
@@ -25544,7 +25106,6 @@ item gift {
     has_random_name = false
     tags = ["spshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.gift
 }
 
@@ -25579,7 +25140,6 @@ item token_of_friendship {
     has_random_name = false
     tags = ["noshop"]
     rftags = ["ore"]
-    color = White
     locale_key_prefix = core.locale.item.token_of_friendship
 }
 
@@ -25684,7 +25244,6 @@ item sand_bag {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.sand_bag
 }
 
@@ -25719,7 +25278,6 @@ item small_gamble_chest {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.small_gamble_chest
 }
 
@@ -25754,7 +25312,6 @@ item scythe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.scythe
 }
 
@@ -25859,7 +25416,6 @@ item fortune_cookie {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fortune_cookie
 }
 
@@ -25894,7 +25450,6 @@ item frisias_tail {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.frisias_tail
 }
 
@@ -25999,7 +25554,6 @@ item license_of_the_void_explorer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.license_of_the_void_explorer
 }
 
@@ -26174,7 +25728,6 @@ item book_of_bokonon {
     has_random_name = false
     tags = ["noshop"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.book_of_bokonon
 }
 
@@ -26209,7 +25762,6 @@ item summoning_crystal {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.summoning_crystal
 }
 
@@ -26244,7 +25796,6 @@ item statue_of_creator {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_creator
 }
 
@@ -26279,7 +25830,6 @@ item upstairs {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.upstairs
 }
 
@@ -26314,7 +25864,6 @@ item downstairs {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.downstairs
 }
 
@@ -26349,7 +25898,6 @@ item new_years_gift {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.new_years_gift
 }
 
@@ -26419,7 +25967,6 @@ item daruma {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.daruma
 }
 
@@ -26454,7 +26001,6 @@ item kagami_mochi {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kagami_mochi
 }
 
@@ -26489,7 +26035,6 @@ item mochi {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.mochi
 }
 
@@ -26629,7 +26174,6 @@ item garoks_hammer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.garoks_hammer
 }
 
@@ -26699,7 +26243,6 @@ item festival_wreath {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.festival_wreath
 }
 
@@ -26769,7 +26312,6 @@ item counter {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.counter
 }
 
@@ -26804,7 +26346,6 @@ item red_stall {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.red_stall
 }
 
@@ -26839,7 +26380,6 @@ item blue_stall {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.blue_stall
 }
 
@@ -26874,7 +26414,6 @@ item jures_body_pillow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.jures_body_pillow
 }
 
@@ -26909,7 +26448,6 @@ item new_years_decoration {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.new_years_decoration
 }
 
@@ -26944,7 +26482,6 @@ item miniature_tree {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.miniature_tree
 }
 
@@ -26979,7 +26516,6 @@ item bottle_of_soda {
     has_random_name = false
     tags = ["fest"]
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_soda
 }
 
@@ -27014,7 +26550,6 @@ item blue_capsule_drug {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.blue_capsule_drug
 }
 
@@ -27049,7 +26584,6 @@ item tomato {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.tomato
 }
 
@@ -27084,7 +26618,6 @@ item large_bookshelf {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.large_bookshelf
 }
 
@@ -27119,7 +26652,6 @@ item luxury_cabinet {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.luxury_cabinet
 }
 
@@ -27154,7 +26686,6 @@ item special_steamed_meat_bun {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.special_steamed_meat_bun
 }
 
@@ -27189,7 +26720,6 @@ item statue_of_kumiromi {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_kumiromi
 }
 
@@ -27224,7 +26754,6 @@ item statue_of_mani {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.statue_of_mani
 }
 
@@ -27294,7 +26823,6 @@ item deer_head {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.deer_head
 }
 
@@ -27329,7 +26857,6 @@ item fur_carpet {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.fur_carpet
 }
 
@@ -27364,7 +26891,6 @@ item kitchen_knife {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.kitchen_knife
 }
 
@@ -27399,7 +26925,6 @@ item dish {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dish
 }
 
@@ -27434,7 +26959,6 @@ item recipe {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.recipe
 }
 
@@ -27469,7 +26993,6 @@ item recipe_holder {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.recipe_holder
 }
 
@@ -27504,7 +27027,6 @@ item bottle_of_salt {
     has_random_name = false
     tags = []
     rftags = ["flavor"]
-    color = White
     locale_key_prefix = core.locale.item.bottle_of_salt
 }
 
@@ -27539,7 +27061,6 @@ item sack_of_sugar {
     has_random_name = false
     tags = []
     rftags = ["flavor"]
-    color = White
     locale_key_prefix = core.locale.item.sack_of_sugar
 }
 
@@ -27574,7 +27095,6 @@ item puff_puff_bread {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.puff_puff_bread
 }
 
@@ -27609,7 +27129,6 @@ item skull_bow {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.skull_bow
 }
 
@@ -27714,7 +27233,6 @@ item dragon_slayer {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.dragon_slayer
 }
 
@@ -27749,6 +27267,5 @@ item putitoro {
     has_random_name = false
     tags = []
     rftags = []
-    color = White
     locale_key_prefix = core.locale.item.putitoro
 }
