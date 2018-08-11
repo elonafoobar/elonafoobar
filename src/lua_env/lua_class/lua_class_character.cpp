@@ -2,6 +2,7 @@
 #include "../../ability.hpp"
 #include "../../character.hpp"
 #include "../../dmgheal.hpp"
+#include "../../element.hpp"
 
 namespace elona
 {

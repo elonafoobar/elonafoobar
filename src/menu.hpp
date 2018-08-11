@@ -22,7 +22,6 @@ void help_window_remove_parens();
 void show_game_help();
 turn_result_t show_chat_history();
 turn_result_t show_message_log();
-void initialize_jkey();
 void load_showroom_user_info();
 void set_option();
 turn_result_t play_scene();

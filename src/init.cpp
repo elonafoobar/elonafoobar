@@ -33,12 +33,14 @@
 #include "main.hpp"
 #include "main_menu.hpp"
 #include "mef.hpp"
+#include "menu.hpp"
 #include "network.hpp"
 #include "race.hpp"
 #include "random.hpp"
 #include "range.hpp"
 #include "snail/touch_input.hpp"
 #include "trait.hpp"
+#include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
@@ -408,6 +410,11 @@ void initialize_lion_db()
     lua::lua->get_registry_manager().load_mod_data(locations);
 }
 
+static void _initialize_jkey()
+{
+    SDIM3(jkey, 2, 12);
+}
+
 void initialize_config(const fs::path& config_file)
 {
     windoww = snail::application::instance().width();
@@ -435,7 +442,7 @@ void initialize_config(const fs::path& config_file)
     SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
-    initialize_jkey();
+    _initialize_jkey();
 
     load_config(config_file);
 }

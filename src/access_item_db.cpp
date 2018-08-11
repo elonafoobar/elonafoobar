@@ -5,6 +5,7 @@
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "menu.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 

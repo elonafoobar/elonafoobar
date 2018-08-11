@@ -9,7 +9,6 @@ void map_initcustom(const std::string&);
 void map_tileset(int = 0);
 void map_converttile();
 void map_createroomdoor();
-void map_initcustom(const std::string&);
 void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);

@@ -1,5 +1,6 @@
 #include "enchantment.hpp"
 #include "db_item.hpp"
+#include "element.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item.hpp"

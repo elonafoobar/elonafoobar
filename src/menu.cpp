@@ -1158,12 +1158,6 @@ label_2711_internal:
     goto label_2711_internal;
 }
 
-void initialize_jkey()
-{
-    SDIM3(jkey, 2, 12);
-    return;
-}
-
 void load_showroom_user_info()
 {
     notesel(headtemp);

@@ -13,6 +13,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
+#include "menu.hpp"
 #include "network.hpp"
 #include "optional.hpp"
 #include "random.hpp"

@@ -11,6 +11,7 @@
 #include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
+#include "element.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"

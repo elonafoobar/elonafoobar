@@ -10,6 +10,7 @@
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
+#include "element.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "fov.hpp"
