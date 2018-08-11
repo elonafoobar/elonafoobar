@@ -28,6 +28,16 @@ void modify_trait(character&, int, int);
 
 void modify_resistance(character&, int, int);
 
+void modify_sanity(character&, int);
+
+void modify_karma(character&, int);
+
+void modify_corruption(character&, int);
+
+void make_pregnant(character&);
+
+void eat_rotten_food(character&);
+
 
 void bind(sol::state&);
 } // namespace LuaCharacter

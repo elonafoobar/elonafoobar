@@ -1,4 +1,4 @@
---- Represents a character.
+--- Represents this character.
 -- @classmod LuaCharacter
 
 --- [R] The index of this character in the global characters array.
@@ -68,9 +68,9 @@ function apply_ailment(ailment, power) end
 -- @treturn bool true if the character was recruited successfully
 function recruit_as_ally() end
 
---- Sets a flag on a character. <b>Note</b>: Currently, all flags up
+--- Sets a flag on this character. <b>Note</b>: Currently, all flags up
 --- to <code>IsQuickTempered</code> are "intrinsic" and are always
---- reset when a character is refreshed each turn. To change these
+--- reset when this character is refreshed each turn. To change these
 --- flags, you must call this function inside a handler for
 --- <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
 --- reset later.
@@ -84,27 +84,49 @@ function recruit_as_ally() end
 --   chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on refresh
 -- end
 --
--- -- force this flag to be overridden after a character is refreshed.
+-- -- force this flag to be overridden after this character is refreshed.
 -- Event.register(Event.EventKind.CharaRefreshed, make_invisible)
 -- Event.register(Event.EventKind.CharaCreated, make_invisible)
 
 function set_flag(flag, value) end
 
---- Makes a character gain a new skill or spell. This only has an
+--- Makes this character gain a new skill or spell. This only has an
 --- effect if the character does not already know the skill/spell.
 -- @tparam num id the skill/spell ID
 -- @tparam num initial_level the intial skill/spell level
 -- @tparam[opt] num initial_stock the initial spell stock for spells
 function gain_skill(id, initial_level, initial_stock) end
 
---- Makes a character gain experience in a skill or spell. This only
+--- Makes this character gain experience in a skill or spell. This only
 --- has an effect if the character already knows the skill/spell.
 -- @tparam num id the skill/spell ID
 -- @tparam num amount the amount of experience
 function gain_skill_exp(id, amount) end
 
---- Modify a character's resistance. Since the effect is permanent,
---- once your resistance is modified, it will not be reset on refreshing.
+--- Modifies this character's resistance. Since the effect is
+--- permanent, once your resistance is modified, it will not be reset
+--- on refreshing.
 -- @tparam num element the corresponding element
--- @tparam num delta the amount of increase/decrease
+-- @tparam num delta the amount of increase/decrease (can be negative)
 function modify_resistance(element, delta) end
+
+--- Modifies this character's sanity.
+-- @tparam num delta the amount of increase/decrease (can be negative)
+function modify_sanity(delta) end
+
+--- Modifies this character's karma. Currently only has an effect if
+--- the character is the player.
+-- @tparam num delta the amount of increase/decrease (can be negative)
+function modify_karma(delta) end
+
+--- Modifies this character's ether corruption. Currently only has an
+--- effect if the character is the player.
+-- @tparam num delta the amount of increase/decrease (can be negative)
+function modify_corruption(delta) end
+
+--- Makes this character pregnant. Only has an effect if the character
+--- is not already pregnant.
+function make_pregnant() end
+
+--- Applies the effects of eating rotten food to this character.
+function eat_rotten_food() end
