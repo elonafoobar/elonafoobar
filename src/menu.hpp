@@ -14,6 +14,16 @@ struct menu_result
     turn_result_t turn_result;
 };
 
+enum ctrl_ally_operation : int
+{
+    call_back = 0,
+    sell = 1,
+    pet_arena = 2,
+    staying = 3,
+    investigate = 4,
+    gene_engineer = 5,
+};
+
 void text_set();
 int cnvjkey(const std::string&);
 void show_quick_menu();

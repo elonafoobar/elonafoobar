@@ -20,7 +20,7 @@ void ui_menu_ctrl_ally::init()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    if (allyctrl == 2)
+    if (allyctrl == ctrl_ally_operation::pet_arena)
     {
         list(0, listmax) = 99;
         list(1, listmax) = -9999;
@@ -32,21 +32,22 @@ void ui_menu_ctrl_ally::init()
         {
             continue;
         }
-        if (allyctrl == 1)
+        if (allyctrl == ctrl_ally_operation::sell)
         {
             if (cdata[cnt].state() == character::state_t::pet_dead)
             {
                 continue;
             }
         }
-        if (allyctrl == 3 || allyctrl == 5)
+        if (allyctrl == ctrl_ally_operation::staying
+            || allyctrl == ctrl_ally_operation::gene_engineer)
         {
             if (cdata[cnt].state() != character::state_t::alive)
             {
                 continue;
             }
         }
-        if (allyctrl == 5)
+        if (allyctrl == ctrl_ally_operation::gene_engineer)
         {
             if (cnt == rc)
             {
@@ -55,12 +56,13 @@ void ui_menu_ctrl_ally::init()
         }
         if (cdata[cnt].current_map != 0)
         {
-            if (allyctrl == 1 || allyctrl == 2)
+            if (allyctrl == ctrl_ally_operation::sell
+                || allyctrl == ctrl_ally_operation::pet_arena)
             {
                 continue;
             }
         }
-        if (allyctrl != 1)
+        if (allyctrl != ctrl_ally_operation::sell)
         {
             if (cdata[cnt].is_escorted()
                 || cdata[cnt].is_escorted_in_sub_quest())
@@ -81,7 +83,7 @@ void ui_menu_ctrl_ally::init()
         ++listmax;
     }
     sort_list_by_column1();
-    if (allyctrl == 2)
+    if (allyctrl == ctrl_ally_operation::pet_arena)
     {
         p = 0;
         DIM2(followerin, 16);
@@ -119,7 +121,7 @@ void ui_menu_ctrl_ally::update()
         page = 0;
         txtnew();
     }
-    if (allyctrl == 0)
+    if (allyctrl == ctrl_ally_operation::call_back)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.call.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.call.title");
@@ -128,7 +130,7 @@ void ui_menu_ctrl_ally::update()
         s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         x = 0;
     }
-    if (allyctrl == 1)
+    if (allyctrl == ctrl_ally_operation::sell)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.sell.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.sell.title");
@@ -137,7 +139,7 @@ void ui_menu_ctrl_ally::update()
         s(13) = i18n::s.get("core.locale.ui.ally_list.sell.value");
         x = 20;
     }
-    if (allyctrl == 2)
+    if (allyctrl == ctrl_ally_operation::pet_arena)
     {
         i = 0;
         for (int cnt = 0; cnt < 16; ++cnt)
@@ -160,7 +162,7 @@ void ui_menu_ctrl_ally::update()
         s(13) = i18n::s.get("core.locale.ui.ally_list.status");
         x = 20;
     }
-    if (allyctrl == 3)
+    if (allyctrl == ctrl_ally_operation::staying)
     {
         if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
         {
@@ -189,14 +191,15 @@ void ui_menu_ctrl_ally::update()
         }
         x = 20;
     }
-    if (allyctrl == 4 || allyctrl == 5)
+    if (allyctrl == ctrl_ally_operation::investigate
+        || allyctrl == ctrl_ally_operation::gene_engineer)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.gene_engineer.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.gene_engineer.title");
         s(11) = strhint2 + strhint3;
         s(12) = i18n::s.get("core.locale.ui.ally_list.name");
         s(13) = i18n::s.get("core.locale.ui.ally_list.status");
-        if (allyctrl == 5)
+        if (allyctrl == ctrl_ally_operation::gene_engineer)
         {
             if (rc != 0)
             {
@@ -255,15 +258,14 @@ void ui_menu_ctrl_ally::draw()
                 wy + 66 + cnt * 19 - 1);
             continue;
         }
-        if (allyctrl == 0 || allyctrl == 2 || allyctrl == 3 || allyctrl == 4
-            || allyctrl == 5)
+        if (allyctrl != ctrl_ally_operation::sell)
         {
             s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             if (cdata[i].current_map != 0)
             {
                 s = s + u8"("s + mapname(cdata[i].current_map) + u8")"s;
             }
-            if (allyctrl == 2)
+            if (allyctrl == ctrl_ally_operation::pet_arena)
             {
                 if (followerin(i) == 1)
                 {
@@ -271,7 +273,7 @@ void ui_menu_ctrl_ally::draw()
                 }
             }
             int n = 0;
-            if (allyctrl == 5)
+            if (allyctrl == ctrl_ally_operation::gene_engineer)
             {
                 if (cdata[i].level > sdata(151, 0) + 5)
                 {
@@ -279,8 +281,8 @@ void ui_menu_ctrl_ally::draw()
                 }
             }
             cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 0, n);
-            if (allyctrl != 3
-                || (allyctrl == 3
+            if (allyctrl != ctrl_ally_operation::staying
+                || (allyctrl == ctrl_ally_operation::staying
                     && gdata_current_map == mdata_t::map_id_t::your_home))
             {
                 s = u8"Lv."s + cdata[i].level + u8" "s;
@@ -290,7 +292,7 @@ void ui_menu_ctrl_ally::draw()
                 }
                 if (cdata[i].state() == character::state_t::pet_waiting)
                 {
-                    if (allyctrl == 0)
+                    if (allyctrl == ctrl_ally_operation::call_back)
                     {
                         s += i18n::s.get(
                             "core.locale.ui.ally_list.call.waiting");
@@ -304,7 +306,7 @@ void ui_menu_ctrl_ally::draw()
                 }
                 if (cdata[i].state() == character::state_t::alive)
                 {
-                    if (allyctrl == 0)
+                    if (allyctrl == ctrl_ally_operation::call_back)
                     {
                         s += i18n::s.get("core.locale.ui.ally_list.alive");
                     }
@@ -326,7 +328,7 @@ void ui_menu_ctrl_ally::draw()
                     s = u8"   "s + cbreeder(i);
                 }
             }
-            if (allyctrl == 5)
+            if (allyctrl == ctrl_ally_operation::gene_engineer)
             {
                 if (rc != 0)
                 {
@@ -373,7 +375,7 @@ void ui_menu_ctrl_ally::draw()
             pos(wx + 370, wy + 66 + cnt * 19 + 2);
             mes(s);
         }
-        if (allyctrl == 1)
+        if (allyctrl == ctrl_ally_operation::sell)
         {
             s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             s += u8" Lv."s + cdata[i].level;
@@ -467,11 +469,11 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
 
     if (p != -1)
     {
-        if (allyctrl == 5)
+        if (allyctrl == ctrl_ally_operation::gene_engineer)
         {
             return _select_gene_engineer(p);
         }
-        else if (allyctrl == 2)
+        else if (allyctrl == ctrl_ally_operation::pet_arena)
         {
             return _select_pet_arena(p);
         }

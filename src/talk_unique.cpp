@@ -2099,7 +2099,7 @@ talk_result_t talk_unique_raphael()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        allyctrl = 1;
+        allyctrl = ctrl_ally_operation::sell;
         int stat = ctrl_ally();
         if (stat == -1)
         {

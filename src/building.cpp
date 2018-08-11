@@ -818,7 +818,7 @@ void prompt_move_ally()
 
 void prompt_ally_staying()
 {
-    allyctrl = 3;
+    allyctrl = ctrl_ally_operation::staying;
     {
         int stat = ctrl_ally();
         if (stat != -1)
