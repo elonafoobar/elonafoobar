@@ -217,15 +217,29 @@ end
 
 
 --- Moves a handle from one integer index to another and updates its
---- __index field with the new value. The handle must be valid and the
---- target index must not be occupied already.
+--- __index field with the new value, if it exists. If the handle
+--- exists, the target slot must not be occupied. If not, the
+--- destination slot will be set to empty as well.
 function Handle.relocate_handle(cpp_ref, new_index, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
-   assert(Handle.is_valid(handle))
-   -- assert(not Handle.is_valid(handles_by_index[kind][new_index]))
 
-   handle.__index = new_index
-   handles_by_index[kind][new_index] = handle
+   if Handle.is_valid(handle) then
+      -- Move the handle into the new slot. The new slot must be empty
+      -- by now.
+      assert(not Handle.is_valid(handles_by_index[kind][new_index]))
+      handle.__index = new_index
+      handles_by_index[kind][new_index] = handle
+   else
+      -- When the handle is not valid, set the destination slot to be
+      -- invalid as well, to reflect relocating an empty handle.
+
+      -- This can happen when a temporary character is created as part
+      -- of change creature magic, as the temporary's state will be
+      -- empty at the time of relocation.
+      handles_by_index[kind][new_index] = nil
+   end
+
+   -- Clear the slot the handle was moved from.
    handles_by_index[kind][cpp_ref.index] = nil
 end
 
