@@ -363,33 +363,6 @@ void apply_god_blessing(int cc)
 
 
 
-std::string get_god_description()
-{
-    std::string buff = u8" "s;
-
-    if (inv[ci].param1 > 0 && inv[ci].param1 <= 7)
-    {
-        buff = i18n::s.get_enum_property(
-            "core.locale.god.desc", "text", inv[ci].param1);
-
-        buff += i18n::s.get("core.locale.god.desc.offering") + u8": ";
-        buff += i18n::s.get_enum_property(
-            "core.locale.god.desc", "offering", inv[ci].param1);
-
-        buff += i18n::s.get("core.locale.god.desc.bonus") + u8": ";
-        buff += i18n::s.get_enum_property(
-            "core.locale.god.desc", "bonus", inv[ci].param1);
-
-        buff += i18n::s.get("core.locale.god.desc.ability") + u8": ";
-        buff += i18n::s.get_enum_property(
-            "core.locale.god.desc", "ability", inv[ci].param1);
-    }
-
-    return buff;
-}
-
-
-
 void god_proc_switching_penalty()
 {
     if (rtval == 0)

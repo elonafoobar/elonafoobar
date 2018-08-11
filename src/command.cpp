@@ -569,9 +569,10 @@ turn_result_t do_pray_command()
     if (stat != -1)
     {
         ci = stat;
-        if (core_god::int2godid(inv[ci].param1) != cdata.player().god_id)
+        int god_id_int = inv[ci].param1;
+        if (core_god::int2godid(god_id_int) != cdata.player().god_id)
         {
-            begin_to_believe_god();
+            begin_to_believe_god(god_id_int);
             return turn_result_t::turn_end;
         }
     }
