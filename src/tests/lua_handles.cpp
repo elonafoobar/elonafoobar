@@ -360,6 +360,7 @@ TEST_CASE(
 
 TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -380,6 +381,7 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
 
 TEST_CASE("Test copying of character handles", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -406,6 +408,7 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
 
 TEST_CASE("Test deletion of character causing handle removal", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -421,6 +424,7 @@ TEST_CASE(
     "Test state change of character causing handle removal",
     "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -446,6 +450,7 @@ TEST_CASE(
     "Test setting of item amount causing handle deletion",
     "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 2;
 
@@ -476,6 +481,7 @@ TEST_CASE(
     "Test modifying of item amount causing handle deletion",
     "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 2;
 
@@ -504,6 +510,7 @@ TEST_CASE(
 
 TEST_CASE("Test separation of item handles", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 3;
 
@@ -525,6 +532,7 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
 
 TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 1;
 
@@ -555,6 +563,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
 {
+    start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 1));
