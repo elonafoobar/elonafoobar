@@ -379,6 +379,30 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
 }
 
+TEST_CASE(
+    "Test relocation of character handle caused by in-place change",
+    "[Lua: Handles]")
+{
+    start_in_debug_map();
+    auto& handle_mgr = elona::lua::lua->get_handle_manager();
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    auto handle = handle_mgr.get_handle(chara);
+
+    int first_index = elona::rc;
+    std::string uuid = handle["__uuid"];
+    REQUIRE(handle["__index"].get<int>() == first_index);
+
+    int tc = elona::rc;
+    flt(20, 2);
+    REQUIRE(chara_create(56, 0, -3, 0));
+    chara_relocate(cdata.tmp(), tc, chara_relocate_mode::change);
+
+    REQUIRE(handle_mgr.handle_is_valid(handle) == true);
+    REQUIRE(handle["__index"].get<int>() == elona::rc);
+    REQUIRE(handle["__uuid"].get<std::string>() == uuid);
+}
+
 TEST_CASE("Test copying of character handles", "[Lua: Handles]")
 {
     start_in_debug_map();

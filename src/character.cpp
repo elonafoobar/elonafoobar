@@ -2273,7 +2273,10 @@ void chara_relocate(
     character::copy(source, destination);
     source.clear();
 
-    // Relocate the corresponding Lua reference.
+    // Relocate the corresponding Lua reference, if it exists. It may
+    // not always exist, since if the mode is "change" the
+    // source's state will be empty. If the source's state is empty, the
+    // destination slot will instead be set to empty as well.
     lua::lua->get_handle_manager().relocate_handle<character>(source, slot);
 
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -2290,7 +2293,10 @@ void chara_relocate(
 
     if (mode == chara_relocate_mode::change)
     {
+        // A new Lua handle is created here. The handles at both slots should
+        // have been cleared by now.
         destination.set_state(character::state_t::alive);
+
         destination.position = position;
         destination.initial_position = initial_position;
         destination.relationship = relationship;
