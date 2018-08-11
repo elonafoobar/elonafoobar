@@ -210,6 +210,7 @@ int itemusingfind(int, bool = false);
 int item_find(int = 0, int = 0, int = 0);
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
+void item_dump_desc(const item&);
 
 int item_cold(int = 0, int = 0);
 int item_fire(int = 0, int = 0);
@@ -225,5 +226,25 @@ int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 int inv_getfreeid_force();
+
+
+enum desc_entry_t : int
+{
+    normal = 0, // rgb(0, 0, 0)
+    raises_skill = 1, // rgb(0, 100, 0)
+    raises_stat = 2, // rgb(0, 0, 100)
+    raises_resist = 3, // rgb(80, 100, 0)
+    enchantment = 4, // rgb(80, 50, 0)
+    weapon_info = 5, // rgb(0, 0, 0)
+    armor_info = 6, // rgb(0, 0, 0)
+    text = 7, // rgb(0, 0, 0)
+    maintains_skill = 8, // rgb(0, 100, 100)
+    negative_effect = 9, // rgb(180, 0, 0)
+
+    small_font = -1,
+    small_font_italic = -2,
+};
+
+void item_load_desc(int ci, int& p);
 
 } // namespace elona

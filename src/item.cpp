@@ -1547,6 +1547,20 @@ int item_stack(int inventory_id, int ci, int show_message)
     return did_stack;
 }
 
+void item_dump_desc(const item& i)
+{
+    reftype = the_item_db[i.id]->category;
+
+    dbid = i.id;
+    access_item_db(2);
+    access_item_db(17);
+
+    item_load_desc(ci, p(0));
+
+    listmax = p;
+    pagemax = (listmax - 1) / pagesize;
+}
+
 void item_acid(int prm_838, int prm_839)
 {
     int body_at_m138 = 0;

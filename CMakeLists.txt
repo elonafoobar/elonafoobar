@@ -106,6 +106,7 @@ set(CORE_SOURCES
   src/initialize_map.cpp
   src/input.cpp
   src/item.cpp
+  src/item_load_desc.cpp
   src/item_material.cpp
   src/itemgen.cpp
   src/lion.cpp
@@ -174,6 +175,9 @@ set(CORE_SOURCES
   src/lua_env/lua_class/lua_class_position.cpp
 
   src/pic_loader/pic_loader.cpp
+
+  src/ui/ui_menu_book.cpp
+  src/ui/ui_menu_item_desc.cpp
 
   src/version.cpp
   )
