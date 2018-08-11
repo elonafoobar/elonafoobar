@@ -178,6 +178,7 @@ set(CORE_SOURCES
 
   src/ui/ui_menu_book.cpp
   src/ui/ui_menu_item_desc.cpp
+  src/ui/ui_menu_npc_tone.cpp
 
   src/version.cpp
   )

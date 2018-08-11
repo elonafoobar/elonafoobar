@@ -27,6 +27,7 @@
 
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_item_desc.hpp"
+#include "ui/ui_menu_npc_tone.hpp"
 
 namespace elona
 {
@@ -7133,134 +7134,30 @@ label_1966_internal:
 
 int change_npc_tone()
 {
-    load_background_variants(4);
-    gsel(0);
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    list(0, 0) = -999;
-    listn(0, 0) =
-        i18n::s.get("core.locale.action.interact.change_tone.default_tone");
-    ++listmax;
-    const auto base_dir = filesystem::dir::user() / u8"talk";
-    for (const auto& entry :
-         filesystem::dir_entries{base_dir,
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{u8R"(.*\.txt)"}})
-    {
-        list(0, listmax) = listmax;
-        listn(0, listmax) =
-            filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
-        ++listmax;
-    }
-    windowshadow = 1;
-label_2015_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_2016_internal:
-    s(0) = i18n::s.get("core.locale.action.interact.change_tone.title");
-    s(1) = i18n::s.get("core.locale.action.interact.change_tone.hint")
-        + strhint2 + strhint3;
-    display_window((windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400);
-    x = ww / 5 * 3;
-    y = wh - 80;
-    pos(wx + ww / 3 * 2, wy + wh / 2);
-    gmode(4, 50);
-    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
-    gmode(2);
-    display_topic(
-        i18n::s.get("core.locale.action.interact.change_tone.tone_title"),
-        wx + 28,
-        wy + 36);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    gmode(2);
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        i = list(0, p);
-        s = ""s + listn(0, p);
-        cs_list(cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, cs = i);
-    if (p != -1)
-    {
-        snd(20);
-        txt(i18n::s.get(
-            "core.locale.action.interact.change_tone.is_somewhat_different",
-            cdata[tc]));
-        if (p == -999)
-        {
-            cdata[tc].has_custom_talk() = false;
-            cdatan(4, tc) = "";
-            return 1;
-        }
-        cdata[tc].has_custom_talk() = true;
-        cdatan(4, tc) = listn(0, p);
-        return 1;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_2015_internal;
-        }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_2015_internal;
-        }
-    }
-    if (key == key_cancel)
+    auto result = ui::ui_menu_npc_tone().show();
+
+    if (result.canceled)
     {
         return -1;
     }
-    goto label_2016_internal;
+
+    snd(20);
+    txt(i18n::s.get(
+        "core.locale.action.interact.change_tone.is_somewhat_different",
+        cdata[tc]));
+
+    if (result.value)
+    {
+        cdata[tc].has_custom_talk() = true;
+        cdatan(4, tc) = *result.value;
+    }
+    else
+    {
+        cdata[tc].has_custom_talk() = false;
+        cdatan(4, tc) = "";
+    }
+
+    return 1;
 }
 
 
