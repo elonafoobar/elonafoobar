@@ -206,7 +206,7 @@ turn_result_t ai_proc_basic()
                 }
             }
             npccostmp = 1;
-            int stat = label_2167();
+            int stat = do_cast_magic();
             if (stat == 1)
             {
                 return turn_result_t::turn_end;
@@ -216,7 +216,7 @@ turn_result_t ai_proc_basic()
     if (act >= 600)
     {
         efid = act;
-        int stat = label_2174();
+        int stat = do_magic_attempt();
         if (stat == 1)
         {
             return turn_result_t::turn_end;
@@ -480,14 +480,14 @@ turn_result_t proc_npc_movement_event(bool retreat)
         >= std::abs(cdata[cc]._206 - cdata[cc].position.y))
     {
         {
-            int stat = label_2694();
+            int stat = ai_dir_check_1();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = label_2695();
+            int stat = ai_dir_check_2();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -497,14 +497,14 @@ turn_result_t proc_npc_movement_event(bool retreat)
     else
     {
         {
-            int stat = label_2695();
+            int stat = ai_dir_check_2();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = label_2694();
+            int stat = ai_dir_check_1();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -556,7 +556,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
     return turn_result_t::turn_end;
 }
 
-int label_2694()
+int ai_dir_check_1()
 {
     if (cdata[cc]._205 > cdata[cc].position.x)
     {
@@ -599,7 +599,7 @@ int label_2694()
     return 0;
 }
 
-int label_2695()
+int ai_dir_check_2()
 {
     if (cdata[cc]._206 > cdata[cc].position.y)
     {

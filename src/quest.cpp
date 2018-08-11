@@ -1029,7 +1029,7 @@ void quest_exit_map()
 turn_result_t quest_pc_died_during_immediate_quest()
 {
     rc = 0;
-    label_1540();
+    revive_player();
     chara_gain_skill_exp(cdata.player(), 17, -500);
     chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;

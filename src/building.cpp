@@ -200,7 +200,7 @@ turn_result_t build_new_building()
         mid = ""s + 7 + u8"_"s + 101;
         ctrl_file(file_operation_t::_12);
         mid = midbk;
-        label_1749();
+        map_global_prepare();
         levelexitby = 2;
         gdata_destination_map = 7;
         gdata_destination_dungeon_level = 1;
@@ -269,7 +269,7 @@ turn_result_t build_new_building()
     snd(58);
     txtef(5);
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
-    label_1749();
+    map_global_prepare();
     inv[ci].modify_number(-1);
     return turn_result_t::turn_end;
 }

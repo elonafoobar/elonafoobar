@@ -183,7 +183,7 @@ optional<turn_result_t> activity_proc(character& chara)
     }
     if (chara.continuous_action_id == 3)
     {
-        label_2153();
+        map_global_proc_travel_events();
         return proc_movement_event();
     }
     if (chara.continuous_action_turn > 0)
@@ -1371,7 +1371,7 @@ void continuous_action_others()
     if (gdata(91) == 100)
     {
         txt(i18n::s.get("core.locale.activity.sleep.finish"));
-        label_2151();
+        sleep_start();
     }
     if (gdata(91) == 101)
     {

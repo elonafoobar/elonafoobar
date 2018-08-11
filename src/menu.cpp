@@ -556,7 +556,7 @@ void show_ex_help()
     return;
 }
 
-void label_2702()
+void help_window_remove_parens()
 {
     if (jp)
     {
@@ -721,7 +721,7 @@ label_2705_internal:
         s(21) = key_throw;
         s(22) = i18n::s.get("core.locale.ui.manual.keys.item.ammo");
         s(23) = key_ammo;
-        label_2702();
+        help_window_remove_parens();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
             font(13 - en * 2);
@@ -757,7 +757,7 @@ label_2705_internal:
         s(23) = key_open;
         s(24) = "";
         s(25) = "";
-        label_2702();
+        help_window_remove_parens();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
             font(13 - en * 2);
@@ -779,7 +779,7 @@ label_2705_internal:
         s(9) = key_material;
         s(10) = i18n::s.get("core.locale.ui.manual.keys.info.feat");
         s(11) = key_trait;
-        label_2702();
+        help_window_remove_parens();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             font(13 - en * 2);
@@ -802,7 +802,7 @@ label_2705_internal:
         s(10) = "";
         s(11) = "";
         s(12) = "";
-        label_2702();
+        help_window_remove_parens();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             font(13 - en * 2);
@@ -1161,7 +1161,7 @@ void initialize_jkey()
     return;
 }
 
-void label_2720()
+void load_showroom_user_info()
 {
     notesel(headtemp);
     noteget(s, 1);
@@ -1451,7 +1451,7 @@ label_2029_internal:
         s = ""s + calcspellcostmp(i, cc) + u8" ("s + spell((i - 400)) + u8")"s;
         pos(wx + 328 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
         mes(s);
-        label_2031();
+        draw_spell_power_entry();
         s = strmid(s, 0, 40);
         pos(wx + 340, wy + 66 + cnt * 19 + 2);
         mes(""s + sdata(i, cc) + u8"/"s + calcspellfail(i, cc) + u8"%"s);
@@ -1678,7 +1678,7 @@ label_2009_internal:
         s = ""s + the_ability_db[list(0, p)]->cost + u8" Sp"s;
         pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
         mes(s);
-        label_2031();
+        draw_spell_power_entry();
         pos(wx + 325, wy + 66 + cnt * 19 + 2);
         mes(strmid(s, 0, 34));
     }
@@ -1789,7 +1789,7 @@ label_2009_internal:
 
 
 
-void label_2031()
+void draw_spell_power_entry()
 {
     s = "";
     if (the_ability_db[i]->sdataref1 / 1000 == 1)
@@ -1848,7 +1848,7 @@ void label_2031()
     return;
 }
 
-void label_2032()
+void trainer_get_gainable_skills()
 {
     int dbmax = 0;
     dblist(0, dbmax) = 159;
@@ -2104,7 +2104,7 @@ label_20331:
     ++listmax;
     if (csctrl == 3)
     {
-        label_2032();
+        trainer_get_gainable_skills();
     }
     else
     {
@@ -3969,7 +3969,7 @@ label_2041_internal:
     goto label_2041_internal;
 }
 
-int label_2044()
+int change_appearance_equipment()
 {
     create_pcpic(cc, true);
     snd(26);
@@ -4197,7 +4197,7 @@ menu_result menu_feats()
     return menu_feats_internal();
 }
 
-menu_result label_1969()
+menu_result menu_feats_internal_b()
 {
     return menu_feats_internal();
 }
@@ -6546,18 +6546,17 @@ label_1887_internal:
     }
     if (rtval != -1)
     {
-        label_1888();
+        god_proc_switching_penalty();
         return;
     }
     goto label_1887_internal;
 }
 
 
-void label_1958()
+void house_board_update_screen()
 {
     screenupdate = -1;
     update_screen();
-    return;
 }
 
 
@@ -7030,7 +7029,7 @@ label_1961_internal:
 
 
 
-void label_1964()
+void screen_analyze_self()
 {
     // TODO: untranslated
     if (rc < 0)

@@ -3225,16 +3225,16 @@ void initialize_random_nefia_rdtype9()
     mdata_map_height = mdata_map_width;
     mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 12;
     map_initialize();
-    label_1709();
+    mapgen_dig_maze();
     rdsecond = 1;
-    label_1709();
+    mapgen_dig_maze();
     rdsecond = 0;
     return;
 }
 
 
 
-void label_1709()
+void mapgen_dig_maze()
 {
     elona_vector1<int> maze;
     int mdig = 0;
@@ -3443,7 +3443,7 @@ void initialize_random_nefia_rdtype10()
     mdata_map_height = mdata_map_width;
     mdata_map_max_crowd_density = mdata_map_width * mdata_map_height / 12;
     map_initialize();
-    label_1709();
+    mapgen_dig_maze();
     for (int cnt = 0; cnt < 50; ++cnt)
     {
         int cnt2 = cnt;

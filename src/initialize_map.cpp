@@ -2686,7 +2686,7 @@ label_1741_internal:
                     }
                 }
             }
-            label_1749();
+            map_global_prepare();
         }
         mapupdate = 0;
         for (auto&& cnt : cdata.all())
@@ -2827,7 +2827,7 @@ label_1742_internal:
                                 if (adata(29, gdata_current_map) == 0)
                                 {
                                     adata(29, gdata_current_map) = 1;
-                                    label_1755();
+                                    map_reload_noyel();
                                 }
                                 map_reload(u8"noyel_fest"s);
                             }
@@ -2836,7 +2836,7 @@ label_1742_internal:
                                 if (adata(29, gdata_current_map) == 1)
                                 {
                                     adata(29, gdata_current_map) = 0;
-                                    label_1755();
+                                    map_reload_noyel();
                                 }
                                 map_reload(u8"noyel"s);
                             }
@@ -2871,7 +2871,7 @@ label_1742_internal:
                         + gdata_year * 24 * 30 * 12
                     >= cdata[rc].time_to_revive)
                 {
-                    label_1540();
+                    revive_player();
                 }
                 else
                 {
@@ -2989,7 +2989,7 @@ label_1744_internal:
             goto label_17401;
         }
     }
-    label_1745();
+    map_proc_regen_and_update();
     gdata_crowd_density = 0;
     for (auto&& cnt : cdata.all())
     {
@@ -3019,8 +3019,8 @@ label_1744_internal:
     scx = cdata.player().position.x;
     scy = cdata.player().position.y;
     msync = 1;
-    label_1746();
-    label_1439();
+    map_prepare_tileset_atlas();
+    ui_initialize_minimap();
     update_scrolling_info();
 
     if (mdata_map_type == mdata_t::map_type_t::town)
@@ -3276,12 +3276,12 @@ label_1744_internal:
         }
     }
     play_music();
-    label_2088();
+    initialize_map_adjust_spawns();
     noaggrorefresh = 0;
     if (adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
     {
         // initialize_cloud_data();
-        label_1748();
+        map_global_proc_diastrophism();
     }
     if (mode == 3)
     {

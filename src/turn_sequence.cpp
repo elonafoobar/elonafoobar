@@ -376,7 +376,7 @@ turn_result_t npc_turn()
                 if (efid >= 400 && efid < 467)
                 {
                     npccostmp = 1;
-                    int stat = label_2167();
+                    int stat = do_cast_magic();
                     if (stat == 1)
                     {
                         return turn_result_t::turn_end;
@@ -384,7 +384,7 @@ turn_result_t npc_turn()
                 }
                 else if (efid >= 600)
                 {
-                    int stat = label_2174();
+                    int stat = do_magic_attempt();
                     if (stat == 1)
                     {
                         return turn_result_t::turn_end;
@@ -944,7 +944,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             goto label_2740_internal;
         }
     label_2740_internal:
-        label_1754();
+        map_proc_special_events();
         if (cdata.player().state() != character::state_t::alive)
         {
             return turn_result_t::pc_died;
@@ -1547,7 +1547,7 @@ label_2747:
     if (t % config::instance().scrsync == 1)
     {
         ++scrturn;
-        label_1420();
+        ui_render_from_screensync();
     }
 
     if (config::instance().net && config::instance().netwish && key == ""s)
@@ -1662,7 +1662,7 @@ label_2747:
     if (getkey(snail::key::f3))
     {
         tcgmain();
-        label_1746();
+        map_prepare_tileset_atlas();
         update_entire_screen();
         return turn_result_t::turn_end;
     }
@@ -1673,7 +1673,7 @@ label_2747:
         syfix = 0;
         update_scrolling_info();
         update_slight();
-        label_1433();
+        ui_render_non_hud();
         p = windoww / 192;
         for (int i = 0; i < p + 1; ++i)
         {

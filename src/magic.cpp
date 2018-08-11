@@ -1269,7 +1269,7 @@ label_2181_internal:
     case 626:
         txt(i18n::s.get("core.locale.magic.mirror"));
         animeload(10, tc);
-        label_1964();
+        screen_analyze_self();
         break;
     case 1101:
         if (is_in_fov(cdata[tc]))

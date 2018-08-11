@@ -1074,7 +1074,7 @@ turn_result_t do_offer_command()
                 "core.locale.action.offer.take_over.fail",
                 i18n::_(u8"god", core_god::int2godid(inv[ti].param1))));
             txtgod(core_god::int2godid(inv[ti].param1), 3);
-            label_1892();
+            god_fail_to_take_over_penalty();
         }
     }
     else
@@ -1120,7 +1120,7 @@ turn_result_t do_look_command()
     page = 0;
     pagesize = 16;
     cs_bk = -1;
-    label_2076();
+    build_target_list();
     if (listmax == 0)
     {
         ++msgdup;
@@ -1839,7 +1839,7 @@ turn_result_t do_use_command()
                         update_screen();
                         ccbk = cc;
                         cc = tc;
-                        label_2044();
+                        change_appearance_equipment();
                         cc = ccbk;
                         f = 1;
                     }
@@ -1902,7 +1902,7 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 9:
     {
-        int stat = label_2083();
+        int stat = read_textbook();
         if (stat == 1)
         {
             return turn_result_t::turn_end;
@@ -2205,7 +2205,7 @@ turn_result_t do_use_command()
         txt(i18n::s.get("core.locale.action.use.rune.use"));
         comctrl = 2;
         {
-            int stat = label_19432();
+            int stat = query_for_showroom_to_visit();
             if (stat == 1)
             {
                 return do_enter_strange_gate();
@@ -3006,7 +3006,7 @@ turn_result_t do_use_stairs_command(int val0)
         if (feat(2) + feat(3) * 100 == 35)
         {
             comctrl = 0;
-            int stat = label_19432();
+            int stat = query_for_showroom_to_visit();
             if (stat == 1)
             {
                 return do_enter_strange_gate();
@@ -3088,7 +3088,7 @@ turn_result_t do_movement_command()
                 {
                     cdata.player().next_position.x = cdata[tc].position.x;
                     cdata.player().next_position.y = cdata[tc].position.y;
-                    label_1438();
+                    ui_scroll_screen();
                 }
                 cell_swap(cc, tc);
                 txt(i18n::s.get(
@@ -3126,7 +3126,7 @@ turn_result_t do_movement_command()
                         cdata[tc].continuous_action_turn = 0;
                     }
                 }
-                label_2206();
+                sense_map_feats_on_move();
                 return turn_result_t::turn_end;
             }
         }
@@ -3335,7 +3335,7 @@ turn_result_t do_zap_command()
 {
     dbid = inv[ci].id;
     access_item_db(14);
-    int stat = label_2172();
+    int stat = do_zap();
     if (stat == 0)
     {
         update_screen();
@@ -3353,7 +3353,7 @@ turn_result_t do_rest_command()
 turn_result_t do_fire_command()
 {
     cc = 0;
-    int stat = label_2072();
+    int stat = find_enemy_target();
     if (stat == 0)
     {
         return turn_result_t::pc_turn_user_error;
@@ -3361,7 +3361,7 @@ turn_result_t do_fire_command()
     tc = cdata.player().enemy_id;
     if (cdata[tc].relationship >= 0)
     {
-        int stat = label_2073();
+        int stat = prompt_really_attack();
         if (stat == 0)
         {
             return turn_result_t::pc_turn_user_error;
@@ -3427,7 +3427,7 @@ turn_result_t do_get_command()
                 update_screen();
                 return turn_result_t::pc_turn_user_error;
             }
-            label_2236();
+            create_harvested_item();
             harvest_plant(
                 chipm(
                     0,
@@ -3460,7 +3460,7 @@ turn_result_t do_get_command()
             map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
             adata(16, area) = mdata_t::map_id_t::none;
             removeworker(area);
-            label_1749();
+            map_global_prepare();
             ctrl_file(file_operation_t::_13);
             snd(58);
             txt(i18n::s.get("core.locale.action.get.building.remove"));
@@ -3545,7 +3545,7 @@ turn_result_t do_get_command()
 turn_result_t do_cast_command()
 {
     tc = cc;
-    int stat = label_2167();
+    int stat = do_cast_magic();
     if (stat == 0)
     {
         return turn_result_t::pc_turn_user_error;

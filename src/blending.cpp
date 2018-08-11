@@ -80,14 +80,14 @@ label_19341_internal:
             --cdata[cc].continuous_action_turn;
             if (cdata[cc].continuous_action_turn <= 0)
             {
-                int stat = label_1931();
+                int stat = blending_find_required_mat();
                 if (stat == 0)
                 {
                     txt(i18n::s.get(
                         "core.locale.blending.required_material_not_found"));
                     break;
                 }
-                label_1933();
+                blending_start_attempt();
                 if (rpref(1) > 0)
                 {
                     cdata[cc].continuous_action_turn = rpref(2) / 10000;
@@ -104,14 +104,14 @@ label_19341_internal:
         mode = 0;
         return;
     }
-    int stat = label_1931();
+    int stat = blending_find_required_mat();
     if (stat == 0)
     {
         txt(i18n::s.get("core.locale.blending.required_material_not_found"));
         rowactend(cc);
         return;
     }
-    label_1933();
+    blending_start_attempt();
     if (rpref(1) > 0)
     {
         cdata[cc].continuous_action_id = 0;
@@ -1544,7 +1544,7 @@ void clear_rprefmat()
 }
 
 
-int label_1931()
+int blending_find_required_mat()
 {
     f = 1;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -1568,7 +1568,7 @@ int label_1931()
     return f;
 }
 
-int label_1932()
+int blending_spend_materials()
 {
     p = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -1604,7 +1604,7 @@ int label_1932()
     return 1;
 }
 
-void label_1933()
+void blending_start_attempt()
 {
     rpresult = 1;
     if (rpdiff(rpid, -1, -1) < rnd(100))
@@ -1617,7 +1617,7 @@ void label_1933()
     {
         if (rpdata(0, rpid) >= 10000)
         {
-            label_1935();
+            blending_proc_on_success_events();
         }
         else
         {
@@ -1664,12 +1664,12 @@ void label_1933()
         }
     }
     --rpref(1);
-    label_1932();
+    blending_spend_materials();
     return;
 }
 
 // TODO: Much duplication with do_dip_command()
-void label_1935()
+void blending_proc_on_success_events()
 {
     int cibk = ci;
     ci = rpref(10);

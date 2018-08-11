@@ -127,7 +127,7 @@ label_18671_internal:
         key_list(cnt) = key_select(cnt);
         ++keyrange;
     }
-    label_1870();
+    casino_adv_draw_mat();
 label_1868_internal:
     x(0) = 170;
     x(1) = 400;
@@ -177,7 +177,7 @@ label_1868_internal:
     }
     if (rtval != -1)
     {
-        label_1871();
+        casino_fade_in_choices();
         atxpic = 0;
         return;
     }
@@ -202,9 +202,9 @@ label_1868_internal:
     goto label_1868_internal;
 }
 
-void label_1870()
+void casino_adv_draw_mat()
 {
-    label_1872();
+    casino_prepare_choice_graphic();
     if (mattile != -1)
     {
         mattile = rnd(mattile(2)) + mattile(1);
@@ -292,9 +292,9 @@ void label_1870()
     return;
 }
 
-void label_1871()
+void casino_fade_in_choices()
 {
-    label_1872();
+    casino_prepare_choice_graphic();
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         x = 170;
@@ -312,7 +312,7 @@ void label_1871()
     return;
 }
 
-void label_1872()
+void casino_prepare_choice_graphic()
 {
     x(1) = 300;
     cs = -1;
@@ -357,7 +357,7 @@ void label_1872()
 void casino_acquire_items()
 {
     mtilefilecur = -1;
-    label_1746();
+    map_prepare_tileset_atlas();
     f = 0;
     for (const auto& cnt : items(-1))
     {
@@ -508,7 +508,7 @@ void casino_random_site()
 label_1875:
     if (atxap <= 0 || cdata.player().hp < 0)
     {
-        label_1877();
+        casino_adv_finish_search();
         return;
     }
     atxinit();
@@ -536,7 +536,7 @@ label_1875:
     }
     if (rtval == 3)
     {
-        label_1877();
+        casino_adv_finish_search();
         return;
     }
     goto label_1875;
@@ -828,7 +828,7 @@ label_1876_internal:
     goto label_1875;
 }
 
-void label_1877()
+void casino_adv_finish_search()
 {
     atxinit();
     if (cdata.player().hp >= 0)

@@ -142,12 +142,12 @@ void select_house_board_tile()
             }
             tile = list(0, p);
             snd(20);
-            label_1958();
+            house_board_update_screen();
             return;
         }
         if (a == stick_key::mouse_right)
         {
-            label_1958();
+            house_board_update_screen();
             return;
         }
     }
@@ -3053,22 +3053,22 @@ void revive_character()
 
 void do_chara_revival()
 {
-    label_15380();
-    label_15390();
+    chara_set_revived_status();
+    chara_clear_status_effects();
     return;
 }
 
 
 
-void label_1539()
+void chara_clear_status_effects_b()
 {
-    label_15390();
+    chara_clear_status_effects();
     return;
 }
 
 
 
-void label_15380()
+void chara_set_revived_status()
 {
     cdata[rc].will_explode_soon() = false;
     cdata[rc].is_sentenced_daeth() = false;
@@ -3088,7 +3088,7 @@ void label_15380()
 
 
 
-void label_15390()
+void chara_clear_status_effects()
 {
     cdata[rc].is_contracting_with_reaper() = false;
     rowactend(rc);
@@ -3135,7 +3135,7 @@ void label_15390()
 
 
 
-void label_1540()
+void revive_player()
 {
     do_chara_revival();
     if (rc == 0)
@@ -5269,7 +5269,7 @@ turn_result_t exit_map()
     if (cdata.player().state() == character::state_t::empty)
     {
         rc = 0;
-        label_1540();
+        revive_player();
         gdata_current_map = mdata_t::map_id_t::your_home;
         gdata(850) = adata(30, 7);
         gdata_current_dungeon_level = 1;
@@ -5481,7 +5481,7 @@ void save_map_local_data()
 
 
 
-void label_1745()
+void map_proc_regen_and_update()
 {
     if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12
@@ -5552,7 +5552,7 @@ void label_1745()
             for (auto&& cnt : cdata.others())
             {
                 rc = cnt.index;
-                label_1539();
+                chara_clear_status_effects_b();
                 if (cnt.state() != character::state_t::alive)
                 {
                     continue;
@@ -5712,7 +5712,7 @@ void label_1745()
 
 
 
-void label_1746()
+void map_prepare_tileset_atlas()
 {
     gsel(6);
     if (mdata_map_atlas_number != mtilefilecur)
@@ -5826,18 +5826,18 @@ int initialize_world_map()
         cyinit = rnd(mdata_map_height);
         place_random_nefias();
     }
-    label_1749();
+    map_global_prepare();
     return 1;
 }
 
 
 
-void label_1748()
+void map_global_proc_diastrophism()
 {
     if (gdata(79) == 1)
     {
         initialize_adata();
-        label_1749();
+        map_global_prepare();
         for (int cnt = 450; cnt < 500; ++cnt)
         {
             adata(16, cnt) = mdata_t::map_id_t::none;
@@ -5873,7 +5873,7 @@ void label_1748()
             }
         }
         initialize_world_map();
-        label_1749();
+        map_global_prepare();
     }
     gdata(79) = 0;
     return;
@@ -5881,16 +5881,16 @@ void label_1748()
 
 
 
-void label_1749()
+void map_global_prepare()
 {
-    label_1751();
-    label_1750();
+    map_clear_material_spots_and_light();
+    map_global_place_entrances();
     return;
 }
 
 
 
-void label_1750()
+void map_global_place_entrances()
 {
     initialize_map_chip();
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -5992,7 +5992,7 @@ void label_1750()
 
 
 
-void label_1751()
+void map_clear_material_spots_and_light()
 {
     for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
     {
@@ -6001,6 +6001,7 @@ void label_1751()
         {
             x = cnt;
             cell_featread(x, y);
+            // material spot
             if (feat(1) < 24 || feat(1) > 28)
             {
                 map(x, y, 6) = 0;
@@ -6851,7 +6852,7 @@ int place_random_nefias()
 
 
 
-void label_1754()
+void map_proc_special_events()
 {
     if (gdata_current_map == mdata_t::map_id_t::noyel)
     {
@@ -7171,7 +7172,7 @@ void label_1754()
 
 
 
-void label_1755()
+void map_reload_noyel()
 {
     for (const auto& cnt : items(-1))
     {
@@ -7600,7 +7601,7 @@ void exittempinv()
 
 
 
-void label_1892()
+void god_fail_to_take_over_penalty()
 {
     efid = 1114;
     efp = 500;
@@ -7622,14 +7623,6 @@ void label_1892()
         magic();
     }
     return;
-}
-
-
-
-int label_1898()
-{
-    key = "";
-    return rtval;
 }
 
 
@@ -8107,7 +8100,7 @@ turn_result_t step_into_gate()
 
 
 
-int label_19432()
+int query_for_showroom_to_visit()
 {
 label_19431_internal:
     if (1 && gdata_wizard == 0)
@@ -8371,9 +8364,9 @@ int target_position()
         scposval = 1;
         if (cdata.player().enemy_id == 0)
         {
-            label_2072();
+            find_enemy_target();
         }
-        label_2076();
+        build_target_list();
         if (listmax == 0)
         {
             txt(lang(
@@ -8756,7 +8749,7 @@ turn_result_t do_short_cut()
 
 turn_result_t do_use_magic()
 {
-    int stat = label_2174();
+    int stat = do_magic_attempt();
     if (stat == 0)
     {
         update_screen();
@@ -8939,7 +8932,7 @@ void savecycle()
 
 
 
-int label_2072()
+int find_enemy_target()
 {
     if (cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
     {
@@ -8951,7 +8944,7 @@ int label_2072()
     }
     if (cdata[cc].enemy_id == 0)
     {
-        label_2076();
+        build_target_list();
         if (listmax != 0)
         {
             f = 0;
@@ -9004,7 +8997,7 @@ int label_2072()
 
 
 
-int label_2073()
+int prompt_really_attack()
 {
     s = txttargetlevel(cc, tc);
     txt(s);
@@ -9071,7 +9064,7 @@ int can_do_ranged_attack()
 
 
 
-void label_2076()
+void build_target_list()
 {
     listmax = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -9337,7 +9330,7 @@ turn_result_t do_gatcha()
 
 
 
-int label_2083()
+int read_textbook()
 {
     if (inv[ci].id == 563)
     {
@@ -9530,7 +9523,7 @@ void dump_player_info()
     noteadd(""s);
     dump_return = 1;
     tc = 0;
-    label_1969();
+    menu_feats_internal_b();
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         if (list(0, cnt) < 0)
@@ -9615,7 +9608,7 @@ void remove_card_and_figures()
 
 
 
-void label_2088()
+void initialize_map_adjust_spawns()
 {
     for (auto&& cnt : cdata.all())
     {
@@ -9879,7 +9872,7 @@ void migrate_save_data(const fs::path& save_dir)
 
 
 
-void label_2090()
+void clear_existing_quest_list()
 {
     ++gdata(184);
     DIM3(qdata, 20, 500);
@@ -10478,7 +10471,7 @@ label_21451_internal:
     {
         if (cc == 0)
         {
-            label_1438();
+            ui_scroll_screen();
         }
     }
     map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
@@ -10717,7 +10710,7 @@ label_21451_internal:
 
 
 
-void label_2149()
+void draw_sleep_background_frame()
 {
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh - inf_verh);
@@ -10733,7 +10726,7 @@ void label_2149()
 
 
 
-void label_2150()
+void load_sleep_background()
 {
     gsel(4);
     gmode(0);
@@ -10746,7 +10739,7 @@ void label_2150()
 
 
 
-void label_2151()
+void sleep_start()
 {
     int timeslept = 0;
     if (gdata_current_map == mdata_t::map_id_t::quest)
@@ -10759,14 +10752,14 @@ void label_2151()
     {
         txtgod(cdata.player().god_id, 10);
     }
-    label_2150();
+    load_sleep_background();
     musicloop = 1;
     play_music("core.mcCoda");
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         gmode(4, cnt * 10);
-        label_2149();
+        draw_sleep_background_frame();
         await(config::instance().animewait * 10);
     }
     gmode(2);
@@ -10815,13 +10808,13 @@ void label_2151()
         weather_changes();
         if (mode != 9)
         {
-            label_2150();
+            load_sleep_background();
             mode = 9;
         }
         gdata_continuous_active_hours = 0;
         gdata_minute = 0;
         cc = 0;
-        label_2149();
+        draw_sleep_background_frame();
         await(config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
@@ -10851,7 +10844,7 @@ void label_2151()
             save_gene();
         }
     }
-    label_2149();
+    draw_sleep_background_frame();
     gdata(98) = 0;
     mode = 0;
     wake_up();
@@ -10960,7 +10953,7 @@ void do_rest()
         {
             txt(i18n::s.get("core.locale.activity.rest.drop_off_to_sleep"));
             cdata[cc].continuous_action_item = -1;
-            label_2151();
+            sleep_start();
             rowactend(cc);
             return;
         }
@@ -10972,7 +10965,7 @@ void do_rest()
 
 
 
-void label_2153()
+void map_global_proc_travel_events()
 {
     if (cdata[cc].continuous_action_id == 0)
     {
@@ -11309,7 +11302,7 @@ int read_normal_book()
     }
     if (inv[ci].id == 563)
     {
-        int stat = label_2083();
+        int stat = read_textbook();
         if (stat == 1)
         {
             return 1;
@@ -11367,12 +11360,12 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 
 
 
-int label_2167()
+int do_cast_magic()
 {
     int spellbk = 0;
     spellbk = efid;
     ccbk = cc;
-    int stat = label_2168();
+    int stat = do_cast_magic_attempt();
     if (stat == 1)
     {
         cc = ccbk;
@@ -11385,7 +11378,7 @@ int label_2167()
 
 
 
-int label_2168()
+int do_cast_magic_attempt()
 {
     int mp = 0;
     efsource = 3;
@@ -11408,7 +11401,7 @@ int label_2168()
         screenupdate = -1;
         update_screen();
     }
-    int stat = label_2175();
+    int stat = prompt_magic_location();
     if (stat == 0)
     {
         efsource = 0;
@@ -11539,7 +11532,7 @@ int label_2168()
             magic();
             if (cdata[tc].state() != character::state_t::alive)
             {
-                int stat = label_2072();
+                int stat = find_enemy_target();
                 if (stat == 0)
                 {
                     break;
@@ -11879,7 +11872,7 @@ int read_scroll()
 
 
 
-int label_2172()
+int do_zap()
 {
     if (inv[ci].count <= 0)
     {
@@ -11896,7 +11889,7 @@ int label_2172()
         efstatus = curse_state_t::none;
     }
     efsource = 1;
-    int stat = label_2175();
+    int stat = prompt_magic_location();
     if (stat == 0)
     {
         efsource = 0;
@@ -11985,7 +11978,7 @@ label_2173_internal:
 
 
 
-int label_2174()
+int do_magic_attempt()
 {
     if (efid == 646)
     {
@@ -12009,7 +12002,7 @@ int label_2174()
         }
     }
     {
-        int stat = label_2175();
+        int stat = prompt_magic_location();
         if (stat == 0)
         {
             return 0;
@@ -12076,7 +12069,7 @@ int label_2174()
 
 
 
-int label_2175()
+int prompt_magic_location()
 {
     noeffect = 0;
     if (efid > 661)
@@ -12230,7 +12223,7 @@ int label_2175()
     {
         if (cc == 0)
         {
-            int stat = label_2072();
+            int stat = find_enemy_target();
             if (stat == 0)
             {
                 obvious = 0;
@@ -12239,7 +12232,7 @@ int label_2175()
             tc = cdata.player().enemy_id;
             if (cdata[tc].relationship >= 0)
             {
-                int stat = label_2073();
+                int stat = prompt_really_attack();
                 if (stat == 0)
                 {
                     obvious = 0;
@@ -12897,7 +12890,7 @@ turn_result_t do_bash()
             {
                 if (cdata[tc].relationship >= 0)
                 {
-                    int stat = label_2073();
+                    int stat = prompt_really_attack();
                     if (stat == 0)
                     {
                         return turn_result_t::pc_turn_user_error;
@@ -13115,7 +13108,7 @@ turn_result_t proc_movement_event()
         {
             if (traveldone == 0)
             {
-                label_2153();
+                map_global_proc_travel_events();
                 keybd_wait = 1;
                 return turn_result_t::turn_end;
             }
@@ -13139,7 +13132,7 @@ turn_result_t proc_movement_event()
             wet(cc, 20);
         }
     }
-    label_2206();
+    sense_map_feats_on_move();
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
         if (cc == 0)
@@ -13436,7 +13429,7 @@ void proc_autopick()
 
 
 
-void label_2206()
+void sense_map_feats_on_move()
 {
     if (cc == 0)
     {
@@ -14199,7 +14192,7 @@ void do_ranged_attack()
             do_physical_attack();
             if (cdata[tc].state() != character::state_t::alive)
             {
-                int stat = label_2072();
+                int stat = find_enemy_target();
                 if (stat == 0)
                 {
                     break;
@@ -14218,7 +14211,7 @@ void do_ranged_attack()
         {
             can_do_ranged_attack();
             ele = 0;
-            label_2076();
+            build_target_list();
             if (listmax == 0)
             {
                 break;
@@ -15328,7 +15321,7 @@ void harvest_plant(int val)
 
 
 
-void label_2236()
+void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd(55);
@@ -15537,7 +15530,7 @@ void do_play_scene()
     scidx = instr(buff, 0, s);
     if (scidx == -1)
     {
-        label_2685();
+        scene_fade_to_black();
         return;
     }
     scidx += s(0).size();
@@ -15550,7 +15543,7 @@ label_2681:
     }
     if (scene_cut == 1)
     {
-        label_2685();
+        scene_fade_to_black();
         return;
     }
     notesel(buff);
@@ -15574,13 +15567,13 @@ label_2682_internal:
     p(1) = instr(buff, scidx, u8"{"s) + scidx;
     if (p(1) == -1)
     {
-        label_2685();
+        scene_fade_to_black();
         return;
     }
     p(2) = instr(buff, scidx, u8"}"s) + scidx + 1;
     if (p(2) == -1)
     {
-        label_2685();
+        scene_fade_to_black();
         return;
     }
     if (scidxtop != 0)
@@ -15635,7 +15628,7 @@ label_2682_internal:
     if (s == u8"{end}"s)
     {
         await(1000);
-        label_2685();
+        scene_fade_to_black();
         return;
     }
     p(3) = instr(buff, scidx, u8"\""s) + scidx + 1;
@@ -15764,7 +15757,7 @@ label_2684_internal:
 
 
 
-void label_2685()
+void scene_fade_to_black()
 {
     gsel(4);
     boxf();
@@ -15999,8 +15992,8 @@ void weather_changes()
             sound_play_environmental();
         }
     }
-    label_1746();
-    label_2662();
+    map_prepare_tileset_atlas();
+    adventurer_update();
     food_gets_rotten();
     if (mdata_map_type == mdata_t::map_type_t::world_map)
     {
@@ -16293,7 +16286,7 @@ void conquer_lesimas()
     }
     mode = 0;
     play_music("core.mcMarch2");
-    label_1442();
+    ui_win_screen_fade();
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);

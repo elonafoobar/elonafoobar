@@ -1140,7 +1140,7 @@ void update_screen()
         syfix = 0;
         update_scrolling_info();
         update_slight();
-        label_1433();
+        ui_render_non_hud();
     }
 
     render_hud();
@@ -1218,10 +1218,10 @@ void update_minimap()
 
 
 
-void label_1420()
+void ui_render_from_screensync()
 {
     gmode(2);
-    label_1433();
+    ui_render_non_hud();
     render_hud();
     redraw();
     screenupdate = 0;
@@ -1339,7 +1339,7 @@ void render_autoturn_animation()
         || (cdata.player().continuous_action_id == 7 && rowactre == 0
             && fishanime == 0))
     {
-        label_1433();
+        ui_render_non_hud();
         msgtemp = "";
         render_hud();
     }
@@ -1674,7 +1674,7 @@ void update_slight()
 
 
 
-void label_1433()
+void ui_render_non_hud()
 {
     cell_draw();
 
@@ -1701,7 +1701,7 @@ void label_1433()
 
 
 
-void label_1438()
+void ui_scroll_screen()
 {
     int scxbk2 = 0;
     int scybk2 = 0;
@@ -1765,7 +1765,7 @@ void label_1438()
         gcopy(0, 0, windowh - inf_verh, windoww, inf_tiles);
         gsel(0);
         gmode(2);
-        label_1433();
+        ui_render_non_hud();
         gmode(0);
         pos(0, windowh - inf_verh);
         gcopy(4, 0, 0, windoww, inf_tiles);
@@ -1780,7 +1780,7 @@ void label_1438()
 
 
 
-void label_1439()
+void ui_initialize_minimap()
 {
     gsel(3);
     for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
@@ -1843,7 +1843,7 @@ void fade_out()
 
 
 
-void label_1442()
+void ui_win_screen_fade()
 {
     for (int i = 0; i < 50; ++i)
     {
@@ -1870,7 +1870,7 @@ void animation_fade_in()
 
 
 
-void label_1444()
+void event_7_setup()
 {
     boxf();
     evx = 12;
@@ -1878,13 +1878,13 @@ void label_1444()
     evtiles = 48;
     evscrh = windowh / evtiles - 1;
     evscrw = windoww / evtiles + 2;
-    label_1445();
+    event_7_modify_screen();
     redraw();
 }
 
 
 
-void label_1445()
+void event_7_modify_screen()
 {
     for (int cnt = 0, cnt_end = (evscrh); cnt < cnt_end; ++cnt)
     {
