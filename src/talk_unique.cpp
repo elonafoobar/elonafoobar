@@ -2099,8 +2099,7 @@ talk_result_t talk_unique_raphael()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        allyctrl = ctrl_ally_operation::sell;
-        int stat = ctrl_ally();
+        int stat = ctrl_ally(ctrl_ally_operation::sell);
         if (stat == -1)
         {
             listmax = 0;

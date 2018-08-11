@@ -14,14 +14,14 @@ struct menu_result
     turn_result_t turn_result;
 };
 
-enum ctrl_ally_operation : int
+enum class ctrl_ally_operation
 {
-    call_back = 0,
-    sell = 1,
-    pet_arena = 2,
-    staying = 3,
-    investigate = 4,
-    gene_engineer = 5,
+    call_back,
+    sell,
+    pet_arena,
+    staying,
+    investigate,
+    gene_engineer,
 };
 
 void text_set();
@@ -63,7 +63,7 @@ void show_economy_window();
 void show_politics_window();
 void begin_to_believe_god();
 void screen_analyze_self();
-int ctrl_ally();
+int ctrl_ally(ctrl_ally_operation);
 void show_book_window();
 int change_npc_tone();
 void item_show_description();

@@ -6560,9 +6560,9 @@ void house_board_update_screen()
 
 
 
-int ctrl_ally()
+int ctrl_ally(ctrl_ally_operation operation)
 {
-    auto result = ui::ui_menu_ctrl_ally().show();
+    auto result = ui::ui_menu_ctrl_ally(operation).show();
 
     if (!result.canceled && result.value)
     {

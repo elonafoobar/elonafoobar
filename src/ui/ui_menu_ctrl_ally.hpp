@@ -3,13 +3,16 @@
 
 namespace elona
 {
+enum class ctrl_ally_operation;
+
 namespace ui
 {
 
 class ui_menu_ctrl_ally : public ui_menu<int>
 {
 public:
-    ui_menu_ctrl_ally()
+    ui_menu_ctrl_ally(ctrl_ally_operation operation)
+        : _operation(operation)
     {
     }
 
@@ -23,6 +26,8 @@ protected:
 private:
     optional<ui_menu_ctrl_ally::result> _select_gene_engineer(int _p);
     optional<ui_menu_ctrl_ally::result> _select_pet_arena(int _p);
+
+    ctrl_ally_operation _operation;
 };
 
 } // namespace ui
