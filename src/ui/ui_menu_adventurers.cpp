@@ -45,7 +45,7 @@ void ui_menu_adventurers::update()
     }
 }
 
-void ui_menu_adventurers::draw()
+static void _draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.adventurers.title");
     s(1) = strhint2 + strhint3;
@@ -58,6 +58,19 @@ void ui_menu_adventurers::draw()
         i18n::s.get("core.locale.ui.adventurers.fame_lv"), wx + 320, wy + 36);
     display_topic(
         i18n::s.get("core.locale.ui.adventurers.location"), wx + 420, wy + 36);
+}
+
+static void _draw_key(int cnt)
+{
+    if (cnt % 2 == 0)
+    {
+        boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
+    }
+    display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+}
+
+static void _draw_keys()
+{
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -68,12 +81,63 @@ void ui_menu_adventurers::draw()
         }
         key_list(cnt) = key_select(cnt);
         ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+        _draw_key(cnt);
     }
+}
+
+static void
+_draw_list_entry_pic_and_rank(int cnt, const character& chara, int _p)
+{
+    draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
+
+    pos(wx + 84, wy + 66 + cnt * 19 + 2);
+    mes(cnvrank(_p + 1)
+        + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
+}
+
+static void _draw_list_entry_name(int cnt, const character& chara)
+{
+    std::string name =
+        ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
+    cutname(name, 26);
+
+    cs_list(cs == cnt, name, wx + 118, wy + 66 + cnt * 19 - 1);
+}
+
+static void _draw_list_entry_level(int cnt, const character& chara)
+{
+    std::string level = ""s + chara.fame + u8"("s + chara.level + u8")"s;
+    pos(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2);
+    mes(level);
+}
+
+static void _draw_list_entry_map_name(int cnt, const character& chara)
+{
+    std::string map_name = mapname(chara.current_map);
+
+    if (map_name == ""s)
+    {
+        map_name = i18n::s.get("core.locale.ui.adventurers.unknown");
+    }
+    if (chara.state() == character::state_t::adventurer_dead)
+    {
+        map_name = i18n::s.get("core.locale.ui.adventurers.hospital");
+    }
+
+    pos(wx + 435, wy + 66 + cnt * 19 + 2);
+    mes(map_name);
+}
+
+static void _draw_list_entry(int cnt, const character& chara, int _p)
+{
+    _draw_list_entry_pic_and_rank(cnt, chara, _p);
+    _draw_list_entry_name(cnt, chara);
+    _draw_list_entry_level(cnt, chara);
+    _draw_list_entry_map_name(cnt, chara);
+}
+
+static void _draw_list_entries()
+{
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -84,35 +148,22 @@ void ui_menu_adventurers::draw()
             break;
         }
 
-        draw_chara_scale_height(
-            cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
+        int chara_index = list(0, p);
+        const character& chara = cdata[chara_index];
 
-        pos(wx + 84, wy + 66 + cnt * 19 + 2);
-        mes(cnvrank(p + 1)
-            + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
-        i = list(0, p);
-        s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
-        cutname(s, 26);
-        cs_list(cs == cnt, s, wx + 118, wy + 66 + cnt * 19 - 1);
-        s = ""s + cdata[i].fame + u8"("s + cdata[i].level + u8")"s;
-        pos(wx + 402 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
-        mes(s);
-        s = mapname(cdata[i].current_map);
-        if (s == ""s)
-        {
-            s = i18n::s.get("core.locale.ui.adventurers.unknown");
-        }
-        if (cdata[i].state() == character::state_t::adventurer_dead)
-        {
-            s = i18n::s.get("core.locale.ui.adventurers.hospital");
-        }
-        pos(wx + 435, wy + 66 + cnt * 19 + 2);
-        mes(s);
+        _draw_list_entry(cnt, chara, p(0));
     }
     if (keyrange != 0)
     {
         cs_bk = cs;
     }
+}
+
+void ui_menu_adventurers::draw()
+{
+    _draw_window();
+    _draw_keys();
+    _draw_list_entries();
 }
 
 optional<ui_menu_adventurers::result_type> ui_menu_adventurers::on_key(
