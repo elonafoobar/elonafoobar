@@ -8,6 +8,31 @@ namespace elona
 namespace ui
 {
 
+const constexpr int _cancel_choice = 2;
+
+static std::string _get_choice_name(bool already_believing, int god_id)
+{
+    if (already_believing)
+    {
+        if (god_id == 0)
+        {
+            return i18n::s.get("core.locale.god.desc.window.abandon");
+        }
+        else
+        {
+            return i18n::s.get(
+                "core.locale.god.desc.window.convert",
+                i18n::_(u8"god", core_god::int2godid(god_id), u8"name"));
+        }
+    }
+    else
+    {
+        return i18n::s.get(
+            "core.locale.god.desc.window.believe",
+            i18n::_(u8"god", core_god::int2godid(god_id), u8"name"));
+    }
+}
+
 void ui_menu_god::init()
 {
     cs = 0;
@@ -19,34 +44,16 @@ void ui_menu_god::init()
     objprm(0, ""s);
     keylog = "";
     listmax = 0;
-    chatesc = 2;
-    if (_already_believing)
-    {
-        if (_god_id == 0)
-        {
-            s = i18n::s.get("core.locale.god.desc.window.abandon");
-        }
-        else
-        {
-            s = i18n::s.get(
-                "core.locale.god.desc.window.convert",
-                i18n::_(u8"god", core_god::int2godid(_god_id), u8"name"));
-        }
-        list(0, listmax) = 0;
-        listn(0, listmax) = s;
-        ++listmax;
-    }
-    else
-    {
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get(
-            "core.locale.god.desc.window.believe",
-            i18n::_(u8"god", core_god::int2godid(_god_id), u8"name"));
-        ++listmax;
-    }
-    list(0, listmax) = 2;
+    chatesc = _cancel_choice;
+
+    list(0, listmax) = 0;
+    listn(0, listmax) = _get_choice_name(_already_believing, _god_id);
+    ++listmax;
+
+    list(0, listmax) = _cancel_choice;
     listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
     ++listmax;
+
     snd(62);
     gsel(4);
     gmode(0);
@@ -97,8 +104,7 @@ static std::string _get_god_description(int god_id)
     return buff;
 }
 
-
-void ui_menu_god::draw()
+static void _draw_window()
 {
     gmode(0);
     pos(0, 0);
@@ -110,32 +116,51 @@ void ui_menu_god::draw()
     window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6);
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
+}
 
+static void _draw_title(int god_id)
+{
     font(18 - en * 2, snail::font_t::style_t::bold);
     bmes(
         i18n::s.get(
             "core.locale.god.desc.window.title",
-            i18n::_(u8"god", core_god::int2godid(_god_id), u8"name")),
+            i18n::_(u8"god", core_god::int2godid(god_id), u8"name")),
         wx + 20,
         wy + 20);
+}
 
-    buff = _get_god_description(_god_id);
-    gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
+static void _draw_desc(int god_id)
+{
+    std::string _buff = _get_god_description(god_id);
+    gmes(_buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
+}
 
+static void _draw_choice(int cnt, const std::string& text)
+{
+    display_key(wx + 50, wy + dy + cnt * 20 - listmax * 20 - 18, cnt);
+    cs_list(cs == cnt, text, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
+}
+
+static void _draw_choices()
+{
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        p = cnt;
-        i = list(0, p);
-        display_key(wx + 50, wy + dy + cnt * 20 - listmax * 20 - 18, cnt);
-        s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
+        _draw_choice(cnt, listn(0, cnt));
     }
     if (keyrange != 0)
     {
         cs_bk = cs;
     }
+}
+
+void ui_menu_god::draw()
+{
+    _draw_window();
+    _draw_title(_god_id);
+    _draw_desc(_god_id);
+    _draw_choices();
 }
 
 optional<ui_menu_god::result_type> ui_menu_god::on_key(const std::string& key)
@@ -146,11 +171,18 @@ optional<ui_menu_god::result_type> ui_menu_god::on_key(const std::string& key)
     if (key == key_cancel)
     {
         snd(40);
-        return ui_menu_god::result_type::cancel();
+        _rtval = _cancel_choice;
     }
     if (_rtval != -1)
     {
-        return ui_menu_god::result_type::finish(_rtval);
+        if (_rtval == _cancel_choice)
+        {
+            return ui_menu_god::result_type::cancel();
+        }
+        else
+        {
+            return ui_menu_god::result_type::finish(_rtval);
+        }
     }
 
     return none;
