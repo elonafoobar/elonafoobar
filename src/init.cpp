@@ -660,7 +660,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(file_operation_t::_10);
+    ctrl_file(file_operation_t::temp_dir_delete);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;

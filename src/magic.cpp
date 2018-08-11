@@ -4247,12 +4247,14 @@ label_2181_internal:
         snd(72);
         txt(i18n::s.get("core.locale.magic.four_dimensional_pocket"));
         invfile = 8;
-        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
         tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+            ctrl_file(
+                file_operation2_t::map_items_read,
+                u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -4271,8 +4273,9 @@ label_2181_internal:
         snd(100);
         ctrl_inventory();
         invcontainer = 0;
-        ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
-        ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+        ctrl_file(
+            file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
         mode = 0;
         break;
     }
