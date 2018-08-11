@@ -9495,8 +9495,7 @@ void dump_player_info()
                 q(0) = itemname(p(1));
                 q(1) = cnvweight(inv[p(1)].weight);
                 ci = p(1);
-                dump_return = 1;
-                item_show_description();
+                item_dump_desc(inv[ci]);
             }
             else
             {

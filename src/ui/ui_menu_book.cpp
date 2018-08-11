@@ -117,6 +117,7 @@ optional<ui_menu_book::result_type> ui_menu_book::on_key(const std::string& key)
     }
     else if (key == key_cancel || key == key_enter)
     {
+        update_screen();
         return ui_menu_book::result_type::finish();
     }
 

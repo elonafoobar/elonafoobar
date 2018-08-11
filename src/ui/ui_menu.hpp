@@ -70,7 +70,6 @@ public:
 
             if (auto res = on_key(elona::key))
             {
-                update_screen();
                 return *res;
             }
 

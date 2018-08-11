@@ -210,6 +210,7 @@ int itemusingfind(int, bool = false);
 int item_find(int = 0, int = 0, int = 0);
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
+void item_dump_desc(const item&);
 
 int item_cold(int = 0, int = 0);
 int item_fire(int = 0, int = 0);
@@ -225,5 +226,8 @@ int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 int inv_getfreeid_force();
+
+
+void item_load_desc(int ci, int& p);
 
 } // namespace elona
