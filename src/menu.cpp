@@ -25,6 +25,7 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_alias.hpp"
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
 #include "ui/ui_menu_god.hpp"
@@ -5800,77 +5801,21 @@ label_1990_internal:
 
 int select_alias(int val0)
 {
-    cs = 0;
-    cs_bk = -1;
-    list(0, 0) = -1;
-    windowshadow = 1;
-    i = 10500;
+    auto result = ui::ui_menu_alias(val0).show();
 
-    while (1)
+    if (result.canceled)
     {
-        if (cs != cs_bk)
-        {
-            s(0) = i18n::s.get("core.locale.ui.alias.title");
-            s(1) = strhint3b;
-            display_window(
-                (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
-            display_topic(
-                i18n::s.get("core.locale.ui.alias.list"), wx + 28, wy + 30);
-            font(14 - en * 2);
-            for (int cnt = 0; cnt < 17; ++cnt)
-            {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                if (val0 == 3)
-                {
-                    randomize(i + cnt);
-                }
-                if (list(0, 0) == -1)
-                {
-                    listn(0, cnt) = random_title(val0);
-                    list(1, cnt) = i + cnt;
-                }
-                if (cnt == 0)
-                {
-                    listn(0, cnt) = i18n::s.get("core.locale.ui.alias.reroll");
-                }
-                pos(wx + 38, wy + 66 + cnt * 19 - 2);
-                gcopy(3, cnt * 24 + 72, 30, 24, 18);
-                cs_list(
-                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
-            }
-            i += 17;
-            cs_bk = cs;
-            list(0, 0) = 0;
-        }
-        redraw();
-        await(config::instance().wait1);
-        key_check();
-        cursor_check();
-        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-        if (p != -1)
-        {
-            if (key == key_select(0))
-            {
-                list(0, 0) = -1;
-                snd(103);
-                cs_bk = -1;
-            }
-            else
-            {
-                if (val0 == 3)
-                {
-                    return p;
-                }
-                cmaka = listn(0, p);
-                return 1;
-            }
-        }
-        if (key == key_cancel)
-        {
-            snd(26);
-            return 0;
-        }
+        return 0;
+    }
+
+    if (val0 == 3)
+    {
+        return result.value->seed;
+    }
+    else
+    {
+        cmaka = result.value->alias;
+        return 1;
     }
 }
 

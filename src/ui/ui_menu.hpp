@@ -60,6 +60,7 @@ public:
     {
         init();
         update();
+        _reupdate = false;
 
         while (true)
         {

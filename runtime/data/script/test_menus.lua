@@ -36,6 +36,8 @@ local function setup()
    altar.param1 = 2
    altar = Item.create(24, 27, "core.altar", 1)
    altar.param1 = 5
+
+   Item.create(25, 25, "core.scroll_of_name", 10)
 end
 
 Event.register(Event.EventKind.ScriptLoaded, setup)
