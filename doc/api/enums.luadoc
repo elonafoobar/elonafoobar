@@ -1,5 +1,10 @@
---- Enumerations for various data types.
+--- Enumerations for various data types. All enum variants take the
+--- name of the variant as a string for its value. This means that
+--- anywhere an enum value is required, you can pass a string with its
+--- name instead of using the <code>Enums</code> table.
 --  @usage local Enums = Elona.require("Enums")
+-- Chara.player():apply_ailment(Enums.StatusAilment.Blinded, 100)
+-- Chara.player():apply_ailment("Blinded", 100)
 module "Enums"
 
 --- The identification state of an item.
@@ -38,7 +43,7 @@ CurseState = {}
 -- @tfield Enums.StatusAilment Sick
 StatusAilment = {}
 
---- A type of tile to be used with <code>Map.generate_tile</code>.
+--- A kind of tile to be used with <code>Map.generate_tile</code>.
 -- @enum TileKind
 -- @see Map.generate_tile
 -- @tfield Enums.TileKind Normal
@@ -180,4 +185,7 @@ Relation = {}
 -- @tfield Enums.Color LightPurple
 -- @tfield Enums.Color LightGreen
 -- @tfield Enums.Color YellowGreen
+-- @tfield Enums.Color RandomFurniture When used with characters/items, picks a random color from a specific subset of colors.
+-- @tfield Enums.Color RandomSeeded When used with characters/items, applies a color that is random per-save but the same for all items of the same type. Examples are potions, rods and scrolls.
+-- @tfield Enums.Color RandomAny When used with characters/items, picks a random color from the first 21 colors.
 Color = {}
