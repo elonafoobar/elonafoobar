@@ -9,50 +9,59 @@ namespace elona
 namespace ui
 {
 
+bool ui_menu_hire::_should_display_chara(const character& chara)
+{
+    if (_operation == hire_operation::revive)
+    {
+        if (chara.state() != character::state_t::pet_dead
+            && chara.state() != character::state_t::villager_dead)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (_operation == hire_operation::hire)
+        {
+            if (chara.state() != character::state_t::servant_being_selected)
+            {
+                return false;
+            }
+        }
+        else if (chara.state() != character::state_t::alive)
+        {
+            return false;
+        }
+        if (chara.index < 16)
+        {
+            if (chara.current_map != gdata_current_map)
+            {
+                return false;
+            }
+        }
+    }
+    if (chara.index == 0)
+    {
+        return false;
+    }
+    if (chara.is_escorted_in_sub_quest() == 1)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void ui_menu_hire::_populate_list()
 {
     for (auto&& cnt : cdata.all())
     {
-        if (_operation == hire_operation::revive)
+        if (_should_display_chara(cnt))
         {
-            if (cnt.state() != character::state_t::pet_dead
-                && cnt.state() != character::state_t::villager_dead)
-            {
-                continue;
-            }
+            list(0, listmax) = cnt.index;
+            list(1, listmax) = -cnt.level;
+            ++listmax;
         }
-        else
-        {
-            if (_operation == hire_operation::hire)
-            {
-                if (cnt.state() != character::state_t::servant_being_selected)
-                {
-                    continue;
-                }
-            }
-            else if (cnt.state() != character::state_t::alive)
-            {
-                continue;
-            }
-            if (cnt.index < 16)
-            {
-                if (cnt.current_map != gdata_current_map)
-                {
-                    continue;
-                }
-            }
-        }
-        if (cnt.index == 0)
-        {
-            continue;
-        }
-        if (cnt.is_escorted_in_sub_quest() == 1)
-        {
-            continue;
-        }
-        list(0, listmax) = cnt.index;
-        list(1, listmax) = -cnt.level;
-        ++listmax;
     }
     sort_list_by_column1();
 }
@@ -85,11 +94,8 @@ void ui_menu_hire::update()
     }
 }
 
-void ui_menu_hire::draw()
+void ui_menu_hire::_draw_topic()
 {
-    s(0) = i18n::s.get("core.locale.ui.npc_list.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
     if (_operation == hire_operation::move)
     {
         s = i18n::s.get("core.locale.ui.npc_list.wage");
@@ -98,14 +104,36 @@ void ui_menu_hire::draw()
     {
         s = i18n::s.get("core.locale.ui.npc_list.init_cost");
     }
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.info"), wx + 350, wy + 36);
     if (_operation != hire_operation::revive)
     {
         display_topic(s, wx + 490, wy + 36);
     }
+}
+
+void ui_menu_hire::_draw_window()
+{
+    s(0) = i18n::s.get("core.locale.ui.npc_list.title");
+    s(1) = strhint2 + strhint3;
+    display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
+    display_topic(
+        i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.ui.npc_list.info"), wx + 350, wy + 36);
+
+    _draw_topic();
+}
+
+static void _draw_key(int cnt)
+{
+    if (cnt % 2 == 0)
+    {
+        boxf(wx + 70, wy + 66 + cnt * 19, 600, 18, {12, 14, 16, 16});
+    }
+    display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+}
+
+static void _draw_keys()
+{
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -116,12 +144,75 @@ void ui_menu_hire::draw()
         }
         key_list(cnt) = key_select(cnt);
         ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 600, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+        _draw_key(cnt);
     }
+}
+
+static void _draw_list_entry_pic(int cnt, const character& chara)
+{
+    draw_chara_scale_height(cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
+}
+
+static void _draw_list_entry_name(int cnt, const character& chara)
+{
+    std::string chara_name = cdatan(0, chara.index);
+    cutname(chara_name, 36);
+
+    cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
+}
+
+static void _draw_list_entry_info(int cnt, const character& chara)
+{
+    std::string level = u8"Lv."s + chara.level + u8" "s;
+
+    if (chara.sex == 0)
+    {
+        level += cnven(i18n::_(u8"ui", u8"male"));
+    }
+    else
+    {
+        level += cnven(i18n::_(u8"ui", u8"female"));
+    }
+
+    level += i18n::s.get(
+        "core.locale.ui.npc_list.age_counter", calcage(chara.index));
+
+    pos(wx + 372, wy + 66 + cnt * 19 + 2);
+    mes(level);
+}
+
+void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
+{
+    if (_operation != hire_operation::revive)
+    {
+        std::string text;
+        int cost = calchirecost(chara.index);
+
+        if (_operation == hire_operation::hire)
+        {
+            text = ""s + (cost * 20) + u8"("s + cost + u8")"s;
+        }
+        else
+        {
+            text = ""s + cost;
+        }
+
+        pos(wx + 512, wy + 66 + cnt * 19 + 2);
+        mes(i18n::s.get("core.locale.ui.npc_list.gold_counter", text));
+    }
+}
+
+
+void ui_menu_hire::_draw_list_entry(int cnt, const character& chara)
+{
+    _draw_list_entry_pic(cnt, chara);
+    _draw_list_entry_name(cnt, chara);
+    _draw_list_entry_info(cnt, chara);
+    _draw_list_entry_cost(cnt, chara);
+}
+
+void ui_menu_hire::_draw_list_entries()
+{
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -132,44 +223,22 @@ void ui_menu_hire::draw()
             break;
         }
 
-        draw_chara_scale_height(
-            cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
+        int chara_index = list(0, p);
+        const character& chara = cdata[chara_index];
 
-        i = list(0, p);
-        s = cdatan(0, i);
-        cutname(s, 36);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
-        s = u8"Lv."s + cdata[i].level + u8" "s;
-        if (cdata[i].sex == 0)
-        {
-            s += cnven(i18n::_(u8"ui", u8"male"));
-        }
-        else
-        {
-            s += cnven(i18n::_(u8"ui", u8"female"));
-        }
-        s += i18n::s.get("core.locale.ui.npc_list.age_counter", calcage(i));
-        pos(wx + 372, wy + 66 + cnt * 19 + 2);
-        mes(s);
-        if (_operation != hire_operation::revive)
-        {
-            if (_operation == hire_operation::hire)
-            {
-                s = ""s + calchirecost(i) * 20 + u8"("s + calchirecost(i)
-                    + u8")"s;
-            }
-            else
-            {
-                s = ""s + calchirecost(i);
-            }
-            pos(wx + 512, wy + 66 + cnt * 19 + 2);
-            mes(i18n::s.get("core.locale.ui.npc_list.gold_counter", s(0)));
-        }
+        _draw_list_entry(cnt, chara);
     }
     if (keyrange != 0)
     {
         cs_bk = cs;
     }
+}
+
+void ui_menu_hire::draw()
+{
+    _draw_window();
+    _draw_keys();
+    _draw_list_entries();
 }
 
 optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
