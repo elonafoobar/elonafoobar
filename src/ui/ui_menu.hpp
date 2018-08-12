@@ -55,10 +55,21 @@ protected:
         _reupdate = true;
     }
 
+    void set_init_failed()
+    {
+        _init_failed = true;
+    }
+
 public:
     ui_menu::result show()
     {
         init();
+
+        if (_init_failed)
+        {
+            return result_type::cancel();
+        }
+
         update();
         _reupdate = false;
 
@@ -95,6 +106,7 @@ private:
         cursor_check();
     }
 
+    bool _init_failed = false;
     bool _reupdate = false;
 };
 

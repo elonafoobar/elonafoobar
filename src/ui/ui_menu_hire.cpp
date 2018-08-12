@@ -150,7 +150,7 @@ static void _draw_keys()
 
 static void _draw_list_entry_pic(int cnt, const character& chara)
 {
-    draw_chara_scale_height(cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
+    draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 }
 
 static void _draw_list_entry_name(int cnt, const character& chara)

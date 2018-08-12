@@ -185,6 +185,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_hire.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_npc_tone.cpp
+  src/ui/ui_menu_quest_board.cpp
   src/ui/ui_menu_spell_writer.cpp
 
   src/version.cpp
