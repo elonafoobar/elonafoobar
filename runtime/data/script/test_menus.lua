@@ -38,6 +38,9 @@ local function setup()
    altar.param1 = 5
 
    Item.create(25, 25, "core.scroll_of_name", 10)
+
+   local spell_writer = Chara.create(28, 23, "core.wizard")
+   spell_writer.character_role = 1020
 end
 
 Event.register(Event.EventKind.ScriptLoaded, setup)

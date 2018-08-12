@@ -184,6 +184,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_god.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_npc_tone.cpp
+  src/ui/ui_menu_spell_writer.cpp
 
   src/version.cpp
   )
