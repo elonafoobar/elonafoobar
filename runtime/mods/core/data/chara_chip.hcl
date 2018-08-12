@@ -6,7 +6,7 @@ chara_chip _0 {
     }
 }
 
-chara_chip _1 {
+chara_chip user {
     id = 1
     source {
         x = 48
@@ -30,7 +30,7 @@ chara_chip _3 {
     }
 }
 
-chara_chip _4 {
+chara_chip little_girl {
     id = 4
     source {
         x = 192
@@ -54,7 +54,7 @@ chara_chip _6 {
     }
 }
 
-chara_chip _7 {
+chara_chip trainer_male {
     id = 7
     source {
         x = 336
@@ -62,7 +62,7 @@ chara_chip _7 {
     }
 }
 
-chara_chip _8 {
+chara_chip miches {
     id = 8
     source {
         x = 384
@@ -78,7 +78,7 @@ chara_chip _9 {
     }
 }
 
-chara_chip _10 {
+chara_chip trainer_female {
     id = 10
     source {
         x = 480
@@ -102,7 +102,7 @@ chara_chip _12 {
     }
 }
 
-chara_chip _13 {
+chara_chip wizard_male {
     id = 13
     source {
         x = 624
@@ -110,7 +110,7 @@ chara_chip _13 {
     }
 }
 
-chara_chip _14 {
+chara_chip wizard_female {
     id = 14
     source {
         x = 672
@@ -118,7 +118,7 @@ chara_chip _14 {
     }
 }
 
-chara_chip _15 {
+chara_chip informer_male {
     id = 15
     source {
         x = 720
@@ -126,7 +126,7 @@ chara_chip _15 {
     }
 }
 
-chara_chip _16 {
+chara_chip informer_female {
     id = 16
     source {
         x = 768
@@ -158,7 +158,7 @@ chara_chip _19 {
     }
 }
 
-chara_chip _20 {
+chara_chip warrior_female {
     id = 20
     source {
         x = 960
@@ -166,7 +166,7 @@ chara_chip _20 {
     }
 }
 
-chara_chip _21 {
+chara_chip warrior_male {
     id = 21
     source {
         x = 1008
@@ -182,7 +182,7 @@ chara_chip _22 {
     }
 }
 
-chara_chip _23 {
+chara_chip moyer_the_crooked {
     id = 23
     source {
         x = 1104
@@ -198,7 +198,7 @@ chara_chip _24 {
     }
 }
 
-chara_chip _25 {
+chara_chip guard {
     id = 25
     source {
         x = 1200
@@ -214,7 +214,7 @@ chara_chip _26 {
     }
 }
 
-chara_chip _27 {
+chara_chip punk_female {
     id = 27
     source {
         x = 1296
@@ -246,7 +246,7 @@ chara_chip _30 {
     }
 }
 
-chara_chip _31 {
+chara_chip gangster_male {
     id = 31
     source {
         x = 1488
@@ -270,7 +270,7 @@ chara_chip _33 {
     }
 }
 
-chara_chip _34 {
+chara_chip warrior_of_elea_female {
     id = 34
     source {
         x = 48
@@ -286,7 +286,7 @@ chara_chip _35 {
     }
 }
 
-chara_chip _36 {
+chara_chip gangster_female {
     id = 36
     source {
         x = 144
@@ -294,7 +294,7 @@ chara_chip _36 {
     }
 }
 
-chara_chip _37 {
+chara_chip fallen_soldier {
     id = 37
     source {
         x = 192
@@ -326,7 +326,7 @@ chara_chip _40 {
     }
 }
 
-chara_chip _41 {
+chara_chip arena_master {
     id = 41
     source {
         x = 384
@@ -334,7 +334,7 @@ chara_chip _41 {
     }
 }
 
-chara_chip _42 {
+chara_chip wizard_of_elea_female {
     id = 42
     source {
         x = 432
@@ -374,7 +374,7 @@ chara_chip _46 {
     }
 }
 
-chara_chip _47 {
+chara_chip wizard_of_elea_male {
     id = 47
     source {
         x = 672
@@ -454,7 +454,7 @@ chara_chip _56 {
     }
 }
 
-chara_chip _57 {
+chara_chip mercenary_archer {
     id = 57
     source {
         x = 1152
@@ -550,7 +550,7 @@ chara_chip _68 {
     }
 }
 
-chara_chip _69 {
+chara_chip healer {
     id = 69
     source {
         x = 144
@@ -558,7 +558,7 @@ chara_chip _69 {
     }
 }
 
-chara_chip _70 {
+chara_chip rich_person_female {
     id = 70
     source {
         x = 192
@@ -566,7 +566,7 @@ chara_chip _70 {
     }
 }
 
-chara_chip _71 {
+chara_chip rich_person_male {
     id = 71
     source {
         x = 240
@@ -574,7 +574,7 @@ chara_chip _71 {
     }
 }
 
-chara_chip _72 {
+chara_chip noble_child_female {
     id = 72
     source {
         x = 288
@@ -582,7 +582,7 @@ chara_chip _72 {
     }
 }
 
-chara_chip _73 {
+chara_chip noble_child_male {
     id = 73
     source {
         x = 336
@@ -590,7 +590,7 @@ chara_chip _73 {
     }
 }
 
-chara_chip _74 {
+chara_chip palmian_elite_soldier_male {
     id = 74
     source {
         x = 384
@@ -598,7 +598,7 @@ chara_chip _74 {
     }
 }
 
-chara_chip _75 {
+chara_chip palmian_elite_soldier_female {
     id = 75
     source {
         x = 432
@@ -606,7 +606,7 @@ chara_chip _75 {
     }
 }
 
-chara_chip _76 {
+chara_chip thief_guild_member_male {
     id = 76
     source {
         x = 480
@@ -614,7 +614,7 @@ chara_chip _76 {
     }
 }
 
-chara_chip _77 {
+chara_chip thief_guild_member_female {
     id = 77
     source {
         x = 528
@@ -622,7 +622,7 @@ chara_chip _77 {
     }
 }
 
-chara_chip _78 {
+chara_chip fighter_guild_member_male {
     id = 78
     source {
         x = 576
@@ -630,7 +630,7 @@ chara_chip _78 {
     }
 }
 
-chara_chip _79 {
+chara_chip fighter_guild_member_female {
     id = 79
     source {
         x = 624
@@ -638,7 +638,7 @@ chara_chip _79 {
     }
 }
 
-chara_chip _80 {
+chara_chip fray {
     id = 80
     source {
         x = 672
@@ -790,7 +790,7 @@ chara_chip _98 {
     }
 }
 
-chara_chip _99 {
+chara_chip karam {
     id = 99
     source {
         x = 0
@@ -798,7 +798,7 @@ chara_chip _99 {
     }
 }
 
-chara_chip _100 {
+chara_chip mercenary_wizard {
     id = 100
     source {
         x = 48
@@ -814,7 +814,7 @@ chara_chip _101 {
     }
 }
 
-chara_chip _102 {
+chara_chip beggar_male {
     id = 102
     source {
         x = 144
@@ -822,7 +822,7 @@ chara_chip _102 {
     }
 }
 
-chara_chip _103 {
+chara_chip beggar_female {
     id = 103
     source {
         x = 192
@@ -830,7 +830,7 @@ chara_chip _103 {
     }
 }
 
-chara_chip _104 {
+chara_chip maid_male {
     id = 104
     source {
         x = 240
@@ -838,7 +838,7 @@ chara_chip _104 {
     }
 }
 
-chara_chip _105 {
+chara_chip maid_female {
     id = 105
     source {
         x = 288
@@ -846,7 +846,7 @@ chara_chip _105 {
     }
 }
 
-chara_chip _106 {
+chara_chip old_person_male {
     id = 106
     source {
         x = 336
@@ -854,7 +854,7 @@ chara_chip _106 {
     }
 }
 
-chara_chip _107 {
+chara_chip old_person_female {
     id = 107
     source {
         x = 384
@@ -870,7 +870,7 @@ chara_chip _108 {
     }
 }
 
-chara_chip _109 {
+chara_chip shena {
     id = 109
     source {
         x = 480
@@ -894,7 +894,7 @@ chara_chip _111 {
     }
 }
 
-chara_chip _112 {
+chara_chip punk_male {
     id = 112
     source {
         x = 624
@@ -926,7 +926,7 @@ chara_chip _115 {
     }
 }
 
-chara_chip _116 {
+chara_chip xabi {
     id = 116
     source {
         x = 816
@@ -934,7 +934,7 @@ chara_chip _116 {
     }
 }
 
-chara_chip _117 {
+chara_chip test_subject {
     id = 117
     source {
         x = 864
@@ -950,7 +950,7 @@ chara_chip _118 {
     }
 }
 
-chara_chip _119 {
+chara_chip captain {
     id = 119
     source {
         x = 960
@@ -958,7 +958,7 @@ chara_chip _119 {
     }
 }
 
-chara_chip _120 {
+chara_chip sailor_male {
     id = 120
     source {
         x = 1008
@@ -966,7 +966,7 @@ chara_chip _120 {
     }
 }
 
-chara_chip _121 {
+chara_chip sailor_female {
     id = 121
     source {
         x = 1056
@@ -974,7 +974,7 @@ chara_chip _121 {
     }
 }
 
-chara_chip _122 {
+chara_chip tourist_male {
     id = 122
     source {
         x = 1104
@@ -1014,7 +1014,7 @@ chara_chip _126 {
     }
 }
 
-chara_chip _127 {
+chara_chip citizen_of_cyber_dome2_male {
     id = 127
     source {
         x = 1344
@@ -1022,7 +1022,7 @@ chara_chip _127 {
     }
 }
 
-chara_chip _128 {
+chara_chip citizen_of_cyber_dome_male {
     id = 128
     source {
         x = 1392
@@ -1030,7 +1030,7 @@ chara_chip _128 {
     }
 }
 
-chara_chip _129 {
+chara_chip citizen_of_cyber_dome_female {
     id = 129
     source {
         x = 1440
@@ -1046,7 +1046,7 @@ chara_chip _130 {
     }
 }
 
-chara_chip _131 {
+chara_chip citizen_of_cyber_dome2_female {
     id = 131
     source {
         x = 1536
@@ -1070,7 +1070,7 @@ chara_chip _133 {
     }
 }
 
-chara_chip _134 {
+chara_chip citizen2_male {
     id = 134
     source {
         x = 96
@@ -1078,7 +1078,7 @@ chara_chip _134 {
     }
 }
 
-chara_chip _135 {
+chara_chip citizen2_female {
     id = 135
     source {
         x = 144
@@ -1086,7 +1086,7 @@ chara_chip _135 {
     }
 }
 
-chara_chip _136 {
+chara_chip citizen_male {
     id = 136
     source {
         x = 192
@@ -1094,7 +1094,7 @@ chara_chip _136 {
     }
 }
 
-chara_chip _137 {
+chara_chip citizen_female {
     id = 137
     source {
         x = 240
@@ -1110,7 +1110,7 @@ chara_chip _138 {
     }
 }
 
-chara_chip _139 {
+chara_chip mercenary_male {
     id = 139
     source {
         x = 336
@@ -1118,7 +1118,7 @@ chara_chip _139 {
     }
 }
 
-chara_chip _140 {
+chara_chip shopkeeper_male {
     id = 140
     source {
         x = 384
@@ -1126,7 +1126,7 @@ chara_chip _140 {
     }
 }
 
-chara_chip _141 {
+chara_chip shopkeeper_female {
     id = 141
     source {
         x = 432
@@ -1134,7 +1134,7 @@ chara_chip _141 {
     }
 }
 
-chara_chip _142 {
+chara_chip elder_male {
     id = 142
     source {
         x = 480
@@ -1142,7 +1142,7 @@ chara_chip _142 {
     }
 }
 
-chara_chip _143 {
+chara_chip elder_female {
     id = 143
     source {
         x = 528
@@ -1150,7 +1150,7 @@ chara_chip _143 {
     }
 }
 
-chara_chip _144 {
+chara_chip bartender_male {
     id = 144
     source {
         x = 576
@@ -1158,7 +1158,7 @@ chara_chip _144 {
     }
 }
 
-chara_chip _145 {
+chara_chip bartender_female {
     id = 145
     source {
         x = 624
@@ -1166,7 +1166,7 @@ chara_chip _145 {
     }
 }
 
-chara_chip _146 {
+chara_chip sales_person_male {
     id = 146
     source {
         x = 672
@@ -1174,7 +1174,7 @@ chara_chip _146 {
     }
 }
 
-chara_chip _147 {
+chara_chip sales_person_female {
     id = 147
     source {
         x = 720
@@ -1182,7 +1182,7 @@ chara_chip _147 {
     }
 }
 
-chara_chip _148 {
+chara_chip bard {
     id = 148
     source {
         x = 768
@@ -1198,7 +1198,7 @@ chara_chip _149 {
     }
 }
 
-chara_chip _150 {
+chara_chip rogue_boss {
     id = 150
     source {
         x = 864
@@ -1254,7 +1254,7 @@ chara_chip _156 {
     }
 }
 
-chara_chip _157 {
+chara_chip rogue_wizard {
     id = 157
     source {
         x = 1200
@@ -1262,7 +1262,7 @@ chara_chip _157 {
     }
 }
 
-chara_chip _158 {
+chara_chip rogue_archer {
     id = 158
     source {
         x = 1248
@@ -1270,7 +1270,7 @@ chara_chip _158 {
     }
 }
 
-chara_chip _159 {
+chara_chip mercenary_warrior {
     id = 159
     source {
         x = 1296
@@ -1302,7 +1302,7 @@ chara_chip _162 {
     }
 }
 
-chara_chip _163 {
+chara_chip nun {
     id = 163
     source {
         x = 1488
@@ -1326,7 +1326,7 @@ chara_chip _165 {
     }
 }
 
-chara_chip _166 {
+chara_chip master_thief {
     id = 166
     source {
         x = 48
@@ -1423,7 +1423,7 @@ chara_chip _177 {
     }
 }
 
-chara_chip _178 {
+chara_chip mercenary_female {
     id = 178
     source {
         x = 624
@@ -1431,7 +1431,7 @@ chara_chip _178 {
     }
 }
 
-chara_chip _179 {
+chara_chip farmer_male {
     id = 179
     source {
         x = 672
@@ -1439,7 +1439,7 @@ chara_chip _179 {
     }
 }
 
-chara_chip _180 {
+chara_chip farmer_female {
     id = 180
     source {
         x = 720
@@ -1447,7 +1447,7 @@ chara_chip _180 {
     }
 }
 
-chara_chip _181 {
+chara_chip sister_male {
     id = 181
     source {
         x = 768
@@ -1455,7 +1455,7 @@ chara_chip _181 {
     }
 }
 
-chara_chip _182 {
+chara_chip sister_female {
     id = 182
     source {
         x = 816
@@ -1463,7 +1463,7 @@ chara_chip _182 {
     }
 }
 
-chara_chip _183 {
+chara_chip rogue_male {
     id = 183
     source {
         x = 864
@@ -1471,7 +1471,7 @@ chara_chip _183 {
     }
 }
 
-chara_chip _184 {
+chara_chip rogue_female {
     id = 184
     source {
         x = 912
@@ -1479,7 +1479,7 @@ chara_chip _184 {
     }
 }
 
-chara_chip _185 {
+chara_chip artist_male {
     id = 185
     source {
         x = 960
@@ -1487,7 +1487,7 @@ chara_chip _185 {
     }
 }
 
-chara_chip _186 {
+chara_chip artist_female {
     id = 186
     source {
         x = 1008
@@ -1495,7 +1495,7 @@ chara_chip _186 {
     }
 }
 
-chara_chip _187 {
+chara_chip miner_male {
     id = 187
     source {
         x = 1056
@@ -1503,7 +1503,7 @@ chara_chip _187 {
     }
 }
 
-chara_chip _188 {
+chara_chip miner_female {
     id = 188
     source {
         x = 1104
@@ -1511,7 +1511,7 @@ chara_chip _188 {
     }
 }
 
-chara_chip _189 {
+chara_chip noble_male {
     id = 189
     source {
         x = 1152
@@ -1519,7 +1519,7 @@ chara_chip _189 {
     }
 }
 
-chara_chip _190 {
+chara_chip noble_female {
     id = 190
     source {
         x = 1200
@@ -1527,7 +1527,7 @@ chara_chip _190 {
     }
 }
 
-chara_chip _191 {
+chara_chip mutant {
     id = 191
     source {
         x = 1248
@@ -1535,7 +1535,7 @@ chara_chip _191 {
     }
 }
 
-chara_chip _192 {
+chara_chip balzak {
     id = 192
     source {
         x = 1296
@@ -1543,7 +1543,7 @@ chara_chip _192 {
     }
 }
 
-chara_chip _193 {
+chara_chip revlus {
     id = 193
     source {
         x = 1344
@@ -1551,7 +1551,7 @@ chara_chip _193 {
     }
 }
 
-chara_chip _194 {
+chara_chip mage_guild_member_female {
     id = 194
     source {
         x = 1392
@@ -1559,7 +1559,7 @@ chara_chip _194 {
     }
 }
 
-chara_chip _195 {
+chara_chip mage_guild_member_male {
     id = 195
     source {
         x = 1440
@@ -1567,7 +1567,7 @@ chara_chip _195 {
     }
 }
 
-chara_chip _196 {
+chara_chip doria {
     id = 196
     source {
         x = 1488
@@ -1575,7 +1575,7 @@ chara_chip _196 {
     }
 }
 
-chara_chip _197 {
+chara_chip sin {
     id = 197
     source {
         x = 1536
@@ -1583,7 +1583,7 @@ chara_chip _197 {
     }
 }
 
-chara_chip _198 {
+chara_chip iron_maiden {
     id = 198
     source {
         x = 0
@@ -1591,7 +1591,7 @@ chara_chip _198 {
     }
 }
 
-chara_chip _199 {
+chara_chip noel {
     id = 199
     source {
         x = 48
@@ -1633,7 +1633,7 @@ chara_chip _203 {
     }
 }
 
-chara_chip _204 {
+chara_chip giant_squirrel {
     id = 204
     source {
         x = 288
@@ -1665,7 +1665,7 @@ chara_chip _207 {
     }
 }
 
-chara_chip _208 {
+chara_chip nurse {
     id = 208
     source {
         x = 480
@@ -1673,7 +1673,7 @@ chara_chip _208 {
     }
 }
 
-chara_chip _209 {
+chara_chip puppet {
     id = 209
     source {
         x = 528
@@ -1689,7 +1689,7 @@ chara_chip _210 {
     }
 }
 
-chara_chip _211 {
+chara_chip black_cat {
     id = 211
     source {
         x = 624
@@ -1713,7 +1713,7 @@ chara_chip _213 {
     }
 }
 
-chara_chip _214 {
+chara_chip nymph {
     id = 214
     source {
         x = 768
@@ -1721,7 +1721,7 @@ chara_chip _214 {
     }
 }
 
-chara_chip _215 {
+chara_chip chaos_flower {
     id = 215
     source {
         x = 816
@@ -1737,7 +1737,7 @@ chara_chip _216 {
     }
 }
 
-chara_chip _217 {
+chara_chip cute_fairy {
     id = 217
     source {
         x = 912
@@ -1745,7 +1745,7 @@ chara_chip _217 {
     }
 }
 
-chara_chip _218 {
+chara_chip android {
     id = 218
     source {
         x = 960
@@ -1753,7 +1753,7 @@ chara_chip _218 {
     }
 }
 
-chara_chip _219 {
+chara_chip tuwen {
     id = 219
     source {
         x = 1008
@@ -1769,7 +1769,7 @@ chara_chip _220 {
     }
 }
 
-chara_chip _221 {
+chara_chip baptist {
     id = 221
     source {
         x = 1104
@@ -1901,7 +1901,7 @@ chara_chip _235 {
     }
 }
 
-chara_chip _236 {
+chara_chip black_angel {
     id = 236
     source {
         x = 240
@@ -1925,7 +1925,7 @@ chara_chip _238 {
     }
 }
 
-chara_chip _239 {
+chara_chip fire_centipede {
     id = 239
     source {
         x = 384
@@ -1933,7 +1933,7 @@ chara_chip _239 {
     }
 }
 
-chara_chip _240 {
+chara_chip cultist_of_fire {
     id = 240
     source {
         x = 432
@@ -1949,7 +1949,7 @@ chara_chip _241 {
     }
 }
 
-chara_chip _242 {
+chara_chip defender {
     id = 242
     source {
         x = 528
@@ -1957,7 +1957,7 @@ chara_chip _242 {
     }
 }
 
-chara_chip _243 {
+chara_chip missionary_of_darkness {
     id = 243
     source {
         x = 576
@@ -1973,7 +1973,7 @@ chara_chip _244 {
     }
 }
 
-chara_chip _245 {
+chara_chip rook {
     id = 245
     source {
         x = 672
@@ -1981,7 +1981,7 @@ chara_chip _245 {
     }
 }
 
-chara_chip _246 {
+chara_chip bishop {
     id = 246
     source {
         x = 720
@@ -1989,7 +1989,7 @@ chara_chip _246 {
     }
 }
 
-chara_chip _247 {
+chara_chip knight {
     id = 247
     source {
         x = 768
@@ -1997,7 +1997,7 @@ chara_chip _247 {
     }
 }
 
-chara_chip _248 {
+chara_chip queen {
     id = 248
     source {
         x = 816
@@ -2005,7 +2005,7 @@ chara_chip _248 {
     }
 }
 
-chara_chip _249 {
+chara_chip king {
     id = 249
     source {
         x = 864
@@ -2013,7 +2013,7 @@ chara_chip _249 {
     }
 }
 
-chara_chip _250 {
+chara_chip yerles_machine_infantry {
     id = 250
     source {
         x = 912
@@ -2021,7 +2021,7 @@ chara_chip _250 {
     }
 }
 
-chara_chip _251 {
+chara_chip rock_thrower {
     id = 251
     source {
         x = 960
@@ -2070,7 +2070,7 @@ chara_chip _256 {
     }
 }
 
-chara_chip _257 {
+chara_chip slime {
     id = 257
     source {
         x = 1248
@@ -2078,7 +2078,7 @@ chara_chip _257 {
     }
 }
 
-chara_chip _258 {
+chara_chip public_performer {
     id = 258
     source {
         x = 1296
@@ -2086,7 +2086,7 @@ chara_chip _258 {
     }
 }
 
-chara_chip _259 {
+chara_chip twintail {
     id = 259
     source {
         x = 1344
@@ -2094,7 +2094,7 @@ chara_chip _259 {
     }
 }
 
-chara_chip _260 {
+chara_chip silver_wolf {
     id = 260
     source {
         x = 1392
@@ -2118,7 +2118,7 @@ chara_chip _262 {
     }
 }
 
-chara_chip _263 {
+chara_chip icolle {
     id = 263
     source {
         x = 1536
@@ -2150,7 +2150,7 @@ chara_chip _266 {
     }
 }
 
-chara_chip _267 {
+chara_chip golden_knight {
     id = 267
     source {
         x = 144
@@ -2166,7 +2166,7 @@ chara_chip _268 {
     }
 }
 
-chara_chip _269 {
+chara_chip exile {
     id = 269
     source {
         x = 240
@@ -2174,7 +2174,7 @@ chara_chip _269 {
     }
 }
 
-chara_chip _270 {
+chara_chip blade {
     id = 270
     source {
         x = 288
@@ -2182,7 +2182,7 @@ chara_chip _270 {
     }
 }
 
-chara_chip _271 {
+chara_chip deformed_eye {
     id = 271
     source {
         x = 336
@@ -2190,7 +2190,7 @@ chara_chip _271 {
     }
 }
 
-chara_chip _272 {
+chara_chip wisp {
     id = 272
     source {
         x = 384
@@ -2198,7 +2198,7 @@ chara_chip _272 {
     }
 }
 
-chara_chip _273 {
+chara_chip shining_hedgehog {
     id = 273
     source {
         x = 432
@@ -2206,7 +2206,7 @@ chara_chip _273 {
     }
 }
 
-chara_chip _274 {
+chara_chip chicken {
     id = 274
     source {
         x = 480
@@ -2214,7 +2214,7 @@ chara_chip _274 {
     }
 }
 
-chara_chip _275 {
+chara_chip pumpkin {
     id = 275
     source {
         x = 528
@@ -2222,7 +2222,7 @@ chara_chip _275 {
     }
 }
 
-chara_chip _276 {
+chara_chip stalker {
     id = 276
     source {
         x = 576
@@ -2230,7 +2230,7 @@ chara_chip _276 {
     }
 }
 
-chara_chip _277 {
+chara_chip shub_niggurath {
     id = 277
     offset_y = 29
     source {
@@ -2239,7 +2239,7 @@ chara_chip _277 {
     }
 }
 
-chara_chip _278 {
+chara_chip gagu {
     id = 278
     source {
         x = 672
@@ -2247,7 +2247,7 @@ chara_chip _278 {
     }
 }
 
-chara_chip _279 {
+chara_chip silver_eyed_witch {
     id = 279
     source {
         x = 720
@@ -2255,7 +2255,7 @@ chara_chip _279 {
     }
 }
 
-chara_chip _280 {
+chara_chip shade {
     id = 280
     tall = true
     offset_y = 32
@@ -2273,7 +2273,7 @@ chara_chip _281 {
     }
 }
 
-chara_chip _282 {
+chara_chip cube {
     id = 282
     source {
         x = 864
@@ -2281,7 +2281,7 @@ chara_chip _282 {
     }
 }
 
-chara_chip _283 {
+chara_chip alien {
     id = 283
     source {
         x = 912
@@ -2289,7 +2289,7 @@ chara_chip _283 {
     }
 }
 
-chara_chip _284 {
+chara_chip fanatic_female {
     id = 284
     source {
         x = 960
@@ -2297,7 +2297,7 @@ chara_chip _284 {
     }
 }
 
-chara_chip _285 {
+chara_chip fanatic_male {
     id = 285
     source {
         x = 1008
@@ -2393,7 +2393,7 @@ chara_chip _296 {
     }
 }
 
-chara_chip _297 {
+chara_chip zeome {
     id = 297
     tall = true
     offset_y = 16
@@ -2667,7 +2667,7 @@ chara_chip _330 {
     }
 }
 
-chara_chip _331 {
+chara_chip orphe {
     id = 331
     source {
         x = 48
@@ -2675,7 +2675,7 @@ chara_chip _331 {
     }
 }
 
-chara_chip _332 {
+chara_chip mad_scientist {
     id = 332
     source {
         x = 96
@@ -2683,7 +2683,7 @@ chara_chip _332 {
     }
 }
 
-chara_chip _333 {
+chara_chip isca {
     id = 333
     source {
         x = 144
@@ -2691,7 +2691,7 @@ chara_chip _333 {
     }
 }
 
-chara_chip _334 {
+chara_chip whom_dwell_in_the_vanity {
     id = 334
     source {
         x = 192
@@ -2715,7 +2715,7 @@ chara_chip _336 {
     }
 }
 
-chara_chip _337 {
+chara_chip loyter {
     id = 337
     source {
         x = 336
@@ -2723,7 +2723,7 @@ chara_chip _337 {
     }
 }
 
-chara_chip _338 {
+chara_chip vesda {
     id = 338
     tall = true
     offset_y = 32
@@ -2733,7 +2733,7 @@ chara_chip _338 {
     }
 }
 
-chara_chip _339 {
+chara_chip issizzle {
     id = 339
     tall = true
     offset_y = 16
@@ -2743,7 +2743,7 @@ chara_chip _339 {
     }
 }
 
-chara_chip _340 {
+chara_chip erystia {
     id = 340
     source {
         x = 480
@@ -2751,7 +2751,7 @@ chara_chip _340 {
     }
 }
 
-chara_chip _341 {
+chara_chip wynan {
     id = 341
     tall = true
     offset_y = 16
@@ -2761,7 +2761,7 @@ chara_chip _341 {
     }
 }
 
-chara_chip _342 {
+chara_chip corgon {
     id = 342
     tall = true
     offset_y = 12
@@ -2771,7 +2771,7 @@ chara_chip _342 {
     }
 }
 
-chara_chip _343 {
+chara_chip quruiza {
     id = 343
     tall = true
     offset_y = 16
@@ -2781,7 +2781,7 @@ chara_chip _343 {
     }
 }
 
-chara_chip _344 {
+chara_chip dungeon_cleaner {
     id = 344
     source {
         x = 672
@@ -2789,7 +2789,7 @@ chara_chip _344 {
     }
 }
 
-chara_chip _345 {
+chara_chip larnneire {
     id = 345
     source {
         x = 720
@@ -2797,7 +2797,7 @@ chara_chip _345 {
     }
 }
 
-chara_chip _346 {
+chara_chip lomias {
     id = 346
     source {
         x = 768
@@ -2805,7 +2805,7 @@ chara_chip _346 {
     }
 }
 
-chara_chip _347 {
+chara_chip at {
     id = 347
     source {
         x = 816
@@ -2813,7 +2813,7 @@ chara_chip _347 {
     }
 }
 
-chara_chip _348 {
+chara_chip frisia {
     id = 348
     source {
         x = 864
@@ -2821,7 +2821,7 @@ chara_chip _348 {
     }
 }
 
-chara_chip _349 {
+chara_chip utima {
     id = 349
     tall = true
     offset_y = 8
@@ -2831,7 +2831,7 @@ chara_chip _349 {
     }
 }
 
-chara_chip _350 {
+chara_chip master_of_pet_arena {
     id = 350
     source {
         x = 960
@@ -2839,7 +2839,7 @@ chara_chip _350 {
     }
 }
 
-chara_chip _351 {
+chara_chip ebon2 {
     id = 351
     tall = true
     offset_y = 8
@@ -2849,7 +2849,7 @@ chara_chip _351 {
     }
 }
 
-chara_chip _352 {
+chara_chip garokk {
     id = 352
     source {
         x = 1056
@@ -2857,7 +2857,7 @@ chara_chip _352 {
     }
 }
 
-chara_chip _353 {
+chara_chip miral {
     id = 353
     source {
         x = 1104
@@ -2873,7 +2873,7 @@ chara_chip _354 {
     }
 }
 
-chara_chip _355 {
+chara_chip young_lady {
     id = 355
     source {
         x = 1200
@@ -2881,7 +2881,7 @@ chara_chip _355 {
     }
 }
 
-chara_chip _356 {
+chara_chip gwen {
     id = 356
     source {
         x = 1248
@@ -2889,7 +2889,7 @@ chara_chip _356 {
     }
 }
 
-chara_chip _357 {
+chara_chip town_child_female {
     id = 357
     source {
         x = 1296
@@ -2897,7 +2897,7 @@ chara_chip _357 {
     }
 }
 
-chara_chip _358 {
+chara_chip pael {
     id = 358
     source {
         x = 1344
@@ -2905,7 +2905,7 @@ chara_chip _358 {
     }
 }
 
-chara_chip _359 {
+chara_chip lily {
     id = 359
     source {
         x = 1392
@@ -2921,7 +2921,7 @@ chara_chip _360 {
     }
 }
 
-chara_chip _361 {
+chara_chip raphael {
     id = 361
     source {
         x = 1488
@@ -2929,7 +2929,7 @@ chara_chip _361 {
     }
 }
 
-chara_chip _362 {
+chara_chip ainc {
     id = 362
     source {
         x = 1536
@@ -2937,7 +2937,7 @@ chara_chip _362 {
     }
 }
 
-chara_chip _363 {
+chara_chip guard_port_kapul {
     id = 363
     source {
         x = 0
@@ -2945,7 +2945,7 @@ chara_chip _363 {
     }
 }
 
-chara_chip _364 {
+chara_chip poppy {
     id = 364
     source {
         x = 48
@@ -2953,7 +2953,7 @@ chara_chip _364 {
     }
 }
 
-chara_chip _365 {
+chara_chip rilian {
     id = 365
     source {
         x = 96
@@ -2961,7 +2961,7 @@ chara_chip _365 {
     }
 }
 
-chara_chip _366 {
+chara_chip tam {
     id = 366
     source {
         x = 144
@@ -2969,7 +2969,7 @@ chara_chip _366 {
     }
 }
 
-chara_chip _367 {
+chara_chip carbuncle {
     id = 367
     source {
         x = 192
@@ -2977,7 +2977,7 @@ chara_chip _367 {
     }
 }
 
-chara_chip _368 {
+chara_chip lion {
     id = 368
     source {
         x = 240
@@ -2985,7 +2985,7 @@ chara_chip _368 {
     }
 }
 
-chara_chip _369 {
+chara_chip cacy {
     id = 369
     source {
         x = 288
@@ -2993,7 +2993,7 @@ chara_chip _369 {
     }
 }
 
-chara_chip _370 {
+chara_chip gilbert_the_colonel {
     id = 370
     source {
         x = 336
@@ -3017,7 +3017,7 @@ chara_chip _372 {
     }
 }
 
-chara_chip _373 {
+chara_chip yerles_self_propelled_gun {
     id = 373
     source {
         x = 480
@@ -3049,7 +3049,7 @@ chara_chip _376 {
     }
 }
 
-chara_chip _377 {
+chara_chip juere_swordman {
     id = 377
     source {
         x = 672
@@ -3065,7 +3065,7 @@ chara_chip _378 {
     }
 }
 
-chara_chip _379 {
+chara_chip hot_spring_maniac_male {
     id = 379
     source {
         x = 768
@@ -3073,7 +3073,7 @@ chara_chip _379 {
     }
 }
 
-chara_chip _380 {
+chara_chip hot_spring_maniac_female {
     id = 380
     source {
         x = 816
@@ -3081,7 +3081,7 @@ chara_chip _380 {
     }
 }
 
-chara_chip _381 {
+chara_chip rudorbo {
     id = 381
     source {
         x = 864
@@ -3097,7 +3097,7 @@ chara_chip _382 {
     }
 }
 
-chara_chip _383 {
+chara_chip arnord {
     id = 383
     source {
         x = 960
@@ -3113,7 +3113,7 @@ chara_chip _384 {
     }
 }
 
-chara_chip _385 {
+chara_chip kamikaze_samurai {
     id = 385
     source {
         x = 1056
@@ -3121,7 +3121,7 @@ chara_chip _385 {
     }
 }
 
-chara_chip _386 {
+chara_chip bomb_rock {
     id = 386
     source {
         x = 1104
@@ -3129,7 +3129,7 @@ chara_chip _386 {
     }
 }
 
-chara_chip _387 {
+chara_chip stray_cat {
     id = 387
     source {
         x = 1152
@@ -3137,7 +3137,7 @@ chara_chip _387 {
     }
 }
 
-chara_chip _388 {
+chara_chip mia {
     id = 388
     source {
         x = 1200
@@ -3173,7 +3173,7 @@ chara_chip _391 {
     }
 }
 
-chara_chip _392 {
+chara_chip renton {
     id = 392
     source {
         x = 1392
@@ -3181,7 +3181,7 @@ chara_chip _392 {
     }
 }
 
-chara_chip _393 {
+chara_chip lulwy {
     id = 393
     tall = true
     offset_y = 16
@@ -3191,7 +3191,7 @@ chara_chip _393 {
     }
 }
 
-chara_chip _394 {
+chara_chip marks {
     id = 394
     source {
         x = 1488
@@ -3199,7 +3199,7 @@ chara_chip _394 {
     }
 }
 
-chara_chip _395 {
+chara_chip ancient_coffin {
     id = 395
     source {
         x = 1536
@@ -3207,7 +3207,7 @@ chara_chip _395 {
     }
 }
 
-chara_chip _396 {
+chara_chip scorpion {
     id = 396
     source {
         x = 0
@@ -3233,7 +3233,7 @@ chara_chip _398 {
     }
 }
 
-chara_chip _399 {
+chara_chip spore_mushroom {
     id = 399
     source {
         x = 144
@@ -3241,7 +3241,7 @@ chara_chip _399 {
     }
 }
 
-chara_chip _400 {
+chara_chip bubble {
     id = 400
     source {
         x = 192
@@ -3249,7 +3249,7 @@ chara_chip _400 {
     }
 }
 
-chara_chip _401 {
+chara_chip mass_monster {
     id = 401
     source {
         x = 240
@@ -3265,7 +3265,7 @@ chara_chip _402 {
     }
 }
 
-chara_chip _403 {
+chara_chip conery {
     id = 403
     source {
         x = 336
@@ -3273,7 +3273,7 @@ chara_chip _403 {
     }
 }
 
-chara_chip _404 {
+chara_chip executioner {
     id = 404
     tall = true
     offset_y = 16
@@ -3283,7 +3283,7 @@ chara_chip _404 {
     }
 }
 
-chara_chip _405 {
+chara_chip asura {
     id = 405
     tall = true
     offset_y = 16
@@ -3293,7 +3293,7 @@ chara_chip _405 {
     }
 }
 
-chara_chip _406 {
+chara_chip hungry_sea_lion {
     id = 406
     source {
         x = 480
@@ -3301,7 +3301,7 @@ chara_chip _406 {
     }
 }
 
-chara_chip _407 {
+chara_chip mad_gaze {
     id = 407
     source {
         x = 528
@@ -3309,7 +3309,7 @@ chara_chip _407 {
     }
 }
 
-chara_chip _408 {
+chara_chip big_daddy {
     id = 408
     tall = true
     offset_y = 16
@@ -3319,7 +3319,7 @@ chara_chip _408 {
     }
 }
 
-chara_chip _409 {
+chara_chip little_sister {
     id = 409
     source {
         x = 624
@@ -3327,7 +3327,7 @@ chara_chip _409 {
     }
 }
 
-chara_chip _410 {
+chara_chip cleaner {
     id = 410
     source {
         x = 672
@@ -3335,7 +3335,7 @@ chara_chip _410 {
     }
 }
 
-chara_chip _411 {
+chara_chip hard_gay {
     id = 411
     source {
         x = 720
@@ -3343,7 +3343,7 @@ chara_chip _411 {
     }
 }
 
-chara_chip _412 {
+chara_chip strange_scientist {
     id = 412
     source {
         x = 768
@@ -3351,7 +3351,7 @@ chara_chip _412 {
     }
 }
 
-chara_chip _413 {
+chara_chip ehekatl {
     id = 413
     tall = true
     offset_y = 16
@@ -3361,7 +3361,7 @@ chara_chip _413 {
     }
 }
 
-chara_chip _414 {
+chara_chip guild_trainer_female {
     id = 414
     source {
         x = 864
@@ -3369,7 +3369,7 @@ chara_chip _414 {
     }
 }
 
-chara_chip _415 {
+chara_chip guild_trainer_male {
     id = 415
     source {
         x = 912
@@ -3377,7 +3377,7 @@ chara_chip _415 {
     }
 }
 
-chara_chip _416 {
+chara_chip mysterious_producer {
     id = 416
     source {
         x = 960
@@ -3385,7 +3385,7 @@ chara_chip _416 {
     }
 }
 
-chara_chip _417 {
+chara_chip prostitute_female {
     id = 417
     source {
         x = 1008
@@ -3393,7 +3393,7 @@ chara_chip _417 {
     }
 }
 
-chara_chip _418 {
+chara_chip prostitute_male {
     id = 418
     source {
         x = 1056
@@ -3401,7 +3401,7 @@ chara_chip _418 {
     }
 }
 
-chara_chip _419 {
+chara_chip prisoner_male {
     id = 419
     source {
         x = 1104
@@ -3409,7 +3409,7 @@ chara_chip _419 {
     }
 }
 
-chara_chip _420 {
+chara_chip prisoner_female {
     id = 420
     source {
         x = 1152
@@ -3481,7 +3481,7 @@ chara_chip _428 {
     }
 }
 
-chara_chip _429 {
+chara_chip yith {
     id = 429
     tall = true
     offset_y = 8
@@ -3491,7 +3491,7 @@ chara_chip _429 {
     }
 }
 
-chara_chip _430 {
+chara_chip spiral_king {
     id = 430
     tall = true
     offset_y = 8
@@ -3509,7 +3509,7 @@ chara_chip _431 {
     }
 }
 
-chara_chip _432 {
+chara_chip opatos {
     id = 432
     tall = true
     offset_y = 8
@@ -3519,7 +3519,7 @@ chara_chip _432 {
     }
 }
 
-chara_chip _433 {
+chara_chip kumiromi {
     id = 433
     tall = true
     offset_y = 8
@@ -3529,7 +3529,7 @@ chara_chip _433 {
     }
 }
 
-chara_chip _434 {
+chara_chip mine_dog {
     id = 434
     source {
         x = 240
@@ -3537,7 +3537,7 @@ chara_chip _434 {
     }
 }
 
-chara_chip _435 {
+chara_chip _test {
     id = 435
     source {
         x = 288
@@ -3569,7 +3569,7 @@ chara_chip _438 {
     }
 }
 
-chara_chip _439 {
+chara_chip mammoth {
     id = 439
     tall = true
     offset_y = 8
@@ -3595,7 +3595,7 @@ chara_chip _441 {
     }
 }
 
-chara_chip _442 {
+chara_chip holy_beast {
     id = 442
     tall = true
     offset_y = 8
@@ -3605,7 +3605,7 @@ chara_chip _442 {
     }
 }
 
-chara_chip _443 {
+chara_chip caravan_master {
     id = 443
     source {
         x = 672
@@ -3637,7 +3637,7 @@ chara_chip _446 {
     }
 }
 
-chara_chip _447 {
+chara_chip mani {
     id = 447
     tall = true
     offset_y = 16
@@ -3823,7 +3823,7 @@ chara_chip _469 {
     }
 }
 
-chara_chip _470 {
+chara_chip kaneda_bike {
     id = 470
     source {
         x = 384
@@ -3831,7 +3831,7 @@ chara_chip _470 {
     }
 }
 
-chara_chip _471 {
+chara_chip cub {
     id = 471
     source {
         x = 432
@@ -3847,7 +3847,7 @@ chara_chip _472 {
     }
 }
 
-chara_chip _473 {
+chara_chip part_time_worker {
     id = 473
     source {
         x = 528
@@ -3871,7 +3871,7 @@ chara_chip _475 {
     }
 }
 
-chara_chip _476 {
+chara_chip festival_tourist_female {
     id = 476
     source {
         x = 672
@@ -3879,7 +3879,7 @@ chara_chip _476 {
     }
 }
 
-chara_chip _477 {
+chara_chip festival_tourist_male {
     id = 477
     source {
         x = 720
@@ -3887,7 +3887,7 @@ chara_chip _477 {
     }
 }
 
-chara_chip _478 {
+chara_chip the_leopard_warrior {
     id = 478
     source {
         x = 768
@@ -3895,7 +3895,7 @@ chara_chip _478 {
     }
 }
 
-chara_chip _479 {
+chara_chip silvia {
     id = 479
     source {
         x = 816
