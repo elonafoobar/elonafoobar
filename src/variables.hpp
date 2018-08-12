@@ -384,7 +384,6 @@ ELONA_EXTERN(elona_vector2<std::string> userdatan);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
-ELONA_EXTERN(int allyctrl);
 ELONA_EXTERN(int am);
 ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
