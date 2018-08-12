@@ -147,6 +147,7 @@ set(CORE_SOURCES
   src/lua_env/event_manager.cpp
   src/lua_env/export_manager.cpp
   src/lua_env/handle_manager.cpp
+  src/lua_env/lua_enums.cpp
   src/lua_env/lua_env.cpp
   src/lua_env/mod_manager.cpp
   src/lua_env/registry_manager.cpp

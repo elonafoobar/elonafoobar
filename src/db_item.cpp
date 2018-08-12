@@ -1,6 +1,7 @@
 #include "db_item.hpp"
 #include <string>
 #include "i18n.hpp"
+#include "lua_env/lua_enums.hpp"
 #include "lua_env/lua_env.hpp"
 
 using namespace elona;
@@ -50,7 +51,7 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(light, int, 0);
     ELONA_LION_DB_FIELD(originalnameref2, std::string, "");
     ELONA_LION_DB_FIELD(has_random_name, bool, false);
-    ELONA_LION_DB_FIELD_ENUM(color, "Color", "None");
+    ELONA_LION_DB_FIELD_ENUM(color, color_index_t, Color, color_index_t::none);
     ELONA_LION_DB_FIELD_REQUIRED(locale_key_prefix, std::string);
 
     ELONA_LION_DB_FIELD_CALLBACK(on_use_callback);

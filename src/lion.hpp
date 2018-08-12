@@ -269,20 +269,19 @@ static optional<std::vector<T>> convert_vector(
         } \
     }
 
-#define ELONA_LION_DB_FIELD_ENUM(name, enum_type, default_value) \
-    int name; \
+#define ELONA_LION_DB_FIELD_ENUM(name, type, enum_map, default_value) \
+    type name; \
     { \
-        std::string variant_; \
         sol::optional<std::string> value_ = data[#name]; \
         if (value_) \
         { \
-            variant_ = *value_; \
+            name = lua::LuaEnums::enum_map.get_from_string( \
+                *value_, default_value); \
         } \
         else \
         { \
-            variant_ = default_value; \
+            name = default_value; \
         } \
-        name = lua.get_api_manager().get_enum_value(enum_type, variant_); \
     }
 
 #define ELONA_LION_DB_FIELD_CALLBACK(name) \

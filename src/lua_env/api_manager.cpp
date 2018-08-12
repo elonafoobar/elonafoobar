@@ -28,6 +28,9 @@ api_manager::api_manager(lua_env* lua)
     // constructors.
     LuaApiClasses::bind(*lua->get_state());
     LuaApiClasses::bind_api(*lua->get_state(), core);
+
+    // Bind enums to the Enums table.
+    LuaEnums::bind(core);
 }
 
 bool api_manager::is_loaded()
@@ -70,31 +73,6 @@ void api_manager::add_api(
         }
         api_table[pair.first.as<std::string>()] = pair.second;
     }
-}
-
-int api_manager::get_enum_value(
-    const std::string& enum_name,
-    const std::string& variant) const
-{
-    sol::optional<sol::table> Enums = try_find_api("core", "Enums");
-    if (!Enums)
-        throw std::runtime_error(
-            "Enum table not loaded in API manager (" + enum_name + "." + variant
-            + ")");
-
-    sol::optional<sol::table> enum_table = (*Enums)[enum_name];
-
-    if (!enum_table)
-        throw std::runtime_error("No such enum \"" + enum_name + "\"");
-
-    sol::optional<int> enum_value = (*enum_table)[variant];
-
-    if (!enum_value)
-        throw std::runtime_error(
-            "No such enum value \"" + variant + "\" for enum \"" + enum_name
-            + "\"");
-
-    return *enum_value;
 }
 
 void api_manager::load_lua_support_libraries(lua_env& lua)

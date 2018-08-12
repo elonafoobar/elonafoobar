@@ -15,10 +15,6 @@ void LuaItem::bind(sol::state& lua)
         "set_number",
         &item::set_number,
 
-        "curse_state",
-        &item::curse_state,
-        "identify_state",
-        &item::identification_state,
         "index",
         sol::readonly(&item::index),
         "position",
@@ -36,7 +32,26 @@ void LuaItem::bind(sol::state& lua)
         "param1",
         &item::param1,
         "param2",
-        &item::param2);
+        &item::param2,
+
+        "curse_state",
+        sol::property(
+            [](item& i) {
+                return LuaEnums::CurseState.convert_to_string(i.curse_state);
+            },
+            [](item& i, const enum_string& s) {
+                i.curse_state = LuaEnums::CurseState.ensure_from_string(s);
+            }),
+        "identify_state",
+        sol::property(
+            [](item& i) {
+                return LuaEnums::IdentifyState.convert_to_string(
+                    i.identification_state);
+            },
+            [](item& i, const enum_string& s) {
+                i.identification_state =
+                    LuaEnums::IdentifyState.ensure_from_string(s);
+            }));
 
     lua.set_usertype(item::lua_type(), LuaItem);
 }

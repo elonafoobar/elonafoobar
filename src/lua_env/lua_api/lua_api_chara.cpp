@@ -34,13 +34,10 @@ int Chara::count()
     return gdata_crowd_density;
 }
 
-bool Chara::flag(lua_character_handle handle, int flag)
+bool Chara::flag(lua_character_handle handle, const enum_string& flag_name)
 {
-    if (flag < 5 || flag > 991 || (flag > 32 && flag < 960))
-    {
-        return false;
-    }
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    int flag = LuaEnums::CharaFlag.ensure_from_string(flag_name);
     return chara._flags[flag] == 1;
 }
 

@@ -13,6 +13,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/lua_enums.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
@@ -451,8 +452,8 @@ static std::vector<int> convert_chara_flags(
         for (const auto& kvp : *value)
         {
             std::string variant_name = kvp.second.as<std::string>();
-            int variant_value = lua::lua->get_api_manager().get_enum_value(
-                "CharaFlag", variant_name);
+            int variant_value =
+                lua::LuaEnums::CharaFlag.ensure_from_string(variant_name);
             flag_types.push_back(variant_value);
         }
     }
@@ -472,7 +473,7 @@ character_data character_db_ex::convert(
     ELONA_LION_DB_FIELD(ai_heal, int, 0);
     ELONA_LION_DB_FIELD(ai_move, int, 0);
     ELONA_LION_DB_FIELD(can_talk, int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color, "Color", "None");
+    ELONA_LION_DB_FIELD_ENUM(color, color_index_t, Color, color_index_t::none);
     ELONA_LION_DB_FIELD(creaturepack, int, 0);
     ELONA_LION_DB_FIELD(cspecialeq, int, 0);
     ELONA_LION_DB_FIELD(damage_reaction_info, int, 0);
@@ -492,11 +493,11 @@ character_data character_db_ex::convert(
     ELONA_LION_DB_FIELD(image, int, 0);
     ELONA_LION_DB_FIELD(level, int, 0);
     ELONA_LION_DB_FIELD(male_image, int, 0);
-    ELONA_LION_DB_FIELD_ENUM(original_relationship, "Relation", "Neutral");
+    ELONA_LION_DB_FIELD_ENUM(original_relationship, int, Relation, 0);
     ELONA_LION_DB_FIELD(portrait, int, 0);
     ELONA_LION_DB_FIELD(race, std::string, "");
     ELONA_LION_DB_FIELD(class_, std::string, "");
-    ELONA_LION_DB_FIELD_ENUM(sex, "Gender", "Random");
+    ELONA_LION_DB_FIELD_ENUM(sex, int, Gender, -1);
     ELONA_LION_DB_FIELD(fltselect, int, 0);
     ELONA_LION_DB_FIELD(category, int, 0);
     ELONA_LION_DB_FIELD(rarity, int, 10000);
