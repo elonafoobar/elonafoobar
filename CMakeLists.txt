@@ -81,7 +81,9 @@ set(CORE_SOURCES
   src/crafting.cpp
   src/ctrl_file.cpp
   src/ctrl_inventory.cpp
+  src/db_chara_chip.cpp
   src/db_item.cpp
+  src/db_item_chip.cpp
   src/db_music.cpp
   src/db_sound.cpp
   src/debug.cpp

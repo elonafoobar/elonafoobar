@@ -13,7 +13,9 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "db_chara_chip.hpp"
 #include "db_item.hpp"
+#include "db_item_chip.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -405,6 +407,19 @@ void initialize_lion_db()
         "sound", [](auto table) { the_sound_db.initialize(table); });
     lua::lua->get_registry_manager().register_native_datatype(
         "music", [](auto table) { the_music_db.initialize(table); });
+
+    lua::lua->get_registry_manager().register_native_datatype(
+        "chara_chip", [](auto table) {
+            chara_chip_db db;
+            db.initialize(table);
+            initialize_chara_chips(db);
+        });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "item_chip", [](auto table) {
+            item_chip_db db;
+            db.initialize(table);
+            initialize_item_chips(db);
+        });
 
     auto locations = collect_mod_datafile_locations();
     lua::lua->get_registry_manager().load_mod_data(locations);

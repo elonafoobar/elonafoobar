@@ -144,33 +144,7 @@ struct character_data
 
 
 
-class character_db_ex;
-
-
-namespace lion
-{
-
-template <>
-struct lion_db_traits<character_db_ex>
-{
-    using data_type = character_data;
-    using legacy_id_type = int;
-    static constexpr const char* datatype_name = u8"chara";
-};
-
-} // namespace lion
-
-
-
-class character_db_ex : public lion::lion_db<character_db_ex>
-{
-public:
-    character_db_ex() = default;
-
-    character_data
-    convert(const std::string&, const sol::table&, lua::lua_env&);
-};
-
+ELONA_LION_DEFINE_DB(character_db_ex, character_data, int, u8"chara")
 
 extern character_db_ex the_character_db;
 

@@ -1,6 +1,6 @@
 item counter {
     id = 900
-    image = 515
+    image = 900
     value = 780
     weight = 500
     dice_x = 0
