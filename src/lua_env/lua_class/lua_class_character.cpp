@@ -1,8 +1,10 @@
 #include "lua_class_character.hpp"
 #include "../../ability.hpp"
 #include "../../character.hpp"
+#include "../../character_status.hpp"
 #include "../../dmgheal.hpp"
 #include "../../element.hpp"
+#include "../../food.hpp"
 
 namespace elona
 {
@@ -94,6 +96,58 @@ void LuaCharacter::modify_resistance(character& self, int element, int delta)
     elona::resistmod(self.index, element, delta);
 }
 
+void LuaCharacter::modify_sanity(character& self, int delta)
+{
+    if (delta < 0)
+    {
+        elona::damage_insanity(self, (-delta));
+    }
+    else
+    {
+        elona::heal_insanity(self, delta);
+    }
+}
+
+void LuaCharacter::modify_karma(character& self, int delta)
+{
+    if (self.index != 0)
+    {
+        return;
+    }
+
+    elona::modify_karma(self, delta);
+}
+
+void LuaCharacter::modify_corruption(character& self, int delta)
+{
+    if (self.index != 0)
+    {
+        return;
+    }
+
+    elona::modify_ether_disease_stage(delta);
+}
+
+void LuaCharacter::make_pregnant(character& self)
+{
+    int tc_bk = self.index;
+    elona::tc = self.index;
+
+    elona::get_pregnant();
+
+    elona::tc = tc_bk;
+}
+
+void LuaCharacter::eat_rotten_food(character& self)
+{
+    int cc_bk = self.index;
+    elona::cc = self.index;
+
+    elona::eat_rotten_food();
+
+    elona::cc = cc_bk;
+}
+
 void LuaCharacter::bind(sol::state& lua)
 {
     sol::usertype<character> LuaCharacter(
@@ -118,6 +172,16 @@ void LuaCharacter::bind(sol::state& lua)
         &LuaCharacter::gain_skill_exp,
         "modify_resistance",
         &LuaCharacter::modify_resistance,
+        "modify_sanity",
+        &LuaCharacter::modify_sanity,
+        "modify_karma",
+        &LuaCharacter::modify_karma,
+        "modify_corruption",
+        &LuaCharacter::modify_corruption,
+        "make_pregnant",
+        &LuaCharacter::make_pregnant,
+        "eat_rotten_food",
+        &LuaCharacter::eat_rotten_food,
 
         "hp",
         sol::readonly(&character::hp),

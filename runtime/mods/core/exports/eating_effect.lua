@@ -31,7 +31,7 @@ end
 
 function eating_effect.deformed_eye(eater)
    eat_message(eater, "deformed_eye", Enums.Color.Purple)
-   eater:gain_sanity(-25)
+   eater:modify_sanity(-25)
    eater:apply_ailment(Enums.StatusAilment.Insane, 500)
 end
 
@@ -42,7 +42,7 @@ end
 
 function eating_effect.holy_one(eater)
    eat_message(eater, "holy_one", Enums.Color.Green)
-   eater:gain_sanity(-50)
+   eater:modify_sanity(-50)
    mod_resist_chance(eater, Enums.Element.Mind, 5)
 end
 
@@ -69,7 +69,7 @@ end
 function eating_effect.insanity(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
    eater:modify_resistance(Enums.Element.Mind, 50)
-   eater:gain_sanity(-500)
+   eater:modify_sanity(-500)
    eater:apply_ailment(Enums.StatusAilment.Insane, 1000)
 end
 
@@ -125,7 +125,7 @@ end
 
 function eating_effect.calm(eater)
    eat_message(eater, "calm", Enums.Color.Green)
-   eater:gain_sanity(20)
+   eater:modify_sanity(20)
 end
 
 function eating_effect.fire_crab(eater)
@@ -139,7 +139,7 @@ end
 
 function eating_effect.yith(eater)
    eat_message(eater, "insanity", Enums.Color.Purple)
-   eater:gain_sanity(-50)
+   eater:modify_sanity(-50)
    mod_resist_chance(eater, Enums.Element.Mind, 5)
 end
 

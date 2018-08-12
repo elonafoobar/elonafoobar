@@ -1,0 +1,23 @@
+--- Math utility functions.
+--  @usage local Math = Elona.require("Math")
+
+module "Math"
+
+--- Retrieves the maximum of two numbers.
+-- @tparam num a
+-- @tparam num b
+-- @treturn num the maximum of a and b
+function max(a, b) end
+
+--- Retrieves the minimum of two numbers.
+-- @tparam num a
+-- @tparam num b
+-- @treturn num the minimum of a and b
+function min(a, b) end
+
+--- Clamps a number between two numbers.
+-- @tparam num n
+-- @tparam num min
+-- @tparam num max
+-- @treturn num a number between min and max
+function clamp(n, min, max) end
