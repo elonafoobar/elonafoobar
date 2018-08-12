@@ -2448,9 +2448,8 @@ turn_result_t do_use_command()
         txtnew();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_original"));
         rc = 0;
-        allyctrl = 5;
         {
-            int stat = ctrl_ally();
+            int stat = ctrl_ally(ctrl_ally_operation::gene_engineer);
             if (stat == -1)
             {
                 return turn_result_t::turn_end;
@@ -2459,9 +2458,8 @@ turn_result_t do_use_command()
         }
         txtnew();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
-        allyctrl = 5;
         {
-            int stat = ctrl_ally();
+            int stat = ctrl_ally(ctrl_ally_operation::gene_engineer);
             if (stat == -1)
             {
                 return turn_result_t::turn_end;

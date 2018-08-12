@@ -27,9 +27,9 @@ public:
         {
         }
 
-        static result finish()
+        static result finish(optional<T> res = none)
         {
-            return {false, none};
+            return {false, res};
         }
 
         static result cancel()

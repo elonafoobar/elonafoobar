@@ -413,8 +413,7 @@ talk_result_t talk_pet_arena_master(int chatval)
     {
         followerexist(cnt) = static_cast<int>(cdata[cnt].state());
     }
-    allyctrl = 2;
-    int stat = ctrl_ally();
+    int stat = ctrl_ally(ctrl_ally_operation::pet_arena);
     if (stat == -1)
     {
         buff = i18n::s.get(
@@ -565,8 +564,7 @@ talk_result_t talk_guard_return_item()
 
 talk_result_t talk_bartender_call_ally()
 {
-    allyctrl = 0;
-    int stat = ctrl_ally();
+    int stat = ctrl_ally(ctrl_ally_operation::call_back);
     if (stat != -1)
     {
         rc = stat;
@@ -714,8 +712,7 @@ talk_result_t talk_slave_buy(int chatval)
 
 talk_result_t talk_slave_sell()
 {
-    allyctrl = 1;
-    int stat = ctrl_ally();
+    int stat = ctrl_ally(ctrl_ally_operation::sell);
     if (stat != -1)
     {
         rc = stat;
@@ -917,8 +914,7 @@ talk_result_t talk_sister_buy_indulgence()
 talk_result_t talk_informer_investigate_ally()
 {
     int tcchat = tc;
-    allyctrl = 4;
-    int stat = ctrl_ally();
+    int stat = ctrl_ally(ctrl_ally_operation::investigate);
     if (stat != -1)
     {
         rc = stat;

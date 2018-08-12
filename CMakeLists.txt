@@ -177,7 +177,9 @@ set(CORE_SOURCES
   src/pic_loader/pic_loader.cpp
 
   src/ui/ui_menu_book.cpp
+  src/ui/ui_menu_ctrl_ally.cpp
   src/ui/ui_menu_item_desc.cpp
+  src/ui/ui_menu_npc_tone.cpp
 
   src/version.cpp
   )

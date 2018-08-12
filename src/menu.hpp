@@ -14,6 +14,16 @@ struct menu_result
     turn_result_t turn_result;
 };
 
+enum class ctrl_ally_operation
+{
+    call_back,
+    sell,
+    pet_arena,
+    staying,
+    investigate,
+    gene_engineer,
+};
+
 void text_set();
 int cnvjkey(const std::string&);
 void show_quick_menu();
@@ -53,7 +63,7 @@ void show_economy_window();
 void show_politics_window();
 void begin_to_believe_god();
 void screen_analyze_self();
-int ctrl_ally();
+int ctrl_ally(ctrl_ally_operation);
 void show_book_window();
 int change_npc_tone();
 void item_show_description();
