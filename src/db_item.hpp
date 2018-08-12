@@ -2,7 +2,6 @@
 
 #include <array>
 #include <unordered_map>
-#include "cat.hpp"
 #include "enums.hpp"
 #include "i18n.hpp"
 #include "lion.hpp"
@@ -50,8 +49,6 @@ struct item_data
     i18n_key locale_key_prefix;
     optional<std::string> on_use_callback;
 };
-
-
 
 ELONA_LION_DEFINE_DB(item_db_ex, item_data, int, u8"item")
 

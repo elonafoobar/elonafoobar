@@ -5,13 +5,15 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
-#include "../character.hpp"
 #include "../item.hpp"
 #include "../lib/noncopyable.hpp"
 #include "lua_env.hpp"
 
 namespace elona
 {
+
+struct character;
+
 namespace lua
 {
 
