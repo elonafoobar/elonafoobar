@@ -45,7 +45,7 @@ protected:
     using result_type = ui_menu<T>::result;
 
 protected:
-    virtual void init() = 0;
+    virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual optional<result_type> on_key(const std::string& key) = 0;
@@ -55,17 +55,10 @@ protected:
         _reupdate = true;
     }
 
-    void set_init_failed()
-    {
-        _init_failed = true;
-    }
-
 public:
     ui_menu::result show()
     {
-        init();
-
-        if (_init_failed)
+        if (!init())
         {
             return result_type::cancel();
         }
@@ -106,7 +99,6 @@ private:
         cursor_check();
     }
 
-    bool _init_failed = false;
     bool _reupdate = false;
 };
 

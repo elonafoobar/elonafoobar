@@ -18,7 +18,7 @@ public:
     }
 
 protected:
-    virtual void init();
+    virtual bool init();
     virtual void update();
     virtual void draw();
     virtual optional<ui_menu_hire::result_type> on_key(const std::string& key);

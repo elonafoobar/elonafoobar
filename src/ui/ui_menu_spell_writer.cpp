@@ -23,7 +23,7 @@ static void _populate_book_list()
     sort_list_by_column1();
 }
 
-void ui_menu_spell_writer::init()
+bool ui_menu_spell_writer::init()
 {
     snd(26);
     listmax = 0;
@@ -35,6 +35,8 @@ void ui_menu_spell_writer::init()
     windowshadow = 1;
 
     _populate_book_list();
+
+    return true;
 }
 
 void ui_menu_spell_writer::update()

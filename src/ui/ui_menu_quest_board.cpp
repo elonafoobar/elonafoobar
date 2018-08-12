@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_quest_board::init()
+bool ui_menu_quest_board::init()
 {
     quest_refresh_list();
     listmax = 0;
@@ -47,8 +47,7 @@ void ui_menu_quest_board::init()
     if (listmax == 0)
     {
         txt(i18n::s.get("core.locale.ui.board.no_new_notices"));
-        set_init_failed();
-        return;
+        return false;
     }
 
     sort_list_by_column1();
@@ -73,6 +72,8 @@ void ui_menu_quest_board::init()
     }
     render_hud();
     gsel(0);
+
+    return true;
 }
 
 void ui_menu_quest_board::update()

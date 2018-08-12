@@ -97,7 +97,7 @@ static void _init_pet_arena_selection()
     }
 }
 
-void ui_menu_ctrl_ally::init()
+bool ui_menu_ctrl_ally::init()
 {
     snd(26);
     listmax = 0;
@@ -125,6 +125,8 @@ void ui_menu_ctrl_ally::init()
         _init_pet_arena_selection();
     }
     windowshadow = 1;
+
+    return true;
 }
 
 static void _update_call_back()

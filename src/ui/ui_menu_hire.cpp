@@ -66,7 +66,7 @@ void ui_menu_hire::_populate_list()
     sort_list_by_column1();
 }
 
-void ui_menu_hire::init()
+bool ui_menu_hire::init()
 {
     snd(26);
     listmax = 0;
@@ -78,6 +78,8 @@ void ui_menu_hire::init()
     windowshadow = 1;
 
     _populate_list();
+
+    return true;
 }
 
 void ui_menu_hire::update()

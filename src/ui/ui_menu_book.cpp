@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_book::init()
+bool ui_menu_book::init()
 {
     snd(59);
     gsel(4);
@@ -28,7 +28,7 @@ void ui_menu_book::init()
     p = instr(buff, 0, ""s + _book_id + u8","s + lang(u8"JP"s, u8"EN"s));
     if (p == -1)
     {
-        return;
+        return false;
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
@@ -40,6 +40,8 @@ void ui_menu_book::init()
     listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;
+
+    return true;
 }
 
 void ui_menu_book::update()

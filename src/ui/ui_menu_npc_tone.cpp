@@ -33,7 +33,7 @@ static int _load_talk_entries()
     return _listmax;
 }
 
-void ui_menu_npc_tone::init()
+bool ui_menu_npc_tone::init()
 {
     load_background_variants(4);
     gsel(0);
@@ -45,6 +45,8 @@ void ui_menu_npc_tone::init()
     windowshadow = 1;
 
     listmax = _load_talk_entries();
+
+    return true;
 }
 
 void ui_menu_npc_tone::update()

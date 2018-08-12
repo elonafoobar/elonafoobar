@@ -10,7 +10,7 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_item_desc::init()
+bool ui_menu_item_desc::init()
 {
     snd(26);
     page_save();
@@ -23,6 +23,8 @@ void ui_menu_item_desc::init()
     item_dump_desc(_the_item);
 
     windowshadow = 1;
+
+    return true;
 }
 
 void ui_menu_item_desc::update()
