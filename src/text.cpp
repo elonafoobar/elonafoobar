@@ -329,8 +329,17 @@ std::string mapname(int id, bool description)
         break;
     case mdata_t::map_id_t::random_dungeon: name = mapname_dungeon(id); break;
     default:
-        name = i18n::s.get_enum_property(
+        auto name_opt = i18n::s.get_enum_property_opt(
             "core.locale.map.unique", "name", adata(16, id));
+        if (name_opt)
+        {
+            name = *name_opt;
+        }
+        else
+        {
+            name = "";
+        }
+
         auto desc_opt = i18n::s.get_enum_property_opt(
             "core.locale.map.unique", "desc", adata(16, id));
         if (desc_opt)

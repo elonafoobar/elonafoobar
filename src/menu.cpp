@@ -25,8 +25,11 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_adventurers.hpp"
+#include "ui/ui_menu_alias.hpp"
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
+#include "ui/ui_menu_god.hpp"
 #include "ui/ui_menu_item_desc.hpp"
 #include "ui/ui_menu_npc_tone.hpp"
 
@@ -5671,205 +5674,26 @@ label_1986_internal:
 
 void list_adventurers()
 {
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    for (int cnt = 0; cnt < 56; ++cnt)
-    {
-        if (cdata[cnt].state() == character::state_t::empty)
-        {
-            continue;
-        }
-        list(0, listmax) = cnt;
-        list(1, listmax) = -cdata[cnt].fame;
-        ++listmax;
-    }
-    sort_list_by_column1();
-    windowshadow = 1;
-label_1989_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1990_internal:
-    s(0) = i18n::s.get("core.locale.ui.adventurers.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
-    display_topic(
-        i18n::s.get("core.locale.ui.adventurers.name_and_rank"),
-        wx + 28,
-        wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.adventurers.fame_lv"), wx + 320, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.adventurers.location"), wx + 420, wy + 36);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-
-        draw_chara_scale_height(
-            cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
-
-        pos(wx + 84, wy + 66 + cnt * 19 + 2);
-        mes(cnvrank(p + 1)
-            + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
-        i = list(0, p);
-        s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
-        cutname(s, 26);
-        cs_list(cs == cnt, s, wx + 118, wy + 66 + cnt * 19 - 1);
-        s = ""s + cdata[i].fame + u8"("s + cdata[i].level + u8")"s;
-        pos(wx + 402 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
-        mes(s);
-        s = mapname(cdata[i].current_map);
-        if (s == ""s)
-        {
-            s = i18n::s.get("core.locale.ui.adventurers.unknown");
-        }
-        if (cdata[i].state() == character::state_t::adventurer_dead)
-        {
-            s = i18n::s.get("core.locale.ui.adventurers.hospital");
-        }
-        pos(wx + 435, wy + 66 + cnt * 19 + 2);
-        mes(s);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1989_internal;
-        }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1989_internal;
-        }
-    }
-    if (key == key_cancel)
-    {
-        return;
-    }
-    goto label_1990_internal;
+    ui::ui_menu_adventurers().show();
 }
 
 int select_alias(int val0)
 {
-    cs = 0;
-    cs_bk = -1;
-    list(0, 0) = -1;
-    windowshadow = 1;
-    i = 10500;
+    auto result = ui::ui_menu_alias(val0).show();
 
-    while (1)
+    if (result.canceled)
     {
-        if (cs != cs_bk)
-        {
-            s(0) = i18n::s.get("core.locale.ui.alias.title");
-            s(1) = strhint3b;
-            display_window(
-                (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
-            display_topic(
-                i18n::s.get("core.locale.ui.alias.list"), wx + 28, wy + 30);
-            font(14 - en * 2);
-            for (int cnt = 0; cnt < 17; ++cnt)
-            {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                if (val0 == 3)
-                {
-                    randomize(i + cnt);
-                }
-                if (list(0, 0) == -1)
-                {
-                    listn(0, cnt) = random_title(val0);
-                    list(1, cnt) = i + cnt;
-                }
-                if (cnt == 0)
-                {
-                    listn(0, cnt) = i18n::s.get("core.locale.ui.alias.reroll");
-                }
-                pos(wx + 38, wy + 66 + cnt * 19 - 2);
-                gcopy(3, cnt * 24 + 72, 30, 24, 18);
-                cs_list(
-                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
-            }
-            i += 17;
-            cs_bk = cs;
-            list(0, 0) = 0;
-        }
-        redraw();
-        await(config::instance().wait1);
-        key_check();
-        cursor_check();
-        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-        if (p != -1)
-        {
-            if (key == key_select(0))
-            {
-                list(0, 0) = -1;
-                snd(103);
-                cs_bk = -1;
-            }
-            else
-            {
-                if (val0 == 3)
-                {
-                    return p;
-                }
-                cmaka = listn(0, p);
-                return 1;
-            }
-        }
-        if (key == key_cancel)
-        {
-            snd(26);
-            return 0;
-        }
+        return 0;
+    }
+
+    if (val0 == 3)
+    {
+        return result.value->seed;
+    }
+    else
+    {
+        cmaka = result.value->alias;
+        return 1;
     }
 }
 
@@ -6437,118 +6261,17 @@ label_2283_internal:
     goto label_2283_internal;
 }
 
-void begin_to_believe_god()
+void begin_to_believe_god(int god_id)
 {
-    cs = 0;
-    page = 0;
-    pagemax = 0;
-    pagesize = 16;
-    cs_bk = -1;
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
-    listmax = 0;
-    chatesc = 2;
-    if (!cdata.player().god_id.empty())
+    bool already_believing = !cdata.player().god_id.empty();
+
+    auto result = ui::ui_menu_god(god_id, already_believing).show();
+
+    if (!result.canceled && result.value)
     {
-        if (inv[ci].param1 == 0)
-        {
-            s = i18n::s.get("core.locale.god.desc.window.abandon");
-        }
-        else
-        {
-            s = i18n::s.get(
-                "core.locale.god.desc.window.convert",
-                i18n::_(
-                    u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
-        }
-        list(0, listmax) = 0;
-        listn(0, listmax) = s;
-        ++listmax;
-    }
-    else
-    {
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get(
-            "core.locale.god.desc.window.believe",
-            i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
-        ++listmax;
-    }
-    list(0, listmax) = 2;
-    listn(0, listmax) = i18n::s.get("core.locale.god.desc.window.cancel");
-    ++listmax;
-    snd(62);
-    gsel(4);
-    gmode(0);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"bg_altar.bmp", 1);
-    pos(0, 0);
-    gcopy(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
-    gsel(0);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-    }
-label_1887_internal:
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh - inf_verh);
-    gmode(2);
-    render_hud();
-    dx = 520;
-    dy = 270;
-    window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6);
-    wx = (windoww - dx) / 2 + inf_screenx;
-    wy = winposy(dy);
-    font(18 - en * 2, snail::font_t::style_t::bold);
-    bmes(
-        i18n::s.get(
-            "core.locale.god.desc.window.title",
-            i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")),
-        wx + 20,
-        wy + 20);
-    buff = get_god_description();
-    gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-    {
-        p = cnt;
-        i = list(0, p);
-        display_key(wx + 50, wy + dy + cnt * 20 - listmax * 20 - 18, cnt);
-        s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
-    if (chatesc != -1)
-    {
-        if (key == key_cancel)
-        {
-            snd(40);
-            rtval = chatesc;
-        }
-    }
-    if (rtval != -1)
-    {
+        rtval = *result.value;
         god_proc_switching_penalty();
-        return;
     }
-    goto label_1887_internal;
 }
 
 
