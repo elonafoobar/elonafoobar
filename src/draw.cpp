@@ -309,7 +309,7 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
     {
         item_rect = draw_get_rect_item(id);
         gsel(1);
-        boxf(0, 960, item_rect->width, item_rect->height);
+        boxf(0, 960, inf_tiles, inf_tiles * 2);
 
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
