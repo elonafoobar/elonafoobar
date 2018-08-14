@@ -80,9 +80,9 @@ talk_result_t talk_inn_eat()
     return talk_result_t::talk_npc;
 }
 
-talk_result_t talk_wizard_identify(int chatval)
+talk_result_t talk_wizard_identify(int chatval_)
 {
-    if (cdata.player().gold < calcidentifyvalue(chatval - 14))
+    if (cdata.player().gold < calcidentifyvalue(chatval_ - 14))
     {
         buff = i18n::_(u8"ui", u8"no_gold");
         return talk_result_t::talk_npc;
@@ -106,7 +106,7 @@ talk_result_t talk_wizard_identify(int chatval)
             "core.locale.talk.npc.wizard.identify.already", cdata[tc]);
         return talk_result_t::talk_npc;
     }
-    if (chatval == 15)
+    if (chatval_ == 15)
     {
         cdata.player().gold -= calcidentifyvalue(1);
         p(0) = 0;
@@ -138,7 +138,7 @@ talk_result_t talk_wizard_identify(int chatval)
     }
     else
     {
-        if (chatval == 14)
+        if (chatval_ == 14)
         {
             efp = 250;
         }
@@ -165,7 +165,7 @@ talk_result_t talk_wizard_identify(int chatval)
                 "core.locale.talk.npc.wizard.identify.need_investigate",
                 cdata[tc]);
         }
-        cdata.player().gold -= calcidentifyvalue(chatval - 14);
+        cdata.player().gold -= calcidentifyvalue(chatval_ - 14);
     }
     snd(12);
     return talk_result_t::talk_npc;
@@ -234,7 +234,7 @@ talk_result_t talk_trade()
     return talk_result_t::talk_npc;
 }
 
-talk_result_t talk_arena_master(int chatval)
+talk_result_t talk_arena_master(int chatval_)
 {
     if (gdata_mount != 0)
     {
@@ -257,7 +257,7 @@ talk_result_t talk_arena_master(int chatval)
             + 2);
     listmax = 0;
     randomize(adata(26, gdata_current_map));
-    if (chatval == 21)
+    if (chatval_ == 21)
     {
         if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
@@ -362,7 +362,7 @@ talk_result_t talk_arena_master(int chatval)
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_pet_arena_master(int chatval)
+talk_result_t talk_pet_arena_master(int chatval_)
 {
     gdata(74) = calcfame(
         0,
@@ -370,7 +370,7 @@ talk_result_t talk_pet_arena_master(int chatval)
                 * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
             + 2);
     listmax = 0;
-    if (chatval == 40)
+    if (chatval_ == 40)
     {
         arenaop(0) = 0;
         arenaop(1) = 1;
@@ -380,7 +380,7 @@ talk_result_t talk_pet_arena_master(int chatval)
             arenaop(2),
             cdata[tc]);
     }
-    if (chatval == 41)
+    if (chatval_ == 41)
     {
         arenaop(0) = 1;
         arenaop(1) = 2;
@@ -652,13 +652,13 @@ talk_result_t talk_ally_abandon()
     return talk_result_t::talk_npc;
 }
 
-talk_result_t talk_slave_buy(int chatval)
+talk_result_t talk_slave_buy(int chatval_)
 {
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         flt(cdata.player().level / 2 + 5);
         fixlv = 2;
-        if (chatval == 36)
+        if (chatval_ == 36)
         {
             fltn(u8"man"s);
         }
@@ -1273,10 +1273,10 @@ talk_result_t talk_caravan_master_hire()
     return talk_result_t::talk_end;
 }
 
-talk_result_t talk_guard_where_is(int chatval)
+talk_result_t talk_guard_where_is(int chatval_)
 {
     talk_guide_quest_client();
-    rc = rtval(chatval - 10000);
+    rc = rtval(chatval_ - 10000);
     p = direction(
         cdata.player().position.x,
         cdata.player().position.y,
