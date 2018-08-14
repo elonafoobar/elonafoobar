@@ -439,7 +439,8 @@ talk_result_t talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(23, gdata_current_map));
+        adata(23, gdata_current_map),
+        cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -447,7 +448,8 @@ talk_result_t talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(22, gdata_current_map));
+        adata(22, gdata_current_map),
+        cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
