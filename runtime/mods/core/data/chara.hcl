@@ -1313,7 +1313,7 @@ chara blue_bubble {
     race = "slime"
     resistances = {_63 = 500}
     image = 400
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -2659,7 +2659,7 @@ chara orc {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "orc"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 2
@@ -3210,7 +3210,7 @@ chara fire_ent {
         _51 = 50
         _50 = 500
     }
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3239,7 +3239,7 @@ chara ice_ent {
         _50 = 50
         _51 = 500
     }
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3288,7 +3288,7 @@ chara master_lich {
     original_relationship = Aggressive
     race = "lich"
     class_ = "wizard"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3313,7 +3313,7 @@ chara demi_lich {
     original_relationship = Aggressive
     race = "lich"
     class_ = "wizard"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3450,7 +3450,7 @@ chara ice_hound {
         _50 = 50
         _51 = 500
     }
-    color = LightBrown
+    color = White2
     cspecialeq = 0
     fltselect = 0
     category = 15
@@ -3632,7 +3632,7 @@ chara nether_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_56 = 500}
-    color = PaleRed
+    color = LightGrey
     cspecialeq = 0
     fltselect = 0
     category = 22
@@ -3658,7 +3658,7 @@ chara chaos_hound {
     race = "hound"
     class_ = "predator"
     resistances = {_59 = 500}
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 23
@@ -3807,7 +3807,7 @@ chara super_hungry_sea_lion {
     race = "ent"
     class_ = "predator"
     image = 406
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -3857,7 +3857,7 @@ chara chaos_cloud {
     race = "spirit"
     element_of_unarmed_attack = 5900300
     resistances = {_59 = 500}
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4125,7 +4125,7 @@ chara titan {
     original_relationship = Aggressive
     race = "giant"
     class_ = "warrior"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4150,7 +4150,7 @@ chara imp {
     special_actions = [410, 450]
     original_relationship = Aggressive
     race = "imp"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4200,7 +4200,7 @@ chara chaos_imp {
     special_actions = [410]
     original_relationship = Aggressive
     race = "imp"
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4250,7 +4250,7 @@ chara hand_of_the_chaos {
     original_relationship = Aggressive
     race = "hand"
     element_of_unarmed_attack = 5900180
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4275,7 +4275,7 @@ chara hand_of_the_murderer {
     original_relationship = Aggressive
     race = "hand"
     class_ = "warrior"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 1
     eqtwohand = 1
     fltselect = 0
@@ -4399,7 +4399,7 @@ chara cobra {
     special_actions = [615]
     original_relationship = Aggressive
     race = "snake"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4423,7 +4423,7 @@ chara king_cobra {
     special_actions = [615]
     original_relationship = Aggressive
     race = "snake"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4621,7 +4621,7 @@ chara goblin {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "goblin"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4669,7 +4669,7 @@ chara goblin_shaman {
     original_relationship = Aggressive
     race = "goblin"
     class_ = "warmage"
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 1
@@ -4862,7 +4862,7 @@ chara steel_mass {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4913,7 +4913,7 @@ chara death_armor {
     original_relationship = Aggressive
     race = "armor"
     class_ = "warrior"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -4983,7 +4983,7 @@ chara stheno {
     original_relationship = Aggressive
     race = "medusa"
     class_ = "warmage"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5099,7 +5099,7 @@ chara green_dragon {
     original_relationship = Aggressive
     race = "dragon"
     class_ = "predator"
-    color = YellowGreen
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5223,7 +5223,7 @@ chara chaos_dragon {
     race = "dragon"
     class_ = "predator"
     resistances = {_59 = 500}
-    color = LightGreen
+    color = LightPurple
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5348,7 +5348,7 @@ chara black_widow {
     race = "spider"
     element_of_unarmed_attack = 5500150
     resistances = {_55 = 500}
-    color = YellowGreen
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5375,7 +5375,7 @@ chara paralyzer {
     race = "spider"
     element_of_unarmed_attack = 5800150
     resistances = {_55 = 500}
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5429,7 +5429,7 @@ chara blood_spider {
     race = "spider"
     element_of_unarmed_attack = 5600100
     resistances = {_55 = 500}
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 6
@@ -5502,7 +5502,7 @@ chara steel_golem {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = PaleRed
+    color = LightGrey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -5554,7 +5554,7 @@ chara mithril_golem {
     original_relationship = Aggressive
     race = "golem"
     class_ = "predator"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7087,7 +7087,7 @@ chara blade_alpha {
     race = "machine"
     class_ = "predator"
     element_of_unarmed_attack = 6100120
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -7341,7 +7341,7 @@ chara shining_hedgehog {
     original_relationship = Aggressive
     race = "crab"
     image = 273
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     damage_reaction_info = 500062
     fltselect = 0
@@ -8369,7 +8369,7 @@ chara lame_horse {
     has_random_name = true
     original_relationship = Unconcerned
     race = "horse"
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8423,7 +8423,7 @@ chara noyel_horse {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = PaleRed
+    color = LightGrey
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8450,7 +8450,7 @@ chara yowyn_horse {
     original_relationship = Unconcerned
     race = "horse"
     class_ = "predator"
-    color = LightBlue
+    color = PaleRed
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -8896,7 +8896,7 @@ chara quickling {
     normal_actions = [-1]
     original_relationship = Aggressive
     race = "quickling"
-    color = YellowGreen
+    color = LightGreen
     cspecialeq = 0
     fltselect = 0
     category = 0
@@ -9001,7 +9001,7 @@ chara alien {
     class_ = "predator"
     element_of_unarmed_attack = 6300250
     image = 283
-    color = LightPurple
+    color = LightBlue
     cspecialeq = 0
     fltselect = 0
     category = 0
