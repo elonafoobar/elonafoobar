@@ -258,6 +258,7 @@ talk_result_t talk_ignored()
 
 talk_result_t talk_house_visitor()
 {
+    int chatval_ = 0;
     listmax = 0;
     cc = 0;
     switch (cdata[tc].character_role)
@@ -479,8 +480,8 @@ talk_result_t talk_house_visitor()
                     }
                 }
                 chatesc = 1;
-                talk_window_query();
-                if (chatval == 0 || chatval == -1)
+                chatval_ = talk_window_query();
+                if (chatval_ == 0 || chatval_ == -1)
                 {
                     listmax = 0;
                     buff = i18n::s.get(
@@ -502,7 +503,7 @@ talk_result_t talk_house_visitor()
                     return talk_result_t::talk_end;
                 }
                 snd(12);
-                if (chatval == 1)
+                if (chatval_ == 1)
                 {
                     cdata.player().platinum_coin -=
                         calclearncost(csskill, 0, true);
@@ -526,7 +527,7 @@ talk_result_t talk_house_visitor()
                         }
                     }
                 }
-                if (chatval == 2)
+                if (chatval_ == 2)
                 {
                     cdata.player().platinum_coin -=
                         calctraincost(csskill, 0, true);
@@ -887,8 +888,8 @@ talk_result_t talk_house_visitor()
                 ++listmax;
             }
         }
-        talk_window_query();
-        if (chatval == 0 || chatval == -1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 0 || chatval_ == -1)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -914,8 +915,8 @@ talk_result_t talk_house_visitor()
         txt(i18n::s.get(
             "core.locale.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            i18n::_(u8"ability", std::to_string(chatval), u8"name")));
-        modify_potential(cdata.player(), chatval, 10);
+            i18n::_(u8"ability", std::to_string(chatval_), u8"name")));
+        modify_potential(cdata.player(), chatval_, 10);
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.visitor.trainer.after", cdata[tc]);
         tc = tc * 1 + 0;
@@ -962,8 +963,8 @@ talk_result_t talk_house_visitor()
         listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
         buff = i18n::s.get("core.locale.talk.visitor.beggar.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             p = cdata.player().gold / 20 + 1;
             txt(i18n::s.get(
@@ -1014,8 +1015,8 @@ talk_result_t talk_house_visitor()
         listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
         buff = i18n::s.get("core.locale.talk.visitor.punk.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             listmax = 0;
             buff =
@@ -1063,8 +1064,8 @@ talk_result_t talk_house_visitor()
         buff = i18n::s.get(
             "core.locale.talk.visitor.mysterious_producer.want_to_be_star",
             cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -1118,8 +1119,8 @@ talk_result_t talk_house_visitor()
         ++listmax;
         buff =
             i18n::s.get("core.locale.talk.visitor.merchant.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 0)
+        chatval_ = talk_window_query();
+        if (chatval_ == 0)
         {
             invctrl = 11;
             invfile = cdata[tc].shop_store_id;
@@ -1130,7 +1131,7 @@ talk_result_t talk_house_visitor()
             buff = "";
             return talk_result_t::talk_house_visitor;
         }
-        if (chatval == 1)
+        if (chatval_ == 1)
         {
             invctrl = 12;
             invfile = cdata[tc].shop_store_id;
@@ -1174,8 +1175,8 @@ bool talk_give_potion_of_cure_corruption()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"bye");
     ++listmax;
-    talk_window_query();
-    if (chatval != 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ != 1)
     {
         return false;
     }
