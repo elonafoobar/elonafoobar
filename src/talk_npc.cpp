@@ -2278,8 +2278,10 @@ talk_result_t talk_npc()
     }
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 10 || chatval == 11)
+
+    int chatval_ = talk_window_query();
+
+    if (chatval_ == 10 || chatval_ == 11)
     {
         if ((cdata[tc].character_role >= 1000
              && cdata[tc].character_role < 2000)
@@ -2292,7 +2294,7 @@ talk_result_t talk_npc()
                     && gdata_current_map != mdata_t::map_id_t::your_home)
                 {
                     listmax = 0;
-                    if (chatval == 10)
+                    if (chatval_ == 10)
                     {
                         buff = i18n::s.get(
                             "core.locale.talk.npc.shop.criminal.buy",
@@ -2313,170 +2315,55 @@ talk_result_t talk_npc()
             }
         }
     }
-    if (chatval == 1)
+
+    switch (chatval_)
     {
-        buff = "";
-        return talk_result_t::talk_npc;
-    }
-    if (chatval == 10)
-    {
-        return talk_shop_buy();
-    }
-    if (chatval == 11)
-    {
-        return talk_shop_sell();
-    }
-    if (chatval == 12)
-    {
-        return talk_invest();
-    }
-    if (chatval == 13)
-    {
-        return talk_inn_eat();
-    }
-    if (chatval >= 14 && chatval < 17)
-    {
-        return talk_wizard_identify(chatval);
-    }
-    if (chatval == 17)
-    {
-        csctrl = 2;
-        return talk_trainer();
-    }
-    if (chatval == 18)
-    {
-        return talk_informer_list_adventurers();
-    }
-    if (chatval == 19)
-    {
-        return talk_healer_restore_attributes();
-    }
-    if (chatval == 20)
-    {
-        return talk_trade();
-    }
-    if (chatval == 21 || chatval == 22)
-    {
-        return talk_arena_master(chatval);
-    }
-    if (chatval == 40 || chatval == 41)
-    {
-        return talk_pet_arena_master(chatval);
-    }
-    if (chatval == 42)
-    {
-        return talk_pet_arena_master_score();
-    }
-    if (chatval == 23)
-    {
-        return talk_arena_master_score();
-    }
-    if (chatval == 24)
-    {
-        return talk_result_t::talk_quest_giver;
-    }
-    if (chatval == 25)
-    {
-        return talk_quest_delivery();
-    }
-    if (chatval == 26)
-    {
-        return talk_quest_supply();
-    }
-    if (chatval == 30)
-    {
-        csctrl = 3;
-        return talk_trainer();
-    }
-    if (chatval == 31)
-    {
-        return talk_shop_attack();
-    }
-    if (chatval == 32)
-    {
-        return talk_guard_return_item();
-    }
-    if (chatval == 33)
-    {
-        return talk_bartender_call_ally();
-    }
-    if (chatval == 34)
-    {
-        return talk_ally_order_wait();
-    }
-    if (chatval == 35)
-    {
-        return talk_ally_abandon();
-    }
-    if (chatval == 36 || chatval == 57)
-    {
-        return talk_slave_buy(chatval);
-    }
-    if (chatval == 37)
-    {
-        return talk_slave_sell();
-    }
-    if (chatval == 38)
-    {
-        return talk_ally_marriage();
-    }
-    if (chatval == 39)
-    {
-        return talk_ally_gene();
-    }
-    if (chatval == 43)
-    {
-        return talk_innkeeper_shelter();
-    }
-    if (chatval == 44)
-    {
-        return talk_servant_fire();
-    }
-    if (chatval == 45)
-    {
-        return talk_maid_think_of_house_name();
-    }
-    if (chatval == 46)
-    {
-        return talk_sister_buy_indulgence();
-    }
-    if (chatval == 47)
-    {
-        return talk_informer_investigate_ally();
-    }
-    if (chatval == 48)
-    {
-        return talk_ally_silence();
-    }
-    if (chatval == 50)
-    {
-        return talk_adventurer_hire();
-    }
-    if (chatval == 51)
-    {
-        return talk_adventurer_join();
-    }
-    if (chatval == 52)
-    {
-        return talk_moyer_sell_paels_mom();
-    }
-    if (chatval == 53)
-    {
-        return talk_wizard_return();
-    }
-    if (chatval == 54)
-    {
-        return talk_shop_reload_ammo();
-    }
-    if (chatval == 55)
-    {
-        return talk_spell_writer_reserve();
-    }
-    if (chatval == 56)
-    {
-        return talk_sex();
-    }
-    if (chatval == 58)
+    case 1: buff = ""; return talk_result_t::talk_npc;
+    case 10: return talk_shop_buy();
+    case 11: return talk_shop_sell();
+    case 12: return talk_invest();
+    case 13: return talk_inn_eat();
+    case 14:
+    case 15:
+    case 16: return talk_wizard_identify(chatval_);
+    case 17: csctrl = 2; return talk_trainer();
+    case 18: return talk_informer_list_adventurers();
+    case 19: return talk_healer_restore_attributes();
+    case 20: return talk_trade();
+    case 21:
+    case 22: return talk_arena_master(chatval_);
+    case 40:
+    case 41: return talk_pet_arena_master(chatval_);
+    case 42: return talk_pet_arena_master_score();
+    case 23: return talk_arena_master_score();
+    case 24: return talk_result_t::talk_quest_giver;
+    case 25: return talk_quest_delivery();
+    case 26: return talk_quest_supply();
+    case 30: csctrl = 3; return talk_trainer();
+    case 31: return talk_shop_attack();
+    case 32: return talk_guard_return_item();
+    case 33: return talk_bartender_call_ally();
+    case 34: return talk_ally_order_wait();
+    case 35: return talk_ally_abandon();
+    case 36:
+    case 57: return talk_slave_buy(chatval_);
+    case 37: return talk_slave_sell();
+    case 38: return talk_ally_marriage();
+    case 39: return talk_ally_gene();
+    case 43: return talk_innkeeper_shelter();
+    case 44: return talk_servant_fire();
+    case 45: return talk_maid_think_of_house_name();
+    case 46: return talk_sister_buy_indulgence();
+    case 47: return talk_informer_investigate_ally();
+    case 48: return talk_ally_silence();
+    case 50: return talk_adventurer_hire();
+    case 51: return talk_adventurer_join();
+    case 52: return talk_moyer_sell_paels_mom();
+    case 53: return talk_wizard_return();
+    case 54: return talk_shop_reload_ammo();
+    case 55: return talk_spell_writer_reserve();
+    case 56: return talk_sex();
+    case 58:
     {
         if (gdata_left_turns_of_timestop == 0)
         {
@@ -2484,21 +2371,14 @@ talk_result_t talk_npc()
         }
         return talk_result_t::talk_end;
     }
-    if (chatval == 59)
-    {
-        return talk_result_maid_chase_out();
+    case 59: return talk_result_maid_chase_out();
+    case 60: return talk_prostitute_buy();
+    case 61: return talk_caravan_master_hire();
     }
-    if (chatval == 60)
+
+    if (chatval_ >= 10000)
     {
-        return talk_prostitute_buy();
-    }
-    if (chatval == 61)
-    {
-        return talk_caravan_master_hire();
-    }
-    if (chatval >= 10000)
-    {
-        return talk_guard_where_is(chatval);
+        return talk_guard_where_is(chatval_);
     }
 
     if (event_id() == 11)
@@ -2509,6 +2389,6 @@ talk_result_t talk_npc()
     }
 
     return talk_result_t::talk_end;
-}
+} // namespace elona
 
 } // namespace elona

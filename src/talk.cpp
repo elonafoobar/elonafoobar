@@ -1474,7 +1474,7 @@ void talk_end()
 
 
 
-void talk_window_query()
+int talk_window_query()
 {
     cs_bk = -1;
     key_list = key_enter;
@@ -1488,68 +1488,69 @@ void talk_window_query()
     objprm(0, ""s);
     keylog = "";
     talk_window_init_and_show();
-label_2258_internal:
-    talk_window_show();
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+    while (1)
     {
-        if (cs == cnt)
+        talk_window_show();
+        font(14 - en * 2);
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            color(100, 160, 250);
+            if (cs == cnt)
+            {
+                color(100, 160, 250);
+            }
+            else
+            {
+                color(255, 255, 255);
+            }
+            noteget(s, cnt);
+            x = wx + 136;
+            y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
+            display_key(x, y, cnt);
+            cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
+            color(0, 0, 0);
         }
-        else
+        cs_bk = cs;
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+        cursor_check();
+        int a{};
+        a = stick(stick_key::escape);
+        if (a == stick_key::escape)
         {
-            color(255, 255, 255);
+            if (scenemode)
+            {
+                scene_cut = 1;
+                talk_reset_variables();
+                return -1;
+            }
         }
-        noteget(s, cnt);
-        x = wx + 136;
-        y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
-        display_key(x, y, cnt);
-        cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
-        color(0, 0, 0);
-    }
-    cs_bk = cs;
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    int a{};
-    a = stick(stick_key::escape);
-    if (a == stick_key::escape)
-    {
-        if (scenemode)
+        p = -1;
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            scene_cut = 1;
+            if (key == key_select(cnt))
+            {
+                p = list(0, cnt);
+                break;
+            }
+        }
+        if (p != -1)
+        {
+            chatval = p;
             talk_reset_variables();
-            return;
+            return chatval;
         }
-    }
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (key == key_cancel)
         {
-            p = list(0, cnt);
-            break;
+            if (chatesc == 1)
+            {
+                chatval = -1;
+                talk_reset_variables();
+                return chatval;
+            }
         }
     }
-    if (p != -1)
-    {
-        chatval = p;
-        talk_reset_variables();
-        return;
-    }
-    if (key == key_cancel)
-    {
-        if (chatesc == 1)
-        {
-            chatval = -1;
-            talk_reset_variables();
-            return;
-        }
-    }
-    goto label_2258_internal;
 }
 
 
