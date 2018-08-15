@@ -1538,17 +1538,15 @@ int talk_window_query()
         }
         if (p != -1)
         {
-            chatval = p;
             talk_reset_variables();
-            return chatval;
+            return p(0);
         }
         if (key == key_cancel)
         {
             if (chatesc == 1)
             {
-                chatval = -1;
                 talk_reset_variables();
-                return chatval;
+                return -1;
             }
         }
     }

@@ -687,7 +687,6 @@ ELONA_EXTERN(std::string txtcopy);
 ELONA_EXTERN(std::string userfile);
 ELONA_EXTERN(std::string usermsg);
 
-ELONA_EXTERN(int chatval);
 ELONA_EXTERN(optional<int> chatval_unique_chara_id);
 ELONA_EXTERN(bool chatval_show_impress);
 
