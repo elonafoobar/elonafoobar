@@ -89,7 +89,7 @@ By default, assets from vanilla Elona in `deps/` are not bundled with the APK, t
 
 # How To Contribute
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 
 
