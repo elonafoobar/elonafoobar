@@ -4586,7 +4586,7 @@ talk_result_t talk_unique_part_time_worker()
 talk_result_t talk_unique()
 {
     listmax = 0;
-    switch (chatval(1))
+    switch (*chatval_unique_chara_id)
     {
     case 2: return talk_unique_zeome();
     case 23: return talk_unique_orphe();

@@ -123,12 +123,12 @@ void talk_to_npc()
         talk_wrapper(talk_result_t::talk_more);
         return;
     }
-    chatval(1) = 0;
-    chatval(2) = 1;
+    chatval_unique_chara_id = none;
+    chatval_show_impress = true;
     if (cdata[tc].quality == 6 && tc >= 16)
     {
-        chatval(1) = cdata[tc].id;
-        chatval(2) = 0;
+        chatval_unique_chara_id = cdata[tc].id;
+        chatval_show_impress = false;
     }
     if (event_id() == 2)
     {
@@ -160,7 +160,7 @@ void talk_to_npc()
         cdata[tc].visited_just_now() = false;
         talk_wrapper(talk_result_t::talk_house_visitor);
     }
-    if (chatval(1) != 0)
+    if (chatval_unique_chara_id)
     {
         if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
@@ -1682,7 +1682,7 @@ void talk_window_show()
     mes(s);
     color(0, 0, 0);
     font(13 - en * 2);
-    if (chatval(2) == 1)
+    if (chatval_show_impress)
     {
         s = i18n::_(
             u8"ui",

@@ -1822,7 +1822,7 @@ talk_result_t talk_npc()
                 i18n::s.get("core.locale.talk.npc.maid.choices.do_not_meet"));
         }
     }
-    if (cdata[tc].interest > 0 && chatval(1) == 0)
+    if (cdata[tc].interest > 0 && !chatval_unique_chara_id)
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.locale.talk.npc.common.choices.talk"));
