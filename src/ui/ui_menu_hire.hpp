@@ -4,7 +4,7 @@
 
 namespace elona
 {
-class character;
+struct character;
 
 namespace ui
 {
