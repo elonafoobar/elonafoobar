@@ -330,8 +330,10 @@ talk_result_t talk_arena_master(int chatval_)
         0,
         i18n::s.get("core.locale.talk.npc.arena_master.enter.choices.leave"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval != 1)
+
+    chatval_ = talk_window_query();
+
+    if (chatval_ != 1)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
@@ -401,8 +403,10 @@ talk_result_t talk_pet_arena_master(int chatval_)
         i18n::s.get(
             "core.locale.talk.npc.pet_arena_master.register.choices.leave"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval != 1)
+
+    chatval_ = talk_window_query();
+
+    if (chatval_ != 1)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
@@ -496,8 +500,8 @@ talk_result_t talk_shop_attack()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.shop.attack.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval != 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ != 1)
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
@@ -591,8 +595,8 @@ talk_result_t talk_bartender_call_ally()
             i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.choices.go_back"));
         chatesc = 1;
-        talk_window_query();
-        if (chatval == 1)
+        int chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             snd(12);
             cdata.player().gold -= calcresurrectvalue(rc);
@@ -639,8 +643,8 @@ talk_result_t talk_ally_abandon()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.ally.abandon.choices.no"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         txt(i18n::s.get(
             "core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
@@ -690,8 +694,10 @@ talk_result_t talk_slave_buy(int chatval_)
         0,
         i18n::s.get("core.locale.talk.npc.slave_trader.buy.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+
+    chatval_ = talk_window_query();
+
+    if (chatval_ == 1)
     {
         txt(i18n::s.get(
             "core.locale.talk.npc.slave_trader.buy.you_buy",
@@ -729,8 +735,8 @@ talk_result_t talk_slave_sell()
             i18n::s.get(
                 "core.locale.talk.npc.slave_trader.sell.choices.go_back"));
         chatesc = 1;
-        talk_window_query();
-        if (chatval == 1)
+        int chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             txt(i18n::s.get(
                 "core.locale.talk.npc.slave_trader.sell.you_sell_off",
@@ -838,8 +844,8 @@ talk_result_t talk_servant_fire()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.servant.fire.choices.no"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         txt(i18n::s.get(
             "core.locale.talk.npc.servant.fire.you_dismiss", cdata[tc]));
@@ -895,8 +901,8 @@ talk_result_t talk_sister_buy_indulgence()
         i18n::s.get(
             "core.locale.talk.npc.sister.buy_indulgence.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         snd(12);
         cdata.player().gold -= calcguiltvalue();
@@ -933,8 +939,8 @@ talk_result_t talk_informer_investigate_ally()
             i18n::s.get("core.locale.talk.npc.informer.investigate_ally."
                         "choices.go_back"));
         chatesc = 1;
-        talk_window_query();
-        if (chatval == 1)
+        int chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             snd(12);
             cdata.player().gold -= 10000;
@@ -994,8 +1000,8 @@ talk_result_t talk_adventurer_hire()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.adventurer.hire.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         snd(12);
         cdata.player().gold -= calchireadv(tc);
@@ -1068,8 +1074,8 @@ talk_result_t talk_moyer_sell_paels_mom()
         i18n::s.get(
             "core.locale.talk.npc.moyer.sell_paels_mom.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         txt(i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.you_sell"));
         modify_karma(cdata.player(), -20);
@@ -1121,8 +1127,8 @@ talk_result_t talk_shop_reload_ammo()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.shop.ammo.choices.go_back"));
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         snd(12);
         cdata.player().gold -= calccostreload(0);
@@ -1154,8 +1160,8 @@ talk_result_t talk_sex()
     ELONA_APPEND_RESPONSE(
         0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
     buff = i18n::s.get("core.locale.talk.npc.common.sex.prompt", cdata[tc]);
-    talk_window_query();
-    if (chatval != 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ != 1)
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
@@ -1197,8 +1203,8 @@ talk_result_t talk_prostitute_buy()
         0, i18n::s.get("core.locale.talk.npc.common.sex.choices.go_back"));
     buff =
         i18n::s.get("core.locale.talk.npc.prostitute.buy", sexvalue, cdata[tc]);
-    talk_window_query();
-    if (chatval != 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ != 1)
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
@@ -1254,20 +1260,20 @@ talk_result_t talk_caravan_master_hire()
         ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
     }
     buff = i18n::s.get("core.locale.talk.npc.caravan_master.hire.tset");
-    talk_window_query();
-    if (chatval <= 0)
+    int chatval_ = talk_window_query();
+    if (chatval_ <= 0)
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
         return talk_result_t::talk_npc;
     }
-    gdata_destination_map = adata(30, chatval);
+    gdata_destination_map = adata(30, chatval_);
     gdata_destination_dungeon_level = 1;
     levelexitby = 4;
     gdata(79) = 1;
-    gdata(850) = adata(30, chatval);
-    gdata_pc_x_in_world_map = adata(1, chatval);
-    gdata_pc_y_in_world_map = adata(2, chatval);
+    gdata(850) = adata(30, chatval_);
+    gdata_pc_x_in_world_map = adata(1, chatval_);
+    gdata_pc_y_in_world_map = adata(2, chatval_);
     fixtransfermap = 1;
     chatteleport = 1;
     return talk_result_t::talk_end;
@@ -1487,8 +1493,8 @@ talk_result_t talk_trainer()
         i18n::s.get("core.locale.talk.npc.trainer.choices.go_back");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         snd(12);
         if (csctrl == 2)
@@ -1536,8 +1542,8 @@ talk_result_t talk_invest()
         i18n::s.get("core.locale.talk.npc.shop.invest.choices.reject");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         snd(12);
         cdata.player().gold -= calcinvestvalue();
@@ -1598,8 +1604,8 @@ talk_result_t talk_quest_giver()
         i18n::s.get("core.locale.talk.npc.quest_giver.about.choices.leave");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
-    if (chatval == 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ == 1)
     {
         p = 0;
         for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
