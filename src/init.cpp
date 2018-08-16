@@ -551,7 +551,6 @@ void initialize_elona()
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
 
-    DIM2(chatval, 5);
     DIM2(evlist, 10);
     DIM2(matneed, 20);
     DIM3(pcc, 30, 20);

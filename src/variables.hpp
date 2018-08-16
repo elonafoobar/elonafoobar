@@ -177,7 +177,6 @@ ELONA_EXTERN(elona_vector1<int> fsetperform);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> arenaop);
-ELONA_EXTERN(elona_vector1<int> chatval);
 ELONA_EXTERN(elona_vector1<int> commark);
 ELONA_EXTERN(elona_vector1<int> cyclemax);
 ELONA_EXTERN(elona_vector1<int> deck);
@@ -687,6 +686,9 @@ ELONA_EXTERN(std::string strhint7);
 ELONA_EXTERN(std::string txtcopy);
 ELONA_EXTERN(std::string userfile);
 ELONA_EXTERN(std::string usermsg);
+
+ELONA_EXTERN(optional<int> chatval_unique_chara_id);
+ELONA_EXTERN(bool chatval_show_impress);
 
 //// Game formulae
 int calcincome(int = 0);

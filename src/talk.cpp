@@ -123,12 +123,12 @@ void talk_to_npc()
         talk_wrapper(talk_result_t::talk_more);
         return;
     }
-    chatval(1) = 0;
-    chatval(2) = 1;
+    chatval_unique_chara_id = none;
+    chatval_show_impress = true;
     if (cdata[tc].quality == 6 && tc >= 16)
     {
-        chatval(1) = cdata[tc].id;
-        chatval(2) = 0;
+        chatval_unique_chara_id = cdata[tc].id;
+        chatval_show_impress = false;
     }
     if (event_id() == 2)
     {
@@ -160,7 +160,7 @@ void talk_to_npc()
         cdata[tc].visited_just_now() = false;
         talk_wrapper(talk_result_t::talk_house_visitor);
     }
-    if (chatval(1) != 0)
+    if (chatval_unique_chara_id)
     {
         if (gdata_current_map != mdata_t::map_id_t::show_house)
         {
@@ -258,6 +258,7 @@ talk_result_t talk_ignored()
 
 talk_result_t talk_house_visitor()
 {
+    int chatval_ = 0;
     listmax = 0;
     cc = 0;
     switch (cdata[tc].character_role)
@@ -479,8 +480,8 @@ talk_result_t talk_house_visitor()
                     }
                 }
                 chatesc = 1;
-                talk_window_query();
-                if (chatval == 0 || chatval == -1)
+                chatval_ = talk_window_query();
+                if (chatval_ == 0 || chatval_ == -1)
                 {
                     listmax = 0;
                     buff = i18n::s.get(
@@ -502,7 +503,7 @@ talk_result_t talk_house_visitor()
                     return talk_result_t::talk_end;
                 }
                 snd(12);
-                if (chatval == 1)
+                if (chatval_ == 1)
                 {
                     cdata.player().platinum_coin -=
                         calclearncost(csskill, 0, true);
@@ -526,7 +527,7 @@ talk_result_t talk_house_visitor()
                         }
                     }
                 }
-                if (chatval == 2)
+                if (chatval_ == 2)
                 {
                     cdata.player().platinum_coin -=
                         calctraincost(csskill, 0, true);
@@ -887,8 +888,8 @@ talk_result_t talk_house_visitor()
                 ++listmax;
             }
         }
-        talk_window_query();
-        if (chatval == 0 || chatval == -1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 0 || chatval_ == -1)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -914,8 +915,8 @@ talk_result_t talk_house_visitor()
         txt(i18n::s.get(
             "core.locale.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            i18n::_(u8"ability", std::to_string(chatval), u8"name")));
-        modify_potential(cdata.player(), chatval, 10);
+            i18n::_(u8"ability", std::to_string(chatval_), u8"name")));
+        modify_potential(cdata.player(), chatval_, 10);
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.visitor.trainer.after", cdata[tc]);
         tc = tc * 1 + 0;
@@ -962,8 +963,8 @@ talk_result_t talk_house_visitor()
         listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
         buff = i18n::s.get("core.locale.talk.visitor.beggar.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             p = cdata.player().gold / 20 + 1;
             txt(i18n::s.get(
@@ -1014,8 +1015,8 @@ talk_result_t talk_house_visitor()
         listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.no");
         ++listmax;
         buff = i18n::s.get("core.locale.talk.visitor.punk.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             listmax = 0;
             buff =
@@ -1063,8 +1064,8 @@ talk_result_t talk_house_visitor()
         buff = i18n::s.get(
             "core.locale.talk.visitor.mysterious_producer.want_to_be_star",
             cdata[tc]);
-        talk_window_query();
-        if (chatval == 1)
+        chatval_ = talk_window_query();
+        if (chatval_ == 1)
         {
             listmax = 0;
             buff = i18n::s.get(
@@ -1118,8 +1119,8 @@ talk_result_t talk_house_visitor()
         ++listmax;
         buff =
             i18n::s.get("core.locale.talk.visitor.merchant.dialog", cdata[tc]);
-        talk_window_query();
-        if (chatval == 0)
+        chatval_ = talk_window_query();
+        if (chatval_ == 0)
         {
             invctrl = 11;
             invfile = cdata[tc].shop_store_id;
@@ -1130,7 +1131,7 @@ talk_result_t talk_house_visitor()
             buff = "";
             return talk_result_t::talk_house_visitor;
         }
-        if (chatval == 1)
+        if (chatval_ == 1)
         {
             invctrl = 12;
             invfile = cdata[tc].shop_store_id;
@@ -1174,8 +1175,8 @@ bool talk_give_potion_of_cure_corruption()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"bye");
     ++listmax;
-    talk_window_query();
-    if (chatval != 1)
+    int chatval_ = talk_window_query();
+    if (chatval_ != 1)
     {
         return false;
     }
@@ -1474,7 +1475,7 @@ void talk_end()
 
 
 
-void talk_window_query()
+int talk_window_query()
 {
     cs_bk = -1;
     key_list = key_enter;
@@ -1488,68 +1489,67 @@ void talk_window_query()
     objprm(0, ""s);
     keylog = "";
     talk_window_init_and_show();
-label_2258_internal:
-    talk_window_show();
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+    while (1)
     {
-        if (cs == cnt)
+        talk_window_show();
+        font(14 - en * 2);
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            color(100, 160, 250);
+            if (cs == cnt)
+            {
+                color(100, 160, 250);
+            }
+            else
+            {
+                color(255, 255, 255);
+            }
+            noteget(s, cnt);
+            x = wx + 136;
+            y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
+            display_key(x, y, cnt);
+            cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
+            color(0, 0, 0);
         }
-        else
+        cs_bk = cs;
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+        cursor_check();
+        int a{};
+        a = stick(stick_key::escape);
+        if (a == stick_key::escape)
         {
-            color(255, 255, 255);
+            if (scenemode)
+            {
+                scene_cut = 1;
+                talk_reset_variables();
+                return -1;
+            }
         }
-        noteget(s, cnt);
-        x = wx + 136;
-        y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
-        display_key(x, y, cnt);
-        cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
-        color(0, 0, 0);
-    }
-    cs_bk = cs;
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    int a{};
-    a = stick(stick_key::escape);
-    if (a == stick_key::escape)
-    {
-        if (scenemode)
+        p = -1;
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
         {
-            scene_cut = 1;
+            if (key == key_select(cnt))
+            {
+                p = list(0, cnt);
+                break;
+            }
+        }
+        if (p != -1)
+        {
             talk_reset_variables();
-            return;
+            return p(0);
         }
-    }
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (key == key_cancel)
         {
-            p = list(0, cnt);
-            break;
+            if (chatesc == 1)
+            {
+                talk_reset_variables();
+                return -1;
+            }
         }
     }
-    if (p != -1)
-    {
-        chatval = p;
-        talk_reset_variables();
-        return;
-    }
-    if (key == key_cancel)
-    {
-        if (chatesc == 1)
-        {
-            chatval = -1;
-            talk_reset_variables();
-            return;
-        }
-    }
-    goto label_2258_internal;
 }
 
 
@@ -1682,7 +1682,7 @@ void talk_window_show()
     mes(s);
     color(0, 0, 0);
     font(13 - en * 2);
-    if (chatval(2) == 1)
+    if (chatval_show_impress)
     {
         s = i18n::_(
             u8"ui",
