@@ -2035,14 +2035,20 @@ void chara_modify_impression(character& cc, int delta)
     if (level1 > level2)
     {
         txtef(8);
-        txt(i18n::s.get("core.locale.chara.impression.lose", cc, level2));
+        txt(i18n::s.get(
+            "core.locale.chara.impression.lose",
+            cc,
+            i18n::_(u8"ui", u8"impression", u8"_"s + level2)));
     }
     else if (level2 > level1)
     {
         if (cc.relationship != -3)
         {
             txtef(2);
-            txt(i18n::s.get("core.locale.chara.impression.gain", cc, level2));
+            txt(i18n::s.get(
+                "core.locale.chara.impression.gain",
+                cc,
+                i18n::_(u8"ui", u8"impression", u8"_"s + level2)));
         }
     }
 }

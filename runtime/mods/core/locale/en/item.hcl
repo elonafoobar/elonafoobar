@@ -5048,6 +5048,26 @@ locale {
         double_bed {
             name = "double bed"
         }
+        eastern_lamp {
+            name = "eastern lamp"
+        }
+        eastern_window {
+            name = "eastern window"
+        }
+        chochin {
+            name = "chochin"
+        }
+        partition {
+            name = "partition"
+        }
+        spellbook_of_darkness_arrow {
+            name = "darkness arrow"
+            description {
+                main {
+                    text = "This tome seems to carefully bend light,",
+                }
+            }
+        }
         dal_i_thalion {
             name = "<Dal-i-thalion>"
             unidentified_name = "light shoes"

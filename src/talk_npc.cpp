@@ -439,7 +439,8 @@ talk_result_t talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(23, gdata_current_map));
+        adata(23, gdata_current_map),
+        cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -447,7 +448,8 @@ talk_result_t talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
-        adata(22, gdata_current_map));
+        adata(22, gdata_current_map),
+        cdata[tc]);
     return talk_result_t::talk_npc;
 }
 
@@ -1560,7 +1562,8 @@ talk_result_t talk_invest()
 talk_result_t talk_finish_escort()
 {
     listmax = 0;
-    buff = i18n::s.get("core.locale.talk.npc.quest_giver.finish.escort");
+    buff = i18n::s.get(
+        "core.locale.talk.npc.quest_giver.finish.escort", cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::_(u8"ui", u8"more");
