@@ -79,15 +79,8 @@ static bool _should_show_entry(int item_id, int _prodtype)
     return true;
 }
 
-bool ui_menu_crafting::init()
+static void _populate_recipe_list(int _invctrl)
 {
-    listmax = 0;
-    page = 0;
-    pagesize = 10;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    page_load();
     if (_invctrl == 0)
     {
         for (int item_id = 0, cnt_end = (maxitemid); item_id < cnt_end;
@@ -112,23 +105,26 @@ bool ui_menu_crafting::init()
             ++listmax;
         }
     }
+}
+
+bool ui_menu_crafting::init()
+{
+    listmax = 0;
+    page = 0;
+    pagesize = 10;
+    cs = 0;
+    cc = 0;
+    cs_bk = -1;
+    page_load();
     windowshadow = 1;
+
+    _populate_recipe_list(_invctrl);
 
     return true;
 }
 
-void ui_menu_crafting::update()
+static void _draw_window()
 {
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
     s(0) = i18n::s.get("core.locale.crafting.menu.title");
     s(1) = strhint2 + strhint3b;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
@@ -142,6 +138,15 @@ void ui_menu_crafting::update()
         wy + 258);
     display_topic(
         i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
+}
+
+static void _draw_key(int cnt)
+{
+    display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+}
+
+static void _draw_keys()
+{
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -156,97 +161,166 @@ void ui_menu_crafting::update()
         {
             boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
         }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+        _draw_key(cnt);
     }
+}
+
+static void _draw_recipe_desc(const crafting_recipe& recipe)
+{
+    font(13 - en * 2);
+
+    std::string desc =
+        i18n::s.get("core.locale.crafting.menu.skill_needed") + u8": "s;
+    if (auto text = i18n::s.get_enum_optional(
+            "core.locale.crafting.menu.skills", recipe.skill_used))
+    {
+        desc += *text;
+    }
+
+    desc += u8" "s + recipe.required_skill_level + u8"("s
+        + sdata(recipe.skill_used, 0) + u8")"s;
+
+    if (recipe.required_skill_level <= sdata(recipe.skill_used, 0))
+    {
+        color(30, 30, 200);
+    }
+    else
+    {
+        color(200, 30, 30);
+    }
+
+    pos(wx + 37, wy + 288);
+    mes(desc + u8" "s);
+    color(0, 0, 0);
+}
+
+static void _draw_single_recipe_required_material(
+    int mat_index,
+    const required_material& required_mat)
+{
+    std::string mat_desc = matname(required_mat.id) + " "
+        + i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount
+        + u8"("s + mat(required_mat.id) + u8")"s;
+
+    if (mat(required_mat.id) >= required_mat.amount)
+    {
+        color(30, 30, 200);
+    }
+    else
+    {
+        color(200, 30, 30);
+    }
+
+    pos(wx + 37 + mat_index % 3 * 192, wy + 334 + mat_index / 3 * 16);
+    mes(mat_desc);
+    color(0, 0, 0);
+}
+
+static void _draw_recipe_required_materials(const crafting_recipe& recipe)
+{
+    int mat_index = 0;
+    for (const auto required_mat : recipe.required_materials)
+    {
+        _draw_single_recipe_required_material(mat_index, required_mat);
+        mat_index++;
+    }
+}
+
+static void _draw_recipe(int item_id, bool draw_desc)
+{
+    auto recipe = crafting_find_recipe(item_id);
+    assert(recipe);
+    if (draw_desc)
+    {
+        _draw_recipe_desc(*recipe);
+    }
+
+    _draw_recipe_required_materials(*recipe);
+}
+
+static void _draw_single_list_entry(int cnt, int item_id)
+{
+    std::string item_name = ioriginalnameref(item_id);
+    std::string item_make =
+        i18n::s.get("core.locale.crafting.menu.make", item_name);
+
+    font(14 - en * 2);
+
+    int color_mode = 0;
+    if (elona::stoi(listn(0, p)) == -1)
+    {
+        color_mode = 3;
+    }
+    cs_list(
+        cs == cnt,
+        cnven(item_name),
+        wx + 86,
+        wy + 66 + cnt * 19 - 1,
+        0,
+        color_mode);
+
+    pos(wx + 308, wy + 66 + cnt * 19 + 2);
+    mes(item_make);
+
+    draw_item_material(ipicref(item_id), wx + 37, wy + 69 + cnt * 19 + 2);
+}
+
+static bool _draw_list_entries(bool draw_desc)
+{
+    bool should_redraw = false;
+
     cs_listbk();
-    f = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        int entry_index = pagesize * page + cnt;
+        if (entry_index >= listmax)
         {
             break;
         }
-        i(0) = list(0, p);
-        i(1) = list(1, p);
+
+        int item_id = list(0, entry_index);
+
         if (cs == cnt)
         {
-            int item_id = i(0);
-            auto recipe = crafting_find_recipe(item_id);
-            if (invctrl == 0)
-            {
-                font(13 - en * 2);
-                s = i18n::s.get("core.locale.crafting.menu.skill_needed")
-                    + u8": "s;
-                if (auto text = i18n::s.get_enum_optional(
-                        "core.locale.crafting.menu.skills", recipe->skill_used))
-                {
-                    s += *text;
-                }
-                s += u8" "s + recipe->required_skill_level + u8"("s
-                    + sdata(recipe->skill_used, 0) + u8")"s;
-                if (recipe->required_skill_level
-                    <= sdata(recipe->skill_used, 0))
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37, wy + 288);
-                mes(s + u8" "s);
-                color(0, 0, 0);
-            }
-            for (const auto required_mat : recipe->required_materials)
-            {
-                s = matname(required_mat.id) + " "
-                    + i18n::s.get("core.locale.crafting.menu.x") + " "
-                    + required_mat.amount + u8"("s + mat(required_mat.id)
-                    + u8")"s;
-                if (mat(required_mat.id) >= required_mat.amount)
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37 + cnt % 3 * 192, wy + 334 + cnt / 3 * 16);
-                mes(s);
-                color(0, 0, 0);
-            }
-            f = 1;
+            _draw_recipe(item_id, draw_desc);
+            should_redraw = true;
         }
-        s = ioriginalnameref(i);
-        s(1) = i18n::s.get("core.locale.crafting.menu.make", s(0));
-        font(14 - en * 2);
-        if (elona::stoi(listn(0, p)) == -1)
-        {
-            p(2) = 3;
-        }
-        else
-        {
-            p(2) = 0;
-        }
-        cs_list(cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
-        pos(wx + 308, wy + 66 + cnt * 19 + 2);
-        mes(s(1));
 
-        draw_item_material(ipicref(i), wx + 37, wy + 69 + cnt * 19 + 2);
+        _draw_single_list_entry(cnt, item_id);
     }
-    if (keyrange != 0)
+
+    return should_redraw;
+}
+
+void ui_menu_crafting::update()
+{
+    cs_bk = -1;
+    pagemax = (listmax - 1) / pagesize;
+    if (page < 0)
     {
-        cs_bk = cs;
+        page = pagemax;
     }
-    if (f == 1 || listmax == 0)
+    else if (page > pagemax)
     {
-        redraw();
+        page = 0;
     }
 }
 
 void ui_menu_crafting::draw()
 {
+    _draw_window();
+    _draw_keys();
+    bool draw_desc = _invctrl == 0;
+    bool should_redraw = _draw_list_entries(draw_desc);
+
+    if (keyrange != 0)
+    {
+        cs_bk = cs;
+    }
+    if (should_redraw || listmax == 0)
+    {
+        redraw();
+    }
 }
 
 optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
