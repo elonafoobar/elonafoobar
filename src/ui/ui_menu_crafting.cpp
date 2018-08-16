@@ -1,10 +1,83 @@
 #include "ui_menu_crafting.hpp"
+#include "../ability.hpp"
+#include "../audio.hpp"
+#include "../crafting.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 namespace elona
 {
 namespace ui
 {
+
+static int _can_produce_item(int created_item_id)
+{
+    elona_vector1<int> j_at_m110;
+
+    auto recipe = crafting_find_recipe(created_item_id);
+    if (!recipe)
+    {
+        return -1;
+    }
+
+    if (recipe->required_skill_level > sdata(recipe->skill_used, 0))
+    {
+        return -1;
+    }
+
+    for (const auto& required_mat : recipe->required_materials)
+    {
+        if (mat(required_mat.id) < required_mat.amount)
+        {
+            return -1;
+        }
+    }
+
+    return 1;
+}
+
+static bool _should_show_entry(int item_id, int _prodtype)
+{
+    auto recipe = crafting_find_recipe(item_id);
+    if (!recipe)
+    {
+        return false;
+    }
+    if (_prodtype == 2)
+    {
+        if (recipe->skill_used != 178)
+        {
+            return false;
+        }
+    }
+    if (_prodtype == 1)
+    {
+        if (recipe->skill_used != 176)
+        {
+            return false;
+        }
+    }
+    if (_prodtype == 3)
+    {
+        if (recipe->skill_used != 179)
+        {
+            return false;
+        }
+    }
+    if (_prodtype == 4)
+    {
+        if (recipe->skill_used != 177)
+        {
+            return false;
+        }
+    }
+    if (sdata(recipe->skill_used, 0) + 3 < recipe->required_skill_level)
+    {
+        return false;
+    }
+
+    return true;
+}
 
 bool ui_menu_crafting::init()
 {
@@ -17,63 +90,31 @@ bool ui_menu_crafting::init()
     page_load();
     if (_invctrl == 0)
     {
-        for (int cnt = 0, cnt_end = (maxitemid); cnt < cnt_end; ++cnt)
+        for (int item_id = 0, cnt_end = (maxitemid); item_id < cnt_end;
+             ++item_id)
         {
-            matid = cnt;
-            int stat = get_required_craft_materials();
-            if (stat == -1)
+            if (_should_show_entry(item_id, prodtype))
             {
-                continue;
+                listn(0, listmax) = ""s + _can_produce_item(item_id);
+                list(0, listmax) = item_id;
+                list(1, listmax) = 0;
+                ++listmax;
             }
-            if (_prodtype == 2)
-            {
-                if (matval != 178)
-                {
-                    continue;
-                }
-            }
-            if (_prodtype == 1)
-            {
-                if (matval != 176)
-                {
-                    continue;
-                }
-            }
-            if (_prodtype == 3)
-            {
-                if (matval != 179)
-                {
-                    continue;
-                }
-            }
-            if (_prodtype == 4)
-            {
-                if (matval != 177)
-                {
-                    continue;
-                }
-            }
-            if (sdata(matval, 0) + 3 < matval(1))
-            {
-                continue;
-            }
-            listn(0, listmax) = ""s + prodcheck();
-            list(0, listmax) = cnt;
-            list(1, listmax) = 0;
-            ++listmax;
         }
     }
     else
     {
         for (int cnt = 0; cnt < 50; ++cnt)
         {
-            listn(0, listmax) = ""s + prodcheck();
+            listn(0, listmax) = ""s + (-1);
             list(0, listmax) = 630;
             list(1, listmax) = cnt;
             ++listmax;
         }
     }
     windowshadow = 1;
+
+    return true;
 }
 
 void ui_menu_crafting::update()
@@ -130,20 +171,22 @@ void ui_menu_crafting::update()
         i(1) = list(1, p);
         if (cs == cnt)
         {
-            matid = i;
+            int item_id = i(0);
+            auto recipe = crafting_find_recipe(item_id);
             if (invctrl == 0)
             {
-                get_required_craft_materials();
                 font(13 - en * 2);
                 s = i18n::s.get("core.locale.crafting.menu.skill_needed")
                     + u8": "s;
                 if (auto text = i18n::s.get_enum_optional(
-                        "core.locale.crafting.menu.skills", matval))
+                        "core.locale.crafting.menu.skills", recipe->skill_used))
                 {
                     s += *text;
                 }
-                s += u8" "s + matval(1) + u8"("s + sdata(matval, 0) + u8")"s;
-                if (matval(1) <= sdata(matval, 0))
+                s += u8" "s + recipe->required_skill_level + u8"("s
+                    + sdata(recipe->skill_used, 0) + u8")"s;
+                if (recipe->required_skill_level
+                    <= sdata(recipe->skill_used, 0))
                 {
                     color(30, 30, 200);
                 }
@@ -155,18 +198,13 @@ void ui_menu_crafting::update()
                 mes(s + u8" "s);
                 color(0, 0, 0);
             }
-            for (int cnt = 0; cnt < 6; ++cnt)
+            for (const auto required_mat : recipe->required_materials)
             {
-                int j0 = matneed(cnt * 2);
-                int j1 = matneed(cnt * 2 + 1);
-                if (j0 == -1)
-                {
-                    break;
-                }
-                s = matname(j0) + " "
-                    + i18n::s.get("core.locale.crafting.menu.x") + " " + j1
-                    + u8"("s + mat(j0) + u8")"s;
-                if (mat(j0) >= j1)
+                s = matname(required_mat.id) + " "
+                    + i18n::s.get("core.locale.crafting.menu.x") + " "
+                    + required_mat.amount + u8"("s + mat(required_mat.id)
+                    + u8")"s;
+                if (mat(required_mat.id) >= required_mat.amount)
                 {
                     color(30, 30, 200);
                 }
@@ -220,10 +258,9 @@ optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
 
     if (p_ != -1)
     {
-        matid = p_;
-        get_required_craft_materials();
-        s = ioriginalnameref(matid);
-        if (prodcheck() == -1)
+        int created_item_id = p_;
+        s = ioriginalnameref(created_item_id);
+        if (_can_produce_item(created_item_id) == -1)
         {
             snd(27);
             txt(i18n::s.get(
@@ -246,7 +283,7 @@ optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
         {
             snd(1);
             ++page;
-            goto label_1857_internal;
+            set_reupdate();
         }
     }
     else if (key == key_pagedown)
@@ -255,13 +292,15 @@ optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
         {
             snd(1);
             --page;
-            goto label_1857_internal;
+            set_reupdate();
         }
     }
     else if (key == key_cancel)
     {
-        return;
+        return ui_menu_crafting::result::cancel();
     }
+
+    return none;
 }
 
 

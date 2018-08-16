@@ -209,7 +209,6 @@ ELONA_EXTERN(elona_vector1<int> irandomname);
 ELONA_EXTERN(elona_vector1<int> isetfruit);
 ELONA_EXTERN(elona_vector1<int> mainskill);
 ELONA_EXTERN(elona_vector1<int> mat);
-ELONA_EXTERN(elona_vector1<int> matneed);
 ELONA_EXTERN(elona_vector1<int> mdata);
 ELONA_EXTERN(elona_vector1<int> mdatatmp);
 ELONA_EXTERN(elona_vector1<int> p);
