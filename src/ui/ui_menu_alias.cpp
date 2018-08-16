@@ -8,12 +8,14 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_alias::init()
+bool ui_menu_alias::init()
 {
     cs = 0;
     windowshadow = 1;
 
     _set_reroll_aliases();
+
+    return true;
 }
 
 void ui_menu_alias::_set_reroll_aliases()

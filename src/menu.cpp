@@ -30,8 +30,11 @@
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
 #include "ui/ui_menu_god.hpp"
+#include "ui/ui_menu_hire.hpp"
 #include "ui/ui_menu_item_desc.hpp"
 #include "ui/ui_menu_npc_tone.hpp"
+#include "ui/ui_menu_quest_board.hpp"
+#include "ui/ui_menu_spell_writer.hpp"
 
 namespace elona
 {
@@ -5105,6 +5108,28 @@ label_1974_internal:
     goto label_1974_internal;
 }
 
+static turn_result_t _visit_quest_giver(int quest_index)
+{
+    // TODO move the below somewhere else to decouple quest_teleport
+    tc = qdata(0, quest_index);
+    rq = quest_index;
+    client = tc;
+    efid = 619;
+    magic();
+    tc = client;
+    if (cdata.player().state() == character::state_t::alive)
+    {
+        quest_teleport = true;
+        talk_to_npc();
+    }
+    if (chatteleport == 1)
+    {
+        chatteleport = 0;
+        return turn_result_t::exit_map;
+    }
+    return turn_result_t::turn_end;
+}
+
 turn_result_t show_quest_board()
 {
     if (config::instance().extrahelp)
@@ -5124,552 +5149,37 @@ turn_result_t show_quest_board()
             }
         }
     }
-    quest_refresh_list();
-    listmax = 0;
-    page = 0;
-    pagesize = 4;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
-         cnt < cnt_end;
-         ++cnt)
-    {
-        if (qdata(1, cnt) != gdata_current_map)
-        {
-            continue;
-        }
-        if (qdata(3, cnt) == 0)
-        {
-            continue;
-        }
-        if (qdata(8, cnt) != 0)
-        {
-            continue;
-        }
-        rc = qdata(0, cnt);
-        if (cdata[rc].state() != character::state_t::alive)
-        {
-            continue;
-        }
-        list(0, listmax) = cnt;
-        list(1, listmax) = qdata(5, cnt);
-        ++listmax;
-    }
-    if (listmax == 0)
-    {
-        txt(i18n::s.get("core.locale.ui.board.no_new_notices"));
-        return turn_result_t::turn_end;
-    }
-    sort_list_by_column1();
-    gsel(3);
-    pos(960, 96);
-    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 1);
-    gsel(0);
-    gsel(4);
-    fillbg(3, 960, 96, 128, 128);
-    ww = 560;
-    int h = 140;
-    wh = h * 4;
-    wx = (windoww - ww) / 2 + inf_screenx;
-    wy = winposy(wh);
-    for (int cnt = 0; cnt < 4; ++cnt)
-    {
-        y = wy + cnt * 120;
-        window(wx + 4, y + 4, ww, h, true);
-        window(wx, y, ww, h);
-        pos(wx + 20, y + 8);
-        gcopy(3, 960, 240, 48, 84);
-    }
-    render_hud();
-    gsel(0);
-label_1977_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1978_internal:
-    s(0) = i18n::s.get("core.locale.ui.board.title");
-    s(1) = strhint2 + strhint3b;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, inf_ver);
-    gmode(2);
-    font(16 - en * 2);
-    bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        y = wy + cnt * 120 + 20;
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        boxf(wx + 70, y, 460, 18, {12, 14, 16, 16});
-        display_key(wx + 70, y - 2, cnt);
-    }
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        y = wy + cnt * 120 + 20;
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        rq = list(0, p);
-        tc = qdata(0, rq);
-        quest_set_data(0);
-        p = pagesize * page + cnt;
-        font(14 - en * 2);
-        cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
-        s(2) = u8"("s + nquestdate + u8")"s;
-        pos(wx + 344, y + 2);
-        mes(s(2));
-        s(4) = cdatan(0, tc);
-        cutname(s(4), 20);
-        pos(wx + 392, y + 2);
-        mes(s(4));
-        talk_conv(buff, 70);
-        p(0) = qdata(5, rq) / 5 + 1;
-        p(1) = 14;
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (cdata.player().level * 2 < qdata(5, rq))
-            {
-                color(205, 0, 0);
-                break;
-            }
-            if (cdata.player().level * 3 / 2 < qdata(5, rq))
-            {
-                color(140, 80, 0);
-                break;
-            }
-            if (cdata.player().level < qdata(5, rq))
-            {
-                color(0, 0, 205);
-                break;
-            }
-            color(0, 155, 0);
-        }
-        if (p < 11)
-        {
-            dy = 0;
-            if (p > 5)
-            {
-                font(10 - en * 2);
-                dy = -3;
-            }
-            for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
-            {
-                pos(wx + 270 + cnt % 5 * 13, y + dy + cnt / 5 * 8 + 2);
-                mes(i18n::s.get("core.locale.ui.board.difficulty"));
-            }
-        }
-        else
-        {
-            pos(wx + 270, y + 2);
-            mes(i18n::s.get("core.locale.ui.board.difficulty_counter") + p);
-        }
-        color(0, 0, 0);
-        font(13 - en * 2);
-        pos(wx + 20, y + 20);
-        mes(buff);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (p != -1)
-    {
-        txtnew();
-        txt(i18n::s.get("core.locale.ui.board.do_you_meet"));
-        ELONA_YES_NO_PROMPT();
-        rtval = show_prompt(promptx, prompty, 160);
-        if (rtval != 0)
-        {
-            goto label_1977_internal;
-        }
-        // TODO move the below somewhere else to decouple quest_teleport
-        tc = qdata(0, p);
-        rq = p;
-        client = tc;
-        efid = 619;
-        magic();
-        tc = client;
-        if (cdata.player().state() == character::state_t::alive)
-        {
-            quest_teleport = true;
-            talk_to_npc();
-        }
-        if (chatteleport == 1)
-        {
-            chatteleport = 0;
-            return turn_result_t::exit_map;
-        }
-        return turn_result_t::turn_end;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1977_internal;
-        }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1977_internal;
-        }
-    }
-    if (key == key_cancel)
+
+    auto result = ui::ui_menu_quest_board().show();
+
+    if (result.canceled)
     {
         return turn_result_t::turn_end;
     }
-    goto label_1978_internal;
+
+    int quest_index = *result.value;
+    return _visit_quest_giver(quest_index);
 }
 
-int show_hire_menu()
+int show_hire_menu(hire_operation operation)
 {
-    snd(26);
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    for (auto&& cnt : cdata.all())
-    {
-        if (allyctrl == 2)
-        {
-            if (cnt.state() != character::state_t::pet_dead
-                && cnt.state() != character::state_t::villager_dead)
-            {
-                continue;
-            }
-        }
-        else
-        {
-            if (allyctrl == 1)
-            {
-                if (allyctrl == 1)
-                {
-                    if (cnt.state()
-                        != character::state_t::servant_being_selected)
-                    {
-                        continue;
-                    }
-                }
-            }
-            else if (cnt.state() != character::state_t::alive)
-            {
-                continue;
-            }
-            if (cnt.index < 16)
-            {
-                if (cnt.current_map != gdata_current_map)
-                {
-                    continue;
-                }
-            }
-        }
-        if (cnt.index == 0)
-        {
-            continue;
-        }
-        if (cnt.is_escorted_in_sub_quest() == 1)
-        {
-            continue;
-        }
-        list(0, listmax) = cnt.index;
-        list(1, listmax) = -cnt.level;
-        ++listmax;
-    }
-    sort_list_by_column1();
-    windowshadow = 1;
-label_1981_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1982_internal:
-    s(0) = i18n::s.get("core.locale.ui.npc_list.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
-    if (allyctrl == 0)
-    {
-        s = i18n::s.get("core.locale.ui.npc_list.wage");
-    }
-    else
-    {
-        s = i18n::s.get("core.locale.ui.npc_list.init_cost");
-    }
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.name"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.npc_list.info"), wx + 350, wy + 36);
-    if (allyctrl != 2)
-    {
-        display_topic(s, wx + 490, wy + 36);
-    }
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 600, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
+    auto result = ui::ui_menu_hire(operation).show();
 
-        draw_chara_scale_height(
-            cdata[list(0, p)], wx + 40, wy + 74 + cnt * 19 - 8);
-
-        i = list(0, p);
-        s = cdatan(0, i);
-        cutname(s, 36);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
-        s = u8"Lv."s + cdata[i].level + u8" "s;
-        if (cdata[i].sex == 0)
-        {
-            s += cnven(i18n::_(u8"ui", u8"male"));
-        }
-        else
-        {
-            s += cnven(i18n::_(u8"ui", u8"female"));
-        }
-        s += i18n::s.get("core.locale.ui.npc_list.age_counter", calcage(i));
-        pos(wx + 372, wy + 66 + cnt * 19 + 2);
-        mes(s);
-        if (allyctrl != 2)
-        {
-            if (allyctrl == 1)
-            {
-                s = ""s + calchirecost(i) * 20 + u8"("s + calchirecost(i)
-                    + u8")"s;
-            }
-            else
-            {
-                s = ""s + calchirecost(i);
-            }
-            pos(wx + 512, wy + 66 + cnt * 19 + 2);
-            mes(i18n::s.get("core.locale.ui.npc_list.gold_counter", s(0)));
-        }
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (p != -1)
-    {
-        return p;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1981_internal;
-        }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1981_internal;
-        }
-    }
-    if (key == key_cancel)
+    if (result.canceled)
     {
         return -1;
     }
-    goto label_1982_internal;
+    else
+    {
+        return *result.value;
+    }
 }
 
 int show_spell_writer_menu()
 {
-    snd(26);
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    for (int cnt = 0; cnt < 800; ++cnt)
-    {
-        if (itemmemory(2, cnt) == 0)
-        {
-            continue;
-        }
-        list(0, listmax) = cnt;
-        list(1, listmax) = cnt;
-        ++listmax;
-    }
-    sort_list_by_column1();
-    windowshadow = 1;
-label_1985_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1986_internal:
-    s(0) = i18n::s.get("core.locale.ui.reserve.title");
-    s(1) = strhint2 + strhint3;
-    display_window((windoww - 540) / 2 + inf_screenx, winposy(448), 540, 448);
-    display_topic(i18n::s.get("core.locale.ui.reserve.name"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.ui.reserve.status"), wx + 390, wy + 36);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 440, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        i = list(0, p);
+    ui::ui_menu_spell_writer().show();
 
-        draw_item_material(429, wx + 38, wy + 73 + cnt * 19);
-
-        s = ioriginalnameref(i);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
-        pos(wx + 400, wy + 66 + cnt * 19 + 2);
-        if (itemmemory(2, i) == 1)
-        {
-            color(120, 120, 120);
-            mes(i18n::s.get("core.locale.ui.reserve.not_reserved"));
-            color(0, 0, 0);
-        }
-        else
-        {
-            color(55, 55, 255);
-            mes(i18n::s.get("core.locale.ui.reserve.reserved"));
-            color(0, 0, 0);
-        }
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw();
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (p != -1)
-    {
-        if (p == 289 || p == 732)
-        {
-            snd(27);
-            txt(i18n::s.get("core.locale.ui.reserve.unavailable"));
-            goto label_1985_internal;
-        }
-        snd(20);
-        if (itemmemory(2, p) == 1)
-        {
-            itemmemory(2, p) = 2;
-        }
-        else
-        {
-            itemmemory(2, p) = 1;
-        }
-        goto label_1985_internal;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1985_internal;
-        }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1985_internal;
-        }
-    }
-    if (key == key_cancel)
-    {
-        return -1;
-    }
-    goto label_1986_internal;
+    return -1;
 }
 
 void list_adventurers()

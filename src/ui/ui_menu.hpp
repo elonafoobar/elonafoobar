@@ -45,7 +45,7 @@ protected:
     using result_type = ui_menu<T>::result;
 
 protected:
-    virtual void init() = 0;
+    virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual optional<result_type> on_key(const std::string& key) = 0;
@@ -58,7 +58,11 @@ protected:
 public:
     ui_menu::result show()
     {
-        init();
+        if (!init())
+        {
+            return result_type::cancel();
+        }
+
         update();
         _reupdate = false;
 

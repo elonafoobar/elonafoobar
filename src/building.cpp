@@ -566,8 +566,7 @@ void prompt_hiring()
     randomize();
     txtnew();
     txt(i18n::s.get("core.locale.building.home.hire.who"));
-    allyctrl = 1;
-    int stat = show_hire_menu();
+    int stat = show_hire_menu(hire_operation::hire);
     if (stat != -1)
     {
         tc = stat;
@@ -770,8 +769,7 @@ void prompt_move_ally()
 
         txtnew();
         txt(i18n::s.get("core.locale.building.home.move.who"));
-        allyctrl = 0;
-        int stat = show_hire_menu();
+        int stat = show_hire_menu(hire_operation::move);
         if (stat == -1)
         {
             break;

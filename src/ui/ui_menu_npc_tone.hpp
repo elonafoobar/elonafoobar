@@ -14,7 +14,7 @@ public:
     }
 
 protected:
-    virtual void init();
+    virtual bool init();
     virtual void update();
     virtual void draw();
     virtual optional<ui_menu_npc_tone::result_type> on_key(

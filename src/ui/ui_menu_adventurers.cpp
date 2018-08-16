@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_adventurers::init()
+bool ui_menu_adventurers::init()
 {
     listmax = 0;
     page = 0;
@@ -29,6 +29,8 @@ void ui_menu_adventurers::init()
     }
     sort_list_by_column1();
     windowshadow = 1;
+
+    return true;
 }
 
 void ui_menu_adventurers::update()

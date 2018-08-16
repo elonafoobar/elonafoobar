@@ -33,7 +33,7 @@ static std::string _get_choice_name(bool already_believing, int god_id)
     }
 }
 
-void ui_menu_god::init()
+bool ui_menu_god::init()
 {
     cs = 0;
     page = 0;
@@ -62,6 +62,8 @@ void ui_menu_god::init()
     pos(0, 0);
     gcopy(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
+
+    return true;
 }
 
 void ui_menu_god::update()

@@ -24,6 +24,13 @@ enum class ctrl_ally_operation
     gene_engineer,
 };
 
+enum class hire_operation
+{
+    move,
+    hire,
+    revive,
+};
+
 void text_set();
 int cnvjkey(const std::string&);
 void show_quick_menu();
@@ -55,7 +62,7 @@ turn_result_t show_quest_board();
 void list_adventurers();
 turn_result_t blending_menu();
 menu_result menu_equipment();
-int show_hire_menu();
+int show_hire_menu(hire_operation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();

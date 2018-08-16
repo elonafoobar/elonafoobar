@@ -3,16 +3,13 @@
 
 namespace elona
 {
-struct item;
-
 namespace ui
 {
 
-class ui_menu_item_desc : public ui_menu<dummy_result>
+class ui_menu_quest_board : public ui_menu<int>
 {
 public:
-    ui_menu_item_desc(const item& the_item)
-        : _the_item(the_item)
+    ui_menu_quest_board()
     {
     }
 
@@ -20,11 +17,10 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_item_desc::result_type> on_key(
+    virtual optional<ui_menu_quest_board::result_type> on_key(
         const std::string& key);
 
 private:
-    const item& _the_item;
 };
 
 } // namespace ui

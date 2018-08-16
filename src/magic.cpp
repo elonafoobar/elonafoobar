@@ -2031,9 +2031,8 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        allyctrl = 2;
         {
-            int stat = show_hire_menu();
+            int stat = show_hire_menu(hire_operation::revive);
             if (stat == -1)
             {
                 txt(i18n::s.get("core.locale.common.nothing_happens"));
