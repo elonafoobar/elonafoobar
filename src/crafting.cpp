@@ -14,6 +14,8 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_crafting.hpp"
+
 namespace elona
 {
 
@@ -924,151 +926,17 @@ int get_required_craft_materials()
 void crafting_menu()
 {
     int matuse = 0;
-label_18551_internal:
-    listmax = 0;
-    page = 0;
-    pagesize = 10;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    page_load();
-    if (invctrl == 0)
+
+    while (true)
     {
-        for (int cnt = 0, cnt_end = (maxitemid); cnt < cnt_end; ++cnt)
+        auto result = ui::ui_menu_crafting(prodtype, invctrl).show();
+
+        if (!result.canceled && result.value)
         {
-            matid = cnt;
-            int stat = get_required_craft_materials();
-            if (stat == -1)
-            {
-                continue;
-            }
-            if (prodtype == 2)
-            {
-                if (matval != 178)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 1)
-            {
-                if (matval != 176)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 3)
-            {
-                if (matval != 179)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 4)
-            {
-                if (matval != 177)
-                {
-                    continue;
-                }
-            }
-            if (sdata(matval, 0) + 3 < matval(1))
-            {
-                continue;
-            }
-            listn(0, listmax) = ""s + prodcheck();
-            list(0, listmax) = cnt;
-            list(1, listmax) = 0;
-            ++listmax;
-        }
-    }
-    else
-    {
-        for (int cnt = 0; cnt < 50; ++cnt)
-        {
-            listn(0, listmax) = ""s + prodcheck();
-            list(0, listmax) = 630;
-            list(1, listmax) = cnt;
-            ++listmax;
-        }
-    }
-    windowshadow = 1;
-label_1857_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    s(0) = i18n::s.get("core.locale.crafting.menu.title");
-    s(1) = strhint2 + strhint3b;
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.detail"), wx + 296, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.requirement"),
-        wx + 28,
-        wy + 258);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    cs_listbk();
-    f = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        i(0) = list(0, p);
-        i(1) = list(1, p);
-        if (cs == cnt)
-        {
-            matid = i;
-            if (invctrl == 0)
-            {
-                get_required_craft_materials();
-                font(13 - en * 2);
-                s = i18n::s.get("core.locale.crafting.menu.skill_needed")
-                    + u8": "s;
-                if (auto text = i18n::s.get_enum_optional(
-                        "core.locale.crafting.menu.skills", matval))
-                {
-                    s += *text;
-                }
-                s += u8" "s + matval(1) + u8"("s + sdata(matval, 0) + u8")"s;
-                if (matval(1) <= sdata(matval, 0))
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37, wy + 288);
-                mes(s + u8" "s);
-                color(0, 0, 0);
-            }
+            matid = *result.value;
+            get_required_craft_materials();
+
+            matuse = 0;
             for (int cnt = 0; cnt < 6; ++cnt)
             {
                 int j0 = matneed(cnt * 2);
@@ -1077,127 +945,35 @@ label_1857_internal:
                 {
                     break;
                 }
-                s = matname(j0) + " "
-                    + i18n::s.get("core.locale.crafting.menu.x") + " " + j1
-                    + u8"("s + mat(j0) + u8")"s;
-                if (mat(j0) >= j1)
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37 + cnt % 3 * 192, wy + 334 + cnt / 3 * 16);
-                mes(s);
-                color(0, 0, 0);
+                mat(j0) -= j1;
+                matuse += j1;
             }
-            f = 1;
-        }
-        s = ioriginalnameref(i);
-        s(1) = i18n::s.get("core.locale.crafting.menu.make", s(0));
-        font(14 - en * 2);
-        if (elona::stoi(listn(0, p)) == -1)
-        {
-            p(2) = 3;
-        }
-        else
-        {
-            p(2) = 0;
-        }
-        cs_list(cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
-        pos(wx + 308, wy + 66 + cnt * 19 + 2);
-        mes(s(1));
-
-        draw_item_material(ipicref(i), wx + 37, wy + 69 + cnt * 19 + 2);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    if (f == 1 || listmax == 0)
-    {
-        redraw();
-    }
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (p != -1)
-    {
-        matid = p;
-        get_required_craft_materials();
-        s = ioriginalnameref(matid);
-        if (prodcheck() == -1)
-        {
-            snd(27);
-            txt(i18n::s.get(
-                "core.locale.crafting.you_do_not_meet_requirements"));
-            goto label_1857_internal;
-        }
-        if (!inv_getspace(0))
-        {
-            snd(27);
-            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
-            goto label_1857_internal;
-        }
-        matuse = 0;
-        for (int cnt = 0; cnt < 6; ++cnt)
-        {
-            int j0 = matneed(cnt * 2);
-            int j1 = matneed(cnt * 2 + 1);
-            if (j0 == -1)
+            snd(58);
+            fixlv = 2;
+            if (rnd(200 + matval(1) * 2) < sdata(matval, 0) + 20)
             {
-                break;
+                fixlv = 4;
             }
-            mat(j0) -= j1;
-            matuse += j1;
+            if (rnd(100 + matval(1) * 2) < sdata(matval, 0) + 20)
+            {
+                fixlv = 3;
+            }
+            flt(calcobjlv(sdata(matval, 0)), calcfixlv(fixlv));
+            nostack = 1;
+            itemcreate(0, matid, -1, -1, 0);
+            txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
+            item_stack(0, ci, 0);
+            r2 = matuse;
+            gain_crafting_experience(matval);
+            chara_refresh(0);
+            render_hud();
+            page_save();
         }
-        snd(58);
-        fixlv = 2;
-        if (rnd(200 + matval(1) * 2) < sdata(matval, 0) + 20)
+        else if (result.canceled)
         {
-            fixlv = 4;
-        }
-        if (rnd(100 + matval(1) * 2) < sdata(matval, 0) + 20)
-        {
-            fixlv = 3;
-        }
-        flt(calcobjlv(sdata(matval, 0)), calcfixlv(fixlv));
-        nostack = 1;
-        itemcreate(0, p, -1, -1, 0);
-        txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
-        item_stack(0, ci, 0);
-        r2 = matuse;
-        gain_crafting_experience(matval);
-        chara_refresh(0);
-        render_hud();
-        page_save();
-        goto label_18551_internal;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1857_internal;
+            break;
         }
     }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1857_internal;
-        }
-    }
-    if (key == key_cancel)
-    {
-        return;
-    }
-    goto label_1857_internal;
 }
 
 
