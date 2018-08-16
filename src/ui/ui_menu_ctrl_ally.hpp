@@ -3,7 +3,7 @@
 
 namespace elona
 {
-class character;
+struct character;
 enum class ctrl_ally_operation;
 
 namespace ui
