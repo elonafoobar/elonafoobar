@@ -132,6 +132,7 @@ set(CORE_SOURCES
   src/status_ailment.cpp
   src/std.cpp
   src/talk.cpp
+  src/talk_house_visitor.cpp
   src/talk_npc.cpp
   src/talk_unique.cpp
   src/tcg.cpp
