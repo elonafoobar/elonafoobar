@@ -80,6 +80,7 @@ void ui_menu_scene::update()
 
 static void _draw_window()
 {
+    gmode(2);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
     x = 240;
