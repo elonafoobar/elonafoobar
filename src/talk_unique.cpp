@@ -12,6 +12,7 @@
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
@@ -148,12 +149,9 @@ talk_result_t talk_unique_loyter()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.yes");
-        ;
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
@@ -183,9 +181,7 @@ talk_result_t talk_unique_loyter()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.begin.yes");
         tc = tc * 1 + 0;
@@ -222,9 +218,7 @@ talk_result_t talk_unique_loyter()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.loyter.quest.end");
         tc = tc * 1 + 0;
@@ -275,9 +269,7 @@ talk_result_t talk_unique_miches()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.yes");
         tc = tc * 1 + 0;
@@ -314,9 +306,7 @@ talk_result_t talk_unique_miches()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.miches.quest.end");
         tc = tc * 1 + 0;
@@ -367,9 +357,7 @@ talk_result_t talk_unique_shena()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.yes");
         tc = tc * 1 + 0;
@@ -410,9 +398,7 @@ talk_result_t talk_unique_shena()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.shena.quest.end");
         tc = tc * 1 + 0;
@@ -1063,9 +1049,7 @@ talk_result_t talk_unique_xabi()
         itemcreate(
             -1, 621, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         return talk_result_t::talk_unique;
     }
     return talk_result_t::talk_ignored;
@@ -1573,9 +1557,7 @@ talk_result_t talk_unique_karam()
         flt();
         itemcreate(-1, 239, cdata[tc].position.x, cdata[tc].position.y, 0);
         inv[ci].param2 = 0;
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         txt(i18n::s.get("core.locale.talk.unique.karam.dies", cdata[tc]));
         chara_vanquish(tc);
         return talk_result_t::talk_end;
@@ -1729,9 +1711,7 @@ talk_result_t talk_unique_pael()
         {
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_pael_and_her_mom = 1;
         return talk_result_t::talk_end;
     }
@@ -1765,9 +1745,7 @@ talk_result_t talk_unique_pael()
         {
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
         return talk_result_t::talk_end;
     }
@@ -1780,9 +1758,7 @@ talk_result_t talk_unique_pael()
         {
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
         return talk_result_t::talk_end;
     }
@@ -1795,9 +1771,7 @@ talk_result_t talk_unique_pael()
         {
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
         return talk_result_t::talk_end;
     }
@@ -1870,9 +1844,7 @@ talk_result_t talk_unique_paels_mom()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get_enum(
             "core.locale.talk.unique.paels_mom.progress.last", 2);
@@ -2067,9 +2039,7 @@ talk_result_t talk_unique_raphael()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.raphael.quest.yes");
         tc = tc * 1 + 0;
@@ -2180,9 +2150,7 @@ talk_result_t talk_unique_raphael()
                 5000);
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             gdata_wife_collector = 1000;
         }
         chara_vanquish(rc);
@@ -2236,9 +2204,7 @@ talk_result_t talk_unique_ainc()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.ainc.quest.do_it");
         tc = tc * 1 + 0;
@@ -2278,9 +2244,7 @@ talk_result_t talk_unique_ainc()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_novice_knight = 1000;
         return talk_result_t::talk_end;
     }
@@ -2354,9 +2318,7 @@ talk_result_t talk_unique_rilian()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.do_it");
         tc = tc * 1 + 0;
@@ -2396,9 +2358,7 @@ talk_result_t talk_unique_rilian()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_puppys_cave = 1000;
         chara_vanquish(chara_find_ally(225));
         flt();
@@ -2439,9 +2399,7 @@ talk_result_t talk_unique_tam()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.yes");
         tc = tc * 1 + 0;
@@ -2483,9 +2441,7 @@ talk_result_t talk_unique_tam()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.tam.quest.end");
         tc = tc * 1 + 0;
@@ -2547,9 +2503,7 @@ talk_result_t talk_unique_gilbert()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.yes");
         tc = tc * 1 + 0;
@@ -2583,9 +2537,7 @@ talk_result_t talk_unique_gilbert()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.begin.yes");
         tc = tc * 1 + 0;
@@ -2619,9 +2571,7 @@ talk_result_t talk_unique_gilbert()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.gilbert.quest.end");
         tc = tc * 1 + 0;
@@ -2665,9 +2615,7 @@ talk_result_t talk_unique_arnord()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.yes");
         tc = tc * 1 + 0;
@@ -2699,9 +2647,7 @@ talk_result_t talk_unique_arnord()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.begin.yes");
         tc = tc * 1 + 0;
@@ -2731,9 +2677,7 @@ talk_result_t talk_unique_arnord()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.arnord.quest.end");
         tc = tc * 1 + 0;
@@ -2776,9 +2720,7 @@ talk_result_t talk_unique_mia()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.mia.quest.yes");
         tc = tc * 1 + 0;
@@ -2824,9 +2766,7 @@ talk_result_t talk_unique_mia()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_mias_dream = 1000;
         chara_relocate(cdata[chara_find_ally(246)], none);
         cdata[rc].relationship = -1;
@@ -2881,9 +2821,7 @@ talk_result_t talk_unique_renton()
         ELONA_TALK_SCENE_CUT();
         if (gdata_rare_books == 0)
         {
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             gdata_rare_books = 1;
             return talk_result_t::talk_end;
         }
@@ -3017,9 +2955,7 @@ talk_result_t talk_unique_renton()
             snd(51);
             txt(i18n::s.get(
                 "core.locale.common.something_is_put_on_the_ground"));
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             gdata_rare_books = 1000;
         }
         return talk_result_t::talk_end;
@@ -3078,9 +3014,7 @@ talk_result_t talk_unique_marks()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         cdata.player().gold -= 20000;
         snd(12);
@@ -3133,9 +3067,7 @@ talk_result_t talk_unique_noel()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_red_blossom_in_palmia = 1000;
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.end");
@@ -3169,9 +3101,7 @@ talk_result_t talk_unique_noel()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_red_blossom_in_palmia = 1;
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.noel.quest.of_course");
@@ -3251,9 +3181,7 @@ talk_result_t talk_unique_icolle()
         itemcreate(
             -1, 685, cdata.player().position.x, cdata.player().position.y, 6);
         inv[ci].param2 = 5;
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.icolle.quest.alright");
@@ -3337,9 +3265,7 @@ talk_result_t talk_unique_icolle()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_ambitious_scientist = 1000;
     }
     return talk_result_t::talk_end;
@@ -3383,9 +3309,7 @@ talk_result_t talk_unique_balzak()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.yes");
         tc = tc * 1 + 0;
@@ -3429,9 +3353,7 @@ talk_result_t talk_unique_balzak()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.balzak.quest.end");
         tc = tc * 1 + 0;
@@ -3490,9 +3412,7 @@ talk_result_t talk_unique_lexus()
                 ELONA_TALK_SCENE_CUT();
                 gdata_joining_mages_guild = 1;
                 gdata_mages_guild_quota = 30;
-                snd(44);
-                txtef(2);
-                txt(i18n::s.get("core.locale.quest.journal_updated"));
+                quest_update_journal_msg();
                 listmax = 0;
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.lexus.nonmember.want_to_join", 2);
@@ -3534,9 +3454,7 @@ talk_result_t talk_unique_lexus()
             gdata_thieves_guild_quota2 = 0;
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.lexus.nonmember.joined"));
             listmax = 0;
@@ -3579,9 +3497,7 @@ talk_result_t talk_unique_lexus()
     {
         gdata_mages_guild_quota2 = 1;
         gdata_mages_guild_quota = 75 - gdata(128) / 200;
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.lexus.member.new_quota",
@@ -3627,9 +3543,7 @@ talk_result_t talk_unique_lexus()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         modrank(8, 500, 8);
         listmax = 0;
         buff = i18n::s.get(
@@ -3681,9 +3595,7 @@ talk_result_t talk_unique_abyss()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_joining_thieves_guild = 1;
-                snd(44);
-                txtef(2);
-                txt(i18n::s.get("core.locale.quest.journal_updated"));
+                quest_update_journal_msg();
                 listmax = 0;
                 buff = i18n::s.get_enum(
                     "core.locale.talk.unique.abyss.nonmember.want_to_join", 1);
@@ -3725,9 +3637,7 @@ talk_result_t talk_unique_abyss()
             gdata_thieves_guild_quota2 = 0;
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.abyss.nonmember.joined"));
             listmax = 0;
@@ -3770,9 +3680,7 @@ talk_result_t talk_unique_abyss()
     {
         gdata_thieves_guild_quota2 = 1;
         gdata_thieves_guild_quota = (10000 - gdata(128)) * 6 + 1000;
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.abyss.member.new_quota",
@@ -3818,9 +3726,7 @@ talk_result_t talk_unique_abyss()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         modrank(8, 500, 8);
         listmax = 0;
         buff = i18n::s.get(
@@ -3872,9 +3778,7 @@ talk_result_t talk_unique_doria()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_joining_fighters_guild = 1;
-                snd(44);
-                txtef(2);
-                txt(i18n::s.get("core.locale.quest.journal_updated"));
+                quest_update_journal_msg();
                 while (1)
                 {
                     flt(10);
@@ -3942,9 +3846,7 @@ talk_result_t talk_unique_doria()
             gdata_thieves_guild_quota2 = 0;
             txt(i18n::s.get("core.locale.quest.completed"));
             snd(51);
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
             txtef(5);
             txt(i18n::s.get("core.locale.talk.unique.doria.nonmember.joined"));
             listmax = 0;
@@ -4007,9 +3909,7 @@ talk_result_t talk_unique_doria()
         gdata_fighters_guild_target = cdata.tmp().id;
         chara_vanquish(56);
         gdata_fighters_guild_quota2 = 1;
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.doria.member.new_quota",
@@ -4056,9 +3956,7 @@ talk_result_t talk_unique_doria()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         modrank(8, 500, 8);
         listmax = 0;
         buff = i18n::s.get(
@@ -4103,9 +4001,7 @@ talk_result_t talk_unique_conery()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         listmax = 0;
         buff = i18n::s.get(
             "core.locale.talk.unique.conery.quest.do_it", cdatan(0, 0));
@@ -4153,9 +4049,7 @@ talk_result_t talk_unique_conery()
         txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_minotaur_king = 1000;
         return talk_result_t::talk_end;
     }
@@ -4244,9 +4138,7 @@ talk_result_t talk_unique_strange_scientist()
         itemcreate(
             -1, 699, cdata.player().position.x, cdata.player().position.y, 0);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        snd(44);
-        txtef(2);
-        txt(i18n::s.get("core.locale.quest.journal_updated"));
+        quest_update_journal_msg();
         gdata_little_sister = 1;
         return talk_result_t::talk_end;
     }

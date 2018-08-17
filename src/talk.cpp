@@ -248,7 +248,12 @@ talk_result_t talk_ignored()
     return talk_result_t::talk_end;
 }
 
-
+static void _give_potion_of_cure_corruption(int stat)
+{
+    inv[stat].modify_number(-1);
+    txt(i18n::s.get("core.locale.talk.unique.pael.give.you_give"));
+    snd(13);
+}
 
 bool talk_give_potion_of_cure_corruption()
 {
@@ -283,9 +288,9 @@ bool talk_give_potion_of_cure_corruption()
         }
         return false;
     }
-    inv[stat].modify_number(-1);
-    txt(i18n::s.get("core.locale.talk.unique.pael.give.you_give"));
-    snd(13);
+
+    _give_potion_of_cure_corruption(stat);
+
     listmax = 0;
     buff =
         i18n::s.get("core.locale.talk.unique.pael.give.dialog", cdatan(0, 0));

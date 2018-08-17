@@ -87,9 +87,7 @@ void quest_check()
                 if (gdata_putit_attacks < 2)
                 {
                     gdata_putit_attacks = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -100,9 +98,7 @@ void quest_check()
                 if (gdata_thieves_hideout < 2)
                 {
                     gdata_thieves_hideout = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -113,9 +109,7 @@ void quest_check()
                 if (gdata_nightmare < 3)
                 {
                     gdata_nightmare = 3;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -129,9 +123,7 @@ void quest_check()
                 if (gdata_cat_house < 2)
                 {
                     gdata_cat_house = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -142,9 +134,7 @@ void quest_check()
                 if (gdata_defense_line < 3)
                 {
                     gdata_defense_line = 3;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -158,9 +148,7 @@ void quest_check()
                 if (gdata_sewer_sweeping < 2)
                 {
                     gdata_sewer_sweeping = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -518,6 +506,13 @@ void quest_refresh_list()
             }
         }
     }
+}
+
+void quest_update_journal_msg()
+{
+    snd(44);
+    txtef(2);
+    txt(i18n::s.get("core.locale.quest.journal_updated"));
 }
 
 int quest_generate()
