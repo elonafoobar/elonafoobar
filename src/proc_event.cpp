@@ -817,9 +817,7 @@ void proc_event()
             && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;
-            snd(44);
-            txtef(2);
-            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            quest_update_journal_msg();
         }
         if (mdata_map_type == mdata_t::map_type_t::town
             || mdata_map_type == mdata_t::map_type_t::guild)

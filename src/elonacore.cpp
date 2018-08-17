@@ -6972,9 +6972,7 @@ void map_proc_special_events()
             }
             if (gdata_duration_of_kamikaze_attack == 250)
             {
-                snd(44);
-                txtef(2);
-                txt(i18n::s.get("core.locale.quest.journal_updated"));
+                quest_update_journal_msg();
                 gdata_kamikaze_attack = 3;
                 txtef(9);
                 txt(lang(
@@ -16128,9 +16126,7 @@ void weather_changes()
                 if (rnd(20) == 0)
                 {
                     ++gdata_pael_and_her_mom;
-                    snd(44);
-                    txtef(2);
-                    txt(i18n::s.get("core.locale.quest.journal_updated"));
+                    quest_update_journal_msg();
                 }
             }
         }

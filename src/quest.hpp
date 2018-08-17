@@ -10,6 +10,7 @@ void quest_place_target();
 int quest_targets_remaining();
 void quest_set_data(int);
 void quest_refresh_list();
+void quest_update_journal_msg();
 
 void quest_check();
 void quest_check_all_for_failed();

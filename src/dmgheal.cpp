@@ -1029,10 +1029,7 @@ int damage_hp(
                         if (gdata_novice_knight < 1000)
                         {
                             gdata_novice_knight = 2;
-                            snd(44);
-                            txtef(2);
-                            txt(i18n::s.get(
-                                "core.locale.quest.journal_updated"));
+                            quest_update_journal_msg();
                         }
                     }
                     if (victim.id == 257)
@@ -1040,10 +1037,7 @@ int damage_hp(
                         if (gdata_pyramid_trial < 1000)
                         {
                             gdata_pyramid_trial = 1000;
-                            snd(44);
-                            txtef(2);
-                            txt(i18n::s.get(
-                                "core.locale.quest.journal_updated"));
+                            quest_update_journal_msg();
                             txt(i18n::s.get("core.locale.quest.completed"));
                             snd(51);
                         }
@@ -1053,10 +1047,7 @@ int damage_hp(
                         if (gdata_minotaur_king < 1000)
                         {
                             gdata_minotaur_king = 2;
-                            snd(44);
-                            txtef(2);
-                            txt(i18n::s.get(
-                                "core.locale.quest.journal_updated"));
+                            quest_update_journal_msg();
                         }
                     }
                     if (victim.id == 318)
