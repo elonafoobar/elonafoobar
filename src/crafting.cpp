@@ -14,15 +14,13 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_crafting.hpp"
+
 namespace elona
 {
 
-int matid = 0;
-elona_vector1<int> matval;
-
 void initialize_craft_material_data()
 {
-    DIM2(matval, 4);
     DIM3(matref, 5, 400);
     DIM3(matspot, 5, 400);
     SDIM3(matname, 40, 400);
@@ -313,918 +311,134 @@ void initialize_craft_material_data()
     matspot(0, 21) = 16;
 }
 
+// clang-format off
+std::unordered_map<int, crafting_recipe> recipes = {
+    {502, {179, 40, {{35, 2}, {44, 2}, {51, 2}} }},
+    {501, {179, 13, {{43, 2}, {44, 1}         } }},
+    {500, {179, 1,  {{43, 2}, {38, 1}         } }},
+    {455, {177, 1,  {{45, 4}, {53, 2}, {7,  3}} }},
+    {411, {179, 5,  {{43, 4}, {36, 1}, {23, 2}} }},
+    {408, {176, 11, {{47, 3}, {52, 2}, {21, 1}} }},
+    {407, {178, 14, {{25, 4}, {20, 3}, {42, 1}} }},
+    {405, {176, 15, {{48, 8}, {9,  5}, {52, 2}} }},
+    {403, {176, 12, {{47, 5}, {16, 2}, {10, 1}} }},
+    {402, {177, 5,  {{53, 7}, {45, 4}         } }},
+    {401, {179, 14, {{3,  8}, {53, 4}, {21, 1}} }},
+    {400, {176, 8,  {{3,  6}, {46, 4}, {2,  4}} }},
+    {399, {177, 8,  {{45, 5}, {33, 2}, {20, 2}} }},
+    {395, {179, 30, {{43, 5}, {30, 1}, {44, 1}} }},
+    {390, {179, 25, {{35, 1}, {36, 2}, {30, 2}} }},
+    {389, {179, 25, {{35, 2}, {36, 2}, {17, 4}} }},
+    {388, {179, 15, {{35, 1}, {17, 2}, {23, 3}} }},
+    {384, {179, 15, {{35, 2}, {17, 4}, {16, 4}} }},
+    {362, {179, 18, {{35, 1}, {49, 2}, {30, 1}} }},
+    {287, {178, 45, {{34, 2}, {10, 5}, {25, 4}} }},
+    {286, {178, 8,  {{25, 4}, {14, 4}         } }},
+    {285, {178, 8,  {{25, 4}, {15, 4}         } }},
+    {253, {178, 1,  {{5,  4}                  } }},
+    {245, {179, 1,  {{43, 2}, {2,  2}, {4,  2}} }},
+    {242, {179, 10, {{35, 1}, {36, 1}, {23, 3}} }},
+    {236, {179, 4,  {{43, 3}, {13, 2}, {2,  2}} }},
+    {209, {179, 8,  {{43, 4}, {17, 2}, {16, 2}} }},
+    {175, {176, 17, {{37, 1}, {28, 5}, {54, 1}} }},
+    {123, {176, 14, {{37, 1}, {26, 5}, {50, 2}} }},
+    {122, {176, 14, {{37, 1}, {27, 5}, {20, 5}} }},
+    {120, {176, 1,  {{6,  1}, {9,  4}, {50, 2}} }},
+    {119, {176, 1,  {{6,  1}, {14, 4}, {54, 1}} }},
+    {76,  {178, 40, {{34, 2}, {5,  5}, {42, 4}} }},
+    {75,  {178, 30, {{34, 1}, {25, 4}, {14, 5}} }},
+    {74,  {178, 25, {{15, 3}, {25, 4}, {42, 3}} }},
+    {72,  {178, 20, {{10, 1}, {5,  4}, {42, 2}} }},
+    {71,  {178, 15, {{25, 3}, {42, 2}         } }},
+    {70,  {178, 10, {{25, 3}, {14, 1}, {15, 1}} }},
+    {69,  {178, 5,  {{5,  3}, {15, 2}         } }},
+    {68,  {178, 1,  {{5,  3}, {14, 1}         } }},
+    {66,  {177, 8,  {{33, 4}, {39, 5}, {18, 2}} }},
+    {65,  {177, 10, {{33, 5}, {54, 3}, {31, 6}} }},
+    {19,  {176, 5,  {{6,  1}, {4,  4}, {29, 2}} }},
+    {18,  {176, 8,  {{6,  1}, {32, 2}, {49, 2}} }},
+    {16,  {179, 7,  {{43, 3}, {2,  2}, {4,  3}} }},
+    {14,  {179, 1,  {{43, 2}, {49, 1}         } }},
+    {8,   {177, 4,  {{45, 6}, {53, 3}, {50, 2}} }},
+};
+// clang-format on
 
-
-int get_required_craft_materials()
+optional<const crafting_recipe&> crafting_find_recipe(int matid_)
 {
-    matneed(0) = -1;
-    matneed(1) = -1;
-    matneed(2) = -1;
-    matneed(3) = -1;
-    matneed(4) = -1;
-    matneed(5) = -1;
-    matneed(6) = -1;
-    matneed(7) = -1;
-    matneed(8) = -1;
-    matneed(9) = -1;
-    if (matid == 502)
+    auto it = recipes.find(matid_);
+
+    if (it == recipes.end())
     {
-        matval(0) = 179;
-        matval(1) = 40;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 2;
-        matneed(2) = 44;
-        matneed(3) = 2;
-        matneed(4) = 51;
-        matneed(5) = 2;
-        return 1;
+        return none;
     }
-    if (matid == 501)
-    {
-        matval(0) = 179;
-        matval(1) = 13;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 2;
-        matneed(2) = 44;
-        matneed(3) = 1;
-        return 1;
-    }
-    if (matid == 500)
-    {
-        matval(0) = 179;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 2;
-        matneed(2) = 38;
-        matneed(3) = 1;
-        return 1;
-    }
-    if (matid == 455)
-    {
-        matval(0) = 177;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 45;
-        matneed(1) = 4;
-        matneed(2) = 53;
-        matneed(3) = 2;
-        matneed(4) = 7;
-        matneed(5) = 3;
-        return 1;
-    }
-    if (matid == 411)
-    {
-        matval(0) = 179;
-        matval(1) = 5;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 4;
-        matneed(2) = 36;
-        matneed(3) = 1;
-        matneed(4) = 23;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 408)
-    {
-        matval(0) = 176;
-        matval(1) = 11;
-        matval(2) = 100;
-        matneed(0) = 47;
-        matneed(1) = 3;
-        matneed(2) = 52;
-        matneed(3) = 2;
-        matneed(4) = 21;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 407)
-    {
-        matval(0) = 178;
-        matval(1) = 14;
-        matval(2) = 100;
-        matneed(0) = 25;
-        matneed(1) = 4;
-        matneed(2) = 20;
-        matneed(3) = 3;
-        matneed(4) = 42;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 405)
-    {
-        matval(0) = 176;
-        matval(1) = 15;
-        matval(2) = 100;
-        matneed(0) = 48;
-        matneed(1) = 8;
-        matneed(2) = 9;
-        matneed(3) = 5;
-        matneed(4) = 52;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 403)
-    {
-        matval(0) = 176;
-        matval(1) = 12;
-        matval(2) = 100;
-        matneed(0) = 47;
-        matneed(1) = 5;
-        matneed(2) = 16;
-        matneed(3) = 2;
-        matneed(4) = 10;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 402)
-    {
-        matval(0) = 177;
-        matval(1) = 5;
-        matval(2) = 100;
-        matneed(0) = 53;
-        matneed(1) = 7;
-        matneed(2) = 45;
-        matneed(3) = 4;
-        return 1;
-    }
-    if (matid == 401)
-    {
-        matval(0) = 179;
-        matval(1) = 14;
-        matval(2) = 100;
-        matneed(0) = 3;
-        matneed(1) = 8;
-        matneed(2) = 53;
-        matneed(3) = 4;
-        matneed(4) = 21;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 400)
-    {
-        matval(0) = 176;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 3;
-        matneed(1) = 6;
-        matneed(2) = 46;
-        matneed(3) = 4;
-        matneed(4) = 2;
-        matneed(5) = 4;
-        return 1;
-    }
-    if (matid == 399)
-    {
-        matval(0) = 177;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 45;
-        matneed(1) = 5;
-        matneed(2) = 33;
-        matneed(3) = 2;
-        matneed(4) = 20;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 395)
-    {
-        matval(0) = 179;
-        matval(1) = 30;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 5;
-        matneed(2) = 30;
-        matneed(3) = 1;
-        matneed(4) = 44;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 390)
-    {
-        matval(0) = 179;
-        matval(1) = 25;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 1;
-        matneed(2) = 36;
-        matneed(3) = 2;
-        matneed(4) = 30;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 389)
-    {
-        matval(0) = 179;
-        matval(1) = 25;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 2;
-        matneed(2) = 36;
-        matneed(3) = 2;
-        matneed(4) = 17;
-        matneed(5) = 4;
-        return 1;
-    }
-    if (matid == 388)
-    {
-        matval(0) = 179;
-        matval(1) = 15;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 1;
-        matneed(2) = 17;
-        matneed(3) = 2;
-        matneed(4) = 23;
-        matneed(5) = 3;
-        return 1;
-    }
-    if (matid == 384)
-    {
-        matval(0) = 179;
-        matval(1) = 15;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 2;
-        matneed(2) = 17;
-        matneed(3) = 4;
-        matneed(4) = 16;
-        matneed(5) = 4;
-        return 1;
-    }
-    if (matid == 362)
-    {
-        matval(0) = 179;
-        matval(1) = 18;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 1;
-        matneed(2) = 49;
-        matneed(3) = 2;
-        matneed(4) = 30;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 287)
-    {
-        matval(0) = 178;
-        matval(1) = 45;
-        matval(2) = 100;
-        matneed(0) = 34;
-        matneed(1) = 2;
-        matneed(2) = 10;
-        matneed(3) = 5;
-        matneed(4) = 25;
-        matneed(5) = 4;
-        return 1;
-    }
-    if (matid == 286)
-    {
-        matval(0) = 178;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 25;
-        matneed(1) = 4;
-        matneed(2) = 14;
-        matneed(3) = 4;
-        return 1;
-    }
-    if (matid == 285)
-    {
-        matval(0) = 178;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 25;
-        matneed(1) = 4;
-        matneed(2) = 15;
-        matneed(3) = 4;
-        return 1;
-    }
-    if (matid == 253)
-    {
-        matval(0) = 178;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 5;
-        matneed(1) = 4;
-        return 1;
-    }
-    if (matid == 245)
-    {
-        matval(0) = 179;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 2;
-        matneed(2) = 2;
-        matneed(3) = 2;
-        matneed(4) = 4;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 242)
-    {
-        matval(0) = 179;
-        matval(1) = 10;
-        matval(2) = 100;
-        matneed(0) = 35;
-        matneed(1) = 1;
-        matneed(2) = 36;
-        matneed(3) = 1;
-        matneed(4) = 23;
-        matneed(5) = 3;
-        return 1;
-    }
-    if (matid == 236)
-    {
-        matval(0) = 179;
-        matval(1) = 4;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 3;
-        matneed(2) = 13;
-        matneed(3) = 2;
-        matneed(4) = 2;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 209)
-    {
-        matval(0) = 179;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 4;
-        matneed(2) = 17;
-        matneed(3) = 2;
-        matneed(4) = 16;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 175)
-    {
-        matval(0) = 176;
-        matval(1) = 17;
-        matval(2) = 100;
-        matneed(0) = 37;
-        matneed(1) = 1;
-        matneed(2) = 28;
-        matneed(3) = 5;
-        matneed(4) = 54;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 123)
-    {
-        matval(0) = 176;
-        matval(1) = 14;
-        matval(2) = 100;
-        matneed(0) = 37;
-        matneed(1) = 1;
-        matneed(2) = 26;
-        matneed(3) = 5;
-        matneed(4) = 50;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 122)
-    {
-        matval(0) = 176;
-        matval(1) = 14;
-        matval(2) = 100;
-        matneed(0) = 37;
-        matneed(1) = 1;
-        matneed(2) = 27;
-        matneed(3) = 5;
-        matneed(4) = 20;
-        matneed(5) = 5;
-        return 1;
-    }
-    if (matid == 120)
-    {
-        matval(0) = 176;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 6;
-        matneed(1) = 1;
-        matneed(2) = 9;
-        matneed(3) = 4;
-        matneed(4) = 50;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 119)
-    {
-        matval(0) = 176;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 6;
-        matneed(1) = 1;
-        matneed(2) = 14;
-        matneed(3) = 4;
-        matneed(4) = 54;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 76)
-    {
-        matval(0) = 178;
-        matval(1) = 40;
-        matval(2) = 100;
-        matneed(0) = 34;
-        matneed(1) = 2;
-        matneed(2) = 5;
-        matneed(3) = 5;
-        matneed(4) = 42;
-        matneed(5) = 4;
-        return 1;
-    }
-    if (matid == 75)
-    {
-        matval(0) = 178;
-        matval(1) = 30;
-        matval(2) = 100;
-        matneed(0) = 34;
-        matneed(1) = 1;
-        matneed(2) = 25;
-        matneed(3) = 4;
-        matneed(4) = 14;
-        matneed(5) = 5;
-        return 1;
-    }
-    if (matid == 74)
-    {
-        matval(0) = 178;
-        matval(1) = 25;
-        matval(2) = 100;
-        matneed(0) = 15;
-        matneed(1) = 3;
-        matneed(2) = 25;
-        matneed(3) = 4;
-        matneed(4) = 42;
-        matneed(5) = 3;
-        return 1;
-    }
-    if (matid == 72)
-    {
-        matval(0) = 178;
-        matval(1) = 20;
-        matval(2) = 100;
-        matneed(0) = 10;
-        matneed(1) = 1;
-        matneed(2) = 5;
-        matneed(3) = 4;
-        matneed(4) = 42;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 71)
-    {
-        matval(0) = 178;
-        matval(1) = 15;
-        matval(2) = 100;
-        matneed(0) = 25;
-        matneed(1) = 3;
-        matneed(2) = 42;
-        matneed(3) = 2;
-        return 1;
-    }
-    if (matid == 70)
-    {
-        matval(0) = 178;
-        matval(1) = 10;
-        matval(2) = 100;
-        matneed(0) = 25;
-        matneed(1) = 3;
-        matneed(2) = 14;
-        matneed(3) = 1;
-        matneed(4) = 15;
-        matneed(5) = 1;
-        return 1;
-    }
-    if (matid == 69)
-    {
-        matval(0) = 178;
-        matval(1) = 5;
-        matval(2) = 100;
-        matneed(0) = 5;
-        matneed(1) = 3;
-        matneed(2) = 15;
-        matneed(3) = 2;
-        return 1;
-    }
-    if (matid == 68)
-    {
-        matval(0) = 178;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 5;
-        matneed(1) = 3;
-        matneed(2) = 14;
-        matneed(3) = 1;
-        return 1;
-    }
-    if (matid == 66)
-    {
-        matval(0) = 177;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 33;
-        matneed(1) = 4;
-        matneed(2) = 39;
-        matneed(3) = 5;
-        matneed(4) = 18;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 65)
-    {
-        matval(0) = 177;
-        matval(1) = 10;
-        matval(2) = 100;
-        matneed(0) = 33;
-        matneed(1) = 5;
-        matneed(2) = 54;
-        matneed(3) = 3;
-        matneed(4) = 31;
-        matneed(5) = 6;
-        return 1;
-    }
-    if (matid == 19)
-    {
-        matval(0) = 176;
-        matval(1) = 5;
-        matval(2) = 100;
-        matneed(0) = 6;
-        matneed(1) = 1;
-        matneed(2) = 4;
-        matneed(3) = 4;
-        matneed(4) = 29;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 18)
-    {
-        matval(0) = 176;
-        matval(1) = 8;
-        matval(2) = 100;
-        matneed(0) = 6;
-        matneed(1) = 1;
-        matneed(2) = 32;
-        matneed(3) = 2;
-        matneed(4) = 49;
-        matneed(5) = 2;
-        return 1;
-    }
-    if (matid == 16)
-    {
-        matval(0) = 179;
-        matval(1) = 7;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 3;
-        matneed(2) = 2;
-        matneed(3) = 2;
-        matneed(4) = 4;
-        matneed(5) = 3;
-        return 1;
-    }
-    if (matid == 14)
-    {
-        matval(0) = 179;
-        matval(1) = 1;
-        matval(2) = 100;
-        matneed(0) = 43;
-        matneed(1) = 2;
-        matneed(2) = 49;
-        matneed(3) = 1;
-        return 1;
-    }
-    if (matid == 8)
-    {
-        matval(0) = 177;
-        matval(1) = 4;
-        matval(2) = 100;
-        matneed(0) = 45;
-        matneed(1) = 6;
-        matneed(2) = 53;
-        matneed(3) = 3;
-        matneed(4) = 50;
-        matneed(5) = 2;
-        return 1;
-    }
-    return -1;
+
+    return it->second;
 }
 
+static int _determine_crafted_fixlv(const crafting_recipe& recipe)
+{
+    int fixlv_ = 2;
+    if (rnd(200 + recipe.required_skill_level * 2)
+        < sdata(recipe.skill_used, 0) + 20)
+    {
+        fixlv_ = 4;
+    }
+    if (rnd(100 + recipe.required_skill_level * 2)
+        < sdata(recipe.skill_used, 0) + 20)
+    {
+        fixlv_ = 3;
+    }
 
+    return fixlv_;
+}
+
+static void _craft_item(int matid, const crafting_recipe& recipe)
+{
+    fixlv = _determine_crafted_fixlv(recipe);
+    flt(calcobjlv(sdata(recipe.skill_used, 0)), calcfixlv(fixlv));
+    nostack = 1;
+    itemcreate(0, matid, -1, -1, 0);
+    txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
+    item_stack(0, ci, 0);
+}
 
 void crafting_menu()
 {
-    int matuse = 0;
-label_18551_internal:
-    listmax = 0;
-    page = 0;
-    pagesize = 10;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    page_load();
-    if (invctrl == 0)
+    while (true)
     {
-        for (int cnt = 0, cnt_end = (maxitemid); cnt < cnt_end; ++cnt)
-        {
-            matid = cnt;
-            int stat = get_required_craft_materials();
-            if (stat == -1)
-            {
-                continue;
-            }
-            if (prodtype == 2)
-            {
-                if (matval != 178)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 1)
-            {
-                if (matval != 176)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 3)
-            {
-                if (matval != 179)
-                {
-                    continue;
-                }
-            }
-            if (prodtype == 4)
-            {
-                if (matval != 177)
-                {
-                    continue;
-                }
-            }
-            if (sdata(matval, 0) + 3 < matval(1))
-            {
-                continue;
-            }
-            listn(0, listmax) = ""s + prodcheck();
-            list(0, listmax) = cnt;
-            list(1, listmax) = 0;
-            ++listmax;
-        }
-    }
-    else
-    {
-        for (int cnt = 0; cnt < 50; ++cnt)
-        {
-            listn(0, listmax) = ""s + prodcheck();
-            list(0, listmax) = 630;
-            list(1, listmax) = cnt;
-            ++listmax;
-        }
-    }
-    windowshadow = 1;
-label_1857_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    s(0) = i18n::s.get("core.locale.crafting.menu.title");
-    s(1) = strhint2 + strhint3b;
-    display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.product"), wx + 28, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.detail"), wx + 296, wy + 36);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.requirement"),
-        wx + 28,
-        wy + 258);
-    display_topic(
-        i18n::s.get("core.locale.crafting.menu.material"), wx + 28, wy + 304);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
-    }
-    cs_listbk();
-    f = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        i(0) = list(0, p);
-        i(1) = list(1, p);
-        if (cs == cnt)
-        {
-            matid = i;
-            if (invctrl == 0)
-            {
-                get_required_craft_materials();
-                font(13 - en * 2);
-                s = i18n::s.get("core.locale.crafting.menu.skill_needed")
-                    + u8": "s;
-                if (auto text = i18n::s.get_enum_optional(
-                        "core.locale.crafting.menu.skills", matval))
-                {
-                    s += *text;
-                }
-                s += u8" "s + matval(1) + u8"("s + sdata(matval, 0) + u8")"s;
-                if (matval(1) <= sdata(matval, 0))
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37, wy + 288);
-                mes(s + u8" "s);
-                color(0, 0, 0);
-            }
-            for (int cnt = 0; cnt < 6; ++cnt)
-            {
-                int j0 = matneed(cnt * 2);
-                int j1 = matneed(cnt * 2 + 1);
-                if (j0 == -1)
-                {
-                    break;
-                }
-                s = matname(j0) + " "
-                    + i18n::s.get("core.locale.crafting.menu.x") + " " + j1
-                    + u8"("s + mat(j0) + u8")"s;
-                if (mat(j0) >= j1)
-                {
-                    color(30, 30, 200);
-                }
-                else
-                {
-                    color(200, 30, 30);
-                }
-                pos(wx + 37 + cnt % 3 * 192, wy + 334 + cnt / 3 * 16);
-                mes(s);
-                color(0, 0, 0);
-            }
-            f = 1;
-        }
-        s = ioriginalnameref(i);
-        s(1) = i18n::s.get("core.locale.crafting.menu.make", s(0));
-        font(14 - en * 2);
-        if (elona::stoi(listn(0, p)) == -1)
-        {
-            p(2) = 3;
-        }
-        else
-        {
-            p(2) = 0;
-        }
-        cs_list(cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
-        pos(wx + 308, wy + 66 + cnt * 19 + 2);
-        mes(s(1));
+        auto result = ui::ui_menu_crafting(prodtype, invctrl).show();
 
-        draw_item_material(ipicref(i), wx + 37, wy + 69 + cnt * 19 + 2);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    if (f == 1 || listmax == 0)
-    {
-        redraw();
-    }
-    await(config::instance().wait1);
-    key_check();
-    cursor_check();
-    ELONA_GET_SELECTED_ITEM(p, 0);
-    if (p != -1)
-    {
-        matid = p;
-        get_required_craft_materials();
-        s = ioriginalnameref(matid);
-        if (prodcheck() == -1)
+        if (!result.canceled && result.value)
         {
-            snd(27);
-            txt(i18n::s.get(
-                "core.locale.crafting.you_do_not_meet_requirements"));
-            goto label_1857_internal;
-        }
-        if (!inv_getspace(0))
-        {
-            snd(27);
-            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
-            goto label_1857_internal;
-        }
-        matuse = 0;
-        for (int cnt = 0; cnt < 6; ++cnt)
-        {
-            int j0 = matneed(cnt * 2);
-            int j1 = matneed(cnt * 2 + 1);
-            if (j0 == -1)
+            int matid = *result.value;
+            auto recipe = crafting_find_recipe(matid);
+            assert(recipe);
+
+            int matuse = 0;
+            for (const auto& required_mat : recipe->required_materials)
             {
-                break;
+                mat(required_mat.id) -= required_mat.amount;
+                matuse += required_mat.amount;
             }
-            mat(j0) -= j1;
-            matuse += j1;
+
+            snd(58);
+            _craft_item(matid, *recipe);
+
+            r2 = matuse;
+            gain_crafting_experience(recipe->skill_used, matuse);
+            chara_refresh(0);
+
+            // NOTE: page_load is called in ui_menu_crafting.
+            render_hud();
+            page_save();
         }
-        snd(58);
-        fixlv = 2;
-        if (rnd(200 + matval(1) * 2) < sdata(matval, 0) + 20)
+        else if (result.canceled)
         {
-            fixlv = 4;
-        }
-        if (rnd(100 + matval(1) * 2) < sdata(matval, 0) + 20)
-        {
-            fixlv = 3;
-        }
-        flt(calcobjlv(sdata(matval, 0)), calcfixlv(fixlv));
-        nostack = 1;
-        itemcreate(0, p, -1, -1, 0);
-        txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
-        item_stack(0, ci, 0);
-        r2 = matuse;
-        gain_crafting_experience(matval);
-        chara_refresh(0);
-        render_hud();
-        page_save();
-        goto label_18551_internal;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            ++page;
-            goto label_1857_internal;
+            break;
         }
     }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
-        {
-            snd(1);
-            --page;
-            goto label_1857_internal;
-        }
-    }
-    if (key == key_cancel)
-    {
-        return;
-    }
-    goto label_1857_internal;
 }
 
-
-int prodcheck()
-{
-    int f_at_m110 = 0;
-    elona_vector1<int> j_at_m110;
-    f_at_m110 = 1;
-    if (matval(1) > sdata(matval, 0))
-    {
-        f_at_m110 = -1;
-    }
-    for (int cnt = 0; cnt < 6; ++cnt)
-    {
-        j_at_m110(0) = matneed(cnt * 2);
-        j_at_m110(1) = matneed(cnt * 2 + 1);
-        if (j_at_m110 == -1)
-        {
-            break;
-        }
-        if (mat(j_at_m110) < j_at_m110(1))
-        {
-            f_at_m110 = -1;
-        }
-    }
-    return f_at_m110;
-}
 
 
 } // namespace elona

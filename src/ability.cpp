@@ -644,9 +644,9 @@ void gain_memorization_experience(int cc)
 
 
 
-void gain_crafting_experience(int skill)
+void gain_crafting_experience(int skill, int mat_amount)
 {
-    chara_gain_skill_exp(cdata.player(), skill, 50 + r2 * 20);
+    chara_gain_skill_exp(cdata.player(), skill, 50 + mat_amount * 20);
 }
 
 
