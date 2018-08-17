@@ -847,6 +847,10 @@ void initialize_item_chips(const item_chip_db& db)
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.
+        if (item_chips.size() < legacy_id)
+        {
+            item_chips.resize(legacy_id + 1);
+        }
         item_chips[legacy_id] = chip_data.chip;
 
         if (chip_data.filepath)
@@ -879,6 +883,10 @@ void initialize_chara_chips(const chara_chip_db& db)
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.
+        if (chara_chips.size() < legacy_id)
+        {
+            chara_chips.resize(legacy_id + 1);
+        }
         chara_chips[legacy_id] = chip_data.chip;
 
         if (chip_data.filepath)
