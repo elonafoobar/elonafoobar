@@ -186,14 +186,17 @@ set(CORE_SOURCES
   src/ui/ui_menu_book.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
+  src/ui/ui_menu_game_help.cpp
   src/ui/ui_menu_god.cpp
   src/ui/ui_menu_hire.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_npc_tone.cpp
   src/ui/ui_menu_quest_board.cpp
   src/ui/ui_menu_scene.cpp
+  src/ui/ui_menu_skills.cpp
   src/ui/ui_menu_spell_writer.cpp
-  src/ui/ui_menu_game_help.cpp
+  src/ui/ui_menu_spells.cpp
+  src/ui/ui_menu_composite_skills.cpp
 
   src/version.cpp
   )

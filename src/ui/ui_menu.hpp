@@ -11,6 +11,9 @@ namespace elona
 namespace ui
 {
 
+template <typename T>
+class ui_menu_composite;
+
 struct dummy_result
 {
 };
@@ -18,6 +21,8 @@ struct dummy_result
 template <typename T>
 class ui_menu
 {
+    friend class ui_menu_composite<T>;
+
 public:
     struct result
     {
@@ -44,12 +49,13 @@ public:
 protected:
     using result_type = ui_menu<T>::result;
 
-protected:
+public:
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual optional<result_type> on_key(const std::string& key) = 0;
 
+protected:
     void set_reupdate()
     {
         _reupdate = true;
