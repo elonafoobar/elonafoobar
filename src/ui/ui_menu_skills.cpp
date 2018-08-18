@@ -63,7 +63,6 @@ void ui_menu_skills::update()
     {
         page = 0;
     }
-    std::cout << "UPDATEskill " << pagemax << " " << page << std::endl;
 }
 
 void ui_menu_skills::draw()
@@ -152,11 +151,10 @@ optional<ui_menu_skills::result_type> ui_menu_skills::on_key(
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
         screenupdate = -1;
         update_screen();
-        // return do_use_magic();
-        return ui_menu_skills::result::finish();
+        return ui_menu_skills::result::finish(
+            ui_menu_composite_skills_result(ui_menu_skills_result{p}));
     }
     else if (key == u8"sc"s)
     {

@@ -874,26 +874,37 @@ turn_result_t play_scene()
     }
 }
 
-turn_result_t show_spell_list()
-{
-    ui::ui_menu_composite_skills(ui::ui_menu_composite_skills::index::spells)
-        .show();
 
-    update_screen();
-    return turn_result_t::pc_turn_user_error;
+static turn_result_t _show_skill_spell_menu(size_t menu_index)
+{
+    auto result = ui::ui_menu_composite_skills(menu_index).show();
+
+    if (result.canceled || !result.value)
+    {
+        return turn_result_t::pc_turn_user_error;
+    }
+
+    if (result.value->type() == typeid(ui::ui_menu_skills_result))
+    {
+        efid = boost::get<ui::ui_menu_skills_result>(*result.value).effect_id;
+        return do_cast_command();
+    }
+    else
+    {
+        efid = boost::get<ui::ui_menu_spells_result>(*result.value).effect_id;
+        return do_use_magic();
+    }
 }
 
-
+turn_result_t show_spell_list()
+{
+    return _show_skill_spell_menu(ui::ui_menu_composite_skills::index::spells);
+}
 
 turn_result_t show_skill_list()
 {
-    ui::ui_menu_composite_skills(ui::ui_menu_composite_skills::index::skills)
-        .show();
-
-    update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return _show_skill_spell_menu(ui::ui_menu_composite_skills::index::skills);
 }
-
 
 
 void draw_spell_power_entry()

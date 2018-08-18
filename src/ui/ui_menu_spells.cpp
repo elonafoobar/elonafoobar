@@ -53,7 +53,6 @@ void ui_menu_spells::update()
     {
         page = 0;
     }
-    std::cout << "UPDATEspell " << pagemax << " " << page << std::endl;
 }
 
 void ui_menu_spells::draw()
@@ -148,9 +147,8 @@ optional<ui_menu_spells::result_type> ui_menu_spells::on_key(
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
-        // return do_cast_command();
-        return ui_menu_spells::result::finish();
+        return ui_menu_spells::result::finish(
+            ui_menu_composite_skills_result(ui_menu_spells_result{p}));
     }
     else if (key == u8"sc"s)
     {

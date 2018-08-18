@@ -6,7 +6,18 @@ namespace elona
 namespace ui
 {
 
-typedef dummy_result ui_menu_composite_skills_result;
+struct ui_menu_skills_result
+{
+    int effect_id;
+};
+
+struct ui_menu_spells_result
+{
+    int effect_id;
+};
+
+typedef boost::variant<ui_menu_skills_result, ui_menu_spells_result>
+    ui_menu_composite_skills_result;
 
 class ui_menu_composite_skills
     : public ui_menu_composite<ui_menu_composite_skills_result>
