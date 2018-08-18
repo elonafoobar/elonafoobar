@@ -49,6 +49,10 @@ $(BENCH_RUNNER):
 clean: FORCE
 	-rd /q /s $(BIN_DIR)
 
+format: FORCE
+        powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
+        git diff
+
 FORCE:
 
 
