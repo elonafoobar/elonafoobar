@@ -241,6 +241,26 @@ static optional<std::vector<T>> convert_vector(
 }
 
 
+#define ELONA_LION_DEFINE_DB(class_name, data, legacy_id, name) \
+    class class_name; \
+    namespace lion \
+    { \
+    template <> \
+    struct lion_db_traits<class_name> \
+    { \
+        using data_type = data; \
+        using legacy_id_type = legacy_id; \
+        static constexpr const char* datatype_name = name; \
+    }; \
+    } \
+    class class_name : public lion::lion_db<class_name> \
+    { \
+    public: \
+        class_name() = default; \
+        data convert(const std::string&, const sol::table&, lua::lua_env&); \
+    };
+
+
 #define ELONA_LION_DB_FIELD(name, type, default_value) \
     type name; \
     { \

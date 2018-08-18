@@ -114,11 +114,6 @@ void pre_init()
 {
     log::initialize();
 
-    initialize_cat_db();
-    configure_lua();
-    initialize_i18n();
-    initialize_lion_db();
-
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
     const fs::path config_file =
@@ -132,6 +127,12 @@ void pre_init()
     init_assets();
     filesystem::dir::set_base_save_directory(fs::path("save"));
     initialize_config(config_file);
+
+    initialize_cat_db();
+    configure_lua();
+    initialize_i18n();
+    initialize_lion_db();
+
     initialize_elona();
 
     config::instance().is_test = true;

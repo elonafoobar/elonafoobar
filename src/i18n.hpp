@@ -24,6 +24,9 @@ namespace elona
 
 typedef std::string i18n_key;
 
+struct character;
+struct item;
+
 namespace i18n
 {
 

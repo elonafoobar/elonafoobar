@@ -2,7 +2,6 @@
 
 #include <array>
 #include <unordered_map>
-#include "cat.hpp"
 #include "enums.hpp"
 #include "i18n.hpp"
 #include "lion.hpp"
@@ -51,34 +50,7 @@ struct item_data
     optional<std::string> on_use_callback;
 };
 
-
-
-class item_db_ex;
-
-
-namespace lion
-{
-
-template <>
-struct lion_db_traits<item_db_ex>
-{
-    using data_type = item_data;
-    using legacy_id_type = int;
-    static constexpr const char* datatype_name = u8"item";
-};
-
-} // namespace lion
-
-
-
-class item_db_ex : public lion::lion_db<item_db_ex>
-{
-public:
-    item_db_ex() = default;
-
-    item_data convert(const std::string&, const sol::table&, lua::lua_env&);
-};
-
+ELONA_LION_DEFINE_DB(item_db_ex, item_data, int, u8"item")
 
 extern item_db_ex the_item_db;
 

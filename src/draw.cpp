@@ -2,7 +2,9 @@
 #include <cmath>
 #include "character.hpp"
 #include "config.hpp"
+#include "db_chara_chip.hpp"
 #include "db_item.hpp"
+#include "db_item_chip.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "hcl.hpp"
@@ -93,143 +95,6 @@ double easing(double t)
         return 0;
 
     return elastic_easing(t);
-}
-
-
-
-void initialize_item_chips()
-{
-    auto value = hclutil::load(
-        filesystem::dir::mods() / "core" / "data" / "item_chip.hcl");
-    pic_loader::map_type extents;
-
-    for (const auto& pair : value.get<hcl::Object>("item_chip"))
-    {
-        assert(pair.first.size() > 1);
-        int i = std::stoi(pair.first.substr(1));
-        int x = 0;
-        int y = 0;
-        int width = inf_tiles;
-        int frame_width = inf_tiles;
-        int height = inf_tiles;
-        int offset_y = 0;
-        int stack_height = 8;
-        int shadow = 40;
-        int animation = 0;
-        bool tall = false;
-
-        auto source = pair.second["source"];
-        if (source.is<hcl::Object>())
-        {
-            x = source["x"].as<int>();
-            y = source["y"].as<int>();
-        }
-        else
-        {
-            throw std::runtime_error("unimplemented");
-        }
-
-        if (auto value = pair.second.find("tall"))
-        {
-            tall = value->as<bool>();
-        }
-        if (auto value = pair.second.find("offset_y"))
-        {
-            offset_y = value->as<int>();
-        }
-        if (auto value = pair.second.find("stack_height"))
-        {
-            stack_height = value->as<int>();
-        }
-        if (auto value = pair.second.find("shadow"))
-        {
-            shadow = value->as<int>();
-        }
-        if (auto value = pair.second.find("animation"))
-        {
-            animation = value->as<int>();
-        }
-
-        if (tall)
-        {
-            height = inf_tiles * 2;
-            offset_y += inf_tiles;
-        }
-
-        if (animation > 0)
-        {
-            // Animation frames are laid out from left to right. The
-            // region width represents the entire set of frames, while
-            // frame_width represents the width per frame.
-            width = inf_tiles * animation;
-        }
-
-        shared_id key("core.item_chip." + std::to_string(i));
-        extents[key] = extent{x, y, width, height, frame_width};
-        item_chips[i] =
-            item_chip_t{key, offset_y, stack_height, shadow, animation};
-    }
-
-    loader.add_predefined_extents(
-        filesystem::dir::graphic() / u8"item.bmp",
-        extents,
-        pic_loader::page_type::item);
-}
-
-
-
-void initialize_chara_chips()
-{
-    auto value = hclutil::load(
-        filesystem::dir::mods() / "core" / "data" / "chara_chip.hcl");
-    pic_loader::map_type extents;
-
-    for (const auto& pair : value.get<hcl::Object>("chara_chip"))
-    {
-        assert(pair.first.size() > 1);
-        int i = std::stoi(pair.first.substr(1));
-        int x = 0;
-        int y = 0;
-        int width = inf_tiles;
-        int height = inf_tiles;
-        int offset_y = 16;
-        bool tall = false;
-
-        auto source = pair.second["source"];
-        if (source.is<hcl::Object>())
-        {
-            x = source["x"].as<int>();
-            y = source["y"].as<int>();
-        }
-        else
-        {
-            throw std::runtime_error("unimplemented");
-        }
-
-        if (auto value = pair.second.find("tall"))
-        {
-            tall = value->as<bool>();
-        }
-        if (auto value = pair.second.find("offset_y"))
-        {
-            offset_y = value->as<int>();
-        }
-
-        if (tall)
-        {
-            height = inf_tiles * 2;
-            offset_y += inf_tiles;
-        }
-
-        shared_id key("core.chara_chip." + std::to_string(i));
-        extents[key] = extent{x, y, width, height};
-        chara_chips[i] = chara_chip_t{key, offset_y};
-    }
-
-    loader.add_predefined_extents(
-        filesystem::dir::graphic() / u8"character.bmp",
-        extents,
-        pic_loader::page_type::character);
 }
 
 
@@ -972,17 +837,84 @@ void initialize_map_chip()
 }
 
 
+void initialize_item_chips(const item_chip_db& db)
+{
+    pic_loader::map_type predefined_extents;
+
+    for (const auto& chip_data : db)
+    {
+        shared_id key = chip_data.chip.key;
+        int legacy_id = chip_data.id;
+
+        // Insert chip data into global vector.
+        if (item_chips.size() < legacy_id)
+        {
+            item_chips.resize(legacy_id + 1);
+        }
+        item_chips[legacy_id] = chip_data.chip;
+
+        if (chip_data.filepath)
+        {
+            // Chip is from an external file.
+            loader.load(
+                *chip_data.filepath, key, pic_loader::page_type::character);
+        }
+        else
+        {
+            // Chip is located in item.bmp.
+            predefined_extents[key] = chip_data.rect;
+        }
+    }
+
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"item.bmp",
+        predefined_extents,
+        pic_loader::page_type::item);
+}
+
+
+void initialize_chara_chips(const chara_chip_db& db)
+{
+    pic_loader::map_type predefined_extents;
+
+    for (const auto& chip_data : db)
+    {
+        shared_id key = chip_data.chip.key;
+        int legacy_id = chip_data.id;
+
+        // Insert chip data into global vector.
+        if (chara_chips.size() < legacy_id)
+        {
+            chara_chips.resize(legacy_id + 1);
+        }
+        chara_chips[legacy_id] = chip_data.chip;
+
+        if (chip_data.filepath)
+        {
+            // Chip is from an external file.
+            loader.load(
+                *chip_data.filepath, key, pic_loader::page_type::character);
+        }
+        else
+        {
+            // Chip is located in character.bmp.
+            predefined_extents[key] = chip_data.rect;
+        }
+    }
+
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"character.bmp",
+        predefined_extents,
+        pic_loader::page_type::character);
+}
+
 
 void initialize_all_chips()
 {
-    loader.clear_storage_and_buffers();
-
     initialize_mef();
     SDIM3(tname, 16, 11);
     tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
     tname(2) = i18n::s.get("core.locale.item.chip.field");
-    initialize_item_chips();
-    initialize_chara_chips();
     initialize_map_chip();
 }
 

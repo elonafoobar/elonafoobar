@@ -4,10 +4,6 @@
 #include "lua_env/lua_enums.hpp"
 #include "lua_env/lua_env.hpp"
 
-using namespace elona;
-
-
-
 namespace elona
 {
 
