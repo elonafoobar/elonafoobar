@@ -8,6 +8,16 @@ namespace elona
 namespace ui
 {
 
+static void _load_chat_history()
+{
+    std::string scroll_text = i18n::s.get("core.locale.ui.message.hit_any_key");
+    showscroll(scroll_text, wx, wy, ww, wh);
+    net_read();
+    buff = "";
+    notesel(buff);
+    header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
+}
+
 bool ui_menu_chat_history::init()
 {
     curmenu = 2;
@@ -26,17 +36,13 @@ bool ui_menu_chat_history::init()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    s = i18n::s.get("core.locale.ui.message.hit_any_key");
-    showscroll(s, wx, wy, ww, wh);
-    net_read();
-    buff = "";
-    notesel(buff);
-    header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
+
+    _load_chat_history();
 
     return true;
 }
 
-void ui_menu_chat_history::update()
+static void _parse_net_buffer()
 {
     while (1)
     {
@@ -58,6 +64,10 @@ void ui_menu_chat_history::update()
         s += u8"\n"s;
         buff += ""s + s;
     }
+}
+
+static void _draw_messages()
+{
     font(13 - en * 2);
     i = 0;
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -71,13 +81,9 @@ void ui_menu_chat_history::update()
         {
             s = strutil::replace(s, u8"&quot;", u8"\"");
         }
-        if (s == ""s)
+        if (s == ""s && cnt == 0)
         {
-            if (cnt == 0)
-            {
-                s = u8"No new messages received."s;
-            }
-            break;
+            s = u8"No new messages received."s;
         }
         i += talk_conv(s, (ww - 110 - en * 50) / 7);
         pos(wx + 48, (19 - i) * 16 + wy + 48);
@@ -85,7 +91,18 @@ void ui_menu_chat_history::update()
         mes(s);
         color(0, 0, 0);
         ++i;
+
+        if (s == ""s)
+        {
+            break;
+        }
     }
+}
+
+void ui_menu_chat_history::update()
+{
+    _parse_net_buffer();
+    _draw_messages();
 }
 
 void ui_menu_chat_history::draw()
@@ -95,7 +112,7 @@ void ui_menu_chat_history::draw()
 optional<ui_menu_chat_history::result_type> ui_menu_chat_history::on_key(
     const std::string& key)
 {
-    if (key != ""s && key != key_prev && key != key_next)
+    if (key != ""s)
     {
         update_screen();
         return ui_menu_chat_history::result::finish();
