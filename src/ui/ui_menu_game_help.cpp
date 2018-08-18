@@ -1,6 +1,6 @@
+#include "ui_menu_game_help.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
-#include "ui_menu_game_help.hpp"
 #include "../i18n.hpp"
 
 namespace elona
@@ -9,7 +9,7 @@ namespace ui
 {
 bool ui_menu_game_help::init()
 {
-	// pre - notesel init
+    // pre - notesel init
     snd(26);
     listmax = 0;
     page = 0;
@@ -30,7 +30,7 @@ bool ui_menu_game_help::init()
         cs_bk2 = cs;
     }
 
-	// notesel
+    // notesel
     notesel(buff);
     {
         buff(0).clear();
@@ -60,7 +60,7 @@ bool ui_menu_game_help::init()
     }
     windowshadow = 1;
 
-	update();
+    update();
 
     return true;
 }
@@ -286,7 +286,7 @@ void ui_menu_game_help::update()
     else if (page > pagemax)
         page = 0;
 
-	s(0) = u8"Elona In-Game Help"s;
+    s(0) = u8"Elona In-Game Help"s;
     s(1) = strhint2 + strhint3b;
 
     if (mode == 1)
@@ -300,7 +300,7 @@ void ui_menu_game_help::update()
             (windoww - 780) / 2 + inf_screenx, winposy(496) - 24, 780, 496);
     }
     display_topic(i18n::s.get("core.locale.ui.manual.topic"), wx + 34, wy + 36);
-    
+
     if (mode == 1)
         p = 2;
     else
@@ -308,8 +308,8 @@ void ui_menu_game_help::update()
 
     _draw_background_vignette(page % 5);
     keyrange = 0;
-    
-	// Moves and refresh cursor
+
+    // Moves and refresh cursor
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -320,19 +320,17 @@ void ui_menu_game_help::update()
         display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
     }
 
-	// Draws the first page, key lists, in a specific way
+    // Draws the first page, key lists, in a specific way
     if (cs_bk2 == 0 && page_bk == 0)
         _update_key_list();
     else
         _update_regular_pages();
-    
-
 }
 
 
 void ui_menu_game_help::draw()
 {
-	// Draws the elft part of the window continuously, ensuring key refreshing
+    // Draws the elft part of the window continuously, ensuring key refreshing
     _draw_navigation_menu();
 }
 
@@ -340,7 +338,7 @@ void ui_menu_game_help::draw()
 optional<ui_menu_game_help::result_type> ui_menu_game_help::on_key(
     const std::string& key)
 {
-	// Key selection
+    // Key selection
     ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
@@ -350,8 +348,8 @@ optional<ui_menu_game_help::result_type> ui_menu_game_help::on_key(
         set_reupdate();
     }
 
-	// Page changes
-	if (key == key_pageup)
+    // Page changes
+    if (key == key_pageup)
     {
         if (pagemax != 0)
         {
@@ -370,7 +368,7 @@ optional<ui_menu_game_help::result_type> ui_menu_game_help::on_key(
         }
     }
 
-	// Closing menu
+    // Closing menu
     if (key == key_cancel)
     {
         return ui_menu_game_help::result_type::finish();

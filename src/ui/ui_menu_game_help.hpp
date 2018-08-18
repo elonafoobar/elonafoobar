@@ -18,7 +18,7 @@ protected:
     virtual optional<ui_menu_game_help::result_type> on_key(
         const std::string& key);
 
-	void _remove_parenthesis_around_keys();
+    void _remove_parenthesis_around_keys();
     void _update_key_list();
     void _update_regular_pages();
     void _draw_navigation_menu();
