@@ -44,7 +44,7 @@ turn_result_t play_scene();
 
 turn_result_t show_spell_list();
 turn_result_t show_skill_list();
-void draw_spell_power_entry();
+void draw_spell_power_entry(int skill_id);
 void trainer_get_gainable_skills();
 menu_result menu_character_sheet();
 int change_appearance();

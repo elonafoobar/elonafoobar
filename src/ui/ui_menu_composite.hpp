@@ -100,18 +100,24 @@ protected:
             size_t prev_menu = _selected;
             if (key == key_next)
             {
-                ++_selected;
-                if (_selected > _menus.size() - 1)
+                if (_selected >= _menus.size() - 1)
                 {
                     _selected = 0;
+                }
+                else
+                {
+                    _selected++;
                 }
             }
             if (key == key_prev)
             {
-                --_selected;
-                if (_selected < 0)
+                if (_selected <= 0)
                 {
                     _selected = _menus.size() - 1;
+                }
+                else
+                {
+                    _selected--;
                 }
             }
             if (prev_menu != _selected)
@@ -131,37 +137,51 @@ protected:
     }
 
 private:
+    void _draw_menu_icon_background(int x, int y, int width)
+    {
+        font(12 + sizefix - en * 2);
+        window2(x, y, width, 22, 5, 5);
+        pos(x - 28, y - 8);
+        gcopy(3, 64, 288, 50, 32);
+    }
+
+    void _draw_single_menu_item(
+        size_t menu_index,
+        const menu_info& menu,
+        int x,
+        int y)
+    {
+        pos(x + menu_index * 50 + 20, y - 24);
+        gcopy(3, 288 + menu.image * 48, 48, 48, 48);
+
+        if (_selected == menu_index)
+        {
+            gmode(5, 70);
+            pos(x + menu_index * 50 + 20, y - 24);
+            gcopy(3, 288 + menu.image * 48, 48, 48, 48);
+            gmode(2);
+        }
+
+        bmes(
+            menu.text,
+            x + menu_index * 50 + 46 - strlen_u(menu.text) * 3,
+            y + 7,
+            _selected == menu_index ? snail::color{255, 255, 255}
+                                    : snail::color{165, 165, 165});
+    }
+
     void _draw_menu_icons()
     {
         int x = windoww - (50 * _menus.size() + 60);
         int y = 34;
         int width = 50 * _menus.size() + 40;
 
-        font(12 + sizefix - en * 2);
-        window2(x, y, width, 22, 5, 5);
-        pos(x - 28, y - 8);
-        gcopy(3, 64, 288, 50, 32);
+        _draw_menu_icon_background(x, y, width);
 
         size_t menu_index = 0;
         for (const auto& menu : _menus)
         {
-            pos(x + menu_index * 50 + 20, y - 24);
-            gcopy(3, 288 + menu.image * 48, 48, 48, 48);
-
-            if (_selected == menu_index)
-            {
-                gmode(5, 70);
-                pos(x + menu_index * 50 + 20, y - 24);
-                gcopy(3, 288 + menu.image * 48, 48, 48, 48);
-                gmode(2);
-            }
-
-            bmes(
-                menu.text,
-                x + menu_index * 50 + 46 - strlen_u(menu.text) * 3,
-                y + 7,
-                _selected == menu_index ? snail::color{255, 255, 255}
-                                        : snail::color{165, 165, 165});
+            _draw_single_menu_item(menu_index, menu, x, y);
 
             menu_index++;
         }

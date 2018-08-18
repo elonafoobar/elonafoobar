@@ -10,17 +10,8 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_skills::init()
+static void _populate_skill_list()
 {
-    listmax = 0;
-    page = 0;
-    pagesize = 16;
-    cs = 0;
-    cc = 0;
-    cs_bk = -1;
-    cs = commark(0) % 1000;
-    page = commark(0) / 1000;
-    curmenu = 1;
     for (int cnt = 300; cnt < 400; ++cnt)
     {
         if (sdata(cnt, cc) > 0)
@@ -42,11 +33,26 @@ bool ui_menu_skills::init()
         }
     }
     sort_list_by_column1();
+}
+
+bool ui_menu_skills::init()
+{
+    listmax = 0;
+    page = 0;
+    pagesize = 16;
+    cs = 0;
+    cc = 0;
+    cs_bk = -1;
+    cs = commark(0) % 1000;
+    page = commark(0) / 1000;
+    curmenu = 1;
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);
     gsel(0);
     windowshadow = 1;
+
+    _populate_skill_list();
 
     return true;
 }
@@ -65,7 +71,7 @@ void ui_menu_skills::update()
     }
 }
 
-void ui_menu_skills::draw()
+static void _draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.skill.title");
     s(1) = strhint2 + strhint3 + strhint7;
@@ -75,12 +81,26 @@ void ui_menu_skills::draw()
     display_topic(i18n::s.get("core.locale.ui.skill.cost"), wx + 220, wy + 36);
     display_topic(
         i18n::s.get("core.locale.ui.skill.detail"), wx + 320, wy + 36);
+
     pos(wx + 46, wy - 16);
     gcopy(3, 960, 48, 48, 48);
     pos(wx + ww - 78, wy + wh - 165);
     gcopy(3, 960, 96, 72, 144);
     pos(wx + ww - 168, wy);
     gcopy(3, 1032, 96, 102, 48);
+}
+
+static void _draw_key(int cnt)
+{
+    if (cnt % 2 == 0)
+    {
+        boxf(wx + 70, wy + 66 + cnt * 19, 490, 18, {12, 14, 16, 16});
+    }
+    display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+}
+
+static void _draw_keys()
+{
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -91,12 +111,64 @@ void ui_menu_skills::draw()
         }
         key_list(cnt) = key_select(cnt);
         ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 66 + cnt * 19, 490, 18, {12, 14, 16, 16});
-        }
-        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+        _draw_key(cnt);
     }
+}
+
+static void _draw_skill_attribute(int cnt, int skill_id)
+{
+    pos(wx + 40, wy + 74 + cnt * 19);
+    gmode(2);
+    gcopy_c(
+        1,
+        (the_ability_db[skill_id]->related_basic_attribute - 10) * inf_tiles,
+        672,
+        inf_tiles,
+        inf_tiles);
+}
+
+static void _draw_skill_name(int cnt, int skill_id)
+{
+    std::string skill_shortcut = "";
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        if (gdata(40 + cnt) == skill_id)
+        {
+            skill_shortcut = u8"{"s + cnt + u8"}"s;
+        }
+    }
+    cs_list(
+        cs == cnt,
+        i18n::_(u8"ability", std::to_string(skill_id), u8"name")
+            + skill_shortcut,
+        wx + 84,
+        wy + 66 + cnt * 19 - 1);
+}
+
+static void _draw_spell_cost(int cnt, int skill_id)
+{
+    std::string spell_cost = ""s + the_ability_db[skill_id]->cost + u8" Sp"s;
+    pos(wx + 288 - strlen_u(spell_cost) * 7, wy + 66 + cnt * 19 + 2);
+    mes(spell_cost);
+}
+
+static void _draw_spell_power(int cnt, int skill_id)
+{
+    draw_spell_power_entry(skill_id);
+    pos(wx + 325, wy + 66 + cnt * 19 + 2);
+    mes(strmid(s, 0, 34));
+}
+
+static void _draw_single_list_entry(int cnt, int skill_id)
+{
+    _draw_skill_attribute(cnt, skill_id);
+    _draw_skill_name(cnt, skill_id);
+    _draw_spell_cost(cnt, skill_id);
+    _draw_spell_power(cnt, skill_id);
+}
+
+static void _draw_list_entries()
+{
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -106,40 +178,42 @@ void ui_menu_skills::draw()
         {
             break;
         }
-        i = list(0, p);
-        pos(wx + 40, wy + 74 + cnt * 19);
-        gmode(2);
-        gcopy_c(
-            1,
-            (the_ability_db[list(0, p)]->related_basic_attribute - 10)
-                * inf_tiles,
-            672,
-            inf_tiles,
-            inf_tiles);
-        s = "";
-        for (int cnt = 0; cnt < 20; ++cnt)
-        {
-            if (gdata(40 + cnt) == list(0, p))
-            {
-                s = u8"{"s + cnt + u8"}"s;
-            }
-        }
-        cs_list(
-            cs == cnt,
-            i18n::_(u8"ability", std::to_string(list(0, p)), u8"name") + s,
-            wx + 84,
-            wy + 66 + cnt * 19 - 1);
-        s = ""s + the_ability_db[list(0, p)]->cost + u8" Sp"s;
-        pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
-        mes(s);
-        draw_spell_power_entry();
-        pos(wx + 325, wy + 66 + cnt * 19 + 2);
-        mes(strmid(s, 0, 34));
+        int skill_id = list(0, p);
+        _draw_single_list_entry(cnt, skill_id);
     }
     if (keyrange != 0)
     {
         cs_bk = cs;
     }
+}
+
+void ui_menu_skills::draw()
+{
+    _draw_window();
+    _draw_keys();
+    _draw_list_entries();
+}
+
+static void _assign_shortcut(int sc_, int skill_id)
+{
+    snd(20);
+    if (gdata(40 + sc_) == skill_id)
+    {
+        gdata(40 + sc_) = 0;
+        return;
+    }
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        if (gdata(40 + cnt) == skill_id)
+        {
+            gdata(40 + cnt) = 0;
+        }
+    }
+    gdata(40 + sc_) = skill_id;
+    txt(lang(
+        u8"{"s + sc_ + u8"}キーにショートカットを割り当てた。"s,
+        u8"You have assigned the shortcut to {"s + sc_ + u8"} key."s));
+    display_msg(inf_screeny + inf_tiles);
 }
 
 optional<ui_menu_skills::result_type> ui_menu_skills::on_key(
@@ -158,26 +232,8 @@ optional<ui_menu_skills::result_type> ui_menu_skills::on_key(
     }
     else if (key == u8"sc"s)
     {
-        snd(20);
-        p = list(0, pagesize * page + cs);
-        if (gdata(40 + sc) == p)
-        {
-            gdata(40 + sc) = 0;
-            set_reupdate();
-            return none;
-        }
-        for (int cnt = 0; cnt < 20; ++cnt)
-        {
-            if (gdata(40 + cnt) == p)
-            {
-                gdata(40 + cnt) = 0;
-            }
-        }
-        gdata(40 + sc) = p;
-        txt(lang(
-            u8"{"s + sc + u8"}キーにショートカットを割り当てた。"s,
-            u8"You have assigned the shortcut to {"s + sc + u8"} key."s));
-        display_msg(inf_screeny + inf_tiles);
+        int selected_skill = list(0, pagesize * page + cs);
+        _assign_shortcut(sc, selected_skill);
         set_reupdate();
         return none;
     }

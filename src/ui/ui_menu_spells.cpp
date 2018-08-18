@@ -125,7 +125,7 @@ void ui_menu_spells::draw()
         s = ""s + calcspellcostmp(i, cc) + u8" ("s + spell((i - 400)) + u8")"s;
         pos(wx + 328 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
         mes(s);
-        draw_spell_power_entry();
+        draw_spell_power_entry(i);
         s = strmid(s, 0, 40);
         pos(wx + 340, wy + 66 + cnt * 19 + 2);
         mes(""s + sdata(i, cc) + u8"/"s + calcspellfail(i, cc) + u8"%"s);

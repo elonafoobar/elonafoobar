@@ -907,19 +907,22 @@ turn_result_t show_skill_list()
 }
 
 
-void draw_spell_power_entry()
+void draw_spell_power_entry(int skill_id)
 {
     s = "";
-    if (the_ability_db[i]->sdataref1 / 1000 == 1)
+    if (the_ability_db[skill_id]->sdataref1 / 1000 == 1)
     {
-        p = the_ability_db[i]->sdataref1 % 1000;
-        const auto duration = calc_buff_duration(p, calcspellpower(i, cc));
-        const auto description = get_buff_description(p, calcspellpower(i, cc));
+        p = the_ability_db[skill_id]->sdataref1 % 1000;
+        const auto duration =
+            calc_buff_duration(p, calcspellpower(skill_id, cc));
+        const auto description =
+            get_buff_description(p, calcspellpower(skill_id, cc));
         s = ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter")
             + description;
         return;
     }
-    const auto damage = calc_skill_damage(i, cc, calcspellpower(i, cc));
+    const auto damage =
+        calc_skill_damage(skill_id, cc, calcspellpower(skill_id, cc));
     if (damage)
     {
         dice1 = damage->dice_x;
@@ -952,7 +955,7 @@ void draw_spell_power_entry()
                 }
             }
         }
-        else if (i == 461)
+        else if (skill_id == 461)
         {
             s += ""s + clamp(bonus, 1, 100) + u8"%"s;
         }
@@ -962,7 +965,7 @@ void draw_spell_power_entry()
         }
         s += u8" "s;
     }
-    s += i18n::_(u8"ability", std::to_string(i), u8"description");
+    s += i18n::_(u8"ability", std::to_string(skill_id), u8"description");
     return;
 }
 
