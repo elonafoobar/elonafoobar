@@ -24,6 +24,8 @@ bool ui_menu_message_log::init()
     show_title(i18n::s.get("core.locale.ui.message.hit_any_key"));
     drawmenu(2);
     window_animation_corner(wx, wy, ww, wh, 8, 4);
+
+    return true;
 }
 
 void ui_menu_message_log::update()
@@ -95,7 +97,7 @@ void ui_menu_message_log::draw()
 optional<ui_menu_message_log::result_type> ui_menu_message_log::on_key(
     const std::string& key)
 {
-    if (key != ""s)
+    if (key != ""s && key != key_prev && key != key_next)
     {
         update_screen();
         return ui_menu_message_log::result::finish();

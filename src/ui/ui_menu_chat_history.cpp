@@ -32,6 +32,8 @@ bool ui_menu_chat_history::init()
     buff = "";
     notesel(buff);
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
+
+    return true;
 }
 
 void ui_menu_chat_history::update()
@@ -93,7 +95,7 @@ void ui_menu_chat_history::draw()
 optional<ui_menu_chat_history::result_type> ui_menu_chat_history::on_key(
     const std::string& key)
 {
-    if (key != ""s)
+    if (key != ""s && key != key_prev && key != key_next)
     {
         update_screen();
         return ui_menu_chat_history::result::finish();

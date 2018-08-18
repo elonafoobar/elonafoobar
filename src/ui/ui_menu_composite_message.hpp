@@ -11,9 +11,9 @@ class ui_menu_composite_message : public ui_menu_composite<dummy_result>
 public:
     enum index : size_t
     {
-        message = 0,
+        message_log = 0,
         journal = 1,
-        chat = 2
+        chat_history = 2
     };
 
     ui_menu_composite_message(size_t selected)

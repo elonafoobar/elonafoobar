@@ -40,6 +40,8 @@
 #include "ui/ui_menu_spell_writer.hpp"
 #include "ui/ui_menu_spells.hpp"
 
+#include "ui/ui_menu_composite_message.hpp"
+
 namespace elona
 {
 
@@ -576,18 +578,26 @@ void show_game_help()
     ui::ui_menu_game_help().show();
 }
 
-menu_result menu_journal()
+turn_result_t show_journal()
 {
-    return menu_result{false, false, turn_result_t::pc_turn_user_error};
-}
-
-turn_result_t show_chat_history()
-{
+    ui::ui_menu_composite_message(ui::ui_menu_composite_message::index::journal)
+        .show();
     return turn_result_t::pc_turn_user_error;
 }
 
 turn_result_t show_message_log()
 {
+    ui::ui_menu_composite_message(
+        ui::ui_menu_composite_message::index::message_log)
+        .show();
+    return turn_result_t::pc_turn_user_error;
+}
+
+turn_result_t show_chat_history()
+{
+    ui::ui_menu_composite_message(
+        ui::ui_menu_composite_message::index::chat_history)
+        .show();
     return turn_result_t::pc_turn_user_error;
 }
 

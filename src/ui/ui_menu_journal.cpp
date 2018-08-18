@@ -151,6 +151,8 @@ bool ui_menu_journal::init()
     wy = winposy(448);
     snd(59);
     window_animation(wx, wy, 736, 448, 9, 4);
+
+    return true;
 }
 
 void ui_menu_journal::update()

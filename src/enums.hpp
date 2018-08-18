@@ -139,8 +139,8 @@ enum class turn_result_t
     show_chat_history,
     show_message_log,
     show_quest_board,
+    show_journal,
 
-    menu_journal,
     menu_materials,
     menu_character_sheet,
     menu_equipment,
