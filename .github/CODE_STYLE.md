@@ -3,6 +3,7 @@ The following is ideal; not all of these are being regarded at the moment.
 
 ## C++
 
+- C++ formatting style is handled by the use of `clang-format`. It's best to set up `clang-format` to be run after saving a `.cpp`/`.hpp` file in your editor. If it can't be done, you'll have to remember to use `make format`/`nmake -f Makefile.win format` after finishing your changes. Continuous integration is set up so code with inconsistent formatting will fail the build.
 - C++ source files use `.cpp`, header files use `.hpp`.
 - Try to keep source files below 5,000SLoC. This makes a high-level overview of pieces of related functionality easier to parse.
 - Break up large methods as much as possible, especially things like long `switch` statements.
