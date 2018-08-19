@@ -44,6 +44,8 @@ locale {
             # <attacker> <verb>s something and <...>
             attacks_and = "${name(_1)} ${_2}${s(_1)} ${name(_3)} and"
 
+            attacks_throwing = "${name(_1)} ${_2}${s(_1)} ${name(_3)} and"
+
             attacks_unarmed = "${name(_1)} ${_2}${s(_1)} ${name(_3)}."
             attacks_unarmed_and = "${name(_1)} ${_2}${s(_1)} ${name(_3)} and"
 
@@ -103,7 +105,6 @@ locale {
                 verb = "slash"
             }
             _111 {
-                # name is automatically set based on thrown item name
                 verb_and = "shoot"
                 verb = "shoot"
             }

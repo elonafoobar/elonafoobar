@@ -35,6 +35,8 @@ locale {
             attacks_with = "${kare_wa(_3)}${name(_1)}に${_4}で${_2}。"
             attacks_and = "${kare_wa(_1)}${name(_3)}を${_2}"
 
+            attacks_throwing = "${kare_wa(_1)}${name(_3)}に${_4}を${_2}"
+
             attacks_unarmed = "${kare_wa(_3)}${name(_1)}に${_2}"
             attacks_unarmed_and = "${kare_wa(_1)}${name(_3)}を${_2}"
 
@@ -89,7 +91,6 @@ locale {
                 verb = "切られた"
             }
             _111 {
-                # name is automatically set based on thrown item name
                 verb_and = "投げ"
                 verb = "攻撃された"
             }

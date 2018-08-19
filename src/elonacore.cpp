@@ -14508,14 +14508,29 @@ label_22191_internal:
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
-                        txt(i18n::s.get(
-                            "core.locale.damage.weapon.attacks_and",
-                            cdata[cc],
-                            i18n::s.get_enum_property(
-                                "core.locale.damage.weapon",
-                                "verb_and",
-                                attackskill),
-                            cdata[tc]));
+                        if (attackskill == 111)
+                        {
+                            txt(i18n::s.get(
+                                "core.locale.damage.weapon.attacks_throwing",
+                                cdata[cc],
+                                i18n::s.get_enum_property(
+                                    "core.locale.damage.weapon",
+                                    "verb_and",
+                                    attackskill),
+                                cdata[tc],
+                                *weapon_name));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.locale.damage.weapon.attacks_and",
+                                cdata[cc],
+                                i18n::s.get_enum_property(
+                                    "core.locale.damage.weapon",
+                                    "verb_and",
+                                    attackskill),
+                                cdata[tc]));
+                        }
                     }
                     else
                     {
