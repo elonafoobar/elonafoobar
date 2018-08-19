@@ -860,7 +860,11 @@ void continuous_action_eating()
 
 void continuous_action_eating_finish()
 {
+    // `ci` may be overwritten in apply_general_eating_effect() call. E.g.,
+    // vomit is created.
+    const auto ci_save = ci;
     apply_general_eating_effect(ci);
+    ci = ci_save;
     if (cc == 0)
     {
         item_identify(inv[ci], identification_state_t::partly_identified);
