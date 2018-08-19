@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "ui_menu.hpp"
@@ -21,8 +22,10 @@ protected:
         menu_info(
             std::unique_ptr<menu_type> _menu,
             int _image,
+            int _sound,
             std::string _text)
             : image(_image)
+            , sound(_sound)
             , text(_text)
         {
             menu = std::move(_menu);
@@ -30,6 +33,7 @@ protected:
 
         std::unique_ptr<menu_type> menu;
         int image;
+        int sound;
         std::string text;
     };
 
@@ -46,10 +50,11 @@ protected:
     void push_back(
         std::unique_ptr<menu_type> menu,
         int image,
+        int sound,
         const i18n_key& locale_key)
     {
         std::string text = i18n::s.get(locale_key);
-        _menus.emplace_back(std::move(menu), image, text);
+        _menus.emplace_back(std::move(menu), image, sound, text);
     }
 
     virtual void add_menus() = 0;
@@ -64,6 +69,9 @@ protected:
         }
 
         _selected = std::min(std::max(_selected, (size_t)0), _menus.size());
+
+        // TODO: move to ui_menu
+        snd(_menus[_selected].sound);
 
         return true;
     }
@@ -122,6 +130,7 @@ protected:
             }
             if (prev_menu != _selected)
             {
+                snd(_menus[_selected].sound);
                 _menu_switched = true;
                 ui_menu<T>::set_reupdate();
             }
