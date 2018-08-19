@@ -60,6 +60,11 @@ void pic_loader::load(
     size_t i = 0;
     while (true)
     {
+        if (i == buffers.size())
+        {
+            add_buffer(type);
+        }
+
         auto& info = buffers.at(i);
         i += 1;
 
@@ -80,11 +85,6 @@ void pic_loader::load(
             info.insert_extent(skyline_index, ext);
 
             break;
-        }
-
-        if (i == buffers.size())
-        {
-            add_buffer(type);
         }
     }
 
