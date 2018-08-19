@@ -35,7 +35,6 @@ void text_set();
 int cnvjkey(const std::string&);
 void show_quick_menu();
 void show_ex_help();
-void help_window_remove_parens();
 void show_game_help();
 turn_result_t show_chat_history();
 turn_result_t show_message_log();

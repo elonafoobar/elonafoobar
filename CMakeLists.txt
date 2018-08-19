@@ -193,6 +193,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_quest_board.cpp
   src/ui/ui_menu_scene.cpp
   src/ui/ui_menu_spell_writer.cpp
+  src/ui/ui_menu_game_help.cpp
 
   src/version.cpp
   )
