@@ -42,18 +42,18 @@ locale {
 
             _108 {
                 name = "弓"
-                verb_and = "撃たれた"
-                verb = "射撃し"
+                verb_and = "射撃し"
+                verb = "撃たれた"
             }
             _109 {
                 name = "クロスボウ"
-                verb_and = "撃たれた"
-                verb = "射撃し"
+                verb_and = "射撃し"
+                verb = "撃たれた"
             }
             _110 {
                 name = "銃"
-                verb_and = "撃たれた"
-                verb = "射撃し"
+                verb_and = "射撃し"
+                verb = "撃たれた"
             }
             _100 {
                 name = "長剣"
