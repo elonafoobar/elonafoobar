@@ -9,8 +9,11 @@
 #include "../snail/image.hpp"
 #include "extent.hpp"
 
+
+
 namespace elona
 {
+
 
 /***
  * Loads images from a variety of different image sources and packs
@@ -46,6 +49,7 @@ public:
         character,
         item
     };
+
     struct skyline
     {
         skyline(int x, int y, int width)
@@ -59,19 +63,22 @@ public:
         int y;
         int width;
 
-        inline int left() const
+        int left() const
         {
             return x;
         }
-        inline int top() const
+
+        int top() const
         {
             return y;
         }
-        inline int right() const
+
+        int right() const
         {
             return x + width - 1;
         }
     };
+
 
     /***
      * Represents a single buffer allocated by a call to buffer().
@@ -222,6 +229,7 @@ public:
         std::vector<skyline> skylines;
     };
 
+
     using id_type = shared_id;
     using map_type = std::unordered_map<id_type, extent>;
 
@@ -261,6 +269,7 @@ public:
         return (*this)[shared_id(inner_id)];
     }
 
+
 private:
     buffer_info& add_buffer(page_type type)
     {
@@ -271,4 +280,6 @@ private:
     std::vector<buffer_info> buffers;
     map_type storage;
 };
+
+
 } // namespace elona

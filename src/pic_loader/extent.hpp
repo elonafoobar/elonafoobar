@@ -1,12 +1,16 @@
 #pragma once
 
+
+
 namespace elona
 {
+
 
 struct extent
 {
     extent()
         : extent(0, 0, 0, 0){};
+
     extent(int x, int y, int width, int height)
         : x(x)
         , y(y)
@@ -15,6 +19,7 @@ struct extent
         , frame_width(width)
     {
     }
+
     extent(int x, int y, int width, int height, int frame_width)
         : x(x)
         , y(y)
@@ -31,18 +36,21 @@ struct extent
     int frame_width;
     int buffer;
 
-    inline int left() const
+    int left() const
     {
         return x;
     }
-    inline int right() const
+
+    int right() const
     {
         return x + width - 1;
     }
-    inline int bottom() const
+
+    int bottom() const
     {
         return y + height - 1;
     }
 };
+
 
 } // namespace elona
