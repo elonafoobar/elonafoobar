@@ -57,8 +57,6 @@ optional<random_event> generate_random_event_in_sleep()
     int id = 0;
     int luck_threshold = 0;
 
-    return random_event{3, 0};
-
     if (!cdata.player().god_id.empty())
     {
         if (rnd(12) == 0)
