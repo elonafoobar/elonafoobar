@@ -14479,8 +14479,7 @@ label_22191_internal:
                         "core.locale.damage.weapon.attacks_unarmed_and",
                         cdata[cc],
                         _melee(0, cdata[cc].melee_attack_type),
-                        cdata[tc],
-                        i18n::s.get("core.locale.damage.weapon.and")));
+                        cdata[tc]));
                 }
                 else
                 {
@@ -14509,15 +14508,29 @@ label_22191_internal:
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
-                        txt(i18n::s.get(
-                            "core.locale.damage.weapon.attacks_and",
-                            cdata[cc],
-                            i18n::s.get_enum_property(
-                                "core.locale.damage.weapon",
-                                "verb_and",
-                                attackskill),
-                            cdata[tc],
-                            i18n::s.get("core.locale.damage.weapon.and")));
+                        if (attackskill == 111)
+                        {
+                            txt(i18n::s.get(
+                                "core.locale.damage.weapon.attacks_throwing",
+                                cdata[cc],
+                                i18n::s.get_enum_property(
+                                    "core.locale.damage.weapon",
+                                    "verb_and",
+                                    attackskill),
+                                cdata[tc],
+                                *weapon_name));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.locale.damage.weapon.attacks_and",
+                                cdata[cc],
+                                i18n::s.get_enum_property(
+                                    "core.locale.damage.weapon",
+                                    "verb_and",
+                                    attackskill),
+                                cdata[tc]));
+                        }
                     }
                     else
                     {
