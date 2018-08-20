@@ -52,7 +52,7 @@ local function switch_item_type(chara)
    end
 
    local list
-   GUI.txt_color(2)
+   GUI.txtef("Green")
    if chara.index == Store.map_local.potion_chara.index then
       list = potions
       GUI.txt("*potion* ")
@@ -63,7 +63,7 @@ local function switch_item_type(chara)
       list = scrolls
       GUI.txt("*scroll* ")
    else
-      GUI.txt_color(0)
+      GUI.txtef("White")
       return
    end
 
@@ -81,9 +81,9 @@ local function switch_item_type(chara)
 end
 
 local function gain_magic_skills()
-   Chara.player():modify_skill_exp(14, 999999)
-   Chara.player():modify_skill_exp(155, 999999)
-   Chara.player():modify_skill_exp(174, 999999)
+   Chara.player():gain_skill_exp(14, 999999)
+   Chara.player():gain_skill_exp(155, 999999)
+   Chara.player():gain_skill_exp(174, 999999)
    Chara.player():gain_skill(164, 9999)
    Chara.player():gain_skill(172, 9999)
    Chara.player():gain_skill(188, 9999)

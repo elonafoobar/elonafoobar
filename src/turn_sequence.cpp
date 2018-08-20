@@ -2035,7 +2035,6 @@ label_2747:
         }
         else
         {
-            snd(102);
             return turn_result_t::show_spell_list;
         }
     }
@@ -2051,7 +2050,6 @@ label_2747:
         }
         else
         {
-            snd(101);
             return turn_result_t::show_skill_list;
         }
     }
