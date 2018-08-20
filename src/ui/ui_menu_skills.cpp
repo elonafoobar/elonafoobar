@@ -46,6 +46,7 @@ bool ui_menu_skills::init()
     cs = commark(0) % 1000;
     page = commark(0) / 1000;
     curmenu = 1;
+    snd(101);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);

@@ -36,6 +36,7 @@ bool ui_menu_spells::init()
     cs = commark(1) % 1000;
     page = commark(1) / 1000;
     curmenu = 0;
+    snd(102);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_spell.bmp", 1);
