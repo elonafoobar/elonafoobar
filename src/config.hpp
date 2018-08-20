@@ -67,6 +67,9 @@ public:
     std::string language;
     bool leash_icon;
     int max_damage_popup;
+    bool allow_enhanced_skill;
+    int enhanced_skill_lowerbound;
+    int enhanced_skill_upperbound;
     bool msgaddtime;
     int msgtrans;
     std::string music;

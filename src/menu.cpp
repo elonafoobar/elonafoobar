@@ -38,6 +38,10 @@
 #include "ui/ui_menu_scene.hpp"
 #include "ui/ui_menu_spell_writer.hpp"
 
+/*
+        gdata(750 - 760) => tracked skills (ctrl +f for [TRACKING])
+*/
+
 namespace elona
 {
 
@@ -2288,7 +2292,11 @@ label_2035_internal:
                     s = i18n::s.get(
                         "core.locale.ui.chara_sheet.skill.resist", cnven(s));
                 }
-                for (int cnt = 0; cnt < 3; ++cnt)
+                // [TRACKING] Shows the star in the (c) menu
+                for (int cnt = 0;
+                     cnt < (elona::config::instance().allow_enhanced_skill ? 10
+                                                                           : 3);
+                     ++cnt)
                 {
                     if (gdata(750 + cnt) == cc * 10000 + i)
                     {
@@ -2396,6 +2404,7 @@ label_2035_internal:
     }
     else if (csctrl != 1)
     {
+        // [TRACKING] Stores which skill id is to be tracked
         if (key == key_mode2)
         {
             for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
@@ -2406,7 +2415,11 @@ label_2035_internal:
             if (i != -1)
             {
                 p = 750;
-                for (int cnt = 750; cnt < 753; ++cnt)
+                for (int cnt = 0;
+                     cnt < (elona::config::instance().allow_enhanced_skill
+                                ? 750 + 10
+                                : 750 + 3);
+                     ++cnt)
                 {
                     if (gdata(cnt) % 10000 == 0)
                     {
@@ -2560,7 +2573,7 @@ label_2035_internal:
         }
     }
     goto label_2035_internal;
-}
+} // namespace elona
 
 menu_result menu_equipment()
 {

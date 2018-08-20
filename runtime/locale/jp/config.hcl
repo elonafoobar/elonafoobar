@@ -340,6 +340,9 @@ locale {
                         right = "右側に表示"
                     }
                 }
+                allow_enhanced_skill_tracking {
+                    name = "強化されたスキル追跡を許可する"
+                }
                 leash_icon {
                     name = "紐のアイコン表示"
                 }
