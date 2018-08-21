@@ -184,6 +184,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_adventurers.cpp
   src/ui/ui_menu_alias.cpp
   src/ui/ui_menu_book.cpp
+  src/ui/ui_menu_character_sheet.cpp
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
@@ -199,6 +200,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_skills.cpp
   src/ui/ui_menu_spell_writer.cpp
   src/ui/ui_menu_spells.cpp
+  src/ui/ui_menu_composite_character.cpp
   src/ui/ui_menu_composite_message.cpp
   src/ui/ui_menu_composite_skills.cpp
 
