@@ -188,6 +188,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
+  src/ui/ui_menu_equipment.cpp
   src/ui/ui_menu_game_help.cpp
   src/ui/ui_menu_god.cpp
   src/ui/ui_menu_hire.cpp

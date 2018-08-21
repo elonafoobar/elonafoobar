@@ -1,5 +1,6 @@
 #include "ui_menu_composite_character.hpp"
 #include "ui_menu_character_sheet.hpp"
+#include "ui_menu_equipment.hpp"
 
 namespace elona
 {
@@ -12,6 +13,10 @@ void ui_menu_composite_character::add_menus()
         std::make_unique<ui_menu_character_sheet>(0, false),
         9,
         "core.locale.ui.menu.chara.chara");
+    push_back(
+        std::make_unique<ui_menu_equipment>(),
+        10,
+        "core.locale.ui.menu.chara.wear");
 }
 
 } // namespace ui
