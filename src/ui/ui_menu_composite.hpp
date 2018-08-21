@@ -122,8 +122,7 @@ protected:
                 ui_menu<T>::set_reupdate();
             }
         }
-
-        if (auto result = _menus[_selected].menu->on_key(key))
+        else if (auto result = _menus[_selected].menu->on_key(key))
         {
             return result;
         }

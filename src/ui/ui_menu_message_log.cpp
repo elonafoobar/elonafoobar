@@ -78,7 +78,7 @@ static void _draw_single_message(int cnt)
     }
     if (p < 0)
     {
-        continue;
+        return;
     }
     pos(inf_msgx, inf_msgy - cnt * inf_msgspace);
     gcopy(8, 0, p * inf_msgspace, windoww - inf_msgx, inf_msgspace);
