@@ -142,18 +142,21 @@ static void _draw_window_background(bool is_chara_making)
     s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2
         + strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally")
         + u8"]"s;
+
+    int y_adjust;
     if (is_chara_making)
     {
         // Adjust downwards for character making caption.
-        i = 1;
+        y_adjust = 1;
     }
     else
     {
-        i = 0;
+        y_adjust = 0;
     }
+
     display_window(
         (windoww - 730) / 2 + inf_screenx,
-        winposy(430, i) + i * 15,
+        winposy(430, y_adjust) + y_adjust * 15,
         730,
         430,
         55,
@@ -185,9 +188,12 @@ static void _draw_window(bool is_chara_making)
     _draw_window_deco();
 }
 
-static void _draw_key(int cnt, int p)
+static void _draw_key(int cnt, int p_)
 {
-    if (list(0, p) < 0)
+    int list_item = list(0, p_);
+    int list_value = list(1, p_);
+
+    if (list_item < 0)
     {
         return;
     }
@@ -195,10 +201,11 @@ static void _draw_key(int cnt, int p)
     {
         boxf(wx + 57, wy + 66 + cnt * 19, 640, 18, {12, 14, 16, 16});
     }
-    if (list(1, p) >= 10000 || list(0, p) < 0)
+    if (list_value >= 10000 || list_item < 0)
     {
         return;
     }
+
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
@@ -207,14 +214,14 @@ static void _draw_keys()
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        int index = pagesize * page + cnt;
+        if (index >= listmax)
         {
             break;
         }
         key_list(cnt) = key_select(cnt);
         ++keyrange;
-        _draw_key(cnt, p);
+        _draw_key(cnt, index);
     }
 }
 
@@ -306,8 +313,8 @@ static void _draw_single_list_entry(
 
     if (list_value != trait_desc_value)
     {
-        trait_get_info(0, i);
-        text_color = _get_trait_color(trait(i));
+        trait_get_info(0, list_item);
+        text_color = _get_trait_color(trait(list_item));
     }
     else
     {
@@ -320,13 +327,12 @@ static void _draw_single_list_entry(
 
 static void _draw_list_entries()
 {
-
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        int index = pagesize * page + cnt;
+        if (index >= listmax)
         {
             break;
         }
@@ -350,9 +356,9 @@ void ui_menu_feats::draw()
     _draw_list_entries();
 }
 
-static bool _gain_trait(int p, bool show_text)
+static bool _gain_trait(int p_, bool show_text)
 {
-    int tid = list(0, p);
+    int tid = list(0, p_);
     trait_get_info(0, tid);
 
     if (traitref(2) <= trait(tid))
@@ -373,30 +379,30 @@ static bool _gain_trait(int p, bool show_text)
     return true;
 }
 
-static bool _can_select_trait(int p)
+static bool _can_select_trait(int p_, int tc_)
 {
-    return gdata_acquirable_feat_count > 0 && list(1, p) < 10000 && tc == 0;
+    return gdata_acquirable_feat_count > 0 && list(1, p_) < 10000 && tc_ == 0;
 }
 
 static void _switch_target(bool is_forwards)
 {
-    p = tc;
+    int new_index = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (is_forwards)
         {
-            ++p;
-            if (p == 16)
+            ++new_index;
+            if (new_index == 16)
             {
-                p = 0;
+                new_index = 0;
             }
         }
         else
         {
-            --p;
-            if (p < 0)
+            --new_index;
+            if (new_index < 0)
             {
-                p = 15;
+                new_index = 15;
             }
         }
         if (cdata[p].state() != character::state_t::alive)
@@ -405,7 +411,7 @@ static void _switch_target(bool is_forwards)
         }
         break;
     }
-    tc = p;
+    tc = new_index;
     snd(1);
     page = 0;
     cs = 0;
@@ -414,12 +420,14 @@ static void _switch_target(bool is_forwards)
 optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
     const std::string& key)
 {
-    ELONA_GET_SELECTED_INDEX(p);
+    int p_;
 
-    if (p > 0 && _can_select_trait(p))
+    ELONA_GET_SELECTED_INDEX(p_);
+
+    if (p_ > 0 && _can_select_trait(p_, tc))
     {
         bool show_text = _operation == operation::normal;
-        if (_gain_trait(p, show_text))
+        if (_gain_trait(p_, show_text))
         {
             if (_operation == operation::character_making)
             {
