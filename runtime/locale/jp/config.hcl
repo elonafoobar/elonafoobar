@@ -1,4 +1,4 @@
-locale {
+﻿locale {
     config {
         common {
             menu = "項目"
@@ -341,7 +341,7 @@ locale {
                     }
                 }
                 allow_enhanced_skill_tracking {
-                    name = "強化されたスキル追跡を許可する"
+                    name = "スキルトラック拡張"
                 }
                 leash_icon {
                     name = "紐のアイコン表示"
