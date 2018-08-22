@@ -6,7 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_composite_character : public ui_menu_composite<dummy_result>
+typedef bool ui_menu_composite_character_result;
+
+class ui_menu_composite_character
+    : public ui_menu_composite<ui_menu_composite_character_result>
 {
 public:
     enum index : size_t

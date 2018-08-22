@@ -30,6 +30,7 @@
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_character_sheet.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
+#include "ui/ui_menu_feats.hpp"
 #include "ui/ui_menu_game_help.hpp"
 #include "ui/ui_menu_god.hpp"
 #include "ui/ui_menu_hire.hpp"
@@ -47,8 +48,6 @@
 namespace elona
 {
 
-std::string strhint6;
-
 void text_set()
 {
     strhint1 = i18n::s.get("core.locale.ui.hint.cursor");
@@ -60,7 +59,6 @@ void text_set()
     strhint5 =
         ""s + key_identify + i18n::s.get("core.locale.ui.hint.known_info");
     strhint5b = ""s + key_mode + i18n::s.get("core.locale.ui.hint.mode");
-    strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
     strhint7 = i18n::s.get("core.locale.ui.hint.shortcut");
 
     SDIM4(_melee, 20, 3, 8);
@@ -739,233 +737,6 @@ void draw_spell_power_entry(int skill_id)
     return;
 }
 
-void trainer_get_gainable_skills()
-{
-    int dbmax = 0;
-    dblist(0, dbmax) = 159;
-    ++dbmax;
-    dblist(0, dbmax) = 173;
-    ++dbmax;
-    if (gdata_current_map == mdata_t::map_id_t::yowyn)
-    {
-        dblist(0, dbmax) = 154;
-        ++dbmax;
-        dblist(0, dbmax) = 162;
-        ++dbmax;
-        dblist(0, dbmax) = 184;
-        ++dbmax;
-        dblist(0, dbmax) = 176;
-        ++dbmax;
-        dblist(0, dbmax) = 177;
-        ++dbmax;
-        dblist(0, dbmax) = 180;
-        ++dbmax;
-        dblist(0, dbmax) = 301;
-        ++dbmax;
-        dblist(0, dbmax) = 167;
-        ++dbmax;
-        dblist(0, dbmax) = 153;
-        ++dbmax;
-    }
-    if (gdata_current_map == mdata_t::map_id_t::vernis)
-    {
-        dblist(0, dbmax) = 178;
-        ++dbmax;
-        dblist(0, dbmax) = 154;
-        ++dbmax;
-        dblist(0, dbmax) = 184;
-        ++dbmax;
-        dblist(0, dbmax) = 163;
-        ++dbmax;
-        dblist(0, dbmax) = 182;
-        ++dbmax;
-        dblist(0, dbmax) = 185;
-        ++dbmax;
-        dblist(0, dbmax) = 158;
-        ++dbmax;
-    }
-    if (gdata_current_map == mdata_t::map_id_t::palmia)
-    {
-        dblist(0, dbmax) = 151;
-        ++dbmax;
-        dblist(0, dbmax) = 150;
-        ++dbmax;
-        dblist(0, dbmax) = 161;
-        ++dbmax;
-        dblist(0, dbmax) = 179;
-        ++dbmax;
-        dblist(0, dbmax) = 301;
-        ++dbmax;
-        dblist(0, dbmax) = 156;
-        ++dbmax;
-        dblist(0, dbmax) = 160;
-        ++dbmax;
-        dblist(0, dbmax) = 172;
-        ++dbmax;
-        dblist(0, dbmax) = 178;
-        ++dbmax;
-    }
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
-    {
-        dblist(0, dbmax) = 181;
-        ++dbmax;
-        dblist(0, dbmax) = 150;
-        ++dbmax;
-        dblist(0, dbmax) = 162;
-        ++dbmax;
-        dblist(0, dbmax) = 184;
-        ++dbmax;
-        dblist(0, dbmax) = 182;
-        ++dbmax;
-        dblist(0, dbmax) = 155;
-        ++dbmax;
-        dblist(0, dbmax) = 153;
-        ++dbmax;
-    }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
-    {
-        if (gdata_current_dungeon_level == 1)
-        {
-            dblist(0, dbmax) = 172;
-            ++dbmax;
-            dblist(0, dbmax) = 154;
-            ++dbmax;
-            dblist(0, dbmax) = 150;
-            ++dbmax;
-            dblist(0, dbmax) = 174;
-            ++dbmax;
-            dblist(0, dbmax) = 185;
-            ++dbmax;
-            dblist(0, dbmax) = 171;
-            ++dbmax;
-            dblist(0, dbmax) = 160;
-            ++dbmax;
-            dblist(0, dbmax) = 167;
-            ++dbmax;
-        }
-    }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
-    {
-        if (gdata_current_dungeon_level == 3)
-        {
-            dblist(0, dbmax) = 172;
-            ++dbmax;
-            dblist(0, dbmax) = 165;
-            ++dbmax;
-            dblist(0, dbmax) = 155;
-            ++dbmax;
-            dblist(0, dbmax) = 164;
-            ++dbmax;
-            dblist(0, dbmax) = 178;
-            ++dbmax;
-            dblist(0, dbmax) = 188;
-            ++dbmax;
-            dblist(0, dbmax) = 171;
-            ++dbmax;
-            dblist(0, dbmax) = 187;
-            ++dbmax;
-        }
-    }
-    if (gdata_current_map == mdata_t::map_id_t::derphy)
-    {
-        if (gdata_current_dungeon_level == 1)
-        {
-            dblist(0, dbmax) = 158;
-            ++dbmax;
-            dblist(0, dbmax) = 157;
-            ++dbmax;
-            dblist(0, dbmax) = 170;
-            ++dbmax;
-            dblist(0, dbmax) = 171;
-            ++dbmax;
-            dblist(0, dbmax) = 176;
-            ++dbmax;
-            dblist(0, dbmax) = 174;
-            ++dbmax;
-            dblist(0, dbmax) = 183;
-            ++dbmax;
-            dblist(0, dbmax) = 163;
-            ++dbmax;
-        }
-    }
-    if (gdata_current_map == mdata_t::map_id_t::derphy)
-    {
-        if (gdata_current_dungeon_level == 3)
-        {
-            dblist(0, dbmax) = 300;
-            ++dbmax;
-            dblist(0, dbmax) = 175;
-            ++dbmax;
-            dblist(0, dbmax) = 158;
-            ++dbmax;
-            dblist(0, dbmax) = 157;
-            ++dbmax;
-            dblist(0, dbmax) = 189;
-            ++dbmax;
-        }
-    }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
-    {
-        if (gdata_current_dungeon_level == 1)
-        {
-            dblist(0, dbmax) = 156;
-            ++dbmax;
-            dblist(0, dbmax) = 160;
-            ++dbmax;
-            dblist(0, dbmax) = 183;
-            ++dbmax;
-            dblist(0, dbmax) = 185;
-            ++dbmax;
-            dblist(0, dbmax) = 174;
-            ++dbmax;
-            dblist(0, dbmax) = 151;
-            ++dbmax;
-        }
-    }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
-    {
-        if (gdata_current_dungeon_level == 3)
-        {
-            dblist(0, dbmax) = 153;
-            ++dbmax;
-            dblist(0, dbmax) = 166;
-            ++dbmax;
-            dblist(0, dbmax) = 167;
-            ++dbmax;
-            dblist(0, dbmax) = 169;
-            ++dbmax;
-            dblist(0, dbmax) = 152;
-            ++dbmax;
-            dblist(0, dbmax) = 189;
-            ++dbmax;
-            dblist(0, dbmax) = 168;
-            ++dbmax;
-            dblist(0, dbmax) = 186;
-            ++dbmax;
-        }
-    }
-    for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
-    {
-        p = dblist(0, cnt);
-        f = 0;
-        if (sdata.get(p, cc).original_level == 0)
-        {
-            if (the_ability_db[p]->related_basic_attribute != 0)
-            {
-                f = 1;
-            }
-        }
-        if (f)
-        {
-            list(0, listmax) = p;
-            list(1, listmax) =
-                the_ability_db[p]->related_basic_attribute + 21000;
-            ++listmax;
-        }
-    }
-    return;
-}
-
 menu_result menu_character_sheet_cycle()
 {
     return {false, false, turn_result_t::none};
@@ -1015,18 +786,6 @@ menu_result menu_equipment()
     auto result = ui::ui_menu_composite_character(
                       ui::ui_menu_composite_character::index::equipment)
                       .show();
-
-    // TODO move to one function
-    if (false)
-    {
-        m_result.turn_result = turn_result_t::ctrl_inventory;
-        return m_result;
-    }
-    else if (false)
-    {
-        m_result.turn_result = turn_result_t::menu_equipment;
-        return m_result;
-    }
 
     m_result.turn_result = turn_result_t::pc_turn_user_error;
     return m_result;
@@ -1700,30 +1459,41 @@ void show_weapon_dice(int val0)
 
 menu_result menu_feats()
 {
-    return menu_feats_internal();
-}
-
-menu_result menu_feats_internal_b()
-{
-    return menu_feats_internal(false);
-}
-
-menu_result menu_feats_internal()
-{
-    menu_result m_result = {false, false, turn_result_t::none};
-
     ui::ui_menu_composite_character(
         ui::ui_menu_composite_character::index::feats)
         .show();
 
-    if (mode == 1)
+    update_screen();
+    return {false, false, turn_result_t::pc_turn_user_error};
+}
+
+void menu_feats_dump()
+{
+    // TODO: move to ability_dump()
+    ui::ui_menu_feats(false, ui::ui_menu_feats::operation::normal).show();
+}
+
+menu_result menu_feats_character_making()
+{
+    menu_result m_result = {false, false, turn_result_t::none};
+
+    auto result =
+        ui::ui_menu_feats(true, ui::ui_menu_feats::operation::character_making)
+            .show();
+
+    if (result.canceled)
     {
         m_result.succeeded = false;
-        return m_result;
+    }
+    else if (result.value && *result.value == false)
+    {
+        m_result.pressed_f1 = true;
+    }
+    else if (result.value && *result.value == true)
+    {
+        m_result.succeeded = true;
     }
 
-    update_screen();
-    m_result.turn_result = turn_result_t::pc_turn_user_error;
     return m_result;
 }
 

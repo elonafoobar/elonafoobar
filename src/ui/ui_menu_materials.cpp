@@ -1,5 +1,5 @@
 #include "ui_menu_materials.hpp"
-#include "audio.hpp"
+#include "../audio.hpp"
 
 namespace elona
 {
@@ -28,13 +28,14 @@ bool ui_menu_materials::init()
     picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     snd(92);
-    drawmenu();
     wx = (windoww - 600) / 2 + inf_screenx;
     wy = winposy(430);
     ww = 600;
     wh = 430;
     window_animation(wx, wy, ww, wh, 9, 4);
     windowshadow = 1;
+
+    return true;
 }
 
 void ui_menu_materials::update()
@@ -49,7 +50,6 @@ void ui_menu_materials::update()
     {
         page = 0;
     }
-    drawmenu();
 }
 
 void ui_menu_materials::draw()

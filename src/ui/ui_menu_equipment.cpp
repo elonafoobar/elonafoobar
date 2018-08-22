@@ -1,4 +1,7 @@
 #include "ui_menu_equipment.hpp"
+#include "../equipment.hpp"
+#include "../item.hpp"
+#include "../menu.hpp"
 
 namespace elona
 {
@@ -58,7 +61,6 @@ bool ui_menu_equipment::init()
         }
     }
     sort_list_by_column1();
-    drawmenu();
     ww = 690;
     wh = 380;
     wx = (windoww - 690) / 2 + inf_screenx;
@@ -73,6 +75,8 @@ bool ui_menu_equipment::init()
     picload(filesystem::dir::graphic() / u8"deco_wear.bmp", 1);
     gsel(0);
     windowshadow = 1;
+
+    return true;
 }
 
 void ui_menu_equipment::update()
@@ -229,12 +233,16 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
             set_reupdate();
             return none;
         }
+
+        // Push equipment selection screen onto call stack and pop it
+        // off after.
         nowindowanime = 1;
         menucycle = 0;
         invctrl = 6;
         snd(100);
-        result.turn_result = turn_result_t::ctrl_inventory;
-        return result;
+        ctrl_inventory();
+
+        return none;
     }
     else if (key == key_identify)
     {
@@ -248,8 +256,7 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
             returnfromidentify = 0;
             screenupdate = -1;
             update_screen();
-            result.turn_result = turn_result_t::menu_equipment;
-            return result;
+            return none;
         }
     }
     else if (key == key_mode)
@@ -288,6 +295,7 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
         menucycle = 0;
         create_pcpic(cc, true);
         update_screen();
+        // result.turn_result = turn_result_t::pc_turn_user_error
         return ui_menu_equipment::result::cancel();
     }
 

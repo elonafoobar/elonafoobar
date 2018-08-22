@@ -1,12 +1,245 @@
 #include "ui_menu_character_sheet.hpp"
-#include "ability.hpp"
-#include "audio.hpp"
-#include "character.hpp"
+#include "../ability.hpp"
+#include "../audio.hpp"
+#include "../calc.hpp"
+#include "../character.hpp"
+#include "../character_status.hpp"
+#include "../class.hpp"
+#include "../draw.hpp"
+#include "../enchantment.hpp"
+#include "../menu.hpp"
 
 namespace elona
 {
 namespace ui
 {
+
+static void _trainer_get_gainable_skills()
+{
+    int dbmax = 0;
+    dblist(0, dbmax) = 159;
+    ++dbmax;
+    dblist(0, dbmax) = 173;
+    ++dbmax;
+    if (gdata_current_map == mdata_t::map_id_t::yowyn)
+    {
+        dblist(0, dbmax) = 154;
+        ++dbmax;
+        dblist(0, dbmax) = 162;
+        ++dbmax;
+        dblist(0, dbmax) = 184;
+        ++dbmax;
+        dblist(0, dbmax) = 176;
+        ++dbmax;
+        dblist(0, dbmax) = 177;
+        ++dbmax;
+        dblist(0, dbmax) = 180;
+        ++dbmax;
+        dblist(0, dbmax) = 301;
+        ++dbmax;
+        dblist(0, dbmax) = 167;
+        ++dbmax;
+        dblist(0, dbmax) = 153;
+        ++dbmax;
+    }
+    if (gdata_current_map == mdata_t::map_id_t::vernis)
+    {
+        dblist(0, dbmax) = 178;
+        ++dbmax;
+        dblist(0, dbmax) = 154;
+        ++dbmax;
+        dblist(0, dbmax) = 184;
+        ++dbmax;
+        dblist(0, dbmax) = 163;
+        ++dbmax;
+        dblist(0, dbmax) = 182;
+        ++dbmax;
+        dblist(0, dbmax) = 185;
+        ++dbmax;
+        dblist(0, dbmax) = 158;
+        ++dbmax;
+    }
+    if (gdata_current_map == mdata_t::map_id_t::palmia)
+    {
+        dblist(0, dbmax) = 151;
+        ++dbmax;
+        dblist(0, dbmax) = 150;
+        ++dbmax;
+        dblist(0, dbmax) = 161;
+        ++dbmax;
+        dblist(0, dbmax) = 179;
+        ++dbmax;
+        dblist(0, dbmax) = 301;
+        ++dbmax;
+        dblist(0, dbmax) = 156;
+        ++dbmax;
+        dblist(0, dbmax) = 160;
+        ++dbmax;
+        dblist(0, dbmax) = 172;
+        ++dbmax;
+        dblist(0, dbmax) = 178;
+        ++dbmax;
+    }
+    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    {
+        dblist(0, dbmax) = 181;
+        ++dbmax;
+        dblist(0, dbmax) = 150;
+        ++dbmax;
+        dblist(0, dbmax) = 162;
+        ++dbmax;
+        dblist(0, dbmax) = 184;
+        ++dbmax;
+        dblist(0, dbmax) = 182;
+        ++dbmax;
+        dblist(0, dbmax) = 155;
+        ++dbmax;
+        dblist(0, dbmax) = 153;
+        ++dbmax;
+    }
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    {
+        if (gdata_current_dungeon_level == 1)
+        {
+            dblist(0, dbmax) = 172;
+            ++dbmax;
+            dblist(0, dbmax) = 154;
+            ++dbmax;
+            dblist(0, dbmax) = 150;
+            ++dbmax;
+            dblist(0, dbmax) = 174;
+            ++dbmax;
+            dblist(0, dbmax) = 185;
+            ++dbmax;
+            dblist(0, dbmax) = 171;
+            ++dbmax;
+            dblist(0, dbmax) = 160;
+            ++dbmax;
+            dblist(0, dbmax) = 167;
+            ++dbmax;
+        }
+    }
+    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    {
+        if (gdata_current_dungeon_level == 3)
+        {
+            dblist(0, dbmax) = 172;
+            ++dbmax;
+            dblist(0, dbmax) = 165;
+            ++dbmax;
+            dblist(0, dbmax) = 155;
+            ++dbmax;
+            dblist(0, dbmax) = 164;
+            ++dbmax;
+            dblist(0, dbmax) = 178;
+            ++dbmax;
+            dblist(0, dbmax) = 188;
+            ++dbmax;
+            dblist(0, dbmax) = 171;
+            ++dbmax;
+            dblist(0, dbmax) = 187;
+            ++dbmax;
+        }
+    }
+    if (gdata_current_map == mdata_t::map_id_t::derphy)
+    {
+        if (gdata_current_dungeon_level == 1)
+        {
+            dblist(0, dbmax) = 158;
+            ++dbmax;
+            dblist(0, dbmax) = 157;
+            ++dbmax;
+            dblist(0, dbmax) = 170;
+            ++dbmax;
+            dblist(0, dbmax) = 171;
+            ++dbmax;
+            dblist(0, dbmax) = 176;
+            ++dbmax;
+            dblist(0, dbmax) = 174;
+            ++dbmax;
+            dblist(0, dbmax) = 183;
+            ++dbmax;
+            dblist(0, dbmax) = 163;
+            ++dbmax;
+        }
+    }
+    if (gdata_current_map == mdata_t::map_id_t::derphy)
+    {
+        if (gdata_current_dungeon_level == 3)
+        {
+            dblist(0, dbmax) = 300;
+            ++dbmax;
+            dblist(0, dbmax) = 175;
+            ++dbmax;
+            dblist(0, dbmax) = 158;
+            ++dbmax;
+            dblist(0, dbmax) = 157;
+            ++dbmax;
+            dblist(0, dbmax) = 189;
+            ++dbmax;
+        }
+    }
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    {
+        if (gdata_current_dungeon_level == 1)
+        {
+            dblist(0, dbmax) = 156;
+            ++dbmax;
+            dblist(0, dbmax) = 160;
+            ++dbmax;
+            dblist(0, dbmax) = 183;
+            ++dbmax;
+            dblist(0, dbmax) = 185;
+            ++dbmax;
+            dblist(0, dbmax) = 174;
+            ++dbmax;
+            dblist(0, dbmax) = 151;
+            ++dbmax;
+        }
+    }
+    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    {
+        if (gdata_current_dungeon_level == 3)
+        {
+            dblist(0, dbmax) = 153;
+            ++dbmax;
+            dblist(0, dbmax) = 166;
+            ++dbmax;
+            dblist(0, dbmax) = 167;
+            ++dbmax;
+            dblist(0, dbmax) = 169;
+            ++dbmax;
+            dblist(0, dbmax) = 152;
+            ++dbmax;
+            dblist(0, dbmax) = 189;
+            ++dbmax;
+            dblist(0, dbmax) = 168;
+            ++dbmax;
+            dblist(0, dbmax) = 186;
+            ++dbmax;
+        }
+    }
+    for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
+    {
+        p = dblist(0, cnt);
+        f = 0;
+        if (sdata.get(p, cc).original_level == 0)
+        {
+            if (the_ability_db[p]->related_basic_attribute != 0)
+            {
+                f = 1;
+            }
+        }
+        if (f)
+        {
+            list(0, listmax) = p;
+            list(1, listmax) =
+                the_ability_db[p]->related_basic_attribute + 21000;
+            ++listmax;
+        }
+    }
+    return;
+}
 
 bool ui_menu_character_sheet::init()
 {
@@ -31,7 +264,7 @@ bool ui_menu_character_sheet::init()
     ++listmax;
     if (_csctrl == 3)
     {
-        trainer_get_gainable_skills();
+        _trainer_get_gainable_skills();
     }
     else
     {
@@ -123,7 +356,6 @@ bool ui_menu_character_sheet::init()
     {
         s = i18n::s.get("core.locale.ui.chara_sheet.title.learning");
     }
-    drawmenu(0);
     if (mode != 1)
     {
         snd(94);
@@ -159,10 +391,14 @@ bool ui_menu_character_sheet::init()
         txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
     }
     _returned_from_portrait = 0;
+
+    return true;
 }
 
 void ui_menu_character_sheet::update()
 {
+    std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
+
     if (_csctrl != 1)
     {
         display_msg(inf_tiles + inf_screeny);
@@ -563,7 +799,7 @@ void ui_menu_character_sheet::draw()
             if (cdata[cc].buffs[cnt].id == 0)
             {
                 gmode(4, 120);
-                draw("buff_icon_none", x, y);
+                elona::draw("buff_icon_none", x, y);
                 gmode(2);
                 continue;
             }
@@ -776,7 +1012,6 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
                 {
                     nowindowanime = 1;
                 }
-                _returned_from_portrait = 1;
                 return ui_menu_character_sheet::result::finish(true);
             }
         }
@@ -836,11 +1071,13 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         if (key == key_enter)
         {
             snd(103);
+            // result.succeeded = false
             return ui_menu_character_sheet::result::cancel();
         }
         if (key == key_cancel)
         {
-            return ui_menu_character_sheet::result::finish();
+            // result.succeeded = true
+            return ui_menu_character_sheet::result::finish(false);
         }
         return none;
     }
@@ -863,6 +1100,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
+                // result.succeeded = false;
                 return ui_menu_character_sheet::result::cancel();
             }
             if (cdata.player().skill_bonus < 1 || p < 0 || p < 100)
@@ -905,12 +1143,14 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         if (_csctrl == 0)
         {
             update_screen();
+            // result.turn_result = turn_result_t::pc_turn_user_error
         }
         else
         {
             screenupdate = -1;
             update_screen();
             tc = tcbk;
+            // result.succeeded = false
         }
         return ui_menu_character_sheet::result::cancel();
     }

@@ -22,7 +22,6 @@ bool ui_menu_message_log::init()
     wh(2) = -1;
     snd(93);
     show_title(i18n::s.get("core.locale.ui.message.hit_any_key"));
-    drawmenu(2);
     window_animation_corner(wx, wy, ww, wh, 8, 4);
 
     return true;

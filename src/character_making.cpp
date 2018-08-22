@@ -581,16 +581,16 @@ main_menu_result_t character_making_select_feats()
         mes(u8"Gene from "s + geneuse);
     }
 
-    menu_result result = menu_feats();
+    menu_result result = menu_feats_character_making();
     clear_background_in_character_making();
 
-    if (result.pressed_f1)
-    {
-        return main_menu_result_t::character_making_select_feats;
-    }
     if (!result.succeeded)
     {
         return main_menu_result_t::character_making_role_attributes_looped;
+    }
+    if (result.pressed_f1)
+    {
+        return main_menu_result_t::character_making_select_feats;
     }
 
     return main_menu_result_t::character_making_select_alias;

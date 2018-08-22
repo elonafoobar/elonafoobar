@@ -1,12 +1,13 @@
 #pragma once
 #include "ui_menu.hpp"
+#include "ui_menu_composite_character.hpp"
 
 namespace elona
 {
 namespace ui
 {
 
-class ui_menu_equipment : public ui_menu<dummy_result>
+class ui_menu_equipment : public ui_menu<ui_menu_composite_character_result>
 {
 public:
     ui_menu_equipment()

@@ -10,7 +10,7 @@ enum class turn_result_t;
 struct menu_result
 {
     bool succeeded; // true if stat was 1, false if it was 0
-    bool pressed_f1; // true if menu_feats_internal returned -1
+    bool pressed_f1; // true if f1 was pressed in feats menu
     turn_result_t turn_result;
 };
 
@@ -45,7 +45,6 @@ turn_result_t play_scene();
 turn_result_t show_spell_list();
 turn_result_t show_skill_list();
 void draw_spell_power_entry(int skill_id);
-void trainer_get_gainable_skills();
 menu_result menu_character_sheet();
 int change_appearance();
 menu_result menu_feats();
@@ -53,9 +52,9 @@ menu_result menu_materials();
 
 int select_alias(int);
 menu_result menu_feats();
-menu_result menu_feats_internal();
+menu_result menu_feats_character_making();
+void menu_feats_dump();
 void deco_traits_menu();
-menu_result menu_feats_internal_b();
 turn_result_t show_journal();
 turn_result_t show_quest_board();
 void list_adventurers();

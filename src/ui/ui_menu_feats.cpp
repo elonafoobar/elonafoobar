@@ -1,4 +1,7 @@
 #include "ui_menu_feats.hpp"
+#include "../enchantment.hpp"
+#include "../menu.hpp"
+#include "../trait.hpp"
 
 namespace elona
 {
@@ -17,7 +20,6 @@ bool ui_menu_feats::init()
         cs_bk = -1;
         curmenu = 2;
         snd(96);
-        drawmenu();
         ww = 700;
         wh = 400;
         wx = (windoww - ww) / 2 + inf_screenx;
@@ -29,6 +31,15 @@ bool ui_menu_feats::init()
         gsel(0);
         windowshadow = 1;
     }
+
+    // TEMP
+    if (dump_return == 1)
+    {
+        dump_return = 0;
+        return false;
+    }
+
+    return true;
 }
 
 void ui_menu_feats::update()
@@ -210,12 +221,9 @@ void ui_menu_feats::update()
             ++listmax;
         }
     }
-    if (dump_return == 1)
-    {
-        dump_return = 0;
-        result.succeeded = false;
-        return result;
-    }
+
+    // dump_return
+
     std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
@@ -304,7 +312,7 @@ void ui_menu_feats::draw()
     s(1) = i18n::s.get("core.locale.trait.window.enter") + "  " + strhint2
         + strhint3 + u8"z,x ["s + i18n::s.get("core.locale.trait.window.ally")
         + u8"]"s;
-    if (mode == 1)
+    if (_operation == operation::character_making)
     {
         i = 1;
     }
@@ -466,26 +474,28 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
                             txt(i18n::s.get(
                                 "core.locale.trait.window.already_maxed"));
                         }
-                        goto label_196901_internal;
+                        set_reupdate();
+                        return none;
                     }
                     --gdata_acquirable_feat_count;
                     cs = -10000 + tid;
                     snd(61);
                     ++trait(tid);
                     chara_refresh(tc);
-                    if (mode == 1)
+                    if (_operation == operation::character_making)
                     {
                         if (gdata_acquirable_feat_count == 0)
                         {
-                            result.succeeded = true;
-                            return result;
+                            // result.succeeded = true
+                            return ui_menu_feats::result::finish(true);
                         }
                     }
                     else
                     {
                         render_hud();
                     }
-                    goto label_196901_internal;
+                    set_reupdate();
+                    return none;
                 }
             }
         }
@@ -496,7 +506,7 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
         {
             snd(1);
             ++page;
-            goto label_196901_internal;
+            set_reupdate();
         }
     }
     else if (key == key_pagedown)
@@ -505,7 +515,7 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
         {
             snd(1);
             --page;
-            goto label_196901_internal;
+            set_reupdate();
         }
     }
     else if (key == u8"z"s || key == u8"x"s)
@@ -539,24 +549,23 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
         snd(1);
         page = 0;
         cs = 0;
-        goto label_196901_internal;
+        set_reupdate();
     }
     else if (key == key_cancel)
     {
-        if (mode == 1)
+        if (mode != 1)
         {
-            result.succeeded = false;
-            return result;
+            update_screen();
         }
-        update_screen();
-        result.turn_result = turn_result_t::pc_turn_user_error;
-        return result;
+        // result.turn_result = turn_result_t::pc_turn_user_error
+        return ui_menu_feats::result::cancel();
     }
-    else if (getkey(snail::key::f1) && mode == 1)
+    else if (
+        getkey(snail::key::f1) && _operation == operation::character_making)
     {
         show_game_help();
-        result.pressed_f1 = true;
-        return result;
+        // result.pressed_f1 = true
+        return ui_menu_feats::result::finish(false);
     }
 
     return none;

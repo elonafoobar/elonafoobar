@@ -9521,7 +9521,7 @@ void dump_player_info()
     noteadd(""s);
     dump_return = 1;
     tc = 0;
-    menu_feats_internal_b();
+    menu_feats_dump();
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         if (list(0, cnt) < 0)
