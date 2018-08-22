@@ -17,9 +17,8 @@ public:
     };
 
 public:
-    ui_menu_feats(bool decorate, operation operation)
-        : _decorate(decorate)
-        , _operation(operation)
+    ui_menu_feats(operation operation)
+        : _operation(operation)
     {
     }
 
@@ -30,7 +29,6 @@ protected:
     virtual optional<ui_menu_feats::result_type> on_key(const std::string& key);
 
 private:
-    bool _decorate;
     operation _operation;
 };
 

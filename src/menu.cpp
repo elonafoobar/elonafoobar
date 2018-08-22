@@ -781,14 +781,11 @@ menu_result menu_character_sheet()
 
 menu_result menu_equipment()
 {
-    menu_result m_result = {false, false, turn_result_t::none};
+    ui::ui_menu_composite_character(
+        ui::ui_menu_composite_character::index::equipment)
+        .show();
 
-    auto result = ui::ui_menu_composite_character(
-                      ui::ui_menu_composite_character::index::equipment)
-                      .show();
-
-    m_result.turn_result = turn_result_t::pc_turn_user_error;
-    return m_result;
+    return {false, false, turn_result_t::pc_turn_user_error};
 }
 
 menu_result menu_materials()
@@ -1472,7 +1469,7 @@ menu_result menu_feats_character_making()
     menu_result m_result = {false, false, turn_result_t::none};
 
     auto result =
-        ui::ui_menu_feats(true, ui::ui_menu_feats::operation::character_making)
+        ui::ui_menu_feats(ui::ui_menu_feats::operation::character_making)
             .show();
 
     if (result.canceled)
