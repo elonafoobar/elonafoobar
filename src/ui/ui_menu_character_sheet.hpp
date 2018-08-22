@@ -11,9 +11,13 @@ class ui_menu_character_sheet
     : public ui_menu<ui_menu_composite_character_result>
 {
 public:
-    ui_menu_character_sheet(int csctrl, bool returned_from_portrait)
+    ui_menu_character_sheet(
+        int csctrl,
+        bool returned_from_portrait,
+        bool is_character_making)
         : _csctrl(csctrl)
         , _returned_from_portrait(returned_from_portrait)
+        , _is_character_making(is_character_making)
     {
     }
 
@@ -27,6 +31,9 @@ protected:
 private:
     int _csctrl;
     bool _returned_from_portrait;
+    bool _is_character_making;
+
+
     int _cs_buff = 0;
     int _cs_buffmax = 0;
 };
