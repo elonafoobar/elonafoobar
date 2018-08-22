@@ -793,6 +793,7 @@ menu_result menu_materials()
     ui::ui_menu_composite_character(
         ui::ui_menu_composite_character::index::materials)
         .show();
+
     return {false, false, turn_result_t::pc_turn_user_error};
 }
 
