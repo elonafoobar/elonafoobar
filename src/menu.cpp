@@ -1467,12 +1467,6 @@ menu_result menu_feats()
     return {false, false, turn_result_t::pc_turn_user_error};
 }
 
-void menu_feats_dump()
-{
-    // TODO: move to ability_dump()
-    ui::ui_menu_feats(false, ui::ui_menu_feats::operation::normal).show();
-}
-
 menu_result menu_feats_character_making()
 {
     menu_result m_result = {false, false, turn_result_t::none};

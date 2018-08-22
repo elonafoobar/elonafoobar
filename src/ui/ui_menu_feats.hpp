@@ -32,8 +32,6 @@ protected:
 private:
     bool _decorate;
     operation _operation;
-
-    int _featrq = 0;
 };
 
 } // namespace ui

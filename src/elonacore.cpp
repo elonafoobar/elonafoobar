@@ -9519,9 +9519,8 @@ void dump_player_info()
     }
     noteadd(u8"------------------------------ 特徴"s);
     noteadd(""s);
-    dump_return = 1;
     tc = 0;
-    menu_feats_dump();
+    trait_load_desc();
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         if (list(0, cnt) < 0)

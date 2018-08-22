@@ -53,7 +53,6 @@ menu_result menu_materials();
 int select_alias(int);
 menu_result menu_feats();
 menu_result menu_feats_character_making();
-void menu_feats_dump();
 void deco_traits_menu();
 turn_result_t show_journal();
 turn_result_t show_quest_board();

@@ -743,4 +743,188 @@ int trait_get_info(int traitmode, int tid)
 }
 
 
+void trait_load_desc()
+{
+    int featrq = 0;
+
+    listmax = 0;
+    if (tc == 0 && gdata_acquirable_feat_count > 0)
+    {
+        list(0, listmax) = -1;
+        list(1, listmax) = 0;
+        ++listmax;
+    }
+    f = 0;
+    for (int cnt = 0; cnt < 217; ++cnt)
+    {
+        if (tc != 0)
+        {
+            break;
+        }
+        int stat = trait_get_info(0, cnt);
+        if (stat == 0)
+        {
+            continue;
+        }
+        if (stat == 1)
+        {
+            if (traitref == 0)
+            {
+                if (gdata_acquirable_feat_count > 0)
+                {
+                    list(0, listmax) = cnt;
+                    list(1, listmax) = cnt + 1;
+                    ++listmax;
+                }
+            }
+        }
+        if (trait(cnt) != 0)
+        {
+            list(0, listmax) = cnt;
+            list(1, listmax) = 10000 + cnt + 1;
+            ++listmax;
+            ++f;
+        }
+    }
+    if (f != 0)
+    {
+        list(0, listmax) = -2;
+        list(1, listmax) = 10000;
+        ++listmax;
+    }
+    sort_list_by_column1();
+    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+    {
+        i = list(0, cnt);
+        if (i < 0)
+        {
+            if (i == -1)
+            {
+                s = i18n::s.get("core.locale.trait.window.available_feats");
+            }
+            if (i == -2)
+            {
+                s = i18n::s.get("core.locale.trait.window.feats_and_traits");
+            }
+            listn(0, cnt) = s;
+            continue;
+        }
+        int tid = i;
+        int stat = trait_get_info(0, tid);
+        featrq = stat;
+        s = "";
+        if (list(1, cnt) < 10000)
+        {
+            if (trait(tid) < traitref(2))
+            {
+                s = traitrefn2(trait(tid));
+            }
+            else
+            {
+                s = traitrefn2(traitref(2) - 1) + u8"(MAX)"s;
+            }
+            if (featrq == -1)
+            {
+                s += u8"("s
+                    + i18n::s.get("core.locale.trait.window.requirement")
+                    + u8")"s;
+            }
+            pos(wx + 30, wy + 61 + cnt * 19);
+            x = 84;
+        }
+        else
+        {
+            pos(wx + 45, wy + 61 + cnt * 19);
+            x = 70;
+            if (traitref == 0)
+            {
+                s = u8"["s
+                    + i18n::s.get("core.locale.trait.window.category.feat")
+                    + u8"]"s;
+            }
+            if (traitref == 1)
+            {
+                s = u8"["s
+                    + i18n::s.get("core.locale.trait.window.category.mutation")
+                    + u8"]"s;
+            }
+            if (traitref == 2)
+            {
+                s = u8"["s
+                    + i18n::s.get("core.locale.trait.window.category.race")
+                    + u8"]"s;
+            }
+            if (traitref == 3)
+            {
+                s = u8"["s
+                    + i18n::s.get(
+                          "core.locale.trait.window.category.ether_disease")
+                    + u8"]"s;
+            }
+            s += traitrefn(2 + std::abs(trait(tid)));
+        }
+        listn(0, cnt) = s;
+    }
+    if (cdata[tc].is_incognito() == 1)
+    {
+        list(0, listmax) = 1;
+        list(1, listmax) = 99999;
+        listn(0, listmax) = u8"["s
+            + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+            + i18n::s.get("core.locale.trait.incognito");
+        ++listmax;
+    }
+    if (cdata[tc].is_pregnant() == 1)
+    {
+        list(0, listmax) = 1;
+        list(1, listmax) = 99999;
+        listn(0, listmax) = u8"["s
+            + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+            + i18n::s.get("core.locale.trait.pregnant");
+        ++listmax;
+    }
+    if (cdata[tc].has_anorexia() == 1)
+    {
+        list(0, listmax) = 1;
+        list(1, listmax) = 99999;
+        listn(0, listmax) = u8"["s
+            + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+            + i18n::s.get("core.locale.trait.anorexia");
+        ++listmax;
+    }
+    if (cdata[tc].speed_correction_value != 0)
+    {
+        list(0, listmax) = 1;
+        list(1, listmax) = 99999;
+        listn(0, listmax) = u8"["s
+            + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+            + i18n::s.get(
+                  "core.locale.trait.body_is_complicated",
+                  cdata[tc].speed_correction_value);
+        ++listmax;
+    }
+    if (tc == 0 && gdata_ether_disease_speed != 0)
+    {
+        if (gdata_ether_disease_speed > 0)
+        {
+            list(0, listmax) = 1;
+            list(1, listmax) = 99999;
+            listn(0, listmax) = u8"["s
+                + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                + i18n::s.get("core.locale.trait.ether_disease_grows.fast");
+            ++listmax;
+        }
+        else
+        {
+            list(0, listmax) = 1;
+            list(1, listmax) = 99999;
+            listn(0, listmax) = u8"["s
+                + i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s
+                + i18n::s.get("core.locale.trait.ether_disease_grows.slow");
+            ++listmax;
+        }
+    }
+}
+
+
 } // namespace elona
