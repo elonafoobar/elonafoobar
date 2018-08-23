@@ -658,7 +658,6 @@ ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
 ELONA_EXTERN(std::string homepage);
 ELONA_EXTERN(std::string key_alter);
-ELONA_EXTERN(std::string lastword);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);
@@ -1284,7 +1283,6 @@ void scene_fade_to_black();
 void conquer_lesimas();
 void play_the_last_scene_again();
 std::vector<std::string> txtsetwinword(int);
-void txtsetlastword();
 
 
 //// Game lifecycle

@@ -218,18 +218,6 @@ std::string snfood(const std::string& name)
 
 
 
-void txtsetlastword()
-{
-    std::vector<std::string> last_words;
-    range::copy(
-        fileutil::read_by_line{filesystem::dir::user()
-                               / lang(u8"lastwords.txt", u8"lastwords-e.txt")},
-        std::back_inserter(last_words));
-    lastword = choice(last_words);
-}
-
-
-
 std::vector<std::string> txtsetwinword(int n)
 {
     std::vector<std::string> ret;

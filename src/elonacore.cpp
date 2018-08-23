@@ -16262,13 +16262,14 @@ turn_result_t pc_died()
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
     input_text_dialog((windoww - 310) / 2 + inf_screenx, winposy(90), 16);
+    std::string last_words;
     if (inputlog == ""s)
     {
-        txtsetlastword();
+        last_words = i18n::s.get("core.locale.system.last_words");
     }
     else
     {
-        lastword = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
+        last_words = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
     }
     buff = "";
     notesel(buff);
@@ -16282,7 +16283,7 @@ turn_result_t pc_died()
             buff(0) += tmp + '\n';
         }
     }
-    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(""s, u8" "s) + lastword;
+    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(""s, u8" "s) + last_words;
     lenfix(s, 60);
     s += lang(
         ""s + gdata_year + u8"年"s + gdata_month + u8"月"s + gdata_day
@@ -16375,9 +16376,9 @@ turn_result_t pc_died()
     s = u8"dead"s
         + lang(
               (cdatan(1, 0) + cdatan(0, 0) + u8"は"s + mdatan(0) + u8"で"s
-               + ndeathcause + lastword),
+               + ndeathcause + last_words),
               (cdatan(1, 0) + u8" "s + cdatan(0, 0) + u8" "s + ndeathcause
-               + u8" in "s + mdatan(0) + u8" "s + lastword));
+               + u8" in "s + mdatan(0) + u8" "s + last_words));
     if (gdata_wizard == 0)
     {
         net_send(s);
