@@ -25,7 +25,7 @@ static bool _should_display_quest(int cnt)
         return false;
     }
     rc = qdata(0, cnt);
-    if (cdata[rc].state() != character::state_t::alive)
+    if (cdata[rc].state() != character::State::alive)
     {
         return false;
     }

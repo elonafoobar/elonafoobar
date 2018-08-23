@@ -10,7 +10,7 @@ namespace elona
 
 struct trait_data
 {
-    enum class type_t
+    enum class Type
     {
         feat,
         mutation,
@@ -19,7 +19,7 @@ struct trait_data
     };
 
     int id;
-    type_t type;
+    Type type;
     int min;
     int max;
 };

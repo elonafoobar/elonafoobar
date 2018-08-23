@@ -86,7 +86,7 @@ static void _draw_window()
 
 static void _draw_alias_locked(int cnt)
 {
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::font_t::Style::bold);
     pos(wx + 280, wy + 66 + cnt * 19 + 2);
     color(20, 20, 140);
     mes(u8"Locked!"s);
@@ -168,7 +168,7 @@ optional<ui_menu_charamake_alias::result_type> ui_menu_charamake_alias::on_key(
     {
         return ui_menu_charamake_alias::result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
         return ui_menu_charamake_alias::result::finish();

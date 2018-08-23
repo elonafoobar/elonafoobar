@@ -22,7 +22,7 @@ namespace snail
 class renderer : public lib::noncopyable
 {
 public:
-    enum flag_t
+    enum Flag
     {
         none = 0,
         software = SDL_RENDERER_SOFTWARE,
@@ -32,7 +32,7 @@ public:
     };
 
 
-    enum class text_alignment_t
+    enum class TextAlignment
     {
         left,
         center,
@@ -40,7 +40,7 @@ public:
     };
 
 
-    enum class text_baseline_t
+    enum class TextBaseline
     {
         top,
         middle,
@@ -49,25 +49,25 @@ public:
 
     ~renderer();
 
-    text_alignment_t text_alignment() const noexcept
+    TextAlignment text_alignment() const noexcept
     {
         return _text_alignment;
     }
 
 
-    void set_text_alignment(text_alignment_t text_alignment)
+    void set_text_alignment(TextAlignment text_alignment)
     {
         _text_alignment = text_alignment;
     }
 
 
-    text_baseline_t text_baseline() const noexcept
+    TextBaseline text_baseline() const noexcept
     {
         return _text_baseline;
     }
 
 
-    void set_text_baseline(text_baseline_t text_baseline)
+    void set_text_baseline(TextBaseline text_baseline)
     {
         _text_baseline = text_baseline;
     }
@@ -91,12 +91,12 @@ public:
     }
 
 
-    blend_mode_t blend_mode() const noexcept
+    BlendMode blend_mode() const noexcept
     {
         return _blend_mode;
     }
 
-    void set_blend_mode(blend_mode_t blend_mode);
+    void set_blend_mode(BlendMode blend_mode);
 
     void set_draw_color(const color&);
 
@@ -205,10 +205,10 @@ public:
         int dst_y);
 
 private:
-    text_alignment_t _text_alignment = text_alignment_t::left;
-    text_baseline_t _text_baseline = text_baseline_t::top;
+    TextAlignment _text_alignment = TextAlignment::left;
+    TextBaseline _text_baseline = TextBaseline::top;
     font_t _font;
-    blend_mode_t _blend_mode = blend_mode_t::blend;
+    BlendMode _blend_mode = BlendMode::blend;
 };
 
 

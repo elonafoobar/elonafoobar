@@ -23,20 +23,20 @@ struct character_sheet_result
     optional<int> trainer_skill_id;
 };
 
-enum class feats_result
+enum class FeatsResult
 {
     confirmed,
     pressed_f1,
 };
 
-typedef boost::variant<character_sheet_result, feats_result>
+typedef boost::variant<character_sheet_result, FeatsResult>
     ui_menu_composite_character_result;
 
 class ui_menu_composite_character
     : public ui_menu_composite<ui_menu_composite_character_result>
 {
 public:
-    enum index : size_t
+    enum Index : size_t
     {
         character_sheet = 0,
         equipment = 1,

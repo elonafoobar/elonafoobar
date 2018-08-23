@@ -14,7 +14,7 @@ bool Chara::is_alive(lua_character_handle handle)
     }
 
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    return chara.state() == character::state_t::alive;
+    return chara.state() == character::State::alive;
 }
 
 bool Chara::is_player(lua_character_handle handle)
@@ -37,13 +37,13 @@ int Chara::count()
 bool Chara::flag(lua_character_handle handle, const enum_string& flag_name)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    int flag = LuaEnums::CharaFlag.ensure_from_string(flag_name);
+    int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     return chara._flags[flag] == 1;
 }
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if (elona::cdata.player().state() == character::state_t::empty)
+    if (elona::cdata.player().state() == character::State::empty)
     {
         return sol::nullopt;
     }

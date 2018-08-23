@@ -7,7 +7,7 @@ namespace elona
 namespace snail
 {
 
-void renderer::set_blend_mode(blend_mode_t)
+void renderer::set_blend_mode(BlendMode)
 {
 }
 

@@ -34,7 +34,7 @@ void store::init(const std::vector<store::location>& locations)
 void store::load(const fs::path& path, const std::string& mod_name)
 {
     for (const auto& entry :
-         filesystem::dir_entries{path, filesystem::dir_entries::type::file})
+         filesystem::dir_entries{path, filesystem::dir_entries::Type::file})
     {
         std::ifstream ifs(entry.path().native());
         if (!ifs)
@@ -331,7 +331,7 @@ void load(const std::string& language)
 {
     for (auto&& entry : filesystem::dir_entries{
              filesystem::path(u8"lang") / language,
-             filesystem::dir_entries::type::file,
+             filesystem::dir_entries::Type::file,
          })
     {
         cat::global.load(entry.path());

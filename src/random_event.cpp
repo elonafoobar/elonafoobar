@@ -160,14 +160,14 @@ optional<random_event> generate_random_event()
     {
         return generate_random_event_in_sleep();
     }
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         if (cdata.player().continuous_action_id != 0)
         {
             return none;
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::player_owned)
+    if (mdata_map_type == mdata_t::MapType::player_owned)
     {
         return none;
     }
@@ -201,7 +201,7 @@ optional<random_event> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         if (rnd(25) == 0)
         {
@@ -209,7 +209,7 @@ optional<random_event> generate_random_event()
             luck_threshold = 80;
         }
     }
-    else if (mdata_map_type == mdata_t::map_type_t::world_map)
+    else if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (rnd(40))
         {
@@ -267,7 +267,7 @@ void run_random_event(random_event event)
                 --cnt;
                 continue;
             }
-            if (cdata[p].state() == character::state_t::alive)
+            if (cdata[p].state() == character::State::alive)
             {
                 txt(i18n::s.get_enum_property(
                     "core.locale.event.popup", "scream", 15, cdata[p]));

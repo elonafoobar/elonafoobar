@@ -1317,7 +1317,7 @@ void fmode_10()
 {
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::tmp(),
-             filesystem::dir_entries::type::file,
+             filesystem::dir_entries::Type::file,
              std::regex{u8R"(.*\..*)"}))
     {
         fs::remove_all(entry.path());
@@ -1335,9 +1335,9 @@ void fmode_9()
 // deletes a map and optionally deletes characters/skills/items in it.
 // the optional case is so the characters/skills/items can be
 // preserved in the case of upgrading the player's home.
-void fmode_11_12(file_operation_t file_operation)
+void fmode_11_12(FileOperation file_operation)
 {
-    if (file_operation == file_operation_t::map_delete_preserve_items)
+    if (file_operation == FileOperation::map_delete_preserve_items)
     {
         tmpload(u8"mdata_"s + mid + u8".s2");
         if (!fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
@@ -1354,7 +1354,7 @@ void fmode_11_12(file_operation_t file_operation)
 
     fs::remove_all(filepath);
     save_t::instance().remove(filepath.filename());
-    if (file_operation == file_operation_t::map_delete)
+    if (file_operation == FileOperation::map_delete)
     {
         filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
         if (fs::exists(filepath))
@@ -1440,7 +1440,7 @@ void fmode_13()
     }
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(playerid),
-             filesystem::dir_entries::type::file,
+             filesystem::dir_entries::Type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         writeloadedbuff(entry.path().filename());
@@ -1448,7 +1448,7 @@ void fmode_13()
     }
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::tmp(),
-             filesystem::dir_entries::type::file,
+             filesystem::dir_entries::Type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         save_t::instance().remove(entry.path().filename());
@@ -1519,58 +1519,58 @@ void save_t::save(const fs::path& save_dir)
 
 
 
-void ctrl_file(file_operation_t file_operation)
+void ctrl_file(FileOperation file_operation)
 {
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     switch (file_operation)
     {
-    case file_operation_t::map_read:
-    case file_operation_t::map_write:
-        fmode_1_2(file_operation == file_operation_t::map_read);
+    case FileOperation::map_read:
+    case FileOperation::map_write:
+        fmode_1_2(file_operation == FileOperation::map_read);
         break;
-    case file_operation_t::custom_map_read:
-    case file_operation_t::custom_map_write:
-        fmode_5_6(file_operation == file_operation_t::custom_map_read);
+    case FileOperation::custom_map_read:
+    case FileOperation::custom_map_write:
+        fmode_5_6(file_operation == FileOperation::custom_map_read);
         break;
-    case file_operation_t::save_game_delete: fmode_9(); break;
-    case file_operation_t::temp_dir_delete: fmode_10(); break;
-    case file_operation_t::map_delete:
-    case file_operation_t::map_delete_preserve_items:
+    case FileOperation::save_game_delete: fmode_9(); break;
+    case FileOperation::temp_dir_delete: fmode_10(); break;
+    case FileOperation::map_delete:
+    case FileOperation::map_delete_preserve_items:
         fmode_11_12(file_operation);
         break;
-    case file_operation_t::temp_dir_delete_area: fmode_13(); break;
-    case file_operation_t::gene_write:
-    case file_operation_t::gene_read:
-        fmode_14_15(file_operation == file_operation_t::gene_read);
+    case FileOperation::temp_dir_delete_area: fmode_13(); break;
+    case FileOperation::gene_write:
+    case FileOperation::gene_read:
+        fmode_14_15(file_operation == FileOperation::gene_read);
         break;
-    case file_operation_t::map_home_upgrade: fmode_17(); break;
-    case file_operation_t::map_load_map_obj_files: fmode_16(); break;
+    case FileOperation::map_home_upgrade: fmode_17(); break;
+    case FileOperation::map_load_map_obj_files: fmode_16(); break;
     default: assert(0);
     }
 }
 
 
-void ctrl_file(file_operation2_t file_operation, const fs::path& filepath)
+void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
 {
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     switch (file_operation)
     {
-    case file_operation2_t::map_items_read:
-    case file_operation2_t::map_items_write:
+    case FileOperation2::map_items_read:
+    case FileOperation2::map_items_write:
         fmode_3_4(
-            file_operation == file_operation2_t::map_items_read, filepath);
+            file_operation == FileOperation2::map_items_read, filepath);
         break;
-    case file_operation2_t::global_read:
-    case file_operation2_t::global_write:
-        fmode_7_8(file_operation == file_operation2_t::global_read, filepath);
+    case FileOperation2::global_read:
+    case FileOperation2::global_write:
+        fmode_7_8(file_operation == FileOperation2::global_read, filepath);
         break;
-    case file_operation2_t::deck_write:
-    case file_operation2_t::deck_read:
-        fmode_23_24(file_operation == file_operation2_t::deck_read, filepath);
+    case FileOperation2::deck_write:
+    case FileOperation2::deck_read:
+        fmode_23_24(file_operation == FileOperation2::deck_read, filepath);
         break;
     default: assert(0);
     }

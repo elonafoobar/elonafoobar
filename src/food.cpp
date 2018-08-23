@@ -120,8 +120,8 @@ void eat_rotten_food()
         ++fdmax;
     }
     nutrition = 1000;
-    dmgcon(cc, status_ailment_t::paralyzed, 100);
-    dmgcon(cc, status_ailment_t::confused, 200);
+    dmgcon(cc, StatusAilment::paralyzed, 100);
+    dmgcon(cc, StatusAilment::confused, 200);
     return;
 }
 
@@ -168,7 +168,7 @@ void chara_vomit(character& cc)
         {
             break;
         }
-        if (the_buff_db[cc.buffs[i].id]->type == buff_data::type_t::food)
+        if (the_buff_db[cc.buffs[i].id]->type == buff_data::Type::food)
         {
             buff_delete(cc, i);
         }
@@ -179,7 +179,7 @@ void chara_vomit(character& cc)
     }
 
     // Vomit.
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         auto p = 2;
         for (const auto& i : items(-1))
@@ -229,7 +229,7 @@ void chara_vomit(character& cc)
         }
     }
 
-    dmgcon(cc.index, status_ailment_t::dimmed, 100);
+    dmgcon(cc.index, StatusAilment::dimmed, 100);
     modify_weight(cc, -(1 + rnd(5)));
     if (cc.nutrition <= 0)
     {
@@ -240,9 +240,9 @@ void chara_vomit(character& cc)
 
 
 
-void eatstatus(curse_state_t curse_state, int eater)
+void eatstatus(CurseState curse_state, int eater)
 {
-    if (cdata[eater].state() != character::state_t::alive)
+    if (cdata[eater].state() != character::State::alive)
         return;
 
     if (is_cursed(curse_state))
@@ -254,7 +254,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         }
         chara_vomit(cdata[eater]);
     }
-    else if (curse_state == curse_state_t::blessed)
+    else if (curse_state == CurseState::blessed)
     {
         if (is_in_fov(cdata[eater]))
         {
@@ -280,7 +280,7 @@ void chara_anorexia(character& cc)
 
 
 
-void get_sick_if_cursed(curse_state_t curse_state, character& drinker)
+void get_sick_if_cursed(CurseState curse_state, character& drinker)
 {
     if (!is_cursed(curse_state))
         return;
@@ -289,7 +289,7 @@ void get_sick_if_cursed(curse_state_t curse_state, character& drinker)
     {
         txt(i18n::s.get("core.locale.food.eat_status.cursed_drink", drinker));
     }
-    dmgcon(drinker.index, status_ailment_t::sick, 200);
+    dmgcon(drinker.index, StatusAilment::sick, 200);
 }
 
 
@@ -1069,7 +1069,7 @@ void apply_general_eating_effect(int cieat)
                 {
                     txt(i18n::s.get("core.locale.food.effect.human.dislike"));
                     damage_insanity(cdata[cc], 15);
-                    dmgcon(cc, status_ailment_t::insane, 150);
+                    dmgcon(cc, StatusAilment::insane, 150);
                     if (trait(41) == 0)
                     {
                         if (rnd(5) == 0)
@@ -1122,7 +1122,7 @@ void apply_general_eating_effect(int cieat)
                 cdata[cc], fdlist(0, cnt), fdlist(1, cnt) * i / 100);
         }
     }
-    if (inv[ci].curse_state == curse_state_t::blessed)
+    if (inv[ci].curse_state == CurseState::blessed)
     {
         nutrition = nutrition * 150 / 100;
     }
@@ -1217,8 +1217,8 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get(
                 "core.locale.food.effect.fortune_cookie", cdata[cc]));
             read_talk_file(u8"%COOKIE2");
-            if (inv[ci].curse_state == curse_state_t::blessed
-                || (inv[ci].curse_state == curse_state_t::none && rnd(2)))
+            if (inv[ci].curse_state == CurseState::blessed
+                || (inv[ci].curse_state == CurseState::none && rnd(2)))
             {
                 read_talk_file(u8"%COOKIE1");
             }
@@ -1241,7 +1241,7 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get("core.locale.food.effect.poisoned.dialog"));
         }
         damage_hp(cdata[cc], rnd(250) + 250, -4);
-        if (cdata[cc].state() != character::state_t::alive)
+        if (cdata[cc].state() != character::State::alive)
         {
             if (cc != 0)
             {
@@ -1268,7 +1268,7 @@ void apply_general_eating_effect(int cieat)
             modify_karma(cdata.player(), -10);
             lovemiracle(cc);
         }
-        dmgcon(cc, status_ailment_t::dimmed, 500);
+        dmgcon(cc, StatusAilment::dimmed, 500);
         cdata[cc].emotion_icon = 317;
     }
     for (int cnt = 0; cnt < 15; ++cnt)

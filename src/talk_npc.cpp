@@ -30,7 +30,7 @@ namespace elona
 namespace
 {
 
-talk_result_t talk_shop_buy()
+TalkResult talk_shop_buy()
 {
     invctrl = 11;
     invfile = cdata[tc].shop_store_id;
@@ -39,10 +39,10 @@ talk_result_t talk_shop_buy()
     update_screen();
     cs = 0;
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_shop_sell()
+TalkResult talk_shop_sell()
 {
     invctrl = 12;
     invfile = cdata[tc].shop_store_id;
@@ -52,21 +52,21 @@ talk_result_t talk_shop_sell()
     update_screen();
     cs = 0;
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_inn_eat()
+TalkResult talk_inn_eat()
 {
     if (cdata.player().gold < calcmealvalue())
     {
         buff = i18n::_(u8"ui", u8"no_gold");
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     if (cdata.player().nutrition >= 15000)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.innkeeper.eat.not_hungry", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     snd(12);
     cdata.player().gold -= calcmealvalue();
@@ -77,15 +77,15 @@ talk_result_t talk_inn_eat()
     txt(i18n::s.get("core.locale.talk.npc.innkeeper.eat.results"));
     show_eating_message();
     chara_anorexia(cdata.player());
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_wizard_identify(int chatval_)
+TalkResult talk_wizard_identify(int chatval_)
 {
     if (cdata.player().gold < calcidentifyvalue(chatval_ - 14))
     {
         buff = i18n::_(u8"ui", u8"no_gold");
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     p = 0;
     for (const auto& cnt : items(0))
@@ -95,7 +95,7 @@ talk_result_t talk_wizard_identify(int chatval_)
             continue;
         }
         if (inv[cnt].identification_state
-            != identification_state_t::completely_identified)
+            != IdentifyState::completely_identified)
         {
             ++p;
         }
@@ -104,7 +104,7 @@ talk_result_t talk_wizard_identify(int chatval_)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.wizard.identify.already", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     if (chatval_ == 15)
     {
@@ -120,12 +120,12 @@ talk_result_t talk_wizard_identify(int chatval_)
                 continue;
             }
             if (inv[cnt].identification_state
-                != identification_state_t::completely_identified)
+                != IdentifyState::completely_identified)
             {
                 const auto result = item_identify(inv[cnt], 250);
                 item_stack(0, cnt, 1);
                 ++p(1);
-                if (result >= identification_state_t::completely_identified)
+                if (result >= IdentifyState::completely_identified)
                 {
                     ++p;
                 }
@@ -152,9 +152,9 @@ talk_result_t talk_wizard_identify(int chatval_)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.common.you_kidding", cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
-        if (idtresult == identification_state_t::completely_identified)
+        if (idtresult == IdentifyState::completely_identified)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.wizard.identify.finished", cdata[tc]);
@@ -168,30 +168,30 @@ talk_result_t talk_wizard_identify(int chatval_)
         cdata.player().gold -= calcidentifyvalue(chatval_ - 14);
     }
     snd(12);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_informer_list_adventurers()
+TalkResult talk_informer_list_adventurers()
 {
     list_adventurers();
     buff = i18n::s.get(
         "core.locale.talk.npc.informer.show_adventurers", cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_healer_restore_attributes()
+TalkResult talk_healer_restore_attributes()
 {
     if (cdata.player().gold < calcrestorecost())
     {
         buff = i18n::_(u8"ui", u8"no_gold");
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     snd(12);
     cdata.player().gold -= calcrestorecost();
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != character::State::alive)
         {
             continue;
         }
@@ -207,10 +207,10 @@ talk_result_t talk_healer_restore_attributes()
     talk_start();
     buff = i18n::s.get(
         "core.locale.talk.npc.healer.restore_attributes", cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_trade()
+TalkResult talk_trade()
 {
     invsubroutine = 1;
     for (const auto& cnt : items(tc))
@@ -218,7 +218,7 @@ talk_result_t talk_trade()
         if (inv[cnt].number() != 0)
         {
             inv[cnt].identification_state =
-                identification_state_t::completely_identified;
+                IdentifyState::completely_identified;
         }
     }
     invctrl(0) = 20;
@@ -228,13 +228,13 @@ talk_result_t talk_trade()
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     buff = i18n::s.get("core.locale.talk.npc.common.thanks", cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_arena_master(int chatval_)
+TalkResult talk_arena_master(int chatval_)
 {
     if (gdata_mount != 0)
     {
@@ -243,7 +243,7 @@ talk_result_t talk_arena_master(int chatval_)
         if (stat == 0)
         {
             txt(i18n::s.get("core.locale.magic.mount.no_place_to_get_off"));
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         cell_setchara(gdata_mount, rtval, rtval(1));
         txt(i18n::s.get(
@@ -265,7 +265,7 @@ talk_result_t talk_arena_master(int chatval_)
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
                 cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
         randomize(adata(24, gdata_current_map));
         for (int cnt = 0; cnt < 50; ++cnt)
@@ -314,7 +314,7 @@ talk_result_t talk_arena_master(int chatval_)
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
                 cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
         arenaop(0) = 1;
         arenaop(1) = (100 - gdata(120) / 100) / 2 + 1;
@@ -337,7 +337,7 @@ talk_result_t talk_arena_master(int chatval_)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     if (arenaop == 0)
     {
@@ -361,10 +361,10 @@ talk_result_t talk_arena_master(int chatval_)
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_pet_arena_master(int chatval_)
+TalkResult talk_pet_arena_master(int chatval_)
 {
     gdata(74) = calcfame(
         0,
@@ -410,19 +410,19 @@ talk_result_t talk_pet_arena_master(int chatval_)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     DIM2(followerexist, 16);
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         followerexist(cnt) = static_cast<int>(cdata[cnt].state());
     }
-    int stat = ctrl_ally(ctrl_ally_operation::pet_arena);
+    int stat = ctrl_ally(ControlAllyOperation::pet_arena);
     if (stat == -1)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.arena_master.enter.cancel", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     gdata_executing_immediate_quest_type = 2;
     gdata(71) = 0;
@@ -436,28 +436,28 @@ talk_result_t talk_pet_arena_master(int chatval_)
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_pet_arena_master_score()
+TalkResult talk_pet_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
         adata(23, gdata_current_map),
         cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_arena_master_score()
+TalkResult talk_arena_master_score()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.arena_master.streak",
         adata(22, gdata_current_map),
         cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_quest_delivery()
+TalkResult talk_quest_delivery()
 {
     int stat = inv_getfreeid_force();
     ti = stat;
@@ -472,10 +472,10 @@ talk_result_t talk_quest_delivery()
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_quest_supply()
+TalkResult talk_quest_supply()
 {
     int stat = inv_getfreeid_force();
     ti = stat;
@@ -490,10 +490,10 @@ talk_result_t talk_quest_supply()
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_shop_attack()
+TalkResult talk_shop_attack()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.shop.attack.dialog", cdata[tc]);
@@ -507,13 +507,13 @@ talk_result_t talk_shop_attack()
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     go_hostile();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_guard_return_item()
+TalkResult talk_guard_return_item()
 {
     listmax = 0;
     p = itemfind(0, 284);
@@ -565,20 +565,20 @@ talk_result_t talk_guard_return_item()
     }
     refresh_burden_state();
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_bartender_call_ally()
+TalkResult talk_bartender_call_ally()
 {
-    int stat = ctrl_ally(ctrl_ally_operation::call_back);
+    int stat = ctrl_ally(ControlAllyOperation::call_back);
     if (stat != -1)
     {
         rc = stat;
-        if (cdata[rc].state() == character::state_t::alive)
+        if (cdata[rc].state() == character::State::alive)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
         listmax = 0;
         buff = i18n::s.get(
@@ -619,10 +619,10 @@ talk_result_t talk_bartender_call_ally()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_ally_order_wait()
+TalkResult talk_ally_order_wait()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.wait_at_town", cdata[tc]);
@@ -631,12 +631,12 @@ talk_result_t talk_ally_order_wait()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
-    cdata[tc].set_state(character::state_t::pet_waiting);
+    cdata[tc].set_state(character::State::pet_waiting);
     cdata[tc].current_map = 0;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_ally_abandon()
+TalkResult talk_ally_abandon()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.abandon.prompt", cdata[tc]);
@@ -652,13 +652,13 @@ talk_result_t talk_ally_abandon()
             "core.locale.talk.npc.ally.abandon.you_abandoned", cdata[tc]));
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         chara_delete(tc);
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_slave_buy(int chatval_)
+TalkResult talk_slave_buy(int chatval_)
 {
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -715,12 +715,12 @@ talk_result_t talk_slave_buy(int chatval_)
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_slave_sell()
+TalkResult talk_slave_sell()
 {
-    int stat = ctrl_ally(ctrl_ally_operation::sell);
+    int stat = ctrl_ally(ControlAllyOperation::sell);
     if (stat != -1)
     {
         rc = stat;
@@ -745,7 +745,7 @@ talk_result_t talk_slave_sell()
                 cnven(cdatan(0, rc))));
             snd(11);
             earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
-            if (cdata[rc].state() == character::state_t::alive)
+            if (cdata[rc].state() == character::State::alive)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             }
@@ -767,16 +767,16 @@ talk_result_t talk_slave_sell()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_ally_marriage()
+TalkResult talk_ally_marriage()
 {
     if (cdata[tc].impression < 200)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.ally.marriage.refuses", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     cdata[tc].is_married() = true;
     listmax = 0;
@@ -787,12 +787,12 @@ talk_result_t talk_ally_marriage()
     ELONA_TALK_SCENE_CUT();
     marry = tc;
     event_add(13);
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_ally_gene()
+TalkResult talk_ally_gene()
 {
-    if (gdata_current_map == mdata_t::map_id_t::shelter_)
+    if (gdata_current_map == mdata_t::MapId::shelter_)
     {
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.refuses");
@@ -800,7 +800,7 @@ talk_result_t talk_ally_gene()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.ally.make_gene.accepts");
@@ -813,10 +813,10 @@ talk_result_t talk_ally_gene()
     {
         gdata(98) = tc;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_innkeeper_shelter()
+TalkResult talk_innkeeper_shelter()
 {
     listmax = 0;
     buff =
@@ -834,10 +834,10 @@ talk_result_t talk_innkeeper_shelter()
     levelexitby = 2;
     chatteleport = 1;
     snd(49);
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_servant_fire()
+TalkResult talk_servant_fire()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.servant.fire.prompt", cdata[tc]);
@@ -853,13 +853,13 @@ talk_result_t talk_servant_fire()
             "core.locale.talk.npc.servant.fire.you_dismiss", cdata[tc]));
         chara_vanquish(tc);
         calccosthire();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_maid_think_of_house_name()
+TalkResult talk_maid_think_of_house_name()
 {
     mdatan(0) = random_title();
     if (rnd(5))
@@ -874,16 +874,16 @@ talk_result_t talk_maid_think_of_house_name()
         "core.locale.talk.npc.maid.think_of_house_name.come_up_with",
         mdatan(0),
         cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_sister_buy_indulgence()
+TalkResult talk_sister_buy_indulgence()
 {
     if (cdata.player().karma >= -30)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.sister.buy_indulgence.karma_is_not_low");
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     listmax = 0;
     buff = i18n::s.get(
@@ -915,13 +915,13 @@ talk_result_t talk_sister_buy_indulgence()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_informer_investigate_ally()
+TalkResult talk_informer_investigate_ally()
 {
     int tcchat = tc;
-    int stat = ctrl_ally(ctrl_ally_operation::investigate);
+    int stat = ctrl_ally(ControlAllyOperation::investigate);
     if (stat != -1)
     {
         rc = stat;
@@ -964,10 +964,10 @@ talk_result_t talk_informer_investigate_ally()
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
     tc = tcchat;
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_ally_silence()
+TalkResult talk_ally_silence()
 {
     if (cdata[tc].is_silent() == 0)
     {
@@ -983,10 +983,10 @@ talk_result_t talk_ally_silence()
             + u8")"s;
         cdata[tc].is_silent() = false;
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_adventurer_hire()
+TalkResult talk_adventurer_hire()
 {
     buff = i18n::s.get(
         "core.locale.talk.npc.adventurer.hire.cost",
@@ -1021,16 +1021,16 @@ talk_result_t talk_adventurer_hire()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_adventurer_join()
+TalkResult talk_adventurer_join()
 {
     if (cdata.player().level * 3 / 2 + 10 < cdata[tc].level)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.adventurer.join.too_weak", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     if (cdata[tc].impression >= 200 && cdata[tc].hire_count > 2)
     {
@@ -1046,7 +1046,7 @@ talk_result_t talk_adventurer_join()
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.adventurer.join.party_full", cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
         rc = tc;
         new_ally_joins();
@@ -1055,14 +1055,14 @@ talk_result_t talk_adventurer_join()
         cdata[tc].impression = 100;
         rc = oc;
         create_adventurer();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     buff = i18n::s.get(
         "core.locale.talk.npc.adventurer.join.not_known", cdata[tc]);
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_moyer_sell_paels_mom()
+TalkResult talk_moyer_sell_paels_mom()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.moyer.sell_paels_mom.prompt");
@@ -1095,10 +1095,10 @@ talk_result_t talk_moyer_sell_paels_mom()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_wizard_return()
+TalkResult talk_wizard_return()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.wizard.return", cdata[tc]);
@@ -1107,15 +1107,15 @@ talk_result_t talk_wizard_return()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     try_to_return();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_shop_reload_ammo()
+TalkResult talk_shop_reload_ammo()
 {
     if (calccostreload(0) == 0)
     {
         buff = i18n::s.get("core.locale.talk.npc.shop.ammo.no_ammo");
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     buff = i18n::s.get(
         "core.locale.talk.npc.shop.ammo.cost", calccostreload(0), cdata[tc]);
@@ -1140,20 +1140,20 @@ talk_result_t talk_shop_reload_ammo()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_spell_writer_reserve()
+TalkResult talk_spell_writer_reserve()
 {
     screenupdate = -1;
     update_screen();
     invctrl = 0;
     show_spell_writer_menu();
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_sex()
+TalkResult talk_sex()
 {
     ELONA_APPEND_RESPONSE(
         1, i18n::s.get("core.locale.talk.npc.common.sex.choices.accept"));
@@ -1165,7 +1165,7 @@ talk_result_t talk_sex()
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.npc.common.sex.start", cdata[tc]);
@@ -1175,10 +1175,10 @@ talk_result_t talk_sex()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     continuous_action_sex();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_result_maid_chase_out()
+TalkResult talk_result_maid_chase_out()
 {
     --gdata_number_of_waiting_guests;
     listmax = 0;
@@ -1188,10 +1188,10 @@ talk_result_t talk_result_maid_chase_out()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     buff = "";
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_prostitute_buy()
+TalkResult talk_prostitute_buy()
 {
     sexvalue = sdata(17, tc) * 25 + 100 + cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
@@ -1208,7 +1208,7 @@ talk_result_t talk_prostitute_buy()
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     snd(12);
     cdata[cc].gold -= sexvalue;
@@ -1224,24 +1224,24 @@ talk_result_t talk_prostitute_buy()
     tc = 0;
     continuous_action_sex();
     cc = 0;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_caravan_master_hire()
+TalkResult talk_caravan_master_hire()
 {
-    if (gdata_current_map == mdata_t::map_id_t::north_tyris_south_border)
+    if (gdata_current_map == mdata_t::MapId::north_tyris_south_border)
     {
         p(0) = 45;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == mdata_t::map_id_t::south_tyris_north_border)
+    if (gdata_current_map == mdata_t::MapId::south_tyris_north_border)
     {
         p(0) = 43;
         p(1) = 48;
         p(2) = 0;
     }
-    if (gdata_current_map == mdata_t::map_id_t::test_world_north_border)
+    if (gdata_current_map == mdata_t::MapId::test_world_north_border)
     {
         p(0) = 43;
         p(1) = 45;
@@ -1265,7 +1265,7 @@ talk_result_t talk_caravan_master_hire()
     {
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     gdata_destination_map = adata(30, chatval_);
     gdata_destination_dungeon_level = 1;
@@ -1276,10 +1276,10 @@ talk_result_t talk_caravan_master_hire()
     gdata_pc_y_in_world_map = adata(2, chatval_);
     fixtransfermap = 1;
     chatteleport = 1;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_guard_where_is(int chatval_)
+TalkResult talk_guard_where_is(int chatval_)
 {
     talk_guide_quest_client();
     rc = rtval(chatval_ - 10000);
@@ -1317,7 +1317,7 @@ talk_result_t talk_guard_where_is(int chatval_)
                 "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             break;
         }
-        if (cdata[rc].state() != character::state_t::alive)
+        if (cdata[rc].state() != character::State::alive)
         {
             s = i18n::s.get(
                 "core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
@@ -1367,10 +1367,10 @@ talk_result_t talk_guard_where_is(int chatval_)
         break;
     }
     buff = s;
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_accepted_quest()
+TalkResult talk_accepted_quest()
 {
     if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
     {
@@ -1387,7 +1387,7 @@ talk_result_t talk_accepted_quest()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
@@ -1406,7 +1406,7 @@ talk_result_t talk_accepted_quest()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
@@ -1425,7 +1425,7 @@ talk_result_t talk_accepted_quest()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
@@ -1441,10 +1441,10 @@ talk_result_t talk_accepted_quest()
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_trainer(bool is_training)
+TalkResult talk_trainer(bool is_training)
 {
     tcbk = tc;
     menucycle = 0;
@@ -1454,7 +1454,7 @@ talk_result_t talk_trainer(bool is_training)
     if (!selected_skill_opt)
     {
         buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     int selected_skill = *selected_skill_opt;
     listmax = 0;
@@ -1521,21 +1521,21 @@ talk_result_t talk_trainer(bool is_training)
     {
         buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_trainer_train_skill()
+TalkResult talk_trainer_train_skill()
 {
     return talk_trainer(true);
 }
 
-talk_result_t talk_trainer_learn_skill()
+TalkResult talk_trainer_learn_skill()
 {
     return talk_trainer(false);
 }
 
 
-talk_result_t talk_invest()
+TalkResult talk_invest()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -1566,14 +1566,14 @@ talk_result_t talk_invest()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         calccosthire();
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
-talk_result_t talk_finish_escort()
+TalkResult talk_finish_escort()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -1588,21 +1588,21 @@ talk_result_t talk_finish_escort()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
 
-talk_result_t talk_quest_giver()
+TalkResult talk_quest_giver()
 {
     if (qdata(8, rq) == 1)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.quest_giver.about.during", cdata[tc]);
-        return talk_result_t::talk_npc;
+        return TalkResult::talk_npc;
     }
     quest_set_data(1);
     listmax = 0;
@@ -1637,7 +1637,7 @@ talk_result_t talk_quest_giver()
             buff = i18n::s.get(
                 "core.locale.talk.npc.quest_giver.about.too_many_unfinished",
                 cdata[tc]);
-            return talk_result_t::talk_npc;
+            return TalkResult::talk_npc;
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -1663,7 +1663,7 @@ talk_result_t talk_quest_giver()
                 buff = i18n::s.get(
                     "core.locale.talk.npc.quest_giver.about.backpack_full",
                     cdata[tc]);
-                return talk_result_t::talk_npc;
+                return TalkResult::talk_npc;
             }
         }
         if (qdata(3, rq) == 1007)
@@ -1674,7 +1674,7 @@ talk_result_t talk_quest_giver()
                 buff = i18n::s.get(
                     "core.locale.talk.npc.quest_giver.about.party_full",
                     cdata[tc]);
-                return talk_result_t::talk_npc;
+                return TalkResult::talk_npc;
             }
             for (int cnt = 0;; ++cnt)
             {
@@ -1694,7 +1694,7 @@ talk_result_t talk_quest_giver()
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)
                     {
-                        if (cdata[cnt].state() == character::state_t::empty)
+                        if (cdata[cnt].state() == character::State::empty)
                         {
                             continue;
                         }
@@ -1749,37 +1749,37 @@ talk_result_t talk_quest_giver()
         buff =
             i18n::s.get("core.locale.talk.npc.common.you_kidding", cdata[tc]);
     }
-    return talk_result_t::talk_npc;
+    return TalkResult::talk_npc;
 }
 
 
 } // namespace
 
-void talk_wrapper(talk_result_t initial)
+void talk_wrapper(TalkResult initial)
 {
-    talk_result_t result = initial;
+    TalkResult result = initial;
     bool finished = false;
     while (!finished)
     {
         switch (result)
         {
-        case talk_result_t::talk_npc: result = talk_npc(); break;
-        case talk_result_t::talk_unique: result = talk_unique(); break;
-        case talk_result_t::talk_quest_giver:
+        case TalkResult::talk_npc: result = talk_npc(); break;
+        case TalkResult::talk_unique: result = talk_unique(); break;
+        case TalkResult::talk_quest_giver:
             result = talk_quest_giver();
             break;
-        case talk_result_t::talk_house_visitor:
+        case TalkResult::talk_house_visitor:
             result = talk_house_visitor();
             break;
-        case talk_result_t::talk_sleeping: result = talk_sleeping(); break;
-        case talk_result_t::talk_busy: result = talk_busy(); break;
-        case talk_result_t::talk_ignored: result = talk_ignored(); break;
-        case talk_result_t::talk_finish_escort:
+        case TalkResult::talk_sleeping: result = talk_sleeping(); break;
+        case TalkResult::talk_busy: result = talk_busy(); break;
+        case TalkResult::talk_ignored: result = talk_ignored(); break;
+        case TalkResult::talk_finish_escort:
             result = talk_finish_escort();
             break;
-        case talk_result_t::talk_game_begin: result = talk_game_begin(); break;
-        case talk_result_t::talk_more: result = talk_more(); break;
-        case talk_result_t::talk_end:
+        case TalkResult::talk_game_begin: result = talk_game_begin(); break;
+        case TalkResult::talk_more: result = talk_more(); break;
+        case TalkResult::talk_end:
             talk_end();
             finished = true;
             break;
@@ -1789,7 +1789,7 @@ void talk_wrapper(talk_result_t initial)
 }
 
 
-talk_result_t talk_npc()
+TalkResult talk_npc()
 {
     listmax = 0;
     if (buff == ""s)
@@ -2104,7 +2104,7 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].drunk != 0 || 0)
     {
-        if (gdata_current_map != mdata_t::map_id_t::show_house)
+        if (gdata_current_map != mdata_t::MapId::show_house)
         {
             if (tc >= 16)
             {
@@ -2258,7 +2258,7 @@ talk_result_t talk_npc()
             i18n::s.get(
                 "core.locale.talk.npc.quest_giver.choices.here_is_delivery"));
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         if (tc >= 57)
         {
@@ -2283,7 +2283,7 @@ talk_result_t talk_npc()
             rc = chara_find(222);
             if (rc != 0)
             {
-                if (cdata[rc].state() == character::state_t::alive)
+                if (cdata[rc].state() == character::State::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,
@@ -2307,8 +2307,8 @@ talk_result_t talk_npc()
             if (cdata.player().karma < -30
                 && cdata.player().is_incognito() == 0)
             {
-                if (gdata_current_map != mdata_t::map_id_t::derphy
-                    && gdata_current_map != mdata_t::map_id_t::your_home)
+                if (gdata_current_map != mdata_t::MapId::derphy
+                    && gdata_current_map != mdata_t::MapId::your_home)
                 {
                     listmax = 0;
                     if (chatval_ == 10)
@@ -2327,7 +2327,7 @@ talk_result_t talk_npc()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    return talk_result_t::talk_npc;
+                    return TalkResult::talk_npc;
                 }
             }
         }
@@ -2335,7 +2335,7 @@ talk_result_t talk_npc()
 
     switch (chatval_)
     {
-    case 1: buff = ""; return talk_result_t::talk_npc;
+    case 1: buff = ""; return TalkResult::talk_npc;
     case 10: return talk_shop_buy();
     case 11: return talk_shop_sell();
     case 12: return talk_invest();
@@ -2353,7 +2353,7 @@ talk_result_t talk_npc()
     case 41: return talk_pet_arena_master(chatval_);
     case 42: return talk_pet_arena_master_score();
     case 23: return talk_arena_master_score();
-    case 24: return talk_result_t::talk_quest_giver;
+    case 24: return TalkResult::talk_quest_giver;
     case 25: return talk_quest_delivery();
     case 26: return talk_quest_supply();
     case 30: return talk_trainer_learn_skill();
@@ -2386,7 +2386,7 @@ talk_result_t talk_npc()
         {
             event_add(25);
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     case 59: return talk_result_maid_chase_out();
     case 60: return talk_prostitute_buy();
@@ -2405,7 +2405,7 @@ talk_result_t talk_npc()
         snd(49);
     }
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 } // namespace elona
 
 } // namespace elona

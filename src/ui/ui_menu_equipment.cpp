@@ -193,7 +193,7 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
 
 static void _draw_keys(int main_hand)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
     gmode(2);
     keyrange = 0;
     f = 0;
@@ -398,7 +398,7 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
         menucycle = 0;
         create_pcpic(cc, true);
         update_screen();
-        // result.turn_result = turn_result_t::pc_turn_user_error
+        // result.turn_result = TurnResult::pc_turn_user_error
         return ui_menu_equipment::result::cancel();
     }
 

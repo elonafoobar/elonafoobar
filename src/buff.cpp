@@ -64,7 +64,7 @@ buff_db::buff_db()
         0,
         buff_data{0,
                   LUA_REFNIL,
-                  buff_data::type_t::buff,
+                  buff_data::Type::buff,
                   LUA_REFNIL,
                   LUA_REFNIL}); // dummy
 }
@@ -90,7 +90,7 @@ void buff_db::define(lua_State* L)
         buff_data{
             std::stoi(id),
             self,
-            buff_data::type_t(type_),
+            buff_data::Type(type_),
             duration,
             on_refresh,
         });
@@ -146,7 +146,7 @@ void buff_add(
         }
     }
 
-    if (the_buff_db[id]->type == buff_data::type_t::hex)
+    if (the_buff_db[id]->type == buff_data::Type::hex)
     {
         bool resists{};
         if (sdata(60, cc.index) / 2 > rnd(power * 2 + 100))
@@ -202,7 +202,7 @@ void buff_add(
     if (is_in_fov(cc))
     {
         // Messages of fodd buff are shown elsewhere.
-        if (the_buff_db[id]->type != buff_data::type_t::food)
+        if (the_buff_db[id]->type != buff_data::Type::food)
         {
             txt(i18n::s.get_enum_property("core.locale.buff", id, "apply", cc));
         }

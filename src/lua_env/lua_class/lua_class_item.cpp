@@ -37,20 +37,20 @@ void LuaItem::bind(sol::state& lua)
         "curse_state",
         sol::property(
             [](item& i) {
-                return LuaEnums::CurseState.convert_to_string(i.curse_state);
+                return LuaEnums::CurseStateTable.convert_to_string(i.curse_state);
             },
             [](item& i, const enum_string& s) {
-                i.curse_state = LuaEnums::CurseState.ensure_from_string(s);
+                i.curse_state = LuaEnums::CurseStateTable.ensure_from_string(s);
             }),
         "identify_state",
         sol::property(
             [](item& i) {
-                return LuaEnums::IdentifyState.convert_to_string(
+                return LuaEnums::IdentifyStateTable.convert_to_string(
                     i.identification_state);
             },
             [](item& i, const enum_string& s) {
                 i.identification_state =
-                    LuaEnums::IdentifyState.ensure_from_string(s);
+                    LuaEnums::IdentifyStateTable.ensure_from_string(s);
             }));
 
     lua.set_usertype(item::lua_type(), LuaItem);

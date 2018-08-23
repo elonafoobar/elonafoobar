@@ -291,7 +291,7 @@ void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);
 
-snail::window::fullscreen_mode_t config_get_fullscreen_mode();
+snail::window::FullscreenMode config_get_fullscreen_mode();
 
 
 } // namespace elona

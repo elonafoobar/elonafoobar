@@ -350,7 +350,7 @@ static void _draw_list_entries()
 
 void ui_menu_feats::draw()
 {
-    _draw_window(_operation == operation::character_making);
+    _draw_window(_operation == Operation::character_making);
     _draw_keys();
     _draw_acquirable_trait_number(tc);
     _draw_list_entries();
@@ -405,7 +405,7 @@ static void _switch_target(bool is_forwards)
                 new_index = 15;
             }
         }
-        if (cdata[new_index].state() == character::state_t::alive)
+        if (cdata[new_index].state() == character::State::alive)
         {
             break;
         }
@@ -425,16 +425,16 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
 
     if (p_ > 0 && _can_select_trait(p_, tc))
     {
-        bool show_text = _operation == operation::normal;
+        bool show_text = _operation == Operation::normal;
         if (_gain_trait(p_, show_text))
         {
-            if (_operation == operation::character_making)
+            if (_operation == Operation::character_making)
             {
                 if (gdata_acquirable_feat_count == 0)
                 {
                     return ui_menu_feats::result::finish(
                         ui_menu_composite_character_result{
-                            feats_result::confirmed});
+                            FeatsResult::confirmed});
                 }
             }
             else
@@ -472,18 +472,18 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
     }
     else if (key == key_cancel)
     {
-        if (_operation == operation::normal)
+        if (_operation == Operation::normal)
         {
             update_screen();
         }
         return ui_menu_feats::result::cancel();
     }
     else if (
-        getkey(snail::key::f1) && _operation == operation::character_making)
+        getkey(snail::Key::f1) && _operation == Operation::character_making)
     {
         show_game_help();
         return ui_menu_feats::result::finish(
-            ui_menu_composite_character_result{feats_result::pressed_f1});
+            ui_menu_composite_character_result{FeatsResult::pressed_f1});
     }
 
     return none;

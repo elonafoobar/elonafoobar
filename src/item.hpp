@@ -54,8 +54,8 @@ struct item
     int quality = 0;
     position_t position;
     int weight = 0;
-    identification_state_t identification_state =
-        identification_state_t::unidentified;
+    IdentifyState identification_state =
+        IdentifyState::unidentified;
     int count = 0;
     int dice_x = 0;
     int dice_y = 0;
@@ -64,7 +64,7 @@ struct item
     int dv = 0;
     int pv = 0;
     int skill = 0;
-    curse_state_t curse_state = curse_state_t::none;
+    CurseState curse_state = CurseState::none;
     int body_part = 0;
     int function = 0;
     int enhancement = 0;
@@ -192,8 +192,8 @@ int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
 
 
-identification_state_t item_identify(item& ci, identification_state_t level);
-identification_state_t item_identify(item& ci, int power);
+IdentifyState item_identify(item& ci, IdentifyState level);
+IdentifyState item_identify(item& ci, int power);
 
 range::iota<int> items(int owner);
 std::vector<int> itemlist(int owner, int id);
@@ -231,7 +231,7 @@ bool inv_getspace(int);
 int inv_getfreeid_force();
 
 
-enum desc_entry_t : int
+enum ItemDescriptionType : int
 {
     normal = 0, // rgb(0, 0, 0)
     raises_skill = 1, // rgb(0, 100, 0)

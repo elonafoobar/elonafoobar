@@ -78,7 +78,7 @@ void ui_menu_book::draw()
         noteget(s, p);
         if (p == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::font_t::Style::bold);
         }
         if (p == 1)
         {
@@ -92,7 +92,7 @@ void ui_menu_book::draw()
         mes(s);
         if (p % 20 == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::font_t::Style::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
         }

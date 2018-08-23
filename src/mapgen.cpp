@@ -246,7 +246,7 @@ int dist_town()
         {
             x_at_m165 = cnt;
             cell_featread(x_at_m165, y_at_m165);
-            if (adata(0, feat(2)) == mdata_t::map_type_t::town)
+            if (adata(0, feat(2)) == mdata_t::MapType::town)
             {
                 i_at_m165 = dist(
                     cdata.player().position.x,
@@ -301,11 +301,11 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         {
             x_at_m167 = mdata_map_width - 2;
             y_at_m167 = mdata_map_height / 2;
-            if (gdata_current_map == mdata_t::map_id_t::palmia)
+            if (gdata_current_map == mdata_t::MapId::palmia)
             {
                 y_at_m167 = 22;
             }
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 x_at_m167 = 58;
                 y_at_m167 = 21;
@@ -315,11 +315,11 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         {
             x_at_m167 = 1;
             y_at_m167 = mdata_map_height / 2;
-            if (gdata_current_map == mdata_t::map_id_t::noyel)
+            if (gdata_current_map == mdata_t::MapId::noyel)
             {
                 y_at_m167 = 3;
             }
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 x_at_m167 = 25;
                 y_at_m167 = 1;
@@ -329,15 +329,15 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         {
             x_at_m167 = mdata_map_width / 2;
             y_at_m167 = mdata_map_height - 2;
-            if (gdata_current_map == mdata_t::map_id_t::palmia)
+            if (gdata_current_map == mdata_t::MapId::palmia)
             {
                 x_at_m167 = 30;
             }
-            if (gdata_current_map == mdata_t::map_id_t::noyel)
+            if (gdata_current_map == mdata_t::MapId::noyel)
             {
                 x_at_m167 = 28;
             }
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 x_at_m167 = 58;
                 y_at_m167 = 21;
@@ -347,17 +347,17 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
         {
             x_at_m167 = mdata_map_width / 2;
             y_at_m167 = 1;
-            if (gdata_current_map == mdata_t::map_id_t::noyel)
+            if (gdata_current_map == mdata_t::MapId::noyel)
             {
                 x_at_m167 = 5;
             }
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 x_at_m167 = 25;
                 y_at_m167 = 1;
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::larna)
+        if (gdata_current_map == mdata_t::MapId::larna)
         {
             x_at_m167 = 1;
             y_at_m167 = 14;
@@ -448,7 +448,7 @@ void map_placeplayer()
     camera = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != character::State::alive)
         {
             continue;
         }
@@ -461,7 +461,7 @@ void map_placeplayer()
                 continue;
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+        if (gdata_current_map == mdata_t::MapId::pet_arena)
         {
             if (followerin(cnt) == 1)
             {
@@ -1364,7 +1364,7 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if ((264 <= map(x_at_m169, y_at_m169, 0)
              && map(x_at_m169, y_at_m169, 0) < 363)
@@ -1378,8 +1378,8 @@ void map_randsite(int prm_971, int prm_972)
     {
         return;
     }
-    if (mdata_map_type >= mdata_t::map_type_t::dungeon
-        && mdata_map_type <= mdata_t::map_type_t::dungeon_castle)
+    if (mdata_map_type >= mdata_t::MapType::dungeon
+        && mdata_map_type <= mdata_t::MapType::dungeon_castle)
     {
         if (mdata_map_next_regenerate_date == 0)
         {
@@ -1400,8 +1400,8 @@ void map_randsite(int prm_971, int prm_972)
             }
         }
     }
-    if (mdata_map_type >= mdata_t::map_type_t::dungeon
-        && mdata_map_type <= mdata_t::map_type_t::dungeon_castle)
+    if (mdata_map_type >= mdata_t::MapType::dungeon
+        && mdata_map_type <= mdata_t::MapType::dungeon_castle)
     {
         if (rnd(14) == 0)
         {
@@ -1426,8 +1426,8 @@ void map_randsite(int prm_971, int prm_972)
         cell_featset(x_at_m169, y_at_m169, tile_re + rnd(3), 24);
         return;
     }
-    if (mdata_map_type == mdata_t::map_type_t::town
-        || mdata_map_type == mdata_t::map_type_t::guild)
+    if (mdata_map_type == mdata_t::MapType::town
+        || mdata_map_type == mdata_t::MapType::guild)
     {
         if (rnd(3) == 0)
         {
@@ -1791,7 +1791,7 @@ void generate_random_nefia()
         {
             rdtype = 3;
         }
-        if (adata(0, gdata_current_map) == mdata_t::map_type_t::dungeon)
+        if (adata(0, gdata_current_map) == mdata_t::MapType::dungeon)
         {
             rdtype = 2;
             if (rnd(4) == 0)
@@ -1815,7 +1815,7 @@ void generate_random_nefia()
                 mdata_map_tileset = 10;
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::map_type_t::dungeon_forest)
+        if (adata(0, gdata_current_map) == mdata_t::MapType::dungeon_forest)
         {
             rdtype = 2;
             if (rnd(6) == 0)
@@ -1835,7 +1835,7 @@ void generate_random_nefia()
                 rdtype = 4;
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::map_type_t::dungeon_tower)
+        if (adata(0, gdata_current_map) == mdata_t::MapType::dungeon_tower)
         {
             rdtype = 1;
             if (rnd(5) == 0)
@@ -1855,7 +1855,7 @@ void generate_random_nefia()
                 mdata_map_tileset = 10;
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::map_type_t::dungeon_castle)
+        if (adata(0, gdata_current_map) == mdata_t::MapType::dungeon_castle)
         {
             rdtype = 1;
             if (rnd(5) == 0)
@@ -1875,7 +1875,7 @@ void generate_random_nefia()
                 mdata_map_tileset = 10;
             }
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::lesimas)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::lesimas)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 101;
@@ -1958,38 +1958,38 @@ void generate_random_nefia()
                 }
             }
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::tower_of_fire)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::tower_of_fire)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 7;
             rdtype = 1;
         }
         if (adata(16, gdata_current_map)
-            == mdata_t::map_id_t::crypt_of_the_damned)
+            == mdata_t::MapId::crypt_of_the_damned)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 0;
             rdtype = 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::ancient_castle)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::ancient_castle)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 200;
             rdtype = 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::mountain_pass)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::mountain_pass)
         {
             rdtype = 8;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::puppy_cave)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::puppy_cave)
         {
             rdtype = 10;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::minotaurs_nest)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::minotaurs_nest)
         {
             rdtype = 9;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::quest)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::quest)
         {
             if (gdata_executing_immediate_quest_type == 1001)
             {
@@ -2223,7 +2223,7 @@ void generate_random_nefia()
             chara_create(-1, 318, -3, 0);
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::lesimas)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::lesimas)
     {
         if (gdata_current_dungeon_level == 3
             || gdata_current_dungeon_level == 17
@@ -3856,7 +3856,7 @@ void initialize_home_mdata()
 void map_initcustom(const std::string& prm_934)
 {
     fmapfile = (filesystem::dir::map() / prm_934).generic_string();
-    ctrl_file(file_operation_t::custom_map_read);
+    ctrl_file(FileOperation::custom_map_read);
     map_tileset(mdata_map_tileset);
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)

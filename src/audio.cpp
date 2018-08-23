@@ -41,15 +41,15 @@ shared_id get_default_music()
 {
     optional<std::string> music_id = none;
 
-    if (adata(0, gdata_current_map) == mdata_t::map_type_t::field)
+    if (adata(0, gdata_current_map) == mdata_t::MapType::field)
     {
         return musicprev;
     }
-    if (adata(0, gdata_current_map) == mdata_t::map_type_t::town)
+    if (adata(0, gdata_current_map) == mdata_t::MapType::town)
     {
         music_id = "core.music:core.mcTown1"s;
     }
-    if (adata(0, gdata_current_map) == mdata_t::map_type_t::player_owned)
+    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned)
     {
         music_id = "core.music:core.mcHome"s;
     }
@@ -57,7 +57,7 @@ shared_id get_default_music()
     {
         music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
     }
-    if (adata(0, gdata_current_map) >= mdata_t::map_type_t::dungeon)
+    if (adata(0, gdata_current_map) >= mdata_t::MapType::dungeon)
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcDungeon1",
@@ -68,8 +68,8 @@ shared_id get_default_music()
             "core.music:core.mcDungeon6"};
         music_id = choices[gdata_hour % 6];
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon
-        || adata(16, gdata_current_map) == mdata_t::map_id_t::the_void)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
+        || adata(16, gdata_current_map) == mdata_t::MapId::the_void)
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
@@ -79,7 +79,7 @@ shared_id get_default_music()
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::quest)
+    if (gdata_current_map == mdata_t::MapId::quest)
     {
         if (gdata_executing_immediate_quest_type == 1001)
         {
@@ -102,45 +102,45 @@ shared_id get_default_music()
             music_id = "core.music:core.mcArena";
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::arena)
+    if (gdata_current_map == mdata_t::MapId::arena)
     {
         music_id = "core.music:core.mcArena"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::larna)
+    if (gdata_current_map == mdata_t::MapId::larna)
     {
         music_id = "core.music:core.mcVillage1"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         music_id = "core.music:core.mcTown2"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    if (gdata_current_map == mdata_t::MapId::lumiest)
     {
         music_id = "core.music:core.mcTown2"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::yowyn)
+    if (gdata_current_map == mdata_t::MapId::yowyn)
     {
         music_id = "core.music:core.mcVillage1"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::derphy)
+    if (gdata_current_map == mdata_t::MapId::derphy)
     {
         music_id = "core.music:core.mcTown3"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::palmia)
+    if (gdata_current_map == mdata_t::MapId::palmia)
     {
         music_id = "core.music:core.mcTown4"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::cyber_dome)
+    if (gdata_current_map == mdata_t::MapId::cyber_dome)
     {
         music_id = "core.music:core.mcTown5"s;
     }
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         music_id = "core.music:core.mcTown6"s;
     }
 
     if (!music_id
-        || adata(0, gdata_current_map) == mdata_t::map_type_t::world_map)
+        || adata(0, gdata_current_map) == mdata_t::MapType::world_map)
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcField1",
@@ -381,7 +381,7 @@ std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
     {
         return {0, 0};
     }
-    if (cdata.player().state() == character::state_t::empty)
+    if (cdata.player().state() == character::State::empty)
     {
         return {0, 0};
     }
@@ -441,7 +441,7 @@ void sound_play_environmental()
     }
     else if (
         gdata_current_dungeon_level == 1
-        || gdata_current_map == mdata_t::map_id_t::shelter_)
+        || gdata_current_map == mdata_t::MapId::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }
@@ -449,7 +449,7 @@ void sound_play_environmental()
     {
         DSSETVOLUME(13, max_volume);
     }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         snd(78, true);
     }
@@ -457,7 +457,7 @@ void sound_play_environmental()
     {
         DSSTOP(14);
     }
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         snd(79, true);
     }

@@ -259,7 +259,7 @@ void application::proc_event()
     }
 }
 
-void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
+void application::set_fullscreen_mode(window::FullscreenMode fullscreen_mode)
 {
     (*_window).set_fullscreen_mode(fullscreen_mode);
     _fullscreen_mode = fullscreen_mode;
@@ -397,11 +397,11 @@ void application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
-        _orientation = screen_orientation::portrait;
+        _orientation = Orientation::portrait;
     }
     else
     {
-        _orientation = screen_orientation::landscape;
+        _orientation = Orientation::landscape;
     }
 
     _window_pos = calculate_android_window_pos();
@@ -467,7 +467,7 @@ rect application::calculate_android_window_pos()
     x = 0;
     y = 0;
 
-    if (_orientation == screen_orientation::portrait)
+    if (_orientation == Orientation::portrait)
     {
         return calculate_android_window_pos_portrait(
             _width, _height, _physical_width);

@@ -411,7 +411,7 @@ void chara_gain_skill_exp(
     {
         exp = experience;
     }
-    if (gdata_current_map == mdata_t::map_id_t::show_house)
+    if (gdata_current_map == mdata_t::MapId::show_house)
     {
         exp /= 5;
     }
@@ -582,7 +582,7 @@ void gain_healing_and_meditation_experience(int cc)
 
 void gain_stealth_experience(int cc)
 {
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (rnd(20))
         {
@@ -607,7 +607,7 @@ void gain_weight_lifting_experience(int cc)
     {
         return;
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (rnd(20))
         {

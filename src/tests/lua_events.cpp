@@ -31,7 +31,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.thing == "dood"))"));
@@ -58,7 +58,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 4))"));
@@ -83,7 +83,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.thing == nil))"));
@@ -114,7 +114,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 1))"));
@@ -138,7 +138,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 0))"));
@@ -163,9 +163,9 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 1))"));
@@ -192,9 +192,9 @@ Event.clear(Event.EventKind.AllTurnsFinished)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::player_turn>();
+        .run_callbacks<elona::lua::EventKind::player_turn>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 1))"));
@@ -221,9 +221,9 @@ Event.clear()
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::player_turn>();
+        .run_callbacks<elona::lua::EventKind::player_turn>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 0))"));
@@ -252,7 +252,7 @@ Event.clear()
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "first_mod", R"(assert(Store.global.called_times == 1))"));
@@ -285,7 +285,7 @@ Event.register(Event.EventKind.PlayerTurn, second_handler)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.first == true))"));

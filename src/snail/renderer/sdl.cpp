@@ -13,21 +13,21 @@ namespace snail
 
 SDL_Renderer* _ptr;
 
-void renderer::set_blend_mode(blend_mode_t blend_mode)
+void renderer::set_blend_mode(BlendMode blend_mode)
 {
     _blend_mode = blend_mode;
 
     switch (_blend_mode)
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         detail::enforce_sdl(
             ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_ADD));
         break;
@@ -116,15 +116,15 @@ rect renderer::render_text(
 
     switch (_text_alignment)
     {
-    case text_alignment_t::left: x_ = x; break;
-    case text_alignment_t::center: x_ = x - width / 2; break;
-    case text_alignment_t::right: x_ = x - width; break;
+    case TextAlignment::left: x_ = x; break;
+    case TextAlignment::center: x_ = x - width / 2; break;
+    case TextAlignment::right: x_ = x - width; break;
     }
     switch (_text_baseline)
     {
-    case text_baseline_t::top: y_ = y; break;
-    case text_baseline_t::middle: y_ = y - height / 2; break;
-    case text_baseline_t::bottom: y_ = y - height; break;
+    case TextBaseline::top: y_ = y; break;
+    case TextBaseline::middle: y_ = y - height / 2; break;
+    case TextBaseline::bottom: y_ = y - height; break;
     }
     ::SDL_Rect dst{x_, y_, width, height};
     detail::enforce_sdl(::SDL_RenderCopy(ptr(), texture, nullptr, &dst));
@@ -363,15 +363,15 @@ void renderer::render_image(
 {
     switch (_blend_mode)
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_ADD));
         break;
@@ -408,15 +408,15 @@ void renderer::render_image_crop(
 {
     switch (_blend_mode)
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(image, ::SDL_BLENDMODE_ADD));
         break;

@@ -44,7 +44,7 @@ void rowact_item(int prm_790)
 {
     for (auto&& cc : cdata.all())
     {
-        if (cc.state() != character::state_t::alive)
+        if (cc.state() != character::State::alive)
         {
             continue;
         }
@@ -107,7 +107,7 @@ void activity_handle_damage(character& chara)
     chara.stops_continuous_action_if_damaged = 0;
 }
 
-optional<turn_result_t> activity_proc(character& chara)
+optional<TurnResult> activity_proc(character& chara)
 {
     ci = chara.continuous_action_item;
     --chara.continuous_action_turn;
@@ -188,7 +188,7 @@ optional<turn_result_t> activity_proc(character& chara)
     }
     if (chara.continuous_action_turn > 0)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     rowactend(cc);
     if (cc == 0)
@@ -196,7 +196,7 @@ optional<turn_result_t> activity_proc(character& chara)
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            return turn_result_t::exit_map;
+            return TurnResult::exit_map;
         }
     }
 
@@ -260,7 +260,7 @@ void continuous_action_perform()
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
             for (auto&& audience : cdata.all())
             {
-                if (audience.state() != character::state_t::alive)
+                if (audience.state() != character::State::alive)
                 {
                     continue;
                 }
@@ -359,7 +359,7 @@ void continuous_action_perform()
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
                         damage_hp(cdata[cc], dmg, -8);
-                        if (cdata[cc].state() == character::state_t::empty)
+                        if (cdata[cc].state() == character::State::empty)
                         {
                             break;
                         }
@@ -425,7 +425,7 @@ void continuous_action_perform()
                 {
                     if (rnd(15) == 0)
                     {
-                        dmgcon(tc, status_ailment_t::drunk, 500);
+                        dmgcon(tc, StatusAilment::drunk, 500);
                     }
                 }
                 if (rnd(sdata(183, cc) + 1) > rnd(cdata[tc].level * 5 + 1))
@@ -661,7 +661,7 @@ void continuous_action_sex()
         tc -= 10000;
         sexhost = 0;
     }
-    if (cdata[tc].state() != character::state_t::alive
+    if (cdata[tc].state() != character::State::alive
         || cdata[tc].continuous_action_id != 11)
     {
         if (is_in_fov(cdata[cc]))
@@ -722,20 +722,20 @@ void continuous_action_sex()
         {
             if (rnd(3) == 0)
             {
-                dmgcon(c, status_ailment_t::insane, 500);
+                dmgcon(c, StatusAilment::insane, 500);
             }
             if (rnd(5) == 0)
             {
-                dmgcon(c, status_ailment_t::paralyzed, 500);
+                dmgcon(c, StatusAilment::paralyzed, 500);
             }
-            dmgcon(c, status_ailment_t::insane, 300);
+            dmgcon(c, StatusAilment::insane, 300);
             heal_insanity(cdata[c], 10);
             chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
             chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
         }
         if (rnd(15) == 0)
         {
-            dmgcon(c, status_ailment_t::sick, 200);
+            dmgcon(c, StatusAilment::sick, 200);
         }
         chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
@@ -864,7 +864,7 @@ void continuous_action_eating_finish()
     ci = ci_save;
     if (cc == 0)
     {
-        item_identify(inv[ci], identification_state_t::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly_identified);
     }
     if (chara_unequip(ci))
     {
@@ -890,7 +890,7 @@ void continuous_action_eating_finish()
                     txtef(9);
                     txt(i18n::s.get("core.locale.food.passed_rotten"));
                     damage_hp(cdata[cc], 999, -12);
-                    if (cdata[cc].state() != character::state_t::alive)
+                    if (cdata[cc].state() != character::State::alive)
                     {
                         if (cdata[cc].relationship > 0)
                         {
@@ -941,9 +941,9 @@ void continuous_action_others()
         }
         if (gdata(91) == 100)
         {
-            if (mdata_map_type == mdata_t::map_type_t::player_owned
-                || mdata_map_type == mdata_t::map_type_t::town
-                || mdata_map_type == mdata_t::map_type_t::guild)
+            if (mdata_map_type == mdata_t::MapType::player_owned
+                || mdata_map_type == mdata_t::MapType::town
+                || mdata_map_type == mdata_t::MapType::guild)
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
                 cdata[cc].continuous_action_turn = 5;
@@ -1004,11 +1004,11 @@ void continuous_action_others()
             }
             if (gdata_weather != 0 && gdata_weather != 3)
             {
-                if (gdata_current_map == mdata_t::map_id_t::shelter_
+                if (gdata_current_map == mdata_t::MapId::shelter_
                     || (mdata_map_indoors_flag == 1
-                        && (mdata_map_type == mdata_t::map_type_t::player_owned
-                            || mdata_map_type == mdata_t::map_type_t::town
-                            || mdata_map_type == mdata_t::map_type_t::guild)))
+                        && (mdata_map_type == mdata_t::MapType::player_owned
+                            || mdata_map_type == mdata_t::MapType::town
+                            || mdata_map_type == mdata_t::MapType::guild)))
                 {
                     txt(i18n::s.get(
                         "core.locale.activity.study.start.weather_is_bad"));
@@ -1060,16 +1060,16 @@ void continuous_action_others()
             p = 25;
             if (gdata_weather != 0 && gdata_weather != 3)
             {
-                if (gdata_current_map == mdata_t::map_id_t::shelter_)
+                if (gdata_current_map == mdata_t::MapId::shelter_)
                 {
                     p = 5;
                 }
-                if (gdata_current_map != mdata_t::map_id_t::shelter_
+                if (gdata_current_map != mdata_t::MapId::shelter_
                     && mdata_map_indoors_flag == 1)
                 {
-                    if (mdata_map_type == mdata_t::map_type_t::player_owned
-                        || mdata_map_type == mdata_t::map_type_t::town
-                        || mdata_map_type == mdata_t::map_type_t::guild)
+                    if (mdata_map_type == mdata_t::MapType::player_owned
+                        || mdata_map_type == mdata_t::MapType::town
+                        || mdata_map_type == mdata_t::MapType::guild)
                     {
                         p = 5;
                         gdata_minute += 30;
@@ -1137,7 +1137,7 @@ void continuous_action_others()
                 cdata.player().position.x, cdata.player().position.y, 5, 8);
             for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cdata[cnt].state() != character::State::alive)
                 {
                     continue;
                 }
@@ -1226,7 +1226,7 @@ void continuous_action_others()
             }
             if (tg != -1)
             {
-                if (cdata[tg].state() != character::state_t::alive)
+                if (cdata[tg].state() != character::State::alive)
                 {
                     if (f != 1)
                     {
@@ -1301,7 +1301,7 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state() != character::state_t::alive)
+        if ((tg != -1 && cdata[tg].state() != character::State::alive)
             || inv[ci].number() <= 0)
         {
             txt(i18n::s.get("core.locale.activity.steal.abort"));
@@ -1687,7 +1687,7 @@ void spot_digging()
         return;
     }
     txt(i18n::s.get("core.locale.activity.dig_spot.finish"));
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         for (const auto& cnt : items(0))
         {
@@ -1753,7 +1753,7 @@ void spot_digging()
                                             "put_on_the_ground"));
                             autosave = 1
                                 * (gdata_current_map
-                                   != mdata_t::map_id_t::show_house);
+                                   != mdata_t::MapId::show_house);
                             inv[cnt].modify_number(-1);
                             break;
                         }
@@ -1838,7 +1838,7 @@ void spot_mining_or_wall()
         }
         if (f == 1
             || (gdata_tutorial_flag == 2
-                && gdata_current_map == mdata_t::map_id_t::your_home))
+                && gdata_current_map == mdata_t::MapId::your_home))
         {
             rtval = 0;
             if (rnd(5) == 0)
@@ -1863,16 +1863,16 @@ void spot_mining_or_wall()
             breaking_animation({refx, refy}, 5).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2
-                && gdata_current_map == mdata_t::map_id_t::your_home)
+                && gdata_current_map == mdata_t::MapId::your_home)
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
-                inv[ci].curse_state = curse_state_t::cursed;
+                inv[ci].curse_state = CurseState::cursed;
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
                 gdata_tutorial_flag = 3;
             }
             else if (
-                rtval != 0 && gdata_current_map != mdata_t::map_id_t::shelter_)
+                rtval != 0 && gdata_current_map != mdata_t::MapId::shelter_)
             {
                 if (rtval > 0)
                 {
@@ -1902,19 +1902,19 @@ void spot_mining_or_wall()
     return;
 }
 
-turn_result_t do_dig_after_sp_check()
+TurnResult do_dig_after_sp_check()
 {
     if (cdata[cc].sp < 0)
     {
         txt(i18n::s.get("core.locale.action.dig.too_exhausted"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     rowactre = 0;
     digx = tlocx;
     digy = tlocy;
     spot_mining_or_wall();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 int search_material_spot()
@@ -1929,23 +1929,23 @@ int search_material_spot()
     }
     atxspot = 11;
     atxlv = gdata_current_dungeon_level;
-    if (mdata_map_type == mdata_t::map_type_t::dungeon)
+    if (mdata_map_type == mdata_t::MapType::dungeon)
     {
         atxspot = 9;
     }
-    if (mdata_map_type == mdata_t::map_type_t::dungeon_tower)
+    if (mdata_map_type == mdata_t::MapType::dungeon_tower)
     {
         atxspot = 12;
     }
-    if (mdata_map_type == mdata_t::map_type_t::dungeon_forest)
+    if (mdata_map_type == mdata_t::MapType::dungeon_forest)
     {
         atxspot = 10;
     }
-    if (mdata_map_type == mdata_t::map_type_t::dungeon_castle)
+    if (mdata_map_type == mdata_t::MapType::dungeon_castle)
     {
         atxspot = 12;
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         atxlv = cdata.player().level / 2 + rnd(10);
         if (atxlv > 30)

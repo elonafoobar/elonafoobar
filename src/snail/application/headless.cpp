@@ -67,7 +67,7 @@ void application::proc_event()
 }
 
 
-void set_fullscreen_mode(window::fullscreen_mode_t)
+void set_fullscreen_mode(window::FullscreenMode)
 {
 }
 

@@ -41,7 +41,7 @@ void handle_manager::bind(lua_env& lua)
 
 void handle_manager::create_chara_handle(const character& chara)
 {
-    if (chara.state() == character::state_t::empty)
+    if (chara.state() == character::State::empty)
     {
         return;
     }
@@ -73,12 +73,12 @@ void handle_manager::remove_item_handle(const item& item)
 // Handlers for brand-new instances of characters/objects being created
 void handle_manager::create_chara_handle_run_callbacks(const character& chara)
 {
-    assert(chara.state() != character::state_t::empty);
+    assert(chara.state() != character::State::empty);
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().run_callbacks<event_kind_t::character_created>(
+    lua->get_event_manager().run_callbacks<EventKind::character_created>(
         handle);
 }
 
@@ -89,7 +89,7 @@ void handle_manager::create_item_handle_run_callbacks(const item& item)
 
     auto handle = get_handle(item);
     assert(handle != sol::lua_nil);
-    lua->get_event_manager().run_callbacks<event_kind_t::item_created>(handle);
+    lua->get_event_manager().run_callbacks<EventKind::item_created>(handle);
 }
 
 
@@ -103,7 +103,7 @@ void handle_manager::remove_chara_handle_run_callbacks(const character& chara)
         return;
     }
 
-    lua->get_event_manager().run_callbacks<event_kind_t::character_removed>(
+    lua->get_event_manager().run_callbacks<EventKind::character_removed>(
         handle);
     remove_chara_handle(chara);
 }
@@ -116,7 +116,7 @@ void handle_manager::remove_item_handle_run_callbacks(const item& item)
         return;
     }
 
-    lua->get_event_manager().run_callbacks<event_kind_t::item_removed>(handle);
+    lua->get_event_manager().run_callbacks<EventKind::item_removed>(handle);
     remove_item_handle(item);
 }
 

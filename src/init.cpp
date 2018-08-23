@@ -58,7 +58,7 @@ namespace
 void main_loop()
 {
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 
     while (true)
     {
@@ -151,7 +151,7 @@ void load_character_sprite()
     gsel(5);
     for (const auto& entry :
          filesystem::dir_entries{filesystem::dir::user() / u8"graphic",
-                                 filesystem::dir_entries::type::file,
+                                 filesystem::dir_entries::Type::file,
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
         const auto file = filesystem::to_utf8_path(entry.path().filename());
@@ -681,7 +681,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(file_operation_t::temp_dir_delete);
+    ctrl_file(FileOperation::temp_dir_delete);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;
@@ -927,12 +927,12 @@ void initialize_debug_globals()
     gdata_previous_map = -1;
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    gdata_current_map = mdata_t::map_id_t::north_tyris;
+    gdata_current_map = mdata_t::MapId::north_tyris;
     gdata_current_dungeon_level = 0;
     gdata_entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    gdata_current_map = mdata_t::map_id_t::vernis;
+    gdata_current_map = mdata_t::MapId::vernis;
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 7;
     mapstartx = 10;
@@ -985,11 +985,11 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 284, -1, -1, 0);
     inv[ci].set_number(20);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 127, -1, -1, 0);
     inv[ci].set_number(20);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 617, -1, -1, 0);
     inv[ci].set_number(20);
@@ -1033,18 +1033,18 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 516, -1, -1, 0);
     inv[ci].set_number(5);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 262, -1, -1, 0);
     inv[ci].set_number(5);
     flt();
     itemcreate(0, 632, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 632, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 204, -1, -1, 0);
     inv[ci].subname = 330;
@@ -1052,7 +1052,7 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 636, -1, -1, 0);
     inv[ci].set_number(3);
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 342, -1, -1, 0);
     inv[ci].count = 100;
@@ -1135,11 +1135,11 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
@@ -1226,7 +1226,7 @@ void initialize_world()
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
-    gdata_current_map = mdata_t::map_id_t::your_home;
+    gdata_current_map = mdata_t::MapId::your_home;
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 4;
     gdata_version = 1220;
@@ -1314,26 +1314,26 @@ void initialize_game()
     if (script_loaded)
     {
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::script_loaded>();
+            .run_callbacks<lua::EventKind::script_loaded>();
     }
 }
 
 void main_title_loop()
 {
-    main_menu_result_t result = main_menu_wrapper();
+    MainMenuResult result = main_menu_wrapper();
     bool finished = false;
     while (!finished)
     {
         switch (result)
         {
-        case main_menu_result_t::main_title_menu:
+        case MainMenuResult::main_title_menu:
             result = main_menu_wrapper();
             break;
-        case main_menu_result_t::initialize_game:
+        case MainMenuResult::initialize_game:
             initialize_game();
             finished = true;
             break;
-        case main_menu_result_t::finish_elona:
+        case MainMenuResult::finish_elona:
             finish_elona();
             finished = true;
             break;
@@ -1341,7 +1341,7 @@ void main_title_loop()
         }
     }
 
-    if (result == main_menu_result_t::initialize_game)
+    if (result == MainMenuResult::initialize_game)
     {
         main_loop();
     }

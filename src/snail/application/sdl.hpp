@@ -24,7 +24,7 @@ namespace snail
 class application final : public lib::noncopyable
 {
 public:
-    enum class screen_orientation
+    enum class Orientation
     {
         portrait,
         landscape
@@ -69,7 +69,7 @@ public:
         return _dpi;
     }
 
-    screen_orientation orientation() const noexcept
+    Orientation orientation() const noexcept
     {
         return _orientation;
     }
@@ -146,15 +146,15 @@ public:
 
     bool is_fullscreen()
     {
-        return _fullscreen_mode != window::fullscreen_mode_t::windowed;
+        return _fullscreen_mode != window::FullscreenMode::windowed;
     }
 
-    window::fullscreen_mode_t get_fullscreen_mode()
+    window::FullscreenMode get_fullscreen_mode()
     {
         return _fullscreen_mode;
     }
 
-    void set_fullscreen_mode(window::fullscreen_mode_t);
+    void set_fullscreen_mode(window::FullscreenMode);
 
     std::map<std::string, ::SDL_DisplayMode> get_display_modes();
 
@@ -184,7 +184,7 @@ private:
     int _physical_height;
     float _dpi;
     std::string _title;
-    screen_orientation _orientation;
+    Orientation _orientation;
     rect _window_pos; // Window draw position for Android
 
     size_t _frame = 0;
@@ -196,8 +196,8 @@ private:
     fps_manager _fps_manager;
     std::vector<std::unique_ptr<effect_base>> _effects;
     std::vector<lib::scope_guard> _finalizers;
-    window::fullscreen_mode_t _fullscreen_mode =
-        window::fullscreen_mode_t::windowed;
+    window::FullscreenMode _fullscreen_mode =
+        window::FullscreenMode::windowed;
 
     application() = default;
 

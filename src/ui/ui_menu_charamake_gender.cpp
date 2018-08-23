@@ -93,7 +93,7 @@ ui_menu_charamake_gender::on_key(const std::string& key)
     {
         return ui_menu_charamake_gender::result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
         return ui_menu_charamake_gender::result::finish();

@@ -48,13 +48,13 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image);
 
 void set_color_mod(int r, int g, int b, int window_id = -1);
 
-enum class show_hp_bar_side
+enum class HPBarSide
 {
     left_side,
     right_side,
 };
 
-void show_hp_bar(show_hp_bar_side side, int inf_clocky);
+void show_hp_bar(HPBarSide side, int inf_clocky);
 
 void initialize_damage_popups();
 void add_damage_popup(

@@ -32,8 +32,8 @@ void set_japanese()
 void normalize_item(item& i)
 {
     i.quality = 3;
-    i.curse_state = curse_state_t::none;
-    i.identification_state = identification_state_t::completely_identified;
+    i.curse_state = CurseState::none;
+    i.identification_state = IdentifyState::completely_identified;
     i.material = 34;
     i.quality = 1;
     i.dv = 0;

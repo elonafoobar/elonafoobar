@@ -110,7 +110,7 @@ static void _draw_window_desc(int locks_left)
     pos(wx + 175, wy + 52);
     mes(i18n::s.get(
         "core.locale.chara_making.roll_attributes.locked_items_desc"));
-    font(13 - en * 2, snail::font_t::style_t::bold);
+    font(13 - en * 2, snail::font_t::Style::bold);
     pos(wx + 180, wy + 84);
     mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left")
         + u8": "s + locks_left);
@@ -125,7 +125,7 @@ static void _draw_window(int locks_left)
 
 static void _draw_attribute_locked(int cnt)
 {
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::font_t::Style::bold);
     pos(wx + 240, wy + 66 + cnt * 23 + 2);
     color(20, 20, 140);
     mes(u8"Locked!"s);
@@ -160,7 +160,7 @@ static void _draw_attribute(
     font(14 - en * 2);
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 23 - 1);
 
-    font(15 - en * 2, snail::font_t::style_t::bold);
+    font(15 - en * 2, snail::font_t::Style::bold);
     if (cnt >= 2)
     {
         _draw_attribute_value(cnt, list_value, is_locked);
@@ -225,7 +225,7 @@ ui_menu_charamake_attributes::on_key(const std::string& key)
     {
         return ui_menu_charamake_attributes::result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
         return ui_menu_charamake_attributes::result::finish();

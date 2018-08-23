@@ -15,7 +15,7 @@ static void copy_image(snail::basic_image& img, const extent& ext)
     const auto save =
         snail::application::instance().get_renderer().blend_mode();
     snail::application::instance().get_renderer().set_blend_mode(
-        snail::blend_mode_t::none);
+        snail::BlendMode::none);
     snail::application::instance().get_renderer().render_image(
         img, ext.x, ext.y, ext.width, ext.height);
     snail::application::instance().get_renderer().set_blend_mode(save);
@@ -29,7 +29,7 @@ static void copy_image_cropped(
     const auto save =
         snail::application::instance().get_renderer().blend_mode();
     snail::application::instance().get_renderer().set_blend_mode(
-        snail::blend_mode_t::none);
+        snail::BlendMode::none);
     snail::application::instance().get_renderer().render_image_crop(
         img, source.x, source.y, source.width, source.height, dest.x, dest.y);
     snail::application::instance().get_renderer().set_blend_mode(save);
@@ -52,7 +52,7 @@ void pic_loader::clear_storage_and_buffers()
 void pic_loader::load(
     const fs::path& image_file,
     const id_type& id,
-    page_type type)
+    PageType type)
 {
     snail::basic_image img{image_file, snail::color{0, 0, 0}};
     extent ext{0, 0, 0, 0};
@@ -101,7 +101,7 @@ void pic_loader::load(
 void pic_loader::add_predefined_extents(
     const fs::path& atlas_file,
     const map_type& extents,
-    page_type type)
+    PageType type)
 {
     snail::basic_image img{atlas_file, snail::color{0, 0, 0}};
 
@@ -141,7 +141,7 @@ void pic_loader::add_predefined_extents(
     }
 }
 
-pic_loader::buffer_info& pic_loader::add_buffer(page_type type, int w, int h)
+pic_loader::buffer_info& pic_loader::add_buffer(PageType type, int w, int h)
 {
     int new_buffer_index;
     size_t buffer_info_index = buffers.size();

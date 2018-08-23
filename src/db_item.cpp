@@ -47,7 +47,7 @@ item_data item_db_ex::convert(
     ELONA_LION_DB_FIELD(light, int, 0);
     ELONA_LION_DB_FIELD(originalnameref2, std::string, "");
     ELONA_LION_DB_FIELD(has_random_name, bool, false);
-    ELONA_LION_DB_FIELD_ENUM(color, color_index_t, Color, color_index_t::none);
+    ELONA_LION_DB_FIELD_ENUM(color, ColorIndex, ColorIndexTable, ColorIndex::none);
     ELONA_LION_DB_FIELD_REQUIRED(locale_key_prefix, std::string);
 
     ELONA_LION_DB_FIELD_CALLBACK(on_use_callback);
@@ -91,7 +91,7 @@ item_data item_db_ex::convert(
         light,
         originalnameref2,
         has_random_name,
-        static_cast<color_index_t>(color),
+        static_cast<ColorIndex>(color),
 
         filter,
         rffilter,

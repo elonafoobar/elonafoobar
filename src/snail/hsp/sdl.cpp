@@ -14,7 +14,7 @@ namespace
 
 struct font_cache_key
 {
-    font_cache_key(int size, elona::snail::font_t::style_t style)
+    font_cache_key(int size, elona::snail::font_t::Style style)
         : size(size)
         , style(style)
     {
@@ -22,7 +22,7 @@ struct font_cache_key
 
 
     int size;
-    elona::snail::font_t::style_t style;
+    elona::snail::font_t::Style style;
 
 
     bool operator==(const font_cache_key& other) const
@@ -183,24 +183,24 @@ void set_blend_mode()
     case 0:
     case 1:
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::none);
+            BlendMode::none);
         break;
     case 2:
     case 3:
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::blend);
+            BlendMode::blend);
         break;
     case 4:
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::blend);
+            BlendMode::blend);
         break;
     case 5:
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::add);
+            BlendMode::add);
         break;
     case 6:
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::blend);
+            BlendMode::blend);
         break;
     default: break;
     }
@@ -232,18 +232,18 @@ struct MessageBox
         {
             if (!input.is_ime_active())
             {
-                if (input.was_pressed_just_now(key::enter)
-                    || input.was_pressed_just_now(key::keypad_enter))
+                if (input.was_pressed_just_now(Key::enter)
+                    || input.was_pressed_just_now(Key::keypad_enter))
                 {
                     // New line.
                     buffer += '\n';
                 }
-                else if (input.was_pressed_just_now(key::escape))
+                else if (input.was_pressed_just_now(Key::escape))
                 {
                     // A tab character indicates input was canceled.
                     buffer += '\t';
                 }
-                else if (input.is_pressed(key::backspace) && !buffer.empty())
+                else if (input.is_pressed(Key::backspace) && !buffer.empty())
                 {
                     if (backspace_held_frames == 0
                         || (backspace_held_frames > 15
@@ -263,7 +263,7 @@ struct MessageBox
                     backspace_held_frames++;
                 }
                 else if (
-                    input.is_pressed(key::key_v) && input.is_pressed(key::ctrl))
+                    input.is_pressed(Key::key_v) && input.is_pressed(Key::ctrl))
                 {
                     // Paste.
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
@@ -272,7 +272,7 @@ struct MessageBox
                     buffer +=
                         strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
                 }
-                else if (!input.is_pressed(key::backspace))
+                else if (!input.is_pressed(Key::backspace))
                 {
                     backspace_held_frames = 0;
                 }
@@ -280,8 +280,8 @@ struct MessageBox
         }
         else
         {
-            if (input.is_pressed(key::enter, keywait)
-                || input.is_pressed(key::keypad_enter, keywait))
+            if (input.is_pressed(Key::enter, keywait)
+                || input.is_pressed(Key::keypad_enter, keywait))
             {
                 // New line.
                 buffer += '\n';
@@ -359,7 +359,7 @@ void picload(basic_image& img, int mode)
         buffer(detail::current_buffer, img.width(), img.height());
     }
     const auto save = application::instance().get_renderer().blend_mode();
-    application::instance().get_renderer().set_blend_mode(blend_mode_t::none);
+    application::instance().get_renderer().set_blend_mode(BlendMode::none);
     application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
@@ -382,7 +382,7 @@ static void redraw_android()
     renderer.render_image(
         detail::android_display_region, pos.x, pos.y, pos.width, pos.height);
 
-    auto itr = font_detail::font_cache.find({14, font_t::style_t::regular});
+    auto itr = font_detail::font_cache.find({14, font_t::Style::regular});
     if (itr != std::end(font_detail::font_cache))
     {
         renderer.set_font(itr->second);
@@ -471,12 +471,12 @@ void boxf(int x, int y, int width, int height, const snail::color& color)
     if (color == snail::color{0, 0, 0, 0})
     {
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::none);
+            BlendMode::none);
     }
     else
     {
         application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::blend);
+            BlendMode::blend);
     }
     application::instance().get_renderer().fill_rect(x, y, width, height);
     detail::current_tex_buffer().color = save_color;
@@ -558,7 +558,7 @@ void color(int r, int g, int b)
         detail::current_tex_buffer().color);
 }
 
-void font(int size, font_t::style_t style, const fs::path& filepath)
+void font(int size, font_t::Style style, const fs::path& filepath)
 {
     auto& renderer = application::instance().get_renderer();
     if (renderer.font().size() == size && renderer.font().style() == style)
@@ -634,7 +634,7 @@ void gcopy(
         if (window_id >= 10)
         {
             const auto save = renderer.blend_mode();
-            renderer.set_blend_mode(blend_mode_t::none);
+            renderer.set_blend_mode(BlendMode::none);
             renderer.set_draw_color({0, 0, 0, 0});
             renderer.set_blend_mode(save);
         }
@@ -769,15 +769,15 @@ void grotate(
 
     switch (application::instance().get_renderer().blend_mode())
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
             detail::tex_buffers[window_id].texture, ::SDL_BLENDMODE_ADD));
         break;
@@ -818,7 +818,7 @@ static void title_android(const std::string& display_mode)
     application::instance().set_display_mode(
         application::instance().get_default_display_mode());
     application::instance().set_fullscreen_mode(
-        window::fullscreen_mode_t::fullscreen);
+        window::FullscreenMode::fullscreen);
     application::instance().set_subwindow_display_mode(display_mode);
 }
 
@@ -827,7 +827,7 @@ static void title_android(const std::string& display_mode)
 void title(
     const std::string& title_str,
     const std::string& display_mode,
-    window::fullscreen_mode_t fullscreen_mode)
+    window::FullscreenMode fullscreen_mode)
 {
     application::instance().initialize(title_str);
 

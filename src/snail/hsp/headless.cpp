@@ -61,7 +61,7 @@ void color(int, int, int)
 {
 }
 
-void font(int, snail::font_t::style_t, const fs::path&)
+void font(int, snail::font_t::Style, const fs::path&)
 {
 }
 
@@ -105,7 +105,7 @@ void line(int, int, int, int, const snail::color&)
 void title(
     const std::string& title_str,
     const std::string&,
-    window::fullscreen_mode_t)
+    window::FullscreenMode)
 {
     application::instance().initialize(title_str);
 }

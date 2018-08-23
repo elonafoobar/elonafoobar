@@ -63,7 +63,7 @@ int calcscore();
 void calcpartyscore();
 void calcpartyscore2();
 
-int generate_color(color_index_t index, int id);
+int generate_color(ColorIndex index, int id);
 
 
 } // namespace elona

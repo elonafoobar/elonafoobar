@@ -7,7 +7,7 @@ namespace snail
 {
 
 
-enum class blend_mode_t
+enum class BlendMode
 {
     none,
     blend,

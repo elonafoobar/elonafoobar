@@ -122,7 +122,7 @@ static void _draw_window()
 
 static void _draw_title(int god_id)
 {
-    font(18 - en * 2, snail::font_t::style_t::bold);
+    font(18 - en * 2, snail::font_t::Style::bold);
     bmes(
         i18n::s.get(
             "core.locale.god.desc.window.title",

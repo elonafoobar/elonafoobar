@@ -13,7 +13,7 @@ void Animation::play_failure_to_cast(const position_t& caster_pos)
 
 void Animation::play_bright_aura(const position_t& target_pos, int kind)
 {
-    auto anim_type = static_cast<bright_aura_animation::type_t>(kind);
+    auto anim_type = static_cast<bright_aura_animation::Type>(kind);
     bright_aura_animation(target_pos, anim_type).play();
 }
 
@@ -22,19 +22,19 @@ void Animation::play_breath(
     const position_t& target_pos,
     const enum_string& element_name)
 {
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     breath_animation(attacker_pos, target_pos, static_cast<int>(element))
         .play();
 }
 
 void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
 {
-    ball_animation(pos, range, ball_animation::type_t::atomic_bomb).play();
+    ball_animation(pos, range, ball_animation::Type::atomic_bomb).play();
 }
 
 void Animation::play_ball_magic(const position_t& pos, int range, int element)
 {
-    ball_animation(pos, range, ball_animation::type_t::ball, element).play();
+    ball_animation(pos, range, ball_animation::Type::ball, element).play();
 }
 
 void Animation::play_bolt(
@@ -43,7 +43,7 @@ void Animation::play_bolt(
     const enum_string& element_name,
     int distance)
 {
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     bolt_animation(
         attacker_pos, target_pos, static_cast<int>(element), distance)
         .play();
@@ -72,7 +72,7 @@ void Animation::play_ranged_attack(
     int fired_item_image,
     int fired_item_color)
 {
-    auto anim_type = static_cast<ranged_attack_animation::type_t>(kind);
+    auto anim_type = static_cast<ranged_attack_animation::Type>(kind);
     ranged_attack_animation(
         attacker_pos,
         target_pos,

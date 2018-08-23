@@ -37,7 +37,7 @@ mod_manager::mod_manager(lua_env* lua)
 
 void mod_manager::load_mods(const fs::path& mod_dir)
 {
-    if (stage != mod_loading_stage_t::not_started)
+    if (stage != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -51,7 +51,7 @@ void mod_manager::load_mods(
     const fs::path& mod_dir,
     const fs::path& additional_mod_path)
 {
-    if (stage != mod_loading_stage_t::not_started)
+    if (stage != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -147,8 +147,8 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
 
 void mod_manager::scan_all_mods(const fs::path& mods_dir)
 {
-    if (stage != mod_loading_stage_t::not_started
-        && stage != mod_loading_stage_t::scan_finished)
+    if (stage != ModLoadingStage::not_started
+        && stage != ModLoadingStage::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }
@@ -157,19 +157,19 @@ void mod_manager::scan_all_mods(const fs::path& mods_dir)
 
     // TODO: [dependency management] order mods and always load core first.
     for (const auto& entry :
-         filesystem::dir_entries{mods_dir, filesystem::dir_entries::type::dir})
+         filesystem::dir_entries{mods_dir, filesystem::dir_entries::Type::dir})
     {
         if (fs::exists(entry.path() / init_script))
         {
             scan_mod(entry.path());
         }
     }
-    stage = mod_loading_stage_t::scan_finished;
+    stage = ModLoadingStage::scan_finished;
 }
 
 void mod_manager::load_lua_support_libraries()
 {
-    if (stage == mod_loading_stage_t::not_started)
+    if (stage == ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods haven't been scanned yet!");
     }
@@ -179,12 +179,12 @@ void mod_manager::load_lua_support_libraries()
     // under data/lua.
     lua_->get_api_manager().load_lua_support_libraries(*lua_);
 
-    stage = mod_loading_stage_t::lua_libraries_loaded;
+    stage = ModLoadingStage::lua_libraries_loaded;
 }
 
 void mod_manager::load_scanned_mods()
 {
-    if (stage != mod_loading_stage_t::lua_libraries_loaded)
+    if (stage != ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -203,15 +203,15 @@ void mod_manager::load_scanned_mods()
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
-    lua_->get_event_manager().run_callbacks<event_kind_t::all_mods_loaded>();
+    lua_->get_event_manager().run_callbacks<EventKind::all_mods_loaded>();
     lua_->get_export_manager().register_all_exports();
 
-    stage = mod_loading_stage_t::all_mods_loaded;
+    stage = ModLoadingStage::all_mods_loaded;
 }
 
 void mod_manager::run_startup_script(const std::string& name)
 {
-    if (stage < mod_loading_stage_t::lua_libraries_loaded)
+    if (stage < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -353,7 +353,7 @@ void mod_manager::load_mod_from_script(
     const std::string& script,
     bool readonly)
 {
-    if (stage < mod_loading_stage_t::lua_libraries_loaded)
+    if (stage < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }

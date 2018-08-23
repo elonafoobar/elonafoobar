@@ -15,7 +15,7 @@ namespace elona
 class config_def : public spec::object
 {
 public:
-    enum class option_platform
+    enum class Platform
     {
         all,
         desktop,
@@ -38,7 +38,7 @@ public:
 
         // Platform this option applies to. On other platforms it will
         // be hidden.
-        option_platform platform = option_platform::all;
+        Platform platform = Platform::all;
 
         // Overridden default value from platform_default field if the
         // specified platform matches ("android" or "desktop").
@@ -48,11 +48,11 @@ public:
         {
             switch (platform)
             {
-            case option_platform::desktop:
+            case Platform::desktop:
                 return visible && !defines::is_android;
-            case option_platform::android:
+            case Platform::android:
                 return visible && defines::is_android;
-            case option_platform::all:
+            case Platform::all:
             default: return visible;
             }
         }

@@ -7,131 +7,131 @@ namespace lua
 
 namespace LuaEnums
 {
-enum_map<damage_source_t> DamageSource{
+enum_map<DamageSource> DamageSourceTable{
     "DamageSource",
     {
-        {"Trap", damage_source_t::trap},
-        {"Overcasting", damage_source_t::overcasting},
-        {"Starvation", damage_source_t::starvation},
-        {"Poisoning", damage_source_t::poisoning},
-        {"Curse", damage_source_t::curse},
-        {"BackpackWeight", damage_source_t::backpack_weight},
-        {"FallFromStairs", damage_source_t::fall_from_stairs},
-        {"Audience", damage_source_t::audience},
-        {"Burn", damage_source_t::burn},
-        {"Adventuring", damage_source_t::adventuring},
-        {"UnseenHand", damage_source_t::unseen_hand},
-        {"FoodPoisoning", damage_source_t::food_poisoning},
-        {"BloodLoss", damage_source_t::blood_loss},
-        {"EtherDisease", damage_source_t::ether_disease},
-        {"Acid", damage_source_t::acid},
-        {"Shatter", damage_source_t::shatter},
-        {"AtomicBomb", damage_source_t::atomic_bomb},
-        {"IronMaiden", damage_source_t::iron_maiden},
-        {"Guillotine", damage_source_t::guillotine},
-        {"Hanging", damage_source_t::hanging},
-        {"Mochi", damage_source_t::mochi},
+        {"Trap", DamageSource::trap},
+        {"Overcasting", DamageSource::overcasting},
+        {"Starvation", DamageSource::starvation},
+        {"Poisoning", DamageSource::poisoning},
+        {"Curse", DamageSource::curse},
+        {"BackpackWeight", DamageSource::backpack_weight},
+        {"FallFromStairs", DamageSource::fall_from_stairs},
+        {"Audience", DamageSource::audience},
+        {"Burn", DamageSource::burn},
+        {"Adventuring", DamageSource::adventuring},
+        {"UnseenHand", DamageSource::unseen_hand},
+        {"FoodPoisoning", DamageSource::food_poisoning},
+        {"BloodLoss", DamageSource::blood_loss},
+        {"EtherDisease", DamageSource::ether_disease},
+        {"Acid", DamageSource::acid},
+        {"Shatter", DamageSource::shatter},
+        {"AtomicBomb", DamageSource::atomic_bomb},
+        {"IronMaiden", DamageSource::iron_maiden},
+        {"Guillotine", DamageSource::guillotine},
+        {"Hanging", DamageSource::hanging},
+        {"Mochi", DamageSource::mochi},
     }};
 
-enum_map<color_index_t> Color{
+enum_map<ColorIndex> ColorIndexTable{
     "Color",
     {
-        {"None", color_index_t::none},
-        {"White", color_index_t::white},
-        {"Green", color_index_t::green},
-        {"Red", color_index_t::red},
-        {"Blue", color_index_t::blue},
-        {"Orange", color_index_t::orange},
-        {"Yellow", color_index_t::yellow},
-        {"Grey", color_index_t::grey},
-        {"Purple", color_index_t::purple},
-        {"Cyan", color_index_t::cyan},
-        {"LightRed", color_index_t::light_red},
-        {"Gold", color_index_t::gold},
-        {"White2", color_index_t::white2},
-        {"LightBrown", color_index_t::light_brown},
-        {"DarkGreen", color_index_t::dark_green},
-        {"LightGrey", color_index_t::light_grey},
-        {"PaleRed", color_index_t::pale_red},
-        {"LightBlue", color_index_t::light_blue},
-        {"LightPurple", color_index_t::light_purple},
-        {"LightGreen", color_index_t::light_green},
-        {"YellowGreen", color_index_t::yellow_green},
-        {"RandomFurniture", color_index_t::random_furniture},
-        {"RandomSeeded", color_index_t::random_seeded},
-        {"RandomAny", color_index_t::random_any},
+        {"None", ColorIndex::none},
+        {"White", ColorIndex::white},
+        {"Green", ColorIndex::green},
+        {"Red", ColorIndex::red},
+        {"Blue", ColorIndex::blue},
+        {"Orange", ColorIndex::orange},
+        {"Yellow", ColorIndex::yellow},
+        {"Grey", ColorIndex::grey},
+        {"Purple", ColorIndex::purple},
+        {"Cyan", ColorIndex::cyan},
+        {"LightRed", ColorIndex::light_red},
+        {"Gold", ColorIndex::gold},
+        {"White2", ColorIndex::white2},
+        {"LightBrown", ColorIndex::light_brown},
+        {"DarkGreen", ColorIndex::dark_green},
+        {"LightGrey", ColorIndex::light_grey},
+        {"PaleRed", ColorIndex::pale_red},
+        {"LightBlue", ColorIndex::light_blue},
+        {"LightPurple", ColorIndex::light_purple},
+        {"LightGreen", ColorIndex::light_green},
+        {"YellowGreen", ColorIndex::yellow_green},
+        {"RandomFurniture", ColorIndex::random_furniture},
+        {"RandomSeeded", ColorIndex::random_seeded},
+        {"RandomAny", ColorIndex::random_any},
     }};
 
-enum_map<curse_state_t> CurseState{"CurseState",
+enum_map<CurseState> CurseStateTable{"CurseState",
                                    {
-                                       {"Doomed", curse_state_t::doomed},
-                                       {"Cursed", curse_state_t::cursed},
-                                       {"None", curse_state_t::none},
-                                       {"Blessed", curse_state_t::blessed},
+                                       {"Doomed", CurseState::doomed},
+                                       {"Cursed", CurseState::cursed},
+                                       {"None", CurseState::none},
+                                       {"Blessed", CurseState::blessed},
                                    }};
 
-enum_map<identification_state_t> IdentifyState{
+enum_map<IdentifyState> IdentifyStateTable{
     "IdentifyState",
     {
-        {"Unidentified", identification_state_t::unidentified},
-        {"Partly", identification_state_t::partly_identified},
-        {"Almost", identification_state_t::almost_identified},
-        {"Completely", identification_state_t::completely_identified},
+        {"Unidentified", IdentifyState::unidentified},
+        {"Partly", IdentifyState::partly_identified},
+        {"Almost", IdentifyState::almost_identified},
+        {"Completely", IdentifyState::completely_identified},
     }};
 
-enum_map<status_ailment_t> StatusAilment{
+enum_map<StatusAilment> StatusAilmentTable{
     "StatusAilment",
     {
-        {"Blinded", status_ailment_t::blinded},
-        {"Confused", status_ailment_t::confused},
-        {"Paralyzed", status_ailment_t::paralyzed},
-        {"Poisoned", status_ailment_t::poisoned},
-        {"Sleep", status_ailment_t::sleep},
-        {"Fear", status_ailment_t::fear},
-        {"Dimmed", status_ailment_t::dimmed},
-        {"Bleeding", status_ailment_t::bleeding},
-        {"Drunk", status_ailment_t::drunk},
-        {"Insane", status_ailment_t::insane},
-        {"Sick", status_ailment_t::sick},
+        {"Blinded", StatusAilment::blinded},
+        {"Confused", StatusAilment::confused},
+        {"Paralyzed", StatusAilment::paralyzed},
+        {"Poisoned", StatusAilment::poisoned},
+        {"Sleep", StatusAilment::sleep},
+        {"Fear", StatusAilment::fear},
+        {"Dimmed", StatusAilment::dimmed},
+        {"Bleeding", StatusAilment::bleeding},
+        {"Drunk", StatusAilment::drunk},
+        {"Insane", StatusAilment::insane},
+        {"Sick", StatusAilment::sick},
     }};
 
-enum_map<element_t> Element{"Element",
+enum_map<Element> ElementTable{"Element",
                             {
-                                {"Fire", element_t::fire},
-                                {"Cold", element_t::cold},
-                                {"Lightning", element_t::lightning},
-                                {"Darkness", element_t::darkness},
-                                {"Mind", element_t::mind},
-                                {"Poison", element_t::poison},
-                                {"Nether", element_t::nether},
-                                {"Sound", element_t::sound},
-                                {"Nerve", element_t::nerve},
-                                {"Chaos", element_t::chaos},
-                                {"Magic", element_t::magic},
-                                {"Cut", element_t::cut},
-                                {"Ether", element_t::ether},
-                                {"Acid", element_t::acid},
+                                {"Fire", Element::fire},
+                                {"Cold", Element::cold},
+                                {"Lightning", Element::lightning},
+                                {"Darkness", Element::darkness},
+                                {"Mind", Element::mind},
+                                {"Poison", Element::poison},
+                                {"Nether", Element::nether},
+                                {"Sound", Element::sound},
+                                {"Nerve", Element::nerve},
+                                {"Chaos", Element::chaos},
+                                {"Magic", Element::magic},
+                                {"Cut", Element::cut},
+                                {"Ether", Element::ether},
+                                {"Acid", Element::acid},
                             }};
 
-enum_map<tile_kind_t> TileKind{"TileKind",
+enum_map<TileKind> TileKindTable{"TileKind",
                                {
-                                   {"Normal", tile_kind_t::normal},
-                                   {"Wall", tile_kind_t::wall},
-                                   {"Tunnel", tile_kind_t::tunnel},
-                                   {"Room", tile_kind_t::room},
-                                   {"Fog", tile_kind_t::fog},
+                                   {"Normal", TileKind::normal},
+                                   {"Wall", TileKind::wall},
+                                   {"Tunnel", TileKind::tunnel},
+                                   {"Room", TileKind::room},
+                                   {"Fog", TileKind::fog},
                                }};
 
 
 // TODO: convert the following to enum class.
-enum_map<int> Gender{"Gender",
+enum_map<int> GenderTable{"Gender",
                      {
                          {"Random", -1},
                          {"Male", 0},
                          {"Female", 1},
                      }};
 
-enum_map<int> Relation{"Relation",
+enum_map<int> RelationTable{"Relation",
                        {
                            {"Aggressive", -3},
                            {"Nonaggressive", -2},
@@ -140,7 +140,7 @@ enum_map<int> Relation{"Relation",
                            {"Friend", 10},
                        }};
 
-enum_map<int> CharaFlag{
+enum_map<int> CharaFlagTable{
     "CharaFlag",
     {
         // Intrinsic flags (reset on every character refresh)
@@ -214,16 +214,16 @@ void LuaEnums::bind(sol::table& core)
 {
     sol::table Enums = core.create_named("Enums");
 
-    DamageSource.bind(Enums);
-    Color.bind(Enums);
-    CurseState.bind(Enums);
-    IdentifyState.bind(Enums);
-    StatusAilment.bind(Enums);
-    Element.bind(Enums);
-    TileKind.bind(Enums);
-    Gender.bind(Enums);
-    Relation.bind(Enums);
-    CharaFlag.bind(Enums);
+    DamageSourceTable.bind(Enums);
+    ColorIndexTable.bind(Enums);
+    CurseStateTable.bind(Enums);
+    IdentifyStateTable.bind(Enums);
+    StatusAilmentTable.bind(Enums);
+    ElementTable.bind(Enums);
+    TileKindTable.bind(Enums);
+    GenderTable.bind(Enums);
+    RelationTable.bind(Enums);
+    CharaFlagTable.bind(Enums);
 }
 
 } // namespace lua

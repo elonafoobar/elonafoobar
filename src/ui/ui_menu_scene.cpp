@@ -117,7 +117,7 @@ static void _draw_title()
 {
     font(
         12 - en * 2,
-        snail::font_t::style_t::italic | snail::font_t::style_t::underline);
+        snail::font_t::Style::italic | snail::font_t::Style::underline);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
     font(12 - en * 2);
@@ -152,7 +152,7 @@ static void _draw_list_entries()
 
 static void _draw_more()
 {
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::font_t::Style::bold);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)

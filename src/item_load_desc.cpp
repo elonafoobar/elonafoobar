@@ -22,7 +22,7 @@ static void _load_single_item_description_text(
     {
         buf += "\n" + *footnote;
     }
-    list(0, p) = desc_entry_t::normal;
+    list(0, p) = ItemDescriptionType::normal;
     listn(0, p) = "";
     ++p;
     notesel(buf);
@@ -55,7 +55,7 @@ static void _load_single_item_description_text(
                 {
                     break;
                 }
-                list(0, p) = desc_entry_t::small_font;
+                list(0, p) = ItemDescriptionType::small_font;
                 listn(0, p) = one_line;
                 ++p;
                 total_size += one_line_size;
@@ -63,11 +63,11 @@ static void _load_single_item_description_text(
         }
         else
         {
-            list(0, p) = desc_entry_t::normal;
+            list(0, p) = ItemDescriptionType::normal;
             listn(0, p) = desc_line;
             if (cnt == noteinfo() - 1)
             {
-                list(0, p) = desc_entry_t::small_font_italic;
+                list(0, p) = ItemDescriptionType::small_font_italic;
             }
             ++p;
         }
@@ -93,7 +93,7 @@ static void _load_item_main_description_text(
     if (auto text =
             i18n::s.get_optional(locale_key_prefix + ".description.main.text"))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = *text;
         ++p;
     }
@@ -103,7 +103,7 @@ static void _load_item_stat_text(int ci, int& p)
 {
     if (inv[ci].material != 0)
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get(
             "core.locale.item.desc.it_is_made_of",
             i18n::_(
@@ -112,45 +112,45 @@ static void _load_item_stat_text(int ci, int& p)
     }
     if (inv[ci].material == 8)
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) =
             i18n::s.get("core.locale.item.desc.speeds_up_ether_disease");
         ++p;
     }
     if (ibit(1, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.acidproof");
         ++p;
     }
     if (ibit(2, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.fireproof");
         ++p;
     }
     if (ibit(5, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.precious");
         ++p;
     }
     if (ibit(8, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) =
             i18n::s.get("core.locale.item.desc.bit.blessed_by_ehekatl");
         ++p;
     }
     if (ibit(9, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.stolen");
         ++p;
     }
     if (ibit(10, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive")
             + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
             + clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1), 0, 100)
@@ -159,20 +159,20 @@ static void _load_item_stat_text(int ci, int& p)
     }
     if (ibit(16, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.show_room_only");
         ++p;
     }
     if (ibit(17, ci))
     {
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.handmade");
         ++p;
     }
     if (inv[ci].dice_x != 0)
     {
         const auto pierce = calc_rate_to_pierce(inv[ci].id);
-        list(0, p) = desc_entry_t::weapon_info;
+        list(0, p) = ItemDescriptionType::weapon_info;
         listn(0, p) =
             i18n::s.get("core.locale.item.desc.weapon.it_can_be_wielded")
             + u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y
@@ -183,13 +183,13 @@ static void _load_item_stat_text(int ci, int& p)
         {
             if (inv[ci].weight <= 1500)
             {
-                list(0, p) = desc_entry_t::weapon_info;
+                list(0, p) = ItemDescriptionType::weapon_info;
                 listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.light");
                 ++p;
             }
             if (inv[ci].weight >= 4000)
             {
-                list(0, p) = desc_entry_t::weapon_info;
+                list(0, p) = ItemDescriptionType::weapon_info;
                 listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.heavy");
                 ++p;
             }
@@ -197,7 +197,7 @@ static void _load_item_stat_text(int ci, int& p)
     }
     if (inv[ci].hit_bonus != 0 || inv[ci].damage_bonus != 0)
     {
-        list(0, p) = desc_entry_t::weapon_info;
+        list(0, p) = ItemDescriptionType::weapon_info;
         listn(0, p) = i18n::s.get(
             "core.locale.item.desc.bonus",
             inv[ci].hit_bonus,
@@ -206,7 +206,7 @@ static void _load_item_stat_text(int ci, int& p)
     }
     if (inv[ci].pv != 0 || inv[ci].dv != 0)
     {
-        list(0, p) = desc_entry_t::armor_info;
+        list(0, p) = ItemDescriptionType::armor_info;
         listn(0, p) =
             i18n::s.get("core.locale.item.desc.dv_pv", inv[ci].dv, inv[ci].pv);
         ++p;
@@ -226,7 +226,7 @@ static void _load_item_stat_text(int ci, int& p)
             ++npc_count;
         }
         const auto percentage = std::min(100 * card_count / npc_count, 100);
-        list(0, p) = desc_entry_t::text;
+        list(0, p) = ItemDescriptionType::text;
         listn(0, p) = i18n::s.get("core.locale.item.desc.deck") + u8": "s
             + card_count + u8"/" + npc_count + u8"(" + percentage + u8"%)";
         ++p;
@@ -268,7 +268,7 @@ static void _load_item_enchantment_desc(int ci, int& p)
     }
     if (ibit(15, ci))
     {
-        list(0, p) = desc_entry_t::enchantment;
+        list(0, p) = ItemDescriptionType::enchantment;
         listn(0, p) = i18n::s.get("core.locale.item.desc.bit.eternal_force");
         ++p;
     }
@@ -281,31 +281,31 @@ void item_load_desc(int ci, int& p)
         the_item_db[inv[ci].id]->locale_key_prefix;
 
     if (inv[ci].identification_state
-        == identification_state_t::completely_identified)
+        == IdentifyState::completely_identified)
     {
         _load_item_main_description_text(locale_key_prefix, p);
     }
     if (inv[ci].identification_state
-        >= identification_state_t::almost_identified)
+        >= IdentifyState::almost_identified)
     {
         _load_item_stat_text(ci, p);
     }
     if (inv[ci].identification_state
-        <= identification_state_t::partly_identified)
+        <= IdentifyState::partly_identified)
     {
-        list(0, p) = desc_entry_t::normal;
+        list(0, p) = ItemDescriptionType::normal;
         listn(0, p) = i18n::s.get("core.locale.item.desc.have_to_identify");
         ++p;
     }
     if (inv[ci].identification_state
-        == identification_state_t::completely_identified)
+        == IdentifyState::completely_identified)
     {
         _load_item_enchantment_desc(ci, p);
         _load_item_description_text(locale_key_prefix, p);
     }
     if (p == 0)
     {
-        list(0, p) = desc_entry_t::normal;
+        list(0, p) = ItemDescriptionType::normal;
         listn(0, p) = i18n::s.get("core.locale.item.desc.no_information");
         ++p;
     }

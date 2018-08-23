@@ -23,7 +23,7 @@ class ui_menu_composite_skills
     : public ui_menu_composite<ui_menu_composite_skills_result>
 {
 public:
-    enum index : size_t
+    enum Index : size_t
     {
         spells = 0,
         skills = 1

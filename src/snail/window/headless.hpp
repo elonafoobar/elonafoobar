@@ -16,14 +16,14 @@ namespace snail
 class window : public lib::noncopyable
 {
 public:
-    enum initial_position
+    enum InitialPosition
     {
         position_undefined = SDL_WINDOWPOS_UNDEFINED,
         position_centered = SDL_WINDOWPOS_CENTERED,
     };
 
 
-    enum flag
+    enum Flag
     {
         none = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -49,7 +49,7 @@ public:
     };
 
 
-    enum class fullscreen_mode_t : Uint32
+    enum class FullscreenMode : Uint32
     {
         windowed = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -73,7 +73,7 @@ public:
 
     ::SDL_DisplayMode get_display_mode();
 
-    void set_fullscreen_mode(fullscreen_mode_t fullscreen_mode);
+    void set_fullscreen_mode(FullscreenMode fullscreen_mode);
 
     window(
         const std::string& title,

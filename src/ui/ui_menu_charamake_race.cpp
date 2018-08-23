@@ -193,7 +193,7 @@ optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(
     {
         return ui_menu_charamake_race::result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
         return ui_menu_charamake_race::result::finish();

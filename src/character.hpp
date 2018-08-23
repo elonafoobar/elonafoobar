@@ -41,7 +41,7 @@ struct buff_t
 
 struct character
 {
-    enum class state_t : int
+    enum class State : int
     {
         empty = 0,
         alive = 1,
@@ -210,17 +210,17 @@ struct character
 
     bool is_dead()
     {
-        return state_ == character::state_t::empty
-            || state_ == character::state_t::pet_dead
-            || state_ == character::state_t::villager_dead
-            || state_ == character::state_t::adventurer_dead;
+        return state_ == character::State::empty
+            || state_ == character::State::pet_dead
+            || state_ == character::State::villager_dead
+            || state_ == character::State::adventurer_dead;
     }
 
-    character::state_t state() const
+    character::State state() const
     {
         return state_;
     }
-    void set_state(character::state_t);
+    void set_state(character::State);
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
@@ -370,7 +370,7 @@ struct character
 
 
 private:
-    character::state_t state_ = character::state_t::empty;
+    character::State state_ = character::State::empty;
 
 
     character(const character&) = default;
@@ -475,7 +475,7 @@ void initialize_character();
 bool chara_place();
 
 
-enum class chara_relocate_mode
+enum class CharaRelocationMode
 {
     normal,
     change,
@@ -492,7 +492,7 @@ enum class chara_relocate_mode
 void chara_relocate(
     character& source,
     optional<int> destination_slot,
-    chara_relocate_mode mode = chara_relocate_mode::normal);
+    CharaRelocationMode mode = CharaRelocationMode::normal);
 
 void chara_refresh(int);
 

@@ -265,7 +265,7 @@ label_1393_internal:
     ++t_at_m147;
     if (t_at_m147 > 10000)
     {
-        if (getkey(snail::key::escape))
+        if (getkey(snail::Key::escape))
         {
             txt(u8"[Chat Skipped]"s);
             sockclose();

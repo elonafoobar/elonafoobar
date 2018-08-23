@@ -167,7 +167,7 @@ optional<ui_menu_charamake_class::result_type> ui_menu_charamake_class::on_key(
     {
         return ui_menu_charamake_class::result::cancel();
     }
-    if (getkey(snail::key::f1))
+    if (getkey(snail::Key::f1))
     {
         show_game_help();
         return ui_menu_charamake_class::result::finish();

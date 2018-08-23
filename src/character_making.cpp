@@ -50,7 +50,7 @@ void character_making_draw_background(const i18n_key& key)
 {
     _draw_background_and_caption(key);
 
-    font(13 - en * 2, snail::font_t::style_t::bold);
+    font(13 - en * 2, snail::font_t::Style::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -60,17 +60,17 @@ void character_making_draw_background(const i18n_key& key)
     }
 }
 
-main_menu_result_t character_making_select_race()
+MainMenuResult character_making_select_race()
 {
     auto result = ui::ui_menu_charamake_race().show();
 
     if (result.canceled)
     {
-        return main_menu_result_t::main_title_menu;
+        return MainMenuResult::main_title_menu;
     }
     else if (!result.value)
     {
-        return main_menu_result_t::character_making_select_race;
+        return MainMenuResult::character_making_select_race;
     }
     else
     {
@@ -78,11 +78,11 @@ main_menu_result_t character_making_select_race()
         cmrace(0) = value.race_id;
         cmrace(1) = value.race_name;
         access_race_info(11, cmrace);
-        return main_menu_result_t::character_making_select_sex;
+        return MainMenuResult::character_making_select_sex;
     }
 }
 
-main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
+MainMenuResult character_making_select_sex(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
@@ -93,20 +93,20 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
 
     if (result.canceled)
     {
-        return main_menu_result_t::main_menu_new_game;
+        return MainMenuResult::main_menu_new_game;
     }
     else if (!result.value)
     {
-        return main_menu_result_t::character_making_select_sex_looped;
+        return MainMenuResult::character_making_select_sex_looped;
     }
     else
     {
         cmsex = *result.value;
-        return main_menu_result_t::character_making_select_class;
+        return MainMenuResult::character_making_select_class;
     }
 }
 
-main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
+MainMenuResult character_making_select_class(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
@@ -117,22 +117,22 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
 
     if (result.canceled)
     {
-        return main_menu_result_t::character_making_select_sex_looped;
+        return MainMenuResult::character_making_select_sex_looped;
     }
     else if (!result.value)
     {
-        return main_menu_result_t::character_making_select_class_looped;
+        return MainMenuResult::character_making_select_class_looped;
     }
     else
     {
         cmclass = *result.value;
-        return main_menu_result_t::character_making_role_attributes;
+        return MainMenuResult::character_making_role_attributes;
     }
 }
 
 
 
-main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
+MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
 {
     if (advanced_to_next_menu)
     {
@@ -147,11 +147,11 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
 
     if (result.canceled)
     {
-        return main_menu_result_t::character_making_select_class_looped;
+        return MainMenuResult::character_making_select_class_looped;
     }
     else if (!result.value)
     {
-        return main_menu_result_t::character_making_role_attributes_looped;
+        return MainMenuResult::character_making_role_attributes_looped;
     }
     else
     {
@@ -164,11 +164,11 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             cmstats(i) = stats(i);
         }
 
-        return main_menu_result_t::character_making_select_feats;
+        return MainMenuResult::character_making_select_feats;
     }
 }
 
-main_menu_result_t character_making_select_feats()
+MainMenuResult character_making_select_feats()
 {
     gdata_acquirable_feat_count = 3;
     DIM2(trait, 500);
@@ -183,17 +183,17 @@ main_menu_result_t character_making_select_feats()
 
     if (result.pressed_f1)
     {
-        return main_menu_result_t::character_making_select_feats;
+        return MainMenuResult::character_making_select_feats;
     }
     else if (!result.succeeded)
     {
-        return main_menu_result_t::character_making_role_attributes_looped;
+        return MainMenuResult::character_making_role_attributes_looped;
     }
 
-    return main_menu_result_t::character_making_select_alias;
+    return MainMenuResult::character_making_select_alias;
 }
 
-main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
+MainMenuResult character_making_select_alias(bool advanced_to_next_menu)
 {
     bool restore_previous_alias = !advanced_to_next_menu;
     optional<std::string> previous_alias = none;
@@ -207,20 +207,20 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
 
     if (result.canceled)
     {
-        return main_menu_result_t::character_making_select_feats;
+        return MainMenuResult::character_making_select_feats;
     }
     else if (!result.value)
     {
-        return main_menu_result_t::character_making_select_alias_looped;
+        return MainMenuResult::character_making_select_alias_looped;
     }
     else
     {
         cmaka = *result.value;
-        return main_menu_result_t::character_making_customize_appearance;
+        return MainMenuResult::character_making_customize_appearance;
     }
 }
 
-main_menu_result_t character_making_customize_appearance()
+MainMenuResult character_making_customize_appearance()
 {
     pcc(15, 0) = 0;
 
@@ -234,7 +234,7 @@ main_menu_result_t character_making_customize_appearance()
         if (stat == 0)
         {
             clear_background_in_character_making();
-            return main_menu_result_t::character_making_select_alias_looped;
+            return MainMenuResult::character_making_select_alias_looped;
         }
         if (stat != -1)
         {
@@ -245,7 +245,7 @@ main_menu_result_t character_making_customize_appearance()
     }
     clear_background_in_character_making();
 
-    return main_menu_result_t::character_making_final_phase;
+    return MainMenuResult::character_making_final_phase;
 }
 
 static void _reroll_character()
@@ -311,7 +311,7 @@ static bool _validate_save_path(const std::string& playerid)
 {
     if (range::any_of(
             filesystem::dir_entries{filesystem::dir::save(),
-                                    filesystem::dir_entries::type::all},
+                                    filesystem::dir_entries::Type::all},
             [&](const auto& entry) {
                 return filesystem::to_utf8_path(entry.path().filename())
                     == playerid;
@@ -323,7 +323,7 @@ static bool _validate_save_path(const std::string& playerid)
     return true;
 }
 
-main_menu_result_t character_making_final_phase()
+MainMenuResult character_making_final_phase()
 {
     std::string cmname;
 
@@ -362,14 +362,14 @@ main_menu_result_t character_making_final_phase()
     if (rtval == 2)
     {
         nowindowanime = 0;
-        return main_menu_result_t::main_menu_new_game;
+        return MainMenuResult::main_menu_new_game;
     }
     else if (rtval == 3)
     {
         nowindowanime = 0;
         clear_background_in_character_making();
         load_background_variants(2);
-        return main_menu_result_t::character_making_customize_appearance;
+        return MainMenuResult::character_making_customize_appearance;
     }
     gmode(0);
     pos(0, 100);
@@ -385,7 +385,7 @@ main_menu_result_t character_making_final_phase()
             (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
         if (canceled)
         {
-            return main_menu_result_t::character_making_final_phase;
+            return MainMenuResult::character_making_final_phase;
         }
 
         cmname = ""s + inputlog;
@@ -432,7 +432,7 @@ main_menu_result_t character_making_final_phase()
     cdata.player().index = 0;
 
     mode = 5;
-    return main_menu_result_t::initialize_game;
+    return MainMenuResult::initialize_game;
 }
 
 

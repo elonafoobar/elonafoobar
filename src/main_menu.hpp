@@ -3,7 +3,7 @@
 namespace elona
 {
 
-enum class main_menu_result_t
+enum class MainMenuResult
 {
     main_title_menu,
     main_menu_new_game,
@@ -25,10 +25,10 @@ enum class main_menu_result_t
     finish_elona,
 };
 
-main_menu_result_t main_menu_wrapper();
-main_menu_result_t main_menu_new_game();
-main_menu_result_t main_title_menu();
-main_menu_result_t main_menu_continue();
-main_menu_result_t main_menu_incarnate();
+MainMenuResult main_menu_wrapper();
+MainMenuResult main_menu_new_game();
+MainMenuResult main_title_menu();
+MainMenuResult main_menu_continue();
+MainMenuResult main_menu_incarnate();
 
 } // namespace elona

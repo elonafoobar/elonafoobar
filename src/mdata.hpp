@@ -28,7 +28,7 @@ namespace elona
 namespace mdata_t
 {
 
-enum map_type_t
+enum MapType
 {
     world_map = 1,
     guild = 2,
@@ -43,7 +43,7 @@ enum map_type_t
     dungeon_castle = 23,
 };
 
-enum map_id_t
+enum MapId
 {
     none = 0,
     fields = 2,

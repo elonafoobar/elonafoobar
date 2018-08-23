@@ -58,7 +58,7 @@ public:
         }
         else
         {
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(name + ": Script callback error: no such exported function was found");
         }
     }
@@ -76,7 +76,7 @@ public:
         }
         else
         {
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(name + ": Script callback error: no such exported function was found");
             return default_value;
         }

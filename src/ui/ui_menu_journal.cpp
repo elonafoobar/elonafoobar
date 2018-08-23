@@ -186,7 +186,7 @@ void ui_menu_journal::update()
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(10 + en - en * 2, snail::font_t::style_t::bold);
+            font(10 + en - en * 2, snail::font_t::Style::bold);
             color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
@@ -220,7 +220,7 @@ void ui_menu_journal::update()
         color(0, 0, 0);
         if (p % 20 == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::font_t::Style::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)

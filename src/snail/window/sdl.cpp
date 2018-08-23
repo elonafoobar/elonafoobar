@@ -12,8 +12,8 @@ void window::move_to_center()
 {
     ::SDL_SetWindowPosition(
         ptr(),
-        initial_position::position_centered,
-        initial_position::position_centered);
+        InitialPosition::position_centered,
+        InitialPosition::position_centered);
 }
 
 std::pair<int, int> window::get_size()
@@ -40,7 +40,7 @@ void window::set_display_mode(::SDL_DisplayMode display_mode)
     return mode;
 }
 
-void window::set_fullscreen_mode(fullscreen_mode_t fullscreen_mode)
+void window::set_fullscreen_mode(FullscreenMode fullscreen_mode)
 {
     detail::enforce_sdl(
         ::SDL_SetWindowFullscreen(ptr(), static_cast<Uint32>(fullscreen_mode)));

@@ -474,29 +474,29 @@ bool wish_for_item(const std::string& input)
     using namespace strutil;
 
     const auto number_of_items = elona::stoi(input);
-    optional<curse_state_t> curse_state;
+    optional<CurseState> curse_state;
 
     // TODO
     if (debug::voldemort)
     {
         if (contains(input, u8"呪われた") || contains(input, u8"cursed "))
         {
-            curse_state = curse_state_t::cursed;
+            curse_state = CurseState::cursed;
         }
         else if (contains(input, u8"堕落した") || contains(input, u8"doomed "))
         {
-            curse_state = curse_state_t::doomed;
+            curse_state = CurseState::doomed;
         }
         else if (
             contains(input, u8"祝福された") || contains(input, u8"blessed "))
         {
-            curse_state = curse_state_t::blessed;
+            curse_state = CurseState::blessed;
         }
         else if (
             contains(input, u8"呪われていない")
             || contains(input, u8"uncursed "))
         {
-            curse_state = curse_state_t::none;
+            curse_state = CurseState::none;
         }
     }
 
@@ -590,7 +590,7 @@ bool wish_for_item(const std::string& input)
             inv[ci].remove();
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-            inv[ci].curse_state = curse_state_t::blessed;
+            inv[ci].curse_state = CurseState::blessed;
             txt(i18n::s.get("core.locale.wish.it_is_sold_out"));
         }
         if (the_item_db[inv[ci].id]->category == 52000
@@ -627,7 +627,7 @@ bool wish_for_item(const std::string& input)
             inv[ci].curse_state = curse_state.get();
         }
 
-        item_identify(inv[ci], identification_state_t::completely_identified);
+        item_identify(inv[ci], IdentifyState::completely_identified);
         txt(i18n::s.get("core.locale.wish.something_appears", inv[ci]));
         return true;
     }
@@ -731,7 +731,7 @@ bool process_wish()
     txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
     msgtemp = "";
-    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     tcopy = 1;
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")

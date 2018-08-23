@@ -50,7 +50,7 @@ public:
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -79,7 +79,7 @@ public:
 
     virtual void _render(
         ::SDL_Renderer*,
-        blend_mode_t,
+        BlendMode,
         int,
         int,
         int,
@@ -108,7 +108,7 @@ public:
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -145,7 +145,7 @@ class frame_image : public image_base
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,

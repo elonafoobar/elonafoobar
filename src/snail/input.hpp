@@ -66,7 +66,7 @@ private:
 
 
 
-enum class key
+enum class Key
 {
     none,
 
@@ -247,22 +247,22 @@ enum class key
     _size,
 };
 
-inline bool is_modifier(key k)
+inline bool is_modifier(Key k)
 {
     switch (k)
     {
-    case key::ctrl:
-    case key::ctrl_l:
-    case key::ctrl_r:
-    case key::shift:
-    case key::shift_l:
-    case key::shift_r:
-    case key::gui:
-    case key::gui_l:
-    case key::gui_r:
-    case key::alt:
-    case key::alt_l:
-    case key::alt_r: return true;
+    case Key::ctrl:
+    case Key::ctrl_l:
+    case Key::ctrl_r:
+    case Key::shift:
+    case Key::shift_l:
+    case Key::shift_r:
+    case Key::gui:
+    case Key::gui_l:
+    case Key::gui_r:
+    case Key::alt:
+    case Key::alt_l:
+    case Key::alt_r: return true;
     default: return false;
     }
 }
@@ -272,7 +272,7 @@ inline bool is_modifier(key k)
 class mouse_t
 {
 public:
-    enum class button_t
+    enum class Button
     {
         left,
         middle,
@@ -296,7 +296,7 @@ public:
     }
 
 
-    const button& operator[](button_t button) const
+    const button& operator[](Button button) const
     {
         return buttons[static_cast<size_t>(button)];
     }
@@ -310,7 +310,7 @@ public:
 private:
     int _x;
     int _y;
-    std::array<button, static_cast<size_t>(button_t::_size)> buttons;
+    std::array<button, static_cast<size_t>(Button::_size)> buttons;
 };
 
 
@@ -318,10 +318,10 @@ private:
 class input final : public lib::noncopyable
 {
 public:
-    bool is_pressed(key k, int key_wait = 1) const;
-    bool is_pressed(mouse_t::button_t b) const;
-    bool was_pressed_just_now(key k) const;
-    bool was_pressed_just_now(mouse_t::button_t b) const;
+    bool is_pressed(Key k, int key_wait = 1) const;
+    bool is_pressed(mouse_t::Button b) const;
+    bool was_pressed_just_now(Key k) const;
+    bool was_pressed_just_now(mouse_t::Button b) const;
 
     bool is_ime_active() const;
 
@@ -389,7 +389,7 @@ public:
 
 
 private:
-    std::array<button, static_cast<size_t>(key::_size)> _keys;
+    std::array<button, static_cast<size_t>(Key::_size)> _keys;
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
@@ -397,7 +397,7 @@ private:
     // Members for handling text input of on-screen quick action
     // buttons on Android. They need to be here since quick actions
     // can modify inputted text.
-    optional<snail::key> _last_quick_action_key = none;
+    optional<snail::Key> _last_quick_action_key = none;
     optional<std::string> _last_quick_action_text = none;
     int _quick_action_key_repeat = -1;
     int _quick_action_text_repeat = -1;

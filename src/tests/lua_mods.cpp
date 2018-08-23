@@ -140,14 +140,14 @@ Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 1)"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 2)"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.thing == 4)"));
 }
@@ -214,7 +214,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 0)"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     REQUIRE_NOTHROW(
         mod_mgr.run_in_mod("test", "assert(Store.global.grid[1][1] == 1)"));
 }

@@ -44,7 +44,7 @@ namespace elona
 class pic_loader : public lib::noncopyable
 {
 public:
-    enum class page_type
+    enum class PageType
     {
         character,
         item
@@ -87,7 +87,7 @@ public:
     struct buffer_info
     {
         buffer_info(
-            pic_loader::page_type type,
+            pic_loader::PageType type,
             int buffer_id,
             int width,
             int height)
@@ -220,7 +220,7 @@ public:
         }
 
     public:
-        pic_loader::page_type type;
+        pic_loader::PageType type;
         int buffer_id;
         int width;
         int height;
@@ -239,7 +239,7 @@ public:
      * Loads a single sprite into a buffer of the provided type into
      * which it will fit. May allocate a new buffer if none are found.
      */
-    void load(const fs::path&, const id_type&, page_type);
+    void load(const fs::path&, const id_type&, PageType);
 
     /***
      * Loads a map of rectangular extents indexed by an ID
@@ -253,7 +253,7 @@ public:
      * to have been split or merged by previous texture region
      * insertions.
      */
-    void add_predefined_extents(const fs::path&, const map_type&, page_type);
+    void add_predefined_extents(const fs::path&, const map_type&, PageType);
 
     optional_ref<extent> operator[](const id_type& id) const
     {
@@ -271,11 +271,11 @@ public:
 
 
 private:
-    buffer_info& add_buffer(page_type type)
+    buffer_info& add_buffer(PageType type)
     {
         return add_buffer(type, 1024, 1024);
     }
-    buffer_info& add_buffer(page_type, int, int);
+    buffer_info& add_buffer(PageType, int, int);
 
     std::vector<buffer_info> buffers;
     map_type storage;

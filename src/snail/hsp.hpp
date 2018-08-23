@@ -42,7 +42,7 @@ void boxf(int x1, int y1, int x2, int y2, const color& color);
 void boxf(const color& color);
 void buffer(int window_id, int width, int height);
 void color(int r, int g, int b);
-void font(int size, font_t::style_t style, const fs::path& filepath);
+void font(int size, font_t::Style style, const fs::path& filepath);
 void gcopy(
     int window_id,
     int src_x,
@@ -74,7 +74,7 @@ void line(int x1, int y1, int x2, int y2, const snail::color& color);
 void title(
     const std::string& title_str,
     const std::string& display_mode,
-    window::fullscreen_mode_t fullscreen_mode);
+    window::FullscreenMode fullscreen_mode);
 
 } // namespace hsp
 } // namespace snail

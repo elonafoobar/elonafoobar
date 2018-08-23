@@ -9,7 +9,7 @@ namespace ui
 class ui_menu_composite_town : public ui_menu_composite<dummy_result>
 {
 public:
-    enum index : size_t
+    enum Index : size_t
     {
         chart = 0,
         economy = 1,

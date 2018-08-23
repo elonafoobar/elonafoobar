@@ -138,7 +138,7 @@ void pre_init()
     config::instance().is_test = true;
 
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 }
 
 void post_run()
@@ -163,7 +163,7 @@ void reset_state()
     config::instance().is_test = true;
 
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 }
 
 } // namespace testing

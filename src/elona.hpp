@@ -410,7 +410,7 @@ void exec(const std::string&, int);
 
 void font(
     int size,
-    snail::font_t::style_t style = snail::font_t::style_t::regular);
+    snail::font_t::Style style = snail::font_t::Style::regular);
 
 void gcopy(
     int window_id,
@@ -438,7 +438,7 @@ void gcopy_c(
     int dst_height);
 
 
-bool getkey(snail::key);
+bool getkey(snail::Key);
 
 void getstr(
     std::string& out,
@@ -540,8 +540,8 @@ std::string strmid(const std::string& source, int pos, int length);
 void title(
     const std::string& title_str,
     const std::string& display_mode = "",
-    snail::window::fullscreen_mode_t fullscreen_mode =
-        snail::window::fullscreen_mode_t::windowed);
+    snail::window::FullscreenMode fullscreen_mode =
+        snail::window::FullscreenMode::windowed);
 
 
 int wpeek(int x, size_t index);

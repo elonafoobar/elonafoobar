@@ -16,7 +16,7 @@
 namespace elona
 {
 
-main_menu_result_t main_title_menu()
+MainMenuResult main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
@@ -172,17 +172,17 @@ main_menu_result_t main_title_menu()
         {
             snd(20);
             geneuse = "";
-            return main_menu_result_t::main_menu_new_game;
+            return MainMenuResult::main_menu_new_game;
         }
         if (key == u8"a"s)
         {
             snd(20);
-            return main_menu_result_t::main_menu_continue;
+            return MainMenuResult::main_menu_continue;
         }
         if (key == u8"c"s)
         {
             snd(20);
-            return main_menu_result_t::main_menu_incarnate;
+            return MainMenuResult::main_menu_incarnate;
         }
         if (key == u8"d"s)
         {
@@ -193,20 +193,20 @@ main_menu_result_t main_title_menu()
         {
             snd(20);
             set_option();
-            return main_menu_result_t::main_title_menu;
+            return MainMenuResult::main_title_menu;
         }
         if (key == u8"f"s)
         {
             snd(20);
-            return main_menu_result_t::finish_elona;
+            return MainMenuResult::finish_elona;
         }
     }
 }
 
-main_menu_result_t main_menu_wrapper()
+MainMenuResult main_menu_wrapper()
 {
     // Start off in the title menu.
-    main_menu_result_t result = main_title_menu();
+    MainMenuResult result = main_title_menu();
     bool finished = false;
     while (!finished)
     {
@@ -214,68 +214,68 @@ main_menu_result_t main_menu_wrapper()
         {
             // Main menu
 
-        case main_menu_result_t::main_menu_incarnate:
+        case MainMenuResult::main_menu_incarnate:
             result = main_menu_incarnate();
             break;
-        case main_menu_result_t::main_menu_continue:
+        case MainMenuResult::main_menu_continue:
             result = main_menu_continue();
             break;
-        case main_menu_result_t::main_menu_new_game:
+        case MainMenuResult::main_menu_new_game:
             result = main_menu_new_game();
             break;
-        case main_menu_result_t::main_title_menu:
+        case MainMenuResult::main_title_menu:
             // Loop back to the start.
-            result = main_menu_result_t::main_title_menu;
+            result = MainMenuResult::main_title_menu;
             finished = true;
             break;
 
             // Character making
 
-        case main_menu_result_t::character_making_select_race:
+        case MainMenuResult::character_making_select_race:
             result = character_making_select_race();
             break;
-        case main_menu_result_t::character_making_select_sex:
+        case MainMenuResult::character_making_select_sex:
             result = character_making_select_sex();
             break;
-        case main_menu_result_t::character_making_select_sex_looped:
+        case MainMenuResult::character_making_select_sex_looped:
             result = character_making_select_sex(false);
             break;
-        case main_menu_result_t::character_making_select_class:
+        case MainMenuResult::character_making_select_class:
             result = character_making_select_class();
             break;
-        case main_menu_result_t::character_making_select_class_looped:
+        case MainMenuResult::character_making_select_class_looped:
             result = character_making_select_class(false);
             break;
-        case main_menu_result_t::character_making_role_attributes:
+        case MainMenuResult::character_making_role_attributes:
             result = character_making_role_attributes();
             break;
-        case main_menu_result_t::character_making_role_attributes_looped:
+        case MainMenuResult::character_making_role_attributes_looped:
             result = character_making_role_attributes(false);
             break;
-        case main_menu_result_t::character_making_select_feats:
+        case MainMenuResult::character_making_select_feats:
             result = character_making_select_feats();
             break;
-        case main_menu_result_t::character_making_select_alias:
+        case MainMenuResult::character_making_select_alias:
             result = character_making_select_alias();
             break;
-        case main_menu_result_t::character_making_select_alias_looped:
+        case MainMenuResult::character_making_select_alias_looped:
             result = character_making_select_alias(false);
             break;
-        case main_menu_result_t::character_making_customize_appearance:
+        case MainMenuResult::character_making_customize_appearance:
             result = character_making_customize_appearance();
             break;
-        case main_menu_result_t::character_making_final_phase:
+        case MainMenuResult::character_making_final_phase:
             result = character_making_final_phase();
             break;
 
             // Finished initializing, start the game.
 
-        case main_menu_result_t::initialize_game:
-            result = main_menu_result_t::initialize_game;
+        case MainMenuResult::initialize_game:
+            result = MainMenuResult::initialize_game;
             finished = true;
             break;
-        case main_menu_result_t::finish_elona:
-            result = main_menu_result_t::finish_elona;
+        case MainMenuResult::finish_elona:
+            result = MainMenuResult::finish_elona;
             finished = true;
             break;
         default: assert(0); break;
@@ -285,7 +285,7 @@ main_menu_result_t main_menu_wrapper()
 }
 
 
-main_menu_result_t main_menu_new_game()
+MainMenuResult main_menu_new_game()
 {
     if (config::instance().wizard)
     {
@@ -307,12 +307,12 @@ main_menu_result_t main_menu_new_game()
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 1);
     gsel(0);
-    return main_menu_result_t::character_making_select_race;
+    return MainMenuResult::character_making_select_race;
 }
 
 
 
-main_menu_result_t main_menu_continue()
+MainMenuResult main_menu_continue()
 {
     int save_data_count = 0;
     int index = 0;
@@ -323,7 +323,7 @@ main_menu_result_t main_menu_continue()
     keyrange = 0;
 
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::Type::dir})
     {
         s = filesystem::to_utf8_path(entry.path().filename());
         const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
@@ -432,13 +432,13 @@ main_menu_result_t main_menu_continue()
             playerid = listn(0, p);
             snd(20);
             mode = 3;
-            return main_menu_result_t::initialize_game;
+            return MainMenuResult::initialize_game;
         }
         if (ginfo(2) == 0)
         {
             if (save_data_count != 0)
             {
-                if (getkey(snail::key::backspace))
+                if (getkey(snail::Key::backspace))
                 {
                     p = list(0, cs);
                     playerid = listn(0, p);
@@ -457,7 +457,7 @@ main_menu_result_t main_menu_continue()
                     rtval = show_prompt(promptx, prompty, 200);
                     if (rtval != 0)
                     {
-                        return main_menu_result_t::main_menu_continue;
+                        return MainMenuResult::main_menu_continue;
                     }
                     if (jp)
                     {
@@ -475,9 +475,9 @@ main_menu_result_t main_menu_continue()
                     if (rtval == 0)
                     {
                         snd(20);
-                        ctrl_file(file_operation_t::save_game_delete);
+                        ctrl_file(FileOperation::save_game_delete);
                     }
-                    return main_menu_result_t::main_menu_continue;
+                    return MainMenuResult::main_menu_continue;
                 }
             }
         }
@@ -501,7 +501,7 @@ main_menu_result_t main_menu_continue()
         }
         if (key == key_cancel)
         {
-            return main_menu_result_t::main_title_menu;
+            return MainMenuResult::main_title_menu;
         }
         goto savegame_draw_page;
     }
@@ -509,7 +509,7 @@ main_menu_result_t main_menu_continue()
 
 
 
-main_menu_result_t main_menu_incarnate()
+MainMenuResult main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
@@ -534,7 +534,7 @@ main_menu_result_t main_menu_incarnate()
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::Type::dir})
     {
         s = filesystem::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath =
@@ -604,14 +604,14 @@ main_menu_result_t main_menu_incarnate()
             snd(20);
             geneuse = listn(0, p);
             playerid = listn(0, p);
-            return main_menu_result_t::main_menu_new_game;
+            return MainMenuResult::main_menu_new_game;
         }
         if (key == key_cancel)
         {
-            return main_menu_result_t::main_title_menu;
+            return MainMenuResult::main_title_menu;
         }
     }
-    return main_menu_result_t::main_title_menu;
+    return MainMenuResult::main_title_menu;
 }
 
 } // namespace elona

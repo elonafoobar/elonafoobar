@@ -13,7 +13,7 @@ namespace
 void render(
     ::SDL_Texture* texture,
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -25,15 +25,15 @@ void render(
 {
     switch (blend_mode)
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_ADD));
         break;
@@ -93,7 +93,7 @@ basic_image::basic_image(::SDL_Texture* ptr)
 
 void basic_image::_render(
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -137,7 +137,7 @@ frame_image::frame_image(
 
 void frame_image::_render(
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,

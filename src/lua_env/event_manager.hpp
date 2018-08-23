@@ -17,7 +17,7 @@ class lua_env;
  * NOTE: If you change this, be sure to update the constructor for
  * event_manager so the event kind is bound to Lua.
  */
-enum class event_kind_t : unsigned
+enum class EventKind : unsigned
 {
     // Triggered when brand-new object instances are created (not loaded).
     map_created,
@@ -209,19 +209,19 @@ public:
      * Registers a new event handler from a mod's environment.
      */
     void
-    register_event(event_kind_t, sol::environment&, sol::protected_function&);
+    register_event(EventKind, sol::environment&, sol::protected_function&);
 
     /***
      * Unregisters an event handler from a mod's environment by
      * comparing the function reference passed in.
      */
     void
-    unregister_event(event_kind_t, sol::environment&, sol::protected_function&);
+    unregister_event(EventKind, sol::environment&, sol::protected_function&);
 
     /***
      * Clears all mod-local callbacks of the given event kind.
      */
-    void clear_mod_callbacks(event_kind_t, sol::environment&);
+    void clear_mod_callbacks(EventKind, sol::environment&);
 
     /***
      * Clears all mod-local callbacks.
@@ -231,21 +231,21 @@ public:
     /***
      * Runs all callbacks for this event in the order they were registered.
      */
-    void trigger_event(event_kind_t, sol::table);
+    void trigger_event(EventKind, sol::table);
 
-    const callbacks& get_callbacks(event_kind_t event) const
+    const callbacks& get_callbacks(EventKind event) const
     {
         return events.at(event);
     }
 
-    template <event_kind_t event, typename R = void, typename... Args>
+    template <EventKind event, typename R = void, typename... Args>
     R run_callbacks(Args&&... args)
     {
         return events.at(event).run(
             callbacks::retval_type<R>{}, std::forward<Args>(args)...);
     }
 
-    template <event_kind_t event, typename R = void>
+    template <EventKind event, typename R = void>
     R run_callbacks()
     {
         return events.at(event).run(callbacks::retval_type<R>{});
@@ -253,7 +253,7 @@ public:
 
     void clear();
 
-    typedef std::unordered_map<event_kind_t, callbacks> container;
+    typedef std::unordered_map<EventKind, callbacks> container;
 
 private:
     /***

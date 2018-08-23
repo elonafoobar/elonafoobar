@@ -87,7 +87,7 @@ int modpiety(int prm_1035)
         return 0;
     }
     cdata.player().piety_point += prm_1035
-        / (1 + (gdata_current_map == mdata_t::map_id_t::show_house) * 9);
+        / (1 + (gdata_current_map == mdata_t::MapId::show_house) * 9);
     return 1;
 }
 
@@ -441,12 +441,12 @@ void switch_religion()
 
 
 
-turn_result_t do_pray()
+TurnResult do_pray()
 {
     if (cdata.player().god_id.empty())
     {
         txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     txtnew();
     txt(i18n::s.get("core.locale.god.pray.prompt"));
@@ -455,7 +455,7 @@ turn_result_t do_pray()
     if (rtval != 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get(
         "core.locale.god.pray.you_pray_to",
@@ -465,7 +465,7 @@ turn_result_t do_pray()
         i18n::s.get(
             "core.locale.god.pray.indifferent",
             i18n::_(u8"god", cdata.player().god_id, u8"name"));
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     animode = 100;
     miracle_animation().play();
@@ -489,7 +489,7 @@ turn_result_t do_pray()
             p = 0;
             for (int cnt = 1; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state() != character::state_t::empty)
+                if (cdata[cnt].state() != character::State::empty)
                 {
                     if (cdatan(2, cnt) == u8"servant"s)
                     {
@@ -522,7 +522,7 @@ turn_result_t do_pray()
                 {
                     ++gdata_god_rank;
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             flt();
             dbid = 0;
@@ -684,7 +684,7 @@ turn_result_t do_pray()
         }
         ++gdata_god_rank;
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 

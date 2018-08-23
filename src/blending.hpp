@@ -8,7 +8,7 @@ namespace elona
 
 #define window_recipe(a, b, c, d, e, f) window_recipe_(b, c, d, e, f)
 
-turn_result_t blending_menu();
+TurnResult blending_menu();
 void initialize_recipememory();
 void initialize_recipe();
 std::string rpmatname(int = 0);

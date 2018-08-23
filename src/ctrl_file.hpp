@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-enum class file_operation_t
+enum class FileOperation
 {
     map_read,
     map_write,
@@ -29,7 +29,7 @@ enum class file_operation_t
 
 
 
-enum class file_operation2_t
+enum class FileOperation2
 {
     map_items_read,
     map_items_write,
@@ -62,8 +62,8 @@ private:
 
 
 
-void ctrl_file(file_operation_t file_operation);
-void ctrl_file(file_operation2_t file_operation, const fs::path& filepath);
+void ctrl_file(FileOperation file_operation);
+void ctrl_file(FileOperation2 file_operation, const fs::path& filepath);
 void tmpload(const fs::path& filename);
 bool writeloadedbuff(const fs::path& filename);
 void writeloadedbuff_clear();

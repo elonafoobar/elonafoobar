@@ -27,7 +27,7 @@ void window::set_display_mode(::SDL_DisplayMode display_mode)
     return mode;
 }
 
-void window::set_fullscreen_mode(fullscreen_mode_t fullscreen_mode)
+void window::set_fullscreen_mode(FullscreenMode fullscreen_mode)
 {
 }
 

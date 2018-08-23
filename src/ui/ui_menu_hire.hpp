@@ -12,7 +12,7 @@ namespace ui
 class ui_menu_hire : public ui_menu<int>
 {
 public:
-    ui_menu_hire(hire_operation operation)
+    ui_menu_hire(HireOperation operation)
         : _operation(operation)
     {
     }
@@ -33,7 +33,7 @@ private:
     void _draw_list_entry(int cnt, const character& chara);
     void _draw_list_entry_cost(int cnt, const character& chara);
 
-    hire_operation _operation;
+    HireOperation _operation;
 };
 
 } // namespace ui

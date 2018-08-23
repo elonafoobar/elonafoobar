@@ -115,7 +115,7 @@ static void inject_save_files(config& conf)
     if (fs::exists(filesystem::dir::save()))
     {
         for (const auto& entry : filesystem::dir_entries{
-                 filesystem::dir::save(), filesystem::dir_entries::type::dir})
+                 filesystem::dir::save(), filesystem::dir_entries::Type::dir})
         {
             std::string folder =
                 filesystem::to_utf8_path(entry.path().filename());
@@ -139,7 +139,7 @@ static void inject_languages(config& conf)
     bool has_en = false;
 
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::locale(), filesystem::dir_entries::type::dir})
+             filesystem::dir::locale(), filesystem::dir_entries::Type::dir})
     {
         std::string identifier =
             filesystem::to_utf8_path(entry.path().filename());
@@ -169,14 +169,14 @@ static void inject_languages(config& conf)
         "core.config.language.language", locales, spec::unknown_enum_variant);
 }
 
-static std::map<std::string, snail::android::orientation> orientations = {
-    {"sensor_landscape", snail::android::orientation::sensor_landscape},
-    {"sensor_portait", snail::android::orientation::sensor_portrait},
-    {"sensor", snail::android::orientation::sensor},
-    {"landscape", snail::android::orientation::landscape},
-    {"portrait", snail::android::orientation::portrait},
-    {"reverse_landscape", snail::android::orientation::reverse_landscape},
-    {"reverse_portrait", snail::android::orientation::reverse_portrait}};
+static std::map<std::string, snail::android::Orientation> orientations = {
+    {"sensor_landscape", snail::android::Orientation::sensor_landscape},
+    {"sensor_portait", snail::android::Orientation::sensor_portrait},
+    {"sensor", snail::android::Orientation::sensor},
+    {"landscape", snail::android::Orientation::landscape},
+    {"portrait", snail::android::Orientation::portrait},
+    {"reverse_landscape", snail::android::Orientation::reverse_landscape},
+    {"reverse_portrait", snail::android::Orientation::reverse_portrait}};
 
 static void convert_and_set_requested_orientation(std::string variant)
 {
@@ -226,31 +226,31 @@ void config_query_language()
         gcopy(4, 360, 6, 20, 18);
         redraw();
         await(30);
-        if (getkey(snail::key::down))
+        if (getkey(snail::Key::down))
         {
             p = 1;
         }
-        if (getkey(snail::key::keypad_2))
+        if (getkey(snail::Key::keypad_2))
         {
             p = 1;
         }
-        if (getkey(snail::key::up))
+        if (getkey(snail::Key::up))
         {
             p = 0;
         }
-        if (getkey(snail::key::keypad_8))
+        if (getkey(snail::Key::keypad_8))
         {
             p = 0;
         }
-        if (getkey(snail::key::enter))
+        if (getkey(snail::Key::enter))
         {
             break;
         }
-        if (getkey(snail::key::keypad_enter))
+        if (getkey(snail::Key::keypad_enter))
         {
             break;
         }
-        if (getkey(snail::key::space))
+        if (getkey(snail::Key::space))
         {
             break;
         }
@@ -600,19 +600,19 @@ void initialize_config_preload(const fs::path& hcl_file)
 #undef CONFIG_OPTION
 #undef CONFIG_KEY
 
-snail::window::fullscreen_mode_t config_get_fullscreen_mode()
+snail::window::FullscreenMode config_get_fullscreen_mode()
 {
     if (config::instance().fullscreen == "fullscreen")
     {
-        return snail::window::fullscreen_mode_t::fullscreen;
+        return snail::window::FullscreenMode::fullscreen;
     }
     else if (config::instance().fullscreen == "desktop_fullscreen")
     {
-        return snail::window::fullscreen_mode_t::fullscreen_desktop;
+        return snail::window::FullscreenMode::fullscreen_desktop;
     }
     else
     {
-        return snail::window::fullscreen_mode_t::windowed;
+        return snail::window::FullscreenMode::windowed;
     }
 }
 

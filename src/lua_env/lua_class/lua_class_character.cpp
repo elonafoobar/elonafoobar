@@ -22,8 +22,8 @@ void LuaCharacter::damage_hp_source(
     int amount,
     const enum_string& source_name)
 {
-    damage_source_t source =
-        LuaEnums::DamageSource.ensure_from_string(source_name);
+    DamageSource source =
+        LuaEnums::DamageSourceTable.ensure_from_string(source_name);
     elona::damage_hp(self, amount, static_cast<int>(source));
 }
 
@@ -42,14 +42,14 @@ void LuaCharacter::apply_ailment(
     int power)
 {
     assert(power > 0);
-    status_ailment_t ailment =
-        LuaEnums::StatusAilment.ensure_from_string(ailment_name);
+    StatusAilment ailment =
+        LuaEnums::StatusAilmentTable.ensure_from_string(ailment_name);
     elona::dmgcon(self.index, ailment, power);
 }
 
 bool LuaCharacter::recruit_as_ally(character& self)
 {
-    if (self.state() == character::state_t::empty
+    if (self.state() == character::State::empty
         || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;
@@ -63,7 +63,7 @@ void LuaCharacter::set_flag(
     const std::string& flag_name,
     bool is_setting)
 {
-    int flag = LuaEnums::CharaFlag.ensure_from_string(flag_name);
+    int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     int new_value = (is_setting ? 1 : 0);
     self._flags[flag] = new_value;
 }
@@ -100,7 +100,7 @@ void LuaCharacter::modify_resistance(
     const enum_string& element_name,
     int delta)
 {
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     elona::resistmod(self.index, static_cast<int>(element), delta);
 }
 
@@ -221,10 +221,10 @@ void LuaCharacter::bind(sol::state& lua)
         "sex",
         sol::property(
             [](character& c) {
-                return LuaEnums::Gender.convert_to_string(c.sex);
+                return LuaEnums::GenderTable.convert_to_string(c.sex);
             },
             [](character& c, const enum_string& s) {
-                c.sex = LuaEnums::Gender.ensure_from_string(s);
+                c.sex = LuaEnums::GenderTable.ensure_from_string(s);
             }));
 
     lua.set_usertype(character::lua_type(), LuaCharacter);

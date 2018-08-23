@@ -15,7 +15,7 @@ class autopick : public lib::noncopyable
 public:
     struct operation
     {
-        enum class type_t
+        enum class Type
         {
             do_nothing = 0,
             pick_up = 1,
@@ -26,12 +26,12 @@ public:
             open = 16,
         };
 
-        explicit operation(type_t type = type_t::do_nothing)
+        explicit operation(Type type = Type::do_nothing)
             : type(type)
         {
         }
 
-        type_t type = type_t::do_nothing;
+        Type type = Type::do_nothing;
         bool show_prompt = false;
         std::string sound;
     };

@@ -50,7 +50,7 @@ private:
 class bright_aura_animation : public abstract_animation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         debuff,
         offering,
@@ -59,7 +59,7 @@ public:
     };
 
 
-    bright_aura_animation(const position_t& target_pos, type_t type)
+    bright_aura_animation(const position_t& target_pos, Type type)
         : target_pos(target_pos)
         , type(type)
     {
@@ -72,7 +72,7 @@ protected:
 
 private:
     const position_t& target_pos;
-    type_t type;
+    Type type;
 };
 
 
@@ -106,7 +106,7 @@ private:
 class ball_animation : public abstract_animation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         ball,
         atomic_bomb,
@@ -116,7 +116,7 @@ public:
     ball_animation(
         const position_t& position,
         int range,
-        type_t type,
+        Type type,
         int element = 0)
         : position(position)
         , range(range)
@@ -133,7 +133,7 @@ protected:
 private:
     const position_t& position;
     int range;
-    type_t type;
+    Type type;
     int element;
 };
 
@@ -219,7 +219,7 @@ private:
 class ranged_attack_animation : public abstract_animation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         magic_arrow = 0,
         distant_attack = 1,
@@ -233,7 +233,7 @@ public:
     ranged_attack_animation(
         const position_t& attacker_pos,
         const position_t& target_pos,
-        type_t type,
+        Type type,
         int fired_item_subcategory = 0,
         int fired_item_image = 0,
         int fired_item_color = 0)
@@ -254,7 +254,7 @@ protected:
 private:
     const position_t& attacker_pos;
     const position_t& target_pos;
-    type_t type;
+    Type type;
     int fired_item_subcategory;
     int fired_item_image;
     int fired_item_color;

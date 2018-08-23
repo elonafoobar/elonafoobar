@@ -39,16 +39,16 @@ void touch_input::initialize_quick_actions()
 
     _quick_actions.clear();
 
-    std::vector<std::pair<std::string, snail::key>> keys = {
-        {"7", snail::key::keypad_7},
-        {"8", snail::key::keypad_8},
-        {"9", snail::key::keypad_9},
-        {"4", snail::key::keypad_4},
-        {"5", snail::key::keypad_5},
-        {"6", snail::key::keypad_6},
-        {"1", snail::key::keypad_1},
-        {"2", snail::key::keypad_2},
-        {"3", snail::key::keypad_3}};
+    std::vector<std::pair<std::string, snail::Key>> keys = {
+        {"7", snail::Key::keypad_7},
+        {"8", snail::Key::keypad_8},
+        {"9", snail::Key::keypad_9},
+        {"4", snail::Key::keypad_4},
+        {"5", snail::Key::keypad_5},
+        {"6", snail::Key::keypad_6},
+        {"1", snail::Key::keypad_1},
+        {"2", snail::Key::keypad_2},
+        {"3", snail::Key::keypad_3}};
 
     for (int i = 0; i < 3; i++)
     {
@@ -56,7 +56,7 @@ void touch_input::initialize_quick_actions()
         {
             auto pair = keys.at(j + ((2 - i) * 3));
             std::string name = pair.first;
-            snail::key key = pair.second;
+            snail::Key key = pair.second;
 
             int x = space_between + (j * space_between);
             int y = height - space_between - (i * space_between);
@@ -66,23 +66,23 @@ void touch_input::initialize_quick_actions()
     }
 
     using tuples_t =
-        std::tuple<std::string, optional<snail::key>, int, int, bool>[];
+        std::tuple<std::string, optional<snail::Key>, int, int, bool>[];
     for (const auto& tuple : tuples_t{
-             {"OK", snail::key::enter, 1, 1, true},
-             {"Back", snail::key::shift, 2, 1, true},
+             {"OK", snail::Key::enter, 1, 1, true},
+             {"Back", snail::Key::shift, 2, 1, true},
              {"z", none, 1, 2, true},
              {"x", none, 2, 2, true},
              {"g", none, 1, 3, true},
              {"d", none, 2, 3, true},
              {"f", none, 2, 4, true},
-             {"Esc", snail::key::escape, 1, 4, true},
+             {"Esc", snail::Key::escape, 1, 4, true},
              {"v", none, 1, 4, false},
              {"/", none, 2, 4, false},
              {"*", none, 3, 4, false},
          })
     {
         std::string text = std::get<0>(tuple);
-        optional<snail::key> key = std::get<1>(tuple);
+        optional<snail::Key> key = std::get<1>(tuple);
         int w;
         if (std::get<4>(tuple))
         {
@@ -106,18 +106,18 @@ void touch_input::draw_quick_actions()
     }
 
     auto& renderer = application::instance().get_renderer();
-    renderer.set_blend_mode(snail::blend_mode_t::blend);
-    renderer.set_text_alignment(renderer::text_alignment_t::center);
-    renderer.set_text_baseline(renderer::text_baseline_t::middle);
+    renderer.set_blend_mode(snail::BlendMode::blend);
+    renderer.set_text_alignment(renderer::TextAlignment::center);
+    renderer.set_text_baseline(renderer::TextBaseline::middle);
 
     for (auto it = _quick_actions.begin(); it < _quick_actions.end(); it++)
     {
         draw_quick_action(*it);
     }
 
-    renderer.set_blend_mode(snail::blend_mode_t::none);
-    renderer.set_text_alignment(renderer::text_alignment_t::left);
-    renderer.set_text_baseline(renderer::text_baseline_t::top);
+    renderer.set_blend_mode(snail::BlendMode::none);
+    renderer.set_text_alignment(renderer::TextAlignment::left);
+    renderer.set_text_baseline(renderer::TextBaseline::top);
 }
 
 bool touch_input::is_touched(int x, int y, const quick_action& action)
@@ -170,7 +170,7 @@ void touch_input::on_touch_event(::SDL_TouchFingerEvent event)
         quick_action& action = *it;
 
         if (_last_touched_quick_action_idx == none
-            && event.type != event_type::up
+            && event.type != EventType::up
             && is_touched(norm_x, norm_y, action))
         {
             action.touched = true;

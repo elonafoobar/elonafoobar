@@ -240,7 +240,7 @@ optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 int calcobjlv(int base)
 {
     int ret = base <= 0 ? gdata_current_dungeon_level : base;
-    if (gdata_current_map == mdata_t::map_id_t::shelter_)
+    if (gdata_current_map == mdata_t::MapId::shelter_)
     {
         ret = 1;
     }
@@ -638,7 +638,7 @@ int calcattackdmg(int prm_894)
     {
         dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus
             + inv[cw].enhancement
-            + (inv[cw].curse_state == curse_state_t::blessed);
+            + (inv[cw].curse_state == CurseState::blessed);
         dice1 = inv[cw].dice_x;
         dice2 = inv[cw].dice_y;
         if (ammo != -1)
@@ -848,7 +848,7 @@ int calcitemvalue(int ci, int situation)
 {
     int category = the_item_db[inv[ci].id]->category;
     int ret = 0;
-    if (inv[ci].identification_state == identification_state_t::unidentified)
+    if (inv[ci].identification_state == IdentifyState::unidentified)
     {
         if (situation == 2)
         {
@@ -869,27 +869,27 @@ int calcitemvalue(int ci, int situation)
     {
         switch (inv[ci].identification_state)
         {
-        case identification_state_t::unidentified: break;
-        case identification_state_t::partly_identified:
+        case IdentifyState::unidentified: break;
+        case IdentifyState::partly_identified:
             ret = inv[ci].value * 2 / 10;
             break;
-        case identification_state_t::almost_identified:
+        case IdentifyState::almost_identified:
             ret = inv[ci].value * 5 / 10;
             break;
-        case identification_state_t::completely_identified:
+        case IdentifyState::completely_identified:
             ret = inv[ci].value;
             break;
         }
     }
     if (inv[ci].identification_state
-        == identification_state_t::completely_identified)
+        == IdentifyState::completely_identified)
     {
         switch (inv[ci].curse_state)
         {
-        case curse_state_t::doomed: ret = ret / 5; break;
-        case curse_state_t::cursed: ret = ret / 2; break;
-        case curse_state_t::none: break;
-        case curse_state_t::blessed: ret = ret * 120 / 100; break;
+        case CurseState::doomed: ret = ret / 5; break;
+        case CurseState::cursed: ret = ret / 2; break;
+        case CurseState::none: break;
+        case CurseState::blessed: ret = ret * 120 / 100; break;
         }
     }
     if (category == 57000)
@@ -1096,7 +1096,7 @@ void calccosthire()
     {
         if (cnt.character_role == 0)
             continue;
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != character::State::alive)
             continue;
         cost += calchirecost(cnt.index);
     }
@@ -1120,11 +1120,11 @@ int calccostbuilding()
     {
         switch (adata(16, cnt))
         {
-        case mdata_t::map_id_t::museum: cost += 1500; break;
-        case mdata_t::map_id_t::ranch: cost += 1000; break;
-        case mdata_t::map_id_t::crop: cost += 750; break;
-        case mdata_t::map_id_t::shop: cost += 5000; break;
-        case mdata_t::map_id_t::storage_house: cost += 750; break;
+        case mdata_t::MapId::museum: cost += 1500; break;
+        case mdata_t::MapId::ranch: cost += 1000; break;
+        case mdata_t::MapId::crop: cost += 750; break;
+        case mdata_t::MapId::shop: cost += 5000; break;
+        case mdata_t::MapId::storage_house: cost += 750; break;
         default: break;
         }
     }
@@ -1234,7 +1234,7 @@ int calcidentifyvalue(int type)
                 continue;
             }
             if (inv[cnt].identification_state
-                != identification_state_t::completely_identified)
+                != IdentifyState::completely_identified)
             {
                 ++need_to_identify;
             }
@@ -1272,7 +1272,7 @@ int calclearncost(int skill_id, int cc, bool discount)
 
 int calcresurrectvalue(int pet)
 {
-    return cdata[pet].state() != character::state_t::pet_dead
+    return cdata[pet].state() != character::State::pet_dead
         ? 100
         : cdata[pet].level * cdata[pet].level * 15;
 }
@@ -1308,7 +1308,7 @@ int calcinitgold(int owner)
     if (owner < 0)
     {
         return rnd(gdata_current_dungeon_level * 25
-                       * (gdata_current_map != mdata_t::map_id_t::shelter_)
+                       * (gdata_current_map != mdata_t::MapId::shelter_)
                    + 10)
             + 1;
     }
@@ -1501,7 +1501,7 @@ void calcpartyscore()
     int score = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != character::State::alive)
         {
             continue;
         }
@@ -1536,7 +1536,7 @@ void calcpartyscore2()
     int score{};
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != character::State::alive)
         {
             continue;
         }
@@ -1555,21 +1555,21 @@ void calcpartyscore2()
 }
 
 
-int generate_color(color_index_t index, int id)
+int generate_color(ColorIndex index, int id)
 {
     int color = static_cast<int>(index);
-    if (index == color_index_t::random_furniture)
+    if (index == ColorIndex::random_furniture)
     {
         color = choice(randcolor);
     }
-    if (index == color_index_t::random_seeded)
+    if (index == ColorIndex::random_seeded)
     {
         // The choice can't be completely random - it has to be the
         // same as all other items of this type. So, base it off the
         // random seed of the current save data.
         color = _randcolor((id + gdata_random_seed) % 6);
     }
-    if (index == color_index_t::random_any)
+    if (index == ColorIndex::random_any)
     {
         color = rnd(21);
     }

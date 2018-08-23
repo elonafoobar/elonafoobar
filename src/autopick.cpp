@@ -57,12 +57,12 @@ bool autopick::try_load(const fs::path& filepath)
             continue;
 
         std::string line_ = line;
-        operation op{operation::type_t::pick_up};
+        operation op{operation::Type::pick_up};
 
         if (strutil::starts_with(line_, u8"%=")
             || strutil::starts_with(line_, u8"=%"))
         {
-            op.type = operation::type_t::save_and_no_drop;
+            op.type = operation::Type::save_and_no_drop;
             line_ = line_.substr(2);
         }
         else
@@ -70,23 +70,23 @@ bool autopick::try_load(const fs::path& filepath)
             switch (line_.front())
             {
             case '~':
-                op.type = operation::type_t::do_nothing;
+                op.type = operation::Type::do_nothing;
                 line_ = line_.substr(1);
                 break;
             case '%':
-                op.type = operation::type_t::save;
+                op.type = operation::Type::save;
                 line_ = line_.substr(1);
                 break;
             case '=':
-                op.type = operation::type_t::no_drop;
+                op.type = operation::Type::no_drop;
                 line_ = line_.substr(1);
                 break;
             case '!':
-                op.type = operation::type_t::destroy;
+                op.type = operation::Type::destroy;
                 line_ = line_.substr(1);
                 break;
             case '+':
-                op.type = operation::type_t::open;
+                op.type = operation::Type::open;
                 line_ = line_.substr(1);
                 break;
             default: break;
@@ -142,7 +142,7 @@ bool autopick::matcher::matches(const item& ci) const
 {
     const auto id = ci.id;
     const auto name = cnvitemname(id);
-    return ci.identification_state != identification_state_t::unidentified
+    return ci.identification_state != IdentifyState::unidentified
         && name.find(text) != std::string::npos;
 }
 

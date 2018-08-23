@@ -13,7 +13,7 @@ namespace elona
 
 struct buff_data
 {
-    enum class type_t
+    enum class Type
     {
         buff,
         hex,
@@ -23,7 +23,7 @@ struct buff_data
 
     int id;
     cat::ref self;
-    type_t type;
+    Type type;
     cat::ref duration;
     cat::ref on_refresh;
 };

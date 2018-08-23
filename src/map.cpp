@@ -20,7 +20,7 @@ namespace elona
 void map_reload(const std::string& map_filename)
 {
     fmapfile = (filesystem::dir::map() / map_filename).generic_string();
-    ctrl_file(file_operation_t::map_load_map_obj_files);
+    ctrl_file(FileOperation::map_load_map_obj_files);
 
     for (int y = 0; y < mdata_map_height; ++y)
     {

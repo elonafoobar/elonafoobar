@@ -21,7 +21,7 @@ int Skill::resistance(
     lua_character_handle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     return elona::sdata(static_cast<int>(element), chara.index);
 }
 

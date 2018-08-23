@@ -11,24 +11,24 @@ namespace ui
 
 bool ui_menu_hire::_should_display_chara(const character& chara)
 {
-    if (_operation == hire_operation::revive)
+    if (_operation == HireOperation::revive)
     {
-        if (chara.state() != character::state_t::pet_dead
-            && chara.state() != character::state_t::villager_dead)
+        if (chara.state() != character::State::pet_dead
+            && chara.state() != character::State::villager_dead)
         {
             return false;
         }
     }
     else
     {
-        if (_operation == hire_operation::hire)
+        if (_operation == HireOperation::hire)
         {
-            if (chara.state() != character::state_t::servant_being_selected)
+            if (chara.state() != character::State::servant_being_selected)
             {
                 return false;
             }
         }
-        else if (chara.state() != character::state_t::alive)
+        else if (chara.state() != character::State::alive)
         {
             return false;
         }
@@ -98,7 +98,7 @@ void ui_menu_hire::update()
 
 void ui_menu_hire::_draw_topic()
 {
-    if (_operation == hire_operation::move)
+    if (_operation == HireOperation::move)
     {
         s = i18n::s.get("core.locale.ui.npc_list.wage");
     }
@@ -106,7 +106,7 @@ void ui_menu_hire::_draw_topic()
     {
         s = i18n::s.get("core.locale.ui.npc_list.init_cost");
     }
-    if (_operation != hire_operation::revive)
+    if (_operation != HireOperation::revive)
     {
         display_topic(s, wx + 490, wy + 36);
     }
@@ -185,12 +185,12 @@ static void _draw_list_entry_info(int cnt, const character& chara)
 
 void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
 {
-    if (_operation != hire_operation::revive)
+    if (_operation != HireOperation::revive)
     {
         std::string text;
         int cost = calchirecost(chara.index);
 
-        if (_operation == hire_operation::hire)
+        if (_operation == HireOperation::hire)
         {
             text = ""s + (cost * 20) + u8"("s + cost + u8")"s;
         }

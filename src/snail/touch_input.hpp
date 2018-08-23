@@ -18,7 +18,7 @@ struct quick_action
 {
     quick_action(
         std::string text,
-        optional<snail::key> key,
+        optional<snail::Key> key,
         int center_x,
         int center_y)
         : center_x(center_x)
@@ -39,7 +39,7 @@ struct quick_action
     // SDL_KeyboardEvent. This is a result of the use of HSP's
     // "mesbox" function to check if alphanumeric keys are pressed by
     // checking the string input it receives.
-    optional<snail::key> key;
+    optional<snail::Key> key;
     std::string text;
 
     bool touched = false;
@@ -47,7 +47,7 @@ struct quick_action
 
 class touch_input : public lib::noncopyable
 {
-    enum event_type
+    enum EventType
     {
         motion = SDL_FINGERMOTION,
         down = SDL_FINGERDOWN,

@@ -14,7 +14,7 @@ void ui_menu_composite_character::add_menus()
 {
     push_back(
         std::make_unique<ui_menu_character_sheet>(
-            character_sheet_operation::normal),
+            CharacterSheetOperation::normal),
         9,
         "core.locale.ui.menu.chara.chara");
     push_back(
@@ -22,7 +22,7 @@ void ui_menu_composite_character::add_menus()
         10,
         "core.locale.ui.menu.chara.wear");
     push_back(
-        std::make_unique<ui_menu_feats>(ui_menu_feats::operation::normal),
+        std::make_unique<ui_menu_feats>(ui_menu_feats::Operation::normal),
         11,
         "core.locale.ui.menu.chara.feat");
     push_back(

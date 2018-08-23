@@ -6,7 +6,7 @@
 namespace elona
 {
 
-enum stick_key
+enum StickKey
 {
     left = 1 << 0,
     up = 1 << 1,
@@ -21,7 +21,7 @@ enum stick_key
     tab = 1 << 10,
 };
 
-enum class key_wait_delay_t
+enum class KeyWaitDelay
 {
     always,
     walk_run,
@@ -29,7 +29,7 @@ enum class key_wait_delay_t
 };
 
 // Index into c_col.
-enum class color_index_t : int
+enum class ColorIndex : int
 {
     // These two colors are exactly the same.
     none = 0,
@@ -68,7 +68,7 @@ enum class color_index_t : int
     random_any = 23,
 };
 
-enum class curse_state_t : int
+enum class CurseState : int
 {
     doomed = 0,
     cursed = 1,
@@ -77,13 +77,13 @@ enum class curse_state_t : int
 };
 
 
-inline bool is_cursed(curse_state_t s)
+inline bool is_cursed(CurseState s)
 {
-    return s <= curse_state_t::cursed;
+    return s <= CurseState::cursed;
 }
 
 
-enum class identification_state_t : int
+enum class IdentifyState : int
 {
     unidentified = 0,
     partly_identified = 1,
@@ -91,7 +91,7 @@ enum class identification_state_t : int
     completely_identified = 3,
 };
 
-enum class damage_source_t : int
+enum class DamageSource : int
 {
     trap = -1,
     overcasting = -2,
@@ -116,7 +116,7 @@ enum class damage_source_t : int
     mochi = -21,
 };
 
-enum class turn_result_t
+enum class TurnResult
 {
     none,
     all_turns_finished,

@@ -9,7 +9,7 @@ namespace ui
 class ui_menu_composite_message : public ui_menu_composite<dummy_result>
 {
 public:
-    enum index : size_t
+    enum Index : size_t
     {
         message_log = 0,
         journal = 1,

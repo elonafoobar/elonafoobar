@@ -47,12 +47,12 @@ static snail::color _desc_to_color(int desc)
 {
     switch (desc)
     {
-    case desc_entry_t::raises_skill: return {0, 100, 0};
-    case desc_entry_t::raises_stat: return {0, 0, 100};
-    case desc_entry_t::raises_resist: return {80, 100, 0};
-    case desc_entry_t::enchantment: return {80, 50, 0};
-    case desc_entry_t::maintains_skill: return {0, 100, 100};
-    case desc_entry_t::negative_effect: return {180, 0, 0};
+    case ItemDescriptionType::raises_skill: return {0, 100, 0};
+    case ItemDescriptionType::raises_stat: return {0, 0, 100};
+    case ItemDescriptionType::raises_resist: return {80, 100, 0};
+    case ItemDescriptionType::enchantment: return {80, 50, 0};
+    case ItemDescriptionType::maintains_skill: return {0, 100, 100};
+    case ItemDescriptionType::negative_effect: return {180, 0, 0};
     }
 
     return {0, 0, 0};
@@ -67,13 +67,13 @@ static void _set_color(int list_item)
 
 static void _set_font(int list_item)
 {
-    if (list_item == desc_entry_t::small_font)
+    if (list_item == ItemDescriptionType::small_font)
     {
         font(13 - en * 2);
     }
-    else if (list_item == desc_entry_t::small_font_italic)
+    else if (list_item == ItemDescriptionType::small_font_italic)
     {
-        font(13 - en * 2, snail::font_t::style_t::italic);
+        font(13 - en * 2, snail::font_t::Style::italic);
     }
     else
     {
@@ -83,7 +83,7 @@ static void _set_font(int list_item)
 
 static void _set_pos(int cnt, int list_item, const std::string& list_text)
 {
-    if (list_item == desc_entry_t::small_font_italic)
+    if (list_item == ItemDescriptionType::small_font_italic)
     {
         pos(wx + ww - strlen_u(list_text) * 6 - 80, wy + 68 + cnt * 18);
     }
@@ -103,7 +103,7 @@ static void _draw_normal_mark(int cnt, int list_item)
 
 static void _draw_marks(int cnt, int list_item)
 {
-    if (list_item > desc_entry_t::normal)
+    if (list_item > ItemDescriptionType::normal)
     {
         _draw_normal_mark(cnt, list_item);
     }

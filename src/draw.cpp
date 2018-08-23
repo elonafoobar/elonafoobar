@@ -277,16 +277,16 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
 
 
 
-void show_hp_bar(show_hp_bar_side side, int inf_clocky)
+void show_hp_bar(HPBarSide side, int inf_clocky)
 {
-    const bool right = side == show_hp_bar_side::right_side;
+    const bool right = side == HPBarSide::right_side;
 
     int cnt{};
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state() == character::state_t::alive
-             || cc.state() == character::state_t::pet_dead)
+        if ((cc.state() == character::State::alive
+             || cc.state() == character::State::pet_dead)
             && cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
@@ -310,10 +310,10 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 name,
                 x,
                 y,
-                cc.state() == character::state_t::alive
+                cc.state() == character::State::alive
                     ? snail::color{255, 255, 255}
                     : snail::color{255, 35, 35});
-            if (cc.state() == character::state_t::alive)
+            if (cc.state() == character::State::alive)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
@@ -871,7 +871,7 @@ void initialize_item_chips(const item_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::page_type::character);
+                *chip_data.filepath, key, pic_loader::PageType::character);
         }
         else
         {
@@ -883,7 +883,7 @@ void initialize_item_chips(const item_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"item.bmp",
         predefined_extents,
-        pic_loader::page_type::item);
+        pic_loader::PageType::item);
 }
 
 
@@ -907,7 +907,7 @@ void initialize_chara_chips(const chara_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::page_type::character);
+                *chip_data.filepath, key, pic_loader::PageType::character);
         }
         else
         {
@@ -919,7 +919,7 @@ void initialize_chara_chips(const chara_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"character.bmp",
         predefined_extents,
-        pic_loader::page_type::character);
+        pic_loader::PageType::character);
 }
 
 

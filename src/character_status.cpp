@@ -418,8 +418,8 @@ void refresh_speed(character& cc)
     {
         cdata.player().speed_percentage_in_next_turn -= 10;
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map
-        || mdata_map_type == mdata_t::map_type_t::field)
+    if (mdata_map_type == mdata_t::MapType::world_map
+        || mdata_map_type == mdata_t::MapType::field)
     {
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {

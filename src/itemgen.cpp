@@ -370,7 +370,7 @@ int do_create_item(int slot, int x, int y)
     if (reftype == 72000)
     {
         inv[ci].param1 = gdata_current_dungeon_level
-                * (gdata_current_map != mdata_t::map_id_t::shelter_)
+                * (gdata_current_map != mdata_t::MapId::shelter_)
             + 5;
         if (inv[ci].id == 283)
         {
@@ -382,7 +382,7 @@ int do_create_item(int slot, int x, int y)
         }
         inv[ci].param2 =
             rnd(std::abs(gdata_current_dungeon_level)
-                    * (gdata_current_map != mdata_t::map_id_t::shelter_)
+                    * (gdata_current_map != mdata_t::MapId::shelter_)
                 + 1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {
@@ -437,25 +437,25 @@ int do_create_item(int slot, int x, int y)
     if (mode == 6)
     {
         inv[ci].identification_state =
-            identification_state_t::completely_identified;
+            IdentifyState::completely_identified;
     }
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
         || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].curse_state = CurseState::none;
         inv[ci].identification_state =
-            identification_state_t::completely_identified;
+            IdentifyState::completely_identified;
     }
     if (reftype == 92000)
     {
         inv[ci].identification_state =
-            identification_state_t::completely_identified;
-        inv[ci].curse_state = curse_state_t::none;
+            IdentifyState::completely_identified;
+        inv[ci].curse_state = CurseState::none;
         itemmemory(0, inv[ci].id) = 1;
     }
     if (reftype == 62000 || reftype == 64000 || reftype == 77000)
     {
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].curse_state = CurseState::none;
     }
     if (mode != 6)
     {
@@ -464,7 +464,7 @@ int do_create_item(int slot, int x, int y)
             if (rnd(sdata(162, 0) + 1) > 5)
             {
                 inv[ci].identification_state =
-                    identification_state_t::almost_identified;
+                    IdentifyState::almost_identified;
             }
         }
     }
@@ -505,23 +505,23 @@ void init_item_quality_curse_state_material_and_equipments()
     {
         if (rnd(12) == 0)
         {
-            inv[ci].curse_state = curse_state_t::blessed;
+            inv[ci].curse_state = CurseState::blessed;
         }
         if (rnd(13) == 0)
         {
-            inv[ci].curse_state = curse_state_t::cursed;
+            inv[ci].curse_state = CurseState::cursed;
             if (the_item_db[inv[ci].id]->category < 50000)
             {
                 if (rnd(4) == 0)
                 {
-                    inv[ci].curse_state = curse_state_t::doomed;
+                    inv[ci].curse_state = CurseState::doomed;
                 }
             }
         }
     }
     if (cm || mode == 1 || inv[ci].quality == 6)
     {
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].curse_state = CurseState::none;
     }
     if (reftype < 50000 || (reftype == 60000 && rnd(5) == 0))
     {

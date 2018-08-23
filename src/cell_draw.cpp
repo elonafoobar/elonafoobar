@@ -424,7 +424,7 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
     else
     {
         int f_ = 0;
-        if (scrollp > 3 || mdata_map_type == mdata_t::map_type_t::dungeon)
+        if (scrollp > 3 || mdata_map_type == mdata_t::MapType::dungeon)
         {
             f_ = 1;
         }
@@ -525,7 +525,7 @@ void draw_hp_bar(int cc, int x, int y)
 
     if (cc < 16)
     {
-        if (mdata_map_type != mdata_t::map_type_t::world_map)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
             pos(x + 9, y + 32);
             gcopy(3, 480 - ratio, 517, ratio, 3);
@@ -709,7 +709,7 @@ void draw_chara_chip_sprite(
 
 void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
 {
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         draw_character_sprite_in_world_map(
             c_, dx, dy, ani_, cdata[c_].direction);
@@ -738,7 +738,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
     int p_ = cdata[c_].image % 1000;
     auto rect = prepare_chara_chip(c_, dx, dy);
 
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         draw_chara_chip_sprite_in_world_map(
             rect->buffer, p_, dx, dy, rect->width, rect->height);
@@ -885,11 +885,11 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
                 inf_tiles,
                 48 + chipm(6, p_));
         }
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             const auto q_ =
                 map(x, y, 6) / 100000 % 100 + map(x, y, 6) / 10000000 * 100;
-            if (adata(16, q_) == mdata_t::map_id_t::random_dungeon)
+            if (adata(16, q_) == mdata_t::MapId::random_dungeon)
             {
                 if (adata(6, q_) == adata(10, q_))
                 {
@@ -1054,7 +1054,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 p_ = inv[items[i]].image;
                 i_ = inv[items[i]].color;
                 auto rect = prepare_item_image(p_, i_, inv[items[i]].param1);
-                if (mdata_map_type == mdata_t::map_type_t::world_map)
+                if (mdata_map_type == mdata_t::MapType::world_map)
                 {
                     draw_item_chip_in_world_map(
                         dx + (inf_tiles / 2),
@@ -1095,7 +1095,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             {
                 rect = prepare_item_image(p_, i_);
             }
-            if (mdata_map_type == mdata_t::map_type_t::world_map)
+            if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 draw_item_chip_in_world_map(
                     dx + (inf_tiles / 2), dy + (inf_tiles / 2), **rect);
@@ -1176,8 +1176,8 @@ void cell_draw()
 
     if (gdata_torch == 1)
     {
-        if (mdata_map_type >= mdata_t::map_type_t::dungeon
-            && mdata_map_type <= mdata_t::map_type_t::dungeon_castle)
+        if (mdata_map_type >= mdata_t::MapType::dungeon
+            && mdata_map_type <= mdata_t::MapType::dungeon_castle)
         {
             light_ -= 50;
         }
@@ -1241,7 +1241,7 @@ void cell_draw()
 
             // Spot light for PC (bottom a third)
             if (reph(3) == y && x_ == repw(2)
-                && cdata.player().state() == character::state_t::alive)
+                && cdata.player().state() == character::State::alive)
             {
                 px_ = (cdata.player().position.x - scx) * inf_tiles
                     + inf_screenx - 48;
@@ -1261,7 +1261,7 @@ void cell_draw()
             }
 
             if (reph(2) == y && x_ == repw(2)
-                && cdata.player().state() == character::state_t::alive)
+                && cdata.player().state() == character::State::alive)
             {
                 ground_ = map(
                     cdata.player().position.x, cdata.player().position.y, 0);
@@ -1293,7 +1293,7 @@ void cell_draw()
                     {
                         ani_ = cdata.player().turn % 4 * 32;
                     }
-                    if (mdata_map_type == mdata_t::map_type_t::world_map)
+                    if (mdata_map_type == mdata_t::MapType::world_map)
                     {
                         draw_character_sprite_in_world_map(
                             0, px_, py_, ani_, cdata.player().direction);
@@ -1461,7 +1461,7 @@ void cell_draw()
         light_ = 25;
     }
 
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         render_cloud();
     }

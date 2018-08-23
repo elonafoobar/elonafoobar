@@ -42,7 +42,7 @@ static void _load_politics_list(bool is_town)
 
 bool ui_menu_town_politics::init()
 {
-    bool is_town = mdata_map_type == mdata_t::map_type_t::town;
+    bool is_town = mdata_map_type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
     gsel(3);
@@ -89,7 +89,7 @@ static void _draw_window()
     pos(wx + 185, wy + 52);
     mes(i18n::s.get("core.locale.ui.politics.global"));
 
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get(

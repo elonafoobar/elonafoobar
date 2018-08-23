@@ -43,7 +43,7 @@ struct item_data
     int light;
     std::string originalnameref2;
     bool has_random_name;
-    color_index_t color;
+    ColorIndex color;
     std::string filter;
     std::string rffilter;
     i18n_key locale_key_prefix;

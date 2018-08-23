@@ -110,8 +110,8 @@ void apply_god_blessing(int cc);
 std::string get_god_description(int);
 void god_proc_switching_penalty();
 void switch_religion();
-turn_result_t do_pray();
-turn_result_t do_offer();
+TurnResult do_pray();
+TurnResult do_offer();
 
 
 

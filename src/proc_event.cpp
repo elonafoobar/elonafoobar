@@ -87,7 +87,7 @@ void proc_event()
             -1, 23, cdata.player().position.x, cdata.player().position.y);
         break;
     case 27:
-        if (gdata_current_map == mdata_t::map_id_t::show_house)
+        if (gdata_current_map == mdata_t::MapId::show_house)
         {
             break;
         }
@@ -195,7 +195,7 @@ void proc_event()
             cdata.player().position.y,
             rnd(3) + 2);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 29:
     {
@@ -283,7 +283,7 @@ void proc_event()
         txtef(2);
         txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata.player().fame += gdata(74);
-        if (gdata_current_map == mdata_t::map_id_t::the_void)
+        if (gdata_current_map == mdata_t::MapId::the_void)
         {
             adata(20, gdata_current_map) = 0;
             gdata(186) = gdata(186) + 5;
@@ -341,13 +341,13 @@ void proc_event()
         cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 20:
         damage_hp(cdata[evdata1(evnum - (evnum != 0) * 1)], 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
         cdata[evdata1(evnum - (evnum != 0) * 1)].set_state(
-            character::state_t::empty);
+            character::State::empty);
         flt();
         itemcreate(
             -1,
@@ -359,7 +359,7 @@ void proc_event()
         tc = chara_find(221);
         if (tc != 0)
         {
-            if (cdata[tc].state() == character::state_t::alive)
+            if (cdata[tc].state() == character::State::alive)
             {
                 txtef(4);
                 txt(i18n::s.get("core.locale.event.pael"));
@@ -445,7 +445,7 @@ void proc_event()
             {
                 i = rnd(39) + 16;
                 if (cdata[i].state()
-                        == character::state_t::adventurer_in_other_map
+                        == character::State::adventurer_in_other_map
                     && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
@@ -486,7 +486,7 @@ void proc_event()
                 txt(i18n::s.get("core.locale.event.guest_already_left"));
                 break;
             }
-            cdata[tc].set_state(character::state_t::alive);
+            cdata[tc].set_state(character::State::alive);
             rc = tc;
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
@@ -505,7 +505,7 @@ void proc_event()
             {
                 c = cnt - 1;
             }
-            if (cdata[c].state() != character::state_t::alive)
+            if (cdata[c].state() != character::State::alive)
             {
                 continue;
             }
@@ -587,7 +587,7 @@ void proc_event()
         i = 0;
         for (int cc = 0; cc < 16; ++cc)
         {
-            if (cdata[cc].state() != character::state_t::alive)
+            if (cdata[cc].state() != character::State::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -600,7 +600,7 @@ void proc_event()
         i = 0;
         for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
-            if (cdata[cc].state() != character::state_t::alive)
+            if (cdata[cc].state() != character::State::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -626,7 +626,7 @@ void proc_event()
             tc = 0;
             for (auto&& cc : cdata.all())
             {
-                if (cc.state() != character::state_t::alive)
+                if (cc.state() != character::State::alive)
                     continue;
                 if (cc.character_role == 18)
                 {
@@ -641,7 +641,7 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
         txtef(3);
         txt(i18n::s.get("core.locale.event.bomb"));
@@ -767,7 +767,7 @@ void proc_event()
         range_ = 31;
         ele = 59;
         ball_animation(
-            {tlocx, tlocy}, range_, ball_animation::type_t::atomic_bomb, ele)
+            {tlocx, tlocy}, range_, ball_animation::Type::atomic_bomb, ele)
             .play();
         update_screen();
         for (int i = 0; i < range_ * 2 + 1; ++i)
@@ -808,14 +808,14 @@ void proc_event()
         }
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
-            && gdata_current_map == mdata_t::map_id_t::palmia
+            && gdata_current_map == mdata_t::MapId::palmia
             && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;
             quest_update_journal_msg();
         }
-        if (mdata_map_type == mdata_t::map_type_t::town
-            || mdata_map_type == mdata_t::map_type_t::guild)
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild)
         {
             modify_karma(cdata.player(), -80 + trait(162) * 60);
         }
@@ -825,7 +825,7 @@ void proc_event()
         }
         break;
     case 18:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
         gdata_weather = 1;
         sound_play_environmental();
@@ -896,7 +896,7 @@ void proc_event()
         txt(i18n::s.get("core.locale.event.alarm"));
         for (auto&& cc : cdata.others())
         {
-            if (cc.state() == character::state_t::alive)
+            if (cc.state() == character::State::alive)
             {
                 cc.relationship = -3;
                 cc.enemy_id = 0;
@@ -905,7 +905,7 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
         txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)

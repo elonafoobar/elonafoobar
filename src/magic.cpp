@@ -56,7 +56,7 @@ int magic()
     obvious = 1;
     if (efsource != 4 && efsource != 1 && efsource != 2)
     {
-        efstatus = curse_state_t::none;
+        efstatus = CurseState::none;
     }
     efsource = 0;
     efbad = 0;
@@ -71,7 +71,7 @@ int magic()
             {
                 f = 1;
                 p = the_ability_db[efid]->sdataref1 % 1000;
-                if (the_buff_db[p]->type == buff_data::type_t::hex)
+                if (the_buff_db[p]->type == buff_data::Type::hex)
                 {
                     efbad = 1;
                 }
@@ -82,7 +82,7 @@ int magic()
             }
             if (efbad == 0)
             {
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     efp = efp * 150 / 100;
                 }
@@ -93,7 +93,7 @@ int magic()
             }
             else
             {
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     efp = 50;
                 }
@@ -104,15 +104,15 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == buff_data::type_t::buff)
+                if (the_buff_db[p]->type == buff_data::Type::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == buff_data::type_t::hex)
+                else if (the_buff_db[p]->type == buff_data::Type::hex)
                 {
                     bright_aura_animation(
                         cdata[tc].position,
-                        bright_aura_animation::type_t::debuff)
+                        bright_aura_animation::Type::debuff)
                         .play();
                 }
                 if (efid == 625 || efid == 446)
@@ -129,7 +129,7 @@ int magic()
                     cdata[tc], p, efp, calc_buff_duration(p, efp), cdata[cc]);
                 if (efid == 447)
                 {
-                    if (efstatus == curse_state_t::blessed)
+                    if (efstatus == CurseState::blessed)
                     {
                         cdata[tc].birth_year += rnd(3) + 1;
                         if (cdata[tc].birth_year + 12 > gdata_year)
@@ -197,7 +197,7 @@ int magic()
                 ranged_attack_animation(
                     cdata[cc].position,
                     cdata[tc].position,
-                    ranged_attack_animation::type_t::distant_attack)
+                    ranged_attack_animation::Type::distant_attack)
                     .play();
                 try_to_melee_attack();
                 goto the_end;
@@ -316,7 +316,7 @@ int magic()
                     ball_animation(
                         {tlocx, tlocy},
                         range_,
-                        ball_animation::type_t::ball,
+                        ball_animation::Type::ball,
                         ele)
                         .play();
                 }
@@ -367,7 +367,7 @@ int magic()
                             {
                                 bright_aura_animation(
                                     cdata[tc].position,
-                                    bright_aura_animation::type_t::healing_rain)
+                                    bright_aura_animation::Type::healing_rain)
                                     .play();
                                 if (is_in_fov(cdata[tc]))
                                 {
@@ -397,7 +397,7 @@ int magic()
                             {
                                 bright_aura_animation(
                                     cdata[tc].position,
-                                    bright_aura_animation::type_t::healing_rain)
+                                    bright_aura_animation::Type::healing_rain)
                                     .play();
                                 txt(i18n::s.get(
                                     "core.locale.magic.rain_of_sanity",
@@ -500,7 +500,7 @@ int magic()
                         cc = chainbomblist(chainbomb);
                         tlocx = cdata[cc].position.x;
                         tlocy = cdata[cc].position.y;
-                        if (cdata[cc].state() == character::state_t::alive)
+                        if (cdata[cc].state() == character::State::alive)
                         {
                             const auto damage =
                                 calc_skill_damage(efid, cc, efp);
@@ -524,7 +524,7 @@ int magic()
                 ranged_attack_animation(
                     cdata[cc].position,
                     cdata[tc].position,
-                    ranged_attack_animation::type_t::magic_arrow)
+                    ranged_attack_animation::Type::magic_arrow)
                     .play();
                 dmg = roll(dice1, dice2, bonus);
                 if (is_in_fov(cdata[tc]))
@@ -578,7 +578,7 @@ int magic()
                     }
                 }
                 heal_both_rider_and_mount();
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     healcon(tc, 12, 5 + rnd(5));
                 }
@@ -587,7 +587,7 @@ int magic()
                     get_sick_if_cursed(efstatus, cdata[tc]);
                 }
                 bright_aura_animation(
-                    cdata[tc].position, bright_aura_animation::type_t::healing)
+                    cdata[tc].position, bright_aura_animation::Type::healing)
                     .play();
                 goto the_end;
             case 6:
@@ -681,11 +681,11 @@ int magic()
                 damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
-                    dmgcon(tc, status_ailment_t::fear, elep);
+                    dmgcon(tc, StatusAilment::fear, elep);
                 }
                 if (efid == 618)
                 {
-                    dmgcon(tc, status_ailment_t::sleep, elep);
+                    dmgcon(tc, StatusAilment::sleep, elep);
                 }
                 if (efid == 614)
                 {
@@ -843,10 +843,10 @@ int magic()
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata_current_map == mdata_t::map_id_t::pet_arena
-                    || mdata_map_type == mdata_t::map_type_t::world_map
-                    || gdata_current_map == mdata_t::map_id_t::pyramid
-                    || gdata_current_map == mdata_t::map_id_t::jail)
+                if (gdata_current_map == mdata_t::MapId::pet_arena
+                    || mdata_map_type == mdata_t::MapType::world_map
+                    || gdata_current_map == mdata_t::MapId::pyramid
+                    || gdata_current_map == mdata_t::MapId::jail)
                 {
                     if (is_in_fov(cdata[tc]))
                     {
@@ -1091,7 +1091,7 @@ int magic()
         }
         else
         {
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 efp = efp * 150 / 100;
             }
@@ -1112,7 +1112,7 @@ label_2181_internal:
         damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
-        if (mdata_map_type != mdata_t::map_type_t::world_map)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.magic.map.need_global_map"));
             break;
@@ -1206,7 +1206,7 @@ label_2181_internal:
                     if (y == inv[ci].param2)
                     {
                         pos(sx, sy);
-                        font(40 - en * 2, snail::font_t::style_t::italic);
+                        font(40 - en * 2, snail::font_t::Style::italic);
                         color(255, 20, 20);
                         mes(i18n::s.get("core.locale.magic.map.mark"));
                         color(0, 0, 0);
@@ -1242,7 +1242,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.love_potion.spill", cdata[tc]));
             chara_modify_impression(cdata[tc], clamp(efp / 15, 0, 15));
-            dmgcon(tc, status_ailment_t::dimmed, 100);
+            dmgcon(tc, StatusAilment::dimmed, 100);
             lovemiracle(tc);
             break;
         }
@@ -1256,7 +1256,7 @@ label_2181_internal:
             lovemiracle(tc);
             chara_modify_impression(cdata[tc], clamp(efp / 4, 0, 25));
         }
-        dmgcon(tc, status_ailment_t::dimmed, 500);
+        dmgcon(tc, StatusAilment::dimmed, 500);
         break;
     case 654:
         if (is_in_fov(cdata[tc]))
@@ -1297,7 +1297,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.milk.other"));
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             modify_height(cdata[tc], rnd(5) + 1);
         }
@@ -1327,7 +1327,7 @@ label_2181_internal:
                 txt(i18n::s.get("core.locale.magic.alcohol.normal"));
             }
         }
-        dmgcon(tc, status_ailment_t::drunk, efp);
+        dmgcon(tc, StatusAilment::drunk, efp);
         eatstatus(efstatus, tc);
         break;
     case 1116:
@@ -1752,7 +1752,7 @@ label_2181_internal:
                 }
             }
             if (the_buff_db[cdata[tc].buffs[i].id]->type
-                != buff_data::type_t::hex)
+                != buff_data::Type::hex)
             {
                 continue;
             }
@@ -1780,7 +1780,7 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
         bright_aura_animation(
-            cdata[tc].position, bright_aura_animation::type_t::healing)
+            cdata[tc].position, bright_aura_animation::Type::healing)
             .play();
         break;
     case 1117:
@@ -1800,10 +1800,10 @@ label_2181_internal:
         }
         snd(24);
         txt(i18n::s.get("core.locale.magic.create_material.apply", s(0)));
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         for (int cnt = 0,
                  cnt_end =
-                     (rnd(3) + 3 + (efstatus == curse_state_t::blessed) * 6);
+                     (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
              cnt < cnt_end;
              ++cnt)
         {
@@ -1890,7 +1890,7 @@ label_2181_internal:
                 }
                 else if (p == -1)
                 {
-                    if (efstatus == curse_state_t::blessed)
+                    if (efstatus == CurseState::blessed)
                     {
                         if (rnd(3) == 0)
                         {
@@ -1943,7 +1943,7 @@ label_2181_internal:
         f = 0;
         for (int cnt = 0,
                  cnt_end = cnt
-                 + (1 + (efstatus == curse_state_t::blessed)
+                 + (1 + (efstatus == CurseState::blessed)
                     + (!is_cursed(efstatus)) + rnd(2));
              cnt < cnt_end;
              ++cnt)
@@ -2004,7 +2004,7 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
@@ -2027,7 +2027,7 @@ label_2181_internal:
             break;
         }
         {
-            int stat = show_hire_menu(hire_operation::revive);
+            int stat = show_hire_menu(HireOperation::revive);
             if (stat == -1)
             {
                 txt(i18n::s.get("core.locale.common.nothing_happens"));
@@ -2070,14 +2070,14 @@ label_2181_internal:
         }
         break;
     case 412:
-        if (efstatus == curse_state_t::none)
+        if (efstatus == CurseState::none)
         {
             if (is_in_fov(cdata[tc]))
             {
                 txt(i18n::s.get("core.locale.magic.uncurse.apply", cdata[tc]));
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             if (is_in_fov(cdata[tc]))
             {
@@ -2107,15 +2107,15 @@ label_2181_internal:
             }
             ci = cnt;
             p = 0;
-            if (inv[ci].curse_state == curse_state_t::cursed)
+            if (inv[ci].curse_state == CurseState::cursed)
             {
                 p = rnd(200) + 1;
             }
-            if (inv[ci].curse_state == curse_state_t::doomed)
+            if (inv[ci].curse_state == CurseState::doomed)
             {
                 p = rnd(1000) + 1;
             }
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 p = p / 2 + 1;
             }
@@ -2128,7 +2128,7 @@ label_2181_internal:
                 if (efp >= p)
                 {
                     ++p(1);
-                    inv[ci].curse_state = curse_state_t::none;
+                    inv[ci].curse_state = CurseState::none;
                     item_stack(tc, ci, 1);
                 }
                 else
@@ -2137,7 +2137,7 @@ label_2181_internal:
                 }
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             if (p(1) != 0)
             {
@@ -2205,7 +2205,7 @@ label_2181_internal:
             break;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+        for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2277,10 +2277,10 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1143:
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             cdata[tc].experience = cdata[tc].required_experience;
             r2 = 0;
@@ -2369,7 +2369,7 @@ label_2181_internal:
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1107:
         if (tc != 0)
@@ -2403,7 +2403,7 @@ label_2181_internal:
             txt(i18n::s.get(
                 "core.locale.magic.faith.apply",
                 i18n::_(u8"god", cdata.player().god_id, u8"name")));
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 txt(i18n::s.get("core.locale.magic.faith.blessed"));
             }
@@ -2415,14 +2415,14 @@ label_2181_internal:
             chara_gain_skill_exp(
                 cdata.player(),
                 181,
-                1000 + (efstatus == curse_state_t::blessed) * 750,
+                1000 + (efstatus == CurseState::blessed) * 750,
                 6,
                 1000);
         }
         chara_refresh(tc);
         break;
     case 1119:
-        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+        for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2480,14 +2480,14 @@ label_2181_internal:
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1106:
         i = rnd(10) + 10;
         chara_gain_skill_exp(
             cdata[tc], i, efstatusfix(-2000, -2000, -1000, -250));
         bright_aura_animation(
-            cdata[tc].position, bright_aura_animation::type_t::debuff)
+            cdata[tc].position, bright_aura_animation::Type::debuff)
             .play();
         chara_refresh(tc);
         break;
@@ -2495,7 +2495,7 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.troll_blood.apply", cdata[tc]));
         chara_gain_skill_exp(
             cdata[tc], 18, efstatusfix(-4000, -1000, 8000, 12000));
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             modify_potential(cdata[tc], 18, 15);
             txtef(2);
@@ -2504,7 +2504,7 @@ label_2181_internal:
         chara_refresh(tc);
         break;
     case 1113:
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             for (int cnt = 10; cnt < 18; ++cnt)
             {
@@ -2523,7 +2523,7 @@ label_2181_internal:
         {
             i = rnd(8) + 10;
             const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
-            if (efstatus == curse_state_t::none)
+            if (efstatus == CurseState::none)
             {
                 txt(i18n::s.get(
                     "core.locale.magic.gain_potential.increases",
@@ -2548,7 +2548,7 @@ label_2181_internal:
                 snd(117);
             }
         }
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 653:
         if (tc < 57)
@@ -2599,7 +2599,7 @@ label_2181_internal:
                         continue;
                     }
                     if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
-                        || efstatus == curse_state_t::blessed)
+                        || efstatus == CurseState::blessed)
                     {
                         if (efid == 429)
                         {
@@ -2680,7 +2680,7 @@ label_2181_internal:
                         "core.locale.magic.restore.body.apply", cdata[tc]));
                     animeload(10, tc);
                 }
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.restore.body.blessed", cdata[tc]));
@@ -2710,7 +2710,7 @@ label_2181_internal:
                         "core.locale.magic.restore.mind.apply", cdata[tc]));
                     animeload(10, tc);
                 }
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     txt(i18n::s.get(
                         "core.locale.magic.restore.mind.blessed", cdata[tc]));
@@ -2744,7 +2744,7 @@ label_2181_internal:
             {
                 cdata[tc].attr_adjs[attr] = 0;
             }
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 cdata[tc].attr_adjs[attr] =
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
@@ -2785,7 +2785,7 @@ label_2181_internal:
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
             if (adata(16, gdata_current_map)
-                == mdata_t::map_id_t::random_dungeon)
+                == mdata_t::MapId::random_dungeon)
             {
                 if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
@@ -2840,7 +2840,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
             bright_aura_animation(
-                cdata[tc].position, bright_aura_animation::type_t::healing)
+                cdata[tc].position, bright_aura_animation::Type::healing)
                 .play();
         }
         break;
@@ -2850,7 +2850,7 @@ label_2181_internal:
         {
             txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
             bright_aura_animation(
-                cdata[tc].position, bright_aura_animation::type_t::healing)
+                cdata[tc].position, bright_aura_animation::Type::healing)
                 .play();
         }
         break;
@@ -2869,35 +2869,35 @@ label_2181_internal:
                     cdata[tc]));
             }
         }
-        dmgcon(tc, status_ailment_t::poisoned, efp);
+        dmgcon(tc, StatusAilment::poisoned, efp);
         break;
     case 1111:
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.ink_attack", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::blinded, efp);
+        dmgcon(tc, StatusAilment::blinded, efp);
         break;
     case 1109:
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.confusion", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::confused, efp);
+        dmgcon(tc, StatusAilment::confused, efp);
         break;
     case 1110:
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.paralysis", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::paralyzed, efp);
+        dmgcon(tc, StatusAilment::paralyzed, efp);
         break;
     case 1112:
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.locale.magic.sleep", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::sleep, efp);
+        dmgcon(tc, StatusAilment::sleep, efp);
         break;
     case 645:
     case 1114:
@@ -2938,7 +2938,7 @@ label_2181_internal:
                 continue;
             }
             p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
-            if (inv[p(i)].curse_state == curse_state_t::blessed)
+            if (inv[p(i)].curse_state == CurseState::blessed)
             {
                 if (rnd(10))
                 {
@@ -2956,7 +2956,7 @@ label_2181_internal:
                 {
                     continue;
                 }
-                if (inv[p].curse_state == curse_state_t::blessed)
+                if (inv[p].curse_state == CurseState::blessed)
                 {
                     if (rnd(10))
                     {
@@ -2971,13 +2971,13 @@ label_2181_internal:
         {
             i = p(rnd(i));
             const auto valn = itemname(i, 1, 1);
-            if (inv[i].curse_state == curse_state_t::cursed)
+            if (inv[i].curse_state == CurseState::cursed)
             {
-                inv[i].curse_state = curse_state_t::doomed;
+                inv[i].curse_state = CurseState::doomed;
             }
             else
             {
-                inv[i].curse_state = curse_state_t::cursed;
+                inv[i].curse_state = CurseState::cursed;
             }
             if (is_in_fov(cdata[tc]))
             {
@@ -3064,9 +3064,9 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (gdata_current_map == mdata_t::map_id_t::arena
-            || gdata_current_map == mdata_t::map_id_t::pet_arena
-            || gdata_current_map == mdata_t::map_id_t::the_void)
+        if (gdata_current_map == mdata_t::MapId::arena
+            || gdata_current_map == mdata_t::MapId::pet_arena
+            || gdata_current_map == mdata_t::MapId::the_void)
         {
             obvious = 0;
             txt(i18n::s.get(
@@ -3285,7 +3285,7 @@ label_2181_internal:
         objfix = 0;
         ci = efcibk;
         inv[ci].modify_number(-1);
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 21:
     case 1127:
@@ -3610,7 +3610,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.change.apply", cdata[tc]));
             flt(calcobjlv(cdata[tc].level + 3), 2);
             chara_create(56, 0, -3, 0);
-            chara_relocate(cdata.tmp(), tc(0), chara_relocate_mode::change);
+            chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
             cdata[tc].enemy_id = cc;
             cdata[tc].is_quest_target() = false;
             quest_check();
@@ -3641,7 +3641,7 @@ label_2181_internal:
             if (result.succeeded)
             {
                 autosave =
-                    1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+                    1 * (gdata_current_map != mdata_t::MapId::show_house);
                 animeload(8, cc);
                 if (!is_cursed(efstatus))
                 {
@@ -3654,12 +3654,12 @@ label_2181_internal:
                         if (inv[ci].pv > 0)
                         {
                             inv[ci].pv -= inv[ci].pv / 10 + 1
-                                + (efstatus != curse_state_t::blessed);
+                                + (efstatus != CurseState::blessed);
                         }
                         if (inv[ci].damage_bonus > 0)
                         {
                             inv[ci].damage_bonus -= inv[ci].damage_bonus / 10
-                                + 1 + (efstatus != curse_state_t::blessed);
+                                + 1 + (efstatus != CurseState::blessed);
                         }
                     }
                     txt(i18n::s.get("core.locale.magic.flying.apply", inv[ci]));
@@ -3713,7 +3713,7 @@ label_2181_internal:
         }
         if (f == 1)
         {
-            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+            autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
@@ -3829,11 +3829,11 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.swarm"));
         for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state() != character::state_t::alive)
+            if (cdata[cc].state() != character::State::alive)
             {
                 continue;
             }
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != character::State::alive)
             {
                 continue;
             }
@@ -3863,7 +3863,7 @@ label_2181_internal:
         }
         break;
     case 659:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             break;
         }
@@ -3880,7 +3880,7 @@ label_2181_internal:
     case 466:
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != character::State::alive)
             {
                 continue;
             }
@@ -3913,11 +3913,11 @@ label_2181_internal:
         miracle_animation().play();
         for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state() != character::state_t::alive)
+            if (cdata[cc].state() != character::State::alive)
             {
                 continue;
             }
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != character::State::alive)
             {
                 continue;
             }
@@ -3963,7 +3963,7 @@ label_2181_internal:
         }
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != character::State::alive)
             {
                 continue;
             }
@@ -4100,7 +4100,7 @@ label_2181_internal:
                     "core.locale.magic.gaze", cdata[cc], cdata[tc]));
             }
         }
-        dmgcon(tc, status_ailment_t::dimmed, 200);
+        dmgcon(tc, StatusAilment::dimmed, 200);
         break;
     case 652:
         if (is_in_fov(cdata[tc]))
@@ -4242,13 +4242,13 @@ label_2181_internal:
         snd(72);
         txt(i18n::s.get("core.locale.magic.four_dimensional_pocket"));
         invfile = 8;
-        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
-                file_operation2_t::map_items_read,
+                FileOperation2::map_items_read,
                 u8"shop"s + invfile + u8".s2");
         }
         else
@@ -4269,15 +4269,15 @@ label_2181_internal:
         ctrl_inventory();
         invcontainer = 0;
         ctrl_file(
-            file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
-        ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
+            FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
         mode = 0;
         break;
     }
 
 the_end:
     ci = efcibk;
-    efstatus = curse_state_t::none;
+    efstatus = CurseState::none;
     efsource = 0;
     return 1;
 }

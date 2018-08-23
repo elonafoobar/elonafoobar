@@ -57,7 +57,7 @@ struct mod_info
 /***
  * The stage of loading the lua environment is currently in.
  */
-enum class mod_loading_stage_t : unsigned
+enum class ModLoadingStage : unsigned
 {
     not_started,
     scan_finished,
@@ -276,7 +276,7 @@ private:
      * tracking the lifecycle of mod loading and ensuring the loading
      * functions are ran in the correct order.
      */
-    mod_loading_stage_t stage = mod_loading_stage_t::not_started;
+    ModLoadingStage stage = ModLoadingStage::not_started;
 
     lua_env* lua_;
 };

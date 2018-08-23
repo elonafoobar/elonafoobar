@@ -19,7 +19,7 @@ bool ui_menu_adventurers::init()
     cs_bk = -1;
     for (int cnt = 0; cnt < 56; ++cnt)
     {
-        if (cdata[cnt].state() == character::state_t::empty)
+        if (cdata[cnt].state() == character::State::empty)
         {
             continue;
         }
@@ -121,7 +121,7 @@ static void _draw_list_entry_map_name(int cnt, const character& chara)
     {
         map_name = i18n::s.get("core.locale.ui.adventurers.unknown");
     }
-    if (chara.state() == character::state_t::adventurer_dead)
+    if (chara.state() == character::State::adventurer_dead)
     {
         map_name = i18n::s.get("core.locale.ui.adventurers.hospital");
     }

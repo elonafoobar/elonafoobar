@@ -99,7 +99,7 @@ void render_weather_effect_rain()
     }
 
     for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -143,7 +143,7 @@ void render_weather_effect_hard_rain()
     }
 
     for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -290,7 +290,7 @@ void highlight_characters_in_pet_arena()
 {
     for (auto&& cc : cdata.all())
     {
-        if (cc.state() != character::state_t::alive)
+        if (cc.state() != character::State::alive)
             continue;
         if (cc.index == 0)
             continue;
@@ -579,7 +579,7 @@ void render_skill_trackers()
             continue;
         }
         const auto chara = gdata(750 + i) / 10000;
-        if (chara != 0 && cdata[chara].state() != character::state_t::alive)
+        if (chara != 0 && cdata[chara].state() != character::State::alive)
         {
             gdata(750 + i) = 0;
             continue;
@@ -1000,18 +1000,18 @@ position_t gmes(
             pos += instr(message, pos, u8">") + 1;
             if (tag == u8"emp1")
             {
-                font(font_size - en * 2, snail::font_t::style_t::underline);
+                font(font_size - en * 2, snail::font_t::Style::underline);
                 text_color = {50, 50, 255};
             }
             else if (tag == u8"emp2")
             {
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::font_t::Style::bold);
                 text_color = {40, 130, 40};
             }
             else if (tag == u8"title1")
             {
                 font_size = 12;
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::font_t::Style::bold);
                 text_color = {100, 50, 50};
             }
             else if (tag == u8"def")
@@ -1032,7 +1032,7 @@ position_t gmes(
             }
             else if (tag == u8"b")
             {
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::font_t::Style::bold);
             }
             else if (tag == u8"green")
             {
@@ -1257,11 +1257,11 @@ void render_hud()
     gmode(2);
 
     // HP/MP bar
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::font_t::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
     if (gdata_mount != 0
-        && cdata[gdata_mount].state() == character::state_t::alive)
+        && cdata[gdata_mount].state() == character::State::alive)
     {
         render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
     }
@@ -1282,7 +1282,7 @@ void render_hud()
     {
         if (mode != 9)
         {
-            if (mdata_map_type != mdata_t::map_type_t::world_map)
+            if (mdata_map_type != mdata_t::MapType::world_map)
             {
                 if (cdata.player().continuous_action_id == 0)
                 {
@@ -1313,8 +1313,8 @@ void render_hud()
     if (config::instance().hp_bar != "hide")
     {
         show_hp_bar(
-            config::instance().hp_bar == "left" ? show_hp_bar_side::left_side
-                                                : show_hp_bar_side::right_side,
+            config::instance().hp_bar == "left" ? HPBarSide::left_side
+                                                : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1379,7 +1379,7 @@ void render_autoturn_animation()
     int h = 25;
 
     window2(sx, sy, w, h, 0, 5);
-    font(13 - en * 2, snail::font_t::style_t::bold);
+    font(13 - en * 2, snail::font_t::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
@@ -1523,7 +1523,7 @@ void update_scrolling_info()
         sy(0) = tlocy - scy;
         sy(1) = tlocy;
     }
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         sx(0) = cdata[camera].position.x - scx;
         sx(1) = cdata[camera].position.x;
@@ -1639,7 +1639,7 @@ void update_slight()
                 ++lx;
                 continue;
             }
-            if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+            if (gdata_current_map == mdata_t::MapId::pet_arena)
             {
                 goto label_1430_internal;
             }
@@ -1701,7 +1701,7 @@ void ui_render_non_hud()
 {
     cell_draw();
 
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         highlight_characters_in_pet_arena();
     }
@@ -1739,7 +1739,7 @@ void ui_scroll_screen()
         return;
     }
     scrollp = config::instance().walkwait;
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;
@@ -2067,7 +2067,7 @@ void display_window2(
     gmode(2);
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -2146,7 +2146,7 @@ void display_window(
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+        font(12 + sizefix - en * 2, snail::font_t::Style::bold);
         pos(window_x + window_width - strlen_u(s) * 7 - 40 - prm_673,
             window_y + window_height - 65 - window_height % 8);
         mes(s);
@@ -2161,7 +2161,7 @@ void display_window(
 
 void display_note(const std::string& prm_674, int prm_675)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
 }
@@ -2170,7 +2170,7 @@ void display_note(const std::string& prm_674, int prm_675)
 
 void display_topic(const std::string& topic, int x, int y)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
     draw("topic_icon", x, y + 7);
     pos(x + 26, y + 8);
     mes(topic);
@@ -2386,14 +2386,14 @@ void cs_list(
     case 1:
         color(0, 0, 0);
         if (inv[ci].identification_state
-            == identification_state_t::completely_identified)
+            == IdentifyState::completely_identified)
         {
             switch (inv[ci].curse_state)
             {
-            case curse_state_t::doomed: color(100, 10, 100); break;
-            case curse_state_t::cursed: color(150, 10, 10); break;
-            case curse_state_t::none: color(10, 40, 120); break;
-            case curse_state_t::blessed: color(10, 110, 30); break;
+            case CurseState::doomed: color(100, 10, 100); break;
+            case CurseState::cursed: color(150, 10, 10); break;
+            case CurseState::none: color(10, 40, 120); break;
+            case CurseState::blessed: color(10, 110, 30); break;
             }
         }
         if (ibit(13, ci))
@@ -2450,7 +2450,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+        font(12 + sizefix - en * 2, snail::font_t::Style::bold);
         pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
     }

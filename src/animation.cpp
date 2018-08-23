@@ -262,13 +262,13 @@ void bright_aura_animation::do_play()
     // Load image and play sound.
     switch (type)
     {
-    case type_t::debuff:
+    case Type::debuff:
         prepare_item_image(8, 0);
         snd_at(38, target_pos);
         break;
-    case type_t::offering: prepare_item_image(9, 0); break;
-    case type_t::healing:
-    case type_t::healing_rain:
+    case Type::offering: prepare_item_image(9, 0); break;
+    case Type::healing:
+    case Type::healing_rain:
         prepare_item_image(7, 0);
         snd_at(33, target_pos);
         break;
@@ -296,7 +296,7 @@ void bright_aura_animation::do_play()
     {
         particles_pos[i] = {rnd(inf_tiles), rnd(inf_tiles)};
         particles_n[i] = -(rnd(4) + 1);
-        if (type == type_t::debuff)
+        if (type == Type::debuff)
         {
             particles_n[i] *= -1;
         }
@@ -305,7 +305,7 @@ void bright_aura_animation::do_play()
     // Do animation.
     for (int i = 0; i < 10; ++i)
     {
-        if (type == type_t::healing_rain)
+        if (type == Type::healing_rain)
         {
             await(config::instance().animewait / 4);
         }
@@ -410,7 +410,7 @@ void ball_animation::do_play()
 {
     int anicol{};
     int anisound{};
-    if (type == type_t::ball)
+    if (type == Type::ball)
     {
         anicol = eleinfo(element, 0);
         anisound = eleinfo(element, 1);
@@ -460,7 +460,7 @@ void ball_animation::do_play()
                     continue;
                 }
                 anip1 = 48 - (anip - 4) * (anip - 4) * 2;
-                if (type == type_t::ball)
+                if (type == Type::ball)
                 {
                     if (fov_los(position.x, position.y, anidx, anidy) == 0)
                     {
@@ -667,28 +667,28 @@ void ranged_attack_animation::do_play()
 
     int anicol{};
     int anisound{};
-    if (type == type_t::magic_arrow)
+    if (type == Type::magic_arrow)
     {
         anicol = eleinfo(ele, 0);
         anisound = eleinfo(ele, 1);
     }
     prepare_item_image(6, anicol);
-    if (type == type_t::distant_attack)
+    if (type == Type::distant_attack)
     {
         prepare_item_image(23, 0);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::bow)
+    if (type == Type::bow)
     {
         prepare_item_image(1, anicol);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::crossbow)
+    if (type == Type::crossbow)
     {
         prepare_item_image(2, anicol);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::firearm)
+    if (type == Type::firearm)
     {
         if (fired_item_subcategory == 24021)
         {
@@ -701,12 +701,12 @@ void ranged_attack_animation::do_play()
             snd_at(30, attacker_pos);
         }
     }
-    if (type == type_t::throwing)
+    if (type == Type::throwing)
     {
         prepare_item_image(fired_item_image, fired_item_color);
         snd_at(31, attacker_pos);
     }
-    if (type == type_t::magic_arrow)
+    if (type == Type::magic_arrow)
     {
         snd_at(36, attacker_pos);
     }
@@ -929,7 +929,7 @@ void miracle_animation::do_play()
     am = 0;
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != character::State::alive)
         {
             continue;
         }

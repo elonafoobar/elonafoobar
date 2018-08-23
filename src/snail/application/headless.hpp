@@ -13,7 +13,7 @@ namespace snail
 class application final
 {
 public:
-    enum class orientation
+    enum class Orientation
     {
         portrait,
         landscape
@@ -53,9 +53,9 @@ public:
         return 96.0f;
     }
 
-    orientation orientation() const noexcept
+    Orientation orientation() const noexcept
     {
-        return orientation::landscape;
+        return Orientation::landscape;
     }
 
     bool was_focus_lost_just_now() noexcept
@@ -98,12 +98,12 @@ public:
         return false;
     }
 
-    window::fullscreen_mode_t get_fullscreen_mode()
+    window::FullscreenMode get_fullscreen_mode()
     {
-        return window::fullscreen_mode_t::windowed;
+        return window::FullscreenMode::windowed;
     }
 
-    void set_fullscreen_mode(window::fullscreen_mode_t);
+    void set_fullscreen_mode(window::FullscreenMode);
 
 
     std::map<std::string, ::SDL_DisplayMode> get_display_modes()

@@ -109,7 +109,7 @@ int chara_create_internal()
             get_random_npc_id();
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::the_void)
+    if (gdata_current_map == mdata_t::MapId::the_void)
     {
         if (!novoidlv)
         {
@@ -203,7 +203,7 @@ int chara_get_free_slot_force()
     std::vector<int> slots;
     for (auto&& cc : cdata.others())
     {
-        if (cc.state() == character::state_t::alive && cc.character_role == 0)
+        if (cc.state() == character::State::alive && cc.character_role == 0)
         {
             slots.push_back(cc.index);
         }
@@ -379,24 +379,24 @@ void failed_to_place_character(character& cc)
 {
     if (cc.index < 16)
     {
-        cc.set_state(character::state_t::pet_in_other_map);
+        cc.set_state(character::State::pet_in_other_map);
         txt(i18n::s.get("core.locale.chara.place_failure.ally", cc));
     }
     else
     {
         txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
-        cc.set_state(character::state_t::empty);
+        cc.set_state(character::State::empty);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
         modify_crowd_density(cc.index, -1);
     }
     if (cc.character_role != 0)
     {
-        cc.set_state(character::state_t::villager_dead);
+        cc.set_state(character::State::villager_dead);
     }
     if (cc.character_role == 13)
     {
-        cc.set_state(character::state_t::adventurer_dead);
+        cc.set_state(character::State::adventurer_dead);
         cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
     }
@@ -426,10 +426,10 @@ character::character()
 }
 
 
-void character::set_state(character::state_t new_state)
+void character::set_state(character::State new_state)
 {
     bool was_alive = !this->is_dead();
-    bool was_empty = this->state_ == character::state_t::empty;
+    bool was_empty = this->state_ == character::State::empty;
 
     this->state_ = new_state;
 
@@ -438,11 +438,11 @@ void character::set_state(character::state_t new_state)
         chara_killed(*this);
     }
 
-    if (was_empty && this->state_ != character::state_t::empty)
+    if (was_empty && this->state_ != character::State::empty)
     {
         lua::lua->get_handle_manager().create_chara_handle_run_callbacks(*this);
     }
-    else if (!was_empty && this->state_ == character::state_t::empty)
+    else if (!was_empty && this->state_ == character::State::empty)
     {
         chara_remove(*this);
     }
@@ -836,20 +836,20 @@ void initialize_character_filters()
 void chara_set_generation_filter()
 {
     dbid = 0;
-    if (gdata_current_map == mdata_t::map_id_t::cyber_dome)
+    if (gdata_current_map == mdata_t::MapId::cyber_dome)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltn(u8"sf"s);
         return;
     }
-    if (mdata_map_type == mdata_t::map_type_t::town
-        || mdata_map_type == mdata_t::map_type_t::guild)
+    if (mdata_map_type == mdata_t::MapType::town
+        || mdata_map_type == mdata_t::MapType::guild)
     {
         flt(calcobjlv(10), calcfixlv(2));
         fltselect = 5;
         if (gdata_current_dungeon_level == 1)
         {
-            if (gdata_current_map == mdata_t::map_id_t::yowyn)
+            if (gdata_current_map == mdata_t::MapId::yowyn)
             {
                 if (rnd(2))
                 {
@@ -857,7 +857,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::noyel)
+            if (gdata_current_map == mdata_t::MapId::noyel)
             {
                 if (rnd(3) == 0)
                 {
@@ -865,7 +865,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::derphy)
+            if (gdata_current_map == mdata_t::MapId::derphy)
             {
                 if (rnd(3) == 0)
                 {
@@ -878,7 +878,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 if (rnd(3) == 0)
                 {
@@ -886,7 +886,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::vernis)
+            if (gdata_current_map == mdata_t::MapId::vernis)
             {
                 if (rnd(2))
                 {
@@ -894,7 +894,7 @@ void chara_set_generation_filter()
                     return;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::palmia)
+            if (gdata_current_map == mdata_t::MapId::palmia)
             {
                 if (rnd(3) == 0)
                 {
@@ -903,21 +903,21 @@ void chara_set_generation_filter()
                 }
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::lumiest)
+        if (gdata_current_map == mdata_t::MapId::lumiest)
         {
             if (gdata_current_dungeon_level == 3)
             {
                 dbid = 289;
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::derphy)
+        if (gdata_current_map == mdata_t::MapId::derphy)
         {
             if (gdata_current_dungeon_level == 3)
             {
                 dbid = 293;
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+        if (gdata_current_map == mdata_t::MapId::port_kapul)
         {
             if (gdata_current_dungeon_level == 3)
             {
@@ -926,7 +926,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::lesimas)
+    if (gdata_current_map == mdata_t::MapId::lesimas)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (gdata_current_dungeon_level < 4)
@@ -938,29 +938,29 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::the_void)
+    if (gdata_current_map == mdata_t::MapId::the_void)
     {
         flt(calcobjlv(gdata_current_dungeon_level % 50 + 5), calcfixlv(2));
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::dragons_nest)
+    if (gdata_current_map == mdata_t::MapId::dragons_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::crypt_of_the_damned)
+    if (gdata_current_map == mdata_t::MapId::crypt_of_the_damned)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         fltn(u8"undead"s);
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::tower_of_fire)
+    if (gdata_current_map == mdata_t::MapId::tower_of_fire)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         fltn(u8"fire"s);
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::ancient_castle)
+    if (gdata_current_map == mdata_t::MapId::ancient_castle)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2) == 0)
@@ -969,20 +969,20 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::pyramid)
+    if (gdata_current_map == mdata_t::MapId::pyramid)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         flttypemajor = 13;
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest_graveyard
-        || gdata_current_map == mdata_t::map_id_t::truce_ground)
+    if (gdata_current_map == mdata_t::MapId::lumiest_graveyard
+        || gdata_current_map == mdata_t::MapId::truce_ground)
     {
         flt(calcobjlv(20), calcfixlv(2));
         fltselect = 4;
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::quest)
+    if (gdata_current_map == mdata_t::MapId::quest)
     {
         if (gdata_executing_immediate_quest_type >= 1000)
         {
@@ -996,7 +996,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::yeeks_nest)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::yeeks_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2))
@@ -1005,7 +1005,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::minotaurs_nest)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::minotaurs_nest)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         if (rnd(2))
@@ -1014,13 +1014,13 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata_map_type >= mdata_t::map_type_t::dungeon)
+    if (mdata_map_type >= mdata_t::MapType::dungeon)
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum
-        || adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
+        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         flt(calcobjlv(100), calcfixlv(2));
         if (rnd(1))
@@ -1046,7 +1046,7 @@ bool chara_place()
 
     if (rc == 56)
     {
-        cdata[rc].set_state(character::state_t::empty);
+        cdata[rc].set_state(character::State::empty);
         return false;
     }
 
@@ -1119,7 +1119,7 @@ void initialize_character()
         cdata[rc].is_lay_hand_available() = true;
     }
 
-    cdata[rc].set_state(character::state_t::alive);
+    cdata[rc].set_state(character::State::alive);
 
     cm = 0;
     return;
@@ -1157,7 +1157,7 @@ int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
     {
         if (rc == 56)
         {
-            cdata[rc].set_state(character::state_t::empty);
+            cdata[rc].set_state(character::State::empty);
             --npcmemory(1, cdata[rc].id);
             return 1;
         }
@@ -1277,17 +1277,17 @@ void chara_refresh(int cc)
             cdata[cc].hit_bonus += inv[rp].hit_bonus;
             cdata[cc].damage_bonus += inv[rp].damage_bonus;
             cdata[cc].pv += inv[rp].enhancement * 2
-                + (inv[rp].curse_state == curse_state_t::blessed) * 2;
+                + (inv[rp].curse_state == CurseState::blessed) * 2;
         }
         else if (cdata[cc].body_parts[i] / 10000 == 5)
         {
             ++attacknum;
         }
-        if (inv[rp].curse_state == curse_state_t::cursed)
+        if (inv[rp].curse_state == CurseState::cursed)
         {
             cdata[cc].curse_power += 20;
         }
-        if (inv[rp].curse_state == curse_state_t::doomed)
+        if (inv[rp].curse_state == CurseState::doomed)
         {
             cdata[cc].curse_power += 100;
         }
@@ -1624,7 +1624,7 @@ void chara_refresh(int cc)
     if (handle != sol::lua_nil)
     {
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::character_refreshed>(handle);
+            .run_callbacks<lua::EventKind::character_refreshed>(handle);
     }
 }
 
@@ -1652,9 +1652,9 @@ int chara_find(int id)
 {
     for (auto&& i : cdata.others())
     {
-        if (i.state() != character::state_t::villager_dead)
+        if (i.state() != character::State::villager_dead)
         {
-            if (i.state() != character::state_t::alive)
+            if (i.state() != character::State::alive)
             {
                 continue;
             }
@@ -1673,7 +1673,7 @@ int chara_find_ally(int id)
 {
     for (int i = 0; i < 16; ++i)
     {
-        if (cdata[i].state() != character::state_t::alive)
+        if (cdata[i].state() != character::State::alive)
         {
             continue;
         }
@@ -1691,7 +1691,7 @@ int chara_get_free_slot()
 {
     for (auto&& i : cdata.others())
     {
-        if (i.state() == character::state_t::empty)
+        if (i.state() == character::State::empty)
         {
             return i.index;
         }
@@ -1706,7 +1706,7 @@ int chara_get_free_slot_ally()
     const auto max_allies = clamp(sdata(17, 0) / 5 + 1, 2, 15);
     for (int i = 1; i < max_allies + 1; ++i)
     {
-        if (cdata[i].state() != character::state_t::empty)
+        if (cdata[i].state() != character::State::empty)
         {
             continue;
         }
@@ -1901,12 +1901,12 @@ void chara_vanquish(int cc)
         ride_end();
     }
     else if (
-        cdata[cc].state() == character::state_t::alive
-        || cdata[cc].state() == character::state_t::servant_being_selected)
+        cdata[cc].state() == character::State::alive
+        || cdata[cc].state() == character::State::servant_being_selected)
     {
         map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
     }
-    cdata[cc].set_state(character::state_t::empty);
+    cdata[cc].set_state(character::State::empty);
     cdata[cc].character_role = 0;
     if (cdata[cc].shop_store_id != 0)
     {
@@ -1994,9 +1994,9 @@ void chara_killed(character& chara)
 {
     auto handle = lua::lua->get_handle_manager().get_handle(chara);
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::character_killed>(handle);
+        .run_callbacks<lua::EventKind::character_killed>(handle);
 
-    if (chara.state() == character::state_t::empty)
+    if (chara.state() == character::State::empty)
     {
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
@@ -2004,9 +2004,9 @@ void chara_killed(character& chara)
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
     }
     else if (
-        chara.state() == character::state_t::villager_dead
-        || chara.state() == character::state_t::adventurer_dead
-        || chara.state() == character::state_t::pet_dead)
+        chara.state() == character::State::villager_dead
+        || chara.state() == character::State::adventurer_dead
+        || chara.state() == character::State::pet_dead)
     {
         // This character revives.
     }
@@ -2020,7 +2020,7 @@ void chara_killed(character& chara)
 
 void chara_remove(character& chara)
 {
-    chara.set_state(character::state_t::empty);
+    chara.set_state(character::State::empty);
     lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
 }
 
@@ -2050,7 +2050,7 @@ void chara_delete(int cc)
 void chara_relocate(
     character& source,
     optional<int> destination_slot,
-    chara_relocate_mode mode)
+    CharaRelocationMode mode)
 {
     if (source.index == gdata_mount)
     {
@@ -2070,7 +2070,7 @@ void chara_relocate(
     int hate;
     int enemy_id;
     int hp;
-    if (mode == chara_relocate_mode::change)
+    if (mode == CharaRelocationMode::change)
     {
         position = destination.position;
         initial_position = destination.initial_position;
@@ -2134,11 +2134,11 @@ void chara_relocate(
         destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
     }
 
-    if (mode == chara_relocate_mode::change)
+    if (mode == CharaRelocationMode::change)
     {
         // A new Lua handle is created here. The handles at both slots should
         // have been cleared by now.
-        destination.set_state(character::state_t::alive);
+        destination.set_state(character::State::alive);
 
         destination.position = position;
         destination.initial_position = initial_position;
@@ -2158,7 +2158,7 @@ void chara_relocate(
         else
         {
             rc = slot;
-            destination.set_state(character::state_t::alive);
+            destination.set_state(character::State::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
             chara_place();

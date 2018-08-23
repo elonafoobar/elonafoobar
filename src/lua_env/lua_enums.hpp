@@ -96,16 +96,16 @@ private:
 
 namespace LuaEnums
 {
-extern enum_map<damage_source_t> DamageSource;
-extern enum_map<color_index_t> Color;
-extern enum_map<curse_state_t> CurseState;
-extern enum_map<identification_state_t> IdentifyState;
-extern enum_map<status_ailment_t> StatusAilment;
-extern enum_map<element_t> Element;
-extern enum_map<tile_kind_t> TileKind;
-extern enum_map<int> Gender;
-extern enum_map<int> Relation;
-extern enum_map<int> CharaFlag;
+extern enum_map<DamageSource> DamageSourceTable;
+extern enum_map<ColorIndex> ColorIndexTable;
+extern enum_map<CurseState> CurseStateTable;
+extern enum_map<IdentifyState> IdentifyStateTable;
+extern enum_map<StatusAilment> StatusAilmentTable;
+extern enum_map<Element> ElementTable;
+extern enum_map<TileKind> TileKindTable;
+extern enum_map<int> GenderTable;
+extern enum_map<int> RelationTable;
+extern enum_map<int> CharaFlagTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

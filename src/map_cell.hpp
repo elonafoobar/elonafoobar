@@ -8,7 +8,7 @@ namespace elona
 struct position_t;
 
 // Maps from an enumeration to an ID in the current tileset.
-enum class tile_kind_t : int
+enum class TileKind : int
 {
     normal = 0,
     wall = 1,
@@ -38,6 +38,6 @@ bool cell_swap(int = 0, int = 0, int = 0, int = 0);
  * The ID is only valid until the tileset is changed.
  * Tilesets can have multiple variations for the same tile type.
  */
-int cell_get_type(tile_kind_t type);
+int cell_get_type(TileKind type);
 
 } // namespace elona

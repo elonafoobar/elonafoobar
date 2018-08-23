@@ -32,7 +32,7 @@ void trait_db::define(lua_State* L)
         std::stoi(id), // TODO
         trait_data{
             std::stoi(id),
-            trait_data::type_t(type),
+            trait_data::Type(type),
             min,
             max,
         });

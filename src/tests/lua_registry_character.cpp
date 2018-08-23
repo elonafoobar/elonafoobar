@@ -102,7 +102,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
         REQUIRE(data->resistances == expected);
     }
 
-    REQUIRE(data->color == color_index_t::blue);
+    REQUIRE(data->color == ColorIndex::blue);
     REQUIRE(data->sex == 1);
     REQUIRE(data->original_relationship == -3);
     REQUIRE(data->_flags[22] == true);
@@ -142,7 +142,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
         REQUIRE(data->resistances == expected);
     }
 
-    REQUIRE(data->color == color_index_t::none);
+    REQUIRE(data->color == ColorIndex::none);
     REQUIRE(data->sex == -1);
     REQUIRE(data->original_relationship == 0);
     REQUIRE(data->_flags[22] == false);

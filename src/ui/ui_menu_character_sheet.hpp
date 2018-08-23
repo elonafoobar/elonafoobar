@@ -12,7 +12,7 @@ class ui_menu_character_sheet
     : public ui_menu<ui_menu_composite_character_result>
 {
 public:
-    ui_menu_character_sheet(character_sheet_operation operation)
+    ui_menu_character_sheet(CharacterSheetOperation operation)
         : _operation(operation)
     {
     }
@@ -25,7 +25,7 @@ protected:
         const std::string& key);
 
 private:
-    character_sheet_operation _operation;
+    CharacterSheetOperation _operation;
 
     bool _returned_from_portrait = false;
     int _cs_buff = 0;

@@ -154,25 +154,25 @@ void initialize_home_adata()
     return;
 }
 
-turn_result_t build_new_building()
+TurnResult build_new_building()
 {
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(0) != 0)
     {
         txt(i18n::s.get("core.locale.building.cannot_build_it_here"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::none)
+        if (adata(16, cnt) == mdata_t::MapId::none)
         {
             area = cnt;
             break;
@@ -182,7 +182,7 @@ turn_result_t build_new_building()
     {
         txt(i18n::s.get("core.locale.building.cannot_build_anymore"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get("core.locale.building.really_build_it_here"));
     ELONA_YES_NO_PROMPT();
@@ -190,7 +190,7 @@ turn_result_t build_new_building()
     if (rtval != 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (inv[ci].id == 344)
     {
@@ -199,7 +199,7 @@ turn_result_t build_new_building()
         initialize_home_adata();
         std::string midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
-        ctrl_file(file_operation_t::map_delete_preserve_items);
+        ctrl_file(FileOperation::map_delete_preserve_items);
         mid = midbk;
         map_global_prepare();
         levelexitby = 2;
@@ -212,13 +212,13 @@ turn_result_t build_new_building()
         txt(i18n::s.get("core.locale.building.built_new_house"));
         msg_halt();
         snd(49);
-        return turn_result_t::exit_map;
+        return TurnResult::exit_map;
     }
-    ctrl_file(file_operation_t::temp_dir_delete_area);
+    ctrl_file(FileOperation::temp_dir_delete_area);
     p = area;
     adata(1, p) = cdata.player().position.x;
     adata(2, p) = cdata.player().position.y;
-    adata(0, p) = mdata_t::map_type_t::player_owned;
+    adata(0, p) = mdata_t::MapType::player_owned;
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(18, p) = 3;
@@ -230,38 +230,38 @@ turn_result_t build_new_building()
     adata(30, p) = gdata(850);
     if (inv[ci].id == 521)
     {
-        adata(16, p) = mdata_t::map_id_t::museum;
+        adata(16, p) = mdata_t::MapId::museum;
         adata(15, p) = 151;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 522)
     {
-        adata(16, p) = mdata_t::map_id_t::shop;
+        adata(16, p) = mdata_t::MapId::shop;
         adata(15, p) = 150;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 542)
     {
-        adata(16, p) = mdata_t::map_id_t::crop;
+        adata(16, p) = mdata_t::MapId::crop;
         adata(15, p) = 152;
         adata(21, p) = 2;
     }
     if (inv[ci].id == 543)
     {
-        adata(16, p) = mdata_t::map_id_t::storage_house;
+        adata(16, p) = mdata_t::MapId::storage_house;
         adata(15, p) = 153;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 572)
     {
-        adata(16, p) = mdata_t::map_id_t::ranch;
+        adata(16, p) = mdata_t::MapId::ranch;
         adata(15, p) = 154;
         adata(21, p) = 2;
         adata(12, p) = 1;
     }
     if (inv[ci].id == 712)
     {
-        adata(16, p) = mdata_t::map_id_t::your_dungeon;
+        adata(16, p) = mdata_t::MapId::your_dungeon;
         adata(15, p) = 138;
         adata(21, p) = 1;
         adata(12, p) = 1;
@@ -272,7 +272,7 @@ turn_result_t build_new_building()
     txt(i18n::s.get("core.locale.building.built_new", s(0)));
     map_global_prepare();
     inv[ci].modify_number(-1);
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
@@ -298,15 +298,15 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
     return;
 }
 
-turn_result_t show_house_board()
+TurnResult show_house_board()
 {
     txtnew();
-    if (mdata_map_type != mdata_t::map_type_t::player_owned)
+    if (mdata_map_type != mdata_t::MapType::player_owned)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     p(0) = 0;
     p(1) = 0;
@@ -336,7 +336,7 @@ turn_result_t show_house_board()
         p(0),
         p(1),
         p(2)));
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -350,7 +350,7 @@ turn_result_t show_house_board()
                 "core.locale.building.shop.no_assigned_shopkeeper"));
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
     {
         if (getworker(gdata_current_map) != -1)
         {
@@ -363,13 +363,13 @@ turn_result_t show_house_board()
             txt(i18n::s.get("core.locale.building.ranch.no_assigned_breeder"));
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         p = 0;
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.state() == character::state_t::alive
-                || cnt.state() == character::state_t::villager_dead)
+            if (cnt.state() == character::State::alive
+                || cnt.state() == character::State::villager_dead)
             {
                 if (cnt.character_role != 0)
                 {
@@ -385,7 +385,7 @@ turn_result_t show_house_board()
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
     p = 0;
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
@@ -402,7 +402,7 @@ turn_result_t show_house_board()
                 ""s + 5);
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get(
@@ -414,7 +414,7 @@ turn_result_t show_house_board()
         i18n::s.get("core.locale.building.house_board.choices.design"),
         u8"null"s,
         ""s + 0);
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         ELONA_APPEND_PROMPT(
             i18n::s.get("core.locale.building.house_board.choices.home_rank"),
@@ -443,7 +443,7 @@ turn_result_t show_house_board()
     if (stat == -1)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     rtval = stat;
     switch (rtval)
@@ -459,7 +459,7 @@ turn_result_t show_house_board()
     tlocinity = 0;
     screenupdate = -1;
     update_screen();
-    return turn_result_t::show_house_board;
+    return TurnResult::show_house_board;
 }
 
 
@@ -469,8 +469,8 @@ void prompt_hiring()
     p = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::state_t::alive
-            || cnt.state() == character::state_t::villager_dead)
+        if (cnt.state() == character::State::alive
+            || cnt.state() == character::State::villager_dead)
         {
             if (cnt.character_role != 0)
             {
@@ -506,7 +506,7 @@ void prompt_hiring()
         {
             continue;
         }
-        cdata[rc].set_state(character::state_t::servant_being_selected);
+        cdata[rc].set_state(character::State::servant_being_selected);
         cdata[rc].character_role = isethirerole(hire);
         if (cdata[rc].id == 1)
         {
@@ -556,7 +556,7 @@ void prompt_hiring()
             {
                 continue;
             }
-            if (cnt.state() != character::state_t::empty
+            if (cnt.state() != character::State::empty
                 && cdatan(0, cnt.index) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
@@ -566,7 +566,7 @@ void prompt_hiring()
     randomize();
     txtnew();
     txt(i18n::s.get("core.locale.building.home.hire.who"));
-    int stat = show_hire_menu(hire_operation::hire);
+    int stat = show_hire_menu(HireOperation::hire);
     if (stat != -1)
     {
         tc = stat;
@@ -580,7 +580,7 @@ void prompt_hiring()
             snd(12);
             cdata.player().gold -= calchirecost(tc) * 20;
             await(config::instance().animewait * 10);
-            cdata[tc].set_state(character::state_t::alive);
+            cdata[tc].set_state(character::State::alive);
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));
@@ -589,7 +589,7 @@ void prompt_hiring()
     }
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() == character::state_t::servant_being_selected)
+        if (cnt.state() == character::State::servant_being_selected)
         {
             chara_vanquish(cnt.index);
         }
@@ -646,7 +646,7 @@ void start_home_map_mode()
             break;
         }
 
-        if (getkey(snail::key::ctrl))
+        if (getkey(snail::Key::ctrl))
         {
             if (map(tlocx, tlocy, 0) != tile)
             {
@@ -769,7 +769,7 @@ void prompt_move_ally()
 
         txtnew();
         txt(i18n::s.get("core.locale.building.home.move.who"));
-        int stat = show_hire_menu(hire_operation::move);
+        int stat = show_hire_menu(HireOperation::move);
         if (stat == -1)
         {
             break;
@@ -817,7 +817,7 @@ void prompt_move_ally()
 void prompt_ally_staying()
 {
     {
-        int stat = ctrl_ally(ctrl_ally_operation::staying);
+        int stat = ctrl_ally(ControlAllyOperation::staying);
         if (stat != -1)
         {
             int c = stat;
@@ -825,7 +825,7 @@ void prompt_ally_staying()
             txtnew();
             if (getworker(gdata_current_map, c) == c)
             {
-                if (gdata_current_map == mdata_t::map_id_t::your_home)
+                if (gdata_current_map == mdata_t::MapId::your_home)
                 {
                     cdata[c].current_map = 0;
                     txt(i18n::s.get(
@@ -842,7 +842,7 @@ void prompt_ally_staying()
             }
             else
             {
-                if (gdata_current_map == mdata_t::map_id_t::your_home)
+                if (gdata_current_map == mdata_t::MapId::your_home)
                 {
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
@@ -889,7 +889,7 @@ void update_shop_and_report()
     std::string midbk = mid;
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::shop)
+        if (adata(16, cnt) == mdata_t::MapId::shop)
         {
             area = cnt;
             mid = ""s + area + u8"_"s + 101;
@@ -897,7 +897,7 @@ void update_shop_and_report()
         }
     }
     mid = midbk;
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -935,8 +935,8 @@ void show_shop_log()
     }
     if (gdata_current_map != area)
     {
-        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
-        ctrl_file(file_operation2_t::map_items_read, u8"inv_"s + mid + u8".s2");
+        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
     dblistmax = 0;
@@ -1038,7 +1038,7 @@ void show_shop_log()
         {
             for (auto&& cnt : cdata.all())
             {
-                if (cnt.state() != character::state_t::alive)
+                if (cnt.state() != character::State::alive)
                 {
                     continue;
                 }
@@ -1058,16 +1058,16 @@ void show_shop_log()
     if (gdata_current_map != area)
     {
         ctrl_file(
-            file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
+            FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
     }
     else
     {
-        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     }
     tmpload(filesystem::u8path(u8"shop5.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop5.s2"))
     {
-        ctrl_file(file_operation2_t::map_items_read, u8"shop5.s2");
+        ctrl_file(FileOperation2::map_items_read, u8"shop5.s2");
     }
     else
     {
@@ -1165,8 +1165,8 @@ void show_shop_log()
         modrank(5, 30, 2);
     }
     mode = 0;
-    ctrl_file(file_operation2_t::map_items_write, u8"shop5.s2");
-    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shop5.s2");
+    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     return;
 }
 
@@ -1430,7 +1430,7 @@ void update_ranch()
     livestock = 0;
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != character::State::alive)
         {
             continue;
         }
@@ -1483,7 +1483,7 @@ void update_ranch()
         egg = 0;
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != character::State::alive)
             {
                 continue;
             }

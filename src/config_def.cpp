@@ -22,15 +22,15 @@ static void add_platform(config_def::metadata& dat, const hcl::Object& item)
 
     if (platform == "desktop")
     {
-        dat.platform = config_def::option_platform::desktop;
+        dat.platform = config_def::Platform::desktop;
     }
     else if (platform == "android")
     {
-        dat.platform = config_def::option_platform::android;
+        dat.platform = config_def::Platform::android;
     }
     else
     {
-        dat.platform = config_def::option_platform::all;
+        dat.platform = config_def::Platform::all;
     }
 }
 

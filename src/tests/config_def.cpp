@@ -106,16 +106,16 @@ config def {
 
     REQUIRE(
         def.get_metadata("core.config.foo").platform
-        == config_def::option_platform::all);
+        == config_def::Platform::all);
     REQUIRE(
         def.get_metadata("core.config.baz").platform
-        == config_def::option_platform::desktop);
+        == config_def::Platform::desktop);
     REQUIRE(
         def.get_metadata("core.config.hoge").platform
-        == config_def::option_platform::android);
+        == config_def::Platform::android);
     REQUIRE(
         def.get_metadata("core.config.fuga").platform
-        == config_def::option_platform::all);
+        == config_def::Platform::all);
 }
 
 TEST_CASE("Test metadata: platform_default", "[Config: Definition]")

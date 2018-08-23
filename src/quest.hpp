@@ -3,7 +3,7 @@
 namespace elona
 {
 
-enum class turn_result_t;
+enum class TurnResult;
 
 void quest_on_map_initialize();
 void quest_place_target();
@@ -21,7 +21,7 @@ void quest_complete();
 int quest_is_return_forbidden();
 void quest_exit_map();
 void quest_team_victorious();
-turn_result_t quest_pc_died_during_immediate_quest();
+TurnResult quest_pc_died_during_immediate_quest();
 
 int quest_generate();
 void quest_gen_scale_by_level();

@@ -396,7 +396,7 @@ TEST_CASE(
     int tc = elona::rc;
     flt(20, 2);
     REQUIRE(chara_create(56, 0, -3, 0));
-    chara_relocate(cdata.tmp(), tc, chara_relocate_mode::change);
+    chara_relocate(cdata.tmp(), tc, CharaRelocationMode::change);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle["__index"].get<int>() == elona::rc);
@@ -458,11 +458,11 @@ TEST_CASE(
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // State is set to empty.
-    chara.set_state(character::state_t::empty);
+    chara.set_state(character::State::empty);
     REQUIRE(handle_mgr.handle_is_valid(handle) == false);
 
     // State becomes non-empty again. Character counts as recreated.
-    chara.set_state(character::state_t::alive);
+    chara.set_state(character::State::alive);
     REQUIRE(handle_mgr.handle_is_valid(handle) == false);
 
     // The handle has been replaced, so retrieve it again.
