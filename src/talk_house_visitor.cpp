@@ -216,44 +216,43 @@ int _adventurer_get_trained_skill()
     return val;
 }
 
-void _adventurer_learn_skill()
+void _adventurer_learn_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calclearncost(csskill, 0, true);
-    chara_gain_skill(cdata[cc], csskill);
+    cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
+    chara_gain_skill(cdata[cc], skill_id);
     ++gdata_number_of_learned_skills_by_trainer;
 }
 
-void _adventurer_train_skill()
+void _adventurer_train_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calctraincost(csskill, 0, true);
+    cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
     modify_potential(
         cdata[cc],
-        csskill,
+        skill_id,
         clamp(
-            15 - sdata.get(csskill, cc).potential / 15,
+            15 - sdata.get(skill_id, cc).potential / 15,
             2,
-            15 - (csskill < 18) * 10));
+            15 - (skill_id < 18) * 10));
 }
 
 talk_result_t _talk_hv_adventurer_train()
 {
-    int stat = _adventurer_get_trained_skill();
-    csskill = stat;
+    int skill_id = _adventurer_get_trained_skill();
 
     list(0, listmax) = 0;
     listn(0, listmax) =
         i18n::s.get("core.locale.talk.visitor.adventurer.train.choices.pass");
     ++listmax;
-    if (sdata.get(csskill, 0).original_level == 0)
+    if (sdata.get(skill_id, 0).original_level == 0)
     {
         buff = i18n::s.get(
             "core.locale.talk.visitor.adventurer.train.learn."
             "dialog",
-            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-            std::to_string(calclearncost(csskill, cc, true))
+            i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+            std::to_string(calclearncost(skill_id, cc, true))
                 + i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calclearncost(csskill, cc, true))
+        if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = i18n::s.get(
@@ -267,11 +266,11 @@ talk_result_t _talk_hv_adventurer_train()
         buff = i18n::s.get(
             "core.locale.talk.visitor.adventurer.train.train."
             "dialog",
-            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-            std::to_string(calclearncost(csskill, cc, true))
+            i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
+            std::to_string(calclearncost(skill_id, cc, true))
                 + i18n::_(u8"ui", u8"platinum"),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calctraincost(csskill, cc, true))
+        if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) = i18n::s.get(
@@ -305,7 +304,7 @@ talk_result_t _talk_hv_adventurer_train()
     snd(12);
     if (chatval_ == 1)
     {
-        _adventurer_learn_skill();
+        _adventurer_learn_skill(skill_id);
 
         listmax = 0;
         buff = i18n::s.get(
@@ -326,7 +325,7 @@ talk_result_t _talk_hv_adventurer_train()
     }
     if (chatval_ == 2)
     {
-        _adventurer_train_skill();
+        _adventurer_train_skill(skill_id);
 
         listmax = 0;
         buff = i18n::s.get(
@@ -477,12 +476,11 @@ talk_result_t _talk_hv_adventurer_materials()
 
 talk_result_t _talk_hv_adventurer_favorite_skill()
 {
-    int stat = advfavoriteskill(tc);
-    csskill = rtval(rnd(stat));
+    int skill_id = advfavoriteskill(tc);
     listmax = 0;
     buff = i18n::s.get(
         "core.locale.talk.visitor.adventurer.favorite_skill.dialog",
-        i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+        i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
@@ -502,12 +500,11 @@ talk_result_t _talk_hv_adventurer_favorite_skill()
 
 talk_result_t _talk_hv_adventurer_favorite_stat()
 {
-    int stat = advfavoritestat(tc);
-    csskill = stat;
+    int skill_id = advfavoritestat(tc);
     listmax = 0;
     buff = i18n::s.get(
         "core.locale.talk.visitor.adventurer.favorite_stat.dialog",
-        i18n::_(u8"ability", std::to_string(csskill), u8"name"),
+        i18n::_(u8"ability", std::to_string(skill_id), u8"name"),
         cdata[tc]);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;

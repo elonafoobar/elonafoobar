@@ -2485,7 +2485,7 @@ void cs_list(
 
 
 
-void showscroll(const std::string& title, int x, int y, int width, int height)
+void showscroll(const std::string& hint, int x, int y, int width, int height)
 {
     if (windowshadow != 0)
     {
@@ -2496,7 +2496,7 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
     }
     draw_scroll(x, y, width, height);
 
-    if (title.empty())
+    if (hint.empty())
         return;
 
     draw("tip_icon", x + 40, y + height - 67 - height % 8);
@@ -2515,7 +2515,7 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
     font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
-    mes(s);
+    mes(hint);
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);

@@ -739,25 +739,9 @@ void draw_spell_power_entry(int skill_id)
 
 menu_result _show_character_sheet_menu(size_t menu_index)
 {
-    while (true)
-    {
-        auto menu = ui::ui_menu_composite_character(menu_index);
-        auto result = menu.show();
+    ui::ui_menu_composite_character(menu_index).show();
 
-        if (result.canceled)
-        {
-            break;
-        }
-
-        auto sheet_result =
-            boost::get<ui::character_sheet_result>(*result.value);
-        if (!sheet_result.returned_from_portrait)
-        {
-            break;
-        }
-        menu_index = menu.selected_index();
-    }
-
+    update_screen();
     return {false, false, turn_result_t::pc_turn_user_error};
 }
 
@@ -769,37 +753,28 @@ menu_result menu_character_sheet_normal()
 
 menu_result menu_feats()
 {
-    auto result = _show_character_sheet_menu(
+    return _show_character_sheet_menu(
         ui::ui_menu_composite_character::index::feats);
-
-    update_screen();
-    return result;
 }
 
 menu_result menu_equipment()
 {
-    auto result = _show_character_sheet_menu(
+    return _show_character_sheet_menu(
         ui::ui_menu_composite_character::index::equipment);
-
-    update_screen();
-    return result;
 }
 
 menu_result menu_materials()
 {
-    auto result = _show_character_sheet_menu(
+    return _show_character_sheet_menu(
         ui::ui_menu_composite_character::index::materials);
-
-    update_screen();
-    return result;
 }
 
 // Returns false if canceled, true if confirmed
 bool menu_character_sheet_character_making()
 {
-    auto result = ui::ui_menu_character_sheet(
-                      character_sheet_operation::character_making, false)
-                      .show();
+    auto result =
+        ui::ui_menu_character_sheet(character_sheet_operation::character_making)
+            .show();
 
     if (result.canceled)
     {
@@ -822,7 +797,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         op = character_sheet_operation::learn_skill;
     }
 
-    auto result = ui::ui_menu_character_sheet(op, false).show();
+    auto result = ui::ui_menu_character_sheet(op).show();
 
     if (result.canceled || !result.value)
     {
@@ -835,8 +810,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
 
 void menu_character_sheet_investigate()
 {
-    ui::ui_menu_character_sheet(
-        character_sheet_operation::investigate_ally, false)
+    ui::ui_menu_character_sheet(character_sheet_operation::investigate_ally)
         .show();
 }
 

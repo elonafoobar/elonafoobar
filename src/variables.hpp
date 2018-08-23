@@ -60,7 +60,6 @@ ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
-ELONA_EXTERN(int csskill);
 ELONA_EXTERN(elona_vector1<int> randcolor);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(int attackvar);

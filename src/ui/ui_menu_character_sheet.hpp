@@ -12,11 +12,8 @@ class ui_menu_character_sheet
     : public ui_menu<ui_menu_composite_character_result>
 {
 public:
-    ui_menu_character_sheet(
-        character_sheet_operation operation,
-        bool returned_from_portrait)
+    ui_menu_character_sheet(character_sheet_operation operation)
         : _operation(operation)
-        , _returned_from_portrait(returned_from_portrait)
     {
     }
 
@@ -29,8 +26,8 @@ protected:
 
 private:
     character_sheet_operation _operation;
-    bool _returned_from_portrait;
 
+    bool _returned_from_portrait = false;
     int _cs_buff = 0;
     int _cs_buffmax = 0;
 };

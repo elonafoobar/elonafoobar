@@ -386,7 +386,6 @@ bool ui_menu_character_sheet::init()
     {
         cc = 0;
     }
-    csskill = -1;
     curmenu = 0;
     if (_operation == character_sheet_operation::train_skill
         || _operation == character_sheet_operation::learn_skill)
@@ -1295,15 +1294,15 @@ static void _track_skill(int skill_id)
     }
 }
 
-static void _apply_skill_bonus(int csskill)
+static void _apply_skill_bonus(int csskill_)
 {
     --cdata.player().skill_bonus;
     snd(19);
-    chara_gain_skill_exp(cdata[cc], csskill, 400, 2, 1000);
+    chara_gain_skill_exp(cdata[cc], csskill_, 400, 2, 1000);
     modify_potential(
         cdata[cc],
-        csskill,
-        clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
+        csskill_,
+        clamp(15 - sdata.get(csskill_, cc).potential / 15, 2, 15));
 }
 
 optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
@@ -1320,9 +1319,9 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
                 {
                     nowindowanime = 1;
                 }
-                // returnedfromportrait = 1
-                return ui_menu_character_sheet::result::finish(
-                    ui_menu_composite_character_result{true});
+                _returned_from_portrait = true;
+                set_reinit();
+                return none;
             }
         }
         else if (key == key_north)
@@ -1346,16 +1345,8 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             return none;
         }
     }
-    else if (_operation != character_sheet_operation::character_making)
-    {
-        if (key == key_mode2)
-        {
-            int index = pagesize * (page - 1) + cs;
-            int skill_id = list(0, index);
-            _track_skill(skill_id);
-        }
-    }
-    else if (_operation == character_sheet_operation::character_making)
+
+    if (_operation == character_sheet_operation::character_making)
     {
         if (key == key_enter)
         {
@@ -1369,6 +1360,16 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         }
         return none;
     }
+    else
+    {
+        if (key == key_mode2)
+        {
+            int index = pagesize * (page - 1) + cs;
+            int skill_id = list(0, index);
+            _track_skill(skill_id);
+        }
+    }
+
     p = -1;
     for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
@@ -1382,30 +1383,30 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     {
         if (_operation != character_sheet_operation::investigate_ally)
         {
-            // TODO: return csskill for talk_trainer()
-            csskill = p;
+            int skill_id = p;
             if (_operation == character_sheet_operation::train_skill
                 || _operation == character_sheet_operation::learn_skill)
             {
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
-                // result.succeeded = false;
-                return ui_menu_character_sheet::result::cancel();
+                return ui_menu_character_sheet::result::finish(
+                    ui_menu_composite_character_result{skill_id});
             }
-            if (cdata.player().skill_bonus < 1 || p < 0 || p < 100)
+            if (cdata.player().skill_bonus < 1 || skill_id < 0
+                || skill_id < 100)
             {
                 set_reupdate();
                 return none;
             }
-            if (sdata.get(csskill, 0).original_level == 0)
+            if (sdata.get(skill_id, 0).original_level == 0)
             {
                 snd(27);
                 set_reupdate();
                 return none;
             }
 
-            _apply_skill_bonus(csskill);
+            _apply_skill_bonus(skill_id);
 
             render_hud();
             set_reupdate();

@@ -10,7 +10,7 @@ struct character_sheet_result
 {
     character_sheet_result(bool returned_from_portrait)
         : returned_from_portrait(returned_from_portrait)
-        , trainer_skill_id(-1)
+        , trainer_skill_id(none)
     {
     }
     character_sheet_result(int trainer_skill_id)
@@ -20,7 +20,7 @@ struct character_sheet_result
     }
 
     bool returned_from_portrait;
-    int trainer_skill_id;
+    optional<int> trainer_skill_id;
 };
 
 enum class feats_result
