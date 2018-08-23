@@ -576,9 +576,9 @@ static void _draw_portrait_face()
 {
     if (cdata[cc].portrait >= 0)
     {
-        p = cdata[cc].sex * 64 + cdata[cc].portrait;
+        int portrait_id = cdata[cc].sex * 64 + cdata[cc].portrait;
         pos(wx + 560, wy + 27);
-        gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
+        gcopy(4, portrait_id % 16 * 48, portrait_id / 16 * 72, 48, 72, 80, 112);
     }
     else
     {
@@ -944,29 +944,32 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
             boxf(x, y, 32, 32, {200, 200, 255, 63});
         }
     }
+
+    std::string buff_desc;
+
     if (_cs_buffmax != 0)
     {
         const auto duration = calc_buff_duration(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         const auto description = get_buff_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
-        s = ""s
-            + i18n::_(
-                  u8"buff",
-                  std::to_string(cdata[cc].buffs[_cs_buff].id),
-                  u8"name")
+        buff_desc = ""s
+            + i18n::_(u8"buff",
+                      std::to_string(cdata[cc].buffs[_cs_buff].id),
+                      u8"name")
             + u8": "s + cdata[cc].buffs[_cs_buff].turns
             + i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration)
             + description;
     }
     else
     {
-        s = i18n::s.get("core.locale.ui.chara_sheet.buff.is_not_currently");
+        buff_desc =
+            i18n::s.get("core.locale.ui.chara_sheet.buff.is_not_currently");
     }
 
     font(13 - en * 2);
     pos(wx + 108, wy + 366);
-    mes(s);
+    mes(buff_desc);
     font(11 + sizefix * 2 - en * 2, snail::font_t::style_t::bold);
     color(20, 10, 0);
     pos(wx + 70, wy + 369 - en * 3);
@@ -1022,7 +1025,7 @@ static void _draw_other_pages_topics()
 static void _draw_other_pages_keys()
 {
     keyrange = 0;
-    p(1) = 0;
+    int item_count = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         int index = pagesize * (page - 1) + cnt;
@@ -1033,14 +1036,14 @@ static void _draw_other_pages_keys()
         key_list(cnt) = key_select(cnt);
         ++keyrange;
 
-        int list_item = list(0, p);
+        int list_item = list(0, index);
 
         if (list_item < 0)
         {
-            p(1) = 1;
+            item_count = 1;
             continue;
         }
-        ++p(1);
+        ++item_count;
         if (list_item < 100)
         {
             x = 52;
@@ -1051,7 +1054,7 @@ static void _draw_other_pages_keys()
             x = 70;
             dx = 0;
         }
-        if (p(1) % 2 == 0)
+        if (item_count % 2 == 0)
         {
             boxf(wx + x, wy + 66 + cnt * 19, 595 + dx, 18, {12, 14, 16, 16});
         }
@@ -1102,8 +1105,8 @@ static void _draw_skill_name(int cnt, int skill_id)
 
     if (_is_resistance(skill_id))
     {
-        skill_name =
-            i18n::s.get("core.locale.ui.chara_sheet.skill.resist", cnven(s));
+        skill_name = i18n::s.get(
+            "core.locale.ui.chara_sheet.skill.resist", cnven(skill_name));
     }
 
     for (int cnt = 0; cnt < 3; ++cnt)
@@ -1162,7 +1165,7 @@ static void _draw_skill_train_cost(int cnt, int skill_id, bool is_training)
     {
         train_cost = ""s + calclearncost(skill_id, cc) + u8"p "s;
     }
-    pos(wx + 322 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
+    pos(wx + 322 - strlen_u(train_cost) * 7, wy + 66 + cnt * 19 + 2);
     mes(train_cost);
 }
 

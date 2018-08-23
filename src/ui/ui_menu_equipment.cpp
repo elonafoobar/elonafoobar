@@ -309,7 +309,7 @@ static void _equip_item()
     ctrl_inventory();
 }
 
-static void _on_list_entry_select(int index)
+static bool _on_list_entry_select(int index)
 {
     body = index;
 
@@ -317,10 +317,11 @@ static void _on_list_entry_select(int index)
     {
         _unequip_item();
         render_hud();
-        return;
+        return false;
     }
 
     _equip_item();
+    return true;
 }
 
 static void _show_item_desc(int body_)
@@ -342,9 +343,17 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
     {
         _cs_prev = cs;
 
-        _on_list_entry_select(p);
+        bool equipped = _on_list_entry_select(p);
 
-        set_reupdate();
+        if (equipped)
+        {
+            // Reinitialize "list" after returning from ctrl_inventory().
+            set_reinit();
+        }
+        else
+        {
+            set_reupdate();
+        }
         return none;
     }
     else if (key == key_identify)
@@ -354,6 +363,9 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
         {
             _cs_prev = cs;
             _show_item_desc(body_);
+
+            // Modifies "list", so run init() again in-place.
+            set_reinit();
             return none;
         }
     }

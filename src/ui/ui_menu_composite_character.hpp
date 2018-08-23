@@ -39,9 +39,9 @@ public:
     enum index : size_t
     {
         character_sheet = 0,
-        materials = 1,
+        equipment = 1,
         feats = 2,
-        equipment = 3
+        materials = 3,
     };
 
     ui_menu_composite_character(size_t selected)

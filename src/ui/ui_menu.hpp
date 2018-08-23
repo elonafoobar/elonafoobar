@@ -56,38 +56,61 @@ public:
     virtual optional<result_type> on_key(const std::string& key) = 0;
 
 protected:
+    /**
+     * Runs update() after the next cycle.
+     */
     void set_reupdate()
     {
         _reupdate = true;
     }
 
+    /**
+     * Reinitializes this menu in-place on the next cycle by calling init(), for
+     * example after opening another menu inside of it that modifies "list".
+     */
+    void set_reinit()
+    {
+        _reinit = true;
+    }
+
 public:
     ui_menu::result show()
     {
-        if (!init())
-        {
-            return result_type::cancel();
-        }
-
-        update();
-        _reupdate = false;
-
         while (true)
         {
-            draw();
-
-            _redraw();
-            _update_input();
-
-            if (auto res = on_key(elona::key))
+            if (!init())
             {
-                return *res;
+                return result_type::cancel();
             }
 
-            if (_reupdate)
+            update();
+            _reupdate = false;
+
+            while (true)
             {
-                update();
-                _reupdate = false;
+                draw();
+
+                _redraw();
+                _update_input();
+
+                if (auto res = on_key(elona::key))
+                {
+                    return *res;
+                }
+
+                if (_reupdate)
+                {
+                    update();
+                    _reupdate = false;
+                }
+
+                if (_reinit)
+                {
+                    _reinit = false;
+
+                    // Break out of this loop and run init() again at the top.
+                    break;
+                }
             }
         }
     }
@@ -106,6 +129,7 @@ private:
     }
 
     bool _reupdate = false;
+    bool _reinit = false;
 };
 
 } // namespace ui

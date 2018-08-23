@@ -337,9 +337,9 @@ static void _draw_list_entries()
             break;
         }
 
-        int list_index = list(0, p);
-        int list_value = list(1, p);
-        const std::string& text = listn(0, p);
+        int list_index = list(0, index);
+        int list_value = list(1, index);
+        const std::string& text = listn(0, index);
         _draw_single_list_entry(cnt, list_index, list_value, text);
     }
     if (keyrange != 0)
@@ -405,11 +405,10 @@ static void _switch_target(bool is_forwards)
                 new_index = 15;
             }
         }
-        if (cdata[p].state() != character::state_t::alive)
+        if (cdata[new_index].state() == character::state_t::alive)
         {
-            continue;
+            break;
         }
-        break;
     }
     tc = new_index;
     snd(1);
