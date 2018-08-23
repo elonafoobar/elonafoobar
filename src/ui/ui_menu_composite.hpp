@@ -43,6 +43,11 @@ public:
         _menu_switched = true;
     }
 
+    size_t selected_index() const noexcept
+    {
+        return _selected;
+    }
+
 protected:
     void push_back(
         std::unique_ptr<menu_type> menu,

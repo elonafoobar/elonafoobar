@@ -947,9 +947,8 @@ talk_result_t talk_informer_investigate_ally()
             snd(12);
             cdata.player().gold -= 10000;
             cc = rc;
-            csctrl = 4;
             snd(26);
-            menu_character_sheet();
+            menu_character_sheet_investigate();
             cc = 0;
             talk_start();
             buff = "";
@@ -1446,21 +1445,19 @@ talk_result_t talk_accepted_quest()
     return talk_result_t::talk_end;
 }
 
-
-
-talk_result_t talk_trainer()
+talk_result_t talk_trainer(bool is_training)
 {
     tcbk = tc;
     menucycle = 0;
-    menu_character_sheet();
+    optional<int> selected_skill = menu_character_sheet_trainer(is_training);
     talk_start();
-    if (csskill == -1)
+    if (!selected_skill)
     {
         buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
         return talk_result_t::talk_npc;
     }
     listmax = 0;
-    if (csctrl == 2)
+    if (is_training)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.trainer.cost.training",
@@ -1499,7 +1496,7 @@ talk_result_t talk_trainer()
     if (chatval_ == 1)
     {
         snd(12);
-        if (csctrl == 2)
+        if (is_training)
         {
             cdata.player().platinum_coin -= calctraincost(csskill, cc);
             modify_potential(
@@ -1525,6 +1522,15 @@ talk_result_t talk_trainer()
     return talk_result_t::talk_npc;
 }
 
+talk_result_t talk_trainer_train_skill()
+{
+    return talk_trainer(true);
+}
+
+talk_result_t talk_trainer_learn_skill()
+{
+    return talk_trainer(false);
+}
 
 
 talk_result_t talk_invest()
@@ -2335,7 +2341,7 @@ talk_result_t talk_npc()
     case 14:
     case 15:
     case 16: return talk_wizard_identify(chatval_);
-    case 17: csctrl = 2; return talk_trainer();
+    case 17: return talk_trainer(true);
     case 18: return talk_informer_list_adventurers();
     case 19: return talk_healer_restore_attributes();
     case 20: return talk_trade();
@@ -2348,7 +2354,7 @@ talk_result_t talk_npc()
     case 24: return talk_result_t::talk_quest_giver;
     case 25: return talk_quest_delivery();
     case 26: return talk_quest_supply();
-    case 30: csctrl = 3; return talk_trainer();
+    case 30: return talk_trainer(false);
     case 31: return talk_shop_attack();
     case 32: return talk_guard_return_item();
     case 33: return talk_bartender_call_ally();

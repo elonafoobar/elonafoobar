@@ -1,4 +1,5 @@
 #include "ui_menu_composite_character.hpp"
+#include "../menu.hpp"
 #include "ui_menu_character_sheet.hpp"
 #include "ui_menu_equipment.hpp"
 #include "ui_menu_feats.hpp"
@@ -12,7 +13,8 @@ namespace ui
 void ui_menu_composite_character::add_menus()
 {
     push_back(
-        std::make_unique<ui_menu_character_sheet>(0, false),
+        std::make_unique<ui_menu_character_sheet>(
+            character_sheet_operation::normal, false),
         9,
         "core.locale.ui.menu.chara.chara");
     push_back(

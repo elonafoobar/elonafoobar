@@ -241,7 +241,7 @@ static void _trainer_get_gainable_skills()
     return;
 }
 
-static void _load_skill_list(int _csctrl)
+static void _load_skill_list(character_sheet_operation op)
 {
     for (int cnt = 150; cnt < 400; ++cnt)
     {
@@ -249,7 +249,7 @@ static void _load_skill_list(int _csctrl)
         if (sdata(cnt, cc) != 0)
         {
             f = 1;
-            if (_csctrl == 2)
+            if (op == character_sheet_operation::train_skill)
             {
                 if (sdata.get(cnt, cc).original_level == 0)
                 {
@@ -267,12 +267,12 @@ static void _load_skill_list(int _csctrl)
     }
 }
 
-static void _load_weapon_proficiency_list(int _csctrl)
+static void _load_weapon_proficiency_list(character_sheet_operation op)
 {
     for (int cnt = 100; cnt < 150; ++cnt)
     {
         f = 0;
-        if (_csctrl != 3)
+        if (op != character_sheet_operation::learn_skill)
         {
             if (sdata(cnt, cc) != 0)
             {
@@ -315,42 +315,43 @@ static void _load_resistances_list()
     }
 }
 
-static void _load_list_skill_category(int _csctrl)
+static void _load_list_skill_category(character_sheet_operation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 20000;
     listn(0, listmax) =
         i18n::s.get("core.locale.ui.chara_sheet.category.skill");
     ++listmax;
-    if (_csctrl == 3)
+    if (op == character_sheet_operation::learn_skill)
     {
         _trainer_get_gainable_skills();
     }
     else
     {
-        _load_skill_list(_csctrl);
+        _load_skill_list(op);
     }
 }
 
-static void _load_list_proficiency_category(int _csctrl)
+static void _load_list_proficiency_category(character_sheet_operation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 30000;
     listn(0, listmax) =
         i18n::s.get("core.locale.ui.chara_sheet.category.weapon_proficiency");
     ++listmax;
-    _load_weapon_proficiency_list(_csctrl);
+    _load_weapon_proficiency_list(op);
 
-    if (_csctrl != 2 && _csctrl != 3)
+    if (op != character_sheet_operation::train_skill
+        && op != character_sheet_operation::learn_skill)
     {
         _load_resistances_list();
     }
 }
 
-static void _load_list(int _csctrl)
+static void _load_list(character_sheet_operation op)
 {
-    _load_list_skill_category(_csctrl);
-    _load_list_proficiency_category(_csctrl);
+    _load_list_skill_category(op);
+    _load_list_proficiency_category(op);
 
     sort_list_by_column1();
 }
@@ -381,18 +382,19 @@ bool ui_menu_character_sheet::init()
     pagesize = 16;
     listmax = 0;
     cs = 0;
-    if (_csctrl != 4)
+    if (_operation != character_sheet_operation::investigate_ally)
     {
         cc = 0;
     }
     csskill = -1;
     curmenu = 0;
-    if (_csctrl == 2 || _csctrl == 3)
+    if (_operation == character_sheet_operation::train_skill
+        || _operation == character_sheet_operation::learn_skill)
     {
         page = 1;
     }
 
-    _load_list(_csctrl);
+    _load_list(_operation);
 
     gsel(7);
     picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
@@ -402,15 +404,15 @@ bool ui_menu_character_sheet::init()
     ww = 700;
     wh = 400;
     s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
-    if (_csctrl == 2)
+    if (_operation == character_sheet_operation::train_skill)
     {
         s = i18n::s.get("core.locale.ui.chara_sheet.title.training");
     }
-    if (_csctrl == 3)
+    if (_operation == character_sheet_operation::learn_skill)
     {
         s = i18n::s.get("core.locale.ui.chara_sheet.title.learning");
     }
-    if (!_is_character_making)
+    if (_operation != character_sheet_operation::character_making)
     {
         snd(94);
     }
@@ -426,7 +428,7 @@ bool ui_menu_character_sheet::init()
         gcopy(7, 0, 0, 700, 400);
         gmode(2);
     }
-    if (_csctrl == 2)
+    if (_operation == character_sheet_operation::train_skill)
     {
         txtnew();
         txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
@@ -436,13 +438,14 @@ bool ui_menu_character_sheet::init()
     return true;
 }
 
-static void _draw_title(int _csctrl)
+static void _draw_title(character_sheet_operation op)
 {
     std::string title = "";
     std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
 
-    if (_csctrl == 0)
+    switch (op)
     {
+    case character_sheet_operation::normal:
         if (page == 0)
         {
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.hint")
@@ -453,14 +456,12 @@ static void _draw_title(int _csctrl)
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.spend_bonus")
                 + strhint2 + strhint3;
         }
-    }
-    if (_csctrl == 1)
-    {
+        break;
+    case character_sheet_operation::character_making:
         title = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll") + strhint6
             + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
-    }
-    if (_csctrl == 2)
-    {
+        break;
+    case character_sheet_operation::train_skill:
         if (page == 0)
         {
             title = strhint6 + strhint2 + strhint3;
@@ -470,9 +471,8 @@ static void _draw_title(int _csctrl)
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.train_skill")
                 + strhint2 + strhint3;
         }
-    }
-    if (_csctrl == 3)
-    {
+        break;
+    case character_sheet_operation::learn_skill:
         if (page == 0)
         {
             title = strhint6 + strhint2 + strhint3;
@@ -482,9 +482,8 @@ static void _draw_title(int _csctrl)
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.learn_skill")
                 + strhint2 + strhint3;
         }
-    }
-    if (_csctrl == 4)
-    {
+        break;
+    case character_sheet_operation::investigate_ally:
         if (page == 0)
         {
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info")
@@ -494,8 +493,10 @@ static void _draw_title(int _csctrl)
         {
             title = strhint2 + strhint3;
         }
+        break;
     }
-    if (_csctrl != 1)
+
+    if (op != character_sheet_operation::character_making)
     {
         if (page != 0)
         {
@@ -511,7 +512,7 @@ static void _draw_title(int _csctrl)
 
 void ui_menu_character_sheet::update()
 {
-    if (_csctrl != 1)
+    if (_operation != character_sheet_operation::character_making)
     {
         display_msg(inf_tiles + inf_screeny);
     }
@@ -525,12 +526,14 @@ void ui_menu_character_sheet::update()
     {
         page = 0;
     }
-    if (_csctrl == 1)
+    if (_operation == character_sheet_operation::character_making)
     {
+        // Don't allow moving to skills list during character
+        // creation.
         pagemax = 0;
     }
 
-    _draw_title(_csctrl);
+    _draw_title(_operation);
 }
 
 static void _draw_window(bool show_bonus)
@@ -971,7 +974,7 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
     color(0, 0, 0);
 }
 
-static void _draw_first_page(int _csctrl, int& _cs_buff, int& _cs_buffmax)
+static void _draw_first_page(int& _cs_buff, int& _cs_buffmax)
 {
     keyrange = 0;
     key_list = key_enter;
@@ -1060,7 +1063,7 @@ static void _draw_other_pages_keys()
     }
 }
 
-static void _draw_other_pages(int _csctrl)
+static void _draw_other_pages()
 {
     _draw_other_pages_topics();
     _draw_other_pages_keys();
@@ -1184,16 +1187,18 @@ static void _draw_skill_enchantment_power(int cnt, int skill_id)
     mes(enchantment_level);
 }
 
-static void _draw_skill_entry(int cnt, int skill_id, int _csctrl)
+static void
+_draw_skill_entry(int cnt, int skill_id, character_sheet_operation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
     _draw_skill_power(cnt, skill_id);
     _draw_skill_desc(cnt, skill_id);
 
-    if (_csctrl == 2 || _csctrl == 3)
+    if (op == character_sheet_operation::train_skill
+        || op == character_sheet_operation::learn_skill)
     {
-        bool is_training = _csctrl == 2;
+        bool is_training = op == character_sheet_operation::train_skill;
         _draw_skill_train_cost(cnt, skill_id, is_training);
     }
     else if (_has_enchantment(cc, skill_id))
@@ -1213,11 +1218,11 @@ static void _draw_other_page_single_list_entry(
     int cnt,
     int list_item,
     const std::string& text,
-    int _csctrl)
+    character_sheet_operation op)
 {
     if (list_item >= 0)
     {
-        _draw_skill_entry(cnt, list_item, _csctrl);
+        _draw_skill_entry(cnt, list_item, op);
     }
     else
     {
@@ -1225,7 +1230,7 @@ static void _draw_other_page_single_list_entry(
     }
 }
 
-static void _draw_other_page_list_entries(int _csctrl)
+static void _draw_other_page_list_entries(character_sheet_operation op)
 {
     font(14 - en * 2);
     cs_listbk();
@@ -1239,7 +1244,7 @@ static void _draw_other_page_list_entries(int _csctrl)
 
         int list_item = list(0, index);
         const std::string& text = listn(0, index);
-        _draw_other_page_single_list_entry(cnt, list_item, text, _csctrl);
+        _draw_other_page_single_list_entry(cnt, list_item, text, op);
     }
     cs_bk = cs;
 }
@@ -1247,20 +1252,20 @@ static void _draw_other_page_list_entries(int _csctrl)
 void ui_menu_character_sheet::draw()
 {
     cs_bk = -1;
-    bool show_bonus = _csctrl == 0;
+    bool show_bonus = _operation == character_sheet_operation::normal;
     _draw_window(show_bonus);
 
     if (page == 0)
     {
-        _draw_first_page(_csctrl, _cs_buff, _cs_buffmax);
+        _draw_first_page(_cs_buff, _cs_buffmax);
     }
     else
     {
-        _draw_other_pages(_csctrl);
+        _draw_other_pages();
     }
     if (page > 0)
     {
-        _draw_other_page_list_entries(_csctrl);
+        _draw_other_page_list_entries(_operation);
     }
 }
 
@@ -1308,12 +1313,13 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             if (cc < 16)
             {
                 change_appearance();
-                if (!_is_character_making)
+                if (_operation != character_sheet_operation::character_making)
                 {
                     nowindowanime = 1;
                 }
                 // returnedfromportrait = 1
-                return ui_menu_character_sheet::result::finish(true);
+                return ui_menu_character_sheet::result::finish(
+                    ui_menu_composite_character_result{true});
             }
         }
         else if (key == key_north)
@@ -1337,7 +1343,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             return none;
         }
     }
-    else if (_csctrl != 1)
+    else if (_operation != character_sheet_operation::character_making)
     {
         if (key == key_mode2)
         {
@@ -1346,18 +1352,17 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             _track_skill(skill_id);
         }
     }
-    else if (_csctrl == 1)
+    else if (_operation == character_sheet_operation::character_making)
     {
         if (key == key_enter)
         {
             snd(103);
-            // result.succeeded = false
             return ui_menu_character_sheet::result::cancel();
         }
         if (key == key_cancel)
         {
-            // result.succeeded = true
-            return ui_menu_character_sheet::result::finish(false);
+            return ui_menu_character_sheet::result::finish(
+                ui_menu_composite_character_result{false});
         }
         return none;
     }
@@ -1372,10 +1377,12 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     }
     if (p != -1)
     {
-        if (_csctrl != 4)
+        if (_operation != character_sheet_operation::investigate_ally)
         {
+            // TODO: return csskill for talk_trainer()
             csskill = p;
-            if (_csctrl == 2 || _csctrl == 3)
+            if (_operation == character_sheet_operation::train_skill
+                || _operation == character_sheet_operation::learn_skill)
             {
                 screenupdate = -1;
                 update_screen();
@@ -1416,7 +1423,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     else if (key == key_cancel)
     {
         menucycle = 0;
-        if (_csctrl == 0)
+        if (_operation == character_sheet_operation::normal)
         {
             update_screen();
             // result.turn_result = turn_result_t::pc_turn_user_error

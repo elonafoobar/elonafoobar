@@ -433,8 +433,9 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
             {
                 if (gdata_acquirable_feat_count == 0)
                 {
-                    // result.succeeded = true
-                    return ui_menu_feats::result::finish(true);
+                    return ui_menu_feats::result::finish(
+                        ui_menu_composite_character_result{
+                            feats_result::confirmed});
                 }
             }
             else
@@ -476,15 +477,14 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
         {
             update_screen();
         }
-        // result.turn_result = turn_result_t::pc_turn_user_error
         return ui_menu_feats::result::cancel();
     }
     else if (
         getkey(snail::key::f1) && _operation == operation::character_making)
     {
         show_game_help();
-        // result.pressed_f1 = true
-        return ui_menu_feats::result::finish(false);
+        return ui_menu_feats::result::finish(
+            ui_menu_composite_character_result{feats_result::pressed_f1});
     }
 
     return none;

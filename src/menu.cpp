@@ -737,65 +737,139 @@ void draw_spell_power_entry(int skill_id)
     return;
 }
 
-menu_result menu_character_sheet_cycle()
+menu_result _show_character_sheet_menu(size_t menu_index)
 {
-    return {false, false, turn_result_t::none};
-}
-
-menu_result menu_character_sheet()
-{
-    bool returned_from_portrait = false;
-    menu_result m_result = {false, false, turn_result_t::none};
-
     while (true)
     {
-        auto result =
-            ui::ui_menu_character_sheet(csctrl, returned_from_portrait).show();
-        returned_from_portrait = false;
+        auto menu = ui::ui_menu_composite_character(menu_index);
+        auto result = menu.show();
 
         if (result.canceled)
         {
-            if (csctrl == 0)
-            {
-                m_result.turn_result = turn_result_t::pc_turn_user_error;
-            }
-            else
-            {
-                m_result.succeeded = false;
-            }
-            return m_result;
+            break;
         }
 
-        if (*result.value == false)
+        auto sheet_result =
+            boost::get<ui::character_sheet_result>(*result.value);
+        if (!sheet_result.returned_from_portrait)
         {
             break;
         }
-        else
-        {
-            returned_from_portrait = true;
-        }
+        menu_index = menu.selected_index();
     }
-    m_result.succeeded = true;
-    return m_result;
+
+    return {false, false, turn_result_t::pc_turn_user_error};
+}
+
+menu_result menu_character_sheet_normal()
+{
+    return _show_character_sheet_menu(
+        ui::ui_menu_composite_character::index::character_sheet);
+}
+
+menu_result menu_feats()
+{
+    auto result = _show_character_sheet_menu(
+        ui::ui_menu_composite_character::index::feats);
+
+    update_screen();
+    return result;
 }
 
 menu_result menu_equipment()
 {
-    ui::ui_menu_composite_character(
-        ui::ui_menu_composite_character::index::equipment)
-        .show();
+    auto result = _show_character_sheet_menu(
+        ui::ui_menu_composite_character::index::equipment);
 
-    return {false, false, turn_result_t::pc_turn_user_error};
+    update_screen();
+    return result;
 }
 
 menu_result menu_materials()
 {
-    ui::ui_menu_composite_character(
-        ui::ui_menu_composite_character::index::materials)
-        .show();
+    auto result = _show_character_sheet_menu(
+        ui::ui_menu_composite_character::index::materials);
 
-    return {false, false, turn_result_t::pc_turn_user_error};
+    update_screen();
+    return result;
 }
+
+// Returns false if canceled, true if confirmed
+bool menu_character_sheet_character_making()
+{
+    auto result = ui::ui_menu_character_sheet(
+                      character_sheet_operation::character_making, false)
+                      .show();
+
+    if (result.canceled)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+// Returns skill ID if skill selected, none if canceled
+optional<int> menu_character_sheet_trainer(bool is_training)
+{
+    character_sheet_operation op;
+    if (is_training)
+    {
+        op = character_sheet_operation::train_skill;
+    }
+    else
+    {
+        op = character_sheet_operation::learn_skill;
+    }
+
+    auto result = ui::ui_menu_character_sheet(op, false).show();
+
+    if (result.canceled || !result.value)
+    {
+        return none;
+    }
+
+    auto sheet_result = boost::get<ui::character_sheet_result>(*result.value);
+    return sheet_result.trainer_skill_id;
+}
+
+void menu_character_sheet_investigate()
+{
+    ui::ui_menu_character_sheet(
+        character_sheet_operation::investigate_ally, false)
+        .show();
+}
+
+menu_result menu_feats_character_making()
+{
+    menu_result m_result = {false, false, turn_result_t::none};
+
+    auto result =
+        ui::ui_menu_feats(ui::ui_menu_feats::operation::character_making)
+            .show();
+
+    if (result.canceled)
+    {
+        m_result.succeeded = false;
+    }
+    else if (result.value)
+    {
+        auto feats_result = boost::get<ui::feats_result>(*result.value);
+
+        if (feats_result == ui::feats_result::pressed_f1)
+        {
+            m_result.pressed_f1 = true;
+        }
+        else
+        {
+            m_result.succeeded = true;
+        }
+    }
+
+    return m_result;
+}
+
+
 
 void set_pcc_info(int val0)
 {
@@ -1453,40 +1527,6 @@ void show_weapon_dice(int val0)
     }
     ++p(2);
     return;
-}
-
-menu_result menu_feats()
-{
-    ui::ui_menu_composite_character(
-        ui::ui_menu_composite_character::index::feats)
-        .show();
-
-    update_screen();
-    return {false, false, turn_result_t::pc_turn_user_error};
-}
-
-menu_result menu_feats_character_making()
-{
-    menu_result m_result = {false, false, turn_result_t::none};
-
-    auto result =
-        ui::ui_menu_feats(ui::ui_menu_feats::operation::character_making)
-            .show();
-
-    if (result.canceled)
-    {
-        m_result.succeeded = false;
-    }
-    else if (result.value && *result.value == false)
-    {
-        m_result.pressed_f1 = true;
-    }
-    else if (result.value && *result.value == true)
-    {
-        m_result.succeeded = true;
-    }
-
-    return m_result;
 }
 
 static turn_result_t _visit_quest_giver(int quest_index)

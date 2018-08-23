@@ -1,4 +1,5 @@
 #pragma once
+#include "../menu.hpp"
 #include "ui_menu.hpp"
 #include "ui_menu_composite_character.hpp"
 
@@ -12,12 +13,10 @@ class ui_menu_character_sheet
 {
 public:
     ui_menu_character_sheet(
-        int csctrl,
-        bool returned_from_portrait,
-        bool is_character_making)
-        : _csctrl(csctrl)
+        character_sheet_operation operation,
+        bool returned_from_portrait)
+        : _operation(operation)
         , _returned_from_portrait(returned_from_portrait)
-        , _is_character_making(is_character_making)
     {
     }
 
@@ -29,10 +28,8 @@ protected:
         const std::string& key);
 
 private:
-    int _csctrl;
+    character_sheet_operation _operation;
     bool _returned_from_portrait;
-    bool _is_character_making;
-
 
     int _cs_buff = 0;
     int _cs_buffmax = 0;

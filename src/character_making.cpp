@@ -832,19 +832,17 @@ main_menu_result_t character_making_final_phase()
             initialize_pc_character();
             cdata[rc].portrait = cmportrait;
             create_pcpic(0, true);
-            mode = 1;
-            csctrl = 1;
             menucycle = 0;
             {
-                menu_result result = menu_character_sheet();
-                if (!result.succeeded)
+                bool confirmed = menu_character_sheet_character_making();
+                if (confirmed)
                 {
-                    nowindowanime = 1;
-                    clear_background_in_character_making();
+                    break;
                 }
                 else
                 {
-                    break;
+                    nowindowanime = 1;
+                    clear_background_in_character_making();
                 }
             }
         }

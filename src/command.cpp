@@ -247,10 +247,9 @@ turn_result_t do_interact_command()
     }
     if (p == 6)
     {
-        csctrl = 4;
         snd(26);
         cc = tc;
-        menu_character_sheet();
+        menu_character_sheet_investigate();
         cc = 0;
         return turn_result_t::pc_turn_user_error;
     }
@@ -2561,9 +2560,8 @@ turn_result_t do_use_command()
         screenupdate = -1;
         update_screen();
         cc = rc;
-        csctrl = 4;
         snd(26);
-        menu_character_sheet();
+        menu_character_sheet_investigate();
         cc = 0;
         goto label_2229_internal;
     case 35:

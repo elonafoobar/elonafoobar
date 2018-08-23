@@ -6,7 +6,31 @@ namespace elona
 namespace ui
 {
 
-typedef bool ui_menu_composite_character_result;
+struct character_sheet_result
+{
+    character_sheet_result(bool returned_from_portrait)
+        : returned_from_portrait(returned_from_portrait)
+        , trainer_skill_id(-1)
+    {
+    }
+    character_sheet_result(int trainer_skill_id)
+        : returned_from_portrait(false)
+        , trainer_skill_id(trainer_skill_id)
+    {
+    }
+
+    bool returned_from_portrait;
+    int trainer_skill_id;
+};
+
+enum class feats_result
+{
+    confirmed,
+    pressed_f1,
+};
+
+typedef boost::variant<character_sheet_result, feats_result>
+    ui_menu_composite_character_result;
 
 class ui_menu_composite_character
     : public ui_menu_composite<ui_menu_composite_character_result>
