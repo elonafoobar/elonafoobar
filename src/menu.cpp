@@ -887,12 +887,12 @@ static turn_result_t _show_skill_spell_menu(size_t menu_index)
     if (result.value->type() == typeid(ui::ui_menu_skills_result))
     {
         efid = boost::get<ui::ui_menu_skills_result>(*result.value).effect_id;
-        return do_cast_command();
+        return do_use_magic();
     }
     else
     {
         efid = boost::get<ui::ui_menu_spells_result>(*result.value).effect_id;
-        return do_use_magic();
+        return do_cast_command();
     }
 }
 
