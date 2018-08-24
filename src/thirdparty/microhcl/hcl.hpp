@@ -224,6 +224,7 @@ struct ParseResult {
 
 // Parses from std::istream.
 ParseResult parse(std::istream&);
+ParseResult parse(std::istream&, const std::string&);
 // Parses a file.
 ParseResult parseFile(const std::string& filename);
 
@@ -280,14 +281,17 @@ private:
 
 class Lexer {
 public:
-    explicit Lexer(std::istream& is) : is_(is),
-                                       lineNo_(1),
-                                       columnNo_(0) {}
+    explicit Lexer(std::istream& is, const std::string& filename)
+        : is_(is),
+          lineNo_(1),
+          columnNo_(0),
+          filename_(filename) {}
 
     Token nextToken();
 
     int lineNo() const { return lineNo_; }
     int columnNo() const { return columnNo_; }
+    const std::string& filename() const { return filename_; }
 
     // Skips if UTF8BOM is found.
     // Returns true if success. Returns false if intermediate state is left.
@@ -311,11 +315,12 @@ private:
     std::istream& is_;
     int lineNo_;
     int columnNo_;
+    std::string filename_;
 };
 
 class Parser {
 public:
-    explicit Parser(std::istream& is) : lexer_(is), token_(TokenType::ILLEGAL)
+    explicit Parser(std::istream& is, const std::string& filename) : lexer_(is, filename), token_(TokenType::ILLEGAL)
     {
         if (!lexer_.skipUTF8BOM()) {
             token_ = Token(TokenType::ILLEGAL, std::string("Invalid UTF8 BOM"));
@@ -366,11 +371,16 @@ private:
 
 inline ParseResult parse(std::istream& is)
 {
+    return parse(is, "[input stream]");
+}
+
+inline ParseResult parse(std::istream& is, const std::string& filename)
+{
     if (!is) {
         return ParseResult(hcl::Value(), "stream is in bad state. file does not exist?");
     }
 
-    internal::Parser parser(is);
+    internal::Parser parser(is, filename);
     hcl::Value v = parser.parse();
 
     if (v.valid())
@@ -1488,7 +1498,7 @@ inline const Value* Value::find(const std::string& key) const
         return nullptr;
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     const Value* current = this;
     while (true) {
@@ -1682,7 +1692,7 @@ inline bool Value::erase(const std::string& key)
         return false;
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     Value* current = this;
     while (true) {
@@ -1825,7 +1835,7 @@ inline Value* Value::ensureValue(const std::string& key)
     }
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     Value* current = this;
     while (true) {
@@ -1891,7 +1901,7 @@ namespace internal {
 inline void Parser::addError(const std::string& reason)
 {
     std::stringstream ss;
-    ss << "Error:" << lexer_.lineNo() << ":" << lexer_.columnNo() << ": " << reason << "\n";
+    ss << lexer_.filename() << ":" << lexer_.lineNo() << ":" << lexer_.columnNo() << ": " << reason << "\n";
     errorReason_ += ss.str();
 }
 

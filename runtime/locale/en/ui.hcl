@@ -319,7 +319,7 @@ locale {
             title = "Notice Board"
 
             difficulty = "$"
-            difficulty_counter = "$ x "
+            difficulty_counter = "$ x ${_1}"
 
             no_new_notices = "It seems there are no new notices."
             do_you_meet = "Do you want to meet the client?"

@@ -52,7 +52,7 @@ void store::load(
     const std::string& hcl_file,
     const std::string& mod_name)
 {
-    const hcl::Value& value = hclutil::load(is);
+    const hcl::Value& value = hclutil::load(is, hcl_file);
 
     if (!value.is<hcl::Object>() || !value.has("locale"))
     {
