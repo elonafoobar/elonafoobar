@@ -14,6 +14,10 @@ namespace elona
 namespace ui
 {
 
+/*
+        gdata(750 - 760) => tracked skills (ctrl +f for [TRACKING])
+*/
+
 static void _trainer_get_gainable_skills()
 {
     int dbmax = 0;
@@ -1108,7 +1112,10 @@ static void _draw_skill_name(int cnt, int skill_id)
             "core.locale.ui.chara_sheet.skill.resist", cnven(skill_name));
     }
 
-    for (int cnt = 0; cnt < 3; ++cnt)
+    // [TRACKING] Shows the star in the (c) menu
+    for (int cnt = 0;
+         cnt < (elona::config::instance().allow_enhanced_skill ? 10 : 3);
+         ++cnt)
     {
         if (gdata(750 + cnt) == cc * 10000 + skill_id)
         {
@@ -1273,25 +1280,25 @@ void ui_menu_character_sheet::draw()
 
 static void _track_skill(int skill_id)
 {
-    if (skill_id != -1)
+    int gdata_index = 750;
+    int max_tracked_skills =
+        elona::config::instance().allow_enhanced_skill ? 10 : 3;
+
+    for (int cnt = 750; cnt < 750 + max_tracked_skills; ++cnt)
     {
-        int gdata_index = 750;
-        for (int cnt = 750; cnt < 753; ++cnt)
+        if (gdata(cnt) % 10000 == 0)
         {
-            if (gdata(cnt) % 10000 == 0)
-            {
-                gdata_index = cnt;
-            }
-            if (gdata(cnt) == cc * 10000 + i)
-            {
-                gdata_index = cnt;
-                skill_id = 0;
-                break;
-            }
+            gdata_index = cnt;
         }
-        gdata(gdata_index) = cc * 10000 + skill_id;
-        snd(20);
+        if (gdata(cnt) == cc * 10000 + skill_id)
+        {
+            gdata_index = cnt;
+            skill_id = 0;
+            break;
+        }
     }
+    gdata(gdata_index) = cc * 10000 + skill_id;
+    snd(20);
 }
 
 static void _apply_skill_bonus(int csskill_)
@@ -1362,11 +1369,16 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     }
     else
     {
-        if (key == key_mode2)
+        // [TRACKING] Stores which skill id is to be tracked
+        if (key == key_mode2 && page > 0)
         {
             int index = pagesize * (page - 1) + cs;
             int skill_id = list(0, index);
-            _track_skill(skill_id);
+
+            if (skill_id != -1)
+            {
+                _track_skill(skill_id);
+            }
         }
     }
 
@@ -1430,14 +1442,12 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         if (_operation == character_sheet_operation::normal)
         {
             update_screen();
-            // result.turn_result = turn_result_t::pc_turn_user_error
         }
         else
         {
             screenupdate = -1;
             update_screen();
             tc = tcbk;
-            // result.succeeded = false
         }
         return ui_menu_character_sheet::result::cancel();
     }

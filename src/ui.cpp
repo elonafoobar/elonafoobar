@@ -571,7 +571,7 @@ void render_clock()
 void render_skill_trackers()
 {
     int y{};
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         const auto skill = gdata(750 + i) % 10000;
         if (skill == 0)
@@ -588,14 +588,46 @@ void render_skill_trackers()
             strutil::take_by_width(
                 i18n::_(u8"ability", std::to_string(skill), u8"name"), 6),
             16,
-            inf_clocky + 155 - y * 16);
+            inf_clocky + 125 + y * 16);
         bmes(
             ""s + sdata.get(skill, chara).original_level + u8"."s
                 + std::to_string(
                       1000 + sdata.get(skill, chara).experience % 1000)
                       .substr(1),
             66,
-            inf_clocky + 155 - y * 16);
+            inf_clocky + 125 + y * 16);
+        if (elona::config::instance().allow_enhanced_skill)
+        {
+            elona::snail::color col(0, 0, 0, 255);
+            if (sdata.get(skill, chara).potential
+                > elona::config::instance().enhanced_skill_upperbound)
+            {
+                col.g = 255;
+                col.r = 130;
+                col.b = 130;
+            }
+            else if (
+                sdata.get(skill, chara).potential
+                > elona::config::instance().enhanced_skill_lowerbound)
+            {
+                col.g = 255;
+                col.r = 255;
+                col.b = 130;
+            }
+            else
+            {
+                col.g = 130;
+                col.r = 255;
+                col.b = 130;
+            }
+
+            bmes(
+                ""s + sdata.get(skill, chara).potential + u8"%"s,
+                112,
+                inf_clocky + 125 + y * 16,
+                col);
+        }
+
         ++y;
     }
 }

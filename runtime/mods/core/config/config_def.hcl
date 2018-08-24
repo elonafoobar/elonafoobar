@@ -311,7 +311,17 @@ config def {
                 default = "right"
                 variants = ["hide", "left", "right"]
             }
-
+            allow_enhanced_skill_tracking =true
+            enhanced_skill_tracking_lowerbound = {
+                default = 50
+                min = 0
+                max = 390
+            }
+            enhanced_skill_tracking_upperbound = {
+                default = 100
+                min = 10
+                max = 400
+            }
             leash_icon = true
             autopick = true
             autosave = false
