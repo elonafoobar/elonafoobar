@@ -56,7 +56,7 @@ menu_result menu_feats();
 menu_result menu_feats_internal();
 void deco_traits_menu();
 menu_result menu_feats_internal_b();
-menu_result menu_journal();
+turn_result_t show_journal();
 turn_result_t show_quest_board();
 void list_adventurers();
 turn_result_t blending_menu();

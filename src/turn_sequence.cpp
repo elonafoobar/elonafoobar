@@ -663,6 +663,7 @@ bool turn_wrapper()
         case turn_result_t::show_message_log:
             result = show_message_log();
             break;
+        case turn_result_t::show_journal: result = show_journal(); break;
         case turn_result_t::show_house_board:
             result = show_house_board();
             break;
@@ -676,9 +677,6 @@ bool turn_wrapper()
 
             // Menus with a success status
 
-        case turn_result_t::menu_journal:
-            result = menu_journal().turn_result;
-            break;
         case turn_result_t::menu_materials:
             result = menu_materials().turn_result;
             break;
@@ -2059,7 +2057,7 @@ label_2747:
     }
     if (key == key_journal)
     {
-        return turn_result_t::menu_journal;
+        return turn_result_t::show_journal;
     }
     menucycle = 0;
     if (key == key_offer)

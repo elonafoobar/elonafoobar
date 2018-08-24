@@ -91,11 +91,6 @@ protected:
 
     virtual optional<typename ui_menu<T>::result> on_key(const std::string& key)
     {
-        if (auto result = _menus[_selected].menu->on_key(key))
-        {
-            return result;
-        }
-
         if (key == key_next || key == key_prev)
         {
             size_t prev_menu = _selected;
@@ -126,6 +121,10 @@ protected:
                 _menu_switched = true;
                 ui_menu<T>::set_reupdate();
             }
+        }
+        else if (auto result = _menus[_selected].menu->on_key(key))
+        {
+            return result;
         }
 
         if (_menus[_selected].menu->_reupdate)

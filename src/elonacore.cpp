@@ -8681,7 +8681,7 @@ turn_result_t do_short_cut()
     if (gdata(40 + sc) == 0)
     {
         ++msgdup;
-        i18n::s.get("core.locale.action.shortcut.unassigned");
+        txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
