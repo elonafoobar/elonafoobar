@@ -310,6 +310,18 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION(
         "foobar.max_damage_popup"s, int, config::instance().max_damage_popup);
     CONFIG_OPTION(
+        "foobar.allow_enhanced_skill_tracking"s,
+        bool,
+        config::instance().allow_enhanced_skill);
+    CONFIG_OPTION(
+        "foobar.enhanced_skill_tracking_lowerbound"s,
+        int,
+        config::instance().enhanced_skill_lowerbound);
+    CONFIG_OPTION(
+        "foobar.enhanced_skill_tracking_upperbound"s,
+        int,
+        config::instance().enhanced_skill_upperbound);
+    CONFIG_OPTION(
         "foobar.startup_script"s,
         std::string,
         config::instance().startup_script);

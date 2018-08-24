@@ -399,6 +399,9 @@ DOC
                         right = "Show right side"
                     }
                 }
+                allow_enhanced_skill_tracking {
+                    name = "Allow enhanced skill tracking"
+                }
                 leash_icon {
                     name = "Leash icon"
                     yes_no = core.locale.config.common.yes_no.show_dont_show

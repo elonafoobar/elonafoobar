@@ -1,4 +1,4 @@
-locale {
+﻿locale {
     config {
         common {
             menu = "項目"
@@ -339,6 +339,9 @@ locale {
                         left = "左側に表示"
                         right = "右側に表示"
                     }
+                }
+                allow_enhanced_skill_tracking {
+                    name = "スキルトラック拡張"
                 }
                 leash_icon {
                     name = "紐のアイコン表示"
