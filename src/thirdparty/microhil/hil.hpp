@@ -615,6 +615,11 @@ inline Token Lexer::nextString()
             s += c;
     }
 
+    if (dollar)
+    {
+        s += '$';
+    }
+
     return Token(TokenType::STRING, s);
 }
 

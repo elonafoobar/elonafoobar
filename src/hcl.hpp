@@ -13,9 +13,9 @@ namespace elona
 namespace hclutil
 {
 
-inline hcl::Value load(std::istream& is)
+inline hcl::Value load(std::istream& is, const std::string& filename)
 {
-    hcl::ParseResult parseResult = hcl::parse(is);
+    hcl::ParseResult parseResult = hcl::parse(is, filename);
 
     if (!parseResult.valid())
     {
@@ -25,18 +25,23 @@ inline hcl::Value load(std::istream& is)
     return parseResult.value;
 }
 
+inline hcl::Value load(std::istream& is)
+{
+    return load(is, "[input stream]");
+}
+
 inline hcl::Value load(const fs::path& filepath)
 {
     std::ifstream in{filepath.native()};
+    std::string filepath_string =
+        filesystem::make_preferred_path_in_utf8(filepath);
 
     if (!in)
     {
-        throw std::runtime_error{
-            "Failed to open "
-            + filesystem::make_preferred_path_in_utf8(filepath)};
+        throw std::runtime_error{"Failed to open " + filepath_string};
     }
 
-    return load(in);
+    return load(in, filepath_string);
 }
 
 

@@ -318,7 +318,7 @@ locale {
             title = "掲載されている依頼"
 
             difficulty = "★"
-            difficulty_counter = "★×"
+            difficulty_counter = "★×${_1}"
 
             no_new_notices = "新しい依頼は掲示されていないようだ。"
             do_you_meet = "依頼主に会う？"

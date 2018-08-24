@@ -216,8 +216,8 @@ static void _draw_list_entry_difficulty(
     else
     {
         pos(wx + 270, y + 2);
-        mes(i18n::s.get("core.locale.ui.board.difficulty_counter")
-            + difficulty_stars);
+        mes(i18n::s.get(
+            "core.locale.ui.board.difficulty_counter", difficulty_stars));
     }
 }
 
