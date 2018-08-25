@@ -185,6 +185,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_alias.cpp
   src/ui/ui_menu_book.cpp
   src/ui/ui_menu_character_sheet.cpp
+  src/ui/ui_menu_charamake_gender.cpp
   src/ui/ui_menu_charamake_race.cpp
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
