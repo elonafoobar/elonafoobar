@@ -490,8 +490,7 @@ void run_random_event(random_event event)
         if (result == 0)
         {
             cdata.player().nutrition = 15000;
-            txt(i18n::s.get_enum(
-                "core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
+            txt(i18n::s.get("core.locale.talk.npc.innkeeper.eat.results"));
             show_eating_message();
             chara_anorexia(cdata.player());
         }

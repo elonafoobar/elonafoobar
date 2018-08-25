@@ -21,34 +21,36 @@ locale {
             start = "${name(_1)} start${s(_1)} to play ${itemname(_2)}."
 
             sound {
-                _0 = "*Tiki*"
-                _1 = "*Dan*"
-                _2 = "*Lala*"
-                _3 = "*Cha*"
+                random = [
+                    "*Tiki*",
+                    "*Dan*",
+                    "*Lala*"
+                ]
+                cha = "*Cha*"
             }
 
             gets_angry = "${name(_1)} get${s(_1)} angry."
 
             dialog {
-                interest {
-                    _0 = "${name(_1)} clap${s(_1)}."
-                    _1 = "${name(_1)} listen${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
-                    _2 = "\"Bravo!\""
-                    _3 = "\"Nice song.\""
-                    _4 = "\"Scut!\""
-                    _5 = "${name(_1)} ${is(_1)} excited!"
-                }
-                disinterest {
-                    _0 = "\"Boring.\""
-                    _1 = "\"I've heard this before.\""
-                    _2 = "\"This song again?\""
-                }
-                angry {
-                    _0 = "\"Boo boo!\""
-                    _1 = "\"Shut it!\""
-                    _2 = "\"What are you doing!\""
-                    _3 = "\"You can't play shit.\""
-                }
+                interest = [
+                    "${name(_1)} clap${s(_1)}.",
+                    "${name(_1)} listen${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully.",
+                    "\"Bravo!\"",
+                    "\"Nice song.\"",
+                    "\"Scut!\"",
+                    "${name(_1)} ${is(_1)} excited!"
+                ]
+                disinterest = [
+                    "\"Boring.\"",
+                    "\"I've heard this before.\"",
+                    "\"This song again?\""
+                ]
+                angry = [
+                    "\"Boo boo!\"",
+                    "\"Shut it!\"",
+                    "\"What are you doing!\"",
+                    "\"You can't play shit.\""
+                ]
             }
 
             throws_rock = "${name(_1)} throw${s(_1)} a rock."
@@ -73,23 +75,20 @@ locale {
             take_clothes_off = "${name(_1)} begin${s(_1)} to take ${his(_1)} clothes off."
             spare_life = "\"I-I don't really know that ${_1}. Please spare my life!\""
 
-            dialog {
-                _0 = "\"Yes!\""
-                _1 = "\"Ohhh\""
-                _2 = "*gasp*"
-                _3 = "*rumble*"
-                _4 = "\"come on!\""
-            }
+            dialog = [
+                "\"Yes!\"",
+                "\"Ohhh\"",
+                "*gasp*",
+                "*rumble*",
+                "\"come on!\""
+            ]
 
-            # NOTE
-            after_dialog {
-                # TODO: JP has 5 choices, but EN had 4.
-                _0 = "You are awesome!"
-                _1 = "Oh my god...."
-                _2 = "Okay, okay, you win!"
-                _3 = "Holy...!"
-                _4 = "You are awesome!"
-            }
+            after_dialog = [
+                "You are awesome!",
+                "Oh my god....",
+                "Okay, okay, you win!",
+                "Holy...!"
+            ]
 
             take = "Here, take this."
             take_all_i_have = "Take this money, it's all I have!"
@@ -182,14 +181,13 @@ locale {
         }
 
         harvest {
-            sound {
-                # NOTE: EN has 5 variants, JP has 4
-                _0 = "*sing*"
-                _1 = "*pull*"
-                _2 = "*thud*"
-                _3 = "*rumble*"
-                _4 = "*gasp*"
-            }
+            sound = [
+                "*sing*",
+                "*pull*",
+                "*thud*",
+                "*rumble*",
+                "*gasp*"
+            ]
             finish = "You harvest ${itemname(_1, 1)}. (${_2})"
         }
 
@@ -237,13 +235,13 @@ locale {
                 other = "You start to dig the spot."
             }
 
-            sound {
-                _0 = "*clink*"
-                _1 = "*smash*"
-                _2 = "*thud*"
-                _3 = "*sing*"
-                _4 = "*sigh*"
-            }
+            sound = [
+                "*clink*",
+                "*smash*",
+                "*thud*",
+                "*sing*",
+                "*sigh*"
+            ]
 
             finish = "You finish digging."
             something_is_there = "*click* ...something is there!"

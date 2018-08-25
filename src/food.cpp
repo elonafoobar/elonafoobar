@@ -37,31 +37,27 @@ void show_eating_message()
     txtef(2);
     if (cdata[cc].nutrition >= 12000)
     {
-        txt(i18n::s.get_enum(
-            "core.locale.food.eating_message.bloated", rnd(3)));
+        txt(i18n::s.get("core.locale.food.eating_message.bloated"));
     }
     else if (cdata[cc].nutrition >= 10000)
     {
-        txt(i18n::s.get_enum(
-            "core.locale.food.eating_message.satisfied", rnd(4)));
+        txt(i18n::s.get("core.locale.food.eating_message.satisfied"));
     }
     else if (cdata[cc].nutrition >= 5000)
     {
-        txt(i18n::s.get_enum("core.locale.food.eating_message.normal", rnd(3)));
+        txt(i18n::s.get("core.locale.food.eating_message.normal"));
     }
     else if (cdata[cc].nutrition >= 2000)
     {
-        txt(i18n::s.get_enum("core.locale.food.eating_message.hungry", rnd(4)));
+        txt(i18n::s.get("core.locale.food.eating_message.hungry"));
     }
     else if (cdata[cc].nutrition >= 1000)
     {
-        txt(i18n::s.get_enum(
-            "core.locale.food.eating_message.very_hungry", rnd(3)));
+        txt(i18n::s.get("core.locale.food.eating_message.very_hungry"));
     }
     else
     {
-        txt(i18n::s.get_enum(
-            "core.locale.food.eating_message.starving", rnd(3)));
+        txt(i18n::s.get("core.locale.food.eating_message.starving"));
     }
 }
 
@@ -310,20 +306,17 @@ void get_hungry(character& cc)
         if (p == 1)
         {
             msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.starving", rnd(2)));
+            txt(i18n::s.get("core.locale.food.hunger_status.starving"));
         }
         else if (p == 2)
         {
             msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.very_hungry", rnd(2)));
+            txt(i18n::s.get("core.locale.food.hunger_status.very_hungry"));
         }
         else if (p == 5)
         {
             msgalert = 1;
-            txt(i18n::s.get_enum(
-                "core.locale.food.hunger_status.hungry", rnd(3)));
+            txt(i18n::s.get("core.locale.food.hunger_status.hungry"));
         }
         refresh_speed(cc);
     }
@@ -663,35 +656,30 @@ void apply_general_eating_effect(int cieat)
                     txt(i18n::s.get("core.locale.food.effect.raw"));
                     break;
                 }
-                txt(i18n::s.get_enum("core.locale.food.effect.boring", rnd(2)));
+                txt(i18n::s.get("core.locale.food.effect.boring"));
                 break;
             }
             if (inv[ci].param2 < 3)
             {
-                txt(i18n::s.get_enum(
-                    "core.locale.food.effect.quality.bad", rnd(3)));
+                txt(i18n::s.get("core.locale.food.effect.quality.bad"));
                 break;
             }
             if (inv[ci].param2 < 5)
             {
-                txt(i18n::s.get_enum(
-                    "core.locale.food.effect.quality.so_so", rnd(2)));
+                txt(i18n::s.get("core.locale.food.effect.quality.so_so"));
                 break;
             }
             if (inv[ci].param2 < 7)
             {
-                txt(i18n::s.get_enum(
-                    "core.locale.food.effect.quality.good", rnd(2)));
+                txt(i18n::s.get("core.locale.food.effect.quality.good"));
                 break;
             }
             if (inv[ci].param2 < 9)
             {
-                txt(i18n::s.get_enum(
-                    "core.locale.food.effect.quality.great", rnd(3)));
+                txt(i18n::s.get("core.locale.food.effect.quality.great"));
                 break;
             }
-            txt(i18n::s.get_enum(
-                "core.locale.food.effect.quality.delicious", rnd(3)));
+            txt(i18n::s.get("core.locale.food.effect.quality.delicious"));
         }
     }
     else if (inv[ci].material == 35)
@@ -1250,8 +1238,7 @@ void apply_general_eating_effect(int cieat)
         {
             txt(i18n::s.get(
                 "core.locale.food.effect.poisoned.text", cdata[cc]));
-            txt(i18n::s.get_enum(
-                "core.locale.food.effect.poisoned.dialog", rnd(2)));
+            txt(i18n::s.get("core.locale.food.effect.poisoned.dialog"));
         }
         damage_hp(cdata[cc], rnd(250) + 250, -4);
         if (cdata[cc].state() != character::state_t::alive)
@@ -1275,8 +1262,7 @@ void apply_general_eating_effect(int cieat)
         else
         {
             txtef(9);
-            txt(i18n::s.get_enum(
-                "core.locale.food.effect.spiked.other", rnd(2), cdata[cc]));
+            txt(i18n::s.get("core.locale.food.effect.spiked.other", cdata[cc]));
             cdata[cc].emotion_icon = 317;
             chara_modify_impression(cdata[cc], 30);
             modify_karma(cdata.player(), -10);

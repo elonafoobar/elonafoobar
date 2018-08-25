@@ -64,11 +64,11 @@ locale {
             street_vendor = "屋台商人の${_1}"
             street_vendor2 = "屋台商人屋の${_1}"
             of_noyel = "ノイエルの${_1}"
-            fanatic {
-                _0 = "オパートスの信者"
-                _1 = "マニの信者"
-                _2 = "エヘカトルの信者"
-            }
+            fanatic = [
+                "オパートスの信者",
+                "マニの信者",
+                "エヘカトルの信者"
+            ]
 
             # Yowyn
             horse_master = "馬屋の${_1}"

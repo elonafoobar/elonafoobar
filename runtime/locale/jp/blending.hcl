@@ -56,10 +56,10 @@ locale {
 
         required_material_not_found = "調合に必要な材料が見つからない。"
 
-        sounds {
-            _0 = " *こねこね* "
-            _1 = " *トントン* "
-        }
+        sounds = [
+            " *こねこね* ",
+            " *トントン* "
+        ]
 
         success_rate {
             perfect = "もう完璧！"

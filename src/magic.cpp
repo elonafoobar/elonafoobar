@@ -1108,8 +1108,7 @@ label_2181_internal:
     {
     case 636:
         txtef(8);
-        txt(i18n::s.get_enum(
-            "core.locale.magic.insanity", rnd(4), cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.locale.magic.insanity", cdata[cc], cdata[tc]));
         damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
@@ -1320,14 +1319,12 @@ label_2181_internal:
             if (is_cursed(efstatus))
             {
                 txtef(9);
-                txt(i18n::s.get_enum(
-                    "core.locale.magic.alcohol.cursed", rnd(4)));
+                txt(i18n::s.get("core.locale.magic.alcohol.cursed"));
             }
             else
             {
                 txtef(9);
-                txt(i18n::s.get_enum(
-                    "core.locale.magic.alcohol.normal", rnd(7)));
+                txt(i18n::s.get("core.locale.magic.alcohol.normal"));
             }
         }
         dmgcon(tc, status_ailment_t::drunk, efp);
@@ -1496,8 +1493,7 @@ label_2181_internal:
                     "core.locale.magic.mount.dismount", cdata[gdata_mount]));
                 txtef(9);
                 txt(name(gdata_mount)
-                    + i18n::s.get_enum(
-                          "core.locale.magic.mount.dismount_dialog", rnd(4)));
+                    + i18n::s.get("core.locale.magic.mount.dismount_dialog"));
                 ride_end();
                 break;
             }
@@ -1539,8 +1535,7 @@ label_2181_internal:
             ride_begin(tc);
             txtef(9);
             txt(name(gdata_mount)
-                + i18n::s.get_enum(
-                      "core.locale.magic.mount.mount.dialog", rnd(4)));
+                + i18n::s.get("core.locale.magic.mount.mount.dialog"));
         }
         break;
     case 183:

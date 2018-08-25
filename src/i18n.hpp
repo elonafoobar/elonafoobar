@@ -476,6 +476,12 @@ public:
 
     optional<const hil::Context&> find_translation(const i18n_key& key)
     {
+        // In the unlikely event that a single locale key refers to
+        // both a single string and a list, the string will be chosen.
+        // This normally won't happen accidentally since duplicate
+        // locale keys will expand into an object (per current HCL
+        // decoding rules).
+
         const auto& found = storage.find(key);
         if (found != storage.end())
         {
@@ -656,8 +662,19 @@ private:
     void
     visit_string(const std::string&, const std::string&, const std::string&);
 
+    /***
+     * Storage for single pieces of localized texts.
+     */
     std::unordered_map<i18n_key, hil::Context> storage;
+
+    /***
+     * Storage for lists of localized text.
+     *
+     * When retrieving text using a locale key referring to a list element,
+     * the text will be chosen randomly.
+     */
     std::unordered_map<i18n_key, std::vector<hil::Context>> list_storage;
+
     std::set<i18n_key> unknown_keys;
 };
 

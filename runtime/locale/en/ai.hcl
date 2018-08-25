@@ -1,9 +1,9 @@
 locale {
     ai {
-        snail {
-            _0 = "\"Snail!\""
-            _1 = "\"Kill!\""
-        }
+        snail = [
+            "\"Snail!\"",
+            "\"Kill!\""
+        ]
 
         ally {
             sells_items = "${name(_1)} sells ${_2} items and earns ${_3} gold pieces."
@@ -17,22 +17,22 @@ locale {
 
         crushes_wall = "${name(_1)} crush${s(_1, true)} the wall!"
 
-        fire_giant {
-            _0 = "\"Filthy monster!\""
-            _1 = "\"Go to hell!\""
-            _2 = "\"I'll get rid of you.\""
-            _3 = "\"Eat this!\""
-        }
+        fire_giant = [
+            "\"Filthy monster!\"",
+            "\"Go to hell!\"",
+            "\"I'll get rid of you.\"",
+            "\"Eat this!\""
+        ]
 
         makes_snowman = "${name(_1)} make${s(_1)} ${itemname(_2)}!"
 
-        snowball {
-            _0 = "*grin*"
-            _1 = "\"Fire in the hole!\""
-            _2 = "\"Tee-hee-hee!\""
-            _3 = "\"Eat this!\""
-            _4 = "\"Watch out!\""
-            _5 = "\"Scut!\""
-        }
+        snowball = [
+            "*grin*",
+            "\"Fire in the hole!\"",
+            "\"Tee-hee-hee!\"",
+            "\"Eat this!\"",
+            "\"Watch out!\"",
+            "\"Scut!\""
+        ]
     }
 }

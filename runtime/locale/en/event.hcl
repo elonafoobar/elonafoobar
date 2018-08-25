@@ -19,14 +19,13 @@ locale {
 
         my_eyes = "${name(_1)} shout${s(_1)} \"Eyes! My eyes!\""
 
-        okaeri {
-            _0 = "\"Welcome home!\""
-            _1 = "\"Hey, dear.\""
-            _2 = "\"You're back!\""
-            _3 = "\"I was waiting for you.\""
-            _4 = "\"Nice to see you again.\""
-            _5 = "\"Welcome home!\"" # JP has 6 choices, so add one extra
-        }
+        okaeri = [
+            "\"Welcome home!\"",
+            "\"Hey, dear.\"",
+            "\"You're back!\"",
+            "\"I was waiting for you.\"",
+            "\"Nice to see you again.\""
+        ]
 
         bomb = "* RRROOM-KABOOOOM*"
 

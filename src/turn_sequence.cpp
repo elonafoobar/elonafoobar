@@ -54,8 +54,7 @@ turn_result_t npc_turn()
             if (rnd(30) == 0)
             {
                 tc = cc;
-                txt(i18n::s.get_enum(
-                    "core.locale.action.npc.sand_bag", rnd(3), cdata[tc]));
+                txt(i18n::s.get("core.locale.action.npc.sand_bag", cdata[tc]));
             }
         }
         cdata[cc].hate = 0;
@@ -82,9 +81,8 @@ turn_result_t npc_turn()
                             {
                                 if (rnd(2))
                                 {
-                                    txt(i18n::s.get_enum(
-                                        "core.locale.action.npc.leash.dialog",
-                                        rnd(2)));
+                                    txt(i18n::s.get(
+                                        "core.locale.action.npc.leash.dialog"));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
@@ -192,8 +190,7 @@ turn_result_t npc_turn()
                 if (rnd(40) == 0)
                 {
                     txtef(4);
-                    txt(i18n::s.get_enum(
-                        "core.locale.action.npc.arena", rnd(8)));
+                    txt(i18n::s.get("core.locale.action.npc.arena"));
                 }
                 return ai_proc_misc_map_events();
             }
@@ -1069,8 +1066,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                             "core.locale.action.npc.drunk.gets_the_worse",
                             cdata[cc],
                             cdata[tc]));
-                        txt(i18n::s.get_enum(
-                            "core.locale.action.npc.drunk.dialog", rnd(4)));
+                        txt(i18n::s.get("core.locale.action.npc.drunk.dialog"));
                     }
                     if (rnd(4) == 0)
                     {

@@ -74,7 +74,7 @@ talk_result_t talk_inn_eat()
     cdata.player().nutrition = 15000;
     buff = i18n::s.get(
         "core.locale.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
-    txt(i18n::s.get_enum("core.locale.talk.npc.innkeeper.eat.results", rnd(3)));
+    txt(i18n::s.get("core.locale.talk.npc.innkeeper.eat.results"));
     show_eating_message();
     chara_anorexia(cdata.player());
     return talk_result_t::talk_npc;
@@ -864,9 +864,8 @@ talk_result_t talk_maid_think_of_house_name()
     mdatan(0) = random_title();
     if (rnd(5))
     {
-        mdatan(0) = i18n::s.get_enum(
+        mdatan(0) = i18n::s.get(
             "core.locale.talk.npc.maid.think_of_house_name.suffixes",
-            rnd(11),
             mdatan(0));
     }
     screenupdate = -1;

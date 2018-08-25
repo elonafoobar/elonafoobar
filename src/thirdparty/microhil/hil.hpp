@@ -607,8 +607,6 @@ inline Token Lexer::nextString()
             default:
                 return Token(TokenType::ILLEGAL, std::string("string has unknown escape sequence"));
             }
-        } else if (c == '"') {
-            return Token(TokenType::ILLEGAL, std::string("found double quotes while parsing non-HIL string literal"));
         }
 
         if (!dollar)

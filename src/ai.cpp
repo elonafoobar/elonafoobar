@@ -801,9 +801,8 @@ label_2692_internal:
                                             tlocy = cdata[gdata_fire_giant]
                                                         .position.y;
                                             txtef(9);
-                                            txt(i18n::s.get_enum(
-                                                "core.locale.ai.fire_giant",
-                                                rnd(4)));
+                                            txt(i18n::s.get(
+                                                "core.locale.ai.fire_giant"));
                                             return do_throw_command();
                                         }
                                     }
@@ -872,8 +871,7 @@ label_2692_internal:
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
                                     txtef(9);
-                                    txt(i18n::s.get_enum(
-                                        "core.locale.ai.snowball", rnd(6)));
+                                    txt(i18n::s.get("core.locale.ai.snowball"));
                                     return do_throw_command();
                                 }
                             }
@@ -971,8 +969,7 @@ label_2692_internal:
                             if (is_in_fov(cdata[cc]))
                             {
                                 txtef(9);
-                                txt(i18n::s.get_enum(
-                                    "core.locale.ai.snail", rnd(2)));
+                                txt(i18n::s.get("core.locale.ai.snail"));
                             }
                             return do_throw_command();
                         }
