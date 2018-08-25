@@ -23,7 +23,7 @@ bool ui_menu_town_politics::init()
     ++listmax;
     if (mdata_map_type != mdata_t::map_type_t::town)
     {
-        goto label_2281_internal:
+        goto label_2281_internal;
     }
     list(0, listmax) = 0;
     listn(0, listmax) =
@@ -51,7 +51,6 @@ label_2281_internal:
     gsel(0);
     windowshadow = 1;
     snd(92);
-    drawmenu(3);
     city = 1;
     ww = 480;
     wh = 400;
@@ -154,7 +153,7 @@ optional<ui_menu_town_politics::result_type> ui_menu_town_politics::on_key(
         {
             snd(1);
             --page;
-            goto label_2282_internal;
+            set_reupdate();
         }
     }
     else if (key == key_cancel)

@@ -35,7 +35,6 @@ void fillbg(
 
 
 
-void drawmenu(int = 0);
 void screen_txtadv();
 
 void update_entire_screen();

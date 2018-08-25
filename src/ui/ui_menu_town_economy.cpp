@@ -53,7 +53,6 @@ bool ui_menu_town_economy::init()
     gsel(0);
     windowshadow = 1;
     snd(92);
-    drawmenu(3);
     city = 1;
     ww = 540;
     wh = 440;

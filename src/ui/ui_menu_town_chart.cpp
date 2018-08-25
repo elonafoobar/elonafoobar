@@ -1,5 +1,6 @@
 #include "ui_menu_town_chart.hpp"
 #include "../audio.hpp"
+#include "../draw.hpp"
 #include "../i18n.hpp"
 
 namespace elona
@@ -28,7 +29,6 @@ void ui_menu_town_chart::update()
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
-    drawmenu(3);
     windowshadow = 1;
     city = adata(28, gdata_current_map);
     lv = 0;
@@ -121,7 +121,7 @@ optional<ui_menu_town_chart::result_type> ui_menu_town_chart::on_key(
 
     if (p != -1)
     {
-        return;
+        return ui_menu_town_chart::result::finish();
     }
     else if (key == key_pageup)
     {
