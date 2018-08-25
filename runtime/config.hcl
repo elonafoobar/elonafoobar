@@ -177,6 +177,10 @@ config {
             # Provide a script's name, like "my_script.lua" for "data/script/my_script.lua".
             startup_script = ""
 
+            # Set to true to run startup scripts in a loaded save.
+            # This may be dangerous, so back up your save data first.
+            run_script_in_save = false
+
             # Show damage popups.
             damage_popup = true
         }

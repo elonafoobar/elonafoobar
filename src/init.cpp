@@ -181,7 +181,10 @@ void start_elona()
         main_loop();
         return;
     }
-    else if (config::instance().startup_script != ""s)
+    else if (
+        config::instance().startup_script != ""s
+        && !config::instance().get<bool>(
+               "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();
@@ -1239,6 +1242,7 @@ void initialize_testbed()
 void initialize_game()
 {
     bool script_loaded = false;
+    bool will_load_script = false;
     autopick::instance().load(playerid);
 
     mtilefilecur = -1;
@@ -1270,12 +1274,7 @@ void initialize_game()
         playerid = u8"sav_testbed"s;
         initialize_debug_globals();
         initialize_testbed();
-        if (config::instance().startup_script != ""s)
-        {
-            lua::lua->get_mod_manager().run_startup_script(
-                config::instance().startup_script);
-            script_loaded = true;
-        }
+        will_load_script = true;
         mode = 2;
     }
     if (mode == 2)
@@ -1287,7 +1286,21 @@ void initialize_game()
     if (mode == 3)
     {
         load_save_data();
+
+        if (config::instance().get<bool>(
+                "core.config.foobar.run_script_in_save"))
+        {
+            will_load_script = true;
+        }
     }
+
+    if (will_load_script && config::instance().startup_script != ""s)
+    {
+        lua::lua->get_mod_manager().run_startup_script(
+            config::instance().startup_script);
+        script_loaded = true;
+    }
+
     init_fovlist();
     initialize_map();
 

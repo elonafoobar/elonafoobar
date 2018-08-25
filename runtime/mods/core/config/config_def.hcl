@@ -342,6 +342,11 @@ config def {
                 default = ""
                 visible = false
             }
+
+            run_script_in_save = {
+                default = false
+                visible = false
+            }
         }
     }
 
