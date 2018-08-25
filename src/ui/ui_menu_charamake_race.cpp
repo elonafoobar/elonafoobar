@@ -72,47 +72,49 @@ void ui_menu_charamake_race::update()
 
 void ui_menu_charamake_race::draw()
 {
-    if (cs != cs_bk)
+    if (cs == cs_bk)
     {
-        s(0) = i18n::s.get("core.locale.chara_making.select_race.title");
-        s(1) = strhint3b;
-        display_window(
-            (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500);
-        ++cmbg;
-        x = ww / 5 * 2;
-        y = wh - 80;
-        pos(wx + ww / 4, wy + wh / 2);
-        gmode(4, 50);
-        gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
-        gmode(2);
-        display_topic(
-            i18n::s.get("core.locale.chara_making.select_race.race"),
-            wx + 28,
-            wy + 30);
-        display_topic(
-            i18n::s.get("core.locale.chara_making.select_race.detail"),
-            wx + 188,
-            wy + 30);
-        font(14 - en * 2);
-        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-        {
-            p = page * pagesize + cnt;
-            if (p >= listmax)
-            {
-                break;
-            }
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-            cs_list(cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
-        }
-        cs_bk = cs;
-        pos(wx + 200, wy + 66);
-        chara_delete(0);
-        access_race_info(3, listn(1, page * pagesize + cs));
-        access_race_info(11, listn(1, page * pagesize + cs));
-        show_race_or_class_info(0);
+        return;
     }
+
+    s(0) = i18n::s.get("core.locale.chara_making.select_race.title");
+    s(1) = strhint3b;
+    display_window(
+        (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500);
+    ++cmbg;
+    x = ww / 5 * 2;
+    y = wh - 80;
+    pos(wx + ww / 4, wy + wh / 2);
+    gmode(4, 50);
+    gcopy_c(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
+    gmode(2);
+    display_topic(
+        i18n::s.get("core.locale.chara_making.select_race.race"),
+        wx + 28,
+        wy + 30);
+    display_topic(
+        i18n::s.get("core.locale.chara_making.select_race.detail"),
+        wx + 188,
+        wy + 30);
+    font(14 - en * 2);
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+    {
+        p = page * pagesize + cnt;
+        if (p >= listmax)
+        {
+            break;
+        }
+        key_list(cnt) = key_select(cnt);
+        keyrange = cnt + 1;
+        display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+        cs_list(cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
+    }
+    cs_bk = cs;
+    pos(wx + 200, wy + 66);
+    chara_delete(0);
+    access_race_info(3, listn(1, page * pagesize + cs));
+    access_race_info(11, listn(1, page * pagesize + cs));
+    show_race_or_class_info(0);
 }
 
 optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(

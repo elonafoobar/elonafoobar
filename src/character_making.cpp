@@ -16,6 +16,7 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_charamake_class.hpp"
 #include "ui/ui_menu_charamake_gender.hpp"
 #include "ui/ui_menu_charamake_race.hpp"
 
@@ -88,114 +89,21 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
     {
         snd(20);
     }
-    cs = 0;
-    cs_bk = -1;
-    page = 0;
-    pagesize = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.select_class.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
-    {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
-    listmax = 0;
-    for (const auto& class_ : the_class_db.get_available_classes(false))
-    {
-        listn(1, listmax) = class_.get().id;
-        ++listmax;
-    }
-    if (config::instance().extraclass)
-    {
-        for (const auto& class_ : the_class_db.get_available_classes(true))
-        {
-            listn(1, listmax) = class_.get().id;
-            ++listmax;
-        }
-    }
-    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-    {
-        access_class_info(2, listn(1, cnt));
-        listn(0, cnt) = classname;
-    }
-    windowshadow = 1;
 
-    while (true)
+    auto result = ui::ui_menu_charamake_class().show();
+
+    if (result.canceled)
     {
-        if (cs != cs_bk)
-        {
-            s(0) = i18n::s.get("core.locale.chara_making.select_class.title");
-            s(1) = strhint3b;
-            display_window(
-                (windoww - 680) / 2 + inf_screenx,
-                winposy(500, 1) + 20,
-                680,
-                500);
-            ++cmbg;
-            x = ww / 5 * 2;
-            y = wh - 80;
-            pos(wx + ww / 4, wy + wh / 2);
-            gmode(4, 50);
-            gcopy_c(
-                2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
-            gmode(2);
-            display_topic(
-                i18n::s.get("core.locale.chara_making.select_class.class"),
-                wx + 28,
-                wy + 30);
-            display_topic(
-                i18n::s.get("core.locale.chara_making.select_class.detail"),
-                wx + 188,
-                wy + 30);
-            font(14 - en * 2);
-            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-            {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-                if (jp)
-                {
-                    s = listn(0, cnt);
-                }
-                else
-                {
-                    s = cnven(listn(1, cnt));
-                }
-                cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
-            }
-            cs_bk = cs;
-            pos(wx + 200, wy + 66);
-            chara_delete(0);
-            access_class_info(3, listn(1, cs));
-            access_class_info(11, listn(1, cs));
-            show_race_or_class_info(1);
-            redraw();
-        }
-        await(config::instance().wait1);
-        key_check();
-        cursor_check();
-        ELONA_GET_SELECTED_INDEX(p);
-        if (p != -1)
-        {
-            cmclass = listn(1, p);
-            return main_menu_result_t::character_making_role_attributes;
-        }
-        if (key == key_cancel)
-        {
-            return main_menu_result_t::character_making_select_sex_looped;
-        }
-        if (getkey(snail::key::f1))
-        {
-            show_game_help();
-            return main_menu_result_t::character_making_select_sex_looped;
-        }
+        return main_menu_result_t::character_making_select_sex_looped;
+    }
+    else if (!result.value)
+    {
+        return main_menu_result_t::character_making_select_class_looped;
+    }
+    else
+    {
+        cmclass = *result.value;
+        return main_menu_result_t::character_making_role_attributes;
     }
 }
 

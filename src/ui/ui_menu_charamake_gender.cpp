@@ -36,6 +36,11 @@ void ui_menu_charamake_gender::update()
 
 void ui_menu_charamake_gender::draw()
 {
+    if (cs_bk == cs)
+    {
+        return;
+    }
+
     s(0) = i18n::s.get("core.locale.chara_making.select_gender.title");
     s(1) = strhint3b;
     display_window(
@@ -61,7 +66,6 @@ void ui_menu_charamake_gender::draw()
         gcopy(3, cnt * 24 + 72, 30, 24, 18);
         cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
     }
-    cs_bk = cs;
 }
 
 optional<ui_menu_charamake_gender::result_type>
