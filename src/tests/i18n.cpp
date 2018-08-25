@@ -214,6 +214,21 @@ locale {
         == u8"baz: dood");
 }
 
+
+TEST_CASE("test i18n lists", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo = ["bar: ${_1}", "baz: ${_1}"]
+}
+)");
+
+    // Getting a translation from a list will pick randomly.
+    randomize(0);
+
+    REQUIRE(store.get(u8"test.locale.foo", "dood") == u8"baz: dood");
+}
+
 TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
 {
     i18n::store store = load(
