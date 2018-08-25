@@ -30,8 +30,10 @@ void ui_menu_town_chart::update()
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     windowshadow = 1;
-    city = adata(28, gdata_current_map);
+
+    _city = adata(28, gdata_current_map);
     lv = 0;
+
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -100,7 +102,7 @@ void ui_menu_town_chart::draw()
             font(12 + sizefix - en * 2);
             bmes(cnven(popostname(p)), x - 2, y + jp * 2);
             font(14 - en * 2);
-            if (podata(0 + cnt, city) == 0)
+            if (podata(0 + cnt, _city) == 0)
             {
                 s = i18n::s.get("core.locale.ui.town_chart.empty");
             }

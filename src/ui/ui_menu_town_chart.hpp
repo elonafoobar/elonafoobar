@@ -19,6 +19,9 @@ protected:
     virtual void draw();
     virtual optional<ui_menu_town_chart::result_type> on_key(
         const std::string& key);
+
+private:
+    int _city;
 };
 
 } // namespace ui

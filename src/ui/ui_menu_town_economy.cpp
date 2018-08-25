@@ -7,20 +7,21 @@ namespace elona
 namespace ui
 {
 
-static void showeconomy(
-    int prm_1086,
-    int prm_1087,
-    const std::string& prm_1088,
-    int prm_1089,
-    int prm_1090)
+static void _show_economy_info(
+    int x,
+    int y,
+    const std::string& text,
+    int value,
+    int prev_value)
 {
-    int p_at_m195 = 0;
-    pos(prm_1086, prm_1087);
-    mes(prm_1088);
-    pos(prm_1086 + 130, prm_1087);
-    mes(""s + prm_1089);
-    p_at_m195 = prm_1089 - prm_1090;
-    if (p_at_m195 >= 0)
+    pos(x, y);
+    mes(text);
+
+    pos(x + 130, y);
+    mes(""s + value);
+
+    int diff = value - prev_value;
+    if (diff >= 0)
     {
         color(0, 0, 150);
     }
@@ -28,10 +29,10 @@ static void showeconomy(
     {
         color(150, 0, 0);
     }
-    pos(prm_1086 + 130 + ginfo(14) + 12, prm_1087);
-    mes(u8"("s + p_at_m195 + u8")"s);
+
+    pos(x + 130 + ginfo(14) + 12, y);
+    mes(u8"("s + diff + u8")"s);
     color(0, 0, 0);
-    return;
 }
 
 bool ui_menu_town_economy::init()
@@ -53,7 +54,7 @@ bool ui_menu_town_economy::init()
     gsel(0);
     windowshadow = 1;
     snd(92);
-    city = 1;
+    _city = 1;
     ww = 540;
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;
@@ -76,66 +77,86 @@ void ui_menu_town_economy::update()
     }
 }
 
+static void _draw_window()
+{
+    std::string hint = strhint2 + strhint3b;
+    showscroll(hint, wx, wy, ww, wh);
+    font(14 - en * 2);
+}
+
+static void _draw_economy_info(int _city)
+{
+    display_topic(
+        i18n::s.get("core.locale.ui.economy.information"), wx + 65, wy + 50);
+    display_topic(
+        i18n::s.get("core.locale.ui.economy.finance"), wx + 65, wy + 150);
+
+    font(14 - en * 2);
+    x = wx + 50;
+    y = wy + 80;
+    _show_economy_info(
+        x,
+        y,
+        i18n::s.get("core.locale.ui.economy.population"),
+        podata(100, _city),
+        podata(101, _city));
+
+    x = wx + 50;
+    y = wy + 180;
+    _show_economy_info(
+        x,
+        y,
+        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s + gdata(820)
+            + u8"%)"s,
+        podata(102, _city),
+        podata(103, _city));
+    _show_economy_info(
+        x,
+        y + 16,
+        i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s
+            + podata(150, _city) + u8"%)"s,
+        podata(104, _city),
+        podata(105, _city));
+}
+
+static void _draw_economy_details()
+{
+    display_topic(
+        i18n::s.get("core.locale.ui.economy.population_detail"),
+        wx + 65,
+        wy + 50);
+    display_topic(
+        i18n::s.get("core.locale.ui.economy.finance_detail"),
+        wx + 65,
+        wy + 200);
+    font(14 - en * 2);
+}
+
+static bool _map_has_economy()
+{
+    return adata(28, gdata_current_map) != 0
+        && gdata_current_dungeon_level == 1;
+}
+
 void ui_menu_town_economy::draw()
 {
-    s = strhint2 + strhint3b;
-    showscroll(s, wx, wy, ww, wh);
-    font(14 - en * 2);
-    if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
-    {
-        pos(wx + 40, wy + 60);
-        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
-    }
-    else
+    _draw_window();
+
+    if (_map_has_economy())
     {
         if (page == 0)
         {
-            display_topic(
-                i18n::s.get("core.locale.ui.economy.information"),
-                wx + 65,
-                wy + 50);
-            display_topic(
-                i18n::s.get("core.locale.ui.economy.finance"),
-                wx + 65,
-                wy + 150);
-            font(14 - en * 2);
-            x = wx + 50;
-            y = wy + 80;
-            showeconomy(
-                x,
-                y,
-                i18n::s.get("core.locale.ui.economy.population"),
-                podata(100, city),
-                podata(101, city));
-            x = wx + 50;
-            y = wy + 180;
-            showeconomy(
-                x,
-                y,
-                i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s
-                    + gdata(820) + u8"%)"s,
-                podata(102, city),
-                podata(103, city));
-            showeconomy(
-                x,
-                y + 16,
-                i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s
-                    + podata(150, city) + u8"%)"s,
-                podata(104, city),
-                podata(105, city));
+            _draw_economy_info(_city);
         }
         if (page == 1)
         {
-            display_topic(
-                i18n::s.get("core.locale.ui.economy.population_detail"),
-                wx + 65,
-                wy + 50);
-            display_topic(
-                i18n::s.get("core.locale.ui.economy.finance_detail"),
-                wx + 65,
-                wy + 200);
-            font(14 - en * 2);
+            _draw_economy_details();
         }
+    }
+    else
+    {
+        pos(wx + 40, wy + 60);
+        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
     }
 }
 
