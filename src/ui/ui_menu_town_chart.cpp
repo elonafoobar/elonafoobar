@@ -1,4 +1,4 @@
-#include "ui_menu_city_chart.hpp"
+#include "ui_menu_town_chart.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
 
@@ -7,12 +7,12 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_city_chart::init()
+bool ui_menu_town_chart::init()
 {
     return true;
 }
 
-void ui_menu_city_chart::update()
+void ui_menu_town_chart::update()
 {
     listmax = 0;
     page = 0;
@@ -44,9 +44,9 @@ void ui_menu_city_chart::update()
     }
 }
 
-void ui_menu_city_chart::draw()
+void ui_menu_town_chart::draw()
 {
-    s(0) = i18n::s.get("core.locale.ui.city_chart.title");
+    s(0) = i18n::s.get("core.locale.ui.town_chart.title");
     s(1) = strhint3b;
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
     keyrange = 0;
@@ -57,13 +57,13 @@ void ui_menu_city_chart::draw()
     {
         font(14 - en * 2);
         pos(wx + 40, wy + 50);
-        mes(i18n::s.get("core.locale.ui.city_chart.no_economy"));
+        mes(i18n::s.get("core.locale.ui.town_chart.no_economy"));
     }
     else
     {
         display_topic(
             i18n::s.get(
-                "core.locale.ui.city_chart.chart",
+                "core.locale.ui.town_chart.chart",
                 mapname(adata(16, gdata_current_map))),
             wx + 40,
             wy + 34);
@@ -102,7 +102,7 @@ void ui_menu_city_chart::draw()
             font(14 - en * 2);
             if (podata(0 + cnt, city) == 0)
             {
-                s = i18n::s.get("core.locale.ui.city_chart.empty");
+                s = i18n::s.get("core.locale.ui.town_chart.empty");
             }
             cs_list(cs == cnt, s, x - 2, y + 20);
             ++j0;
@@ -114,7 +114,7 @@ void ui_menu_city_chart::draw()
     }
 }
 
-optional<ui_menu_city_chart::result_type> ui_menu_city_chart::on_key(
+optional<ui_menu_town_chart::result_type> ui_menu_town_chart::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -144,7 +144,7 @@ optional<ui_menu_city_chart::result_type> ui_menu_city_chart::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return ui_menu_city_chart::result::cancel();
+        return ui_menu_town_chart::result::cancel();
     }
 
     return none;

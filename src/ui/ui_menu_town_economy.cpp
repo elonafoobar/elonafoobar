@@ -1,4 +1,4 @@
-#include "ui_menu_city_economy.hpp"
+#include "ui_menu_town_economy.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"
 
@@ -34,7 +34,7 @@ static void showeconomy(
     return;
 }
 
-bool ui_menu_city_economy::init()
+bool ui_menu_town_economy::init()
 {
     curmenu = 1;
     key_list(0) = key_enter;
@@ -63,7 +63,7 @@ bool ui_menu_city_economy::init()
     return true;
 }
 
-void ui_menu_city_economy::update()
+void ui_menu_town_economy::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -77,7 +77,7 @@ void ui_menu_city_economy::update()
     }
 }
 
-void ui_menu_city_economy::draw()
+void ui_menu_town_economy::draw()
 {
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
@@ -140,7 +140,7 @@ void ui_menu_city_economy::draw()
     }
 }
 
-optional<ui_menu_city_economy::result_type> ui_menu_city_economy::on_key(
+optional<ui_menu_town_economy::result_type> ui_menu_town_economy::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -164,7 +164,7 @@ optional<ui_menu_city_economy::result_type> ui_menu_city_economy::on_key(
     else if (key != ""s)
     {
         update_screen();
-        return ui_menu_city_economy::result::cancel();
+        return ui_menu_town_economy::result::cancel();
     }
 
     return none;

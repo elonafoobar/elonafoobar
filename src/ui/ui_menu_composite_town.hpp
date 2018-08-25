@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_composite_city : public ui_menu_composite<dummy_result>
+class ui_menu_composite_town : public ui_menu_composite<dummy_result>
 {
 public:
     enum index : size_t
@@ -16,7 +16,7 @@ public:
         politics = 2
     };
 
-    ui_menu_composite_city(size_t selected)
+    ui_menu_composite_town(size_t selected)
         : ui_menu_composite(selected)
     {
     }
