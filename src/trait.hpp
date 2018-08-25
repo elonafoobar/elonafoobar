@@ -59,6 +59,7 @@ extern trait_db the_trait_db;
 
 
 int trait_get_info(int traitmode, int tid);
+void trait_load_desc();
 
 
 

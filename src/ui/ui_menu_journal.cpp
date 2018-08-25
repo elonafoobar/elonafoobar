@@ -146,7 +146,6 @@ bool ui_menu_journal::init()
     append_subquest_journal(1);
     listmax = noteinfo();
     show_title(strhint2 + strhint3);
-    drawmenu(2);
     wx = (windoww - 736) / 2 + inf_screenx;
     wy = winposy(448);
     snd(59);

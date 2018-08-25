@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "optional.hpp"
 
 namespace elona
 {
@@ -10,7 +11,7 @@ enum class turn_result_t;
 struct menu_result
 {
     bool succeeded; // true if stat was 1, false if it was 0
-    bool pressed_f1; // true if menu_feats_internal returned -1
+    bool pressed_f1; // true if f1 was pressed in feats menu
     turn_result_t turn_result;
 };
 
@@ -31,6 +32,16 @@ enum class hire_operation
     revive,
 };
 
+enum class character_sheet_operation
+{
+    normal,
+    train_skill,
+    learn_skill,
+    character_making,
+    investigate_ally,
+};
+
+
 void text_set();
 int cnvjkey(const std::string&);
 void show_quick_menu();
@@ -45,17 +56,19 @@ turn_result_t play_scene();
 turn_result_t show_spell_list();
 turn_result_t show_skill_list();
 void draw_spell_power_entry(int skill_id);
-void trainer_get_gainable_skills();
-menu_result menu_character_sheet();
 int change_appearance();
 menu_result menu_feats();
 menu_result menu_materials();
 
+menu_result menu_character_sheet_normal();
+bool menu_character_sheet_character_making();
+optional<int> menu_character_sheet_trainer(bool is_training);
+void menu_character_sheet_investigate();
+
 int select_alias(int);
 menu_result menu_feats();
-menu_result menu_feats_internal();
+menu_result menu_feats_character_making();
 void deco_traits_menu();
-menu_result menu_feats_internal_b();
 turn_result_t show_journal();
 turn_result_t show_quest_board();
 void list_adventurers();

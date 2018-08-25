@@ -184,14 +184,18 @@ set(CORE_SOURCES
   src/ui/ui_menu_adventurers.cpp
   src/ui/ui_menu_alias.cpp
   src/ui/ui_menu_book.cpp
+  src/ui/ui_menu_character_sheet.cpp
   src/ui/ui_menu_chat_history.cpp
   src/ui/ui_menu_crafting.cpp
   src/ui/ui_menu_ctrl_ally.cpp
+  src/ui/ui_menu_equipment.cpp
+  src/ui/ui_menu_feats.cpp
   src/ui/ui_menu_game_help.cpp
   src/ui/ui_menu_god.cpp
   src/ui/ui_menu_hire.cpp
   src/ui/ui_menu_item_desc.cpp
   src/ui/ui_menu_journal.cpp
+  src/ui/ui_menu_materials.cpp
   src/ui/ui_menu_message_log.cpp
   src/ui/ui_menu_npc_tone.cpp
   src/ui/ui_menu_quest_board.cpp
@@ -199,6 +203,7 @@ set(CORE_SOURCES
   src/ui/ui_menu_skills.cpp
   src/ui/ui_menu_spell_writer.cpp
   src/ui/ui_menu_spells.cpp
+  src/ui/ui_menu_composite_character.cpp
   src/ui/ui_menu_composite_message.cpp
   src/ui/ui_menu_composite_skills.cpp
 

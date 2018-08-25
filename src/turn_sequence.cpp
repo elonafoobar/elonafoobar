@@ -681,7 +681,7 @@ bool turn_wrapper()
             result = menu_materials().turn_result;
             break;
         case turn_result_t::menu_character_sheet:
-            result = menu_character_sheet().turn_result;
+            result = menu_character_sheet_normal().turn_result;
             break;
         case turn_result_t::menu_equipment:
             result = menu_equipment().turn_result;
@@ -2006,7 +2006,6 @@ label_2747:
     }
     if (key == key_charainfo)
     {
-        csctrl = 0;
         return turn_result_t::menu_character_sheet;
     }
     if (key == key_material)

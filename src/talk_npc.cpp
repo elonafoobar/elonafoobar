@@ -947,9 +947,8 @@ talk_result_t talk_informer_investigate_ally()
             snd(12);
             cdata.player().gold -= 10000;
             cc = rc;
-            csctrl = 4;
             snd(26);
-            menu_character_sheet();
+            menu_character_sheet_investigate();
             cc = 0;
             talk_start();
             buff = "";
@@ -1446,28 +1445,28 @@ talk_result_t talk_accepted_quest()
     return talk_result_t::talk_end;
 }
 
-
-
-talk_result_t talk_trainer()
+talk_result_t talk_trainer(bool is_training)
 {
     tcbk = tc;
     menucycle = 0;
-    menu_character_sheet();
+    optional<int> selected_skill_opt =
+        menu_character_sheet_trainer(is_training);
     talk_start();
-    if (csskill == -1)
+    if (!selected_skill_opt)
     {
         buff = i18n::s.get("core.locale.talk.npc.trainer.leave", cdata[tc]);
         return talk_result_t::talk_npc;
     }
+    int selected_skill = *selected_skill_opt;
     listmax = 0;
-    if (csctrl == 2)
+    if (is_training)
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.trainer.cost.training",
-            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-            calctraincost(csskill, cc),
+            i18n::_(u8"ability", std::to_string(selected_skill), u8"name"),
+            calctraincost(selected_skill, cc),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calctraincost(csskill, cc))
+        if (cdata.player().platinum_coin >= calctraincost(selected_skill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = i18n::s.get(
@@ -1479,10 +1478,10 @@ talk_result_t talk_trainer()
     {
         buff = i18n::s.get(
             "core.locale.talk.npc.trainer.cost.learning",
-            i18n::_(u8"ability", std::to_string(csskill), u8"name"),
-            calclearncost(csskill, cc),
+            i18n::_(u8"ability", std::to_string(selected_skill), u8"name"),
+            calclearncost(selected_skill, cc),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calclearncost(csskill, cc))
+        if (cdata.player().platinum_coin >= calclearncost(selected_skill, cc))
         {
             list(0, listmax) = 1;
             listn(0, listmax) = i18n::s.get(
@@ -1499,20 +1498,21 @@ talk_result_t talk_trainer()
     if (chatval_ == 1)
     {
         snd(12);
-        if (csctrl == 2)
+        if (is_training)
         {
-            cdata.player().platinum_coin -= calctraincost(csskill, cc);
+            cdata.player().platinum_coin -= calctraincost(selected_skill, cc);
             modify_potential(
                 cdata[cc],
-                csskill,
-                clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
+                selected_skill,
+                clamp(
+                    15 - sdata.get(selected_skill, cc).potential / 15, 2, 15));
             buff = i18n::s.get(
                 "core.locale.talk.npc.trainer.finish.training", cdata[tc]);
         }
         else
         {
-            cdata.player().platinum_coin -= calclearncost(csskill, cc);
-            chara_gain_skill(cdata[cc], csskill);
+            cdata.player().platinum_coin -= calclearncost(selected_skill, cc);
+            chara_gain_skill(cdata[cc], selected_skill);
             ++gdata_number_of_learned_skills_by_trainer;
             buff = i18n::s.get(
                 "core.locale.talk.npc.trainer.finish.learning", cdata[tc]);
@@ -1525,6 +1525,15 @@ talk_result_t talk_trainer()
     return talk_result_t::talk_npc;
 }
 
+talk_result_t talk_trainer_train_skill()
+{
+    return talk_trainer(true);
+}
+
+talk_result_t talk_trainer_learn_skill()
+{
+    return talk_trainer(false);
+}
 
 
 talk_result_t talk_invest()
@@ -2335,7 +2344,7 @@ talk_result_t talk_npc()
     case 14:
     case 15:
     case 16: return talk_wizard_identify(chatval_);
-    case 17: csctrl = 2; return talk_trainer();
+    case 17: return talk_trainer_train_skill();
     case 18: return talk_informer_list_adventurers();
     case 19: return talk_healer_restore_attributes();
     case 20: return talk_trade();
@@ -2348,7 +2357,7 @@ talk_result_t talk_npc()
     case 24: return talk_result_t::talk_quest_giver;
     case 25: return talk_quest_delivery();
     case 26: return talk_quest_supply();
-    case 30: csctrl = 3; return talk_trainer();
+    case 30: return talk_trainer_learn_skill();
     case 31: return talk_shop_attack();
     case 32: return talk_guard_return_item();
     case 33: return talk_bartender_call_ally();

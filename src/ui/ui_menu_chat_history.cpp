@@ -30,7 +30,6 @@ bool ui_menu_chat_history::init()
     gsel(0);
     windowshadow = 1;
     snd(92);
-    drawmenu(2);
     ww = clamp(windoww - 90, windoww - 90, 720);
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;
