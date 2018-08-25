@@ -11,15 +11,8 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_charamake_class::init()
+static void _load_class_list()
 {
-    cs = 0;
-    cs_bk = -1;
-    page = 0;
-    pagesize = 0;
-
-    character_making_draw_background(
-        "core.locale.chara_making.select_class.caption");
 
     listmax = 0;
     for (const auto& class_ : the_class_db.get_available_classes(false))
@@ -40,7 +33,21 @@ bool ui_menu_charamake_class::init()
         access_class_info(2, listn(1, cnt));
         listn(0, cnt) = classname;
     }
+}
+
+bool ui_menu_charamake_class::init()
+{
+    cs = 0;
+    cs_bk = -1;
+    page = 0;
+    pagesize = 0;
+
+    character_making_draw_background(
+        "core.locale.chara_making.select_class.caption");
+
     windowshadow = 1;
+
+    _load_class_list();
 
     return true;
 }
@@ -69,13 +76,8 @@ _draw_class_info(int chip_male, int chip_female, const std::string& race)
     draw_race_or_class_info();
 }
 
-void ui_menu_charamake_class::draw()
+static void _draw_window()
 {
-    if (cs == cs_bk)
-    {
-        return;
-    }
-
     s(0) = i18n::s.get("core.locale.chara_making.select_class.title");
     s(1) = strhint3b;
     display_window(
@@ -95,29 +97,59 @@ void ui_menu_charamake_class::draw()
         i18n::s.get("core.locale.chara_making.select_class.detail"),
         wx + 188,
         wy + 30);
+}
+
+static void _draw_choice(int cnt, const std::string& text)
+{
+    display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+    cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
+}
+
+static void _draw_choices()
+{
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
-        display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+
+        std::string text;
         if (jp)
         {
-            s = listn(0, cnt);
+            text = listn(0, cnt);
         }
         else
         {
-            s = cnven(listn(1, cnt));
+            text = cnven(listn(1, cnt));
         }
-        cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
+
+        _draw_choice(cnt, text);
     }
     cs_bk = cs;
-    pos(wx + 200, wy + 66);
+}
+
+static void _reload_selected_class(const std::string& klass)
+{
     chara_delete(0);
-    access_class_info(3, listn(1, cs));
-    access_class_info(11, listn(1, cs));
+    access_class_info(3, klass);
+    access_class_info(11, klass);
+}
+
+void ui_menu_charamake_class::draw()
+{
+    if (cs == cs_bk)
+    {
+        return;
+    }
+
+    _draw_window();
+    _draw_choices();
+
+    const std::string& selected_class = listn(1, cs);
+    _reload_selected_class(selected_class);
+
+    pos(wx + 200, wy + 66);
     _draw_class_info(ref1, ref2, _race);
-    redraw();
 }
 
 optional<ui_menu_charamake_class::result_type> ui_menu_charamake_class::on_key(

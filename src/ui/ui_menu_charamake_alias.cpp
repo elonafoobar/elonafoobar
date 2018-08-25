@@ -64,13 +64,8 @@ void ui_menu_charamake_alias::update()
     _redraw_aliases = true;
 }
 
-void ui_menu_charamake_alias::draw()
+static void _draw_window()
 {
-    if (!_redraw_aliases)
-    {
-        return;
-    }
-
     s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
     s(1) = strhint3b + key_mode2 + " ["
         + i18n::s.get("core.locale.chara_making.select_alias.lock_alias") + "]";
@@ -87,22 +82,47 @@ void ui_menu_charamake_alias::draw()
         i18n::s.get("core.locale.chara_making.select_alias.alias_list"),
         wx + 28,
         wy + 30);
+}
+
+static void _draw_alias_locked(int cnt)
+{
+    font(12 - en * 2, snail::font_t::style_t::bold);
+    pos(wx + 280, wy + 66 + cnt * 19 + 2);
+    color(20, 20, 140);
+    mes(u8"Locked!"s);
+    color(0, 0, 0);
+}
+
+static void _draw_alias(int cnt, const std::string& text, bool is_locked)
+{
+    font(14 - en * 2);
+    pos(wx + 38, wy + 66 + cnt * 19 - 2);
+    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
+
+    if (is_locked)
+    {
+        _draw_alias_locked(cnt);
+    }
+}
+
+void ui_menu_charamake_alias::draw()
+{
+    if (!_redraw_aliases)
+    {
+        return;
+    }
+
+    _draw_window();
+
     for (int cnt = 0; cnt < 17; ++cnt)
     {
-        font(14 - en * 2);
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
-        pos(wx + 38, wy + 66 + cnt * 19 - 2);
-        gcopy(3, cnt * 24 + 72, 30, 24, 18);
-        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
-        if (_locked_aliases(cnt) == 1)
-        {
-            font(12 - en * 2, snail::font_t::style_t::bold);
-            pos(wx + 280, wy + 66 + cnt * 19 + 2);
-            color(20, 20, 140);
-            mes(u8"Locked!"s);
-            color(0, 0, 0);
-        }
+
+        const std::string& text = listn(0, cnt);
+        bool is_locked = _locked_aliases(cnt) == 1;
+        _draw_alias(cnt, text, is_locked);
     }
     cs_bk = cs;
     list(0, 0) = 0;

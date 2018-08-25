@@ -74,9 +74,9 @@ main_menu_result_t character_making_select_race()
     }
     else
     {
-        int race_id = *result.value;
-        cmrace(0) = listn(1, race_id);
-        cmrace(1) = listn(0, race_id);
+        auto value = *result.value;
+        cmrace(0) = value.race_id;
+        cmrace(1) = value.race_name;
         access_race_info(11, cmrace);
         return main_menu_result_t::character_making_select_sex;
     }
@@ -157,8 +157,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
     {
         auto stats = *result.value;
 
-        // elona_vector1 has no copy constructor. Trying to assign to
-        // one will assign to the 0th element, as in HSP.
+        // elona_vector1 has no copy assignment operator. Trying to
+        // assign to one will assign to the 0th element, as in HSP.
         for (size_t i = 0; i < stats.size(); i++)
         {
             cmstats(i) = stats(i);

@@ -17,15 +17,8 @@ bool ui_menu_charamake_attributes::init()
     return true;
 }
 
-void ui_menu_charamake_attributes::update()
+void ui_menu_charamake_attributes::_reroll_attributes()
 {
-    cs = 0;
-    cs_bk = -1;
-    pagesize = 0;
-
-    character_making_draw_background(
-        "core.locale.chara_making.roll_attributes.caption");
-
     chara_delete(0);
     access_race_info(3, _race);
     access_class_info(3, _klass);
@@ -49,7 +42,10 @@ void ui_menu_charamake_attributes::update()
                 + sdata.get(cnt, rc).potential;
         }
     }
-    _minimum = false;
+}
+
+static void _load_attributes_list(elona_vector1<int>& _attributes)
+{
     listmax = 0;
     list(0, 0) = 0;
     listn(0, 0) = i18n::s.get("core.locale.chara_making.common.reroll");
@@ -64,10 +60,26 @@ void ui_menu_charamake_attributes::update()
         listn(0, listmax) = i18n::_(u8"ability", std::to_string(cnt), u8"name");
         ++listmax;
     }
+}
+
+void ui_menu_charamake_attributes::update()
+{
+    cs = 0;
+    cs_bk = -1;
+    pagesize = 0;
+
+    character_making_draw_background(
+        "core.locale.chara_making.roll_attributes.caption");
+
+    _reroll_attributes();
+    _minimum = false;
+
+    _load_attributes_list(_attributes);
+
     windowshadow = 1;
 }
 
-void ui_menu_charamake_attributes::draw()
+static void _draw_window_background()
 {
     s(0) = i18n::s.get(
         "core.locale.chara_making.roll_attributes.attribute_reroll");
@@ -76,6 +88,10 @@ void ui_menu_charamake_attributes::draw()
         + "]";
     display_window(
         (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
+}
+
+static void _draw_window_topic()
+{
     x = 150;
     y = 240;
     pos(wx + 85, wy + wh / 2);
@@ -86,6 +102,10 @@ void ui_menu_charamake_attributes::draw()
         i18n::s.get("core.locale.chara_making.roll_attributes.title"),
         wx + 28,
         wy + 30);
+}
+
+static void _draw_window_desc(int locks_left)
+{
     font(12 + sizefix - en * 2);
     pos(wx + 175, wy + 52);
     mes(i18n::s.get(
@@ -93,32 +113,74 @@ void ui_menu_charamake_attributes::draw()
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(wx + 180, wy + 84);
     mes(i18n::s.get("core.locale.chara_making.roll_attributes.locks_left")
-        + u8": "s + _locked_attributes(8));
+        + u8": "s + locks_left);
+}
+
+static void _draw_window(int locks_left)
+{
+    _draw_window_background();
+    _draw_window_topic();
+    _draw_window_desc(locks_left);
+}
+
+static void _draw_attribute_locked(int cnt)
+{
+    font(12 - en * 2, snail::font_t::style_t::bold);
+    pos(wx + 240, wy + 66 + cnt * 23 + 2);
+    color(20, 20, 140);
+    mes(u8"Locked!"s);
+    color(0, 0, 0);
+}
+
+static void _draw_attribute_value(int cnt, int list_value, bool is_locked)
+{
+    // Copy image from item sheet.
+    // TODO: migrate to pic_loader
+    pos(wx + 198, wy + 76 + cnt * 23);
+    gmode(2);
+    gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
+
+    pos(wx + 210, wy + 66 + cnt * 23);
+    mes(""s + list_value / 1000000);
+
+    if (is_locked)
+    {
+        _draw_attribute_locked(cnt);
+    }
+}
+
+static void _draw_attribute(
+    int cnt,
+    int list_value,
+    const std::string& text,
+    bool is_locked)
+{
+    pos(wx + 38, wy + 66 + cnt * 23 - 2);
+    gcopy(3, cnt * 24 + 72, 30, 24, 18);
+    font(14 - en * 2);
+    cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 23 - 1);
+
+    font(15 - en * 2, snail::font_t::style_t::bold);
+    if (cnt >= 2)
+    {
+        _draw_attribute_value(cnt, list_value, is_locked);
+    }
+}
+
+void ui_menu_charamake_attributes::draw()
+{
+    int locks_left = _locked_attributes(8);
+    _draw_window(locks_left);
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
-        pos(wx + 38, wy + 66 + cnt * 23 - 2);
-        gcopy(3, cnt * 24 + 72, 30, 24, 18);
-        font(14 - en * 2);
-        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
-        font(15 - en * 2, snail::font_t::style_t::bold);
-        if (cnt >= 2)
-        {
-            pos(wx + 198, wy + 76 + cnt * 23);
-            gmode(2);
-            gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
-            pos(wx + 210, wy + 66 + cnt * 23);
-            mes(""s + list(0, cnt) / 1000000);
-            if (_locked_attributes(cnt - 2) == 1)
-            {
-                font(12 - en * 2, snail::font_t::style_t::bold);
-                pos(wx + 240, wy + 66 + cnt * 23 + 2);
-                color(20, 20, 140);
-                mes(u8"Locked!"s);
-                color(0, 0, 0);
-            }
-        }
+
+        int list_value = list(0, cnt);
+        const std::string& text = listn(0, cnt);
+        bool is_locked = cnt < 2 ? false : _locked_attributes(cnt - 2) == 1;
+        _draw_attribute(cnt, list_value, text, is_locked);
     }
     cs_bk = cs;
 }

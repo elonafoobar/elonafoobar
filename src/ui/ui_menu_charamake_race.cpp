@@ -11,16 +11,8 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_charamake_race::init()
+static void _load_race_list()
 {
-    cs = 0;
-    cs_bk = -1;
-    pagesize = 16;
-    page = 0;
-
-    character_making_draw_background(
-        "core.locale.chara_making.select_race.caption");
-
     listmax = 0;
     for (const auto& race : the_race_db.get_available_races(false))
     {
@@ -45,7 +37,21 @@ bool ui_menu_charamake_race::init()
             listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
         }
     }
+}
+
+bool ui_menu_charamake_race::init()
+{
+    cs = 0;
+    cs_bk = -1;
+    pagesize = 16;
+    page = 0;
+
+    character_making_draw_background(
+        "core.locale.chara_making.select_race.caption");
+
     windowshadow = 1;
+
+    _load_race_list();
 
     return true;
 }
@@ -79,13 +85,8 @@ static void _draw_race_info(int chip_male, int chip_female)
     draw_race_or_class_info();
 }
 
-void ui_menu_charamake_race::draw()
+static void _draw_window()
 {
-    if (cs == cs_bk)
-    {
-        return;
-    }
-
     s(0) = i18n::s.get("core.locale.chara_making.select_race.title");
     s(1) = strhint3b;
     display_window(
@@ -105,25 +106,54 @@ void ui_menu_charamake_race::draw()
         i18n::s.get("core.locale.chara_making.select_race.detail"),
         wx + 188,
         wy + 30);
+}
+
+static void _draw_choice(int cnt, const std::string& text)
+{
+    display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+    cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
+}
+
+static void _draw_choices()
+{
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
-        p = page * pagesize + cnt;
-        if (p >= listmax)
+        int index = page * pagesize + cnt;
+        if (index >= listmax)
         {
             break;
         }
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
-        display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-        cs_list(cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
+
+        const std::string& text = listn(0, index);
+        _draw_choice(cnt, text);
     }
     cs_bk = cs;
-    pos(wx + 200, wy + 66);
+}
 
+static void _reload_selected_race(const std::string& race)
+{
     chara_delete(0);
-    access_race_info(3, listn(1, page * pagesize + cs));
-    access_race_info(11, listn(1, page * pagesize + cs));
+    access_race_info(3, race);
+    access_race_info(11, race);
+}
+
+void ui_menu_charamake_race::draw()
+{
+    if (cs == cs_bk)
+    {
+        return;
+    }
+
+    _draw_window();
+    _draw_choices();
+
+    const std::string& selected_race = listn(1, page * pagesize + cs);
+    _reload_selected_race(selected_race);
+
+    pos(wx + 200, wy + 66);
     _draw_race_info(ref1, ref2);
 }
 
@@ -134,7 +164,12 @@ optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(
 
     if (p != -1)
     {
-        return ui_menu_charamake_race::result::finish(p(0));
+        int race_index = p;
+        const std::string& race_id = listn(1, race_index);
+        const std::string& race_name = listn(0, race_index);
+
+        return ui_menu_charamake_race::result::finish(
+            ui_menu_charamake_race_result{race_id, race_name});
     }
     else if (key == key_pageup)
     {

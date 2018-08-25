@@ -6,7 +6,19 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_charamake_race : public ui_menu<int>
+struct ui_menu_charamake_race_result
+{
+    ui_menu_charamake_race_result(std::string race_id, std::string race_name)
+        : race_id(race_id)
+        , race_name(race_name)
+    {
+    }
+
+    std::string race_id;
+    std::string race_name;
+};
+
+class ui_menu_charamake_race : public ui_menu<ui_menu_charamake_race_result>
 {
 public:
     ui_menu_charamake_race()

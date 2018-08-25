@@ -29,6 +29,8 @@ protected:
         const std::string& key);
 
 private:
+    void _reroll_attributes();
+
     std::string _race;
     std::string _klass;
     elona_vector1<int> _attributes;
