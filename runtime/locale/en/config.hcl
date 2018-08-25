@@ -4,6 +4,7 @@ locale {
             menu = "Menu"
             require_restart = "Items marked with * require restart to apply changes."
             assign_button = "To assign a button, move the cursor to\nan item and press the button."
+            no_desc = "(No description available.)"
 
             yes_no {
                 # NOTE: This text is implicitly chosen for boolean values without an explicit
@@ -75,7 +76,11 @@ locale {
                 }
                 default_save {
                     name = "Default Save"
-                    doc = "Saved game to be loaded on startup."
+                    doc = <<DOC
+Saved game to be loaded on startup.
+These are calculated when the game loads.
+If one is missing, restart the game to have it appear.
+DOC
                     variants {
                         "" = "None"
                     }
@@ -99,6 +104,7 @@ locale {
                 sound {
                     name = "Sound*"
                     yes_no = core.locale.config.common.yes_no.on_off
+                    doc = "Enable or disable sound."
                 }
                 music {
                     name = "Music*"
@@ -107,9 +113,17 @@ locale {
                         direct_music = "Direct music"
                         mci = "MCI"
                     }
+                    doc = <<DOC
+Music mode to use.
+Currently there is no difference between Direct music and MCI.
+DOC
                 }
                 stereo_sound {
-                  name = "Stereo Sound"
+                    name = "Stereo Sound"
+                    doc = <<DOC
+Whether or not to play certain sounds based on the position of the source.
+Examples are magic casting, eating/drinking, and damage.
+DOC
                 }
                 fullscreen {
                     name = "Screen Mode*"
@@ -118,10 +132,18 @@ locale {
                         fullscreen = "Full screen"
                         desktop_fullscreen = "Desktop fullscr"
                     }
-                    doc = "Fullscreen mode."
+                    doc = <<DOC
+Fullscreen mode.
+'Full screen' will use a hardware fullscreen mode.
+'Desktop fullscr' will create a borderless window the same size as the screen.
+DOC
                 }
                 display_mode {
                     name = "Screen Resolution*"
+                    doc = <<DOC
+Screen resolution to use.
+The available options may change depending on the graphics hardware you use.
+DOC
                     # Variants are injected at runtime.
                 }
                 orientation {
@@ -135,6 +157,11 @@ locale {
                         reverse_landscape = "Reverse Landscape"
                         reverse_portrait = "Reverse Portrait"
                     }
+                    doc = <<DOC
+Screen orientation to use when running the app.
+Portrait modes will display the game in a window at the top.
+Landscape modes will fill the entire screen.
+DOC
                 }
                 window_mode {
                     name = "Window Size*"
@@ -151,7 +178,10 @@ locale {
                 }
                 heartbeat {
                     name = "Heartbeat Sound"
-                    doc = "Play heartbeat sound when health is low."
+                    doc = <<DOC
+Play heartbeat sound when health is low.
+The threshold to play at is configurable.
+DOC
                 }
                 heartbeat_threshold {
                     name = "Heartbeat Threshold"
@@ -161,7 +191,7 @@ locale {
                     name = "Skip Random Events"
                     doc = <<DOC
 Skip displaying random event popup windows.
-Random events will still occur.
+Random events will still occur. In most cases, a default option will be chosen.
 DOC
                 }
             }
@@ -170,6 +200,10 @@ DOC
                 name = "Network Setting"
                 enabled {
                     name = "Use Network"
+                    doc = <<DOC
+Enable network features (chat, alias, and moongate).
+Currently unimplemented.
+DOC
                 }
                 wish {
                     name = "Constantly Connect"
@@ -202,7 +236,10 @@ DOC
                 general_wait {
                     name = "General Wait"
                     formatter = core.locale.config.common.formatter.wait
-                    doc = "Number of frames to wait for most animations/actions."
+                    doc = <<DOC
+Number of frames to wait for most animations/actions.
+For example, it controls the amount of delay for input polling.
+DOC
                 }
                 anime_wait {
                     name = "Animation Wait"
@@ -228,7 +265,7 @@ DOC
                     }
                     doc = <<DOC
 Speed of auto-turn actions.
-This is also affected by "Animation Wait".
+This is also affected by 'Animation Wait'.
 DOC
                 }
                 attack_anime {
@@ -244,12 +281,12 @@ DOC
                     yes_no = core.locale.config.common.yes_no.unsupported
                     doc = <<DOC
 Play animations at the title screen.
-NOTE: Currently not implemented.
+Currently not implemented.
 DOC
                 }
                 window_anime {
                     name = "Window Animation"
-                    doc = "Play window animations."
+                    doc = "Play window animations for certain character-related menus."
                 }
                 screen_refresh {
                     name = "Screen Refresh"
@@ -265,6 +302,11 @@ DOC
                 name = "Input Setting"
                 autodisable_numlock {
                     name = "Auto-Disable Numlock"
+                    doc = <<DOC
+If Numlock is on, turns off Numlock while playing and turns it back on again after exiting.
+It can fix issues related to holding Shift and a numpad movement key at the same time.
+This only has an effect on Windows.
+DOC
                 }
                 assign_z_key {
                     name = "Assign z key"
@@ -273,6 +315,7 @@ DOC
                         zap = "Zap"
                         none = "Don't assign"
                     }
+                    doc = "Change the assignment of the 'z' key."
                 }
                 assign_x_key {
                     name = "Assign x key"
@@ -281,6 +324,7 @@ DOC
                         identify = "Identify"
                         none = "Don't assign"
                     }
+                    doc = "Change the assignment of the 'x' key."
                 }
                 walk_wait {
                     name = "Walk Speed"
@@ -325,6 +369,10 @@ DOC
                 joypad {
                     name = "Game Pad"
                     yes_no = core.locale.config.common.yes_no.unsupported #core.locale.config.common.yes_no.use_dont_use
+                    doc = <<DOC
+Enable gamepads.
+Currently unimplemented.
+DOC
                 }
             }
 
@@ -336,9 +384,15 @@ Place fonts (TTF format) in data/font. Please ensure the fonts are monospaced to
 DOC
                 vertical_offset {
                     name = "Vertical Offset"
+                    doc = <<DOC
+Vertical text offset for certain menu titles.
+DOC
                 }
                 size_adjustment {
                     name = "Size Adjustment"
+                    doc = <<DOC
+Size adjustment for certain pieces of text.
+DOC
                 }
             }
 
@@ -346,10 +400,13 @@ DOC
                 name = "Message&Log"
                 add_timestamps {
                     name = "Add time info"
+                    doc = <<DOC
+Add a turn timestamp to each message received.
+DOC
                 }
                 transparency {
                     name = "Transparency"
-                    doc = "Message box transparency."
+                    doc = "Controls the amount of transparency older message log messages receive."
                     formatter = "${_1}*10 %"#TODO
                 }
             }
@@ -401,33 +458,63 @@ DOC
                 }
                 allow_enhanced_skill_tracking {
                     name = "Allow enhanced skill tracking"
+                    doc = <<DOC
+Increases the number of trackable skills to 10 and colorizes potential.
+DOC
+                }
+                enhanced_skill_tracking_lowerbound {
+                    name = "Enhanced tracking lowerbound"
+                    doc = <<DOC
+Potential below this amount will be colored red in the skill tracker.
+Only has an effect when used with 'Allow enhanced skill tracking'.
+DOC
+                }
+                enhanced_skill_tracking_upperbound {
+                    name = "Enhanced tracking upperbound"
+                    doc = <<DOC
+Potential above this amount will be colored green in the skill tracker.
+Only has an effect when used with 'Allow enhanced skill tracking'.
+DOC
                 }
                 leash_icon {
                     name = "Leash icon"
                     yes_no = core.locale.config.common.yes_no.show_dont_show
+                    doc = <<DOC
+Display a leash icon for leashed pets.
+DOC
                 }
                 autopick {
                     name = "Autopick"
-                    doc = "Automatically pick up items you pass over."
                     yes_no = core.locale.config.common.yes_no.use_dont_use
+                    doc = "Automatically pick up items you pass over."
                 }
                 autosave {
                     name = "Autosave"
-                    doc = "Automatically save the game at certain intervals."
                     yes_no = core.locale.config.common.yes_no.enable_disable
+                    doc = <<DOC
+Automatically save the game at certain intervals.
+These include (but are not limited to):
+Using scrolls of create material.
+Using potions of gain potential.
+Opening chests/material boxes.
+DOC
                 }
                 damage_popup {
                     name = "Damage popup"
-                    doc = "Show damage popups."
                     yes_no = core.locale.config.common.yes_no.on_off
+                    doc = "Show damage popups."
                 }
                 max_damage_popup {
                     name = "Max damage popup"
+                    doc = <<DOC
+Maximum amount of damage popups to render.
+Only has an effect when used with 'Damage popup'.
+DOC
                 }
                 startup_script {
                     doc = <<DOC
 Run a script in the data/script/ folder at startup.
-Provide a script's name, like "my_script.lua" for "data/script/my_script.lua".
+Provide a script's name, like 'my_script.lua' for 'data/script/my_script.lua'.
 DOC
                 }
             }
@@ -438,12 +525,13 @@ DOC
                 vibrate {
                     name = "Vibrate"
                     doc = <<DOC
-Vibrate on important events/low health.
+Vibrate on important events and low health.
 DOC
                 }
 
                 vibrate_duration {
                     name = "Vibrate Duration"
+                    doc = "Controls the duration of the vibration in 'Vibrate'."
                 }
 
                 hide_navigation {
@@ -462,18 +550,22 @@ DOC
 
                 quick_action_transparency {
                     name = "Quick Action Transp."
+                    doc = "Controls transparency of touch actions."
                 }
 
                 quick_action_size {
                     name = "Quick Action Size"
+                    doc = "Controls size of touch actions."
                 }
 
                 quick_action_repeat_start_wait {
                     name = "Quick Action Repeat Wait"
+                    doc = "Controls the held time before a quick action begins to repeat."
                 }
 
                 quick_action_repeat_wait {
                     name = "Quick Action Wait"
+                    doc = "Controls the time between repeats of a held quick action."
                 }
             }
         }

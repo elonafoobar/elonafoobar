@@ -4,6 +4,7 @@
             menu = "項目"
             require_restart = "* 印のついた項目は、ゲームの再起動後に適用されます"
             assign_button = "ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"
+            no_desc = "(説明はありません)"
 
             yes_no {
                 # NOTE: This text is implicitly chosen for boolean values without an explicit
@@ -342,6 +343,12 @@
                 }
                 allow_enhanced_skill_tracking {
                     name = "スキルトラック拡張"
+                }
+                enhanced_skill_tracking_lowerbound {
+                    name = "スキルトラック拡張(下界)"
+                }
+                enhanced_skill_tracking_upperbound {
+                    name = "スキルトラック拡張(上界)"
                 }
                 leash_icon {
                     name = "紐のアイコン表示"
