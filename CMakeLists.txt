@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 3.0)
 # Project
 project(Elona_foobar VERSION 0.2.6)
 
+# Android version code. Increment on every distinct release.
+set(PROJECT_VERSION_CODE 1)
+
 
 # Options
 option(ANDROID_BUNDLE_ASSETS "Bundle assets with Android distribution" OFF)
@@ -31,9 +34,6 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 
 # Get platform
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
-
-# Android version code. Increment on every distinct release.
-set(PROJECT_VERSION_CODE 1)
 
 # Versioning file
 configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
@@ -481,73 +481,72 @@ else()
         " COMPONENT Runtime)
 endif()
 
+function(copy_nonexisting source target)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND}
+    -Dsourcefile=${source}
+    -Ddestinationfile=${target}
+    -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake)
+endfunction()
 
-# Kludgy function to work around the lack of directory support in copy_if_different
-function(copy_nonexisting src rel final_dir final)
-  if(ANDROID)
-    # Asset directory is wiped on each rebuild anyway.
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_directory
-      "${rel}"
-      "${final_dir}/${final}")
-  else()
-    file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
+function(copy_dir source target)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${source}
+    ${target})
+endfunction()
 
-    foreach( each_file ${allfiles} )
-      set(destinationfile "${final_dir}/${final}/${each_file}")
-      set(sourcefile "${rel}/${each_file}")
-      add_custom_command(TARGET ${PROJECT_NAME}
-        POST_BUILD
-        COMMAND ${CMAKE_COMMAND}
-        -Ddestinationfile=${destinationfile}
-        -Dsourcefile=${sourcefile}
-        -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake)
-    endforeach(each_file)
-  endif()
+function(copy_file source target)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${source}
+    ${target})
 endfunction()
 
 if(ANDROID)
   set(ASSET_DIR "${CMAKE_SOURCE_DIR}/android/app/src/main/assets")
   file(REMOVE_RECURSE ${ASSET_DIR})
   file(MAKE_DIRECTORY ${ASSET_DIR})
-  copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} "runtime")
-
-  # Remove default config, in order to use Android-specific defaults.
-  add_custom_command(TARGET ${PROJECT_NAME}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E remove "${ASSET_DIR}/runtime/config.hcl")
+  set(RUNTIME_DIR "${ASSET_DIR}/runtime")
 else()
   set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-  copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ${ASSET_DIR} ".")
+  set(RUNTIME_DIR "${ASSET_DIR}")
+
+  # Copy default config.
+  copy_nonexisting("${CMAKE_SOURCE_DIR}/runtime/config.hcl" "${RUNTIME_DIR}/config.hcl")
 endif()
 
-# Copy assets from Elona 1.22 if they are present
+# Copy and overwrite runtime folders/files (except config.hcl)
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/lang/ "${RUNTIME_DIR}/lang/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/mods/ "${RUNTIME_DIR}/mods/")
+copy_dir(${CMAKE_SOURCE_DIR}/runtime/original/ "${RUNTIME_DIR}/original/")
+copy_file(${CMAKE_SOURCE_DIR}/runtime/__init__.lua "${RUNTIME_DIR}")
+copy_file(${CMAKE_SOURCE_DIR}/runtime/assets.hcl "${RUNTIME_DIR}")
+
+# Copy assets from Elona 1.22 if they are present.
 if (NOT ANDROID OR ANDROID_BUNDLE_ASSETS)
-    if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
-    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" ${ASSET_DIR} "graphic")
-    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" ${ASSET_DIR} "map")
-    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" ${ASSET_DIR} "original")
-    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" ${ASSET_DIR} "sound")
-    copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" ${ASSET_DIR} "user")
+  if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
+    copy_dir("${CMAKE_PREFIX_PATH}/elona/graphic" "${ASSET_DIR}/graphic")
+    copy_dir("${CMAKE_PREFIX_PATH}/elona/map" "${ASSET_DIR}/map")
+    copy_dir("${CMAKE_PREFIX_PATH}/elona/original" "${ASSET_DIR}/original")
+    copy_dir("${CMAKE_PREFIX_PATH}/elona/sound" "${ASSET_DIR}/sound")
+    copy_dir("${CMAKE_PREFIX_PATH}/elona/user" "${ASSET_DIR}/user")
     message("Elona 1.22 distribution found.")
-    else()
+  else()
     message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
-    endif()
+  endif()
 endif()
 
 if(NOT ANDROID)
   if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
-    copy_nonexisting("${CMAKE_CURRENT_SOURCE_DIR}/src/tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/data" ${ASSET_DIR} "tests/data")
+    copy_dir(${CMAKE_SOURCE_DIR}/src/tests/data "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
   endif()
 
   if(WITH_TESTS STREQUAL "TESTS")
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_directory
-      "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/lua"
-      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_directory
-      "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/lua/classes"
-      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua/classes")
+    copy_dir(${CMAKE_SOURCE_DIR}/src/tests/lua "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
   endif()
 endif()
