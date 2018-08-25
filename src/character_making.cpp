@@ -16,6 +16,7 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "ui/ui_menu_charamake_alias.hpp"
 #include "ui/ui_menu_charamake_attributes.hpp"
 #include "ui/ui_menu_charamake_class.hpp"
 #include "ui/ui_menu_charamake_gender.hpp"
@@ -174,163 +175,34 @@ main_menu_result_t character_making_select_feats()
 
 main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
 {
-    bool reroll_aliases = true;
-    bool redraw_aliases = true;
     bool restore_previous_alias = !advanced_to_next_menu;
+    optional<std::string> previous_alias = none;
 
-    DIM2(alias_lock, 18);
-
-    pagemax = 0;
-    page = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.select_alias.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
+    if (advanced_to_next_menu)
     {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
+        DIM2(alias_lock, 18);
     }
-    windowshadow = 1;
-    cs = 0;
-    cs_bk = -1;
-    list(0, 0) = -1;
 
     if (restore_previous_alias)
     {
-        cs = 1;
+        previous_alias = cmaka;
     }
 
-    while (true)
-    {
-        if (reroll_aliases)
-        {
-            for (int cnt = 0; cnt < 17; ++cnt)
-            {
-                if (list(0, 0) == -1 && alias_lock(cnt) == 0)
-                {
-                    if (gdata_wizard == 1)
-                    {
-                        listn(0, cnt) = u8"*Debug*"s;
-                    }
-                    else
-                    {
-                        listn(0, cnt) = random_title();
-                    }
-                }
-                if (cnt == 0)
-                {
-                    listn(0, cnt) =
-                        i18n::s.get("core.locale.chara_making.common.reroll");
-                }
-                else if (restore_previous_alias && cnt == 1 && cmaka != "")
-                {
-                    listn(0, cnt) = cmaka;
-                    restore_previous_alias = false;
-                }
-            }
-            reroll_aliases = false;
-        }
-        if (redraw_aliases)
-        {
-            s(0) = i18n::s.get("core.locale.chara_making.select_alias.title");
-            s(1) = strhint3b + key_mode2 + " ["
-                + i18n::s.get(
-                      "core.locale.chara_making.select_alias.lock_alias")
-                + "]";
-            display_window(
-                (windoww - 400) / 2 + inf_screenx,
-                winposy(458, 1) + 20,
-                400,
-                458);
-            ++cmbg;
-            x = ww / 3 * 2;
-            y = wh - 80;
-            pos(wx + ww / 2, wy + wh / 2);
-            gmode(4, 40);
-            gcopy_c(
-                2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
-            gmode(2);
-            display_topic(
-                i18n::s.get("core.locale.chara_making.select_alias.alias_list"),
-                wx + 28,
-                wy + 30);
-            for (int cnt = 0; cnt < 17; ++cnt)
-            {
-                font(14 - en * 2);
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                pos(wx + 38, wy + 66 + cnt * 19 - 2);
-                gcopy(3, cnt * 24 + 72, 30, 24, 18);
-                cs_list(
-                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
-                if (alias_lock(cnt) == 1)
-                {
-                    font(12 - en * 2, snail::font_t::style_t::bold);
-                    pos(wx + 280, wy + 66 + cnt * 19 + 2);
-                    color(20, 20, 140);
-                    mes(u8"Locked!"s);
-                    color(0, 0, 0);
-                }
-            }
-            cs_bk = cs;
-            list(0, 0) = 0;
-            redraw_aliases = false;
-        }
+    auto result =
+        ui::ui_menu_charamake_alias(previous_alias, alias_lock).show();
 
-        redraw();
-        await(config::instance().wait1);
-        key_check();
-        cursor_check();
-        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
-        if (p != -1)
-        {
-            if (key == key_select(0))
-            {
-                list(0, 0) = -1;
-                snd(103);
-                cs_bk = -1;
-                reroll_aliases = true;
-                redraw_aliases = true;
-            }
-            else
-            {
-                cmaka = listn(0, p);
-                return main_menu_result_t::
-                    character_making_customize_appearance;
-            }
-        }
-        if (key == key_mode2 && cs != -1)
-        {
-            if (alias_lock(cs) != 0)
-            {
-                alias_lock(cs) = 0;
-            }
-            else
-            {
-                alias_lock(cs) = 1;
-            }
-            snd(20);
-            redraw_aliases = true;
-        }
-        if (key == key_cancel)
-        {
-            return main_menu_result_t::character_making_select_feats;
-        }
-        if (getkey(snail::key::f1))
-        {
-            show_game_help();
-            return main_menu_result_t::character_making_select_alias_looped;
-        }
-        if (cs != cs_bk)
-        {
-            redraw_aliases = true;
-        }
+    if (result.canceled)
+    {
+        return main_menu_result_t::character_making_select_feats;
+    }
+    else if (!result.value)
+    {
+        return main_menu_result_t::character_making_select_alias_looped;
+    }
+    else
+    {
+        cmaka = *result.value;
+        return main_menu_result_t::character_making_customize_appearance;
     }
 }
 
