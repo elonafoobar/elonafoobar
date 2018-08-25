@@ -78,8 +78,6 @@ int show_hire_menu(hire_operation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
-void show_economy_window();
-void show_politics_window();
 void begin_to_believe_god(int);
 void screen_analyze_self();
 int ctrl_ally(ctrl_ally_operation);

@@ -1608,18 +1608,6 @@ void show_city_chart()
     ui::ui_menu_composite_town(ui::ui_menu_composite_town::index::chart).show();
 }
 
-void show_economy_window()
-{
-    ui::ui_menu_composite_town(ui::ui_menu_composite_town::index::economy)
-        .show();
-}
-
-void show_politics_window()
-{
-    ui::ui_menu_composite_town(ui::ui_menu_composite_town::index::politics)
-        .show();
-}
-
 void begin_to_believe_god(int god_id)
 {
     bool already_believing = !cdata.player().god_id.empty();
