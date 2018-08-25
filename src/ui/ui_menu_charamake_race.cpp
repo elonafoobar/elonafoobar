@@ -1,5 +1,10 @@
 #include "ui_menu_charamake_race.hpp"
 #include "../audio.hpp"
+#include "../character_making.hpp"
+#include "../draw.hpp"
+#include "../i18n.hpp"
+#include "../menu.hpp"
+#include "../race.hpp"
 
 namespace elona
 {
@@ -12,20 +17,10 @@ bool ui_menu_charamake_race::init()
     cs_bk = -1;
     pagesize = 16;
     page = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.select_race.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
-    {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
+
+    character_making_draw_background(
+        "core.locale.chara_making.select_race.caption");
+
     listmax = 0;
     for (const auto& race : the_race_db.get_available_races(false))
     {
@@ -67,7 +62,21 @@ void ui_menu_charamake_race::update()
     {
         page = 0;
     }
-    reset_page = false;
+}
+
+static void _draw_race_info(int chip_male, int chip_female)
+{
+    {
+        // male
+        draw_chara(chip_male, wx + 480, wy + 96, 2, 40);
+    }
+    {
+        // female
+        draw_chara(chip_female, wx + 350, wy + 96, 2, 40);
+    }
+
+    gmode(2);
+    draw_race_or_class_info();
 }
 
 void ui_menu_charamake_race::draw()
@@ -111,10 +120,11 @@ void ui_menu_charamake_race::draw()
     }
     cs_bk = cs;
     pos(wx + 200, wy + 66);
+
     chara_delete(0);
     access_race_info(3, listn(1, page * pagesize + cs));
     access_race_info(11, listn(1, page * pagesize + cs));
-    show_race_or_class_info(0);
+    _draw_race_info(ref1, ref2);
 }
 
 optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(

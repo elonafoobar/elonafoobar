@@ -1,5 +1,10 @@
 #include "ui_menu_charamake_class.hpp"
 #include "../audio.hpp"
+#include "../character_making.hpp"
+#include "../class.hpp"
+#include "../draw.hpp"
+#include "../i18n.hpp"
+#include "../menu.hpp"
 
 namespace elona
 {
@@ -12,20 +17,10 @@ bool ui_menu_charamake_class::init()
     cs_bk = -1;
     page = 0;
     pagesize = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.select_class.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
-    {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
+
+    character_making_draw_background(
+        "core.locale.chara_making.select_class.caption");
+
     listmax = 0;
     for (const auto& class_ : the_class_db.get_available_classes(false))
     {
@@ -52,6 +47,26 @@ bool ui_menu_charamake_class::init()
 
 void ui_menu_charamake_class::update()
 {
+}
+
+static void
+_draw_class_info(int chip_male, int chip_female, const std::string& race)
+{
+    {
+        auto rect = chara_preparepic(chip_male);
+        pos(wx + 380, wy - rect->height + 60);
+        gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+    }
+    {
+        auto rect = chara_preparepic(chip_female);
+        pos(wx + 350, wy - rect->height + 60);
+        gcopy(rect->buffer, 0, 960, inf_tiles, rect->height);
+    }
+    pos(wx + 460, wy + 38);
+    mes(i18n::s.get("core.locale.chara_making.select_race.race_info.race")
+        + u8": "s + race);
+
+    draw_race_or_class_info();
 }
 
 void ui_menu_charamake_class::draw()
@@ -101,7 +116,7 @@ void ui_menu_charamake_class::draw()
     chara_delete(0);
     access_class_info(3, listn(1, cs));
     access_class_info(11, listn(1, cs));
-    show_race_or_class_info(1);
+    _draw_class_info(ref1, ref2, _race);
     redraw();
 }
 

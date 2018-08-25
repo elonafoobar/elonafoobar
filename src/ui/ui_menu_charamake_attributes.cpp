@@ -1,5 +1,11 @@
 #include "ui_menu_charamake_attributes.hpp"
+#include "../ability.hpp"
 #include "../audio.hpp"
+#include "../character_making.hpp"
+#include "../class.hpp"
+#include "../i18n.hpp"
+#include "../menu.hpp"
+#include "../race.hpp"
 
 namespace elona
 {
@@ -16,23 +22,13 @@ void ui_menu_charamake_attributes::update()
     cs = 0;
     cs_bk = -1;
     pagesize = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.roll_attributes.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
-    {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
+
+    character_making_draw_background(
+        "core.locale.chara_making.roll_attributes.caption");
+
     chara_delete(0);
-    access_race_info(3, cmrace);
-    access_class_info(3, cmclass);
+    access_race_info(3, _race);
+    access_class_info(3, _klass);
     cdata[rc].level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {

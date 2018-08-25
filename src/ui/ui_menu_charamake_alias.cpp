@@ -1,5 +1,8 @@
 #include "ui_menu_charamake_alias.hpp"
 #include "../audio.hpp"
+#include "../character_making.hpp"
+#include "../i18n.hpp"
+#include "../menu.hpp"
 
 namespace elona
 {
@@ -10,20 +13,10 @@ bool ui_menu_charamake_alias::init()
 {
     pagemax = 0;
     page = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = i18n::s.get("core.locale.chara_making.select_alias.caption");
-    draw_caption();
-    font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
-    {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
+
+    character_making_draw_background(
+        "core.locale.chara_making.select_alias.caption");
+
     windowshadow = 1;
     cs = 0;
     cs_bk = -1;
@@ -68,6 +61,7 @@ void ui_menu_charamake_alias::_reroll_aliases()
 void ui_menu_charamake_alias::update()
 {
     _reroll_aliases();
+    _redraw_aliases = true;
 }
 
 void ui_menu_charamake_alias::draw()

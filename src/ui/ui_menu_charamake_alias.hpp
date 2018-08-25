@@ -9,12 +9,10 @@ namespace ui
 class ui_menu_charamake_alias : public ui_menu<std::string>
 {
 public:
-    ui_menu_charamake_alias(
-        optional<std::string> previous_alias,
-        elona_vector1<int>& locked_aliases)
+    ui_menu_charamake_alias(optional<std::string> previous_alias)
         : _previous_alias(previous_alias)
-        , _locked_aliases(locked_aliases)
     {
+        DIM2(_locked_aliases, 18);
     }
 
 protected:
@@ -28,7 +26,7 @@ private:
     void _reroll_aliases();
 
     optional<std::string> _previous_alias;
-    elona_vector1<int>& _locked_aliases;
+    elona_vector1<int> _locked_aliases;
 
     bool _redraw_aliases = false;
 };

@@ -10,9 +10,13 @@ class ui_menu_charamake_attributes : public ui_menu<elona_vector1<int>>
 {
 public:
     ui_menu_charamake_attributes(
+        const std::string& race,
+        const std::string& klass,
         elona_vector1<int> attributes,
         elona_vector1<int>& locked_attributes)
-        : _attributes(attributes)
+        : _race(race)
+        , _klass(klass)
+        , _attributes(attributes)
         , _locked_attributes(locked_attributes)
     {
     }
@@ -25,6 +29,8 @@ protected:
         const std::string& key);
 
 private:
+    std::string _race;
+    std::string _klass;
     elona_vector1<int> _attributes;
     elona_vector1<int>& _locked_attributes;
 
