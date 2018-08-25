@@ -347,6 +347,12 @@ config def {
                 default = false
                 visible = false
             }
+
+            pcc_graphic_scale = {
+                type = "enum"
+                default = "shrinked"
+                variants = ["shrinked", "fullscale"]
+            }
         }
     }
 

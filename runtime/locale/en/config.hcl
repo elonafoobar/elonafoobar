@@ -517,6 +517,14 @@ Run a script in the data/script/ folder at startup.
 Provide a script's name, like 'my_script.lua' for 'data/script/my_script.lua'.
 DOC
                 }
+
+                pcc_graphic_scale = {
+                    name = "PCC Graphic"
+                    variants {
+                        shrinked = "Shrinked"
+                        fullscale = "Full-scale"
+                    }
+                }
             }
 
             android {

@@ -19,6 +19,17 @@ namespace
 
 
 
+int pcc_size(int shrinked, int fullscale)
+{
+    assert(shrinked < fullscale);
+
+    const auto is_fullscale =
+        config::instance().pcc_graphic_scale == "fullscale";
+    return is_fullscale ? fullscale : shrinked;
+}
+
+
+
 template <typename T>
 struct loop_xy
 {
@@ -563,12 +574,26 @@ void draw_character_sprite_in_water(
     // Upper body
     pos(x + 24, y + 16);
     gmode(2);
-    gcopy_c(texture_id, frame, direction * 48, 32, 28, 24, 24);
+    gcopy_c(
+        texture_id,
+        frame,
+        direction * 48,
+        32,
+        28,
+        pcc_size(24, 32),
+        pcc_size(24, 28));
 
     // Lower body
-    pos(x + 24, y + 36);
+    pos(x + 24, y + pcc_size(36, 40));
     gmode(4, 146);
-    gcopy_c(texture_id, frame, direction * 48 + 28, 32, 20, 24, 16);
+    gcopy_c(
+        texture_id,
+        frame,
+        direction * 48 + 28,
+        32,
+        20,
+        pcc_size(24, 32),
+        pcc_size(16, 20));
 }
 
 
@@ -590,7 +615,14 @@ void draw_character_sprite(
     // Character sprite
     pos(x + 24, y + dy + 8);
     gmode(2);
-    gcopy_c(texture_id, frame, direction * 48, 32, 48, 24, 40);
+    gcopy_c(
+        texture_id,
+        frame,
+        direction * 48,
+        32,
+        48,
+        pcc_size(24, 32),
+        pcc_size(40, 48));
 }
 
 

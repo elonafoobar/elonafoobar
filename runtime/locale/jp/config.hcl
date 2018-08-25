@@ -370,6 +370,14 @@
                 }
                 startup_script {
                 }
+
+                pcc_graphic_scale = {
+                    name = "PCC表示"
+                    variants {
+                        shrinked = "縮小(通常)"
+                        fullscale = "原寸"
+                    }
+                }
             }
 
             android {
