@@ -12,8 +12,8 @@ public:
     enum index : size_t
     {
         chart = 0,
-        city = 1,
-        law = 2
+        economy = 1,
+        politics = 2
     };
 
     ui_menu_composite_city(size_t selected)

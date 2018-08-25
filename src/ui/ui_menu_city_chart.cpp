@@ -1,4 +1,6 @@
 #include "ui_menu_city_chart.hpp"
+#include "../audio.hpp"
+#include "../i18n.hpp"
 
 namespace elona
 {
