@@ -43,6 +43,7 @@ locale {
             mode = " [情報切替]  "
             portrait = "p [ポートレイト変更]  "
             shortcut = "0〜9 [ショートカット]  "
+            help = " [説明]  "
         }
 
         quick_menu {

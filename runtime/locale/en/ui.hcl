@@ -44,6 +44,7 @@ locale {
             mode = " [Mode]  "
             portrait = "p [Portrait]  "
             shortcut = "0~9 [Shortcut]  "
+            help = " [Help]  "
         }
 
         quick_menu {

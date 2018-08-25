@@ -24,9 +24,11 @@ class config_menu_item_base
 public:
     std::string name;
     std::string key;
+    i18n_key locale_key;
 
     config_menu_item_base(const std::string& key, const i18n_key& locale_key)
         : key(key)
+        , locale_key(locale_key)
     {
         name = i18n::s.get(locale_key + ".name");
     }
@@ -39,6 +41,18 @@ public:
     virtual std::string get_message()
     {
         return "";
+    }
+
+    std::string get_desc() const
+    {
+        if (auto text = i18n::s.get_optional(locale_key + ".doc"))
+        {
+            return *text;
+        }
+        else
+        {
+            return i18n::s.get("core.locale.config.common.no_desc");
+        }
     }
 };
 
@@ -535,6 +549,45 @@ config_screen create_config_screen()
 namespace elona
 {
 
+static void _show_config_item_desc(const std::string& desc)
+{
+    size_t width = 100;
+    size_t height = 100;
+    int font_size = 13 + sizefix - en * 2;
+    std::string line;
+    std::istringstream ss(desc);
+
+    while (std::getline(ss, line))
+    {
+        width = std::max(width, strlen_u(line) * 8 + 40);
+        height += font_size;
+    }
+
+    int x = promptx - (width / 2);
+    int y = prompty - (height / 2);
+
+    snd(26);
+
+    while (true)
+    {
+        window(x + 8, y + 8, width, height, false);
+
+        font(font_size);
+        pos(x + 40, y + font_size + 36);
+        mes(desc);
+
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+
+        if (key != ""s)
+        {
+            key = ""s;
+            break;
+        }
+    }
+}
+
 int submenu = 0;
 
 void set_option()
@@ -607,7 +660,7 @@ set_option_begin:
             reset_page = false;
         }
         s(0) = menu_title;
-        s(1) = strhint3;
+        s(1) = strhint3 + key_mode2 + i18n::s.get("core.locale.ui.hint.help");
         pagesize = 0;
         if (mode == 1)
         {
@@ -747,6 +800,12 @@ set_option_begin:
             snd(20);
             reset_page = true;
             continue;
+        }
+        if (key == key_mode2)
+        {
+            auto desc = config_screen[submenu]->items[cs].get()->get_desc();
+            _show_config_item_desc(desc);
+            goto set_option_begin;
         }
         if (key == key_cancel)
         {
