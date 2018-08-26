@@ -1,4 +1,6 @@
 data {
+    define = ["dialog"]
+
     load {
         core.chara      = ["data/chara.hcl"]
         core.item       = ["data/item.hcl"]
