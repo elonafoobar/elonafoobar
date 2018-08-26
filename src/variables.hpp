@@ -413,7 +413,6 @@ ELONA_EXTERN(int chatflag);
 ELONA_EXTERN(int chatteleport);
 ELONA_EXTERN(int ci);
 ELONA_EXTERN(int cidip);
-ELONA_EXTERN(int city);
 ELONA_EXTERN(int client);
 ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);

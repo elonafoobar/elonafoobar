@@ -208,9 +208,13 @@ set(CORE_SOURCES
   src/ui/ui_menu_skills.cpp
   src/ui/ui_menu_spell_writer.cpp
   src/ui/ui_menu_spells.cpp
+  src/ui/ui_menu_town_chart.cpp
+  src/ui/ui_menu_town_economy.cpp
+  src/ui/ui_menu_town_politics.cpp
   src/ui/ui_menu_composite_character.cpp
   src/ui/ui_menu_composite_message.cpp
   src/ui/ui_menu_composite_skills.cpp
+  src/ui/ui_menu_composite_town.cpp
 
   src/version.cpp
   )

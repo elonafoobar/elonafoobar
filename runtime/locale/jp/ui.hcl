@@ -28,8 +28,8 @@ locale {
             }
             town {
                 chart = "チャート"
-                city = "街情報"
-                law = "法律"
+                economy = "街情報"
+                politics = "法律"
             }
         }
 
@@ -369,7 +369,7 @@ locale {
             reroll = "別の名前を考える"
         }
 
-        city_chart {
+        town_chart {
             title = "ポストチャート"
 
             chart = "${_1}のチャート"

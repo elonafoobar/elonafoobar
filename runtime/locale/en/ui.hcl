@@ -28,8 +28,8 @@ locale {
             }
             town {
                 chart = "Chart"
-                city = "City"
-                law = "Law"
+                economy = "City"
+                politics = "Law"
             }
         }
 
@@ -370,7 +370,7 @@ locale {
             reroll = "Reroll"
         }
 
-        city_chart {
+        town_chart {
             title = "City Chart"
 
             chart = "${_1} City Chart"
