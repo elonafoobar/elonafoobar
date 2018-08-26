@@ -474,34 +474,57 @@ public:
         storage.clear();
     }
 
+    optional<const hil::Context&> find_translation(const i18n_key& key)
+    {
+        // In the unlikely event that a single locale key refers to
+        // both a single string and a list, the string will be chosen.
+        // This normally won't happen accidentally since duplicate
+        // locale keys will expand into an object (per current HCL
+        // decoding rules).
+
+        const auto& found = storage.find(key);
+        if (found != storage.end())
+        {
+            return found->second;
+        }
+
+        const auto& found_list = list_storage.find(key);
+        if (found_list != list_storage.end())
+        {
+            const auto& list = found_list->second;
+            return list.at(rnd(list.size()));
+        }
+
+        return none;
+    }
+
     template <typename Head, typename... Tail>
     optional<std::string>
-    get_optional(const std::string& key, Head const& head, Tail&&... tail)
+    get_optional(const i18n_key& key, Head const& head, Tail&&... tail)
     {
-        const auto& found = storage.find(key);
-        if (found == storage.end())
+        const auto& found = find_translation(key);
+        if (!found)
         {
             return none;
         }
 
-        return fmt_with_context(
-            found->second, head, std::forward<Tail>(tail)...);
+        return fmt_with_context(*found, head, std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    optional<std::string> get_optional(const std::string& key, Tail&&... tail)
+    optional<std::string> get_optional(const i18n_key& key, Tail&&... tail)
     {
-        const auto& found = storage.find(key);
-        if (found == storage.end())
+        const auto& found = find_translation(key);
+        if (!found)
         {
             return none;
         }
 
-        return fmt_with_context(found->second, std::forward<Tail>(tail)...);
+        return fmt_with_context(*found, std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
-    std::string get(const std::string& key, Head const& head, Tail&&... tail)
+    std::string get(const i18n_key& key, Head const& head, Tail&&... tail)
     {
         if (auto text = get_optional(key, head, std::forward<Tail>(tail)...))
         {
@@ -519,7 +542,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get(const std::string& key, Tail&&... tail)
+    std::string get(const i18n_key& key, Tail&&... tail)
     {
         if (auto text = get_optional(key, std::forward<Tail>(tail)...))
         {
@@ -540,11 +563,8 @@ public:
     // Convenience methods for cases like "core.element._<enum index>.name"
 
     template <typename Head, typename... Tail>
-    std::string get_enum(
-        const std::string& key,
-        int index,
-        Head const& head,
-        Tail&&... tail)
+    std::string
+    get_enum(const i18n_key& key, int index, Head const& head, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index),
@@ -553,7 +573,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get_enum(const std::string& key, int index, Tail&&... tail)
+    std::string get_enum(const i18n_key& key, int index, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -561,7 +581,7 @@ public:
 
     template <typename Head, typename... Tail>
     optional<std::string> get_enum_optional(
-        const std::string& key,
+        const i18n_key& key,
         int index,
         Head const& head,
         Tail&&... tail)
@@ -574,7 +594,7 @@ public:
 
     template <typename... Tail>
     optional<std::string>
-    get_enum_optional(const std::string& key, int index, Tail&&... tail)
+    get_enum_optional(const i18n_key& key, int index, Tail&&... tail)
     {
         return get_optional(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -638,9 +658,24 @@ private:
     void visit(const hcl::Value&, const std::string&, const std::string&);
     void
     visit_object(const hcl::Object&, const std::string&, const std::string&);
+    void visit_list(const hcl::List&, const std::string&, const std::string&);
+    void
+    visit_string(const std::string&, const std::string&, const std::string&);
 
-    std::unordered_map<std::string, hil::Context> storage;
-    std::set<std::string> unknown_keys;
+    /***
+     * Storage for single pieces of localized texts.
+     */
+    std::unordered_map<i18n_key, hil::Context> storage;
+
+    /***
+     * Storage for lists of localized text.
+     *
+     * When retrieving text using a locale key referring to a list element,
+     * the text will be chosen randomly.
+     */
+    std::unordered_map<i18n_key, std::vector<hil::Context>> list_storage;
+
+    std::set<i18n_key> unknown_keys;
 };
 
 extern i18n::store s;

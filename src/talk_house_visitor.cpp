@@ -561,7 +561,7 @@ void _adventurer_drink()
     txt(i18n::s.get(
         "core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
     txtef(9);
-    txt(i18n::s.get_enum("core.locale.magic.alcohol.normal", rnd(7)));
+    txt(i18n::s.get("core.locale.magic.alcohol.normal"));
     dmgcon(tc, status_ailment_t::drunk, 1000);
     dmgcon(cc, status_ailment_t::drunk, 1000);
     chara_modify_impression(cdata[tc], 15);

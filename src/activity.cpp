@@ -247,11 +247,11 @@ void continuous_action_perform()
                 if (rnd(10) == 0)
                 {
                     txtef(4);
-                    txt(i18n::s.get_enum(
-                        "core.locale.activity.perform.sound", rnd(3)));
+                    txt(i18n::s.get(
+                        "core.locale.activity.perform.sound.random"));
                 }
                 txtef(4);
-                txt(i18n::s.get_enum("core.locale.activity.perform.sound", 3));
+                txt(i18n::s.get("core.locale.activity.perform.sound.cha"));
             }
         }
         if (cdata[cc].continuous_action_turn % 20 == 0)
@@ -332,9 +332,9 @@ void continuous_action_perform()
                     if (is_in_fov(cdata[cc]))
                     {
                         txtef(9);
-                        txt(i18n::s.get_enum(
-                            "core.locale.activity.perform.dialog.disinterest",
-                            rnd(3)));
+                        txt(
+                            i18n::s.get("core.locale.activity.perform.dialog."
+                                        "disinterest"));
                     }
                     cdata[tc].interest = 0;
                     continue;
@@ -347,9 +347,8 @@ void continuous_action_perform()
                         if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
-                            txt(i18n::s.get_enum(
-                                "core.locale.activity.perform.dialog.angry",
-                                rnd(4)));
+                            txt(i18n::s.get(
+                                "core.locale.activity.perform.dialog.angry"));
                             txt(i18n::s.get(
                                 "core.locale.activity.perform.throws_rock",
                                 cdata[tc]));
@@ -436,9 +435,8 @@ void continuous_action_perform()
                         if (is_in_fov(cdata[cc]))
                         {
                             txtef(9);
-                            txt(i18n::s.get_enum(
+                            txt(i18n::s.get(
                                 "core.locale.activity.perform.dialog.interest",
-                                rnd(4),
                                 cdata[tc],
                                 cdata[cc]));
                         }
@@ -697,8 +695,7 @@ void continuous_action_sex()
                 if (is_in_fov(cdata[cc]))
                 {
                     txtef(9);
-                    txt(i18n::s.get_enum(
-                        "core.locale.activity.sex.dialog", rnd(5)));
+                    txt(i18n::s.get("core.locale.activity.sex.dialog"));
                 }
             }
         }
@@ -751,8 +748,8 @@ void continuous_action_sex()
     if (is_in_fov(cdata[cc]))
     {
         txtef(9);
-        dialog_head = i18n::s.get_enum(
-            "core.locale.activity.sex.after_dialog", rnd(5), cdata[tc]);
+        dialog_head =
+            i18n::s.get("core.locale.activity.sex.after_dialog", cdata[tc]);
         txtef(20);
     }
     if (tc != 0)
@@ -891,9 +888,7 @@ void continuous_action_eating_finish()
                 if (inv[ci].param3 < 0)
                 {
                     txtef(9);
-                    // TODO JP had six options, EN only had five.
-                    txt(i18n::s.get_enum(
-                        "core.locale.food.passed_rotten", rnd(6)));
+                    txt(i18n::s.get("core.locale.food.passed_rotten"));
                     damage_hp(cdata[cc], 999, -12);
                     if (cdata[cc].state() != character::state_t::alive)
                     {
@@ -1057,8 +1052,7 @@ void continuous_action_others()
             if (rnd(4) == 0)
             {
                 txtef(9);
-                txt(i18n::s.get_enum(
-                    "core.locale.activity.harvest.sound", rnd(5)));
+                txt(i18n::s.get("core.locale.activity.harvest.sound"));
             }
         }
         if (gdata(91) == 104)
@@ -1688,8 +1682,7 @@ void spot_digging()
         if (cdata[cc].turn % 5 == 0)
         {
             txtef(4);
-            txt(i18n::s.get_enum(
-                "core.locale.activity.dig_spot.sound", rnd(5)));
+            txt(i18n::s.get("core.locale.activity.dig_spot.sound"));
         }
         return;
     }
@@ -1900,8 +1893,7 @@ void spot_mining_or_wall()
         else if (cdata[cc].turn % 5 == 0)
         {
             txtef(4);
-            txt(i18n::s.get_enum(
-                "core.locale.activity.dig_spot.sound", rnd(5)));
+            txt(i18n::s.get("core.locale.activity.dig_spot.sound"));
         }
         return;
     }

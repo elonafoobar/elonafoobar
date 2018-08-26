@@ -80,11 +80,11 @@ locale {
             }
 
             eat {
-                too_bloated {
-                    _0 = "Your are too full to eat."
-                    _1 = "You are too bloated to eat any more."
-                    _2 = "Your stomach can't digest any more."
-                }
+                too_bloated = [
+                    "Your are too full to eat.",
+                    "You are too bloated to eat any more.",
+                    "Your stomach can't digest any more."
+                ]
             }
 
             equip {
@@ -130,11 +130,11 @@ locale {
 
                 love_potion {
                     text = "${name(_1)} throws it on the ground angrily."
-                    dialog {
-                        _0 = "\"You scum!\""
-                        _1 = "\"What are you trying to do!\""
-                        _2 = "\"Guard! Guard! Guard!\""
-                    }
+                    dialog = [
+                        "\"You scum!\"",
+                        "\"What are you trying to do!\"",
+                        "\"Guard! Guard! Guard!\""
+                    ]
                 }
 
                 refuses = "${name(_1)} refuse${s(_1)} to take ${itemname(_2, 1)}."
@@ -144,10 +144,10 @@ locale {
                 how_many = "How many? (1 to ${_1})"
                 prompt = "Do you really want to buy ${_1} for ${_2} gold pieces?"
 
-                not_enough_money {
-                    _0 = "You check your wallet and shake your head."
-                    _1 = "You need to earn more money!"
-                }
+                not_enough_money = [
+                    "You check your wallet and shake your head.",
+                    "You need to earn more money!"
+                ]
 
                 window {
                     price = "Price"

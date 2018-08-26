@@ -731,9 +731,8 @@ turn_result_t do_throw_command()
                         if (tc != 0)
                         {
                             txtef(9);
-                            txt(i18n::s.get_enum(
-                                "core.locale.action.throw.snow.dialog",
-                                rnd(6)));
+                            txt(i18n::s.get(
+                                "core.locale.action.throw.snow.dialog"));
                         }
                     }
                     return turn_result_t::turn_end;
@@ -3111,9 +3110,8 @@ turn_result_t do_movement_command()
                                 snd(11);
                                 cdata[cc].gold -= p;
                                 earn_gold(cdata[tc], p);
-                                txt(i18n::s.get_enum(
-                                    "core.locale.action.move.displace.dialog",
-                                    rnd(2)));
+                                txt(i18n::s.get(
+                                    "core.locale.action.move.displace.dialog"));
                             }
                         }
                     }
@@ -3525,7 +3523,7 @@ turn_result_t do_get_command()
         }
         if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
-            txt(i18n::s.get_enum("core.locale.action.get.not_owned", rnd(3)));
+            txt(i18n::s.get("core.locale.action.get.not_owned"));
         }
         update_screen();
         return turn_result_t::pc_turn_user_error;

@@ -56,10 +56,10 @@ locale {
 
         required_material_not_found = "A required material cannot be found."
 
-        sounds {
-            _0 = "*pug*"
-            _1 = "*clank*"
-        }
+        sounds = [
+            "*pug*",
+            "*clank*"
+        ]
 
         success_rate {
             perfect = "Perfect!"

@@ -96,12 +96,12 @@ locale {
             other = "The breath hits ${name(_1)} and"
         }
 
-        insanity {
-            _0 = "${name(_2)} see${s(_2)} maggots breed in the rent stomach of ${name(_1)}."
-            _1 = "${name(_2)} see${s(_2)} ${name(_1)} chow${s(_1)} dead bodies."
-            _2 = "${name(_2)} shudders${s(_2)} at ${name(_1)}${his_owned(_1)} terrifying eyes."
-            _3 = "${name(_2)} feel${s(_2)} sick at entrails caught in ${name(_1)}${his_owned(_1)} tentacles."
-        }
+        insanity = [
+            "${name(_2)} see${s(_2)} maggots breed in the rent stomach of ${name(_1)}.",
+            "${name(_2)} see${s(_2)} ${name(_1)} chow${s(_1)} dead bodies.",
+            "${name(_2)} shudders${s(_2)} at ${name(_1)}${his_owned(_1)} terrifying eyes.",
+            "${name(_2)} feel${s(_2)} sick at entrails caught in ${name(_1)}${his_owned(_1)} tentacles."
+        ]
 
         map {
             need_global_map = "You need to read it while you are in the global map."
@@ -131,21 +131,21 @@ locale {
         }
 
         alcohol {
-            cursed {
-                _0 = "*Hic*"
-                _1 = "\"Ah, bad booze.\""
-                _2 = "\"Ugh...\""
-                _3 = "\"Bah, smells like rotten milk.\""
-            }
-            normal {
-                _0 = "*Hic*"
-                _1 = "\"Ah, good booze.\""
-                _2 = "\"La-la-la-la.\""
-                _3 = "\"I'm going to heaven.\""
-                _4 = "\"Whew!\""
-                _5 = "\"I'm revived!\""
-                _6 = "\"Awesome.\""
-            }
+            cursed = [
+                "*Hic*",
+                "\"Ah, bad booze.\"",
+                "\"Ugh...\"",
+                "\"Bah, smells like rotten milk.\""
+            ]
+            normal = [
+                "*Hic*",
+                "\"Ah, good booze.\"",
+                "\"La-la-la-la.\"",
+                "\"I'm going to heaven.\"",
+                "\"Whew!\"",
+                "\"I'm revived!\"",
+                "\"Awesome.\""
+            ]
         }
 
         acid {
@@ -186,12 +186,12 @@ locale {
             no_place_to_get_off = "There's no place to get off."
 
             dismount = "You dismount from ${name(_1)}."
-            dismount_dialog {
-                _0 = "\"Phew.\""
-                _1 = "\"How was my ride?\""
-                _2 = "\"Tired...tired...\""
-                _3 = "\"It was nice.\""
-            }
+            dismount_dialog = [
+                "\"Phew.\"",
+                "\"How was my ride?\"",
+                "\"Tired...tired...\"",
+                "\"It was nice.\""
+            ]
 
             only_ally = "You can only ride an ally."
             not_client = "You can't ride a client."
@@ -203,12 +203,12 @@ locale {
                 execute = "You ride ${name(_1)}. (${name(_1)}'s speed: ${_2}->"
                 suitable = "You feel comfortable."
                 unsuitable = "This creature is too weak to carry you."
-                dialog {
-                    _0 = "\"Awww.\""
-                    _1 = "\"You should go on a diet.\""
-                    _2 = "\"Let's roll!\""
-                    _3 = "\"Be gentle.\""
-                }
+                dialog = [
+                    "\"Awww.\"",
+                    "\"You should go on a diet.\"",
+                    "\"Let's roll!\"",
+                    "\"Be gentle.\""
+                ]
             }
         }
 

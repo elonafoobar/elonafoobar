@@ -109,14 +109,13 @@ locale {
             }
         }
 
-        passed_rotten {
-            _0 = "\"Yuck!!\""
-            _1 = "\"....!!\""
-            _2 = "\"W-What...\""
-            _3 = "\"Are you teasing me?\""
-            _4 = "\"You fool!\""
-            _5 = "\"Yuck!!\"" # JP has 6 options, so one more was added here.
-        }
+        passed_rotten = [
+            "\"Yuck!!\"",
+            "\"....!!\"",
+            "\"W-What...\"",
+            "\"Are you teasing me?\"",
+            "\"You fool!\""
+        ]
 
         mochi {
             chokes = "${name(_1)} choke${s(_1)} on mochi!"
@@ -124,54 +123,54 @@ locale {
         }
 
         hunger_status {
-            hungry {
-                _0 = "You are getting hungry."
-                _1 = "You feel hungry."
-                _2 = "Now what shall I eat?"
-            }
-            very_hungry {
-                _0 = "Your hunger makes you dizzy."
-                _1 = "You have to eat something NOW."
-            }
-            starving {
-                _0 = "You are starving!"
-                _1 = "You are almost dead from hunger."
-            }
+            hungry = [
+                "You are getting hungry.",
+                "You feel hungry.",
+                "Now what shall I eat?"
+            ]
+            very_hungry = [
+                "Your hunger makes you dizzy.",
+                "You have to eat something NOW."
+            ]
+            starving = [
+                "You are starving!",
+                "You are almost dead from hunger."
+            ]
         }
 
         eating_message {
-            bloated {
-                _0 = "Phew! You are pretty bloated."
-                _1 = "You've never eaten this much before!"
-                _2 = "Your stomach is unbelievably full!"
-            }
-            satisfied {
-                _0 = "You are satisfied!"
-                _1 = "This hearty meal has filled your stomach."
-                _2 = "You really ate!"
-                _3 = "You pat your stomach contentedly."
-            }
-            normal {
-                _0 = "You can eat more."
-                _1 = "You pat your stomach."
-                _2 = "You satisfied your appetite a little."
-            }
-            hungry {
-                _0 = "You are still a bit hungry."
-                _1 = "Not enough..."
-                _2 = "You want to eat more."
-                _3 = "Your stomach is still somewhat empty."
-            }
-            very_hungry {
-                _0 = "No, it was not enough at all."
-                _1 = "You still feel very hungry."
-                _2 = "You aren't satisfied."
-            }
-            starving {
-                _0 = "It didn't help you from starving!"
-                _1 = "It prolonged your death for seconds."
-                _2 = "Empty! Your stomach is still empty!"
-            }
+            bloated = [
+                "Phew! You are pretty bloated.",
+                "You've never eaten this much before!",
+                "Your stomach is unbelievably full!"
+            ]
+            satisfied = [
+                "You are satisfied!",
+                "This hearty meal has filled your stomach.",
+                "You really ate!",
+                "You pat your stomach contentedly."
+            ]
+            normal = [
+                "You can eat more.",
+                "You pat your stomach.",
+                "You satisfied your appetite a little."
+            ]
+            hungry = [
+                "You are still a bit hungry.",
+                "Not enough...",
+                "You want to eat more.",
+                "Your stomach is still somewhat empty."
+            ]
+            very_hungry = [
+                "No, it was not enough at all.",
+                "You still feel very hungry.",
+                "You aren't satisfied."
+            ]
+            starving = [
+                "It didn't help you from starving!",
+                "It prolonged your death for seconds.",
+                "Empty! Your stomach is still empty!"
+            ]
         }
 
         not_affected_by_rotten = "But ${name(_1)}${his_owned(_1)} stomach isn't affected."
@@ -198,10 +197,10 @@ locale {
             raw_meat = "Ugh...Raw meat..."
             powder = "It tastes like...powder..."
             raw = "Er...this needs to be cooked."
-            boring {
-                _0 = "It doesn't taste awful but..."
-                _1 = "Very boring food."
-            }
+            boring = [
+                "It doesn't taste awful but...",
+                "Very boring food."
+            ]
 
             raw_glum = "${name(_1)} looks glum."
 
@@ -229,18 +228,18 @@ locale {
 
             poisoned {
                 text = "It's poisoned! ${name(_1)} writhe${s(_1)} in agony!"
-                dialog {
-                    _0 = "\"Gyaaaaa...!\""
-                    _1 = "\"Ugh!\""
-                }
+                dialog = [
+                    "\"Gyaaaaa...!\"",
+                    "\"Ugh!\""
+                ]
             }
 
             spiked {
                 self = "You are excited!"
-                other {
-                    _0 = "${name(_1)} gasps, \"I f-feel...strange...\""
-                    _1 = "${name(_1)} gasps \"Uh..uh..What is this feeling...\""
-                }
+                other = [
+                    "${name(_1)} gasps, \"I f-feel...strange...\"",
+                    "${name(_1)} gasps \"Uh..uh..What is this feeling...\""
+                ]
             }
 
             ability {
@@ -281,29 +280,29 @@ locale {
             }
 
             quality {
-                bad {
-                    _0 = "Boy, it gives your stomach trouble!"
-                    _1 = "Ugh! Yuk!"
-                    _2 = "Awful taste!!"
-                }
-                so_so {
-                    _0 = "Uh-uh, the taste is so so."
-                    _1 = "The taste is not bad."
-                }
-                good {
-                    _0 = "It tasted good."
-                    _1 = "Decent meal."
-                }
-                great {
-                    _0 = "Delicious!"
-                    _1 = "Gee what a good taste!"
-                    _2 = "It tasted pretty good!"
-                }
-                delicious {
-                    _0 = "Wow! Terrific food!"
-                    _1 = "Yummy! Absolutely yummy!"
-                    _2 = "It tasted like seventh heaven!"
-                }
+                bad = [
+                    "Boy, it gives your stomach trouble!",
+                    "Ugh! Yuk!",
+                    "Awful taste!!"
+                ]
+                so_so = [
+                    "Uh-uh, the taste is so so.",
+                    "The taste is not bad."
+                ]
+                good = [
+                    "It tasted good.",
+                    "Decent meal."
+                ]
+                great = [
+                    "Delicious!",
+                    "Gee what a good taste!",
+                    "It tasted pretty good!"
+                ]
+                delicious = [
+                    "Wow! Terrific food!",
+                    "Yummy! Absolutely yummy!",
+                    "It tasted like seventh heaven!"
+                ]
             }
         }
     }

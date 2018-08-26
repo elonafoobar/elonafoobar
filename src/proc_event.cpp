@@ -619,12 +619,7 @@ void proc_event()
         for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
             txtef(9);
-            // TODO JP had 6 choices but EN had 5. An extra choice was
-            // added for EN so the lists would be the same length. It
-            // would be nice to have a way to check the number of
-            // variants in a list of translation choices.
-            int text_index = rnd(6);
-            txt(i18n::s.get_enum("core.locale.event.okaeri", text_index));
+            txt(i18n::s.get("core.locale.event.okaeri"));
         }
         if (gdata_number_of_waiting_guests != 0)
         {

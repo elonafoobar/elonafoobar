@@ -64,11 +64,11 @@ locale {
             street_vendor = "${trim_job(_1)}the street vendor"
             street_vendor2 = "${trim_job(_1)}the street vendor"
             of_noyel = "${_1} of Noyel"
-            fanatic {
-                _0 = "Opatos Fanatic"
-                _1 = "Mani Fanatic"
-                _2 = "Ehekatl Fanatic"
-            }
+            fanatic = [
+                "Opatos Fanatic",
+                "Mani Fanatic",
+                "Ehekatl Fanatic"
+            ]
 
             # Yowyn
             horse_master = "${trim_job(_1)}the horse master"

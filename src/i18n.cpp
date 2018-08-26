@@ -75,14 +75,40 @@ void store::visit_object(
     }
 }
 
-void store::visit(
-    const hcl::Value& value,
+void store::visit_string(
+    const std::string& string,
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    if (value.is<std::string>())
+    std::stringstream ss(string);
+
+    hil::ParseResult p = hil::parse(ss);
+    // TODO validate ident names?
+    if (!p.valid())
     {
-        std::stringstream ss(value.as<std::string>());
+        throw i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
+    }
+
+    storage.emplace(current_key, std::move(p.context));
+}
+
+void store::visit_list(
+    const hcl::List& list,
+    const std::string& current_key,
+    const std::string& hcl_file)
+{
+    std::vector<hil::Context> parsed;
+
+    for (const auto& item : list)
+    {
+        if (!item.is<std::string>())
+        {
+            throw i18n_error(
+                hcl_file,
+                current_key + ": List must only contain string values.");
+        }
+
+        std::stringstream ss(item.as<std::string>());
 
         hil::ParseResult p = hil::parse(ss);
         // TODO validate ident names?
@@ -90,8 +116,24 @@ void store::visit(
         {
             throw i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
         }
+        parsed.push_back(std::move(p.context));
+    }
 
-        storage.emplace(current_key, std::move(p.context));
+    list_storage.emplace(current_key, std::move(parsed));
+}
+
+void store::visit(
+    const hcl::Value& value,
+    const std::string& current_key,
+    const std::string& hcl_file)
+{
+    if (value.is<std::string>())
+    {
+        visit_string(value.as<std::string>(), current_key, hcl_file);
+    }
+    if (value.is<hcl::List>())
+    {
+        visit_list(value.as<hcl::List>(), current_key, hcl_file);
     }
     else if (value.is<hcl::Object>())
     {

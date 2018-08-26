@@ -7240,8 +7240,7 @@ void map_reload_noyel()
             {
                 cdata[rc].only_christmas() = true;
                 cdata[rc].is_hung_on_sand_bag() = true;
-                cdatan(0, rc) =
-                    i18n::s.get_enum("core.locale.chara.job.fanatic", rnd(3));
+                cdatan(0, rc) = i18n::s.get("core.locale.chara.job.fanatic");
             }
         }
         {
@@ -11035,18 +11034,16 @@ void map_global_proc_travel_events()
                     || cdata.player().gravity > 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get_enum(
-                        "core.locale.action.move.global.weather.snow.sound",
-                        rnd(5)));
+                    txt(i18n::s.get(
+                        "core.locale.action.move.global.weather.snow.sound"));
                     cdata[cc].continuous_action_turn += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
                 txtef(8);
-                txt(i18n::s.get_enum(
-                    "core.locale.action.move.global.weather.snow.message",
-                    rnd(3)));
+                txt(i18n::s.get(
+                    "core.locale.action.move.global.weather.snow.message"));
                 cdata[cc].continuous_action_turn += 50;
             }
         }
@@ -11057,9 +11054,6 @@ void map_global_proc_travel_events()
                 snd(18);
                 txt(i18n::s.get(
                     "core.locale.action.move.global.weather.snow.eat"));
-                txt(lang(
-                    u8"空腹のあまり、あなたは積もっている雪を腹にかきこんだ。"s,
-                    u8"You are too hungry. You chow down snow."s));
                 cdata[cc].nutrition += 5000;
                 show_eating_message();
                 dmgcon(0, status_ailment_t::dimmed, 1000);
@@ -11076,10 +11070,9 @@ void map_global_proc_travel_events()
                     || cdata.player().gravity > 0)
                 {
                     txtef(9);
-                    txt(i18n::s.get_enum(
+                    txt(i18n::s.get(
                         "core.locale.action.move.global.weather.heavy_rain."
-                        "sound",
-                        rnd(5)));
+                        "sound"));
                     cdata[cc].continuous_action_turn += 5;
                 }
             }
@@ -11088,10 +11081,9 @@ void map_global_proc_travel_events()
                 if (rnd(500) == 0)
                 {
                     txtef(8);
-                    txt(i18n::s.get_enum(
+                    txt(i18n::s.get(
                         "core.locale.action.move.global.weather.heavy_rain."
-                        "message",
-                        rnd(3)));
+                        "message"));
                     cdata.player().confused = 10;
                 }
             }

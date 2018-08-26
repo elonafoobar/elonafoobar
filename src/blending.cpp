@@ -55,7 +55,7 @@ label_19341_internal:
         if (rnd(30) == 0)
         {
             txtef(4);
-            txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
+            txt(i18n::s.get("core.locale.blending.sounds"));
         }
         return;
     }
@@ -71,7 +71,7 @@ label_19341_internal:
             if (cnt % 5 == 0)
             {
                 txtef(4);
-                txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
+                txt(i18n::s.get("core.locale.blending.sounds"));
             }
             redraw();
             await(config::instance().animewait * 5);

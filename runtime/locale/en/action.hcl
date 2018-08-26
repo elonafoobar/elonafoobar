@@ -141,10 +141,10 @@ locale {
             carry_too_much = "You carry too much to move!"
             displace {
                 text = "You displace ${name(_1)}."
-                dialog {
-                    _0 = "\"Oops, sorry.\""
-                    _1 = "\"Watch it.\""
-                }
+                dialog = [
+                    "\"Oops, sorry.\"",
+                    "\"Watch it.\""
+                ]
             }
 
             leave {
@@ -222,37 +222,33 @@ locale {
 
                 weather {
                     snow {
-                        message {
-                            _0 = "Snow delays your travel."
-                            _1 = "You are caught in a snowdrift."
-                            _2 = "It's hard to walk on a snowy road."
-                        }
-                        sound {
-                            # TODO: JP has 4 variants, EN has 5
-                            _0 = " *kisssh*"
-                            _1 = "*thudd*"
-                            _2 = "*siz*"
-                            _3 = "*clump*"
-                            _4 = "*skritch*"
-                        }
+                        message = [
+                            "Snow delays your travel.",
+                            "You are caught in a snowdrift.",
+                            "It's hard to walk on a snowy road."
+                        ]
+                        sound = [
+                            " *kisssh*",
+                            "*thudd*",
+                            "*siz*",
+                            "*clump*",
+                            "*skritch*"
+                        ]
                         eat = "You are too hungry. You chow down snow."
                     }
 
                     heavy_rain {
-                        message {
-                            # TODO: JP has 3 variants, EN has 2
-                            _0 = "It's raining heavily. You lose your way."
-                            _1 = "You can't see a thing!"
-                            _2 = "It's raining heavily. You lose your way."
-                        }
-                        sound {
-                            # TODO: JP has 4 variants, EN has 5
-                            _0 = "*drip*"
-                            _1 = "*sip*"
-                            _2 = "*drizzle*"
-                            _3 = "*splash*"
-                            _4 = "*kissh*"
-                        }
+                        message = [
+                            "It's raining heavily. You lose your way.",
+                            "You can't see a thing!"
+                        ]
+                        sound = [
+                            "*drip*",
+                            "*sip*",
+                            "*drizzle*",
+                            "*splash*",
+                            "*kissh*"
+                        ]
                     }
                 }
 
@@ -327,11 +323,11 @@ locale {
 
             cannot_carry = "You can't carry it."
 
-            not_owned {
-                _0 = "It's not your property."
-                _1 = "You can't just take it."
-                _2 = "It's not yours."
-            }
+            not_owned = [
+                "It's not your property.",
+                "You can't just take it.",
+                "It's not yours."
+            ]
         }
 
         ammo {
@@ -477,14 +473,14 @@ locale {
                 hits_snowman = "It hits ${itemname(_1, 1)} and breaks it."
                 melts = "It falls on the ground and melts."
 
-                dialog {
-                    _0 = "\"Hey!\""
-                    _1 = "\"Now you did it.\""
-                    _2 = "*chuckle*"
-                    _3 = "\"Tee-hee-hee!\""
-                    _4 = "\"You'll pay for this.\""
-                    _5 = "*grin*"
-                }
+                dialog = [
+                    "\"Hey!\"",
+                    "\"Now you did it.\"",
+                    "*chuckle*",
+                    "\"Tee-hee-hee!\"",
+                    "\"You'll pay for this.\"",
+                    "*grin*"
+                ]
             }
 
             tomato = "*crumble*"
@@ -687,36 +683,36 @@ locale {
 
         npc {
             is_busy_now = "${name(_1)} ${is(_1)} busy now."
-            sand_bag {
-                _0 = "\"Release me now.\""
-                _1 = "\"I won't forget this.\""
-                _2 = "\"Hit me!\""
-            }
+            sand_bag = [
+                "\"Release me now.\"",
+                "\"I won't forget this.\"",
+                "\"Hit me!\""
+            ]
             leash {
-                dialog {
-                    _0 = "\"Ouch!\""
-                    _1 = "\"Stop it!\""
-                }
+                dialog = [
+                    "\"Ouch!\"",
+                    "\"Stop it!\""
+                ]
                 untangle = "${name(_1)} untangle${s(_1)} the leash."
             }
-            arena {
-                _0 = "\"Come on!\""
-                _1 = "\"More blood!\""
-                _2 = "\"Beat'em!\""
-                _3 = "\"Use your brain!\""
-                _4 = "\"Wooooo!\""
-                _5 = "\"Go go!\""
-                _6 = "\"Good fighting.\""
-                _7 = "\"Yeeee!\""
-            }
+            arena = [
+                "\"Come on!\"",
+                "\"More blood!\"",
+                "\"Beat'em!\"",
+                "\"Use your brain!\"",
+                "\"Wooooo!\"",
+                "\"Go go!\"",
+                "\"Good fighting.\"",
+                "\"Yeeee!\""
+            ]
             drunk {
                 gets_the_worse = "${name(_1)} gets the worse for drink and catches ${name(_2)}."
-                dialog {
-                    _0 = "\"Have a drink baby.\""
-                    _1 = "\"What are you looking at?\""
-                    _2 = "\"I ain't drunk.\""
-                    _3 = "\"Let's have fun.\""
-                }
+                dialog = [
+                    "\"Have a drink baby.\"",
+                    "\"What are you looking at?\"",
+                    "\"I ain't drunk.\"",
+                    "\"Let's have fun.\""
+                ]
                 annoyed {
                     text = "${name(_1)} is pretty annoyed with the drunkard."
                     dialog = "\"Your time is over, drunk!\""

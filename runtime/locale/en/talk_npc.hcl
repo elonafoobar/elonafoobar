@@ -143,19 +143,19 @@ locale {
                 }
 
                 think_of_house_name {
-                    suffixes {
-                        _0 = "${_1} Home"
-                        _1 = "${_1} Mansion"
-                        _2 = "${_1} Shack"
-                        _3 = "${_1} Nest"
-                        _4 = "${_1} Base"
-                        _5 = "${_1} Hideout"
-                        _6 = "${_1} Dome"
-                        _7 = "${_1} Hut"
-                        _8 = "${_1} Cabin"
-                        _9 = "${_1} Hovel"
-                        _10 = "${_1} Shed"
-                    }
+                    suffixes = [
+                        "${_1} Home",
+                        "${_1} Mansion",
+                        "${_1} Shack",
+                        "${_1} Nest",
+                        "${_1} Base",
+                        "${_1} Hideout",
+                        "${_1} Dome",
+                        "${_1} Hut",
+                        "${_1} Cabin",
+                        "${_1} Hovel",
+                        "${_1} Shed"
+                    ]
                     come_up_with = "Hey, I've come up a good idea! \"${_1}\", doesn't it sound so charming?"
                 }
 
@@ -238,11 +238,11 @@ locale {
                     not_hungry = "You don't seem that hungry."
                     here_you_are = "Here you are."
 
-                    results {
-                        _0 = "It was tasty."
-                        _1 = "Not bad at all."
-                        _2 = "You smack your lips."
-                    }
+                    results = [
+                        "It was tasty.",
+                        "Not bad at all.",
+                        "You smack your lips."
+                    ]
                 }
 
                 go_to_shelter = "The shelter is free to use for anyone. Here, come in."

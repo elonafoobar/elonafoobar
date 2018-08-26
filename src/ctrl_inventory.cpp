@@ -1220,8 +1220,7 @@ label_2061_internal:
                 }
                 if (inv[ci].own_state == 1)
                 {
-                    txt(i18n::s.get_enum(
-                        "core.locale.action.get.not_owned", rnd(3)));
+                    txt(i18n::s.get("core.locale.action.get.not_owned"));
                 }
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1295,8 +1294,8 @@ label_2061_internal:
                     {
                         screenupdate = -1;
                         update_screen();
-                        txt(i18n::s.get_enum(
-                            "core.locale.ui.inv.buy.not_enough_money", rnd(2)));
+                        txt(i18n::s.get(
+                            "core.locale.ui.inv.buy.not_enough_money"));
                         msgkeep = 1;
                         goto label_20591;
                     }
@@ -1365,8 +1364,7 @@ label_2061_internal:
             savecycle();
             if (cdata.player().nutrition > 10000)
             {
-                txt(i18n::s.get_enum(
-                    "core.locale.ui.inv.eat.too_bloated", rnd(3)));
+                txt(i18n::s.get("core.locale.ui.inv.eat.too_bloated"));
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
@@ -1621,9 +1619,8 @@ label_2061_internal:
                         inv[ci]));
                     snd(47);
                     txtef(9);
-                    txt(i18n::s.get_enum(
+                    txt(i18n::s.get(
                         "core.locale.ui.inv.give.love_potion.dialog",
-                        rnd(3),
                         cdata[tc]));
                     chara_modify_impression(cdata[tc], -20);
                     cdata[tc].emotion_icon = 318;
