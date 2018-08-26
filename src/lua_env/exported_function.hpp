@@ -22,7 +22,7 @@ struct ExportedFunction
     sol::protected_function func;
 
     template <typename... Args>
-    void call(Args&&... args) const
+    void call_unsafely(Args&&... args) const
     {
         auto result = func.call(std::forward<Args>(args)...);
         if (!result.valid())
@@ -30,6 +30,19 @@ struct ExportedFunction
             sol::error err = result;
             txtef(ColorIndex::red);
             txt(id + ": Script callback error: " + err.what());
+            throw err;
+        }
+    }
+
+    template <typename... Args>
+    void call(Args&&... args) const
+    {
+        try
+        {
+            call_unsafely(std::forward<Args>(args)...);
+        }
+        catch (const sol::error& err)
+        {
         }
     }
 
@@ -67,7 +80,7 @@ struct ExportedFunction
             return default_value;
         }
     }
-};
+}; // namespace lua
 
 } // namespace lua
 } // namespace elona
