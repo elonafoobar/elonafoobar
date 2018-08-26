@@ -1,9 +1,10 @@
 #pragma once
-#include "../dialog/dialog.hpp"
 #include "ui_menu.hpp"
 
 namespace elona
 {
+class dialog_data;
+
 namespace ui
 {
 

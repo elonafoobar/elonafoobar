@@ -1,6 +1,7 @@
 #include "dialog_decoder.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "dialog.hpp"
+#include "dialog_data.hpp"
 
 namespace elona
 {
@@ -8,6 +9,46 @@ namespace elona
 optional<dialog_data> dialog_decoder::decode(const std::string& id)
 {
     return decode(id, *lua::lua.get());
+}
+
+static std::pair<std::string, std::string> _parse_id(
+    const std::string& datatype_mod_name,
+    const std::string& datatype_name,
+    const std::string& id)
+{
+    // TODO dry
+    auto colon_pos = id.find(":");
+    if (colon_pos == std::string::npos)
+    {
+        throw std::runtime_error("Bad ID \"" + id + "\"");
+    }
+
+    std::string datatype_fqn = id.substr(0, colon_pos);
+    std::string datatype_id = id.substr(colon_pos + 1);
+
+    auto period_pos = datatype_fqn.find(".");
+    if (period_pos == std::string::npos)
+    {
+        throw std::runtime_error("Bad datatype name \"" + datatype_fqn + "\"");
+    }
+
+    std::string mod_name = datatype_fqn.substr(0, period_pos);
+    std::string name = datatype_fqn.substr(period_pos + 1);
+    if (datatype_mod_name != mod_name || datatype_name != name)
+    {
+        throw std::runtime_error(
+            "Expected id of format \"" + datatype_mod_name + "." + datatype_name
+            + "\", got \"" + mod_name + "." + name + "\"");
+    }
+
+    period_pos = datatype_id.find(".");
+    if (period_pos == std::string::npos)
+    {
+        throw std::runtime_error("Bad datatype name \"" + datatype_fqn + "\"");
+    }
+
+    return {datatype_id.substr(0, period_pos),
+            datatype_id.substr(period_pos + 1)};
 }
 
 optional<dialog_data> dialog_decoder::decode(
@@ -19,7 +60,11 @@ optional<dialog_data> dialog_decoder::decode(
         sol::table dialog_table =
             *lua.get_registry_manager().get_table("core", "dialog");
 
-        sol::table dialog_table_data = dialog_table["core"][id];
+        std::string mod_name;
+        std::string data_id;
+        std::tie(mod_name, data_id) = _parse_id("core", "dialog", id);
+
+        sol::table dialog_table_data = dialog_table[mod_name][data_id];
 
         return decode(dialog_table_data, lua);
     }
@@ -37,7 +82,8 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
     std::string full_id = table["_full_id"];
     optional<dialog_node_behavior> behavior = dialog_node_behavior{};
 
-    for (const auto& pair : table)
+    sol::table nodes_table = table["nodes"];
+    for (const auto& pair : nodes_table)
     {
         dialog_node the_dialog_node;
 
@@ -139,15 +185,23 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
                 {
                     sol::table choice_data = pair.second.as<sol::table>();
                     std::string text_key = choice_data["text"];
-                    std::string node_id = choice_data["node_id"];
+                    std::string next_node = choice_data["node"];
 
-                    if (node_id != "End")
+                    if (text_key == ""s || next_node == ""s)
                     {
-                        the_dialog_node.choices.emplace_back(text_key, node_id);
+                        throw std::runtime_error(
+                            full_id + ": Expected \"text\" and \"node\" fields for choice in node \""s
+                            + node_name + "\"");
+                    }
+
+                    if (next_node == "End")
+                    {
+                        the_dialog_node.choices.emplace_back(text_key, none);
                     }
                     else
                     {
-                        the_dialog_node.choices.emplace_back(text_key, none);
+                        the_dialog_node.choices.emplace_back(
+                            text_key, next_node);
                     }
                 }
             }

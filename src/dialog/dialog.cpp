@@ -1,9 +1,8 @@
 #include "dialog.hpp"
+#include "dialog_data.hpp"
 #include "dialog_decoder.hpp"
 
 namespace elona
-{
-namespace lua
 {
 
 void dialog_start(const std::string& id)
@@ -14,5 +13,4 @@ void dialog_start(const std::string& id)
     }
 }
 
-} // namespace lua
 } // namespace elona

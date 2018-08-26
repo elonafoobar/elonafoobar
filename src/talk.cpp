@@ -17,6 +17,8 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
+#include "dialog/dialog.hpp"
+
 namespace elona
 {
 
@@ -170,7 +172,16 @@ void talk_to_npc()
         return;
     }
     buff = "";
-    talk_wrapper(TalkResult::talk_npc);
+
+    const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
+    if (dialog_id)
+    {
+        dialog_start(*dialog_id);
+    }
+    else
+    {
+        talk_wrapper(TalkResult::talk_npc);
+    }
 }
 
 

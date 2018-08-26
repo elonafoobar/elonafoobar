@@ -1,4 +1,5 @@
 #include "ui_menu_dialog.hpp"
+#include "../dialog/dialog_data.hpp"
 #include "../i18n.hpp"
 #include "../talk.hpp"
 
@@ -34,7 +35,7 @@ bool ui_menu_dialog::init()
     key = "";
     objprm(0, ""s);
     keylog = "";
-    buff = _dialog.text();
+    buff = i18n::s.get(_dialog.text_key());
 
     talk_window_init();
 

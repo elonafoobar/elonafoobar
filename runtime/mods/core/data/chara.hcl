@@ -93,6 +93,8 @@ chara caravan_master {
     category = 0
     rarity = 100000
     coefficient = 400
+
+    dialog_id = "core.dialog:dialog.test"
 }
 
 chara bartender {

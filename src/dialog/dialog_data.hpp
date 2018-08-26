@@ -103,7 +103,7 @@ public:
 public:
     void show();
 
-    const std::string& text() const
+    const std::string& text_key() const
     {
         return current_node().text.at(current_text_index);
     }
@@ -167,11 +167,11 @@ private:
     /// Returns false on failure.
     bool advance_internal(optional<std::string> node_id, size_t text_index);
 
-    std::string starting_node;
     size_t current_text_index = 0;
     optional<std::string> current_node_id = none;
 
     map_type nodes;
+    std::string starting_node;
 };
 
 } // namespace elona

@@ -1,3 +1,4 @@
+#include "dialog_data.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../talk.hpp"
 #include "../ui/ui_menu_dialog.hpp"
@@ -273,6 +274,7 @@ bool dialog_data::advance_internal(
         current_text_index = 0;
         return true;
     }
+    std::cout << " NEXT: '" << *node_id << std::endl;
 
     auto it = nodes.find(*node_id);
     if (it == nodes.end())
@@ -306,7 +308,7 @@ void dialog_data::show()
         return;
     }
 
-    while (!has_more_text())
+    while (has_more_text())
     {
         if (!run_callback_before())
         {

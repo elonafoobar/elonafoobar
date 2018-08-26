@@ -94,6 +94,7 @@ CharacterData character_db_ex::convert(
     ELONA_LION_DB_FIELD(rarity, int, 10000);
     ELONA_LION_DB_FIELD(coefficient, int, 400);
     ELONA_LION_DB_FIELD_CALLBACK(corpse_eating_callback);
+    ELONA_LION_DB_FIELD(dialog_id, std::string, "");
 
     std::unordered_map<int, int> resistances =
         _convert_resistances(data, "resistances");
@@ -125,6 +126,12 @@ CharacterData character_db_ex::convert(
 
     // TODO: validate by regex/alphanum-only
     std::string filter = lion::convert_tags(data, "tags");
+
+    optional<std::string> dialog_id_opt = none;
+    if (dialog_id != ""s)
+    {
+        dialog_id_opt = dialog_id;
+    }
 
     return CharacterData{
         id,
@@ -168,6 +175,7 @@ CharacterData character_db_ex::convert(
         rarity,
         coefficient,
         corpse_eating_callback,
+        dialog_id_opt,
         flags,
     };
 }
