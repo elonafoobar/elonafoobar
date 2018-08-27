@@ -42,3 +42,20 @@ dialog test {
         }
     }
 }
+
+
+dialog redirect {
+    nodes {
+        _start {
+            redirector = "exports:dialog.dialog.redirect"
+        }
+        one {
+            text = "dialog.locale.dialog.redirect.one.text"
+            choices = End
+        }
+        two {
+            text = "dialog.locale.dialog.redirect.two.text"
+            choices = End
+        }
+    }
+}

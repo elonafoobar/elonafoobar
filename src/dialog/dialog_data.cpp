@@ -73,6 +73,8 @@ bool dialog_node_behavior_redirector::apply(
     dialog_data& the_dialog,
     dialog_node& the_dialog_node)
 {
+    std::cout << " REDIRECT " << std::endl;
+
     sol::object result = lua::lua->get_export_manager().call_with_result(
         callback_redirector, sol::lua_nil);
 
@@ -84,6 +86,7 @@ bool dialog_node_behavior_redirector::apply(
                 + ": Redirector callback returned invalid node id");
         return false;
     }
+    std::cout << " REDIRECT " << result.as<std::string>() << std::endl;
 
     return the_dialog.set_node(result.as<std::string>());
 }
@@ -202,7 +205,8 @@ bool dialog_data::apply_node_behavior(dialog_node& node)
 {
     try
     {
-        return node.behavior.apply(*this, node);
+        std::cout << " APPLY " << node.id << std::endl;
+        return node.behavior->apply(*this, node);
     }
     catch (const std::exception& e)
     {

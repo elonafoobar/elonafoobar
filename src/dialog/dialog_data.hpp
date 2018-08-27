@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -24,6 +25,8 @@ struct dialog_choice
 
 struct dialog_node_behavior
 {
+    virtual ~dialog_node_behavior() = default;
+
     virtual bool apply(dialog_data&, dialog_node&)
     {
         return true;
@@ -31,41 +34,41 @@ struct dialog_node_behavior
 };
 
 /// This node is generated from calling a Lua callback.
-struct dialog_node_behavior_generator : dialog_node_behavior
+struct dialog_node_behavior_generator : public dialog_node_behavior
 {
     dialog_node_behavior_generator(std::string callback_generator)
         : callback_generator(callback_generator)
     {
     }
 
-    virtual bool apply(dialog_data&, dialog_node&);
+    bool apply(dialog_data&, dialog_node&);
 
     std::string callback_generator;
 };
 
 /// This node redirects to another node without showing text. The node
 /// to redirect to is determined by calling a Lua function.
-struct dialog_node_behavior_redirector : dialog_node_behavior
+struct dialog_node_behavior_redirector : public dialog_node_behavior
 {
     dialog_node_behavior_redirector(std::string callback_redirector)
         : callback_redirector(callback_redirector)
     {
     }
 
-    virtual bool apply(dialog_data&, dialog_node&);
+    bool apply(dialog_data&, dialog_node&);
 
     std::string callback_redirector;
 };
 
 /// This node uses the choices of another node.
-struct dialog_node_behavior_inherit_choices : dialog_node_behavior
+struct dialog_node_behavior_inherit_choices : public dialog_node_behavior
 {
     dialog_node_behavior_inherit_choices(std::string node_id_for_choices)
         : node_id_for_choices(node_id_for_choices)
     {
     }
 
-    virtual bool apply(dialog_data&, dialog_node&);
+    bool apply(dialog_data&, dialog_node&);
 
     std::string node_id_for_choices;
     bool is_applying = false;
@@ -83,7 +86,7 @@ struct dialog_node
 
     /// Behavior to apply to the dialog state, like changing the
     /// current dialog node or programmatically generating nodes.
-    dialog_node_behavior behavior;
+    std::shared_ptr<dialog_node_behavior> behavior;
 };
 
 class dialog_data

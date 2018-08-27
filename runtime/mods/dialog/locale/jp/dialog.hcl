@@ -25,5 +25,14 @@ locale {
                 text = "...Really?"
             }
         }
+
+        redirect {
+            one {
+                text = "Picked first."
+            }
+            two {
+                text = "Second was picked."
+            }
+        }
     }
 }

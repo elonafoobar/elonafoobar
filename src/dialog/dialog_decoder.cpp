@@ -80,7 +80,6 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
 {
     dialog_data::map_type nodes;
     std::string full_id = table["_full_id"];
-    optional<dialog_node_behavior> behavior = dialog_node_behavior{};
 
     sol::table nodes_table = table["nodes"];
     for (const auto& pair : nodes_table)
@@ -89,6 +88,8 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
 
         std::string node_name = pair.first.as<std::string>();
         sol::table node_data = pair.second.as<sol::table>();
+
+        the_dialog_node.behavior = std::make_shared<dialog_node_behavior>();
 
         std::string node_id = full_id + "." + node_name;
         the_dialog_node.id = node_id;
@@ -110,6 +111,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
             }
         }
 
+        int behaviors = 0;
         if (node_data["generator"] != sol::lua_nil)
         {
             std::string callback_generator = node_data["generator"];
@@ -119,9 +121,12 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
                     full_id + ": Node \"" + node_name
                     + "\" has unknown Lua callback " + callback_generator);
             }
-            behavior = dialog_node_behavior_generator(callback_generator);
+            the_dialog_node.behavior =
+                std::make_shared<dialog_node_behavior_generator>(
+                    callback_generator);
+            behaviors++;
         }
-        else if (node_data["redirector"] != sol::lua_nil)
+        if (node_data["redirector"] != sol::lua_nil)
         {
             // TODO dry
             std::string callback_redirector = node_data["redirector"];
@@ -131,14 +136,25 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
                     full_id + ": Node \"" + node_name
                     + "\" has unknown Lua callback " + callback_redirector);
             }
-            behavior = dialog_node_behavior_redirector(callback_redirector);
+            the_dialog_node.behavior =
+                std::make_shared<dialog_node_behavior_redirector>(
+                    callback_redirector);
+            behaviors++;
         }
-        else if (node_data["inherit_choices"] != sol::lua_nil)
+        if (node_data["inherit_choices"] != sol::lua_nil)
         {
             // TODO dry
             std::string node_id_for_choices = node_data["inherit"];
-            behavior =
-                dialog_node_behavior_inherit_choices(node_id_for_choices);
+            the_dialog_node.behavior =
+                std::make_shared<dialog_node_behavior_inherit_choices>(
+                    node_id_for_choices);
+            behaviors++;
+        }
+
+        if (behaviors > 1)
+        {
+            throw std::runtime_error(
+                full_id + ": Only one of \"generator\", \"redirector\", or \"inherit_choices\" can be used at a time");
         }
 
         if (node_data["run_before"] != sol::lua_nil)
@@ -207,7 +223,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
             }
         }
 
-        nodes.emplace(the_dialog_node.id, the_dialog_node);
+        nodes.insert(std::make_pair(node_id, std::move(the_dialog_node)));
     }
 
     std::string starting_node = full_id + "._start";
