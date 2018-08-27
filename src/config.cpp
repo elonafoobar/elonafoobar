@@ -326,6 +326,10 @@ void load_config(const fs::path& hcl_file)
         std::string,
         config::instance().startup_script);
     CONFIG_OPTION(
+        "foobar.pcc_graphic_scale"s,
+        std::string,
+        config::instance().pcc_graphic_scale);
+    CONFIG_OPTION(
         "game.attack_neutral_npcs"s,
         bool,
         config::instance().attack_neutral_npcs);
