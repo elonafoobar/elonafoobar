@@ -887,6 +887,15 @@ int run()
     initialize_mods();
     // Load translations from scanned mods.
     initialize_i18n();
+
+    if (config::instance().font_filename.empty())
+    {
+        // If no font is specified in `config.hcl`, use a pre-defined font
+        // depending on each language.
+        config::instance().font_filename =
+            i18n::s.get("core.locale.meta.default_font");
+    }
+
     // Load data from scanned mods.
     initialize_lion_db();
 

@@ -2,6 +2,6 @@ locale {
     meta {
         tag = "JP"
 
-        font = "font1"
+        default_font = "Kochi Gothic.ttf"
     }
 }

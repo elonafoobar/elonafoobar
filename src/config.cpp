@@ -296,8 +296,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION(
         "balance.restock_interval"s, int, config::instance().restock_interval);
     CONFIG_OPTION("debug.noa_debug"s, bool, config::instance().noadebug);
-    CONFIG_OPTION("font.english"s, std::string, config::instance().font2);
-    CONFIG_OPTION("font.japanese"s, std::string, config::instance().font1);
+    CONFIG_OPTION("font.file"s, std::string, config::instance().font_filename);
     CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
     CONFIG_OPTION("font.vertical_offset"s, int, vfix);
     CONFIG_OPTION("foobar.autopick"s, bool, config::instance().use_autopick);

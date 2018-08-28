@@ -338,11 +338,11 @@ void exec(const std::string&, int)
 
 void font(int size, snail::font_t::style_t style)
 {
-    // TODO lang font
-    // const auto& filepath = filesystem::path(u8"font")
-    //     / filesystem::u8path(lang(
-    //           config::instance().font1, config::instance().font2));
-    // snail::hsp::font(size, style, filepath);
+    snail::hsp::font(
+        size,
+        style,
+        filesystem::path(u8"font")
+            / filesystem::u8path(config::instance().font_filename));
 }
 
 
