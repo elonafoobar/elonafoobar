@@ -11084,8 +11084,7 @@ int do_cast_magic()
     if (stat == 1)
     {
         cc = ccbk;
-        r2 = spellbk;
-        gain_casting_experience(cc);
+        gain_casting_experience(cc, spellbk);
         return 1;
     }
     return 0;
@@ -12343,8 +12342,7 @@ int pick_up_item()
         }
         else
         {
-            r2 = sellgold;
-            gain_negotiation_experience(0);
+            gain_negotiation_experience(0, sellgold);
         }
     }
     else
