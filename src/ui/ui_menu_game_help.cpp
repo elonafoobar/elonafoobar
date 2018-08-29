@@ -3,7 +3,7 @@
 #include "../draw.hpp"
 #include "../i18n.hpp"
 
-static std::string lang(const std::string& a, const std::string& b) { return jp ? a : b; }
+
 
 namespace elona
 {
@@ -36,10 +36,9 @@ bool ui_menu_game_help::init()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{(filesystem::dir::data()
-                          / lang(u8"manual_JP.txt", u8"manual_ENG.txt"))
-                             .native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "manual.txt").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {

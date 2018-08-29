@@ -26,6 +26,7 @@ void store::init(const std::vector<store::location>& locations)
 
     for (const auto& loc : locations)
     {
+        locale_dir_table[loc.mod_name] = loc.locale_dir;
         load(loc.locale_dir, loc.mod_name);
     }
 }
