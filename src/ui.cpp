@@ -588,14 +588,14 @@ void render_skill_trackers()
             strutil::take_by_width(
                 i18n::_(u8"ability", std::to_string(skill), u8"name"), 6),
             16,
-            inf_clocky + 125 + y * 16);
+            inf_clocky + 107 + y * 16);
         bmes(
             ""s + sdata.get(skill, chara).original_level + u8"."s
                 + std::to_string(
                       1000 + sdata.get(skill, chara).experience % 1000)
                       .substr(1),
             66,
-            inf_clocky + 125 + y * 16);
+            inf_clocky + 107 + y * 16);
         if (elona::config::instance().allow_enhanced_skill)
         {
             elona::snail::color col{255, 130, 130};
@@ -615,7 +615,7 @@ void render_skill_trackers()
             bmes(
                 ""s + sdata.get(skill, chara).potential + u8"%"s,
                 112,
-                inf_clocky + 125 + y * 16,
+                inf_clocky + 107 + y * 16,
                 col);
         }
 
