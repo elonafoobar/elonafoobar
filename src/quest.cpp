@@ -1235,7 +1235,13 @@ void quest_complete()
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                p = clamp(p * qdata(13, rq) / qdata(12, rq), p(0), p * 3);
+                p = clamp(
+                    p
+                        * static_cast<int>(
+                              static_cast<double>(qdata(13, rq))
+                              / qdata(12, rq)),
+                    p(0),
+                    p * 3);
             }
         }
     }
