@@ -1941,42 +1941,43 @@ int item_cold(int prm_844, int prm_845)
     return f_at_m138;
 }
 
-void mapitem_fire(int prm_842, int prm_843)
+
+
+void mapitem_fire(int x, int y)
 {
-    if (map(prm_842, prm_843, 4) == 0)
+    if (map(x, y, 4) == 0)
     {
         return;
     }
-    ci_at_m138 = -1;
+
+    int ci = -1;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() == 0)
         {
             continue;
         }
-        if (inv[cnt].position.x == prm_842)
+        if (inv[cnt].position == position_t{x, y})
         {
-            if (inv[cnt].position.y == prm_843)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
+            ci = cnt;
+            break;
         }
     }
-    if (ci_at_m138 != -1)
+    if (ci != -1)
     {
-        int stat = item_fire(-1, ci_at_m138);
-        if (stat == 1)
+        const auto burned = item_fire(-1, ci);
+        if (burned)
         {
-            if (map(prm_842, prm_843, 8) == 0)
+            if (map(x, y, 8) == 0)
             {
-                mef_add(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
+                mef_add(x, y, 5, 24, rnd(10) + 5, 100, cc);
             }
         }
-        cell_refresh(prm_842, prm_843);
+        cell_refresh(x, y);
     }
-    return;
 }
+
+
 
 void mapitem_cold(int prm_846, int prm_847)
 {

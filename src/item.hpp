@@ -215,10 +215,10 @@ int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const item&);
 
-int item_cold(int = 0, int = 0);
 bool item_fire(int owner, int ci = -1);
+void mapitem_fire(int x, int y);
+int item_cold(int = 0, int = 0);
 void mapitem_cold(int = 0, int = 0);
-void mapitem_fire(int = 0, int = 0);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
