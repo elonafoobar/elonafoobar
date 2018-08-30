@@ -291,7 +291,21 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
         {
             const auto name = cdatan(0, i);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
-            const int y = inf_clocky + 200 - 180 * right + cnt * 32;
+            int y = inf_clocky + (right ? 20 : 136) + cnt * 32;
+
+            // If they are shown left side, move them below the skill
+            // trackers.
+            if (!right)
+            {
+                for (int i = 0; i < 10; ++i)
+                {
+                    if (gdata(750 + i) % 10000 != 0)
+                    {
+                        y += 16;
+                    }
+                }
+            }
+
             bmes(
                 name,
                 x,
