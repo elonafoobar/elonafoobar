@@ -574,7 +574,7 @@ int damage_hp(
             {
                 if (victim.index == 0 || rnd(3) == 0)
                 {
-                    item_acid(victim.index, -1);
+                    item_acid(victim);
                 }
             }
         }

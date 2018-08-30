@@ -1561,65 +1561,60 @@ void item_dump_desc(const item& i)
     pagemax = (listmax - 1) / pagesize;
 }
 
-void item_acid(int prm_838, int prm_839)
+
+
+void item_acid(const character& owner, int ci)
 {
-    int body_at_m138 = 0;
-    if (prm_839 != -1)
+    if (ci == -1)
     {
-        ci_at_m138 = prm_839;
-    }
-    else
-    {
-        ci_at_m138 = -1;
-        for (int i = 0; i < 30; ++i)
+        for (const auto& body_part : owner.body_parts)
         {
-            body_at_m138 = cdata[prm_838].body_parts[i] / 10000;
-            if (body_at_m138 == 0)
+            if (body_part / 10000 == 0)
             {
                 break;
             }
-            p_at_m138 = cdata[prm_838].body_parts[i] % 10000 - 1;
-            if (p_at_m138 == -1)
+            int i = body_part % 10000 - 1;
+            if (i == -1)
             {
                 continue;
             }
-            if (rnd(clamp(30, 1, 30)) == 0)
+            if (inv[i].enhancement >= -3)
             {
-                if (inv[p_at_m138].enhancement > -4)
+                if (rnd(30) == 0)
                 {
-                    ci_at_m138 = p_at_m138;
+                    ci = p;
                     break;
                 }
             }
         }
+        if (ci == -1)
+        {
+            return;
+        }
     }
-    if (ci_at_m138 == -1)
+
+    if (the_item_db[inv[ci].id]->category >= 50000)
     {
         return;
     }
-    if (the_item_db[inv[ci_at_m138].id]->category >= 50000)
-    {
-        return;
-    }
-    if (ibit(1, ci_at_m138) == 0)
+
+    if (ibit(1, ci) == 0)
     {
         txtef(8);
         txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
-                + u8"は酸で傷ついた。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+            name(owner.index) + u8"の"s + itemname(ci) + u8"は酸で傷ついた。"s,
+            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
                 + u8" is damaged by acid."s));
-        --inv[ci_at_m138].enhancement;
+        --inv[ci].enhancement;
     }
     else
     {
         txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
+            name(owner.index) + u8"の"s + itemname(ci)
                 + u8"は酸では傷つかない。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
                 + u8" is immune to acid."s));
     }
-    return;
 }
 
 
