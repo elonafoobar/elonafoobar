@@ -584,7 +584,7 @@ int damage_hp(
         }
         if (element == 51)
         {
-            item_cold(victim.index, -1);
+            item_cold(victim.index);
         }
         if (victim.sleep != 0)
         {

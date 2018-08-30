@@ -1823,126 +1823,6 @@ bool item_fire(int owner, int ci)
 
 
 
-int item_cold(int prm_844, int prm_845)
-{
-    std::string s_at_m138;
-    max_at_m138 = 0;
-    ti_at_m138 = -1;
-    if (prm_845 != -1)
-    {
-        list_at_m138(0) = prm_845;
-        ++max_at_m138;
-    }
-    if (prm_844 != -1)
-    {
-        if (sdata(51, prm_844) / 50 >= 6 || cdata[prm_844].quality >= 4)
-        {
-            return 0;
-        }
-        for (const auto& cnt : items(prm_844))
-        {
-            if (inv[cnt].number() == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id == 568)
-            {
-                if (ti_at_m138 == -1)
-                {
-                    ti_at_m138 = cnt;
-                    item_separate(ti_at_m138);
-                }
-                continue;
-            }
-            if (prm_845 == -1)
-            {
-                list_at_m138(max_at_m138) = cnt;
-                ++max_at_m138;
-            }
-        }
-    }
-    if (max_at_m138 == 0)
-    {
-        return 0;
-    }
-    f_at_m138 = 0;
-    for (int cnt = 0; cnt < 2; ++cnt)
-    {
-        ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number() <= 0)
-        {
-            continue;
-        }
-        rowact_item(ci_at_m138);
-        if (ibit(5, ci_at_m138) == 0)
-        {
-            a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
-            if (prm_844 == -1)
-            {
-                s_at_m138 = "";
-            }
-            else
-            {
-                s_at_m138 = name(prm_844) + lang(u8"の"s, your(prm_844));
-            }
-            if (a_at_m138 == 72000 || a_at_m138 == 59000 || a_at_m138 == 68000)
-            {
-                continue;
-            }
-            if (inv[ci_at_m138].quality >= 4 || inv[ci_at_m138].body_part != 0)
-            {
-                continue;
-            }
-            if (a_at_m138 != 52000)
-            {
-                if (rnd(30))
-                {
-                    continue;
-                }
-            }
-            if (ti_at_m138 != -1)
-            {
-                if (inv[ti_at_m138].number() > 0)
-                {
-                    txt(lang(
-                        itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
-                            + u8"の持ち物を冷気から守った。"s,
-                        itemname(ti_at_m138, 1) + u8" protects "s
-                            + name(prm_844) + your(prm_844)
-                            + u8" stuff from cold."s));
-                    if (inv[ti_at_m138].count > 0)
-                    {
-                        --inv[ti_at_m138].count;
-                    }
-                    else if (rnd(20) == 0)
-                    {
-                        txt(lang(
-                            itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
-                            itemname(ti_at_m138, 1)
-                                + u8" is broken to pieces."s));
-                        inv[ti_at_m138].modify_number(-1);
-                        break;
-                    }
-                    continue;
-                }
-            }
-            p_at_m138 = rnd(inv[ci_at_m138].number()) / 2 + 1;
-            txtef(8);
-            txt(lang(
-                s_at_m138 + itemname(ci_at_m138, p_at_m138)
-                    + u8"は粉々に砕けた。"s,
-                s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
-                    + _s2(p_at_m138) + u8" to pieces."s));
-            inv[ci_at_m138].modify_number(-p_at_m138);
-            f_at_m138 = 1;
-        }
-    }
-    refresh_burden_state();
-    return f_at_m138;
-}
-
-
-
 void mapitem_fire(int x, int y)
 {
     if (map(x, y, 4) == 0)
@@ -1975,6 +1855,124 @@ void mapitem_fire(int x, int y)
         }
         cell_refresh(x, y);
     }
+}
+
+
+
+bool item_cold(int owner, int ci)
+{
+    int blanket = -1;
+    std::vector<int> list;
+    if (ci != -1)
+    {
+        list.push_back(ci);
+    }
+    if (owner != -1)
+    {
+        if (sdata(51, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        {
+            return false;
+        }
+        for (const auto& cnt : items(owner))
+        {
+            if (inv[cnt].number() == 0)
+            {
+                continue;
+            }
+            if (inv[cnt].id == 568)
+            {
+                if (blanket == -1)
+                {
+                    blanket = cnt;
+                    item_separate(blanket);
+                }
+                continue;
+            }
+            if (ci == -1)
+            {
+                list.push_back(cnt);
+            }
+        }
+    }
+    if (list.empty())
+    {
+        return false;
+    }
+
+    bool broken{};
+    for (int cnt = 0; cnt < 2; ++cnt)
+    {
+        int ci_ = choice(list);
+        if (inv[ci_].number() <= 0)
+        {
+            continue;
+        }
+        rowact_item(ci_);
+        if (ibit(5, ci_))
+        {
+            continue;
+        }
+
+        int a_ = the_item_db[inv[ci_].id]->category;
+        std::string s_;
+        if (owner == -1)
+        {
+            s_ = "";
+        }
+        else
+        {
+            s_ = name(owner) + lang(u8"の"s, your(owner));
+        }
+        if (a_ == 72000 || a_ == 59000 || a_ == 68000)
+        {
+            continue;
+        }
+        if (inv[ci_].quality >= 4 || inv[ci_].body_part != 0)
+        {
+            continue;
+        }
+        if (a_ != 52000)
+        {
+            if (rnd(30))
+            {
+                continue;
+            }
+        }
+        if (blanket != -1)
+        {
+            if (inv[blanket].number() > 0)
+            {
+                txt(lang(
+                    itemname(blanket, 1) + u8"が"s + name(owner)
+                        + u8"の持ち物を冷気から守った。"s,
+                    itemname(blanket, 1) + u8" protects "s + name(owner)
+                        + your(owner) + u8" stuff from cold."s));
+                if (inv[blanket].count > 0)
+                {
+                    --inv[blanket].count;
+                }
+                else if (rnd(20) == 0)
+                {
+                    txt(lang(
+                        itemname(blanket, 1) + u8"は粉々に砕けた。"s,
+                        itemname(blanket, 1) + u8" is broken to pieces."s));
+                    inv[blanket].modify_number(-1);
+                    break;
+                }
+                continue;
+            }
+        }
+        int p_ = rnd(inv[ci_].number()) / 2 + 1;
+        txtef(8);
+        txt(lang(
+            s_ + itemname(ci_, p_) + u8"は粉々に砕けた。"s,
+            s_ + itemname(ci_, p_) + u8" break"s + _s2(p_) + u8" to pieces."s));
+        inv[ci_].modify_number(-p_);
+        broken = true;
+    }
+
+    refresh_burden_state();
+    return broken;
 }
 
 
