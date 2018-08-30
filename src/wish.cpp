@@ -355,9 +355,13 @@ bool grant_special_wishing(const std::string& wish)
             txt(lang(
                 u8"…罪なんて犯してないじゃない。", u8"You aren't a sinner."));
         }
-        modify_karma(cdata.player(), -cdata.player().karma / 2);
-        txt(lang(
-            u8"あら…都合のいいことを言うのね。", u8"What a convenient wish!"));
+        else
+        {
+            modify_karma(cdata.player(), -cdata.player().karma / 2);
+            txt(lang(
+                u8"あら…都合のいいことを言うのね。",
+                u8"What a convenient wish!"));
+        }
     }
     else if (wish == u8"死" || wish == u8"death")
     {
