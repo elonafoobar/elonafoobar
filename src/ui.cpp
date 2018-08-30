@@ -598,27 +598,18 @@ void render_skill_trackers()
             inf_clocky + 125 + y * 16);
         if (elona::config::instance().allow_enhanced_skill)
         {
-            elona::snail::color col(0, 0, 0, 255);
+            elona::snail::color col{255, 130, 130};
+
             if (sdata.get(skill, chara).potential
                 > elona::config::instance().enhanced_skill_upperbound)
             {
-                col.g = 255;
-                col.r = 130;
-                col.b = 130;
+                col = {130, 255, 130};
             }
             else if (
                 sdata.get(skill, chara).potential
                 > elona::config::instance().enhanced_skill_lowerbound)
             {
-                col.g = 255;
-                col.r = 255;
-                col.b = 130;
-            }
-            else
-            {
-                col.g = 130;
-                col.r = 255;
-                col.b = 130;
+                col = {255, 255, 130};
             }
 
             bmes(
