@@ -5337,7 +5337,8 @@ turn_result_t exit_map()
         else
         {
             msgtemp += i18n::s.get(
-                "core.locale.action.exit_map.left", mapname(gdata_current_map));
+                "core.locale.action.exit_map.left",
+                mapname(gdata_previous_map));
         }
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
