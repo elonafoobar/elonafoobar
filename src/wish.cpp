@@ -318,19 +318,23 @@ bool grant_special_wishing(const std::string& wish)
         {
             txt(lang(u8"だめよ。", u8"*laugh*"));
         }
-        txt(lang(u8"新しい異名は？", u8"What's your new alias?"));
-        int stat = select_alias(0);
-        if (stat == 1)
-        {
-            txt(lang(
-                u8"あなたの新しい異名は「" + cmaka + u8"」。満足したかしら？",
-                u8"You will be known as <" + cmaka + u8">."));
-            cdatan(1, 0) = cmaka;
-        }
         else
         {
-            txt(lang(
-                u8"あら、そのままでいいの？", u8"What a waste of a wish!"));
+            txt(lang(u8"新しい異名は？", u8"What's your new alias?"));
+            int stat = select_alias(0);
+            if (stat == 1)
+            {
+                txt(lang(
+                    u8"あなたの新しい異名は「" + cmaka
+                        + u8"」。満足したかしら？",
+                    u8"You will be known as <" + cmaka + u8">."));
+                cdatan(1, 0) = cmaka;
+            }
+            else
+            {
+                txt(lang(
+                    u8"あら、そのままでいいの？", u8"What a waste of a wish!"));
+            }
         }
     }
     else if (
@@ -355,9 +359,13 @@ bool grant_special_wishing(const std::string& wish)
             txt(lang(
                 u8"…罪なんて犯してないじゃない。", u8"You aren't a sinner."));
         }
-        modify_karma(cdata.player(), -cdata.player().karma / 2);
-        txt(lang(
-            u8"あら…都合のいいことを言うのね。", u8"What a convenient wish!"));
+        else
+        {
+            modify_karma(cdata.player(), -cdata.player().karma / 2);
+            txt(lang(
+                u8"あら…都合のいいことを言うのね。",
+                u8"What a convenient wish!"));
+        }
     }
     else if (wish == u8"死" || wish == u8"death")
     {
