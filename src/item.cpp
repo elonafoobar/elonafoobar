@@ -1977,34 +1977,30 @@ bool item_cold(int owner, int ci)
 
 
 
-void mapitem_cold(int prm_846, int prm_847)
+void mapitem_cold(int x, int y)
 {
-    if (map(prm_846, prm_847, 4) == 0)
+    if (map(x, y, 4) == 0)
     {
         return;
     }
-    ci_at_m138 = -1;
+    int ci = -1;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() == 0)
         {
             continue;
         }
-        if (inv[cnt].position.x == prm_846)
+        if (inv[cnt].position == position_t{x, y})
         {
-            if (inv[cnt].position.y == prm_847)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
+            ci = cnt;
+            break;
         }
     }
-    if (ci_at_m138 != -1)
+    if (ci != -1)
     {
-        item_cold(-1, ci_at_m138);
-        cell_refresh(prm_846, prm_847);
+        item_cold(-1, ci);
+        cell_refresh(x, y);
     }
-    return;
 }
 
 

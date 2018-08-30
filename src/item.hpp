@@ -218,7 +218,7 @@ void item_dump_desc(const item&);
 bool item_fire(int owner, int ci = -1);
 void mapitem_fire(int x, int y);
 bool item_cold(int owner, int ci = -1);
-void mapitem_cold(int = 0, int = 0);
+void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
