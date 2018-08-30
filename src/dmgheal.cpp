@@ -580,7 +580,7 @@ int damage_hp(
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim.index, -1);
+            item_fire(victim.index);
         }
         if (element == 51)
         {

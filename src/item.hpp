@@ -216,7 +216,7 @@ int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const item&);
 
 int item_cold(int = 0, int = 0);
-int item_fire(int = 0, int = 0);
+bool item_fire(int owner, int ci = -1);
 void mapitem_cold(int = 0, int = 0);
 void mapitem_fire(int = 0, int = 0);
 
