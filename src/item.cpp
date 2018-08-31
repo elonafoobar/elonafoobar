@@ -1914,15 +1914,6 @@ bool item_cold(int owner, int ci)
         }
 
         int a_ = the_item_db[inv[ci_].id]->category;
-        std::string s_;
-        if (owner == -1)
-        {
-            s_ = "";
-        }
-        else
-        {
-            s_ = name(owner) + lang(u8"の"s, your(owner));
-        }
         if (a_ == 72000 || a_ == 59000 || a_ == 68000)
         {
             continue;
@@ -1942,31 +1933,53 @@ bool item_cold(int owner, int ci)
         {
             if (inv[blanket].number() > 0)
             {
-                txt(lang(
-                    itemname(blanket, 1) + u8"が"s + name(owner)
-                        + u8"の持ち物を冷気から守った。"s,
-                    itemname(blanket, 1) + u8" protects "s + name(owner)
-                        + your(owner) + u8" stuff from cold."s));
+                if (is_in_fov(cdata[owner]))
+                {
+                    txt(lang(
+                        itemname(blanket, 1) + u8"が"s + name(owner)
+                            + u8"の持ち物を冷気から守った。"s,
+                        itemname(blanket, 1) + u8" protects "s + name(owner)
+                            + your(owner) + u8" stuff from cold."s));
+                }
                 if (inv[blanket].count > 0)
                 {
                     --inv[blanket].count;
                 }
                 else if (rnd(20) == 0)
                 {
-                    txt(lang(
-                        itemname(blanket, 1) + u8"は粉々に砕けた。"s,
-                        itemname(blanket, 1) + u8" is broken to pieces."s));
                     inv[blanket].modify_number(-1);
+                    if (is_in_fov(cdata[owner]))
+                    {
+                        txt(lang(
+                            itemname(blanket, 1) + u8"は粉々に砕けた。"s,
+                            itemname(blanket, 1) + u8" is broken to pieces."s));
+                    }
                     break;
                 }
                 continue;
             }
         }
         int p_ = rnd(inv[ci_].number()) / 2 + 1;
-        txtef(8);
-        txt(lang(
-            s_ + itemname(ci_, p_) + u8"は粉々に砕けた。"s,
-            s_ + itemname(ci_, p_) + u8" break"s + _s2(p_) + u8" to pieces."s));
+        if (owner != -1)
+        {
+            if (is_in_fov(cdata[owner]))
+            {
+                txtef(8);
+                txt(lang(
+                    name(owner) + u8"の"s + itemname(ci_, p_)
+                        + u8"は粉々に砕けた。"s,
+                    name(owner) + your(owner) + u8" "s + itemname(ci_, p_, 1)
+                        + u8" break"s + _s2(p_) + u8" to pieces."s));
+            }
+        }
+        else if (is_in_fov(inv[ci_].position))
+        {
+            txtef(8);
+            txt(lang(
+                u8"地面の"s + itemname(ci_, p_) + u8"は粉々に砕けた。"s,
+                itemname(ci_, p_) + u8" on the ground break"s + _s2(p_)
+                    + u8" to pieces."s));
+        }
         inv[ci_].modify_number(-p_);
         broken = true;
     }
