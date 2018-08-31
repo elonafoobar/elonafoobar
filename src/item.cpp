@@ -1647,7 +1647,6 @@ bool item_fire(int owner, int ci)
                 if (blanket == -1)
                 {
                     blanket = cnt;
-                    item_separate(blanket);
                 }
                 continue;
             }
@@ -1744,6 +1743,7 @@ bool item_fire(int owner, int ci)
 
         if (blanket != -1)
         {
+            item_separate(blanket);
             if (is_in_fov(cdata[owner]))
             {
                 txt(lang(
@@ -1881,7 +1881,6 @@ bool item_cold(int owner, int ci)
                 if (blanket == -1)
                 {
                     blanket = cnt;
-                    item_separate(blanket);
                 }
                 continue;
             }
@@ -1928,6 +1927,7 @@ bool item_cold(int owner, int ci)
         }
         if (blanket != -1)
         {
+            item_separate(blanket);
             if (is_in_fov(cdata[owner]))
             {
                 txt(lang(
