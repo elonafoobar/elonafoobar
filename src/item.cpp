@@ -1766,8 +1766,8 @@ bool item_fire(int owner, int ci)
                         txt(lang(
                             itemname(blanket, 1) + u8"は灰と化した。"s,
                             itemname(blanket, 1) + u8" turns to dust."s));
-                        break;
                     }
+                    break;
                 }
                 continue;
             }
