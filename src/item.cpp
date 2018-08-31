@@ -1744,33 +1744,30 @@ bool item_fire(int owner, int ci)
 
         if (blanket != -1)
         {
-            if (inv[blanket].number() > 0)
+            if (is_in_fov(cdata[owner]))
             {
+                txt(lang(
+                    itemname(blanket, 1) + u8"が"s + name(owner)
+                        + u8"の持ち物を炎から守った。"s,
+                    itemname(blanket, 1) + u8" protects "s + name(owner)
+                        + your(owner) + u8" stuff from fire."s));
+            }
+            if (inv[blanket].count > 0)
+            {
+                --inv[blanket].count;
+            }
+            else if (rnd(20) == 0)
+            {
+                inv[blanket].modify_number(-1);
                 if (is_in_fov(cdata[owner]))
                 {
                     txt(lang(
-                        itemname(blanket, 1) + u8"が"s + name(owner)
-                            + u8"の持ち物を炎から守った。"s,
-                        itemname(blanket, 1) + u8" protects "s + name(owner)
-                            + your(owner) + u8" stuff from fire."s));
+                        itemname(blanket, 1) + u8"は灰と化した。"s,
+                        itemname(blanket, 1) + u8" turns to dust."s));
                 }
-                if (inv[blanket].count > 0)
-                {
-                    --inv[blanket].count;
-                }
-                else if (rnd(20) == 0)
-                {
-                    inv[blanket].modify_number(-1);
-                    if (is_in_fov(cdata[owner]))
-                    {
-                        txt(lang(
-                            itemname(blanket, 1) + u8"は灰と化した。"s,
-                            itemname(blanket, 1) + u8" turns to dust."s));
-                    }
-                    break;
-                }
-                continue;
+                break;
             }
+            continue;
         }
 
         int p_ = rnd(inv[ci_].number()) / 2 + 1;
@@ -1931,33 +1928,30 @@ bool item_cold(int owner, int ci)
         }
         if (blanket != -1)
         {
-            if (inv[blanket].number() > 0)
+            if (is_in_fov(cdata[owner]))
             {
+                txt(lang(
+                    itemname(blanket, 1) + u8"が"s + name(owner)
+                        + u8"の持ち物を冷気から守った。"s,
+                    itemname(blanket, 1) + u8" protects "s + name(owner)
+                        + your(owner) + u8" stuff from cold."s));
+            }
+            if (inv[blanket].count > 0)
+            {
+                --inv[blanket].count;
+            }
+            else if (rnd(20) == 0)
+            {
+                inv[blanket].modify_number(-1);
                 if (is_in_fov(cdata[owner]))
                 {
                     txt(lang(
-                        itemname(blanket, 1) + u8"が"s + name(owner)
-                            + u8"の持ち物を冷気から守った。"s,
-                        itemname(blanket, 1) + u8" protects "s + name(owner)
-                            + your(owner) + u8" stuff from cold."s));
+                        itemname(blanket, 1) + u8"は粉々に砕けた。"s,
+                        itemname(blanket, 1) + u8" is broken to pieces."s));
                 }
-                if (inv[blanket].count > 0)
-                {
-                    --inv[blanket].count;
-                }
-                else if (rnd(20) == 0)
-                {
-                    inv[blanket].modify_number(-1);
-                    if (is_in_fov(cdata[owner]))
-                    {
-                        txt(lang(
-                            itemname(blanket, 1) + u8"は粉々に砕けた。"s,
-                            itemname(blanket, 1) + u8" is broken to pieces."s));
-                    }
-                    break;
-                }
-                continue;
+                break;
             }
+            continue;
         }
         int p_ = rnd(inv[ci_].number()) / 2 + 1;
         if (owner != -1)
