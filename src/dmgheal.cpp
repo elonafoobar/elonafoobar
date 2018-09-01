@@ -574,17 +574,17 @@ int damage_hp(
             {
                 if (victim.index == 0 || rnd(3) == 0)
                 {
-                    item_acid(victim.index, -1);
+                    item_acid(victim);
                 }
             }
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim.index, -1);
+            item_fire(victim.index);
         }
         if (element == 51)
         {
-            item_cold(victim.index, -1);
+            item_cold(victim.index);
         }
         if (victim.sleep != 0)
         {

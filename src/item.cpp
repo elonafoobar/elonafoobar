@@ -1561,85 +1561,82 @@ void item_dump_desc(const item& i)
     pagemax = (listmax - 1) / pagesize;
 }
 
-void item_acid(int prm_838, int prm_839)
+
+
+void item_acid(const character& owner, int ci)
 {
-    int body_at_m138 = 0;
-    if (prm_839 != -1)
+    if (ci == -1)
     {
-        ci_at_m138 = prm_839;
-    }
-    else
-    {
-        ci_at_m138 = -1;
-        for (int i = 0; i < 30; ++i)
+        for (const auto& body_part : owner.body_parts)
         {
-            body_at_m138 = cdata[prm_838].body_parts[i] / 10000;
-            if (body_at_m138 == 0)
+            if (body_part / 10000 == 0)
             {
                 break;
             }
-            p_at_m138 = cdata[prm_838].body_parts[i] % 10000 - 1;
-            if (p_at_m138 == -1)
+            int i = body_part % 10000 - 1;
+            if (i == -1)
             {
                 continue;
             }
-            if (rnd(clamp(30, 1, 30)) == 0)
+            if (inv[i].enhancement >= -3)
             {
-                if (inv[p_at_m138].enhancement > -4)
+                if (rnd(30) == 0)
                 {
-                    ci_at_m138 = p_at_m138;
+                    ci = p;
                     break;
                 }
             }
         }
+        if (ci == -1)
+        {
+            return;
+        }
     }
-    if (ci_at_m138 == -1)
+
+    if (the_item_db[inv[ci].id]->category >= 50000)
     {
         return;
     }
-    if (the_item_db[inv[ci_at_m138].id]->category >= 50000)
-    {
-        return;
-    }
-    if (ibit(1, ci_at_m138) == 0)
+
+    if (ibit(1, ci) == 0)
     {
         txtef(8);
         txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
-                + u8"は酸で傷ついた。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+            name(owner.index) + u8"の"s + itemname(ci) + u8"は酸で傷ついた。"s,
+            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
                 + u8" is damaged by acid."s));
-        --inv[ci_at_m138].enhancement;
+        --inv[ci].enhancement;
     }
     else
     {
         txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
+            name(owner.index) + u8"の"s + itemname(ci)
                 + u8"は酸では傷つかない。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
                 + u8" is immune to acid."s));
     }
-    return;
 }
 
 
 
-int item_fire(int prm_840, int prm_841)
+bool item_fire(int owner, int ci)
 {
-    max_at_m138 = 0;
-    ti_at_m138 = -1;
-    if (prm_841 != -1)
+    std::vector<int> list;
+
+    int blanket = -1;
+
+    if (ci != -1)
     {
-        list_at_m138(0) = prm_841;
-        ++max_at_m138;
+        list.push_back(ci);
     }
-    if (prm_840 != -1)
+
+    if (owner != -1)
     {
-        if (sdata(50, prm_840) / 50 >= 6 || cdata[prm_840].quality >= 4)
+        if (sdata(50, owner) / 50 >= 6 || cdata[owner].quality >= 4)
         {
-            return 0;
+            return false;
         }
-        for (const auto& cnt : items(prm_840))
+        for (const auto& cnt : items(owner))
         {
             if (inv[cnt].number() == 0)
             {
@@ -1647,224 +1644,233 @@ int item_fire(int prm_840, int prm_841)
             }
             if (inv[cnt].id == 567)
             {
-                if (ti_at_m138 == -1)
+                if (blanket == -1)
                 {
-                    ti_at_m138 = cnt;
-                    item_separate(ti_at_m138);
+                    blanket = cnt;
                 }
                 continue;
             }
-            if (prm_841 == -1)
+            if (ci == -1)
             {
-                list_at_m138(max_at_m138) = cnt;
-                ++max_at_m138;
+                list.push_back(cnt);
             }
         }
     }
-    if (max_at_m138 == 0)
+
+    if (list.empty())
     {
-        return 0;
+        return false;
     }
-    f_at_m138 = 0;
+
+    bool burned{};
+
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number() <= 0)
+        int ci_ = choice(list);
+        if (inv[ci_].number() <= 0)
         {
             continue;
         }
-        rowact_item(ci_at_m138);
-        if (ibit(2, ci_at_m138) == 0)
+        rowact_item(ci_);
+        if (ibit(2, ci_) || ibit(5, ci_))
         {
-            if (ibit(5, ci_at_m138) == 0)
+            continue;
+        }
+
+        int a_ = the_item_db[inv[ci_].id]->category;
+        if (a_ == 57000 && inv[ci_].param2 == 0)
+        {
+            if (owner == -1)
             {
-                a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
-                if (a_at_m138 == 57000)
+                if (is_in_fov(inv[ci_].position))
                 {
-                    if (inv[ci_at_m138].param2 == 0)
-                    {
-                        if (prm_840 == -1)
-                        {
-                            if (is_in_fov(inv[ci_at_m138].position))
-                            {
-                                txtef(11);
-                                txt(lang(
-                                    u8"地面の"s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number())
-                                        + u8"はこんがりと焼き上がった。"s,
-                                    itemname(
-                                        ci_at_m138, inv[ci_at_m138].number())
-                                        + u8" on the ground get"s
-                                        + _s2(inv[ci_at_m138].number())
-                                        + u8" perfectly broiled."s));
-                            }
-                        }
-                        if (prm_840 != -1)
-                        {
-                            if (is_in_fov(cdata[prm_840]))
-                            {
-                                txtef(11);
-                                txt(lang(
-                                    name(prm_840) + u8"の"s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number())
-                                        + u8"はこんがりと焼き上がった。"s,
-                                    name(prm_840) + your(prm_840) + u8" "s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number(),
-                                              1)
-                                        + u8" get"s
-                                        + _s2(inv[ci_at_m138].number())
-                                        + u8" perfectly broiled."s));
-                            }
-                        }
-                        make_dish(ci_at_m138, rnd(5) + 1);
-                        f_at_m138 = 1;
-                        continue;
-                    }
+                    txtef(11);
+                    txt(lang(
+                        u8"地面の"s + itemname(ci_, inv[ci_].number())
+                            + u8"はこんがりと焼き上がった。"s,
+                        itemname(ci_, inv[ci_].number())
+                            + u8" on the ground get"s + _s2(inv[ci_].number())
+                            + u8" perfectly broiled."s));
                 }
-                if (a_at_m138 == 72000 || a_at_m138 == 59000
-                    || a_at_m138 == 68000 || inv[ci_at_m138].quality >= 4)
+            }
+            else
+            {
+                if (is_in_fov(cdata[owner]))
+                {
+                    txtef(11);
+                    txt(lang(
+                        name(owner) + u8"の"s + itemname(ci_, inv[ci_].number())
+                            + u8"はこんがりと焼き上がった。"s,
+                        name(owner) + your(owner) + u8" "s
+                            + itemname(ci_, inv[ci_].number(), 1) + u8" get"s
+                            + _s2(inv[ci_].number())
+                            + u8" perfectly broiled."s));
+                }
+            }
+            make_dish(ci_, rnd(5) + 1);
+            burned = true;
+            continue;
+        }
+
+        if (a_ == 72000 || a_ == 59000 || a_ == 68000 || inv[ci_].quality >= 4)
+        {
+            continue;
+        }
+
+        if (inv[ci_].body_part != 0)
+        {
+            if (rnd(2))
+            {
+                continue;
+            }
+        }
+
+        if (a_ != 56000 && a_ != 80000 && a_ != 55000 && a_ != 53000
+            && a_ != 54000)
+        {
+            if (rnd(4))
+            {
+                continue;
+            }
+            if (owner != -1)
+            {
+                if (rnd(4))
                 {
                     continue;
                 }
-                if (inv[ci_at_m138].body_part != 0)
+            }
+        }
+
+        if (blanket != -1)
+        {
+            item_separate(blanket);
+            if (is_in_fov(cdata[owner]))
+            {
+                txt(lang(
+                    itemname(blanket, 1) + u8"が"s + name(owner)
+                        + u8"の持ち物を炎から守った。"s,
+                    itemname(blanket, 1) + u8" protects "s + name(owner)
+                        + your(owner) + u8" stuff from fire."s));
+            }
+            if (inv[blanket].count > 0)
+            {
+                --inv[blanket].count;
+            }
+            else if (rnd(20) == 0)
+            {
+                inv[blanket].modify_number(-1);
+                if (is_in_fov(cdata[owner]))
                 {
-                    if (rnd(2))
-                    {
-                        continue;
-                    }
+                    txt(lang(
+                        itemname(blanket, 1) + u8"は灰と化した。"s,
+                        itemname(blanket, 1) + u8" turns to dust."s));
                 }
-                if (a_at_m138 != 56000 && a_at_m138 != 80000
-                    && a_at_m138 != 55000 && a_at_m138 != 53000
-                    && a_at_m138 != 54000)
-                {
-                    if (rnd(4))
-                    {
-                        continue;
-                    }
-                    if (prm_840 != -1)
-                    {
-                        if (rnd(4))
-                        {
-                            continue;
-                        }
-                    }
-                }
-                if (ti_at_m138 != -1)
-                {
-                    if (inv[ti_at_m138].number() > 0)
-                    {
-                        if (is_in_fov(cdata[prm_840]))
-                        {
-                            txt(lang(
-                                itemname(ti_at_m138, 1) + u8"が"s
-                                    + name(prm_840)
-                                    + u8"の持ち物を炎から守った。"s,
-                                itemname(ti_at_m138, 1) + u8" protects "s
-                                    + name(prm_840) + your(prm_840)
-                                    + u8" stuff from fire."s));
-                        }
-                        if (inv[ti_at_m138].count > 0)
-                        {
-                            --inv[ti_at_m138].count;
-                        }
-                        else if (rnd(20) == 0)
-                        {
-                            inv[ti_at_m138].modify_number(-1);
-                            if (is_in_fov(cdata[prm_840]))
-                            {
-                                txt(lang(
-                                    itemname(ti_at_m138, 1)
-                                        + u8"は灰と化した。"s,
-                                    itemname(ti_at_m138, 1)
-                                        + u8" turns to dust."s));
-                                break;
-                            }
-                        }
-                        continue;
-                    }
-                }
-                p_at_m138 = rnd(inv[ci_at_m138].number()) / 2 + 1;
-                if (prm_840 != -1)
-                {
-                    if (inv[ci_at_m138].body_part != 0)
-                    {
-                        if (is_in_fov(cdata[prm_840]))
-                        {
-                            txtef(8);
-                            txt(lang(
-                                name(prm_840) + u8"の装備している"s
-                                    + itemname(ci_at_m138, p_at_m138)
-                                    + u8"は灰と化した。"s,
-                                itemname(ci_at_m138, p_at_m138) + u8" "s
-                                    + name(prm_840) + u8" equip"s + _s(prm_840)
-                                    + u8" turn"s + _s2(p_at_m138)
-                                    + u8" to dust."s));
-                        }
-                        cdata[prm_840]
-                            .body_parts[inv[ci_at_m138].body_part - 100] =
-                            cdata[prm_840]
-                                .body_parts[inv[ci_at_m138].body_part - 100]
-                            / 10000 * 10000;
-                        inv[ci_at_m138].body_part = 0;
-                        chara_refresh(prm_840);
-                    }
-                    else if (is_in_fov(cdata[prm_840]))
-                    {
-                        txtef(8);
-                        txt(lang(
-                            name(prm_840) + u8"の"s
-                                + itemname(ci_at_m138, p_at_m138)
-                                + u8"は灰と化した。"s,
-                            name(prm_840) + your(prm_840) + u8" "s
-                                + itemname(ci_at_m138, p_at_m138, 1)
-                                + u8" turn"s + _s2(p_at_m138)
-                                + u8" to dust."s));
-                    }
-                }
-                else if (is_in_fov(inv[ci_at_m138].position))
+                break;
+            }
+            continue;
+        }
+
+        int p_ = rnd(inv[ci_].number()) / 2 + 1;
+        if (owner != -1)
+        {
+            if (inv[ci_].body_part != 0)
+            {
+                if (is_in_fov(cdata[owner]))
                 {
                     txtef(8);
                     txt(lang(
-                        u8"地面の"s + itemname(ci_at_m138, p_at_m138)
+                        name(owner) + u8"の装備している"s + itemname(ci_, p_)
                             + u8"は灰と化した。"s,
-                        itemname(ci_at_m138, p_at_m138)
-                            + u8" on the ground turn"s + _s(p_at_m138)
+                        itemname(ci_, p_) + u8" "s + name(owner) + u8" equip"s
+                            + _s(owner) + u8" turn"s + _s2(p_)
                             + u8" to dust."s));
                 }
-                inv[ci_at_m138].modify_number(-p_at_m138);
-                cell_refresh(
-                    inv[ci_at_m138].position.x, inv[ci_at_m138].position.y);
-                f_at_m138 = 1;
+                cdata[owner].body_parts[inv[ci_].body_part - 100] =
+                    cdata[owner].body_parts[inv[ci_].body_part - 100] / 10000
+                    * 10000;
+                inv[ci_].body_part = 0;
+                chara_refresh(owner);
+            }
+            else if (is_in_fov(cdata[owner]))
+            {
+                txtef(8);
+                txt(lang(
+                    name(owner) + u8"の"s + itemname(ci_, p_)
+                        + u8"は灰と化した。"s,
+                    name(owner) + your(owner) + u8" "s + itemname(ci_, p_, 1)
+                        + u8" turn"s + _s2(p_) + u8" to dust."s));
             }
         }
+        else if (is_in_fov(inv[ci_].position))
+        {
+            txtef(8);
+            txt(lang(
+                u8"地面の"s + itemname(ci_, p_) + u8"は灰と化した。"s,
+                itemname(ci_, p_) + u8" on the ground turn"s + _s(p_)
+                    + u8" to dust."s));
+        }
+        inv[ci_].modify_number(-p_);
+        cell_refresh(inv[ci_].position.x, inv[ci_].position.y);
+        burned = true;
     }
+
     refresh_burden_state();
-    return f_at_m138;
+    return burned;
 }
 
-int item_cold(int prm_844, int prm_845)
+
+
+void mapitem_fire(int x, int y)
 {
-    std::string s_at_m138;
-    max_at_m138 = 0;
-    ti_at_m138 = -1;
-    if (prm_845 != -1)
+    if (map(x, y, 4) == 0)
     {
-        list_at_m138(0) = prm_845;
-        ++max_at_m138;
+        return;
     }
-    if (prm_844 != -1)
+
+    int ci = -1;
+    for (const auto& cnt : items(-1))
     {
-        if (sdata(51, prm_844) / 50 >= 6 || cdata[prm_844].quality >= 4)
+        if (inv[cnt].number() == 0)
         {
-            return 0;
+            continue;
         }
-        for (const auto& cnt : items(prm_844))
+        if (inv[cnt].position == position_t{x, y})
+        {
+            ci = cnt;
+            break;
+        }
+    }
+    if (ci != -1)
+    {
+        const auto burned = item_fire(-1, ci);
+        if (burned)
+        {
+            if (map(x, y, 8) == 0)
+            {
+                mef_add(x, y, 5, 24, rnd(10) + 5, 100, cc);
+            }
+        }
+        cell_refresh(x, y);
+    }
+}
+
+
+
+bool item_cold(int owner, int ci)
+{
+    int blanket = -1;
+    std::vector<int> list;
+    if (ci != -1)
+    {
+        list.push_back(ci);
+    }
+    if (owner != -1)
+    {
+        if (sdata(51, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        {
+            return false;
+        }
+        for (const auto& cnt : items(owner))
         {
             if (inv[cnt].number() == 0)
             {
@@ -1872,165 +1878,136 @@ int item_cold(int prm_844, int prm_845)
             }
             if (inv[cnt].id == 568)
             {
-                if (ti_at_m138 == -1)
+                if (blanket == -1)
                 {
-                    ti_at_m138 = cnt;
-                    item_separate(ti_at_m138);
+                    blanket = cnt;
                 }
                 continue;
             }
-            if (prm_845 == -1)
+            if (ci == -1)
             {
-                list_at_m138(max_at_m138) = cnt;
-                ++max_at_m138;
+                list.push_back(cnt);
             }
         }
     }
-    if (max_at_m138 == 0)
+    if (list.empty())
     {
-        return 0;
+        return false;
     }
-    f_at_m138 = 0;
+
+    bool broken{};
     for (int cnt = 0; cnt < 2; ++cnt)
     {
-        ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number() <= 0)
+        int ci_ = choice(list);
+        if (inv[ci_].number() <= 0)
         {
             continue;
         }
-        rowact_item(ci_at_m138);
-        if (ibit(5, ci_at_m138) == 0)
+        rowact_item(ci_);
+        if (ibit(5, ci_))
         {
-            a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
-            if (prm_844 == -1)
-            {
-                s_at_m138 = "";
-            }
-            else
-            {
-                s_at_m138 = name(prm_844) + lang(u8"の"s, your(prm_844));
-            }
-            if (a_at_m138 == 72000 || a_at_m138 == 59000 || a_at_m138 == 68000)
+            continue;
+        }
+
+        int a_ = the_item_db[inv[ci_].id]->category;
+        if (a_ == 72000 || a_ == 59000 || a_ == 68000)
+        {
+            continue;
+        }
+        if (inv[ci_].quality >= 4 || inv[ci_].body_part != 0)
+        {
+            continue;
+        }
+        if (a_ != 52000)
+        {
+            if (rnd(30))
             {
                 continue;
             }
-            if (inv[ci_at_m138].quality >= 4 || inv[ci_at_m138].body_part != 0)
+        }
+        if (blanket != -1)
+        {
+            item_separate(blanket);
+            if (is_in_fov(cdata[owner]))
             {
-                continue;
+                txt(lang(
+                    itemname(blanket, 1) + u8"が"s + name(owner)
+                        + u8"の持ち物を冷気から守った。"s,
+                    itemname(blanket, 1) + u8" protects "s + name(owner)
+                        + your(owner) + u8" stuff from cold."s));
             }
-            if (a_at_m138 != 52000)
+            if (inv[blanket].count > 0)
             {
-                if (rnd(30))
-                {
-                    continue;
-                }
+                --inv[blanket].count;
             }
-            if (ti_at_m138 != -1)
+            else if (rnd(20) == 0)
             {
-                if (inv[ti_at_m138].number() > 0)
+                inv[blanket].modify_number(-1);
+                if (is_in_fov(cdata[owner]))
                 {
                     txt(lang(
-                        itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
-                            + u8"の持ち物を冷気から守った。"s,
-                        itemname(ti_at_m138, 1) + u8" protects "s
-                            + name(prm_844) + your(prm_844)
-                            + u8" stuff from cold."s));
-                    if (inv[ti_at_m138].count > 0)
-                    {
-                        --inv[ti_at_m138].count;
-                    }
-                    else if (rnd(20) == 0)
-                    {
-                        txt(lang(
-                            itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
-                            itemname(ti_at_m138, 1)
-                                + u8" is broken to pieces."s));
-                        inv[ti_at_m138].modify_number(-1);
-                        break;
-                    }
-                    continue;
+                        itemname(blanket, 1) + u8"は粉々に砕けた。"s,
+                        itemname(blanket, 1) + u8" is broken to pieces."s));
                 }
+                break;
             }
-            p_at_m138 = rnd(inv[ci_at_m138].number()) / 2 + 1;
+            continue;
+        }
+        int p_ = rnd(inv[ci_].number()) / 2 + 1;
+        if (owner != -1)
+        {
+            if (is_in_fov(cdata[owner]))
+            {
+                txtef(8);
+                txt(lang(
+                    name(owner) + u8"の"s + itemname(ci_, p_)
+                        + u8"は粉々に砕けた。"s,
+                    name(owner) + your(owner) + u8" "s + itemname(ci_, p_, 1)
+                        + u8" break"s + _s2(p_) + u8" to pieces."s));
+            }
+        }
+        else if (is_in_fov(inv[ci_].position))
+        {
             txtef(8);
             txt(lang(
-                s_at_m138 + itemname(ci_at_m138, p_at_m138)
-                    + u8"は粉々に砕けた。"s,
-                s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
-                    + _s2(p_at_m138) + u8" to pieces."s));
-            inv[ci_at_m138].modify_number(-p_at_m138);
-            f_at_m138 = 1;
+                u8"地面の"s + itemname(ci_, p_) + u8"は粉々に砕けた。"s,
+                itemname(ci_, p_) + u8" on the ground break"s + _s2(p_)
+                    + u8" to pieces."s));
         }
+        inv[ci_].modify_number(-p_);
+        broken = true;
     }
+
     refresh_burden_state();
-    return f_at_m138;
+    return broken;
 }
 
-void mapitem_fire(int prm_842, int prm_843)
+
+
+void mapitem_cold(int x, int y)
 {
-    if (map(prm_842, prm_843, 4) == 0)
+    if (map(x, y, 4) == 0)
     {
         return;
     }
-    ci_at_m138 = -1;
+    int ci = -1;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() == 0)
         {
             continue;
         }
-        if (inv[cnt].position.x == prm_842)
+        if (inv[cnt].position == position_t{x, y})
         {
-            if (inv[cnt].position.y == prm_843)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
+            ci = cnt;
+            break;
         }
     }
-    if (ci_at_m138 != -1)
+    if (ci != -1)
     {
-        int stat = item_fire(-1, ci_at_m138);
-        if (stat == 1)
-        {
-            if (map(prm_842, prm_843, 8) == 0)
-            {
-                mef_add(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
-            }
-        }
-        cell_refresh(prm_842, prm_843);
+        item_cold(-1, ci);
+        cell_refresh(x, y);
     }
-    return;
-}
-
-void mapitem_cold(int prm_846, int prm_847)
-{
-    if (map(prm_846, prm_847, 4) == 0)
-    {
-        return;
-    }
-    ci_at_m138 = -1;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number() == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].position.x == prm_846)
-        {
-            if (inv[cnt].position.y == prm_847)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
-        }
-    }
-    if (ci_at_m138 != -1)
-    {
-        item_cold(-1, ci_at_m138);
-        cell_refresh(prm_846, prm_847);
-    }
-    return;
 }
 
 

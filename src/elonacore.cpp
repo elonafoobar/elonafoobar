@@ -14663,7 +14663,7 @@ label_22191_internal:
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(cc, cw);
+                                item_acid(cdata[cc], cw);
                             }
                         }
                     }

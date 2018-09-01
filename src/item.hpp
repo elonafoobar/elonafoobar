@@ -184,6 +184,9 @@ private:
 extern inventory inv;
 
 
+struct character;
+
+
 
 int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
@@ -199,7 +202,7 @@ void itemname_additional_info();
 void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
-void item_acid(int = 0, int = 0);
+void item_acid(const character& owner, int ci = -1);
 void item_delete(int);
 void item_exchange(int = 0, int = 0);
 void item_modify_num(item&, int);
@@ -212,10 +215,10 @@ int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 void item_dump_desc(const item&);
 
-int item_cold(int = 0, int = 0);
-int item_fire(int = 0, int = 0);
-void mapitem_cold(int = 0, int = 0);
-void mapitem_fire(int = 0, int = 0);
+bool item_fire(int owner, int ci = -1);
+void mapitem_fire(int x, int y);
+bool item_cold(int owner, int ci = -1);
+void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
