@@ -54,8 +54,7 @@ public:
     bool extraclass;
     bool extrahelp;
     bool extrarace;
-    std::string font1;
-    std::string font2;
+    std::string font_filename;
     std::string fullscreen;
     bool heart;
     bool hideautoidentify;

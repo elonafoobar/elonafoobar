@@ -79,8 +79,7 @@ config {
         font {
             # TTF fonts to use.
             # Place fonts in data/font. Please ensure the fonts are monospaced to avoid issues.
-            japanese = "Kochi Gothic.ttf"
-            english = "Bitstream Sans Vera Mono.ttf"
+            file = ""
 
             vertical_offset = -1 # fontVfix1
             size_adjustment = 1 # fontSfix1

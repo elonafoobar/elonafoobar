@@ -248,8 +248,6 @@ locale {
                 deteriorates = "${name(_1)}の${_2}は衰えた。"
             }
 
-            growth = "${name(_1)}の${_2}は成長期に突入した。"
-
             corpse {
                 iron = "まるで鉄のように硬い！${name(_1)}の胃は悲鳴をあげた。"
                 deformed_eye = "気が変になりそうな味だ。"

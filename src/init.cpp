@@ -94,8 +94,6 @@ void backup_config_files()
 {
     std::pair<const char*, const char*> files[] = {
         {u8"./original/export.txt", u8"./user/export.txt"},
-        {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},
-        {u8"./original/lastwords-e.txt", u8"./user/lastwords-e.txt"},
         {u8"./original/musiclist.txt", u8"./user/music/musiclist.txt"},
         {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
     };
@@ -889,6 +887,15 @@ int run()
     initialize_mods();
     // Load translations from scanned mods.
     initialize_i18n();
+
+    if (config::instance().font_filename.empty())
+    {
+        // If no font is specified in `config.hcl`, use a pre-defined font
+        // depending on each language.
+        config::instance().font_filename =
+            i18n::s.get("core.locale.meta.default_font");
+    }
+
     // Load data from scanned mods.
     initialize_lion_db();
 

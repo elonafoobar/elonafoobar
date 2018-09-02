@@ -243,8 +243,7 @@ config def {
     font = {
         type = "section"
         options = {
-            japanese = "Kochi Gothic.ttf"
-            english = "Bitstream Sans Vera Mono.ttf"
+            file = "Kochi Gothic.ttf"
 
             vertical_offset = {
                 default = -1

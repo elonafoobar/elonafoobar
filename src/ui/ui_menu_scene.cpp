@@ -3,6 +3,7 @@
 #include "../i18n.hpp"
 
 
+
 namespace elona
 {
 namespace ui
@@ -13,9 +14,9 @@ static void _load_scenes()
     notesel(buff);
     {
         buff(0).clear();
-        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
-        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {

@@ -1,6 +1,7 @@
 #include "ui_menu_book.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../i18n.hpp"
 
 namespace elona
 {
@@ -25,7 +26,8 @@ bool ui_menu_book::init()
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, ""s + _book_id + u8","s + lang(u8"JP"s, u8"EN"s));
+    p = instr(
+        buff, 0, ""s + _book_id + u8","s + i18n::s.get("core.locale.meta.tag"));
     if (p == -1)
     {
         return false;

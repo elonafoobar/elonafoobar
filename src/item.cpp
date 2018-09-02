@@ -18,6 +18,11 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+static std::string lang(const std::string& a, const std::string& b)
+{
+    return jp ? a : b;
+}
+
 
 namespace elona
 {
@@ -558,9 +563,7 @@ int item_separate(int ci)
         if (ti == -1)
         {
             inv[ci].set_number(1);
-            txt(lang(
-                u8"何かが地面に落ちて消えた…"s,
-                u8"Something falls to the ground and disappear..."s));
+            txt(i18n::s.get("core.locale.item.something_falls_and_disappears"));
             return ci;
         }
     }
@@ -578,9 +581,7 @@ int item_separate(int ci)
         inv[ti].position = inv[ci].position;
         itemturn(ti);
         cell_refresh(inv[ti].position.x, inv[ti].position.y);
-        txt(lang(
-            u8"何かが地面に落ちた。"s,
-            u8"Something falls to the ground from your backpack."s));
+        txt(i18n::s.get("core.locale.item.something_falls_from_backpack"));
         refresh_burden_state();
     }
 
@@ -659,15 +660,19 @@ void itemname_additional_info()
 {
     if (inv[prm_518].id == 578)
     {
-        s_ += lang(
-            ""s + moneyboxn(inv[prm_518].param2),
-            u8"("s + moneyboxn(inv[prm_518].param2) + u8")"s);
+        s_ += i18n::s.get_enum(
+            "core.locale.item.kitty_bank_rank", inv[prm_518].param2);
     }
     if (inv[prm_518].id == 617)
     {
         s_ += lang(
-            ""s + biten(inv[prm_518].param1),
-            u8" <"s + biten(inv[prm_518].param1) + u8">"s);
+            ""s
+                + i18n::s.get_enum(
+                      "core.locale.item.bait_rank", inv[prm_518].param1),
+            u8" <"s
+                + i18n::s.get_enum(
+                      "core.locale.item.bait_rank", inv[prm_518].param1)
+                + u8">"s);
     }
     if (inv[prm_518].id == 687)
     {
@@ -682,8 +687,16 @@ void itemname_additional_info()
             == identification_state_t::completely_identified)
         {
             s_ += lang(
-                u8"《"s + magebookn(inv[prm_518].param1) + u8"》という題名の"s,
-                u8" titled <"s + magebookn(inv[prm_518].param1) + u8">"s);
+                u8"《"s
+                    + i18n::s.get_enum(
+                          "core.locale.item.ancient_book_title",
+                          inv[prm_518].param1)
+                    + u8"》という題名の"s,
+                u8" titled <"s
+                    + i18n::s.get_enum(
+                          "core.locale.item.ancient_book_title",
+                          inv[prm_518].param1)
+                    + u8">"s);
         }
     }
     if (inv[prm_518].id == 783)
@@ -903,9 +916,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     if (inv[prm_518].id >= maxitemid - 2
         || size_t(inv[prm_518].id) > ioriginalnameref.size())
     {
-        return lang(
-            u8"未知のアイテム(バージョン非互換)"s,
-            u8"unknown item (incompatible version)"s);
+        return i18n::s.get("core.locale.item.unknown_item");
     }
     if (inv[prm_518].quality >= 5)
     {
@@ -1137,7 +1148,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv[prm_518].id == 729)
     {
-        s_ += ""s + giftn(inv[prm_518].param4) + lang(""s, u8" "s);
+        s_ +=
+            i18n::s.get_enum("core.locale.item.gift_rank", inv[prm_518].param4)
+            + i18n::space_if_needed();
     }
     if (skip_ == 1)
     {
@@ -1151,7 +1164,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         if (ibit(15, prm_518))
         {
             alpha_ = 1;
-            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) + strblank;
+            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s)
+                + i18n::space_if_needed();
         }
         else
         {
@@ -1161,12 +1175,14 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 {
                     if (jp)
                     {
-                        s_ += egoname(inv[prm_518].subname - 10000) + strblank;
+                        s_ += egoname(inv[prm_518].subname - 10000)
+                            + i18n::space_if_needed();
                     }
                 }
                 else if (inv[prm_518].subname < 40000)
                 {
-                    s_ += egominorn(inv[prm_518].subname - 20000) + strblank;
+                    s_ += egominorn(inv[prm_518].subname - 20000)
+                        + i18n::space_if_needed();
                 }
             }
             if (inv[prm_518].quality != 6)
@@ -1177,7 +1193,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                               u8"item_material",
                               std::to_string(inv[prm_518].material),
                               u8"alias")
-                        + strblank;
+                        + i18n::space_if_needed();
                 }
                 else
                 {
@@ -1185,7 +1201,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                               u8"item_material",
                               std::to_string(inv[prm_518].material),
                               u8"name")
-                        + strblank;
+                        + i18n::space_if_needed();
                     if (jp)
                     {
                         if (/* TODO is_katakana */ false)
@@ -1254,13 +1270,15 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             randomize(inv[prm_518].subname - 40000);
             if (inv[prm_518].quality == 4)
             {
-                s_ += lang(u8"『"s, u8" <"s) + random_title(1)
-                    + lang(u8"』"s, u8">"s);
+                s_ += i18n::space_if_needed()
+                    + i18n::s.get(
+                          "core.locale.item.miracle_paren", random_title(1));
             }
             else
             {
-                s_ += lang(u8"《"s, u8" {"s) + random_title(1)
-                    + lang(u8"》"s, u8"}"s);
+                s_ += i18n::space_if_needed()
+                    + i18n::s.get(
+                          "core.locale.item.godly_paren", random_title(1));
             }
             randomize();
         }
@@ -1305,9 +1323,7 @@ label_0313_internal:
         }
         if (ibit(4, prm_518) == 1)
         {
-            s_ += lang(
-                u8"(残り"s + inv[prm_518].count + u8"回)"s,
-                u8"(Charges: "s + inv[prm_518].count + u8")"s);
+            s_ += i18n::s.get("core.locale.item.charges", inv[prm_518].count);
         }
         if (inv[prm_518].dice_x != 0 || inv[prm_518].hit_bonus != 0
             || inv[prm_518].damage_bonus != 0)
@@ -1351,9 +1367,13 @@ label_0313_internal:
     if (inv[prm_518].id == 342 && inv[prm_518].count != 0)
     {
         s_ += lang(
-            u8"("s + biten(inv[prm_518].param4) + u8"残り"s + inv[prm_518].count
-                + u8"匹)"s,
-            u8"("s + inv[prm_518].count + u8" "s + biten(inv[prm_518].param4)
+            u8"("s
+                + i18n::s.get_enum(
+                      "core.locale.item.bait_rank", inv[prm_518].param4)
+                + u8"残り"s + inv[prm_518].count + u8"匹)"s,
+            u8"("s + inv[prm_518].count + u8" "s
+                + i18n::s.get_enum(
+                      "core.locale.item.bait_rank", inv[prm_518].param4)
                 + u8")"s);
     }
     if (inv[prm_518].id == 685)
@@ -1399,11 +1419,13 @@ label_0313_internal:
         }
         if (inv[prm_518].curse_state == curse_state_t::cursed)
         {
-            s_ += lang(u8"(恐ろしい)"s, u8"(Scary)"s);
+            s_ +=
+                i18n::s.get("core.locale.item.approximate_curse_state.cursed");
         }
         if (inv[prm_518].curse_state == curse_state_t::doomed)
         {
-            s_ += lang(u8"(禍々しい)"s, u8"(Dreadful)"s);
+            s_ +=
+                i18n::s.get("core.locale.item.approximate_curse_state.doomed");
         }
     }
     if (a_ == 72000)
@@ -1536,11 +1558,8 @@ int item_stack(int inventory_id, int ci, int show_message)
         }
         if (show_message)
         {
-            txt(lang(
-                itemname(ti, 1) + u8"をまとめた(計"s + inv[ti].number()
-                    + u8"個) "s,
-                itemname(ti, 1) + u8" has been stacked. (Total:"s
-                    + inv[ti].number() + u8")"s));
+            txt(i18n::s.get(
+                "core.locale.item.stacked", inv[ti], inv[ti].number()));
         }
     }
 
@@ -1601,19 +1620,12 @@ void item_acid(const character& owner, int ci)
     if (ibit(1, ci) == 0)
     {
         txtef(8);
-        txt(lang(
-            name(owner.index) + u8"の"s + itemname(ci) + u8"は酸で傷ついた。"s,
-            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
-                + u8" is damaged by acid."s));
+        txt(i18n::s.get("core.locale.item.acid.damaged", owner, inv[ci]));
         --inv[ci].enhancement;
     }
     else
     {
-        txt(lang(
-            name(owner.index) + u8"の"s + itemname(ci)
-                + u8"は酸では傷つかない。"s,
-            name(owner.index) + your(owner.index) + u8" "s + itemname(ci, 0, 1)
-                + u8" is immune to acid."s));
+        txt(i18n::s.get("core.locale.item.acid.immune", owner, inv[ci]));
     }
 }
 
@@ -1685,12 +1697,10 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(inv[ci_].position))
                 {
                     txtef(11);
-                    txt(lang(
-                        u8"地面の"s + itemname(ci_, inv[ci_].number())
-                            + u8"はこんがりと焼き上がった。"s,
-                        itemname(ci_, inv[ci_].number())
-                            + u8" on the ground get"s + _s2(inv[ci_].number())
-                            + u8" perfectly broiled."s));
+                    txt(i18n::s.get(
+                        "core.locale.item.item_on_the_ground_get_"
+                        "broiled",
+                        inv[ci_]));
                 }
             }
             else
@@ -1698,13 +1708,11 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(cdata[owner]))
                 {
                     txtef(11);
-                    txt(lang(
-                        name(owner) + u8"の"s + itemname(ci_, inv[ci_].number())
-                            + u8"はこんがりと焼き上がった。"s,
-                        name(owner) + your(owner) + u8" "s
-                            + itemname(ci_, inv[ci_].number(), 1) + u8" get"s
-                            + _s2(inv[ci_].number())
-                            + u8" perfectly broiled."s));
+                    txt(i18n::s.get(
+                        "core.locale.item.item_on_the_ground_get_"
+                        "broiled",
+                        inv[ci_],
+                        cdata[owner]));
                 }
             }
             make_dish(ci_, rnd(5) + 1);
@@ -1746,11 +1754,10 @@ bool item_fire(int owner, int ci)
             item_separate(blanket);
             if (is_in_fov(cdata[owner]))
             {
-                txt(lang(
-                    itemname(blanket, 1) + u8"が"s + name(owner)
-                        + u8"の持ち物を炎から守った。"s,
-                    itemname(blanket, 1) + u8" protects "s + name(owner)
-                        + your(owner) + u8" stuff from fire."s));
+                txt(i18n::s.get(
+                    "core.locale.item.fireproof_blanket_protects_item",
+                    inv[blanket],
+                    cdata[owner]));
             }
             if (inv[blanket].count > 0)
             {
@@ -1761,9 +1768,9 @@ bool item_fire(int owner, int ci)
                 inv[blanket].modify_number(-1);
                 if (is_in_fov(cdata[owner]))
                 {
-                    txt(lang(
-                        itemname(blanket, 1) + u8"は灰と化した。"s,
-                        itemname(blanket, 1) + u8" turns to dust."s));
+                    txt(i18n::s.get(
+                        "core.locale.item.fireproof_blanket_turns_to_dust",
+                        inv[blanket]));
                 }
                 break;
             }
@@ -1778,12 +1785,11 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(cdata[owner]))
                 {
                     txtef(8);
-                    txt(lang(
-                        name(owner) + u8"の装備している"s + itemname(ci_, p_)
-                            + u8"は灰と化した。"s,
-                        itemname(ci_, p_) + u8" "s + name(owner) + u8" equip"s
-                            + _s(owner) + u8" turn"s + _s2(p_)
-                            + u8" to dust."s));
+                    txt(i18n::s.get(
+                        "core.locale.item.item_someone_equips_turns_to_dust",
+                        inv[ci_],
+                        p_,
+                        cdata[owner]));
                 }
                 cdata[owner].body_parts[inv[ci_].body_part - 100] =
                     cdata[owner].body_parts[inv[ci_].body_part - 100] / 10000
@@ -1794,20 +1800,20 @@ bool item_fire(int owner, int ci)
             else if (is_in_fov(cdata[owner]))
             {
                 txtef(8);
-                txt(lang(
-                    name(owner) + u8"の"s + itemname(ci_, p_)
-                        + u8"は灰と化した。"s,
-                    name(owner) + your(owner) + u8" "s + itemname(ci_, p_, 1)
-                        + u8" turn"s + _s2(p_) + u8" to dust."s));
+                txt(i18n::s.get(
+                    "core.locale.item.someones_item_turns_to_dust",
+                    inv[ci_],
+                    p_,
+                    cdata[owner]));
             }
         }
         else if (is_in_fov(inv[ci_].position))
         {
             txtef(8);
-            txt(lang(
-                u8"地面の"s + itemname(ci_, p_) + u8"は灰と化した。"s,
-                itemname(ci_, p_) + u8" on the ground turn"s + _s(p_)
-                    + u8" to dust."s));
+            txt(i18n::s.get(
+                "core.locale.item.item_on_the_ground_turns_to_dust",
+                inv[ci_],
+                p_));
         }
         inv[ci_].modify_number(-p_);
         cell_refresh(inv[ci_].position.x, inv[ci_].position.y);
@@ -1930,11 +1936,10 @@ bool item_cold(int owner, int ci)
             item_separate(blanket);
             if (is_in_fov(cdata[owner]))
             {
-                txt(lang(
-                    itemname(blanket, 1) + u8"が"s + name(owner)
-                        + u8"の持ち物を冷気から守った。"s,
-                    itemname(blanket, 1) + u8" protects "s + name(owner)
-                        + your(owner) + u8" stuff from cold."s));
+                txt(i18n::s.get(
+                    "core.locale.item.coldproof_blanket_protects_item",
+                    inv[blanket],
+                    cdata[owner]));
             }
             if (inv[blanket].count > 0)
             {
@@ -1945,9 +1950,10 @@ bool item_cold(int owner, int ci)
                 inv[blanket].modify_number(-1);
                 if (is_in_fov(cdata[owner]))
                 {
-                    txt(lang(
-                        itemname(blanket, 1) + u8"は粉々に砕けた。"s,
-                        itemname(blanket, 1) + u8" is broken to pieces."s));
+                    txt(i18n::s.get(
+                        "core.locale.item.coldproof_blanket_is_broken_to_"
+                        "pieces",
+                        inv[blanket]));
                 }
                 break;
             }
@@ -1959,20 +1965,20 @@ bool item_cold(int owner, int ci)
             if (is_in_fov(cdata[owner]))
             {
                 txtef(8);
-                txt(lang(
-                    name(owner) + u8"の"s + itemname(ci_, p_)
-                        + u8"は粉々に砕けた。"s,
-                    name(owner) + your(owner) + u8" "s + itemname(ci_, p_, 1)
-                        + u8" break"s + _s2(p_) + u8" to pieces."s));
+                txt(i18n::s.get(
+                    "core.locale.item.someones_item_breaks_to_pieces",
+                    inv[ci_],
+                    p_,
+                    cdata[owner]));
             }
         }
         else if (is_in_fov(inv[ci_].position))
         {
             txtef(8);
-            txt(lang(
-                u8"地面の"s + itemname(ci_, p_) + u8"は粉々に砕けた。"s,
-                itemname(ci_, p_) + u8" on the ground break"s + _s2(p_)
-                    + u8" to pieces."s));
+            txt(i18n::s.get(
+                "core.locale.item.item_on_the_ground_breaks_to_pieces",
+                inv[ci_],
+                p_));
         }
         inv[ci_].modify_number(-p_);
         broken = true;
@@ -2167,9 +2173,7 @@ int inv_getfreeid(int owner)
     }
     if (owner == -1 && mode != 6)
     {
-        txt(lang(
-            u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
-            u8"Too many item data! Some items in this area are destroyed."s));
+        txt(i18n::s.get("core.locale.item.items_are_destroyed"));
         return inv_compress(owner);
     }
     return -1;

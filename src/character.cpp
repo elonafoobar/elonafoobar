@@ -1753,7 +1753,7 @@ int chara_custom_talk(int cc, int talk_type)
         default: assert(0);
         }
 
-        tag += u8"," + lang(u8"JP"s, u8"EN"s);
+        tag += u8"," + i18n::s.get("core.locale.meta.tag");
         const auto start_text = range::find_if(
             talk_file_buffer,
             [&](const auto& line) { return strutil::contains(line, tag); });

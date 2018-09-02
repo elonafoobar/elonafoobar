@@ -1343,10 +1343,8 @@ void apply_general_eating_effect(int cieat)
             {
                 if (is_in_fov(cdata[cc]))
                 {
-                    txt(i18n::s.get(
-                        "core.locale.food.effect.growth",
-                        cdata[cc],
-                        i18n::_(u8"ability", std::to_string(enc), u8"name")));
+                    txt(i18n::s.get_enum_property(
+                        "core.locale.buff", enc + 10, "apply", cdata[cc]));
                 }
                 buff_add(
                     cdata[cc],

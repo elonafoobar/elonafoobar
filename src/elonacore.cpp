@@ -68,6 +68,12 @@ namespace
 std::string atbuff;
 
 
+std::string lang(const std::string& a, const std::string& b)
+{
+    return jp ? a : b;
+}
+
+
 
 void memcpy(
     elona_vector2<int>& src,
@@ -222,20 +228,6 @@ int noeffect = 0;
 int inumbk = 0;
 int attackitem = 0;
 int extraattack = 0;
-
-
-
-std::string lang(const std::string& prm_246, const std::string& prm_247)
-{
-    if (jp)
-    {
-        return prm_246;
-    }
-    else
-    {
-        return prm_247;
-    }
-}
 
 
 
@@ -461,34 +453,28 @@ void initialize_rankn()
 
 std::string guildname()
 {
-    std::string s_at_m7;
-    s_at_m7 = lang(u8"なし"s, u8"None"s);
-    if (gdata_belongs_to_mages_guild != 0)
+    if (gdata_belongs_to_mages_guild)
     {
-        s_at_m7 = lang(u8"魔術士ギルド"s, u8"Mages Guild"s);
+        return i18n::s.get("core.locale.guild.mages.name");
     }
-    if (gdata_belongs_to_fighters_guild != 0)
+    else if (gdata_belongs_to_fighters_guild)
     {
-        s_at_m7 = lang(u8"戦士ギルド"s, u8"Fighters Guild"s);
+        return i18n::s.get("core.locale.guild.fighters.name");
     }
-    if (gdata_belongs_to_thieves_guild != 0)
+    else if (gdata_belongs_to_thieves_guild)
     {
-        s_at_m7 = lang(u8"盗賊ギルド"s, u8"Thieves Guild"s);
+        return i18n::s.get("core.locale.guild.thieves.name");
     }
-    return s_at_m7;
+    else
+    {
+        return i18n::s.get("core.locale.guild.none.name");
+    }
 }
 
 
 
 void initialize_post_data()
 {
-    SDIM3(popostname, 20, 7);
-    popostname(1) = lang(u8"市長"s, u8"mayor"s);
-    popostname(2) = lang(u8"村長"s, u8"chief"s);
-    popostname(3) = lang(u8"司祭"s, u8"priest"s);
-    popostname(4) = lang(u8"守衛長"s, u8"guard master"s);
-    popostname(5) = lang(u8"徴税官"s, u8"tax master"s);
-    popostname(6) = lang(u8"建設主任"s, u8"head architect"s);
     DIM4(pochart, 10, 10, 10);
     pochart(0, 0, 0) = 2;
     pochart(0, 1, 0) = 3;
@@ -505,7 +491,6 @@ void initialize_building_daga()
 {
     DIM4(bddata, 40, 20, 10);
     DIM3(bdref, 10, 7);
-    SDIM3(bdrefn, 20, 7);
     bdref(0, 1) = 0;
     bdref(1, 1) = 1500;
     bdref(0, 2) = 1;
@@ -518,13 +503,6 @@ void initialize_building_daga()
     bdref(1, 5) = 2500;
     bdref(0, 6) = 5;
     bdref(1, 6) = 2500;
-    bdrefn(1) = lang(u8"炭鉱"s, u8"Mine"s);
-    bdrefn(2) = lang(u8"畑"s, u8"Crop"s);
-    bdrefn(3) = lang(u8"アトリエ"s, u8"Art Atelier"s);
-    bdrefn(4) = lang(u8"寺院"s, u8"Temple"s);
-    bdrefn(5) = lang(u8"盗賊の隠れ家"s, u8"Smuggler's Hideout"s);
-    bdrefn(6) = lang(u8"灯台"s, u8"Light House"s);
-    return;
 }
 
 
@@ -720,7 +698,7 @@ int getunid(int prm_284)
     {
         cdata[prm_284].image = 1;
         cdata[prm_284].cnpc_id = usernpcmax;
-        cdatan(0, prm_284) = lang(u8"残りカス"s, u8"a garbage"s);
+        cdatan(0, prm_284) = i18n::s.get("core.locale.chara.garbage");
     }
     return f_at_m14;
 }
@@ -1004,8 +982,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{filesystem::dir::data()
-                               / lang(u8"ndata.csv", u8"ndata-e.csv")},
+        fileutil::read_by_line{i18n::s.get_locale_dir("core") / "lazy"
+                               / "ndata.csv"},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -1176,9 +1154,7 @@ int cargocheck()
         && mdata_map_type != mdata_t::map_type_t::guild)
     {
         ++msgdup;
-        txt(lang(
-            u8"荷車の荷物は街か野外でしか操作できない。"s,
-            u8"You can only use cargo items on the surface."s));
+        txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"));
         snd(27);
         return 0;
     }
@@ -1286,7 +1262,6 @@ void modrank(int prm_552, int prm_553, int prm_554)
     elona_vector1<int> p_at_m75;
     int orgrank_at_m75 = 0;
     int i_at_m75 = 0;
-    std::string s_at_m75;
     p_at_m75 = 120 + prm_552;
     p_at_m75(1) = gdata(p_at_m75) / 100;
     orgrank_at_m75 = gdata(p_at_m75);
@@ -1327,20 +1302,20 @@ void modrank(int prm_552, int prm_553, int prm_554)
         {
             txtef(8);
         }
-        s_at_m75 = u8" "s + orgrank_at_m75 / 100 + lang(u8"位 → "s, u8" -> "s)
-            + gdata(p_at_m75) / 100 + lang(u8"位 "s, ""s);
-        txt(lang(u8"ランク変動"s, u8"Ranking Change "s) + u8"("s
-            + rankn(10, prm_552) + s_at_m75 + u8") "s + lang(u8"《"s, u8"<"s)
-            + ranktitle(prm_552) + lang(u8"》"s, u8">"s));
+        const auto from = orgrank_at_m75 / 100;
+        const auto to = gdata(p_at_m75) / 100;
+        txt(i18n::s.get(
+            "core.locale.misc.ranking.changed",
+            rankn(10, prm_552),
+            from,
+            to,
+            ranktitle(prm_552)));
     }
     else if (i_at_m75 > 0)
     {
         txtef(2);
-        txt(lang(
-            u8"着実に次のランクに近づいている。"s,
-            u8"You are one step closer to the next rank."s));
+        txt(i18n::s.get("core.locale.misc.ranking.closer_to_next_rank"));
     }
-    return;
 }
 
 
@@ -1812,11 +1787,8 @@ void make_sound(
                     cdata[cnt].sleep = 0;
                     if (is_in_fov(cdata[cnt]))
                     {
-                        txt(lang(
-                            name(cnt) + u8"は物音に気付き目を覚ました。"s,
-                            name(cnt) + u8" notice"s + _s(cnt)
-                                + u8" the sound and wake"s + _s(cnt)
-                                + u8" up."s));
+                        txt(i18n::s.get(
+                            "core.locale.misc.sound.waken", cdata[cnt]));
                     }
                     cdata[cnt].emotion_icon = 221;
                     if (prm_781)
@@ -1826,13 +1798,12 @@ void make_sound(
                             if (is_in_fov(cdata[cnt]))
                             {
                                 txtef(9);
-                                txt(lang(
-                                    name(cnt) + u8"はキレた。"s,
-                                    name(cnt)
-                                        + u8" can no longer put up with it."s));
-                                txt(lang(
-                                    u8"「もう我慢できない」"s,
-                                    u8"\"That's it.\""s));
+                                txt(i18n::s.get(
+                                    "core.locale.misc.sound.get_anger",
+                                    cdata[cnt]));
+                                txt(
+                                    i18n::s.get("core.locale.misc.sound.can_no_"
+                                                "longer_stand"));
                             }
                             turn_aggro(cnt, prm_782, 80);
                         }
@@ -1841,7 +1812,6 @@ void make_sound(
             }
         }
     }
-    return;
 }
 
 
@@ -1859,9 +1829,8 @@ void hostileaction(int prm_787, int prm_788)
     if (cdata[prm_788].relationship == 10)
     {
         txtef(8);
-        txt(lang(
-            name(prm_788) + u8"は嫌な顔をした。"s,
-            name(prm_788) + u8" glares at you."s));
+        txt(i18n::s.get(
+            "core.locale.misc.hostile_action.glares_at_you", cdata[prm_788]));
     }
     else
     {
@@ -1874,18 +1843,18 @@ void hostileaction(int prm_787, int prm_788)
             if (gdata_released_fire_giant == 0)
             {
                 txtef(8);
-                txt(lang(
-                    name(prm_788) + u8"は嫌な顔をした。"s,
-                    name(prm_788) + u8" glares at you."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.hostile_action.glares_at_you",
+                    cdata[prm_788]));
                 return;
             }
         }
         if (cdata[prm_788].relationship > -2)
         {
             txtef(8);
-            txt(lang(
-                name(prm_788) + u8"は嫌な顔をした。"s,
-                name(prm_788) + u8" glares at you."s));
+            txt(i18n::s.get(
+                "core.locale.misc.hostile_action.glares_at_you",
+                cdata[prm_788]));
             cdata[prm_788].relationship = -2;
         }
         else
@@ -1893,9 +1862,9 @@ void hostileaction(int prm_787, int prm_788)
             if (cdata[prm_788].relationship != -3)
             {
                 txtef(8);
-                txt(lang(
-                    name(prm_788) + u8"は激怒した。"s,
-                    name(prm_788) + u8" gets furious!"s));
+                txt(i18n::s.get(
+                    "core.locale.misc.hostile_action.gets_furious",
+                    cdata[prm_788]));
             }
             cdata[prm_788].relationship = -3;
             cdata[prm_788].hate = 80;
@@ -1908,7 +1877,7 @@ void hostileaction(int prm_787, int prm_788)
         if (rnd(50) == 0)
         {
             txtef(3);
-            txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
+            txt(i18n::s.get("core.locale.misc.hostile_action.get_excited"));
             for (auto&& cnt : cdata.all())
             {
                 if (cnt.is_livestock() == 1)
@@ -1970,7 +1939,6 @@ void incognitobegin()
             }
         }
     }
-    return;
 }
 
 
@@ -1993,7 +1961,6 @@ void incognitoend()
             }
         }
     }
-    return;
 }
 
 
@@ -2348,15 +2315,15 @@ std::string cnveqweight(int cc)
     int id = chara_armor_class(cdata[cc]);
     if (id == 169)
     {
-        return lang(u8"(重装備)"s, u8"(Heavy)"s);
+        return i18n::s.get("core.locale.item.armor_class.heavy");
     }
     else if (id == 170)
     {
-        return lang(u8"(中装備)"s, u8"(Medium)"s);
+        return i18n::s.get("core.locale.item.armor_class.medium");
     }
     else
     {
-        return lang(u8"(軽装備)"s, u8"(Light)"s);
+        return i18n::s.get("core.locale.item.armor_class.light");
     }
 }
 
@@ -2406,15 +2373,10 @@ void wet(int cc, int turns)
     cdata[cc].wet += turns;
     if (is_in_fov(cdata[cc]))
     {
-        txt(lang(
-            name(cc) + u8"は濡れた。"s,
-            name(cc) + u8" get"s + _s(cc) + u8" wet."s));
+        txt(i18n::s.get("core.locale.misc.wet.gets_wet", cdata[cc]));
         if (cdata[cc].is_invisible())
         {
-            txt(lang(
-                name(cc) + u8"の姿があらわになった。"s,
-                name(cc) + u8" "s + is(cc) + u8" revealed "s + his(cc)
-                    + u8" shape."s));
+            txt(i18n::s.get("core.locale.misc.wet.is_revealed", cdata[cc]));
         }
     }
 }
@@ -2484,9 +2446,8 @@ int try_to_cast_spell()
     {
         if (is_in_fov(cdata[cc]))
         {
-            txt(lang(
-                name(cc) + u8"はマナを吸い取られた！"s,
-                name(cc) + your(cc) + u8" mana is absorbed."s));
+            txt(i18n::s.get(
+                "core.locale.misc.fail_to_cast.mana_is_absorbed", cdata[cc]));
         }
         if (cc == 0)
         {
@@ -2504,13 +2465,13 @@ int try_to_cast_spell()
         {
             if (cdata[cc].confused != 0)
             {
-                txt(lang(
-                    name(cc) + u8"は余計に混乱した。"s,
-                    name(cc) + u8" "s + is(cc) + u8" confused more."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.fail_to_cast.is_confused_more",
+                    cdata[cc]));
             }
             else
             {
-                txt(lang(u8"難解だ！"s, u8"It's too difficult!"s));
+                txt(i18n::s.get("core.locale.misc.fail_to_cast.too_difficult"));
             }
         }
         dmgcon(cc, status_ailment_t::confused, 100);
@@ -2520,9 +2481,8 @@ int try_to_cast_spell()
     {
         if (is_in_fov(cdata[cc]))
         {
-            txt(lang(
-                u8"魔力の渦が何かを召喚した！"s,
-                u8"Several creatures are summoned from a vortex of magic."s));
+            txt(i18n::s.get(
+                "core.locale.misc.fail_to_cast.creatures_are_summoned"));
         }
         for (int cnt = 0, cnt_end = (2 + rnd(3)); cnt < cnt_end; ++cnt)
         {
@@ -2542,9 +2502,8 @@ int try_to_cast_spell()
     }
     if (is_in_fov(cdata[cc]))
     {
-        txt(lang(
-            name(cc) + u8"は奇妙な力に捻じ曲げられた！"s,
-            u8"A dimension door opens in front of you."s));
+        txt(i18n::s.get(
+            "core.locale.misc.fail_to_cast.dimension_door_opens", cdata[cc]));
     }
     tc = cc;
     efid = 408;
@@ -2680,7 +2639,7 @@ void proc_turn_end(int cc)
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
+                txt(i18n::s.get("core.locale.misc.status_ailment.choked"));
             }
         }
         ++cdata[cc].choked;
@@ -2697,10 +2656,9 @@ void proc_turn_end(int cc)
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    name(cc) + u8"は重力から抜け出した。"s,
-                    name(cc) + u8" break"s + _s(cc)
-                        + u8" away from gravity."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.status_ailment.breaks_away_from_gravity",
+                    cdata[cc]));
             }
         }
     }
@@ -2711,9 +2669,8 @@ void proc_turn_end(int cc)
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    name(cc) + u8"はやや落ち着いた。"s,
-                    name(cc) + u8" calm"s + _s(cc) + u8" down."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.status_ailment.calms_down", cdata[cc]));
             }
         }
     }
@@ -2818,72 +2775,8 @@ void proc_turn_end(int cc)
             if (rnd(3) == 0)
             {
                 txtef(9);
-                if (jp)
-                {
-                    r2 = rnd(5);
-                    if (r2 == 0)
-                    {
-                        txt(name(cc) + u8"「キョキョキョ」"s,
-                            name(cc) + u8"「クワッ」"s,
-                            name(cc) + u8"「シャアァァ」"s,
-                            name(cc) + u8"「ばぶっふ！」"s,
-                            name(cc) + u8"「煮殺せ！」"s,
-                            name(cc) + u8"「許しなさい許しなさい！！」"s);
-                    }
-                    if (r2 == 1)
-                    {
-                        txt(name(cc) + u8"「フゥハハハー！」"s,
-                            name(cc) + u8"「あ、あ、あ、あ」"s,
-                            name(cc) + u8"「ぴ…ぴ…ぴか…」"s,
-                            name(cc) + u8"「お兄ちゃん！」"s,
-                            name(cc) + u8"「うみみやぁ」"s);
-                    }
-                    if (r2 == 2)
-                    {
-                        txt(name(cc) + u8"は突然踊りだした。"s,
-                            name(cc) + u8"は着ていたものを脱ぎだした。"s,
-                            name(cc) + u8"はぐるぐる回りだした。"s,
-                            name(cc) + u8"は奇声を発した。"s,
-                            name(cc) + u8"「ねうねう♪ねうねう♪」"s);
-                    }
-                    if (r2 == 3)
-                    {
-                        txt(name(cc) + u8"「ウージッムシ♪ウージッムシ♪」"s,
-                            name(cc) + u8"「じゃあ殺さなきゃ。うん♪」"s,
-                            name(cc) + u8"「このナメクジがっ」"s,
-                            name(cc) + u8"「おすわり！」"s,
-                            name(cc) +
-                                u8"「フーーーーン フーーーーン･･･ フーーーンフ」"s);
-                    }
-                    if (r2 == 4)
-                    {
-                        txt(name(cc) + u8"「このかたつむり野郎がっ」"s,
-                            name(cc) + u8"「うにゅみゅあ！」"s,
-                            name(cc) + u8"「ごめんなさいごめんなさい！」"s,
-                            name(cc) + u8"「もうすぐ生まれるよ♪」"s,
-                            name(cc) + u8"「フーーーーン フー…クワッ！」"s);
-                    }
-                }
-                else
-                {
-                    r2 = rnd(2);
-                    if (r2 == 0)
-                    {
-                        txt(name(cc) + u8" start"s + _s(cc) + u8" to take "s
-                                + his(cc) + u8" cloths off."s,
-                            name(cc) + u8" shout"s + _s(cc) + u8"."s,
-                            name(cc) + u8" dance"s + _s(cc) + u8"."s);
-                    }
-                    if (r2 == 1)
-                    {
-                        txt(u8"\"Weeeeeee!\""s,
-                            u8"\"Forgive me! Forgive me!\""s,
-                            u8"\"P-P-Pika!\""s,
-                            u8"\"Shhhhhh!\""s,
-                            u8"\"So I have to kill.\""s,
-                            u8"\"You snail!\""s);
-                    }
-                }
+                txt(i18n::s.get(
+                    "core.locale.misc.status_ailment.insane", cdata[cc]));
             }
         }
         if (rnd(5) == 0)
@@ -2938,9 +2831,7 @@ void proc_turn_end(int cc)
             }
             if (gdata_play_turns % 100 == 0)
             {
-                txt(lang(
-                    u8"あなたは眠りを必要としている。"s,
-                    u8"You need to sleep."s));
+                txt(i18n::s.get("core.locale.misc.status_ailment.sleepy"));
             }
             if (rnd(2))
             {
@@ -3042,11 +2933,7 @@ void revive_character()
     cdata[rc].current_map = 0;
     snd(64);
     txtef(5);
-    txt(cnven(cdatan(0, rc))
-        + lang(
-              u8"は復活した！"s,
-              (u8" "s + have(rc) + u8" been resurrected!"s)));
-    return;
+    txt(i18n::s.get("core.locale.misc.resurrect", cdatan(0, rc), cdata[rc]));
 }
 
 
@@ -3055,7 +2942,6 @@ void do_chara_revival()
 {
     chara_set_revived_status();
     chara_clear_status_effects();
-    return;
 }
 
 
@@ -3063,7 +2949,6 @@ void do_chara_revival()
 void chara_clear_status_effects_b()
 {
     chara_clear_status_effects();
-    return;
 }
 
 
@@ -3246,9 +3131,8 @@ int convertartifact(int prm_930, int prm_931)
         }
     }
 
-    txt(lang(
-        n_at_m163 + u8"は"s + itemname(ci) + u8"に形を変えた。"s,
-        n_at_m163 + u8" turns its shape into "s + itemname(ci) + u8"."s));
+    txt(i18n::s.get(
+        "core.locale.misc.artifact_regeneration", n_at_m163, inv[ci]));
     return prm_930;
 }
 
@@ -3487,26 +3371,6 @@ void initialize_set_of_random_generation()
     giftvalue(3) = 50;
     giftvalue(4) = 75;
     giftvalue(5) = 100;
-    giftn(0) = lang(u8"つまらない"s, u8"cheap"s);
-    giftn(1) = lang(u8"普通の"s, u8"so so"s);
-    giftn(2) = lang(u8"ちょっとドキドキする"s, u8"exciting"s);
-    giftn(3) = lang(u8"高価な"s, u8"expensive"s);
-    giftn(4) = lang(u8"気絶しそうなほど素晴らしい"s, u8"hot and gorgeous"s);
-    giftn(5) = lang(u8"王様が羨むほどの"s, u8"crazy epic"s);
-    giftn(6) = u8"bug"s;
-    moneyboxn(0) = lang(u8"5百金貨"s, u8"500 GP"s);
-    moneyboxn(1) = lang(u8"2千金貨"s, u8"2k GP"s);
-    moneyboxn(2) = lang(u8"1万金貨"s, u8"10K GP"s);
-    moneyboxn(3) = lang(u8"5万金貨"s, u8"50K GP"s);
-    moneyboxn(4) = lang(u8"50万金貨"s, u8"500K GP"s);
-    moneyboxn(5) = lang(u8"500万金貨"s, u8"5M GP"s);
-    moneyboxn(6) = lang(u8"1億金貨"s, u8"500M GP"s);
-    biten(0) = lang(u8"ミジンコ"s, u8"water flea"s);
-    biten(1) = lang(u8"バッタ"s, u8"grasshopper"s);
-    biten(2) = lang(u8"テントウ"s, u8"ladybug"s);
-    biten(3) = lang(u8"トンボ"s, u8"dragonfly"s);
-    biten(4) = lang(u8"セミ"s, u8"locust"s);
-    biten(5) = lang(u8"ヘラクレス"s, u8"beetle"s);
     notesel(buff);
     {
         buff(0).clear();
@@ -3534,22 +3398,6 @@ void initialize_set_of_random_generation()
             ++p;
         }
     }
-    magebookn(0) = lang(u8"ヴォイニッチ写本"s, u8"Voynich Manuscript"s);
-    magebookn(1) = lang(u8"ドール賛歌"s, u8"Dhol Chants"s);
-    magebookn(2) = lang(u8"ポナペ教教典"s, u8"Ponape Scripture"s);
-    magebookn(3) = lang(u8"グラーキ黙示録"s, u8"Revelations of Glaaki"s);
-    magebookn(4) = lang(u8"グ＝ハーン断章"s, u8"G'harne Fragments"s);
-    magebookn(5) = lang(u8"断罪の書"s, u8"Liber Damnatus"s);
-    magebookn(6) = lang(u8"ドジアンの書"s, u8"Book of Dzyan"s);
-    magebookn(7) = lang(u8"エイボンの書"s, u8"Book of Eibon"s);
-    magebookn(8) = lang(u8"大いなる教書"s, u8"Grand Grimoire"s);
-    magebookn(9) = lang(u8"セラエノ断章"s, u8"Celaeno Fragments"s);
-    magebookn(10) = lang(u8"ネクロノミコン"s, u8"Necronomicon"s);
-    magebookn(11) = lang(u8"ルルイエ異本"s, u8"The R'lyeh Text"s);
-    magebookn(12) = lang(u8"エルトダウン・シャールズ"s, u8"Eltdown Shards"s);
-    magebookn(13) = lang(u8"金枝篇"s, u8"The Golden Bough"s);
-    magebookn(14) = lang(u8"終焉の書"s, u8"Apocalypse"s);
-    return;
 }
 
 
@@ -3807,11 +3655,10 @@ void character_drops_item()
                         if (rnd(3))
                         {
                             txtef(9);
-                            txt(lang(
-                                name(catitem) + u8"は"s + itemname(ci)
-                                    + u8"をぺろぺろと舐めた。"s,
-                                name(catitem) + " licks " + itemname(ci)
-                                    + "."));
+                            txt(i18n::s.get(
+                                "core.locale.misc.black_cat_licks",
+                                cdata[catitem],
+                                inv[ci]));
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
                             enchantment_add(
@@ -4536,12 +4383,10 @@ void food_gets_rotten()
                                         {
                                             continue;
                                         }
-                                        txt(lang(
-                                            itemname(cnt)
-                                                + u8"は上手い具合に干された。"s,
-                                            itemname(cnt)
-                                                + is2(inv[cnt].number())
-                                                + u8" dried up in the sun."s));
+                                        txt(i18n::s.get(
+                                            "core.locale.misc.corpse_is_dried_"
+                                            "up",
+                                            inv[cnt]));
                                         inv[cnt].param3 = gdata_hour
                                             + gdata_day * 24
                                             + gdata_month * 24 * 30
@@ -4561,10 +4406,9 @@ void food_gets_rotten()
                             {
                                 if (p < 16)
                                 {
-                                    txt(lang(
-                                        itemname(cnt) + u8"は腐った。"s,
-                                        itemname(cnt) + u8" rot"s
-                                            + _s2(inv[cnt].number()) + u8"."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.misc.get_rotten",
+                                        inv[cnt]));
                                 }
                             }
                             inv[cnt].param3 = -1;
@@ -4581,11 +4425,9 @@ void food_gets_rotten()
                                     i = the_item_db[inv[cnt].id]->subcategory;
                                     if (rnd(3) == 0)
                                     {
-                                        txt(lang(
-                                            u8"あなたは"s + itemname(cnt)
-                                                + u8"から種を取り出した。"s,
-                                            u8"You extract plant seeds from "s
-                                                + itemname(cnt) + u8"."s));
+                                        txt(i18n::s.get(
+                                            "core.locale.misc.extract_seed",
+                                            inv[cnt]));
                                         p = rnd(inv[cnt].number()) + 1;
                                         inv[cnt].modify_number(
                                             (-inv[cnt].number()));
@@ -4605,7 +4447,6 @@ void food_gets_rotten()
             }
         }
     }
-    return;
 }
 
 
@@ -4643,16 +4484,12 @@ void damage_by_cursed_equipments()
             if (is_in_fov(cdata[cc]))
             {
                 txtef(8);
-                txt(lang(
-                    u8"悪意のある手が"s + name(cc)
-                        + u8"の財布から金貨を抜き去った。"s,
-                    u8"A malicious hand filches some gold pieces from "s
-                        + name(cc) + your(cc) + u8" wallet."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.curse.gold_stolen", cdata[cc]));
             }
             return;
         }
     }
-    return;
 }
 
 
@@ -4663,16 +4500,9 @@ void proc_pregnant()
     {
         if (is_in_fov(cdata[cc]))
         {
-            txt(lang(
-                name(cc) + u8"は不安げに腹を押さえた。"s,
-                name(cc) + u8" pat"s + _s(cc) + u8" "s + his(cc)
-                    + u8" stomach uneasily."s));
-            txt(lang(
-                    u8"「なにかが産まれそうだよ！」"s,
-                    u8"\"I'm going to have a baby!\""s),
-                lang(
-                    u8"「腹になにかが…」"s,
-                    u8"\"Something is wrong with my stomach...\""s));
+            txt(i18n::s.get(
+                "core.locale.misc.pregnant.pats_stomach", cdata[cc]));
+            txt(i18n::s.get("core.locale.misc.pregnant.something_is_wrong"));
         }
     }
     if (mdata_map_type != mdata_t::map_type_t::world_map)
@@ -4681,10 +4511,9 @@ void proc_pregnant()
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    u8"何かが"s + name(cc) + u8"の腹を破り飛び出した！"s,
-                    u8"Something splits "s + name(cc) + your(cc)
-                        + u8" body and breaks out!"s));
+                txt(i18n::s.get(
+                    "core.locale.misc.pregnant.something_breaks_out",
+                    cdata[cc]));
             }
             cdata[cc].bleeding += 15;
             flt();
@@ -4712,7 +4541,6 @@ void proc_pregnant()
             }
         }
     }
-    return;
 }
 
 
@@ -4756,10 +4584,8 @@ void proc_negative_equipments()
                     if (is_in_fov(cdata[cc]))
                     {
                         txtef(8);
-                        txt(lang(
-                            u8"何かが"s + name(cc) + u8"の血を吸った。"s,
-                            u8"Something sucks "s + name(cc) + your(cc)
-                                + u8" blood."s));
+                        txt(i18n::s.get(
+                            "core.locale.misc.curse.blood_sucked", cdata[cc]));
                     }
                     cdata[cc].bleeding +=
                         std::abs(inv[ci].enchantments[cnt].power) / 25 + 3;
@@ -4773,10 +4599,9 @@ void proc_negative_equipments()
                     if (is_in_fov(cdata[cc]))
                     {
                         txtef(8);
-                        txt(lang(
-                            name(cc) + u8"は未熟になった。"s,
-                            name(cc) + u8" become"s + _s(cc)
-                                + u8" inexperienced."s));
+                        txt(i18n::s.get(
+                            "core.locale.misc.curse.experience_reduced",
+                            cdata[cc]));
                     }
                     cdata[cc].experience -= cdata[cc].required_experience
                             / (300
@@ -4809,9 +4634,9 @@ void proc_negative_equipments()
                             if (is_in_fov(cdata[cc]))
                             {
                                 txtef(8);
-                                txt(lang(
-                                    u8"魔力の渦が何かを召喚した！"s,
-                                    u8"Several creatures are summoned from a vortex of magic."s));
+                                txt(
+                                    i18n::s.get("core.locale.misc.curse."
+                                                "creature_summoned"));
                             }
                             for (int cnt = 0, cnt_end = (1 + rnd(3));
                                  cnt < cnt_end;
@@ -4832,7 +4657,6 @@ void proc_negative_equipments()
             }
         }
     }
-    return;
 }
 
 
@@ -4867,11 +4691,10 @@ void auto_identify()
             itemmemory(0, inv[ci].id) = 1;
             if (!config::instance().hideautoidentify)
             {
-                txt(lang(
-                    u8"バックパックの中の"s + s + u8"は"s + itemname(ci)
-                        + u8"だと判明した。"s,
-                    u8"You appraise "s + s + u8" as "s + itemname(ci)
-                        + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.identify.fully_identified",
+                    s(0),
+                    inv[ci]));
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
@@ -4882,16 +4705,11 @@ void auto_identify()
             {
                 if (!config::instance().hideautoidentify)
                 {
-                    txt(lang(
-                        u8"バックパックの中の"s + itemname(ci) + u8"は"s
-                            + i18n::_(
-                                  u8"ui", u8"quality", u8"_"s + inv[ci].quality)
-                            + u8"だという感じがする。"s,
-                        u8"You sense the quality of "s + itemname(ci)
-                            + u8" is "s
-                            + i18n::_(
-                                  u8"ui", u8"quality", u8"_"s + inv[ci].quality)
-                            + u8"."s));
+                    txt(i18n::s.get(
+                        "core.locale.misc.identify.almost_identified",
+                        inv[ci],
+                        i18n::_(
+                            u8"ui", u8"quality", u8"_"s + inv[ci].quality)));
                 }
                 item_identify(
                     inv[ci], identification_state_t::almost_identified);
@@ -4899,7 +4717,6 @@ void auto_identify()
             }
         }
     }
-    return;
 }
 
 
@@ -4912,7 +4729,7 @@ void lovemiracle(int prm_932)
     }
     cibk = ci;
     txtef(9);
-    txt(lang(u8"「あ…！」"s, u8"\"Uh...!\""s));
+    txt(i18n::s.get("core.locale.misc.love_miracle.uh"));
     flt();
     if (rnd(2))
     {
@@ -4940,7 +4757,6 @@ void lovemiracle(int prm_932)
     ci = cibk;
     snd(107);
     animeload(15, prm_932);
-    return;
 }
 
 
@@ -4951,23 +4767,17 @@ void get_pregnant()
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                u8"しかしすぐに吐き出した。"s,
-                u8"But "s + he(tc) + u8" puke"s + _s(tc)
-                    + u8" it out quickly."s));
+            txt(i18n::s.get("core.locale.misc.pregnant.pukes_out", cdata[tc]));
         }
         return;
     }
     if (cdata[tc].is_pregnant() == 0)
     {
         txtef(5);
-        txt(lang(
-            name(tc) + u8"は寄生された。"s,
-            name(tc) + u8" get"s + _s(tc) + u8" pregnant."s));
+        txt(i18n::s.get("core.locale.misc.pregnant.gets_pregnant", cdata[tc]));
         animeload(8, tc);
         cdata[tc].is_pregnant() = true;
     }
-    return;
 }
 
 
@@ -5027,7 +4837,6 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    return;
 }
 
 
@@ -5115,8 +4924,7 @@ turn_result_t exit_map()
         f = 0;
         if (feat(1) == 11)
         {
-            msgtemp +=
-                lang(u8"階段を降りた。"s, u8"You walk down the stairs. "s);
+            msgtemp += i18n::s.get("core.locale.misc.walk_down_stairs");
             f = 1;
             gdata_entrance_type = 1;
             mdata_map_stair_down_pos =
@@ -5134,7 +4942,7 @@ turn_result_t exit_map()
         }
         if (feat(1) == 10)
         {
-            msgtemp += lang(u8"階段を昇った。"s, u8"You walk up the stairs. "s);
+            msgtemp += i18n::s.get("core.locale.misc.walk_up_stairs");
             f = 1;
             gdata_entrance_type = 2;
             mdata_map_stair_up_pos =
@@ -6976,11 +6784,10 @@ void map_proc_special_events()
                 quest_update_journal_msg();
                 gdata_kamikaze_attack = 3;
                 txtef(9);
-                txt(lang(
-                    u8"伝令「パルミア軍の撤退が完了しました！これ以上ここに留まる必要はありません。機を見て地下から退却してください！」"s,
-                    u8"The messenger "s
-                        + u8"\"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""s));
-                txt(lang(u8"階段が現れた。"s, u8"Suddenly, stairs appear."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.quest.kamikaze_attack.message"));
+                txt(i18n::s.get(
+                    "core.locale.misc.quest.kamikaze_attack.stairs_appear"));
                 cell_featset(18, 9, tile_downstairs, 11, 1);
             }
             flt();
@@ -6996,8 +6803,7 @@ void map_proc_special_events()
         {
             if (cdata.player().karma < -30)
             {
-                txt(lang(
-                    u8"あなたは罪を悔いた。"s, u8"You repent of your sin."s));
+                txt(i18n::s.get("core.locale.misc.map.jail.repent_of_sin"));
                 modify_karma(cdata.player(), 1);
                 p = rnd(8) + 10;
                 if (sdata.get(p, 0).original_level >= 10)
@@ -7013,15 +6819,11 @@ void map_proc_special_events()
                 cell_featread(29, 6);
                 if (feat(1) == 21)
                 {
-                    txt(lang(
-                        u8"あなたはガードの足音が近づいてくるのに気付いた。"s,
-                        u8"You hear footsteps coming towards your cell."s));
-                    txt(lang(
-                        u8"「そこのお前、もう反省したころだろう。出てもいいぞ」"s,
-                        u8"\"Hey punk, our boss says you can leave the jail now. Do not come back, okay?\""s));
-                    txt(lang(
-                        u8"ガードは面倒くさそうにあなたの牢の扉を開けた。"s,
-                        u8"A guard unenthusiastically unlocks your cell."s));
+                    txt(i18n::s.get(
+                        "core.locale.misc.map.jail.guard_approaches"));
+                    txt(i18n::s.get("core.locale.misc.map.jail.leave_here"));
+                    txt(i18n::s.get(
+                        "core.locale.misc.map.jail.unlocks_your_cell"));
                     cell_featset(29, 6, tile_dooropen, 20, 0, -1);
                     snd(48);
                 }
@@ -7037,9 +6839,8 @@ void map_proc_special_events()
                 if (cdata.player().has_anorexia() == 0)
                 {
                     snd(18);
-                    txt(lang(
-                        u8"シェルターの貯蔵食品を食べた。"s,
-                        u8"You eat stored food."s));
+                    txt(i18n::s.get(
+                        "core.locale.misc.map.shelter.eat_stored_food"));
                     cdata[cc].nutrition += 5000;
                     show_eating_message();
                 }
@@ -7057,9 +6858,8 @@ void map_proc_special_events()
             {
                 cnt.turn_cost = 0;
             }
-            txt(lang(
-                u8"もうシェルターの中にいる必要は無い。"s,
-                u8"You don't need to stay in the shelter any longer."s));
+            txt(i18n::s.get(
+                "core.locale.misc.map.shelter.no_longer_need_to_stay"));
         }
     }
     if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum)
@@ -7069,31 +6869,12 @@ void map_proc_special_events()
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txt(lang(u8" *ざわざわ* "s, u8"*noise*"s),
-                    lang(u8"「ふむ…悪くないな」"s, u8"\"Hmm. Not bad.\""s),
-                    lang(u8"「何だろう、これは」"s, u8"\"What's this?\""s),
-                    lang(u8"「ほほう…」"s, u8"\"Ohh...\""s),
-                    lang(
-                        u8"「私も死んだらはく製に…」"s,
-                        u8"\"I want to be stuffed...\""s),
-                    lang(
-                        u8"「ここが噂の…」"s,
-                        u8"\"So this is the famous...\""s));
+                txt(i18n::s.get("core.locale.misc.map.museum.chats"));
             }
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txt(lang(u8" *がやがや* "s, u8"*murmur*"s),
-                    lang(
-                        u8"「やだっ気持ち悪い」"s, u8"\"Gross! Disgusting.\""s),
-                    lang(
-                        u8"「ねーねーこれ死んでるんでしょ？」"s,
-                        u8"\"Hey. Is it really dead?\""s),
-                    lang(u8"「かわ、いー♪」"s, u8"\"Scut!\""s),
-                    lang(
-                        u8"「今日はとことん見るぜ」"s,
-                        u8"\"Absolutely amazing.\""s),
-                    lang(u8"「触ってもいいの？」"s, u8"\"Can I touch?\""s));
+                txt(i18n::s.get("core.locale.misc.map.museum.chats2"));
             }
             if (rnd(15) == 0)
             {
@@ -7152,21 +6933,11 @@ void map_proc_special_events()
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txt(lang(u8" *ざわざわ* "s, u8"*murmur*"s),
-                    lang(
-                        u8"「これ欲しい〜」"s,
-                        u8"\"I want this! I want this!\""s),
-                    lang(u8"「何だろう、これは」"s, u8"\"Oh what's this?\""s),
-                    lang(u8"「お買い物♪」"s, u8"\"I'm just watching\""s),
-                    lang(u8"「金が足りん…」"s, u8"\"My wallet is empty...\""s),
-                    lang(
-                        u8"「ここが噂の…」"s,
-                        u8"\"So this is the famous....\""s));
+                txt(i18n::s.get("core.locale.misc.map.shop.chats"));
             }
             return;
         }
     }
-    return;
 }
 
 
@@ -7739,20 +7510,22 @@ void supply_income()
         flt();
         itemcreate(-1, 54, -1, -1, p);
     }
-    s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
-    if (income(1) != 0)
-    {
-        s += lang(
-            u8"と"s + income(1) + u8"個のアイテム"s,
-            u8" and "s + income(1) + u8" items"s);
-    }
     if (income != 0 || income(1) != 0)
     {
         snd(24);
         txtef(5);
-        txt(lang(
-            s + u8"が給料として振り込まれた。"s,
-            u8"As a salary, "s + s + u8" have been sent to your house."s));
+        if (income(1) == 0)
+        {
+            txt(i18n::s.get(
+                "core.locale.misc.income.sent_to_your_house", income(0)));
+        }
+        else
+        {
+            txt(i18n::s.get(
+                "core.locale.misc.income.sent_to_your_house2",
+                income(0),
+                income(1)));
+        }
         autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
     }
     if (gdata_day == 1)
@@ -7780,9 +7553,7 @@ void supply_income()
             inv[ci].subname = inv[ci].subname * (100 + rnd(20)) / 100;
             mode = 0;
             ++gdata_left_bill;
-            txt(lang(
-                u8"請求書が送られてきた。"s,
-                u8"A bill has been sent to your house."s));
+            txt(i18n::s.get("core.locale.misc.tax.bill"));
             if (gdata_left_bill > 1)
             {
                 if (gdata_left_bill <= 4)
@@ -7790,47 +7561,37 @@ void supply_income()
                     txtef(3);
                     if (gdata_left_bill > 3)
                     {
-                        s(0) = lang(u8"警告！！"s, u8"Warning!! "s);
-                        s(1) = lang(
-                            u8"早急にパルミア大使館まで行き、税金を納めなければならない。"s,
-                            u8"You have to go to the Embassy of Palmia and pay tax at once. "s);
+                        s(0) = i18n::s.get("core.locale.misc.tax.warning");
+                        s(1) = i18n::s.get(
+                            "core.locale.misc.tax.have_to_go_embassy");
                     }
                     else
                     {
-                        s(0) = lang(u8"注意！"s, u8"Caution! "s);
+                        s(0) = i18n::s.get("core.locale.misc.tax.caution");
                         s(1) = "";
                     }
                     txt(s
-                        + lang(
-                              (u8"税金を"s + (gdata_left_bill - 1)
-                               + u8"ヶ月分滞納している。"s),
-                              (u8"You are in arrears with your tax for "s
-                               + (gdata_left_bill - 1) + u8" months."s))
+                        + i18n::s.get(
+                              "core.locale.misc.tax.left_bills",
+                              gdata_left_bill - 1)
                         + s(1));
                 }
             }
             if (gdata_left_bill > 4)
             {
                 txtef(3);
-                txt(lang(
-                    u8"あなたは税金を"s + (gdata_left_bill - 1)
-                        + u8"ヶ月滞納した罪で訴えられた。"s,
-                    u8"You have been accused for being in arrears with your tax for"s
-                        + (gdata_left_bill - 1) + u8" months."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.tax.accused", gdata_left_bill - 1));
                 int stat = decfame(0, 50);
                 p = stat;
                 txtef(3);
-                txt(lang(
-                    u8"名声値を"s + p + u8"失った。"s,
-                    u8"You lose "s + p + u8" fame."s));
+                txt(i18n::s.get("core.locale.misc.tax.lose_fame", p(0)));
                 modify_karma(cdata.player(), -30 * 2);
             }
         }
         else
         {
-            txt(lang(
-                u8"レベルが6に達していないので納税の義務はない。"s,
-                u8"You don't have to pay tax until you hit level 6."s));
+            txt(i18n::s.get("core.locale.misc.tax.no_duty"));
         }
     }
     ctrl_file(
@@ -7883,7 +7644,7 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
                 }
                 if (p_at_m185(1) != 0)
                 {
-                    rtvaln += lang(u8"と"s, u8" and "s);
+                    rtvaln += i18n::s.get("core.locale.misc.and");
                 }
                 rtvaln += itemname(i_at_m185(cnt));
                 ++p_at_m185(1);
@@ -8153,15 +7914,11 @@ label_19431_internal:
     }
     if (comctrl == 0 || comctrl == 2)
     {
-        txt(lang(
-            u8"どのルームを訪問する？ "s,
-            u8"Which room do you want to visit? "s));
+        txt(i18n::s.get("core.locale.misc.custom.show_room.which_show_room"));
     }
     if (comctrl == 1)
     {
-        txt(lang(
-            u8"どのチームと対戦する？"s,
-            u8"Which team do you want to play a match? "s));
+        txt(i18n::s.get("core.locale.misc.custom.pet_team.which_team"));
     }
     windowshadow = 1;
 label_1944_internal:
@@ -8178,22 +7935,22 @@ label_1944_internal:
 label_1945_internal:
     if (comctrl == 0 || comctrl == 2)
     {
-        s = lang(u8"ルーム一覧"s, u8"Room List"s);
+        s = i18n::s.get("core.locale.misc.custom.show_room.list");
     }
     if (comctrl == 1)
     {
-        s = lang(u8"ペットチーム一覧"s, u8"Team List"s);
+        s = i18n::s.get("core.locale.misc.custom.pet_team.list");
     }
-    s(1) = lang(u8"BackSpace [削除]  "s, u8"BackSpace [Delete]  "s) + strhint2
-        + strhint3;
+    s(1) =
+        i18n::s.get("core.locale.misc.custom.key_hint") + strhint2 + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     if (comctrl == 0 || comctrl == 2)
     {
-        s = lang(u8"ルームの名称"s, u8"Name"s);
+        s = i18n::s.get("core.locale.misc.custom.show_room.name");
     }
     if (comctrl == 1)
     {
-        s = lang(u8"チームの名称"s, u8"Name"s);
+        s = i18n::s.get("core.locale.misc.custom.pet_team.name");
     }
     display_topic(s, wx + 28, wy + 36);
     display_topic(u8"Ver"s, wx + 534, wy + 36);
@@ -8242,9 +7999,7 @@ label_1945_internal:
         if (p == -999)
         {
             snd(27);
-            txt(lang(
-                u8"互換性のないバージョンのファイルです。"s,
-                u8"Selected item is incompatible."s));
+            txt(i18n::s.get("core.locale.misc.custom.incompatible"));
             goto label_1944_internal;
         }
         if (listn(1, p) == u8"net"s)
@@ -8261,9 +8016,8 @@ label_1945_internal:
             usermapid = list(1, p);
             if (stat == 0)
             {
-                txt(lang(
-                    u8"ファイルの取得に失敗した。"s,
-                    u8"Failed to retrieve designated files."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.custom.fail_to_retrieve_file"));
                 goto label_1944_internal;
             }
             userfile = u8"temp"s + s;
@@ -8299,9 +8053,8 @@ label_1945_internal:
                 {
                     goto label_1944_internal;
                 }
-                txt(lang(
-                    u8"本当に"s + userfile + u8"を削除する？ "s,
-                    u8"Do you really want to delete "s + userfile + u8"? "s));
+                txt(i18n::s.get(
+                    "core.locale.misc.custom.do_you_want_to_delete", userfile));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
@@ -8368,9 +8121,7 @@ int target_position()
         build_target_list();
         if (listmax == 0)
         {
-            txt(lang(
-                u8"視界内にターゲットは存在しない。"s,
-                u8"You look around and find nothing."s));
+            txt(i18n::s.get("core.locale.misc.no_target_around"));
         }
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
@@ -9171,9 +8922,7 @@ void try_to_return()
     int stat = quest_is_return_forbidden();
     if (stat == 1)
     {
-        txt(lang(
-            u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
-            u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
+        txt(i18n::s.get("core.locale.misc.return.forbidden"));
         ELONA_YES_NO_PROMPT();
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
@@ -9233,7 +8982,7 @@ void try_to_return()
             list(1, p) = adata(6, i);
             ELONA_APPEND_PROMPT(
                 mapname(i) + u8" "s + cnvrank((adata(6, i) - adata(17, i) + 1))
-                    + lang(u8"階"s, u8" Lv"s),
+                    + i18n::s.get("core.locale.misc.dungeon_level"),
                 u8"null"s,
                 ""s + promptmax);
             ++p;
@@ -9242,29 +8991,25 @@ void try_to_return()
     listmax = p;
     if (listmax == 0)
     {
-        txt(lang(
-            u8"この大陸には帰還できる場所が無い。"s,
-            u8"You don't know any location you can return to"s));
+        txt(i18n::s.get("core.locale.misc.return.no_location"));
         return;
     }
-    txt(lang(u8"どの場所に帰還する？"s, u8"Where do you want to go?"s));
+    txt(i18n::s.get("core.locale.misc.return.where_do_you_want_to_go"));
     display_msg(inf_screeny + inf_tiles);
     rtval = show_prompt(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
     {
-        txt(lang(
-            u8"周囲の大気がざわめきだした。"s,
-            u8"The air around you becomes charged."s));
+        txt(i18n::s.get("core.locale.misc.return.air_becomes_charged"));
         if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
                 if (adata(20, gdata_current_map) != -1)
                 {
-                    txt(lang(
-                        u8"このままダンジョンを出ると、この階のクエストは達成できない…"s,
-                        u8"The lord of the dungeon might disappear if you escape now."s));
+                    txt(
+                        i18n::s.get("core.locale.misc.return.lord_of_dungeon_"
+                                    "might_disappear"));
                 }
             }
         }
@@ -9273,7 +9018,6 @@ void try_to_return()
         gdata_is_returning_or_escaping = 15 + rnd(15);
     }
     update_screen();
-    return;
 }
 
 
@@ -9645,11 +9389,7 @@ void migrate_save_data(const fs::path& save_dir)
     int p3 = 0;
     if (gdata_version != 1220)
     {
-        dialog(lang(
-            u8"Ver."s + gdata_version
-                + u8"のセーブデータをアップデートします。"s,
-            u8"Updating your save data from Ver."s + gdata_version
-                + u8" now."s));
+        dialog(i18n::s.get("core.locale.misc.save.update", gdata_version));
     }
     if (gdata_rights_to_succeed_to < 0)
     {
@@ -9673,15 +9413,11 @@ void migrate_save_data(const fs::path& save_dir)
     {
         if (adata(0, gdata_current_map) != mdata_t::map_type_t::town)
         {
-            dialog(lang(
-                u8"アップデートを行うには、街中でセーブしたセーブデータが必要です。"s,
-                u8"To update your game, please save your game in a town in the previous version then retry."s));
+            dialog(i18n::s.get("core.locale.misc.save.need_to_save_in_town"));
             finish_elona();
             return;
         }
-        dialog(lang(
-            u8"次のプロセスの完了までには、しばらく時間がかかることがあります。"s,
-            u8"The next updating process may take a while to complete."s));
+        dialog(i18n::s.get("core.locale.misc.save.take_a_while"));
         memcpy(adata, 0, 300, adata, 0, 100, 8000);
         memcpy(adata, 0, 450, adata, 0, 150, 8000);
         for (int cnt = 100; cnt < 200; ++cnt)
@@ -10203,9 +9939,7 @@ void save_game()
     if (gdata_current_map == mdata_t::map_id_t::show_house)
     {
         txtef(3);
-        txt(lang(
-            u8"ユーザーマップの中ではセーブできない。"s,
-            u8"The game is not saved in a user map."s));
+        txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"));
         update_screen();
         return;
     }
@@ -10607,9 +10341,8 @@ label_21451_internal:
                     {
                         if (is_in_fov(cdata[cc]))
                         {
-                            txt(lang(
-                                u8"魔法の力がテレポートを防いだ。"s,
-                                u8"Magical field prevents teleportation."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.teleport.prevented"));
                         }
                         return;
                     }
@@ -10627,10 +10360,9 @@ label_21451_internal:
                             if (is_in_fov(cdata[cc]))
                             {
                                 snd(72);
-                                txt(lang(
-                                    name(cc) + u8"は突然消えた。"s,
-                                    u8"Suddenly, "s + name(cc) + u8" disappear"s
-                                        + _s(cc) + u8"."s));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.disappears",
+                                    cdata[cc]));
                             }
                             rowactend(cc);
                             update_screen();
@@ -10720,7 +10452,6 @@ void draw_sleep_background_frame()
         redraw();
     }
     screenupdate = 0;
-    return;
 }
 
 
@@ -11016,10 +10747,8 @@ void map_global_proc_travel_events()
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
-                    name(cc) + u8" "s + have(cc) + u8" finished eating "s
-                        + itemname(ci, 1) + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.misc.finished_eating", cdata[cc], inv[ci]));
             }
             continuous_action_eating_finish();
         }
@@ -11336,10 +11065,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
             {
                 if (is_in_fov(cdata[prm_1077]))
                 {
-                    txt(lang(
-                        name(prm_1077) + u8"は巻き込みを免れた。"s,
-                        u8"The spell passes through "s + name(prm_1077)
-                            + u8"."s));
+                    txt(i18n::s.get("core.locale.misc.spell_passes_through"));
                 }
                 chara_gain_skill_exp(cdata[prm_1076], 188, 8, 4);
                 return 1;
@@ -12009,10 +11735,7 @@ int do_magic_attempt()
             {
                 if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"は頭を振った。"s,
-                        name(cc) + u8" shake"s + _s(cc) + u8" "s + his(cc)
-                            + u8" head."s));
+                    txt(i18n::s.get("core.locale.misc.shakes_head"));
                 }
                 return 1;
             }
@@ -13209,9 +12932,7 @@ turn_result_t proc_movement_event()
             }
             if (encounter == 3)
             {
-                txt(lang(
-                    u8"暗殺者につかまった。あなたはクライアントを守らなければならない。"s,
-                    u8"You are caught by assassins. You have to protect your client."s));
+                txt(i18n::s.get("core.locale.misc.caught_by_assassins"));
                 msg_halt();
                 gdata_previous_map2 = gdata_current_map;
                 gdata_previous_dungeon_level = gdata_current_dungeon_level;
@@ -14420,7 +14141,8 @@ label_22191_internal:
             {
                 if (inv[cw].quality == 6)
                 {
-                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                        + iknownnameref(inv[cw].id);
                 }
                 else if (inv[cw].subname >= 40000)
                 {
@@ -14430,9 +14152,17 @@ label_22191_internal:
                 }
                 else
                 {
-                    s(1) = lang(""s, u8"The "s) + iknownnameref(inv[cw].id);
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                        + iknownnameref(inv[cw].id);
                 }
-                s(1) = lang(u8"『"s, u8"<"s) + s(1) + lang(u8"』"s, u8">"s);
+                if (inv[cw].quality == 5)
+                {
+                    s(1) = i18n::s.get("core.locale.item.godly_paren", s(1));
+                }
+                else
+                {
+                    s(1) = i18n::s.get("core.locale.item.miracle_paren", s(1));
+                }
                 if (is_in_fov(cdata[cc]))
                 {
                     if (rnd(5) == 0)
@@ -14768,9 +14498,9 @@ label_22191_internal:
                     {
                         txtef(2);
                         snd(61);
-                        txt(lang(
-                            itemname(cw) + u8"は十分に血を味わった！"s,
-                            itemname(cw) + u8" has tasted enough blood!"s));
+                        txt(i18n::s.get(
+                            "core.locale.misc.living_weapon_taste_blood",
+                            inv[cw]));
                     }
                 }
             }
@@ -14794,7 +14524,6 @@ label_22191_internal:
             goto label_22191_internal;
         }
     }
-    return;
 }
 
 
@@ -15522,9 +15251,9 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
-        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -15554,9 +15283,9 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
-        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -16235,9 +15964,7 @@ void conquer_lesimas()
     std::string wincomment;
     snd(51);
     stop_music();
-    txt(lang(
-        u8"信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！"s,
-        u8"Unbelievable! You conquered Lesimas!"s));
+    txt(i18n::s.get("core.locale.win.conquer_lesimas"));
     update_screen();
     const auto win_words = txtsetwinword(3);
     for (int cnt = 0; cnt < 3; ++cnt)
@@ -16303,13 +16030,10 @@ void conquer_lesimas()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
     gsel(0);
-    s = lang(
-        ""s + cdatan(1, 0) + cdatan(0, 0)
-            + u8"に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！"s,
-        u8"Blessing to "s + cdatan(0, 0) + u8", "s + cdatan(1, 0)
-            + u8"! You've finally acquired the codex!"s);
+    s = i18n::s.get(
+        "core.locale.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0));
     draw_caption();
-    s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
+    s(0) = i18n::s.get("core.locale.win.window.win");
     s(1) = ""s + strhint3;
     windowshadow = 1;
     ww = 680;
@@ -16323,38 +16047,25 @@ void conquer_lesimas()
     gmode(4, 250);
     gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
-    display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
+    display_topic(
+        i18n::s.get("core.locale.win.window.caption"), wx + 28, wy + 40);
     font(14 - en * 2);
     pos(wx + 40, wy + 76);
-    mes(lang(
-        ""s + 517 + u8"年"s + 8 + u8"月"s + 12
-            + u8"日に、あなたはノースティリスに到着した。"s,
-        u8"In the year "s + 517 + u8", "s + 12 + u8"/"s + 8
-            + u8", you arrived at North Tyris."s));
+    mes(i18n::s.get("core.locale.win.window.arrived_at_tyris", 517, 8, 12));
     pos(wx + 40, wy + 116);
-    mes(lang(
-        u8"最深で"s + gdata_deepest_dungeon_level + u8"階相当まで到達し、"s
-            + gdata_kill_count + u8"匹の敵を殺して、"s,
-        u8"You've killed "s + gdata_kill_count
-            + u8" creatures and reached\nmaximum of "s
-            + cnvrank(gdata_deepest_dungeon_level) + u8" level of dungeons."s));
+    mes(i18n::s.get(
+        "core.locale.win.window.have_killed",
+        gdata_deepest_dungeon_level,
+        gdata_kill_count));
     pos(wx + 40, wy + 146);
-    mes(lang(
-        u8"現在"s + calcscore() + u8"点のスコアを叩き出している。"s,
-        u8"Your score is "s + calcscore() + u8" points now."s));
+    mes(i18n::s.get("core.locale.win.window.score", calcscore()));
     pos(wx + 40, wy + 186);
-    mes(lang(
-        ""s + gdata_year + u8"年"s + gdata_month + u8"月"s + gdata_day
-            + u8"日にレシマスを制覇して、"s,
-        u8"In the year "s + gdata_year + u8", "s + gdata_day + u8"/"s
-            + gdata_month + u8", you conquered Lesimas."s));
+    mes(i18n::s.get(
+        "core.locale.win.window.lesimas", gdata_year, gdata_month, gdata_day));
     pos(wx + 40, wy + 206);
-    mes(lang(
-        u8"あなたは「"s + wincomment + u8"」とコメントした。"s,
-        u8"Upon killing Zeome, you said, \""s + wincomment + u8"\""));
+    mes(i18n::s.get("core.locale.win.window.comment", wincomment));
     pos(wx + 40, wy + 246);
-    mes(lang(
-        u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));
+    mes(i18n::s.get("core.locale.win.window.your_journey_continues"));
     redraw();
     key_list = key_enter;
     keyrange = 0;
@@ -16377,9 +16088,7 @@ void conquer_lesimas()
 void play_the_last_scene_again()
 {
     update_entire_screen();
-    txt(lang(
-        u8"達成のシーンをもう一度再現する？"s,
-        u8"You want to watch this event again?"s));
+    txt(i18n::s.get("core.locale.misc.win.watch_event_again"));
     ELONA_YES_NO_PROMPT();
     rtval = show_prompt(promptx, prompty, 160);
     if (rtval == 0)
@@ -16404,17 +16113,19 @@ turn_result_t pc_died()
     {
         return quest_pc_died_during_immediate_quest();
     }
-    txt(lang(u8"さようなら… "s, u8"Good bye... "s));
-    txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
+    txt(i18n::s.get("core.locale.misc.death.good_bye"));
+    txt(i18n::s.get("core.locale.misc.death.you_leave_dying_message"));
     inputlog = "";
     input_text_dialog((windoww - 310) / 2 + inf_screenx, winposy(90), 16);
+    std::string last_words;
     if (inputlog == ""s)
     {
-        txtsetlastword();
+        last_words = i18n::s.get("core.locale.system.last_words");
     }
     else
     {
-        lastword = lang(u8"「"s, u8"\""s) + inputlog + lang(u8"」"s, u8"\""s);
+        last_words =
+            i18n::s.get("core.locale.misc.death.dying_message", inputlog(0));
     }
     buff = "";
     notesel(buff);
@@ -16428,17 +16139,14 @@ turn_result_t pc_died()
             buff(0) += tmp + '\n';
         }
     }
-    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + lang(""s, u8" "s) + lastword;
+    s = cdatan(1, cc) + u8" "s + cdatan(0, cc) + i18n::space_if_needed()
+        + last_words;
     lenfix(s, 60);
-    s += lang(
-        ""s + gdata_year + u8"年"s + gdata_month + u8"月"s + gdata_day
-            + u8"日"s,
-        ""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
+    s += i18n::s.get(
+        "core.locale.misc.death.date", gdata_year, gdata_month, gdata_day);
     noteadd(""s, 0);
     noteadd(s, 1);
-    s = lang(
-        mdatan(0) + u8"で"s + ndeathcause,
-        cnven(ndeathcause) + u8" in "s + mdatan(0) + u8"."s);
+    s = i18n::s.get("core.locale.misc.death.you_died", ndeathcause, mdatan(0));
     noteadd(s, 2);
     s = ""s + calcscore() + u8","s + cdata[cc].image;
     noteadd(s, 3);
@@ -16488,7 +16196,8 @@ turn_result_t pc_died()
     }
     for (int cnt = 0, cnt_end = (noteinfo() / 4); cnt < cnt_end; ++cnt)
     {
-        noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
+        noteadd(
+            i18n::s.get("core.locale.misc.death.rank", cnt + 1), cnt * 4, 1);
     }
     {
         std::ofstream out{bone_filepath.native(), std::ios::binary};
@@ -16499,31 +16208,34 @@ turn_result_t pc_died()
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gsel(0);
     show_game_score_ranking();
-    s = lang(
-        u8"あともう少しで埋葬される…"s, u8"You are about to be buried..."s);
+    s = i18n::s.get("core.locale.misc.death.you_are_about_to_be_buried");
     draw_caption();
     ELONA_APPEND_PROMPT(
-        lang(u8"這い上がる"s, u8"Crawl up"s), u8"a"s, ""s + promptmax);
+        i18n::s.get("core.locale.misc.death.crawl_up"),
+        u8"a"s,
+        ""s + promptmax);
     ELONA_APPEND_PROMPT(
-        lang(u8"埋まる"s, u8"Lie on your back"s), u8"b"s, ""s + promptmax);
+        i18n::s.get("core.locale.misc.death.lie_on_your_back"),
+        u8"b"s,
+        ""s + promptmax);
     rtval = show_prompt(promptx, 100, 240);
     if (rtval == 1)
     {
         show_game_score_ranking();
-        s = lang(
-            u8"あなたは埋められた。さようなら…（キーを押すと終了します）"s,
-            u8"You have been buried. Bye...(Hit any key to exit)"s);
+        s = i18n::s.get("core.locale.misc.death.you_have_been_buried");
         draw_caption();
         redraw();
         wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s
-        + lang(
-              (cdatan(1, 0) + cdatan(0, 0) + u8"は"s + mdatan(0) + u8"で"s
-               + ndeathcause + lastword),
-              (cdatan(1, 0) + u8" "s + cdatan(0, 0) + u8" "s + ndeathcause
-               + u8" in "s + mdatan(0) + u8" "s + lastword));
+        + i18n::s.get(
+              "core.locale.misc.death.sent_message",
+              cdatan(1, 0),
+              cdatan(0, 0),
+              ndeathcause,
+              mdatan(0),
+              last_words);
     if (gdata_wizard == 0)
     {
         net_send(s);
@@ -16566,7 +16278,7 @@ void show_game_score_ranking()
         }
         else
         {
-            s = u8" "s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s);
+            s = " "s + i18n::s.get("core.locale.misc.score.rank", cnt + 1);
         }
         pos(x - 80, y + 10);
         color(10, 10, 10);
@@ -16600,7 +16312,7 @@ void show_game_score_ranking()
         noteget(s(10), p + 3);
         csvsort(s, s(10), 44);
         pos(x + 480, y + 20);
-        mes(""s + s + lang(u8"点"s, ""s));
+        mes(i18n::s.get("core.locale.misc.score.score", s(0)));
         p = elona::stoi(s(1)) % 1000;
 
         draw_chara_scale_height(elona::stoi(s(1)), x - 22, y + 12);
@@ -16608,7 +16320,6 @@ void show_game_score_ranking()
         color(0, 0, 0);
     }
     color(0, 0, 0);
-    return;
 }
 
 

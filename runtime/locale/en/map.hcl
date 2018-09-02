@@ -271,6 +271,15 @@ locale {
             }
         }
 
+        misc_location {
+            _1 = "Mine"
+            _2 = "Crop"
+            _3 = "Art Atelier"
+            _4 = "Temple" # Unused in vanilla
+            _5 = "Smuggler's Hideout"
+            _6 = "Light House"
+        }
+
         you_see = "You see ${_1}."
         you_see_an_entrance = "You see an entrance leading to ${_1}.(Approximate danger level: ${_2}) "
     }

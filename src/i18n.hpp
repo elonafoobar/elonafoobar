@@ -652,6 +652,45 @@ public:
             std::forward<Tail>(tail)...);
     }
 
+    // Returns string list. If the value associated with `key` is a scalar,
+    // returns 1-size list which contains the value. If `key` does not exist,
+    // returns empty list.
+    template <typename... Args>
+    std::vector<std::string> get_list(const i18n_key& key, Args&&... args)
+    {
+        std::vector<std::string> ret;
+
+        const auto& found = storage.find(key);
+        if (found != storage.end())
+        {
+            ret.push_back(
+                fmt_with_context(found->second, std::forward<Args>(args)...));
+            return ret;
+        }
+
+        const auto& found_list = list_storage.find(key);
+        if (found_list != list_storage.end())
+        {
+            std::transform(
+                std::begin(found_list->second),
+                std::end(found_list->second),
+                std::back_inserter(ret),
+                [&](const auto& x) {
+                    return fmt_with_context(x, std::forward<Args>(args)...);
+                });
+            return ret;
+        }
+
+        return ret;
+    }
+
+
+    const fs::path& get_locale_dir(const std::string& mod_name)
+    {
+        return locale_dir_table[mod_name];
+    }
+
+
 private:
     void load(const fs::path&, const std::string&);
 
@@ -676,6 +715,10 @@ private:
     std::unordered_map<i18n_key, std::vector<hil::Context>> list_storage;
 
     std::set<i18n_key> unknown_keys;
+
+    // Key: mod name.
+    // Value: locale directory.
+    std::unordered_map<std::string, fs::path> locale_dir_table;
 };
 
 extern i18n::store s;

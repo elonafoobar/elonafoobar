@@ -1505,14 +1505,9 @@ label_2061_internal:
             }
             if (f)
             {
-                s(0) = "";
-                for (int cnt = 0; cnt < 4; cnt++)
-                {
-                    s(cnt + 1) = i18n::s.get_enum(
-                        "core.locale.ui.inv.give.refuse_dialog", cnt);
-                }
                 snd(27);
-                txt(lang(name(tc) + s(f), s(f)));
+                txt(i18n::s.get_enum(
+                    "core.locale.ui.inv.give.refuse_dialog", f - 1, cdata[tc]));
                 goto label_2060_internal;
             }
             f = 0;
@@ -1889,22 +1884,12 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                 goto label_2060_internal;
             }
-            f = 0;
             if (the_item_db[inv[ci].id]->category == 77000)
             {
-                f = 2;
-            }
-            if (f != 0)
-            {
-                s(0) = "";
-                for (int cnt = 0; cnt < 4; cnt++)
-                {
-                    s(cnt + 1) = i18n::s.get_enum(
-                        "core.locale.ui.inv.take_ally.refuse_dialog", cnt);
-                }
                 snd(27);
                 txtef(4);
-                txt(lang(name(tc) + s(f), s(f)));
+                txt(i18n::s.get(
+                    "core.locale.ui.inv.take_ally.refuse_dialog", cdata[tc]));
                 goto label_2060_internal;
             }
             if (inv[ci].body_part != 0)
@@ -2255,7 +2240,7 @@ label_2061_internal:
                 }
             }
             gdata(40 + sc) = p;
-            txt(i18n::s.get("core.locale.ui.inv.common.shortcut.assigned", sc));
+            txt(i18n::s.get("core.locale.ui.assign_shortcut", sc));
             goto label_2060_internal;
         }
     }

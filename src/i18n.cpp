@@ -26,6 +26,7 @@ void store::init(const std::vector<store::location>& locations)
 
     for (const auto& loc : locations)
     {
+        locale_dir_table[loc.mod_name] = loc.locale_dir;
         load(loc.locale_dir, loc.mod_name);
     }
 }
@@ -242,13 +243,18 @@ std::string format_builtins_string(
     std::string value)
 {
     ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
+    ELONA_DEFINE_I18N_BUILTIN("capitalize", cnven(value));
 
     return UNKNOWN_FUNCTION("string");
 }
 
 std::string format_builtins_integer(const hil::FunctionCall& func, int value)
 {
+    // For plural
     ELONA_DEFINE_I18N_BUILTIN("s", value == 1 ? u8""s : u8"s"s);
+    // For third person singular
+    ELONA_DEFINE_I18N_BUILTIN("s2", value == 1 ? u8"s"s : u8""s);
+    ELONA_DEFINE_I18N_BUILTIN("ordinal", cnvrank(value));
 
     return UNKNOWN_FUNCTION("integer");
 }
