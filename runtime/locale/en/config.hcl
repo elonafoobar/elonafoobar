@@ -270,7 +270,7 @@ DOC
                 }
                 attack_anime {
                     name = "Attack Animation"
-                    doc = "Play animations when melee attacking."
+                    doc = "Play animations when melee/ranged attacking."
                 }
                 weather_effect {
                     name = "Weather Effect"
