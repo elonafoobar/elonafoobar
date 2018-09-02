@@ -50,5 +50,187 @@ locale {
                 "\"You snail!\"",
             ]
         }
+
+        win {
+            conquer_lesimas = "Unbelievable! You conquered Lesimas!"
+            you_acquired_codex = "Blessing to ${_2}, ${_1}! You've finally acquired the codex!"
+            window = {
+                title = "*Win*"
+                caption = "Trace"
+                arrived_at_tyris = "In the year ${_1}, ${_2}/${_3}, you arrived at North Tyris."
+                have_killed = "You've killed ${_2} creature${s(_2)} and reached\nmaximum of ${ordinal(_1)} level of dungeons."
+                score = "Your score is ${_1} point${s(_1)} now."
+                lesimas = "In the year ${_1}, ${_2}/${_3}, you conquered Lesimas."
+                comment = "Upon killing Zeome, you said, \"${_1}\""
+                your_journey_continues = "Your journey continues..."
+            }
+
+            watch_event_again = "You want to watch this event again?"
+        }
+
+        death {
+            good_bye = "Good bye... "
+            you_leave_dying_message = "You leave a dying message."
+            dying_message = "\"${_1}\""
+            date = "${_1}/${_2}/${_3}"
+            you_died = "${capitalize(_1)} in ${_2}."
+            rank = "{ordinal(_1)}"
+            you_are_about_to_be_buried = "You are about to be buried..."
+            crawl_up = "Crawl up"
+            lie_on_your_back = "Lie on your back"
+            you_have_been_buried = "You have been buried. Bye...(Hit any key to exit)"
+            sent_message = "${_1} ${_2} ${_3} in ${_4} ${5}"
+        }
+
+        score {
+            rank = "${ordinal(_1)}"
+            score = "${_1}"
+        }
+
+        resurrect = "${capitalize(_1)} ${have(_2)} been resurrected!"
+        artifact_regeneration = "${_1} turns its shape into ${itemname(_2)}."
+        black_cat_licks = "${name(_1)} licks ${itemname(_2)}."
+        corpse_is_dried_up = "${itemname(_1)} ${is(_1)} dried up in the sun."
+        get_rotten = "${itemname(_1)} rot${s(_1)}."
+        extract_seed = "You extract plant seeds from ${itemname(_1)}."
+
+        curse {
+            gold_stolen = "A malicious hand filches some gold pieces from ${name(_1)}${his_owned(_1)} wallet."
+            blood_sucked = "Something sucks ${name(_1)}${his_owned(_1)} blood."
+            experience_reduced = "${name(_1)} become${s(_1)} inexperienced."
+            creature_summoned = "Several creatures are summoned from a vortex of magic."
+        }
+
+        identify {
+            fully_identified = "You appraise ${_1} as ${itemname(_2)}."
+            almost_identified = "You sense the quality of ${itemname(_1)} is ${_2}."
+        }
+
+        love_miracle {
+            uh = "\"Uh...!\""
+        }
+
+        pregnant {
+            pukes_out = "But ${he(_1)} puke${s(_1)} it out quickly."
+            gets_pregnant = "${name(_1)} get${s(_1)} pregnant."
+
+            pats_stomach = "${name(_1)} pat${s(_1)} ${his(_1)} stomach uneasily."
+            something_is_wrong = [
+                "\"I'm going to have a baby!\"",
+                "\"Something is wrong with my stomach...\"",
+            ]
+            something_breaks_out = "Something splits ${name(_1)}${his_owned(_1)} body and breaks out!"
+        }
+
+        walk_down_stairs = "You walk down the stairs. "
+        walk_up_stairs = "You walk up the stairs. "
+
+        quest {
+            kamikaze_attack {
+                messange = "The messenger \"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""
+                stairs_appear = "Suddenly, stairs appear."
+            }
+        }
+
+        map {
+            jail {
+                repent_of_sin = "You repent of your sin."
+                guard_approaches = "You hear footsteps coming towards your cell."
+                leave_here = "\"Hey punk, our boss says you can leave the jail now. Do not come back, okay?\""
+                unlocks_your_cell = "A guard unenthusiastically unlocks your cell."
+            }
+
+            shelter {
+                eat_stored_food = "You eat stored food."
+                no_longer_need_to_stay = "You don't need to stay in the shelter any longer."
+            }
+
+            museum {
+                chats = [
+                    "*noise*",
+                    "\"Hmm. Not bad.\"",
+                    "\"What's this?\"",
+                    "\"Ohh...\"",
+                    "\"I want to be stuffed...\"",
+                    "\"So this is the famous...\"",
+                ]
+                chats2 = [
+                    "*murmur*",
+                    "\"Gross! Disgusting.\"",
+                    "\"Hey. Is it really dead?\"",
+                    "\"Scut!\"",
+                    "\"Absolutely amazing.\"",
+                    "\"Can I touch?\"",
+                ]
+            }
+
+            shop {
+                chats = [
+                    "*murmur*",
+                    "\"I want this! I want this!\"",
+                    "\"Oh what's this?\"",
+                    "\"I'm just watching\"",
+                    "\"My wallet is empty...\"",
+                    "\"So this is the famous....\"",
+                ]
+            }
+        }
+
+        custom {
+            key_hint = "BackSpace [Delete]  "
+            show_room {
+                which_show_room = "Which room do you want to visit? "
+                list = "Room List"
+                name = "Name"
+            }
+            pet_team {
+                which_team = "Which team do you want to play a match? "
+                list = "Team List"
+                name = "Name"
+            }
+
+            incompatible = "Selected item is incompatible."
+            fail_to_retrieve_file = "Failed to retrieve designated files."
+            do_you_want_to_delete = "Do you really want to delete ${_1}? "
+        }
+
+        no_target_around = "You look around and find nothing."
+
+        return {
+            forbidden = "Returning while taking a quest if forbidden. Are you sure you want to return?"
+            no_location = "You don't know any location you can return to"
+            where_do_you_want_to_go = "Where do you want to go?"
+            air_becomes_charged = "The air around you becomes charged."
+            lord_of_dungeon_might_disappear = "The lord of the dungeon might disappear if you escape now."
+        }
+
+        dungeon_level = " Lv"
+
+        save {
+            update = "Updating your save data from Ver.${_1} now."
+            need_to_save_in_town = "To update your game, please save your game in a town in the previous version then retry."
+            take_a_while = "The next updating process may take a while to complete."
+            cannot_save_in_user_map = "The game is not saved in a user map."
+        }
+
+        living_weapon_taste_blood = "${itemname(_1)} has tasted enough blood!"
+        caught_by_assassins = "You are caught by assassins. You have to protect your client."
+        finished_eating = "${name(_1)} ${have(_1)} finished eating ${itemname(_1, 1)}."
+        spell_passes_through = "The spell passes through ${name(_1)}."
+        shakes_head = "${name(_1)} shake${s(_1)} ${his(_1)} head."
+
+        wields_proudly {
+            the = "The "
+        }
+
+        and = " and "
+
+        income {
+            sent_to_your_house = "As a salary, ${_1} gold piece${s(_1)} have been sent to your house."
+            sent_to_your_house2 = "As a salary, ${_1} gold piece${s(_1)} and ${_2} item${s(_2)} have been sent to your house."
+        }
+
+        tax {
+        }
     }
 }
