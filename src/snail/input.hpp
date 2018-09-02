@@ -42,6 +42,7 @@ struct button : public lib::noncopyable
     {
         _is_pressed = false;
         _repeat = -1;
+        _was_released_immediately = false;
     }
 
 
