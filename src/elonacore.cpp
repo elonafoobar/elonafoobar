@@ -982,8 +982,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{filesystem::dir::data()
-                               / lang(u8"ndata.csv", u8"ndata-e.csv")},
+        fileutil::read_by_line{i18n::s.get_locale_dir("core") / "lazy"
+                               / "ndata.csv"},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
