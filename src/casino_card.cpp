@@ -81,7 +81,7 @@ void showcard2(int prm_425, int prm_426)
     elona_vector1<int> col_at_cardcontrol;
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
-    font(43 - en * 2, snail::font_t::Style::bold);
+    font(43 - en * 2, snail::Font::Style::bold);
     gmode(2);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
@@ -253,7 +253,7 @@ void showcardpile()
             showcard2(cnt);
         }
     }
-    font(16 - en * 2, snail::font_t::Style::bold);
+    font(16 - en * 2, snail::Font::Style::bold);
     bmes(
         u8"X "s + pilestack_at_cardcontrol,
         pilex_at_cardcontrol + 8,

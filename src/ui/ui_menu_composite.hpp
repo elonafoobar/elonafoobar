@@ -17,9 +17,9 @@ class UIMenuComposite : public UIMenu<T>
 protected:
     using menu_type = UIMenu<T>;
 
-    struct menu_info
+    struct MenuInfo
     {
-        menu_info(
+        MenuInfo(
             std::unique_ptr<menu_type> _menu,
             int _image,
             std::string _text)
@@ -34,7 +34,7 @@ protected:
         std::string text;
     };
 
-    using menu_list = std::vector<menu_info>;
+    using menu_list = std::vector<MenuInfo>;
 
 public:
     UIMenuComposite(size_t selected)
@@ -94,7 +94,7 @@ protected:
         _menus[_selected].menu->draw();
     }
 
-    virtual optional<typename UIMenu<T>::result> on_key(const std::string& key)
+    virtual optional<typename UIMenu<T>::Result> on_key(const std::string& key)
     {
         if (key == key_next || key == key_prev)
         {
@@ -160,7 +160,7 @@ private:
 
     void _draw_single_menu_item(
         size_t menu_index,
-        const menu_info& menu,
+        const MenuInfo& menu,
         int x,
         int y)
     {
@@ -179,8 +179,8 @@ private:
             menu.text,
             x + menu_index * 50 + 46 - strlen_u(menu.text) * 3,
             y + 7,
-            _selected == menu_index ? snail::color{255, 255, 255}
-                                    : snail::color{165, 165, 165});
+            _selected == menu_index ? snail::Color{255, 255, 255}
+                                    : snail::Color{165, 165, 165});
     }
 
     void _draw_menu_icons()

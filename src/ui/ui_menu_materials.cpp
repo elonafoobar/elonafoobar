@@ -171,7 +171,7 @@ optional<UIMenuMaterials::result_type> UIMenuMaterials::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return UIMenuMaterials::result::cancel();
+        return UIMenuMaterials::Result::cancel();
     }
 
     return none;

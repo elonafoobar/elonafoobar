@@ -79,13 +79,13 @@ public:
     }
 
 
-    const font_t& font() const noexcept
+    const Font& font() const noexcept
     {
         return _font;
     }
 
 
-    void set_font(const font_t& font)
+    void set_font(const Font& font)
     {
         _font = font;
     }
@@ -98,7 +98,7 @@ public:
 
     void set_blend_mode(BlendMode blend_mode);
 
-    void set_draw_color(const color&);
+    void set_draw_color(const Color&);
 
     ::SDL_Texture* render_target();
 
@@ -115,25 +115,25 @@ public:
     void present();
     void render_point(int x, int y);
     void fill_rect(int x, int y, int width, int height);
-    rect render_text(
+    Rect render_text(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::black,
+        const Color& text_color = palette::black,
         double scale = 1.0);
-    rect render_text_with_shadow(
+    Rect render_text_with_shadow(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::white,
-        const color& shadow_color = palette::black,
+        const Color& text_color = palette::white,
+        const Color& shadow_color = palette::black,
         double scale = 1.0);
-    rect render_multiline_text(
+    Rect render_multiline_text(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::black);
-    size calculate_text_size(const std::string& text);
+        const Color& text_color = palette::black);
+    Size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
     void render_image(ImageBase& image, int dst_x, int dst_y);
     void render_image(
@@ -207,7 +207,7 @@ public:
 private:
     TextAlignment _text_alignment = TextAlignment::left;
     TextBaseline _text_baseline = TextBaseline::top;
-    font_t _font;
+    Font _font;
     BlendMode _blend_mode = BlendMode::blend;
 };
 

@@ -14,7 +14,7 @@ namespace ui
 template <typename T>
 class UIMenuComposite;
 
-struct dummy_result
+struct DummyResult
 {
 };
 
@@ -24,20 +24,20 @@ class UIMenu
     friend class UIMenuComposite<T>;
 
 public:
-    struct result
+    struct Result
     {
-        result(bool canceled, optional<T> value)
+        Result(bool canceled, optional<T> value)
             : canceled(canceled)
             , value(value)
         {
         }
 
-        static result finish(optional<T> res = none)
+        static Result finish(optional<T> res = none)
         {
             return {false, res};
         }
 
-        static result cancel()
+        static Result cancel()
         {
             return {true, none};
         }
@@ -47,7 +47,7 @@ public:
     };
 
 protected:
-    using result_type = UIMenu<T>::result;
+    using result_type = UIMenu<T>::Result;
 
 public:
     virtual bool init() = 0;
@@ -74,7 +74,7 @@ protected:
     }
 
 public:
-    UIMenu::result show()
+    UIMenu::Result show()
     {
         while (true)
         {

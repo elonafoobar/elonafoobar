@@ -407,7 +407,7 @@ void Application::update_orientation()
     _window_pos = calculate_android_window_pos();
 }
 
-static rect calculate_android_window_pos_portrait(
+static Rect calculate_android_window_pos_portrait(
     int window_width,
     int window_height,
     int physical_width)
@@ -420,7 +420,7 @@ static rect calculate_android_window_pos_portrait(
     return {0, 0, physical_width, height};
 }
 
-static rect calculate_android_window_pos_landscape(
+static Rect calculate_android_window_pos_landscape(
     int window_width,
     int window_height,
     int physical_width,
@@ -460,7 +460,7 @@ static rect calculate_android_window_pos_landscape(
     return {x, y, width, height};
 }
 
-rect Application::calculate_android_window_pos()
+Rect Application::calculate_android_window_pos()
 {
     int x, y, width, height;
 

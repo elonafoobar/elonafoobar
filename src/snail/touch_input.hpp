@@ -14,9 +14,9 @@ namespace elona
 namespace snail
 {
 
-struct quick_action
+struct QuickAction
 {
-    quick_action(
+    QuickAction(
         std::string text,
         optional<snail::Key> key,
         int center_x,
@@ -58,7 +58,7 @@ public:
     virtual ~TouchInput() override = default;
     static TouchInput& instance();
 
-    optional<quick_action> last_touched_quick_action() const
+    optional<QuickAction> last_touched_quick_action() const
     {
         if (_last_touched_quick_action_idx)
         {
@@ -89,16 +89,16 @@ public:
 private:
     TouchInput() = default;
 
-    void draw_quick_action(const quick_action&);
+    void draw_quick_action(const QuickAction&);
     int quick_action_size() const noexcept;
-    bool is_touched(int, int, const quick_action&);
+    bool is_touched(int, int, const QuickAction&);
 
     uint8_t quick_action_alpha() const noexcept
     {
         return static_cast<uint8_t>(_quick_action_transparency * 255);
     }
 
-    std::vector<quick_action> _quick_actions;
+    std::vector<QuickAction> _quick_actions;
     optional<size_t> _last_touched_quick_action_idx = none;
     float _base_quick_action_size = 0.5;
     float _quick_action_transparency = 0.5;

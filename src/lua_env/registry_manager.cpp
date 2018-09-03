@@ -139,7 +139,7 @@ sol::optional<sol::table> RegistryManager::get_table(
 
 
 void RegistryManager::load_mod_data(
-    const std::vector<RegistryManager::location>& locations)
+    const std::vector<RegistryManager::Location>& locations)
 {
     // Load data.hcl in each mod directory.
     for (const auto& loc : locations)

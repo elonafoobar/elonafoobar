@@ -18,9 +18,9 @@ namespace
 {
 
 
-struct config_loading_error : public std::runtime_error
+struct ConfigLoadingError : public std::runtime_error
 {
-    config_loading_error(const std::string& message)
+    ConfigLoadingError(const std::string& message)
         : std::runtime_error(message)
     {
     }
@@ -114,8 +114,8 @@ static void inject_save_files(Config& conf)
 
     if (fs::exists(filesystem::dir::save()))
     {
-        for (const auto& entry : filesystem::dir_entries{
-                 filesystem::dir::save(), filesystem::dir_entries::Type::dir})
+        for (const auto& entry : filesystem::dir_entries(
+                 filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
         {
             std::string folder =
                 filesystem::to_utf8_path(entry.path().filename());
@@ -138,8 +138,8 @@ static void inject_languages(Config& conf)
     bool has_jp = false;
     bool has_en = false;
 
-    for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::locale(), filesystem::dir_entries::Type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::locale(), filesystem::DirEntryRange::Type::dir))
     {
         std::string identifier =
             filesystem::to_utf8_path(entry.path().filename());
@@ -161,7 +161,7 @@ static void inject_languages(Config& conf)
     // the code are refactored.
     if (!has_en || !has_jp)
     {
-        throw config_loading_error(
+        throw ConfigLoadingError(
             "Locale for English or Japanese is missing in locale/ folder.");
     }
 
@@ -642,7 +642,7 @@ void Config::load_defaults(bool preload)
 
         // Sections don't have defaults, so trying to set them would
         // cause an error.
-        if (!def.is<spec::section_def>(key))
+        if (!def.is<spec::SectionDef>(key))
         {
             if (preload == def.get_metadata(key).preload)
             {
@@ -661,7 +661,7 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
     if (!parseResult.valid())
     {
         std::cerr << parseResult.errorReason << std::endl;
-        throw config_loading_error(
+        throw ConfigLoadingError(
             u8"Failed to read " + hcl_file + u8": " + parseResult.errorReason);
     }
 
@@ -671,7 +671,7 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
 
     if (!value.is<hcl::Object>() || !value.has("config"))
     {
-        throw config_loading_error(
+        throw ConfigLoadingError(
             hcl_file + ": \"config\" object not found at top level");
     }
 
@@ -680,7 +680,7 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
     // TODO mod support
     if (!conf.is<hcl::Object>() || !conf.has("core"))
     {
-        throw config_loading_error(
+        throw ConfigLoadingError(
             hcl_file + ": \"core\" object not found after \"config\"");
     }
 
@@ -708,9 +708,9 @@ void Config::visit(
 {
     if (value.is<hcl::Object>())
     {
-        if (!def.is<spec::section_def>(current_key))
+        if (!def.is<spec::SectionDef>(current_key))
         {
-            throw config_loading_error(
+            throw ConfigLoadingError(
                 hcl_file + ": No such config section \"" + current_key + "\".");
         }
         visit_object(value.as<hcl::Object>(), current_key, hcl_file, preload);
@@ -719,7 +719,7 @@ void Config::visit(
     {
         if (!def.exists(current_key))
         {
-            throw config_loading_error(
+            throw ConfigLoadingError(
                 hcl_file + ": No such config value \"" + current_key + "\".");
         }
         if (preload == def.get_metadata(current_key).preload)
@@ -733,29 +733,29 @@ bool Config::verify_types(
     const hcl::Value& value,
     const std::string& current_key)
 {
-    if (def.is<spec::section_def>(current_key))
+    if (def.is<spec::SectionDef>(current_key))
     {
         // It doesn't make sense to set a section as a value.
         return false;
     }
     if (value.is<bool>())
     {
-        return def.is<spec::bool_def>(current_key);
+        return def.is<spec::BoolDef>(current_key);
     }
     if (value.is<int>())
     {
-        return def.is<spec::int_def>(current_key);
+        return def.is<spec::IntDef>(current_key);
     }
     if (value.is<hcl::List>())
     {
-        return def.is<spec::list_def>(current_key);
+        return def.is<spec::ListDef>(current_key);
     }
     if (value.is<std::string>())
     {
-        if (def.is<spec::enum_def>(current_key))
+        if (def.is<spec::EnumDef>(current_key))
         {
-            auto enum_def = def.get<spec::enum_def>(current_key);
-            if (enum_def.pending)
+            auto EnumDef = def.get<spec::EnumDef>(current_key);
+            if (EnumDef.pending)
             {
                 // The key could be anything because the values are
                 // not known yet, so don't attempt to check anything.
@@ -764,12 +764,12 @@ bool Config::verify_types(
             else
             {
                 return static_cast<bool>(
-                    enum_def.get_index_of(value.as<std::string>()));
+                    EnumDef.get_index_of(value.as<std::string>()));
             }
         }
         else
         {
-            return def.is<spec::string_def>(current_key);
+            return def.is<spec::StringDef>(current_key);
         }
     }
 
@@ -782,7 +782,7 @@ void Config::write()
                        std::ios::binary};
     if (!file)
     {
-        throw config_loading_error{
+        throw ConfigLoadingError{
             u8"Failed to open: "s
             + filesystem::make_preferred_path_in_utf8(
                   filesystem::dir::exe() / u8"config.hcl")};
@@ -811,7 +811,7 @@ void Config::write()
 
         // Don't save injected enum values that are still unknown
         // (though this should never happen)
-        if (def.is<spec::enum_def>(key)
+        if (def.is<spec::EnumDef>(key)
             && value.as<std::string>() == spec::unknown_enum_variant)
         {
             continue;

@@ -74,7 +74,7 @@ public:
         return _orientation;
     }
 
-    rect window_pos() const noexcept
+    Rect window_pos() const noexcept
     {
         return _window_pos;
     }
@@ -185,7 +185,7 @@ private:
     float _dpi;
     std::string _title;
     Orientation _orientation;
-    rect _window_pos; // Window draw position for Android
+    Rect _window_pos; // Window draw position for Android
 
     size_t _frame = 0;
     bool _will_quit = false;
@@ -211,7 +211,7 @@ private:
     void handle_window_event(const ::SDL_WindowEvent& event);
     void on_size_changed(const ::SDL_WindowEvent& event);
 
-    rect calculate_android_window_pos();
+    Rect calculate_android_window_pos();
 };
 
 

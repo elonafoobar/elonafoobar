@@ -8,7 +8,7 @@ namespace lua
 
 namespace Magic
 {
-void cast_self(lua_character_handle, int, int, const position_t&);
+void cast_self(lua_character_handle, int, int, const Position&);
 void cast(lua_character_handle, lua_character_handle, int, int);
 
 

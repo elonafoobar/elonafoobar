@@ -166,13 +166,13 @@ private:
 
 
 template <typename>
-struct cat_db_traits;
+struct CatDBTraits;
 
 
 template <class T>
 class CatDB : public lib::noncopyable
 {
-    using traits_type = cat_db_traits<T>;
+    using traits_type = CatDBTraits<T>;
 
 public:
     using id_type = typename traits_type::id_type;

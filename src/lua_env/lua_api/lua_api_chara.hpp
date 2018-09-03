@@ -21,10 +21,10 @@ int count();
 
 sol::optional<lua_character_handle> player();
 
-sol::optional<lua_character_handle> create(const position_t&, int);
+sol::optional<lua_character_handle> create(const Position&, int);
 sol::optional<lua_character_handle> create_xy(int, int, int);
 sol::optional<lua_character_handle> create_from_id(
-    const position_t&,
+    const Position&,
     const std::string&);
 sol::optional<lua_character_handle>
 create_from_id_xy(int, int, const std::string&);

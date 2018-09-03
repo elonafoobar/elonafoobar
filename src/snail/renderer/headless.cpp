@@ -25,7 +25,7 @@ void Renderer::set_render_target(::SDL_Texture*)
 {
 }
 
-void Renderer::set_draw_color(const color&)
+void Renderer::set_draw_color(const Color&)
 {
 }
 
@@ -58,32 +58,32 @@ void Renderer::fill_rect(int, int, int, int)
 }
 
 
-rect Renderer::render_text(const std::string&, int, int, const color&, double)
+Rect Renderer::render_text(const std::string&, int, int, const Color&, double)
 {
-    return rect{0, 0, 0, 0};
+    return Rect{0, 0, 0, 0};
 }
 
 
 
-rect Renderer::render_text_with_shadow(
+Rect Renderer::render_text_with_shadow(
     const std::string&,
     int,
     int,
-    const color&,
-    const color&,
+    const Color&,
+    const Color&,
     double)
 {
-    return rect{0, 0, 0, 0};
+    return Rect{0, 0, 0, 0};
 }
 
 
-rect Renderer::render_multiline_text(const std::string&, int, int, const color&)
+Rect Renderer::render_multiline_text(const std::string&, int, int, const Color&)
 {
-    return rect{0, 0, 0, 0};
+    return Rect{0, 0, 0, 0};
 }
 
 
-size Renderer::calculate_text_size(const std::string&)
+Size Renderer::calculate_text_size(const std::string&)
 {
     return {0, 0};
 }

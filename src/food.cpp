@@ -127,7 +127,7 @@ void eat_rotten_food()
 
 
 
-void cure_anorexia(character& cc)
+void cure_anorexia(Character& cc)
 {
     if (!cc.has_anorexia())
         return;
@@ -142,7 +142,7 @@ void cure_anorexia(character& cc)
 
 
 
-void chara_vomit(character& cc)
+void chara_vomit(Character& cc)
 {
     ++cc.anorexia_count;
 
@@ -168,7 +168,7 @@ void chara_vomit(character& cc)
         {
             break;
         }
-        if (the_buff_db[cc.buffs[i].id]->type == buff_data::Type::food)
+        if (the_buff_db[cc.buffs[i].id]->type == BuffData::Type::food)
         {
             buff_delete(cc, i);
         }
@@ -242,7 +242,7 @@ void chara_vomit(character& cc)
 
 void eatstatus(CurseState curse_state, int eater)
 {
-    if (cdata[eater].state() != character::State::alive)
+    if (cdata[eater].state() != Character::State::alive)
         return;
 
     if (is_cursed(curse_state))
@@ -270,7 +270,7 @@ void eatstatus(CurseState curse_state, int eater)
 
 
 
-void chara_anorexia(character& cc)
+void chara_anorexia(Character& cc)
 {
     if (cc.has_anorexia())
     {
@@ -280,7 +280,7 @@ void chara_anorexia(character& cc)
 
 
 
-void get_sick_if_cursed(CurseState curse_state, character& drinker)
+void get_sick_if_cursed(CurseState curse_state, Character& drinker)
 {
     if (!is_cursed(curse_state))
         return;
@@ -294,7 +294,7 @@ void get_sick_if_cursed(CurseState curse_state, character& drinker)
 
 
 
-void get_hungry(character& cc)
+void get_hungry(Character& cc)
 {
     if ((trait(158) && rnd(3) == 0) || debug::voldemort)
         return;
@@ -1241,7 +1241,7 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get("core.locale.food.effect.poisoned.dialog"));
         }
         damage_hp(cdata[cc], rnd(250) + 250, -4);
-        if (cdata[cc].state() != character::State::alive)
+        if (cdata[cc].state() != Character::State::alive)
         {
             if (cc != 0)
             {

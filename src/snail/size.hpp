@@ -7,7 +7,7 @@ namespace snail
 {
 
 
-struct size
+struct Size
 {
     int width;
     int height;

@@ -29,7 +29,7 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
     if (fs::exists(filepath))
     {
         range::copy(
-            fileutil::read_by_line{filepath}, std::back_inserter(lines));
+            fileutil::read_by_line(filepath), std::back_inserter(lines));
     }
 
     if (fmode_str == u8"qname"s)
@@ -732,7 +732,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             artifactlocation.clear();
             range::copy(
-                fileutil::read_by_line{filepath},
+                fileutil::read_by_line(filepath),
                 std::back_inserter(artifactlocation));
         }
     }
@@ -1317,7 +1317,7 @@ void fmode_10()
 {
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::tmp(),
-             filesystem::dir_entries::Type::file,
+             filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(.*\..*)"}))
     {
         fs::remove_all(entry.path());
@@ -1440,7 +1440,7 @@ void fmode_13()
     }
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::save(playerid),
-             filesystem::dir_entries::Type::file,
+             filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         writeloadedbuff(entry.path().filename());
@@ -1448,7 +1448,7 @@ void fmode_13()
     }
     for (const auto& entry : filesystem::dir_entries(
              filesystem::dir::tmp(),
-             filesystem::dir_entries::Type::file,
+             filesystem::DirEntryRange::Type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         Save::instance().remove(entry.path().filename());

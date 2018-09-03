@@ -5,7 +5,7 @@
 namespace elona
 {
 
-chara_chip_data CharaChipDB::convert(
+CharaChipData CharaChipDB::convert(
     const std::string& id_,
     const sol::table& data,
     lua::LuaEnv& lua)
@@ -46,9 +46,9 @@ chara_chip_data CharaChipDB::convert(
         offset_y += inf_tiles;
     }
 
-    return chara_chip_data{id,
-                           extent{x, y, width, height},
-                           chara_chip_t{shared_id(id_), offset_y},
+    return CharaChipData{id,
+                           Extent{x, y, width, height},
+                           CharaChip{shared_id(id_), offset_y},
                            filepath};
 }
 

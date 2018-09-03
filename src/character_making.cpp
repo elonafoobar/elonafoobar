@@ -50,7 +50,7 @@ void character_making_draw_background(const i18n_key& key)
 {
     _draw_background_and_caption(key);
 
-    font(13 - en * 2, snail::font_t::Style::bold);
+    font(13 - en * 2, snail::Font::Style::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -178,7 +178,7 @@ MainMenuResult character_making_select_feats()
     character_making_draw_background(
         "core.locale.chara_making.select_feats.caption");
 
-    menu_result result = menu_feats_character_making();
+    MenuResult result = menu_feats_character_making();
     clear_background_in_character_making();
 
     if (result.pressed_f1)
@@ -310,8 +310,8 @@ static int _prompt_satisfied()
 static bool _validate_save_path(const std::string& playerid)
 {
     if (range::any_of(
-            filesystem::dir_entries{filesystem::dir::save(),
-                                    filesystem::dir_entries::Type::all},
+            filesystem::dir_entries(filesystem::dir::save(),
+                                    filesystem::DirEntryRange::Type::all),
             [&](const auto& entry) {
                 return filesystem::to_utf8_path(entry.path().filename())
                     == playerid;

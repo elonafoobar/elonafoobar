@@ -67,7 +67,7 @@ inline int godid2int(const god_id_t& id)
 } // namespace core_god
 
 
-struct god_data
+struct GodData
 {
     god_id_t id;
 };
@@ -80,10 +80,10 @@ namespace cat
 {
 
 template <>
-struct cat_db_traits<GodDB>
+struct CatDBTraits<GodDB>
 {
     using id_type = god_id_t;
-    using data_type = god_data;
+    using data_type = GodData;
     static constexpr const char* filename = u8"god.lua";
     static constexpr const char* table_name = u8"god";
 };

@@ -99,7 +99,7 @@ class BasicImage : public ImageBase
 public:
     explicit BasicImage(
         const fs::path& filepath,
-        const optional<color>& keycolor = none);
+        const optional<Color>& keycolor = none);
 
     explicit BasicImage(::SDL_Texture* ptr);
 

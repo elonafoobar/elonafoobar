@@ -28,7 +28,7 @@ namespace elona
 {
 
 
-inventory inv;
+Inventory inv;
 
 int ci_at_m138 = 0;
 int p_at_m138 = 0;
@@ -39,21 +39,21 @@ int f_at_m138 = 0;
 int a_at_m138 = 0;
 
 
-item::item()
+Item::Item()
     : enchantments(15)
 {
 }
 
 
 
-void item::clear()
+void Item::clear()
 {
     copy({}, *this);
 }
 
 
 
-bool item::almost_equals(const item& other, bool ignore_position)
+bool Item::almost_equals(const Item& other, bool ignore_position)
 {
     return true
         // && number == other.number
@@ -79,7 +79,7 @@ bool item::almost_equals(const item& other, bool ignore_position)
         && range::equal(enchantments, other.enchantments);
 }
 
-inventory::inventory()
+Inventory::Inventory()
     : storage(5480)
 {
     for (size_t i = 0; i < storage.size(); ++i)
@@ -90,7 +90,7 @@ inventory::inventory()
 
 int ibit(size_t type, int ci)
 {
-    assert(type < sizeof(item::flags) * 8);
+    assert(type < sizeof(Item::flags) * 8);
     return inv[ci].flags & (1 << type) ? 1 : 0;
 }
 
@@ -98,7 +98,7 @@ int ibit(size_t type, int ci)
 
 void ibitmod(size_t type, int ci, int on)
 {
-    assert(type < sizeof(item::flags) * 8);
+    assert(type < sizeof(Item::flags) * 8);
     if (on)
     {
         inv[ci].flags |= 1 << type;
@@ -281,7 +281,7 @@ int itemusingfind(int ci, bool disallow_pc)
 {
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::State::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -347,7 +347,7 @@ int mapitemfind(int x, int y, int id)
         {
             continue;
         }
-        if (inv[cnt].id == id && inv[cnt].position == position_t{x, y})
+        if (inv[cnt].id == id && inv[cnt].position == Position{x, y})
         {
             return cnt;
         }
@@ -464,7 +464,7 @@ void item_copy(int a, int b)
 
     bool was_empty = inv[b].number() == 0;
 
-    item::copy(inv[a], inv[b]);
+    Item::copy(inv[a], inv[b]);
 
     if (was_empty && inv[b].number() != 0)
     {
@@ -480,17 +480,17 @@ void item_copy(int a, int b)
 
 void item_exchange(int a, int b)
 {
-    item tmp;
-    item::copy(inv[a], tmp);
-    item::copy(inv[b], inv[a]);
-    item::copy(tmp, inv[b]);
+    Item tmp;
+    Item::copy(inv[a], tmp);
+    Item::copy(inv[b], inv[a]);
+    Item::copy(tmp, inv[b]);
 
-    lua::lua->get_handle_manager().swap_handles<item>(inv[b], inv[a]);
+    lua::lua->get_handle_manager().swap_handles<Item>(inv[b], inv[a]);
 }
 
 
 
-void item::remove()
+void Item::remove()
 {
     number_ = 0;
     lua::lua->get_handle_manager().remove_item_handle_run_callbacks(*this);
@@ -507,7 +507,7 @@ void item_delete(int ci)
 
 
 
-void item_refresh(item& i)
+void item_refresh(Item& i)
 {
     if (i.number() <= 0)
     {
@@ -528,14 +528,14 @@ void item_refresh(item& i)
 
 
 
-void item::modify_number(int delta)
+void Item::modify_number(int delta)
 {
     this->set_number(this->number_ + delta);
 }
 
 
 
-void item::set_number(int number_)
+void Item::set_number(int number_)
 {
     bool item_was_empty = this->number_ <= 0;
 
@@ -607,7 +607,7 @@ bool chara_unequip(int ci)
 }
 
 
-IdentifyState item_identify(item& ci, IdentifyState level)
+IdentifyState item_identify(Item& ci, IdentifyState level)
 {
     if (level == IdentifyState::almost_identified
         && the_item_db[ci.id]->category >= 50000)
@@ -629,7 +629,7 @@ IdentifyState item_identify(item& ci, IdentifyState level)
 }
 
 
-IdentifyState item_identify(item& ci, int power)
+IdentifyState item_identify(Item& ci, int power)
 {
     return item_identify(
         ci,
@@ -1566,7 +1566,7 @@ int item_stack(int inventory_id, int ci, int show_message)
     return did_stack;
 }
 
-void item_dump_desc(const item& i)
+void item_dump_desc(const Item& i)
 {
     reftype = the_item_db[i.id]->category;
 
@@ -1582,7 +1582,7 @@ void item_dump_desc(const item& i)
 
 
 
-void item_acid(const character& owner, int ci)
+void item_acid(const Character& owner, int ci)
 {
     if (ci == -1)
     {
@@ -1840,7 +1840,7 @@ void mapitem_fire(int x, int y)
         {
             continue;
         }
-        if (inv[cnt].position == position_t{x, y})
+        if (inv[cnt].position == Position{x, y})
         {
             ci = cnt;
             break;
@@ -2003,7 +2003,7 @@ void mapitem_cold(int x, int y)
         {
             continue;
         }
-        if (inv[cnt].position == position_t{x, y})
+        if (inv[cnt].position == Position{x, y})
         {
             ci = cnt;
             break;

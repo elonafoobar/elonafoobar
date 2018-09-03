@@ -36,7 +36,7 @@ int dmg_at_m141 = 0;
 
 
 
-void end_dmghp(const character& victim)
+void end_dmghp(const Character& victim)
 {
     if (victim.is_hung_on_sand_bag())
     {
@@ -57,7 +57,7 @@ void end_dmghp(const character& victim)
 
 
 
-void dmgheal_death_by_backpack(character& chara)
+void dmgheal_death_by_backpack(Character& chara)
 {
     int heaviest_item_index = -1;
     int heaviest_weight = 0;
@@ -105,7 +105,7 @@ namespace elona
 
 
 int damage_hp(
-    character& victim,
+    Character& victim,
     int amount,
     int damage_source,
     int element,
@@ -116,7 +116,7 @@ int damage_hp(
     int gained_exp = 0;
     bool attacker_is_player = false;
 
-    optional<character&> attacker = none;
+    optional<Character&> attacker = none;
     if (damage_source >= 0)
     {
         attacker = cdata[damage_source];
@@ -130,7 +130,7 @@ int damage_hp(
     {
         attacker_is_player = false;
     }
-    if (victim.state() != character::State::alive)
+    if (victim.state() != Character::State::alive)
     {
         end_dmghp(victim);
         return 0;
@@ -295,7 +295,7 @@ int damage_hp(
                 {
                     continue;
                 }
-                if (cdata[cnt].state() != character::State::alive)
+                if (cdata[cnt].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -901,18 +901,18 @@ int damage_hp(
         }
         if (victim.character_role == 0)
         {
-            victim.set_state(character::State::empty);
+            victim.set_state(Character::State::empty);
         }
         else if (victim.character_role == 13)
         {
-            victim.set_state(character::State::adventurer_dead);
+            victim.set_state(Character::State::adventurer_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
         }
         else
         {
-            victim.set_state(character::State::villager_dead);
+            victim.set_state(Character::State::villager_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
@@ -921,16 +921,16 @@ int damage_hp(
             if (victim.index < 16)
             {
                 chara_modify_impression(victim, -10);
-                victim.set_state(character::State::pet_dead);
+                victim.set_state(Character::State::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
                 {
                     event_add(15, victim.id);
-                    victim.set_state(character::State::empty);
+                    victim.set_state(Character::State::empty);
                 }
                 if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    victim.set_state(character::State::empty);
+                    victim.set_state(Character::State::empty);
                 }
             }
         }
@@ -1102,7 +1102,7 @@ int damage_hp(
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
-        if (victim.state() == character::State::empty)
+        if (victim.state() == Character::State::empty)
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
@@ -1150,7 +1150,7 @@ int damage_hp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                if (cdata[chara_index].state() != character::State::alive)
+                if (cdata[chara_index].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1190,7 +1190,7 @@ int damage_hp(
 
 
 
-void heal_hp(character& cc, int delta)
+void heal_hp(Character& cc, int delta)
 {
     cc.hp += delta;
     if (cc.hp > cc.max_hp)
@@ -1201,7 +1201,7 @@ void heal_hp(character& cc, int delta)
 
 
 
-void damage_mp(character& cc, int delta)
+void damage_mp(Character& cc, int delta)
 {
     cc.mp -= delta;
     if (cc.mp < -999999)
@@ -1232,7 +1232,7 @@ void damage_mp(character& cc, int delta)
 
 
 
-void heal_mp(character& cc, int delta)
+void heal_mp(Character& cc, int delta)
 {
     cc.mp += delta;
     if (cc.mp > cc.max_mp)
@@ -1243,7 +1243,7 @@ void heal_mp(character& cc, int delta)
 
 
 
-bool action_sp(character& cc, int sp)
+bool action_sp(Character& cc, int sp)
 {
     if (cc.index != 0 || debug::voldemort)
         return true;
@@ -1254,7 +1254,7 @@ bool action_sp(character& cc, int sp)
 
 
 
-void damage_sp(character& cc, int delta)
+void damage_sp(Character& cc, int delta)
 {
     if (cc.index != 0 || debug::voldemort)
         return;
@@ -1267,7 +1267,7 @@ void damage_sp(character& cc, int delta)
 
 
 
-void heal_sp(character& cc, int delta)
+void heal_sp(Character& cc, int delta)
 {
     cc.sp += delta;
     if (cc.sp > cc.max_sp)
@@ -1278,7 +1278,7 @@ void heal_sp(character& cc, int delta)
 
 
 
-void damage_insanity(character& cc, int delta)
+void damage_insanity(Character& cc, int delta)
 {
     if (cc.quality >= 4)
         return;
@@ -1305,7 +1305,7 @@ void damage_insanity(character& cc, int delta)
 
 
 
-void heal_insanity(character& cc, int delta)
+void heal_insanity(Character& cc, int delta)
 {
     cc.insanity -= delta;
     if (cc.insanity < 0)

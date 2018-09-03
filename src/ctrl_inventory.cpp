@@ -24,9 +24,9 @@
 namespace elona
 {
 
-menu_result ctrl_inventory()
+MenuResult ctrl_inventory()
 {
-    menu_result result = {false, false, TurnResult::none};
+    MenuResult result = {false, false, TurnResult::none};
     int mainweapon = 0;
     int countequip = 0;
     int showmoney = 0;
@@ -809,8 +809,8 @@ label_2060_internal:
                           i18n::_(u8"ui", u8"inventory_command", u8"_"s + p))
                         * 3,
                 y + 7,
-                invctrl == p ? snail::color{255, 255, 255}
-                             : snail::color{165, 165, 165});
+                invctrl == p ? snail::Color{255, 255, 255}
+                             : snail::Color{165, 165, 165});
             if (invkey(p) != ""s)
             {
                 bmes(

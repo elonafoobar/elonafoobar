@@ -21,7 +21,7 @@ namespace elona
 {
 
 
-struct buff_t
+struct Buff
 {
     int id = 0;
     int power = 0;
@@ -39,7 +39,7 @@ struct buff_t
 
 
 
-struct character
+struct Character
 {
     enum class State : int
     {
@@ -58,19 +58,19 @@ struct character
         servant_being_selected = 10,
     };
 
-    character();
+    Character();
 
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
 
     // Index of this character into the global cdata array.
     // Used for communicating with legacy code that takes integer index
-    // arguments. New code should pass character& instead. Not serialized; set
+    // arguments. New code should pass Character& instead. Not serialized; set
     // on creation and load.
     int index = -1;
 
-    position_t position;
-    position_t next_position;
+    Position position;
+    Position next_position;
     int time_to_revive = 0;
     int vision_flag = 0;
     int image = 0;
@@ -162,7 +162,7 @@ struct character
     int shop_store_id = 0;
     int time_to_restore = 0;
     int cnpc_id = 0;
-    position_t initial_position;
+    Position initial_position;
     int hate = 0;
     int ai_calm = 0;
     int ai_move = 0;
@@ -190,7 +190,7 @@ struct character
     std::vector<int> body_parts;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
-    std::vector<buff_t> buffs;
+    std::vector<Buff> buffs;
     std::vector<int> attr_adjs;
 
     int _156 = 0;
@@ -210,17 +210,17 @@ struct character
 
     bool is_dead()
     {
-        return state_ == character::State::empty
-            || state_ == character::State::pet_dead
-            || state_ == character::State::villager_dead
-            || state_ == character::State::adventurer_dead;
+        return state_ == Character::State::empty
+            || state_ == Character::State::pet_dead
+            || state_ == Character::State::villager_dead
+            || state_ == Character::State::adventurer_dead;
     }
 
-    character::State state() const
+    Character::State state() const
     {
         return state_;
     }
-    void set_state(character::State);
+    void set_state(Character::State);
 
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
@@ -361,7 +361,7 @@ struct character
     }
 
 
-    static void copy(const character& from, character& to)
+    static void copy(const Character& from, Character& to)
     {
         const auto index_save = to.index;
         to = from;
@@ -370,22 +370,22 @@ struct character
 
 
 private:
-    character::State state_ = character::State::empty;
+    Character::State state_ = Character::State::empty;
 
 
-    character(const character&) = default;
-    character(character&&) = default;
-    character& operator=(const character&) = default;
-    character& operator=(character&&) = default;
+    Character(const Character&) = default;
+    Character(Character&&) = default;
+    Character& operator=(const Character&) = default;
+    Character& operator=(Character&&) = default;
 };
 
 
 
-struct cdata_slice
+struct CDataSlice
 {
-    using iterator = std::vector<character>::iterator;
+    using iterator = std::vector<Character>::iterator;
 
-    cdata_slice(const iterator& begin, const iterator& end)
+    CDataSlice(const iterator& begin, const iterator& end)
         : _begin(begin)
         , _end(end)
     {
@@ -408,55 +408,55 @@ private:
 
 
 
-struct cdata_t
+struct CData
 {
-    cdata_t();
+    CData();
 
 
-    character& operator[](int index)
+    Character& operator[](int index)
     {
         return storage[index];
     }
 
 
-    character& player()
+    Character& player()
     {
         return (*this)[0];
     }
 
 
-    character& tmp()
+    Character& tmp()
     {
         return (*this)[56];
     }
 
 
 
-    cdata_slice all()
+    CDataSlice all()
     {
         return {std::begin(storage), std::end(storage)};
     }
 
 
-    cdata_slice pets()
+    CDataSlice pets()
     {
         return {std::begin(storage) + 1, std::begin(storage) + 16};
     }
 
 
-    cdata_slice pc_and_pets()
+    CDataSlice pc_and_pets()
     {
         return {std::begin(storage), std::begin(storage) + 16};
     }
 
 
-    cdata_slice adventurers()
+    CDataSlice adventurers()
     {
         return {std::begin(storage) + 16, std::begin(storage) + 56};
     }
 
 
-    cdata_slice others()
+    CDataSlice others()
     {
         return {std::begin(storage) + 57, std::end(storage)};
     }
@@ -464,11 +464,11 @@ struct cdata_t
 
 
 private:
-    std::vector<character> storage;
+    std::vector<Character> storage;
 };
 
 
-extern cdata_t cdata;
+extern CData cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 void initialize_character();
@@ -490,7 +490,7 @@ enum class CharaRelocationMode
  * you specify `none`, find an empty slot in cdata.others().
  */
 void chara_relocate(
-    character& source,
+    Character& source,
     optional<int> destination_slot,
     CharaRelocationMode mode = CharaRelocationMode::normal);
 
@@ -503,12 +503,12 @@ void chara_refresh(int);
  * @return the character slot copied to if `source` was successfully copied;
  * otherwise, -1.
  */
-int chara_copy(const character& source);
+int chara_copy(const Character& source);
 
 void chara_delete(int = 0);
-void chara_remove(character&);
+void chara_remove(Character&);
 void chara_vanquish(int = 0);
-void chara_killed(character&);
+void chara_killed(Character&);
 int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
@@ -517,9 +517,9 @@ bool chara_unequip(int);
 int chara_custom_talk(int = 0, int = 0);
 std::string chara_refstr(int = 0, int = 0);
 int chara_impression_level(int = 0);
-void chara_modify_impression(character& cc, int delta);
-void chara_set_item_which_will_be_used(character& cc);
-int chara_armor_class(const character& cc);
+void chara_modify_impression(Character& cc, int delta);
+void chara_set_item_which_will_be_used(Character& cc);
+int chara_armor_class(const Character& cc);
 
 void initialize_character_filters();
 void chara_set_generation_filter();
@@ -527,7 +527,7 @@ void chara_add_quality_parens();
 
 int access_character_info();
 
-bool belong_to_same_team(const character& c1, const character& c2);
+bool belong_to_same_team(const Character& c1, const Character& c2);
 
 
 } // namespace elona

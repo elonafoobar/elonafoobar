@@ -18,7 +18,7 @@ namespace
 {
 
 
-int calculate_original_value(const item& ci)
+int calculate_original_value(const Item& ci)
 {
     if (the_item_db[ci.id]->category == 60000)
     {
@@ -53,7 +53,7 @@ int itemcreate(int slot, int id, int x, int y, int number)
 
 void get_random_item_id()
 {
-    weighted_random_sampler<int> sampler;
+    WeightedRandomSampler<int> sampler;
 
     for (const auto& data : the_item_db)
     {

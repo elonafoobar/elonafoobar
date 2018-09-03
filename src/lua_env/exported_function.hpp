@@ -10,9 +10,9 @@ namespace lua
 
 // Holds identifier and function pointer from an exported Lua
 // function.
-struct exported_function
+struct ExportedFunction
 {
-    exported_function(std::string id, sol::protected_function func)
+    ExportedFunction(std::string id, sol::protected_function func)
         : id(id)
         , func(func)
     {

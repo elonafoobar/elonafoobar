@@ -6,9 +6,9 @@ namespace elona
 namespace ui
 {
 
-struct ui_menu_charamake_race_result
+struct UIMenuCharamakeRaceResult
 {
-    ui_menu_charamake_race_result(std::string race_id, std::string race_name)
+    UIMenuCharamakeRaceResult(std::string race_id, std::string race_name)
         : race_id(race_id)
         , race_name(race_name)
     {
@@ -18,7 +18,7 @@ struct ui_menu_charamake_race_result
     std::string race_name;
 };
 
-class UIMenuCharamakeRace : public UIMenu<ui_menu_charamake_race_result>
+class UIMenuCharamakeRace : public UIMenu<UIMenuCharamakeRaceResult>
 {
 public:
     UIMenuCharamakeRace()

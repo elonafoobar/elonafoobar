@@ -7,7 +7,7 @@ namespace elona
 {
 
 
-foobar_data_t foobar_data;
+FoobarData foobar_data;
 
 
 void modify_crowd_density(int cc, int delta)

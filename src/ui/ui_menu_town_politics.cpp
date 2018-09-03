@@ -195,7 +195,7 @@ optional<UIMenuTownPolitics::result_type> UIMenuTownPolitics::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return UIMenuTownPolitics::result::cancel();
+        return UIMenuTownPolitics::Result::cancel();
     }
 
     return none;

@@ -16,22 +16,22 @@ int height();
 
 bool is_overworld();
 
-bool valid(const position_t&);
+bool valid(const Position&);
 bool valid_xy(int, int);
 
-bool can_access(const position_t&);
+bool can_access(const Position&);
 bool can_access_xy(int, int);
 
-position_t bound_within(const position_t&);
+Position bound_within(const Position&);
 
-position_t random_pos();
+Position random_pos();
 
 int generate_tile(const enum_string&);
 
-void set_tile(const position_t&, int);
+void set_tile(const Position&, int);
 void set_tile_xy(int, int, int);
 
-void set_tile_memory(const position_t&, int);
+void set_tile_memory(const Position&, int);
 void set_tile_memory_xy(int, int, int);
 
 

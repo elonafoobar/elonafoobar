@@ -79,7 +79,7 @@ void load_musiclist()
         return;
 
     size_t i = 0;
-    for (auto&& line : fileutil::read_by_line{filepath})
+    for (auto&& line : fileutil::read_by_line(filepath))
     {
         if (line.empty())
             continue;
@@ -150,9 +150,9 @@ void load_character_sprite()
     gmode(0);
     gsel(5);
     for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::user() / u8"graphic",
-                                 filesystem::dir_entries::Type::file,
-                                 std::regex{u8R"(chara_.*\.bmp)"}})
+         filesystem::dir_entries(filesystem::dir::user() / u8"graphic",
+                                 filesystem::DirEntryRange::Type::file,
+                                 std::regex{u8R"(chara_.*\.bmp)"}))
     {
         const auto file = filesystem::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
@@ -285,23 +285,23 @@ int cat_get_field_with_index(lua_State* L)
 
 
 const luaL_Reg cdata_functions[] = {
-    {u8"pv", &cat_get_field<character, int, &character::pv>},
-    {u8"fear", &cat_get_field<character, int, &character::fear>},
-    {u8"confused", &cat_get_field<character, int, &character::confused>},
-    {u8"dv", &cat_get_field<character, int, &character::dv>},
-    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
+    {u8"pv", &cat_get_field<Character, int, &Character::pv>},
+    {u8"fear", &cat_get_field<Character, int, &Character::fear>},
+    {u8"confused", &cat_get_field<Character, int, &Character::confused>},
+    {u8"dv", &cat_get_field<Character, int, &Character::dv>},
+    {u8"hit_bonus", &cat_get_field<Character, int, &Character::hit_bonus>},
     {u8"growth_buffs",
-     &cat_get_field_with_index<character, int, &character::growth_buffs>},
+     &cat_get_field_with_index<Character, int, &Character::growth_buffs>},
     {nullptr, nullptr},
 };
 
 
 const luaL_Reg sdata_functions[] = {
-    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
+    {u8"current_level", &cat_get_field<Ability, int, &Ability::current_level>},
     {u8"original_level",
-     &cat_get_field<ability, int, &ability::original_level>},
-    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
-    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
+     &cat_get_field<Ability, int, &Ability::original_level>},
+    {u8"experience", &cat_get_field<Ability, int, &Ability::experience>},
+    {u8"potential", &cat_get_field<Ability, int, &Ability::potential>},
     {nullptr, nullptr},
 };
 
@@ -327,7 +327,7 @@ int cat_cdata(lua_State* L)
 {
     int cc = luaL_checknumber(L, 1);
 
-    cat::userdata<character>::push_new(L, &cdata[cc]);
+    cat::userdata<Character>::push_new(L, &cdata[cc]);
     luaL_setmetatable(L, "elona__cdata");
 
     return 1;
@@ -339,7 +339,7 @@ int cat_sdata(lua_State* L)
     int id = luaL_checknumber(L, 1);
     int cc = luaL_checknumber(L, 2);
 
-    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
+    cat::userdata<Ability>::push_new(L, &sdata.get(id, cc));
     luaL_setmetatable(L, "elona__sdata");
 
     return 1;
@@ -375,10 +375,10 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-static std::vector<lua::RegistryManager::location>
+static std::vector<lua::RegistryManager::Location>
 collect_mod_datafile_locations()
 {
-    std::vector<lua::RegistryManager::location> locations;
+    std::vector<lua::RegistryManager::Location> locations;
 
     for (const auto& pair : lua::lua->get_mod_manager())
     {
@@ -469,7 +469,7 @@ void initialize_i18n()
     i18n::load(language);
 
     // Load built-in translations in data/locale/(jp|en).
-    std::vector<i18n::Store::location> locations{
+    std::vector<i18n::Store::Location> locations{
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.

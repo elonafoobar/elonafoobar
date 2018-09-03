@@ -727,7 +727,7 @@ void talk_window_show()
         i18n::s.get("core.locale.talk.window.impress"), wx + 28, wy + 170);
     display_topic(
         i18n::s.get("core.locale.talk.window.attract"), wx + 28, wy + 215);
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (cdatan(1, tc) == ""s)
     {
         s = cdatan(0, tc) + u8" "s;

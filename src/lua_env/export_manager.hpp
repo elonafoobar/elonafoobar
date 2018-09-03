@@ -41,7 +41,7 @@ public:
      * Obtains a Lua callback where name is like
      * "exports:<mod_name>.<namespaces>", if it exists.
      */
-    optional<exported_function> get_exported_function(
+    optional<ExportedFunction> get_exported_function(
         const std::string& name) const;
 
     bool has_function(const std::string& name) const

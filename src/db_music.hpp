@@ -5,13 +5,13 @@
 namespace elona
 {
 
-struct music_data
+struct MusicData
 {
     int id;
     fs::path file;
 };
 
-ELONA_LION_DEFINE_DB(MusicDB, music_data, int, u8"music")
+ELONA_LION_DEFINE_DB(MusicDB, MusicData, int, u8"music")
 
 extern MusicDB the_music_db;
 

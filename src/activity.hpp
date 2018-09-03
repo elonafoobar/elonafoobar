@@ -5,14 +5,14 @@
 namespace elona
 {
 
-struct character;
+struct Character;
 
 void rowact_check(int = 0);
 void rowact_item(int = 0);
 void rowactend(int = 0);
 
-void activity_handle_damage(character&);
-optional<TurnResult> activity_proc(character&);
+void activity_handle_damage(Character&);
+optional<TurnResult> activity_proc(Character&);
 
 void prompt_stop_continuous_action();
 void continuous_action_perform();

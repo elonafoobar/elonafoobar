@@ -312,7 +312,7 @@ void initialize_craft_material_data()
 }
 
 // clang-format off
-std::unordered_map<int, crafting_recipe> recipes = {
+std::unordered_map<int, CraftingRecipe> recipes = {
     {502, {179, 40, {{35, 2}, {44, 2}, {51, 2}} }},
     {501, {179, 13, {{43, 2}, {44, 1}         } }},
     {500, {179, 1,  {{43, 2}, {38, 1}         } }},
@@ -363,7 +363,7 @@ std::unordered_map<int, crafting_recipe> recipes = {
 };
 // clang-format on
 
-optional<const crafting_recipe&> crafting_find_recipe(int matid_)
+optional<const CraftingRecipe&> crafting_find_recipe(int matid_)
 {
     auto it = recipes.find(matid_);
 
@@ -375,7 +375,7 @@ optional<const crafting_recipe&> crafting_find_recipe(int matid_)
     return it->second;
 }
 
-static int _determine_crafted_fixlv(const crafting_recipe& recipe)
+static int _determine_crafted_fixlv(const CraftingRecipe& recipe)
 {
     int fixlv_ = 2;
     if (rnd(200 + recipe.required_skill_level * 2)
@@ -392,7 +392,7 @@ static int _determine_crafted_fixlv(const crafting_recipe& recipe)
     return fixlv_;
 }
 
-static void _craft_item(int matid, const crafting_recipe& recipe)
+static void _craft_item(int matid, const CraftingRecipe& recipe)
 {
     fixlv = _determine_crafted_fixlv(recipe);
     flt(calcobjlv(sdata(recipe.skill_used, 0)), calcfixlv(fixlv));

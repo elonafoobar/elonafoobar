@@ -10,7 +10,7 @@ namespace elona
 namespace
 {
 
-static void copy_image(snail::BasicImage& img, const extent& ext)
+static void copy_image(snail::BasicImage& img, const Extent& ext)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -23,8 +23,8 @@ static void copy_image(snail::BasicImage& img, const extent& ext)
 
 static void copy_image_cropped(
     snail::BasicImage& img,
-    const extent& source,
-    const extent& dest)
+    const Extent& source,
+    const Extent& dest)
 {
     const auto save =
         snail::Application::instance().get_renderer().blend_mode();
@@ -54,8 +54,8 @@ void PicLoader::load(
     const id_type& id,
     PageType type)
 {
-    snail::BasicImage img{image_file, snail::color{0, 0, 0}};
-    extent ext{0, 0, 0, 0};
+    snail::BasicImage img{image_file, snail::Color{0, 0, 0}};
+    Extent ext{0, 0, 0, 0};
 
     size_t i = 0;
     while (true)
@@ -103,20 +103,20 @@ void PicLoader::add_predefined_extents(
     const map_type& extents,
     PageType type)
 {
-    snail::BasicImage img{atlas_file, snail::color{0, 0, 0}};
+    snail::BasicImage img{atlas_file, snail::Color{0, 0, 0}};
 
     // Add a new buffer for this atlas. The assumption is that all the
     // defined sprites will fit on this buffer. This assumption might
     // not hold in the degenerate case, but for the atlases used
     // (character.bmp, image.bmp) there is still a good amount of
     // unused space to hold any potential overflow.
-    buffer_info& info = add_buffer(type, img.width(), img.height());
+    BufferInfo& info = add_buffer(type, img.width(), img.height());
     gsel(info.buffer_id);
 
     for (auto& pair : extents)
     {
         // Get the source loaded from a definition file.
-        const extent& source = pair.second;
+        const Extent& source = pair.second;
 
         assert(source.right() < img.width());
         assert(source.bottom() < img.height());
@@ -126,7 +126,7 @@ void PicLoader::add_predefined_extents(
         assert(found);
 
         size_t skyline_index = found->first;
-        extent& dest = found->second;
+        Extent& dest = found->second;
         dest.buffer = info.buffer_id;
         dest.frame_width = source.frame_width;
 
@@ -141,7 +141,7 @@ void PicLoader::add_predefined_extents(
     }
 }
 
-PicLoader::buffer_info& PicLoader::add_buffer(PageType type, int w, int h)
+PicLoader::BufferInfo& PicLoader::add_buffer(PageType type, int w, int h)
 {
     int new_buffer_index;
     size_t buffer_info_index = buffers.size();

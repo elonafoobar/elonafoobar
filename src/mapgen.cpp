@@ -448,7 +448,7 @@ void map_placeplayer()
     camera = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }

@@ -22,7 +22,6 @@ constexpr int max_volume = MIX_MAX_VOLUME;
 // 8-12: temporary
 // 13-16: reserved for weather effect
 
-constexpr int max_channels = 17;
 constexpr int temporary_channels_head = 7;
 constexpr int temporary_channels_size = 6;
 
@@ -182,7 +181,7 @@ namespace detail
 {
 
 void snd_inner(
-    const sound_data& sound,
+    const SoundData& sound,
     short angle,
     unsigned char dist,
     bool loop,
@@ -375,13 +374,13 @@ std::pair<short, unsigned char> sound_calculate_position(
     return {angle, dist};
 }
 
-std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
+std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 {
     if (!Config::instance().get<bool>("core.config.screen.stereo_sound"))
     {
         return {0, 0};
     }
-    if (cdata.player().state() == character::State::empty)
+    if (cdata.player().state() == Character::State::empty)
     {
         return {0, 0};
     }

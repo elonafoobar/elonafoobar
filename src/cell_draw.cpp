@@ -31,7 +31,7 @@ int pcc_size(int shrinked, int fullscale)
 
 
 template <typename T>
-struct loop_xy
+struct XYIterator
 {
     struct iterator
     {
@@ -78,7 +78,7 @@ struct loop_xy
     };
 
 
-    loop_xy(T width, T height)
+    XYIterator(T width, T height)
         : width(width)
         , height(height)
     {
@@ -101,8 +101,15 @@ private:
 };
 
 
+template <typename T>
+XYIterator<T> loop_xy(T width, T height)
+{
+    return {width, height};
+}
 
-struct lightdata_t
+
+
+struct LightData
 {
     int x;
     int frame;
@@ -114,7 +121,7 @@ struct lightdata_t
 };
 
 
-lightdata_t lightdata[] = {
+LightData lightdata[] = {
     {0, 0, 0, 0, 0, 0, false},      {1, 1, 50, 8, 8, 50, true},
     {1, 1, 70, 28, 8, 70, true},    {3, 0, 100, 30, 8, 20, false},
     {3, 0, 80, 0, 6, 40, false},    {11, 0, 140, 48, 10, 20, false},
@@ -129,7 +136,7 @@ lightdata_t lightdata[] = {
 
 
 
-struct deco_t
+struct Deco
 {
     int _0;
     int _1;
@@ -137,7 +144,7 @@ struct deco_t
 };
 
 
-deco_t deco[] = {
+Deco deco[] = {
     {0, 0, 0},   {0, 1, 0},   {1, 2, 0},   {0, 0, 0},   {1, 0, 0},
     {0, 0, 0},   {-1, 21, 0}, {-1, 30, 0}, {2, 1, 0},   {-1, 20, 0},
     {2, 2, 0},   {-1, 33, 0}, {2, 0, 0},   {-1, 32, 0}, {-1, 31, 0},
@@ -227,7 +234,7 @@ void render_shadow_low(int light)
 {
     gmode(6, light);
 
-    for (const auto& pos : loop_xy<int>(inf_screenw, inf_screenh))
+    for (const auto& pos : loop_xy(inf_screenw, inf_screenh))
     {
         const auto x = pos.first;
         const auto y = pos.second;
@@ -411,7 +418,7 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
     if (scrollanime == 0)
     {
-        for (const auto& pos : loop_xy<int>(inf_screenw, inf_screenh))
+        for (const auto& pos : loop_xy(inf_screenw, inf_screenh))
         {
             const auto x = pos.first;
             const auto y = pos.second;
@@ -428,7 +435,7 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
         {
             f_ = 1;
         }
-        for (const auto& pos : loop_xy<int>(inf_screenw + 2, inf_screenh + 2))
+        for (const auto& pos : loop_xy(inf_screenw + 2, inf_screenh + 2))
         {
             const auto x = pos.first;
             const auto y = pos.second;
@@ -445,9 +452,9 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
 
 
-struct cloud
+struct Cloud
 {
-    cloud(int x0, int y0, int x, int y, int width, int height)
+    Cloud(int x0, int y0, int x, int y, int width, int height)
         : x0(x0)
         , y0(y0)
         , x(x)
@@ -465,7 +472,7 @@ struct cloud
     int height;
 };
 
-std::vector<cloud> clouds;
+std::vector<Cloud> clouds;
 
 
 void initialize_cloud_data()
@@ -627,7 +634,7 @@ void draw_character_sprite(
 
 
 
-optional_ref<extent> prepare_chara_chip(int c_, int dx, int dy)
+optional_ref<Extent> prepare_chara_chip(int c_, int dx, int dy)
 {
     const int col_ = cdata[c_].image / 1000;
     const int p_ = cdata[c_].image % 1000;
@@ -779,14 +786,14 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 }
 
 
-bool you_can_see(const character& chara)
+bool you_can_see(const Character& chara)
 {
     return is_in_fov(chara)
         && (!chara.is_invisible() || cdata.player().can_see_invisible()
             || chara.wet != 0);
 }
 
-bool hp_bar_visible(const character& chara)
+bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() || gdata(94) == chara.index
         || debug::voldemort;
@@ -946,7 +953,7 @@ void draw_mefs(int x, int y, int dx, int dy, int scrturn_)
 
 
 
-void draw_item_chip_in_world_map(int x, int y, const extent& rect)
+void draw_item_chip_in_world_map(int x, int y, const Extent& rect)
 {
     pos(x, y);
     gmode(2);
@@ -956,7 +963,7 @@ void draw_item_chip_in_world_map(int x, int y, const extent& rect)
 
 
 
-void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
+void draw_item_chip_shadow(int x, int y, const Extent& rect, int p_, int alpha)
 {
     gmode(2, alpha);
     if (rect.height == inf_tiles)
@@ -993,7 +1000,7 @@ void draw_item_chip_shadow(int x, int y, const extent& rect, int p_, int alpha)
 void draw_item_chip_on_ground(
     int x,
     int y,
-    const extent& rect,
+    const Extent& rect,
     int p_,
     int scrturn_)
 {
@@ -1085,7 +1092,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
         }
         else
         {
-            optional_ref<extent> rect;
+            optional_ref<Extent> rect;
             if (p_ == 528 || p_ == 531)
             {
                 rect = prepare_item_image(
@@ -1241,7 +1248,7 @@ void cell_draw()
 
             // Spot light for PC (bottom a third)
             if (reph(3) == y && x_ == repw(2)
-                && cdata.player().state() == character::State::alive)
+                && cdata.player().state() == Character::State::alive)
             {
                 px_ = (cdata.player().position.x - scx) * inf_tiles
                     + inf_screenx - 48;
@@ -1261,7 +1268,7 @@ void cell_draw()
             }
 
             if (reph(2) == y && x_ == repw(2)
-                && cdata.player().state() == character::State::alive)
+                && cdata.player().state() == Character::State::alive)
             {
                 ground_ = map(
                     cdata.player().position.x, cdata.player().position.y, 0);

@@ -163,9 +163,9 @@ public:
 class ConfigMenuItemChoice : public ConfigMenuItemBase
 {
 public:
-    struct choice
+    struct Choice
     {
-        choice(std::string value, i18n_key message_key)
+        Choice(std::string value, i18n_key message_key)
             : value(value)
             , message_key(message_key)
         {
@@ -177,13 +177,13 @@ public:
 
     int index;
     bool translate_variants;
-    std::vector<choice> variants;
+    std::vector<Choice> variants;
 
     ConfigMenuItemChoice(
         const std::string& key,
         const i18n_key& locale_key,
         std::string default_choice,
-        const std::vector<choice>& variants,
+        const std::vector<Choice>& variants,
         bool translate_variants)
         : ConfigMenuItemBase(key, locale_key)
         , translate_variants(translate_variants)
@@ -379,13 +379,13 @@ static void add_config_item_choice(
 {
     // Add the translated names of all variants.
     const auto& variants = def.get_variants(key);
-    std::vector<ConfigMenuItemChoice::choice> choices;
+    std::vector<ConfigMenuItemChoice::Choice> choices;
 
     for (const auto& variant : variants)
     {
-        auto choice = ConfigMenuItemChoice::choice{
+        auto Choice = ConfigMenuItemChoice::Choice{
             variant, locale_key + ".variants." + variant};
-        choices.emplace_back(choice);
+        choices.emplace_back(Choice);
     }
 
     bool translate_variants = def.get_metadata(key).translate_variants;
@@ -497,30 +497,30 @@ void visit_config_item(
         return;
     }
 
-    if (conf.get_def().is<spec::bool_def>(key))
+    if (conf.get_def().is<spec::BoolDef>(key))
     {
         add_config_item_yesno(key, locale_key, conf.get<bool>(key), ret);
     }
-    else if (conf.get_def().is<spec::int_def>(key))
+    else if (conf.get_def().is<spec::IntDef>(key))
     {
         add_config_item_integer(
             key, locale_key, conf.get<int>(key), conf.get_def(), ret);
     }
-    else if (conf.get_def().is<spec::enum_def>(key))
+    else if (conf.get_def().is<spec::EnumDef>(key))
     {
         add_config_item_choice(
             key, locale_key, conf.get<std::string>(key), conf.get_def(), ret);
     }
-    else if (conf.get_def().is<spec::string_def>(key))
+    else if (conf.get_def().is<spec::StringDef>(key))
     {
         // ignore
         // TODO: don't ignore, allow text input
     }
-    else if (conf.get_def().is<spec::list_def>(key))
+    else if (conf.get_def().is<spec::ListDef>(key))
     {
         // ignore
     }
-    else if (conf.get_def().is<spec::section_def>(key))
+    else if (conf.get_def().is<spec::SectionDef>(key))
     {
         throw std::runtime_error(
             "You cannot currently define nested sections.");

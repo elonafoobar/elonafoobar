@@ -349,7 +349,7 @@ void window_recipe2(int val0)
     gcopy(3, 960, 288, 480, 68);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
-    font(15 - en * 2, snail::font_t::Style::bold);
+    font(15 - en * 2, snail::Font::Style::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
     bmes(
         i18n::s.get("core.locale.blending.rate_panel.success_rate", s_at_m183),
@@ -442,13 +442,13 @@ void window_recipe_(
     font(12 + sizefix - en * 2);
     pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
     mes(s_at_m184(1));
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
     dy_at_m184 = prm_1052 + 48;
-    font(12 - en * 2, snail::font_t::Style::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(i18n::s.get("core.locale.blending.window.procedure"));
     dy_at_m184 = dy_at_m184 + 18;
@@ -560,7 +560,7 @@ void window_recipe_(
     dy_at_m184 += 30;
     if (rppage == 0)
     {
-        font(12 - en * 2, snail::font_t::Style::bold);
+        font(12 - en * 2, snail::Font::Style::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(i18n::s.get(
             "core.locale.blending.window.the_recipe_of", rpname(rpid)));
@@ -594,7 +594,7 @@ void window_recipe_(
             color(0, 0, 0);
         }
         dy_at_m184 += 50;
-        font(12 - en * 2, snail::font_t::Style::bold);
+        font(12 - en * 2, snail::Font::Style::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(i18n::s.get("core.locale.blending.window.required_equipment"));
         return;
@@ -603,7 +603,7 @@ void window_recipe_(
     {
         return;
     }
-    font(12 - en * 2, snail::font_t::Style::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
@@ -790,7 +790,7 @@ label_1925_internal:
     display_topic(
         i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -912,7 +912,7 @@ label_1928_internal:
     display_topic(
         i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
     s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;

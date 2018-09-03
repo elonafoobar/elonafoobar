@@ -9,7 +9,7 @@ namespace elona
 
 
 // @VARIABLE@ is replaced by CMake.
-const version_t latest_version{
+const Version latest_version{
     @PROJECT_VERSION_MAJOR@,
     @PROJECT_VERSION_MINOR@,
     @PROJECT_VERSION_PATCH@,

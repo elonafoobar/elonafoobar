@@ -12,13 +12,13 @@ namespace elona
 namespace lua
 {
 
-void LuaCharacter::damage_hp(character& self, int amount)
+void LuaCharacter::damage_hp(Character& self, int amount)
 {
     LuaCharacter::damage_hp_source(self, amount, "UnseenHand");
 }
 
 void LuaCharacter::damage_hp_source(
-    character& self,
+    Character& self,
     int amount,
     const enum_string& source_name)
 {
@@ -28,16 +28,16 @@ void LuaCharacter::damage_hp_source(
 }
 
 void LuaCharacter::damage_hp_chara(
-    character& self,
+    Character& self,
     int amount,
     lua_character_handle handle)
 {
-    auto& other = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& other = lua::lua->get_handle_manager().get_ref<Character>(handle);
     elona::damage_hp(self, amount, other.index);
 }
 
 void LuaCharacter::apply_ailment(
-    character& self,
+    Character& self,
     const enum_string& ailment_name,
     int power)
 {
@@ -47,9 +47,9 @@ void LuaCharacter::apply_ailment(
     elona::dmgcon(self.index, ailment, power);
 }
 
-bool LuaCharacter::recruit_as_ally(character& self)
+bool LuaCharacter::recruit_as_ally(Character& self)
 {
-    if (self.state() == character::State::empty
+    if (self.state() == Character::State::empty
         || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;
@@ -59,7 +59,7 @@ bool LuaCharacter::recruit_as_ally(character& self)
 }
 
 void LuaCharacter::set_flag(
-    character& self,
+    Character& self,
     const std::string& flag_name,
     bool is_setting)
 {
@@ -68,13 +68,13 @@ void LuaCharacter::set_flag(
     self._flags[flag] = new_value;
 }
 
-void LuaCharacter::gain_skill(character& self, int skill, int initial_level)
+void LuaCharacter::gain_skill(Character& self, int skill, int initial_level)
 {
     LuaCharacter::gain_skill_stock(self, skill, initial_level, 0);
 }
 
 void LuaCharacter::gain_skill_stock(
-    character& self,
+    Character& self,
     int skill,
     int initial_level,
     int initial_stock)
@@ -86,7 +86,7 @@ void LuaCharacter::gain_skill_stock(
     elona::chara_gain_skill(self, skill, initial_level, initial_stock);
 }
 
-void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
+void LuaCharacter::gain_skill_exp(Character& self, int skill, int amount)
 {
     if (skill < 0 || skill >= 600)
     {
@@ -96,7 +96,7 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
 }
 
 void LuaCharacter::modify_resistance(
-    character& self,
+    Character& self,
     const enum_string& element_name,
     int delta)
 {
@@ -104,7 +104,7 @@ void LuaCharacter::modify_resistance(
     elona::resistmod(self.index, static_cast<int>(element), delta);
 }
 
-void LuaCharacter::modify_sanity(character& self, int delta)
+void LuaCharacter::modify_sanity(Character& self, int delta)
 {
     if (delta < 0)
     {
@@ -116,7 +116,7 @@ void LuaCharacter::modify_sanity(character& self, int delta)
     }
 }
 
-void LuaCharacter::modify_karma(character& self, int delta)
+void LuaCharacter::modify_karma(Character& self, int delta)
 {
     if (self.index != 0)
     {
@@ -126,7 +126,7 @@ void LuaCharacter::modify_karma(character& self, int delta)
     elona::modify_karma(self, delta);
 }
 
-void LuaCharacter::modify_corruption(character& self, int delta)
+void LuaCharacter::modify_corruption(Character& self, int delta)
 {
     if (self.index != 0)
     {
@@ -136,7 +136,7 @@ void LuaCharacter::modify_corruption(character& self, int delta)
     elona::modify_ether_disease_stage(delta);
 }
 
-void LuaCharacter::make_pregnant(character& self)
+void LuaCharacter::make_pregnant(Character& self)
 {
     int tc_bk = self.index;
     elona::tc = self.index;
@@ -146,7 +146,7 @@ void LuaCharacter::make_pregnant(character& self)
     elona::tc = tc_bk;
 }
 
-void LuaCharacter::eat_rotten_food(character& self)
+void LuaCharacter::eat_rotten_food(Character& self)
 {
     int cc_bk = self.index;
     elona::cc = self.index;
@@ -158,9 +158,9 @@ void LuaCharacter::eat_rotten_food(character& self)
 
 void LuaCharacter::bind(sol::state& lua)
 {
-    sol::usertype<character> LuaCharacter(
+    sol::usertype<Character> LuaCharacter(
         "lua_type",
-        &character::lua_type,
+        &Character::lua_type,
 
         "damage_hp",
         sol::overload(
@@ -192,42 +192,42 @@ void LuaCharacter::bind(sol::state& lua)
         &LuaCharacter::eat_rotten_food,
 
         "hp",
-        sol::readonly(&character::hp),
+        sol::readonly(&Character::hp),
         "max_hp",
-        sol::readonly(&character::max_hp),
+        sol::readonly(&Character::max_hp),
         "mp",
-        sol::readonly(&character::mp),
+        sol::readonly(&Character::mp),
         "max_mp",
-        sol::readonly(&character::max_mp),
+        sol::readonly(&Character::max_mp),
         "sp",
-        sol::readonly(&character::sp),
+        sol::readonly(&Character::sp),
         "max_sp",
-        sol::readonly(&character::max_sp),
+        sol::readonly(&Character::max_sp),
         "shop_rank",
-        &character::shop_rank,
+        &Character::shop_rank,
         "character_role",
-        &character::character_role,
+        &Character::character_role,
         "index",
-        sol::readonly(&character::index),
+        sol::readonly(&Character::index),
         "id",
-        sol::readonly(&character::id),
+        sol::readonly(&Character::id),
         "position",
-        &character::position,
+        &Character::position,
         "name",
-        sol::property([](character& c) { return elona::cdatan(0, c.index); }),
+        sol::property([](Character& c) { return elona::cdatan(0, c.index); }),
         "experience",
-        &character::experience,
+        &Character::experience,
 
         "sex",
         sol::property(
-            [](character& c) {
+            [](Character& c) {
                 return LuaEnums::GenderTable.convert_to_string(c.sex);
             },
-            [](character& c, const enum_string& s) {
+            [](Character& c, const enum_string& s) {
                 c.sex = LuaEnums::GenderTable.ensure_from_string(s);
             }));
 
-    lua.set_usertype(character::lua_type(), LuaCharacter);
+    lua.set_usertype(Character::lua_type(), LuaCharacter);
 }
 
 } // namespace lua

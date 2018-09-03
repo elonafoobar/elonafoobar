@@ -78,7 +78,7 @@ void UIMenuBook::draw()
         noteget(s, p);
         if (p == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+            font(12 + sizefix - en * 2, snail::Font::Style::bold);
         }
         if (p == 1)
         {
@@ -92,7 +92,7 @@ void UIMenuBook::draw()
         mes(s);
         if (p % 20 == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+            font(12 + sizefix - en * 2, snail::Font::Style::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
         }

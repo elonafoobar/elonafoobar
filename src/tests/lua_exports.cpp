@@ -118,7 +118,7 @@ return {
     elona::lua::lua->get_export_manager().register_all_exports();
 
     REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    character& chara = elona::cdata[elona::rc];
+    Character& chara = elona::cdata[elona::rc];
     auto handle = elona::lua::lua->get_handle_manager().get_handle(chara);
 
     auto function = elona::lua::lua->get_export_manager().get_exported_function(

@@ -12,14 +12,14 @@ namespace elona
 
 
 // FIXME
-struct enc_t
+struct Enchantment
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
     int id = 0;
     int power = 0;
 
-    bool operator==(const enc_t& other) const noexcept
+    bool operator==(const Enchantment& other) const noexcept
     {
         return id == other.id && power == other.power;
     }
@@ -35,16 +35,16 @@ struct enc_t
 };
 
 
-struct item
+struct Item
 {
-    item();
+    Item();
 
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
 
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
-    // arguments. New code should pass item& instead. Not serialized; set on
+    // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
     int index = -1;
 
@@ -52,7 +52,7 @@ struct item
     int image = 0;
     int id = 0;
     int quality = 0;
-    position_t position;
+    Position position;
     int weight = 0;
     IdentifyState identification_state =
         IdentifyState::unidentified;
@@ -81,12 +81,12 @@ struct item
 
     int flags = 0;
 
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
 
 
     void clear();
 
-    bool almost_equals(const item& other, bool ignore_position);
+    bool almost_equals(const Item& other, bool ignore_position);
 
     // for identifying the type of a Lua reference
     static std::string lua_type()
@@ -144,7 +144,7 @@ struct item
     }
 
 
-    static void copy(const item& from, item& to)
+    static void copy(const Item& from, Item& to)
     {
         const auto index_save = to.index;
         to = from;
@@ -157,34 +157,34 @@ private:
     int number_ = 0;
 
 
-    item(const item&) = default;
-    item(item&&) = default;
-    item& operator=(const item&) = default;
-    item& operator=(item&&) = default;
+    Item(const Item&) = default;
+    Item(Item&&) = default;
+    Item& operator=(const Item&) = default;
+    Item& operator=(Item&&) = default;
 };
 
 
 
-struct inventory
+struct Inventory
 {
-    inventory();
+    Inventory();
 
 
-    item& operator[](int index)
+    Item& operator[](int index)
     {
         return storage[index];
     }
 
 
 private:
-    std::vector<item> storage;
+    std::vector<Item> storage;
 };
 
 
-extern inventory inv;
+extern Inventory inv;
 
 
-struct character;
+struct Character;
 
 
 
@@ -192,8 +192,8 @@ int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
 
 
-IdentifyState item_identify(item& ci, IdentifyState level);
-IdentifyState item_identify(item& ci, int power);
+IdentifyState item_identify(Item& ci, IdentifyState level);
+IdentifyState item_identify(Item& ci, int power);
 
 range::iota<int> items(int owner);
 std::vector<int> itemlist(int owner, int id);
@@ -202,18 +202,18 @@ void itemname_additional_info();
 void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
-void item_acid(const character& owner, int ci = -1);
+void item_acid(const Character& owner, int ci = -1);
 void item_delete(int);
 void item_exchange(int = 0, int = 0);
-void item_modify_num(item&, int);
-void item_set_num(item&, int);
+void item_modify_num(Item&, int);
+void item_set_num(Item&, int);
 void itemturn(int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
 int item_find(int = 0, int = 0, int = 0);
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
-void item_dump_desc(const item&);
+void item_dump_desc(const Item&);
 
 bool item_fire(int owner, int ci = -1);
 void mapitem_fire(int x, int y);

@@ -22,7 +22,7 @@ public:
         android,
     };
 
-    struct metadata
+    struct MetaData
     {
         // True if the config section/option is visible in the options menu.
         bool visible = true;
@@ -86,7 +86,7 @@ public:
         return spec::Object::get_default(key);
     }
 
-    const metadata& get_metadata(const spec_key& key) const
+    const MetaData& get_metadata(const spec_key& key) const
     {
         return data.at(key);
     }
@@ -96,7 +96,7 @@ public:
         return locale_root;
     }
 
-    void post_visit(const spec_key&, const spec::section_def&);
+    void post_visit(const spec_key&, const spec::SectionDef&);
     void pre_visit_section(const spec_key&, const hcl::Object&);
     void pre_visit_item(const spec_key&, const hcl::Object&);
     void pre_visit_bare_value(const spec_key&, const hcl::Value&);
@@ -110,6 +110,6 @@ private:
     bool is_child_visible(const spec_key&);
 
     std::string locale_root;
-    std::map<std::string, metadata> data;
+    std::map<std::string, MetaData> data;
 };
 } // namespace elona

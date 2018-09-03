@@ -24,8 +24,8 @@ namespace elona
 
 typedef std::string i18n_key;
 
-struct character;
-struct item;
+struct Character;
+
 
 namespace i18n
 {
@@ -67,9 +67,9 @@ std::string _(const std::string& key_head, const Args&... key_tail)
 
 
 
-struct formattable_string
+struct FormattableString
 {
-    explicit formattable_string(
+    explicit FormattableString(
         const std::string& key_head,
         const std::vector<std::string>& key_tail)
         : key_head(key_head)
@@ -103,18 +103,18 @@ private:
 
 
 // TODO rename
-inline formattable_string fmt(
+inline FormattableString fmt(
     const std::string& key_head,
     const std::vector<std::string>& key_tail)
 {
-    return formattable_string{key_head, key_tail};
+    return FormattableString{key_head, key_tail};
 }
 
 
 
 // TODO rename
 template <typename... Args>
-formattable_string fmt(const std::string& key_head, const Args&... key_tail)
+FormattableString fmt(const std::string& key_head, const Args&... key_tail)
 {
     return fmt(key_head, {key_tail...});
 }
@@ -140,24 +140,24 @@ std::string format_builtins_string(const hil::FunctionCall&, std::string);
 std::string format_builtins_integer(const hil::FunctionCall&, int);
 std::string format_builtins_character(
     const hil::FunctionCall&,
-    const character&);
-std::string format_builtins_item(const hil::FunctionCall&, const item&);
+    const Character&);
+std::string format_builtins_item(const hil::FunctionCall&, const Item&);
 
 std::string space_if_needed();
 
 namespace detail
 {
 
-template <typename Head = character const&>
-std::string format_literal_type(character const& c)
+template <typename Head = Character const&>
+std::string format_literal_type(Character const& c)
 {
-    return "<character: "s + std::to_string(c.index) + ">"s;
+    return "<Character: "s + std::to_string(c.index) + ">"s;
 }
 
-template <typename Head = item const&>
-std::string format_literal_type(item const& i)
+template <typename Head = Item const&>
+std::string format_literal_type(Item const& i)
 {
-    return "<item: "s + std::to_string(i.index) + ">"s;
+    return "<Item: "s + std::to_string(i.index) + ">"s;
 }
 
 template <typename Head>
@@ -210,18 +210,18 @@ std::string format_literal_type(Head const& head)
     return std::to_string(head);
 }
 
-template <typename Head = const character&>
+template <typename Head = const Character&>
 std::string format_function_type(
     hil::FunctionCall const& func,
-    const character& chara)
+    const Character& chara)
 {
     return format_builtins_character(func, chara);
 }
 
-template <typename Head = const item&>
+template <typename Head = const Item&>
 std::string format_function_type(
     hil::FunctionCall const& func,
-    const item& item)
+    const Item& item)
 {
     return format_builtins_item(func, item);
 }
@@ -246,16 +246,16 @@ std::string format_function_type(
     else if (object.is<sol::table>())
     {
         sol::table table = object.as<sol::table>();
-        if (lua::lua->get_handle_manager().handle_is<character>(table))
+        if (lua::lua->get_handle_manager().handle_is<Character>(table))
         {
             auto& chara =
-                lua::lua->get_handle_manager().get_ref<character>(table);
+                lua::lua->get_handle_manager().get_ref<Character>(table);
             return format_builtins_character(func, chara);
         }
-        else if (lua::lua->get_handle_manager().handle_is<item>(table))
+        else if (lua::lua->get_handle_manager().handle_is<Item>(table))
         {
             auto& item_ref =
-                lua::lua->get_handle_manager().get_ref<item>(table);
+                lua::lua->get_handle_manager().get_ref<Item>(table);
             return format_builtins_item(func, item_ref);
         }
     }
@@ -452,9 +452,9 @@ public:
     Store(){};
     ~Store() = default;
 
-    struct location
+    struct Location
     {
-        location(fs::path locale_dir, std::string mod_name)
+        Location(fs::path locale_dir, std::string mod_name)
             : locale_dir(locale_dir)
             , mod_name(mod_name)
         {
@@ -464,7 +464,7 @@ public:
         std::string mod_name;
     };
 
-    void init(const std::vector<Store::location>&);
+    void init(const std::vector<Store::Location>&);
 
     // For testing use.
     void load(std::istream&, const std::string&, const std::string&);

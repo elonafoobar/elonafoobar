@@ -20,7 +20,7 @@ namespace i18n
 
 i18n::Store s;
 
-void Store::init(const std::vector<Store::location>& locations)
+void Store::init(const std::vector<Store::Location>& locations)
 {
     clear();
 
@@ -34,7 +34,7 @@ void Store::init(const std::vector<Store::location>& locations)
 void Store::load(const fs::path& path, const std::string& mod_name)
 {
     for (const auto& entry :
-         filesystem::dir_entries{path, filesystem::dir_entries::Type::file})
+         filesystem::dir_entries(path, filesystem::DirEntryRange::Type::file))
     {
         std::ifstream ifs(entry.path().native());
         if (!ifs)
@@ -215,7 +215,7 @@ inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
 
 inline std::string builtin_itemname(
     const hil::FunctionCall& func,
-    const item& item)
+    const Item& item)
 {
     int number = item.number();
     bool needs_article = true;
@@ -261,7 +261,7 @@ std::string format_builtins_integer(const hil::FunctionCall& func, int value)
 
 std::string format_builtins_character(
     const hil::FunctionCall& func,
-    const character& chara)
+    const Character& chara)
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
@@ -309,7 +309,7 @@ std::string format_builtins_character(
 
 std::string format_builtins_item(
     const hil::FunctionCall& func,
-    const item& item)
+    const Item& item)
 {
     ELONA_DEFINE_I18N_BUILTIN("itemname", builtin_itemname(func, item));
     ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
@@ -329,10 +329,10 @@ std::string format_builtins_item(
 
 void load(const std::string& language)
 {
-    for (auto&& entry : filesystem::dir_entries{
+    for (auto&& entry : filesystem::dir_entries(
              filesystem::path(u8"lang") / language,
-             filesystem::dir_entries::Type::file,
-         })
+             filesystem::DirEntryRange::Type::file
+             ))
     {
         cat::global.load(entry.path());
     }

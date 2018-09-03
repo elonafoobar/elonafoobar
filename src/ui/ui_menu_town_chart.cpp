@@ -126,7 +126,7 @@ optional<UIMenuTownChart::result_type> UIMenuTownChart::on_key(
 
     if (p != -1)
     {
-        return UIMenuTownChart::result::finish();
+        return UIMenuTownChart::Result::finish();
     }
     else if (key == key_pageup)
     {
@@ -149,7 +149,7 @@ optional<UIMenuTownChart::result_type> UIMenuTownChart::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return UIMenuTownChart::result::cancel();
+        return UIMenuTownChart::Result::cancel();
     }
 
     return none;

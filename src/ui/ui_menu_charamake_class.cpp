@@ -161,16 +161,16 @@ optional<UIMenuCharamakeClass::result_type> UIMenuCharamakeClass::on_key(
     {
         int class_id = p;
         std::string klass = listn(1, class_id);
-        return UIMenuCharamakeClass::result::finish(klass);
+        return UIMenuCharamakeClass::Result::finish(klass);
     }
     if (key == key_cancel)
     {
-        return UIMenuCharamakeClass::result::cancel();
+        return UIMenuCharamakeClass::Result::cancel();
     }
     if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return UIMenuCharamakeClass::result::finish();
+        return UIMenuCharamakeClass::Result::finish();
     }
 
     return none;

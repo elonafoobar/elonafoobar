@@ -197,7 +197,7 @@ int cell_itemlist(int prm_625, int prm_626)
 }
 
 // Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const position_t& pos)
+std::pair<int, int> cell_itemoncell(const Position& pos)
 {
     int number{};
     int item{};
@@ -217,7 +217,7 @@ std::pair<int, int> cell_itemoncell(const position_t& pos)
 void cell_setchara(int cc, int x, int y)
 {
     map(x, y, 1) = cc + 1;
-    cdata[cc].position = position_t{x, y};
+    cdata[cc].position = Position{x, y};
 }
 
 

@@ -75,7 +75,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::bool_def>("core.test.foo"));
+    REQUIRE(def.is<spec::BoolDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<bool>());
     REQUIRE(def.get_default("core.test.foo").as<bool>() == true);
 }
@@ -92,7 +92,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::int_def>("core.test.foo"));
+    REQUIRE(def.is<spec::IntDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<int>());
     REQUIRE(def.get_default("core.test.foo").as<int>() == 42);
 }
@@ -134,7 +134,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::string_def>("core.test.foo"));
+    REQUIRE(def.is<spec::StringDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
     REQUIRE(def.get_default("core.test.foo").as<std::string>() == "bar");
 }
@@ -147,7 +147,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::list_def>("core.test.foo"));
+    REQUIRE(def.is<spec::ListDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<hcl::List>());
     auto list = def.get_default("core.test.foo").as<hcl::List>();
     REQUIRE(list.at(0).as<std::string>() == "bar");
@@ -167,7 +167,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::enum_def>("core.test.foo"));
+    REQUIRE(def.is<spec::EnumDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
     REQUIRE(def.get_default("core.test.foo").as<std::string>() == "baz");
 }
@@ -261,7 +261,7 @@ test def {
 }
 )");
 
-    REQUIRE(def.is<spec::enum_def>("core.test.foo"));
+    REQUIRE(def.is<spec::EnumDef>("core.test.foo"));
     REQUIRE(def.get_default("core.test.foo").is<std::string>());
     REQUIRE(
         def.get_default("core.test.foo").as<std::string>() == "__unknown__");

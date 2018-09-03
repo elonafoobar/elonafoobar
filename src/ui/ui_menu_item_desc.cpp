@@ -43,7 +43,7 @@ void UIMenuItemDesc::update()
     }
 }
 
-static snail::color _desc_to_color(int desc)
+static snail::Color _desc_to_color(int desc)
 {
     switch (desc)
     {
@@ -73,7 +73,7 @@ static void _set_font(int list_item)
     }
     else if (list_item == ItemDescriptionType::small_font_italic)
     {
-        font(13 - en * 2, snail::font_t::Style::italic);
+        font(13 - en * 2, snail::Font::Style::italic);
     }
     else
     {

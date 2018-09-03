@@ -9,7 +9,7 @@ namespace ui
 {
 
 class UIMenuCharacterSheet
-    : public UIMenu<ui_menu_composite_character_result>
+    : public UIMenu<UIMenuCompositeCharacterResult>
 {
 public:
     UIMenuCharacterSheet(CharacterSheetOperation operation)

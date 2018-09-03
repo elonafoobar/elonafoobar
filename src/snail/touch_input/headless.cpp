@@ -21,7 +21,7 @@ void TouchInput::draw_quick_actions()
 {
 }
 
-void TouchInput::draw_quick_action(const quick_action&)
+void TouchInput::draw_quick_action(const QuickAction&)
 {
 }
 

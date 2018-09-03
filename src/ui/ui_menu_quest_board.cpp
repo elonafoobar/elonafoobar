@@ -25,7 +25,7 @@ static bool _should_display_quest(int cnt)
         return false;
     }
     rc = qdata(0, cnt);
-    if (cdata[rc].state() != character::State::alive)
+    if (cdata[rc].state() != Character::State::alive)
     {
         return false;
     }
@@ -148,7 +148,7 @@ static void _draw_keys()
     }
 }
 
-static snail::color _get_quest_difficulty_color(
+static snail::Color _get_quest_difficulty_color(
     int player_level,
     int quest_difficulty)
 {
@@ -293,7 +293,7 @@ optional<UIMenuQuestBoard::result_type> UIMenuQuestBoard::on_key(
             set_reupdate();
             return none;
         }
-        return UIMenuQuestBoard::result::finish(_p);
+        return UIMenuQuestBoard::Result::finish(_p);
     }
     else if (key == key_pageup)
     {
@@ -315,7 +315,7 @@ optional<UIMenuQuestBoard::result_type> UIMenuQuestBoard::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuQuestBoard::result::cancel();
+        return UIMenuQuestBoard::Result::cancel();
     }
 
     return none;

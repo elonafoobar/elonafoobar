@@ -80,7 +80,7 @@ TurnResult do_give_command()
         update_screen();
         invctrl = 10;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -225,7 +225,7 @@ TurnResult do_interact_command()
         update_screen();
         invctrl = 10;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1155,7 +1155,7 @@ label_1953_internal:
         screenupdate = -1;
         update_screen();
         keyrange = 0;
-        font(20 - en * 2, snail::font_t::Style::bold);
+        font(20 - en * 2, snail::Font::Style::bold);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -1936,7 +1936,7 @@ TurnResult do_use_command()
         }
         if (tc > 0 && tc < 16)
         {
-            if (cdata[tc].state() == character::State::alive)
+            if (cdata[tc].state() == Character::State::alive)
             {
                 gdata(94) = 0;
                 if (cdata[tc].has_been_used_stethoscope() == 1)
@@ -2614,7 +2614,7 @@ TurnResult do_open_command()
         invctrl(0) = 24;
         invctrl(1) = 0;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -2623,7 +2623,7 @@ TurnResult do_open_command()
         invctrl(0) = 24;
         invctrl(1) = 2;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -2646,7 +2646,7 @@ TurnResult do_open_command()
                 if (gdata_released_fire_giant == 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::State::alive)
+                        == Character::State::alive)
                     {
                         tc = chara_find(203);
                         if (tc != 0)
@@ -2996,7 +2996,7 @@ TurnResult do_use_stairs_command(int val0)
                     -7);
                 msg_halt();
             }
-            if (cdata.player().state() == character::State::empty)
+            if (cdata.player().state() == Character::State::empty)
             {
                 return TurnResult::turn_begin;
             }
@@ -3508,7 +3508,7 @@ TurnResult do_get_command()
     {
         invctrl = 3;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -3568,7 +3568,7 @@ TurnResult do_short_cut_command()
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -3673,7 +3673,7 @@ TurnResult do_exit_command()
 int ask_direction_to_close()
 {
     int number_of_doors{};
-    position_t pos;
+    Position pos;
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)

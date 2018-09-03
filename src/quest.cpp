@@ -46,7 +46,7 @@ void quest_place_target()
 {
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::State::alive)
+        if (cnt.state() == Character::State::alive)
         {
             cnt.is_quest_target() = true;
             cnt.relationship = -3;
@@ -62,7 +62,7 @@ int quest_targets_remaining()
     f_at_m119 = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::State::alive)
+        if (cnt.state() == Character::State::alive)
         {
             if (cnt.is_quest_target() == 1)
             {
@@ -164,7 +164,7 @@ void quest_check()
             p_at_m119 = 0;
             for (auto&& cnt : cdata.others())
             {
-                if (cnt.state() == character::State::alive)
+                if (cnt.state() == Character::State::alive)
                 {
                     ++p_at_m119;
                 }
@@ -429,7 +429,7 @@ void quest_on_map_initialize()
 {
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::State::empty)
+        if (cnt.state() == Character::State::empty)
         {
             continue;
         }
@@ -539,7 +539,7 @@ int quest_generate()
             {
                 continue;
             }
-            if (cdata[n].state() != character::State::alive)
+            if (cdata[n].state() != Character::State::alive)
             {
                 continue;
             }
@@ -1067,7 +1067,7 @@ void quest_failed(int val0)
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;
-                            if (cdata[tc].state() == character::State::alive)
+                            if (cdata[tc].state() == Character::State::alive)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
@@ -1106,7 +1106,7 @@ void quest_failed(int val0)
                                 txt(s);
                                 damage_hp(cdata[tc], 999999, p);
                             }
-                            cdata[tc].set_state(character::State::empty);
+                            cdata[tc].set_state(Character::State::empty);
                             break;
                         }
                     }

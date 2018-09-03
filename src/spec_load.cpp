@@ -65,12 +65,12 @@ void Object::load(std::istream& is, const std::string& hcl_file)
     items.emplace(top_level_key, result);
 }
 
-section_def Object::visit_object(
+SectionDef Object::visit_object(
     const hcl::Object& object,
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    section_def def{};
+    SectionDef def{};
 
     for (const auto& pair : object)
     {
@@ -150,7 +150,7 @@ void Object::visit_item(
         }
         else if (type == "runtime_enum")
         {
-            i = enum_def{0, {spec::unknown_enum_variant}, true};
+            i = EnumDef{0, {spec::unknown_enum_variant}, true};
         }
         else
         {
@@ -198,7 +198,7 @@ spec::item Object::visit_expanded_item(
 
 
 
-section_def Object::visit_section(
+SectionDef Object::visit_section(
     const hcl::Object& section,
     const std::string& current_key,
     const std::string& hcl_file)
@@ -215,13 +215,13 @@ section_def Object::visit_section(
     return visit_object(options, current_key, hcl_file);
 }
 
-int_def Object::visit_int(
+IntDef Object::visit_int(
     int default_value,
     const hcl::Object& item,
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    int_def def;
+    IntDef def;
 
     if (item.find("min") == item.end())
     {
@@ -241,27 +241,27 @@ int_def Object::visit_int(
     return def;
 }
 
-bool_def object::visit_bool(bool default_value)
+BoolDef object::visit_bool(bool default_value)
 {
-    return bool_def{default_value};
+    return BoolDef{default_value};
 }
 
-string_def Object::visit_string(const std::string& default_value)
+StringDef Object::visit_string(const std::string& default_value)
 {
-    return string_def{default_value};
+    return StringDef{default_value};
 }
 
-list_def Object::visit_list(const hcl::List& default_value)
+ListDef Object::visit_list(const hcl::List& default_value)
 {
-    return list_def{default_value};
+    return ListDef{default_value};
 }
 
-enum_def Object::visit_enum(
+EnumDef Object::visit_enum(
     const hcl::Object& item,
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    enum_def def{};
+    EnumDef def{};
 
     if (item.find("default") == item.end())
     {

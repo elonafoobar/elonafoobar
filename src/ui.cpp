@@ -90,7 +90,7 @@ void update_screen_hud()
 
 void render_weather_effect_rain()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -113,7 +113,7 @@ void render_weather_effect_rain()
              static_cast<uint8_t>(100 + brightness),
              static_cast<uint8_t>(150 + brightness)});
 
-        if (particle == position_t{0, 0})
+        if (particle == Position{0, 0})
         {
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
@@ -134,7 +134,7 @@ void render_weather_effect_rain()
 
 void render_weather_effect_hard_rain()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -157,7 +157,7 @@ void render_weather_effect_hard_rain()
              static_cast<uint8_t>(100 + brightness),
              static_cast<uint8_t>(150 + brightness)});
 
-        if (particle == position_t{0, 0})
+        if (particle == Position{0, 0})
         {
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
@@ -178,7 +178,7 @@ void render_weather_effect_hard_rain()
 
 void render_weather_effect_snow()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 1750;
     if (particles.empty())
@@ -196,7 +196,7 @@ void render_weather_effect_snow()
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != gdata_weather)
         {
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
@@ -217,7 +217,7 @@ void render_weather_effect_snow()
 
 void render_weather_effect_etherwind()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -235,7 +235,7 @@ void render_weather_effect_etherwind()
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != gdata_weather)
         {
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
@@ -290,11 +290,11 @@ void highlight_characters_in_pet_arena()
 {
     for (auto&& cc : cdata.all())
     {
-        if (cc.state() != character::State::alive)
+        if (cc.state() != Character::State::alive)
             continue;
         if (cc.index == 0)
             continue;
-        snail::color color{0};
+        snail::Color color{0};
         if (cc.relationship == 10)
         {
             color = {127, 127, 255, 32};
@@ -388,14 +388,14 @@ void _render_hp_or_mp_bar(
 
 
 
-void render_hp_bar(const character& cc, int x, int y, bool show_digit = false)
+void render_hp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
     _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, 412, show_digit);
 }
 
 
 
-void render_mp_bar(const character& cc, int x, int y, bool show_digit = false)
+void render_mp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
     _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, 532, show_digit);
 }
@@ -579,7 +579,7 @@ void render_skill_trackers()
             continue;
         }
         const auto chara = gdata(750 + i) / 10000;
-        if (chara != 0 && cdata[chara].state() != character::State::alive)
+        if (chara != 0 && cdata[chara].state() != Character::State::alive)
         {
             gdata(750 + i) = 0;
             continue;
@@ -598,7 +598,7 @@ void render_skill_trackers()
             inf_clocky + 107 + y * 16);
         if (elona::Config::instance().allow_enhanced_skill)
         {
-            elona::snail::color col{255, 130, 130};
+            elona::snail::Color col{255, 130, 130};
 
             if (sdata.get(skill, chara).potential
                 > elona::Config::instance().enhanced_skill_upperbound)
@@ -642,8 +642,8 @@ int render_one_status_ailment(
         std::is_same<decltype(get_text(value)), std::string>::value,
         "F2 signature: std::string get_text(int value)");
     static_assert(
-        std::is_same<decltype(get_color(value)), snail::color>::value,
-        "F3 signature: snail::color get_color(int value)");
+        std::is_same<decltype(get_color(value)), snail::Color>::value,
+        "F3 signature: snail::Color get_color(int value)");
 
     if (!do_render(value))
         return y;
@@ -683,7 +683,7 @@ int render_one_status_ailment(
     int y,
     F1 do_render,
     F2 get_text,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     return render_one_status_ailment(
         value, x, y, do_render, get_text, [&](auto) { return text_color; });
@@ -698,7 +698,7 @@ int render_one_status_ailment(
     int y,
     F1 do_render,
     const std::string& text,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     return render_one_status_ailment(
         value,
@@ -729,9 +729,9 @@ void render_status_ailments()
         },
         [](auto nutrition) {
             return (nutrition >= 10)
-                ? snail::color{0, 0, 0}
-                : (nutrition >= 1) ? snail::color{200, 0, 0}
-                                   : snail::color{250, 0, 0};
+                ? snail::Color{0, 0, 0}
+                : (nutrition >= 1) ? snail::Color{200, 0, 0}
+                                   : snail::Color{250, 0, 0};
         });
 
     y = render_one_status_ailment(
@@ -893,9 +893,9 @@ void render_status_ailments()
                                 : i18n::_(u8"ui", u8"sleepy", u8"_0");
         },
         [](auto hours) {
-            return (hours >= 50) ? snail::color{255, 0, 0}
-                                 : (hours >= 30) ? snail::color{100, 100, 0}
-                                                 : snail::color{0, 0, 0};
+            return (hours >= 50) ? snail::Color{255, 0, 0}
+                                 : (hours >= 30) ? snail::Color{100, 100, 0}
+                                                 : snail::Color{0, 0, 0};
         });
 
     y = render_one_status_ailment(
@@ -910,8 +910,8 @@ void render_status_ailments()
         },
         [](auto sp) {
             return (sp < 0)
-                ? snail::color{120, 120, 0}
-                : (sp < 25) ? snail::color{80, 80, 0} : snail::color{60, 60, 0};
+                ? snail::Color{120, 120, 0}
+                : (sp < 25) ? snail::Color{80, 80, 0} : snail::Color{60, 60, 0};
         });
 
     y = render_one_status_ailment(
@@ -921,7 +921,7 @@ void render_status_ailments()
         [](auto state) { return state != 0; },
         [](auto state) { return i18n::_(u8"ui", u8"burden", u8"_"s + state); },
         [](auto state) {
-            return snail::color{0,
+            return snail::Color{0,
                                 static_cast<uint8_t>(state * 40),
                                 static_cast<uint8_t>(state * 40)};
         });
@@ -951,12 +951,12 @@ int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
 
-position_t gmes(
+Position gmes(
     const std::string& text,
     int x_base,
     int y_base,
     int width,
-    const snail::color& text_color_base,
+    const snail::Color& text_color_base,
     bool shadow)
 {
     int font_size = 14;
@@ -966,7 +966,7 @@ position_t gmes(
     int x = x_base;
     int y = y_base;
     size_t pos = 0;
-    snail::color text_color = text_color_base;
+    snail::Color text_color = text_color_base;
 
     while (message.find(u8"$end", pos) != pos)
     {
@@ -1000,18 +1000,18 @@ position_t gmes(
             pos += instr(message, pos, u8">") + 1;
             if (tag == u8"emp1")
             {
-                font(font_size - en * 2, snail::font_t::Style::underline);
+                font(font_size - en * 2, snail::Font::Style::underline);
                 text_color = {50, 50, 255};
             }
             else if (tag == u8"emp2")
             {
-                font(font_size - en * 2, snail::font_t::Style::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {40, 130, 40};
             }
             else if (tag == u8"title1")
             {
                 font_size = 12;
-                font(font_size - en * 2, snail::font_t::Style::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {100, 50, 50};
             }
             else if (tag == u8"def")
@@ -1032,7 +1032,7 @@ position_t gmes(
             }
             else if (tag == u8"b")
             {
-                font(font_size - en * 2, snail::font_t::Style::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
             }
             else if (tag == u8"green")
             {
@@ -1257,11 +1257,11 @@ void render_hud()
     gmode(2);
 
     // HP/MP bar
-    font(12 - en * 2, snail::font_t::Style::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
     if (gdata_mount != 0
-        && cdata[gdata_mount].state() == character::State::alive)
+        && cdata[gdata_mount].state() == Character::State::alive)
     {
         render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
     }
@@ -1379,7 +1379,7 @@ void render_autoturn_animation()
     int h = 25;
 
     window2(sx, sy, w, h, 0, 5);
-    font(13 - en * 2, snail::font_t::Style::bold);
+    font(13 - en * 2, snail::Font::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
@@ -1581,7 +1581,7 @@ void update_slight()
     slight.clear();
     ++msync;
 
-    position_t center{cdata.player().position.x - (fov_max + 2) / 2,
+    Position center{cdata.player().position.x - (fov_max + 2) / 2,
                       (fov_max + 2) / 2 - cdata.player().position.y};
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
@@ -2067,7 +2067,7 @@ void display_window2(
     gmode(2);
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -2146,7 +2146,7 @@ void display_window(
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
         pos(window_x + window_width - strlen_u(s) * 7 - 40 - prm_673,
             window_y + window_height - 65 - window_height % 8);
         mes(s);
@@ -2161,7 +2161,7 @@ void display_window(
 
 void display_note(const std::string& prm_674, int prm_675)
 {
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
 }
@@ -2170,7 +2170,7 @@ void display_note(const std::string& prm_674, int prm_675)
 
 void display_topic(const std::string& topic, int x, int y)
 {
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
     pos(x + 26, y + 8);
     mes(topic);
@@ -2450,7 +2450,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
         pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
     }

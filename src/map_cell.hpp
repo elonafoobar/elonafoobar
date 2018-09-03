@@ -5,7 +5,7 @@
 namespace elona
 {
 
-struct position_t;
+struct Position;
 
 // Maps from an enumeration to an ID in the current tileset.
 enum class TileKind : int
@@ -17,7 +17,7 @@ enum class TileKind : int
     fog = 4
 };
 
-std::pair<int, int> cell_itemoncell(const position_t& pos);
+std::pair<int, int> cell_itemoncell(const Position& pos);
 int cell_featread(int = 0, int = 0, int = 0);
 int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);

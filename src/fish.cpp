@@ -29,7 +29,7 @@ void FishDB::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        fish_data{
+        FishData{
             std::stoi(id),
             no_generate,
             rank,

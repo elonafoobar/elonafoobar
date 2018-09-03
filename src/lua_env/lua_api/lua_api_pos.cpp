@@ -7,7 +7,7 @@ namespace lua
 {
 
 
-int Pos::dist(const position_t& from, const position_t& to)
+int Pos::dist(const Position& from, const Position& to)
 {
     return Pos::dist_xy(from.x, from.y, to.x, to.y);
 }

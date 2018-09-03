@@ -178,7 +178,7 @@ void EventManager::trigger_event(EventKind event, sol::table data)
     auto iter = events.find(event);
     if (iter != events.end())
     {
-        iter->second.run(Callbacks::retval_type<void>(), data);
+        iter->second.run(Callbacks::RetValType<void>(), data);
     }
     else
     {

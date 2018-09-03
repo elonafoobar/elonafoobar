@@ -74,19 +74,19 @@ public:
     }
 
 private:
-    struct candidate_t
+    struct Candidate
     {
         T value;
         Similarity similarity;
 
-        candidate_t(const T& value, const Similarity& similarity)
+        Candidate(const T& value, const Similarity& similarity)
             : value(value)
             , similarity(similarity)
         {
         }
     };
 
-    std::vector<candidate_t> candidates;
+    std::vector<Candidate> candidates;
 };
 
 

@@ -26,9 +26,9 @@ class RegistryManager
 public:
     explicit RegistryManager(LuaEnv*);
 
-    struct location
+    struct Location
     {
-        location(fs::path data_hcl_file, std::string mod_name)
+        Location(fs::path data_hcl_file, std::string mod_name)
             : data_hcl_file(data_hcl_file)
             , mod_name(mod_name)
         {
@@ -42,7 +42,7 @@ public:
      * Loads the data declared by each mod in a data.hcl file inside
      * the mod's root directory, if it exists;
      */
-    void load_mod_data(const std::vector<RegistryManager::location>&);
+    void load_mod_data(const std::vector<RegistryManager::Location>&);
 
     /***
      * Registers a core datatype whose data is kept in native code.
@@ -105,7 +105,6 @@ private:
      * The isolated Lua environment where data is stored.
      */
     sol::environment registry_env;
-    bool data_initialized = false;
     // Initialization functions to call upon loading a core datatype.
     std::unordered_map<std::string, std::function<void(sol::table)>>
         native_initializers;

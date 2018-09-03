@@ -86,7 +86,7 @@ static void _draw_window()
 
 static void _draw_alias_locked(int cnt)
 {
-    font(12 - en * 2, snail::font_t::Style::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 280, wy + 66 + cnt * 19 + 2);
     color(20, 20, 140);
     mes(u8"Locked!"s);
@@ -148,7 +148,7 @@ optional<UIMenuCharamakeAlias::result_type> UIMenuCharamakeAlias::on_key(
         else
         {
             std::string alias = listn(0, p);
-            return UIMenuCharamakeAlias::result::finish(alias);
+            return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }
     else if (key == key_mode2 && cs != -1)
@@ -166,12 +166,12 @@ optional<UIMenuCharamakeAlias::result_type> UIMenuCharamakeAlias::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuCharamakeAlias::result::cancel();
+        return UIMenuCharamakeAlias::Result::cancel();
     }
     else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return UIMenuCharamakeAlias::result::finish();
+        return UIMenuCharamakeAlias::Result::finish();
     }
 
     if (cs != cs_bk)

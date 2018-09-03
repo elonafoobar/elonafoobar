@@ -16,7 +16,7 @@ namespace
 {
 
 
-static void add_platform(ConfigDef::metadata& dat, const hcl::Object& item)
+static void add_platform(ConfigDef::MetaData& dat, const hcl::Object& item)
 {
     std::string platform = item.at("platform").as<std::string>();
 
@@ -35,7 +35,7 @@ static void add_platform(ConfigDef::metadata& dat, const hcl::Object& item)
 }
 
 static void set_default_from_platform(
-    ConfigDef::metadata& dat,
+    ConfigDef::MetaData& dat,
     const hcl::Object& item)
 {
     // NOTE: Could be generalized, if it were neeed.
@@ -60,16 +60,16 @@ static void set_default_from_platform(
 
 void ConfigDef::post_visit(
     const spec_key& current_key,
-    const spec::section_def&)
+    const spec::SectionDef&)
 {
-    data.emplace(current_key, metadata{});
+    data.emplace(current_key, MetaData{});
 }
 
 void ConfigDef::pre_visit_section(
     const spec_key& current_key,
     const hcl::Object& section)
 {
-    metadata dat{};
+    MetaData dat{};
 
     CONFIG_DEF_METADATA(section, visible);
     if (section.find("platform") != section.end())
@@ -86,14 +86,14 @@ void ConfigDef::pre_visit_bare_value(
     const spec_key& current_key,
     const hcl::Value&)
 {
-    data.emplace(current_key, metadata{});
+    data.emplace(current_key, MetaData{});
 }
 
 void ConfigDef::pre_visit_item(
     const spec_key& current_key,
     const hcl::Object& item)
 {
-    metadata dat{};
+    MetaData dat{};
 
     CONFIG_DEF_METADATA(item, visible);
     CONFIG_DEF_METADATA(item, preload);

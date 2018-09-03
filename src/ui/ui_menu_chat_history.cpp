@@ -114,7 +114,7 @@ optional<UIMenuChatHistory::result_type> UIMenuChatHistory::on_key(
     if (key != ""s)
     {
         update_screen();
-        return UIMenuChatHistory::result::finish();
+        return UIMenuChatHistory::Result::finish();
     }
 
     return none;

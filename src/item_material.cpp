@@ -106,7 +106,7 @@ void ItemMaterialDB::define(lua_State* L)
     ELONA_CAT_DB_FIELD_BOOLEAN(fireproof, false);
     ELONA_CAT_DB_FIELD_BOOLEAN(acidproof, false);
 
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
     lua_getfield(L, -1, u8"enchantments");
     if (!lua_isnil(L, -1))
     {
@@ -115,7 +115,7 @@ void ItemMaterialDB::define(lua_State* L)
         {
             int k = std::stoi(luaL_checkstring(L, -2) + 1);
             int v = luaL_checkinteger(L, -1);
-            enchantments.emplace_back(enc_t{k, v});
+            enchantments.emplace_back(Enchantment{k, v});
             lua_pop(L, 1);
         }
     }
@@ -123,7 +123,7 @@ void ItemMaterialDB::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        item_material_data{
+        ItemMaterialData{
             std::stoi(id),
             weight,
             value,

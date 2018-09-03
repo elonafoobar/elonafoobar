@@ -8,7 +8,7 @@ namespace elona
 
 enum class TurnResult;
 
-struct menu_result
+struct MenuResult
 {
     bool succeeded; // true if stat was 1, false if it was 0
     bool pressed_f1; // true if f1 was pressed in feats menu
@@ -57,23 +57,23 @@ TurnResult show_spell_list();
 TurnResult show_skill_list();
 void draw_spell_power_entry(int skill_id);
 int change_appearance();
-menu_result menu_feats();
-menu_result menu_materials();
+MenuResult menu_feats();
+MenuResult menu_materials();
 
-menu_result menu_character_sheet_normal();
+MenuResult menu_character_sheet_normal();
 bool menu_character_sheet_character_making();
 optional<int> menu_character_sheet_trainer(bool is_training);
 void menu_character_sheet_investigate();
 
 int select_alias(int);
-menu_result menu_feats();
-menu_result menu_feats_character_making();
+MenuResult menu_feats();
+MenuResult menu_feats_character_making();
 void deco_traits_menu();
 TurnResult show_journal();
 TurnResult show_quest_board();
 void list_adventurers();
 TurnResult blending_menu();
-menu_result menu_equipment();
+MenuResult menu_equipment();
 int show_hire_menu(HireOperation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
@@ -85,6 +85,6 @@ void show_book_window();
 int change_npc_tone();
 void item_show_description();
 
-menu_result ctrl_inventory();
+MenuResult ctrl_inventory();
 
 } // namespace elona

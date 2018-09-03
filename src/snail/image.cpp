@@ -59,7 +59,7 @@ namespace snail
 
 BasicImage::BasicImage(
     const fs::path& filepath,
-    const optional<color>& keycolor)
+    const optional<Color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.string().c_str()));
 

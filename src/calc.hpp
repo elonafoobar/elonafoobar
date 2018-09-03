@@ -13,7 +13,7 @@ int calc_buff_duration(int id, int power);
 std::string get_buff_description(int id, int power);
 void apply_buff(int cc, int id, int power);
 
-struct skill_damage
+struct SkillDamage
 {
     int dice_x;
     int dice_y;
@@ -21,7 +21,7 @@ struct skill_damage
     int element;
     int element_power;
 };
-optional<skill_damage> calc_skill_damage(int, int, int);
+optional<SkillDamage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);
 int calcfixlv(int = 0);
 int calcfame(int = 0, int = 0);

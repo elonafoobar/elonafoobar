@@ -168,8 +168,8 @@ optional<UIMenuCharamakeRace::result_type> UIMenuCharamakeRace::on_key(
         const std::string& race_id = listn(1, race_index);
         const std::string& race_name = listn(0, race_index);
 
-        return UIMenuCharamakeRace::result::finish(
-            ui_menu_charamake_race_result{race_id, race_name});
+        return UIMenuCharamakeRace::Result::finish(
+            UIMenuCharamakeRaceResult{race_id, race_name});
     }
     else if (key == key_pageup)
     {
@@ -191,12 +191,12 @@ optional<UIMenuCharamakeRace::result_type> UIMenuCharamakeRace::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuCharamakeRace::result::cancel();
+        return UIMenuCharamakeRace::Result::cancel();
     }
     else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return UIMenuCharamakeRace::result::finish();
+        return UIMenuCharamakeRace::Result::finish();
     }
 
     return none;

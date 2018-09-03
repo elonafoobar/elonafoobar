@@ -16,9 +16,9 @@ using namespace elona;
 TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
-    character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
     you.sex = 0;
     chara.sex = 1;
@@ -43,9 +43,9 @@ TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
 TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
-    character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
     you.sex = 0;
     chara.sex = 1;
@@ -70,9 +70,9 @@ TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
 TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
-    character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
     you.sex = 0;
     chara.sex = 1;
@@ -98,9 +98,9 @@ TEST_CASE("test i18n builtin: name()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
-    character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", you) == u8"you");
@@ -112,8 +112,8 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     elona::cdatan(0, you.index) = u8"Orville";
     update_slight();
 
@@ -125,7 +125,7 @@ TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"a putitoro");
@@ -142,7 +142,7 @@ TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    Item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${itembasename(_1)}", item) == u8"putitoro");
@@ -152,7 +152,7 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
     REQUIRE(
@@ -171,8 +171,8 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("you ${is(_1)} killed.", you) == u8"you are killed.");
@@ -190,8 +190,8 @@ TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${have(_1)}", you) == u8"have");
@@ -202,8 +202,8 @@ TEST_CASE("test i18n builtin: himself()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
     you.sex = 0;
     chara.sex = 1;
@@ -216,8 +216,8 @@ TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("you${his_owned(_1)}", you) == u8"your");
@@ -229,8 +229,8 @@ TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_english();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     elona::cdatan(0, chara.index) = "Putit the mochi vendor";
     update_slight();
 
@@ -241,9 +241,9 @@ TEST_CASE("test i18n builtin: kare_wa()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
     testing::set_japanese();
-    character& you = elona::cdata.player();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
-    character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& you = elona::cdata.player();
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
     update_slight();
 
     REQUIRE(i18n::fmt_hil("${kare_wa(_1)}", you) == u8"");

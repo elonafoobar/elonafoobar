@@ -114,7 +114,7 @@ optional<UIMenuMessageLog::result_type> UIMenuMessageLog::on_key(
     if (key != ""s)
     {
         update_screen();
-        return UIMenuMessageLog::result::finish();
+        return UIMenuMessageLog::Result::finish();
     }
 
     return none;

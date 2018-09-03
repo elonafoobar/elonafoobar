@@ -9,7 +9,7 @@ namespace lua
 
 namespace Pos
 {
-int dist(const position_t&, const position_t&);
+int dist(const Position&, const Position&);
 int dist_xy(int, int, int, int);
 
 

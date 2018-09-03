@@ -389,10 +389,10 @@ void boxf(
     int y,
     int width,
     int height,
-    const snail::color& color = {0, 0, 0, 0});
+    const snail::Color& color = {0, 0, 0, 0});
 void boxf();
 
-void boxl(int x, int y, int width, int height, const snail::color& color);
+void boxl(int x, int y, int width, int height, const snail::Color& color);
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -410,7 +410,7 @@ void exec(const std::string&, int);
 
 void font(
     int size,
-    snail::font_t::Style style = snail::font_t::Style::regular);
+    snail::Font::Style style = snail::Font::Style::regular);
 
 void gcopy(
     int window_id,
@@ -486,7 +486,7 @@ void line(
     int y1,
     int x2,
     int y2,
-    const snail::color& color = {0, 0, 0});
+    const snail::Color& color = {0, 0, 0});
 
 
 

@@ -6,20 +6,20 @@ namespace elona
 namespace lua
 {
 
-void Animation::play_failure_to_cast(const position_t& caster_pos)
+void Animation::play_failure_to_cast(const Position& caster_pos)
 {
     FailureToCastAnimation(caster_pos).play();
 }
 
-void Animation::play_bright_aura(const position_t& target_pos, int kind)
+void Animation::play_bright_aura(const Position& target_pos, int kind)
 {
     auto anim_type = static_cast<BrightAuraAnimation::Type>(kind);
     BrightAuraAnimation(target_pos, anim_type).play();
 }
 
 void Animation::play_breath(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     const enum_string& element_name)
 {
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
@@ -27,19 +27,19 @@ void Animation::play_breath(
         .play();
 }
 
-void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
+void Animation::play_ball_atomic_bomb(const Position& pos, int range)
 {
     BallAnimation(pos, range, BallAnimation::Type::atomic_bomb).play();
 }
 
-void Animation::play_ball_magic(const position_t& pos, int range, int element)
+void Animation::play_ball_magic(const Position& pos, int range, int element)
 {
     BallAnimation(pos, range, BallAnimation::Type::ball, element).play();
 }
 
 void Animation::play_bolt(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     const enum_string& element_name,
     int distance)
 {
@@ -50,8 +50,8 @@ void Animation::play_bolt(
 }
 
 void Animation::play_throwing_object(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     int item_chip,
     int item_color)
 {
@@ -59,14 +59,14 @@ void Animation::play_throwing_object(
         .play();
 }
 
-void Animation::play_swarm(const position_t& target_pos)
+void Animation::play_swarm(const Position& target_pos)
 {
     SwarmAnimation(target_pos).play();
 }
 
 void Animation::play_ranged_attack(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     int kind,
     int fired_item_subcategory,
     int fired_item_image,
@@ -84,7 +84,7 @@ void Animation::play_ranged_attack(
 }
 
 void Animation::play_melee_attack(
-    const position_t& target_pos,
+    const Position& target_pos,
     bool debris,
     int attack_skill,
     int damage_percent,
@@ -95,7 +95,7 @@ void Animation::play_melee_attack(
         .play();
 }
 
-void Animation::play_gene_engineering(const position_t& pos)
+void Animation::play_gene_engineering(const Position& pos)
 {
     GeneEngineeringAnimation(pos).play();
 }
@@ -115,7 +115,7 @@ void Animation::play_ragnarok()
     RagnarokAnimation().play();
 }
 
-void Animation::play_breaking(const position_t& pos)
+void Animation::play_breaking(const Position& pos)
 {
     BreakingAnimation(pos).play();
 }

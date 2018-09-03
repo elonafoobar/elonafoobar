@@ -7,7 +7,7 @@ namespace elona
 namespace lua
 {
 
-bool FOV::los(const position_t& from, const position_t& to)
+bool FOV::los(const Position& from, const Position& to)
 {
     return FOV::los_xy(from.x, from.y, to.x, to.y);
 }
@@ -19,18 +19,18 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
 
 bool FOV::you_see(lua_character_handle handle)
 {
-    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return elona::is_in_fov(chara);
 }
 
-bool FOV::you_see_pos(const position_t& pos)
+bool FOV::you_see_pos(const Position& pos)
 {
     return elona::is_in_fov(pos) == 1;
 }
 
 bool FOV::you_see_pos_xy(int x, int y)
 {
-    return elona::is_in_fov(position_t(x, y)) == 1;
+    return elona::is_in_fov(Position(x, y)) == 1;
 }
 
 void FOV::refresh()

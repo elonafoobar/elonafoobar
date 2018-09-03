@@ -244,7 +244,7 @@ static void _draw_acquirable_trait_number(int tc_)
 
 static void _draw_single_list_entry_name(
     int cnt,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     pos(wx + 270, wy + 66 + cnt * 19 + 2);
 
@@ -256,7 +256,7 @@ static void _draw_single_list_entry_name(
 static void _draw_single_list_entry_text(
     int cnt,
     bool draw_name,
-    const snail::color& text_color,
+    const snail::Color& text_color,
     const std::string& text)
 {
     if (draw_name)
@@ -281,7 +281,7 @@ static void _draw_single_list_entry_text(
     }
 }
 
-static snail::color _get_trait_color(int trait_value)
+static snail::Color _get_trait_color(int trait_value)
 {
     if (trait_value == 0)
     {
@@ -309,7 +309,7 @@ static void _draw_single_list_entry(
         return;
     }
 
-    snail::color text_color = {10, 10, 10};
+    snail::Color text_color = {10, 10, 10};
 
     if (list_value != trait_desc_value)
     {
@@ -405,7 +405,7 @@ static void _switch_target(bool is_forwards)
                 new_index = 15;
             }
         }
-        if (cdata[new_index].state() == character::State::alive)
+        if (cdata[new_index].state() == Character::State::alive)
         {
             break;
         }
@@ -432,8 +432,8 @@ optional<UIMenuFeats::result_type> UIMenuFeats::on_key(
             {
                 if (gdata_acquirable_feat_count == 0)
                 {
-                    return UIMenuFeats::result::finish(
-                        ui_menu_composite_character_result{
+                    return UIMenuFeats::Result::finish(
+                        UIMenuCompositeCharacterResult{
                             FeatsResult::confirmed});
                 }
             }
@@ -476,14 +476,14 @@ optional<UIMenuFeats::result_type> UIMenuFeats::on_key(
         {
             update_screen();
         }
-        return UIMenuFeats::result::cancel();
+        return UIMenuFeats::Result::cancel();
     }
     else if (
         getkey(snail::Key::f1) && _operation == Operation::character_making)
     {
         show_game_help();
-        return UIMenuFeats::result::finish(
-            ui_menu_composite_character_result{FeatsResult::pressed_f1});
+        return UIMenuFeats::Result::finish(
+            UIMenuCompositeCharacterResult{FeatsResult::pressed_f1});
     }
 
     return none;

@@ -41,7 +41,7 @@ int decrease_potential(int potential, int level_delta)
 
 
 void set_ability(
-    character& cc,
+    Character& cc,
     int id,
     int original_level,
     int experience,
@@ -80,7 +80,7 @@ void AbilityDB::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        ability_data{
+        AbilityData{
             std::stoi(id),
             related_basic_attribute,
             sdataref1,
@@ -92,7 +92,7 @@ void AbilityDB::define(lua_State* L)
 
 
 SkillData::SkillData()
-    : storage(ELONA_MAX_CHARACTERS, std::vector<ability>(600))
+    : storage(ELONA_MAX_CHARACTERS, std::vector<Ability>(600))
 {
 }
 
@@ -100,7 +100,7 @@ SkillData::SkillData()
 
 void SkillData::clear(int cc)
 {
-    range::fill(storage[cc], ability{});
+    range::fill(storage[cc], Ability{});
 }
 
 
@@ -112,7 +112,7 @@ void SkillData::copy(int tc, int cc)
 
 
 
-void chara_init_skill(character& cc, int id, int initial_level)
+void chara_init_skill(Character& cc, int id, int initial_level)
 {
     int original_level = sdata.get(id, cc.index).original_level;
     int potential;
@@ -169,7 +169,7 @@ void chara_init_skill(character& cc, int id, int initial_level)
 
 
 
-void chara_init_common_skills(character& cc)
+void chara_init_common_skills(Character& cc)
 {
     for (int element = 50; element < 61; ++element)
     {
@@ -224,7 +224,7 @@ void chara_init_common_skills(character& cc)
 
 
 
-void chara_gain_skill(character& cc, int id, int initial_level, int stock)
+void chara_gain_skill(Character& cc, int id, int initial_level, int stock)
 {
     if (id >= 400)
     {
@@ -294,7 +294,7 @@ void gain_special_action()
 
 
 
-void chara_gain_fixed_skill_exp(character& cc, int id, int experience)
+void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
 {
     auto lv = sdata.get(id, cc.index).original_level;
     auto exp = sdata.get(id, cc.index).experience + experience;
@@ -360,7 +360,7 @@ void chara_gain_fixed_skill_exp(character& cc, int id, int experience)
 
 
 void chara_gain_skill_exp(
-    character& cc,
+    Character& cc,
     int id,
     int experience,
     int experience_divisor_of_related_basic_attribute,

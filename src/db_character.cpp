@@ -51,7 +51,7 @@ static std::vector<int> _convert_chara_flags(
 
     return flag_types;
 }
-character_data character_db_ex::convert(
+CharacterData character_db_ex::convert(
     const std::string& id_,
     const sol::table& data,
     lua::LuaEnv& lua)
@@ -116,7 +116,7 @@ character_data character_db_ex::convert(
     std::vector<int> flag_types = _convert_chara_flags(data, "flags");
 
     // TODO: cannot set bit flags off.
-    decltype(character_data::_flags) flags;
+    decltype(CharacterData::_flags) flags;
     for (const auto& type : flag_types)
     {
         flags[type] = true;
@@ -125,7 +125,7 @@ character_data character_db_ex::convert(
     // TODO: validate by regex/alphanum-only
     std::string filter = lion::convert_tags(data, "tags");
 
-    return character_data{
+    return CharacterData{
         id,
         normal_actions,
         special_actions,

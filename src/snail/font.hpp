@@ -13,7 +13,7 @@ namespace snail
 {
 
 
-struct font_t
+struct Font
 {
     enum class Style
     {
@@ -49,18 +49,18 @@ struct font_t
     }
 
 
-    font_t() = default;
-    font_t(
+    Font() = default;
+    Font(
         const fs::path& filepath,
         int size,
         Style style = Style::regular);
-    font_t(const font_t&) = default;
-    font_t(font_t&&) = default;
-    font_t& operator=(const font_t&) = default;
-    font_t& operator=(font_t&&) = default;
+    Font(const Font&) = default;
+    Font(Font&&) = default;
+    Font& operator=(const Font&) = default;
+    Font& operator=(Font&&) = default;
 
 
-    virtual ~font_t() = default;
+    virtual ~Font() = default;
 
 
 private:
@@ -72,9 +72,9 @@ private:
 
 
 
-inline font_t::Style operator|(font_t::Style lhs, font_t::Style rhs)
+inline Font::Style operator|(Font::Style lhs, Font::Style rhs)
 {
-    return font_t::Style(int(lhs) | int(rhs));
+    return Font::Style(int(lhs) | int(rhs));
 }
 
 

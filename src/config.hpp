@@ -150,26 +150,26 @@ public:
     {
         def.inject_enum(key, variants, default_variant);
 
-        auto enum_def = def.get<spec::enum_def>(key);
+        auto EnumDef = def.get<spec::EnumDef>(key);
         if (storage.find(key) != storage.end())
         {
             // Check if this enum has an invalid value. If so, set it to the
             // default.
             std::string current = get<std::string>(key);
-            if (!enum_def.get_index_of(current))
+            if (!EnumDef.get_index_of(current))
             {
                 ELONA_LOG(
                     "Config key "s
                     << key << " had invalid variant "s << current << ". "s
                     << "("s << def.type_to_string(key) << ")"s
-                    << "Setting to "s << enum_def.get_default() << "."s);
-                set(key, enum_def.get_default());
+                    << "Setting to "s << EnumDef.get_default() << "."s);
+                set(key, EnumDef.get_default());
             }
         }
         else
         {
             set(key,
-                enum_def.get_default()); // Set the enum to its default value.
+                EnumDef.get_default()); // Set the enum to its default value.
         }
     }
 

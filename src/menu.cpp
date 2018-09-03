@@ -536,7 +536,7 @@ void show_ex_help()
         gcopy(3, 960, 96, 48, 48);
         pos(wx + 10, wy + 42);
         gcopy(3, 960, 144, 96, 120);
-        font(16 - en * 2, snail::font_t::Style::bold);
+        font(16 - en * 2, snail::Font::Style::bold);
         bmes(
             i18n::s.get("core.locale.ui.exhelp.title"),
             wx + 142,
@@ -653,14 +653,14 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
         return TurnResult::pc_turn_user_error;
     }
 
-    if (result.value->type() == typeid(ui::ui_menu_skills_result))
+    if (result.value->type() == typeid(ui::UIMenuSkillsResult))
     {
-        efid = boost::get<ui::ui_menu_skills_result>(*result.value).effect_id;
+        efid = boost::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
         return do_use_magic();
     }
     else
     {
-        efid = boost::get<ui::ui_menu_spells_result>(*result.value).effect_id;
+        efid = boost::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
         return do_cast_command();
     }
 }
@@ -738,7 +738,7 @@ void draw_spell_power_entry(int skill_id)
     return;
 }
 
-menu_result _show_character_sheet_menu(size_t menu_index)
+MenuResult _show_character_sheet_menu(size_t menu_index)
 {
     ui::UIMenuCompositeCharacter(menu_index).show();
 
@@ -746,25 +746,25 @@ menu_result _show_character_sheet_menu(size_t menu_index)
     return {false, false, TurnResult::pc_turn_user_error};
 }
 
-menu_result menu_character_sheet_normal()
+MenuResult menu_character_sheet_normal()
 {
     return _show_character_sheet_menu(
         ui::UIMenuCompositeCharacter::Index::character_sheet);
 }
 
-menu_result menu_feats()
+MenuResult menu_feats()
 {
     return _show_character_sheet_menu(
         ui::UIMenuCompositeCharacter::Index::feats);
 }
 
-menu_result menu_equipment()
+MenuResult menu_equipment()
 {
     return _show_character_sheet_menu(
         ui::UIMenuCompositeCharacter::Index::equipment);
 }
 
-menu_result menu_materials()
+MenuResult menu_materials()
 {
     return _show_character_sheet_menu(
         ui::UIMenuCompositeCharacter::Index::materials);
@@ -805,7 +805,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         return none;
     }
 
-    auto sheet_result = boost::get<ui::character_sheet_result>(*result.value);
+    auto sheet_result = boost::get<ui::CharacterSheetResult>(*result.value);
     return sheet_result.trainer_skill_id;
 }
 
@@ -815,9 +815,9 @@ void menu_character_sheet_investigate()
         .show();
 }
 
-menu_result menu_feats_character_making()
+MenuResult menu_feats_character_making()
 {
-    menu_result m_result = {false, false, TurnResult::none};
+    MenuResult m_result = {false, false, TurnResult::none};
 
     auto result =
         ui::UIMenuFeats(ui::UIMenuFeats::Operation::character_making)
@@ -1456,7 +1456,7 @@ void append_accuracy_info(int val0)
 void show_weapon_dice(int val0)
 {
     tc = cc;
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     if (val0 == 0)
     {
@@ -1513,7 +1513,7 @@ static TurnResult _visit_quest_giver(int quest_index)
     efid = 619;
     magic();
     tc = client;
-    if (cdata.player().state() == character::State::alive)
+    if (cdata.player().state() == Character::State::alive)
     {
         quest_teleport = true;
         talk_to_npc();

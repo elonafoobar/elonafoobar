@@ -70,9 +70,9 @@ label_17401:
         {
             if (cdata[cnt].current_map == gdata_current_map)
             {
-                if (cdata[cnt].state() == character::State::pet_moving_to_map)
+                if (cdata[cnt].state() == Character::State::pet_moving_to_map)
                 {
-                    cdata[cnt].set_state(character::State::alive);
+                    cdata[cnt].set_state(Character::State::alive);
                 }
             }
         }
@@ -135,7 +135,7 @@ label_1741_internal:
         DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() == character::State::empty)
+            if (cnt.state() == Character::State::empty)
             {
                 continue;
             }
@@ -170,7 +170,7 @@ label_1741_internal:
     mdata_map_next_regenerate_date = 0;
     for (auto&& cnt : cdata.others())
     {
-        cnt.set_state(character::State::empty);
+        cnt.set_state(Character::State::empty);
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
@@ -778,7 +778,7 @@ label_1741_internal:
         map_placeplayer();
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[cnt].state() == character::State::alive)
+            if (cdata[cnt].state() == Character::State::alive)
             {
                 if (cdata[cnt].relationship == 10)
                 {
@@ -787,7 +787,7 @@ label_1741_internal:
                         map(cdata[cnt].position.x, cdata[cnt].position.y, 1) =
                             0;
                         cdata[cnt].set_state(
-                            character::State::pet_in_other_map);
+                            Character::State::pet_in_other_map);
                     }
                 }
             }
@@ -844,13 +844,13 @@ label_1741_internal:
             }
             if (followerin(cnt) == 0)
             {
-                cdata[cnt].set_state(character::State::pet_dead);
+                cdata[cnt].set_state(Character::State::pet_dead);
                 cdata[cnt].position.x = 0;
                 cdata[cnt].position.y = 0;
             }
             else
             {
-                cdata[cnt].set_state(character::State::alive);
+                cdata[cnt].set_state(Character::State::alive);
             }
         }
         map_placeplayer();
@@ -1634,7 +1634,7 @@ label_1741_internal:
             listmax = 0;
             for (auto&& cnt : cdata.others())
             {
-                if (cnt.state() == character::State::alive)
+                if (cnt.state() == Character::State::alive)
                 {
                     if (cnt.is_quest_target() == 1)
                     {
@@ -2694,7 +2694,7 @@ label_1741_internal:
         mapupdate = 0;
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() == character::State::empty)
+            if (cnt.state() == Character::State::empty)
             {
                 continue;
             }
@@ -2741,7 +2741,7 @@ label_1742_internal:
     }
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::adventurer_in_other_map)
+        if (cdata[cnt].state() != Character::State::adventurer_in_other_map)
         {
             continue;
         }
@@ -2771,7 +2771,7 @@ label_1742_internal:
             continue;
         }
         rc = cnt;
-        cdata[rc].set_state(character::State::alive);
+        cdata[rc].set_state(Character::State::alive);
         if (cdata[cnt].is_contracting() == 1)
         {
             cxinit = cdata.player().position.x;
@@ -2868,7 +2868,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state() == character::State::villager_dead)
+            if (cdata[rc].state() == Character::State::villager_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -2881,7 +2881,7 @@ label_1742_internal:
                     continue;
                 }
             }
-            if (cdata[rc].state() != character::State::alive)
+            if (cdata[rc].state() != Character::State::alive)
             {
                 continue;
             }
@@ -3008,7 +3008,7 @@ label_1744_internal:
             cnt.hate = 0;
         }
         cnt.vision_flag = 0;
-        if (cnt.state() != character::State::empty)
+        if (cnt.state() != Character::State::empty)
         {
             modify_crowd_density(cnt.index, 1);
         }
@@ -3359,7 +3359,7 @@ label_1744_internal:
                     {
                         if (cdata[cnt].is_escorted() == 1)
                         {
-                            if (cdata[cnt].state() == character::State::alive)
+                            if (cdata[cnt].state() == Character::State::alive)
                             {
                                 if (cdata[cnt].id == qdata(13, cnt2))
                                 {
@@ -3487,7 +3487,7 @@ label_1744_internal:
                 + 1;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state() != character::State::alive)
+                if (cdata[cnt].state() != Character::State::alive)
                 {
                     continue;
                 }

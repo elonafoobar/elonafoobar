@@ -184,7 +184,7 @@ optional<UIMenuTownEconomy::result_type> UIMenuTownEconomy::on_key(
     else if (key != ""s)
     {
         update_screen();
-        return UIMenuTownEconomy::result::cancel();
+        return UIMenuTownEconomy::Result::cancel();
     }
 
     return none;

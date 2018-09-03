@@ -4,7 +4,7 @@ namespace elona
 {
 namespace ui
 {
-class UIMenuGameHelp : public UIMenu<dummy_result>
+class UIMenuGameHelp : public UIMenu<DummyResult>
 {
 public:
     UIMenuGameHelp()

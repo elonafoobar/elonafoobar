@@ -29,7 +29,7 @@ void set_japanese()
     set_item_info();
 }
 
-void normalize_item(item& i)
+void normalize_item(Item& i)
 {
     i.quality = 3;
     i.curse_state = CurseState::none;
@@ -57,14 +57,14 @@ std::string test_itemname(int id, int number, bool prefix)
     return name;
 }
 
-item& create_item(int id, int number)
+Item& create_item(int id, int number)
 {
     REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
     normalize_item(elona::inv[elona::ci]);
     return elona::inv[elona::ci];
 }
 
-character& create_chara(int id, int x, int y)
+Character& create_chara(int id, int x, int y)
 {
     elona::fixlv = 0;
     REQUIRE(chara_create(-1, id, x, y));

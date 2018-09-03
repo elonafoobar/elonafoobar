@@ -45,11 +45,11 @@ void await(int)
 {
 }
 
-void boxf(int, int, int, int, const snail::color&)
+void boxf(int, int, int, int, const snail::Color&)
 {
 }
 
-void boxf(const snail::color&)
+void boxf(const snail::Color&)
 {
 }
 
@@ -61,7 +61,7 @@ void color(int, int, int)
 {
 }
 
-void font(int, snail::font_t::Style, const fs::path&)
+void font(int, snail::Font::Style, const fs::path&)
 {
 }
 
@@ -98,7 +98,7 @@ void gsel(int)
 
 
 
-void line(int, int, int, int, const snail::color&)
+void line(int, int, int, int, const snail::Color&)
 {
 }
 

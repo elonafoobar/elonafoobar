@@ -141,7 +141,7 @@ int chara_create_internal()
 
 
 
-bool is_in_map(const position_t& position)
+bool is_in_map(const Position& position)
 {
     const auto x = position.x;
     const auto y = position.y;
@@ -150,7 +150,7 @@ bool is_in_map(const position_t& position)
 
 
 
-position_t get_random_position(const position_t& base_position, int n)
+Position get_random_position(const Position& base_position, int n)
 {
     return {base_position.x - rnd(n) + rnd(n),
             base_position.y - rnd(n) + rnd(n)};
@@ -158,8 +158,8 @@ position_t get_random_position(const position_t& base_position, int n)
 
 
 
-optional<position_t> get_free_space(
-    const position_t& base_position,
+optional<Position> get_free_space(
+    const Position& base_position,
     int number_of_trials)
 {
     for (int i = 0; i < number_of_trials; ++i)
@@ -203,7 +203,7 @@ int chara_get_free_slot_force()
     std::vector<int> slots;
     for (auto&& cc : cdata.others())
     {
-        if (cc.state() == character::State::alive && cc.character_role == 0)
+        if (cc.state() == Character::State::alive && cc.character_role == 0)
         {
             slots.push_back(cc.index);
         }
@@ -232,7 +232,7 @@ namespace
 
 
 
-bool can_place_character_at(const position_t& position, bool allow_stairs)
+bool can_place_character_at(const Position& position, bool allow_stairs)
 {
     // Out of range
     if (position.x < 0 || mdata_map_width <= position.x || position.y < 0
@@ -270,8 +270,8 @@ bool can_place_character_at(const position_t& position, bool allow_stairs)
 
 
 bool chara_place_internal(
-    character& cc,
-    optional<position_t> position,
+    Character& cc,
+    optional<Position> position,
     bool enemy_respawn)
 {
     int x;
@@ -375,28 +375,28 @@ bool chara_place_internal(
 
 
 
-void failed_to_place_character(character& cc)
+void failed_to_place_character(Character& cc)
 {
     if (cc.index < 16)
     {
-        cc.set_state(character::State::pet_in_other_map);
+        cc.set_state(Character::State::pet_in_other_map);
         txt(i18n::s.get("core.locale.chara.place_failure.ally", cc));
     }
     else
     {
         txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
-        cc.set_state(character::State::empty);
+        cc.set_state(Character::State::empty);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
         modify_crowd_density(cc.index, -1);
     }
     if (cc.character_role != 0)
     {
-        cc.set_state(character::State::villager_dead);
+        cc.set_state(Character::State::villager_dead);
     }
     if (cc.character_role == 13)
     {
-        cc.set_state(character::State::adventurer_dead);
+        cc.set_state(Character::State::adventurer_dead);
         cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
     }
@@ -412,12 +412,12 @@ namespace elona
 {
 
 
-cdata_t cdata;
+CData cdata;
 
 
 elona_vector1<std::string> usertxt;
 
-character::character()
+Character::Character()
     : growth_buffs(10)
     , body_parts(30)
     , buffs(16)
@@ -426,10 +426,10 @@ character::character()
 }
 
 
-void character::set_state(character::State new_state)
+void Character::set_state(Character::State new_state)
 {
     bool was_alive = !this->is_dead();
-    bool was_empty = this->state_ == character::State::empty;
+    bool was_empty = this->state_ == Character::State::empty;
 
     this->state_ = new_state;
 
@@ -438,24 +438,24 @@ void character::set_state(character::State new_state)
         chara_killed(*this);
     }
 
-    if (was_empty && this->state_ != character::State::empty)
+    if (was_empty && this->state_ != Character::State::empty)
     {
         lua::lua->get_handle_manager().create_chara_handle_run_callbacks(*this);
     }
-    else if (!was_empty && this->state_ == character::State::empty)
+    else if (!was_empty && this->state_ == Character::State::empty)
     {
         chara_remove(*this);
     }
 }
 
 
-void character::clear()
+void Character::clear()
 {
     copy({}, *this);
 }
 
 
-void character::clear_flags()
+void Character::clear_flags()
 {
     for (size_t i = 0; i < 32 * 30; ++i)
     {
@@ -464,7 +464,7 @@ void character::clear_flags()
 }
 
 
-cdata_t::cdata_t()
+CData::CData()
     : storage(ELONA_MAX_CHARACTERS)
 {
     for (size_t i = 0; i < storage.size(); ++i)
@@ -1046,7 +1046,7 @@ bool chara_place()
 
     if (rc == 56)
     {
-        cdata[rc].set_state(character::State::empty);
+        cdata[rc].set_state(Character::State::empty);
         return false;
     }
 
@@ -1058,7 +1058,7 @@ bool chara_place()
 
     const auto success = chara_place_internal(
         cdata[rc],
-        cxinit >= 0 ? optional<position_t>({cxinit, cyinit}) : none,
+        cxinit >= 0 ? optional<Position>({cxinit, cyinit}) : none,
         cxinit == -2);
     if (!success)
     {
@@ -1119,7 +1119,7 @@ void initialize_character()
         cdata[rc].is_lay_hand_available() = true;
     }
 
-    cdata[rc].set_state(character::State::alive);
+    cdata[rc].set_state(Character::State::alive);
 
     cm = 0;
     return;
@@ -1157,7 +1157,7 @@ int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
     {
         if (rc == 56)
         {
-            cdata[rc].set_state(character::State::empty);
+            cdata[rc].set_state(Character::State::empty);
             --npcmemory(1, cdata[rc].id);
             return 1;
         }
@@ -1652,9 +1652,9 @@ int chara_find(int id)
 {
     for (auto&& i : cdata.others())
     {
-        if (i.state() != character::State::villager_dead)
+        if (i.state() != Character::State::villager_dead)
         {
-            if (i.state() != character::State::alive)
+            if (i.state() != Character::State::alive)
             {
                 continue;
             }
@@ -1673,7 +1673,7 @@ int chara_find_ally(int id)
 {
     for (int i = 0; i < 16; ++i)
     {
-        if (cdata[i].state() != character::State::alive)
+        if (cdata[i].state() != Character::State::alive)
         {
             continue;
         }
@@ -1691,7 +1691,7 @@ int chara_get_free_slot()
 {
     for (auto&& i : cdata.others())
     {
-        if (i.state() == character::State::empty)
+        if (i.state() == Character::State::empty)
         {
             return i.index;
         }
@@ -1706,7 +1706,7 @@ int chara_get_free_slot_ally()
     const auto max_allies = clamp(sdata(17, 0) / 5 + 1, 2, 15);
     for (int i = 1; i < max_allies + 1; ++i)
     {
-        if (cdata[i].state() != character::State::empty)
+        if (cdata[i].state() != Character::State::empty)
         {
             continue;
         }
@@ -1729,7 +1729,7 @@ int chara_custom_talk(int cc, int talk_type)
         if (!fs::exists(filepath))
             return 0;
         range::copy(
-            fileutil::read_by_line{filepath},
+            fileutil::read_by_line(filepath),
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
@@ -1852,7 +1852,7 @@ int chara_impression_level(int impression)
 
 
 
-void chara_modify_impression(character& cc, int delta)
+void chara_modify_impression(Character& cc, int delta)
 {
     int level1 = chara_impression_level(cc.impression);
     if (delta >= 0)
@@ -1901,12 +1901,12 @@ void chara_vanquish(int cc)
         ride_end();
     }
     else if (
-        cdata[cc].state() == character::State::alive
-        || cdata[cc].state() == character::State::servant_being_selected)
+        cdata[cc].state() == Character::State::alive
+        || cdata[cc].state() == Character::State::servant_being_selected)
     {
         map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
     }
-    cdata[cc].set_state(character::State::empty);
+    cdata[cc].set_state(Character::State::empty);
     cdata[cc].character_role = 0;
     if (cdata[cc].shop_store_id != 0)
     {
@@ -1927,7 +1927,7 @@ void chara_vanquish(int cc)
 
 
 
-int chara_copy(const character& source)
+int chara_copy(const Character& source)
 {
     // Find empty slot.
     const auto slot = chara_get_free_slot();
@@ -1950,7 +1950,7 @@ int chara_copy(const character& source)
     chara_delete(slot);
 
     // Copy from `source` to `destination`.
-    character::copy(source, destination);
+    Character::copy(source, destination);
     sdata.copy(slot, source.index);
     for (int i = 0; i < 10; ++i)
     {
@@ -1990,13 +1990,13 @@ int chara_copy(const character& source)
 
 
 
-void chara_killed(character& chara)
+void chara_killed(Character& chara)
 {
     auto handle = lua::lua->get_handle_manager().get_handle(chara);
     lua::lua->get_event_manager()
         .run_callbacks<lua::EventKind::character_killed>(handle);
 
-    if (chara.state() == character::State::empty)
+    if (chara.state() == Character::State::empty)
     {
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
@@ -2004,9 +2004,9 @@ void chara_killed(character& chara)
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
     }
     else if (
-        chara.state() == character::State::villager_dead
-        || chara.state() == character::State::adventurer_dead
-        || chara.state() == character::State::pet_dead)
+        chara.state() == Character::State::villager_dead
+        || chara.state() == Character::State::adventurer_dead
+        || chara.state() == Character::State::pet_dead)
     {
         // This character revives.
     }
@@ -2018,9 +2018,9 @@ void chara_killed(character& chara)
 
 
 
-void chara_remove(character& chara)
+void chara_remove(Character& chara)
 {
-    chara.set_state(character::State::empty);
+    chara.set_state(Character::State::empty);
     lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(chara);
 }
 
@@ -2048,7 +2048,7 @@ void chara_delete(int cc)
 
 
 void chara_relocate(
-    character& source,
+    Character& source,
     optional<int> destination_slot,
     CharaRelocationMode mode)
 {
@@ -2063,8 +2063,8 @@ void chara_relocate(
     auto& destination = cdata[slot];
 
     // Backups for changing
-    position_t position;
-    position_t initial_position;
+    Position position;
+    Position initial_position;
     int relationship;
     int original_relationship;
     int hate;
@@ -2099,7 +2099,7 @@ void chara_relocate(
                 ci = cnt;
             }
         }
-        item::copy(inv[p], inv[cnt]);
+        Item::copy(inv[p], inv[cnt]);
         inv[p].clear();
         inv[cnt].body_part = 0;
         ++p;
@@ -2113,14 +2113,14 @@ void chara_relocate(
     sdata.copy(slot, source.index);
     sdata.clear(source.index);
 
-    character::copy(source, destination);
+    Character::copy(source, destination);
     source.clear();
 
     // Relocate the corresponding Lua reference, if it exists. It may
     // not always exist, since if the mode is "change" the
     // source's state will be empty. If the source's state is empty, the
     // destination slot will instead be set to empty as well.
-    lua::lua->get_handle_manager().relocate_handle<character>(source, slot);
+    lua::lua->get_handle_manager().relocate_handle<Character>(source, slot);
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -2138,7 +2138,7 @@ void chara_relocate(
     {
         // A new Lua handle is created here. The handles at both slots should
         // have been cleared by now.
-        destination.set_state(character::State::alive);
+        destination.set_state(Character::State::alive);
 
         destination.position = position;
         destination.initial_position = initial_position;
@@ -2158,7 +2158,7 @@ void chara_relocate(
         else
         {
             rc = slot;
-            destination.set_state(character::State::alive);
+            destination.set_state(Character::State::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
             chara_place();
@@ -2204,7 +2204,7 @@ void chara_relocate(
 
 
 
-void chara_set_item_which_will_be_used(character& cc)
+void chara_set_item_which_will_be_used(Character& cc)
 {
     int category = the_item_db[inv[ci].id]->category;
     if (category == 57000 || category == 52000 || category == 53000)
@@ -2215,7 +2215,7 @@ void chara_set_item_which_will_be_used(character& cc)
 
 
 
-int chara_armor_class(const character& cc)
+int chara_armor_class(const Character& cc)
 {
     if (cc.sum_of_equipment_weight >= 35000)
     {
@@ -2233,7 +2233,7 @@ int chara_armor_class(const character& cc)
 
 
 
-bool belong_to_same_team(const character& c1, const character& c2)
+bool belong_to_same_team(const Character& c1, const Character& c2)
 {
     return (c1.relationship >= 0 && c2.relationship >= 0)
         || (c1.relationship == -1 && c2.relationship == -1)

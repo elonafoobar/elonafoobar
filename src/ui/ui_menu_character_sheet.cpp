@@ -621,7 +621,7 @@ static void _draw_first_page_portrait()
 
 static void _draw_first_page_text_exp()
 {
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.exp.exp");
     s(2) = i18n::s.get("core.locale.ui.chara_sheet.exp.next_level");
@@ -819,7 +819,7 @@ static void _draw_first_page_weapon_info()
 {
     append_accuracy_info(0);
     tc = cc;
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     pos(wx + 417, wy + 281 + p(2) * 16);
     mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"));
@@ -972,7 +972,7 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
     font(13 - en * 2);
     pos(wx + 108, wy + 366);
     mes(buff_desc);
-    font(11 + sizefix * 2 - en * 2, snail::font_t::Style::bold);
+    font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     pos(wx + 70, wy + 369 - en * 3);
     mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":");
@@ -1217,7 +1217,7 @@ _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
 
 static void _draw_text_entry(int cnt, const std::string& text)
 {
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
@@ -1357,12 +1357,12 @@ optional<UIMenuCharacterSheet::result_type> UIMenuCharacterSheet::on_key(
         if (key == key_enter)
         {
             snd(103);
-            return UIMenuCharacterSheet::result::cancel();
+            return UIMenuCharacterSheet::Result::cancel();
         }
         if (key == key_cancel)
         {
-            return UIMenuCharacterSheet::result::finish(
-                ui_menu_composite_character_result{false});
+            return UIMenuCharacterSheet::Result::finish(
+                UIMenuCompositeCharacterResult{false});
         }
         return none;
     }
@@ -1401,8 +1401,8 @@ optional<UIMenuCharacterSheet::result_type> UIMenuCharacterSheet::on_key(
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
-                return UIMenuCharacterSheet::result::finish(
-                    ui_menu_composite_character_result{skill_id});
+                return UIMenuCharacterSheet::Result::finish(
+                    UIMenuCompositeCharacterResult{skill_id});
             }
             if (cdata.player().skill_bonus < 1 || skill_id < 0
                 || skill_id < 100)
@@ -1448,7 +1448,7 @@ optional<UIMenuCharacterSheet::result_type> UIMenuCharacterSheet::on_key(
             update_screen();
             tc = tcbk;
         }
-        return UIMenuCharacterSheet::result::cancel();
+        return UIMenuCharacterSheet::Result::cancel();
     }
 
     return none;

@@ -26,7 +26,7 @@ namespace
 
 
 
-struct random_event
+struct RandomEvent
 {
     int id;
     int luck_threshold;
@@ -52,7 +52,7 @@ std::vector<int> fsetremain{
 
 
 
-optional<random_event> generate_random_event_in_sleep()
+optional<RandomEvent> generate_random_event_in_sleep()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -133,13 +133,13 @@ optional<random_event> generate_random_event_in_sleep()
     }
     else
     {
-        return random_event{id, luck_threshold};
+        return RandomEvent{id, luck_threshold};
     }
 }
 
 
 
-optional<random_event> generate_random_event()
+optional<RandomEvent> generate_random_event()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -234,13 +234,13 @@ optional<random_event> generate_random_event()
     }
     else
     {
-        return random_event{id, luck_threshold};
+        return RandomEvent{id, luck_threshold};
     }
 }
 
 
 
-void run_random_event(random_event event)
+void run_random_event(RandomEvent event)
 {
     assert(event.id != 0);
 
@@ -267,7 +267,7 @@ void run_random_event(random_event event)
                 --cnt;
                 continue;
             }
-            if (cdata[p].state() == character::State::alive)
+            if (cdata[p].state() == Character::State::alive)
             {
                 txt(i18n::s.get_enum_property(
                     "core.locale.event.popup", "scream", 15, cdata[p]));

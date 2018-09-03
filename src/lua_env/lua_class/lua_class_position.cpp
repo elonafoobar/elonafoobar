@@ -8,12 +8,12 @@ namespace lua
 
 void LuaPosition::bind(sol::state& lua)
 {
-    sol::usertype<position_t> LuaPosition(
-        sol::constructors<position_t(), position_t(int, int)>(),
+    sol::usertype<Position> LuaPosition(
+        sol::constructors<Position(), Position(int, int)>(),
         "x",
-        &position_t::x,
+        &Position::x,
         "y",
-        &position_t::y);
+        &Position::y);
 
     lua.set_usertype("LuaPosition", LuaPosition);
 }

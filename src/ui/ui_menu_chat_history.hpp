@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuChatHistory : public UIMenu<dummy_result>
+class UIMenuChatHistory : public UIMenu<DummyResult>
 {
 public:
     UIMenuChatHistory()

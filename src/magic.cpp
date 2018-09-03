@@ -71,7 +71,7 @@ int magic()
             {
                 f = 1;
                 p = the_ability_db[efid]->sdataref1 % 1000;
-                if (the_buff_db[p]->type == buff_data::Type::hex)
+                if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
                     efbad = 1;
                 }
@@ -104,11 +104,11 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == buff_data::Type::buff)
+                if (the_buff_db[p]->type == BuffData::Type::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == buff_data::Type::hex)
+                else if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
                     BrightAuraAnimation(
                         cdata[tc].position,
@@ -500,7 +500,7 @@ int magic()
                         cc = chainbomblist(chainbomb);
                         tlocx = cdata[cc].position.x;
                         tlocy = cdata[cc].position.y;
-                        if (cdata[cc].state() == character::State::alive)
+                        if (cdata[cc].state() == Character::State::alive)
                         {
                             const auto damage =
                                 calc_skill_damage(efid, cc, efp);
@@ -1206,7 +1206,7 @@ label_2181_internal:
                     if (y == inv[ci].param2)
                     {
                         pos(sx, sy);
-                        font(40 - en * 2, snail::font_t::Style::italic);
+                        font(40 - en * 2, snail::Font::Style::italic);
                         color(255, 20, 20);
                         mes(i18n::s.get("core.locale.magic.map.mark"));
                         color(0, 0, 0);
@@ -1599,7 +1599,7 @@ label_2181_internal:
         invctrl = 16;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (!result.succeeded)
             {
                 return 0;
@@ -1752,7 +1752,7 @@ label_2181_internal:
                 }
             }
             if (the_buff_db[cdata[tc].buffs[i].id]->type
-                != buff_data::Type::hex)
+                != BuffData::Type::hex)
             {
                 continue;
             }
@@ -3239,7 +3239,7 @@ label_2181_internal:
         invctrl(1) = 7;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (!result.succeeded)
             {
                 break;
@@ -3300,7 +3300,7 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
         if (inv[ci].quality == 5 || ibit(10, ci) == 1)
@@ -3403,7 +3403,7 @@ label_2181_internal:
         }
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 if (inv[ci].enhancement < efp / 100)
@@ -3451,7 +3451,7 @@ label_2181_internal:
         invctrl(1) = 3;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 dbid = inv[ci].id;
@@ -3539,7 +3539,7 @@ label_2181_internal:
         invctrl(1) = 5;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 dbid = inv[ci].id;
@@ -3637,7 +3637,7 @@ label_2181_internal:
         invctrl(1) = 6;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 autosave =
@@ -3701,7 +3701,7 @@ label_2181_internal:
         invctrl(1) = 4;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
         if (f)
@@ -3829,11 +3829,11 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.swarm"));
         for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state() != character::State::alive)
+            if (cdata[cc].state() != Character::State::alive)
             {
                 continue;
             }
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -3880,7 +3880,7 @@ label_2181_internal:
     case 466:
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -3913,11 +3913,11 @@ label_2181_internal:
         MiracleAnimation().play();
         for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state() != character::State::alive)
+            if (cdata[cc].state() != Character::State::alive)
             {
                 continue;
             }
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -3963,7 +3963,7 @@ label_2181_internal:
         }
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }

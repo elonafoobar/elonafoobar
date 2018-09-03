@@ -4,7 +4,7 @@
 
 namespace elona
 {
-struct character;
+struct Character;
 
 namespace ui
 {
@@ -24,14 +24,14 @@ protected:
     virtual optional<UIMenuHire::result_type> on_key(const std::string& key);
 
 private:
-    bool _should_display_chara(const character& chara);
+    bool _should_display_chara(const Character& chara);
     void _populate_list();
 
     void _draw_topic();
     void _draw_window();
     void _draw_list_entries();
-    void _draw_list_entry(int cnt, const character& chara);
-    void _draw_list_entry_cost(int cnt, const character& chara);
+    void _draw_list_entry(int cnt, const Character& chara);
+    void _draw_list_entry_cost(int cnt, const Character& chara);
 
     HireOperation _operation;
 };

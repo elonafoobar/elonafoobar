@@ -11,7 +11,7 @@ namespace elona
 
 
 
-struct buff_data
+struct BuffData
 {
     enum class Type
     {
@@ -37,10 +37,10 @@ namespace cat
 {
 
 template <>
-struct cat_db_traits<BuffDB>
+struct CatDBTraits<BuffDB>
 {
     using id_type = int;
-    using data_type = buff_data;
+    using data_type = BuffData;
     static constexpr const char* filename = u8"buff.lua";
     static constexpr const char* table_name = u8"buff";
 };
@@ -61,19 +61,19 @@ public:
 extern BuffDB the_buff_db;
 
 
-struct character;
-struct buff_t;
+struct Character;
+struct Buff;
 
 
-bool buff_has(const character& cc, int id);
-optional_ref<const buff_t> buff_find(const character& cc, int id);
+bool buff_has(const Character& cc, int id);
+optional_ref<const Buff> buff_find(const Character& cc, int id);
 void buff_add(
-    character& cc,
+    Character& cc,
     int id,
     int power,
     int turns,
-    optional_ref<const character> doer = none);
-void buff_delete(character& cc, int prm_806);
+    optional_ref<const Character> doer = none);
+void buff_delete(Character& cc, int prm_806);
 
 
 

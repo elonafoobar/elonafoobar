@@ -62,12 +62,12 @@ enum class EventKind : unsigned
 class Callbacks
 {
 public:
-    struct callback_t
+    struct Callback
     {
         sol::protected_function function;
         sol::environment env;
         std::string mod_name;
-        callback_t(
+        Callback(
             sol::environment _env,
             sol::protected_function _function,
             std::string _mod_name)
@@ -79,11 +79,11 @@ public:
     };
 
     template <typename>
-    struct retval_type
+    struct RetValType
     {
     };
 
-    typedef std::vector<callback_t> callback_container;
+    typedef std::vector<Callback> callback_container;
     typedef callback_container::iterator iterator;
     typedef callback_container::const_iterator const_iterator;
 
@@ -153,7 +153,7 @@ public:
     }
 
     template <typename... Args>
-    void run(retval_type<void>, Args&&... args)
+    void run(RetValType<void>, Args&&... args)
     {
         for (const auto iter : functions)
         {
@@ -167,7 +167,7 @@ public:
     }
 
     template <typename R, typename... Args>
-    optional<R> run(retval_type<R>, Args&&... args)
+    optional<R> run(RetValType<R>, Args&&... args)
     {
         R retval = none;
 
@@ -242,13 +242,13 @@ public:
     R run_callbacks(Args&&... args)
     {
         return events.at(event).run(
-            Callbacks::retval_type<R>{}, std::forward<Args>(args)...);
+            Callbacks::RetValType<R>{}, std::forward<Args>(args)...);
     }
 
     template <EventKind event, typename R = void>
     R run_callbacks()
     {
-        return events.at(event).run(Callbacks::retval_type<R>{});
+        return events.at(event).run(Callbacks::RetValType<R>{});
     }
 
     void clear();

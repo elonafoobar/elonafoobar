@@ -27,14 +27,14 @@ namespace lion
 {
 
 template <typename>
-struct lion_db_traits;
+struct LionDBTraits;
 
 
 template <class T>
 class LionDB : public lib::noncopyable
 {
 public:
-    using traits_type = lion_db_traits<T>;
+    using traits_type = LionDBTraits<T>;
     using id_type = shared_id;
     using legacy_id_type = typename traits_type::legacy_id_type;
     using data_type = typename traits_type::data_type;
@@ -246,7 +246,7 @@ static optional<std::vector<T>> convert_vector(
     namespace lion \
     { \
     template <> \
-    struct lion_db_traits<ClassName> \
+    struct LionDBTraits<ClassName> \
     { \
         using data_type = data; \
         using legacy_id_type = legacy_id; \

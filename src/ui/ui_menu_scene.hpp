@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuScene : public UIMenu<dummy_result>
+class UIMenuScene : public UIMenu<DummyResult>
 {
 public:
     UIMenuScene()

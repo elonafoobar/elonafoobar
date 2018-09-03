@@ -127,7 +127,7 @@ void await(int msec)
 
 
 
-void boxf(int x, int y, int width, int height, const snail::color& color)
+void boxf(int x, int y, int width, int height, const snail::Color& color)
 {
     snail::hsp::boxf(x, y, width, height, color);
 }
@@ -141,7 +141,7 @@ void boxf()
 
 
 
-void boxl(int x, int y, int width, int height, const snail::color& color)
+void boxl(int x, int y, int width, int height, const snail::Color& color)
 {
     const auto x2 = x + width;
     const auto y2 = y + height;
@@ -336,7 +336,7 @@ void exec(const std::string&, int)
 
 
 
-void font(int size, snail::font_t::Style style)
+void font(int size, snail::Font::Style style)
 {
     snail::hsp::font(
         size,
@@ -520,7 +520,7 @@ int stoi(const std::string& s)
 
 
 
-void line(int x1, int y1, int x2, int y2, const snail::color& color)
+void line(int x1, int y1, int x2, int y2, const snail::Color& color)
 {
     snail::hsp::line(x1, y1, x2, y2, color);
 }
@@ -594,15 +594,6 @@ size_t count(const std::string& str)
     return split_lines(str).size();
 }
 
-
-
-struct io_error : public std::runtime_error
-{
-    io_error(const std::string& message)
-        : std::runtime_error(message)
-    {
-    }
-};
 
 
 } // namespace notemanip
@@ -723,10 +714,10 @@ void pget(int x, int y)
 
 void picload(const fs::path& filepath, int mode)
 {
-    optional<snail::color> keycolor = snail::color{0, 0, 0};
+    optional<snail::Color> keycolor = snail::Color{0, 0, 0};
     if (filesystem::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
     {
-        keycolor = snail::color(43, 133, 133);
+        keycolor = snail::Color(43, 133, 133);
     }
     if (filesystem::to_utf8_path(filepath).find(u8"bg") != std::string::npos)
     {

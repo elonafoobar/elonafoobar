@@ -9,12 +9,12 @@ namespace elona
 namespace ui
 {
 
-bool UIMenuHire::_should_display_chara(const character& chara)
+bool UIMenuHire::_should_display_chara(const Character& chara)
 {
     if (_operation == HireOperation::revive)
     {
-        if (chara.state() != character::State::pet_dead
-            && chara.state() != character::State::villager_dead)
+        if (chara.state() != Character::State::pet_dead
+            && chara.state() != Character::State::villager_dead)
         {
             return false;
         }
@@ -23,12 +23,12 @@ bool UIMenuHire::_should_display_chara(const character& chara)
     {
         if (_operation == HireOperation::hire)
         {
-            if (chara.state() != character::State::servant_being_selected)
+            if (chara.state() != Character::State::servant_being_selected)
             {
                 return false;
             }
         }
-        else if (chara.state() != character::State::alive)
+        else if (chara.state() != Character::State::alive)
         {
             return false;
         }
@@ -150,12 +150,12 @@ static void _draw_keys()
     }
 }
 
-static void _draw_list_entry_pic(int cnt, const character& chara)
+static void _draw_list_entry_pic(int cnt, const Character& chara)
 {
     draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 }
 
-static void _draw_list_entry_name(int cnt, const character& chara)
+static void _draw_list_entry_name(int cnt, const Character& chara)
 {
     std::string chara_name = cdatan(0, chara.index);
     cutname(chara_name, 36);
@@ -163,7 +163,7 @@ static void _draw_list_entry_name(int cnt, const character& chara)
     cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_info(int cnt, const character& chara)
+static void _draw_list_entry_info(int cnt, const Character& chara)
 {
     std::string level = u8"Lv."s + chara.level + u8" "s;
 
@@ -183,7 +183,7 @@ static void _draw_list_entry_info(int cnt, const character& chara)
     mes(level);
 }
 
-void UIMenuHire::_draw_list_entry_cost(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
 {
     if (_operation != HireOperation::revive)
     {
@@ -205,7 +205,7 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const character& chara)
 }
 
 
-void UIMenuHire::_draw_list_entry(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry(int cnt, const Character& chara)
 {
     _draw_list_entry_pic(cnt, chara);
     _draw_list_entry_name(cnt, chara);
@@ -226,7 +226,7 @@ void UIMenuHire::_draw_list_entries()
         }
 
         int chara_index = list(0, p);
-        const character& chara = cdata[chara_index];
+        const Character& chara = cdata[chara_index];
 
         _draw_list_entry(cnt, chara);
     }
@@ -251,7 +251,7 @@ optional<UIMenuHire::result_type> UIMenuHire::on_key(const std::string& key)
 
     if (_p != -1)
     {
-        return UIMenuHire::result::finish(_p);
+        return UIMenuHire::Result::finish(_p);
     }
     else if (key == key_pageup)
     {
@@ -273,7 +273,7 @@ optional<UIMenuHire::result_type> UIMenuHire::on_key(const std::string& key)
     }
     else if (key == key_cancel)
     {
-        return UIMenuHire::result::cancel();
+        return UIMenuHire::Result::cancel();
     }
 
     return none;

@@ -40,7 +40,7 @@ static bool _should_show_entry(int body_part)
     return true;
 }
 
-static int _load_equipment_list(const character& chara)
+static int _load_equipment_list(const Character& chara)
 {
     int mainhand = 0;
 
@@ -193,7 +193,7 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
 
 static void _draw_keys(int main_hand)
 {
-    font(12 + sizefix - en * 2, snail::font_t::Style::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     gmode(2);
     keyrange = 0;
     f = 0;
@@ -399,7 +399,7 @@ optional<UIMenuEquipment::result_type> UIMenuEquipment::on_key(
         create_pcpic(cc, true);
         update_screen();
         // result.turn_result = TurnResult::pc_turn_user_error
-        return UIMenuEquipment::result::cancel();
+        return UIMenuEquipment::Result::cancel();
     }
 
     return none;

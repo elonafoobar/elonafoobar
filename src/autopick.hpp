@@ -13,7 +13,7 @@ namespace elona
 class Autopick : public lib::noncopyable
 {
 public:
-    struct operation
+    struct Operation
     {
         enum class Type
         {
@@ -26,7 +26,7 @@ public:
             open = 16,
         };
 
-        explicit operation(Type type = Type::do_nothing)
+        explicit Operation(Type type = Type::do_nothing)
             : type(type)
         {
         }
@@ -40,26 +40,26 @@ public:
 
     void load(const std::string& player_id);
 
-    operation get_operation(const item&);
+    Operation get_operation(const Item&);
 
 
 private:
-    struct matcher
+    struct Matcher
     {
-        matcher(const std::string& text, const operation& op)
+        Matcher(const std::string& text, const Operation& op)
             : text(text)
             , op(op)
         {
         }
 
         std::string text;
-        operation op;
+        Operation op;
 
-        bool matches(const item&) const;
+        bool matches(const Item&) const;
     };
 
 
-    std::vector<matcher> matchers;
+    std::vector<Matcher> matchers;
     Autopick() = default;
 
 

@@ -211,7 +211,7 @@ optional<UIMenuSpellWriter::result_type> UIMenuSpellWriter::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuSpellWriter::result::finish();
+        return UIMenuSpellWriter::Result::finish();
     }
 
     return none;

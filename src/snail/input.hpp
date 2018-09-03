@@ -14,7 +14,7 @@ namespace snail
 
 
 
-struct button : public lib::noncopyable
+struct KeyState : public lib::noncopyable
 {
     bool is_pressed() const noexcept
     {
@@ -296,7 +296,7 @@ public:
     }
 
 
-    const button& operator[](Button button) const
+    const KeyState& operator[](Button button) const
     {
         return buttons[static_cast<size_t>(button)];
     }
@@ -310,7 +310,7 @@ public:
 private:
     int _x;
     int _y;
-    std::array<button, static_cast<size_t>(Button::_size)> buttons;
+    std::array<KeyState, static_cast<size_t>(Button::_size)> buttons;
 };
 
 
@@ -389,7 +389,7 @@ public:
 
 
 private:
-    std::array<button, static_cast<size_t>(Key::_size)> _keys;
+    std::array<KeyState, static_cast<size_t>(Key::_size)> _keys;
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};

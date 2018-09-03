@@ -6,13 +6,13 @@ namespace elona
 namespace ui
 {
 
-struct ui_menu_alias_result
+struct UIMenuAliasResult
 {
     std::string alias = "";
     int seed = -1;
 };
 
-class UIMenuAlias : public UIMenu<ui_menu_alias_result>
+class UIMenuAlias : public UIMenu<UIMenuAliasResult>
 {
 public:
     UIMenuAlias(int alias_type)

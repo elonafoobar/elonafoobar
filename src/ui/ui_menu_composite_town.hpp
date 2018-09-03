@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuCompositeTown : public UIMenuComposite<dummy_result>
+class UIMenuCompositeTown : public UIMenuComposite<DummyResult>
 {
 public:
     enum Index : size_t

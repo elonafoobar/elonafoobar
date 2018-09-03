@@ -13,7 +13,7 @@ namespace elona
 {
 
 
-struct item_data
+struct ItemData
 {
     int id;
     int image;
@@ -50,7 +50,7 @@ struct item_data
     optional<std::string> on_use_callback;
 };
 
-ELONA_LION_DEFINE_DB(item_db_ex, item_data, int, u8"item")
+ELONA_LION_DEFINE_DB(item_db_ex, ItemData, int, u8"item")
 
 extern item_db_ex the_item_db;
 

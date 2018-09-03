@@ -989,7 +989,7 @@ bool casino_blackjack()
             cardplayeradd(0, 220, 124);
             cardplayeradd(1, 220, 240);
         }
-        font(14 - en * 2, snail::font_t::Style::bold);
+        font(14 - en * 2, snail::Font::Style::bold);
         color(255, 255, 255);
         pos(152, 154);
         mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"));

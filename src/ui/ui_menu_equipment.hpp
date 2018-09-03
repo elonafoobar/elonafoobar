@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuEquipment : public UIMenu<ui_menu_composite_character_result>
+class UIMenuEquipment : public UIMenu<UIMenuCompositeCharacterResult>
 {
 public:
     UIMenuEquipment()

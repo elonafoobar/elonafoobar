@@ -19,7 +19,7 @@ bool UIMenuAdventurers::init()
     cs_bk = -1;
     for (int cnt = 0; cnt < 56; ++cnt)
     {
-        if (cdata[cnt].state() == character::State::empty)
+        if (cdata[cnt].state() == Character::State::empty)
         {
             continue;
         }
@@ -88,7 +88,7 @@ static void _draw_keys()
 }
 
 static void
-_draw_list_entry_pic_and_rank(int cnt, const character& chara, int _p)
+_draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
 {
     draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 
@@ -97,7 +97,7 @@ _draw_list_entry_pic_and_rank(int cnt, const character& chara, int _p)
         + i18n::s.get("core.locale.ui.adventurers.rank_counter"));
 }
 
-static void _draw_list_entry_name(int cnt, const character& chara)
+static void _draw_list_entry_name(int cnt, const Character& chara)
 {
     std::string name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -106,14 +106,14 @@ static void _draw_list_entry_name(int cnt, const character& chara)
     cs_list(cs == cnt, name, wx + 118, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_level(int cnt, const character& chara)
+static void _draw_list_entry_level(int cnt, const Character& chara)
 {
     std::string level = ""s + chara.fame + u8"("s + chara.level + u8")"s;
     pos(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2);
     mes(level);
 }
 
-static void _draw_list_entry_map_name(int cnt, const character& chara)
+static void _draw_list_entry_map_name(int cnt, const Character& chara)
 {
     std::string map_name = mapname(chara.current_map);
 
@@ -121,7 +121,7 @@ static void _draw_list_entry_map_name(int cnt, const character& chara)
     {
         map_name = i18n::s.get("core.locale.ui.adventurers.unknown");
     }
-    if (chara.state() == character::State::adventurer_dead)
+    if (chara.state() == Character::State::adventurer_dead)
     {
         map_name = i18n::s.get("core.locale.ui.adventurers.hospital");
     }
@@ -130,7 +130,7 @@ static void _draw_list_entry_map_name(int cnt, const character& chara)
     mes(map_name);
 }
 
-static void _draw_list_entry(int cnt, const character& chara, int _p)
+static void _draw_list_entry(int cnt, const Character& chara, int _p)
 {
     _draw_list_entry_pic_and_rank(cnt, chara, _p);
     _draw_list_entry_name(cnt, chara);
@@ -151,7 +151,7 @@ static void _draw_list_entries()
         }
 
         int chara_index = list(0, p);
-        const character& chara = cdata[chara_index];
+        const Character& chara = cdata[chara_index];
 
         _draw_list_entry(cnt, chara, p(0));
     }
@@ -193,7 +193,7 @@ optional<UIMenuAdventurers::result_type> UIMenuAdventurers::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuAdventurers::result::finish();
+        return UIMenuAdventurers::Result::finish();
     }
 
     return none;

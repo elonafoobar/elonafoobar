@@ -86,7 +86,7 @@ optional<UIMenuAlias::result_type> UIMenuAlias::on_key(
         }
         else
         {
-            ui_menu_alias_result res;
+            UIMenuAliasResult res;
 
             if (_alias_type == 3)
             {
@@ -97,13 +97,13 @@ optional<UIMenuAlias::result_type> UIMenuAlias::on_key(
                 res.alias = listn(0, _p);
             }
 
-            return UIMenuAlias::result::finish(res);
+            return UIMenuAlias::Result::finish(res);
         }
     }
     else if (key == key_cancel)
     {
         snd(26);
-        return UIMenuAlias::result::cancel();
+        return UIMenuAlias::Result::cancel();
     }
 
     return none;

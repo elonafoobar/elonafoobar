@@ -11,7 +11,7 @@ namespace elona
 item_db_ex the_item_db;
 
 
-item_data item_db_ex::convert(
+ItemData item_db_ex::convert(
     const std::string& id_,
     const sol::table& data,
     lua::LuaEnv& lua)
@@ -60,7 +60,7 @@ item_data item_db_ex::convert(
         is_usable = true;
     }
 
-    return item_data{
+    return ItemData{
         id,
         image,
         value,

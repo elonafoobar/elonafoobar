@@ -17,7 +17,7 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
     testing::set_japanese();
 
     {
-        item& item = testing::create_item(260);
+        Item& item = testing::create_item(260);
         update_slight();
 
         item.param2 = 1;
@@ -26,7 +26,7 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
         REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"カレーパン");
     }
     {
-        item& item = testing::create_item(573);
+        Item& item = testing::create_item(573);
         update_slight();
 
         item.param2 = 1;

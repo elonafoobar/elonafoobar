@@ -982,8 +982,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{i18n::s.get_locale_dir("core") / "lazy"
-                               / "ndata.csv"},
+        fileutil::read_by_line(i18n::s.get_locale_dir("core") / "lazy"
+                               / "ndata.csv"),
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -1005,7 +1005,7 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{filesystem::dir::data() / u8"name.csv"},
+        fileutil::read_by_line(filesystem::dir::data() / u8"name.csv"),
         std::back_inserter(lines));
 
     SDIM3(rn1, 15, lines.size());
@@ -1773,7 +1773,7 @@ void make_sound(
 {
     for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -1917,7 +1917,7 @@ void incognitobegin()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -1947,7 +1947,7 @@ void incognitoend()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -2967,7 +2967,7 @@ void chara_set_revived_status()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    cdata[rc].set_state(character::State::alive);
+    cdata[rc].set_state(Character::State::alive);
     return;
 }
 
@@ -3089,7 +3089,7 @@ int convertartifact(int prm_930, int prm_931)
         tc_at_m163 = inv_getowner(cnt);
         if (tc_at_m163 != -1)
         {
-            if (cdata[tc_at_m163].state() == character::State::empty
+            if (cdata[tc_at_m163].state() == Character::State::empty
                 || cdata[tc_at_m163].character_role == 13)
             {
                 continue;
@@ -4349,7 +4349,7 @@ void food_gets_rotten()
         else
         {
             p = cnt;
-            if (cdata[p].state() == character::State::empty)
+            if (cdata[p].state() == Character::State::empty)
             {
                 continue;
             }
@@ -5074,7 +5074,7 @@ TurnResult exit_map()
             fixstart = 1;
         }
     }
-    if (cdata.player().state() == character::State::empty)
+    if (cdata.player().state() == Character::State::empty)
     {
         rc = 0;
         revive_player();
@@ -5183,11 +5183,11 @@ TurnResult exit_map()
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
         rowactend(cnt);
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
-            if (cdata[cnt].state() == character::State::pet_in_other_map)
+            if (cdata[cnt].state() == Character::State::pet_in_other_map)
             {
-                cdata[cnt].set_state(character::State::alive);
+                cdata[cnt].set_state(Character::State::alive);
             }
             continue;
         }
@@ -5196,7 +5196,7 @@ TurnResult exit_map()
         {
             if (cdata[cnt].current_map != 0)
             {
-                cdata[cnt].set_state(character::State::pet_moving_to_map);
+                cdata[cnt].set_state(Character::State::pet_moving_to_map);
             }
         }
     }
@@ -5221,7 +5221,7 @@ TurnResult exit_map()
         // forget about all NPCs that were here
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.state() != character::State::empty)
+            if (cnt.state() != Character::State::empty)
             {
                 --npcmemory(1, cnt.id);
             }
@@ -5260,10 +5260,10 @@ void prepare_charas_for_map_unload()
     // remove living adventurers from the map and set their states
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state() == character::State::alive)
+        if (cdata[cnt].state() == Character::State::alive)
         {
             map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
-            cdata[cnt].set_state(character::State::adventurer_in_other_map);
+            cdata[cnt].set_state(Character::State::adventurer_in_other_map);
         }
     }
 }
@@ -5362,7 +5362,7 @@ void map_proc_regen_and_update()
             {
                 rc = cnt.index;
                 chara_clear_status_effects_b();
-                if (cnt.state() != character::State::alive)
+                if (cnt.state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -5370,7 +5370,7 @@ void map_proc_regen_and_update()
                 {
                     if (rnd(2))
                     {
-                        cnt.set_state(character::State::empty);
+                        cnt.set_state(Character::State::empty);
                         map(cnt.position.x, cnt.position.y, 1) = 0;
                     }
                 }
@@ -5420,13 +5420,13 @@ void map_proc_regen_and_update()
         {
             for (auto&& cnt : cdata.others())
             {
-                if (cnt.state() != character::State::alive)
+                if (cnt.state() != Character::State::alive)
                 {
                     continue;
                 }
                 if (cnt.is_temporary() == 1)
                 {
-                    cnt.set_state(character::State::empty);
+                    cnt.set_state(Character::State::empty);
                     map(cnt.position.x, cnt.position.y, 1) = 0;
                 }
             }
@@ -5468,7 +5468,7 @@ void map_proc_regen_and_update()
             {
                 for (auto&& cnt : cdata.others())
                 {
-                    if (cnt.state() != character::State::alive)
+                    if (cnt.state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -6667,7 +6667,7 @@ void map_proc_special_events()
     {
         if (gdata_released_fire_giant == 1)
         {
-            if (cdata[gdata_fire_giant].state() == character::State::alive)
+            if (cdata[gdata_fire_giant].state() == Character::State::alive)
             {
                 if (gdata_crowd_density < 70)
                 {
@@ -7878,9 +7878,9 @@ label_19431_internal:
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
     for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::user(),
-                                 filesystem::dir_entries::Type::file,
-                                 pattern})
+         filesystem::dir_entries(filesystem::dir::user(),
+                                 filesystem::DirEntryRange::Type::file,
+                                 pattern))
     {
         const auto path = entry.path();
         if (path == filesystem::path(u8"temp.enum")
@@ -8441,7 +8441,7 @@ TurnResult do_short_cut()
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -8590,7 +8590,7 @@ TurnResult try_interact_with_npc()
     invally = 1;
     invctrl = 10;
     snd(100);
-    menu_result mr = ctrl_inventory();
+    MenuResult mr = ctrl_inventory();
     assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
 }
@@ -8684,7 +8684,7 @@ void savecycle()
 
 int find_enemy_target()
 {
-    if (cdata[cdata[cc].enemy_id].state() != character::State::alive)
+    if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
     {
         cdata[cc].enemy_id = 0;
     }
@@ -8821,7 +8821,7 @@ void build_target_list()
     {
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -9282,7 +9282,7 @@ void dump_player_info()
     noteadd(""s);
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() == character::State::empty)
+        if (cdata[cnt].state() == Character::State::empty)
         {
             continue;
         }
@@ -9353,7 +9353,7 @@ void initialize_map_adjust_spawns()
 {
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() == character::State::alive)
+        if (cnt.state() == Character::State::alive)
         {
             if (cnt.position.x < 0 || cnt.position.x >= mdata_map_width
                 || cnt.position.y < 0 || cnt.position.y >= mdata_map_height)
@@ -9427,11 +9427,11 @@ void migrate_save_data(const fs::path& save_dir)
             {
                 adata(cnt, p) = 0;
             }
-            for (const auto& entry : filesystem::dir_entries{
+            for (const auto& entry : filesystem::dir_entries(
                      filesystem::dir::tmp(),
-                     filesystem::dir_entries::Type::file,
+                     filesystem::DirEntryRange::Type::file,
                      std::regex{u8R"(.*_)"s + std::to_string(p)
-                                + u8R"(_.*\..*)"}})
+                                + u8R"(_.*\..*)"}))
             {
                 const auto file = entry.path().filename();
                 p1 = instr(filesystem::to_utf8_path(file), 0, u8"_"s);
@@ -9499,9 +9499,9 @@ void migrate_save_data(const fs::path& save_dir)
         // Fix corrupted map data.
         // Iterate all map file
         for (const auto& entry :
-             filesystem::dir_entries{save_dir,
-                                     filesystem::dir_entries::Type::file,
-                                     std::regex{R"(map_\d+_\d+\.s2)"}})
+             filesystem::dir_entries(save_dir,
+                                     filesystem::DirEntryRange::Type::file,
+                                     std::regex{R"(map_\d+_\d+\.s2)"}))
         {
             int map_id;
             int level;
@@ -9567,7 +9567,7 @@ void migrate_save_data(const fs::path& save_dir)
                     for (const auto& i : items(-1))
                     {
                         if (inv[i].number() > 0
-                            && inv[i].position == position_t{x, y})
+                            && inv[i].position == Position{x, y})
                         {
                             inv[i].remove();
                         }
@@ -9614,7 +9614,6 @@ void clear_existing_quest_list()
     SDIM3(qname, 40, 500);
     gdata_number_of_existing_quests = 0;
     initialize_adata();
-    return;
 }
 
 
@@ -9672,11 +9671,11 @@ void load_gene_files()
     DIM2(spact, 500);
     for (auto&& cnt : cdata.all())
     {
-        cnt.set_state(character::State::empty);
+        cnt.set_state(Character::State::empty);
     }
     sdata.copy(56, 0);
     sdata.clear(0);
-    character::copy(cdata.player(), cdata.tmp());
+    Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
     for (const auto& cnt : items(-1))
     {
@@ -9864,9 +9863,9 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
     foobar_data.version = {0, 2, 5, "", "", ""};
 
     for (const auto entry :
-         filesystem::dir_entries{save_dir,
-                                 filesystem::dir_entries::Type::file,
-                                 std::regex{R"(.*\.s2)"}})
+         filesystem::dir_entries(save_dir,
+                                 filesystem::DirEntryRange::Type::file,
+                                 std::regex{R"(.*\.s2)"}))
     {
         ELONA_LOG("v0.2.5:copy:" << entry.path());
         fs::copy_file(
@@ -9946,8 +9945,8 @@ void save_game()
     ctrl_file(FileOperation::map_write);
     ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
     save_f = 0;
-    for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::Type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -10554,7 +10553,7 @@ void sleep_start()
         {
             if (cdata[cnt].has_made_gene() == 1)
             {
-                if (cdata[cnt].state() == character::State::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     tc = cnt;
                     break;
@@ -11161,7 +11160,7 @@ int do_cast_magic_attempt()
             }
         }
         damage_mp(cdata[cc], mp);
-        if (cdata[cc].state() != character::State::alive)
+        if (cdata[cc].state() != Character::State::alive)
         {
             efsource = 0;
             return 1;
@@ -11248,7 +11247,7 @@ int do_cast_magic_attempt()
         for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
         {
             magic();
-            if (cdata[tc].state() != character::State::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
                 if (stat == 0)
@@ -11706,7 +11705,7 @@ int do_magic_attempt()
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
-                    if (cdata[cnt].state() == character::State::alive)
+                    if (cdata[cnt].state() == Character::State::alive)
                     {
                         if (cdata[cnt].relationship == 10)
                         {
@@ -12620,7 +12619,7 @@ TurnResult do_bash()
                     cdata[cc],
                     cdata[tc]));
                 damage_hp(cdata[tc], sdata(10, cc) * 5, cc);
-                if (cdata[tc].state() == character::State::alive)
+                if (cdata[tc].state() == Character::State::alive)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.bash.choked.spits", cdata[tc]));
@@ -13057,13 +13056,13 @@ void proc_autopick()
         const auto op = Autopick::instance().get_operation(inv[ci]);
         switch (op.type)
         {
-        case Autopick::operation::Type::do_nothing:
+        case Autopick::Operation::Type::do_nothing:
             did_something = false;
             break;
-        case Autopick::operation::Type::pick_up:
-        case Autopick::operation::Type::save:
-        case Autopick::operation::Type::no_drop:
-        case Autopick::operation::Type::save_and_no_drop:
+        case Autopick::Operation::Type::pick_up:
+        case Autopick::Operation::Type::save:
+        case Autopick::Operation::Type::no_drop:
+        case Autopick::Operation::Type::save_and_no_drop:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13080,13 +13079,13 @@ void proc_autopick()
             in = inv[ci].number();
             elona::ci = ci;
             pick_up_item();
-            if (int(op.type) & int(Autopick::operation::Type::no_drop))
+            if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
                 ibitmod(13, ti, 1);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
-            if (int(op.type) & int(Autopick::operation::Type::save))
+            if (int(op.type) & int(Autopick::Operation::Type::save))
             {
                 if (gdata_wizard == 0)
                 {
@@ -13094,7 +13093,7 @@ void proc_autopick()
                 }
             }
             break;
-        case Autopick::operation::Type::destroy:
+        case Autopick::Operation::Type::destroy:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13114,7 +13113,7 @@ void proc_autopick()
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
-        case Autopick::operation::Type::open:
+        case Autopick::Operation::Type::open:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13903,7 +13902,7 @@ void do_ranged_attack()
             ele = 0;
             extraattack = 0;
             do_physical_attack();
-            if (cdata[tc].state() != character::State::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
                 if (stat == 0)
@@ -14068,11 +14067,11 @@ void do_physical_attack()
     int attackdmg;
     int expmodifer = 0;
 label_22191_internal:
-    if (cdata[cc].state() != character::State::alive)
+    if (cdata[cc].state() != Character::State::alive)
     {
         return;
     }
-    if (cdata[tc].state() != character::State::alive)
+    if (cdata[tc].state() != Character::State::alive)
     {
         return;
     }
@@ -14313,7 +14312,7 @@ label_22191_internal:
                         cdata.player(), 301, 30 / expmodifer, 0, 5);
                 }
             }
-            if (cdata[tc].state() == character::State::alive)
+            if (cdata[tc].state() == Character::State::alive)
             {
                 chara_gain_skill_exp(
                     cdata[tc],
@@ -14486,7 +14485,7 @@ label_22191_internal:
     rowact_check(tc);
     if (attackskill != 106)
     {
-        if (cdata[tc].state() != character::State::alive)
+        if (cdata[tc].state() != Character::State::alive)
         {
             cw = attackitem;
             if (ibit(10, cw))
@@ -14549,7 +14548,7 @@ void proc_weapon_enchantments()
         {
             p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(cdata[cc], p / 5);
-            if (cdata[tc].state() != character::State::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 continue;
             }
@@ -14620,7 +14619,7 @@ void proc_weapon_enchantments()
                     continue;
                 }
                 ele = enc;
-                if (cdata[tc].state() != character::State::alive)
+                if (cdata[tc].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -14637,7 +14636,7 @@ void proc_weapon_enchantments()
             }
             if (i == 8)
             {
-                if (cdata[tc].state() != character::State::alive)
+                if (cdata[tc].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -14676,7 +14675,7 @@ void proc_weapon_enchantments()
     }
     if (ammoproc == 3)
     {
-        if (cdata[tc].state() == character::State::alive)
+        if (cdata[tc].state() == Character::State::alive)
         {
             gdata(809) = 1;
             damage_hp(

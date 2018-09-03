@@ -16,18 +16,18 @@ int Item::count()
 
 bool Item::has_enchantment(const lua_item_handle handle, int id)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     return elona::encfindspec(item_ref.index, id);
 }
 
 void Item::remove(lua_item_handle handle)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    auto& item_ref = lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     item_ref.remove();
 }
 
 sol::optional<lua_item_handle>
-Item::create(const position_t& position, int id, int number)
+Item::create(const Position& position, int id, int number)
 {
     return Item::create_xy(position.x, position.y, id, number);
 }
@@ -48,7 +48,7 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
 }
 
 sol::optional<lua_item_handle> Item::create_from_id(
-    const position_t& position,
+    const Position& position,
     const std::string& id,
     int number)
 {

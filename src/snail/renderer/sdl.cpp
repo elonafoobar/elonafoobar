@@ -49,7 +49,7 @@ void Renderer::set_render_target(::SDL_Texture* texture)
     detail::enforce_sdl(::SDL_SetRenderTarget(ptr(), texture));
 }
 
-void Renderer::set_draw_color(const color& color)
+void Renderer::set_draw_color(const Color& color)
 {
     detail::enforce_sdl(
         ::SDL_SetRenderDrawColor(ptr(), color.r, color.g, color.b, color.a));
@@ -93,15 +93,15 @@ void Renderer::fill_rect(int x, int y, int width, int height)
 }
 
 
-rect Renderer::render_text(
+Rect Renderer::render_text(
     const std::string& text,
     int x,
     int y,
-    const color& color,
+    const Color& color,
     double scale)
 {
     if (text.empty())
-        return rect{x, y, 0, 0};
+        return Rect{x, y, 0, 0};
 
     auto surface = detail::enforce_ttf(::TTF_RenderUTF8_Solid(
         _font.ptr(), text.c_str(), detail::to_sdl_color(color)));
@@ -132,17 +132,17 @@ rect Renderer::render_text(
     ::SDL_FreeSurface(surface);
     ::SDL_DestroyTexture(texture);
 
-    return rect{x_, y_, width, height};
+    return Rect{x_, y_, width, height};
 }
 
 
 
-rect Renderer::render_text_with_shadow(
+Rect Renderer::render_text_with_shadow(
     const std::string& text,
     int x,
     int y,
-    const color& text_color,
-    const color& shadow_color,
+    const Color& text_color,
+    const Color& shadow_color,
     double scale)
 {
     // Render shadow.
@@ -161,15 +161,15 @@ rect Renderer::render_text_with_shadow(
 }
 
 
-rect Renderer::render_multiline_text(
+Rect Renderer::render_multiline_text(
     const std::string& text,
     int x,
     int y,
-    const color& text_color)
+    const Color& text_color)
 {
     const auto line_skip = ::TTF_FontLineSkip(_font.ptr());
 
-    rect ret = {x, y, 0, 0};
+    Rect ret = {x, y, 0, 0};
     auto i = 0;
     std::istringstream stream{text};
     std::string line;
@@ -186,7 +186,7 @@ rect Renderer::render_multiline_text(
 }
 
 
-size Renderer::calculate_text_size(const std::string& text)
+Size Renderer::calculate_text_size(const std::string& text)
 {
     int width;
     int height;

@@ -117,7 +117,7 @@ static void _draw_title()
 {
     font(
         12 - en * 2,
-        snail::font_t::Style::italic | snail::font_t::Style::underline);
+        snail::Font::Style::italic | snail::Font::Style::underline);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
     font(12 - en * 2);
@@ -152,7 +152,7 @@ static void _draw_list_entries()
 
 static void _draw_more()
 {
-    font(12 - en * 2, snail::font_t::Style::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
@@ -195,7 +195,7 @@ optional<UIMenuScene::result_type> UIMenuScene::on_key(
     if (p_ != -1)
     {
         _do_play_scene(p_);
-        return UIMenuScene::result::finish();
+        return UIMenuScene::Result::finish();
     }
     else if (key == key_pageup)
     {
@@ -219,7 +219,7 @@ optional<UIMenuScene::result_type> UIMenuScene::on_key(
     {
         play_music();
         update_screen();
-        return UIMenuScene::result::cancel();
+        return UIMenuScene::Result::cancel();
     }
 
     return none;

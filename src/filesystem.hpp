@@ -66,7 +66,7 @@ std::string to_forward_slashes(const fs::path& path);
 
 
 
-struct dir_entries
+struct DirEntryRange
 {
     enum class Type
     {
@@ -76,10 +76,10 @@ struct dir_entries
     };
 
 
-    dir_entries(
+    DirEntryRange(
         const fs::path& base_dir,
         Type entry_type,
-        const std::regex& pattern = std::regex{u8".*"})
+        const std::regex& pattern)
         : base_dir(base_dir)
         , entry_type(entry_type)
         , pattern(pattern)
@@ -196,6 +196,15 @@ private:
     const Type entry_type;
     const std::regex pattern;
 };
+
+
+inline DirEntryRange dir_entries(
+    const fs::path& base_dir,
+    DirEntryRange::Type entry_type,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return {base_dir, entry_type, pattern};
+}
 
 
 

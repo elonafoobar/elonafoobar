@@ -11,7 +11,7 @@ namespace lua
 {
 
 class LuaEnv;
-struct mod_info;
+struct ModInfo;
 
 /***
  * Keeps track of built-in and mod-provided API bindings. APIs are

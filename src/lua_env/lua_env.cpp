@@ -50,7 +50,7 @@ void LuaEnv::clear()
 
     for (int i = 0; i < ELONA_MAX_CHARACTERS; i++)
     {
-        if (cdata[i].state() != character::State::empty)
+        if (cdata[i].state() != Character::State::empty)
         {
             handle_mgr->remove_chara_handle(cdata[i]);
         }

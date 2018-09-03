@@ -39,9 +39,9 @@ void HandleManager::bind(LuaEnv& lua)
     Item.set("iter", handle_env["Handle"]["iter_items"]);
 }
 
-void HandleManager::create_chara_handle(const character& chara)
+void HandleManager::create_chara_handle(const Character& chara)
 {
-    if (chara.state() == character::State::empty)
+    if (chara.state() == Character::State::empty)
     {
         return;
     }
@@ -49,7 +49,7 @@ void HandleManager::create_chara_handle(const character& chara)
     create_handle(chara);
 }
 
-void HandleManager::create_item_handle(const item& item)
+void HandleManager::create_item_handle(const Item& item)
 {
     if (item.number() == 0)
     {
@@ -59,21 +59,21 @@ void HandleManager::create_item_handle(const item& item)
     create_handle(item);
 }
 
-void HandleManager::remove_chara_handle(const character& chara)
+void HandleManager::remove_chara_handle(const Character& chara)
 {
     remove_handle(chara);
 }
 
-void HandleManager::remove_item_handle(const item& item)
+void HandleManager::remove_item_handle(const Item& item)
 {
     remove_handle(item);
 }
 
 
 // Handlers for brand-new instances of characters/objects being created
-void HandleManager::create_chara_handle_run_callbacks(const character& chara)
+void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
 {
-    assert(chara.state() != character::State::empty);
+    assert(chara.state() != Character::State::empty);
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);
@@ -82,7 +82,7 @@ void HandleManager::create_chara_handle_run_callbacks(const character& chara)
         handle);
 }
 
-void HandleManager::create_item_handle_run_callbacks(const item& item)
+void HandleManager::create_item_handle_run_callbacks(const Item& item)
 {
     assert(item.number() != 0);
     create_item_handle(item);
@@ -95,7 +95,7 @@ void HandleManager::create_item_handle_run_callbacks(const item& item)
 
 // Handlers for invalidation of characters/items (character death, item count is
 // 0)
-void HandleManager::remove_chara_handle_run_callbacks(const character& chara)
+void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
 {
     auto handle = get_handle(chara);
     if (handle == sol::lua_nil)
@@ -108,7 +108,7 @@ void HandleManager::remove_chara_handle_run_callbacks(const character& chara)
     remove_chara_handle(chara);
 }
 
-void HandleManager::remove_item_handle_run_callbacks(const item& item)
+void HandleManager::remove_item_handle_run_callbacks(const Item& item)
 {
     auto handle = get_handle(item);
     if (handle == sol::lua_nil)

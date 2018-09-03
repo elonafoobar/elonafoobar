@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuSpellWriter : public UIMenu<dummy_result>
+class UIMenuSpellWriter : public UIMenu<DummyResult>
 {
 public:
     UIMenuSpellWriter()

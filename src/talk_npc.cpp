@@ -191,7 +191,7 @@ TalkResult talk_healer_restore_attributes()
     tcbk = tc;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() != character::State::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -223,7 +223,7 @@ TalkResult talk_trade()
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
-    menu_result result = ctrl_inventory();
+    MenuResult result = ctrl_inventory();
     if (!result.succeeded)
     {
         buff =
@@ -574,7 +574,7 @@ TalkResult talk_bartender_call_ally()
     if (stat != -1)
     {
         rc = stat;
-        if (cdata[rc].state() == character::State::alive)
+        if (cdata[rc].state() == Character::State::alive)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.bartender.call_ally.no_need", cdata[tc]);
@@ -631,7 +631,7 @@ TalkResult talk_ally_order_wait()
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
     map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
-    cdata[tc].set_state(character::State::pet_waiting);
+    cdata[tc].set_state(Character::State::pet_waiting);
     cdata[tc].current_map = 0;
     return TalkResult::talk_end;
 }
@@ -745,7 +745,7 @@ TalkResult talk_slave_sell()
                 cnven(cdatan(0, rc))));
             snd(11);
             earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
-            if (cdata[rc].state() == character::State::alive)
+            if (cdata[rc].state() == Character::State::alive)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             }
@@ -1317,7 +1317,7 @@ TalkResult talk_guard_where_is(int chatval_)
                 "core.locale.talk.npc.common.you_kidding", cdata[tc]);
             break;
         }
-        if (cdata[rc].state() != character::State::alive)
+        if (cdata[rc].state() != Character::State::alive)
         {
             s = i18n::s.get(
                 "core.locale.talk.npc.guard.where_is.dead", cdata[tc]);
@@ -1694,7 +1694,7 @@ TalkResult talk_quest_giver()
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)
                     {
-                        if (cdata[cnt].state() == character::State::empty)
+                        if (cdata[cnt].state() == Character::State::empty)
                         {
                             continue;
                         }
@@ -2283,7 +2283,7 @@ TalkResult talk_npc()
             rc = chara_find(222);
             if (rc != 0)
             {
-                if (cdata[rc].state() == character::State::alive)
+                if (cdata[rc].state() == Character::State::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,

@@ -22,9 +22,9 @@ using namespace std::literals::string_literals;
  * internal C++ storage object for storing, serializing and
  * deserializing mod data alongside the base game data.
  */
-struct mod_info
+struct ModInfo
 {
-    explicit mod_info(
+    explicit ModInfo(
         const std::string name_,
         const optional<fs::path> path_,
         std::shared_ptr<sol::state> state)
@@ -42,9 +42,9 @@ struct mod_info
             chunk_cache = LoadedChunkCache{*path};
         }
     }
-    mod_info(const mod_info&) = delete;
-    mod_info& operator=(const mod_info&) = delete;
-    ~mod_info() = default;
+    ModInfo(const ModInfo&) = delete;
+    ModInfo& operator=(const ModInfo&) = delete;
+    ~ModInfo() = default;
 
     std::string name;
     optional<fs::path> path;
@@ -73,7 +73,7 @@ enum class ModLoadingStage : unsigned
 class ModManager
 {
     using mod_storage_type =
-        std::unordered_map<std::string, std::unique_ptr<mod_info>>;
+        std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
 
 public:
     using iterator = mod_storage_type::iterator;
@@ -174,7 +174,7 @@ public:
      *
      * For testing use only.
      */
-    mod_info* get_mod(const std::string& name)
+    ModInfo* get_mod(const std::string& name)
     {
         auto val = mods.find(name);
         if (val == mods.end())
@@ -228,24 +228,24 @@ private:
      *
      * Will throw if there was an error on running the script.
      */
-    void load_mod(mod_info& mod);
+    void load_mod(ModInfo& mod);
 
     /***
      * Sets up the global variables of a mod and locks them so they
      * cannot be overwritten.
      */
-    void setup_and_lock_mod_globals(mod_info&);
+    void setup_and_lock_mod_globals(ModInfo&);
 
     /***
      * Sets the global variables of a mod on the given table.
      */
-    void setup_mod_globals(mod_info& mod, sol::table&);
+    void setup_mod_globals(ModInfo& mod, sol::table&);
 
 
     /***
      * Binds the Store global variable to a mod's environment.
      */
-    static void bind_store(sol::state&, mod_info&, sol::table&);
+    static void bind_store(sol::state&, ModInfo&, sol::table&);
 
     /***
      * Whitelists functions that are safe for usage in user-written scripts.

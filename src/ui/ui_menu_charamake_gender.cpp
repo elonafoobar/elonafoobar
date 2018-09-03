@@ -83,20 +83,20 @@ UIMenuCharamakeGender::on_key(const std::string& key)
 {
     if (key == key_select(0))
     {
-        return UIMenuCharamakeGender::result::finish(0);
+        return UIMenuCharamakeGender::Result::finish(0);
     }
     else if (key == key_select(1))
     {
-        return UIMenuCharamakeGender::result::finish(1);
+        return UIMenuCharamakeGender::Result::finish(1);
     }
     else if (key == key_cancel)
     {
-        return UIMenuCharamakeGender::result::cancel();
+        return UIMenuCharamakeGender::Result::cancel();
     }
     else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return UIMenuCharamakeGender::result::finish();
+        return UIMenuCharamakeGender::Result::finish();
     }
 
     return none;

@@ -717,7 +717,7 @@ void tcgdraw()
             --efllist_at_tcg(4, cnt);
             if (efllist_at_tcg(0, cnt) == 1)
             {
-                font(20 - en * 2, snail::font_t::Style::bold);
+                font(20 - en * 2, snail::Font::Style::bold);
                 pos(efllist_at_tcg(5, cnt) + 11,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -738,7 +738,7 @@ void tcgdraw()
             }
             if (efllist_at_tcg(0, cnt) == 2)
             {
-                font(20 - en * 2, snail::font_t::Style::bold);
+                font(20 - en * 2, snail::Font::Style::bold);
                 pos(efllist_at_tcg(2, cnt) + 31,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
                 mes(std::abs(efllist_at_tcg(1, cnt)));

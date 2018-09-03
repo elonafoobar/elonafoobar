@@ -368,8 +368,8 @@ TurnResult show_house_board()
         p = 0;
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.state() == character::State::alive
-                || cnt.state() == character::State::villager_dead)
+            if (cnt.state() == Character::State::alive
+                || cnt.state() == Character::State::villager_dead)
             {
                 if (cnt.character_role != 0)
                 {
@@ -469,8 +469,8 @@ void prompt_hiring()
     p = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::State::alive
-            || cnt.state() == character::State::villager_dead)
+        if (cnt.state() == Character::State::alive
+            || cnt.state() == Character::State::villager_dead)
         {
             if (cnt.character_role != 0)
             {
@@ -506,7 +506,7 @@ void prompt_hiring()
         {
             continue;
         }
-        cdata[rc].set_state(character::State::servant_being_selected);
+        cdata[rc].set_state(Character::State::servant_being_selected);
         cdata[rc].character_role = isethirerole(hire);
         if (cdata[rc].id == 1)
         {
@@ -556,7 +556,7 @@ void prompt_hiring()
             {
                 continue;
             }
-            if (cnt.state() != character::State::empty
+            if (cnt.state() != Character::State::empty
                 && cdatan(0, cnt.index) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
@@ -580,7 +580,7 @@ void prompt_hiring()
             snd(12);
             cdata.player().gold -= calchirecost(tc) * 20;
             await(Config::instance().animewait * 10);
-            cdata[tc].set_state(character::State::alive);
+            cdata[tc].set_state(Character::State::alive);
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.building.home.hire.you_hire", cdata[tc]));
@@ -589,7 +589,7 @@ void prompt_hiring()
     }
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() == character::State::servant_being_selected)
+        if (cnt.state() == Character::State::servant_being_selected)
         {
             chara_vanquish(cnt.index);
         }
@@ -1038,7 +1038,7 @@ void show_shop_log()
         {
             for (auto&& cnt : cdata.all())
             {
-                if (cnt.state() != character::State::alive)
+                if (cnt.state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1430,7 +1430,7 @@ void update_ranch()
     livestock = 0;
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::State::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -1483,7 +1483,7 @@ void update_ranch()
         egg = 0;
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }

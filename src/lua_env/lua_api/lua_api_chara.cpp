@@ -13,19 +13,19 @@ bool Chara::is_alive(lua_character_handle handle)
         return false;
     }
 
-    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
-    return chara.state() == character::State::alive;
+    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
+    return chara.state() == Character::State::alive;
 }
 
 bool Chara::is_player(lua_character_handle handle)
 {
-    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return chara.index == 0;
 }
 
 bool Chara::is_ally(lua_character_handle handle)
 {
-    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return !Chara::is_player(handle) && chara.index <= 16;
 }
 
@@ -36,14 +36,14 @@ int Chara::count()
 
 bool Chara::flag(lua_character_handle handle, const enum_string& flag_name)
 {
-    auto& chara = lua::lua->get_handle_manager().get_ref<character>(handle);
+    auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     return chara._flags[flag] == 1;
 }
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if (elona::cdata.player().state() == character::State::empty)
+    if (elona::cdata.player().state() == Character::State::empty)
     {
         return sol::nullopt;
     }
@@ -56,7 +56,7 @@ sol::optional<lua_character_handle> Chara::player()
 }
 
 sol::optional<lua_character_handle> Chara::create(
-    const position_t& position,
+    const Position& position,
     int id)
 {
     return Chara::create_xy(position.x, position.y, id);
@@ -78,7 +78,7 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
 }
 
 sol::optional<lua_character_handle> Chara::create_from_id(
-    const position_t& position,
+    const Position& position,
     const std::string& id)
 {
     return Chara::create_from_id_xy(position.x, position.y, id);

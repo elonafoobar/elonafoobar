@@ -7,15 +7,15 @@
 namespace elona
 {
 
-struct item_chip_data
+struct ItemChipData
 {
     int id;
-    extent rect;
-    item_chip_t chip;
+    Extent rect;
+    ItemChip chip;
     optional<fs::path> filepath;
 };
 
 // Used only as an intermediary between registry and initialize_item_chips().
-ELONA_LION_DEFINE_DB(ItemChipDB, item_chip_data, int, u8"item_chip")
+ELONA_LION_DEFINE_DB(ItemChipDB, ItemChipData, int, u8"item_chip")
 
 } // namespace elona

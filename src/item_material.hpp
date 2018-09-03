@@ -8,7 +8,7 @@ namespace elona
 {
 
 
-struct item_material_data
+struct ItemMaterialData
 {
     int id;
     int weight;
@@ -19,7 +19,7 @@ struct item_material_data
     int pv;
     int dice_y;
     int color;
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
     bool fireproof;
     bool acidproof;
 };
@@ -32,10 +32,10 @@ namespace cat
 {
 
 template <>
-struct cat_db_traits<ItemMaterialDB>
+struct CatDBTraits<ItemMaterialDB>
 {
     using id_type = int;
-    using data_type = item_material_data;
+    using data_type = ItemMaterialData;
     static constexpr const char* filename = u8"item_material.lua";
     static constexpr const char* table_name = u8"item_material";
 };

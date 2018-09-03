@@ -322,8 +322,8 @@ MainMenuResult main_menu_continue()
     pagesize = 5;
     keyrange = 0;
 
-    for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::Type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
         s = filesystem::to_utf8_path(entry.path().filename());
         const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
@@ -533,8 +533,8 @@ MainMenuResult main_menu_incarnate()
     draw_caption();
     keyrange = 0;
     listmax = 0;
-    for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::Type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
         s = filesystem::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath =

@@ -91,7 +91,7 @@ end
 }
 
 
-void ModManager::load_mod(mod_info& mod)
+void ModManager::load_mod(ModInfo& mod)
 {
     setup_and_lock_mod_globals(mod);
 
@@ -140,8 +140,8 @@ void ModManager::scan_mod(const fs::path& mod_dir)
         throw std::runtime_error("\"script\" is a reserved mod name.");
     }
 
-    std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(mod_name, mod_dir, lua_->get_state());
+    std::unique_ptr<ModInfo> info =
+        std::make_unique<ModInfo>(mod_name, mod_dir, lua_->get_state());
     this->mods.emplace(mod_name, std::move(info));
 }
 
@@ -157,7 +157,7 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
 
     // TODO: [dependency management] order mods and always load core first.
     for (const auto& entry :
-         filesystem::dir_entries{mods_dir, filesystem::dir_entries::Type::dir})
+         filesystem::dir_entries(mods_dir, filesystem::DirEntryRange::Type::dir))
     {
         if (fs::exists(entry.path() / init_script))
         {
@@ -220,8 +220,8 @@ void ModManager::run_startup_script(const std::string& name)
         throw std::runtime_error("Startup script was already run.");
     }
 
-    std::unique_ptr<mod_info> script_mod =
-        std::make_unique<mod_info>("script", none, lua_->get_state());
+    std::unique_ptr<ModInfo> script_mod =
+        std::make_unique<ModInfo>("script", none, lua_->get_state());
     setup_and_lock_mod_globals(*script_mod);
 
     lua_->get_state()->safe_script_file(
@@ -287,7 +287,7 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
-void ModManager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
+void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
 {
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
@@ -304,7 +304,7 @@ void ModManager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
     table["Store"] = Store;
 }
 
-void ModManager::setup_mod_globals(mod_info& mod, sol::table& table)
+void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 {
     // Create the globals "Elona" and "Store" for this mod's
     // environment.
@@ -331,7 +331,7 @@ void ModManager::setup_mod_globals(mod_info& mod, sol::table& table)
     }
 }
 
-void ModManager::setup_and_lock_mod_globals(mod_info& mod)
+void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 {
     sol::table env_metatable = lua_->get_state()->create_table_with();
 
@@ -364,8 +364,8 @@ void ModManager::load_mod_from_script(
                 "Mod "s + name + " was already initialized."s);
     }
 
-    std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(name, none, lua_->get_state());
+    std::unique_ptr<ModInfo> info =
+        std::make_unique<ModInfo>(name, none, lua_->get_state());
 
     if (readonly)
     {

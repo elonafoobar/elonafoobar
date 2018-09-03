@@ -12,9 +12,9 @@
 namespace
 {
 
-struct font_cache_key
+struct FontCacheKey
 {
-    font_cache_key(int size, elona::snail::font_t::Style style)
+    FontCacheKey(int size, elona::snail::Font::Style style)
         : size(size)
         , style(style)
     {
@@ -22,10 +22,10 @@ struct font_cache_key
 
 
     int size;
-    elona::snail::font_t::Style style;
+    elona::snail::Font::Style style;
 
 
-    bool operator==(const font_cache_key& other) const
+    bool operator==(const FontCacheKey& other) const
     {
         return size == other.size && style == other.style;
     }
@@ -39,9 +39,9 @@ namespace std
 {
 
 template <>
-struct hash<font_cache_key>
+struct hash<FontCacheKey>
 {
-    size_t operator()(const font_cache_key& key) const
+    size_t operator()(const FontCacheKey& key) const
     {
         return hash<int>()(key.size * 100 + int(key.style));
     }
@@ -100,7 +100,7 @@ struct TexBuffer
     ::SDL_Texture* texture = nullptr;
     int tex_width = 32;
     int tex_height = 32;
-    snail::color color{0, 0, 0, 255};
+    snail::Color color{0, 0, 0, 255};
     int x = 0;
     int y = 0;
     int mode = 2;
@@ -303,7 +303,7 @@ std::vector<std::unique_ptr<MessageBox>> message_boxes;
 
 namespace font_detail
 {
-std::unordered_map<font_cache_key, font_t> font_cache;
+std::unordered_map<FontCacheKey, Font> font_cache;
 }
 
 // TODO place all this in detail
@@ -375,14 +375,14 @@ void pos(int x, int y)
 static void redraw_android()
 {
     auto& renderer = Application::instance().get_renderer();
-    rect pos = Application::instance().window_pos();
+    Rect pos = Application::instance().window_pos();
 
     renderer.set_render_target(nullptr);
     renderer.clear();
     renderer.render_image(
         detail::android_display_region, pos.x, pos.y, pos.width, pos.height);
 
-    auto itr = font_detail::font_cache.find({14, font_t::Style::regular});
+    auto itr = font_detail::font_cache.find({14, Font::Style::regular});
     if (itr != std::end(font_detail::font_cache))
     {
         renderer.set_font(itr->second);
@@ -401,7 +401,7 @@ void redraw()
     auto& renderer = Application::instance().get_renderer();
     const auto save = renderer.render_target();
     renderer.set_render_target(target);
-    renderer.set_draw_color(snail::color{0, 0, 0, 255});
+    renderer.set_draw_color(snail::Color{0, 0, 0, 255});
     renderer.clear();
     renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
 
@@ -463,12 +463,12 @@ void await(int msec)
     await_detail::last_await = now;
 }
 
-void boxf(int x, int y, int width, int height, const snail::color& color)
+void boxf(int x, int y, int width, int height, const snail::Color& color)
 {
     const auto save_color = detail::current_tex_buffer().color;
     detail::current_tex_buffer().color = color;
     Application::instance().get_renderer().set_draw_color(color);
-    if (color == snail::color{0, 0, 0, 0})
+    if (color == snail::Color{0, 0, 0, 0})
     {
         Application::instance().get_renderer().set_blend_mode(
             BlendMode::none);
@@ -482,7 +482,7 @@ void boxf(int x, int y, int width, int height, const snail::color& color)
     detail::current_tex_buffer().color = save_color;
 }
 
-void boxf(const snail::color& color)
+void boxf(const snail::Color& color)
 {
     boxf(
         0,
@@ -558,7 +558,7 @@ void color(int r, int g, int b)
         detail::current_tex_buffer().color);
 }
 
-void font(int size, font_t::Style style, const fs::path& filepath)
+void font(int size, Font::Style style, const fs::path& filepath)
 {
     auto& renderer = Application::instance().get_renderer();
     if (renderer.font().size() == size && renderer.font().style() == style)
@@ -803,7 +803,7 @@ void gsel(int window_id)
 
 
 
-void line(int x1, int y1, int x2, int y2, const snail::color& color)
+void line(int x1, int y1, int x2, int y2, const snail::Color& color)
 {
     auto&& renderer = snail::Application::instance().get_renderer();
     renderer.set_draw_color(color);

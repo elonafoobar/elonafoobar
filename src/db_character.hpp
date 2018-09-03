@@ -84,7 +84,7 @@
 namespace elona
 {
 
-struct character_data
+struct CharacterData
 {
     int id;
     std::vector<int> normal_actions;
@@ -131,7 +131,7 @@ struct character_data
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 };
 
-ELONA_LION_DEFINE_DB(character_db_ex, character_data, int, u8"chara")
+ELONA_LION_DEFINE_DB(character_db_ex, CharacterData, int, u8"chara")
 
 extern character_db_ex the_character_db;
 

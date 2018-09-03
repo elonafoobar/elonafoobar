@@ -165,7 +165,7 @@ static void _draw_keys()
     }
 }
 
-static void _draw_recipe_desc(const crafting_recipe& recipe)
+static void _draw_recipe_desc(const CraftingRecipe& recipe)
 {
     font(13 - en * 2);
 
@@ -196,7 +196,7 @@ static void _draw_recipe_desc(const crafting_recipe& recipe)
 
 static void _draw_single_recipe_required_material(
     int mat_index,
-    const required_material& required_mat)
+    const RequiredMaterial& required_mat)
 {
     std::string mat_desc = matname(required_mat.id) + " "
         + i18n::s.get("core.locale.crafting.menu.x") + " " + required_mat.amount
@@ -216,7 +216,7 @@ static void _draw_single_recipe_required_material(
     color(0, 0, 0);
 }
 
-static void _draw_recipe_required_materials(const crafting_recipe& recipe)
+static void _draw_recipe_required_materials(const CraftingRecipe& recipe)
 {
     int mat_index = 0;
     for (const auto required_mat : recipe.required_materials)
@@ -349,7 +349,7 @@ optional<UIMenuCrafting::result_type> UIMenuCrafting::on_key(
             set_reupdate();
             return none;
         }
-        return UIMenuCrafting::result::finish(p_);
+        return UIMenuCrafting::Result::finish(p_);
     }
     else if (key == key_pageup)
     {
@@ -371,7 +371,7 @@ optional<UIMenuCrafting::result_type> UIMenuCrafting::on_key(
     }
     else if (key == key_cancel)
     {
-        return UIMenuCrafting::result::cancel();
+        return UIMenuCrafting::Result::cancel();
     }
 
     return none;

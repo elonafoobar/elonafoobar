@@ -31,7 +31,7 @@ protected:
 class FailureToCastAnimation : public AbstractAnimation
 {
 public:
-    FailureToCastAnimation(const position_t& caster_pos)
+    FailureToCastAnimation(const Position& caster_pos)
         : caster_pos(caster_pos)
     {
     }
@@ -42,7 +42,7 @@ protected:
 
 
 private:
-    const position_t& caster_pos;
+    const Position& caster_pos;
 };
 
 
@@ -59,7 +59,7 @@ public:
     };
 
 
-    BrightAuraAnimation(const position_t& target_pos, Type type)
+    BrightAuraAnimation(const Position& target_pos, Type type)
         : target_pos(target_pos)
         , type(type)
     {
@@ -71,7 +71,7 @@ protected:
 
 
 private:
-    const position_t& target_pos;
+    const Position& target_pos;
     Type type;
 };
 
@@ -81,8 +81,8 @@ class BreathAnimation : public AbstractAnimation
 {
 public:
     BreathAnimation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+        const Position& attacker_pos,
+        const Position& target_pos,
         int element)
         : attacker_pos(attacker_pos)
         , target_pos(target_pos)
@@ -96,8 +96,8 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int element;
 };
 
@@ -114,7 +114,7 @@ public:
 
 
     BallAnimation(
-        const position_t& position,
+        const Position& position,
         int range,
         Type type,
         int element = 0)
@@ -131,7 +131,7 @@ protected:
 
 
 private:
-    const position_t& position;
+    const Position& position;
     int range;
     Type type;
     int element;
@@ -143,8 +143,8 @@ class BoltAnimation : public AbstractAnimation
 {
 public:
     BoltAnimation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+        const Position& attacker_pos,
+        const Position& target_pos,
         int element,
         int distance)
         : attacker_pos(attacker_pos)
@@ -160,8 +160,8 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int element;
     int distance;
 };
@@ -172,8 +172,8 @@ class ThrowingObjectAnimation : public AbstractAnimation
 {
 public:
     ThrowingObjectAnimation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+        const Position& attacker_pos,
+        const Position& target_pos,
         int item_chip,
         int item_color)
         : attacker_pos(attacker_pos)
@@ -189,8 +189,8 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int item_chip;
     int item_color;
 };
@@ -200,7 +200,7 @@ private:
 class SwarmAnimation : public AbstractAnimation
 {
 public:
-    SwarmAnimation(const position_t& target_pos)
+    SwarmAnimation(const Position& target_pos)
         : target_pos(target_pos)
     {
     }
@@ -211,7 +211,7 @@ protected:
 
 
 private:
-    const position_t& target_pos;
+    const Position& target_pos;
 };
 
 
@@ -231,8 +231,8 @@ public:
 
 
     RangedAttackAnimation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+        const Position& attacker_pos,
+        const Position& target_pos,
         Type type,
         int fired_item_subcategory = 0,
         int fired_item_image = 0,
@@ -252,8 +252,8 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     Type type;
     int fired_item_subcategory;
     int fired_item_image;
@@ -266,7 +266,7 @@ class MeleeAttackAnimation : public AbstractAnimation
 {
 public:
     MeleeAttackAnimation(
-        const position_t& position,
+        const Position& position,
         bool debris,
         int attack_skill,
         int damage_percent,
@@ -284,7 +284,7 @@ protected:
     virtual void do_play() override;
 
 private:
-    const position_t& position;
+    const Position& position;
     bool debris;
     int attack_skill;
     int damage_percent;
@@ -296,7 +296,7 @@ private:
 class GeneEngineeringAnimation : public AbstractAnimation
 {
 public:
-    GeneEngineeringAnimation(const position_t& position)
+    GeneEngineeringAnimation(const Position& position)
         : position(position)
     {
     }
@@ -306,7 +306,7 @@ protected:
     virtual void do_play() override;
 
 private:
-    const position_t& position;
+    const Position& position;
 };
 
 
@@ -362,9 +362,8 @@ protected:
 class BreakingAnimation : public AbstractAnimation
 {
 public:
-    BreakingAnimation(const position_t& position, int type = 0)
+    BreakingAnimation(const Position& position)
         : position(position)
-        , type(type)
     {
     }
 
@@ -374,8 +373,7 @@ protected:
 
 
 private:
-    position_t position;
-    int type;
+    Position position;
 };
 
 

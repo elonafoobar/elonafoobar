@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuFeats : public UIMenu<ui_menu_composite_character_result>
+class UIMenuFeats : public UIMenu<UIMenuCompositeCharacterResult>
 {
 public:
     enum class Operation

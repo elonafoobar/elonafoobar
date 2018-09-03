@@ -6,21 +6,21 @@ namespace elona
 namespace ui
 {
 
-struct ui_menu_skills_result
+struct UIMenuSkillsResult
 {
     int effect_id;
 };
 
-struct ui_menu_spells_result
+struct UIMenuSpellsResult
 {
     int effect_id;
 };
 
-typedef boost::variant<ui_menu_skills_result, ui_menu_spells_result>
-    ui_menu_composite_skills_result;
+typedef boost::variant<UIMenuSkillsResult, UIMenuSpellsResult>
+    UIMenuCompositeSkillsResult;
 
 class UIMenuCompositeSkills
-    : public UIMenuComposite<ui_menu_composite_skills_result>
+    : public UIMenuComposite<UIMenuCompositeSkillsResult>
 {
 public:
     enum Index : size_t

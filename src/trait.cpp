@@ -30,9 +30,9 @@ void TraitDB::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        trait_data{
+        TraitData{
             std::stoi(id),
-            trait_data::Type(type),
+            TraitData::Type(type),
             min,
             max,
         });

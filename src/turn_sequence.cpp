@@ -124,7 +124,7 @@ TurnResult npc_turn()
             {
                 if (cdata[pcattacker].relationship <= -3)
                 {
-                    if (cdata[pcattacker].state() == character::State::alive)
+                    if (cdata[pcattacker].state() == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -144,7 +144,7 @@ TurnResult npc_turn()
                     && cdata[cdata.player().enemy_id].relationship <= -3)
                 {
                     if (cdata[cdata.player().enemy_id].state()
-                        == character::State::alive)
+                        == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -175,7 +175,7 @@ TurnResult npc_turn()
     }
     if (cdata[cc].enemy_id != 0)
     {
-        if (cdata[cdata[cc].enemy_id].state() != character::State::alive)
+        if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             cdata[cc].enemy_id = 0;
             cdata[cc].hate = 0;
@@ -210,7 +210,7 @@ TurnResult npc_turn()
         }
         i = cdata[cc].enemy_id;
         if (cdata[i].relationship == p
-            && cdata[i].state() == character::State::alive && i >= p(1)
+            && cdata[i].state() == Character::State::alive && i >= p(1)
             && i < p(1) + p(2))
         {
             if (rnd(10) != 0)
@@ -223,7 +223,7 @@ TurnResult npc_turn()
         for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
-            if (cdata[i].state() == character::State::alive)
+            if (cdata[i].state() == Character::State::alive)
             {
                 if (cdata[i].relationship == p)
                 {
@@ -233,12 +233,12 @@ TurnResult npc_turn()
             }
         }
         if (cdata[cdata[cc].enemy_id].relationship != p
-            || cdata[cdata[cc].enemy_id].state() != character::State::alive)
+            || cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
             {
-                if (cdata[cnt].state() == character::State::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     if (cdata[cnt].relationship == p)
                     {
@@ -271,7 +271,7 @@ TurnResult npc_turn()
                 if (gdata_released_fire_giant != 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::State::alive)
+                        == Character::State::alive)
                     {
                         cdata[cc].enemy_id = gdata_fire_giant;
                         cdata[cc].hate = 500;
@@ -735,7 +735,7 @@ TurnResult turn_begin()
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
-    if (cdata.player().state() != character::State::alive)
+    if (cdata.player().state() != Character::State::alive)
     {
         return TurnResult::pc_died;
     }
@@ -753,7 +753,7 @@ TurnResult turn_begin()
     {
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::State::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -816,7 +816,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
         {
-            if (cdata[ct].state() != character::State::alive)
+            if (cdata[ct].state() != Character::State::alive)
             {
                 ++ct;
                 continue;
@@ -852,7 +852,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state() == character::State::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     gain_healing_and_meditation_experience(cnt);
                 }
@@ -889,7 +889,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::State::alive)
+                    if (cdata[cnt].state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -940,7 +940,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
     label_2740_internal:
         map_proc_special_events();
-        if (cdata.player().state() != character::State::alive)
+        if (cdata.player().state() != Character::State::alive)
         {
             return TurnResult::pc_died;
         }
@@ -1031,7 +1031,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             {
                 for (auto&& cnt : cdata.all())
                 {
-                    if (cnt.state() != character::State::alive)
+                    if (cnt.state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -1130,7 +1130,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
     {
         chara_refresh(cc);
     }
-    if (cdata[cc].state() == character::State::alive)
+    if (cdata[cc].state() == Character::State::alive)
     {
         if (ct == 0)
         {
@@ -1174,7 +1174,7 @@ void update_emoicon()
 TurnResult turn_end()
 {
     cc = ct;
-    if (cdata[cc].state() != character::State::alive)
+    if (cdata[cc].state() != Character::State::alive)
     {
         return TurnResult::pass_one_turn;
     }
@@ -1224,7 +1224,7 @@ TurnResult turn_end()
     if (gdata_left_turns_of_timestop > 0)
     {
         --gdata_left_turns_of_timestop;
-        if (cdata[cc].state() != character::State::alive
+        if (cdata[cc].state() != Character::State::alive
             || gdata_left_turns_of_timestop == 0)
         {
             txtef(9);
@@ -1274,7 +1274,7 @@ TurnResult pc_turn(bool advance_time)
         {
             damage_hp(cdata.player(), 999999, -14);
         }
-        if (cdata.player().state() != character::State::alive)
+        if (cdata.player().state() != Character::State::alive)
         {
             return TurnResult::pc_died;
         }
@@ -1380,7 +1380,7 @@ TurnResult pc_turn(bool advance_time)
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
-                if (cdata[cc].state() == character::State::alive
+                if (cdata[cc].state() == Character::State::alive
                     && cdata[cc].relationship == 10)
                 {
                     pet_exists = true;
@@ -1403,14 +1403,14 @@ TurnResult pc_turn(bool advance_time)
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
-                        && cdata[cc].state() == character::State::pet_dead)
+                        && cdata[cc].state() == Character::State::pet_dead)
                         continue;
                     if (petarenawin != 1 && followerin(cc) == 1
-                        && cdata[cc].state() == character::State::pet_dead
+                        && cdata[cc].state() == Character::State::pet_dead
                         && rnd(5) == 0)
                         continue;
                     cdata[cc].set_state(
-                        static_cast<character::State>(followerexist(cc)));
+                        static_cast<Character::State>(followerexist(cc)));
                 }
                 return TurnResult::exit_map;
             }
@@ -1429,7 +1429,7 @@ TurnResult pc_turn(bool advance_time)
                 {
                     p = cnt;
                 }
-                if (cdata[p].state() != character::State::alive)
+                if (cdata[p].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1441,7 +1441,7 @@ TurnResult pc_turn(bool advance_time)
                 {
                     continue;
                 }
-                if (cdata[camera].state() != character::State::alive
+                if (cdata[camera].state() != Character::State::alive
                     || camera == 0)
                 {
                     camera = p;
@@ -1863,7 +1863,7 @@ label_2747:
     {
         invctrl = lastctrl;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1881,7 +1881,7 @@ label_2747:
         {
             invctrl = 26;
             snd(100);
-            menu_result mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -1890,7 +1890,7 @@ label_2747:
     {
         invctrl = 1;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1908,7 +1908,7 @@ label_2747:
         {
             invctrl = 2;
             snd(100);
-            menu_result mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -1917,7 +1917,7 @@ label_2747:
     {
         invctrl = 5;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1925,7 +1925,7 @@ label_2747:
     {
         invctrl = 7;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1933,7 +1933,7 @@ label_2747:
     {
         invctrl = 8;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1951,7 +1951,7 @@ label_2747:
         {
             invctrl = 9;
             snd(100);
-            menu_result mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -1960,7 +1960,7 @@ label_2747:
     {
         invctrl = 14;
         snd(100);
-        menu_result mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory();
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1978,7 +1978,7 @@ label_2747:
         {
             invctrl = 15;
             snd(100);
-            menu_result mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -2069,7 +2069,7 @@ label_2747:
         {
             invctrl = 19;
             snd(100);
-            menu_result mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory();
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }

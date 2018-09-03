@@ -80,7 +80,7 @@ void ClassDB::define(lua_State* L)
 
     storage.emplace(
         id,
-        class_data{
+        ClassData{
             id,
             ordering,
             is_extra,
@@ -92,10 +92,10 @@ void ClassDB::define(lua_State* L)
 
 
 
-std::vector<std::reference_wrapper<const class_data>>
+std::vector<std::reference_wrapper<const ClassData>>
 ClassDB::get_available_classes(bool is_extra_class) const
 {
-    std::vector<std::reference_wrapper<const class_data>> ret;
+    std::vector<std::reference_wrapper<const ClassData>> ret;
     for (const auto& pair : storage)
     {
         if (pair.second.is_extra == is_extra_class)

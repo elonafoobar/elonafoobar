@@ -41,7 +41,7 @@ void clear_color_modulator(int window_id = -1)
 
 
 
-position_t rendering_base_position(const position_t& position)
+Position rendering_base_position(const Position& position)
 {
     return {
         (position.x - scx) * inf_tiles + inf_screenx,
@@ -51,14 +51,7 @@ position_t rendering_base_position(const position_t& position)
 
 
 
-position_t rendering_base_position(const character& cc)
-{
-    return rendering_base_position(cc.position);
-}
-
-
-
-position_t rendering_base_position_center(const position_t& position)
+Position rendering_base_position_center(const Position& position)
 {
     return {
         (position.x - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
@@ -68,16 +61,9 @@ position_t rendering_base_position_center(const position_t& position)
 
 
 
-position_t rendering_base_position_center(const character& cc)
+std::vector<Position> breath_pos()
 {
-    return rendering_base_position_center(cc.position);
-}
-
-
-
-std::vector<position_t> breath_pos()
-{
-    std::vector<position_t> ret(maxbreath);
+    std::vector<Position> ret(maxbreath);
     for (int i = 0; i < maxbreath; ++i)
     {
         ret[i] = {breathlist(0, i), breathlist(1, i)};
@@ -89,7 +75,7 @@ std::vector<position_t> breath_pos()
 
 template <typename F>
 void do_animation(
-    const position_t& center,
+    const Position& center,
     const std::string& image_key,
     int duration,
     F draw)
@@ -120,7 +106,7 @@ void do_animation(
 
 template <typename F, typename G>
 void do_particle_animation(
-    const position_t& center,
+    const Position& center,
     const std::string& image_key,
     int duration,
     int max_particles,
@@ -137,7 +123,7 @@ void do_particle_animation(
     gmode(2);
     gsel(0);
 
-    std::vector<position_t> particles(max_particles);
+    std::vector<Position> particles(max_particles);
     for (int i = 0; i < max_particles; ++i)
     {
         particles[i] = create_particle(i);
@@ -191,21 +177,21 @@ void draw_rotated(
 
 
 
-int dist(const position_t& p, int x, int y)
+int dist(const Position& p, int x, int y)
 {
     return dist(p.x, p.y, x, y);
 }
 
 
 
-int dist(int x, int y, const position_t& p)
+int dist(int x, int y, const Position& p)
 {
     return dist(x, y, p.x, p.y);
 }
 
 
 
-int dist(const position_t& p1, const position_t& p2)
+int dist(const Position& p1, const Position& p2)
 {
     return dist(p1.x, p1.y, p2.x, p2.y);
 }
@@ -290,7 +276,7 @@ void BrightAuraAnimation::do_play()
     gsel(0);
 
     // Initialize particles.
-    std::vector<position_t> particles_pos(max_particles);
+    std::vector<Position> particles_pos(max_particles);
     std::vector<int> particles_n(max_particles);
     for (int i = 0; i < max_particles; ++i)
     {
@@ -929,7 +915,7 @@ void MiracleAnimation::do_play()
     am = 0;
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::State::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -1216,7 +1202,7 @@ void BreakingAnimation::do_play()
         5,
         4,
         [](auto) {
-            return position_t{rnd(24) - 12, rnd(8)};
+            return Position{rnd(24) - 12, rnd(8)};
         },
         [](const auto& key,
            const auto& center,

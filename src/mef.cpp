@@ -276,7 +276,7 @@ void mef_proc(int tc)
             efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
             dbid = mef(7, ef);
             access_item_db(15);
-            if (cdata[tc].state() == character::State::empty)
+            if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);
             }

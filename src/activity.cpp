@@ -44,7 +44,7 @@ void rowact_item(int prm_790)
 {
     for (auto&& cc : cdata.all())
     {
-        if (cc.state() != character::State::alive)
+        if (cc.state() != Character::State::alive)
         {
             continue;
         }
@@ -74,7 +74,7 @@ void rowactend(int cc)
 
 
 
-void activity_handle_damage(character& chara)
+void activity_handle_damage(Character& chara)
 {
     if (chara.index == 0)
     {
@@ -107,7 +107,7 @@ void activity_handle_damage(character& chara)
     chara.stops_continuous_action_if_damaged = 0;
 }
 
-optional<TurnResult> activity_proc(character& chara)
+optional<TurnResult> activity_proc(Character& chara)
 {
     ci = chara.continuous_action_item;
     --chara.continuous_action_turn;
@@ -260,7 +260,7 @@ void continuous_action_perform()
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
             for (auto&& audience : cdata.all())
             {
-                if (audience.state() != character::State::alive)
+                if (audience.state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -359,7 +359,7 @@ void continuous_action_perform()
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
                         damage_hp(cdata[cc], dmg, -8);
-                        if (cdata[cc].state() == character::State::empty)
+                        if (cdata[cc].state() == Character::State::empty)
                         {
                             break;
                         }
@@ -661,7 +661,7 @@ void continuous_action_sex()
         tc -= 10000;
         sexhost = 0;
     }
-    if (cdata[tc].state() != character::State::alive
+    if (cdata[tc].state() != Character::State::alive
         || cdata[tc].continuous_action_id != 11)
     {
         if (is_in_fov(cdata[cc]))
@@ -890,7 +890,7 @@ void continuous_action_eating_finish()
                     txtef(9);
                     txt(i18n::s.get("core.locale.food.passed_rotten"));
                     damage_hp(cdata[cc], 999, -12);
-                    if (cdata[cc].state() != character::State::alive)
+                    if (cdata[cc].state() != Character::State::alive)
                     {
                         if (cdata[cc].relationship > 0)
                         {
@@ -1137,7 +1137,7 @@ void continuous_action_others()
                 cdata.player().position.x, cdata.player().position.y, 5, 8);
             for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
-                if (cdata[cnt].state() != character::State::alive)
+                if (cdata[cnt].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1226,7 +1226,7 @@ void continuous_action_others()
             }
             if (tg != -1)
             {
-                if (cdata[tg].state() != character::State::alive)
+                if (cdata[tg].state() != Character::State::alive)
                 {
                     if (f != 1)
                     {
@@ -1301,7 +1301,7 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state() != character::State::alive)
+        if ((tg != -1 && cdata[tg].state() != Character::State::alive)
             || inv[ci].number() <= 0)
         {
             txt(i18n::s.get("core.locale.activity.steal.abort"));
@@ -1860,7 +1860,7 @@ void spot_mining_or_wall()
             map(refx, refy, 0) = tile_tunnel;
             spillfrag(refx, refy, 2);
             snd(45);
-            BreakingAnimation({refx, refy}, 5).play();
+            BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2
                 && gdata_current_map == mdata_t::MapId::your_home)

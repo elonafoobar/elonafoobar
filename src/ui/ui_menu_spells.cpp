@@ -223,8 +223,8 @@ optional<UIMenuSpells::result_type> UIMenuSpells::on_key(
     if (p != -1)
     {
         menucycle = 0;
-        return UIMenuSpells::result::finish(
-            ui_menu_composite_skills_result(ui_menu_spells_result{p}));
+        return UIMenuSpells::Result::finish(
+            UIMenuCompositeSkillsResult(UIMenuSpellsResult{p}));
     }
     else if (key == u8"sc"s)
     {
@@ -254,7 +254,7 @@ optional<UIMenuSpells::result_type> UIMenuSpells::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return UIMenuSpells::result::finish();
+        return UIMenuSpells::Result::finish();
     }
 
     return none;
