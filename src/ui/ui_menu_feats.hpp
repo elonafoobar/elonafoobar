@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_feats : public ui_menu<ui_menu_composite_character_result>
+class UIMenuFeats : public UIMenu<ui_menu_composite_character_result>
 {
 public:
     enum class Operation
@@ -17,7 +17,7 @@ public:
     };
 
 public:
-    ui_menu_feats(Operation operation)
+    UIMenuFeats(Operation operation)
         : _operation(operation)
     {
     }
@@ -26,7 +26,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_feats::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuFeats::result_type> on_key(const std::string& key);
 
 private:
     Operation _operation;

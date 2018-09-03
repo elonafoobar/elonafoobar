@@ -19,8 +19,8 @@ struct ui_menu_spells_result
 typedef boost::variant<ui_menu_skills_result, ui_menu_spells_result>
     ui_menu_composite_skills_result;
 
-class ui_menu_composite_skills
-    : public ui_menu_composite<ui_menu_composite_skills_result>
+class UIMenuCompositeSkills
+    : public UIMenuComposite<ui_menu_composite_skills_result>
 {
 public:
     enum Index : size_t
@@ -29,8 +29,8 @@ public:
         skills = 1
     };
 
-    ui_menu_composite_skills(size_t selected)
-        : ui_menu_composite(selected)
+    UIMenuCompositeSkills(size_t selected)
+        : UIMenuComposite(selected)
     {
     }
 

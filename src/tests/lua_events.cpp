@@ -15,7 +15,7 @@ using namespace elona::testing;
 
 TEST_CASE("Test registering of callback", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -39,7 +39,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -66,7 +66,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test unregistering of callback", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -91,7 +91,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -122,7 +122,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -146,7 +146,7 @@ Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -173,7 +173,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_handler)
 
 TEST_CASE("Test clearing of single callback type", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -202,7 +202,7 @@ Event.clear(Event.EventKind.AllTurnsFinished)
 
 TEST_CASE("Test clearing of all callback types", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -231,7 +231,7 @@ Event.clear()
 
 TEST_CASE("Test isolation of event clearing between mods", "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("first_mod", R"(
@@ -262,7 +262,7 @@ TEST_CASE(
     "Test triggering of callback inside another callback",
     "[Lua: Events]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(

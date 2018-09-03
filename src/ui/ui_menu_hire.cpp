@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_hire::_should_display_chara(const character& chara)
+bool UIMenuHire::_should_display_chara(const character& chara)
 {
     if (_operation == HireOperation::revive)
     {
@@ -52,7 +52,7 @@ bool ui_menu_hire::_should_display_chara(const character& chara)
     return true;
 }
 
-void ui_menu_hire::_populate_list()
+void UIMenuHire::_populate_list()
 {
     for (auto&& cnt : cdata.all())
     {
@@ -66,7 +66,7 @@ void ui_menu_hire::_populate_list()
     sort_list_by_column1();
 }
 
-bool ui_menu_hire::init()
+bool UIMenuHire::init()
 {
     snd(26);
     listmax = 0;
@@ -82,7 +82,7 @@ bool ui_menu_hire::init()
     return true;
 }
 
-void ui_menu_hire::update()
+void UIMenuHire::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -96,7 +96,7 @@ void ui_menu_hire::update()
     }
 }
 
-void ui_menu_hire::_draw_topic()
+void UIMenuHire::_draw_topic()
 {
     if (_operation == HireOperation::move)
     {
@@ -112,7 +112,7 @@ void ui_menu_hire::_draw_topic()
     }
 }
 
-void ui_menu_hire::_draw_window()
+void UIMenuHire::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.npc_list.title");
     s(1) = strhint2 + strhint3;
@@ -183,7 +183,7 @@ static void _draw_list_entry_info(int cnt, const character& chara)
     mes(level);
 }
 
-void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry_cost(int cnt, const character& chara)
 {
     if (_operation != HireOperation::revive)
     {
@@ -205,7 +205,7 @@ void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
 }
 
 
-void ui_menu_hire::_draw_list_entry(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry(int cnt, const character& chara)
 {
     _draw_list_entry_pic(cnt, chara);
     _draw_list_entry_name(cnt, chara);
@@ -213,7 +213,7 @@ void ui_menu_hire::_draw_list_entry(int cnt, const character& chara)
     _draw_list_entry_cost(cnt, chara);
 }
 
-void ui_menu_hire::_draw_list_entries()
+void UIMenuHire::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -236,14 +236,14 @@ void ui_menu_hire::_draw_list_entries()
     }
 }
 
-void ui_menu_hire::draw()
+void UIMenuHire::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
+optional<UIMenuHire::result_type> UIMenuHire::on_key(const std::string& key)
 {
     int _p;
 
@@ -251,7 +251,7 @@ optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
 
     if (_p != -1)
     {
-        return ui_menu_hire::result::finish(_p);
+        return UIMenuHire::result::finish(_p);
     }
     else if (key == key_pageup)
     {
@@ -273,7 +273,7 @@ optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
     }
     else if (key == key_cancel)
     {
-        return ui_menu_hire::result::cancel();
+        return UIMenuHire::result::cancel();
     }
 
     return none;

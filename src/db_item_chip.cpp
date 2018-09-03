@@ -5,10 +5,10 @@
 namespace elona
 {
 
-item_chip_data item_chip_db::convert(
+item_chip_data ItemChipDB::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     UNUSED(lua);
 

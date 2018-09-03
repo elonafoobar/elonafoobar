@@ -7,7 +7,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_message_log::init()
+bool UIMenuMessageLog::init()
 {
     curmenu = 0;
     windowshadow = 1;
@@ -98,23 +98,23 @@ static void _draw_messages()
     gcopy(4, 0, 0, windoww, inf_msgy);
 }
 
-void ui_menu_message_log::update()
+void UIMenuMessageLog::update()
 {
     _draw_window();
     _draw_messages();
 }
 
-void ui_menu_message_log::draw()
+void UIMenuMessageLog::draw()
 {
 }
 
-optional<ui_menu_message_log::result_type> ui_menu_message_log::on_key(
+optional<UIMenuMessageLog::result_type> UIMenuMessageLog::on_key(
     const std::string& key)
 {
     if (key != ""s)
     {
         update_screen();
-        return ui_menu_message_log::result::finish();
+        return UIMenuMessageLog::result::finish();
     }
 
     return none;

@@ -62,7 +62,7 @@ void character_making_draw_background(const i18n_key& key)
 
 MainMenuResult character_making_select_race()
 {
-    auto result = ui::ui_menu_charamake_race().show();
+    auto result = ui::UIMenuCharamakeRace().show();
 
     if (result.canceled)
     {
@@ -89,7 +89,7 @@ MainMenuResult character_making_select_sex(bool advanced_to_next_menu)
         snd(102);
     }
 
-    auto result = ui::ui_menu_charamake_gender().show();
+    auto result = ui::UIMenuCharamakeGender().show();
 
     if (result.canceled)
     {
@@ -113,7 +113,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
         snd(20);
     }
 
-    auto result = ui::ui_menu_charamake_class(cmrace(1)).show();
+    auto result = ui::UIMenuCharamakeClass(cmrace(1)).show();
 
     if (result.canceled)
     {
@@ -142,7 +142,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
     }
 
     auto result =
-        ui::ui_menu_charamake_attributes(cmrace(0), cmclass, cmstats, cmlock)
+        ui::UIMenuCharamakeAttributes(cmrace(0), cmclass, cmstats, cmlock)
             .show();
 
     if (result.canceled)
@@ -203,7 +203,7 @@ MainMenuResult character_making_select_alias(bool advanced_to_next_menu)
         previous_alias = cmaka;
     }
 
-    auto result = ui::ui_menu_charamake_alias(previous_alias).show();
+    auto result = ui::UIMenuCharamakeAlias(previous_alias).show();
 
     if (result.canceled)
     {

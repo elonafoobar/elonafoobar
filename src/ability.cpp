@@ -62,11 +62,11 @@ namespace elona
 {
 
 
-ability_db the_ability_db;
-skill_data sdata;
+AbilityDB the_ability_db;
+SkillData sdata;
 
 
-void ability_db::define(lua_State* L)
+void AbilityDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -91,21 +91,21 @@ void ability_db::define(lua_State* L)
 }
 
 
-skill_data::skill_data()
+SkillData::SkillData()
     : storage(ELONA_MAX_CHARACTERS, std::vector<ability>(600))
 {
 }
 
 
 
-void skill_data::clear(int cc)
+void SkillData::clear(int cc)
 {
     range::fill(storage[cc], ability{});
 }
 
 
 
-void skill_data::copy(int tc, int cc)
+void SkillData::copy(int tc, int cc)
 {
     range::copy(storage[cc], std::begin(storage[tc]));
 }

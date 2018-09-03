@@ -18,10 +18,10 @@ struct ui_menu_charamake_race_result
     std::string race_name;
 };
 
-class ui_menu_charamake_race : public ui_menu<ui_menu_charamake_race_result>
+class UIMenuCharamakeRace : public UIMenu<ui_menu_charamake_race_result>
 {
 public:
-    ui_menu_charamake_race()
+    UIMenuCharamakeRace()
     {
     }
 
@@ -29,7 +29,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_charamake_race::result_type> on_key(
+    virtual optional<UIMenuCharamakeRace::result_type> on_key(
         const std::string& key);
 };
 

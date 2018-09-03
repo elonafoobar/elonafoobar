@@ -21,7 +21,7 @@ namespace snail
 {
 
 
-class application final : public lib::noncopyable
+class Application final : public lib::noncopyable
 {
 public:
     enum class Orientation
@@ -95,20 +95,20 @@ public:
     void set_title(const std::string& title);
 
 
-    virtual ~application() override = default;
+    virtual ~Application() override = default;
 
 
-    static application& instance();
+    static Application& instance();
 
 
     void initialize(const std::string& title);
-    void run(std::shared_ptr<scene_base> initial_scene);
+    void run(std::shared_ptr<SceneBase> initial_scene);
 
     void quit();
-    void add_effect(std::unique_ptr<effect_base> effect);
+    void add_effect(std::unique_ptr<EffectBase> effect);
 
 
-    void push(std::shared_ptr<scene_base> new_scene)
+    void push(std::shared_ptr<SceneBase> new_scene)
     {
         _scene_manager.push(new_scene);
     }
@@ -126,7 +126,7 @@ public:
     }
 
 
-    void replace(std::shared_ptr<scene_base> new_scene)
+    void replace(std::shared_ptr<SceneBase> new_scene)
     {
         _scene_manager.replace(new_scene);
     }
@@ -136,7 +136,7 @@ public:
     void register_finalizer(std::function<void()> finalizer);
 
 
-    renderer& get_renderer()
+    Renderer& get_renderer()
     {
         return *_renderer;
     }
@@ -146,15 +146,15 @@ public:
 
     bool is_fullscreen()
     {
-        return _fullscreen_mode != window::FullscreenMode::windowed;
+        return _fullscreen_mode != Window::FullscreenMode::windowed;
     }
 
-    window::FullscreenMode get_fullscreen_mode()
+    Window::FullscreenMode get_fullscreen_mode()
     {
         return _fullscreen_mode;
     }
 
-    void set_fullscreen_mode(window::FullscreenMode);
+    void set_fullscreen_mode(Window::FullscreenMode);
 
     std::map<std::string, ::SDL_DisplayMode> get_display_modes();
 
@@ -173,10 +173,10 @@ public:
 
 
 private:
-    detail::sdl_core _sdl_core;
-    detail::sdl_ttf _sdl_ttf;
-    detail::sdl_image _sdl_image;
-    detail::sdl_mixer _sdl_mixer;
+    detail::SDLCore _sdl_core;
+    detail::SDLTTF _sdl_ttf;
+    detail::SDLImage _sdl_image;
+    detail::SDLMixer _sdl_mixer;
 
     int _width;
     int _height;
@@ -190,21 +190,21 @@ private:
     size_t _frame = 0;
     bool _will_quit = false;
     bool _focus_lost_just_now = false;
-    std::unique_ptr<window> _window;
-    std::unique_ptr<renderer> _renderer;
-    scene_manager _scene_manager;
-    fps_manager _fps_manager;
-    std::vector<std::unique_ptr<effect_base>> _effects;
+    std::unique_ptr<Window> _window;
+    std::unique_ptr<Renderer> _renderer;
+    SceneManager _scene_manager;
+    FPSManager _fps_manager;
+    std::vector<std::unique_ptr<EffectBase>> _effects;
     std::vector<lib::scope_guard> _finalizers;
-    window::FullscreenMode _fullscreen_mode =
-        window::FullscreenMode::windowed;
+    Window::FullscreenMode _fullscreen_mode =
+        Window::FullscreenMode::windowed;
 
-    application() = default;
+    Application() = default;
 
     void initialize_dpi();
 
     void main_loop();
-    void render_scene(std::shared_ptr<scene_base> scene);
+    void render_scene(std::shared_ptr<SceneBase> scene);
     void update_orientation();
     void handle_event(const ::SDL_Event& event);
 

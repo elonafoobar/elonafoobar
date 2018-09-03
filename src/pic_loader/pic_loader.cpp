@@ -10,35 +10,35 @@ namespace elona
 namespace
 {
 
-static void copy_image(snail::basic_image& img, const extent& ext)
+static void copy_image(snail::BasicImage& img, const extent& ext)
 {
     const auto save =
-        snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(
+        snail::Application::instance().get_renderer().blend_mode();
+    snail::Application::instance().get_renderer().set_blend_mode(
         snail::BlendMode::none);
-    snail::application::instance().get_renderer().render_image(
+    snail::Application::instance().get_renderer().render_image(
         img, ext.x, ext.y, ext.width, ext.height);
-    snail::application::instance().get_renderer().set_blend_mode(save);
+    snail::Application::instance().get_renderer().set_blend_mode(save);
 }
 
 static void copy_image_cropped(
-    snail::basic_image& img,
+    snail::BasicImage& img,
     const extent& source,
     const extent& dest)
 {
     const auto save =
-        snail::application::instance().get_renderer().blend_mode();
-    snail::application::instance().get_renderer().set_blend_mode(
+        snail::Application::instance().get_renderer().blend_mode();
+    snail::Application::instance().get_renderer().set_blend_mode(
         snail::BlendMode::none);
-    snail::application::instance().get_renderer().render_image_crop(
+    snail::Application::instance().get_renderer().render_image_crop(
         img, source.x, source.y, source.width, source.height, dest.x, dest.y);
-    snail::application::instance().get_renderer().set_blend_mode(save);
+    snail::Application::instance().get_renderer().set_blend_mode(save);
 }
 
 } // namespace
 
 
-void pic_loader::clear_storage_and_buffers()
+void PicLoader::clear_storage_and_buffers()
 {
     for (const auto& buffer : buffers)
     {
@@ -49,12 +49,12 @@ void pic_loader::clear_storage_and_buffers()
     storage.clear();
 }
 
-void pic_loader::load(
+void PicLoader::load(
     const fs::path& image_file,
     const id_type& id,
     PageType type)
 {
-    snail::basic_image img{image_file, snail::color{0, 0, 0}};
+    snail::BasicImage img{image_file, snail::color{0, 0, 0}};
     extent ext{0, 0, 0, 0};
 
     size_t i = 0;
@@ -98,12 +98,12 @@ void pic_loader::load(
     storage[id] = ext;
 }
 
-void pic_loader::add_predefined_extents(
+void PicLoader::add_predefined_extents(
     const fs::path& atlas_file,
     const map_type& extents,
     PageType type)
 {
-    snail::basic_image img{atlas_file, snail::color{0, 0, 0}};
+    snail::BasicImage img{atlas_file, snail::color{0, 0, 0}};
 
     // Add a new buffer for this atlas. The assumption is that all the
     // defined sprites will fit on this buffer. This assumption might
@@ -141,7 +141,7 @@ void pic_loader::add_predefined_extents(
     }
 }
 
-pic_loader::buffer_info& pic_loader::add_buffer(PageType type, int w, int h)
+PicLoader::buffer_info& PicLoader::add_buffer(PageType type, int w, int h)
 {
     int new_buffer_index;
     size_t buffer_info_index = buffers.size();

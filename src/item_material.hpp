@@ -25,14 +25,14 @@ struct item_material_data
 };
 
 
-class item_material_db;
+class ItemMaterialDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<item_material_db>
+struct cat_db_traits<ItemMaterialDB>
 {
     using id_type = int;
     using data_type = item_material_data;
@@ -44,10 +44,10 @@ struct cat_db_traits<item_material_db>
 
 
 
-class item_material_db : public cat::cat_db<item_material_db>
+class ItemMaterialDB : public cat::CatDB<ItemMaterialDB>
 {
 public:
-    item_material_db() = default;
+    ItemMaterialDB() = default;
 
     int lookup_leather(int x, int y);
     int lookup_metal(int x, int y);
@@ -58,7 +58,7 @@ public:
 };
 
 
-extern item_material_db the_item_material_db;
+extern ItemMaterialDB the_item_material_db;
 
 
 

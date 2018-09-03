@@ -610,7 +610,7 @@ TurnResult do_throw_command()
             }
         }
     }
-    throwing_object_animation(
+    ThrowingObjectAnimation(
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
     ti = inv_getfreeid(-1);
@@ -632,7 +632,7 @@ TurnResult do_throw_command()
     }
     x = tlocx;
     y = tlocy;
-    breaking_animation({x, y}).play();
+    BreakingAnimation({x, y}).play();
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -999,8 +999,8 @@ TurnResult do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    bright_aura_animation(
-        cdata[tc].position, bright_aura_animation::Type::offering)
+    BrightAuraAnimation(
+        cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
     int stat = item_find(60002);
@@ -1055,7 +1055,7 @@ TurnResult do_offer_command()
             modpiety(i * 5);
             cdata.player().praying_point += i * 30;
             animode = 100;
-            miracle_animation().play();
+            MiracleAnimation().play();
             snd(120);
             if (inv[ti].param1 != 0)
             {
@@ -1197,13 +1197,13 @@ label_1953_internal:
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
                             pos(sx, sy * (sy > 0));
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_draw_color({255, 255, 255, 25});
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .fill_rect(
                                     sx,
@@ -1223,13 +1223,13 @@ label_1953_internal:
                 if (sy + inf_tiles <= windowh - inf_verh)
                 {
                     pos(sx, sy * (sy > 0));
-                    snail::application::instance()
+                    snail::Application::instance()
                         .get_renderer()
                         .set_blend_mode(snail::BlendMode::blend);
-                    snail::application::instance()
+                    snail::Application::instance()
                         .get_renderer()
                         .set_draw_color({127, 127, 255, 50});
-                    snail::application::instance().get_renderer().fill_rect(
+                    snail::Application::instance().get_renderer().fill_rect(
                         sx,
                         sy * (sy > 0),
                         inf_tiles,
@@ -1250,7 +1250,7 @@ label_1953_internal:
         render_hud();
         redraw();
     }
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_target)
@@ -2483,7 +2483,7 @@ TurnResult do_use_command()
             "core.locale.action.use.gene_machine.has_inherited",
             cdata[rc],
             cdata[tc]));
-        gene_engineering_animation(cdata[rc].position).play();
+        GeneEngineeringAnimation(cdata[rc].position).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)
@@ -3073,7 +3073,7 @@ TurnResult do_movement_command()
         tc = cellchara;
         if (cdata[tc].relationship >= 10
             || (cdata[tc].relationship == -1
-                && !config::instance().attack_neutral_npcs)
+                && !Config::instance().attack_neutral_npcs)
             || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == mdata_t::MapId::museum
                     || adata(16, gdata_current_map) == mdata_t::MapId::shop
@@ -3085,7 +3085,7 @@ TurnResult do_movement_command()
                 {
                     goto label_2204_internal;
                 }
-                if (config::instance().scroll)
+                if (Config::instance().scroll)
                 {
                     cdata.player().next_position.x = cdata[tc].position.x;
                     cdata.player().next_position.y = cdata[tc].position.y;

@@ -11,7 +11,7 @@ namespace ui
 
 const constexpr int trait_desc_value = 99999;
 
-bool ui_menu_feats::init()
+bool UIMenuFeats::init()
 {
     listmax = 0;
     page = 0;
@@ -100,7 +100,7 @@ static void _load_traits_by_enchantments()
     }
 }
 
-void ui_menu_feats::update()
+void UIMenuFeats::update()
 {
     trait_load_desc();
     _load_traits_by_enchantments();
@@ -348,7 +348,7 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_feats::draw()
+void UIMenuFeats::draw()
 {
     _draw_window(_operation == Operation::character_making);
     _draw_keys();
@@ -416,7 +416,7 @@ static void _switch_target(bool is_forwards)
     cs = 0;
 }
 
-optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
+optional<UIMenuFeats::result_type> UIMenuFeats::on_key(
     const std::string& key)
 {
     int p_;
@@ -432,7 +432,7 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
             {
                 if (gdata_acquirable_feat_count == 0)
                 {
-                    return ui_menu_feats::result::finish(
+                    return UIMenuFeats::result::finish(
                         ui_menu_composite_character_result{
                             FeatsResult::confirmed});
                 }
@@ -476,13 +476,13 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
         {
             update_screen();
         }
-        return ui_menu_feats::result::cancel();
+        return UIMenuFeats::result::cancel();
     }
     else if (
         getkey(snail::Key::f1) && _operation == Operation::character_making)
     {
         show_game_help();
-        return ui_menu_feats::result::finish(
+        return UIMenuFeats::result::finish(
             ui_menu_composite_character_result{FeatsResult::pressed_f1});
     }
 

@@ -13,7 +13,7 @@ namespace snail
 
 SDL_Renderer* _ptr;
 
-void renderer::set_blend_mode(BlendMode blend_mode)
+void Renderer::set_blend_mode(BlendMode blend_mode)
 {
     _blend_mode = blend_mode;
 
@@ -34,28 +34,28 @@ void renderer::set_blend_mode(BlendMode blend_mode)
     }
 }
 
-::SDL_Texture* renderer::render_target()
+::SDL_Texture* Renderer::render_target()
 {
     return ::SDL_GetRenderTarget(ptr());
 }
 
-::SDL_Renderer* renderer::ptr()
+::SDL_Renderer* Renderer::ptr()
 {
     return _ptr;
 }
 
-void renderer::set_render_target(::SDL_Texture* texture)
+void Renderer::set_render_target(::SDL_Texture* texture)
 {
     detail::enforce_sdl(::SDL_SetRenderTarget(ptr(), texture));
 }
 
-void renderer::set_draw_color(const color& color)
+void Renderer::set_draw_color(const color& color)
 {
     detail::enforce_sdl(
         ::SDL_SetRenderDrawColor(ptr(), color.r, color.g, color.b, color.a));
 }
 
-renderer::renderer(window& target_window, int flag)
+Renderer::Renderer(Window& target_window, int flag)
 {
     _ptr = detail::enforce_sdl(::SDL_CreateRenderer(
         target_window.ptr(), -1, static_cast<::SDL_RendererFlags>(flag)));
@@ -63,37 +63,37 @@ renderer::renderer(window& target_window, int flag)
         ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
 }
 
-renderer::~renderer()
+Renderer::~Renderer()
 {
     ::SDL_DestroyRenderer(_ptr);
 }
 
 
-void renderer::clear()
+void Renderer::clear()
 {
     detail::enforce_sdl(::SDL_RenderClear(ptr()));
 }
 
 
-void renderer::present()
+void Renderer::present()
 {
     ::SDL_RenderPresent(ptr());
 }
 
-void renderer::render_point(int x, int y)
+void Renderer::render_point(int x, int y)
 {
     detail::enforce_sdl(::SDL_RenderDrawPoint(ptr(), x, y));
 }
 
 
-void renderer::fill_rect(int x, int y, int width, int height)
+void Renderer::fill_rect(int x, int y, int width, int height)
 {
     ::SDL_Rect rect{x, y, width, height};
     detail::enforce_sdl(::SDL_RenderFillRect(ptr(), &rect));
 }
 
 
-rect renderer::render_text(
+rect Renderer::render_text(
     const std::string& text,
     int x,
     int y,
@@ -137,7 +137,7 @@ rect renderer::render_text(
 
 
 
-rect renderer::render_text_with_shadow(
+rect Renderer::render_text_with_shadow(
     const std::string& text,
     int x,
     int y,
@@ -161,7 +161,7 @@ rect renderer::render_text_with_shadow(
 }
 
 
-rect renderer::render_multiline_text(
+rect Renderer::render_multiline_text(
     const std::string& text,
     int x,
     int y,
@@ -186,7 +186,7 @@ rect renderer::render_multiline_text(
 }
 
 
-size renderer::calculate_text_size(const std::string& text)
+size Renderer::calculate_text_size(const std::string& text)
 {
     int width;
     int height;
@@ -196,14 +196,14 @@ size renderer::calculate_text_size(const std::string& text)
 }
 
 
-void renderer::render_line(int start_x, int start_y, int end_x, int end_y)
+void Renderer::render_line(int start_x, int start_y, int end_x, int end_y)
 {
     detail::enforce_sdl(
         ::SDL_RenderDrawLine(ptr(), start_x, start_y, end_x, end_y));
 }
 
 
-void renderer::render_image(image_base& image, int dst_x, int dst_y)
+void Renderer::render_image(ImageBase& image, int dst_x, int dst_y)
 {
     render_image(
         image,
@@ -218,8 +218,8 @@ void renderer::render_image(image_base& image, int dst_x, int dst_y)
 }
 
 
-void renderer::render_image(
-    image_base& image,
+void Renderer::render_image(
+    ImageBase& image,
     int dst_x,
     int dst_y,
     int dst_width,
@@ -238,8 +238,8 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image(
-    image_base& image,
+void Renderer::render_image(
+    ImageBase& image,
     int src_x,
     int src_y,
     int src_width,
@@ -260,8 +260,8 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image(
-    image_base& image,
+void Renderer::render_image(
+    ImageBase& image,
     int src_x,
     int src_y,
     int src_width,
@@ -285,7 +285,7 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
+void Renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
 {
     int img_width;
     int img_height;
@@ -304,7 +304,7 @@ void renderer::render_image(::SDL_Texture* image, int dst_x, int dst_y)
 }
 
 
-void renderer::render_image(
+void Renderer::render_image(
     ::SDL_Texture* image,
     int dst_x,
     int dst_y,
@@ -328,7 +328,7 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image(
+void Renderer::render_image(
     ::SDL_Texture* image,
     int src_x,
     int src_y,
@@ -350,7 +350,7 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image(
+void Renderer::render_image(
     ::SDL_Texture* image,
     int src_x,
     int src_y,
@@ -383,8 +383,8 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image_crop(
-    image_base& image,
+void Renderer::render_image_crop(
+    ImageBase& image,
     int src_x,
     int src_y,
     int src_width,
@@ -397,7 +397,7 @@ void renderer::render_image_crop(
 }
 
 
-void renderer::render_image_crop(
+void Renderer::render_image_crop(
     ::SDL_Texture* image,
     int src_x,
     int src_y,

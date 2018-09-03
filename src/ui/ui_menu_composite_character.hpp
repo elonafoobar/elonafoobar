@@ -32,8 +32,8 @@ enum class FeatsResult
 typedef boost::variant<character_sheet_result, FeatsResult>
     ui_menu_composite_character_result;
 
-class ui_menu_composite_character
-    : public ui_menu_composite<ui_menu_composite_character_result>
+class UIMenuCompositeCharacter
+    : public UIMenuComposite<ui_menu_composite_character_result>
 {
 public:
     enum Index : size_t
@@ -44,8 +44,8 @@ public:
         materials = 3,
     };
 
-    ui_menu_composite_character(size_t selected)
-        : ui_menu_composite(selected)
+    UIMenuCompositeCharacter(size_t selected)
+        : UIMenuComposite(selected)
     {
     }
 

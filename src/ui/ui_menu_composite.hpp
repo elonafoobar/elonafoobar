@@ -12,10 +12,10 @@ namespace ui
 {
 
 template <typename T>
-class ui_menu_composite : public ui_menu<T>
+class UIMenuComposite : public UIMenu<T>
 {
 protected:
-    using menu_type = ui_menu<T>;
+    using menu_type = UIMenu<T>;
 
     struct menu_info
     {
@@ -37,7 +37,7 @@ protected:
     using menu_list = std::vector<menu_info>;
 
 public:
-    ui_menu_composite(size_t selected)
+    UIMenuComposite(size_t selected)
         : _selected(selected)
     {
         _menu_switched = true;
@@ -94,7 +94,7 @@ protected:
         _menus[_selected].menu->draw();
     }
 
-    virtual optional<typename ui_menu<T>::result> on_key(const std::string& key)
+    virtual optional<typename UIMenu<T>::result> on_key(const std::string& key)
     {
         if (key == key_next || key == key_prev)
         {
@@ -124,7 +124,7 @@ protected:
             if (prev_menu != _selected)
             {
                 _menu_switched = true;
-                ui_menu<T>::set_reupdate();
+                UIMenu<T>::set_reupdate();
             }
         }
         else if (auto result = _menus[_selected].menu->on_key(key))
@@ -134,7 +134,7 @@ protected:
 
         if (_menus[_selected].menu->_reupdate)
         {
-            ui_menu<T>::set_reupdate();
+            UIMenu<T>::set_reupdate();
             _menus[_selected].menu->_reupdate = false;
         }
 
@@ -142,7 +142,7 @@ protected:
         {
             // trigger init() to be called in update().
             _menu_switched = true;
-            ui_menu<T>::set_reupdate();
+            UIMenu<T>::set_reupdate();
             _menus[_selected].menu->_reinit = false;
         }
 

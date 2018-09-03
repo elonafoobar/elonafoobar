@@ -7,65 +7,65 @@ namespace elona
 namespace snail
 {
 
-void renderer::set_blend_mode(BlendMode)
+void Renderer::set_blend_mode(BlendMode)
 {
 }
 
-::SDL_Texture* renderer::render_target()
-{
-    return nullptr;
-}
-
-::SDL_Renderer* renderer::ptr()
+::SDL_Texture* Renderer::render_target()
 {
     return nullptr;
 }
 
-void renderer::set_render_target(::SDL_Texture*)
+::SDL_Renderer* Renderer::ptr()
+{
+    return nullptr;
+}
+
+void Renderer::set_render_target(::SDL_Texture*)
 {
 }
 
-void renderer::set_draw_color(const color&)
-{
-}
-
-
-renderer::renderer(window&, int)
-{
-}
-
-renderer::~renderer()
-{
-}
-
-void renderer::clear()
+void Renderer::set_draw_color(const color&)
 {
 }
 
 
-void renderer::present()
+Renderer::Renderer(Window&, int)
+{
+}
+
+Renderer::~Renderer()
+{
+}
+
+void Renderer::clear()
 {
 }
 
 
-void renderer::render_point(int, int)
+void Renderer::present()
 {
 }
 
 
-void renderer::fill_rect(int, int, int, int)
+void Renderer::render_point(int, int)
 {
 }
 
 
-rect renderer::render_text(const std::string&, int, int, const color&, double)
+void Renderer::fill_rect(int, int, int, int)
+{
+}
+
+
+rect Renderer::render_text(const std::string&, int, int, const color&, double)
 {
     return rect{0, 0, 0, 0};
 }
 
 
 
-rect renderer::render_text_with_shadow(
+rect Renderer::render_text_with_shadow(
     const std::string&,
     int,
     int,
@@ -77,59 +77,59 @@ rect renderer::render_text_with_shadow(
 }
 
 
-rect renderer::render_multiline_text(const std::string&, int, int, const color&)
+rect Renderer::render_multiline_text(const std::string&, int, int, const color&)
 {
     return rect{0, 0, 0, 0};
 }
 
 
-size renderer::calculate_text_size(const std::string&)
+size Renderer::calculate_text_size(const std::string&)
 {
     return {0, 0};
 }
 
 
-void renderer::render_line(int, int, int, int)
+void Renderer::render_line(int, int, int, int)
 {
 }
 
 
-void renderer::render_image(image_base&, int, int)
+void Renderer::render_image(ImageBase&, int, int)
 {
 }
 
 
-void renderer::render_image(image_base&, int, int, int, int)
+void Renderer::render_image(ImageBase&, int, int, int, int)
 {
 }
 
 
-void renderer::render_image(image_base&, int, int, int, int, int, int)
+void Renderer::render_image(ImageBase&, int, int, int, int, int, int)
 {
 }
 
 
-void renderer::render_image(image_base&, int, int, int, int, int, int, int, int)
+void Renderer::render_image(ImageBase&, int, int, int, int, int, int, int, int)
 {
 }
 
 
-void renderer::render_image(::SDL_Texture*, int, int)
+void Renderer::render_image(::SDL_Texture*, int, int)
 {
 }
 
 
-void renderer::render_image(::SDL_Texture*, int, int, int, int)
+void Renderer::render_image(::SDL_Texture*, int, int, int, int)
 {
 }
 
 
-void renderer::render_image(::SDL_Texture*, int, int, int, int, int, int)
+void Renderer::render_image(::SDL_Texture*, int, int, int, int, int, int)
 {
 }
 
 
-void renderer::render_image(
+void Renderer::render_image(
     ::SDL_Texture*,
     int,
     int,
@@ -143,7 +143,7 @@ void renderer::render_image(
 }
 
 
-void renderer::render_image_crop(image_base&, int, int, int, int, int, int)
+void Renderer::render_image_crop(ImageBase&, int, int, int, int, int, int)
 {
 }
 

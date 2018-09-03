@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_charamake_gender::init()
+bool UIMenuCharamakeGender::init()
 {
     cs = 0;
     cs_bk = -1;
@@ -23,7 +23,7 @@ bool ui_menu_charamake_gender::init()
     return true;
 }
 
-void ui_menu_charamake_gender::update()
+void UIMenuCharamakeGender::update()
 {
 }
 
@@ -67,7 +67,7 @@ static void _draw_choices()
     }
 }
 
-void ui_menu_charamake_gender::draw()
+void UIMenuCharamakeGender::draw()
 {
     if (cs_bk == cs)
     {
@@ -78,25 +78,25 @@ void ui_menu_charamake_gender::draw()
     _draw_choices();
 }
 
-optional<ui_menu_charamake_gender::result_type>
-ui_menu_charamake_gender::on_key(const std::string& key)
+optional<UIMenuCharamakeGender::result_type>
+UIMenuCharamakeGender::on_key(const std::string& key)
 {
     if (key == key_select(0))
     {
-        return ui_menu_charamake_gender::result::finish(0);
+        return UIMenuCharamakeGender::result::finish(0);
     }
     else if (key == key_select(1))
     {
-        return ui_menu_charamake_gender::result::finish(1);
+        return UIMenuCharamakeGender::result::finish(1);
     }
     else if (key == key_cancel)
     {
-        return ui_menu_charamake_gender::result::cancel();
+        return UIMenuCharamakeGender::result::cancel();
     }
     else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return ui_menu_charamake_gender::result::finish();
+        return UIMenuCharamakeGender::result::finish();
     }
 
     return none;

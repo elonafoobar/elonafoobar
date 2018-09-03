@@ -12,22 +12,22 @@ namespace elona
 namespace lua
 {
 
-class api_manager;
-class event_manager;
-class export_manager;
-class mod_manager;
-class handle_manager;
-class registry_manager;
+class APIManager;
+class EventManager;
+class ExportManager;
+class ModManager;
+class HandleManager;
+class RegistryManager;
 
 /***
  * Main singleton encapsulating various Lua subsystems. Delegates
  * responsibility for specific Lua-related operations to invidual
  * subsystems.
  */
-class lua_env
+class LuaEnv
 {
 public:
-    explicit lua_env();
+    explicit LuaEnv();
 
     /***
      * Returns a shared pointer to the Lua environment's internal Lua
@@ -40,32 +40,32 @@ public:
 
     //********** Individual API manager retrieval methods **********//
 
-    api_manager& get_api_manager()
+    APIManager& get_api_manager()
     {
         return *api_mgr;
     }
 
-    event_manager& get_event_manager()
+    EventManager& get_event_manager()
     {
         return *event_mgr;
     }
 
-    export_manager& get_export_manager()
+    ExportManager& get_export_manager()
     {
         return *export_mgr;
     }
 
-    handle_manager& get_handle_manager()
+    HandleManager& get_handle_manager()
     {
         return *handle_mgr;
     }
 
-    mod_manager& get_mod_manager()
+    ModManager& get_mod_manager()
     {
         return *mod_mgr;
     }
 
-    registry_manager& get_registry_manager()
+    RegistryManager& get_registry_manager()
     {
         return *registry_mgr;
     }
@@ -95,15 +95,15 @@ private:
      */
     std::shared_ptr<sol::state> lua_;
 
-    std::unique_ptr<mod_manager> mod_mgr;
-    std::unique_ptr<api_manager> api_mgr;
-    std::unique_ptr<event_manager> event_mgr;
-    std::unique_ptr<export_manager> export_mgr;
-    std::unique_ptr<handle_manager> handle_mgr;
-    std::unique_ptr<registry_manager> registry_mgr;
+    std::unique_ptr<ModManager> mod_mgr;
+    std::unique_ptr<APIManager> api_mgr;
+    std::unique_ptr<EventManager> event_mgr;
+    std::unique_ptr<ExportManager> export_mgr;
+    std::unique_ptr<HandleManager> handle_mgr;
+    std::unique_ptr<RegistryManager> registry_mgr;
 };
 
-extern std::unique_ptr<lua_env> lua;
+extern std::unique_ptr<LuaEnv> lua;
 
 } // namespace lua
 } // namespace elona

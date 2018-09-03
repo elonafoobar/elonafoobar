@@ -16,6 +16,6 @@ struct item_chip_data
 };
 
 // Used only as an intermediary between registry and initialize_item_chips().
-ELONA_LION_DEFINE_DB(item_chip_db, item_chip_data, int, u8"item_chip")
+ELONA_LION_DEFINE_DB(ItemChipDB, item_chip_data, int, u8"item_chip")
 
 } // namespace elona

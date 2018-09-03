@@ -107,7 +107,7 @@ static void _populate_recipe_list(int _invctrl)
     }
 }
 
-bool ui_menu_crafting::init()
+bool UIMenuCrafting::init()
 {
     listmax = 0;
     page = 0;
@@ -292,7 +292,7 @@ static bool _draw_list_entries(bool draw_desc)
     return should_redraw;
 }
 
-void ui_menu_crafting::update()
+void UIMenuCrafting::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -306,7 +306,7 @@ void ui_menu_crafting::update()
     }
 }
 
-void ui_menu_crafting::draw()
+void UIMenuCrafting::draw()
 {
     _draw_window();
     _draw_keys();
@@ -323,7 +323,7 @@ void ui_menu_crafting::draw()
     }
 }
 
-optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
+optional<UIMenuCrafting::result_type> UIMenuCrafting::on_key(
     const std::string& key)
 {
     int p_ = 0;
@@ -349,7 +349,7 @@ optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
             set_reupdate();
             return none;
         }
-        return ui_menu_crafting::result::finish(p_);
+        return UIMenuCrafting::result::finish(p_);
     }
     else if (key == key_pageup)
     {
@@ -371,7 +371,7 @@ optional<ui_menu_crafting::result_type> ui_menu_crafting::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_crafting::result::cancel();
+        return UIMenuCrafting::result::cancel();
     }
 
     return none;

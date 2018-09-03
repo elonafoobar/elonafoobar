@@ -17,12 +17,12 @@ namespace lua
 typedef std::string enum_string;
 
 template <typename T>
-class enum_map
+class EnumMap
 {
     using map_type = std::unordered_map<std::string, T>;
 
 public:
-    enum_map(std::string name, map_type storage)
+    EnumMap(std::string name, map_type storage)
         : name(name)
         , storage(storage)
     {
@@ -96,16 +96,16 @@ private:
 
 namespace LuaEnums
 {
-extern enum_map<DamageSource> DamageSourceTable;
-extern enum_map<ColorIndex> ColorIndexTable;
-extern enum_map<CurseState> CurseStateTable;
-extern enum_map<IdentifyState> IdentifyStateTable;
-extern enum_map<StatusAilment> StatusAilmentTable;
-extern enum_map<Element> ElementTable;
-extern enum_map<TileKind> TileKindTable;
-extern enum_map<int> GenderTable;
-extern enum_map<int> RelationTable;
-extern enum_map<int> CharaFlagTable;
+extern EnumMap<DamageSource> DamageSourceTable;
+extern EnumMap<ColorIndex> ColorIndexTable;
+extern EnumMap<CurseState> CurseStateTable;
+extern EnumMap<IdentifyState> IdentifyStateTable;
+extern EnumMap<StatusAilment> StatusAilmentTable;
+extern EnumMap<Element> ElementTable;
+extern EnumMap<TileKind> TileKindTable;
+extern EnumMap<int> GenderTable;
+extern EnumMap<int> RelationTable;
+extern EnumMap<int> CharaFlagTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

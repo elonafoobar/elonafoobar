@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_adventurers::init()
+bool UIMenuAdventurers::init()
 {
     listmax = 0;
     page = 0;
@@ -33,7 +33,7 @@ bool ui_menu_adventurers::init()
     return true;
 }
 
-void ui_menu_adventurers::update()
+void UIMenuAdventurers::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -161,14 +161,14 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_adventurers::draw()
+void UIMenuAdventurers::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_adventurers::result_type> ui_menu_adventurers::on_key(
+optional<UIMenuAdventurers::result_type> UIMenuAdventurers::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -193,7 +193,7 @@ optional<ui_menu_adventurers::result_type> ui_menu_adventurers::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_adventurers::result::finish();
+        return UIMenuAdventurers::result::finish();
     }
 
     return none;

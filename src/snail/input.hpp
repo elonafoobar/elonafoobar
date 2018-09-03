@@ -269,7 +269,7 @@ inline bool is_modifier(Key k)
 
 
 
-class mouse_t
+class Mouse
 {
 public:
     enum class Button
@@ -315,13 +315,13 @@ private:
 
 
 
-class input final : public lib::noncopyable
+class Input final : public lib::noncopyable
 {
 public:
     bool is_pressed(Key k, int key_wait = 1) const;
-    bool is_pressed(mouse_t::Button b) const;
+    bool is_pressed(Mouse::Button b) const;
     bool was_pressed_just_now(Key k) const;
-    bool was_pressed_just_now(mouse_t::Button b) const;
+    bool was_pressed_just_now(Mouse::Button b) const;
 
     bool is_ime_active() const;
 
@@ -329,7 +329,7 @@ public:
     void hide_soft_keyboard();
     void toggle_soft_keyboard();
 
-    const mouse_t& mouse() const
+    const Mouse& mouse() const
     {
         return _mouse;
     }
@@ -374,10 +374,10 @@ public:
     }
 
 
-    virtual ~input() override = default;
+    virtual ~Input() override = default;
 
 
-    static input& instance() noexcept;
+    static Input& instance() noexcept;
 
 
     void _update();
@@ -404,9 +404,9 @@ private:
     int _quick_action_repeat_start_wait = 10;
     int _quick_action_repeat_wait = 2;
 
-    mouse_t _mouse;
+    Mouse _mouse;
 
-    input() = default;
+    Input() = default;
 };
 
 

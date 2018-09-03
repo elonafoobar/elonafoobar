@@ -8,7 +8,7 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-static sol::table load(elona::lua::lua_env& lua, const std::string& name)
+static sol::table load(elona::lua::LuaEnv& lua, const std::string& name)
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
@@ -26,7 +26,7 @@ static sol::table load(elona::lua::lua_env& lua, const std::string& name)
 
 TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
     REQUIRE_NOTHROW(lua.get_registry_manager().register_native_datatype(
         "chara", [](sol::table) {}));
@@ -37,7 +37,7 @@ TEST_CASE("test reading nonexistent file", "[Lua: Registry]")
 
 TEST_CASE("test reading invalid enum", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_invalid_enum");
 
     character_db_ex db;
@@ -46,7 +46,7 @@ TEST_CASE("test reading invalid enum", "[Lua: Registry]")
 
 TEST_CASE("test reading invalid callback name", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_invalid_callback");
 
     character_db_ex db;
@@ -57,7 +57,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().register_native_datatype(
@@ -69,7 +69,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Registry]")
 
 TEST_CASE("test registering character", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara");
 
     character_db_ex db;
@@ -111,7 +111,7 @@ TEST_CASE("test registering character", "[Lua: Registry]")
 
 TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_defaults");
 
     character_db_ex db;
@@ -151,7 +151,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Registry]")
 
 TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara");
 
     character_db_ex db;
@@ -165,7 +165,7 @@ TEST_CASE("test usage of legacy ID", "[Lua: Registry]")
 
 TEST_CASE("test character flags", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "chara_defaults");
 
     character_db_ex db;

@@ -579,7 +579,7 @@ void prompt_hiring()
         {
             snd(12);
             cdata.player().gold -= calchirecost(tc) * 20;
-            await(config::instance().animewait * 10);
+            await(Config::instance().animewait * 10);
             cdata[tc].set_state(character::State::alive);
             txtef(2);
             txt(i18n::s.get(
@@ -639,7 +639,7 @@ void start_home_map_mode()
     tile = 0;
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int stat = target_position();
         if (stat == -1)
         {
@@ -751,7 +751,7 @@ void show_home_value()
     while (1)
     {
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_cancel)
@@ -1128,7 +1128,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (!config::instance().hideshopresult)
+        if (!Config::instance().hideshopresult)
         {
             txt(shop_mark
                 + i18n::s.get(
@@ -1139,7 +1139,7 @@ void show_shop_log()
     }
     else
     {
-        if (!config::instance().hideshopresult)
+        if (!Config::instance().hideshopresult)
         {
             s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
             if (income(1) != 0)

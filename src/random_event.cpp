@@ -581,7 +581,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (config::instance().skiprandevents && choices.size() == 1)
+    if (Config::instance().skiprandevents && choices.size() == 1)
     {
         // Skip this event.
         snd(62);
@@ -686,7 +686,7 @@ int show_random_event_window(
             cs_bk = cs;
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_ITEM(rtval, snd(40));

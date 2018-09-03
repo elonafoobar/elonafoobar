@@ -12,7 +12,7 @@ namespace snail
 {
 
 
-class fps_manager final : private lib::noncopyable
+class FPSManager final : private lib::noncopyable
 {
 public:
     int fps() const noexcept
@@ -25,8 +25,8 @@ public:
     double actual_fps();
 
 
-    explicit fps_manager(int fps = 60);
-    virtual ~fps_manager() override = default;
+    explicit FPSManager(int fps = 60);
+    virtual ~FPSManager() override = default;
 
 
     void wait();

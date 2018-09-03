@@ -8,7 +8,7 @@ namespace elona
 namespace lua
 {
 
-event_manager::event_manager(lua_env* lua)
+EventManager::EventManager(LuaEnv* lua)
 {
     this->lua = lua;
     init_events();
@@ -16,7 +16,7 @@ event_manager::event_manager(lua_env* lua)
     bind_api(*lua);
 }
 
-void event_manager::bind_api(lua_env& lua)
+void EventManager::bind_api(LuaEnv& lua)
 {
     sol::table core = lua.get_api_manager().get_api_table();
     sol::table Event = core.create_named("Event");
@@ -60,7 +60,7 @@ void event_manager::bind_api(lua_env& lua)
     init_event_kinds(Event);
 }
 
-void event_manager::init_event_kinds(sol::table& Event)
+void EventManager::init_event_kinds(sol::table& Event)
 {
     Event["EventKind"] = Event.create_with(
         "MapCreated",
@@ -110,7 +110,7 @@ void event_manager::init_event_kinds(sol::table& Event)
         EventKind::script_loaded);
 }
 
-void event_manager::init_events()
+void EventManager::init_events()
 {
     unsigned event_count = static_cast<unsigned>(EventKind::COUNT);
     sol::function error_handler =
@@ -118,13 +118,13 @@ void event_manager::init_events()
     for (unsigned i = 0; i < event_count; i++)
     {
         EventKind event_kind = static_cast<EventKind>(i);
-        callbacks cb;
+        Callbacks cb;
         cb.set_error_handler(error_handler);
         events[event_kind] = std::move(cb);
     }
 }
 
-void event_manager::register_event(
+void EventManager::register_event(
     EventKind event,
     sol::environment& env,
     sol::protected_function& callback)
@@ -136,7 +136,7 @@ void event_manager::register_event(
     }
 }
 
-void event_manager::unregister_event(
+void EventManager::unregister_event(
     EventKind event,
     sol::environment& env,
     sol::protected_function& callback)
@@ -150,7 +150,7 @@ void event_manager::unregister_event(
     }
 }
 
-void event_manager::clear_mod_callbacks(
+void EventManager::clear_mod_callbacks(
     EventKind event,
     sol::environment& env)
 {
@@ -163,7 +163,7 @@ void event_manager::clear_mod_callbacks(
     }
 }
 
-void event_manager::clear_mod_callbacks(sol::environment& env)
+void EventManager::clear_mod_callbacks(sol::environment& env)
 {
     unsigned event_count = static_cast<unsigned>(EventKind::COUNT);
     for (unsigned i = 0; i < event_count; i++)
@@ -173,12 +173,12 @@ void event_manager::clear_mod_callbacks(sol::environment& env)
     }
 }
 
-void event_manager::trigger_event(EventKind event, sol::table data)
+void EventManager::trigger_event(EventKind event, sol::table data)
 {
     auto iter = events.find(event);
     if (iter != events.end())
     {
-        iter->second.run(callbacks::retval_type<void>(), data);
+        iter->second.run(Callbacks::retval_type<void>(), data);
     }
     else
     {
@@ -188,7 +188,7 @@ void event_manager::trigger_event(EventKind event, sol::table data)
     }
 }
 
-void event_manager::clear()
+void EventManager::clear()
 {
     events.clear();
     init_events();

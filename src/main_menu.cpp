@@ -118,9 +118,9 @@ MainMenuResult main_title_menu()
 
     while (1)
     {
-        if (config::instance().autonumlock)
+        if (Config::instance().autonumlock)
         {
-            snail::input::instance().disable_numlock();
+            snail::Input::instance().disable_numlock();
         }
         tx += (rnd(10) + 2) * p(1);
         ty += (rnd(10) + 2) * p(2);
@@ -165,7 +165,7 @@ MainMenuResult main_title_menu()
         }
         cs_bk = cs;
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         if (key == u8"b"s)
@@ -287,7 +287,7 @@ MainMenuResult main_menu_wrapper()
 
 MainMenuResult main_menu_new_game()
 {
-    if (config::instance().wizard)
+    if (Config::instance().wizard)
     {
         gdata_wizard = 1;
     }
@@ -410,7 +410,7 @@ MainMenuResult main_menu_continue()
             mes(u8"No save files found"s);
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -587,7 +587,7 @@ MainMenuResult main_menu_incarnate()
             mes(u8"No gene files found"s);
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;

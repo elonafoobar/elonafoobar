@@ -22,7 +22,7 @@
 namespace
 {
 
-pic_loader loader;
+PicLoader loader;
 
 
 struct damage_popup_t
@@ -322,7 +322,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
-                if (config::instance().leash_icon && cdata[i].is_leashed())
+                if (Config::instance().leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
                     auto rect = prepare_item_image(leash, 2);
@@ -361,7 +361,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    damage_popups.resize(config::instance().max_damage_popup);
+    damage_popups.resize(Config::instance().max_damage_popup);
 }
 
 
@@ -371,8 +371,8 @@ void add_damage_popup(
     int character,
     const snail::color& color)
 {
-    damage_popups.resize(config::instance().max_damage_popup);
-    if (damage_popups_active == config::instance().max_damage_popup)
+    damage_popups.resize(Config::instance().max_damage_popup);
+    if (damage_popups_active == Config::instance().max_damage_popup)
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(
@@ -414,7 +414,7 @@ void clear_damage_popups()
 
 void show_damage_popups()
 {
-    if (config::instance().damage_popup == 0)
+    if (Config::instance().damage_popup == 0)
     {
         return;
     }
@@ -690,7 +690,7 @@ void initialize_map_chip()
 {
     // TODO: this could be called multiple times outside of
     // initialize_all_chips. Add a method to clear only map chip
-    // buffers from pic_loader so they can be loaded again, or keep
+    // buffers from PicLoader so they can be loaded again, or keep
     // all chips loaded at once.
     DIM3(chipm, 8, 825);
     if (mdata_map_atlas_number == 0)
@@ -851,9 +851,9 @@ void initialize_map_chip()
 }
 
 
-void initialize_item_chips(const item_chip_db& db)
+void initialize_item_chips(const ItemChipDB& db)
 {
-    pic_loader::map_type predefined_extents;
+    PicLoader::map_type predefined_extents;
 
     for (const auto& chip_data : db)
     {
@@ -871,7 +871,7 @@ void initialize_item_chips(const item_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::PageType::character);
+                *chip_data.filepath, key, PicLoader::PageType::character);
         }
         else
         {
@@ -883,13 +883,13 @@ void initialize_item_chips(const item_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"item.bmp",
         predefined_extents,
-        pic_loader::PageType::item);
+        PicLoader::PageType::item);
 }
 
 
-void initialize_chara_chips(const chara_chip_db& db)
+void initialize_chara_chips(const CharaChipDB& db)
 {
-    pic_loader::map_type predefined_extents;
+    PicLoader::map_type predefined_extents;
 
     for (const auto& chip_data : db)
     {
@@ -907,7 +907,7 @@ void initialize_chara_chips(const chara_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::PageType::character);
+                *chip_data.filepath, key, PicLoader::PageType::character);
         }
         else
         {
@@ -919,7 +919,7 @@ void initialize_chara_chips(const chara_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"character.bmp",
         predefined_extents,
-        pic_loader::PageType::character);
+        PicLoader::PageType::character);
 }
 
 

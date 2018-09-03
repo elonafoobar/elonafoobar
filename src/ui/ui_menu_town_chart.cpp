@@ -8,12 +8,12 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_town_chart::init()
+bool UIMenuTownChart::init()
 {
     return true;
 }
 
-void ui_menu_town_chart::update()
+void UIMenuTownChart::update()
 {
     listmax = 0;
     page = 0;
@@ -46,7 +46,7 @@ void ui_menu_town_chart::update()
     }
 }
 
-void ui_menu_town_chart::draw()
+void UIMenuTownChart::draw()
 {
     s(0) = i18n::s.get("core.locale.ui.town_chart.title");
     s(1) = strhint3b;
@@ -119,14 +119,14 @@ void ui_menu_town_chart::draw()
     }
 }
 
-optional<ui_menu_town_chart::result_type> ui_menu_town_chart::on_key(
+optional<UIMenuTownChart::result_type> UIMenuTownChart::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
 
     if (p != -1)
     {
-        return ui_menu_town_chart::result::finish();
+        return UIMenuTownChart::result::finish();
     }
     else if (key == key_pageup)
     {
@@ -149,7 +149,7 @@ optional<ui_menu_town_chart::result_type> ui_menu_town_chart::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return ui_menu_town_chart::result::cancel();
+        return UIMenuTownChart::result::cancel();
     }
 
     return none;

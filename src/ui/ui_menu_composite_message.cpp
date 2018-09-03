@@ -8,18 +8,18 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_composite_message::add_menus()
+void UIMenuCompositeMessage::add_menus()
 {
     push_back(
-        std::make_unique<ui_menu_message_log>(),
+        std::make_unique<UIMenuMessageLog>(),
         15,
         "core.locale.ui.menu.log.log");
     push_back(
-        std::make_unique<ui_menu_journal>(),
+        std::make_unique<UIMenuJournal>(),
         3,
         "core.locale.ui.menu.log.journal");
     push_back(
-        std::make_unique<ui_menu_chat_history>(),
+        std::make_unique<UIMenuChatHistory>(),
         16,
         "core.locale.ui.menu.log.chat");
 }

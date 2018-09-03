@@ -39,7 +39,7 @@ struct mod_info
 
         if (path)
         {
-            chunk_cache = loaded_chunk_cache{*path};
+            chunk_cache = LoadedChunkCache{*path};
         }
     }
     mod_info(const mod_info&) = delete;
@@ -48,7 +48,7 @@ struct mod_info
 
     std::string name;
     optional<fs::path> path;
-    optional<loaded_chunk_cache> chunk_cache;
+    optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
     sol::table store_local;
     sol::table store_global;
@@ -70,7 +70,7 @@ enum class ModLoadingStage : unsigned
  * interface for more specialized API handling mechanisms and for
  * keeping track of mods.
  */
-class mod_manager
+class ModManager
 {
     using mod_storage_type =
         std::unordered_map<std::string, std::unique_ptr<mod_info>>;
@@ -79,7 +79,7 @@ public:
     using iterator = mod_storage_type::iterator;
     using const_iterator = mod_storage_type::const_iterator;
 
-    explicit mod_manager(lua_env*);
+    explicit ModManager(LuaEnv*);
 
     // Iterator for mods.
     iterator begin()
@@ -278,7 +278,7 @@ private:
      */
     ModLoadingStage stage = ModLoadingStage::not_started;
 
-    lua_env* lua_;
+    LuaEnv* lua_;
 };
 
 } // namespace lua

@@ -104,7 +104,7 @@ void proc_event()
         txtef(5);
         txt(i18n::s.get("core.locale.event.ehekatl"));
         msg_halt();
-        ragnarok_animation().play();
+        RagnarokAnimation().play();
         flt();
         chara_create(
             -1,
@@ -758,7 +758,7 @@ void proc_event()
             gmode(4, p(3) * 10);
             gcopy_c(7, i / 3 % 2 * 192, 192, 96, 96, 192, 96);
             redraw();
-            await(config::instance().animewait * 3.5);
+            await(Config::instance().animewait * 3.5);
         }
         gmode(2);
         update_entire_screen();
@@ -766,8 +766,8 @@ void proc_event()
         tlocy = evdata2(evnum - (evnum != 0) * 1);
         range_ = 31;
         ele = 59;
-        ball_animation(
-            {tlocx, tlocy}, range_, ball_animation::Type::atomic_bomb, ele)
+        BallAnimation(
+            {tlocx, tlocy}, range_, BallAnimation::Type::atomic_bomb, ele)
             .play();
         update_screen();
         for (int i = 0; i < range_ * 2 + 1; ++i)
@@ -831,7 +831,7 @@ void proc_event()
         sound_play_environmental();
         txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
-        ragnarok_animation().play();
+        RagnarokAnimation().play();
         for (int i = 0; i < 200; ++i)
         {
             for (int j = 0; j < 2; ++j)
@@ -885,7 +885,7 @@ void proc_event()
                 {
                     snd(45);
                 }
-                await(config::instance().animewait);
+                await(Config::instance().animewait);
             }
         }
         break;

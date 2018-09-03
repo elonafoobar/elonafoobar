@@ -26,14 +26,14 @@ struct trait_data
 
 
 
-class trait_db;
+class TraitDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<trait_db>
+struct cat_db_traits<TraitDB>
 {
     using id_type = int;
     using data_type = trait_data;
@@ -45,17 +45,17 @@ struct cat_db_traits<trait_db>
 
 
 
-class trait_db : public cat::cat_db<trait_db>
+class TraitDB : public cat::CatDB<TraitDB>
 {
 public:
-    trait_db() = default;
+    TraitDB() = default;
 
     void define(lua_State* L);
 };
 
 
 
-extern trait_db the_trait_db;
+extern TraitDB the_trait_db;
 
 
 int trait_get_info(int traitmode, int tid);

@@ -57,7 +57,7 @@ namespace snail
 
 
 
-basic_image::basic_image(
+BasicImage::BasicImage(
     const fs::path& filepath,
     const optional<color>& keycolor)
 {
@@ -74,7 +74,7 @@ basic_image::basic_image(
 
     _ptr.reset(
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(
-            application::instance().get_renderer().ptr(), surface)),
+            Application::instance().get_renderer().ptr(), surface)),
         ::SDL_DestroyTexture);
     _width = surface->w;
     _height = surface->h;
@@ -84,14 +84,14 @@ basic_image::basic_image(
 
 
 
-basic_image::basic_image(::SDL_Texture* ptr)
+BasicImage::BasicImage(::SDL_Texture* ptr)
 {
     _ptr.reset(ptr, ::SDL_DestroyTexture);
 }
 
 
 
-void basic_image::_render(
+void BasicImage::_render(
     ::SDL_Renderer* renderer,
     BlendMode blend_mode,
     int src_x,
@@ -119,8 +119,8 @@ void basic_image::_render(
 
 
 
-frame_image::frame_image(
-    basic_image& source,
+FrameImage::FrameImage(
+    BasicImage& source,
     int offset_x,
     int offset_y,
     int width,
@@ -135,7 +135,7 @@ frame_image::frame_image(
 
 
 
-void frame_image::_render(
+void FrameImage::_render(
     ::SDL_Renderer* renderer,
     BlendMode blend_mode,
     int src_x,

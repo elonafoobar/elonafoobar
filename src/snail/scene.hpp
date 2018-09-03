@@ -12,43 +12,43 @@ namespace snail
 
 
 
-class scene_base : public node
+class SceneBase : public Node
 {
 public:
-    std::shared_ptr<scene_base> parent() noexcept
+    std::shared_ptr<SceneBase> parent() noexcept
     {
         return _parent;
     }
 
 
-    explicit scene_base(std::shared_ptr<scene_base> parent = nullptr);
-    virtual ~scene_base() = default;
+    explicit SceneBase(std::shared_ptr<SceneBase> parent = nullptr);
+    virtual ~SceneBase() = default;
 
 
 private:
-    std::shared_ptr<scene_base> _parent;
+    std::shared_ptr<SceneBase> _parent;
 };
 
 
 
-class scene_manager final : public lib::noncopyable
+class SceneManager final : public lib::noncopyable
 {
 public:
-    std::shared_ptr<scene_base> current_scene();
+    std::shared_ptr<SceneBase> current_scene();
 
 
-    scene_manager() = default;
-    virtual ~scene_manager() override = default;
+    SceneManager() = default;
+    virtual ~SceneManager() override = default;
 
 
-    void push(std::shared_ptr<scene_base> new_scene);
+    void push(std::shared_ptr<SceneBase> new_scene);
     void pop();
     void pop_all();
-    void replace(std::shared_ptr<scene_base> new_scene);
+    void replace(std::shared_ptr<SceneBase> new_scene);
 
 
 private:
-    std::stack<std::shared_ptr<scene_base>> _scene_stack;
+    std::stack<std::shared_ptr<SceneBase>> _scene_stack;
 };
 
 

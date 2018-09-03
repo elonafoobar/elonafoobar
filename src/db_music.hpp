@@ -11,8 +11,8 @@ struct music_data
     fs::path file;
 };
 
-ELONA_LION_DEFINE_DB(music_db, music_data, int, u8"music")
+ELONA_LION_DEFINE_DB(MusicDB, music_data, int, u8"music")
 
-extern music_db the_music_db;
+extern MusicDB the_music_db;
 
 } // namespace elona

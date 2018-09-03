@@ -90,7 +90,7 @@ void modify_ether_disease_stage(int delta)
         {
             txtef(8);
             txt(i18n::s.get("core.locale.chara.corruption.symptom"));
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
                 {

@@ -380,7 +380,7 @@ static void _load_portrait()
     }
 }
 
-bool ui_menu_character_sheet::init()
+bool UIMenuCharacterSheet::init()
 {
     page = 0;
     pagesize = 16;
@@ -513,7 +513,7 @@ static void _draw_title(CharacterSheetOperation op)
     show_title(title);
 }
 
-void ui_menu_character_sheet::update()
+void UIMenuCharacterSheet::update()
 {
     if (_operation != CharacterSheetOperation::character_making)
     {
@@ -1113,7 +1113,7 @@ static void _draw_skill_name(int cnt, int skill_id)
 
     // [TRACKING] Shows the star in the (c) menu
     for (int cnt = 0;
-         cnt < (elona::config::instance().allow_enhanced_skill ? 10 : 3);
+         cnt < (elona::Config::instance().allow_enhanced_skill ? 10 : 3);
          ++cnt)
     {
         if (gdata(750 + cnt) == cc * 10000 + skill_id)
@@ -1257,7 +1257,7 @@ static void _draw_other_page_list_entries(CharacterSheetOperation op)
     cs_bk = cs;
 }
 
-void ui_menu_character_sheet::draw()
+void UIMenuCharacterSheet::draw()
 {
     cs_bk = -1;
     bool show_bonus = _operation == CharacterSheetOperation::normal;
@@ -1281,7 +1281,7 @@ static void _track_skill(int skill_id)
 {
     int gdata_index = 750;
     int max_tracked_skills =
-        elona::config::instance().allow_enhanced_skill ? 10 : 3;
+        elona::Config::instance().allow_enhanced_skill ? 10 : 3;
 
     for (int cnt = 750; cnt < 750 + max_tracked_skills; ++cnt)
     {
@@ -1311,7 +1311,7 @@ static void _apply_skill_bonus(int csskill_)
         clamp(15 - sdata.get(csskill_, cc).potential / 15, 2, 15));
 }
 
-optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
+optional<UIMenuCharacterSheet::result_type> UIMenuCharacterSheet::on_key(
     const std::string& key)
 {
     if (page == 0)
@@ -1357,11 +1357,11 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         if (key == key_enter)
         {
             snd(103);
-            return ui_menu_character_sheet::result::cancel();
+            return UIMenuCharacterSheet::result::cancel();
         }
         if (key == key_cancel)
         {
-            return ui_menu_character_sheet::result::finish(
+            return UIMenuCharacterSheet::result::finish(
                 ui_menu_composite_character_result{false});
         }
         return none;
@@ -1401,7 +1401,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
-                return ui_menu_character_sheet::result::finish(
+                return UIMenuCharacterSheet::result::finish(
                     ui_menu_composite_character_result{skill_id});
             }
             if (cdata.player().skill_bonus < 1 || skill_id < 0
@@ -1448,7 +1448,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             update_screen();
             tc = tcbk;
         }
-        return ui_menu_character_sheet::result::cancel();
+        return UIMenuCharacterSheet::result::cancel();
     }
 
     return none;

@@ -30,14 +30,14 @@ struct buff_data
 
 
 
-class buff_db;
+class BuffDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<buff_db>
+struct cat_db_traits<BuffDB>
 {
     using id_type = int;
     using data_type = buff_data;
@@ -49,16 +49,16 @@ struct cat_db_traits<buff_db>
 
 
 
-class buff_db : public cat::cat_db<buff_db>
+class BuffDB : public cat::CatDB<BuffDB>
 {
 public:
-    buff_db();
+    BuffDB();
 
     void define(lua_State* L);
 };
 
 
-extern buff_db the_buff_db;
+extern BuffDB the_buff_db;
 
 
 struct character;

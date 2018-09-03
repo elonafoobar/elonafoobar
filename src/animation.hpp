@@ -10,7 +10,7 @@ namespace elona
 
 
 
-class abstract_animation
+class AbstractAnimation
 {
 public:
     void play();
@@ -28,10 +28,10 @@ protected:
 
 
 
-class failure_to_cast_animation : public abstract_animation
+class FailureToCastAnimation : public AbstractAnimation
 {
 public:
-    failure_to_cast_animation(const position_t& caster_pos)
+    FailureToCastAnimation(const position_t& caster_pos)
         : caster_pos(caster_pos)
     {
     }
@@ -47,7 +47,7 @@ private:
 
 
 
-class bright_aura_animation : public abstract_animation
+class BrightAuraAnimation : public AbstractAnimation
 {
 public:
     enum class Type
@@ -59,7 +59,7 @@ public:
     };
 
 
-    bright_aura_animation(const position_t& target_pos, Type type)
+    BrightAuraAnimation(const position_t& target_pos, Type type)
         : target_pos(target_pos)
         , type(type)
     {
@@ -77,10 +77,10 @@ private:
 
 
 
-class breath_animation : public abstract_animation
+class BreathAnimation : public AbstractAnimation
 {
 public:
-    breath_animation(
+    BreathAnimation(
         const position_t& attacker_pos,
         const position_t& target_pos,
         int element)
@@ -103,7 +103,7 @@ private:
 
 
 
-class ball_animation : public abstract_animation
+class BallAnimation : public AbstractAnimation
 {
 public:
     enum class Type
@@ -113,7 +113,7 @@ public:
     };
 
 
-    ball_animation(
+    BallAnimation(
         const position_t& position,
         int range,
         Type type,
@@ -139,10 +139,10 @@ private:
 
 
 
-class bolt_animation : public abstract_animation
+class BoltAnimation : public AbstractAnimation
 {
 public:
-    bolt_animation(
+    BoltAnimation(
         const position_t& attacker_pos,
         const position_t& target_pos,
         int element,
@@ -168,10 +168,10 @@ private:
 
 
 
-class throwing_object_animation : public abstract_animation
+class ThrowingObjectAnimation : public AbstractAnimation
 {
 public:
-    throwing_object_animation(
+    ThrowingObjectAnimation(
         const position_t& attacker_pos,
         const position_t& target_pos,
         int item_chip,
@@ -197,10 +197,10 @@ private:
 
 
 
-class swarm_animation : public abstract_animation
+class SwarmAnimation : public AbstractAnimation
 {
 public:
-    swarm_animation(const position_t& target_pos)
+    SwarmAnimation(const position_t& target_pos)
         : target_pos(target_pos)
     {
     }
@@ -216,7 +216,7 @@ private:
 
 
 
-class ranged_attack_animation : public abstract_animation
+class RangedAttackAnimation : public AbstractAnimation
 {
 public:
     enum class Type
@@ -230,7 +230,7 @@ public:
     };
 
 
-    ranged_attack_animation(
+    RangedAttackAnimation(
         const position_t& attacker_pos,
         const position_t& target_pos,
         Type type,
@@ -262,10 +262,10 @@ private:
 
 
 
-class melee_attack_animation : public abstract_animation
+class MeleeAttackAnimation : public AbstractAnimation
 {
 public:
-    melee_attack_animation(
+    MeleeAttackAnimation(
         const position_t& position,
         bool debris,
         int attack_skill,
@@ -293,10 +293,10 @@ private:
 
 
 
-class gene_engineering_animation : public abstract_animation
+class GeneEngineeringAnimation : public AbstractAnimation
 {
 public:
-    gene_engineering_animation(const position_t& position)
+    GeneEngineeringAnimation(const position_t& position)
         : position(position)
     {
     }
@@ -311,10 +311,10 @@ private:
 
 
 
-class miracle_animation : public abstract_animation
+class MiracleAnimation : public AbstractAnimation
 {
 public:
-    miracle_animation()
+    MiracleAnimation()
     {
     }
 
@@ -325,10 +325,10 @@ protected:
 
 
 
-class meteor_animation : public abstract_animation
+class MeteorAnimation : public AbstractAnimation
 {
 public:
-    meteor_animation()
+    MeteorAnimation()
     {
     }
 
@@ -339,10 +339,10 @@ protected:
 
 
 
-class ragnarok_animation : public abstract_animation
+class RagnarokAnimation : public AbstractAnimation
 {
 public:
-    ragnarok_animation()
+    RagnarokAnimation()
     {
     }
 
@@ -359,10 +359,10 @@ protected:
 
 
 
-class breaking_animation : public abstract_animation
+class BreakingAnimation : public AbstractAnimation
 {
 public:
-    breaking_animation(const position_t& position, int type = 0)
+    BreakingAnimation(const position_t& position, int type = 0)
         : position(position)
         , type(type)
     {

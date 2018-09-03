@@ -18,7 +18,7 @@ static void _load_chat_history()
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
 }
 
-bool ui_menu_chat_history::init()
+bool UIMenuChatHistory::init()
 {
     curmenu = 2;
     key_list(0) = key_enter;
@@ -98,23 +98,23 @@ static void _draw_messages()
     }
 }
 
-void ui_menu_chat_history::update()
+void UIMenuChatHistory::update()
 {
     _parse_net_buffer();
     _draw_messages();
 }
 
-void ui_menu_chat_history::draw()
+void UIMenuChatHistory::draw()
 {
 }
 
-optional<ui_menu_chat_history::result_type> ui_menu_chat_history::on_key(
+optional<UIMenuChatHistory::result_type> UIMenuChatHistory::on_key(
     const std::string& key)
 {
     if (key != ""s)
     {
         update_screen();
-        return ui_menu_chat_history::result::finish();
+        return UIMenuChatHistory::result::finish();
     }
 
     return none;

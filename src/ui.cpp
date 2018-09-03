@@ -256,7 +256,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!config::instance().env)
+    if (!Config::instance().env)
         return;
     if (mdata_map_indoors_flag != 2)
         return;
@@ -596,18 +596,18 @@ void render_skill_trackers()
                       .substr(1),
             66,
             inf_clocky + 107 + y * 16);
-        if (elona::config::instance().allow_enhanced_skill)
+        if (elona::Config::instance().allow_enhanced_skill)
         {
             elona::snail::color col{255, 130, 130};
 
             if (sdata.get(skill, chara).potential
-                > elona::config::instance().enhanced_skill_upperbound)
+                > elona::Config::instance().enhanced_skill_upperbound)
             {
                 col = {130, 255, 130};
             }
             else if (
                 sdata.get(skill, chara).potential
-                > elona::config::instance().enhanced_skill_lowerbound)
+                > elona::Config::instance().enhanced_skill_lowerbound)
             {
                 col = {255, 255, 130};
             }
@@ -1310,10 +1310,10 @@ void render_hud()
     render_skill_trackers();
 
     // HP bars(pets)
-    if (config::instance().hp_bar != "hide")
+    if (Config::instance().hp_bar != "hide")
     {
         show_hp_bar(
-            config::instance().hp_bar == "left" ? HPBarSide::left_side
+            Config::instance().hp_bar == "left" ? HPBarSide::left_side
                                                 : HPBarSide::right_side,
             inf_clocky);
     }
@@ -1354,7 +1354,7 @@ void load_continuous_action_animation()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && config::instance().animewait != 0)
+    if (racount == 0 && Config::instance().animewait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1368,7 +1368,7 @@ void render_autoturn_animation()
     }
     if (cdata.player().continuous_action_id == 7)
     {
-        if (rowactre == 0 && config::instance().animewait != 0)
+        if (rowactre == 0 && Config::instance().animewait != 0)
         {
             render_fishing_animation();
         }
@@ -1389,7 +1389,7 @@ void render_autoturn_animation()
         || cdata.player().continuous_action_id == 8
         || (cdata.player().continuous_action_id == 7 && rowactre != 0))
     {
-        if (config::instance().animewait != 0)
+        if (Config::instance().animewait != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1405,7 +1405,7 @@ void render_autoturn_animation()
                             snd(52);
                         }
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2);
+                        await(Config::instance().animewait * 2);
                     }
                     if (cdata.player().continuous_action_id == 7)
                     {
@@ -1417,7 +1417,7 @@ void render_autoturn_animation()
                             }
                         }
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2.5);
+                        await(Config::instance().animewait * 2.5);
                     }
                     if (cdata.player().continuous_action_id == 8)
                     {
@@ -1426,7 +1426,7 @@ void render_autoturn_animation()
                             snd(55);
                         }
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2.75);
+                        await(Config::instance().animewait * 2.75);
                     }
                     if (cdata.player().continuous_action_id == 9)
                     {
@@ -1435,7 +1435,7 @@ void render_autoturn_animation()
                             snd(54);
                         }
                         gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 3);
+                        await(Config::instance().animewait * 3);
                     }
                     redraw();
                 }
@@ -1530,7 +1530,7 @@ void update_scrolling_info()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (config::instance().alwayscenter)
+    if (Config::instance().alwayscenter)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1586,7 +1586,7 @@ void update_slight()
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 
-    if (config::instance().scroll)
+    if (Config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
         repw(1) = scx - 1;
@@ -1600,11 +1600,11 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (config::instance().scroll == 0);
+    ly = 1 + (Config::instance().scroll == 0);
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (config::instance().scroll == 0);
+        lx = 1 + (Config::instance().scroll == 0);
         if (sy < 0 || sy >= mdata_map_height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -1738,7 +1738,7 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = config::instance().walkwait;
+    scrollp = Config::instance().walkwait;
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
@@ -1750,10 +1750,10 @@ void ui_scroll_screen()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > config::instance().startrun)
+    else if (keybd_wait > Config::instance().startrun)
     {
         scrollp = 3;
-        if (config::instance().runscroll == 0)
+        if (Config::instance().runscroll == 0)
         {
             return;
         }
@@ -2646,7 +2646,7 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!config::instance().windowanime)
+    if (!Config::instance().windowanime)
         return;
     if (duration == 0)
         return;
@@ -2679,7 +2679,7 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(config::instance().animewait * 0.75);
+            await(Config::instance().animewait * 0.75);
         }
         pos(x, y);
         gcopy(temporary_window_id, 0, 0, width, height);
@@ -2698,7 +2698,7 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!config::instance().windowanime)
+    if (!Config::instance().windowanime)
         return;
     if (duration == 0)
         return;
@@ -2727,7 +2727,7 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(config::instance().animewait * 0.75);
+            await(Config::instance().animewait * 0.75);
         }
         pos(x, y);
         gcopy(temporary_window_id, 0, 0, width, height);

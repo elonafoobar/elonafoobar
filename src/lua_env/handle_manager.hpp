@@ -17,7 +17,7 @@ struct character;
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Provides and manages references to C++ objects as Lua tables
@@ -36,10 +36,10 @@ class lua_env;
  *
  * See data/lua/handle.lua for more information.
  */
-class handle_manager : public lib::noncopyable
+class HandleManager : public lib::noncopyable
 {
 public:
-    explicit handle_manager(lua_env*);
+    explicit HandleManager(LuaEnv*);
 
     /***
      * Creates a new handle in the isolated handle environment.
@@ -184,7 +184,7 @@ private:
         handle_env["Handle"]["remove_handle"](obj, T::lua_type());
     }
 
-    void bind(lua_env&);
+    void bind(LuaEnv&);
 
     boost::uuids::random_generator uuid_generator;
 
@@ -194,7 +194,7 @@ private:
      */
     sol::environment handle_env;
 
-    lua_env* lua;
+    LuaEnv* lua;
 };
 
 } // namespace lua

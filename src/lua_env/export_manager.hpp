@@ -11,7 +11,7 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Stores references to Lua functions that can be provided by mods by
@@ -21,10 +21,10 @@ class lua_env;
  * corpse is eaten, a trap is activated, and so forth, without having
  * to hardcode anything in C++.
  */
-class export_manager
+class ExportManager
 {
 public:
-    explicit export_manager(lua_env*);
+    explicit ExportManager(LuaEnv*);
 
     /***
      * Registers function exports that are inside the "Exports" table
@@ -88,7 +88,7 @@ private:
      */
     sol::environment export_env;
 
-    lua_env* lua_;
+    LuaEnv* lua_;
 };
 
 } // namespace lua

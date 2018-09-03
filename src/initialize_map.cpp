@@ -3415,7 +3415,7 @@ label_1744_internal:
     }
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(202) == 0)
             {
@@ -3433,7 +3433,7 @@ label_1744_internal:
     }
     if (mdata_map_type == mdata_t::MapType::town)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(203) == 0)
             {
@@ -3451,7 +3451,7 @@ label_1744_internal:
     }
     if (gdata_current_map == mdata_t::MapId::shelter_)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(214) == 0)
             {

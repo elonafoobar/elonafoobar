@@ -19,8 +19,8 @@ namespace elona
 
 namespace lua
 {
-class lua_env;
-extern std::unique_ptr<lua_env> lua;
+class LuaEnv;
+extern std::unique_ptr<LuaEnv> lua;
 } // namespace lua
 
 namespace lion
@@ -31,7 +31,7 @@ struct lion_db_traits;
 
 
 template <class T>
-class lion_db : public lib::noncopyable
+class LionDB : public lib::noncopyable
 {
 public:
     using traits_type = lion_db_traits<T>;
@@ -41,7 +41,7 @@ public:
     using map_type = std::unordered_map<id_type, data_type>;
     using legacy_map_type = std::unordered_map<legacy_id_type, id_type>;
 
-    lion_db()
+    LionDB()
         : scope("core")
     {
     }
@@ -112,7 +112,7 @@ public:
         initialize(table, *lua::lua.get());
     }
 
-    void initialize(sol::table root_table, lua::lua_env& lua)
+    void initialize(sol::table root_table, lua::LuaEnv& lua)
     {
         using namespace std::chrono;
         steady_clock::time_point begin = steady_clock::now();
@@ -171,7 +171,7 @@ public:
     }
 
 private:
-    void initialize_for_mod(sol::table data_for_mod, lua::lua_env& lua)
+    void initialize_for_mod(sol::table data_for_mod, lua::LuaEnv& lua)
     {
         for (const auto& pair : data_for_mod)
         {
@@ -184,7 +184,7 @@ private:
     }
 
     void
-    initialize_single(const id_type& id, sol::table data, lua::lua_env& lua)
+    initialize_single(const id_type& id, sol::table data, lua::LuaEnv& lua)
     {
         data_type converted = static_cast<T&>(*this).convert(id, data, lua);
 
@@ -241,23 +241,23 @@ static optional<std::vector<T>> convert_vector(
 }
 
 
-#define ELONA_LION_DEFINE_DB(class_name, data, legacy_id, name) \
-    class class_name; \
+#define ELONA_LION_DEFINE_DB(ClassName, data, legacy_id, name) \
+    class ClassName; \
     namespace lion \
     { \
     template <> \
-    struct lion_db_traits<class_name> \
+    struct lion_db_traits<ClassName> \
     { \
         using data_type = data; \
         using legacy_id_type = legacy_id; \
         static constexpr const char* datatype_name = name; \
     }; \
     } \
-    class class_name : public lion::lion_db<class_name> \
+    class ClassName : public lion::LionDB<ClassName> \
     { \
     public: \
-        class_name() = default; \
-        data convert(const std::string&, const sol::table&, lua::lua_env&); \
+        ClassName() = default; \
+        data convert(const std::string&, const sol::table&, lua::LuaEnv&); \
     };
 
 
@@ -289,13 +289,13 @@ static optional<std::vector<T>> convert_vector(
         } \
     }
 
-#define ELONA_LION_DB_FIELD_ENUM(name, type, enum_map, default_value) \
+#define ELONA_LION_DB_FIELD_ENUM(name, type, EnumMap, default_value) \
     type name; \
     { \
         sol::optional<std::string> value_ = data[#name]; \
         if (value_) \
         { \
-            name = lua::LuaEnums::enum_map.get_from_string( \
+            name = lua::LuaEnums::EnumMap.get_from_string( \
                 *value_, default_value); \
         } \
         else \

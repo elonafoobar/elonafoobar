@@ -8,15 +8,15 @@ namespace elona
 {
 
 
-autopick& autopick::instance()
+Autopick& Autopick::instance()
 {
-    static autopick the_instance;
+    static Autopick the_instance;
     return the_instance;
 }
 
 
 
-void autopick::load(const std::string& player_id)
+void Autopick::load(const std::string& player_id)
 {
     clear();
 
@@ -37,14 +37,14 @@ void autopick::load(const std::string& player_id)
 
 
 
-void autopick::clear()
+void Autopick::clear()
 {
     matchers.clear();
 }
 
 
 
-bool autopick::try_load(const fs::path& filepath)
+bool Autopick::try_load(const fs::path& filepath)
 {
     if (!fs::exists(filepath))
         return false;
@@ -123,7 +123,7 @@ bool autopick::try_load(const fs::path& filepath)
 
 
 
-autopick::operation autopick::get_operation(const item& ci)
+Autopick::operation Autopick::get_operation(const item& ci)
 {
     for (const auto& m : matchers)
     {
@@ -138,7 +138,7 @@ autopick::operation autopick::get_operation(const item& ci)
 
 
 
-bool autopick::matcher::matches(const item& ci) const
+bool Autopick::matcher::matches(const item& ci) const
 {
     const auto id = ci.id;
     const auto name = cnvitemname(id);

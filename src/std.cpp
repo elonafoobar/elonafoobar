@@ -110,10 +110,10 @@ void await(int msec)
     // focus was lost and the player is being queried for input in
     // pc_turn().
     if (defines::is_android
-        && snail::application::instance().was_focus_lost_just_now())
+        && snail::Application::instance().was_focus_lost_just_now())
     {
         if (player_queried_for_input
-            && config::instance().get<bool>("core.config.android.quicksave")
+            && Config::instance().get<bool>("core.config.android.quicksave")
             && !std::uncaught_exception())
         {
             ELONA_LOG("Focus lost, quicksaving game.");
@@ -342,7 +342,7 @@ void font(int size, snail::font_t::Style style)
         size,
         style,
         filesystem::path(u8"font")
-            / filesystem::u8path(config::instance().font_filename));
+            / filesystem::u8path(Config::instance().font_filename));
 }
 
 
@@ -388,7 +388,7 @@ void gcopy_c(
 
 bool getkey(snail::Key key)
 {
-    return snail::input::instance().is_pressed(key);
+    return snail::Input::instance().is_pressed(key);
 }
 
 
@@ -543,7 +543,7 @@ void mes(int n)
 
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, config::instance().keywait, text);
+    snail::hsp::mesbox(buffer, Config::instance().keywait, text);
 }
 
 
@@ -732,7 +732,7 @@ void picload(const fs::path& filepath, int mode)
     {
         keycolor = none;
     }
-    snail::basic_image img{filepath, keycolor};
+    snail::BasicImage img{filepath, keycolor};
     snail::hsp::picload(img, mode);
 }
 
@@ -756,12 +756,12 @@ int stick(int allow_repeat_keys)
     auto check_key_pressed = [allow_repeat_keys](int n, auto&& key) {
         if ((1 << n) & allow_repeat_keys)
         {
-            return (1 << n) * snail::input::instance().is_pressed(key);
+            return (1 << n) * snail::Input::instance().is_pressed(key);
         }
         else
         {
             return (1 << n)
-                * snail::input::instance().was_pressed_just_now(key);
+                * snail::Input::instance().was_pressed_just_now(key);
         }
     };
 
@@ -776,26 +776,26 @@ int stick(int allow_repeat_keys)
     ret += check_key_pressed(5, snail::Key::keypad_enter);
     ret += check_key_pressed(6, snail::Key::ctrl);
     ret += check_key_pressed(7, snail::Key::escape);
-    ret += check_key_pressed(8, snail::mouse_t::Button::left);
-    ret += check_key_pressed(9, snail::mouse_t::Button::right);
+    ret += check_key_pressed(8, snail::Mouse::Button::left);
+    ret += check_key_pressed(9, snail::Mouse::Button::right);
     ret += check_key_pressed(10, snail::Key::tab);
 
     if (allow_repeat_keys == 15)
     {
         if (ret & 1 || ret & 4)
         {
-            ret |= 2 * snail::input::instance().is_pressed(snail::Key::up);
-            ret |= 8 * snail::input::instance().is_pressed(snail::Key::down);
+            ret |= 2 * snail::Input::instance().is_pressed(snail::Key::up);
+            ret |= 8 * snail::Input::instance().is_pressed(snail::Key::down);
         }
         if (ret & 2 || ret & 8)
         {
-            ret |= 1 * snail::input::instance().is_pressed(snail::Key::left);
-            ret |= 4 * snail::input::instance().is_pressed(snail::Key::right);
+            ret |= 1 * snail::Input::instance().is_pressed(snail::Key::left);
+            ret |= 4 * snail::Input::instance().is_pressed(snail::Key::right);
         }
     }
 
-    mousex = snail::input::instance().mouse().x();
-    mousey = snail::input::instance().mouse().y();
+    mousex = snail::Input::instance().mouse().x();
+    mousey = snail::Input::instance().mouse().y();
 
     return ret;
 }
@@ -844,7 +844,7 @@ std::string strmid(const std::string& source, int pos, int length)
 void title(
     const std::string& title_str,
     const std::string& display_mode,
-    snail::window::FullscreenMode fullscreen_mode)
+    snail::Window::FullscreenMode fullscreen_mode)
 {
     snail::hsp::title(title_str, display_mode, fullscreen_mode);
 }

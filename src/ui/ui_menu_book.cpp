@@ -8,7 +8,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_book::init()
+bool UIMenuBook::init()
 {
     snd(59);
     gsel(4);
@@ -46,7 +46,7 @@ bool ui_menu_book::init()
     return true;
 }
 
-void ui_menu_book::update()
+void UIMenuBook::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -60,7 +60,7 @@ void ui_menu_book::update()
     }
 }
 
-void ui_menu_book::draw()
+void UIMenuBook::draw()
 {
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
@@ -99,7 +99,7 @@ void ui_menu_book::draw()
     }
 }
 
-optional<ui_menu_book::result_type> ui_menu_book::on_key(const std::string& key)
+optional<UIMenuBook::result_type> UIMenuBook::on_key(const std::string& key)
 {
     if (key == key_pageup)
     {
@@ -122,7 +122,7 @@ optional<ui_menu_book::result_type> ui_menu_book::on_key(const std::string& key)
     else if (key == key_cancel || key == key_enter)
     {
         update_screen();
-        return ui_menu_book::result_type::finish();
+        return UIMenuBook::result_type::finish();
     }
 
     return none;

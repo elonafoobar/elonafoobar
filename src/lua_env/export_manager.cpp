@@ -5,7 +5,7 @@ namespace elona
 namespace lua
 {
 
-export_manager::export_manager(lua_env* lua)
+ExportManager::ExportManager(LuaEnv* lua)
 {
     lua_ = lua;
     export_env = sol::environment(
@@ -21,7 +21,7 @@ scan_exports = require "private/scan_exports"
 }
 
 
-void export_manager::register_all_exports()
+void ExportManager::register_all_exports()
 {
     export_env.set(
         "_API_TABLE", lua_->get_api_manager().get_master_api_table());
@@ -43,7 +43,7 @@ Exports = scan_exports(_API_TABLE)
     }
 }
 
-optional<exported_function> export_manager::get_exported_function(
+optional<exported_function> ExportManager::get_exported_function(
     const std::string& name) const
 {
     sol::optional<sol::protected_function> func = export_env["Exports"][name];

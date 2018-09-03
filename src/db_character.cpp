@@ -54,7 +54,7 @@ static std::vector<int> _convert_chara_flags(
 character_data character_db_ex::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     ELONA_LION_DB_FIELD_REQUIRED(id, int);
     ELONA_LION_DB_FIELD(ai_act_sub_freq, int, 0);

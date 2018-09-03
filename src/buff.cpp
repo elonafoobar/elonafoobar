@@ -55,10 +55,10 @@ namespace elona
 {
 
 
-buff_db the_buff_db;
+BuffDB the_buff_db;
 
 
-buff_db::buff_db()
+BuffDB::BuffDB()
 {
     storage.emplace(
         0,
@@ -70,7 +70,7 @@ buff_db::buff_db()
 }
 
 
-void buff_db::define(lua_State* L)
+void BuffDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)

@@ -112,7 +112,7 @@ void do_animation(
         gmode(2);
         draw(image_key, center, t);
         redraw();
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
@@ -154,7 +154,7 @@ void do_particle_animation(
             draw(image_key, center, t, particles[i], i);
         }
         redraw();
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
@@ -212,11 +212,11 @@ int dist(const position_t& p1, const position_t& p2)
 
 
 
-void abstract_animation::play()
+void AbstractAnimation::play()
 {
     if (mode == 9)
         return;
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
         return;
 
     if (updates_screen())
@@ -229,7 +229,7 @@ void abstract_animation::play()
 
 
 
-void failure_to_cast_animation::do_play()
+void FailureToCastAnimation::do_play()
 {
     if (!is_in_fov(caster_pos))
         return;
@@ -252,7 +252,7 @@ void failure_to_cast_animation::do_play()
 
 
 
-void bright_aura_animation::do_play()
+void BrightAuraAnimation::do_play()
 {
     constexpr auto max_particles = 15;
 
@@ -307,11 +307,11 @@ void bright_aura_animation::do_play()
     {
         if (type == Type::healing_rain)
         {
-            await(config::instance().animewait / 4);
+            await(Config::instance().animewait / 4);
         }
         else
         {
-            await(config::instance().animewait);
+            await(Config::instance().animewait);
         }
         pos(base_pos.x - inf_tiles / 2, base_pos.y - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
@@ -335,7 +335,7 @@ void bright_aura_animation::do_play()
 
 
 
-void breath_animation::do_play()
+void BreathAnimation::do_play()
 {
     // Play sound.
     snd_at(35, attacker_pos);
@@ -392,7 +392,7 @@ void breath_animation::do_play()
         }
         if (did_draw)
         {
-            await(config::instance().animewait);
+            await(Config::instance().animewait);
             redraw();
         }
     }
@@ -406,7 +406,7 @@ void breath_animation::do_play()
 
 
 
-void ball_animation::do_play()
+void BallAnimation::do_play()
 {
     int anicol{};
     int anisound{};
@@ -497,7 +497,7 @@ void ball_animation::do_play()
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 
     // Play sound.
@@ -509,7 +509,7 @@ void ball_animation::do_play()
 
 
 
-void bolt_animation::do_play()
+void BoltAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -600,7 +600,7 @@ void bolt_animation::do_play()
         }
         if (did_draw)
         {
-            await(config::instance().animewait * 1.75);
+            await(Config::instance().animewait * 1.75);
             redraw();
         }
     }
@@ -613,7 +613,7 @@ void bolt_animation::do_play()
 
 
 
-void throwing_object_animation::do_play()
+void ThrowingObjectAnimation::do_play()
 {
     if (!is_in_fov(target_pos))
         return;
@@ -654,13 +654,13 @@ void throwing_object_animation::do_play()
         pos(x, y - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
 
 
-void ranged_attack_animation::do_play()
+void RangedAttackAnimation::do_play()
 {
     if (!is_in_fov(attacker_pos))
         return;
@@ -743,7 +743,7 @@ void ranged_attack_animation::do_play()
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 
     if (anisound)
@@ -754,7 +754,7 @@ void ranged_attack_animation::do_play()
 
 
 
-void swarm_animation::do_play()
+void SwarmAnimation::do_play()
 {
     snd_at(2, target_pos);
 
@@ -774,7 +774,7 @@ void swarm_animation::do_play()
 
 
 
-void melee_attack_animation::do_play()
+void MeleeAttackAnimation::do_play()
 {
     int anix1;
     switch (attack_skill)
@@ -871,13 +871,13 @@ void melee_attack_animation::do_play()
         pos(anidx - 24, anidy - 48);
         gcopy(4, 0, 0, 96, 144);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
 
 
-void gene_engineering_animation::do_play()
+void GeneEngineeringAnimation::do_play()
 {
     snd_at(107, position);
     if (!is_in_fov(position))
@@ -907,14 +907,14 @@ void gene_engineering_animation::do_play()
             gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96);
         }
 
-        await(config::instance().animewait * 2.25);
+        await(Config::instance().animewait * 2.25);
         redraw();
     }
 }
 
 
 
-void miracle_animation::do_play()
+void MiracleAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -1037,14 +1037,14 @@ void miracle_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 2.25);
+        await(Config::instance().animewait * 2.25);
         redraw();
     }
 }
 
 
 
-void meteor_animation::do_play()
+void MeteorAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -1116,10 +1116,10 @@ void meteor_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 3);
+        await(Config::instance().animewait * 3);
         redraw();
     }
-    await(config::instance().animewait);
+    await(Config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -1129,7 +1129,7 @@ void meteor_animation::do_play()
 
 
 
-void ragnarok_animation::do_play()
+void RagnarokAnimation::do_play()
 {
     constexpr auto TODO = 100;
 
@@ -1194,11 +1194,11 @@ void ragnarok_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 3);
+        await(Config::instance().animewait * 3);
         redraw();
     }
 
-    await(config::instance().animewait);
+    await(Config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -1208,7 +1208,7 @@ void ragnarok_animation::do_play()
 
 
 
-void breaking_animation::do_play()
+void BreakingAnimation::do_play()
 {
     do_particle_animation(
         rendering_base_position_center(position),

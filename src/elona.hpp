@@ -540,8 +540,8 @@ std::string strmid(const std::string& source, int pos, int length);
 void title(
     const std::string& title_str,
     const std::string& display_mode = "",
-    snail::window::FullscreenMode fullscreen_mode =
-        snail::window::FullscreenMode::windowed);
+    snail::Window::FullscreenMode fullscreen_mode =
+        snail::Window::FullscreenMode::windowed);
 
 
 int wpeek(int x, size_t index);

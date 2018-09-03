@@ -130,7 +130,7 @@ reset_page:
         }
 
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;

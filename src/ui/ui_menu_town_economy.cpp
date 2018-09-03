@@ -35,7 +35,7 @@ static void _show_economy_info(
     color(0, 0, 0);
 }
 
-bool ui_menu_town_economy::init()
+bool UIMenuTownEconomy::init()
 {
     curmenu = 1;
     key_list(0) = key_enter;
@@ -63,7 +63,7 @@ bool ui_menu_town_economy::init()
     return true;
 }
 
-void ui_menu_town_economy::update()
+void UIMenuTownEconomy::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -138,7 +138,7 @@ static bool _map_has_economy()
         && gdata_current_dungeon_level == 1;
 }
 
-void ui_menu_town_economy::draw()
+void UIMenuTownEconomy::draw()
 {
     _draw_window();
 
@@ -160,7 +160,7 @@ void ui_menu_town_economy::draw()
     }
 }
 
-optional<ui_menu_town_economy::result_type> ui_menu_town_economy::on_key(
+optional<UIMenuTownEconomy::result_type> UIMenuTownEconomy::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -184,7 +184,7 @@ optional<ui_menu_town_economy::result_type> ui_menu_town_economy::on_key(
     else if (key != ""s)
     {
         update_screen();
-        return ui_menu_town_economy::result::cancel();
+        return UIMenuTownEconomy::result::cancel();
     }
 
     return none;

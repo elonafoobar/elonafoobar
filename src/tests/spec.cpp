@@ -6,20 +6,20 @@
 using namespace std::literals::string_literals;
 using namespace elona;
 
-class test_spec : public spec::object
+class TestSpec : public spec::Object
 {
 public:
-    test_spec()
-        : spec::object("test")
+    TestSpec()
+        : spec::Object("test")
     {
     }
 };
 
 namespace
 {
-test_spec load(const std::string& str)
+TestSpec load(const std::string& str)
 {
-    test_spec def;
+    TestSpec def;
 
     std::stringstream ss(str);
 
@@ -29,7 +29,7 @@ test_spec load(const std::string& str)
 
 bool load_fails(const std::string& str)
 {
-    test_spec def;
+    TestSpec def;
 
     std::stringstream ss(str);
 
@@ -69,7 +69,7 @@ test def {}
 
 TEST_CASE("Test defining boolean config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = true
 }
@@ -82,7 +82,7 @@ test def {
 
 TEST_CASE("Test defining integer config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         default = 42
@@ -128,7 +128,7 @@ test def {
 
 TEST_CASE("Test defining string config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = "bar"
 }
@@ -141,7 +141,7 @@ test def {
 
 TEST_CASE("Test defining list config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = ["bar", "baz", "quux"]
 }
@@ -157,7 +157,7 @@ test def {
 
 TEST_CASE("Test defining enum config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "enum"
@@ -252,7 +252,7 @@ test def {
 
 TEST_CASE("Test defining runtime enum config value", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "runtime_enum"
@@ -287,7 +287,7 @@ TEST_CASE(
     "Test providing invalid default index in injected enum",
     "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "runtime_enum"
@@ -302,7 +302,7 @@ test def {
 
 TEST_CASE("Test error when injecting non-runtime enum", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "enum"
@@ -317,7 +317,7 @@ test def {
 
 TEST_CASE("Test defining config section", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "section"
@@ -372,7 +372,7 @@ test def {
 
 TEST_CASE("Test get_variants", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "enum"
@@ -393,7 +393,7 @@ test def {
 
 TEST_CASE("Test get_children", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo {
         type = "section"
@@ -418,7 +418,7 @@ test def {
 
 TEST_CASE("Test get_max/get_min (integer)", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         default = 42
@@ -437,7 +437,7 @@ test def {
 
 TEST_CASE("Test get_max/get_min (enum)", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         type = "enum"
@@ -453,7 +453,7 @@ test def {
 
 TEST_CASE("Test definition with extended syntax", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = {
         default = "bar"
@@ -467,7 +467,7 @@ test def {
 
 TEST_CASE("Test exists", "[Spec: Definition]")
 {
-    test_spec def = load(R"(
+    TestSpec def = load(R"(
 test def {
     foo = "bar"
 }

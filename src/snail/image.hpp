@@ -15,7 +15,7 @@ namespace snail
 {
 
 
-class image_base
+class ImageBase
 {
 public:
     int width() const noexcept
@@ -69,10 +69,10 @@ protected:
 
 
 
-class null_image : public image_base
+class NullImage : public ImageBase
 {
 public:
-    null_image()
+    NullImage()
     {
     }
 
@@ -94,16 +94,16 @@ public:
 
 
 
-class basic_image : public image_base
+class BasicImage : public ImageBase
 {
 public:
-    explicit basic_image(
+    explicit BasicImage(
         const fs::path& filepath,
         const optional<color>& keycolor = none);
 
-    explicit basic_image(::SDL_Texture* ptr);
+    explicit BasicImage(::SDL_Texture* ptr);
 
-    virtual ~basic_image() = default;
+    virtual ~BasicImage() = default;
 
 
     virtual void _render(
@@ -121,7 +121,7 @@ public:
 
 
 
-class frame_image : public image_base
+class FrameImage : public ImageBase
 {
     int offset_x() const noexcept
     {
@@ -135,8 +135,8 @@ class frame_image : public image_base
     }
 
 
-    frame_image(
-        basic_image& source,
+    FrameImage(
+        BasicImage& source,
         int offset_x,
         int offset_y,
         int width,

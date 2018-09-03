@@ -101,7 +101,7 @@ int show_prompt(int x, int y, int width, PromptType type, int val4)
             font(14 - en * 2);
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         int ret = -1;
@@ -194,7 +194,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         mes(inputlog2);
         color(0, 0, 0);
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         if (key == key_enter)
         {
@@ -315,7 +315,7 @@ bool input_text_dialog(
             --cnt;
             continue;
         }
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         window2(x, y, dx, 36, 0, 2);
         draw("label_input", x + dx / 2 - 60, y - 32);
 
@@ -448,18 +448,18 @@ void key_check(KeyWaitDelay delay_type)
 
     if (msgalert == 1)
     {
-        if (config::instance().alert > 1)
+        if (Config::instance().alert > 1)
         {
-            if (config::instance().get<bool>("core.config.android.vibrate"))
+            if (Config::instance().get<bool>("core.config.android.vibrate"))
             {
-                int duration = config::instance().get<int>(
+                int duration = Config::instance().get<int>(
                     "core.config.android.vibrate_duration");
                 snail::android::vibrate(static_cast<long>(duration * 25));
             }
 
-            for (int i = 0; i < config::instance().alert; ++i)
+            for (int i = 0; i < Config::instance().alert; ++i)
             {
-                await(config::instance().wait1);
+                await(Config::instance().wait1);
             }
             keylog = "";
         }
@@ -620,8 +620,8 @@ void key_check(KeyWaitDelay delay_type)
     }
 
     if (key == key_enter
-        || snail::input::instance().is_pressed(snail::Key::enter)
-        || snail::input::instance().is_pressed(snail::Key::keypad_enter))
+        || snail::Input::instance().is_pressed(snail::Key::enter)
+        || snail::Input::instance().is_pressed(snail::Key::keypad_enter))
     {
         key = key_enter;
         delay_enter = true;
@@ -631,7 +631,7 @@ void key_check(KeyWaitDelay delay_type)
         enter_held_frames = 0;
     }
 
-    if (config::instance().joypad)
+    if (Config::instance().joypad)
     {
         int j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
@@ -854,17 +854,17 @@ void key_check(KeyWaitDelay delay_type)
         {
             if (keybd_attacking != 0)
             {
-                if (keybd_wait % config::instance().attackwait != 0)
+                if (keybd_wait % Config::instance().attackwait != 0)
                 {
                     key = ""s;
                 }
             }
-            else if (config::instance().scroll == 0)
+            else if (Config::instance().scroll == 0)
             {
                 if (keybd_wait
-                    < config::instance().walkwait * config::instance().startrun)
+                    < Config::instance().walkwait * Config::instance().startrun)
                 {
-                    if (keybd_wait % config::instance().walkwait != 0)
+                    if (keybd_wait % Config::instance().walkwait != 0)
                     {
                         key = "";
                     }
@@ -874,7 +874,7 @@ void key_check(KeyWaitDelay delay_type)
                     running = 1;
                     if (keybd_wait < 100000)
                     {
-                        if (keybd_wait % config::instance().runwait != 0)
+                        if (keybd_wait % Config::instance().runwait != 0)
                         {
                             key = ""s;
                         }
@@ -891,11 +891,11 @@ void key_check(KeyWaitDelay delay_type)
                     }
                 }
             }
-            else if (keybd_wait > config::instance().startrun)
+            else if (keybd_wait > Config::instance().startrun)
             {
-                if (config::instance().runscroll == 0)
+                if (Config::instance().runscroll == 0)
                 {
-                    if (keybd_wait % config::instance().runwait != 0)
+                    if (keybd_wait % Config::instance().runwait != 0)
                     {
                         key = "";
                     }
@@ -904,17 +904,17 @@ void key_check(KeyWaitDelay delay_type)
             }
         }
         else if (
-            keybd_wait < config::instance().select_fast_start
-                * config::instance().select_wait)
+            keybd_wait < Config::instance().select_fast_start
+                * Config::instance().select_wait)
         {
-            if (keybd_wait % config::instance().select_wait != 0)
+            if (keybd_wait % Config::instance().select_wait != 0)
             {
                 key = "";
             }
         }
         else if (keybd_wait < 1000)
         {
-            if (keybd_wait % config::instance().select_fast_wait != 0)
+            if (keybd_wait % Config::instance().select_fast_wait != 0)
             {
                 key = ""s;
             }
@@ -938,7 +938,7 @@ void key_check(KeyWaitDelay delay_type)
     }
 
     bool shortcut{};
-    int shortcut_delay = config::instance().keywait;
+    int shortcut_delay = Config::instance().keywait;
     if (delay_type == KeyWaitDelay::walk_run)
     {
         shortcut_delay = 1;
@@ -946,7 +946,7 @@ void key_check(KeyWaitDelay delay_type)
 
     for (int i = 0; i < 10; ++i)
     {
-        const auto pressed = snail::input::instance().is_pressed(
+        const auto pressed = snail::Input::instance().is_pressed(
             snail::Key(int(snail::Key::key_0) + i));
         if (pressed)
         {
@@ -993,12 +993,12 @@ void wait_key_released()
 {
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int result{};
         result = stick(StickKey::mouse_left | StickKey::mouse_right);
         if (result == 0)
         {
-            await(config::instance().wait1);
+            await(Config::instance().wait1);
             key_check();
             if (key(0).empty())
             {
@@ -1012,12 +1012,12 @@ void wait_key_released()
 
 void wait_key_pressed(bool only_enter_or_cancel)
 {
-    if (config::instance().is_test)
+    if (Config::instance().is_test)
         return;
 
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         if (only_enter_or_cancel)
         {

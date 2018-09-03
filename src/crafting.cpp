@@ -406,7 +406,7 @@ void crafting_menu()
 {
     while (true)
     {
-        auto result = ui::ui_menu_crafting(prodtype, invctrl).show();
+        auto result = ui::UIMenuCrafting(prodtype, invctrl).show();
 
         if (!result.canceled && result.value)
         {
@@ -428,7 +428,7 @@ void crafting_menu()
             gain_crafting_experience(recipe->skill_used, matuse);
             chara_refresh(0);
 
-            // NOTE: page_load is called in ui_menu_crafting.
+            // NOTE: page_load is called in UIMenuCrafting.
             render_hud();
             page_save();
         }

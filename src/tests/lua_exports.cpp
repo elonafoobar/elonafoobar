@@ -7,7 +7,7 @@
 #include "tests.hpp"
 
 static void register_export(
-    lua::lua_env& lua,
+    lua::LuaEnv& lua,
     std::string mod_name,
     std::string callback_signature,
     std::string callback_body,
@@ -31,7 +31,7 @@ return {
 
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -81,7 +81,7 @@ return {
 
 TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
 
     register_export(
         lua, "test", "my_callback(arg)", "Store.global.value = arg");
@@ -136,7 +136,7 @@ return {
 
 TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
 
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
     lua.get_export_manager().register_all_exports();
@@ -147,7 +147,7 @@ TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 
 TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
 
     register_export(lua, "test", "my_callback(arg)", "return 42");
 
@@ -169,7 +169,7 @@ TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
 
 TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
 
     register_export(lua, "test", "my_callback()", "return nil");
 
@@ -181,7 +181,7 @@ TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 
 TEST_CASE("test calling exported function with error", "[Lua: Exports]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
 
     register_export(lua, "test", "my_callback()", "error(\"error\")");
 

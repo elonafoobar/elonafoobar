@@ -19,10 +19,10 @@ namespace detail
 
 
 
-class sdl_error : public std::runtime_error
+class SDLError : public std::runtime_error
 {
 public:
-    explicit sdl_error(const std::string& message)
+    explicit SDLError(const std::string& message)
         : std::runtime_error(message)
     {
     }
@@ -70,28 +70,28 @@ T* enforce_mixer(T* result)
 template <typename T>
 T* enforce_sdl(T* result)
 {
-    return result ? result : throw sdl_error(::SDL_GetError());
+    return result ? result : throw SDLError(::SDL_GetError());
 }
 
 
 template <typename T>
 T* enforce_ttf(T* result)
 {
-    return result ? result : throw sdl_error(::TTF_GetError());
+    return result ? result : throw SDLError(::TTF_GetError());
 }
 
 
 template <typename T>
 T* enforce_img(T* result)
 {
-    return result ? result : throw sdl_error(::IMG_GetError());
+    return result ? result : throw SDLError(::IMG_GetError());
 }
 
 
 template <typename T>
 T* enforce_mixer(T* result)
 {
-    return result ? result : throw sdl_error(::Mix_GetError());
+    return result ? result : throw SDLError(::Mix_GetError());
 }
 
 
@@ -102,41 +102,41 @@ T* enforce_mixer(T* result)
 
 
 // For RAII
-class sdl_core final : public lib::noncopyable
+class SDLCore final : public lib::noncopyable
 {
 public:
-    sdl_core();
-    ~sdl_core();
+    SDLCore();
+    ~SDLCore();
 };
 
 
 
 // For RAII
-class sdl_ttf final : public lib::noncopyable
+class SDLTTF final : public lib::noncopyable
 {
 public:
-    sdl_ttf();
-    ~sdl_ttf();
+    SDLTTF();
+    ~SDLTTF();
 };
 
 
 
 // For RAII
-class sdl_image final : public lib::noncopyable
+class SDLImage final : public lib::noncopyable
 {
 public:
-    sdl_image();
-    ~sdl_image();
+    SDLImage();
+    ~SDLImage();
 };
 
 
 
 // For RAII
-class sdl_mixer final : public lib::noncopyable
+class SDLMixer final : public lib::noncopyable
 {
 public:
-    sdl_mixer();
-    ~sdl_mixer();
+    SDLMixer();
+    ~SDLMixer();
 };
 
 

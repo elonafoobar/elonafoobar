@@ -18,7 +18,7 @@ static void _load_materials_list()
     }
 }
 
-bool ui_menu_materials::init()
+bool UIMenuMaterials::init()
 {
     listmax = 0;
     page = 0;
@@ -44,7 +44,7 @@ bool ui_menu_materials::init()
     return true;
 }
 
-void ui_menu_materials::update()
+void UIMenuMaterials::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -136,14 +136,14 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_materials::draw()
+void UIMenuMaterials::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_materials::result_type> ui_menu_materials::on_key(
+optional<UIMenuMaterials::result_type> UIMenuMaterials::on_key(
     const std::string& key)
 {
     int _p;
@@ -171,7 +171,7 @@ optional<ui_menu_materials::result_type> ui_menu_materials::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return ui_menu_materials::result::cancel();
+        return UIMenuMaterials::result::cancel();
     }
 
     return none;

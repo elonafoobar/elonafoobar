@@ -85,10 +85,10 @@ namespace elona
 {
 
 
-item_material_db the_item_material_db;
+ItemMaterialDB the_item_material_db;
 
 
-void item_material_db::define(lua_State* L)
+void ItemMaterialDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -141,20 +141,20 @@ void item_material_db::define(lua_State* L)
 
 
 
-int item_material_db::lookup_leather(int x, int y)
+int ItemMaterialDB::lookup_leather(int x, int y)
 {
     return leather_table[x][y];
 }
 
 
 
-int item_material_db::lookup_metal(int x, int y)
+int ItemMaterialDB::lookup_metal(int x, int y)
 {
     return metal_table[x][y];
 }
 
 
-std::vector<int> item_material_db::get_material_ids()
+std::vector<int> ItemMaterialDB::get_material_ids()
 {
     std::vector<int> ret;
     range::transform(storage, std::back_inserter(ret), [](const auto& pair) {

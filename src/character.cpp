@@ -1917,7 +1917,7 @@ void chara_vanquish(int cc)
         if (fs::exists(storage_filepath))
         {
             fs::remove(storage_filepath);
-            save_t::instance().remove(storage_filepath.filename());
+            Save::instance().remove(storage_filepath.filename());
         }
         cdata[cc].shop_store_id = 0;
     }

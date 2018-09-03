@@ -40,7 +40,7 @@ void talk_to_npc()
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(207) == 0)
             {
@@ -60,7 +60,7 @@ void talk_to_npc()
     }
     if (cdata[tc].character_role == 7)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(208) == 0)
             {
@@ -601,7 +601,7 @@ int talk_window_query()
         }
         cs_bk = cs;
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         int a{};

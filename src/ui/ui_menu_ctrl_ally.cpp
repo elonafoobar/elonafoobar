@@ -12,7 +12,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_ctrl_ally::_should_display_ally(const character& chara)
+bool UIMenuCtrlAlly::_should_display_ally(const character& chara)
 {
     if (chara.state() == character::State::empty)
     {
@@ -67,7 +67,7 @@ bool ui_menu_ctrl_ally::_should_display_ally(const character& chara)
     return true;
 }
 
-void ui_menu_ctrl_ally::_insert_proceed_entry()
+void UIMenuCtrlAlly::_insert_proceed_entry()
 {
     list(0, listmax) = 99;
     list(1, listmax) = -9999;
@@ -97,7 +97,7 @@ static void _init_pet_arena_selection()
     }
 }
 
-bool ui_menu_ctrl_ally::init()
+bool UIMenuCtrlAlly::init()
 {
     snd(26);
     listmax = 0;
@@ -220,7 +220,7 @@ static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
     x = 0;
 }
 
-void ui_menu_ctrl_ally::update()
+void UIMenuCtrlAlly::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -256,7 +256,7 @@ static void _draw_info_pet_arena(const character& chara, std::string& _s)
     }
 }
 
-int ui_menu_ctrl_ally::_draw_get_color_mode(const character& chara)
+int UIMenuCtrlAlly::_draw_get_color_mode(const character& chara)
 {
     int n = 0;
 
@@ -271,7 +271,7 @@ int ui_menu_ctrl_ally::_draw_get_color_mode(const character& chara)
     return n;
 }
 
-std::string ui_menu_ctrl_ally::_get_ally_name(const character& chara)
+std::string UIMenuCtrlAlly::_get_ally_name(const character& chara)
 {
     std::string ally_name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -288,7 +288,7 @@ std::string ui_menu_ctrl_ally::_get_ally_name(const character& chara)
     return ally_name;
 }
 
-std::string ui_menu_ctrl_ally::_get_general_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_general_ally_info(const character& chara)
 {
     std::string ally_info = u8"Lv."s + chara.level + u8" "s;
 
@@ -323,7 +323,7 @@ std::string ui_menu_ctrl_ally::_get_general_ally_info(const character& chara)
     return ally_info;
 }
 
-std::string ui_menu_ctrl_ally::_get_specific_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_specific_ally_info(const character& chara)
 {
     std::string _s = "";
 
@@ -347,7 +347,7 @@ static bool _has_general_info(ControlAllyOperation operation)
             && gdata_current_map == mdata_t::MapId::your_home);
 }
 
-std::string ui_menu_ctrl_ally::_get_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_ally_info(const character& chara)
 {
     std::string _s = "";
 
@@ -363,7 +363,7 @@ std::string ui_menu_ctrl_ally::_get_ally_info(const character& chara)
     return _s;
 }
 
-std::string ui_menu_ctrl_ally::_modify_ally_info_gene_engineer(
+std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
     const character& chara,
     const std::string& ally_info_)
 {
@@ -410,7 +410,7 @@ std::string ui_menu_ctrl_ally::_modify_ally_info_gene_engineer(
     return ally_info;
 }
 
-void ui_menu_ctrl_ally::_draw_ally_list_entry_sell(
+void UIMenuCtrlAlly::_draw_ally_list_entry_sell(
     int cnt,
     const character& chara)
 {
@@ -427,7 +427,7 @@ void ui_menu_ctrl_ally::_draw_ally_list_entry_sell(
     mes(ally_info);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_name(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_name(int cnt, const character& chara)
 {
     std::string ally_name = _get_ally_name(chara);
     int color_mode = _draw_get_color_mode(chara);
@@ -436,7 +436,7 @@ void ui_menu_ctrl_ally::_draw_ally_name(int cnt, const character& chara)
         cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1, 0, color_mode);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_info(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_info(int cnt, const character& chara)
 {
     std::string ally_info = _get_ally_info(chara);
 
@@ -449,7 +449,7 @@ void ui_menu_ctrl_ally::_draw_ally_info(int cnt, const character& chara)
     mes(ally_info);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_list_entry(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const character& chara)
 {
     if (_operation != ControlAllyOperation::sell)
     {
@@ -462,7 +462,7 @@ void ui_menu_ctrl_ally::_draw_ally_list_entry(int cnt, const character& chara)
     }
 }
 
-void ui_menu_ctrl_ally::draw()
+void UIMenuCtrlAlly::draw()
 {
     s(0) = s(10);
     s(1) = s(11);
@@ -518,7 +518,7 @@ void ui_menu_ctrl_ally::draw()
     }
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_gene_engineer(
+optional<UIMenuCtrlAlly::result> UIMenuCtrlAlly::_select_gene_engineer(
     int _p)
 {
     if (cdata[_p].level > sdata(151, 0) + 5)
@@ -530,10 +530,10 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_gene_engineer(
         return none;
     }
 
-    return ui_menu_ctrl_ally::result::finish(_p);
+    return UIMenuCtrlAlly::result::finish(_p);
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
+optional<UIMenuCtrlAlly::result> UIMenuCtrlAlly::_select_pet_arena(int _p)
 {
     i = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -557,7 +557,7 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
         else
         {
             snd(20);
-            return ui_menu_ctrl_ally::result::finish(1);
+            return UIMenuCtrlAlly::result::finish(1);
         }
     }
     else if (cdata[_p].state() == character::State::pet_dead)
@@ -589,7 +589,7 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
     return none;
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
+optional<UIMenuCtrlAlly::result> UIMenuCtrlAlly::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -606,7 +606,7 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
         }
         else
         {
-            return ui_menu_ctrl_ally::result::finish(p(0));
+            return UIMenuCtrlAlly::result::finish(p(0));
         }
     }
     else if (key == key_pageup)
@@ -629,7 +629,7 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_ctrl_ally::result::cancel();
+        return UIMenuCtrlAlly::result::cancel();
     }
 
     return none;

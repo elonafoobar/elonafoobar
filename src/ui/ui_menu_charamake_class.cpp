@@ -20,7 +20,7 @@ static void _load_class_list()
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
-    if (config::instance().extraclass)
+    if (Config::instance().extraclass)
     {
         for (const auto& class_ : the_class_db.get_available_classes(true))
         {
@@ -35,7 +35,7 @@ static void _load_class_list()
     }
 }
 
-bool ui_menu_charamake_class::init()
+bool UIMenuCharamakeClass::init()
 {
     cs = 0;
     cs_bk = -1;
@@ -52,7 +52,7 @@ bool ui_menu_charamake_class::init()
     return true;
 }
 
-void ui_menu_charamake_class::update()
+void UIMenuCharamakeClass::update()
 {
 }
 
@@ -135,7 +135,7 @@ static void _reload_selected_class(const std::string& klass)
     access_class_info(11, klass);
 }
 
-void ui_menu_charamake_class::draw()
+void UIMenuCharamakeClass::draw()
 {
     if (cs == cs_bk)
     {
@@ -152,7 +152,7 @@ void ui_menu_charamake_class::draw()
     _draw_class_info(ref1, ref2, _race);
 }
 
-optional<ui_menu_charamake_class::result_type> ui_menu_charamake_class::on_key(
+optional<UIMenuCharamakeClass::result_type> UIMenuCharamakeClass::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX(p);
@@ -161,16 +161,16 @@ optional<ui_menu_charamake_class::result_type> ui_menu_charamake_class::on_key(
     {
         int class_id = p;
         std::string klass = listn(1, class_id);
-        return ui_menu_charamake_class::result::finish(klass);
+        return UIMenuCharamakeClass::result::finish(klass);
     }
     if (key == key_cancel)
     {
-        return ui_menu_charamake_class::result::cancel();
+        return UIMenuCharamakeClass::result::cancel();
     }
     if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return ui_menu_charamake_class::result::finish();
+        return UIMenuCharamakeClass::result::finish();
     }
 
     return none;

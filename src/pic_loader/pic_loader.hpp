@@ -41,7 +41,7 @@ namespace elona
  * - 10-19: this class
  * - 20+: PCC sprites (used to be 10+). Texture id is chara.index + 20
  */
-class pic_loader : public lib::noncopyable
+class PicLoader : public lib::noncopyable
 {
 public:
     enum class PageType
@@ -87,7 +87,7 @@ public:
     struct buffer_info
     {
         buffer_info(
-            pic_loader::PageType type,
+            PicLoader::PageType type,
             int buffer_id,
             int width,
             int height)
@@ -220,7 +220,7 @@ public:
         }
 
     public:
-        pic_loader::PageType type;
+        PicLoader::PageType type;
         int buffer_id;
         int width;
         int height;

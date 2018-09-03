@@ -73,14 +73,14 @@ struct god_data
 };
 
 
-class god_db;
+class GodDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<god_db>
+struct cat_db_traits<GodDB>
 {
     using id_type = god_id_t;
     using data_type = god_data;
@@ -91,16 +91,16 @@ struct cat_db_traits<god_db>
 } // namespace cat
 
 
-class god_db : public cat::cat_db<god_db>
+class GodDB : public cat::CatDB<GodDB>
 {
 public:
-    god_db() = default;
+    GodDB() = default;
 
     void define(lua_State* L);
 };
 
 
-extern god_db the_god_db;
+extern GodDB the_god_db;
 
 
 void txtgod(const god_id_t& id, int type);

@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-class autopick : public lib::noncopyable
+class Autopick : public lib::noncopyable
 {
 public:
     struct operation
@@ -36,7 +36,7 @@ public:
         std::string sound;
     };
 
-    static autopick& instance();
+    static Autopick& instance();
 
     void load(const std::string& player_id);
 
@@ -60,7 +60,7 @@ private:
 
 
     std::vector<matcher> matchers;
-    autopick() = default;
+    Autopick() = default;
 
 
     void clear();

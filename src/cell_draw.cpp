@@ -24,7 +24,7 @@ int pcc_size(int shrinked, int fullscale)
     assert(shrinked < fullscale);
 
     const auto is_fullscale =
-        config::instance().pcc_graphic_scale == "fullscale";
+        Config::instance().pcc_graphic_scale == "fullscale";
     return is_fullscale ? fullscale : shrinked;
 }
 
@@ -1063,7 +1063,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 }
                 else
                 {
-                    if (config::instance().objectshadow
+                    if (Config::instance().objectshadow
                         && item_chips[p_].shadow)
                     {
                         draw_item_chip_shadow(
@@ -1102,7 +1102,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
             else
             {
-                if (config::instance().objectshadow && item_chips[p_].shadow)
+                if (Config::instance().objectshadow && item_chips[p_].shadow)
                 {
                     draw_item_chip_shadow(dx, dy, **rect, p_, 80);
                 }
@@ -1469,7 +1469,7 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (config::instance().shadow)
+    if (Config::instance().shadow)
     {
         render_shadow_high(light_, sxfix_, syfix_);
     }

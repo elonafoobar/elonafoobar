@@ -9,13 +9,13 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Enumeration for all possible events that can be triggered.
  *
  * NOTE: If you change this, be sure to update the constructor for
- * event_manager so the event kind is bound to Lua.
+ * EventManager so the event kind is bound to Lua.
  */
 enum class EventKind : unsigned
 {
@@ -59,7 +59,7 @@ enum class EventKind : unsigned
 /***
  * Contains a list of callbacks to be run in a defined order.
  */
-class callbacks
+class Callbacks
 {
 public:
     struct callback_t
@@ -199,11 +199,11 @@ private:
  * Manages a list of callbacks for each event type. Allows triggering
  * callbacks from C++ with any arguments needed.
  */
-class event_manager
+class EventManager
 {
 
 public:
-    explicit event_manager(lua_env*);
+    explicit EventManager(LuaEnv*);
 
     /***
      * Registers a new event handler from a mod's environment.
@@ -233,7 +233,7 @@ public:
      */
     void trigger_event(EventKind, sol::table);
 
-    const callbacks& get_callbacks(EventKind event) const
+    const Callbacks& get_callbacks(EventKind event) const
     {
         return events.at(event);
     }
@@ -242,25 +242,25 @@ public:
     R run_callbacks(Args&&... args)
     {
         return events.at(event).run(
-            callbacks::retval_type<R>{}, std::forward<Args>(args)...);
+            Callbacks::retval_type<R>{}, std::forward<Args>(args)...);
     }
 
     template <EventKind event, typename R = void>
     R run_callbacks()
     {
-        return events.at(event).run(callbacks::retval_type<R>{});
+        return events.at(event).run(Callbacks::retval_type<R>{});
     }
 
     void clear();
 
-    typedef std::unordered_map<EventKind, callbacks> container;
+    typedef std::unordered_map<EventKind, Callbacks> container;
 
 private:
     /***
-     * Binds the Lua Event API and the EventKind enum to the lua_env's
+     * Binds the Lua Event API and the EventKind enum to the LuaEnv's
      * API manager.
      */
-    void bind_api(lua_env&);
+    void bind_api(LuaEnv&);
 
     /**
      * Sets up event callback error handlers for each event type.
@@ -273,7 +273,7 @@ private:
     void init_event_kinds(sol::table&);
 
     container events;
-    lua_env* lua;
+    LuaEnv* lua;
 };
 
 } // namespace lua

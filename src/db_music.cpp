@@ -3,10 +3,10 @@
 namespace elona
 {
 
-music_db the_music_db;
+MusicDB the_music_db;
 
 music_data
-music_db::convert(const std::string& id_, const sol::table& data, lua::lua_env&)
+MusicDB::convert(const std::string& id_, const sol::table& data, lua::LuaEnv&)
 {
     ELONA_LION_DB_FIELD(_mod, std::string, "");
     ELONA_LION_DB_FIELD(id, int, -1);

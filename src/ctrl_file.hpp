@@ -41,10 +41,10 @@ enum class FileOperation2
 
 
 
-class save_t : public lib::noncopyable
+class Save : public lib::noncopyable
 {
 public:
-    static save_t& instance();
+    static Save& instance();
 
 
     void clear();
@@ -55,7 +55,7 @@ public:
 
 
 private:
-    save_t() = default;
+    Save() = default;
 
     std::unordered_map<fs::path, bool> saved_files;
 };

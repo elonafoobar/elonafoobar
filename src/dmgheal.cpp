@@ -313,7 +313,7 @@ int damage_hp(
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
-                miracle_animation().play();
+                MiracleAnimation().play();
                 snd(120);
                 break;
             }
@@ -602,11 +602,11 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            if (config::instance().sound)
+            if (Config::instance().sound)
             {
-                if (config::instance().heart)
+                if (Config::instance().heart)
                 {
-                    int threshold = config::instance().get<int>(
+                    int threshold = Config::instance().get<int>(
                         "core.config.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
@@ -614,7 +614,7 @@ int damage_hp(
                         {
                             snd(32);
 
-                            if (config::instance().get<bool>(
+                            if (Config::instance().get<bool>(
                                     "core.config.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();

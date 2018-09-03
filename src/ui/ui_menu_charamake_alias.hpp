@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_charamake_alias : public ui_menu<std::string>
+class UIMenuCharamakeAlias : public UIMenu<std::string>
 {
 public:
-    ui_menu_charamake_alias(optional<std::string> previous_alias)
+    UIMenuCharamakeAlias(optional<std::string> previous_alias)
         : _previous_alias(previous_alias)
     {
         DIM2(_locked_aliases, 18);
@@ -19,7 +19,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_charamake_alias::result_type> on_key(
+    virtual optional<UIMenuCharamakeAlias::result_type> on_key(
         const std::string& key);
 
 private:

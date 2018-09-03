@@ -12,12 +12,12 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_charamake_attributes::init()
+bool UIMenuCharamakeAttributes::init()
 {
     return true;
 }
 
-void ui_menu_charamake_attributes::_reroll_attributes()
+void UIMenuCharamakeAttributes::_reroll_attributes()
 {
     chara_delete(0);
     access_race_info(3, _race);
@@ -62,7 +62,7 @@ static void _load_attributes_list(elona_vector1<int>& _attributes)
     }
 }
 
-void ui_menu_charamake_attributes::update()
+void UIMenuCharamakeAttributes::update()
 {
     cs = 0;
     cs_bk = -1;
@@ -135,7 +135,7 @@ static void _draw_attribute_locked(int cnt)
 static void _draw_attribute_value(int cnt, int list_value, bool is_locked)
 {
     // Copy image from item sheet.
-    // TODO: migrate to pic_loader
+    // TODO: migrate to PicLoader
     pos(wx + 198, wy + 76 + cnt * 23);
     gmode(2);
     gcopy_c(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
@@ -167,7 +167,7 @@ static void _draw_attribute(
     }
 }
 
-void ui_menu_charamake_attributes::draw()
+void UIMenuCharamakeAttributes::draw()
 {
     int locks_left = _locked_attributes(8);
     _draw_window(locks_left);
@@ -185,8 +185,8 @@ void ui_menu_charamake_attributes::draw()
     cs_bk = cs;
 }
 
-optional<ui_menu_charamake_attributes::result_type>
-ui_menu_charamake_attributes::on_key(const std::string& key)
+optional<UIMenuCharamakeAttributes::result_type>
+UIMenuCharamakeAttributes::on_key(const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
 
@@ -200,7 +200,7 @@ ui_menu_charamake_attributes::on_key(const std::string& key)
         }
         if (p == 1)
         {
-            return ui_menu_charamake_attributes::result::finish(_attributes);
+            return UIMenuCharamakeAttributes::result::finish(_attributes);
         }
         if (_locked_attributes(p - 2) != 0)
         {
@@ -223,12 +223,12 @@ ui_menu_charamake_attributes::on_key(const std::string& key)
     }
     else if (key == key_cancel)
     {
-        return ui_menu_charamake_attributes::result::cancel();
+        return UIMenuCharamakeAttributes::result::cancel();
     }
     else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return ui_menu_charamake_attributes::result::finish();
+        return UIMenuCharamakeAttributes::result::finish();
     }
 
     return none;

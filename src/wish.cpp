@@ -26,7 +26,7 @@ namespace
 
 
 template <typename T, typename Similarity = int>
-class by_similarity_selector
+class BySimilaritySelector
 {
 public:
     void add(const T& value, const Similarity& similarity)
@@ -178,7 +178,7 @@ int select_wished_character(const std::string& input)
     constexpr int default_result = 37;
     using namespace strutil;
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = remove_extra_str(input);
     for (int i = 0; i < 800; ++i)
     {
@@ -500,7 +500,7 @@ bool wish_for_item(const std::string& input)
         }
     }
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
     for (const auto& item_data : the_item_db)
     {
@@ -641,7 +641,7 @@ bool wish_for_skill(const std::string& input)
 {
     using namespace strutil;
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
 
     for (const auto& ability_data : the_ability_db)

@@ -127,7 +127,7 @@ void _adventurer_hate_action()
             snd(91);
             ccbk = cc;
             cc = tc;
-            throwing_object_animation(
+            ThrowingObjectAnimation(
                 {tlocx, tlocy}, cdata[cc].position, 223, 0)
                 .play();
             cc = ccbk;
@@ -143,7 +143,7 @@ void _adventurer_hate_action()
             itemcreate(-1, 704, -1, -1, 0);
             txt(i18n::s.get("core.locale.food.vomits", cdata[tc]));
             snd(104);
-            await(config::instance().animewait / 2);
+            await(Config::instance().animewait / 2);
             update_screen();
         }
     }

@@ -14,7 +14,7 @@ item_db_ex the_item_db;
 item_data item_db_ex::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     ELONA_LION_DB_FIELD_REQUIRED(id, int);
     ELONA_LION_DB_FIELD(image, int, 0);

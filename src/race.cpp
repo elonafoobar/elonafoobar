@@ -13,10 +13,10 @@ namespace elona
 {
 
 
-race_db the_race_db;
+RaceDB the_race_db;
 
 
-void race_db::define(lua_State* L)
+void RaceDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -107,7 +107,7 @@ void race_db::define(lua_State* L)
 
 
 std::vector<std::reference_wrapper<const race_data>>
-race_db::get_available_races(bool is_extra_race) const
+RaceDB::get_available_races(bool is_extra_race) const
 {
     std::vector<std::reference_wrapper<const race_data>> ret;
     for (const auto& pair : storage)

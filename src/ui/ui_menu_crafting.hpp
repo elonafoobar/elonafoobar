@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_crafting : public ui_menu<int>
+class UIMenuCrafting : public UIMenu<int>
 {
 public:
-    ui_menu_crafting(int prodtype, int invctrl)
+    UIMenuCrafting(int prodtype, int invctrl)
         : _prodtype(prodtype)
         , _invctrl(invctrl)
     {
@@ -19,7 +19,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_crafting::result_type> on_key(
+    virtual optional<UIMenuCrafting::result_type> on_key(
         const std::string& key);
 
 private:

@@ -11,8 +11,8 @@
 namespace elona
 {
 
-class chara_chip_db;
-class item_chip_db;
+class CharaChipDB;
+class ItemChipDB;
 struct item;
 
 struct item_chip_t
@@ -74,8 +74,8 @@ optional_ref<extent> chara_preparepic(int image_id);
 
 void create_pcpic(int cc, bool prm_410);
 void initialize_map_chip();
-void initialize_chara_chips(const chara_chip_db&);
-void initialize_item_chips(const item_chip_db&);
+void initialize_chara_chips(const CharaChipDB&);
+void initialize_item_chips(const ItemChipDB&);
 void initialize_all_chips();
 
 

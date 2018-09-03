@@ -15,20 +15,20 @@
 namespace elona
 {
 
-class config_def;
+class ConfigDef;
 
-class config
+class Config
 {
 public:
-    static config& instance();
+    static Config& instance();
 
-    config()
+    Config()
     {
     }
-    ~config() = default;
+    ~Config() = default;
 
     void init(const fs::path&);
-    void init(const config_def);
+    void init(const ConfigDef);
     void load(std::istream&, const std::string&, bool);
     void write();
 
@@ -254,7 +254,7 @@ public:
         }
     }
 
-    const config_def& get_def() const
+    const ConfigDef& get_def() const
     {
         return def;
     }
@@ -270,7 +270,7 @@ private:
         bool);
     bool verify_types(const hcl::Value&, const std::string&);
 
-    config_def def;
+    ConfigDef def;
     tsl::ordered_map<std::string, hcl::Value> storage;
     tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
     tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
@@ -291,7 +291,7 @@ void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);
 
-snail::window::FullscreenMode config_get_fullscreen_mode();
+snail::Window::FullscreenMode config_get_fullscreen_mode();
 
 
 } // namespace elona

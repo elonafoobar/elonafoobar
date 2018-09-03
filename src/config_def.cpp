@@ -16,26 +16,26 @@ namespace
 {
 
 
-static void add_platform(config_def::metadata& dat, const hcl::Object& item)
+static void add_platform(ConfigDef::metadata& dat, const hcl::Object& item)
 {
     std::string platform = item.at("platform").as<std::string>();
 
     if (platform == "desktop")
     {
-        dat.platform = config_def::Platform::desktop;
+        dat.platform = ConfigDef::Platform::desktop;
     }
     else if (platform == "android")
     {
-        dat.platform = config_def::Platform::android;
+        dat.platform = ConfigDef::Platform::android;
     }
     else
     {
-        dat.platform = config_def::Platform::all;
+        dat.platform = ConfigDef::Platform::all;
     }
 }
 
 static void set_default_from_platform(
-    config_def::metadata& dat,
+    ConfigDef::metadata& dat,
     const hcl::Object& item)
 {
     // NOTE: Could be generalized, if it were neeed.
@@ -58,14 +58,14 @@ static void set_default_from_platform(
         dat.name = item.at(#name).as<bool>(); \
     }
 
-void config_def::post_visit(
+void ConfigDef::post_visit(
     const spec_key& current_key,
     const spec::section_def&)
 {
     data.emplace(current_key, metadata{});
 }
 
-void config_def::pre_visit_section(
+void ConfigDef::pre_visit_section(
     const spec_key& current_key,
     const hcl::Object& section)
 {
@@ -82,14 +82,14 @@ void config_def::pre_visit_section(
     data.emplace(current_key, dat);
 }
 
-void config_def::pre_visit_bare_value(
+void ConfigDef::pre_visit_bare_value(
     const spec_key& current_key,
     const hcl::Value&)
 {
     data.emplace(current_key, metadata{});
 }
 
-void config_def::pre_visit_item(
+void ConfigDef::pre_visit_item(
     const spec_key& current_key,
     const hcl::Object& item)
 {
@@ -114,7 +114,7 @@ void config_def::pre_visit_item(
 }
 
 
-bool config_def::is_child_visible(const spec_key& child_key)
+bool ConfigDef::is_child_visible(const spec_key& child_key)
 {
     spec_key parent_key = child_key;
     for (size_t i = parent_key.size() - 1; i > 0; i--)

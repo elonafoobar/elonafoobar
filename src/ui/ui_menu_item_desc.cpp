@@ -10,7 +10,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_item_desc::init()
+bool UIMenuItemDesc::init()
 {
     snd(26);
     page_save();
@@ -27,7 +27,7 @@ bool ui_menu_item_desc::init()
     return true;
 }
 
-void ui_menu_item_desc::update()
+void UIMenuItemDesc::update()
 {
     key_list = key_enter;
     keyrange = 0;
@@ -125,7 +125,7 @@ static void _draw_message(int cnt, int list_item, const std::string& list_text)
     _draw_marks(cnt, list_item);
 }
 
-void ui_menu_item_desc::draw()
+void UIMenuItemDesc::draw()
 {
     s(0) = i18n::s.get("core.locale.item.desc.window.title");
     s(1) = strhint4 + strhint3;
@@ -144,7 +144,7 @@ void ui_menu_item_desc::draw()
     }
 }
 
-optional<ui_menu_item_desc::result_type> ui_menu_item_desc::on_key(
+optional<UIMenuItemDesc::result_type> UIMenuItemDesc::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -167,7 +167,7 @@ optional<ui_menu_item_desc::result_type> ui_menu_item_desc::on_key(
     }
     else if (key == key_cancel || key == key_enter)
     {
-        return ui_menu_item_desc::result_type::finish();
+        return UIMenuItemDesc::result_type::finish();
     }
 
     return none;

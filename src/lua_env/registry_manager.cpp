@@ -7,7 +7,7 @@ namespace elona
 namespace lua
 {
 
-registry_manager::registry_manager(lua_env* lua)
+RegistryManager::RegistryManager(LuaEnv* lua)
 {
     lua_ = lua;
     registry_env = sol::environment(
@@ -24,7 +24,7 @@ register_data = require "private/register_data"
     bind_api();
 }
 
-void registry_manager::bind_api()
+void RegistryManager::bind_api()
 {
     sol::table core = lua_->get_api_manager().get_api_table();
     sol::table Registry = core.create_named("Registry");
@@ -44,7 +44,7 @@ void registry_manager::bind_api()
             }));
 }
 
-void registry_manager::register_datatype(
+void RegistryManager::register_datatype(
     const std::string& mod_name,
     const std::string& datatype_name)
 {
@@ -54,7 +54,7 @@ void registry_manager::register_datatype(
         Registry[mod_name] = lua_->get_state()->create_table();
     }
 
-    // spec::object spec(datatype_name);
+    // spec::Object spec(datatype_name);
     // spec.init(spec_file);
 
     if (Registry[mod_name][datatype_name] != sol::lua_nil)
@@ -65,7 +65,7 @@ void registry_manager::register_datatype(
     Registry[mod_name][datatype_name] = lua_->get_state()->create_table();
 }
 
-void registry_manager::register_native_datatype(
+void RegistryManager::register_native_datatype(
     const std::string& datatype_name,
     std::function<void(sol::table)> initializer)
 {
@@ -73,7 +73,7 @@ void registry_manager::register_native_datatype(
     native_initializers.emplace(datatype_name, initializer);
 }
 
-void registry_manager::register_data(
+void RegistryManager::register_data(
     const std::string& originating_mod_name,
     const std::string& datatype_mod_name,
     const std::string& datatype_name,
@@ -122,7 +122,7 @@ register_data(_MOD_NAME, _DATATYPE_MOD_NAME, _DATATYPE_NAME, _FILEPATH, Registry
 }
 
 
-sol::optional<sol::table> registry_manager::get_table(
+sol::optional<sol::table> RegistryManager::get_table(
     const std::string& mod_name,
     const std::string& datatype_name)
 {
@@ -138,8 +138,8 @@ sol::optional<sol::table> registry_manager::get_table(
 }
 
 
-void registry_manager::load_mod_data(
-    const std::vector<registry_manager::location>& locations)
+void RegistryManager::load_mod_data(
+    const std::vector<RegistryManager::location>& locations)
 {
     // Load data.hcl in each mod directory.
     for (const auto& loc : locations)
@@ -166,7 +166,7 @@ void registry_manager::load_mod_data(
     }
 }
 
-void registry_manager::load_single_mod_data(
+void RegistryManager::load_single_mod_data(
     const fs::path& data_hcl_file,
     const std::string& mod_name)
 {
@@ -184,7 +184,7 @@ void registry_manager::load_single_mod_data(
     load_declared_mod_data(data->as<hcl::Object>(), data_hcl_file, mod_name);
 }
 
-void registry_manager::load_declared_mod_defines(
+void RegistryManager::load_declared_mod_defines(
     const hcl::Object& data,
     const fs::path& data_hcl_file,
     const std::string& mod_name)
@@ -213,7 +213,7 @@ void registry_manager::load_declared_mod_defines(
     }
 }
 
-void registry_manager::load_declared_mod_data(
+void RegistryManager::load_declared_mod_data(
     const hcl::Object& data,
     const fs::path& data_hcl_file,
     const std::string& mod_name)
@@ -245,7 +245,7 @@ void registry_manager::load_declared_mod_data(
     }
 }
 
-void registry_manager::load_single_declared_mod_data(
+void RegistryManager::load_single_declared_mod_data(
     const std::string& datatype_fqn,
     const hcl::List& file_list,
     const fs::path& data_hcl_file,

@@ -30,10 +30,10 @@ struct item;
 namespace i18n
 {
 
-class i18n_error : public std::exception
+class I18NError : public std::exception
 {
 public:
-    i18n_error(const std::string& path, std::string str)
+    I18NError(const std::string& path, std::string str)
     {
         std::ostringstream oss;
         oss << path << ": ";
@@ -446,11 +446,11 @@ std::string fmt_hil(const std::string& hil, Tail&&... tail)
 
 
 
-class store
+class Store
 {
 public:
-    store(){};
-    ~store() = default;
+    Store(){};
+    ~Store() = default;
 
     struct location
     {
@@ -464,7 +464,7 @@ public:
         std::string mod_name;
     };
 
-    void init(const std::vector<store::location>&);
+    void init(const std::vector<Store::location>&);
 
     // For testing use.
     void load(std::istream&, const std::string&, const std::string&);
@@ -721,7 +721,7 @@ private:
     std::unordered_map<std::string, fs::path> locale_dir_table;
 };
 
-extern i18n::store s;
+extern i18n::Store s;
 
 } // namespace i18n
 } // namespace elona

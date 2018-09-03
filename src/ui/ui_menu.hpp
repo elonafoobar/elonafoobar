@@ -12,16 +12,16 @@ namespace ui
 {
 
 template <typename T>
-class ui_menu_composite;
+class UIMenuComposite;
 
 struct dummy_result
 {
 };
 
 template <typename T>
-class ui_menu
+class UIMenu
 {
-    friend class ui_menu_composite<T>;
+    friend class UIMenuComposite<T>;
 
 public:
     struct result
@@ -47,7 +47,7 @@ public:
     };
 
 protected:
-    using result_type = ui_menu<T>::result;
+    using result_type = UIMenu<T>::result;
 
 public:
     virtual bool init() = 0;
@@ -74,7 +74,7 @@ protected:
     }
 
 public:
-    ui_menu::result show()
+    UIMenu::result show()
     {
         while (true)
         {
@@ -119,7 +119,7 @@ private:
     void _redraw()
     {
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
     }
 
     void _update_input()

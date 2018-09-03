@@ -179,7 +179,7 @@ namespace snail
 
 
 
-void mouse_t::_handle_event(const ::SDL_MouseButtonEvent& event)
+void Mouse::_handle_event(const ::SDL_MouseButtonEvent& event)
 {
     _x = event.x;
     _y = event.y;
@@ -206,7 +206,7 @@ void mouse_t::_handle_event(const ::SDL_MouseButtonEvent& event)
 
 
 
-void mouse_t::update()
+void Mouse::update()
 {
     for (auto&& button : buttons)
     {
@@ -217,9 +217,9 @@ void mouse_t::update()
 
 
 
-input& input::instance() noexcept
+Input& Input::instance() noexcept
 {
-    static input the_instance;
+    static Input the_instance;
     return the_instance;
 }
 
@@ -236,7 +236,7 @@ a a a a a a a a a a a a a a a a a a a a a
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
 x         x         x         x         x
 */
-bool input::is_pressed(Key k, int key_wait) const
+bool Input::is_pressed(Key k, int key_wait) const
 {
     const auto& key = _keys[static_cast<size_t>(k)];
     return key.is_pressed() && key.repeat() % key_wait == 0;
@@ -244,47 +244,47 @@ bool input::is_pressed(Key k, int key_wait) const
 
 
 
-bool input::is_pressed(mouse_t::Button b) const
+bool Input::is_pressed(Mouse::Button b) const
 {
     return was_pressed_just_now(b);
 }
 
 
 
-bool input::was_pressed_just_now(Key k) const
+bool Input::was_pressed_just_now(Key k) const
 {
     return is_pressed(k) && _keys[static_cast<size_t>(k)].repeat() == 0;
 }
 
 
 
-bool input::was_pressed_just_now(mouse_t::Button b) const
+bool Input::was_pressed_just_now(Mouse::Button b) const
 {
     return mouse()[b].is_pressed();
 }
 
 
 
-bool input::is_ime_active() const
+bool Input::is_ime_active() const
 {
     return _is_ime_active;
 }
 
 
 
-void input::show_soft_keyboard()
+void Input::show_soft_keyboard()
 {
     _is_ime_active = true;
     ::SDL_StartTextInput();
 }
 
-void input::hide_soft_keyboard()
+void Input::hide_soft_keyboard()
 {
     ::SDL_StopTextInput();
     _is_ime_active = false;
 }
 
-void input::toggle_soft_keyboard()
+void Input::toggle_soft_keyboard()
 {
     if (::SDL_IsTextInputActive())
         hide_soft_keyboard();
@@ -293,7 +293,7 @@ void input::toggle_soft_keyboard()
 }
 
 
-void input::disable_numlock()
+void Input::disable_numlock()
 {
     // SDL always reports numlock as being off when the program
     // starts, even if it was on before. The Shift+numpad strangeness
@@ -310,7 +310,7 @@ void input::disable_numlock()
 #endif
 }
 
-void input::restore_numlock()
+void Input::restore_numlock()
 {
 #ifdef _WIN32
     if (!GetKeyState(VK_NUMLOCK) && _needs_restore_numlock)
@@ -324,7 +324,7 @@ void input::restore_numlock()
 
 
 
-void input::_update()
+void Input::_update()
 {
     // Check for touched Android quick actions that send keypresses.
     if (_last_quick_action_key)
@@ -372,7 +372,7 @@ void input::_update()
 
 
 
-void input::_handle_event(const ::SDL_KeyboardEvent& event)
+void Input::_handle_event(const ::SDL_KeyboardEvent& event)
 {
     if (_is_ime_active)
     {
@@ -396,7 +396,7 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
         // same event polling cycle. In that case, mark the key as
         // pressed but immediately released, and allow it to be
         // detected for a single frame before releasing it in
-        // input::update().
+        // Input::update().
         if (the_key.is_pressed() && the_key.repeat() == -1)
         {
             the_key._release_immediately();
@@ -433,7 +433,7 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
 }
 
 
-void input::_handle_event(const ::SDL_TextInputEvent& event)
+void Input::_handle_event(const ::SDL_TextInputEvent& event)
 {
     _text = event.text;
 
@@ -446,7 +446,7 @@ void input::_handle_event(const ::SDL_TextInputEvent& event)
 }
 
 
-void input::_handle_event(const ::SDL_TextEditingEvent& event)
+void Input::_handle_event(const ::SDL_TextEditingEvent& event)
 {
     (void)event;
 
@@ -454,14 +454,14 @@ void input::_handle_event(const ::SDL_TextEditingEvent& event)
 }
 
 
-void input::_handle_event(const ::SDL_TouchFingerEvent& event)
+void Input::_handle_event(const ::SDL_TouchFingerEvent& event)
 {
     bool release_key = false;
     bool stop_text = false;
 
-    touch_input::instance().on_touch_event(event);
+    TouchInput::instance().on_touch_event(event);
 
-    auto action = touch_input::instance().last_touched_quick_action();
+    auto action = TouchInput::instance().last_touched_quick_action();
 
     if (action)
     {
@@ -506,7 +506,7 @@ void input::_handle_event(const ::SDL_TouchFingerEvent& event)
 
 
 
-void input::_handle_event(const ::SDL_MouseButtonEvent& event)
+void Input::_handle_event(const ::SDL_MouseButtonEvent& event)
 {
     _mouse._handle_event(event);
 }

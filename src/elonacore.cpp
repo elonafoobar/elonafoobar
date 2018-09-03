@@ -135,7 +135,7 @@ void select_house_board_tile()
 
         gmode(2);
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int a{};
         a = stick();
         if (a == StickKey::mouse_left)
@@ -739,17 +739,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (config::instance().autoturn == "normal")
+    if (Config::instance().autoturn == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (config::instance().autoturn != "highest" || firstautoturn == 1)
+    if (Config::instance().autoturn != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (config::instance().autoturn == "normal")
+    if (Config::instance().autoturn == "normal")
     {
         redraw();
     }
@@ -938,9 +938,9 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    if (config::instance().autonumlock)
+    if (Config::instance().autonumlock)
     {
-        snail::input::instance().restore_numlock();
+        snail::Input::instance().restore_numlock();
     }
 }
 
@@ -1976,7 +1976,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
     {
         return;
     }
@@ -1993,7 +1993,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = config::instance().animewait * 3.5;
+    i_at_m133(1) = Config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2002,21 +2002,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = config::instance().animewait * 2.5;
+        i_at_m133(1) = Config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2039,7 +2039,7 @@ void animeblood(int cc, int animation_type, int element)
 {
     if (is_in_fov(cdata[cc]) == 0)
         return;
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
         return;
 
     int cnt2_at_m133 = 0;
@@ -2154,7 +2154,7 @@ void animeblood(int cc, int animation_type, int element)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
+        await(Config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
     gmode(2);
@@ -4689,7 +4689,7 @@ void auto_identify()
             item_identify(
                 inv[ci], IdentifyState::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (!config::instance().hideautoidentify)
+            if (!Config::instance().hideautoidentify)
             {
                 txt(i18n::s.get(
                     "core.locale.misc.identify.fully_identified",
@@ -4703,7 +4703,7 @@ void auto_identify()
         {
             if (p > rnd(p(1)))
             {
-                if (!config::instance().hideautoidentify)
+                if (!Config::instance().hideautoidentify)
                 {
                     txt(i18n::s.get(
                         "core.locale.misc.identify.almost_identified",
@@ -4850,7 +4850,7 @@ TurnResult exit_map()
     gdata(171) = 0;
     if (mdata_map_type == mdata_t::MapType::player_owned)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(201) == 0)
             {
@@ -7598,7 +7598,7 @@ void supply_income()
         FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
-    if (config::instance().extrahelp)
+    if (Config::instance().extrahelp)
     {
         if (gdata(216) == 0)
         {
@@ -7829,7 +7829,7 @@ int key_direction()
 
 TurnResult step_into_gate()
 {
-    if (config::instance().extrahelp)
+    if (Config::instance().extrahelp)
     {
         if (gdata(217) == 0)
         {
@@ -7901,7 +7901,7 @@ label_19431_internal:
         ++listmax;
         noteunsel();
     }
-    if (config::instance().net != 0)
+    if (Config::instance().net != 0)
     {
         if (comctrl == 1)
         {
@@ -7990,7 +7990,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -8147,11 +8147,11 @@ int target_position()
         if (dy + inf_tiles <= windowh - inf_verh)
         {
             pos(dx, dy * (dy > 0));
-            snail::application::instance().get_renderer().set_blend_mode(
+            snail::Application::instance().get_renderer().set_blend_mode(
                 snail::BlendMode::blend);
-            snail::application::instance().get_renderer().set_draw_color(
+            snail::Application::instance().get_renderer().set_draw_color(
                 {127, 127, 255, 50});
-            snail::application::instance().get_renderer().fill_rect(
+            snail::Application::instance().get_renderer().fill_rect(
                 dx,
                 dy * (dy > 0),
                 inf_tiles
@@ -8226,13 +8226,13 @@ int target_position()
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
                             pos(sx, sy * (sy > 0));
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_blend_mode(snail::BlendMode::blend);
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_draw_color({255, 255, 255, 25});
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .fill_rect(
                                     sx,
@@ -8251,7 +8251,7 @@ int target_position()
         }
         txttargetnpc(tlocx, tlocy);
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         if (homemapmode == 1)
         {
@@ -9454,9 +9454,9 @@ void migrate_save_data(const fs::path& save_dir)
                 const auto file_ = filesystem::dir::tmp() / file;
                 fs::copy_file(
                     file_, file_cnv, fs::copy_option::overwrite_if_exists);
-                save_t::instance().add(file_cnv.filename());
+                Save::instance().add(file_cnv.filename());
                 fs::remove_all(file_);
-                save_t::instance().remove(file_.filename());
+                Save::instance().remove(file_.filename());
             }
         }
         for (int cnt = 0; cnt < 500; ++cnt)
@@ -9885,7 +9885,7 @@ void load_save_data()
     // TODO instead serialize/deserialize data
     lua::lua->get_handle_manager().clear_map_local_handles();
 
-    save_t::instance().clear();
+    Save::instance().clear();
     writeloadedbuff_clear();
 
     ctrl_file(FileOperation::temp_dir_delete);
@@ -9960,9 +9960,9 @@ void save_game()
     {
         fs::create_directory(save_dir);
     }
-    save_t::instance().save(save_dir);
+    Save::instance().save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
-    save_t::instance().clear();
+    Save::instance().clear();
     ELONA_LOG("Save game: finish");
 }
 
@@ -10015,7 +10015,7 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
     y = cdata.player().position.y;
@@ -10134,7 +10134,7 @@ TurnResult do_debug_console()
     mesbox(buff, true);
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int a{};
         a = stick();
         if (a == StickKey::escape)
@@ -10200,7 +10200,7 @@ void disarm_trap()
 void proc_trap()
 {
 label_21451_internal:
-    if (config::instance().scroll)
+    if (Config::instance().scroll)
     {
         if (cc == 0)
         {
@@ -10426,8 +10426,8 @@ label_21451_internal:
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.activate.mine"));
-                    ball_animation(
-                        {movx, movy}, 0, ball_animation::Type::ball, ele)
+                    BallAnimation(
+                        {movx, movy}, 0, BallAnimation::Type::ball, ele)
                         .play();
                     cell_featset(movx, movy, 0);
                     damage_hp(cdata[cc], 100 + rnd(200), -1);
@@ -10490,7 +10490,7 @@ void sleep_start()
     {
         gmode(4, cnt * 10);
         draw_sleep_background_frame();
-        await(config::instance().animewait * 10);
+        await(Config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -10545,7 +10545,7 @@ void sleep_start()
         gdata_minute = 0;
         cc = 0;
         draw_sleep_background_frame();
-        await(config::instance().animewait * 25);
+        await(Config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -11220,7 +11220,7 @@ int do_cast_magic_attempt()
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
-            failure_to_cast_animation(cdata[cc].position).play();
+            FailureToCastAnimation(cdata[cc].position).play();
         }
         efsource = 0;
         return 1;
@@ -12671,7 +12671,7 @@ TurnResult do_bash()
                 txt(i18n::s.get(
                     "core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
-                breaking_animation({x, y}).play();
+                BreakingAnimation({x, y}).play();
             }
             return TurnResult::turn_end;
         }
@@ -13029,7 +13029,7 @@ TurnResult proc_movement_event()
 
 void proc_autopick()
 {
-    if (!config::instance().use_autopick)
+    if (!Config::instance().use_autopick)
         return;
     if (key_ctrl)
         return;
@@ -13054,16 +13054,16 @@ void proc_autopick()
         const auto y = cdata.player().position.y;
 
         bool did_something = true;
-        const auto op = autopick::instance().get_operation(inv[ci]);
+        const auto op = Autopick::instance().get_operation(inv[ci]);
         switch (op.type)
         {
-        case autopick::operation::Type::do_nothing:
+        case Autopick::operation::Type::do_nothing:
             did_something = false;
             break;
-        case autopick::operation::Type::pick_up:
-        case autopick::operation::Type::save:
-        case autopick::operation::Type::no_drop:
-        case autopick::operation::Type::save_and_no_drop:
+        case Autopick::operation::Type::pick_up:
+        case Autopick::operation::Type::save:
+        case Autopick::operation::Type::no_drop:
+        case Autopick::operation::Type::save_and_no_drop:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13080,13 +13080,13 @@ void proc_autopick()
             in = inv[ci].number();
             elona::ci = ci;
             pick_up_item();
-            if (int(op.type) & int(autopick::operation::Type::no_drop))
+            if (int(op.type) & int(Autopick::operation::Type::no_drop))
             {
                 ibitmod(13, ti, 1);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
-            if (int(op.type) & int(autopick::operation::Type::save))
+            if (int(op.type) & int(Autopick::operation::Type::save))
             {
                 if (gdata_wizard == 0)
                 {
@@ -13094,7 +13094,7 @@ void proc_autopick()
                 }
             }
             break;
-        case autopick::operation::Type::destroy:
+        case Autopick::operation::Type::destroy:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13114,7 +13114,7 @@ void proc_autopick()
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
-        case autopick::operation::Type::open:
+        case Autopick::operation::Type::open:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13198,8 +13198,8 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= config::instance().walkwait
-                            * config::instance().startrun
+                if (keybd_wait <= Config::instance().walkwait
+                            * Config::instance().startrun
                     || cdata.player().turn % 2 == 0
                     || mdata_map_type == mdata_t::MapType::world_map)
                 {
@@ -13228,7 +13228,7 @@ void sense_map_feats_on_move()
                 if (adata(16, feat(2) + feat(3) * 100)
                     == mdata_t::MapId::random_dungeon)
                 {
-                    if (config::instance().extrahelp)
+                    if (Config::instance().extrahelp)
                     {
                         if (gdata(206) == 0)
                         {
@@ -13346,7 +13346,7 @@ void sense_map_feats_on_move()
             }
             if (feat(1) >= 24 && feat(1) <= 28)
             {
-                if (config::instance().extrahelp)
+                if (Config::instance().extrahelp)
                 {
                     if (gdata(205) == 0)
                     {
@@ -13781,7 +13781,7 @@ TurnResult try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(config::instance().animewait * 5);
+                await(Config::instance().animewait * 5);
                 return TurnResult::turn_end;
             }
             feat(2) = 0;
@@ -13842,7 +13842,7 @@ TurnResult try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(config::instance().animewait * 5);
+        await(Config::instance().animewait * 5);
     }
     return TurnResult::turn_end;
 }
@@ -14092,10 +14092,10 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        ranged_attack_animation(
+        RangedAttackAnimation(
             cdata[cc].position,
             cdata[tc].position,
-            static_cast<ranged_attack_animation::Type>(attackskill),
+            static_cast<RangedAttackAnimation::Type>(attackskill),
             the_item_db[inv[cw].id]->subcategory,
             inv[cw].image % 1000,
             inv[cw].image / 1000)
@@ -14123,10 +14123,10 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (config::instance().attackanime)
+            if (Config::instance().attackanime)
             {
                 int damage_percent = dmg * 100 / cdata[tc].max_hp;
-                melee_attack_animation(
+                MeleeAttackAnimation(
                     cdata[tc].position,
                     cdata[tc].breaks_into_debris(),
                     attackskill,
@@ -15237,7 +15237,7 @@ void do_play_scene()
     {
         gdata_played_scene = sceneid;
     }
-    if (config::instance().story == 0 || (en == 1 && sceneid != 0))
+    if (Config::instance().story == 0 || (en == 1 && sceneid != 0))
     {
         return;
     }
@@ -15669,7 +15669,7 @@ void weather_changes()
         }
         if (gdata_weather == 4)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(211) == 0)
                 {
@@ -15687,7 +15687,7 @@ void weather_changes()
         }
         if (gdata_weather == 2)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(212) == 0)
                 {
@@ -15705,7 +15705,7 @@ void weather_changes()
         }
         if (gdata_weather == 1)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(213) == 0)
                 {
@@ -15759,7 +15759,7 @@ void weather_changes()
     }
     if (gdata_continuous_active_hours >= 15)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(209) == 0)
             {
@@ -15777,7 +15777,7 @@ void weather_changes()
     }
     if (cdata.player().nutrition < 5000)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(210) == 0)
             {
@@ -16072,7 +16072,7 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_cancel)

@@ -9,10 +9,10 @@ struct character;
 namespace ui
 {
 
-class ui_menu_hire : public ui_menu<int>
+class UIMenuHire : public UIMenu<int>
 {
 public:
-    ui_menu_hire(HireOperation operation)
+    UIMenuHire(HireOperation operation)
         : _operation(operation)
     {
     }
@@ -21,7 +21,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_hire::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuHire::result_type> on_key(const std::string& key);
 
 private:
     bool _should_display_chara(const character& chara);

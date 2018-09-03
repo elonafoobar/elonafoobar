@@ -172,7 +172,7 @@ void start_elona()
     gdata_hour = 16;
     gdata_minute = 10;
     quickpage = 1;
-    if (config::instance().noadebug)
+    if (Config::instance().noadebug)
     {
         mode = 4;
         initialize_game();
@@ -180,8 +180,8 @@ void start_elona()
         return;
     }
     else if (
-        config::instance().startup_script != ""s
-        && !config::instance().get<bool>(
+        Config::instance().startup_script != ""s
+        && !Config::instance().get<bool>(
                "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
@@ -375,10 +375,10 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-static std::vector<lua::registry_manager::location>
+static std::vector<lua::RegistryManager::location>
 collect_mod_datafile_locations()
 {
-    std::vector<lua::registry_manager::location> locations;
+    std::vector<lua::RegistryManager::location> locations;
 
     for (const auto& pair : lua::lua->get_mod_manager())
     {
@@ -411,13 +411,13 @@ void initialize_lion_db()
 
     lua::lua->get_registry_manager().register_native_datatype(
         "chara_chip", [](auto table) {
-            chara_chip_db db;
+            CharaChipDB db;
             db.initialize(table);
             initialize_chara_chips(db);
         });
     lua::lua->get_registry_manager().register_native_datatype(
         "item_chip", [](auto table) {
-            item_chip_db db;
+            ItemChipDB db;
             db.initialize(table);
             initialize_item_chips(db);
         });
@@ -433,12 +433,12 @@ static void _initialize_jkey()
 
 void initialize_config(const fs::path& config_file)
 {
-    windoww = snail::application::instance().width();
-    windowh = snail::application::instance().height();
+    windoww = snail::Application::instance().width();
+    windowh = snail::Application::instance().height();
 
     if (defines::is_android)
     {
-        snail::touch_input::instance().initialize(filesystem::dir::graphic());
+        snail::TouchInput::instance().initialize(filesystem::dir::graphic());
     }
 
     time_warn = timeGetTime() / 1000;
@@ -469,7 +469,7 @@ void initialize_i18n()
     i18n::load(language);
 
     // Load built-in translations in data/locale/(jp|en).
-    std::vector<i18n::store::location> locations{
+    std::vector<i18n::Store::location> locations{
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.
@@ -731,17 +731,17 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (config::instance().music == "direct_music" && DMINIT() == 0)
+    if (Config::instance().music == "direct_music" && DMINIT() == 0)
     {
-        config::instance().music = "mci";
+        Config::instance().music = "mci";
     }
     DSINIT();
-    if (config::instance().joypad == 1)
+    if (Config::instance().joypad == 1)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            config::instance().joypad = 0;
+            Config::instance().joypad = 0;
         }
     }
     initialize_sound_file();
@@ -837,19 +837,19 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (config::instance().autonumlock)
+    if (Config::instance().autonumlock)
     {
-        snail::input::instance().disable_numlock();
+        snail::Input::instance().disable_numlock();
     }
 }
 
 static void initialize_screen()
 {
-    std::string display_mode = config::instance().display_mode;
+    std::string display_mode = Config::instance().display_mode;
 
     if (defines::is_android)
     {
-        display_mode = config::instance().get<std::string>(
+        display_mode = Config::instance().get<std::string>(
             "core.config.screen.window_mode");
     }
 
@@ -871,10 +871,10 @@ int run()
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
-    lua::lua = std::make_unique<lua::lua_env>();
+    lua::lua = std::make_unique<lua::LuaEnv>();
     initialize_cat_db();
 
-    config::instance().init(config_def_file);
+    Config::instance().init(config_def_file);
     initialize_config_preload(config_file);
     initialize_screen();
 
@@ -888,11 +888,11 @@ int run()
     // Load translations from scanned mods.
     initialize_i18n();
 
-    if (config::instance().font_filename.empty())
+    if (Config::instance().font_filename.empty())
     {
         // If no font is specified in `config.hcl`, use a pre-defined font
         // depending on each language.
-        config::instance().font_filename =
+        Config::instance().font_filename =
             i18n::s.get("core.locale.meta.default_font");
     }
 
@@ -901,7 +901,7 @@ int run()
 
     initialize_elona();
 
-    config::instance().write();
+    Config::instance().write();
 
     start_elona();
 
@@ -1250,12 +1250,12 @@ void initialize_game()
 {
     bool script_loaded = false;
     bool will_load_script = false;
-    autopick::instance().load(playerid);
+    Autopick::instance().load(playerid);
 
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
-    if (config::instance().net)
+    if (Config::instance().net)
     {
         initialize_server_info();
     }
@@ -1294,17 +1294,17 @@ void initialize_game()
     {
         load_save_data();
 
-        if (config::instance().get<bool>(
+        if (Config::instance().get<bool>(
                 "core.config.foobar.run_script_in_save"))
         {
             will_load_script = true;
         }
     }
 
-    if (will_load_script && config::instance().startup_script != ""s)
+    if (will_load_script && Config::instance().startup_script != ""s)
     {
         lua::lua->get_mod_manager().run_startup_script(
-            config::instance().startup_script);
+            Config::instance().startup_script);
         script_loaded = true;
     }
 

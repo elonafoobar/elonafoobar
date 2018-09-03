@@ -9,10 +9,10 @@ enum class ControlAllyOperation;
 namespace ui
 {
 
-class ui_menu_ctrl_ally : public ui_menu<int>
+class UIMenuCtrlAlly : public UIMenu<int>
 {
 public:
-    ui_menu_ctrl_ally(ControlAllyOperation operation)
+    UIMenuCtrlAlly(ControlAllyOperation operation)
         : _operation(operation)
     {
     }
@@ -21,7 +21,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_ctrl_ally::result_type> on_key(
+    virtual optional<UIMenuCtrlAlly::result_type> on_key(
         const std::string& key);
 
 private:
@@ -44,8 +44,8 @@ private:
         const character& chara,
         const std::string& ally_info_);
 
-    optional<ui_menu_ctrl_ally::result> _select_gene_engineer(int _p);
-    optional<ui_menu_ctrl_ally::result> _select_pet_arena(int _p);
+    optional<UIMenuCtrlAlly::result> _select_gene_engineer(int _p);
+    optional<UIMenuCtrlAlly::result> _select_pet_arena(int _p);
 
     ControlAllyOperation _operation;
 };

@@ -7,7 +7,7 @@ namespace lua
 
 namespace LuaEnums
 {
-enum_map<DamageSource> DamageSourceTable{
+EnumMap<DamageSource> DamageSourceTable{
     "DamageSource",
     {
         {"Trap", DamageSource::trap},
@@ -33,7 +33,7 @@ enum_map<DamageSource> DamageSourceTable{
         {"Mochi", DamageSource::mochi},
     }};
 
-enum_map<ColorIndex> ColorIndexTable{
+EnumMap<ColorIndex> ColorIndexTable{
     "Color",
     {
         {"None", ColorIndex::none},
@@ -62,7 +62,7 @@ enum_map<ColorIndex> ColorIndexTable{
         {"RandomAny", ColorIndex::random_any},
     }};
 
-enum_map<CurseState> CurseStateTable{"CurseState",
+EnumMap<CurseState> CurseStateTable{"CurseState",
                                    {
                                        {"Doomed", CurseState::doomed},
                                        {"Cursed", CurseState::cursed},
@@ -70,7 +70,7 @@ enum_map<CurseState> CurseStateTable{"CurseState",
                                        {"Blessed", CurseState::blessed},
                                    }};
 
-enum_map<IdentifyState> IdentifyStateTable{
+EnumMap<IdentifyState> IdentifyStateTable{
     "IdentifyState",
     {
         {"Unidentified", IdentifyState::unidentified},
@@ -79,7 +79,7 @@ enum_map<IdentifyState> IdentifyStateTable{
         {"Completely", IdentifyState::completely_identified},
     }};
 
-enum_map<StatusAilment> StatusAilmentTable{
+EnumMap<StatusAilment> StatusAilmentTable{
     "StatusAilment",
     {
         {"Blinded", StatusAilment::blinded},
@@ -95,7 +95,7 @@ enum_map<StatusAilment> StatusAilmentTable{
         {"Sick", StatusAilment::sick},
     }};
 
-enum_map<Element> ElementTable{"Element",
+EnumMap<Element> ElementTable{"Element",
                             {
                                 {"Fire", Element::fire},
                                 {"Cold", Element::cold},
@@ -113,7 +113,7 @@ enum_map<Element> ElementTable{"Element",
                                 {"Acid", Element::acid},
                             }};
 
-enum_map<TileKind> TileKindTable{"TileKind",
+EnumMap<TileKind> TileKindTable{"TileKind",
                                {
                                    {"Normal", TileKind::normal},
                                    {"Wall", TileKind::wall},
@@ -124,14 +124,14 @@ enum_map<TileKind> TileKindTable{"TileKind",
 
 
 // TODO: convert the following to enum class.
-enum_map<int> GenderTable{"Gender",
+EnumMap<int> GenderTable{"Gender",
                      {
                          {"Random", -1},
                          {"Male", 0},
                          {"Female", 1},
                      }};
 
-enum_map<int> RelationTable{"Relation",
+EnumMap<int> RelationTable{"Relation",
                        {
                            {"Aggressive", -3},
                            {"Nonaggressive", -2},
@@ -140,7 +140,7 @@ enum_map<int> RelationTable{"Relation",
                            {"Friend", 10},
                        }};
 
-enum_map<int> CharaFlagTable{
+EnumMap<int> CharaFlagTable{
     "CharaFlag",
     {
         // Intrinsic flags (reset on every character refresh)

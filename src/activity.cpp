@@ -113,72 +113,72 @@ optional<TurnResult> activity_proc(character& chara)
     --chara.continuous_action_turn;
     if (chara.continuous_action_id == 7)
     {
-        auto_turn(config::instance().animewait * 2);
+        auto_turn(Config::instance().animewait * 2);
         spot_fishing();
     }
     if (chara.continuous_action_id == 5)
     {
-        auto_turn(config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animewait * 0.75);
         spot_mining_or_wall();
     }
     if (chara.continuous_action_id == 8)
     {
-        auto_turn(config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animewait * 0.75);
         spot_material();
     }
     if (chara.continuous_action_id == 9)
     {
-        auto_turn(config::instance().animewait * 0.75);
+        auto_turn(Config::instance().animewait * 0.75);
         spot_digging();
     }
     if (chara.continuous_action_id == 4)
     {
-        auto_turn(config::instance().animewait / 4);
+        auto_turn(Config::instance().animewait / 4);
         do_rest();
     }
     if (chara.continuous_action_id == 1)
     {
-        auto_turn(config::instance().animewait * 5);
+        auto_turn(Config::instance().animewait * 5);
         return do_eat_command();
     }
     if (chara.continuous_action_id == 2)
     {
-        auto_turn(config::instance().animewait * 1.25);
+        auto_turn(Config::instance().animewait * 1.25);
         return do_read_command();
     }
     if (chara.continuous_action_id == 11)
     {
-        auto_turn(config::instance().animewait * 2.5);
+        auto_turn(Config::instance().animewait * 2.5);
         continuous_action_sex();
     }
     if (chara.continuous_action_id == 10)
     {
         if (gdata(91) == 103)
         {
-            auto_turn(config::instance().animewait * 2);
+            auto_turn(Config::instance().animewait * 2);
         }
         else if (gdata(91) == 104)
         {
-            auto_turn(config::instance().animewait * 2);
+            auto_turn(Config::instance().animewait * 2);
         }
         else if (gdata(91) == 105)
         {
-            auto_turn(config::instance().animewait * 2.5);
+            auto_turn(Config::instance().animewait * 2.5);
         }
         else
         {
-            auto_turn(config::instance().animewait);
+            auto_turn(Config::instance().animewait);
         }
         continuous_action_others();
     }
     if (chara.continuous_action_id == 12)
     {
-        auto_turn(config::instance().animewait);
+        auto_turn(Config::instance().animewait);
         continuous_action_blending();
     }
     if (chara.continuous_action_id == 6)
     {
-        auto_turn(config::instance().animewait * 2);
+        auto_turn(Config::instance().animewait * 2);
         continuous_action_perform();
     }
     if (chara.continuous_action_id == 3)
@@ -535,7 +535,7 @@ void continuous_action_perform()
                                             inv[ci].position.y);
                                         ccbk = cc;
                                         cc = tc;
-                                        throwing_object_animation(
+                                        ThrowingObjectAnimation(
                                             inv[ci].position,
                                             cdata[cc].position,
                                             inv[ci].image,
@@ -1515,7 +1515,7 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                if (config::instance().animewait != 0)
+                if (Config::instance().animewait != 0)
                 {
                     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end;
                          ++cnt)
@@ -1526,7 +1526,7 @@ void spot_fishing()
                         ++scrturn;
                         update_screen();
                         redraw();
-                        await(config::instance().animewait * 2);
+                        await(Config::instance().animewait * 2);
                     }
                 }
                 if (rnd(3) == 0)
@@ -1545,14 +1545,14 @@ void spot_fishing()
             fishanime = 2;
             snd(46);
             cdata.player().emotion_icon = 220;
-            if (config::instance().animewait != 0)
+            if (Config::instance().animewait != 0)
             {
                 for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
                 {
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(config::instance().animewait * 2);
+                    await(Config::instance().animewait * 2);
                 }
             }
             if (rnd(10))
@@ -1568,7 +1568,7 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            if (config::instance().animewait != 0)
+            if (Config::instance().animewait != 0)
             {
                 for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end;
                      ++cnt)
@@ -1582,7 +1582,7 @@ void spot_fishing()
                     update_screen();
                     addefmap(fishx, fishy, 5, 2);
                     redraw();
-                    await(config::instance().animewait * 2);
+                    await(Config::instance().animewait * 2);
                 }
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
@@ -1599,7 +1599,7 @@ void spot_fishing()
         {
             fishanime = 4;
             snd(88);
-            if (config::instance().animewait != 0)
+            if (Config::instance().animewait != 0)
             {
                 for (int cnt = 0; cnt < 21; ++cnt)
                 {
@@ -1611,7 +1611,7 @@ void spot_fishing()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(config::instance().animewait * 2);
+                    await(Config::instance().animewait * 2);
                 }
             }
             snd(14 + rnd(2));
@@ -1860,7 +1860,7 @@ void spot_mining_or_wall()
             map(refx, refy, 0) = tile_tunnel;
             spillfrag(refx, refy, 2);
             snd(45);
-            breaking_animation({refx, refy}, 5).play();
+            BreakingAnimation({refx, refy}, 5).play();
             txt(i18n::s.get("core.locale.activity.dig_mining.finish.wall"));
             if (gdata_tutorial_flag == 2
                 && gdata_current_map == mdata_t::MapId::your_home)

@@ -45,7 +45,7 @@ struct quick_action
     bool touched = false;
 };
 
-class touch_input : public lib::noncopyable
+class TouchInput : public lib::noncopyable
 {
     enum EventType
     {
@@ -55,8 +55,8 @@ class touch_input : public lib::noncopyable
     };
 
 public:
-    virtual ~touch_input() override = default;
-    static touch_input& instance();
+    virtual ~TouchInput() override = default;
+    static TouchInput& instance();
 
     optional<quick_action> last_touched_quick_action() const
     {
@@ -87,7 +87,7 @@ public:
     void on_touch_event(::SDL_TouchFingerEvent);
 
 private:
-    touch_input() = default;
+    TouchInput() = default;
 
     void draw_quick_action(const quick_action&);
     int quick_action_size() const noexcept;
@@ -107,7 +107,7 @@ private:
 
     static const constexpr float _base_font_size = 0.0089f;
 
-    std::unique_ptr<basic_image> _quick_action_image;
+    std::unique_ptr<BasicImage> _quick_action_image;
 };
 
 } // namespace snail

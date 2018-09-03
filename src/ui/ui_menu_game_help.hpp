@@ -4,10 +4,10 @@ namespace elona
 {
 namespace ui
 {
-class ui_menu_game_help : public ui_menu<dummy_result>
+class UIMenuGameHelp : public UIMenu<dummy_result>
 {
 public:
-    ui_menu_game_help()
+    UIMenuGameHelp()
     {
     }
 
@@ -15,7 +15,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_game_help::result_type> on_key(
+    virtual optional<UIMenuGameHelp::result_type> on_key(
         const std::string& key);
 
     void _remove_parenthesis_around_keys();

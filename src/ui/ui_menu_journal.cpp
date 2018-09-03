@@ -10,7 +10,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_journal::init()
+bool UIMenuJournal::init()
 {
     curmenu = 1;
     page = 99;
@@ -154,7 +154,7 @@ bool ui_menu_journal::init()
     return true;
 }
 
-void ui_menu_journal::update()
+void UIMenuJournal::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -235,11 +235,11 @@ void ui_menu_journal::update()
     }
 }
 
-void ui_menu_journal::draw()
+void UIMenuJournal::draw()
 {
 }
 
-optional<ui_menu_journal::result_type> ui_menu_journal::on_key(
+optional<UIMenuJournal::result_type> UIMenuJournal::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -264,7 +264,7 @@ optional<ui_menu_journal::result_type> ui_menu_journal::on_key(
     {
         menucycle = 0;
         update_screen();
-        return ui_menu_journal::result::finish();
+        return UIMenuJournal::result::finish();
     }
 
     return none;

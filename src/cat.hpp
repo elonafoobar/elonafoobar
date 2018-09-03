@@ -22,10 +22,10 @@ using ref = int;
 
 
 
-class engine : lib::noncopyable
+class Engine : lib::noncopyable
 {
 public:
-    engine() = default;
+    Engine() = default;
 
     void initialize();
     void load(const fs::path& filepath);
@@ -141,7 +141,7 @@ private:
 };
 
 
-extern engine global;
+extern Engine global;
 
 
 
@@ -170,7 +170,7 @@ struct cat_db_traits;
 
 
 template <class T>
-class cat_db : public lib::noncopyable
+class CatDB : public lib::noncopyable
 {
     using traits_type = cat_db_traits<T>;
 

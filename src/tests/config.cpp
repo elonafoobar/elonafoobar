@@ -10,13 +10,13 @@ using namespace elona;
 
 namespace
 {
-config load(
+Config load(
     const std::string& def_str,
     const std::string& config_str,
     bool preload = false)
 {
-    config_def def;
-    config conf;
+    ConfigDef def;
+    Config conf;
 
     {
         std::stringstream ss(def_str);
@@ -37,8 +37,8 @@ bool load_fails(
     const std::string& config_str,
     bool preload = false)
 {
-    config_def def;
-    config conf;
+    ConfigDef def;
+    Config conf;
 
     {
         std::stringstream ss(def_str);
@@ -105,7 +105,7 @@ config def {
 
 TEST_CASE("Test fallback to default config value", "[Config: Loading]")
 {
-    config conf = load(
+    Config conf = load(
         R"(
 config def {
     foo = false
@@ -119,7 +119,7 @@ config def {
 
 TEST_CASE("Test loading config with out-of-bounds value", "[Config: Loading]")
 {
-    config conf = load(
+    Config conf = load(
         R"(
 config def {
     foo = {
@@ -144,7 +144,7 @@ config def {
 
 TEST_CASE("Test value getter", "[Config: Loading]")
 {
-    config conf = load(
+    Config conf = load(
         R"(
 config def {
     foo = "bar"
@@ -162,7 +162,7 @@ config def {
 
 TEST_CASE("Test value setter", "[Config: Loading]")
 {
-    config conf = load(
+    Config conf = load(
         R"(
 config def {
     foo = "bar"
@@ -202,7 +202,7 @@ config core {
 
 TEST_CASE("Test invalid injected enum value", "[Config: Loading]")
 {
-    config conf = load(
+    Config conf = load(
         R"(
 config def {
     foo = {

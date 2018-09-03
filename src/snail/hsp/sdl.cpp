@@ -122,7 +122,7 @@ void setup_buffers()
 {
     // Default buffer for high-frequency texture copies.
     detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
-        application::instance().get_renderer().ptr(),
+        Application::instance().get_renderer().ptr(),
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET,
         1024,
@@ -133,31 +133,31 @@ void setup_buffers()
     // rendering the message box and when rendering fullscreen
     // backgrounds.
     detail::tmp_buffer_slow = snail::detail::enforce_sdl(::SDL_CreateTexture(
-        application::instance().get_renderer().ptr(),
+        Application::instance().get_renderer().ptr(),
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET,
         // The assumption here is that it's pointless to copy a texture
         // larger than the size of the screen, because the player wouldn't
         // see the rest of the texture. That should save some cycles on less
         // powerful GPUs.
-        std::max(1024, application::instance().width()),
-        std::max(1024, application::instance().height())));
+        std::max(1024, Application::instance().width()),
+        std::max(1024, Application::instance().height())));
 
-    if (application::is_android)
+    if (Application::is_android)
     {
         // Output texture for Android. This is so the game window can
         // be placed such that it covers only part of the actual
         // screen, or scaled up and down.
         detail::android_display_region =
             snail::detail::enforce_sdl(::SDL_CreateTexture(
-                application::instance().get_renderer().ptr(),
+                Application::instance().get_renderer().ptr(),
                 SDL_PIXELFORMAT_ARGB8888,
                 SDL_TEXTUREACCESS_TARGET,
-                application::instance().width(),
-                application::instance().height()));
+                Application::instance().width(),
+                Application::instance().height()));
     }
 
-    application::instance().register_finalizer([]() {
+    Application::instance().register_finalizer([]() {
         ::SDL_DestroyTexture(detail::tmp_buffer);
         ::SDL_DestroyTexture(detail::tmp_buffer_slow);
     });
@@ -182,24 +182,24 @@ void set_blend_mode()
     {
     case 0:
     case 1:
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::none);
         break;
     case 2:
     case 3:
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::blend);
         break;
     case 4:
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::blend);
         break;
     case 5:
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::add);
         break;
     case 6:
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::blend);
         break;
     default: break;
@@ -225,7 +225,7 @@ struct MessageBox
 
     void update()
     {
-        auto& input = input::instance();
+        auto& input = Input::instance();
         buffer += input.pop_text();
 
         if (text)
@@ -325,7 +325,7 @@ void mes(const std::string& text)
 
     if (copy.size() >= 25 /* TODO */)
     {
-        application::instance().get_renderer().render_multiline_text(
+        Application::instance().get_renderer().render_multiline_text(
             copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
@@ -333,7 +333,7 @@ void mes(const std::string& text)
     }
     else
     {
-        application::instance().get_renderer().render_text(
+        Application::instance().get_renderer().render_text(
             copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
@@ -346,24 +346,24 @@ void mesbox(std::string& buffer, int keywait, bool text)
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer, keywait, text));
 
-    if (application::is_android && text)
+    if (Application::is_android && text)
     {
-        input::instance().show_soft_keyboard();
+        Input::instance().show_soft_keyboard();
     }
 }
 
-void picload(basic_image& img, int mode)
+void picload(BasicImage& img, int mode)
 {
     if (mode == 0)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save = application::instance().get_renderer().blend_mode();
-    application::instance().get_renderer().set_blend_mode(BlendMode::none);
-    application::instance().get_renderer().render_image(
+    const auto save = Application::instance().get_renderer().blend_mode();
+    Application::instance().get_renderer().set_blend_mode(BlendMode::none);
+    Application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
-    application::instance().get_renderer().set_blend_mode(save);
+    Application::instance().get_renderer().set_blend_mode(save);
 }
 
 void pos(int x, int y)
@@ -374,8 +374,8 @@ void pos(int x, int y)
 
 static void redraw_android()
 {
-    auto& renderer = application::instance().get_renderer();
-    rect pos = application::instance().window_pos();
+    auto& renderer = Application::instance().get_renderer();
+    rect pos = Application::instance().window_pos();
 
     renderer.set_render_target(nullptr);
     renderer.clear();
@@ -387,25 +387,25 @@ static void redraw_android()
     {
         renderer.set_font(itr->second);
     }
-    touch_input::instance().draw_quick_actions();
+    TouchInput::instance().draw_quick_actions();
 }
 
 void redraw()
 {
     ::SDL_Texture* target = nullptr;
-    if (application::is_android)
+    if (Application::is_android)
     {
         target = detail::android_display_region;
     }
 
-    auto& renderer = application::instance().get_renderer();
+    auto& renderer = Application::instance().get_renderer();
     const auto save = renderer.render_target();
     renderer.set_render_target(target);
     renderer.set_draw_color(snail::color{0, 0, 0, 255});
     renderer.clear();
     renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
 
-    if (application::is_android)
+    if (Application::is_android)
     {
         redraw_android();
     }
@@ -433,9 +433,9 @@ void onkey_0()
     mesbox_detail::message_boxes.erase(
         std::end(mesbox_detail::message_boxes) - 1);
 
-    if (application::is_android)
+    if (Application::is_android)
     {
-        input::instance().hide_soft_keyboard();
+        Input::instance().hide_soft_keyboard();
     }
 }
 
@@ -446,7 +446,7 @@ uint32_t last_await;
 
 void await(int msec)
 {
-    application::instance().proc_event();
+    Application::instance().proc_event();
     if (mesbox_detail::message_boxes.back())
         mesbox_detail::message_boxes.back()->update();
 
@@ -467,18 +467,18 @@ void boxf(int x, int y, int width, int height, const snail::color& color)
 {
     const auto save_color = detail::current_tex_buffer().color;
     detail::current_tex_buffer().color = color;
-    application::instance().get_renderer().set_draw_color(color);
+    Application::instance().get_renderer().set_draw_color(color);
     if (color == snail::color{0, 0, 0, 0})
     {
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::none);
     }
     else
     {
-        application::instance().get_renderer().set_blend_mode(
+        Application::instance().get_renderer().set_blend_mode(
             BlendMode::blend);
     }
-    application::instance().get_renderer().fill_rect(x, y, width, height);
+    Application::instance().get_renderer().fill_rect(x, y, width, height);
     detail::current_tex_buffer().color = save_color;
 }
 
@@ -512,7 +512,7 @@ void buffer(int window_id, int width, int height)
         if (width == img_width && height == img_height)
         {
             gsel(window_id);
-            application::instance().get_renderer().clear();
+            Application::instance().get_renderer().clear();
             return;
         }
         else
@@ -522,7 +522,7 @@ void buffer(int window_id, int width, int height)
     }
     detail::tex_buffers[window_id] = {
         snail::detail::enforce_sdl(::SDL_CreateTexture(
-            application::instance().get_renderer().ptr(),
+            Application::instance().get_renderer().ptr(),
             SDL_PIXELFORMAT_ARGB8888,
             SDL_TEXTUREACCESS_TARGET,
             width,
@@ -531,17 +531,17 @@ void buffer(int window_id, int width, int height)
         height,
     };
 
-    application::instance().register_finalizer(
+    Application::instance().register_finalizer(
         [ptr = detail::tex_buffers[window_id].texture]() {
             ::SDL_DestroyTexture(ptr);
         });
 
-    const auto save = application::instance().get_renderer().render_target();
-    application::instance().get_renderer().set_render_target(
+    const auto save = Application::instance().get_renderer().render_target();
+    Application::instance().get_renderer().set_render_target(
         detail::tex_buffers[window_id].texture);
-    application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-    application::instance().get_renderer().clear();
-    application::instance().get_renderer().set_render_target(save);
+    Application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
+    Application::instance().get_renderer().clear();
+    Application::instance().get_renderer().set_render_target(save);
 
     gsel(window_id);
 }
@@ -554,13 +554,13 @@ void color(int r, int g, int b)
         static_cast<uint8_t>(clamp(b, 0, 255)),
         detail::current_tex_buffer().color.a,
     };
-    application::instance().get_renderer().set_draw_color(
+    Application::instance().get_renderer().set_draw_color(
         detail::current_tex_buffer().color);
 }
 
 void font(int size, font_t::Style style, const fs::path& filepath)
 {
-    auto& renderer = application::instance().get_renderer();
+    auto& renderer = Application::instance().get_renderer();
     if (renderer.font().size() == size && renderer.font().style() == style)
         return;
 
@@ -590,7 +590,7 @@ void gcopy(
     int dst_width,
     int dst_height)
 {
-    auto&& renderer = snail::application::instance().get_renderer();
+    auto&& renderer = snail::Application::instance().get_renderer();
 
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
@@ -680,12 +680,12 @@ int ginfo(int type)
     case 3: return detail::current_buffer; // target window id
     case 4: return 0; // window x1
     case 5: return 0; // window y1
-    case 6: return application::instance().width(); // window x2
-    case 7: return application::instance().height(); // window y2
+    case 6: return Application::instance().width(); // window x2
+    case 7: return Application::instance().height(); // window y2
     case 8: return 0; // window scroll x
     case 9: return 0; // window scroll y
-    case 10: return application::instance().width(); // window width
-    case 11: return application::instance().height(); // window height
+    case 10: return Application::instance().width(); // window width
+    case 11: return Application::instance().height(); // window height
     case 12:
         return detail::current_tex_buffer().tex_width; // window client width
     case 13:
@@ -767,7 +767,7 @@ void grotate(
         dst_height,
     };
 
-    switch (application::instance().get_renderer().blend_mode())
+    switch (Application::instance().get_renderer().blend_mode())
     {
     case BlendMode::none:
         snail::detail::enforce_sdl(::SDL_SetTextureBlendMode(
@@ -783,7 +783,7 @@ void grotate(
         break;
     }
     snail::detail::enforce_sdl(::SDL_RenderCopyEx(
-        application::instance().get_renderer().ptr(),
+        Application::instance().get_renderer().ptr(),
         detail::tex_buffers[window_id].texture,
         &src_rect,
         &dst_rect,
@@ -797,7 +797,7 @@ void grotate(
 void gsel(int window_id)
 {
     detail::current_buffer = window_id;
-    application::instance().get_renderer().set_render_target(
+    Application::instance().get_renderer().set_render_target(
         detail::current_tex_buffer().texture);
 }
 
@@ -805,7 +805,7 @@ void gsel(int window_id)
 
 void line(int x1, int y1, int x2, int y2, const snail::color& color)
 {
-    auto&& renderer = snail::application::instance().get_renderer();
+    auto&& renderer = snail::Application::instance().get_renderer();
     renderer.set_draw_color(color);
     renderer.render_line(x1, y1, x2, y2);
     renderer.set_draw_color({0, 0, 0});
@@ -815,11 +815,11 @@ void line(int x1, int y1, int x2, int y2, const snail::color& color)
 
 static void title_android(const std::string& display_mode)
 {
-    application::instance().set_display_mode(
-        application::instance().get_default_display_mode());
-    application::instance().set_fullscreen_mode(
-        window::FullscreenMode::fullscreen);
-    application::instance().set_subwindow_display_mode(display_mode);
+    Application::instance().set_display_mode(
+        Application::instance().get_default_display_mode());
+    Application::instance().set_fullscreen_mode(
+        Window::FullscreenMode::fullscreen);
+    Application::instance().set_subwindow_display_mode(display_mode);
 }
 
 
@@ -827,11 +827,11 @@ static void title_android(const std::string& display_mode)
 void title(
     const std::string& title_str,
     const std::string& display_mode,
-    window::FullscreenMode fullscreen_mode)
+    Window::FullscreenMode fullscreen_mode)
 {
-    application::instance().initialize(title_str);
+    Application::instance().initialize(title_str);
 
-    if (application::is_android)
+    if (Application::is_android)
     {
         title_android(display_mode);
     }
@@ -839,16 +839,16 @@ void title(
     {
         if (display_mode != "")
         {
-            application::instance().set_display_mode(display_mode);
+            Application::instance().set_display_mode(display_mode);
         }
-        application::instance().set_fullscreen_mode(fullscreen_mode);
+        Application::instance().set_fullscreen_mode(fullscreen_mode);
     }
 
     detail::setup_buffers();
-    application::instance().register_finalizer(
+    Application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(
-        0, application::instance().width(), application::instance().height());
+        0, Application::instance().width(), Application::instance().height());
 }
 
 } // namespace hsp

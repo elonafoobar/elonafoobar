@@ -15,17 +15,17 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
-class spec_error : public std::exception
+class SpecError : public std::exception
 {
 public:
-    spec_error(const std::string& key, std::string str)
+    SpecError(const std::string& key, std::string str)
     {
         std::ostringstream oss;
         oss << key << ": Config definition loading error: ";
         oss << str;
         what_ = oss.str();
     }
-    spec_error(const std::string& file, const std::string& key, std::string str)
+    SpecError(const std::string& file, const std::string& key, std::string str)
     {
         std::ostringstream oss;
         oss << file << ": Config definition loading error at " << key << ": ";
@@ -131,16 +131,16 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
  * HCL document. Used for validating the correctness of user-inputted
  * HCL files. For an example, see runtime/mods/core/config/config_def.hcl.
  */
-class object
+class Object
 {
 public:
     typedef tsl::ordered_map<std::string, item>::const_iterator const_iterator;
 
-    object(std::string name_)
+    Object(std::string name_)
         : name(name_)
     {
     }
-    ~object() = default;
+    ~Object() = default;
 
     void init(const fs::path&);
     void load(std::istream&, const std::string&);
@@ -178,11 +178,11 @@ public:
     {
         if (!exists(key) || !is<enum_def>(key))
         {
-            throw spec_error(key, "No such enum " + key);
+            throw SpecError(key, "No such enum " + key);
         }
         if (!get<enum_def>(key).pending)
         {
-            throw spec_error(
+            throw SpecError(
                 key,
                 "Attempted to inject an enum, but it was not of type "
                 "runtime_enum: "
@@ -200,7 +200,7 @@ public:
         if (!index)
         {
             def.variants = std::vector<std::string>();
-            throw spec_error(
+            throw SpecError(
                 key,
                 "Default variant \"" + default_variant
                     + "\" not found: " + key);
@@ -264,7 +264,7 @@ public:
     {
         if (is<section_def>(key))
         {
-            throw spec_error(key, "Sections cannot have default values.");
+            throw SpecError(key, "Sections cannot have default values.");
         }
         else if (is<int_def>(key))
         {
@@ -295,7 +295,7 @@ public:
     {
         if (!is<section_def>(key))
         {
-            throw spec_error(key, "Cannot get children for non-section " + key);
+            throw SpecError(key, "Cannot get children for non-section " + key);
         }
         return get<section_def>(key).children;
     }
@@ -307,7 +307,7 @@ public:
     {
         if (!is<enum_def>(key))
         {
-            throw spec_error(key, "Cannot get variants for non-enum " + key);
+            throw SpecError(key, "Cannot get variants for non-enum " + key);
         }
         return get<enum_def>(key).variants;
     }
@@ -323,7 +323,7 @@ public:
         }
         if (!is<int_def>(key))
         {
-            throw spec_error(
+            throw SpecError(
                 key, "Cannot get max value for non-integer option " + key);
         }
         return get<int_def>(key).max;
@@ -340,7 +340,7 @@ public:
         }
         if (!is<int_def>(key))
         {
-            throw spec_error(
+            throw SpecError(
                 key, "Cannot get min value for non-integer option " + key);
         }
         return get<int_def>(key).min;

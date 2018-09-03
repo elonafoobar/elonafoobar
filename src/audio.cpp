@@ -188,7 +188,7 @@ void snd_inner(
     bool loop,
     bool allow_duplicate)
 {
-    if (!config::instance().sound)
+    if (!Config::instance().sound)
         return;
 
     int channel = sound.id;
@@ -377,7 +377,7 @@ std::pair<short, unsigned char> sound_calculate_position(
 
 std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
 {
-    if (!config::instance().get<bool>("core.config.screen.stereo_sound"))
+    if (!Config::instance().get<bool>("core.config.screen.stereo_sound"))
     {
         return {0, 0};
     }
@@ -395,7 +395,7 @@ std::pair<short, unsigned char> sound_calculate_position(const position_t& p)
 void stop_music()
 {
     mmstop();
-    if (config::instance().music == "direct_music")
+    if (Config::instance().music == "direct_music")
     {
         DMSTOP();
         DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
@@ -423,7 +423,7 @@ void sound_play_environmental()
     if (env != envwprev)
     {
         envwprev = env;
-        if (config::instance().sound)
+        if (Config::instance().sound)
         {
             if (env == 0)
             {
@@ -485,7 +485,7 @@ void play_music(optional<shared_id> music_id)
 {
     sound_play_environmental();
 
-    if (config::instance().music == "none")
+    if (Config::instance().music == "none")
     {
         return;
     }

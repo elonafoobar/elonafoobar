@@ -22,14 +22,14 @@ struct fish_data
 
 
 
-class fish_db;
+class FishDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<fish_db>
+struct cat_db_traits<FishDB>
 {
     using id_type = int;
     using data_type = fish_data;
@@ -40,17 +40,17 @@ struct cat_db_traits<fish_db>
 } // namespace cat
 
 
-class fish_db : public cat::cat_db<fish_db>
+class FishDB : public cat::CatDB<FishDB>
 {
 public:
-    fish_db() = default;
+    FishDB() = default;
 
     void define(lua_State* L);
 };
 
 
 
-extern fish_db the_fish_db;
+extern FishDB the_fish_db;
 
 
 } // namespace elona

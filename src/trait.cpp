@@ -15,10 +15,10 @@ namespace elona
 {
 
 
-trait_db the_trait_db;
+TraitDB the_trait_db;
 
 
-void trait_db::define(lua_State* L)
+void TraitDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)

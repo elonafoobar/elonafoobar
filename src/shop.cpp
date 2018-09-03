@@ -698,11 +698,11 @@ void shop_refresh()
         }
         item_stack(-1, ci);
     }
-    if (config::instance().restock_interval)
+    if (Config::instance().restock_interval)
     {
         cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-            + 24 * config::instance().restock_interval;
+            + 24 * Config::instance().restock_interval;
     }
     else
     {

@@ -23,14 +23,14 @@ struct ability_data
 };
 
 
-class ability_db;
+class AbilityDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<ability_db>
+struct cat_db_traits<AbilityDB>
 {
     using id_type = int;
     using data_type = ability_data;
@@ -42,16 +42,16 @@ struct cat_db_traits<ability_db>
 
 
 
-class ability_db : public cat::cat_db<ability_db>
+class AbilityDB : public cat::CatDB<AbilityDB>
 {
 public:
-    ability_db() = default;
+    AbilityDB() = default;
 
     void define(lua_State* L);
 };
 
 
-extern ability_db the_ability_db;
+extern AbilityDB the_ability_db;
 
 
 
@@ -77,10 +77,10 @@ struct ability
 
 
 
-class skill_data
+class SkillData
 {
 public:
-    skill_data();
+    SkillData();
 
 
     int& operator()(int id, int cc)
@@ -106,7 +106,7 @@ private:
 };
 
 
-extern skill_data sdata;
+extern SkillData sdata;
 
 
 struct character;

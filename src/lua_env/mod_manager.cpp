@@ -29,13 +29,13 @@ bool is_alnum_only(const std::string& str)
 
 } // namespace
 
-mod_manager::mod_manager(lua_env* lua)
+ModManager::ModManager(LuaEnv* lua)
 {
     lua_ = lua;
 }
 
 
-void mod_manager::load_mods(const fs::path& mod_dir)
+void ModManager::load_mods(const fs::path& mod_dir)
 {
     if (stage != ModLoadingStage::not_started)
     {
@@ -47,7 +47,7 @@ void mod_manager::load_mods(const fs::path& mod_dir)
     load_scanned_mods();
 }
 
-void mod_manager::load_mods(
+void ModManager::load_mods(
     const fs::path& mod_dir,
     const fs::path& additional_mod_path)
 {
@@ -70,7 +70,7 @@ void report_error(sol::error err)
 }
 
 
-void mod_manager::clear_map_local_data()
+void ModManager::clear_map_local_data()
 {
     for (auto&& pair : mods)
     {
@@ -91,7 +91,7 @@ end
 }
 
 
-void mod_manager::load_mod(mod_info& mod)
+void ModManager::load_mod(mod_info& mod)
 {
     setup_and_lock_mod_globals(mod);
 
@@ -124,7 +124,7 @@ void mod_manager::load_mod(mod_info& mod)
     }
 }
 
-void mod_manager::scan_mod(const fs::path& mod_dir)
+void ModManager::scan_mod(const fs::path& mod_dir)
 {
     const std::string mod_name = mod_dir.filename().string();
     ELONA_LOG("Found mod " << mod_name);
@@ -145,7 +145,7 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
     this->mods.emplace(mod_name, std::move(info));
 }
 
-void mod_manager::scan_all_mods(const fs::path& mods_dir)
+void ModManager::scan_all_mods(const fs::path& mods_dir)
 {
     if (stage != ModLoadingStage::not_started
         && stage != ModLoadingStage::scan_finished)
@@ -167,7 +167,7 @@ void mod_manager::scan_all_mods(const fs::path& mods_dir)
     stage = ModLoadingStage::scan_finished;
 }
 
-void mod_manager::load_lua_support_libraries()
+void ModManager::load_lua_support_libraries()
 {
     if (stage == ModLoadingStage::not_started)
     {
@@ -182,7 +182,7 @@ void mod_manager::load_lua_support_libraries()
     stage = ModLoadingStage::lua_libraries_loaded;
 }
 
-void mod_manager::load_scanned_mods()
+void ModManager::load_scanned_mods()
 {
     if (stage != ModLoadingStage::lua_libraries_loaded)
     {
@@ -209,7 +209,7 @@ void mod_manager::load_scanned_mods()
     stage = ModLoadingStage::all_mods_loaded;
 }
 
-void mod_manager::run_startup_script(const std::string& name)
+void ModManager::run_startup_script(const std::string& name)
 {
     if (stage < ModLoadingStage::lua_libraries_loaded)
     {
@@ -237,7 +237,7 @@ void mod_manager::run_startup_script(const std::string& name)
     this->mods.emplace("script", std::move(script_mod));
 }
 
-void mod_manager::clear_mod_stores()
+void ModManager::clear_mod_stores()
 {
     for (auto&& pair : mods)
     {
@@ -287,7 +287,7 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
-void mod_manager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
+void ModManager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
 {
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
@@ -304,7 +304,7 @@ void mod_manager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
     table["Store"] = Store;
 }
 
-void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
+void ModManager::setup_mod_globals(mod_info& mod, sol::table& table)
 {
     // Create the globals "Elona" and "Store" for this mod's
     // environment.
@@ -331,7 +331,7 @@ void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
     }
 }
 
-void mod_manager::setup_and_lock_mod_globals(mod_info& mod)
+void ModManager::setup_and_lock_mod_globals(mod_info& mod)
 {
     sol::table env_metatable = lua_->get_state()->create_table_with();
 
@@ -348,7 +348,7 @@ void mod_manager::setup_and_lock_mod_globals(mod_info& mod)
 
 
 // For testing use
-void mod_manager::load_mod_from_script(
+void ModManager::load_mod_from_script(
     const std::string& name,
     const std::string& script,
     bool readonly)
@@ -401,7 +401,7 @@ void mod_manager::load_mod_from_script(
     this->mods[name] = std::move(info);
 }
 
-void mod_manager::run_in_mod(const std::string& name, const std::string& script)
+void ModManager::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = mods.find(name);
     if (val == mods.end())

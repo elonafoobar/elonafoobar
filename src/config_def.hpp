@@ -12,7 +12,7 @@ namespace elona
  * Contains a layout of valid config options, to be used by the config
  * class for validating values set on it.
  */
-class config_def : public spec::object
+class ConfigDef : public spec::Object
 {
 public:
     enum class Platform
@@ -58,17 +58,17 @@ public:
         }
     };
 
-    config_def()
-        : spec::object("config")
+    ConfigDef()
+        : spec::Object("config")
     {
         locale_root = "core.locale.config.menu";
     }
 
-    ~config_def() = default;
+    ~ConfigDef() = default;
 
     void clear()
     {
-        spec::object::clear();
+        spec::Object::clear();
         data.clear();
     }
 
@@ -83,7 +83,7 @@ public:
             }
         }
 
-        return spec::object::get_default(key);
+        return spec::Object::get_default(key);
     }
 
     const metadata& get_metadata(const spec_key& key) const

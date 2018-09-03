@@ -20,7 +20,7 @@ namespace elona
 {
 
 
-god_db the_god_db;
+GodDB the_god_db;
 
 
 void txtgod(const god_id_t& id, int type)
@@ -388,7 +388,7 @@ void god_proc_switching_penalty()
             magic();
             snd(63);
             mode = 0;
-            await(config::instance().animewait * 20);
+            await(Config::instance().animewait * 20);
         }
         cdata.player().god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
@@ -416,7 +416,7 @@ void switch_religion()
     else
     {
         animode = 100;
-        miracle_animation().play();
+        MiracleAnimation().play();
         snd(51);
         txtef(5);
         txt(i18n::s.get(
@@ -468,7 +468,7 @@ TurnResult do_pray()
         return TurnResult::turn_end;
     }
     animode = 100;
-    miracle_animation().play();
+    MiracleAnimation().play();
     snd(120);
     efid = 1120;
     efp = 100;

@@ -19,7 +19,7 @@ namespace snail
 
 
 
-class renderer : public lib::noncopyable
+class Renderer : public lib::noncopyable
 {
 public:
     enum Flag
@@ -47,7 +47,7 @@ public:
         bottom,
     };
 
-    ~renderer();
+    ~Renderer();
 
     TextAlignment text_alignment() const noexcept
     {
@@ -108,7 +108,7 @@ public:
     ::SDL_Renderer* ptr();
 
 
-    renderer(window& target_window, int flag);
+    Renderer(Window& target_window, int flag);
 
 
     void clear();
@@ -135,15 +135,15 @@ public:
         const color& text_color = palette::black);
     size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
-    void render_image(image_base& image, int dst_x, int dst_y);
+    void render_image(ImageBase& image, int dst_x, int dst_y);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int dst_x,
         int dst_y,
         int dst_width,
         int dst_height);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,
@@ -151,7 +151,7 @@ public:
         int dst_x,
         int dst_y);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,
@@ -188,7 +188,7 @@ public:
 
 
     void render_image_crop(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,

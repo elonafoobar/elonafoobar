@@ -1014,9 +1014,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(config::instance().animewait * 6);
+                await(Config::instance().animewait * 6);
             }
-            await(config::instance().animewait * 3);
+            await(Config::instance().animewait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
@@ -1235,7 +1235,7 @@ TurnResult turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(config::instance().animewait * 10);
+                await(Config::instance().animewait * 10);
             }
             txtef(9);
             txt(u8" *tick* "s);
@@ -1280,7 +1280,7 @@ TurnResult pc_turn(bool advance_time)
         }
         if (gdata(30))
         {
-            await(config::instance().wait1 / 3);
+            await(Config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
@@ -1360,7 +1360,7 @@ TurnResult pc_turn(bool advance_time)
             autosave = 0;
             if (gdata_wizard == 0
                 && gdata_current_map != mdata_t::MapId::pet_arena
-                && config::instance().autosave)
+                && Config::instance().autosave)
             {
                 do_save_game();
             }
@@ -1415,7 +1415,7 @@ TurnResult pc_turn(bool advance_time)
                 return TurnResult::exit_map;
             }
         label_2744_internal:
-            await(config::instance().wait1);
+            await(Config::instance().wait1);
             cdata.player().direction = 0;
             key_check();
             f = 0;
@@ -1538,13 +1538,13 @@ label_2747:
         return TurnResult::turn_end;
     }
     ++t;
-    if (t % config::instance().scrsync == 1)
+    if (t % Config::instance().scrsync == 1)
     {
         ++scrturn;
         ui_render_from_screensync();
     }
 
-    if (config::instance().net && config::instance().netwish && key == ""s)
+    if (Config::instance().net && Config::instance().netwish && key == ""s)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -1558,7 +1558,7 @@ label_2747:
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
                 {
-                    if (config::instance().netchat)
+                    if (Config::instance().netchat)
                     {
                         continue;
                     }
@@ -1590,7 +1590,7 @@ label_2747:
     // queried, but it would probably be dangerous to allow the game
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 

@@ -22,14 +22,14 @@ struct class_data
 
 
 
-class class_db;
+class ClassDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<class_db>
+struct cat_db_traits<ClassDB>
 {
     using id_type = std::string;
     using data_type = class_data;
@@ -41,10 +41,10 @@ struct cat_db_traits<class_db>
 
 
 
-class class_db : public cat::cat_db<class_db>
+class ClassDB : public cat::CatDB<ClassDB>
 {
 public:
-    class_db() = default;
+    ClassDB() = default;
 
     void define(lua_State* L);
     std::vector<std::reference_wrapper<const class_data>> get_available_classes(
@@ -52,7 +52,7 @@ public:
 };
 
 
-extern class_db the_class_db;
+extern ClassDB the_class_db;
 
 
 extern int cequipment;

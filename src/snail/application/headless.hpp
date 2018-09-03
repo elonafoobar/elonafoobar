@@ -10,7 +10,7 @@ namespace elona
 namespace snail
 {
 
-class application final
+class Application final
 {
 public:
     enum class Orientation
@@ -72,9 +72,9 @@ public:
     void set_title(const std::string& title);
 
 
-    ~application() = default;
+    ~Application() = default;
 
-    static application& instance();
+    static Application& instance();
 
 
     void initialize(const std::string& title);
@@ -85,7 +85,7 @@ public:
     void register_finalizer(std::function<void()> finalizer);
 
 
-    renderer& get_renderer()
+    Renderer& get_renderer()
     {
         return *_renderer;
     }
@@ -98,12 +98,12 @@ public:
         return false;
     }
 
-    window::FullscreenMode get_fullscreen_mode()
+    Window::FullscreenMode get_fullscreen_mode()
     {
-        return window::FullscreenMode::windowed;
+        return Window::FullscreenMode::windowed;
     }
 
-    void set_fullscreen_mode(window::FullscreenMode);
+    void set_fullscreen_mode(Window::FullscreenMode);
 
 
     std::map<std::string, ::SDL_DisplayMode> get_display_modes()
@@ -126,9 +126,9 @@ public:
 
 
 private:
-    application() = default;
-    std::unique_ptr<window> _window;
-    std::unique_ptr<renderer> _renderer;
+    Application() = default;
+    std::unique_ptr<Window> _window;
+    std::unique_ptr<Renderer> _renderer;
     bool _will_quit = false;
     const std::string _title = "";
 

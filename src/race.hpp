@@ -33,14 +33,14 @@ struct race_data
 
 
 
-class race_db;
+class RaceDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<race_db>
+struct cat_db_traits<RaceDB>
 {
     using id_type = std::string;
     using data_type = race_data;
@@ -52,10 +52,10 @@ struct cat_db_traits<race_db>
 
 
 
-class race_db : public cat::cat_db<race_db>
+class RaceDB : public cat::CatDB<RaceDB>
 {
 public:
-    race_db() = default;
+    RaceDB() = default;
 
     std::vector<std::reference_wrapper<const race_data>> get_available_races(
         bool is_extra_race) const;
@@ -64,7 +64,7 @@ public:
 };
 
 
-extern race_db the_race_db;
+extern RaceDB the_race_db;
 
 
 

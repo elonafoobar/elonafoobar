@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_charamake_attributes : public ui_menu<elona_vector1<int>>
+class UIMenuCharamakeAttributes : public UIMenu<elona_vector1<int>>
 {
 public:
-    ui_menu_charamake_attributes(
+    UIMenuCharamakeAttributes(
         const std::string& race,
         const std::string& klass,
         elona_vector1<int> attributes,
@@ -25,7 +25,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_charamake_attributes::result_type> on_key(
+    virtual optional<UIMenuCharamakeAttributes::result_type> on_key(
         const std::string& key);
 
 private:

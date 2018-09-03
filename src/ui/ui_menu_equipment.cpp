@@ -65,7 +65,7 @@ static int _load_equipment_list(const character& chara)
     return mainhand;
 }
 
-bool ui_menu_equipment::init()
+bool UIMenuEquipment::init()
 {
     cc = 0;
     page = 0;
@@ -102,7 +102,7 @@ bool ui_menu_equipment::init()
     return true;
 }
 
-void ui_menu_equipment::update()
+void UIMenuEquipment::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -271,7 +271,7 @@ static void _draw_list_entries(bool show_resistances)
     cs_bk = cs;
 }
 
-void ui_menu_equipment::draw()
+void UIMenuEquipment::draw()
 {
     _draw_window(_show_resistances);
     _draw_keys(_mainhand);
@@ -334,7 +334,7 @@ static void _show_item_desc(int body_)
     update_screen();
 }
 
-optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
+optional<UIMenuEquipment::result_type> UIMenuEquipment::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -399,7 +399,7 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
         create_pcpic(cc, true);
         update_screen();
         // result.turn_result = TurnResult::pc_turn_user_error
-        return ui_menu_equipment::result::cancel();
+        return UIMenuEquipment::result::cancel();
     }
 
     return none;

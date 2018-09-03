@@ -5,10 +5,10 @@
 namespace elona
 {
 
-chara_chip_data chara_chip_db::convert(
+chara_chip_data CharaChipDB::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     UNUSED(lua);
     ELONA_LION_DB_FIELD_REQUIRED(_mod, std::string);

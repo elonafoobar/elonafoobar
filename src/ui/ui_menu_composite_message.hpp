@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_composite_message : public ui_menu_composite<dummy_result>
+class UIMenuCompositeMessage : public UIMenuComposite<dummy_result>
 {
 public:
     enum Index : size_t
@@ -16,8 +16,8 @@ public:
         chat_history = 2
     };
 
-    ui_menu_composite_message(size_t selected)
-        : ui_menu_composite(selected)
+    UIMenuCompositeMessage(size_t selected)
+        : UIMenuComposite(selected)
     {
     }
 

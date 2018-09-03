@@ -13,7 +13,7 @@ namespace snail
 {
 
 
-class window : public lib::noncopyable
+class Window : public lib::noncopyable
 {
 public:
     enum InitialPosition
@@ -75,7 +75,7 @@ public:
 
     void set_fullscreen_mode(FullscreenMode fullscreen_mode);
 
-    window(
+    Window(
         const std::string& title,
         int x,
         int y,
@@ -83,7 +83,7 @@ public:
         int height,
         int flag);
 
-    virtual ~window() override = default;
+    virtual ~Window() override = default;
 };
 
 

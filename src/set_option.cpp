@@ -19,21 +19,21 @@ using namespace elona;
 namespace
 {
 
-class config_menu_item_base
+class ConfigMenuItemBase
 {
 public:
     std::string name;
     std::string key;
     i18n_key locale_key;
 
-    config_menu_item_base(const std::string& key, const i18n_key& locale_key)
+    ConfigMenuItemBase(const std::string& key, const i18n_key& locale_key)
         : key(key)
         , locale_key(locale_key)
     {
         name = i18n::s.get(locale_key + ".name");
     }
 
-    virtual ~config_menu_item_base() noexcept = default;
+    virtual ~ConfigMenuItemBase() noexcept = default;
 
     virtual void change(int)
     {
@@ -57,20 +57,20 @@ public:
 };
 
 
-class config_menu_item_yesno : public config_menu_item_base
+class ConfigMenuItemYesNo : public ConfigMenuItemBase
 {
 public:
     bool variable;
     std::string yes;
     std::string no;
 
-    config_menu_item_yesno(
+    ConfigMenuItemYesNo(
         const std::string& key,
         const i18n_key& locale_key,
         bool variable,
         const std::string& yes,
         const std::string& no)
-        : config_menu_item_base(key, locale_key)
+        : ConfigMenuItemBase(key, locale_key)
         , variable(variable)
         , yes(yes)
         , no(no)
@@ -88,32 +88,32 @@ public:
             variable = false;
         }
 
-        config::instance().set(key, variable);
+        Config::instance().set(key, variable);
     }
     std::string get_message()
     {
         return variable ? yes : no;
     }
 
-    virtual ~config_menu_item_yesno() noexcept = default;
+    virtual ~ConfigMenuItemYesNo() noexcept = default;
 };
 
 
-class config_menu_item_info : public config_menu_item_base
+class ConfigMenuItemInfo : public ConfigMenuItemBase
 {
 public:
     std::string info;
 
-    config_menu_item_info(
+    ConfigMenuItemInfo(
         const std::string& key,
         const i18n_key& locale_key,
         const std::string& info)
-        : config_menu_item_base(key, locale_key)
+        : ConfigMenuItemBase(key, locale_key)
         , info(info)
     {
     }
 
-    virtual ~config_menu_item_info() noexcept = default;
+    virtual ~ConfigMenuItemInfo() noexcept = default;
 
     std::string get_message()
     {
@@ -122,7 +122,7 @@ public:
 };
 
 
-class config_menu_item_integer : public config_menu_item_base
+class ConfigMenuItemInteger : public ConfigMenuItemBase
 {
 public:
     int variable;
@@ -130,14 +130,14 @@ public:
     int max;
     std::string text;
 
-    config_menu_item_integer(
+    ConfigMenuItemInteger(
         const std::string& key,
         const i18n_key& locale_key,
         int variable,
         int min,
         int max,
         const std::string& text)
-        : config_menu_item_base(key, locale_key)
+        : ConfigMenuItemBase(key, locale_key)
         , variable(variable)
         , min(min)
         , max(max)
@@ -148,7 +148,7 @@ public:
     void change(int delta)
     {
         variable = clamp(variable + delta, min, max);
-        config::instance().set(key, variable);
+        Config::instance().set(key, variable);
     }
 
     std::string get_message()
@@ -156,11 +156,11 @@ public:
         return i18n::fmt_hil(text, variable);
     }
 
-    virtual ~config_menu_item_integer() noexcept = default;
+    virtual ~ConfigMenuItemInteger() noexcept = default;
 };
 
 
-class config_menu_item_choice : public config_menu_item_base
+class ConfigMenuItemChoice : public ConfigMenuItemBase
 {
 public:
     struct choice
@@ -179,13 +179,13 @@ public:
     bool translate_variants;
     std::vector<choice> variants;
 
-    config_menu_item_choice(
+    ConfigMenuItemChoice(
         const std::string& key,
         const i18n_key& locale_key,
         std::string default_choice,
         const std::vector<choice>& variants,
         bool translate_variants)
-        : config_menu_item_base(key, locale_key)
+        : ConfigMenuItemBase(key, locale_key)
         , translate_variants(translate_variants)
         , variants(variants)
     {
@@ -212,7 +212,7 @@ public:
             && variants.at(index).value == spec::unknown_enum_variant)
         {
             index = 1;
-            config::instance().set(key, variants.at(index).value);
+            Config::instance().set(key, variants.at(index).value);
         }
     }
 
@@ -233,7 +233,7 @@ public:
         {
             index = 1;
         }
-        config::instance().set(key, variants.at(index).value);
+        Config::instance().set(key, variants.at(index).value);
     }
 
     std::string get_message()
@@ -258,18 +258,18 @@ public:
         }
     }
 
-    virtual ~config_menu_item_choice() noexcept = default;
+    virtual ~ConfigMenuItemChoice() noexcept = default;
 };
 
-class config_menu
+class ConfigMenu
 {
 public:
     std::string title;
-    std::vector<std::unique_ptr<config_menu_item_base>> items;
+    std::vector<std::unique_ptr<ConfigMenuItemBase>> items;
     int width;
     int height;
 
-    config_menu(const std::string& title, int width, int height)
+    ConfigMenu(const std::string& title, int width, int height)
         : title(title)
         , width(width)
         , height(height)
@@ -281,11 +281,11 @@ public:
     }
 };
 
-class config_menu_submenu : public config_menu
+class ConfigMenuSubmenu : public ConfigMenu
 {
 public:
-    config_menu_submenu(const std::string& title, int width, int height)
-        : config_menu(title, width, height)
+    ConfigMenuSubmenu(const std::string& title, int width, int height)
+        : ConfigMenu(title, width, height)
     {
     }
 
@@ -297,7 +297,7 @@ public:
     }
 };
 
-class config_menu_joypad : public config_menu
+class ConfigMenuJoypad : public ConfigMenu
 {
 public:
     void draw() const
@@ -309,7 +309,7 @@ public:
 };
 
 
-typedef std::vector<std::unique_ptr<config_menu>> config_screen;
+typedef std::vector<std::unique_ptr<ConfigMenu>> config_screen;
 
 
 // Functions for adding items to the config screen.
@@ -318,7 +318,7 @@ template <class M>
 static void add_config_menu(
     const spec_key& key,
     const i18n_key& menu_name_key,
-    const config_def& def,
+    const ConfigDef& def,
     int width,
     config_screen& ret)
 {
@@ -352,7 +352,7 @@ static void add_config_item_yesno(
     std::string yes_text = i18n::s.get(yes_no + ".yes");
     std::string no_text = i18n::s.get(yes_no + ".no");
 
-    ret.back()->items.emplace_back(std::make_unique<config_menu_item_yesno>(
+    ret.back()->items.emplace_back(std::make_unique<ConfigMenuItemYesNo>(
         key, locale_key, default_value, yes_text, no_text));
 }
 
@@ -360,13 +360,13 @@ static void add_config_item_integer(
     const spec_key& key,
     const i18n_key& locale_key,
     int default_value,
-    const config_def& def,
+    const ConfigDef& def,
     config_screen& ret)
 {
     int min = def.get_min(key);
     int max = def.get_max(key);
 
-    ret.back()->items.emplace_back(std::make_unique<config_menu_item_integer>(
+    ret.back()->items.emplace_back(std::make_unique<ConfigMenuItemInteger>(
         key, locale_key, default_value, min, max, "${_1}"));
 }
 
@@ -374,23 +374,23 @@ static void add_config_item_choice(
     const spec_key& key,
     const i18n_key& locale_key,
     const std::string& default_value,
-    const config_def& def,
+    const ConfigDef& def,
     config_screen& ret)
 {
     // Add the translated names of all variants.
     const auto& variants = def.get_variants(key);
-    std::vector<config_menu_item_choice::choice> choices;
+    std::vector<ConfigMenuItemChoice::choice> choices;
 
     for (const auto& variant : variants)
     {
-        auto choice = config_menu_item_choice::choice{
+        auto choice = ConfigMenuItemChoice::choice{
             variant, locale_key + ".variants." + variant};
         choices.emplace_back(choice);
     }
 
     bool translate_variants = def.get_metadata(key).translate_variants;
 
-    ret.back()->items.emplace_back(std::make_unique<config_menu_item_choice>(
+    ret.back()->items.emplace_back(std::make_unique<ConfigMenuItemChoice>(
         key, locale_key, default_value, choices, translate_variants));
 }
 
@@ -398,7 +398,7 @@ static void add_config_item_section(
     const spec_key& key,
     const i18n_key& locale_key,
     const std::string section_name,
-    const config_def& def,
+    const ConfigDef& def,
     config_screen& ret)
 {
     // EX: "<core.config>.<language>"
@@ -409,7 +409,7 @@ static void add_config_item_section(
         // EX: "<core.locale.config.menu>.<language>"
         i18n_key section_locale_key = locale_key + "." + section_name;
 
-        ret.back()->items.emplace_back(std::make_unique<config_menu_item_base>(
+        ret.back()->items.emplace_back(std::make_unique<ConfigMenuItemBase>(
             section_key, section_locale_key));
     }
 }
@@ -417,18 +417,18 @@ static void add_config_item_section(
 
 // Functions for visiting the parsed config structure.
 
-void visit_section(config&, const spec_key&, config_screen&);
-void visit_config_item(config&, const spec_key&, config_screen&);
+void visit_section(Config&, const spec_key&, config_screen&);
+void visit_config_item(Config&, const spec_key&, config_screen&);
 
 
-void visit_toplevel(config& conf, config_screen& ret)
+void visit_toplevel(Config& conf, config_screen& ret)
 {
     spec_key key = "core.config";
     i18n_key locale_key = conf.get_def().get_locale_root();
     i18n_key menu_name_key = locale_key + ".name";
 
     // Add the top level menu.
-    add_config_menu<config_menu>(key, menu_name_key, conf.get_def(), 370, ret);
+    add_config_menu<ConfigMenu>(key, menu_name_key, conf.get_def(), 370, ret);
 
     // Add the names of top-level config menu sections if they are visible.
     for (const auto& section_name : conf.get_def().get_children(key))
@@ -445,7 +445,7 @@ void visit_toplevel(config& conf, config_screen& ret)
 }
 
 void visit_section(
-    config& conf,
+    Config& conf,
     const spec_key& current_key,
     config_screen& ret)
 {
@@ -469,7 +469,7 @@ void visit_section(
     }
 
     // Add the submenu.
-    add_config_menu<config_menu_submenu>(
+    add_config_menu<ConfigMenuSubmenu>(
         key, menu_name_key, conf.get_def(), 440, ret);
 
     // Visit child config items of this section.
@@ -480,7 +480,7 @@ void visit_section(
 }
 
 void visit_config_item(
-    config& conf,
+    Config& conf,
     const spec_key& current_key,
     config_screen& ret)
 {
@@ -535,7 +535,7 @@ void visit_config_item(
 config_screen create_config_screen()
 {
     config_screen ret;
-    auto& conf = config::instance();
+    auto& conf = Config::instance();
 
     visit_toplevel(conf, ret);
 
@@ -577,7 +577,7 @@ static void _show_config_item_desc(const std::string& desc)
         mes(desc);
 
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
 
         if (key != ""s)
@@ -740,7 +740,7 @@ set_option_begin:
             }
             // if (submenu == 3)
             // {
-            //     if (config::instance().net == 0)
+            //     if (Config::instance().net == 0)
             //     {
             //         if (cnt >= 1)
             //         {
@@ -771,7 +771,7 @@ set_option_begin:
             cs_bk = cs;
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -818,10 +818,10 @@ set_option_begin:
             }
             else
             {
-                config::instance().write();
+                Config::instance().write();
                 if (mode == 0)
                 {
-                    if (config::instance().net)
+                    if (Config::instance().net)
                     {
                         initialize_server_info();
                     }

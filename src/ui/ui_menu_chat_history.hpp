@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_chat_history : public ui_menu<dummy_result>
+class UIMenuChatHistory : public UIMenu<dummy_result>
 {
 public:
-    ui_menu_chat_history()
+    UIMenuChatHistory()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_chat_history::result_type> on_key(
+    virtual optional<UIMenuChatHistory::result_type> on_key(
         const std::string& key);
 };
 

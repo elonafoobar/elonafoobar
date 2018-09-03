@@ -8,32 +8,32 @@ namespace elona
 namespace snail
 {
 
-touch_input& touch_input::instance()
+TouchInput& TouchInput::instance()
 {
-    static touch_input the_instance;
+    static TouchInput the_instance;
     return the_instance;
 }
 
-int touch_input::quick_action_size() const noexcept
+int TouchInput::quick_action_size() const noexcept
 {
     return static_cast<int>(
-        _base_quick_action_size * application::instance().dpi());
+        _base_quick_action_size * Application::instance().dpi());
 }
 
-void touch_input::initialize(const fs::path& asset_path)
+void TouchInput::initialize(const fs::path& asset_path)
 {
     _quick_action_image =
-        std::make_unique<basic_image>(asset_path / "quick_action.png");
+        std::make_unique<BasicImage>(asset_path / "quick_action.png");
 
     initialize_quick_actions();
 
     _initialized = true;
 }
 
-void touch_input::initialize_quick_actions()
+void TouchInput::initialize_quick_actions()
 {
-    int width = application::instance().physical_width();
-    int height = application::instance().physical_height();
+    int width = Application::instance().physical_width();
+    int height = Application::instance().physical_height();
     int size = quick_action_size();
     int space_between = size * 0.75;
 
@@ -98,17 +98,17 @@ void touch_input::initialize_quick_actions()
     }
 }
 
-void touch_input::draw_quick_actions()
+void TouchInput::draw_quick_actions()
 {
     if (!_initialized)
     {
         return;
     }
 
-    auto& renderer = application::instance().get_renderer();
+    auto& renderer = Application::instance().get_renderer();
     renderer.set_blend_mode(snail::BlendMode::blend);
-    renderer.set_text_alignment(renderer::TextAlignment::center);
-    renderer.set_text_baseline(renderer::TextBaseline::middle);
+    renderer.set_text_alignment(Renderer::TextAlignment::center);
+    renderer.set_text_baseline(Renderer::TextBaseline::middle);
 
     for (auto it = _quick_actions.begin(); it < _quick_actions.end(); it++)
     {
@@ -116,11 +116,11 @@ void touch_input::draw_quick_actions()
     }
 
     renderer.set_blend_mode(snail::BlendMode::none);
-    renderer.set_text_alignment(renderer::TextAlignment::left);
-    renderer.set_text_baseline(renderer::TextBaseline::top);
+    renderer.set_text_alignment(Renderer::TextAlignment::left);
+    renderer.set_text_baseline(Renderer::TextBaseline::top);
 }
 
-bool touch_input::is_touched(int x, int y, const quick_action& action)
+bool TouchInput::is_touched(int x, int y, const quick_action& action)
 {
     int size = quick_action_size() / 2;
     int deadzone = ((float)size * 0.75);
@@ -129,14 +129,14 @@ bool touch_input::is_touched(int x, int y, const quick_action& action)
         && x <= action.center_x + deadzone && y <= action.center_y + deadzone;
 }
 
-void touch_input::draw_quick_action(const quick_action& action)
+void TouchInput::draw_quick_action(const quick_action& action)
 {
     int size = quick_action_size() / 2;
     int deadzone = ((float)size * 0.75);
-    float dpi = application::instance().dpi();
+    float dpi = Application::instance().dpi();
     int x = action.center_x - deadzone;
     int y = action.center_y - deadzone;
-    auto& renderer = application::instance().get_renderer();
+    auto& renderer = Application::instance().get_renderer();
 
     renderer.render_image(
         *_quick_action_image.get(), x, y, deadzone * 2, deadzone * 2);
@@ -159,10 +159,10 @@ void touch_input::draw_quick_action(const quick_action& action)
     }
 }
 
-void touch_input::on_touch_event(::SDL_TouchFingerEvent event)
+void TouchInput::on_touch_event(::SDL_TouchFingerEvent event)
 {
-    int norm_x = application::instance().physical_width() * event.x;
-    int norm_y = application::instance().physical_height() * event.y;
+    int norm_x = Application::instance().physical_width() * event.x;
+    int norm_y = Application::instance().physical_height() * event.y;
     _last_touched_quick_action_idx = none;
 
     for (auto it = _quick_actions.begin(); it < _quick_actions.end(); it++)

@@ -10,10 +10,10 @@ namespace elona
 {
 
 
-fish_db the_fish_db;
+FishDB the_fish_db;
 
 
-void fish_db::define(lua_State* L)
+void FishDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)

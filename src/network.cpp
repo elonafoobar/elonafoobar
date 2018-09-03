@@ -127,7 +127,7 @@ int net_send(const std::string& prm_883, int prm_884)
 {
     std::string chattemp;
     std::string msg_at_m147;
-    if (config::instance().net == 0)
+    if (Config::instance().net == 0)
     {
         return 0;
     }
@@ -205,7 +205,7 @@ int net_read(int prm_885)
     chatnew = "";
     SDIM2(netbuf, 20000);
     netbuf = "";
-    if (config::instance().net == 0)
+    if (Config::instance().net == 0)
     {
         return 0;
     }
@@ -534,7 +534,7 @@ void initialize_server_info()
     SDIM2(serverlist, 200);
     notesel(serverlist);
     int stat = net_read(4);
-    if (stat == 1 && config::instance().serverlist == 0)
+    if (stat == 1 && Config::instance().serverlist == 0)
     {
         serverlist = netbuf;
     }
@@ -774,7 +774,7 @@ label_1402_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);

@@ -21,7 +21,7 @@ void mesbox(std::string&, int, bool)
 {
 }
 
-void picload(basic_image&, int)
+void picload(BasicImage&, int)
 {
 }
 
@@ -105,9 +105,9 @@ void line(int, int, int, int, const snail::color&)
 void title(
     const std::string& title_str,
     const std::string&,
-    window::FullscreenMode)
+    Window::FullscreenMode)
 {
-    application::instance().initialize(title_str);
+    Application::instance().initialize(title_str);
 }
 
 
