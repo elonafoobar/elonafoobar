@@ -25,7 +25,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuAlias::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuAlias::ResultType> on_key(const std::string& key);
 
 private:
     void _set_reroll_aliases();

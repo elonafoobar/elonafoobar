@@ -108,7 +108,7 @@ void UIMenuChatHistory::draw()
 {
 }
 
-optional<UIMenuChatHistory::result_type> UIMenuChatHistory::on_key(
+optional<UIMenuChatHistory::ResultType> UIMenuChatHistory::on_key(
     const std::string& key)
 {
     if (key != ""s)

@@ -310,6 +310,7 @@ int dialog_windows(const std::string& message, int option)
 #elif defined(ELONA_OS_MACOS)
 int dialog_macos(const std::string& message, int option)
 {
+    (void)option;
     std::cout << message << std::endl;
     return 1;
 }

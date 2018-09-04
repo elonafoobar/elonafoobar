@@ -6,7 +6,7 @@ namespace lua
 {
 
 void Magic::cast_self(
-    lua_character_handle caster_handle,
+    LuaCharacterHandle caster_handle,
     int effect_id,
     int effect_power,
     const Position& target_location)
@@ -17,8 +17,8 @@ void Magic::cast_self(
 }
 
 void Magic::cast(
-    lua_character_handle caster_handle,
-    lua_character_handle target_handle,
+    LuaCharacterHandle caster_handle,
+    LuaCharacterHandle target_handle,
     int effect_id,
     int effect_power)
 {

@@ -119,7 +119,7 @@ void UIMenuTownChart::draw()
     }
 }
 
-optional<UIMenuTownChart::result_type> UIMenuTownChart::on_key(
+optional<UIMenuTownChart::ResultType> UIMenuTownChart::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);

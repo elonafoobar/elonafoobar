@@ -165,7 +165,7 @@ void UIMenuGod::draw()
     _draw_choices();
 }
 
-optional<UIMenuGod::result_type> UIMenuGod::on_key(const std::string& key)
+optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& key)
 {
     int _rtval = -1;
 
@@ -179,11 +179,11 @@ optional<UIMenuGod::result_type> UIMenuGod::on_key(const std::string& key)
     {
         if (_rtval == _cancel_choice)
         {
-            return UIMenuGod::result_type::cancel();
+            return UIMenuGod::ResultType::cancel();
         }
         else
         {
-            return UIMenuGod::result_type::finish(_rtval);
+            return UIMenuGod::ResultType::finish(_rtval);
         }
     }
 

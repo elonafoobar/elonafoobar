@@ -10,15 +10,15 @@ namespace Item
 {
 int count();
 
-bool has_enchantment(const lua_item_handle, int);
+bool has_enchantment(const LuaItemHandle, int);
 
-void remove(lua_item_handle);
+void remove(LuaItemHandle);
 
-sol::optional<lua_item_handle> create(const Position&, int, int);
-sol::optional<lua_item_handle> create_xy(int, int, int, int);
-sol::optional<lua_item_handle>
+sol::optional<LuaItemHandle> create(const Position&, int, int);
+sol::optional<LuaItemHandle> create_xy(int, int, int, int);
+sol::optional<LuaItemHandle>
 create_from_id(const Position&, const std::string&, int);
-sol::optional<lua_item_handle>
+sol::optional<LuaItemHandle>
 create_from_id_xy(int, int, const std::string&, int);
 
 

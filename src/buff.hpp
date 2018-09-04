@@ -22,10 +22,10 @@ struct BuffData
 
 
     int id;
-    cat::ref self;
+    cat::Ref self;
     Type type;
-    cat::ref duration;
-    cat::ref on_refresh;
+    cat::Ref duration;
+    cat::Ref on_refresh;
 };
 
 
@@ -39,8 +39,8 @@ namespace cat
 template <>
 struct CatDBTraits<BuffDB>
 {
-    using id_type = int;
-    using data_type = BuffData;
+    using IdType = int;
+    using DataType = BuffData;
     static constexpr const char* filename = u8"buff.lua";
     static constexpr const char* table_name = u8"buff";
 };

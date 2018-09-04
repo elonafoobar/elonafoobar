@@ -15,12 +15,12 @@ template <typename T>
 class UIMenuComposite : public UIMenu<T>
 {
 protected:
-    using menu_type = UIMenu<T>;
+    using MenuType = UIMenu<T>;
 
     struct MenuInfo
     {
         MenuInfo(
-            std::unique_ptr<menu_type> _menu,
+            std::unique_ptr<MenuType> _menu,
             int _image,
             std::string _text)
             : image(_image)
@@ -29,12 +29,12 @@ protected:
             menu = std::move(_menu);
         }
 
-        std::unique_ptr<menu_type> menu;
+        std::unique_ptr<MenuType> menu;
         int image;
         std::string text;
     };
 
-    using menu_list = std::vector<MenuInfo>;
+    using MenuList = std::vector<MenuInfo>;
 
 public:
     UIMenuComposite(size_t selected)
@@ -50,9 +50,9 @@ public:
 
 protected:
     void push_back(
-        std::unique_ptr<menu_type> menu,
+        std::unique_ptr<MenuType> menu,
         int image,
-        const i18n_key& locale_key)
+        const I18NKey& locale_key)
     {
         std::string text = i18n::s.get(locale_key);
         _menus.emplace_back(std::move(menu), image, text);
@@ -207,7 +207,7 @@ private:
     }
 
 private:
-    menu_list _menus;
+    MenuList _menus;
     size_t _selected;
     bool _menu_switched;
 };

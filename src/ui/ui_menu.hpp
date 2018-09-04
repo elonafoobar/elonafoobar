@@ -47,13 +47,13 @@ public:
     };
 
 protected:
-    using result_type = UIMenu<T>::Result;
+    using ResultType = UIMenu<T>::Result;
 
 public:
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual optional<result_type> on_key(const std::string& key) = 0;
+    virtual optional<ResultType> on_key(const std::string& key) = 0;
 
 protected:
     /**
@@ -80,7 +80,7 @@ public:
         {
             if (!init())
             {
-                return result_type::cancel();
+                return ResultType::cancel();
             }
 
             update();

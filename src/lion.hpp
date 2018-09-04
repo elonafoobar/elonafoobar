@@ -34,12 +34,12 @@ template <class T>
 class LionDB : public lib::noncopyable
 {
 public:
-    using traits_type = LionDBTraits<T>;
-    using id_type = shared_id;
-    using legacy_id_type = typename traits_type::legacy_id_type;
-    using data_type = typename traits_type::data_type;
-    using map_type = std::unordered_map<id_type, data_type>;
-    using legacy_map_type = std::unordered_map<legacy_id_type, id_type>;
+    using TraitsType = LionDBTraits<T>;
+    using IdType = SharedId;
+    using LegacyIdType = typename TraitsType::LegacyIdType;
+    using DataType = typename TraitsType::DataType;
+    using MapType = std::unordered_map<IdType, DataType>;
+    using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
 
     LionDB()
         : scope("core")
@@ -49,10 +49,10 @@ public:
     struct iterator
     {
     private:
-        using base_iterator_type = typename map_type::const_iterator;
+        using base_iterator_type = typename MapType::const_iterator;
 
     public:
-        using value_type = const data_type;
+        using value_type = const DataType;
         using difference_type = typename base_iterator_type::difference_type;
         using pointer = value_type*;
         using reference = value_type&;
@@ -60,7 +60,7 @@ public:
             typename base_iterator_type::iterator_category;
 
 
-        iterator(const typename map_type::const_iterator& itr)
+        iterator(const typename MapType::const_iterator& itr)
             : itr(itr)
         {
         }
@@ -86,7 +86,7 @@ public:
         }
 
     private:
-        typename map_type::const_iterator itr;
+        typename MapType::const_iterator itr;
     };
 
 
@@ -132,12 +132,12 @@ public:
             std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)
                 .count();
         ELONA_LOG(
-            "[LION ("s << traits_type::datatype_name << ")] Elements: "s
+            "[LION ("s << TraitsType::datatype_name << ")] Elements: "s
                        << storage.size() << ", time: "s << time << "ms"s);
     }
 
-    optional_ref<id_type> get_id_from_legacy(
-        const legacy_id_type& legacy_id) const
+    optional_ref<IdType> get_id_from_legacy(
+        const LegacyIdType& legacy_id) const
     {
         const auto itr = by_legacy_id.find(legacy_id);
         if (itr == std::end(by_legacy_id))
@@ -146,7 +146,7 @@ public:
             return itr->second;
     }
 
-    optional_ref<data_type> operator[](const id_type& id) const
+    optional_ref<DataType> operator[](const IdType& id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
@@ -156,13 +156,13 @@ public:
     }
 
 
-    optional_ref<data_type> operator[](const std::string& inner_id) const
+    optional_ref<DataType> operator[](const std::string& inner_id) const
     {
-        return (*this)[shared_id(inner_id)];
+        return (*this)[SharedId(inner_id)];
     }
 
 
-    optional_ref<data_type> operator[](const legacy_id_type& legacy_id) const
+    optional_ref<DataType> operator[](const LegacyIdType& legacy_id) const
     {
         if (const auto id = get_id_from_legacy(legacy_id))
             return (*this)[**id];
@@ -177,16 +177,16 @@ private:
         {
             sol::table data = pair.second.as<sol::table>();
             std::string id_string = data["_full_id"];
-            id_type id(id_string);
+            IdType id(id_string);
 
             initialize_single(id, data, lua);
         }
     }
 
     void
-    initialize_single(const id_type& id, sol::table data, lua::LuaEnv& lua)
+    initialize_single(const IdType& id, sol::table data, lua::LuaEnv& lua)
     {
-        data_type converted = static_cast<T&>(*this).convert(id, data, lua);
+        DataType converted = static_cast<T&>(*this).convert(id, data, lua);
 
         auto it = by_legacy_id.find(converted.id);
         if (it != by_legacy_id.end())
@@ -202,8 +202,8 @@ private:
 
 protected:
     std::string scope;
-    map_type storage;
-    legacy_map_type by_legacy_id;
+    MapType storage;
+    LegacyMapType by_legacy_id;
 };
 
 /**
@@ -248,8 +248,8 @@ static optional<std::vector<T>> convert_vector(
     template <> \
     struct LionDBTraits<ClassName> \
     { \
-        using data_type = data; \
-        using legacy_id_type = legacy_id; \
+        using DataType = data; \
+        using LegacyIdType = legacy_id; \
         static constexpr const char* datatype_name = name; \
     }; \
     } \

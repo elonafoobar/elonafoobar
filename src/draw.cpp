@@ -853,11 +853,11 @@ void initialize_map_chip()
 
 void initialize_item_chips(const ItemChipDB& db)
 {
-    PicLoader::map_type predefined_extents;
+    PicLoader::MapType predefined_extents;
 
     for (const auto& chip_data : db)
     {
-        shared_id key = chip_data.chip.key;
+        SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.
@@ -889,11 +889,11 @@ void initialize_item_chips(const ItemChipDB& db)
 
 void initialize_chara_chips(const CharaChipDB& db)
 {
-    PicLoader::map_type predefined_extents;
+    PicLoader::MapType predefined_extents;
 
     for (const auto& chip_data : db)
     {
-        shared_id key = chip_data.chip.key;
+        SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.

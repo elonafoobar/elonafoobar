@@ -168,7 +168,7 @@ void UIMenuAdventurers::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuAdventurers::result_type> UIMenuAdventurers::on_key(
+optional<UIMenuAdventurers::ResultType> UIMenuAdventurers::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);

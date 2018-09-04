@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-using god_id_t = std::string;
+using GodId = std::string;
 
 
 namespace core_god
@@ -26,7 +26,7 @@ constexpr const char* jure = u8"jure"; // 6
 constexpr const char* kumiromi = u8"kumiromi"; // 7
 
 
-inline god_id_t int2godid(int n)
+inline GodId int2godid(int n)
 {
     switch (n)
     {
@@ -42,7 +42,7 @@ inline god_id_t int2godid(int n)
 }
 
 
-inline int godid2int(const god_id_t& id)
+inline int godid2int(const GodId& id)
 {
     if (id == mani)
         return 1;
@@ -69,7 +69,7 @@ inline int godid2int(const god_id_t& id)
 
 struct GodData
 {
-    god_id_t id;
+    GodId id;
 };
 
 
@@ -82,8 +82,8 @@ namespace cat
 template <>
 struct CatDBTraits<GodDB>
 {
-    using id_type = god_id_t;
-    using data_type = GodData;
+    using IdType = GodId;
+    using DataType = GodData;
     static constexpr const char* filename = u8"god.lua";
     static constexpr const char* table_name = u8"god";
 };
@@ -103,7 +103,7 @@ public:
 extern GodDB the_god_db;
 
 
-void txtgod(const god_id_t& id, int type);
+void txtgod(const GodId& id, int type);
 int modpiety(int prm_1035);
 void set_npc_religion();
 void apply_god_blessing(int cc);

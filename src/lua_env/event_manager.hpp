@@ -83,9 +83,9 @@ public:
     {
     };
 
-    using callback_container = std::vector<Callback>;
-    using iterator = callback_container::iterator;
-    using const_iterator = callback_container::const_iterator;
+    using CallbackContainer = std::vector<Callback>;
+    using iterator = CallbackContainer::iterator;
+    using const_iterator = CallbackContainer::const_iterator;
 
     const_iterator begin() const
     {
@@ -191,7 +191,7 @@ public:
     }
 
 private:
-    callback_container functions;
+    CallbackContainer functions;
     sol::function error_handler_;
 };
 
@@ -253,7 +253,7 @@ public:
 
     void clear();
 
-    using container = std::unordered_map<EventKind, Callbacks>;
+    using Container = std::unordered_map<EventKind, Callbacks>;
 
 private:
     /***
@@ -272,7 +272,7 @@ private:
      */
     void init_event_kinds(sol::table&);
 
-    container events;
+    Container events;
     LuaEnv* lua;
 };
 

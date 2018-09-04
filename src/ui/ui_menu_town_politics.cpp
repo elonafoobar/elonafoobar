@@ -169,7 +169,7 @@ void UIMenuTownPolitics::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuTownPolitics::result_type> UIMenuTownPolitics::on_key(
+optional<UIMenuTownPolitics::ResultType> UIMenuTownPolitics::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);

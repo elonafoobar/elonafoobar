@@ -29,7 +29,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuCharamakeRace::result_type> on_key(
+    virtual optional<UIMenuCharamakeRace::ResultType> on_key(
         const std::string& key);
 };
 

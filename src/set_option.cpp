@@ -24,9 +24,9 @@ class ConfigMenuItemBase
 public:
     std::string name;
     std::string key;
-    i18n_key locale_key;
+    I18NKey locale_key;
 
-    ConfigMenuItemBase(const std::string& key, const i18n_key& locale_key)
+    ConfigMenuItemBase(const std::string& key, const I18NKey& locale_key)
         : key(key)
         , locale_key(locale_key)
     {
@@ -66,7 +66,7 @@ public:
 
     ConfigMenuItemYesNo(
         const std::string& key,
-        const i18n_key& locale_key,
+        const I18NKey& locale_key,
         bool variable,
         const std::string& yes,
         const std::string& no)
@@ -106,7 +106,7 @@ public:
 
     ConfigMenuItemInfo(
         const std::string& key,
-        const i18n_key& locale_key,
+        const I18NKey& locale_key,
         const std::string& info)
         : ConfigMenuItemBase(key, locale_key)
         , info(info)
@@ -132,7 +132,7 @@ public:
 
     ConfigMenuItemInteger(
         const std::string& key,
-        const i18n_key& locale_key,
+        const I18NKey& locale_key,
         int variable,
         int min,
         int max,
@@ -165,14 +165,14 @@ class ConfigMenuItemChoice : public ConfigMenuItemBase
 public:
     struct Choice
     {
-        Choice(std::string value, i18n_key message_key)
+        Choice(std::string value, I18NKey message_key)
             : value(value)
             , message_key(message_key)
         {
         }
 
         std::string value;
-        i18n_key message_key;
+        I18NKey message_key;
     };
 
     int index;
@@ -181,7 +181,7 @@ public:
 
     ConfigMenuItemChoice(
         const std::string& key,
-        const i18n_key& locale_key,
+        const I18NKey& locale_key,
         std::string default_choice,
         const std::vector<Choice>& variants,
         bool translate_variants)
@@ -238,7 +238,7 @@ public:
 
     std::string get_message()
     {
-        i18n_key locale_key = variants.at(index).message_key;
+        I18NKey locale_key = variants.at(index).message_key;
         if (translate_variants)
         {
             return i18n::s.get(locale_key);
@@ -309,18 +309,18 @@ public:
 };
 
 
-using config_screen = std::vector<std::unique_ptr<ConfigMenu>>;
+using ConfigScreen = std::vector<std::unique_ptr<ConfigMenu>>;
 
 
 // Functions for adding items to the config screen.
 
 template <class M>
 static void add_config_menu(
-    const spec_key& key,
-    const i18n_key& menu_name_key,
+    const SpecKey& key,
+    const I18NKey& menu_name_key,
     const ConfigDef& def,
     int width,
-    config_screen& ret)
+    ConfigScreen& ret)
 {
     auto children = def.get_children(key);
     int w = width;
@@ -330,12 +330,12 @@ static void add_config_menu(
 
 
 static void add_config_item_yesno(
-    const spec_key& key,
-    const i18n_key& locale_key,
+    const SpecKey& key,
+    const I18NKey& locale_key,
     bool default_value,
-    config_screen& ret)
+    ConfigScreen& ret)
 {
-    i18n_key yes_no;
+    I18NKey yes_no;
 
     // Determine which text to use for true/false ("Yes"/"No", "Play"/"Don't
     // Play", etc.)
@@ -357,11 +357,11 @@ static void add_config_item_yesno(
 }
 
 static void add_config_item_integer(
-    const spec_key& key,
-    const i18n_key& locale_key,
+    const SpecKey& key,
+    const I18NKey& locale_key,
     int default_value,
     const ConfigDef& def,
-    config_screen& ret)
+    ConfigScreen& ret)
 {
     int min = def.get_min(key);
     int max = def.get_max(key);
@@ -371,11 +371,11 @@ static void add_config_item_integer(
 }
 
 static void add_config_item_choice(
-    const spec_key& key,
-    const i18n_key& locale_key,
+    const SpecKey& key,
+    const I18NKey& locale_key,
     const std::string& default_value,
     const ConfigDef& def,
-    config_screen& ret)
+    ConfigScreen& ret)
 {
     // Add the translated names of all variants.
     const auto& variants = def.get_variants(key);
@@ -395,19 +395,19 @@ static void add_config_item_choice(
 }
 
 static void add_config_item_section(
-    const spec_key& key,
-    const i18n_key& locale_key,
+    const SpecKey& key,
+    const I18NKey& locale_key,
     const std::string section_name,
     const ConfigDef& def,
-    config_screen& ret)
+    ConfigScreen& ret)
 {
     // EX: "<core.config>.<language>"
-    spec_key section_key = key + "." + section_name;
+    SpecKey section_key = key + "." + section_name;
 
     if (def.get_metadata(section_key).is_visible())
     {
         // EX: "<core.locale.config.menu>.<language>"
-        i18n_key section_locale_key = locale_key + "." + section_name;
+        I18NKey section_locale_key = locale_key + "." + section_name;
 
         ret.back()->items.emplace_back(std::make_unique<ConfigMenuItemBase>(
             section_key, section_locale_key));
@@ -417,15 +417,15 @@ static void add_config_item_section(
 
 // Functions for visiting the parsed config structure.
 
-void visit_section(Config&, const spec_key&, config_screen&);
-void visit_config_item(Config&, const spec_key&, config_screen&);
+void visit_section(Config&, const SpecKey&, ConfigScreen&);
+void visit_config_item(Config&, const SpecKey&, ConfigScreen&);
 
 
-void visit_toplevel(Config& conf, config_screen& ret)
+void visit_toplevel(Config& conf, ConfigScreen& ret)
 {
-    spec_key key = "core.config";
-    i18n_key locale_key = conf.get_def().get_locale_root();
-    i18n_key menu_name_key = locale_key + ".name";
+    SpecKey key = "core.config";
+    I18NKey locale_key = conf.get_def().get_locale_root();
+    I18NKey menu_name_key = locale_key + ".name";
 
     // Add the top level menu.
     add_config_menu<ConfigMenu>(key, menu_name_key, conf.get_def(), 370, ret);
@@ -446,15 +446,15 @@ void visit_toplevel(Config& conf, config_screen& ret)
 
 void visit_section(
     Config& conf,
-    const spec_key& current_key,
-    config_screen& ret)
+    const SpecKey& current_key,
+    ConfigScreen& ret)
 {
     // EX: "<core.config>.<language>"
-    spec_key key = "core.config." + current_key;
+    SpecKey key = "core.config." + current_key;
 
     // EX: "<core.locale.config.menu>.language"
-    i18n_key locale_key = conf.get_def().get_locale_root() + "." + current_key;
-    i18n_key menu_name_key = locale_key + ".name";
+    I18NKey locale_key = conf.get_def().get_locale_root() + "." + current_key;
+    I18NKey menu_name_key = locale_key + ".name";
 
     // Ensure the section exists in the config definition.
     if (!conf.get_def().exists(key))
@@ -481,11 +481,11 @@ void visit_section(
 
 void visit_config_item(
     Config& conf,
-    const spec_key& current_key,
-    config_screen& ret)
+    const SpecKey& current_key,
+    ConfigScreen& ret)
 {
-    spec_key key = "core.config." + current_key;
-    i18n_key locale_key = conf.get_def().get_locale_root() + "." + current_key;
+    SpecKey key = "core.config." + current_key;
+    I18NKey locale_key = conf.get_def().get_locale_root() + "." + current_key;
 
     if (!conf.get_def().exists(key))
     {
@@ -532,9 +532,9 @@ void visit_config_item(
 }
 
 
-config_screen create_config_screen()
+ConfigScreen create_config_screen()
 {
-    config_screen ret;
+    ConfigScreen ret;
     auto& conf = Config::instance();
 
     visit_toplevel(conf, ret);
@@ -592,7 +592,7 @@ int submenu = 0;
 
 void set_option()
 {
-    const auto config_screen = create_config_screen();
+    const auto ConfigScreen = create_config_screen();
 
     cs = 0;
 set_option_begin:
@@ -627,7 +627,7 @@ set_option_begin:
         gmode(2);
     }
 
-    auto& menu_def = config_screen[submenu];
+    auto& menu_def = ConfigScreen[submenu];
     auto menu_title = menu_def->title;
     auto width = menu_def->width;
     auto height = menu_def->height;
@@ -721,7 +721,7 @@ set_option_begin:
         int item_pos = 0;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
-            auto item = config_screen[submenu]->items[cnt].get();
+            auto item = ConfigScreen[submenu]->items[cnt].get();
 
             p = pagesize * page + cnt;
             if (p >= listmax)
@@ -764,7 +764,7 @@ set_option_begin:
             item_pos++;
         }
 
-        config_screen[submenu]->draw();
+        ConfigScreen[submenu]->draw();
 
         if (keyrange != 0)
         {
@@ -796,14 +796,14 @@ set_option_begin:
                 p = -1;
             }
 
-            config_screen[submenu]->items[cs].get()->change(p);
+            ConfigScreen[submenu]->items[cs].get()->change(p);
             snd(20);
             reset_page = true;
             continue;
         }
         if (key == key_mode2)
         {
-            auto desc = config_screen[submenu]->items[cs].get()->get_desc();
+            auto desc = ConfigScreen[submenu]->items[cs].get()->get_desc();
             _show_config_item_desc(desc);
             goto set_option_begin;
         }

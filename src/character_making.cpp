@@ -36,7 +36,7 @@ elona_vector1<int> cmlock;
 namespace elona
 {
 
-static void _draw_background_and_caption(const i18n_key& key)
+static void _draw_background_and_caption(const I18NKey& key)
 {
     gmode(0);
     pos(0, 0);
@@ -46,7 +46,7 @@ static void _draw_background_and_caption(const i18n_key& key)
     draw_caption();
 }
 
-void character_making_draw_background(const i18n_key& key)
+void character_making_draw_background(const I18NKey& key)
 {
     _draw_background_and_caption(key);
 

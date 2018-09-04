@@ -19,7 +19,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuGod::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuGod::ResultType> on_key(const std::string& key);
 
 private:
     int _god_id;

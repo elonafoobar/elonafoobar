@@ -31,8 +31,8 @@ namespace cat
 template <>
 struct CatDBTraits<FishDB>
 {
-    using id_type = int;
-    using data_type = FishData;
+    using IdType = int;
+    using DataType = FishData;
     static constexpr const char* filename = u8"fish.lua";
     static constexpr const char* table_name = u8"fish";
 };

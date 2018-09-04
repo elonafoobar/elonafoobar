@@ -119,7 +119,7 @@ struct Character
     int mp = 0;
     int max_mp = 0;
     int heal_value_per_nether_attack = 0;
-    god_id_t god_id;
+    GodId god_id;
     int piety_point = 0;
     int praying_point = 0;
     int sum_of_equipment_weight = 0;

@@ -65,7 +65,7 @@ void snd(I sound_id, bool loop = false, bool allow_duplicate = true)
 void sound_play_environmental();
 void stop_music();
 
-void play_music(optional<shared_id> music_id = none);
+void play_music(optional<SharedId> music_id = none);
 void play_music(const char* music_id);
 
 

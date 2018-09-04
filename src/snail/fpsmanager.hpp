@@ -33,12 +33,12 @@ public:
 
 
 private:
-    using time = decltype(snail::hsp::timeGetTime());
+    using Time = decltype(snail::hsp::timeGetTime());
 
     int _fps;
     int _frame_count = 0; // [0, fps)
-    time _t0 = time{0}; // The time when `_frame_count` was zero most recently.
-    time _previous_time = time{0};
+    Time _t0 = Time{0}; // The time when `_frame_count` was zero most recently.
+    Time _previous_time = Time{0};
     std::vector<int> _history;
 };
 

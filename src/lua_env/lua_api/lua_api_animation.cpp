@@ -20,7 +20,7 @@ void Animation::play_bright_aura(const Position& target_pos, int kind)
 void Animation::play_breath(
     const Position& attacker_pos,
     const Position& target_pos,
-    const enum_string& element_name)
+    const EnumString& element_name)
 {
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     BreathAnimation(attacker_pos, target_pos, static_cast<int>(element))
@@ -40,7 +40,7 @@ void Animation::play_ball_magic(const Position& pos, int range, int element)
 void Animation::play_bolt(
     const Position& attacker_pos,
     const Position& target_pos,
-    const enum_string& element_name,
+    const EnumString& element_name,
     int distance)
 {
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);

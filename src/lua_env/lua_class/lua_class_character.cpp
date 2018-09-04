@@ -20,7 +20,7 @@ void LuaCharacter::damage_hp(Character& self, int amount)
 void LuaCharacter::damage_hp_source(
     Character& self,
     int amount,
-    const enum_string& source_name)
+    const EnumString& source_name)
 {
     DamageSource source =
         LuaEnums::DamageSourceTable.ensure_from_string(source_name);
@@ -30,7 +30,7 @@ void LuaCharacter::damage_hp_source(
 void LuaCharacter::damage_hp_chara(
     Character& self,
     int amount,
-    lua_character_handle handle)
+    LuaCharacterHandle handle)
 {
     auto& other = lua::lua->get_handle_manager().get_ref<Character>(handle);
     elona::damage_hp(self, amount, other.index);
@@ -38,7 +38,7 @@ void LuaCharacter::damage_hp_chara(
 
 void LuaCharacter::apply_ailment(
     Character& self,
-    const enum_string& ailment_name,
+    const EnumString& ailment_name,
     int power)
 {
     assert(power > 0);
@@ -97,7 +97,7 @@ void LuaCharacter::gain_skill_exp(Character& self, int skill, int amount)
 
 void LuaCharacter::modify_resistance(
     Character& self,
-    const enum_string& element_name,
+    const EnumString& element_name,
     int delta)
 {
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
@@ -223,7 +223,7 @@ void LuaCharacter::bind(sol::state& lua)
             [](Character& c) {
                 return LuaEnums::GenderTable.convert_to_string(c.sex);
             },
-            [](Character& c, const enum_string& s) {
+            [](Character& c, const EnumString& s) {
                 c.sex = LuaEnums::GenderTable.ensure_from_string(s);
             }));
 

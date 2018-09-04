@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuChatHistory::result_type> on_key(
+    virtual optional<UIMenuChatHistory::ResultType> on_key(
         const std::string& key);
 };
 

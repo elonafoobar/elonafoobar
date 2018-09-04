@@ -31,8 +31,8 @@ namespace cat
 template <>
 struct CatDBTraits<ClassDB>
 {
-    using id_type = std::string;
-    using data_type = ClassData;
+    using IdType = std::string;
+    using DataType = ClassData;
     static constexpr const char* filename = u8"class.lua";
     static constexpr const char* table_name = u8"class";
 };

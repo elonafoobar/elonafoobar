@@ -108,7 +108,7 @@ void UIMenuMessageLog::draw()
 {
 }
 
-optional<UIMenuMessageLog::result_type> UIMenuMessageLog::on_key(
+optional<UIMenuMessageLog::ResultType> UIMenuMessageLog::on_key(
     const std::string& key)
 {
     if (key != ""s)

@@ -8,8 +8,8 @@ namespace lua
 
 namespace Skill
 {
-int level(int, lua_character_handle);
-int resistance(const enum_string&, lua_character_handle);
+int level(int, LuaCharacterHandle);
+int resistance(const EnumString&, LuaCharacterHandle);
 
 
 void bind(sol::table&);

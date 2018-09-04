@@ -144,7 +144,7 @@ void UIMenuItemDesc::draw()
     }
 }
 
-optional<UIMenuItemDesc::result_type> UIMenuItemDesc::on_key(
+optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -167,7 +167,7 @@ optional<UIMenuItemDesc::result_type> UIMenuItemDesc::on_key(
     }
     else if (key == key_cancel || key == key_enter)
     {
-        return UIMenuItemDesc::result_type::finish();
+        return UIMenuItemDesc::ResultType::finish();
     }
 
     return none;

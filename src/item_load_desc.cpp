@@ -9,7 +9,7 @@ namespace elona
 {
 
 static void _load_single_item_description_text(
-    const i18n_key& desc_key_prefix,
+    const I18NKey& desc_key_prefix,
     int& p)
 {
     auto desc_opt = i18n::s.get_optional(desc_key_prefix + ".text");
@@ -76,7 +76,7 @@ static void _load_single_item_description_text(
 
 
 static void _load_item_description_text(
-    const i18n_key& locale_key_prefix,
+    const I18NKey& locale_key_prefix,
     int& p)
 {
     for (int cnt = 0; cnt < 3; ++cnt)
@@ -87,7 +87,7 @@ static void _load_item_description_text(
 }
 
 static void _load_item_main_description_text(
-    const i18n_key& locale_key_prefix,
+    const I18NKey& locale_key_prefix,
     int& p)
 {
     if (auto text =
@@ -277,7 +277,7 @@ static void _load_item_enchantment_desc(int ci, int& p)
 
 void item_load_desc(int ci, int& p)
 {
-    const i18n_key& locale_key_prefix =
+    const I18NKey& locale_key_prefix =
         the_item_db[inv[ci].id]->locale_key_prefix;
 
     if (inv[ci].identification_state

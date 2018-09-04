@@ -72,12 +72,12 @@ enum class ModLoadingStage : unsigned
  */
 class ModManager
 {
-    using mod_storage_type =
+    using ModStorageType =
         std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
 
 public:
-    using iterator = mod_storage_type::iterator;
-    using const_iterator = mod_storage_type::const_iterator;
+    using iterator = ModStorageType::iterator;
+    using const_iterator = ModStorageType::const_iterator;
 
     explicit ModManager(LuaEnv*);
 
@@ -269,7 +269,7 @@ private:
     }
 
 private:
-    mod_storage_type mods;
+    ModStorageType mods;
 
     /***
      * The loading stage the environment is currently in. Used for

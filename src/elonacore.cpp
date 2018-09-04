@@ -15375,7 +15375,7 @@ label_2682_internal:
     }
     if (s == u8"{mc}"s)
     {
-        shared_id music_id("core.music:"s + s(1));
+        SharedId music_id("core.music:"s + s(1));
         play_music(music_id);
         goto label_2682_internal;
     }

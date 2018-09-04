@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuTownChart::result_type> on_key(
+    virtual optional<UIMenuTownChart::ResultType> on_key(
         const std::string& key);
 
 private:

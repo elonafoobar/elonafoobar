@@ -14,22 +14,22 @@ namespace elona
 namespace lua
 {
 
-using enum_string = std::string;
+using EnumString = std::string;
 
 template <typename T>
 class EnumMap
 {
-    using map_type = std::unordered_map<std::string, T>;
+    using MapType = std::unordered_map<std::string, T>;
 
 public:
-    EnumMap(std::string name, map_type storage)
+    EnumMap(std::string name, MapType storage)
         : name(name)
         , storage(storage)
     {
     }
 
 public:
-    enum_string convert_to_string(T val)
+    EnumString convert_to_string(T val)
     {
         for (const auto& pair : storage)
         {
@@ -91,7 +91,7 @@ public:
 
 private:
     std::string name;
-    map_type storage;
+    MapType storage;
 };
 
 namespace LuaEnums

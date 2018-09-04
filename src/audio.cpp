@@ -28,7 +28,7 @@ constexpr int temporary_channels_size = 6;
 std::vector<int> soundlist;
 
 int envwprev{};
-shared_id musicprev{};
+SharedId musicprev{};
 
 
 void sound_set_position(int channel, short angle, unsigned char distance)
@@ -36,7 +36,7 @@ void sound_set_position(int channel, short angle, unsigned char distance)
     snail::audio::set_position(channel, angle, distance);
 }
 
-shared_id get_default_music()
+SharedId get_default_music()
 {
     optional<std::string> music_id = none;
 
@@ -148,10 +148,10 @@ shared_id get_default_music()
         music_id = choices[gdata_day % 3];
     }
 
-    return shared_id(*music_id);
+    return SharedId(*music_id);
 }
 
-void play_music_inner(const shared_id& music_id, int musicloop)
+void play_music_inner(const SharedId& music_id, int musicloop)
 {
     if (musicprev != music_id)
     {
@@ -476,11 +476,11 @@ void sound_play_environmental()
 
 void play_music(const char* music_id)
 {
-    shared_id id = shared_id("core.music:"s + std::string(music_id));
+    SharedId id = SharedId("core.music:"s + std::string(music_id));
     play_music(id);
 }
 
-void play_music(optional<shared_id> music_id)
+void play_music(optional<SharedId> music_id)
 {
     sound_play_environmental();
 

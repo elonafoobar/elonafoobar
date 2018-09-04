@@ -169,7 +169,7 @@ static void _toggle_book_reserve(int _p)
     }
 }
 
-optional<UIMenuSpellWriter::result_type> UIMenuSpellWriter::on_key(
+optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     const std::string& key)
 {
     int _p;

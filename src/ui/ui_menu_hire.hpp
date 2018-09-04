@@ -21,7 +21,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuHire::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuHire::ResultType> on_key(const std::string& key);
 
 private:
     bool _should_display_chara(const Character& chara);

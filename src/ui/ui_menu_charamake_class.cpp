@@ -152,7 +152,7 @@ void UIMenuCharamakeClass::draw()
     _draw_class_info(ref1, ref2, _race);
 }
 
-optional<UIMenuCharamakeClass::result_type> UIMenuCharamakeClass::on_key(
+optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX(p);

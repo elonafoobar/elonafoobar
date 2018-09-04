@@ -107,17 +107,17 @@ void Object::visit(
     }
     else
     {
-        item i = visit_bare_value(value, current_key, hcl_file);
+        Item i = visit_bare_value(value, current_key, hcl_file);
         items.emplace(current_key, i);
     }
 }
 
-item Object::visit_bare_value(
+Item Object::visit_bare_value(
     const hcl::Value& default_value,
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    item i;
+    Item i;
 
     pre_visit_bare_value(current_key, default_value);
 
@@ -146,7 +146,7 @@ void Object::visit_item(
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    optional<spec::item> i;
+    optional<spec::Item> i;
 
     pre_visit_item(current_key, item);
 

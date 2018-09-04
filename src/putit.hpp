@@ -195,9 +195,9 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
-    using primitive_type = std::underlying_type_t<E>;
+    using PrimitiveType = std::underlying_type_t<E>;
 
-    primitive_type tmp;
+    PrimitiveType tmp;
     ar.primitive(tmp);
     data = static_cast<E>(tmp);
 }
@@ -213,9 +213,9 @@ template <
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
-    using primitive_type = std::underlying_type_t<E>;
+    using PrimitiveType = std::underlying_type_t<E>;
 
-    primitive_type tmp = static_cast<primitive_type>(data);
+    PrimitiveType tmp = static_cast<PrimitiveType>(data);
     ar.primitive(tmp);
 }
 

@@ -80,7 +80,7 @@ void BuffDB::define(lua_State* L)
     ELONA_CAT_DB_FIELD_REF(duration);
     ELONA_CAT_DB_FIELD_REF(on_refresh);
 
-    cat::ref self = luaL_ref(L, LUA_REGISTRYINDEX);
+    cat::Ref self = luaL_ref(L, LUA_REGISTRYINDEX);
     // Dummy; after calling this function, the caller pop one value from the Lua
     // stack.
     lua_pushnil(L);

@@ -275,7 +275,7 @@ void UIMenuQuestBoard::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuQuestBoard::result_type> UIMenuQuestBoard::on_key(
+optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     const std::string& key)
 {
     int _p;

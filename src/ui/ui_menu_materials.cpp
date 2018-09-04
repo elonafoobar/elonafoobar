@@ -143,7 +143,7 @@ void UIMenuMaterials::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuMaterials::result_type> UIMenuMaterials::on_key(
+optional<UIMenuMaterials::ResultType> UIMenuMaterials::on_key(
     const std::string& key)
 {
     int _p;

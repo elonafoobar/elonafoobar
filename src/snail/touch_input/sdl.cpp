@@ -65,9 +65,9 @@ void TouchInput::initialize_quick_actions()
         }
     }
 
-    using tuples_t =
+    using Tuple =
         std::tuple<std::string, optional<snail::Key>, int, int, bool>[];
-    for (const auto& tuple : tuples_t{
+    for (const auto& tuple : Tuple{
              {"OK", snail::Key::enter, 1, 1, true},
              {"Back", snail::Key::shift, 2, 1, true},
              {"z", none, 1, 2, true},

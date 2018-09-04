@@ -18,7 +18,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuBook::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuBook::ResultType> on_key(const std::string& key);
 
 private:
     int _book_id;

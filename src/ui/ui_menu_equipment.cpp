@@ -334,7 +334,7 @@ static void _show_item_desc(int body_)
     update_screen();
 }
 
-optional<UIMenuEquipment::result_type> UIMenuEquipment::on_key(
+optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);

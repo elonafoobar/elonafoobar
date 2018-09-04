@@ -17,7 +17,7 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
     return elona::fov_los(fx, fy, tx, ty) == 1;
 }
 
-bool FOV::you_see(lua_character_handle handle)
+bool FOV::you_see(LuaCharacterHandle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return elona::is_in_fov(chara);

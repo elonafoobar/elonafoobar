@@ -416,7 +416,7 @@ static void _switch_target(bool is_forwards)
     cs = 0;
 }
 
-optional<UIMenuFeats::result_type> UIMenuFeats::on_key(
+optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(
     const std::string& key)
 {
     int p_;

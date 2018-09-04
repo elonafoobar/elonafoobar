@@ -15,7 +15,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuGameHelp::result_type> on_key(
+    virtual optional<UIMenuGameHelp::ResultType> on_key(
         const std::string& key);
 
     void _remove_parenthesis_around_keys();

@@ -230,8 +230,8 @@ public:
     };
 
 
-    using id_type = shared_id;
-    using map_type = std::unordered_map<id_type, Extent>;
+    using IdType = SharedId;
+    using MapType = std::unordered_map<IdType, Extent>;
 
     void clear_storage_and_buffers();
 
@@ -239,7 +239,7 @@ public:
      * Loads a single sprite into a buffer of the provided type into
      * which it will fit. May allocate a new buffer if none are found.
      */
-    void load(const fs::path&, const id_type&, PageType);
+    void load(const fs::path&, const IdType&, PageType);
 
     /***
      * Loads a map of rectangular extents indexed by an ID
@@ -253,9 +253,9 @@ public:
      * to have been split or merged by previous texture region
      * insertions.
      */
-    void add_predefined_extents(const fs::path&, const map_type&, PageType);
+    void add_predefined_extents(const fs::path&, const MapType&, PageType);
 
-    optional_ref<Extent> operator[](const id_type& id) const
+    optional_ref<Extent> operator[](const IdType& id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
@@ -266,7 +266,7 @@ public:
 
     optional_ref<Extent> operator[](const std::string& inner_id) const
     {
-        return (*this)[shared_id(inner_id)];
+        return (*this)[SharedId(inner_id)];
     }
 
 
@@ -278,7 +278,7 @@ private:
     BufferInfo& add_buffer(PageType, int, int);
 
     std::vector<BufferInfo> buffers;
-    map_type storage;
+    MapType storage;
 };
 
 

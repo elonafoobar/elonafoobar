@@ -43,7 +43,7 @@ private:
 };
 
 
-using spec_key = std::string;
+using SpecKey = std::string;
 
 
 namespace spec
@@ -119,7 +119,7 @@ struct EnumDef
     }
 };
 
-using item = boost::
+using Item = boost::
     variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>;
 
 static const constexpr char* unknown_enum_variant = "__unknown__";
@@ -133,7 +133,7 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
 class Object
 {
 public:
-    using const_iterator = tsl::ordered_map<std::string, item>::const_iterator;
+    using const_iterator = tsl::ordered_map<std::string, Item>::const_iterator;
 
     Object(std::string name_)
         : name(name_)
@@ -348,16 +348,16 @@ public:
     // These functions allow for injecting more specific validations
     // or data in subclasses, like config option visibility based on
     // object properties.
-    virtual void post_visit(const spec_key&, const SectionDef&)
+    virtual void post_visit(const SpecKey&, const SectionDef&)
     {
     }
-    virtual void pre_visit_section(const spec_key&, const hcl::Object&)
+    virtual void pre_visit_section(const SpecKey&, const hcl::Object&)
     {
     }
-    virtual void pre_visit_item(const spec_key&, const hcl::Object&)
+    virtual void pre_visit_item(const SpecKey&, const hcl::Object&)
     {
     }
-    virtual void pre_visit_bare_value(const spec_key&, const hcl::Value&)
+    virtual void pre_visit_bare_value(const SpecKey&, const hcl::Value&)
     {
     }
 
@@ -366,7 +366,7 @@ private:
     SectionDef
     visit_object(const hcl::Object&, const std::string&, const std::string&);
     void visit(const hcl::Value&, const std::string&, const std::string&);
-    item
+    Item
     visit_bare_value(const hcl::Value&, const std::string&, const std::string&);
     void visit_item(const hcl::Object&, const std::string&, const std::string&);
 
@@ -385,7 +385,7 @@ private:
         const std::string&);
 
     std::string name;
-    tsl::ordered_map<std::string, item> items;
+    tsl::ordered_map<std::string, Item> items;
 };
 } // namespace spec
 } // namespace elona

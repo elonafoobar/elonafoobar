@@ -62,7 +62,7 @@ ItemChipData ItemChipDB::convert(
     return ItemChipData{
         id,
         Extent{x, y, width, height, frame_width},
-        ItemChip{shared_id(id_), offset_y, stack_height, shadow, animation},
+        ItemChip{SharedId(id_), offset_y, stack_height, shadow, animation},
         filepath};
 }
 

@@ -6,7 +6,7 @@ namespace elona
 namespace lua
 {
 
-bool Chara::is_alive(lua_character_handle handle)
+bool Chara::is_alive(LuaCharacterHandle handle)
 {
     if (!lua::lua->get_handle_manager().handle_is_valid(handle))
     {
@@ -17,13 +17,13 @@ bool Chara::is_alive(lua_character_handle handle)
     return chara.state() == Character::State::alive;
 }
 
-bool Chara::is_player(lua_character_handle handle)
+bool Chara::is_player(LuaCharacterHandle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return chara.index == 0;
 }
 
-bool Chara::is_ally(lua_character_handle handle)
+bool Chara::is_ally(LuaCharacterHandle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     return !Chara::is_player(handle) && chara.index <= 16;
@@ -34,14 +34,14 @@ int Chara::count()
     return gdata_crowd_density;
 }
 
-bool Chara::flag(lua_character_handle handle, const enum_string& flag_name)
+bool Chara::flag(LuaCharacterHandle handle, const EnumString& flag_name)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     int flag = LuaEnums::CharaFlagTable.ensure_from_string(flag_name);
     return chara._flags[flag] == 1;
 }
 
-sol::optional<lua_character_handle> Chara::player()
+sol::optional<LuaCharacterHandle> Chara::player()
 {
     if (elona::cdata.player().state() == Character::State::empty)
     {
@@ -49,25 +49,25 @@ sol::optional<lua_character_handle> Chara::player()
     }
     else
     {
-        lua_character_handle handle =
+        LuaCharacterHandle handle =
             lua::lua->get_handle_manager().get_handle(elona::cdata.player());
         return handle;
     }
 }
 
-sol::optional<lua_character_handle> Chara::create(
+sol::optional<LuaCharacterHandle> Chara::create(
     const Position& position,
     int id)
 {
     return Chara::create_xy(position.x, position.y, id);
 }
 
-sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
+sol::optional<LuaCharacterHandle> Chara::create_xy(int x, int y, int id)
 {
     elona::flt();
     if (elona::chara_create(-1, id, x, y) != 0)
     {
-        lua_character_handle handle =
+        LuaCharacterHandle handle =
             lua::lua->get_handle_manager().get_handle(elona::cdata[elona::rc]);
         return handle;
     }
@@ -77,14 +77,14 @@ sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
     }
 }
 
-sol::optional<lua_character_handle> Chara::create_from_id(
+sol::optional<LuaCharacterHandle> Chara::create_from_id(
     const Position& position,
     const std::string& id)
 {
     return Chara::create_from_id_xy(position.x, position.y, id);
 }
 
-sol::optional<lua_character_handle>
+sol::optional<LuaCharacterHandle>
 Chara::create_from_id_xy(int x, int y, const std::string& id)
 {
     auto full_id = "core.chara:" + id;

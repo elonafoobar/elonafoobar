@@ -130,7 +130,7 @@ void UIMenuCharamakeAlias::draw()
     _redraw_aliases = false;
 }
 
-optional<UIMenuCharamakeAlias::result_type> UIMenuCharamakeAlias::on_key(
+optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);

@@ -243,7 +243,7 @@ void UIMenuHire::draw()
     _draw_list_entries();
 }
 
-optional<UIMenuHire::result_type> UIMenuHire::on_key(const std::string& key)
+optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
 {
     int _p;
 

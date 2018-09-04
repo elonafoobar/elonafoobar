@@ -1311,7 +1311,7 @@ static void _apply_skill_bonus(int csskill_)
         clamp(15 - sdata.get(csskill_, cc).potential / 15, 2, 15));
 }
 
-optional<UIMenuCharacterSheet::result_type> UIMenuCharacterSheet::on_key(
+optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     const std::string& key)
 {
     if (page == 0)

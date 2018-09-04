@@ -412,8 +412,8 @@ void Input::_handle_event(const ::SDL_KeyboardEvent& event)
         }
     }
 
-    using tuples_t = std::tuple<Key, Key, Key>[];
-    for (const auto& tuple : tuples_t{
+    using KeyTuple = std::tuple<Key, Key, Key>[];
+    for (const auto& tuple : KeyTuple{
              {Key::alt, Key::alt_l, Key::alt_r},
              {Key::ctrl, Key::ctrl_l, Key::ctrl_r},
              {Key::gui, Key::gui_l, Key::gui_r},

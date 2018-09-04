@@ -48,7 +48,7 @@ CharaChipData CharaChipDB::convert(
 
     return CharaChipData{id,
                            Extent{x, y, width, height},
-                           CharaChip{shared_id(id_), offset_y},
+                           CharaChip{SharedId(id_), offset_y},
                            filepath};
 }
 

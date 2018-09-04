@@ -32,8 +32,8 @@ namespace cat
 template <>
 struct CatDBTraits<AbilityDB>
 {
-    using id_type = int;
-    using data_type = AbilityData;
+    using IdType = int;
+    using DataType = AbilityData;
     static constexpr const char* filename = u8"ability.lua";
     static constexpr const char* table_name = u8"ability";
 };

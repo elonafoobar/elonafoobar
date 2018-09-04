@@ -18,7 +18,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuSkills::result_type> on_key(
+    virtual optional<UIMenuSkills::ResultType> on_key(
         const std::string& key);
 };
 

@@ -22,7 +22,7 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
-using i18n_key = std::string;
+using I18NKey = std::string;
 
 struct Character;
 
@@ -474,7 +474,7 @@ public:
         storage.clear();
     }
 
-    optional<const hil::Context&> find_translation(const i18n_key& key)
+    optional<const hil::Context&> find_translation(const I18NKey& key)
     {
         // In the unlikely event that a single locale key refers to
         // both a single string and a list, the string will be chosen.
@@ -500,7 +500,7 @@ public:
 
     template <typename Head, typename... Tail>
     optional<std::string>
-    get_optional(const i18n_key& key, Head const& head, Tail&&... tail)
+    get_optional(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         const auto& found = find_translation(key);
         if (!found)
@@ -512,7 +512,7 @@ public:
     }
 
     template <typename... Tail>
-    optional<std::string> get_optional(const i18n_key& key, Tail&&... tail)
+    optional<std::string> get_optional(const I18NKey& key, Tail&&... tail)
     {
         const auto& found = find_translation(key);
         if (!found)
@@ -524,7 +524,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    std::string get(const i18n_key& key, Head const& head, Tail&&... tail)
+    std::string get(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         if (auto text = get_optional(key, head, std::forward<Tail>(tail)...))
         {
@@ -542,7 +542,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get(const i18n_key& key, Tail&&... tail)
+    std::string get(const I18NKey& key, Tail&&... tail)
     {
         if (auto text = get_optional(key, std::forward<Tail>(tail)...))
         {
@@ -564,7 +564,7 @@ public:
 
     template <typename Head, typename... Tail>
     std::string
-    get_enum(const i18n_key& key, int index, Head const& head, Tail&&... tail)
+    get_enum(const I18NKey& key, int index, Head const& head, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index),
@@ -573,7 +573,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get_enum(const i18n_key& key, int index, Tail&&... tail)
+    std::string get_enum(const I18NKey& key, int index, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -581,7 +581,7 @@ public:
 
     template <typename Head, typename... Tail>
     optional<std::string> get_enum_optional(
-        const i18n_key& key,
+        const I18NKey& key,
         int index,
         Head const& head,
         Tail&&... tail)
@@ -594,7 +594,7 @@ public:
 
     template <typename... Tail>
     optional<std::string>
-    get_enum_optional(const i18n_key& key, int index, Tail&&... tail)
+    get_enum_optional(const I18NKey& key, int index, Tail&&... tail)
     {
         return get_optional(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -656,7 +656,7 @@ public:
     // returns 1-size list which contains the value. If `key` does not exist,
     // returns empty list.
     template <typename... Args>
-    std::vector<std::string> get_list(const i18n_key& key, Args&&... args)
+    std::vector<std::string> get_list(const I18NKey& key, Args&&... args)
     {
         std::vector<std::string> ret;
 
@@ -704,7 +704,7 @@ private:
     /***
      * Storage for single pieces of localized texts.
      */
-    std::unordered_map<i18n_key, hil::Context> storage;
+    std::unordered_map<I18NKey, hil::Context> storage;
 
     /***
      * Storage for lists of localized text.
@@ -712,9 +712,9 @@ private:
      * When retrieving text using a locale key referring to a list element,
      * the text will be chosen randomly.
      */
-    std::unordered_map<i18n_key, std::vector<hil::Context>> list_storage;
+    std::unordered_map<I18NKey, std::vector<hil::Context>> list_storage;
 
-    std::set<i18n_key> unknown_keys;
+    std::set<I18NKey> unknown_keys;
 
     // Key: mod name.
     // Value: locale directory.

@@ -23,7 +23,7 @@ namespace elona
 GodDB the_god_db;
 
 
-void txtgod(const god_id_t& id, int type)
+void txtgod(const GodId& id, int type)
 {
     if (id.empty())
         return;

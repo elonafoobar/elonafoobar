@@ -26,7 +26,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuFeats::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuFeats::ResultType> on_key(const std::string& key);
 
 private:
     Operation _operation;

@@ -17,7 +17,7 @@ struct Item;
 
 struct ItemChip
 {
-    shared_id key;
+    SharedId key;
     int offset_y;
     int stack_height;
     int shadow;
@@ -31,7 +31,7 @@ extern std::vector<ItemChip> item_chips;
 
 struct CharaChip
 {
-    shared_id key;
+    SharedId key;
     int offset_y;
 };
 

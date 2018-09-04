@@ -68,7 +68,7 @@ Position Map::random_pos()
                                         elona::rnd(mdata_map_height - 1)});
 }
 
-int Map::generate_tile(const enum_string& type_name)
+int Map::generate_tile(const EnumString& type_name)
 {
     TileKind type = LuaEnums::TileKindTable.ensure_from_string(type_name);
     return elona::cell_get_type(type);

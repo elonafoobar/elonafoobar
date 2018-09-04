@@ -51,7 +51,7 @@ void PicLoader::clear_storage_and_buffers()
 
 void PicLoader::load(
     const fs::path& image_file,
-    const id_type& id,
+    const IdType& id,
     PageType type)
 {
     snail::BasicImage img{image_file, snail::Color{0, 0, 0}};
@@ -100,7 +100,7 @@ void PicLoader::load(
 
 void PicLoader::add_predefined_extents(
     const fs::path& atlas_file,
-    const map_type& extents,
+    const MapType& extents,
     PageType type)
 {
     snail::BasicImage img{atlas_file, snail::Color{0, 0, 0}};

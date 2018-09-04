@@ -336,7 +336,7 @@ void UIMenuGameHelp::draw()
 }
 
 
-optional<UIMenuGameHelp::result_type> UIMenuGameHelp::on_key(
+optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     const std::string& key)
 {
     // Key selection
@@ -372,7 +372,7 @@ optional<UIMenuGameHelp::result_type> UIMenuGameHelp::on_key(
     // Closing menu
     if (key == key_cancel)
     {
-        return UIMenuGameHelp::result_type::finish();
+        return UIMenuGameHelp::ResultType::finish();
     }
     return none;
 }

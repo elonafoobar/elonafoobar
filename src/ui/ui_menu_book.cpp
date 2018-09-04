@@ -99,7 +99,7 @@ void UIMenuBook::draw()
     }
 }
 
-optional<UIMenuBook::result_type> UIMenuBook::on_key(const std::string& key)
+optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& key)
 {
     if (key == key_pageup)
     {
@@ -122,7 +122,7 @@ optional<UIMenuBook::result_type> UIMenuBook::on_key(const std::string& key)
     else if (key == key_cancel || key == key_enter)
     {
         update_screen();
-        return UIMenuBook::result_type::finish();
+        return UIMenuBook::ResultType::finish();
     }
 
     return none;

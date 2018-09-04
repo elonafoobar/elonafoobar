@@ -8,8 +8,8 @@ namespace lua
 
 namespace Magic
 {
-void cast_self(lua_character_handle, int, int, const Position&);
-void cast(lua_character_handle, lua_character_handle, int, int);
+void cast_self(LuaCharacterHandle, int, int, const Position&);
+void cast(LuaCharacterHandle, LuaCharacterHandle, int, int);
 
 
 void bind(sol::table&);

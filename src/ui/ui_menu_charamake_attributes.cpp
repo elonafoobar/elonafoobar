@@ -185,7 +185,7 @@ void UIMenuCharamakeAttributes::draw()
     cs_bk = cs;
 }
 
-optional<UIMenuCharamakeAttributes::result_type>
+optional<UIMenuCharamakeAttributes::ResultType>
 UIMenuCharamakeAttributes::on_key(const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);

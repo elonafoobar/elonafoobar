@@ -186,7 +186,7 @@ static void _do_play_scene(int scene_id)
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 
-optional<UIMenuScene::result_type> UIMenuScene::on_key(
+optional<UIMenuScene::ResultType> UIMenuScene::on_key(
     const std::string& key)
 {
     int p_ = 0;

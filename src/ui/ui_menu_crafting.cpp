@@ -323,7 +323,7 @@ void UIMenuCrafting::draw()
     }
 }
 
-optional<UIMenuCrafting::result_type> UIMenuCrafting::on_key(
+optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
     const std::string& key)
 {
     int p_ = 0;

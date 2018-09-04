@@ -59,14 +59,14 @@ static void set_default_from_platform(
     }
 
 void ConfigDef::post_visit(
-    const spec_key& current_key,
+    const SpecKey& current_key,
     const spec::SectionDef&)
 {
     data.emplace(current_key, MetaData{});
 }
 
 void ConfigDef::pre_visit_section(
-    const spec_key& current_key,
+    const SpecKey& current_key,
     const hcl::Object& section)
 {
     MetaData dat{};
@@ -83,14 +83,14 @@ void ConfigDef::pre_visit_section(
 }
 
 void ConfigDef::pre_visit_bare_value(
-    const spec_key& current_key,
+    const SpecKey& current_key,
     const hcl::Value&)
 {
     data.emplace(current_key, MetaData{});
 }
 
 void ConfigDef::pre_visit_item(
-    const spec_key& current_key,
+    const SpecKey& current_key,
     const hcl::Object& item)
 {
     MetaData dat{};
@@ -114,9 +114,9 @@ void ConfigDef::pre_visit_item(
 }
 
 
-bool ConfigDef::is_child_visible(const spec_key& child_key)
+bool ConfigDef::is_child_visible(const SpecKey& child_key)
 {
-    spec_key parent_key = child_key;
+    SpecKey parent_key = child_key;
     for (size_t i = parent_key.size() - 1; i > 0; i--)
     {
         if (parent_key[i] == '.')

@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuCharamakeGender::result_type> on_key(
+    virtual optional<UIMenuCharamakeGender::ResultType> on_key(
         const std::string& key);
 };
 

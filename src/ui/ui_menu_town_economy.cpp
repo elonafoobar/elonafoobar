@@ -160,7 +160,7 @@ void UIMenuTownEconomy::draw()
     }
 }
 
-optional<UIMenuTownEconomy::result_type> UIMenuTownEconomy::on_key(
+optional<UIMenuTownEconomy::ResultType> UIMenuTownEconomy::on_key(
     const std::string& key)
 {
     if (key == key_pageup)

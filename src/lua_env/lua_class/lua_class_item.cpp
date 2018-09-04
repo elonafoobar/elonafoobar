@@ -39,7 +39,7 @@ void LuaItem::bind(sol::state& lua)
             [](Item& i) {
                 return LuaEnums::CurseStateTable.convert_to_string(i.curse_state);
             },
-            [](Item& i, const enum_string& s) {
+            [](Item& i, const EnumString& s) {
                 i.curse_state = LuaEnums::CurseStateTable.ensure_from_string(s);
             }),
         "identify_state",
@@ -48,7 +48,7 @@ void LuaItem::bind(sol::state& lua)
                 return LuaEnums::IdentifyStateTable.convert_to_string(
                     i.identification_state);
             },
-            [](Item& i, const enum_string& s) {
+            [](Item& i, const EnumString& s) {
                 i.identification_state =
                     LuaEnums::IdentifyStateTable.ensure_from_string(s);
             }));

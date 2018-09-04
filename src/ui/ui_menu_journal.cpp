@@ -239,7 +239,7 @@ void UIMenuJournal::draw()
 {
 }
 
-optional<UIMenuJournal::result_type> UIMenuJournal::on_key(
+optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
