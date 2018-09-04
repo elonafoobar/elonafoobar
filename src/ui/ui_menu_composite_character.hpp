@@ -29,8 +29,7 @@ enum class FeatsResult
     pressed_f1,
 };
 
-typedef boost::variant<CharacterSheetResult, FeatsResult>
-    UIMenuCompositeCharacterResult;
+using UIMenuCompositeCharacterResult = boost::variant<CharacterSheetResult, FeatsResult>;
 
 class UIMenuCompositeCharacter
     : public UIMenuComposite<UIMenuCompositeCharacterResult>

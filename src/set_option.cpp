@@ -309,7 +309,7 @@ public:
 };
 
 
-typedef std::vector<std::unique_ptr<ConfigMenu>> config_screen;
+using config_screen = std::vector<std::unique_ptr<ConfigMenu>>;
 
 
 // Functions for adding items to the config screen.

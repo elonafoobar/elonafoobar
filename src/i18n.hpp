@@ -22,7 +22,7 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
-typedef std::string i18n_key;
+using i18n_key = std::string;
 
 struct Character;
 

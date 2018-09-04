@@ -16,8 +16,7 @@ struct UIMenuSpellsResult
     int effect_id;
 };
 
-typedef boost::variant<UIMenuSkillsResult, UIMenuSpellsResult>
-    UIMenuCompositeSkillsResult;
+using UIMenuCompositeSkillsResult = boost::variant<UIMenuSkillsResult, UIMenuSpellsResult>;
 
 class UIMenuCompositeSkills
     : public UIMenuComposite<UIMenuCompositeSkillsResult>

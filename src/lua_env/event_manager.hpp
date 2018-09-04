@@ -83,9 +83,9 @@ public:
     {
     };
 
-    typedef std::vector<Callback> callback_container;
-    typedef callback_container::iterator iterator;
-    typedef callback_container::const_iterator const_iterator;
+    using callback_container = std::vector<Callback>;
+    using iterator = callback_container::iterator;
+    using const_iterator = callback_container::const_iterator;
 
     const_iterator begin() const
     {
@@ -253,7 +253,7 @@ public:
 
     void clear();
 
-    typedef std::unordered_map<EventKind, Callbacks> container;
+    using container = std::unordered_map<EventKind, Callbacks>;
 
 private:
     /***

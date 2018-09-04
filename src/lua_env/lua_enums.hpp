@@ -14,7 +14,7 @@ namespace elona
 namespace lua
 {
 
-typedef std::string enum_string;
+using enum_string = std::string;
 
 template <typename T>
 class EnumMap

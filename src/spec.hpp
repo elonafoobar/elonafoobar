@@ -43,7 +43,7 @@ private:
 };
 
 
-typedef std::string spec_key;
+using spec_key = std::string;
 
 
 namespace spec
@@ -119,9 +119,8 @@ struct EnumDef
     }
 };
 
-typedef boost::
-    variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>
-        item;
+using item = boost::
+    variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>;
 
 static const constexpr char* unknown_enum_variant = "__unknown__";
 
@@ -134,7 +133,7 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
 class Object
 {
 public:
-    typedef tsl::ordered_map<std::string, item>::const_iterator const_iterator;
+    using const_iterator = tsl::ordered_map<std::string, item>::const_iterator;
 
     Object(std::string name_)
         : name(name_)
