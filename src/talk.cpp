@@ -605,8 +605,8 @@ int talk_window_query()
         key_check();
         cursor_check();
         int a{};
-        a = stick(StickKey::escape);
-        if (a == StickKey::escape)
+        a = stick(static_cast<int>(StickKey::escape));
+        if (a == static_cast<int>(StickKey::escape))
         {
             if (scenemode)
             {

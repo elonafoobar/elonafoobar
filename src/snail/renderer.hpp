@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../lib/enumutil.hpp"
 #include "../lib/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
@@ -22,7 +23,7 @@ namespace snail
 class Renderer : public lib::noncopyable
 {
 public:
-    enum Flag
+    enum class Flag
     {
         none = 0,
         software = SDL_RENDERER_SOFTWARE,
@@ -108,7 +109,7 @@ public:
     ::SDL_Renderer* ptr();
 
 
-    Renderer(Window& target_window, int flag);
+    Renderer(Window& target_window, Flag flag);
 
 
     void clear();
@@ -210,6 +211,9 @@ private:
     Font _font;
     BlendMode _blend_mode = BlendMode::blend;
 };
+
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(Renderer::Flag)
 
 
 

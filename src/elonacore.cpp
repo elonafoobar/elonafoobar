@@ -138,7 +138,7 @@ void select_house_board_tile()
         await(Config::instance().wait1);
         int a{};
         a = stick();
-        if (a == StickKey::mouse_left)
+        if (a == static_cast<int>(StickKey::mouse_left))
         {
             p = mousex / 24 + mousey / 24 * 33;
             if (p >= listmax)
@@ -151,7 +151,7 @@ void select_house_board_tile()
             house_board_update_screen();
             return;
         }
-        if (a == StickKey::mouse_right)
+        if (a == static_cast<int>(StickKey::mouse_right))
         {
             house_board_update_screen();
             return;
@@ -4976,7 +4976,7 @@ TurnResult exit_map()
                             txt(i18n::s.get(
                                 "core.locale.action.exit_map.not_permitted"));
                             msg_halt();
-                            gdata_current_map = mdata_t::MapId::fields;
+                            gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
                     if (adata(16, gdata_current_map)
@@ -4988,7 +4988,7 @@ TurnResult exit_map()
                                 i18n::s.get("core.locale.action.exit_map.no_"
                                             "invitation_to_pyramid"));
                             msg_halt();
-                            gdata_current_map = mdata_t::MapId::fields;
+                            gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
                     if (adata(16, gdata_current_map) == mdata_t::MapId::jail)
@@ -4996,16 +4996,16 @@ TurnResult exit_map()
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
                         msg_halt();
-                        gdata_current_map = mdata_t::MapId::fields;
+                        gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
                     }
                 }
                 else
                 {
-                    gdata_current_map = mdata_t::MapId::fields;
+                    gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
                 }
                 if (feat(1) != 15)
                 {
-                    gdata_current_map = mdata_t::MapId::fields;
+                    gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
                 }
             }
             if (mdata_map_type == mdata_t::MapType::town
@@ -5017,8 +5017,8 @@ TurnResult exit_map()
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata_map_type >= mdata_t::MapType::dungeon
-            || mdata_map_type == mdata_t::MapType::shelter)
+        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
+            || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
         {
             if (gdata_current_dungeon_level < adata(17, gdata_current_map))
             {
@@ -5078,7 +5078,7 @@ TurnResult exit_map()
     {
         rc = 0;
         revive_player();
-        gdata_current_map = mdata_t::MapId::your_home;
+        gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
         gdata(850) = adata(30, 7);
         gdata_current_dungeon_level = 1;
     }
@@ -5162,7 +5162,7 @@ TurnResult exit_map()
     {
         if (gdata_current_dungeon_level == 2)
         {
-            gdata_current_map = mdata_t::MapId::mountain_pass;
+            gdata_current_map = static_cast<int>(mdata_t::MapId::mountain_pass);
             gdata_current_dungeon_level = adata(10, gdata_current_map) - 1;
             gdata_entrance_type = 1;
             msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
@@ -5172,7 +5172,7 @@ TurnResult exit_map()
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
-            gdata_current_map = mdata_t::MapId::larna;
+            gdata_current_map = static_cast<int>(mdata_t::MapId::larna);
             gdata_current_dungeon_level = 1;
             gdata_entrance_type = 2;
             msgtemp += i18n::s.get("core.locale.action.exit_map.larna");
@@ -5649,7 +5649,7 @@ void map_global_proc_diastrophism()
         map_global_prepare();
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            adata(16, cnt) = mdata_t::MapId::none;
+            adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
         }
     }
     p = 0;
@@ -5677,7 +5677,7 @@ void map_global_proc_diastrophism()
             {
                 if (rnd(5) == 0 || adata(20, cnt) == -1)
                 {
-                    adata(16, cnt) = mdata_t::MapId::none;
+                    adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
                 }
             }
         }
@@ -5825,10 +5825,10 @@ void map_clear_material_spots_and_light()
 
 void initialize_adata()
 {
-    p = mdata_t::MapId::test_world;
+    p = static_cast<int>(mdata_t::MapId::test_world);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5841,10 +5841,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 47;
-    p = mdata_t::MapId::test_world_north_border;
+    p = static_cast<int>(mdata_t::MapId::test_world_north_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 28;
     adata(2, p) = 1;
     adata(3, p) = 8;
@@ -5857,10 +5857,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 47;
-    p = mdata_t::MapId::south_tyris;
+    p = static_cast<int>(mdata_t::MapId::south_tyris);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5873,10 +5873,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 44;
-    p = mdata_t::MapId::south_tyris_north_border;
+    p = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 42;
     adata(2, p) = 1;
     adata(3, p) = 8;
@@ -5889,10 +5889,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 44;
-    p = mdata_t::MapId::the_smoke_and_pipe;
+    p = static_cast<int>(mdata_t::MapId::the_smoke_and_pipe);
     adata(16, p) = p;
     adata(15, p) = 159;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 39;
     adata(2, p) = 13;
     adata(3, p) = 8;
@@ -5905,10 +5905,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 44;
-    p = mdata_t::MapId::north_tyris;
+    p = static_cast<int>(mdata_t::MapId::north_tyris);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5921,10 +5921,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::vernis;
+    p = static_cast<int>(mdata_t::MapId::vernis);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 3;
@@ -5938,10 +5938,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::yowyn;
+    p = static_cast<int>(mdata_t::MapId::yowyn);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 43;
     adata(2, p) = 32;
     adata(3, p) = 3;
@@ -5955,10 +5955,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 2;
     adata(30, p) = 4;
-    p = mdata_t::MapId::palmia;
+    p = static_cast<int>(mdata_t::MapId::palmia);
     adata(16, p) = p;
     adata(15, p) = 136;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 53;
     adata(2, p) = 24;
     adata(3, p) = 3;
@@ -5972,10 +5972,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 3;
     adata(30, p) = 4;
-    p = mdata_t::MapId::derphy;
+    p = static_cast<int>(mdata_t::MapId::derphy);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 14;
     adata(2, p) = 35;
     adata(3, p) = 3;
@@ -5989,10 +5989,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 4;
     adata(30, p) = 4;
-    p = mdata_t::MapId::port_kapul;
+    p = static_cast<int>(mdata_t::MapId::port_kapul);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 3;
     adata(2, p) = 15;
     adata(3, p) = 3;
@@ -6006,10 +6006,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 5;
     adata(30, p) = 4;
-    p = mdata_t::MapId::noyel;
+    p = static_cast<int>(mdata_t::MapId::noyel);
     adata(16, p) = p;
     adata(15, p) = 156;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 89;
     adata(2, p) = 14;
     adata(3, p) = 3;
@@ -6023,10 +6023,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 6;
     adata(30, p) = 4;
-    p = mdata_t::MapId::lumiest;
+    p = static_cast<int>(mdata_t::MapId::lumiest);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::MapType::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 61;
     adata(2, p) = 32;
     adata(3, p) = 3;
@@ -6040,10 +6040,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 7;
     adata(30, p) = 4;
-    p = mdata_t::MapId::fields;
+    p = static_cast<int>(mdata_t::MapId::fields);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::field;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::field);
     adata(1, p) = 0;
     adata(2, p) = 0;
     adata(3, p) = 4;
@@ -6056,9 +6056,9 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::your_home;
+    p = static_cast<int>(mdata_t::MapId::your_home);
     adata(16, p) = p;
-    adata(0, p) = mdata_t::MapType::player_owned;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
     adata(3, p) = 8;
     adata(9, p) = 10000;
     adata(17, p) = 1;
@@ -6075,9 +6075,9 @@ void initialize_adata()
         adata(18, p) = 3;
         adata(30, p) = 4;
     }
-    p = mdata_t::MapId::show_house;
+    p = static_cast<int>(mdata_t::MapId::show_house);
     adata(16, p) = p;
-    adata(0, p) = mdata_t::MapType::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(3, p) = 8;
     adata(9, p) = 10000;
     adata(17, p) = 1;
@@ -6091,10 +6091,10 @@ void initialize_adata()
     adata(4, p) = 1;
     adata(18, p) = 3;
     adata(30, p) = 4;
-    p = mdata_t::MapId::arena;
+    p = static_cast<int>(mdata_t::MapId::arena);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 22;
     adata(2, p) = 21;
     adata(3, p) = 4;
@@ -6107,10 +6107,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::pet_arena;
+    p = static_cast<int>(mdata_t::MapId::pet_arena);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 23;
     adata(2, p) = 21;
     adata(3, p) = 1;
@@ -6123,10 +6123,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::quest;
+    p = static_cast<int>(mdata_t::MapId::quest);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 22;
     adata(2, p) = 21;
     adata(3, p) = 4;
@@ -6139,10 +6139,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::lesimas;
+    p = static_cast<int>(mdata_t::MapId::lesimas);
     adata(16, p) = p;
     adata(15, p) = 139;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 23;
     adata(2, p) = 29;
     adata(3, p) = 1;
@@ -6155,10 +6155,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::the_void;
+    p = static_cast<int>(mdata_t::MapId::the_void);
     adata(16, p) = p;
     adata(15, p) = 139;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 81;
     adata(2, p) = 51;
     adata(3, p) = 1;
@@ -6171,10 +6171,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::tower_of_fire;
+    p = static_cast<int>(mdata_t::MapId::tower_of_fire);
     adata(16, p) = p;
     adata(15, p) = 145;
-    adata(0, p) = mdata_t::MapType::dungeon_tower;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_tower);
     adata(1, p) = 43;
     adata(2, p) = 4;
     adata(3, p) = 1;
@@ -6187,10 +6187,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::crypt_of_the_damned;
+    p = static_cast<int>(mdata_t::MapId::crypt_of_the_damned);
     adata(16, p) = p;
     adata(15, p) = 141;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 37;
     adata(2, p) = 20;
     adata(3, p) = 1;
@@ -6203,10 +6203,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::ancient_castle;
+    p = static_cast<int>(mdata_t::MapId::ancient_castle);
     adata(16, p) = p;
     adata(15, p) = 144;
-    adata(0, p) = mdata_t::MapType::dungeon_castle;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_castle);
     adata(1, p) = 26;
     adata(2, p) = 44;
     adata(3, p) = 1;
@@ -6219,10 +6219,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::dragons_nest;
+    p = static_cast<int>(mdata_t::MapId::dragons_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 13;
     adata(2, p) = 32;
     adata(3, p) = 1;
@@ -6235,10 +6235,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::mountain_pass;
+    p = static_cast<int>(mdata_t::MapId::mountain_pass);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 64;
     adata(2, p) = 43;
     adata(3, p) = 2;
@@ -6251,10 +6251,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::puppy_cave;
+    p = static_cast<int>(mdata_t::MapId::puppy_cave);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 29;
     adata(2, p) = 24;
     adata(3, p) = 1;
@@ -6267,10 +6267,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::minotaurs_nest;
+    p = static_cast<int>(mdata_t::MapId::minotaurs_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 43;
     adata(2, p) = 39;
     adata(3, p) = 1;
@@ -6283,10 +6283,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::yeeks_nest;
+    p = static_cast<int>(mdata_t::MapId::yeeks_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 38;
     adata(2, p) = 31;
     adata(3, p) = 1;
@@ -6299,10 +6299,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::pyramid;
+    p = static_cast<int>(mdata_t::MapId::pyramid);
     adata(16, p) = p;
     adata(15, p) = 160;
-    adata(0, p) = mdata_t::MapType::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 4;
     adata(2, p) = 11;
     adata(3, p) = 1;
@@ -6315,10 +6315,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::lumiest_graveyard;
+    p = static_cast<int>(mdata_t::MapId::lumiest_graveyard);
     adata(16, p) = p;
     adata(15, p) = 141;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 74;
     adata(2, p) = 31;
     adata(3, p) = 3;
@@ -6331,10 +6331,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::truce_ground;
+    p = static_cast<int>(mdata_t::MapId::truce_ground);
     adata(16, p) = p;
     adata(15, p) = 147;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 51;
     adata(2, p) = 9;
     adata(3, p) = 3;
@@ -6347,10 +6347,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::jail;
+    p = static_cast<int>(mdata_t::MapId::jail);
     adata(16, p) = p;
     adata(15, p) = 161;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 28;
     adata(2, p) = 37;
     adata(3, p) = 1;
@@ -6363,10 +6363,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::MapId::cyber_dome;
+    p = static_cast<int>(mdata_t::MapId::cyber_dome);
     adata(16, p) = p;
     adata(15, p) = 148;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 21;
     adata(2, p) = 27;
     adata(3, p) = 8;
@@ -6379,10 +6379,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::larna;
+    p = static_cast<int>(mdata_t::MapId::larna);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 64;
     adata(2, p) = 47;
     adata(3, p) = 3;
@@ -6395,10 +6395,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::miral_and_garoks_workshop;
+    p = static_cast<int>(mdata_t::MapId::miral_and_garoks_workshop);
     adata(16, p) = p;
     adata(15, p) = 157;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 88;
     adata(2, p) = 25;
     adata(3, p) = 8;
@@ -6411,10 +6411,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::mansion_of_younger_sister;
+    p = static_cast<int>(mdata_t::MapId::mansion_of_younger_sister);
     adata(16, p) = p;
     adata(15, p) = 162;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 18;
     adata(2, p) = 2;
     adata(3, p) = 8;
@@ -6427,10 +6427,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::embassy;
+    p = static_cast<int>(mdata_t::MapId::embassy);
     adata(16, p) = p;
     adata(15, p) = 155;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 53;
     adata(2, p) = 21;
     adata(3, p) = 8;
@@ -6443,10 +6443,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::north_tyris_south_border;
+    p = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::MapType::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 27;
     adata(2, p) = 52;
     adata(3, p) = 8;
@@ -6459,10 +6459,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::fort_of_chaos_beast;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_beast);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 13;
     adata(2, p) = 43;
     adata(3, p) = 8;
@@ -6475,10 +6475,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::fort_of_chaos_machine;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_machine);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 51;
     adata(2, p) = 32;
     adata(3, p) = 8;
@@ -6491,10 +6491,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::fort_of_chaos_collapsed;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_collapsed);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 35;
     adata(2, p) = 10;
     adata(3, p) = 8;
@@ -6507,10 +6507,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::shelter_;
+    p = static_cast<int>(mdata_t::MapId::shelter_);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::player_owned;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
     adata(1, p) = 35;
     adata(2, p) = 10;
     adata(3, p) = 1;
@@ -6523,10 +6523,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::MapId::test_site;
+    p = static_cast<int>(mdata_t::MapId::test_site);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::MapType::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 20;
     adata(2, p) = 20;
     adata(3, p) = 4;
@@ -6605,8 +6605,8 @@ int place_random_nefias()
         p = cnt;
         area = p;
         ctrl_file(FileOperation::temp_dir_delete_area);
-        adata(0, p) = mdata_t::MapType::dungeon + rnd(4);
-        adata(16, p) = mdata_t::MapId::random_dungeon;
+        adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+        adata(16, p) = static_cast<int>(mdata_t::MapId::random_dungeon);
         adata(15, p) = 133;
         adata(1, p) = x;
         adata(2, p) = y;
@@ -8262,12 +8262,12 @@ int target_position()
                 continue;
             }
             int a{};
-            a = stick(StickKey::mouse_left | StickKey::mouse_right);
-            if (a == StickKey::mouse_left)
+            a = stick(static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
+            if (a == static_cast<int>(StickKey::mouse_left))
             {
                 key = key_enter;
             }
-            if (a == StickKey::mouse_right)
+            if (a == static_cast<int>(StickKey::mouse_right))
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 2
                     || chipm(0, map(tlocx, tlocy, 0)) == 1)
@@ -10136,7 +10136,7 @@ TurnResult do_debug_console()
         await(Config::instance().wait1);
         int a{};
         a = stick();
-        if (a == StickKey::escape)
+        if (a == static_cast<int>(StickKey::escape))
         {
             return do_exit_debug_console();
         }
@@ -15269,8 +15269,8 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    a = stick(StickKey::escape);
-    if (a == StickKey::escape)
+    a = stick(static_cast<int>(StickKey::escape));
+    if (a == static_cast<int>(StickKey::escape))
     {
         scene_cut = 1;
     }
@@ -15465,8 +15465,8 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        a = stick(StickKey::escape);
-        if (a == StickKey::escape)
+        a = stick(static_cast<int>(StickKey::escape));
+        if (a == static_cast<int>(StickKey::escape))
         {
             scene_cut = 1;
         }

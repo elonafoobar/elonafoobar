@@ -170,7 +170,7 @@ void TouchInput::on_touch_event(::SDL_TouchFingerEvent event)
         QuickAction& action = *it;
 
         if (_last_touched_quick_action_idx == none
-            && event.type != EventType::up
+            && event.type != static_cast<decltype(event.type)>(EventType::up)
             && is_touched(norm_x, norm_y, action))
         {
             action.touched = true;

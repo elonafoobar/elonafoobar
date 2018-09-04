@@ -1014,7 +1014,7 @@ void chara_set_generation_filter()
         }
         return;
     }
-    if (mdata_map_type >= mdata_t::MapType::dungeon)
+    if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon))
     {
         flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
         return;

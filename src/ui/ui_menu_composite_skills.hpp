@@ -22,7 +22,7 @@ class UIMenuCompositeSkills
     : public UIMenuComposite<UIMenuCompositeSkillsResult>
 {
 public:
-    enum Index : size_t
+    enum class Index : size_t
     {
         spells = 0,
         skills = 1

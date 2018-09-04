@@ -60,13 +60,13 @@ void Application::initialize(const std::string& title)
     _title = title;
     _window.reset(new Window(
         title,
-        Window::position_undefined,
-        Window::position_undefined,
+        Window::InitialPosition::undefined,
+        Window::InitialPosition::undefined,
         _width,
         _height,
-        Window::shown));
+        Window::Flag::shown));
     _renderer.reset(new Renderer(
-        *_window, Renderer::accelerated | Renderer::present_vsync));
+        *_window, Renderer::Flag::accelerated | Renderer::Flag::present_vsync));
 
     initialize_dpi();
 

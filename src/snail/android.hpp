@@ -9,7 +9,7 @@ namespace snail
 namespace android
 {
 
-enum Orientation
+enum class Orientation
 {
     landscape = SCREEN_ORIENTATION_LANDSCAPE,
     portrait = SCREEN_ORIENTATION_PORTRAIT,
@@ -20,7 +20,7 @@ enum Orientation
     sensor = SCREEN_ORIENTATION_SENSOR
 };
 
-enum ToastLength
+enum class ToastLength
 {
     short_length = TOAST_LENGTH_SHORT,
     long_length = TOAST_LENGTH_LONG

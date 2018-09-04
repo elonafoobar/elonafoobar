@@ -473,7 +473,7 @@ std::string enchantment_level_string(int prm_448)
 
 void get_enchantment_description(int val0, int power, int category, bool trait)
 {
-    rtval(0) = ItemDescriptionType::enchantment;
+    rtval(0) = static_cast<int>(ItemDescriptionType::enchantment);
     rtval(1) = 0;
 
     s = "";
@@ -487,10 +487,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         switch (val0 / 10000)
         {
         case 1:
-            rtval = ItemDescriptionType::raises_stat;
+            rtval = static_cast<int>(ItemDescriptionType::raises_stat);
             if (power / 50 + 1 < 0)
             {
-                rtval = ItemDescriptionType::negative_effect;
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 const auto skill_name =
                     i18n::_(u8"ability", std::to_string(sid), u8"name");
                 if (category == 57000)
@@ -533,10 +533,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             }
             break;
         case 2:
-            rtval = ItemDescriptionType::raises_resist;
+            rtval = static_cast<int>(ItemDescriptionType::raises_resist);
             if (power / 2 < 0)
             {
-                rtval = ItemDescriptionType::negative_effect;
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.locale.enchantment.with_parameters.resistance."
                     "decreases",
@@ -559,10 +559,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 100);
             break;
         case 3:
-            rtval = ItemDescriptionType::raises_skill;
+            rtval = static_cast<int>(ItemDescriptionType::raises_skill);
             if (power / 50 + 1 < 0)
             {
-                rtval = ItemDescriptionType::negative_effect;
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.locale.enchantment.with_parameters.skill.decreases",
                     i18n::_(u8"ability", std::to_string(sid), u8"name"));
@@ -584,7 +584,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string((power / 50 + 1) / 5);
             break;
         case 6:
-            rtval = ItemDescriptionType::maintains_skill;
+            rtval = static_cast<int>(ItemDescriptionType::maintains_skill);
             if (category == 57000)
             {
                 s = i18n::s.get(
@@ -602,7 +602,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             }
             break;
         case 7:
-            rtval = ItemDescriptionType::enchantment;
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
             s = i18n::_(
                 u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
@@ -614,7 +614,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 100);
             break;
         case 8:
-            rtval = ItemDescriptionType::enchantment;
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
             sid = encprocref(0, sid);
             s = i18n::s.get(
                 "core.locale.enchantment.with_parameters.invokes",
@@ -622,7 +622,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
             break;
         case 9:
-            rtval = ItemDescriptionType::enchantment;
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
             s = i18n::s.get(
                 "core.locale.enchantment.with_parameters.ammo.text",
                 ammoname(sid));
@@ -642,7 +642,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
     {
     case 0: s = u8"?????"s; break;
     case 21:
-        rtval = ItemDescriptionType::negative_effect;
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -653,7 +653,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 45:
-        rtval = ItemDescriptionType::negative_effect;
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -664,7 +664,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 46:
-        rtval = ItemDescriptionType::negative_effect;
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -675,7 +675,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 47:
-        rtval = ItemDescriptionType::negative_effect;
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -685,17 +685,17 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 22: rtval = ItemDescriptionType::enchantment; break;
-    case 23: rtval = ItemDescriptionType::enchantment; break;
-    case 24: rtval = ItemDescriptionType::enchantment; break;
-    case 25: rtval = ItemDescriptionType::enchantment; break;
-    case 26: rtval = ItemDescriptionType::enchantment; break;
-    case 27: rtval = ItemDescriptionType::enchantment; break;
-    case 28: rtval = ItemDescriptionType::enchantment; break;
-    case 41: rtval = ItemDescriptionType::enchantment; break;
-    case 42: rtval = ItemDescriptionType::enchantment; break;
+    case 22: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 23: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 24: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 25: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 26: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 27: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 28: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 41: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 42: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 29:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 100;
@@ -705,13 +705,13 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 100);
         }
         break;
-    case 30: rtval = ItemDescriptionType::enchantment; break;
-    case 31: rtval = ItemDescriptionType::enchantment; break;
-    case 48: rtval = ItemDescriptionType::enchantment; break;
-    case 32: rtval = ItemDescriptionType::enchantment; break;
-    case 33: rtval = ItemDescriptionType::enchantment; break;
+    case 30: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 31: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 48: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 32: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 33: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 34:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -721,9 +721,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 35: rtval = ItemDescriptionType::enchantment; break;
+    case 35: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 36:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -733,9 +733,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 37: rtval = ItemDescriptionType::enchantment; break;
+    case 37: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 38:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -746,7 +746,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 39:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -757,7 +757,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 44:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -768,7 +768,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 50:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -779,7 +779,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 51:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -790,7 +790,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 40:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 100;
@@ -801,7 +801,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 43:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -811,9 +811,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 49: rtval = ItemDescriptionType::enchantment; break;
+    case 49: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 52:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -824,7 +824,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 53:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -835,7 +835,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 54:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -845,10 +845,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 55: rtval = ItemDescriptionType::enchantment; break;
-    case 56: rtval = ItemDescriptionType::enchantment; break;
+    case 55: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 56: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 57:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -859,7 +859,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         }
         break;
     case 58:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -869,10 +869,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             s += enchantment_level_string(power / 50);
         }
         break;
-    case 59: rtval = ItemDescriptionType::enchantment; break;
-    case 60: rtval = ItemDescriptionType::enchantment; break;
+    case 59: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 60: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
     case 61:
-        rtval = ItemDescriptionType::enchantment;
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
         if (trait)
         {
             rtval(1) = power / 50;

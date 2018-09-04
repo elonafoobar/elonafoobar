@@ -581,7 +581,7 @@ void show_game_help()
 
 TurnResult show_journal()
 {
-    ui::UIMenuCompositeMessage(ui::UIMenuCompositeMessage::Index::journal)
+    ui::UIMenuCompositeMessage(static_cast<size_t>(ui::UIMenuCompositeMessage::Index::journal))
         .show();
     return TurnResult::pc_turn_user_error;
 }
@@ -589,7 +589,7 @@ TurnResult show_journal()
 TurnResult show_message_log()
 {
     ui::UIMenuCompositeMessage(
-        ui::UIMenuCompositeMessage::Index::message_log)
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::message_log))
         .show();
     return TurnResult::pc_turn_user_error;
 }
@@ -597,7 +597,7 @@ TurnResult show_message_log()
 TurnResult show_chat_history()
 {
     ui::UIMenuCompositeMessage(
-        ui::UIMenuCompositeMessage::Index::chat_history)
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::chat_history))
         .show();
     return TurnResult::pc_turn_user_error;
 }
@@ -667,12 +667,12 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
 
 TurnResult show_spell_list()
 {
-    return _show_skill_spell_menu(ui::UIMenuCompositeSkills::Index::spells);
+    return _show_skill_spell_menu(static_cast<size_t>(ui::UIMenuCompositeSkills::Index::spells));
 }
 
 TurnResult show_skill_list()
 {
-    return _show_skill_spell_menu(ui::UIMenuCompositeSkills::Index::skills);
+    return _show_skill_spell_menu(static_cast<size_t>(ui::UIMenuCompositeSkills::Index::skills));
 }
 
 
@@ -749,25 +749,25 @@ MenuResult _show_character_sheet_menu(size_t menu_index)
 MenuResult menu_character_sheet_normal()
 {
     return _show_character_sheet_menu(
-        ui::UIMenuCompositeCharacter::Index::character_sheet);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::character_sheet));
 }
 
 MenuResult menu_feats()
 {
     return _show_character_sheet_menu(
-        ui::UIMenuCompositeCharacter::Index::feats);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::feats));
 }
 
 MenuResult menu_equipment()
 {
     return _show_character_sheet_menu(
-        ui::UIMenuCompositeCharacter::Index::equipment);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::equipment));
 }
 
 MenuResult menu_materials()
 {
     return _show_character_sheet_menu(
-        ui::UIMenuCompositeCharacter::Index::materials);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::materials));
 }
 
 // Returns false if canceled, true if confirmed
@@ -1605,7 +1605,7 @@ int select_alias(int val0)
 
 void show_city_chart()
 {
-    ui::UIMenuCompositeTown(ui::UIMenuCompositeTown::Index::chart).show();
+    ui::UIMenuCompositeTown(static_cast<size_t>(ui::UIMenuCompositeTown::Index::chart)).show();
 }
 
 void begin_to_believe_god(int god_id)

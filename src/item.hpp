@@ -231,7 +231,7 @@ bool inv_getspace(int);
 int inv_getfreeid_force();
 
 
-enum ItemDescriptionType : int
+enum class ItemDescriptionType : int
 {
     normal = 0, // rgb(0, 0, 0)
     raises_skill = 1, // rgb(0, 100, 0)

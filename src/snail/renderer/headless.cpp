@@ -30,7 +30,7 @@ void Renderer::set_draw_color(const Color&)
 }
 
 
-Renderer::Renderer(Window&, int)
+Renderer::Renderer(Window&, Flag)
 {
 }
 

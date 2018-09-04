@@ -1118,7 +1118,7 @@ int calccostbuilding()
 
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        switch (adata(16, cnt))
+        switch (static_cast<mdata_t::MapId>(adata(16, cnt)))
         {
         case mdata_t::MapId::museum: cost += 1500; break;
         case mdata_t::MapId::ranch: cost += 1000; break;

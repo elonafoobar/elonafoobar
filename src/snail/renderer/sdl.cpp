@@ -55,7 +55,7 @@ void Renderer::set_draw_color(const Color& color)
         ::SDL_SetRenderDrawColor(ptr(), color.r, color.g, color.b, color.a));
 }
 
-Renderer::Renderer(Window& target_window, int flag)
+Renderer::Renderer(Window& target_window, Flag flag)
 {
     _ptr = detail::enforce_sdl(::SDL_CreateRenderer(
         target_window.ptr(), -1, static_cast<::SDL_RendererFlags>(flag)));

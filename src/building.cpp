@@ -218,7 +218,7 @@ TurnResult build_new_building()
     p = area;
     adata(1, p) = cdata.player().position.x;
     adata(2, p) = cdata.player().position.y;
-    adata(0, p) = mdata_t::MapType::player_owned;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(18, p) = 3;
@@ -230,38 +230,38 @@ TurnResult build_new_building()
     adata(30, p) = gdata(850);
     if (inv[ci].id == 521)
     {
-        adata(16, p) = mdata_t::MapId::museum;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::museum);
         adata(15, p) = 151;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 522)
     {
-        adata(16, p) = mdata_t::MapId::shop;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::shop);
         adata(15, p) = 150;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 542)
     {
-        adata(16, p) = mdata_t::MapId::crop;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::crop);
         adata(15, p) = 152;
         adata(21, p) = 2;
     }
     if (inv[ci].id == 543)
     {
-        adata(16, p) = mdata_t::MapId::storage_house;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::storage_house);
         adata(15, p) = 153;
         adata(21, p) = 1;
     }
     if (inv[ci].id == 572)
     {
-        adata(16, p) = mdata_t::MapId::ranch;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::ranch);
         adata(15, p) = 154;
         adata(21, p) = 2;
         adata(12, p) = 1;
     }
     if (inv[ci].id == 712)
     {
-        adata(16, p) = mdata_t::MapId::your_dungeon;
+        adata(16, p) = static_cast<int>(mdata_t::MapId::your_dungeon);
         adata(15, p) = 138;
         adata(21, p) = 1;
         adata(12, p) = 1;

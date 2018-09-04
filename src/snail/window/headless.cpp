@@ -37,7 +37,7 @@ Window::Window(
     int y,
     int width,
     int height,
-    int flag)
+    Flag flag)
 {
 }
 

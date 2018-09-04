@@ -47,7 +47,7 @@ struct QuickAction
 
 class TouchInput : public lib::noncopyable
 {
-    enum EventType
+    enum class EventType
     {
         motion = SDL_FINGERMOTION,
         down = SDL_FINGERDOWN,

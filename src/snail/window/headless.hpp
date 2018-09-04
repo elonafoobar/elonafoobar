@@ -4,6 +4,7 @@
 #include <string>
 #include "../../lib/noncopyable.hpp"
 #include "../detail/sdl.hpp"
+#include "../../lib/enumutil.hpp"
 
 
 
@@ -16,14 +17,14 @@ namespace snail
 class Window : public lib::noncopyable
 {
 public:
-    enum InitialPosition
+    enum class InitialPosition
     {
-        position_undefined = SDL_WINDOWPOS_UNDEFINED,
-        position_centered = SDL_WINDOWPOS_CENTERED,
+        undefined = SDL_WINDOWPOS_UNDEFINED,
+        centered = SDL_WINDOWPOS_CENTERED,
     };
 
 
-    enum Flag
+    enum class Flag
     {
         none = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -81,10 +82,40 @@ public:
         int y,
         int width,
         int height,
-        int flag);
+        Flag flag);
+
+    Window(
+        const std::string& title,
+        InitialPosition x,
+        int y,
+        int width,
+        int height,
+        Flag flag)
+    : Window(title, static_cast<int>(x), y, width, height, flag) {}
+
+    Window(
+        const std::string& title,
+        int x,
+        InitialPosition y,
+        int width,
+        int height,
+        Flag flag)
+    : Window(title, x, static_cast<int>(y), width, height, flag) {}
+
+    Window(
+        const std::string& title,
+        InitialPosition x,
+        InitialPosition y,
+        int width,
+        int height,
+        Flag flag)
+    : Window(title, static_cast<int>(x), static_cast<int>(y), width, height, flag) {}
 
     virtual ~Window() override = default;
 };
+
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(Window::Flag)
 
 
 

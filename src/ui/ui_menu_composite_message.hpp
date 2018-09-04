@@ -9,7 +9,7 @@ namespace ui
 class UIMenuCompositeMessage : public UIMenuComposite<DummyResult>
 {
 public:
-    enum Index : size_t
+    enum class Index : size_t
     {
         message_log = 0,
         journal = 1,

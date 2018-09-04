@@ -1,12 +1,14 @@
 #pragma once
 
+#include "lib/enumutil.hpp"
+
 
 
 // NOTE: If anything is changed, be sure to update lua_env/lua_enums.hpp.
 namespace elona
 {
 
-enum StickKey
+enum class StickKey
 {
     left = 1 << 0,
     up = 1 << 1,
@@ -20,6 +22,8 @@ enum StickKey
     mouse_right = 1 << 9,
     tab = 1 << 10,
 };
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(StickKey)
 
 enum class KeyWaitDelay
 {

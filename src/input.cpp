@@ -511,10 +511,10 @@ void key_check(KeyWaitDelay delay_type)
     key_tab = 0;
     key_escape = 0;
     int p_at_m19 = stick(
-        StickKey::left | StickKey::up | StickKey::right | StickKey::down);
+        static_cast<int>(StickKey::left | StickKey::up | StickKey::right | StickKey::down));
     if (p_at_m19 != 0)
     {
-        if (p_at_m19 == StickKey::escape)
+        if (p_at_m19 == static_cast<int>(StickKey::escape))
         {
             if (keywait == 0)
             {
@@ -522,7 +522,7 @@ void key_check(KeyWaitDelay delay_type)
                 key_escape = 1;
             }
         }
-        if (p_at_m19 == StickKey::tab)
+        if (p_at_m19 == static_cast<int>(StickKey::tab))
         {
             key_tab = 1;
             key = key_next;
@@ -532,54 +532,54 @@ void key_check(KeyWaitDelay delay_type)
     {
         if (getkey(snail::Key::home))
         {
-            p_at_m19 = StickKey::up | StickKey::left;
+            p_at_m19 = static_cast<int>(StickKey::up | StickKey::left);
         }
         else if (getkey(snail::Key::pageup))
         {
-            p_at_m19 = StickKey::up | StickKey::right;
+            p_at_m19 = static_cast<int>(StickKey::up | StickKey::right);
         }
         else if (getkey(snail::Key::end))
         {
-            p_at_m19 = StickKey::down | StickKey::left;
+            p_at_m19 = static_cast<int>(StickKey::down | StickKey::left);
         }
         else if (getkey(snail::Key::pagedown))
         {
-            p_at_m19 = StickKey::down | StickKey::right;
+            p_at_m19 = static_cast<int>(StickKey::down | StickKey::right);
         }
 
         // Handle the case of the current key matching the movement
         // keybindings set in the user's config.
         else if (key == key_west)
         {
-            p_at_m19 = StickKey::left;
+            p_at_m19 = static_cast<int>(StickKey::left);
         }
         else if (key == key_north)
         {
-            p_at_m19 = StickKey::up;
+            p_at_m19 = static_cast<int>(StickKey::up);
         }
         else if (key == key_east)
         {
-            p_at_m19 = StickKey::right;
+            p_at_m19 = static_cast<int>(StickKey::right);
         }
         else if (key == key_south)
         {
-            p_at_m19 = StickKey::down;
+            p_at_m19 = static_cast<int>(StickKey::down);
         }
         else if (key == key_northwest)
         {
-            p_at_m19 = StickKey::up | StickKey::left;
+            p_at_m19 = static_cast<int>(StickKey::up | StickKey::left);
         }
         else if (key == key_northeast)
         {
-            p_at_m19 = StickKey::up | StickKey::right;
+            p_at_m19 = static_cast<int>(StickKey::up | StickKey::right);
         }
         else if (key == key_southwest)
         {
-            p_at_m19 = StickKey::down | StickKey::left;
+            p_at_m19 = static_cast<int>(StickKey::down | StickKey::left);
         }
         else if (key == key_southeast)
         {
-            p_at_m19 = StickKey::down | StickKey::right;
+            p_at_m19 = static_cast<int>(StickKey::down | StickKey::right);
         }
         else if (key == key_wait)
         {
@@ -737,7 +737,7 @@ void key_check(KeyWaitDelay delay_type)
             keybd_wait = 1000;
         }
     }
-    if (p_at_m19 == StickKey::left)
+    if (p_at_m19 == static_cast<int>(StickKey::left))
     {
         if (key_alt == 0)
         {
@@ -745,7 +745,7 @@ void key_check(KeyWaitDelay delay_type)
             delay_keypress = true;
         }
     }
-    if (p_at_m19 == StickKey::up)
+    if (p_at_m19 == static_cast<int>(StickKey::up))
     {
         if (key_alt == 0)
         {
@@ -753,7 +753,7 @@ void key_check(KeyWaitDelay delay_type)
             delay_keypress = true;
         }
     }
-    if (p_at_m19 == StickKey::right)
+    if (p_at_m19 == static_cast<int>(StickKey::right))
     {
         if (key_alt == 0)
         {
@@ -761,7 +761,7 @@ void key_check(KeyWaitDelay delay_type)
             delay_keypress = true;
         }
     }
-    if (p_at_m19 == StickKey::down)
+    if (p_at_m19 == static_cast<int>(StickKey::down))
     {
         if (key_alt == 0)
         {
@@ -769,22 +769,22 @@ void key_check(KeyWaitDelay delay_type)
             delay_keypress = true;
         }
     }
-    if (p_at_m19 == (StickKey::up | StickKey::left))
+    if (p_at_m19 == static_cast<int>(StickKey::up | StickKey::left))
     {
         key = key_northwest;
         delay_keypress = true;
     }
-    if (p_at_m19 == (StickKey::up | StickKey::right))
+    if (p_at_m19 == static_cast<int>(StickKey::up | StickKey::right))
     {
         key = key_northeast;
         delay_keypress = true;
     }
-    if (p_at_m19 == (StickKey::down | StickKey::left))
+    if (p_at_m19 == static_cast<int>(StickKey::down | StickKey::left))
     {
         key = key_southwest;
         delay_keypress = true;
     }
-    if (p_at_m19 == (StickKey::down | StickKey::right))
+    if (p_at_m19 == static_cast<int>(StickKey::down | StickKey::right))
     {
         key = key_southeast;
         delay_keypress = true;
@@ -995,7 +995,7 @@ void wait_key_released()
     {
         await(Config::instance().wait1);
         int result{};
-        result = stick(StickKey::mouse_left | StickKey::mouse_right);
+        result = stick(static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
         if (result == 0)
         {
             await(Config::instance().wait1);

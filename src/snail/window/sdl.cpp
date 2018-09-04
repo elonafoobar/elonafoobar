@@ -12,8 +12,8 @@ void Window::move_to_center()
 {
     ::SDL_SetWindowPosition(
         ptr(),
-        InitialPosition::position_centered,
-        InitialPosition::position_centered);
+        static_cast<int>(InitialPosition::centered),
+        static_cast<int>(InitialPosition::centered));
 }
 
 std::pair<int, int> Window::get_size()
@@ -52,7 +52,7 @@ Window::Window(
     int y,
     int width,
     int height,
-    int flag)
+    Flag flag)
     : _ptr(
           detail::enforce_sdl(::SDL_CreateWindow(
               title.c_str(),

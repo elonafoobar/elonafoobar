@@ -212,7 +212,7 @@ label_1741_internal:
         {
             map_initcustom(u8"shelter_2"s);
             mdata_map_refresh_type = 0;
-            mdata_map_type = mdata_t::MapType::shelter;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::shelter);
         }
         else
         {
@@ -1134,7 +1134,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"thiefguild"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::guild;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::guild);
             mdata_map_max_crowd_density = 25;
             mdata_map_bgm = 79;
             mdata_map_should_regenerate = 0;
@@ -1455,7 +1455,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"mageguild"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::guild;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::guild);
             mdata_map_max_crowd_density = 25;
             mdata_map_bgm = 79;
             mdata_map_should_regenerate = 0;
@@ -1495,7 +1495,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqSewer"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -1609,7 +1609,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqcat"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -1622,7 +1622,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqwar"s);
             mdata_map_indoors_flag = 2;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -1911,7 +1911,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"fighterguild"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::guild;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::guild);
             mdata_map_max_crowd_density = 25;
             mdata_map_bgm = 79;
             mdata_map_should_regenerate = 0;
@@ -1947,7 +1947,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqkamikaze"s);
             mdata_map_indoors_flag = 2;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -2093,7 +2093,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"puti"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -2106,7 +2106,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqrogue"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -2120,7 +2120,7 @@ label_1741_internal:
             mdata_map_tileset = 0;
             map_initcustom(u8"sqNightmare"s);
             mdata_map_indoors_flag = 1;
-            mdata_map_type = mdata_t::MapType::dungeon;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::dungeon);
             mdata_map_max_crowd_density = 0;
             mdata_map_bgm = 61;
             mdata_map_should_regenerate = 1;
@@ -2290,7 +2290,7 @@ label_1741_internal:
         if (encounter == 3)
         {
             mdata_map_max_crowd_density = 0;
-            mdata_map_type = mdata_t::MapType::temporary;
+            mdata_map_type = static_cast<int>(mdata_t::MapType::temporary);
             rq = encounterref;
             gdata_executing_immediate_quest_type = 1007;
             gdata(71) = 1;

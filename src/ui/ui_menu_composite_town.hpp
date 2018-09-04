@@ -9,7 +9,7 @@ namespace ui
 class UIMenuCompositeTown : public UIMenuComposite<DummyResult>
 {
 public:
-    enum Index : size_t
+    enum class Index : size_t
     {
         chart = 0,
         economy = 1,

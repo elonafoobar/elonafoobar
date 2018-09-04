@@ -56,7 +56,7 @@ SharedId get_default_music()
     {
         music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
     }
-    if (adata(0, gdata_current_map) >= mdata_t::MapType::dungeon)
+    if (adata(0, gdata_current_map) >= static_cast<int>(mdata_t::MapType::dungeon))
     {
         static const std::vector<std::string> choices = {
             "core.music:core.mcDungeon1",

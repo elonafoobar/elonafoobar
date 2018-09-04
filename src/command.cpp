@@ -3204,8 +3204,8 @@ TurnResult do_movement_command()
     if (mdata_map_type == mdata_t::MapType::shelter
         || (gdata_current_dungeon_level == 1
             && mdata_map_type != mdata_t::MapType::world_map
-            && (mdata_map_type < mdata_t::MapType::dungeon
-                || mdata_t::MapType::dungeon_castle < mdata_map_type)))
+            && (mdata_map_type < static_cast<int>(mdata_t::MapType::dungeon)
+                || static_cast<int>(mdata_t::MapType::dungeon_castle) < mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
             || cdata[cc].next_position.x > mdata_map_width - 1
@@ -3458,7 +3458,7 @@ TurnResult do_get_command()
             }
             area = feat(2) + feat(3) * 100;
             map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
-            adata(16, area) = mdata_t::MapId::none;
+            adata(16, area) = static_cast<int>(mdata_t::MapId::none);
             removeworker(area);
             map_global_prepare();
             ctrl_file(FileOperation::temp_dir_delete_area);

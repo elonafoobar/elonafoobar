@@ -45,7 +45,7 @@ void UIMenuItemDesc::update()
 
 static snail::Color _desc_to_color(int desc)
 {
-    switch (desc)
+    switch (static_cast<ItemDescriptionType>(desc))
     {
     case ItemDescriptionType::raises_skill: return {0, 100, 0};
     case ItemDescriptionType::raises_stat: return {0, 0, 100};
@@ -67,11 +67,11 @@ static void _set_color(int list_item)
 
 static void _set_font(int list_item)
 {
-    if (list_item == ItemDescriptionType::small_font)
+    if (list_item == static_cast<int>(ItemDescriptionType::small_font))
     {
         font(13 - en * 2);
     }
-    else if (list_item == ItemDescriptionType::small_font_italic)
+    else if (list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
         font(13 - en * 2, snail::Font::Style::italic);
     }
@@ -83,7 +83,7 @@ static void _set_font(int list_item)
 
 static void _set_pos(int cnt, int list_item, const std::string& list_text)
 {
-    if (list_item == ItemDescriptionType::small_font_italic)
+    if (list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
         pos(wx + ww - strlen_u(list_text) * 6 - 80, wy + 68 + cnt * 18);
     }
@@ -103,7 +103,7 @@ static void _draw_normal_mark(int cnt, int list_item)
 
 static void _draw_marks(int cnt, int list_item)
 {
-    if (list_item > ItemDescriptionType::normal)
+    if (list_item > static_cast<int>(ItemDescriptionType::normal))
     {
         _draw_normal_mark(cnt, list_item);
     }

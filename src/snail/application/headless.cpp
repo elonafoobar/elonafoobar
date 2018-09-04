@@ -27,13 +27,13 @@ void Application::initialize(const std::string&)
 {
     _window.reset(new Window(
         "snail headless",
-        Window::position_undefined,
-        Window::position_undefined,
+        Window::InitialPosition::undefined,
+        Window::InitialPosition::undefined,
         width(),
         height(),
-        Window::shown));
+        Window::Flag::shown));
     _renderer.reset(new Renderer(
-        *_window, Renderer::accelerated | Renderer::present_vsync));
+        *_window, Renderer::Flag::accelerated | Renderer::Flag::present_vsync));
 }
 
 

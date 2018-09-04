@@ -35,7 +35,7 @@ class UIMenuCompositeCharacter
     : public UIMenuComposite<UIMenuCompositeCharacterResult>
 {
 public:
-    enum Index : size_t
+    enum class Index : size_t
     {
         character_sheet = 0,
         equipment = 1,
