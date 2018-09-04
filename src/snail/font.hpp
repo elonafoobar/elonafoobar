@@ -4,6 +4,7 @@
 #include <string>
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"
+#include "../lib/enumutil.hpp"
 
 
 
@@ -72,10 +73,7 @@ private:
 
 
 
-inline Font::Style operator|(Font::Style lhs, Font::Style rhs)
-{
-    return Font::Style(int(lhs) | int(rhs));
-}
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(Font::Style)
 
 
 } // namespace snail
