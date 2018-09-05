@@ -11063,7 +11063,9 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
             {
                 if (is_in_fov(cdata[prm_1077]))
                 {
-                    txt(i18n::s.get("core.locale.misc.spell_passes_through"));
+                    txt(i18n::s.get(
+                        "core.locale.misc.spell_passes_through",
+                        cdata[prm_1077]));
                 }
                 chara_gain_skill_exp(cdata[prm_1076], 188, 8, 4);
                 return 1;
