@@ -44,7 +44,7 @@ int DSINIT()
 {
     Mix_AllocateChannels(max_channels);
     chunks.resize(max_channels);
-    application::instance().register_finalizer([&]() {
+    Application::instance().register_finalizer([&]() {
         for (const auto& chunk : chunks)
         {
             if (chunk)
@@ -100,7 +100,7 @@ bool CHECKPLAY(int channel)
 
 int DMINIT()
 {
-    application::instance().register_finalizer([&]() {
+    Application::instance().register_finalizer([&]() {
         if (played_music)
             ::Mix_FreeMusic(played_music);
     });
@@ -112,7 +112,7 @@ int DMINIT()
 void DMLOADFNAME(const std::string& filepath, int)
 {
     // TODO: find why MIDI is marked "unsupported"
-    if (application::is_android)
+    if (Application::is_android)
     {
         return;
     }
@@ -127,7 +127,7 @@ void DMLOADFNAME(const std::string& filepath, int)
 void DMPLAY(int loop, int)
 {
     // TODO: find why MIDI is marked "unsupported"
-    if (application::is_android)
+    if (Application::is_android)
     {
         return;
     }

@@ -22,14 +22,14 @@ int qy_at_modfov = 0;
 int m_at_modfov = 0;
 int qx_at_modfov = 0;
 
-bool is_in_fov(const position_t& pos)
+bool is_in_fov(const Position& pos)
 {
     return mapsync(pos.x, pos.y) == msync;
 }
 
 
 
-bool is_in_fov(const character& cc)
+bool is_in_fov(const Character& cc)
 {
     return cc.vision_flag == msync || cc.index == gdata_mount;
 }

@@ -40,7 +40,7 @@ static bool _should_show_entry(int body_part)
     return true;
 }
 
-static int _load_equipment_list(const character& chara)
+static int _load_equipment_list(const Character& chara)
 {
     int mainhand = 0;
 
@@ -65,7 +65,7 @@ static int _load_equipment_list(const character& chara)
     return mainhand;
 }
 
-bool ui_menu_equipment::init()
+bool UIMenuEquipment::init()
 {
     cc = 0;
     page = 0;
@@ -102,7 +102,7 @@ bool ui_menu_equipment::init()
     return true;
 }
 
-void ui_menu_equipment::update()
+void UIMenuEquipment::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -193,7 +193,7 @@ static void _draw_key(int cnt, int p_, bool is_main_hand)
 
 static void _draw_keys(int main_hand)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     gmode(2);
     keyrange = 0;
     f = 0;
@@ -271,7 +271,7 @@ static void _draw_list_entries(bool show_resistances)
     cs_bk = cs;
 }
 
-void ui_menu_equipment::draw()
+void UIMenuEquipment::draw()
 {
     _draw_window(_show_resistances);
     _draw_keys(_mainhand);
@@ -334,7 +334,7 @@ static void _show_item_desc(int body_)
     update_screen();
 }
 
-optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
+optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -398,8 +398,8 @@ optional<ui_menu_equipment::result_type> ui_menu_equipment::on_key(
         menucycle = 0;
         create_pcpic(cc, true);
         update_screen();
-        // result.turn_result = turn_result_t::pc_turn_user_error
-        return ui_menu_equipment::result::cancel();
+        // result.turn_result = TurnResult::pc_turn_user_error
+        return UIMenuEquipment::Result::cancel();
     }
 
     return none;

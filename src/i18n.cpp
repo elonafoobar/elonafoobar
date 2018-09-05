@@ -18,9 +18,9 @@ namespace elona
 namespace i18n
 {
 
-i18n::store s;
+i18n::Store s;
 
-void store::init(const std::vector<store::location>& locations)
+void Store::init(const std::vector<Store::Location>& locations)
 {
     clear();
 
@@ -31,10 +31,10 @@ void store::init(const std::vector<store::location>& locations)
     }
 }
 
-void store::load(const fs::path& path, const std::string& mod_name)
+void Store::load(const fs::path& path, const std::string& mod_name)
 {
     for (const auto& entry :
-         filesystem::dir_entries{path, filesystem::dir_entries::type::file})
+         filesystem::dir_entries(path, filesystem::DirEntryRange::Type::file))
     {
         std::ifstream ifs(entry.path().native());
         if (!ifs)
@@ -48,7 +48,7 @@ void store::load(const fs::path& path, const std::string& mod_name)
     }
 }
 
-void store::load(
+void Store::load(
     std::istream& is,
     const std::string& hcl_file,
     const std::string& mod_name)
@@ -57,7 +57,7 @@ void store::load(
 
     if (!value.is<hcl::Object>() || !value.has("locale"))
     {
-        throw i18n_error(hcl_file, "\"locale\" object not found");
+        throw I18NError(hcl_file, "\"locale\" object not found");
     }
 
     const hcl::Value locale = value["locale"];
@@ -65,7 +65,7 @@ void store::load(
     visit_object(locale.as<hcl::Object>(), mod_name + ".locale", hcl_file);
 }
 
-void store::visit_object(
+void Store::visit_object(
     const hcl::Object& object,
     const std::string& current_key,
     const std::string& hcl_file)
@@ -76,7 +76,7 @@ void store::visit_object(
     }
 }
 
-void store::visit_string(
+void Store::visit_string(
     const std::string& string,
     const std::string& current_key,
     const std::string& hcl_file)
@@ -87,13 +87,13 @@ void store::visit_string(
     // TODO validate ident names?
     if (!p.valid())
     {
-        throw i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
+        throw I18NError(hcl_file, "HIL parse error: " + p.errorReason);
     }
 
     storage.emplace(current_key, std::move(p.context));
 }
 
-void store::visit_list(
+void Store::visit_list(
     const hcl::List& list,
     const std::string& current_key,
     const std::string& hcl_file)
@@ -104,7 +104,7 @@ void store::visit_list(
     {
         if (!item.is<std::string>())
         {
-            throw i18n_error(
+            throw I18NError(
                 hcl_file,
                 current_key + ": List must only contain string values.");
         }
@@ -115,7 +115,7 @@ void store::visit_list(
         // TODO validate ident names?
         if (!p.valid())
         {
-            throw i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
+            throw I18NError(hcl_file, "HIL parse error: " + p.errorReason);
         }
         parsed.push_back(std::move(p.context));
     }
@@ -123,7 +123,7 @@ void store::visit_list(
     list_storage.emplace(current_key, std::move(parsed));
 }
 
-void store::visit(
+void Store::visit(
     const hcl::Value& value,
     const std::string& current_key,
     const std::string& hcl_file)
@@ -215,7 +215,7 @@ inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
 
 inline std::string builtin_itemname(
     const hil::FunctionCall& func,
-    const item& item)
+    const Item& item)
 {
     int number = item.number();
     bool needs_article = true;
@@ -261,7 +261,7 @@ std::string format_builtins_integer(const hil::FunctionCall& func, int value)
 
 std::string format_builtins_character(
     const hil::FunctionCall& func,
-    const character& chara)
+    const Character& chara)
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
@@ -309,7 +309,7 @@ std::string format_builtins_character(
 
 std::string format_builtins_item(
     const hil::FunctionCall& func,
-    const item& item)
+    const Item& item)
 {
     ELONA_DEFINE_I18N_BUILTIN("itemname", builtin_itemname(func, item));
     ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
@@ -329,10 +329,9 @@ std::string format_builtins_item(
 
 void load(const std::string& language)
 {
-    for (auto&& entry : filesystem::dir_entries{
+    for (auto&& entry : filesystem::dir_entries(
              filesystem::path(u8"lang") / language,
-             filesystem::dir_entries::type::file,
-         })
+             filesystem::DirEntryRange::Type::file))
     {
         cat::global.load(entry.path());
     }

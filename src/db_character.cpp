@@ -44,17 +44,17 @@ static std::vector<int> _convert_chara_flags(
         {
             std::string variant_name = kvp.second.as<std::string>();
             int variant_value =
-                lua::LuaEnums::CharaFlag.ensure_from_string(variant_name);
+                lua::LuaEnums::CharaFlagTable.ensure_from_string(variant_name);
             flag_types.push_back(variant_value);
         }
     }
 
     return flag_types;
 }
-character_data character_db_ex::convert(
+CharacterData character_db_ex::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     ELONA_LION_DB_FIELD_REQUIRED(id, int);
     ELONA_LION_DB_FIELD(ai_act_sub_freq, int, 0);
@@ -63,7 +63,8 @@ character_data character_db_ex::convert(
     ELONA_LION_DB_FIELD(ai_heal, int, 0);
     ELONA_LION_DB_FIELD(ai_move, int, 0);
     ELONA_LION_DB_FIELD(can_talk, int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color, color_index_t, Color, color_index_t::none);
+    ELONA_LION_DB_FIELD_ENUM(
+        color, ColorIndex, ColorIndexTable, ColorIndex::none);
     ELONA_LION_DB_FIELD(creaturepack, int, 0);
     ELONA_LION_DB_FIELD(cspecialeq, int, 0);
     ELONA_LION_DB_FIELD(damage_reaction_info, int, 0);
@@ -83,11 +84,11 @@ character_data character_db_ex::convert(
     ELONA_LION_DB_FIELD(image, int, 0);
     ELONA_LION_DB_FIELD(level, int, 0);
     ELONA_LION_DB_FIELD(male_image, int, 0);
-    ELONA_LION_DB_FIELD_ENUM(original_relationship, int, Relation, 0);
+    ELONA_LION_DB_FIELD_ENUM(original_relationship, int, RelationTable, 0);
     ELONA_LION_DB_FIELD(portrait, int, 0);
     ELONA_LION_DB_FIELD(race, std::string, "");
     ELONA_LION_DB_FIELD(class_, std::string, "");
-    ELONA_LION_DB_FIELD_ENUM(sex, int, Gender, -1);
+    ELONA_LION_DB_FIELD_ENUM(sex, int, GenderTable, -1);
     ELONA_LION_DB_FIELD(fltselect, int, 0);
     ELONA_LION_DB_FIELD(category, int, 0);
     ELONA_LION_DB_FIELD(rarity, int, 10000);
@@ -116,7 +117,7 @@ character_data character_db_ex::convert(
     std::vector<int> flag_types = _convert_chara_flags(data, "flags");
 
     // TODO: cannot set bit flags off.
-    decltype(character_data::_flags) flags;
+    decltype(CharacterData::_flags) flags;
     for (const auto& type : flag_types)
     {
         flags[type] = true;
@@ -125,7 +126,7 @@ character_data character_db_ex::convert(
     // TODO: validate by regex/alphanum-only
     std::string filter = lion::convert_tags(data, "tags");
 
-    return character_data{
+    return CharacterData{
         id,
         normal_actions,
         special_actions,
@@ -136,7 +137,7 @@ character_data character_db_ex::convert(
         ai_move,
         can_talk,
         class_,
-        static_cast<color_index_t>(color),
+        static_cast<ColorIndex>(color),
         creaturepack,
         cspecialeq,
         damage_reaction_info,

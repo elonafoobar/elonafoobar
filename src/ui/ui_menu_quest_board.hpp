@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_quest_board : public ui_menu<int>
+class UIMenuQuestBoard : public UIMenu<int>
 {
 public:
-    ui_menu_quest_board()
+    UIMenuQuestBoard()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_quest_board::result_type> on_key(
+    virtual optional<UIMenuQuestBoard::ResultType> on_key(
         const std::string& key);
 
 private:

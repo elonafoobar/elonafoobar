@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_adventurers : public ui_menu<dummy_result>
+class UIMenuAdventurers : public UIMenu<DummyResult>
 {
 public:
-    ui_menu_adventurers()
+    UIMenuAdventurers()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_adventurers::result_type> on_key(
+    virtual optional<UIMenuAdventurers::ResultType> on_key(
         const std::string& key);
 };
 

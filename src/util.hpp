@@ -206,7 +206,7 @@ inline void skip_bom(std::istream& in)
 
 // Note: the line number is 1-based.
 // Note: the line does not contains a line break.
-struct read_by_line
+struct ByLineReader
 {
     struct iterator
     {
@@ -276,7 +276,7 @@ struct read_by_line
     };
 
 
-    read_by_line(const fs::path& filepath)
+    ByLineReader(const fs::path& filepath)
     {
         in.open(filepath.native());
         if (!in)
@@ -304,6 +304,14 @@ struct read_by_line
 private:
     std::ifstream in;
 };
+
+
+
+inline ByLineReader read_by_line(const fs::path& filepath)
+{
+    return {filepath};
+}
+
 
 
 } // namespace fileutil

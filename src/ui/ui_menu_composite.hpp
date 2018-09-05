@@ -12,32 +12,29 @@ namespace ui
 {
 
 template <typename T>
-class ui_menu_composite : public ui_menu<T>
+class UIMenuComposite : public UIMenu<T>
 {
 protected:
-    using menu_type = ui_menu<T>;
+    using MenuType = UIMenu<T>;
 
-    struct menu_info
+    struct MenuInfo
     {
-        menu_info(
-            std::unique_ptr<menu_type> _menu,
-            int _image,
-            std::string _text)
+        MenuInfo(std::unique_ptr<MenuType> _menu, int _image, std::string _text)
             : image(_image)
             , text(_text)
         {
             menu = std::move(_menu);
         }
 
-        std::unique_ptr<menu_type> menu;
+        std::unique_ptr<MenuType> menu;
         int image;
         std::string text;
     };
 
-    using menu_list = std::vector<menu_info>;
+    using MenuList = std::vector<MenuInfo>;
 
 public:
-    ui_menu_composite(size_t selected)
+    UIMenuComposite(size_t selected)
         : _selected(selected)
     {
         _menu_switched = true;
@@ -50,9 +47,9 @@ public:
 
 protected:
     void push_back(
-        std::unique_ptr<menu_type> menu,
+        std::unique_ptr<MenuType> menu,
         int image,
-        const i18n_key& locale_key)
+        const I18NKey& locale_key)
     {
         std::string text = i18n::s.get(locale_key);
         _menus.emplace_back(std::move(menu), image, text);
@@ -94,7 +91,7 @@ protected:
         _menus[_selected].menu->draw();
     }
 
-    virtual optional<typename ui_menu<T>::result> on_key(const std::string& key)
+    virtual optional<typename UIMenu<T>::Result> on_key(const std::string& key)
     {
         if (key == key_next || key == key_prev)
         {
@@ -124,7 +121,7 @@ protected:
             if (prev_menu != _selected)
             {
                 _menu_switched = true;
-                ui_menu<T>::set_reupdate();
+                UIMenu<T>::set_reupdate();
             }
         }
         else if (auto result = _menus[_selected].menu->on_key(key))
@@ -134,7 +131,7 @@ protected:
 
         if (_menus[_selected].menu->_reupdate)
         {
-            ui_menu<T>::set_reupdate();
+            UIMenu<T>::set_reupdate();
             _menus[_selected].menu->_reupdate = false;
         }
 
@@ -142,7 +139,7 @@ protected:
         {
             // trigger init() to be called in update().
             _menu_switched = true;
-            ui_menu<T>::set_reupdate();
+            UIMenu<T>::set_reupdate();
             _menus[_selected].menu->_reinit = false;
         }
 
@@ -160,7 +157,7 @@ private:
 
     void _draw_single_menu_item(
         size_t menu_index,
-        const menu_info& menu,
+        const MenuInfo& menu,
         int x,
         int y)
     {
@@ -179,8 +176,8 @@ private:
             menu.text,
             x + menu_index * 50 + 46 - strlen_u(menu.text) * 3,
             y + 7,
-            _selected == menu_index ? snail::color{255, 255, 255}
-                                    : snail::color{165, 165, 165});
+            _selected == menu_index ? snail::Color{255, 255, 255}
+                                    : snail::Color{165, 165, 165});
     }
 
     void _draw_menu_icons()
@@ -207,7 +204,7 @@ private:
     }
 
 private:
-    menu_list _menus;
+    MenuList _menus;
     size_t _selected;
     bool _menu_switched;
 };

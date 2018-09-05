@@ -84,152 +84,152 @@ void apply_buff(int cc, int id, int power)
 
 
 
-optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
+optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
 {
     int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
 
     switch (skill)
     {
-    case 412: return skill_damage{0, 1, x * power * 5 / 100, 0, 0};
+    case 412: return SkillDamage{0, 1, x * power * 5 / 100, 0, 0};
     case 461:
-        return skill_damage{
+        return SkillDamage{
             0, 1, clamp((x * 5 + power) / 20 + 40, 40, 100), 0, 0};
-    case 411: return skill_damage{0, 1, x * power * 10 / 100, 0, 0};
+    case 411: return SkillDamage{0, 1, x * power * 10 / 100, 0, 0};
     case 400:
-        return skill_damage{1 + x / 30, power / 40 + 5 + 1, power / 30, 0, 0};
+        return SkillDamage{1 + x / 30, power / 40 + 5 + 1, power / 30, 0, 0};
     case 401:
-        return skill_damage{2 + x / 26, power / 25 + 5 + 1, power / 15, 0, 0};
+        return SkillDamage{2 + x / 26, power / 25 + 5 + 1, power / 15, 0, 0};
     case 405:
-        return skill_damage{2 + x / 22, power / 18 + 5 + 1, power / 10, 0, 0};
+        return SkillDamage{2 + x / 22, power / 18 + 5 + 1, power / 10, 0, 0};
     case 402:
-        return skill_damage{3 + x / 15, power / 12 + 5 + 1, power / 6, 0, 0};
+        return SkillDamage{3 + x / 15, power / 12 + 5 + 1, power / 6, 0, 0};
     case 403:
-        return skill_damage{5 + x / 10, power / 7 + 5 + 1, power / 2, 0, 0};
-    case 406: return skill_damage{0, 1, x * 5 + power * 2, 0, 0};
-    case 407: return skill_damage{0, 1, x * 5 + power * 3 / 2, 0, 0};
+        return SkillDamage{5 + x / 10, power / 7 + 5 + 1, power / 2, 0, 0};
+    case 406: return SkillDamage{0, 1, x * 5 + power * 2, 0, 0};
+    case 407: return SkillDamage{0, 1, x * 5 + power * 3 / 2, 0, 0};
     case 623:
-        return skill_damage{
+        return SkillDamage{
             1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, 0, 0};
     case 624:
-        return skill_damage{
+        return SkillDamage{
             1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
     case 414:
-        return skill_damage{power / 125 + 2 + x / 50,
-                            power / 60 + 9 + 1,
-                            0,
-                            60,
-                            100 + power / 4};
+        return SkillDamage{power / 125 + 2 + x / 50,
+                           power / 60 + 9 + 1,
+                           0,
+                           60,
+                           100 + power / 4};
     case 459:
-        return skill_damage{power / 100 + 3 + x / 25,
-                            power / 40 + 12 + 1,
-                            0,
-                            60,
-                            100 + power / 4};
+        return SkillDamage{power / 100 + 3 + x / 25,
+                           power / 40 + 12 + 1,
+                           0,
+                           60,
+                           100 + power / 4};
     case 418:
-        return skill_damage{power / 80 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            53,
-                            200 + power / 3};
+        return SkillDamage{power / 80 + 1 + x / 18,
+                           power / 25 + 8 + 1,
+                           0,
+                           53,
+                           200 + power / 3};
     case 415:
-        return skill_damage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            56,
-                            200 + power / 3};
+        return SkillDamage{power / 70 + 1 + x / 18,
+                           power / 25 + 8 + 1,
+                           0,
+                           56,
+                           200 + power / 3};
     case 417:
-        return skill_damage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            59,
-                            200 + power / 3};
+        return SkillDamage{power / 70 + 1 + x / 18,
+                           power / 25 + 8 + 1,
+                           0,
+                           59,
+                           200 + power / 3};
     case 416:
-        return skill_damage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            58,
-                            200 + power / 3};
+        return SkillDamage{power / 70 + 1 + x / 18,
+                           power / 25 + 8 + 1,
+                           0,
+                           58,
+                           200 + power / 3};
     case 419:
-        return skill_damage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            51,
-                            180 + power / 4};
+        return SkillDamage{power / 50 + 1 + x / 20,
+                           power / 26 + 4 + 1,
+                           0,
+                           51,
+                           180 + power / 4};
     case 420:
-        return skill_damage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            50,
-                            180 + power / 4};
+        return SkillDamage{power / 50 + 1 + x / 20,
+                           power / 26 + 4 + 1,
+                           0,
+                           50,
+                           180 + power / 4};
     case 421:
-        return skill_damage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            52,
-                            180 + power / 4};
+        return SkillDamage{power / 50 + 1 + x / 20,
+                           power / 26 + 4 + 1,
+                           0,
+                           52,
+                           180 + power / 4};
     case 422:
-        return skill_damage{power / 50 + 1 + x / 20,
-                            power / 25 + 4 + 1,
-                            0,
-                            53,
-                            180 + power / 4};
+        return SkillDamage{power / 50 + 1 + x / 20,
+                           power / 25 + 4 + 1,
+                           0,
+                           53,
+                           180 + power / 4};
     case 423:
-        return skill_damage{power / 50 + 1 + x / 20,
-                            power / 25 + 4 + 1,
-                            0,
-                            54,
-                            180 + power / 4};
+        return SkillDamage{power / 50 + 1 + x / 20,
+                           power / 25 + 4 + 1,
+                           0,
+                           54,
+                           180 + power / 4};
     case 431:
-        return skill_damage{power / 100 + 1 + x / 20,
-                            power / 15 + 2 + 1,
-                            0,
-                            51,
-                            150 + power / 5};
+        return SkillDamage{power / 100 + 1 + x / 20,
+                           power / 15 + 2 + 1,
+                           0,
+                           51,
+                           150 + power / 5};
     case 432:
-        return skill_damage{power / 100 + 1 + x / 20,
-                            power / 15 + 2 + 1,
-                            0,
-                            50,
-                            150 + power / 5};
+        return SkillDamage{power / 100 + 1 + x / 20,
+                           power / 15 + 2 + 1,
+                           0,
+                           50,
+                           150 + power / 5};
     case 433:
-        return skill_damage{power / 80 + 1 + x / 20,
-                            power / 12 + 2 + 1,
-                            0,
-                            59,
-                            150 + power / 5};
+        return SkillDamage{power / 80 + 1 + x / 20,
+                           power / 12 + 2 + 1,
+                           0,
+                           59,
+                           150 + power / 5};
     case 434:
-        return skill_damage{power / 80 + 1 + x / 20,
-                            power / 12 + 2 + 1,
-                            0,
-                            57,
-                            150 + power / 5};
+        return SkillDamage{power / 80 + 1 + x / 20,
+                           power / 12 + 2 + 1,
+                           0,
+                           57,
+                           150 + power / 5};
     case 460:
-        return skill_damage{
+        return SkillDamage{
             power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, 60, 100};
     case 404:
-        return skill_damage{x / 20 + 3, power / 15 + 5 + 1, power / 10, 0, 0};
-    case 644: return skill_damage{1 + x / 25, 15 + x / 5 + 1, 1, 0, 0};
-    case 601: return skill_damage{1 + x / 15, 7, x / 4, 56, 200};
-    case 612: return skill_damage{1 + x / 20, 7, x / 15, 0, 0};
-    case 602: return skill_damage{1 + x / 15, 8, x / 8, 50, 100};
-    case 603: return skill_damage{1 + x / 15, 8, x / 8, 51, 100};
-    case 604: return skill_damage{1 + x / 15, 8, x / 8, 52, 100};
-    case 605: return skill_damage{1 + x / 15, 8, x / 8, 53, 100};
-    case 606: return skill_damage{1 + x / 15, 8, x / 8, 59, 100};
-    case 608: return skill_damage{1 + x / 15, 8, x / 8, 56, 100};
-    case 610: return skill_damage{1 + x / 15, 8, x / 8, 55, 100};
-    case 607: return skill_damage{1 + x / 15, 8, x / 8, 57, 100};
-    case 609: return skill_damage{1 + x / 15, 8, x / 8, 58, 100};
-    case 611: return skill_damage{1 + x / 15, 8, x / 8, 54, 100};
-    case 613: return skill_damage{1 + x / 10, 4, 1, 0, 0};
-    case 614: return skill_damage{1 + x / 10, 4, 1, 0, 0};
-    case 617: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 2};
-    case 618: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 3};
-    case 615: return skill_damage{1 + x / 10, 5, 0, 55, x * 4 + 20};
-    case 616: return skill_damage{1 + x / 10, 5, 0, 58, x * 4 + 20};
-    case 636: return skill_damage{1 + x / 20, 11, 1, 0, 0};
+        return SkillDamage{x / 20 + 3, power / 15 + 5 + 1, power / 10, 0, 0};
+    case 644: return SkillDamage{1 + x / 25, 15 + x / 5 + 1, 1, 0, 0};
+    case 601: return SkillDamage{1 + x / 15, 7, x / 4, 56, 200};
+    case 612: return SkillDamage{1 + x / 20, 7, x / 15, 0, 0};
+    case 602: return SkillDamage{1 + x / 15, 8, x / 8, 50, 100};
+    case 603: return SkillDamage{1 + x / 15, 8, x / 8, 51, 100};
+    case 604: return SkillDamage{1 + x / 15, 8, x / 8, 52, 100};
+    case 605: return SkillDamage{1 + x / 15, 8, x / 8, 53, 100};
+    case 606: return SkillDamage{1 + x / 15, 8, x / 8, 59, 100};
+    case 608: return SkillDamage{1 + x / 15, 8, x / 8, 56, 100};
+    case 610: return SkillDamage{1 + x / 15, 8, x / 8, 55, 100};
+    case 607: return SkillDamage{1 + x / 15, 8, x / 8, 57, 100};
+    case 609: return SkillDamage{1 + x / 15, 8, x / 8, 58, 100};
+    case 611: return SkillDamage{1 + x / 15, 8, x / 8, 54, 100};
+    case 613: return SkillDamage{1 + x / 10, 4, 1, 0, 0};
+    case 614: return SkillDamage{1 + x / 10, 4, 1, 0, 0};
+    case 617: return SkillDamage{1 + x / 10, 4, 0, 0, 100 + x * 2};
+    case 618: return SkillDamage{1 + x / 10, 4, 0, 0, 100 + x * 3};
+    case 615: return SkillDamage{1 + x / 10, 5, 0, 55, x * 4 + 20};
+    case 616: return SkillDamage{1 + x / 10, 5, 0, 58, x * 4 + 20};
+    case 636: return SkillDamage{1 + x / 20, 11, 1, 0, 0};
     case 655:
-        return skill_damage{
+        return SkillDamage{
             power / 80 + 1, power / 8 + 2 + 1, 0, 57, 150 + power / 2};
     default: return none;
     }
@@ -240,7 +240,7 @@ optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 int calcobjlv(int base)
 {
     int ret = base <= 0 ? gdata_current_dungeon_level : base;
-    if (gdata_current_map == mdata_t::map_id_t::shelter_)
+    if (gdata_current_map == mdata_t::MapId::shelter_)
     {
         ret = 1;
     }
@@ -638,7 +638,7 @@ int calcattackdmg(int prm_894)
     {
         dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus
             + inv[cw].enhancement
-            + (inv[cw].curse_state == curse_state_t::blessed);
+            + (inv[cw].curse_state == CurseState::blessed);
         dice1 = inv[cw].dice_x;
         dice2 = inv[cw].dice_y;
         if (ammo != -1)
@@ -848,7 +848,7 @@ int calcitemvalue(int ci, int situation)
 {
     int category = the_item_db[inv[ci].id]->category;
     int ret = 0;
-    if (inv[ci].identification_state == identification_state_t::unidentified)
+    if (inv[ci].identification_state == IdentifyState::unidentified)
     {
         if (situation == 2)
         {
@@ -869,27 +869,24 @@ int calcitemvalue(int ci, int situation)
     {
         switch (inv[ci].identification_state)
         {
-        case identification_state_t::unidentified: break;
-        case identification_state_t::partly_identified:
+        case IdentifyState::unidentified: break;
+        case IdentifyState::partly_identified:
             ret = inv[ci].value * 2 / 10;
             break;
-        case identification_state_t::almost_identified:
+        case IdentifyState::almost_identified:
             ret = inv[ci].value * 5 / 10;
             break;
-        case identification_state_t::completely_identified:
-            ret = inv[ci].value;
-            break;
+        case IdentifyState::completely_identified: ret = inv[ci].value; break;
         }
     }
-    if (inv[ci].identification_state
-        == identification_state_t::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
         switch (inv[ci].curse_state)
         {
-        case curse_state_t::doomed: ret = ret / 5; break;
-        case curse_state_t::cursed: ret = ret / 2; break;
-        case curse_state_t::none: break;
-        case curse_state_t::blessed: ret = ret * 120 / 100; break;
+        case CurseState::doomed: ret = ret / 5; break;
+        case CurseState::cursed: ret = ret / 2; break;
+        case CurseState::none: break;
+        case CurseState::blessed: ret = ret * 120 / 100; break;
         }
     }
     if (category == 57000)
@@ -1096,7 +1093,7 @@ void calccosthire()
     {
         if (cnt.character_role == 0)
             continue;
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != Character::State::alive)
             continue;
         cost += calchirecost(cnt.index);
     }
@@ -1118,13 +1115,13 @@ int calccostbuilding()
 
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        switch (adata(16, cnt))
+        switch (static_cast<mdata_t::MapId>(adata(16, cnt)))
         {
-        case mdata_t::map_id_t::museum: cost += 1500; break;
-        case mdata_t::map_id_t::ranch: cost += 1000; break;
-        case mdata_t::map_id_t::crop: cost += 750; break;
-        case mdata_t::map_id_t::shop: cost += 5000; break;
-        case mdata_t::map_id_t::storage_house: cost += 750; break;
+        case mdata_t::MapId::museum: cost += 1500; break;
+        case mdata_t::MapId::ranch: cost += 1000; break;
+        case mdata_t::MapId::crop: cost += 750; break;
+        case mdata_t::MapId::shop: cost += 5000; break;
+        case mdata_t::MapId::storage_house: cost += 750; break;
         default: break;
         }
     }
@@ -1234,7 +1231,7 @@ int calcidentifyvalue(int type)
                 continue;
             }
             if (inv[cnt].identification_state
-                != identification_state_t::completely_identified)
+                != IdentifyState::completely_identified)
             {
                 ++need_to_identify;
             }
@@ -1272,7 +1269,7 @@ int calclearncost(int skill_id, int cc, bool discount)
 
 int calcresurrectvalue(int pet)
 {
-    return cdata[pet].state() != character::state_t::pet_dead
+    return cdata[pet].state() != Character::State::pet_dead
         ? 100
         : cdata[pet].level * cdata[pet].level * 15;
 }
@@ -1308,7 +1305,7 @@ int calcinitgold(int owner)
     if (owner < 0)
     {
         return rnd(gdata_current_dungeon_level * 25
-                       * (gdata_current_map != mdata_t::map_id_t::shelter_)
+                       * (gdata_current_map != mdata_t::MapId::shelter_)
                    + 10)
             + 1;
     }
@@ -1501,7 +1498,7 @@ void calcpartyscore()
     int score = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -1536,7 +1533,7 @@ void calcpartyscore2()
     int score{};
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -1555,21 +1552,21 @@ void calcpartyscore2()
 }
 
 
-int generate_color(color_index_t index, int id)
+int generate_color(ColorIndex index, int id)
 {
     int color = static_cast<int>(index);
-    if (index == color_index_t::random_furniture)
+    if (index == ColorIndex::random_furniture)
     {
         color = choice(randcolor);
     }
-    if (index == color_index_t::random_seeded)
+    if (index == ColorIndex::random_seeded)
     {
         // The choice can't be completely random - it has to be the
         // same as all other items of this type. So, base it off the
         // random seed of the current save data.
         color = _randcolor((id + gdata_random_seed) % 6);
     }
-    if (index == color_index_t::random_any)
+    if (index == ColorIndex::random_any)
     {
         color = rnd(21);
     }

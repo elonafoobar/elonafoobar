@@ -25,7 +25,7 @@ static void _populate_spell_list()
     sort_list_by_column1();
 }
 
-bool ui_menu_spells::init()
+bool UIMenuSpells::init()
 {
     listmax = 0;
     page = 0;
@@ -48,7 +48,7 @@ bool ui_menu_spells::init()
     return true;
 }
 
-void ui_menu_spells::update()
+void UIMenuSpells::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -187,7 +187,7 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_spells::draw()
+void UIMenuSpells::draw()
 {
     _draw_window();
     _draw_keys();
@@ -214,8 +214,7 @@ static void _assign_shortcut(int sc_, int spell_id)
     display_msg(inf_screeny + inf_tiles);
 }
 
-optional<ui_menu_spells::result_type> ui_menu_spells::on_key(
-    const std::string& key)
+optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(const std::string& key)
 {
     commark(1) = page * 1000 + cs;
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -223,8 +222,8 @@ optional<ui_menu_spells::result_type> ui_menu_spells::on_key(
     if (p != -1)
     {
         menucycle = 0;
-        return ui_menu_spells::result::finish(
-            ui_menu_composite_skills_result(ui_menu_spells_result{p}));
+        return UIMenuSpells::Result::finish(
+            UIMenuCompositeSkillsResult(UIMenuSpellsResult{p}));
     }
     else if (key == u8"sc"s)
     {
@@ -254,7 +253,7 @@ optional<ui_menu_spells::result_type> ui_menu_spells::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return ui_menu_spells::result::finish();
+        return UIMenuSpells::Result::finish();
     }
 
     return none;

@@ -15,7 +15,7 @@ namespace snail
 {
 
 
-class image_base
+class ImageBase
 {
 public:
     int width() const noexcept
@@ -50,7 +50,7 @@ public:
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -69,46 +69,38 @@ protected:
 
 
 
-class null_image : public image_base
+class NullImage : public ImageBase
 {
 public:
-    null_image()
+    NullImage()
     {
     }
 
 
-    virtual void _render(
-        ::SDL_Renderer*,
-        blend_mode_t,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int) override
+    virtual void
+    _render(::SDL_Renderer*, BlendMode, int, int, int, int, int, int, int, int)
+        override
     {
     }
 };
 
 
 
-class basic_image : public image_base
+class BasicImage : public ImageBase
 {
 public:
-    explicit basic_image(
+    explicit BasicImage(
         const fs::path& filepath,
-        const optional<color>& keycolor = none);
+        const optional<Color>& keycolor = none);
 
-    explicit basic_image(::SDL_Texture* ptr);
+    explicit BasicImage(::SDL_Texture* ptr);
 
-    virtual ~basic_image() = default;
+    virtual ~BasicImage() = default;
 
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,
@@ -121,7 +113,7 @@ public:
 
 
 
-class frame_image : public image_base
+class FrameImage : public ImageBase
 {
     int offset_x() const noexcept
     {
@@ -135,8 +127,8 @@ class frame_image : public image_base
     }
 
 
-    frame_image(
-        basic_image& source,
+    FrameImage(
+        BasicImage& source,
         int offset_x,
         int offset_y,
         int width,
@@ -145,7 +137,7 @@ class frame_image : public image_base
 
     virtual void _render(
         ::SDL_Renderer* renderer,
-        blend_mode_t blend_mode,
+        BlendMode blend_mode,
         int src_x,
         int src_y,
         int src_width,

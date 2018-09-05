@@ -7,7 +7,7 @@ namespace snail
 namespace android
 {
 
-void set_requested_orientation(orientation)
+void set_requested_orientation(Orientation)
 {
 }
 
@@ -15,7 +15,7 @@ void set_navigation_bar_visibility(bool)
 {
 }
 
-void toast(std::string, toast_length)
+void toast(std::string, ToastLength)
 {
 }
 

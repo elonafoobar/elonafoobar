@@ -85,10 +85,10 @@ namespace elona
 {
 
 
-item_material_db the_item_material_db;
+ItemMaterialDB the_item_material_db;
 
 
-void item_material_db::define(lua_State* L)
+void ItemMaterialDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -106,7 +106,7 @@ void item_material_db::define(lua_State* L)
     ELONA_CAT_DB_FIELD_BOOLEAN(fireproof, false);
     ELONA_CAT_DB_FIELD_BOOLEAN(acidproof, false);
 
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
     lua_getfield(L, -1, u8"enchantments");
     if (!lua_isnil(L, -1))
     {
@@ -115,7 +115,7 @@ void item_material_db::define(lua_State* L)
         {
             int k = std::stoi(luaL_checkstring(L, -2) + 1);
             int v = luaL_checkinteger(L, -1);
-            enchantments.emplace_back(enc_t{k, v});
+            enchantments.emplace_back(Enchantment{k, v});
             lua_pop(L, 1);
         }
     }
@@ -123,7 +123,7 @@ void item_material_db::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        item_material_data{
+        ItemMaterialData{
             std::stoi(id),
             weight,
             value,
@@ -141,20 +141,20 @@ void item_material_db::define(lua_State* L)
 
 
 
-int item_material_db::lookup_leather(int x, int y)
+int ItemMaterialDB::lookup_leather(int x, int y)
 {
     return leather_table[x][y];
 }
 
 
 
-int item_material_db::lookup_metal(int x, int y)
+int ItemMaterialDB::lookup_metal(int x, int y)
 {
     return metal_table[x][y];
 }
 
 
-std::vector<int> item_material_db::get_material_ids()
+std::vector<int> ItemMaterialDB::get_material_ids()
 {
     std::vector<int> ret;
     range::transform(storage, std::back_inserter(ret), [](const auto& pair) {

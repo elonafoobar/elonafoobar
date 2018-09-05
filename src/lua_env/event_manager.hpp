@@ -9,15 +9,15 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Enumeration for all possible events that can be triggered.
  *
  * NOTE: If you change this, be sure to update the constructor for
- * event_manager so the event kind is bound to Lua.
+ * EventManager so the event kind is bound to Lua.
  */
-enum class event_kind_t : unsigned
+enum class EventKind : unsigned
 {
     // Triggered when brand-new object instances are created (not loaded).
     map_created,
@@ -59,15 +59,15 @@ enum class event_kind_t : unsigned
 /***
  * Contains a list of callbacks to be run in a defined order.
  */
-class callbacks
+class Callbacks
 {
 public:
-    struct callback_t
+    struct Callback
     {
         sol::protected_function function;
         sol::environment env;
         std::string mod_name;
-        callback_t(
+        Callback(
             sol::environment _env,
             sol::protected_function _function,
             std::string _mod_name)
@@ -79,13 +79,13 @@ public:
     };
 
     template <typename>
-    struct retval_type
+    struct RetValType
     {
     };
 
-    typedef std::vector<callback_t> callback_container;
-    typedef callback_container::iterator iterator;
-    typedef callback_container::const_iterator const_iterator;
+    using CallbackContainer = std::vector<Callback>;
+    using iterator = CallbackContainer::iterator;
+    using const_iterator = CallbackContainer::const_iterator;
 
     const_iterator begin() const
     {
@@ -153,7 +153,7 @@ public:
     }
 
     template <typename... Args>
-    void run(retval_type<void>, Args&&... args)
+    void run(RetValType<void>, Args&&... args)
     {
         for (const auto iter : functions)
         {
@@ -167,7 +167,7 @@ public:
     }
 
     template <typename R, typename... Args>
-    optional<R> run(retval_type<R>, Args&&... args)
+    optional<R> run(RetValType<R>, Args&&... args)
     {
         R retval = none;
 
@@ -191,7 +191,7 @@ public:
     }
 
 private:
-    callback_container functions;
+    CallbackContainer functions;
     sol::function error_handler_;
 };
 
@@ -199,29 +199,28 @@ private:
  * Manages a list of callbacks for each event type. Allows triggering
  * callbacks from C++ with any arguments needed.
  */
-class event_manager
+class EventManager
 {
 
 public:
-    explicit event_manager(lua_env*);
+    explicit EventManager(LuaEnv*);
 
     /***
      * Registers a new event handler from a mod's environment.
      */
-    void
-    register_event(event_kind_t, sol::environment&, sol::protected_function&);
+    void register_event(EventKind, sol::environment&, sol::protected_function&);
 
     /***
      * Unregisters an event handler from a mod's environment by
      * comparing the function reference passed in.
      */
     void
-    unregister_event(event_kind_t, sol::environment&, sol::protected_function&);
+    unregister_event(EventKind, sol::environment&, sol::protected_function&);
 
     /***
      * Clears all mod-local callbacks of the given event kind.
      */
-    void clear_mod_callbacks(event_kind_t, sol::environment&);
+    void clear_mod_callbacks(EventKind, sol::environment&);
 
     /***
      * Clears all mod-local callbacks.
@@ -231,36 +230,36 @@ public:
     /***
      * Runs all callbacks for this event in the order they were registered.
      */
-    void trigger_event(event_kind_t, sol::table);
+    void trigger_event(EventKind, sol::table);
 
-    const callbacks& get_callbacks(event_kind_t event) const
+    const Callbacks& get_callbacks(EventKind event) const
     {
         return events.at(event);
     }
 
-    template <event_kind_t event, typename R = void, typename... Args>
+    template <EventKind event, typename R = void, typename... Args>
     R run_callbacks(Args&&... args)
     {
         return events.at(event).run(
-            callbacks::retval_type<R>{}, std::forward<Args>(args)...);
+            Callbacks::RetValType<R>{}, std::forward<Args>(args)...);
     }
 
-    template <event_kind_t event, typename R = void>
+    template <EventKind event, typename R = void>
     R run_callbacks()
     {
-        return events.at(event).run(callbacks::retval_type<R>{});
+        return events.at(event).run(Callbacks::RetValType<R>{});
     }
 
     void clear();
 
-    typedef std::unordered_map<event_kind_t, callbacks> container;
+    using Container = std::unordered_map<EventKind, Callbacks>;
 
 private:
     /***
-     * Binds the Lua Event API and the EventKind enum to the lua_env's
+     * Binds the Lua Event API and the EventKind enum to the LuaEnv's
      * API manager.
      */
-    void bind_api(lua_env&);
+    void bind_api(LuaEnv&);
 
     /**
      * Sets up event callback error handlers for each event type.
@@ -272,8 +271,8 @@ private:
      */
     void init_event_kinds(sol::table&);
 
-    container events;
-    lua_env* lua;
+    Container events;
+    LuaEnv* lua;
 };
 
 } // namespace lua

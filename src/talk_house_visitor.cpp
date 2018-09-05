@@ -23,7 +23,7 @@ namespace elona
 namespace
 {
 
-talk_result_t _talk_hv_visitor()
+TalkResult _talk_hv_visitor()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.visitor.wanted_to_say_hi", cdata[tc]);
@@ -37,10 +37,10 @@ talk_result_t _talk_hv_visitor()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -59,7 +59,7 @@ void _adventurer_give_new_year_gift()
         inv[ci]));
 }
 
-talk_result_t _talk_hv_adventurer_new_year()
+TalkResult _talk_hv_adventurer_new_year()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -75,7 +75,7 @@ talk_result_t _talk_hv_adventurer_new_year()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -91,13 +91,13 @@ talk_result_t _talk_hv_adventurer_new_year()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_give_new_year_gift();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_hate_action()
@@ -127,8 +127,7 @@ void _adventurer_hate_action()
             snd(91);
             ccbk = cc;
             cc = tc;
-            throwing_object_animation(
-                {tlocx, tlocy}, cdata[cc].position, 223, 0)
+            ThrowingObjectAnimation({tlocx, tlocy}, cdata[cc].position, 223, 0)
                 .play();
             cc = ccbk;
             mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
@@ -143,13 +142,13 @@ void _adventurer_hate_action()
             itemcreate(-1, 704, -1, -1, 0);
             txt(i18n::s.get("core.locale.food.vomits", cdata[tc]));
             snd(104);
-            await(config::instance().animewait / 2);
+            await(Config::instance().animewait / 2);
             update_screen();
         }
     }
 }
 
-talk_result_t _talk_hv_adventurer_hate()
+TalkResult _talk_hv_adventurer_hate()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -164,13 +163,13 @@ talk_result_t _talk_hv_adventurer_hate()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_hate_action();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_become_best_friend()
@@ -235,7 +234,7 @@ void _adventurer_train_skill(int skill_id)
             15 - (skill_id < 18) * 10));
 }
 
-talk_result_t _talk_hv_adventurer_train()
+TalkResult _talk_hv_adventurer_train()
 {
     int skill_id = _adventurer_get_trained_skill();
 
@@ -296,10 +295,10 @@ talk_result_t _talk_hv_adventurer_train()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     snd(12);
     if (chatval_ == 1)
@@ -319,7 +318,7 @@ talk_result_t _talk_hv_adventurer_train()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
@@ -340,11 +339,11 @@ talk_result_t _talk_hv_adventurer_train()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_receive_coin()
@@ -374,7 +373,7 @@ void _adventurer_receive_coin()
     }
 }
 
-talk_result_t _talk_hv_adventurer_friendship()
+TalkResult _talk_hv_adventurer_friendship()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -389,13 +388,13 @@ talk_result_t _talk_hv_adventurer_friendship()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_receive_coin();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_receive_souvenir()
@@ -416,7 +415,7 @@ void _adventurer_receive_souvenir()
     }
 }
 
-talk_result_t _talk_hv_adventurer_souvenir()
+TalkResult _talk_hv_adventurer_souvenir()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -431,13 +430,13 @@ talk_result_t _talk_hv_adventurer_souvenir()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_receive_souvenir();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_receive_materials()
@@ -450,7 +449,7 @@ void _adventurer_receive_materials()
     magic();
 }
 
-talk_result_t _talk_hv_adventurer_materials()
+TalkResult _talk_hv_adventurer_materials()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -465,16 +464,16 @@ talk_result_t _talk_hv_adventurer_materials()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_receive_materials();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t _talk_hv_adventurer_favorite_skill()
+TalkResult _talk_hv_adventurer_favorite_skill()
 {
     int skill_id = advfavoriteskill(tc);
     listmax = 0;
@@ -492,13 +491,13 @@ talk_result_t _talk_hv_adventurer_favorite_skill()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t _talk_hv_adventurer_favorite_stat()
+TalkResult _talk_hv_adventurer_favorite_stat()
 {
     int skill_id = advfavoritestat(tc);
     listmax = 0;
@@ -516,10 +515,10 @@ talk_result_t _talk_hv_adventurer_favorite_stat()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_hold_conversation()
@@ -529,7 +528,7 @@ void _adventurer_hold_conversation()
     chara_modify_impression(cdata[tc], 10);
 }
 
-talk_result_t _talk_hv_adventurer_conversation()
+TalkResult _talk_hv_adventurer_conversation()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -546,13 +545,13 @@ talk_result_t _talk_hv_adventurer_conversation()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_hold_conversation();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _adventurer_drink()
@@ -562,12 +561,12 @@ void _adventurer_drink()
         "core.locale.talk.visitor.adventurer.drink.cheers", cdata[tc]));
     txtef(9);
     txt(i18n::s.get("core.locale.magic.alcohol.normal"));
-    dmgcon(tc, status_ailment_t::drunk, 1000);
-    dmgcon(cc, status_ailment_t::drunk, 1000);
+    dmgcon(tc, StatusAilment::drunk, 1000);
+    dmgcon(cc, StatusAilment::drunk, 1000);
     chara_modify_impression(cdata[tc], 15);
 }
 
-talk_result_t _talk_hv_adventurer_drink()
+TalkResult _talk_hv_adventurer_drink()
 {
     listmax = 0;
     buff = i18n::s.get(
@@ -582,16 +581,16 @@ talk_result_t _talk_hv_adventurer_drink()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
 
     _adventurer_drink();
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t _talk_hv_adventurer()
+TalkResult _talk_hv_adventurer()
 {
     if (gdata_month == 1 && rnd(4))
     {
@@ -704,7 +703,7 @@ void _trainer_do_training(int plat, int chatval_)
     modify_potential(cdata.player(), chatval_, 10);
 }
 
-talk_result_t _talk_hv_trainer()
+TalkResult _talk_hv_trainer()
 {
     int plat = 0;
 
@@ -723,10 +722,10 @@ talk_result_t _talk_hv_trainer()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
 
     // modifies buff/p
@@ -767,10 +766,10 @@ talk_result_t _talk_hv_trainer()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
 
     _trainer_do_training(plat, chatval_);
@@ -787,10 +786,10 @@ talk_result_t _talk_hv_trainer()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _beggar_give()
@@ -803,7 +802,7 @@ void _beggar_give()
     modify_karma(cdata.player(), 2);
 }
 
-talk_result_t _talk_hv_beggar()
+TalkResult _talk_hv_beggar()
 {
     if (cdata.player().gold > 0)
     {
@@ -832,10 +831,10 @@ talk_result_t _talk_hv_beggar()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.visitor.beggar.cheap");
@@ -849,13 +848,13 @@ talk_result_t _talk_hv_beggar()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t _talk_hv_punk()
+TalkResult _talk_hv_punk()
 {
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get("core.locale.talk.visitor.choices.yes");
@@ -880,13 +879,13 @@ talk_result_t _talk_hv_punk()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
 
         continuous_action_sex();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
@@ -900,13 +899,13 @@ talk_result_t _talk_hv_punk()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t _talk_hv_mysterious_producer()
+TalkResult _talk_hv_mysterious_producer()
 {
 
     list(0, listmax) = 1;
@@ -936,13 +935,13 @@ talk_result_t _talk_hv_mysterious_producer()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
 
         continuous_action_sex();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.visitor.punk.hump");
@@ -956,10 +955,10 @@ talk_result_t _talk_hv_mysterious_producer()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 void _merchant_buy()
@@ -985,7 +984,7 @@ void _merchant_sell()
     buff = "";
 }
 
-talk_result_t _talk_hv_merchant()
+TalkResult _talk_hv_merchant()
 {
     list(0, listmax) = 0;
     listn(0, listmax) =
@@ -1004,12 +1003,12 @@ talk_result_t _talk_hv_merchant()
     if (chatval_ == 0)
     {
         _merchant_buy();
-        return talk_result_t::talk_house_visitor;
+        return TalkResult::talk_house_visitor;
     }
     if (chatval_ == 1)
     {
         _merchant_sell();
-        return talk_result_t::talk_house_visitor;
+        return TalkResult::talk_house_visitor;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.visitor.merchant.regret", cdata[tc]);
@@ -1023,16 +1022,16 @@ talk_result_t _talk_hv_merchant()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     cdata[tc].character_role = 2002;
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 } // namespace
 
-talk_result_t talk_house_visitor()
+TalkResult talk_house_visitor()
 {
     listmax = 0;
     cc = 0;
@@ -1046,7 +1045,7 @@ talk_result_t talk_house_visitor()
     case 2006: return _talk_hv_mysterious_producer();
     case 2003: return _talk_hv_merchant();
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 } // namespace elona

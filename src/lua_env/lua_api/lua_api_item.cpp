@@ -14,30 +14,32 @@ int Item::count()
     return inv_sum(-1);
 }
 
-bool Item::has_enchantment(const lua_item_handle handle, int id)
+bool Item::has_enchantment(const LuaItemHandle handle, int id)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     return elona::encfindspec(item_ref.index, id);
 }
 
-void Item::remove(lua_item_handle handle)
+void Item::remove(LuaItemHandle handle)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<item>(handle);
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     item_ref.remove();
 }
 
-sol::optional<lua_item_handle>
-Item::create(const position_t& position, int id, int number)
+sol::optional<LuaItemHandle>
+Item::create(const Position& position, int id, int number)
 {
     return Item::create_xy(position.x, position.y, id, number);
 }
 
-sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
+sol::optional<LuaItemHandle> Item::create_xy(int x, int y, int id, int number)
 {
     elona::flt();
     if (elona::itemcreate(-1, id, x, y, number) != 0)
     {
-        lua_item_handle handle = lua::lua->get_handle_manager().get_handle(
+        LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(
             elona::inv[elona::ci]); // TODO deglobalize ci
         return handle;
     }
@@ -47,15 +49,15 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
     }
 }
 
-sol::optional<lua_item_handle> Item::create_from_id(
-    const position_t& position,
+sol::optional<LuaItemHandle> Item::create_from_id(
+    const Position& position,
     const std::string& id,
     int number)
 {
     return Item::create_from_id_xy(position.x, position.y, id, number);
 }
 
-sol::optional<lua_character_handle>
+sol::optional<LuaCharacterHandle>
 Item::create_from_id_xy(int x, int y, const std::string& id, int number)
 {
     auto full_id = "core.item:" + id;

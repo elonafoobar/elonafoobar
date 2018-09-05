@@ -6,18 +6,18 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_composite_town : public ui_menu_composite<dummy_result>
+class UIMenuCompositeTown : public UIMenuComposite<DummyResult>
 {
 public:
-    enum index : size_t
+    enum class Index : size_t
     {
         chart = 0,
         economy = 1,
         politics = 2
     };
 
-    ui_menu_composite_town(size_t selected)
-        : ui_menu_composite(selected)
+    UIMenuCompositeTown(size_t selected)
+        : UIMenuComposite(selected)
     {
     }
 

@@ -12,32 +12,32 @@ namespace ui
 {
 
 template <typename T>
-class ui_menu_composite;
+class UIMenuComposite;
 
-struct dummy_result
+struct DummyResult
 {
 };
 
 template <typename T>
-class ui_menu
+class UIMenu
 {
-    friend class ui_menu_composite<T>;
+    friend class UIMenuComposite<T>;
 
 public:
-    struct result
+    struct Result
     {
-        result(bool canceled, optional<T> value)
+        Result(bool canceled, optional<T> value)
             : canceled(canceled)
             , value(value)
         {
         }
 
-        static result finish(optional<T> res = none)
+        static Result finish(optional<T> res = none)
         {
             return {false, res};
         }
 
-        static result cancel()
+        static Result cancel()
         {
             return {true, none};
         }
@@ -47,13 +47,13 @@ public:
     };
 
 protected:
-    using result_type = ui_menu<T>::result;
+    using ResultType = UIMenu<T>::Result;
 
 public:
     virtual bool init() = 0;
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual optional<result_type> on_key(const std::string& key) = 0;
+    virtual optional<ResultType> on_key(const std::string& key) = 0;
 
 protected:
     /**
@@ -74,13 +74,13 @@ protected:
     }
 
 public:
-    ui_menu::result show()
+    UIMenu::Result show()
     {
         while (true)
         {
             if (!init())
             {
-                return result_type::cancel();
+                return ResultType::cancel();
             }
 
             update();
@@ -119,7 +119,7 @@ private:
     void _redraw()
     {
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
     }
 
     void _update_input()

@@ -21,15 +21,15 @@ namespace
 
 constexpr int buff_find_slot_no_effect = -1;
 
-int buff_find_slot(const character& cc, int id, int turns)
+int buff_find_slot(const Character& cc, int id, int turns)
 {
-    for (int i = 0; i < cc.buffs.size(); ++i)
+    for (size_t i = 0; i < cc.buffs.size(); ++i)
     {
         if (cc.buffs[i].id == id)
         {
             if (cc.buffs[i].turns < turns)
             {
-                return i;
+                return static_cast<int>(i);
             }
             else
             {
@@ -55,22 +55,22 @@ namespace elona
 {
 
 
-buff_db the_buff_db;
+BuffDB the_buff_db;
 
 
-buff_db::buff_db()
+BuffDB::BuffDB()
 {
     storage.emplace(
         0,
-        buff_data{0,
-                  LUA_REFNIL,
-                  buff_data::type_t::buff,
-                  LUA_REFNIL,
-                  LUA_REFNIL}); // dummy
+        BuffData{0,
+                 LUA_REFNIL,
+                 BuffData::Type::buff,
+                 LUA_REFNIL,
+                 LUA_REFNIL}); // dummy
 }
 
 
-void buff_db::define(lua_State* L)
+void BuffDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -80,17 +80,17 @@ void buff_db::define(lua_State* L)
     ELONA_CAT_DB_FIELD_REF(duration);
     ELONA_CAT_DB_FIELD_REF(on_refresh);
 
-    cat::ref self = luaL_ref(L, LUA_REGISTRYINDEX);
+    cat::Ref self = luaL_ref(L, LUA_REGISTRYINDEX);
     // Dummy; after calling this function, the caller pop one value from the Lua
     // stack.
     lua_pushnil(L);
 
     storage.emplace(
         std::stoi(id), // TODO
-        buff_data{
+        BuffData{
             std::stoi(id),
             self,
-            buff_data::type_t(type_),
+            BuffData::Type(type_),
             duration,
             on_refresh,
         });
@@ -98,7 +98,7 @@ void buff_db::define(lua_State* L)
 
 
 
-bool buff_has(const character& cc, int id)
+bool buff_has(const Character& cc, int id)
 {
     return std::any_of(
         std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
@@ -108,7 +108,7 @@ bool buff_has(const character& cc, int id)
 
 
 
-optional_ref<const buff_t> buff_find(const character& cc, int id)
+optional_ref<const Buff> buff_find(const Character& cc, int id)
 {
     const auto itr = std::find_if(
         std::begin(cc.buffs), std::end(cc.buffs), [&](const auto& buff) {
@@ -127,11 +127,11 @@ optional_ref<const buff_t> buff_find(const character& cc, int id)
 
 
 void buff_add(
-    character& cc,
+    Character& cc,
     int id,
     int power,
     int turns,
-    optional_ref<const character> doer)
+    optional_ref<const Character> doer)
 {
     if (turns <= 0)
         return;
@@ -146,7 +146,7 @@ void buff_add(
         }
     }
 
-    if (the_buff_db[id]->type == buff_data::type_t::hex)
+    if (the_buff_db[id]->type == BuffData::Type::hex)
     {
         bool resists{};
         if (sdata(60, cc.index) / 2 > rnd(power * 2 + 100))
@@ -202,7 +202,7 @@ void buff_add(
     if (is_in_fov(cc))
     {
         // Messages of fodd buff are shown elsewhere.
-        if (the_buff_db[id]->type != buff_data::type_t::food)
+        if (the_buff_db[id]->type != BuffData::Type::food)
         {
             txt(i18n::s.get_enum_property("core.locale.buff", id, "apply", cc));
         }
@@ -220,7 +220,7 @@ void buff_add(
 
 
 
-void buff_delete(character& cc, int slot)
+void buff_delete(Character& cc, int slot)
 {
     if (cc.index == 0)
     {
@@ -261,7 +261,7 @@ void buff_delete(character& cc, int slot)
             if (cc.buffs[cnt + 1].id != 0)
             {
                 cc.buffs[cnt] = cc.buffs[cnt + 1];
-                cc.buffs[cnt + 1] = buff_t{};
+                cc.buffs[cnt + 1] = Buff{};
             }
             else
             {

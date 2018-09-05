@@ -389,10 +389,10 @@ void boxf(
     int y,
     int width,
     int height,
-    const snail::color& color = {0, 0, 0, 0});
+    const snail::Color& color = {0, 0, 0, 0});
 void boxf();
 
-void boxl(int x, int y, int width, int height, const snail::color& color);
+void boxl(int x, int y, int width, int height, const snail::Color& color);
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -408,9 +408,7 @@ int dialog(const std::string& message, int = 0);
 void exec(const std::string&, int);
 
 
-void font(
-    int size,
-    snail::font_t::style_t style = snail::font_t::style_t::regular);
+void font(int size, snail::Font::Style style = snail::Font::Style::regular);
 
 void gcopy(
     int window_id,
@@ -438,7 +436,7 @@ void gcopy_c(
     int dst_height);
 
 
-bool getkey(snail::key);
+bool getkey(snail::Key);
 
 void getstr(
     std::string& out,
@@ -486,7 +484,7 @@ void line(
     int y1,
     int x2,
     int y2,
-    const snail::color& color = {0, 0, 0});
+    const snail::Color& color = {0, 0, 0});
 
 
 
@@ -540,8 +538,8 @@ std::string strmid(const std::string& source, int pos, int length);
 void title(
     const std::string& title_str,
     const std::string& display_mode = "",
-    snail::window::fullscreen_mode_t fullscreen_mode =
-        snail::window::fullscreen_mode_t::windowed);
+    snail::Window::FullscreenMode fullscreen_mode =
+        snail::Window::FullscreenMode::windowed);
 
 
 int wpeek(int x, size_t index);

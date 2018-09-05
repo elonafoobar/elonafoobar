@@ -40,9 +40,9 @@ static void _load_politics_list(bool is_town)
     }
 }
 
-bool ui_menu_town_politics::init()
+bool UIMenuTownPolitics::init()
 {
-    bool is_town = mdata_map_type == mdata_t::map_type_t::town;
+    bool is_town = mdata_map_type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
     gsel(3);
@@ -65,7 +65,7 @@ bool ui_menu_town_politics::init()
     return true;
 }
 
-void ui_menu_town_politics::update()
+void UIMenuTownPolitics::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -89,7 +89,7 @@ static void _draw_window()
     pos(wx + 185, wy + 52);
     mes(i18n::s.get("core.locale.ui.politics.global"));
 
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         pos(wx + 285, wy + 52);
         mes(i18n::s.get(
@@ -162,14 +162,14 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_town_politics::draw()
+void UIMenuTownPolitics::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_town_politics::result_type> ui_menu_town_politics::on_key(
+optional<UIMenuTownPolitics::ResultType> UIMenuTownPolitics::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -195,7 +195,7 @@ optional<ui_menu_town_politics::result_type> ui_menu_town_politics::on_key(
     else if (key == key_cancel)
     {
         update_screen();
-        return ui_menu_town_politics::result::cancel();
+        return UIMenuTownPolitics::Result::cancel();
     }
 
     return none;

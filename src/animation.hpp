@@ -10,7 +10,7 @@ namespace elona
 
 
 
-class abstract_animation
+class AbstractAnimation
 {
 public:
     void play();
@@ -28,10 +28,10 @@ protected:
 
 
 
-class failure_to_cast_animation : public abstract_animation
+class FailureToCastAnimation : public AbstractAnimation
 {
 public:
-    failure_to_cast_animation(const position_t& caster_pos)
+    FailureToCastAnimation(const Position& caster_pos)
         : caster_pos(caster_pos)
     {
     }
@@ -42,15 +42,15 @@ protected:
 
 
 private:
-    const position_t& caster_pos;
+    const Position& caster_pos;
 };
 
 
 
-class bright_aura_animation : public abstract_animation
+class BrightAuraAnimation : public AbstractAnimation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         debuff,
         offering,
@@ -59,7 +59,7 @@ public:
     };
 
 
-    bright_aura_animation(const position_t& target_pos, type_t type)
+    BrightAuraAnimation(const Position& target_pos, Type type)
         : target_pos(target_pos)
         , type(type)
     {
@@ -71,18 +71,18 @@ protected:
 
 
 private:
-    const position_t& target_pos;
-    type_t type;
+    const Position& target_pos;
+    Type type;
 };
 
 
 
-class breath_animation : public abstract_animation
+class BreathAnimation : public AbstractAnimation
 {
 public:
-    breath_animation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+    BreathAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
         int element)
         : attacker_pos(attacker_pos)
         , target_pos(target_pos)
@@ -96,27 +96,27 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int element;
 };
 
 
 
-class ball_animation : public abstract_animation
+class BallAnimation : public AbstractAnimation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         ball,
         atomic_bomb,
     };
 
 
-    ball_animation(
-        const position_t& position,
+    BallAnimation(
+        const Position& position,
         int range,
-        type_t type,
+        Type type,
         int element = 0)
         : position(position)
         , range(range)
@@ -131,20 +131,20 @@ protected:
 
 
 private:
-    const position_t& position;
+    const Position& position;
     int range;
-    type_t type;
+    Type type;
     int element;
 };
 
 
 
-class bolt_animation : public abstract_animation
+class BoltAnimation : public AbstractAnimation
 {
 public:
-    bolt_animation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+    BoltAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
         int element,
         int distance)
         : attacker_pos(attacker_pos)
@@ -160,20 +160,20 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int element;
     int distance;
 };
 
 
 
-class throwing_object_animation : public abstract_animation
+class ThrowingObjectAnimation : public AbstractAnimation
 {
 public:
-    throwing_object_animation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
+    ThrowingObjectAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
         int item_chip,
         int item_color)
         : attacker_pos(attacker_pos)
@@ -189,18 +189,18 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
+    const Position& attacker_pos;
+    const Position& target_pos;
     int item_chip;
     int item_color;
 };
 
 
 
-class swarm_animation : public abstract_animation
+class SwarmAnimation : public AbstractAnimation
 {
 public:
-    swarm_animation(const position_t& target_pos)
+    SwarmAnimation(const Position& target_pos)
         : target_pos(target_pos)
     {
     }
@@ -211,15 +211,15 @@ protected:
 
 
 private:
-    const position_t& target_pos;
+    const Position& target_pos;
 };
 
 
 
-class ranged_attack_animation : public abstract_animation
+class RangedAttackAnimation : public AbstractAnimation
 {
 public:
-    enum class type_t
+    enum class Type
     {
         magic_arrow = 0,
         distant_attack = 1,
@@ -230,10 +230,10 @@ public:
     };
 
 
-    ranged_attack_animation(
-        const position_t& attacker_pos,
-        const position_t& target_pos,
-        type_t type,
+    RangedAttackAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
+        Type type,
         int fired_item_subcategory = 0,
         int fired_item_image = 0,
         int fired_item_color = 0)
@@ -252,9 +252,9 @@ protected:
 
 
 private:
-    const position_t& attacker_pos;
-    const position_t& target_pos;
-    type_t type;
+    const Position& attacker_pos;
+    const Position& target_pos;
+    Type type;
     int fired_item_subcategory;
     int fired_item_image;
     int fired_item_color;
@@ -262,11 +262,11 @@ private:
 
 
 
-class melee_attack_animation : public abstract_animation
+class MeleeAttackAnimation : public AbstractAnimation
 {
 public:
-    melee_attack_animation(
-        const position_t& position,
+    MeleeAttackAnimation(
+        const Position& position,
         bool debris,
         int attack_skill,
         int damage_percent,
@@ -284,7 +284,7 @@ protected:
     virtual void do_play() override;
 
 private:
-    const position_t& position;
+    const Position& position;
     bool debris;
     int attack_skill;
     int damage_percent;
@@ -293,10 +293,10 @@ private:
 
 
 
-class gene_engineering_animation : public abstract_animation
+class GeneEngineeringAnimation : public AbstractAnimation
 {
 public:
-    gene_engineering_animation(const position_t& position)
+    GeneEngineeringAnimation(const Position& position)
         : position(position)
     {
     }
@@ -306,15 +306,15 @@ protected:
     virtual void do_play() override;
 
 private:
-    const position_t& position;
+    const Position& position;
 };
 
 
 
-class miracle_animation : public abstract_animation
+class MiracleAnimation : public AbstractAnimation
 {
 public:
-    miracle_animation()
+    MiracleAnimation()
     {
     }
 
@@ -325,10 +325,10 @@ protected:
 
 
 
-class meteor_animation : public abstract_animation
+class MeteorAnimation : public AbstractAnimation
 {
 public:
-    meteor_animation()
+    MeteorAnimation()
     {
     }
 
@@ -339,10 +339,10 @@ protected:
 
 
 
-class ragnarok_animation : public abstract_animation
+class RagnarokAnimation : public AbstractAnimation
 {
 public:
-    ragnarok_animation()
+    RagnarokAnimation()
     {
     }
 
@@ -359,12 +359,11 @@ protected:
 
 
 
-class breaking_animation : public abstract_animation
+class BreakingAnimation : public AbstractAnimation
 {
 public:
-    breaking_animation(const position_t& position, int type = 0)
+    BreakingAnimation(const Position& position)
         : position(position)
-        , type(type)
     {
     }
 
@@ -374,8 +373,7 @@ protected:
 
 
 private:
-    position_t position;
-    int type;
+    Position position;
 };
 
 

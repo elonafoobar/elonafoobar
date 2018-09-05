@@ -10,7 +10,7 @@ namespace elona
 /* clang-format off */
 
 
-struct version_t
+struct Version
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
@@ -57,7 +57,7 @@ struct version_t
 /* clang-format on */
 
 
-extern const version_t latest_version;
+extern const Version latest_version;
 
 
 } // namespace elona

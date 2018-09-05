@@ -16,7 +16,7 @@ namespace detail
 {
 
 void snd_inner(
-    const sound_data& sound,
+    const SoundData& sound,
     short angle = 0,
     unsigned char dist = 0,
     bool loop = false,
@@ -39,12 +39,12 @@ void DMSTOP();
 void sndload(const fs::path& filepath, int = 0);
 void initialize_sound_file();
 
-std::pair<short, unsigned char> sound_calculate_position(const position_t& p);
+std::pair<short, unsigned char> sound_calculate_position(const Position& p);
 
 template <typename I>
 void snd_at(
     I sound_id,
-    const position_t& p,
+    const Position& p,
     bool loop = false,
     bool allow_duplicate = true)
 {
@@ -65,7 +65,7 @@ void snd(I sound_id, bool loop = false, bool allow_duplicate = true)
 void sound_play_environmental();
 void stop_music();
 
-void play_music(optional<shared_id> music_id = none);
+void play_music(optional<SharedId> music_id = none);
 void play_music(const char* music_id);
 
 

@@ -5,10 +5,10 @@
 namespace elona
 {
 
-item_chip_data item_chip_db::convert(
+ItemChipData ItemChipDB::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     UNUSED(lua);
 
@@ -59,10 +59,10 @@ item_chip_data item_chip_db::convert(
         width = inf_tiles * animation;
     }
 
-    return item_chip_data{
+    return ItemChipData{
         id,
-        extent{x, y, width, height, frame_width},
-        item_chip_t{shared_id(id_), offset_y, stack_height, shadow, animation},
+        Extent{x, y, width, height, frame_width},
+        ItemChip{SharedId(id_), offset_y, stack_height, shadow, animation},
         filepath};
 }
 

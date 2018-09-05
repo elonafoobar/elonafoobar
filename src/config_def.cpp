@@ -16,26 +16,26 @@ namespace
 {
 
 
-static void add_platform(config_def::metadata& dat, const hcl::Object& item)
+static void add_platform(ConfigDef::MetaData& dat, const hcl::Object& item)
 {
     std::string platform = item.at("platform").as<std::string>();
 
     if (platform == "desktop")
     {
-        dat.platform = config_def::option_platform::desktop;
+        dat.platform = ConfigDef::Platform::desktop;
     }
     else if (platform == "android")
     {
-        dat.platform = config_def::option_platform::android;
+        dat.platform = ConfigDef::Platform::android;
     }
     else
     {
-        dat.platform = config_def::option_platform::all;
+        dat.platform = ConfigDef::Platform::all;
     }
 }
 
 static void set_default_from_platform(
-    config_def::metadata& dat,
+    ConfigDef::MetaData& dat,
     const hcl::Object& item)
 {
     // NOTE: Could be generalized, if it were neeed.
@@ -58,18 +58,16 @@ static void set_default_from_platform(
         dat.name = item.at(#name).as<bool>(); \
     }
 
-void config_def::post_visit(
-    const spec_key& current_key,
-    const spec::section_def&)
+void ConfigDef::post_visit(const SpecKey& current_key, const spec::SectionDef&)
 {
-    data.emplace(current_key, metadata{});
+    data.emplace(current_key, MetaData{});
 }
 
-void config_def::pre_visit_section(
-    const spec_key& current_key,
+void ConfigDef::pre_visit_section(
+    const SpecKey& current_key,
     const hcl::Object& section)
 {
-    metadata dat{};
+    MetaData dat{};
 
     CONFIG_DEF_METADATA(section, visible);
     if (section.find("platform") != section.end())
@@ -82,18 +80,18 @@ void config_def::pre_visit_section(
     data.emplace(current_key, dat);
 }
 
-void config_def::pre_visit_bare_value(
-    const spec_key& current_key,
+void ConfigDef::pre_visit_bare_value(
+    const SpecKey& current_key,
     const hcl::Value&)
 {
-    data.emplace(current_key, metadata{});
+    data.emplace(current_key, MetaData{});
 }
 
-void config_def::pre_visit_item(
-    const spec_key& current_key,
+void ConfigDef::pre_visit_item(
+    const SpecKey& current_key,
     const hcl::Object& item)
 {
-    metadata dat{};
+    MetaData dat{};
 
     CONFIG_DEF_METADATA(item, visible);
     CONFIG_DEF_METADATA(item, preload);
@@ -114,9 +112,9 @@ void config_def::pre_visit_item(
 }
 
 
-bool config_def::is_child_visible(const spec_key& child_key)
+bool ConfigDef::is_child_visible(const SpecKey& child_key)
 {
-    spec_key parent_key = child_key;
+    SpecKey parent_key = child_key;
     for (size_t i = parent_key.size() - 1; i > 0; i--)
     {
         if (parent_key[i] == '.')

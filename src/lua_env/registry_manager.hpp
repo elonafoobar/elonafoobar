@@ -9,7 +9,7 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Stores arbitrary data as Lua tables in a naive object database
@@ -21,14 +21,14 @@ class lua_env;
  * issue then data could be serialized in a Lua-readable format, or
  * stored in an actual database like SQLite.
  */
-class registry_manager
+class RegistryManager
 {
 public:
-    explicit registry_manager(lua_env*);
+    explicit RegistryManager(LuaEnv*);
 
-    struct location
+    struct Location
     {
-        location(fs::path data_hcl_file, std::string mod_name)
+        Location(fs::path data_hcl_file, std::string mod_name)
             : data_hcl_file(data_hcl_file)
             , mod_name(mod_name)
         {
@@ -42,7 +42,7 @@ public:
      * Loads the data declared by each mod in a data.hcl file inside
      * the mod's root directory, if it exists;
      */
-    void load_mod_data(const std::vector<registry_manager::location>&);
+    void load_mod_data(const std::vector<RegistryManager::Location>&);
 
     /***
      * Registers a core datatype whose data is kept in native code.
@@ -80,8 +80,8 @@ private:
         const fs::path& data_file);
 
     /***
-     * Binds the Registry API to the lua_env attached to this
-     * registry_manager.
+     * Binds the Registry API to the LuaEnv attached to this
+     * RegistryManager.
      */
     void bind_api();
 
@@ -105,12 +105,11 @@ private:
      * The isolated Lua environment where data is stored.
      */
     sol::environment registry_env;
-    bool data_initialized = false;
     // Initialization functions to call upon loading a core datatype.
     std::unordered_map<std::string, std::function<void(sol::table)>>
         native_initializers;
 
-    lua_env* lua_;
+    LuaEnv* lua_;
 };
 
 } // namespace lua

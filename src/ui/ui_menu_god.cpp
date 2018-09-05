@@ -33,7 +33,7 @@ static std::string _get_choice_name(bool already_believing, int god_id)
     }
 }
 
-bool ui_menu_god::init()
+bool UIMenuGod::init()
 {
     cs = 0;
     page = 0;
@@ -66,7 +66,7 @@ bool ui_menu_god::init()
     return true;
 }
 
-void ui_menu_god::update()
+void UIMenuGod::update()
 {
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -122,7 +122,7 @@ static void _draw_window()
 
 static void _draw_title(int god_id)
 {
-    font(18 - en * 2, snail::font_t::style_t::bold);
+    font(18 - en * 2, snail::Font::Style::bold);
     bmes(
         i18n::s.get(
             "core.locale.god.desc.window.title",
@@ -157,7 +157,7 @@ static void _draw_choices()
     }
 }
 
-void ui_menu_god::draw()
+void UIMenuGod::draw()
 {
     _draw_window();
     _draw_title(_god_id);
@@ -165,7 +165,7 @@ void ui_menu_god::draw()
     _draw_choices();
 }
 
-optional<ui_menu_god::result_type> ui_menu_god::on_key(const std::string& key)
+optional<UIMenuGod::ResultType> UIMenuGod::on_key(const std::string& key)
 {
     int _rtval = -1;
 
@@ -179,11 +179,11 @@ optional<ui_menu_god::result_type> ui_menu_god::on_key(const std::string& key)
     {
         if (_rtval == _cancel_choice)
         {
-            return ui_menu_god::result_type::cancel();
+            return UIMenuGod::ResultType::cancel();
         }
         else
         {
-            return ui_menu_god::result_type::finish(_rtval);
+            return UIMenuGod::ResultType::finish(_rtval);
         }
     }
 

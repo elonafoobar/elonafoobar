@@ -10,6 +10,7 @@ The following is ideal; not all of these are being regarded at the moment.
   + Even better, see if there are ways to externalize data in declarative file formats, like item/character definitions.
 - For large hunks of related code, split them up into files named with a common prefix. For example, `action.cpp`, `action_dig.cpp` and `action_melee.cpp`.
 - We use `snake_case` for C++ code.
+  - For struct/class/enum names, Use `PascaleCase` except for `std`-library-like types such as `iterator`.
 - Prefix public methods inside C++ source files with the name of the file. For example, `enchantment.hpp` could contain `enchantment_add()` and `enchantment_remove()`. This makes it easier to work out where the functions come from. Of course this needn't always be the case, for example if a large group of related functionality is spread out throughout related files. In that case, use the prefix of the main file (for `action_dig.cpp`, use `action_`).
 - Use names that make sense in English. Instead of `dmghp`, use `damage_hp`.
 - Use `#pragma once` inside headers.

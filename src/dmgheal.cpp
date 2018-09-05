@@ -36,7 +36,7 @@ int dmg_at_m141 = 0;
 
 
 
-void end_dmghp(const character& victim)
+void end_dmghp(const Character& victim)
 {
     if (victim.is_hung_on_sand_bag())
     {
@@ -57,7 +57,7 @@ void end_dmghp(const character& victim)
 
 
 
-void dmgheal_death_by_backpack(character& chara)
+void dmgheal_death_by_backpack(Character& chara)
 {
     int heaviest_item_index = -1;
     int heaviest_weight = 0;
@@ -105,7 +105,7 @@ namespace elona
 
 
 int damage_hp(
-    character& victim,
+    Character& victim,
     int amount,
     int damage_source,
     int element,
@@ -116,7 +116,7 @@ int damage_hp(
     int gained_exp = 0;
     bool attacker_is_player = false;
 
-    optional<character&> attacker = none;
+    optional<Character&> attacker = none;
     if (damage_source >= 0)
     {
         attacker = cdata[damage_source];
@@ -130,7 +130,7 @@ int damage_hp(
     {
         attacker_is_player = false;
     }
-    if (victim.state() != character::state_t::alive)
+    if (victim.state() != Character::State::alive)
     {
         end_dmghp(victim);
         return 0;
@@ -271,7 +271,7 @@ int damage_hp(
                     victim.hp = 1;
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+            if (gdata_current_map == mdata_t::MapId::pet_arena)
             {
                 victim.hp = 1;
             }
@@ -295,7 +295,7 @@ int damage_hp(
                 {
                     continue;
                 }
-                if (cdata[cnt].state() != character::state_t::alive)
+                if (cdata[cnt].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -313,7 +313,7 @@ int damage_hp(
                 txt(i18n::s.get("core.locale.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
                 animode = 100 + victim.index;
-                miracle_animation().play();
+                MiracleAnimation().play();
                 snd(120);
                 break;
             }
@@ -482,35 +482,35 @@ int damage_hp(
                 {
                     dmgcon(
                         victim.index,
-                        status_ailment_t::blinded,
+                        StatusAilment::blinded,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
                         victim.index,
-                        status_ailment_t::paralyzed,
+                        StatusAilment::paralyzed,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
                         victim.index,
-                        status_ailment_t::confused,
+                        StatusAilment::confused,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
                         victim.index,
-                        status_ailment_t::poisoned,
+                        StatusAilment::poisoned,
                         rnd(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
                         victim.index,
-                        status_ailment_t::sleep,
+                        StatusAilment::sleep,
                         rnd(element_power / 3 * 2 + 1));
                 }
             }
@@ -525,42 +525,42 @@ int damage_hp(
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::blinded,
+                    StatusAilment::blinded,
                     rnd(element_power + 1));
             }
             if (element == 58)
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::paralyzed,
+                    StatusAilment::paralyzed,
                     rnd(element_power + 1));
             }
             if (element == 54)
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::confused,
+                    StatusAilment::confused,
                     rnd(element_power + 1));
             }
             if (element == 57)
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::confused,
+                    StatusAilment::confused,
                     rnd(element_power + 1));
             }
             if (element == 55)
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::poisoned,
+                    StatusAilment::poisoned,
                     rnd(element_power + 1));
             }
             if (element == 61)
             {
                 dmgcon(
                     victim.index,
-                    status_ailment_t::bleeding,
+                    StatusAilment::bleeding,
                     rnd(element_power + 1));
             }
             if (element == 62)
@@ -602,11 +602,11 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            if (config::instance().sound)
+            if (Config::instance().sound)
             {
-                if (config::instance().heart)
+                if (Config::instance().heart)
                 {
-                    int threshold = config::instance().get<int>(
+                    int threshold = Config::instance().get<int>(
                         "core.config.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
@@ -614,7 +614,7 @@ int damage_hp(
                         {
                             snd(32);
 
-                            if (config::instance().get<bool>(
+                            if (Config::instance().get<bool>(
                                     "core.config.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();
@@ -639,7 +639,7 @@ int damage_hp(
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
-                    if (mdata_map_type != mdata_t::map_type_t::world_map)
+                    if (mdata_map_type != mdata_t::MapType::world_map)
                     {
                         if (chara_copy(victim) != -1)
                         {
@@ -660,7 +660,7 @@ int damage_hp(
                         && victim.poisoned == 0 && victim.paralyzed == 0
                         && victim.blind == 0)
                     {
-                        if (mdata_map_type != mdata_t::map_type_t::world_map)
+                        if (mdata_map_type != mdata_t::MapType::world_map)
                         {
                             if (chara_copy(victim) != -1)
                             {
@@ -744,7 +744,7 @@ int damage_hp(
     {
         auto handle = lua::lua->get_handle_manager().get_handle(victim);
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::character_damaged>(
+            .run_callbacks<lua::EventKind::character_damaged>(
                 handle, dmg_at_m141);
     }
 
@@ -901,18 +901,18 @@ int damage_hp(
         }
         if (victim.character_role == 0)
         {
-            victim.set_state(character::state_t::empty);
+            victim.set_state(Character::State::empty);
         }
         else if (victim.character_role == 13)
         {
-            victim.set_state(character::state_t::adventurer_dead);
+            victim.set_state(Character::State::adventurer_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
         }
         else
         {
-            victim.set_state(character::state_t::villager_dead);
+            victim.set_state(Character::State::villager_dead);
             victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
@@ -921,16 +921,16 @@ int damage_hp(
             if (victim.index < 16)
             {
                 chara_modify_impression(victim, -10);
-                victim.set_state(character::state_t::pet_dead);
+                victim.set_state(Character::State::pet_dead);
                 victim.current_map = 0;
                 if (victim.is_escorted() == 1)
                 {
                     event_add(15, victim.id);
-                    victim.set_state(character::state_t::empty);
+                    victim.set_state(Character::State::empty);
                 }
                 if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    victim.set_state(character::state_t::empty);
+                    victim.set_state(Character::State::empty);
                 }
             }
         }
@@ -992,9 +992,9 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            if (gdata_current_map != mdata_t::map_id_t::show_house)
+            if (gdata_current_map != mdata_t::MapId::show_house)
             {
-                if (gdata_current_map != mdata_t::map_id_t::the_void)
+                if (gdata_current_map != mdata_t::MapId::the_void)
                 {
                     if (victim.id == 2)
                     {
@@ -1066,7 +1066,7 @@ int damage_hp(
                     }
                     if (gdata_current_dungeon_level
                             == adata(10, gdata_current_map)
-                        || gdata_current_map == mdata_t::map_id_t::the_void)
+                        || gdata_current_map == mdata_t::MapId::the_void)
                     {
                         if (adata(20, gdata_current_map) == victim.index
                             && victim.is_lord_of_dungeon() == 1)
@@ -1083,7 +1083,7 @@ int damage_hp(
                     }
                     quest_check();
                 }
-                else if (gdata_current_map == mdata_t::map_id_t::the_void)
+                else if (gdata_current_map == mdata_t::MapId::the_void)
                 {
                     if (adata(20, gdata_current_map) == victim.index
                         && victim.is_lord_of_dungeon() == 1)
@@ -1102,7 +1102,7 @@ int damage_hp(
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
-        if (victim.state() == character::state_t::empty)
+        if (victim.state() == Character::State::empty)
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
@@ -1137,7 +1137,7 @@ int damage_hp(
         }
         rc = victim.index;
         character_drops_item();
-        if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+        if (gdata_current_map == mdata_t::MapId::pet_arena)
         {
             if (rnd(5) == 0)
             {
@@ -1150,7 +1150,7 @@ int damage_hp(
             for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
                  ++chara_index)
             {
-                if (cdata[chara_index].state() != character::state_t::alive)
+                if (cdata[chara_index].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1190,7 +1190,7 @@ int damage_hp(
 
 
 
-void heal_hp(character& cc, int delta)
+void heal_hp(Character& cc, int delta)
 {
     cc.hp += delta;
     if (cc.hp > cc.max_hp)
@@ -1201,7 +1201,7 @@ void heal_hp(character& cc, int delta)
 
 
 
-void damage_mp(character& cc, int delta)
+void damage_mp(Character& cc, int delta)
 {
     cc.mp -= delta;
     if (cc.mp < -999999)
@@ -1232,7 +1232,7 @@ void damage_mp(character& cc, int delta)
 
 
 
-void heal_mp(character& cc, int delta)
+void heal_mp(Character& cc, int delta)
 {
     cc.mp += delta;
     if (cc.mp > cc.max_mp)
@@ -1243,7 +1243,7 @@ void heal_mp(character& cc, int delta)
 
 
 
-bool action_sp(character& cc, int sp)
+bool action_sp(Character& cc, int sp)
 {
     if (cc.index != 0 || debug::voldemort)
         return true;
@@ -1254,7 +1254,7 @@ bool action_sp(character& cc, int sp)
 
 
 
-void damage_sp(character& cc, int delta)
+void damage_sp(Character& cc, int delta)
 {
     if (cc.index != 0 || debug::voldemort)
         return;
@@ -1267,7 +1267,7 @@ void damage_sp(character& cc, int delta)
 
 
 
-void heal_sp(character& cc, int delta)
+void heal_sp(Character& cc, int delta)
 {
     cc.sp += delta;
     if (cc.sp > cc.max_sp)
@@ -1278,7 +1278,7 @@ void heal_sp(character& cc, int delta)
 
 
 
-void damage_insanity(character& cc, int delta)
+void damage_insanity(Character& cc, int delta)
 {
     if (cc.quality >= 4)
         return;
@@ -1299,13 +1299,13 @@ void damage_insanity(character& cc, int delta)
     cc.insanity += delta;
     if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
     {
-        dmgcon(cc.index, status_ailment_t::insane, 100);
+        dmgcon(cc.index, StatusAilment::insane, 100);
     }
 }
 
 
 
-void heal_insanity(character& cc, int delta)
+void heal_insanity(Character& cc, int delta)
 {
     cc.insanity -= delta;
     if (cc.insanity < 0)

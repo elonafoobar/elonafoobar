@@ -90,7 +90,7 @@ void update_screen_hud()
 
 void render_weather_effect_rain()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -99,7 +99,7 @@ void render_weather_effect_rain()
     }
 
     for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -113,7 +113,7 @@ void render_weather_effect_rain()
              static_cast<uint8_t>(100 + brightness),
              static_cast<uint8_t>(150 + brightness)});
 
-        if (particle == position_t{0, 0})
+        if (particle == Position{0, 0})
         {
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
@@ -134,7 +134,7 @@ void render_weather_effect_rain()
 
 void render_weather_effect_hard_rain()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -143,7 +143,7 @@ void render_weather_effect_hard_rain()
     }
 
     for (int i = 0; i < max_particles
-             * (1 + (mdata_map_type == mdata_t::map_type_t::world_map));
+             * (1 + (mdata_map_type == mdata_t::MapType::world_map));
          ++i)
     {
         auto&& particle = particles[i];
@@ -157,7 +157,7 @@ void render_weather_effect_hard_rain()
              static_cast<uint8_t>(100 + brightness),
              static_cast<uint8_t>(150 + brightness)});
 
-        if (particle == position_t{0, 0})
+        if (particle == Position{0, 0})
         {
             particle.x = rnd(windoww);
             particle.y = rnd(windowh - inf_verh) - 6;
@@ -178,7 +178,7 @@ void render_weather_effect_hard_rain()
 
 void render_weather_effect_snow()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 1750;
     if (particles.empty())
@@ -196,7 +196,7 @@ void render_weather_effect_snow()
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != gdata_weather)
         {
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
@@ -217,7 +217,7 @@ void render_weather_effect_snow()
 
 void render_weather_effect_etherwind()
 {
-    static std::vector<position_t> particles;
+    static std::vector<Position> particles;
 
     const auto max_particles = windoww * windowh / 3500;
     if (particles.empty())
@@ -235,7 +235,7 @@ void render_weather_effect_etherwind()
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == position_t{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != gdata_weather)
         {
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
@@ -256,7 +256,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!config::instance().env)
+    if (!Config::instance().env)
         return;
     if (mdata_map_indoors_flag != 2)
         return;
@@ -290,11 +290,11 @@ void highlight_characters_in_pet_arena()
 {
     for (auto&& cc : cdata.all())
     {
-        if (cc.state() != character::state_t::alive)
+        if (cc.state() != Character::State::alive)
             continue;
         if (cc.index == 0)
             continue;
-        snail::color color{0};
+        snail::Color color{0};
         if (cc.relationship == 10)
         {
             color = {127, 127, 255, 32};
@@ -388,14 +388,14 @@ void _render_hp_or_mp_bar(
 
 
 
-void render_hp_bar(const character& cc, int x, int y, bool show_digit = false)
+void render_hp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
     _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, 412, show_digit);
 }
 
 
 
-void render_mp_bar(const character& cc, int x, int y, bool show_digit = false)
+void render_mp_bar(const Character& cc, int x, int y, bool show_digit = false)
 {
     _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, 532, show_digit);
 }
@@ -579,7 +579,7 @@ void render_skill_trackers()
             continue;
         }
         const auto chara = gdata(750 + i) / 10000;
-        if (chara != 0 && cdata[chara].state() != character::state_t::alive)
+        if (chara != 0 && cdata[chara].state() != Character::State::alive)
         {
             gdata(750 + i) = 0;
             continue;
@@ -596,18 +596,18 @@ void render_skill_trackers()
                       .substr(1),
             66,
             inf_clocky + 107 + y * 16);
-        if (elona::config::instance().allow_enhanced_skill)
+        if (elona::Config::instance().allow_enhanced_skill)
         {
-            elona::snail::color col{255, 130, 130};
+            elona::snail::Color col{255, 130, 130};
 
             if (sdata.get(skill, chara).potential
-                > elona::config::instance().enhanced_skill_upperbound)
+                > elona::Config::instance().enhanced_skill_upperbound)
             {
                 col = {130, 255, 130};
             }
             else if (
                 sdata.get(skill, chara).potential
-                > elona::config::instance().enhanced_skill_lowerbound)
+                > elona::Config::instance().enhanced_skill_lowerbound)
             {
                 col = {255, 255, 130};
             }
@@ -642,8 +642,8 @@ int render_one_status_ailment(
         std::is_same<decltype(get_text(value)), std::string>::value,
         "F2 signature: std::string get_text(int value)");
     static_assert(
-        std::is_same<decltype(get_color(value)), snail::color>::value,
-        "F3 signature: snail::color get_color(int value)");
+        std::is_same<decltype(get_color(value)), snail::Color>::value,
+        "F3 signature: snail::Color get_color(int value)");
 
     if (!do_render(value))
         return y;
@@ -683,7 +683,7 @@ int render_one_status_ailment(
     int y,
     F1 do_render,
     F2 get_text,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     return render_one_status_ailment(
         value, x, y, do_render, get_text, [&](auto) { return text_color; });
@@ -698,7 +698,7 @@ int render_one_status_ailment(
     int y,
     F1 do_render,
     const std::string& text,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     return render_one_status_ailment(
         value,
@@ -729,9 +729,9 @@ void render_status_ailments()
         },
         [](auto nutrition) {
             return (nutrition >= 10)
-                ? snail::color{0, 0, 0}
-                : (nutrition >= 1) ? snail::color{200, 0, 0}
-                                   : snail::color{250, 0, 0};
+                ? snail::Color{0, 0, 0}
+                : (nutrition >= 1) ? snail::Color{200, 0, 0}
+                                   : snail::Color{250, 0, 0};
         });
 
     y = render_one_status_ailment(
@@ -893,9 +893,9 @@ void render_status_ailments()
                                 : i18n::_(u8"ui", u8"sleepy", u8"_0");
         },
         [](auto hours) {
-            return (hours >= 50) ? snail::color{255, 0, 0}
-                                 : (hours >= 30) ? snail::color{100, 100, 0}
-                                                 : snail::color{0, 0, 0};
+            return (hours >= 50) ? snail::Color{255, 0, 0}
+                                 : (hours >= 30) ? snail::Color{100, 100, 0}
+                                                 : snail::Color{0, 0, 0};
         });
 
     y = render_one_status_ailment(
@@ -910,8 +910,8 @@ void render_status_ailments()
         },
         [](auto sp) {
             return (sp < 0)
-                ? snail::color{120, 120, 0}
-                : (sp < 25) ? snail::color{80, 80, 0} : snail::color{60, 60, 0};
+                ? snail::Color{120, 120, 0}
+                : (sp < 25) ? snail::Color{80, 80, 0} : snail::Color{60, 60, 0};
         });
 
     y = render_one_status_ailment(
@@ -921,7 +921,7 @@ void render_status_ailments()
         [](auto state) { return state != 0; },
         [](auto state) { return i18n::_(u8"ui", u8"burden", u8"_"s + state); },
         [](auto state) {
-            return snail::color{0,
+            return snail::Color{0,
                                 static_cast<uint8_t>(state * 40),
                                 static_cast<uint8_t>(state * 40)};
         });
@@ -951,12 +951,12 @@ int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
 
-position_t gmes(
+Position gmes(
     const std::string& text,
     int x_base,
     int y_base,
     int width,
-    const snail::color& text_color_base,
+    const snail::Color& text_color_base,
     bool shadow)
 {
     int font_size = 14;
@@ -966,7 +966,7 @@ position_t gmes(
     int x = x_base;
     int y = y_base;
     size_t pos = 0;
-    snail::color text_color = text_color_base;
+    snail::Color text_color = text_color_base;
 
     while (message.find(u8"$end", pos) != pos)
     {
@@ -1000,18 +1000,18 @@ position_t gmes(
             pos += instr(message, pos, u8">") + 1;
             if (tag == u8"emp1")
             {
-                font(font_size - en * 2, snail::font_t::style_t::underline);
+                font(font_size - en * 2, snail::Font::Style::underline);
                 text_color = {50, 50, 255};
             }
             else if (tag == u8"emp2")
             {
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {40, 130, 40};
             }
             else if (tag == u8"title1")
             {
                 font_size = 12;
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {100, 50, 50};
             }
             else if (tag == u8"def")
@@ -1032,7 +1032,7 @@ position_t gmes(
             }
             else if (tag == u8"b")
             {
-                font(font_size - en * 2, snail::font_t::style_t::bold);
+                font(font_size - en * 2, snail::Font::Style::bold);
             }
             else if (tag == u8"green")
             {
@@ -1257,11 +1257,11 @@ void render_hud()
     gmode(2);
 
     // HP/MP bar
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
     if (gdata_mount != 0
-        && cdata[gdata_mount].state() == character::state_t::alive)
+        && cdata[gdata_mount].state() == Character::State::alive)
     {
         render_hp_bar(cdata[gdata_mount], inf_hpx - 120, inf_hpy);
     }
@@ -1282,7 +1282,7 @@ void render_hud()
     {
         if (mode != 9)
         {
-            if (mdata_map_type != mdata_t::map_type_t::world_map)
+            if (mdata_map_type != mdata_t::MapType::world_map)
             {
                 if (cdata.player().continuous_action_id == 0)
                 {
@@ -1310,11 +1310,11 @@ void render_hud()
     render_skill_trackers();
 
     // HP bars(pets)
-    if (config::instance().hp_bar != "hide")
+    if (Config::instance().hp_bar != "hide")
     {
         show_hp_bar(
-            config::instance().hp_bar == "left" ? show_hp_bar_side::left_side
-                                                : show_hp_bar_side::right_side,
+            Config::instance().hp_bar == "left" ? HPBarSide::left_side
+                                                : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1354,7 +1354,7 @@ void load_continuous_action_animation()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && config::instance().animewait != 0)
+    if (racount == 0 && Config::instance().animewait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1368,7 +1368,7 @@ void render_autoturn_animation()
     }
     if (cdata.player().continuous_action_id == 7)
     {
-        if (rowactre == 0 && config::instance().animewait != 0)
+        if (rowactre == 0 && Config::instance().animewait != 0)
         {
             render_fishing_animation();
         }
@@ -1379,7 +1379,7 @@ void render_autoturn_animation()
     int h = 25;
 
     window2(sx, sy, w, h, 0, 5);
-    font(13 - en * 2, snail::font_t::style_t::bold);
+    font(13 - en * 2, snail::Font::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
@@ -1389,7 +1389,7 @@ void render_autoturn_animation()
         || cdata.player().continuous_action_id == 8
         || (cdata.player().continuous_action_id == 7 && rowactre != 0))
     {
-        if (config::instance().animewait != 0)
+        if (Config::instance().animewait != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1405,7 +1405,7 @@ void render_autoturn_animation()
                             snd(52);
                         }
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2);
+                        await(Config::instance().animewait * 2);
                     }
                     if (cdata.player().continuous_action_id == 7)
                     {
@@ -1417,7 +1417,7 @@ void render_autoturn_animation()
                             }
                         }
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2.5);
+                        await(Config::instance().animewait * 2.5);
                     }
                     if (cdata.player().continuous_action_id == 8)
                     {
@@ -1426,7 +1426,7 @@ void render_autoturn_animation()
                             snd(55);
                         }
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 2.75);
+                        await(Config::instance().animewait * 2.75);
                     }
                     if (cdata.player().continuous_action_id == 9)
                     {
@@ -1435,7 +1435,7 @@ void render_autoturn_animation()
                             snd(54);
                         }
                         gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                        await(config::instance().animewait * 3);
+                        await(Config::instance().animewait * 3);
                     }
                     redraw();
                 }
@@ -1523,14 +1523,14 @@ void update_scrolling_info()
         sy(0) = tlocy - scy;
         sy(1) = tlocy;
     }
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         sx(0) = cdata[camera].position.x - scx;
         sx(1) = cdata[camera].position.x;
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (config::instance().alwayscenter)
+    if (Config::instance().alwayscenter)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1581,12 +1581,12 @@ void update_slight()
     slight.clear();
     ++msync;
 
-    position_t center{cdata.player().position.x - (fov_max + 2) / 2,
-                      (fov_max + 2) / 2 - cdata.player().position.y};
+    Position center{cdata.player().position.x - (fov_max + 2) / 2,
+                    (fov_max + 2) / 2 - cdata.player().position.y};
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 
-    if (config::instance().scroll)
+    if (Config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
         repw(1) = scx - 1;
@@ -1600,11 +1600,11 @@ void update_slight()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (config::instance().scroll == 0);
+    ly = 1 + (Config::instance().scroll == 0);
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (config::instance().scroll == 0);
+        lx = 1 + (Config::instance().scroll == 0);
         if (sy < 0 || sy >= mdata_map_height)
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -1639,7 +1639,7 @@ void update_slight()
                 ++lx;
                 continue;
             }
-            if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+            if (gdata_current_map == mdata_t::MapId::pet_arena)
             {
                 goto label_1430_internal;
             }
@@ -1701,7 +1701,7 @@ void ui_render_non_hud()
 {
     cell_draw();
 
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         highlight_characters_in_pet_arena();
     }
@@ -1738,8 +1738,8 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = config::instance().walkwait;
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    scrollp = Config::instance().walkwait;
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
         keybd_wait = 1000;
@@ -1750,10 +1750,10 @@ void ui_scroll_screen()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > config::instance().startrun)
+    else if (keybd_wait > Config::instance().startrun)
     {
         scrollp = 3;
-        if (config::instance().runscroll == 0)
+        if (Config::instance().runscroll == 0)
         {
             return;
         }
@@ -2067,7 +2067,7 @@ void display_window2(
     gmode(2);
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -2146,7 +2146,7 @@ void display_window(
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
         pos(window_x + window_width - strlen_u(s) * 7 - 40 - prm_673,
             window_y + window_height - 65 - window_height % 8);
         mes(s);
@@ -2161,7 +2161,7 @@ void display_window(
 
 void display_note(const std::string& prm_674, int prm_675)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
 }
@@ -2170,7 +2170,7 @@ void display_note(const std::string& prm_674, int prm_675)
 
 void display_topic(const std::string& topic, int x, int y)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     draw("topic_icon", x, y + 7);
     pos(x + 26, y + 8);
     mes(topic);
@@ -2386,14 +2386,14 @@ void cs_list(
     case 1:
         color(0, 0, 0);
         if (inv[ci].identification_state
-            == identification_state_t::completely_identified)
+            == IdentifyState::completely_identified)
         {
             switch (inv[ci].curse_state)
             {
-            case curse_state_t::doomed: color(100, 10, 100); break;
-            case curse_state_t::cursed: color(150, 10, 10); break;
-            case curse_state_t::none: color(10, 40, 120); break;
-            case curse_state_t::blessed: color(10, 110, 30); break;
+            case CurseState::doomed: color(100, 10, 100); break;
+            case CurseState::cursed: color(150, 10, 10); break;
+            case CurseState::none: color(10, 40, 120); break;
+            case CurseState::blessed: color(10, 110, 30); break;
             }
         }
         if (ibit(13, ci))
@@ -2450,7 +2450,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
         pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
     }
@@ -2646,7 +2646,7 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!config::instance().windowanime)
+    if (!Config::instance().windowanime)
         return;
     if (duration == 0)
         return;
@@ -2679,7 +2679,7 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(config::instance().animewait * 0.75);
+            await(Config::instance().animewait * 0.75);
         }
         pos(x, y);
         gcopy(temporary_window_id, 0, 0, width, height);
@@ -2698,7 +2698,7 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!config::instance().windowanime)
+    if (!Config::instance().windowanime)
         return;
     if (duration == 0)
         return;
@@ -2727,7 +2727,7 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(config::instance().animewait * 0.75);
+            await(Config::instance().animewait * 0.75);
         }
         pos(x, y);
         gcopy(temporary_window_id, 0, 0, width, height);

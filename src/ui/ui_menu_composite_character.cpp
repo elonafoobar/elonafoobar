@@ -10,23 +10,22 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_composite_character::add_menus()
+void UIMenuCompositeCharacter::add_menus()
 {
     push_back(
-        std::make_unique<ui_menu_character_sheet>(
-            character_sheet_operation::normal),
+        std::make_unique<UIMenuCharacterSheet>(CharacterSheetOperation::normal),
         9,
         "core.locale.ui.menu.chara.chara");
     push_back(
-        std::make_unique<ui_menu_equipment>(),
+        std::make_unique<UIMenuEquipment>(),
         10,
         "core.locale.ui.menu.chara.wear");
     push_back(
-        std::make_unique<ui_menu_feats>(ui_menu_feats::operation::normal),
+        std::make_unique<UIMenuFeats>(UIMenuFeats::Operation::normal),
         11,
         "core.locale.ui.menu.chara.feat");
     push_back(
-        std::make_unique<ui_menu_materials>(),
+        std::make_unique<UIMenuMaterials>(),
         12,
         "core.locale.ui.menu.chara.material");
 }

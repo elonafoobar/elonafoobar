@@ -90,7 +90,7 @@ void modify_ether_disease_stage(int delta)
         {
             txtef(8);
             txt(i18n::s.get("core.locale.chara.corruption.symptom"));
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
                 {
@@ -215,7 +215,7 @@ void modify_ether_disease_stage(int delta)
 
 
 
-void modify_potential(character& cc, int id, int delta)
+void modify_potential(Character& cc, int id, int delta)
 {
     sdata.get(id, cc.index).potential =
         clamp(sdata.get(id, cc.index).potential + delta, 2, 400);
@@ -223,7 +223,7 @@ void modify_potential(character& cc, int id, int delta)
 
 
 
-void modify_karma(character& cc, int delta)
+void modify_karma(Character& cc, int delta)
 {
     if (trait(162) && delta < 0)
     {
@@ -281,7 +281,7 @@ void modify_karma(character& cc, int delta)
 
 
 
-void modify_weight(character& cc, int delta, bool force)
+void modify_weight(Character& cc, int delta, bool force)
 {
     int min = cc.height * cc.height * 18 / 25000;
     int max = cc.height * cc.height * 24 / 10000;
@@ -320,7 +320,7 @@ void modify_weight(character& cc, int delta, bool force)
 
 
 
-void modify_height(character& cc, int delta)
+void modify_height(Character& cc, int delta)
 {
     cc.height = cc.height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
     if (cc.height < 1)
@@ -342,7 +342,7 @@ void modify_height(character& cc, int delta)
 
 
 
-void refresh_speed(character& cc)
+void refresh_speed(Character& cc)
 {
     cc.current_speed = sdata(18, cc.index)
         * clamp((100 - cc.speed_correction_value), 0, 100) / 100;
@@ -418,8 +418,8 @@ void refresh_speed(character& cc)
     {
         cdata.player().speed_percentage_in_next_turn -= 10;
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map
-        || mdata_map_type == mdata_t::map_type_t::field)
+    if (mdata_map_type == mdata_t::MapType::world_map
+        || mdata_map_type == mdata_t::MapType::field)
     {
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
@@ -437,7 +437,7 @@ void refresh_speed(character& cc)
 
 
 
-void refresh_speed_correction_value(character& cc)
+void refresh_speed_correction_value(Character& cc)
 {
     int number_of_body_parts{};
     for (const auto& body_part : cc.body_parts)
@@ -459,14 +459,14 @@ void refresh_speed_correction_value(character& cc)
 
 
 
-void gain_new_body_part(character& cc)
+void gain_new_body_part(Character& cc)
 {
     int slot = -1;
-    for (int i = 0; i < cc.body_parts.size(); ++i)
+    for (size_t i = 0; i < cc.body_parts.size(); ++i)
     {
         if (cc.body_parts[i] == 0)
         {
-            slot = i;
+            slot = static_cast<int>(i);
             break;
         }
     }
@@ -492,7 +492,7 @@ void gain_new_body_part(character& cc)
 
 
 
-void gain_level(character& cc)
+void gain_level(Character& cc)
 {
     cc.experience -= cc.required_experience;
     if (cc.experience < 0)
@@ -567,7 +567,7 @@ void gain_level(character& cc)
 
 
 
-void grow_primary_skills(character& cc)
+void grow_primary_skills(Character& cc)
 {
     for (int i = 10; i < 20; ++i)
     {
@@ -589,7 +589,7 @@ void grow_primary_skills(character& cc)
 
 
 
-void update_required_experience(character& cc)
+void update_required_experience(Character& cc)
 {
     cc.required_experience = clamp(cc.level, 1, 200)
             * (clamp(cc.level, 1, 200) + 1) * (clamp(cc.level, 1, 200) + 2)
@@ -603,7 +603,7 @@ void update_required_experience(character& cc)
 
 
 
-void earn_gold(character& cc, int delta)
+void earn_gold(Character& cc, int delta)
 {
     constexpr auto max = std::numeric_limits<decltype(cc.gold)>::max();
 
@@ -619,7 +619,7 @@ void earn_gold(character& cc, int delta)
 
 
 
-void earn_platinum(character& cc, int delta)
+void earn_platinum(Character& cc, int delta)
 {
     constexpr auto max = std::numeric_limits<decltype(cc.platinum_coin)>::max();
 

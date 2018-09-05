@@ -7,14 +7,14 @@ namespace elona
 namespace ui
 {
 
-void ui_menu_composite_skills::add_menus()
+void UIMenuCompositeSkills::add_menus()
 {
     push_back(
-        std::make_unique<ui_menu_spells>(),
+        std::make_unique<UIMenuSpells>(),
         13,
         "core.locale.ui.menu.spell.spell");
     push_back(
-        std::make_unique<ui_menu_skills>(),
+        std::make_unique<UIMenuSkills>(),
         14,
         "core.locale.ui.menu.spell.skill");
 }

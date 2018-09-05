@@ -3,29 +3,29 @@ namespace elona
 namespace snail
 {
 
-touch_input& touch_input::instance()
+TouchInput& TouchInput::instance()
 {
-    static touch_input the_instance;
+    static TouchInput the_instance;
     return the_instance;
 }
 
-void touch_input::initialize(const fs::path& asset_path)
+void TouchInput::initialize(const fs::path& asset_path)
 {
 }
 
-void touch_input::initialize_quick_actions()
+void TouchInput::initialize_quick_actions()
 {
 }
 
-void touch_input::draw_quick_actions()
+void TouchInput::draw_quick_actions()
 {
 }
 
-void touch_input::draw_quick_action(const quick_action&)
+void TouchInput::draw_quick_action(const QuickAction&)
 {
 }
 
-void touch_input::on_touch_event(::SDL_TouchFingerEvent)
+void TouchInput::on_touch_event(::SDL_TouchFingerEvent)
 {
 }
 

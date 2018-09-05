@@ -10,8 +10,8 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
-struct mod_info;
+class LuaEnv;
+struct ModInfo;
 
 /***
  * Keeps track of built-in and mod-provided API bindings. APIs are
@@ -20,14 +20,14 @@ struct mod_info;
  * bound to each mod so that "Elona.require" can be called to retrieve
  * a reference to an API table loaded in this manager.
  */
-class api_manager
+class APIManager
 {
 public:
     /***
      * Exposes the root API table ("Elona") from the isolated Lua API
      * environment by table reference.
      */
-    static sol::table bind(lua_env&);
+    static sol::table bind(LuaEnv&);
 
     /***
      * Exposes the root API table ("Elona") from the isolated Lua API
@@ -35,20 +35,20 @@ public:
      *
      * For testing use only.
      */
-    static void set_on(lua_env&);
+    static void set_on(LuaEnv&);
 
 public:
-    explicit api_manager(lua_env*);
+    explicit APIManager(LuaEnv*);
 
     /***
      * Loads Lua library files in data/lua for API implementations
      * that are handled in Lua instead of C++.
      *
-     * This is done by lua_env on construction. It must be done before
+     * This is done by LuaEnv on construction. It must be done before
      * any mods can be loaded, because they all implicitly depend on
      * these libraries.
      */
-    void load_lua_support_libraries(lua_env&);
+    void load_lua_support_libraries(LuaEnv&);
 
     /***
      * Makes all API tables read-only.
@@ -101,7 +101,7 @@ private:
      */
     sol::environment api_env;
 
-    lua_env* lua;
+    LuaEnv* lua;
 };
 
 } // namespace lua

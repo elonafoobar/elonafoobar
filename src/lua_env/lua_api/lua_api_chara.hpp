@@ -9,24 +9,24 @@ namespace lua
 
 namespace Chara
 {
-bool is_alive(lua_character_handle);
+bool is_alive(LuaCharacterHandle);
 
-bool is_player(lua_character_handle);
+bool is_player(LuaCharacterHandle);
 
-bool is_ally(lua_character_handle);
+bool is_ally(LuaCharacterHandle);
 
-bool flag(lua_character_handle, const enum_string&);
+bool flag(LuaCharacterHandle, const EnumString&);
 
 int count();
 
-sol::optional<lua_character_handle> player();
+sol::optional<LuaCharacterHandle> player();
 
-sol::optional<lua_character_handle> create(const position_t&, int);
-sol::optional<lua_character_handle> create_xy(int, int, int);
-sol::optional<lua_character_handle> create_from_id(
-    const position_t&,
+sol::optional<LuaCharacterHandle> create(const Position&, int);
+sol::optional<LuaCharacterHandle> create_xy(int, int, int);
+sol::optional<LuaCharacterHandle> create_from_id(
+    const Position&,
     const std::string&);
-sol::optional<lua_character_handle>
+sol::optional<LuaCharacterHandle>
 create_from_id_xy(int, int, const std::string&);
 
 

@@ -134,11 +134,11 @@ namespace elona
 {
 
 
-struct foobar_data_t
+struct FoobarData
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
-    version_t version;
+    Version version;
     bool is_autodig_enabled{};
 
 
@@ -152,7 +152,7 @@ struct foobar_data_t
 };
 
 
-extern foobar_data_t foobar_data;
+extern FoobarData foobar_data;
 
 
 // TODO: Make gdata class and make this function method.

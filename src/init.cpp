@@ -58,7 +58,7 @@ namespace
 void main_loop()
 {
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 
     while (true)
     {
@@ -79,7 +79,7 @@ void load_musiclist()
         return;
 
     size_t i = 0;
-    for (auto&& line : fileutil::read_by_line{filepath})
+    for (auto&& line : fileutil::read_by_line(filepath))
     {
         if (line.empty())
             continue;
@@ -149,10 +149,10 @@ void load_character_sprite()
 
     gmode(0);
     gsel(5);
-    for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::user() / u8"graphic",
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{u8R"(chara_.*\.bmp)"}})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::user() / u8"graphic",
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(chara_.*\.bmp)"}))
     {
         const auto file = filesystem::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
@@ -172,7 +172,7 @@ void start_elona()
     gdata_hour = 16;
     gdata_minute = 10;
     quickpage = 1;
-    if (config::instance().noadebug)
+    if (Config::instance().noadebug)
     {
         mode = 4;
         initialize_game();
@@ -180,8 +180,8 @@ void start_elona()
         return;
     }
     else if (
-        config::instance().startup_script != ""s
-        && !config::instance().get<bool>(
+        Config::instance().startup_script != ""s
+        && !Config::instance().get<bool>(
                "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
@@ -285,23 +285,23 @@ int cat_get_field_with_index(lua_State* L)
 
 
 const luaL_Reg cdata_functions[] = {
-    {u8"pv", &cat_get_field<character, int, &character::pv>},
-    {u8"fear", &cat_get_field<character, int, &character::fear>},
-    {u8"confused", &cat_get_field<character, int, &character::confused>},
-    {u8"dv", &cat_get_field<character, int, &character::dv>},
-    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
+    {u8"pv", &cat_get_field<Character, int, &Character::pv>},
+    {u8"fear", &cat_get_field<Character, int, &Character::fear>},
+    {u8"confused", &cat_get_field<Character, int, &Character::confused>},
+    {u8"dv", &cat_get_field<Character, int, &Character::dv>},
+    {u8"hit_bonus", &cat_get_field<Character, int, &Character::hit_bonus>},
     {u8"growth_buffs",
-     &cat_get_field_with_index<character, int, &character::growth_buffs>},
+     &cat_get_field_with_index<Character, int, &Character::growth_buffs>},
     {nullptr, nullptr},
 };
 
 
 const luaL_Reg sdata_functions[] = {
-    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
+    {u8"current_level", &cat_get_field<Ability, int, &Ability::current_level>},
     {u8"original_level",
-     &cat_get_field<ability, int, &ability::original_level>},
-    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
-    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
+     &cat_get_field<Ability, int, &Ability::original_level>},
+    {u8"experience", &cat_get_field<Ability, int, &Ability::experience>},
+    {u8"potential", &cat_get_field<Ability, int, &Ability::potential>},
     {nullptr, nullptr},
 };
 
@@ -327,7 +327,7 @@ int cat_cdata(lua_State* L)
 {
     int cc = luaL_checknumber(L, 1);
 
-    cat::userdata<character>::push_new(L, &cdata[cc]);
+    cat::userdata<Character>::push_new(L, &cdata[cc]);
     luaL_setmetatable(L, "elona__cdata");
 
     return 1;
@@ -339,7 +339,7 @@ int cat_sdata(lua_State* L)
     int id = luaL_checknumber(L, 1);
     int cc = luaL_checknumber(L, 2);
 
-    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
+    cat::userdata<Ability>::push_new(L, &sdata.get(id, cc));
     luaL_setmetatable(L, "elona__sdata");
 
     return 1;
@@ -375,10 +375,10 @@ void initialize_cat_db()
     the_trait_db.initialize();
 }
 
-static std::vector<lua::registry_manager::location>
+static std::vector<lua::RegistryManager::Location>
 collect_mod_datafile_locations()
 {
-    std::vector<lua::registry_manager::location> locations;
+    std::vector<lua::RegistryManager::Location> locations;
 
     for (const auto& pair : lua::lua->get_mod_manager())
     {
@@ -411,13 +411,13 @@ void initialize_lion_db()
 
     lua::lua->get_registry_manager().register_native_datatype(
         "chara_chip", [](auto table) {
-            chara_chip_db db;
+            CharaChipDB db;
             db.initialize(table);
             initialize_chara_chips(db);
         });
     lua::lua->get_registry_manager().register_native_datatype(
         "item_chip", [](auto table) {
-            item_chip_db db;
+            ItemChipDB db;
             db.initialize(table);
             initialize_item_chips(db);
         });
@@ -433,12 +433,12 @@ static void _initialize_jkey()
 
 void initialize_config(const fs::path& config_file)
 {
-    windoww = snail::application::instance().width();
-    windowh = snail::application::instance().height();
+    windoww = snail::Application::instance().width();
+    windowh = snail::Application::instance().height();
 
     if (defines::is_android)
     {
-        snail::touch_input::instance().initialize(filesystem::dir::graphic());
+        snail::TouchInput::instance().initialize(filesystem::dir::graphic());
     }
 
     time_warn = timeGetTime() / 1000;
@@ -469,7 +469,7 @@ void initialize_i18n()
     i18n::load(language);
 
     // Load built-in translations in data/locale/(jp|en).
-    std::vector<i18n::store::location> locations{
+    std::vector<i18n::Store::Location> locations{
         {filesystem::dir::locale() / language, "core"}};
 
     // Load translations for each mod.
@@ -681,7 +681,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(file_operation_t::temp_dir_delete);
+    ctrl_file(FileOperation::temp_dir_delete);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;
@@ -731,17 +731,17 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (config::instance().music == "direct_music" && DMINIT() == 0)
+    if (Config::instance().music == "direct_music" && DMINIT() == 0)
     {
-        config::instance().music = "mci";
+        Config::instance().music = "mci";
     }
     DSINIT();
-    if (config::instance().joypad == 1)
+    if (Config::instance().joypad == 1)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            config::instance().joypad = 0;
+            Config::instance().joypad = 0;
         }
     }
     initialize_sound_file();
@@ -837,19 +837,19 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (config::instance().autonumlock)
+    if (Config::instance().autonumlock)
     {
-        snail::input::instance().disable_numlock();
+        snail::Input::instance().disable_numlock();
     }
 }
 
 static void initialize_screen()
 {
-    std::string display_mode = config::instance().display_mode;
+    std::string display_mode = Config::instance().display_mode;
 
     if (defines::is_android)
     {
-        display_mode = config::instance().get<std::string>(
+        display_mode = Config::instance().get<std::string>(
             "core.config.screen.window_mode");
     }
 
@@ -871,10 +871,10 @@ int run()
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
 
-    lua::lua = std::make_unique<lua::lua_env>();
+    lua::lua = std::make_unique<lua::LuaEnv>();
     initialize_cat_db();
 
-    config::instance().init(config_def_file);
+    Config::instance().init(config_def_file);
     initialize_config_preload(config_file);
     initialize_screen();
 
@@ -888,11 +888,11 @@ int run()
     // Load translations from scanned mods.
     initialize_i18n();
 
-    if (config::instance().font_filename.empty())
+    if (Config::instance().font_filename.empty())
     {
         // If no font is specified in `config.hcl`, use a pre-defined font
         // depending on each language.
-        config::instance().font_filename =
+        Config::instance().font_filename =
             i18n::s.get("core.locale.meta.default_font");
     }
 
@@ -901,7 +901,7 @@ int run()
 
     initialize_elona();
 
-    config::instance().write();
+    Config::instance().write();
 
     start_elona();
 
@@ -927,12 +927,12 @@ void initialize_debug_globals()
     gdata_previous_map = -1;
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    gdata_current_map = mdata_t::map_id_t::north_tyris;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     gdata_current_dungeon_level = 0;
     gdata_entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    gdata_current_map = mdata_t::map_id_t::vernis;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::vernis);
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 7;
     mapstartx = 10;
@@ -985,11 +985,11 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 284, -1, -1, 0);
     inv[ci].set_number(20);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 127, -1, -1, 0);
     inv[ci].set_number(20);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 617, -1, -1, 0);
     inv[ci].set_number(20);
@@ -1033,18 +1033,18 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 516, -1, -1, 0);
     inv[ci].set_number(5);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 262, -1, -1, 0);
     inv[ci].set_number(5);
     flt();
     itemcreate(0, 632, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 632, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 204, -1, -1, 0);
     inv[ci].subname = 330;
@@ -1052,7 +1052,7 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 636, -1, -1, 0);
     inv[ci].set_number(3);
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 342, -1, -1, 0);
     inv[ci].count = 100;
@@ -1135,11 +1135,11 @@ void initialize_noa_items()
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
     inv[ci].set_number(10);
@@ -1226,7 +1226,7 @@ void initialize_world()
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
-    gdata_current_map = mdata_t::map_id_t::your_home;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 4;
     gdata_version = 1220;
@@ -1250,12 +1250,12 @@ void initialize_game()
 {
     bool script_loaded = false;
     bool will_load_script = false;
-    autopick::instance().load(playerid);
+    Autopick::instance().load(playerid);
 
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
-    if (config::instance().net)
+    if (Config::instance().net)
     {
         initialize_server_info();
     }
@@ -1294,17 +1294,17 @@ void initialize_game()
     {
         load_save_data();
 
-        if (config::instance().get<bool>(
+        if (Config::instance().get<bool>(
                 "core.config.foobar.run_script_in_save"))
         {
             will_load_script = true;
         }
     }
 
-    if (will_load_script && config::instance().startup_script != ""s)
+    if (will_load_script && Config::instance().startup_script != ""s)
     {
         lua::lua->get_mod_manager().run_startup_script(
-            config::instance().startup_script);
+            Config::instance().startup_script);
         script_loaded = true;
     }
 
@@ -1314,26 +1314,26 @@ void initialize_game()
     if (script_loaded)
     {
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::script_loaded>();
+            .run_callbacks<lua::EventKind::script_loaded>();
     }
 }
 
 void main_title_loop()
 {
-    main_menu_result_t result = main_menu_wrapper();
+    MainMenuResult result = main_menu_wrapper();
     bool finished = false;
     while (!finished)
     {
         switch (result)
         {
-        case main_menu_result_t::main_title_menu:
+        case MainMenuResult::main_title_menu:
             result = main_menu_wrapper();
             break;
-        case main_menu_result_t::initialize_game:
+        case MainMenuResult::initialize_game:
             initialize_game();
             finished = true;
             break;
-        case main_menu_result_t::finish_elona:
+        case MainMenuResult::finish_elona:
             finish_elona();
             finished = true;
             break;
@@ -1341,7 +1341,7 @@ void main_title_loop()
         }
     }
 
-    if (result == main_menu_result_t::initialize_game)
+    if (result == MainMenuResult::initialize_game)
     {
         main_loop();
     }

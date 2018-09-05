@@ -13,7 +13,7 @@ namespace
 void render(
     ::SDL_Texture* texture,
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -25,15 +25,15 @@ void render(
 {
     switch (blend_mode)
     {
-    case blend_mode_t::none:
+    case BlendMode::none:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_NONE));
         break;
-    case blend_mode_t::blend:
+    case BlendMode::blend:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_BLEND));
         break;
-    case blend_mode_t::add:
+    case BlendMode::add:
         detail::enforce_sdl(
             ::SDL_SetTextureBlendMode(texture, ::SDL_BLENDMODE_ADD));
         break;
@@ -57,9 +57,9 @@ namespace snail
 
 
 
-basic_image::basic_image(
+BasicImage::BasicImage(
     const fs::path& filepath,
-    const optional<color>& keycolor)
+    const optional<Color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.string().c_str()));
 
@@ -74,7 +74,7 @@ basic_image::basic_image(
 
     _ptr.reset(
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(
-            application::instance().get_renderer().ptr(), surface)),
+            Application::instance().get_renderer().ptr(), surface)),
         ::SDL_DestroyTexture);
     _width = surface->w;
     _height = surface->h;
@@ -84,16 +84,16 @@ basic_image::basic_image(
 
 
 
-basic_image::basic_image(::SDL_Texture* ptr)
+BasicImage::BasicImage(::SDL_Texture* ptr)
 {
     _ptr.reset(ptr, ::SDL_DestroyTexture);
 }
 
 
 
-void basic_image::_render(
+void BasicImage::_render(
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,
@@ -119,8 +119,8 @@ void basic_image::_render(
 
 
 
-frame_image::frame_image(
-    basic_image& source,
+FrameImage::FrameImage(
+    BasicImage& source,
     int offset_x,
     int offset_y,
     int width,
@@ -135,9 +135,9 @@ frame_image::frame_image(
 
 
 
-void frame_image::_render(
+void FrameImage::_render(
     ::SDL_Renderer* renderer,
-    blend_mode_t blend_mode,
+    BlendMode blend_mode,
     int src_x,
     int src_y,
     int src_width,

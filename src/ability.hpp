@@ -12,7 +12,7 @@ namespace elona
 
 
 
-struct ability_data
+struct AbilityData
 {
     int id;
     int related_basic_attribute;
@@ -23,17 +23,17 @@ struct ability_data
 };
 
 
-class ability_db;
+class AbilityDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<ability_db>
+struct CatDBTraits<AbilityDB>
 {
-    using id_type = int;
-    using data_type = ability_data;
+    using IdType = int;
+    using DataType = AbilityData;
     static constexpr const char* filename = u8"ability.lua";
     static constexpr const char* table_name = u8"ability";
 };
@@ -42,20 +42,20 @@ struct cat_db_traits<ability_db>
 
 
 
-class ability_db : public cat::cat_db<ability_db>
+class AbilityDB : public cat::CatDB<AbilityDB>
 {
 public:
-    ability_db() = default;
+    AbilityDB() = default;
 
     void define(lua_State* L);
 };
 
 
-extern ability_db the_ability_db;
+extern AbilityDB the_ability_db;
 
 
 
-struct ability
+struct Ability
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
@@ -77,10 +77,10 @@ struct ability
 
 
 
-class skill_data
+class SkillData
 {
 public:
-    skill_data();
+    SkillData();
 
 
     int& operator()(int id, int cc)
@@ -89,7 +89,7 @@ public:
     }
 
 
-    ability& get(int id, int cc)
+    Ability& get(int id, int cc)
     {
         assert(id < 600);
         return storage[cc][id];
@@ -102,28 +102,28 @@ public:
 
 
 private:
-    std::vector<std::vector<ability>> storage;
+    std::vector<std::vector<Ability>> storage;
 };
 
 
-extern skill_data sdata;
+extern SkillData sdata;
 
 
-struct character;
+struct Character;
 
-void chara_init_skill(character& cc, int id, int initial_level);
-void chara_init_common_skills(character& cc);
+void chara_init_skill(Character& cc, int id, int initial_level);
+void chara_init_common_skills(Character& cc);
 
 void chara_gain_skill(
-    character& cc,
+    Character& cc,
     int id,
     int initial_level = 0,
     int stock = 0);
 void gain_special_action();
 
-void chara_gain_fixed_skill_exp(character& cc, int id, int experience);
+void chara_gain_fixed_skill_exp(Character& cc, int id, int experience);
 void chara_gain_skill_exp(
-    character& cc,
+    Character& cc,
     int id,
     int experience,
     int experience_divisor_of_related_basic_attribute = 0,

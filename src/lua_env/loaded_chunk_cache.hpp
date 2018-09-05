@@ -16,10 +16,10 @@ namespace lua
  * This is needed since package.loaded is normally global to the entire Lua
  * state.
  */
-class loaded_chunk_cache
+class LoadedChunkCache
 {
 public:
-    loaded_chunk_cache(const fs::path& base_path_)
+    LoadedChunkCache(const fs::path& base_path_)
         : base_path(base_path_)
     {
         assert(fs::exists(base_path));

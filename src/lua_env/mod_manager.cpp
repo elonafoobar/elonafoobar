@@ -29,15 +29,15 @@ bool is_alnum_only(const std::string& str)
 
 } // namespace
 
-mod_manager::mod_manager(lua_env* lua)
+ModManager::ModManager(LuaEnv* lua)
 {
     lua_ = lua;
 }
 
 
-void mod_manager::load_mods(const fs::path& mod_dir)
+void ModManager::load_mods(const fs::path& mod_dir)
 {
-    if (stage != mod_loading_stage_t::not_started)
+    if (stage != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -47,11 +47,11 @@ void mod_manager::load_mods(const fs::path& mod_dir)
     load_scanned_mods();
 }
 
-void mod_manager::load_mods(
+void ModManager::load_mods(
     const fs::path& mod_dir,
     const fs::path& additional_mod_path)
 {
-    if (stage != mod_loading_stage_t::not_started)
+    if (stage != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
@@ -70,7 +70,7 @@ void report_error(sol::error err)
 }
 
 
-void mod_manager::clear_map_local_data()
+void ModManager::clear_map_local_data()
 {
     for (auto&& pair : mods)
     {
@@ -91,7 +91,7 @@ end
 }
 
 
-void mod_manager::load_mod(mod_info& mod)
+void ModManager::load_mod(ModInfo& mod)
 {
     setup_and_lock_mod_globals(mod);
 
@@ -124,7 +124,7 @@ void mod_manager::load_mod(mod_info& mod)
     }
 }
 
-void mod_manager::scan_mod(const fs::path& mod_dir)
+void ModManager::scan_mod(const fs::path& mod_dir)
 {
     const std::string mod_name = mod_dir.filename().string();
     ELONA_LOG("Found mod " << mod_name);
@@ -140,15 +140,15 @@ void mod_manager::scan_mod(const fs::path& mod_dir)
         throw std::runtime_error("\"script\" is a reserved mod name.");
     }
 
-    std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(mod_name, mod_dir, lua_->get_state());
+    std::unique_ptr<ModInfo> info =
+        std::make_unique<ModInfo>(mod_name, mod_dir, lua_->get_state());
     this->mods.emplace(mod_name, std::move(info));
 }
 
-void mod_manager::scan_all_mods(const fs::path& mods_dir)
+void ModManager::scan_all_mods(const fs::path& mods_dir)
 {
-    if (stage != mod_loading_stage_t::not_started
-        && stage != mod_loading_stage_t::scan_finished)
+    if (stage != ModLoadingStage::not_started
+        && stage != ModLoadingStage::scan_finished)
     {
         throw std::runtime_error("Mods have already been scanned!");
     }
@@ -156,20 +156,20 @@ void mod_manager::scan_all_mods(const fs::path& mods_dir)
     const std::string init_script = "init.lua";
 
     // TODO: [dependency management] order mods and always load core first.
-    for (const auto& entry :
-         filesystem::dir_entries{mods_dir, filesystem::dir_entries::type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             mods_dir, filesystem::DirEntryRange::Type::dir))
     {
         if (fs::exists(entry.path() / init_script))
         {
             scan_mod(entry.path());
         }
     }
-    stage = mod_loading_stage_t::scan_finished;
+    stage = ModLoadingStage::scan_finished;
 }
 
-void mod_manager::load_lua_support_libraries()
+void ModManager::load_lua_support_libraries()
 {
-    if (stage == mod_loading_stage_t::not_started)
+    if (stage == ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods haven't been scanned yet!");
     }
@@ -179,12 +179,12 @@ void mod_manager::load_lua_support_libraries()
     // under data/lua.
     lua_->get_api_manager().load_lua_support_libraries(*lua_);
 
-    stage = mod_loading_stage_t::lua_libraries_loaded;
+    stage = ModLoadingStage::lua_libraries_loaded;
 }
 
-void mod_manager::load_scanned_mods()
+void ModManager::load_scanned_mods()
 {
-    if (stage != mod_loading_stage_t::lua_libraries_loaded)
+    if (stage != ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -203,15 +203,15 @@ void mod_manager::load_scanned_mods()
         ELONA_LOG("Loaded mod " << mod->name);
     }
 
-    lua_->get_event_manager().run_callbacks<event_kind_t::all_mods_loaded>();
+    lua_->get_event_manager().run_callbacks<EventKind::all_mods_loaded>();
     lua_->get_export_manager().register_all_exports();
 
-    stage = mod_loading_stage_t::all_mods_loaded;
+    stage = ModLoadingStage::all_mods_loaded;
 }
 
-void mod_manager::run_startup_script(const std::string& name)
+void ModManager::run_startup_script(const std::string& name)
 {
-    if (stage < mod_loading_stage_t::lua_libraries_loaded)
+    if (stage < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -220,8 +220,8 @@ void mod_manager::run_startup_script(const std::string& name)
         throw std::runtime_error("Startup script was already run.");
     }
 
-    std::unique_ptr<mod_info> script_mod =
-        std::make_unique<mod_info>("script", none, lua_->get_state());
+    std::unique_ptr<ModInfo> script_mod =
+        std::make_unique<ModInfo>("script", none, lua_->get_state());
     setup_and_lock_mod_globals(*script_mod);
 
     lua_->get_state()->safe_script_file(
@@ -237,7 +237,7 @@ void mod_manager::run_startup_script(const std::string& name)
     this->mods.emplace("script", std::move(script_mod));
 }
 
-void mod_manager::clear_mod_stores()
+void ModManager::clear_mod_stores()
 {
     for (auto&& pair : mods)
     {
@@ -287,7 +287,7 @@ int deny(
     return luaL_error(L, ss.str().c_str());
 }
 
-void mod_manager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
+void ModManager::bind_store(sol::state& lua, ModInfo& mod, sol::table& table)
 {
     sol::table Store = lua.create_table();
     sol::table metatable = lua.create_table();
@@ -304,7 +304,7 @@ void mod_manager::bind_store(sol::state& lua, mod_info& mod, sol::table& table)
     table["Store"] = Store;
 }
 
-void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
+void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 {
     // Create the globals "Elona" and "Store" for this mod's
     // environment.
@@ -331,7 +331,7 @@ void mod_manager::setup_mod_globals(mod_info& mod, sol::table& table)
     }
 }
 
-void mod_manager::setup_and_lock_mod_globals(mod_info& mod)
+void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 {
     sol::table env_metatable = lua_->get_state()->create_table_with();
 
@@ -348,12 +348,12 @@ void mod_manager::setup_and_lock_mod_globals(mod_info& mod)
 
 
 // For testing use
-void mod_manager::load_mod_from_script(
+void ModManager::load_mod_from_script(
     const std::string& name,
     const std::string& script,
     bool readonly)
 {
-    if (stage < mod_loading_stage_t::lua_libraries_loaded)
+    if (stage < ModLoadingStage::lua_libraries_loaded)
     {
         throw std::runtime_error("Lua libraries weren't loaded!");
     }
@@ -364,8 +364,8 @@ void mod_manager::load_mod_from_script(
                 "Mod "s + name + " was already initialized."s);
     }
 
-    std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(name, none, lua_->get_state());
+    std::unique_ptr<ModInfo> info =
+        std::make_unique<ModInfo>(name, none, lua_->get_state());
 
     if (readonly)
     {
@@ -401,7 +401,7 @@ void mod_manager::load_mod_from_script(
     this->mods[name] = std::move(info);
 }
 
-void mod_manager::run_in_mod(const std::string& name, const std::string& script)
+void ModManager::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = mods.find(name);
     if (val == mods.end())

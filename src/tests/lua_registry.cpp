@@ -10,7 +10,7 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Registry]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_THROWS(lua.get_registry_manager().load_mod_data(
@@ -21,7 +21,7 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Registry]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().load_mod_data(
@@ -49,7 +49,7 @@ TEST_CASE("test loading datatype originating from other mod", "[Lua: Registry]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_registry_manager().load_mod_data(
@@ -80,7 +80,7 @@ TEST_CASE(
     "test verification that API tables only have string keys",
     "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     REQUIRE_THROWS(lua.get_mod_manager().load_mods(
         filesystem::dir::mods(),
         {filesystem::dir::exe() / u8"tests/data/mods/test_export_keys"}));

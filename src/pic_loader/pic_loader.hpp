@@ -41,18 +41,18 @@ namespace elona
  * - 10-19: this class
  * - 20+: PCC sprites (used to be 10+). Texture id is chara.index + 20
  */
-class pic_loader : public lib::noncopyable
+class PicLoader : public lib::noncopyable
 {
 public:
-    enum class page_type
+    enum class PageType
     {
         character,
         item
     };
 
-    struct skyline
+    struct Skyline
     {
-        skyline(int x, int y, int width)
+        Skyline(int x, int y, int width)
             : x(x)
             , y(y)
             , width(width)
@@ -84,10 +84,10 @@ public:
      * Represents a single buffer allocated by a call to buffer().
      * Holds information about available space for packing sprites.
      */
-    struct buffer_info
+    struct BufferInfo
     {
-        buffer_info(
-            pic_loader::page_type type,
+        BufferInfo(
+            PicLoader::PageType type,
             int buffer_id,
             int width,
             int height)
@@ -99,7 +99,7 @@ public:
             skylines.emplace_back(0, 0, width);
         }
 
-        optional<extent> fits(int w, int h, size_t index) const
+        optional<Extent> fits(int w, int h, size_t index) const
         {
             int remain = w;
             int x = skylines.at(index).x;
@@ -107,7 +107,7 @@ public:
 
             for (size_t i = index; i < skylines.size(); i++)
             {
-                const skyline& skyline = skylines[i];
+                const Skyline& skyline = skylines[i];
                 y = std::max(y, skyline.y);
 
                 if (x >= width || y >= height)
@@ -117,7 +117,7 @@ public:
 
                 if (skyline.width >= remain)
                 {
-                    return extent{x, y, w, h};
+                    return Extent{x, y, w, h};
                 }
 
                 assert(remain > skyline.width);
@@ -127,24 +127,24 @@ public:
             return none;
         }
 
-        void insert_extent(size_t index, const extent& extent)
+        void insert_extent(size_t index, const Extent& extent)
         {
             split(index, extent);
             merge_all();
         }
 
-        optional<std::pair<size_t, extent>> find(int w, int h)
+        optional<std::pair<size_t, Extent>> find(int w, int h)
         {
             int bottom = INT_MAX;
             int width = INT_MAX;
             optional<size_t> index = none;
-            extent ext{0, 0, 0, 0};
+            Extent ext{0, 0, 0, 0};
 
             for (size_t i = 0; i < skylines.size(); i++)
             {
                 if (auto e = fits(w, h, i))
                 {
-                    skyline& skyline = skylines[i];
+                    Skyline& skyline = skylines[i];
                     if (e->bottom() < bottom
                         || (e->bottom() == bottom && skyline.width < width))
                     {
@@ -171,8 +171,8 @@ public:
         {
             for (size_t i = 1; i < skylines.size(); i++)
             {
-                skyline& prev = skylines[i - 1];
-                skyline& now = skylines[i];
+                Skyline& prev = skylines[i - 1];
+                Skyline& now = skylines[i];
 
                 if (prev.y == now.y)
                 {
@@ -183,9 +183,9 @@ public:
             }
         }
 
-        void split(size_t index, const extent& extent)
+        void split(size_t index, const Extent& extent)
         {
-            skyline sl{extent.left(), extent.bottom() + 1, extent.width};
+            Skyline sl{extent.left(), extent.bottom() + 1, extent.width};
             assert(sl.right() <= width);
             assert(sl.top() <= height);
 
@@ -193,8 +193,8 @@ public:
 
             for (size_t i = index + 1; i < skylines.size(); i++)
             {
-                skyline& prev = skylines[i - 1];
-                skyline& now = skylines[i];
+                Skyline& prev = skylines[i - 1];
+                Skyline& now = skylines[i];
 
                 assert(prev.left() <= now.left());
 
@@ -220,18 +220,18 @@ public:
         }
 
     public:
-        pic_loader::page_type type;
+        PicLoader::PageType type;
         int buffer_id;
         int width;
         int height;
 
     private:
-        std::vector<skyline> skylines;
+        std::vector<Skyline> skylines;
     };
 
 
-    using id_type = shared_id;
-    using map_type = std::unordered_map<id_type, extent>;
+    using IdType = SharedId;
+    using MapType = std::unordered_map<IdType, Extent>;
 
     void clear_storage_and_buffers();
 
@@ -239,7 +239,7 @@ public:
      * Loads a single sprite into a buffer of the provided type into
      * which it will fit. May allocate a new buffer if none are found.
      */
-    void load(const fs::path&, const id_type&, page_type);
+    void load(const fs::path&, const IdType&, PageType);
 
     /***
      * Loads a map of rectangular extents indexed by an ID
@@ -253,9 +253,9 @@ public:
      * to have been split or merged by previous texture region
      * insertions.
      */
-    void add_predefined_extents(const fs::path&, const map_type&, page_type);
+    void add_predefined_extents(const fs::path&, const MapType&, PageType);
 
-    optional_ref<extent> operator[](const id_type& id) const
+    optional_ref<Extent> operator[](const IdType& id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
@@ -264,21 +264,21 @@ public:
             return itr->second;
     }
 
-    optional_ref<extent> operator[](const std::string& inner_id) const
+    optional_ref<Extent> operator[](const std::string& inner_id) const
     {
-        return (*this)[shared_id(inner_id)];
+        return (*this)[SharedId(inner_id)];
     }
 
 
 private:
-    buffer_info& add_buffer(page_type type)
+    BufferInfo& add_buffer(PageType type)
     {
         return add_buffer(type, 1024, 1024);
     }
-    buffer_info& add_buffer(page_type, int, int);
+    BufferInfo& add_buffer(PageType, int, int);
 
-    std::vector<buffer_info> buffers;
-    map_type storage;
+    std::vector<BufferInfo> buffers;
+    MapType storage;
 };
 
 

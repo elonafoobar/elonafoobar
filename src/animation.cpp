@@ -41,7 +41,7 @@ void clear_color_modulator(int window_id = -1)
 
 
 
-position_t rendering_base_position(const position_t& position)
+Position rendering_base_position(const Position& position)
 {
     return {
         (position.x - scx) * inf_tiles + inf_screenx,
@@ -51,14 +51,7 @@ position_t rendering_base_position(const position_t& position)
 
 
 
-position_t rendering_base_position(const character& cc)
-{
-    return rendering_base_position(cc.position);
-}
-
-
-
-position_t rendering_base_position_center(const position_t& position)
+Position rendering_base_position_center(const Position& position)
 {
     return {
         (position.x - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
@@ -68,16 +61,9 @@ position_t rendering_base_position_center(const position_t& position)
 
 
 
-position_t rendering_base_position_center(const character& cc)
+std::vector<Position> breath_pos()
 {
-    return rendering_base_position_center(cc.position);
-}
-
-
-
-std::vector<position_t> breath_pos()
-{
-    std::vector<position_t> ret(maxbreath);
+    std::vector<Position> ret(maxbreath);
     for (int i = 0; i < maxbreath; ++i)
     {
         ret[i] = {breathlist(0, i), breathlist(1, i)};
@@ -89,7 +75,7 @@ std::vector<position_t> breath_pos()
 
 template <typename F>
 void do_animation(
-    const position_t& center,
+    const Position& center,
     const std::string& image_key,
     int duration,
     F draw)
@@ -112,7 +98,7 @@ void do_animation(
         gmode(2);
         draw(image_key, center, t);
         redraw();
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
@@ -120,7 +106,7 @@ void do_animation(
 
 template <typename F, typename G>
 void do_particle_animation(
-    const position_t& center,
+    const Position& center,
     const std::string& image_key,
     int duration,
     int max_particles,
@@ -137,7 +123,7 @@ void do_particle_animation(
     gmode(2);
     gsel(0);
 
-    std::vector<position_t> particles(max_particles);
+    std::vector<Position> particles(max_particles);
     for (int i = 0; i < max_particles; ++i)
     {
         particles[i] = create_particle(i);
@@ -154,7 +140,7 @@ void do_particle_animation(
             draw(image_key, center, t, particles[i], i);
         }
         redraw();
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
@@ -191,32 +177,32 @@ void draw_rotated(
 
 
 
-int dist(const position_t& p, int x, int y)
+int dist(const Position& p, int x, int y)
 {
     return dist(p.x, p.y, x, y);
 }
 
 
 
-int dist(int x, int y, const position_t& p)
+int dist(int x, int y, const Position& p)
 {
     return dist(x, y, p.x, p.y);
 }
 
 
 
-int dist(const position_t& p1, const position_t& p2)
+int dist(const Position& p1, const Position& p2)
 {
     return dist(p1.x, p1.y, p2.x, p2.y);
 }
 
 
 
-void abstract_animation::play()
+void AbstractAnimation::play()
 {
     if (mode == 9)
         return;
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
         return;
 
     if (updates_screen())
@@ -229,7 +215,7 @@ void abstract_animation::play()
 
 
 
-void failure_to_cast_animation::do_play()
+void FailureToCastAnimation::do_play()
 {
     if (!is_in_fov(caster_pos))
         return;
@@ -252,7 +238,7 @@ void failure_to_cast_animation::do_play()
 
 
 
-void bright_aura_animation::do_play()
+void BrightAuraAnimation::do_play()
 {
     constexpr auto max_particles = 15;
 
@@ -262,13 +248,13 @@ void bright_aura_animation::do_play()
     // Load image and play sound.
     switch (type)
     {
-    case type_t::debuff:
+    case Type::debuff:
         prepare_item_image(8, 0);
         snd_at(38, target_pos);
         break;
-    case type_t::offering: prepare_item_image(9, 0); break;
-    case type_t::healing:
-    case type_t::healing_rain:
+    case Type::offering: prepare_item_image(9, 0); break;
+    case Type::healing:
+    case Type::healing_rain:
         prepare_item_image(7, 0);
         snd_at(33, target_pos);
         break;
@@ -290,13 +276,13 @@ void bright_aura_animation::do_play()
     gsel(0);
 
     // Initialize particles.
-    std::vector<position_t> particles_pos(max_particles);
+    std::vector<Position> particles_pos(max_particles);
     std::vector<int> particles_n(max_particles);
     for (int i = 0; i < max_particles; ++i)
     {
         particles_pos[i] = {rnd(inf_tiles), rnd(inf_tiles)};
         particles_n[i] = -(rnd(4) + 1);
-        if (type == type_t::debuff)
+        if (type == Type::debuff)
         {
             particles_n[i] *= -1;
         }
@@ -305,13 +291,13 @@ void bright_aura_animation::do_play()
     // Do animation.
     for (int i = 0; i < 10; ++i)
     {
-        if (type == type_t::healing_rain)
+        if (type == Type::healing_rain)
         {
-            await(config::instance().animewait / 4);
+            await(Config::instance().animewait / 4);
         }
         else
         {
-            await(config::instance().animewait);
+            await(Config::instance().animewait);
         }
         pos(base_pos.x - inf_tiles / 2, base_pos.y - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
@@ -335,7 +321,7 @@ void bright_aura_animation::do_play()
 
 
 
-void breath_animation::do_play()
+void BreathAnimation::do_play()
 {
     // Play sound.
     snd_at(35, attacker_pos);
@@ -392,7 +378,7 @@ void breath_animation::do_play()
         }
         if (did_draw)
         {
-            await(config::instance().animewait);
+            await(Config::instance().animewait);
             redraw();
         }
     }
@@ -406,11 +392,11 @@ void breath_animation::do_play()
 
 
 
-void ball_animation::do_play()
+void BallAnimation::do_play()
 {
     int anicol{};
     int anisound{};
-    if (type == type_t::ball)
+    if (type == Type::ball)
     {
         anicol = eleinfo(element, 0);
         anisound = eleinfo(element, 1);
@@ -460,7 +446,7 @@ void ball_animation::do_play()
                     continue;
                 }
                 anip1 = 48 - (anip - 4) * (anip - 4) * 2;
-                if (type == type_t::ball)
+                if (type == Type::ball)
                 {
                     if (fov_los(position.x, position.y, anidx, anidy) == 0)
                     {
@@ -497,7 +483,7 @@ void ball_animation::do_play()
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 
     // Play sound.
@@ -509,7 +495,7 @@ void ball_animation::do_play()
 
 
 
-void bolt_animation::do_play()
+void BoltAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -600,7 +586,7 @@ void bolt_animation::do_play()
         }
         if (did_draw)
         {
-            await(config::instance().animewait * 1.75);
+            await(Config::instance().animewait * 1.75);
             redraw();
         }
     }
@@ -613,7 +599,7 @@ void bolt_animation::do_play()
 
 
 
-void throwing_object_animation::do_play()
+void ThrowingObjectAnimation::do_play()
 {
     if (!is_in_fov(target_pos))
         return;
@@ -654,41 +640,41 @@ void throwing_object_animation::do_play()
         pos(x, y - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
 
 
-void ranged_attack_animation::do_play()
+void RangedAttackAnimation::do_play()
 {
     if (!is_in_fov(attacker_pos))
         return;
 
     int anicol{};
     int anisound{};
-    if (type == type_t::magic_arrow)
+    if (type == Type::magic_arrow)
     {
         anicol = eleinfo(ele, 0);
         anisound = eleinfo(ele, 1);
     }
     prepare_item_image(6, anicol);
-    if (type == type_t::distant_attack)
+    if (type == Type::distant_attack)
     {
         prepare_item_image(23, 0);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::bow)
+    if (type == Type::bow)
     {
         prepare_item_image(1, anicol);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::crossbow)
+    if (type == Type::crossbow)
     {
         prepare_item_image(2, anicol);
         snd_at(29, attacker_pos);
     }
-    if (type == type_t::firearm)
+    if (type == Type::firearm)
     {
         if (fired_item_subcategory == 24021)
         {
@@ -701,12 +687,12 @@ void ranged_attack_animation::do_play()
             snd_at(30, attacker_pos);
         }
     }
-    if (type == type_t::throwing)
+    if (type == Type::throwing)
     {
         prepare_item_image(fired_item_image, fired_item_color);
         snd_at(31, attacker_pos);
     }
-    if (type == type_t::magic_arrow)
+    if (type == Type::magic_arrow)
     {
         snd_at(36, attacker_pos);
     }
@@ -743,7 +729,7 @@ void ranged_attack_animation::do_play()
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 
     if (anisound)
@@ -754,7 +740,7 @@ void ranged_attack_animation::do_play()
 
 
 
-void swarm_animation::do_play()
+void SwarmAnimation::do_play()
 {
     snd_at(2, target_pos);
 
@@ -774,7 +760,7 @@ void swarm_animation::do_play()
 
 
 
-void melee_attack_animation::do_play()
+void MeleeAttackAnimation::do_play()
 {
     int anix1;
     switch (attack_skill)
@@ -871,13 +857,13 @@ void melee_attack_animation::do_play()
         pos(anidx - 24, anidy - 48);
         gcopy(4, 0, 0, 96, 144);
         gmode(2);
-        await(config::instance().animewait);
+        await(Config::instance().animewait);
     }
 }
 
 
 
-void gene_engineering_animation::do_play()
+void GeneEngineeringAnimation::do_play()
 {
     snd_at(107, position);
     if (!is_in_fov(position))
@@ -907,14 +893,14 @@ void gene_engineering_animation::do_play()
             gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96);
         }
 
-        await(config::instance().animewait * 2.25);
+        await(Config::instance().animewait * 2.25);
         redraw();
     }
 }
 
 
 
-void miracle_animation::do_play()
+void MiracleAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -929,7 +915,7 @@ void miracle_animation::do_play()
     am = 0;
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -1037,14 +1023,14 @@ void miracle_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 2.25);
+        await(Config::instance().animewait * 2.25);
         redraw();
     }
 }
 
 
 
-void meteor_animation::do_play()
+void MeteorAnimation::do_play()
 {
     elona_vector1<int> ax;
     elona_vector1<int> ay;
@@ -1116,10 +1102,10 @@ void meteor_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 3);
+        await(Config::instance().animewait * 3);
         redraw();
     }
-    await(config::instance().animewait);
+    await(Config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -1129,7 +1115,7 @@ void meteor_animation::do_play()
 
 
 
-void ragnarok_animation::do_play()
+void RagnarokAnimation::do_play()
 {
     constexpr auto TODO = 100;
 
@@ -1194,11 +1180,11 @@ void ragnarok_animation::do_play()
         {
             break;
         }
-        await(config::instance().animewait * 3);
+        await(Config::instance().animewait * 3);
         redraw();
     }
 
-    await(config::instance().animewait);
+    await(Config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -1208,7 +1194,7 @@ void ragnarok_animation::do_play()
 
 
 
-void breaking_animation::do_play()
+void BreakingAnimation::do_play()
 {
     do_particle_animation(
         rendering_base_position_center(position),
@@ -1216,7 +1202,7 @@ void breaking_animation::do_play()
         5,
         4,
         [](auto) {
-            return position_t{rnd(24) - 12, rnd(8)};
+            return Position{rnd(24) - 12, rnd(8)};
         },
         [](const auto& key,
            const auto& center,

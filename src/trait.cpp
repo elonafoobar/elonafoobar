@@ -15,10 +15,10 @@ namespace elona
 {
 
 
-trait_db the_trait_db;
+TraitDB the_trait_db;
 
 
-void trait_db::define(lua_State* L)
+void TraitDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -30,9 +30,9 @@ void trait_db::define(lua_State* L)
 
     storage.emplace(
         std::stoi(id), // TODO
-        trait_data{
+        TraitData{
             std::stoi(id),
-            trait_data::type_t(type),
+            TraitData::Type(type),
             min,
             max,
         });
@@ -42,12 +42,12 @@ void trait_db::define(lua_State* L)
 namespace
 {
 void trait_format_other_parameterized(
-    const i18n_key& i18n_prefix,
+    const I18NKey& i18n_prefix,
     int tid,
     int min)
 {
     optional<std::string> text = none;
-    i18n_key full_prefix = i18n_prefix + ".negative.levels";
+    I18NKey full_prefix = i18n_prefix + ".negative.levels";
     int level = trait(tid);
 
     // Assumptions:
@@ -144,7 +144,7 @@ void trait_format_other_parameterized(
 }
 
 void trait_format_other_parameterless(
-    const i18n_key& i18n_prefix,
+    const I18NKey& i18n_prefix,
     int tid,
     int min,
     int max)
@@ -177,14 +177,14 @@ void trait_format_other_parameterless(
     }
 }
 
-bool trait_is_obtainable(const i18n_key& i18n_prefix, int tid)
+bool trait_is_obtainable(const I18NKey& i18n_prefix, int tid)
 {
     return trait(tid) >= 0
         && i18n::s.get_enum_property_opt(i18n_prefix + ".levels", "name", 0);
 }
 
 
-void trait_format_other(const i18n_key& i18n_prefix, int tid, int min, int max)
+void trait_format_other(const I18NKey& i18n_prefix, int tid, int min, int max)
 {
     if (auto text = i18n::s.get_optional(i18n_prefix + ".positive.gain"))
     {
@@ -207,7 +207,7 @@ void trait_format_other(const i18n_key& i18n_prefix, int tid, int min, int max)
     }
 }
 
-void trait_format_obtainable(const i18n_key& i18n_prefix, int max)
+void trait_format_obtainable(const I18NKey& i18n_prefix, int max)
 {
     traitrefn(2) = i18n::s.get(i18n_prefix + ".desc");
 
@@ -222,7 +222,7 @@ void trait_format_obtainable(const i18n_key& i18n_prefix, int max)
 
 void trait_format(int tid, int min, int max)
 {
-    i18n_key i18n_prefix = "core.locale.trait._" + std::to_string(tid);
+    I18NKey i18n_prefix = "core.locale.trait._" + std::to_string(tid);
     optional<std::string> text = none;
 
     traitrefn(0) = "";

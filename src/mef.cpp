@@ -130,7 +130,7 @@ void mef_update()
         {
             if (mdata_map_indoors_flag == 2)
             {
-                if (mdata_map_type != mdata_t::map_type_t::world_map)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
                     if (gdata_weather == 3 || gdata_weather == 4)
                     {
@@ -273,10 +273,10 @@ void mef_proc(int tc)
                 }
             }
             potionspill = 1;
-            efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
+            efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
             dbid = mef(7, ef);
             access_item_db(15);
-            if (cdata[tc].state() == character::state_t::empty)
+            if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);
             }

@@ -8,7 +8,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_alias::init()
+bool UIMenuAlias::init()
 {
     cs = 0;
     windowshadow = 1;
@@ -18,14 +18,14 @@ bool ui_menu_alias::init()
     return true;
 }
 
-void ui_menu_alias::_set_reroll_aliases()
+void UIMenuAlias::_set_reroll_aliases()
 {
     list(0, 0) = -1;
     cs_bk = -1;
     set_reupdate();
 }
 
-void ui_menu_alias::update()
+void UIMenuAlias::update()
 {
     for (int cnt = 0; cnt < 17; ++cnt)
     {
@@ -50,7 +50,7 @@ void ui_menu_alias::update()
     list(0, 0) = 0;
 }
 
-void ui_menu_alias::draw()
+void UIMenuAlias::draw()
 {
     s(0) = i18n::s.get("core.locale.ui.alias.title");
     s(1) = strhint3b;
@@ -70,8 +70,7 @@ void ui_menu_alias::draw()
     }
 }
 
-optional<ui_menu_alias::result_type> ui_menu_alias::on_key(
-    const std::string& key)
+optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& key)
 {
     int _p;
 
@@ -86,7 +85,7 @@ optional<ui_menu_alias::result_type> ui_menu_alias::on_key(
         }
         else
         {
-            ui_menu_alias_result res;
+            UIMenuAliasResult res;
 
             if (_alias_type == 3)
             {
@@ -97,13 +96,13 @@ optional<ui_menu_alias::result_type> ui_menu_alias::on_key(
                 res.alias = listn(0, _p);
             }
 
-            return ui_menu_alias::result::finish(res);
+            return UIMenuAlias::Result::finish(res);
         }
     }
     else if (key == key_cancel)
     {
         snd(26);
-        return ui_menu_alias::result::cancel();
+        return UIMenuAlias::Result::cancel();
     }
 
     return none;

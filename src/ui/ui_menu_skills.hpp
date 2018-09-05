@@ -7,10 +7,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_skills : public ui_menu<ui_menu_composite_skills_result>
+class UIMenuSkills : public UIMenu<UIMenuCompositeSkillsResult>
 {
 public:
-    ui_menu_skills()
+    UIMenuSkills()
     {
     }
 
@@ -18,8 +18,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_skills::result_type> on_key(
-        const std::string& key);
+    virtual optional<UIMenuSkills::ResultType> on_key(const std::string& key);
 };
 
 } // namespace ui

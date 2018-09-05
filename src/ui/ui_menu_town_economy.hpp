@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_town_economy : public ui_menu<dummy_result>
+class UIMenuTownEconomy : public UIMenu<DummyResult>
 {
 public:
-    ui_menu_town_economy()
+    UIMenuTownEconomy()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_town_economy::result_type> on_key(
+    virtual optional<UIMenuTownEconomy::ResultType> on_key(
         const std::string& key);
 
 private:

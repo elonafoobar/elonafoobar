@@ -110,7 +110,7 @@ void anime_halt()
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(config::instance().wait1 / 3);
+        await(Config::instance().wait1 / 3);
         draw(
             "label_more",
             x_at_txtfunc,
@@ -123,7 +123,7 @@ void anime_halt()
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(config::instance().wait1 / 3);
+        await(Config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc);
         gcopy(3, 672, 504, 120, 24);
         if (cnt != 6)
@@ -165,7 +165,7 @@ void help_halt()
 
 
 
-void txtef(color_index_t color)
+void txtef(ColorIndex color)
 {
     txtef(static_cast<int>(color) % 21);
 }
@@ -272,10 +272,10 @@ void txt_conv()
         {
             msg_newline();
             tnew = 0;
-            if (config::instance().msgtrans)
+            if (Config::instance().msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                gmode(4, config::instance().msgtrans * 20);
+                gmode(4, Config::instance().msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)
@@ -290,7 +290,7 @@ void txt_conv()
                     gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
                 }
             }
-            if (config::instance().msgaddtime)
+            if (Config::instance().msgaddtime)
             {
                 msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
             }

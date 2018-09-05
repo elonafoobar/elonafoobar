@@ -7,7 +7,6 @@
 #include "font.hpp"
 #include "image.hpp"
 #include "rect.hpp"
-#include "size.hpp"
 #include "window.hpp"
 
 namespace elona
@@ -32,17 +31,17 @@ inline T clamp(const T& x, const T& min, const T& max)
 int timeGetTime();
 void mes(const std::string& text);
 void mesbox(std::string& buffer, int keywait, bool text);
-void picload(basic_image& img, int mode);
+void picload(BasicImage& img, int mode);
 void pos(int x, int y);
 void redraw();
 void set_color_mod(int r, int g, int b, int window_id);
 void onkey_0();
 void await(int msec);
-void boxf(int x1, int y1, int x2, int y2, const color& color);
-void boxf(const color& color);
+void boxf(int x1, int y1, int x2, int y2, const Color& color);
+void boxf(const Color& color);
 void buffer(int window_id, int width, int height);
 void color(int r, int g, int b);
-void font(int size, font_t::style_t style, const fs::path& filepath);
+void font(int size, Font::Style style, const fs::path& filepath);
 void gcopy(
     int window_id,
     int src_x,
@@ -70,11 +69,11 @@ void grotate(
     int dst_height,
     double angle);
 void gsel(int window_id);
-void line(int x1, int y1, int x2, int y2, const snail::color& color);
+void line(int x1, int y1, int x2, int y2, const snail::Color& color);
 void title(
     const std::string& title_str,
     const std::string& display_mode,
-    window::fullscreen_mode_t fullscreen_mode);
+    Window::FullscreenMode fullscreen_mode);
 
 } // namespace hsp
 } // namespace snail

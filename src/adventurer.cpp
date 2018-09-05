@@ -40,15 +40,15 @@ void create_adventurer()
     cdata[rc].relationship = 0;
     cdata[rc].original_relationship = 0;
     cdata[rc]._156 = 100;
-    cdata[rc].set_state(character::state_t::adventurer_in_other_map);
+    cdata[rc].set_state(Character::State::adventurer_in_other_map);
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
     cdatan(0, rc) = randomname();
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (adata(16, p) == mdata_t::map_id_t::none
-        || adata(16, p) == mdata_t::map_id_t::your_home
-        || adata(0, p) == mdata_t::map_type_t::temporary)
+    if (adata(16, p) == mdata_t::MapId::none
+        || adata(16, p) == mdata_t::MapId::your_home
+        || adata(0, p) == mdata_t::MapType::temporary)
     {
         p = 4;
     }
@@ -204,12 +204,12 @@ void adventurer_update()
         }
         if (cdata[rc].current_map != gdata_current_map)
         {
-            if (cdata[rc].state() == character::state_t::adventurer_empty)
+            if (cdata[rc].state() == Character::State::adventurer_empty)
             {
                 create_adventurer();
                 continue;
             }
-            if (cdata[rc].state() == character::state_t::adventurer_dead)
+            if (cdata[rc].state() == Character::State::adventurer_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -218,21 +218,21 @@ void adventurer_update()
                     if (rnd(3) == 0)
                     {
                         addnews(5, rc);
-                        cdata[rc].set_state(character::state_t::empty);
+                        cdata[rc].set_state(Character::State::empty);
                         create_adventurer();
                     }
                     else
                     {
                         addnews(3, rc);
                         cdata[rc].set_state(
-                            character::state_t::adventurer_in_other_map);
+                            Character::State::adventurer_in_other_map);
                     }
                     continue;
                 }
             }
         }
         if ((cdata[rc].current_map != gdata_current_map
-             || mdata_map_type == mdata_t::map_type_t::world_map)
+             || mdata_map_type == mdata_t::MapType::world_map)
             && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)
@@ -245,14 +245,14 @@ void adventurer_update()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == mdata_t::map_id_t::none || p == 7
-                    || adata(0, p) == mdata_t::map_type_t::temporary || p == 9)
+                if (adata(16, p) == mdata_t::MapId::none || p == 7
+                    || adata(0, p) == mdata_t::MapType::temporary || p == 9)
                 {
                     p = 4;
                 }
                 if (cnt < 5)
                 {
-                    if (adata(0, p) != mdata_t::map_type_t::town)
+                    if (adata(0, p) != mdata_t::MapType::town)
                     {
                         continue;
                     }
@@ -268,7 +268,7 @@ void adventurer_update()
         }
         if (rnd(200) == 0)
         {
-            if (adata(0, cdata[rc].current_map) != mdata_t::map_type_t::town)
+            if (adata(0, cdata[rc].current_map) != mdata_t::MapType::town)
             {
                 adventurer_discover_equipment();
             }
@@ -353,8 +353,7 @@ int adventurer_discover_equipment()
     {
         return 0;
     }
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     if (inv[ci].quality >= 4)
     {
         if (the_item_db[inv[ci].id]->category < 50000)

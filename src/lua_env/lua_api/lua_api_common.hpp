@@ -4,12 +4,12 @@
 #include "../lua_enums.hpp"
 #include "../lua_env.hpp"
 
-struct position_t;
-struct character;
-struct item;
+struct Position;
+struct Character;
+struct Item;
 
-typedef sol::table lua_character_handle;
-typedef sol::table lua_item_handle;
+using LuaCharacterHandle = sol::table;
+using LuaItemHandle = sol::table;
 
 #define LUA_API_BIND_FUNCTION(api_table, api_name, function) \
     api_table.set_function(#function, api_name::function)

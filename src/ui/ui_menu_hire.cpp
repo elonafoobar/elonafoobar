@@ -9,26 +9,26 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_hire::_should_display_chara(const character& chara)
+bool UIMenuHire::_should_display_chara(const Character& chara)
 {
-    if (_operation == hire_operation::revive)
+    if (_operation == HireOperation::revive)
     {
-        if (chara.state() != character::state_t::pet_dead
-            && chara.state() != character::state_t::villager_dead)
+        if (chara.state() != Character::State::pet_dead
+            && chara.state() != Character::State::villager_dead)
         {
             return false;
         }
     }
     else
     {
-        if (_operation == hire_operation::hire)
+        if (_operation == HireOperation::hire)
         {
-            if (chara.state() != character::state_t::servant_being_selected)
+            if (chara.state() != Character::State::servant_being_selected)
             {
                 return false;
             }
         }
-        else if (chara.state() != character::state_t::alive)
+        else if (chara.state() != Character::State::alive)
         {
             return false;
         }
@@ -52,7 +52,7 @@ bool ui_menu_hire::_should_display_chara(const character& chara)
     return true;
 }
 
-void ui_menu_hire::_populate_list()
+void UIMenuHire::_populate_list()
 {
     for (auto&& cnt : cdata.all())
     {
@@ -66,7 +66,7 @@ void ui_menu_hire::_populate_list()
     sort_list_by_column1();
 }
 
-bool ui_menu_hire::init()
+bool UIMenuHire::init()
 {
     snd(26);
     listmax = 0;
@@ -82,7 +82,7 @@ bool ui_menu_hire::init()
     return true;
 }
 
-void ui_menu_hire::update()
+void UIMenuHire::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -96,9 +96,9 @@ void ui_menu_hire::update()
     }
 }
 
-void ui_menu_hire::_draw_topic()
+void UIMenuHire::_draw_topic()
 {
-    if (_operation == hire_operation::move)
+    if (_operation == HireOperation::move)
     {
         s = i18n::s.get("core.locale.ui.npc_list.wage");
     }
@@ -106,13 +106,13 @@ void ui_menu_hire::_draw_topic()
     {
         s = i18n::s.get("core.locale.ui.npc_list.init_cost");
     }
-    if (_operation != hire_operation::revive)
+    if (_operation != HireOperation::revive)
     {
         display_topic(s, wx + 490, wy + 36);
     }
 }
 
-void ui_menu_hire::_draw_window()
+void UIMenuHire::_draw_window()
 {
     s(0) = i18n::s.get("core.locale.ui.npc_list.title");
     s(1) = strhint2 + strhint3;
@@ -150,12 +150,12 @@ static void _draw_keys()
     }
 }
 
-static void _draw_list_entry_pic(int cnt, const character& chara)
+static void _draw_list_entry_pic(int cnt, const Character& chara)
 {
     draw_chara_scale_height(chara, wx + 40, wy + 74 + cnt * 19 - 8);
 }
 
-static void _draw_list_entry_name(int cnt, const character& chara)
+static void _draw_list_entry_name(int cnt, const Character& chara)
 {
     std::string chara_name = cdatan(0, chara.index);
     cutname(chara_name, 36);
@@ -163,7 +163,7 @@ static void _draw_list_entry_name(int cnt, const character& chara)
     cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 
-static void _draw_list_entry_info(int cnt, const character& chara)
+static void _draw_list_entry_info(int cnt, const Character& chara)
 {
     std::string level = u8"Lv."s + chara.level + u8" "s;
 
@@ -183,14 +183,14 @@ static void _draw_list_entry_info(int cnt, const character& chara)
     mes(level);
 }
 
-void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
 {
-    if (_operation != hire_operation::revive)
+    if (_operation != HireOperation::revive)
     {
         std::string text;
         int cost = calchirecost(chara.index);
 
-        if (_operation == hire_operation::hire)
+        if (_operation == HireOperation::hire)
         {
             text = ""s + (cost * 20) + u8"("s + cost + u8")"s;
         }
@@ -205,7 +205,7 @@ void ui_menu_hire::_draw_list_entry_cost(int cnt, const character& chara)
 }
 
 
-void ui_menu_hire::_draw_list_entry(int cnt, const character& chara)
+void UIMenuHire::_draw_list_entry(int cnt, const Character& chara)
 {
     _draw_list_entry_pic(cnt, chara);
     _draw_list_entry_name(cnt, chara);
@@ -213,7 +213,7 @@ void ui_menu_hire::_draw_list_entry(int cnt, const character& chara)
     _draw_list_entry_cost(cnt, chara);
 }
 
-void ui_menu_hire::_draw_list_entries()
+void UIMenuHire::_draw_list_entries()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -226,7 +226,7 @@ void ui_menu_hire::_draw_list_entries()
         }
 
         int chara_index = list(0, p);
-        const character& chara = cdata[chara_index];
+        const Character& chara = cdata[chara_index];
 
         _draw_list_entry(cnt, chara);
     }
@@ -236,14 +236,14 @@ void ui_menu_hire::_draw_list_entries()
     }
 }
 
-void ui_menu_hire::draw()
+void UIMenuHire::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
+optional<UIMenuHire::ResultType> UIMenuHire::on_key(const std::string& key)
 {
     int _p;
 
@@ -251,7 +251,7 @@ optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
 
     if (_p != -1)
     {
-        return ui_menu_hire::result::finish(_p);
+        return UIMenuHire::Result::finish(_p);
     }
     else if (key == key_pageup)
     {
@@ -273,7 +273,7 @@ optional<ui_menu_hire::result_type> ui_menu_hire::on_key(const std::string& key)
     }
     else if (key == key_cancel)
     {
-        return ui_menu_hire::result::cancel();
+        return UIMenuHire::Result::cancel();
     }
 
     return none;

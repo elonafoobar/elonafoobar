@@ -101,7 +101,7 @@ void load_translations(const std::string& hcl)
 
 void configure_lua()
 {
-    lua::lua.reset(new lua::lua_env());
+    lua::lua.reset(new lua::LuaEnv());
     lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
 
     sol::table Testing = lua::lua->get_state()->create_named_table("Testing");
@@ -119,7 +119,7 @@ void pre_init()
     const fs::path config_file =
         filesystem::dir::exe() / "tests/data/config.hcl";
 
-    config::instance().init(config_def_file);
+    Config::instance().init(config_def_file);
     initialize_config_preload(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
@@ -135,10 +135,10 @@ void pre_init()
 
     initialize_elona();
 
-    config::instance().is_test = true;
+    Config::instance().is_test = true;
 
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 }
 
 void post_run()
@@ -160,10 +160,10 @@ void reset_state()
     elona::en = 0;
     set_item_info();
 
-    config::instance().is_test = true;
+    Config::instance().is_test = true;
 
     lua::lua->get_event_manager()
-        .run_callbacks<lua::event_kind_t::game_initialized>();
+        .run_callbacks<lua::EventKind::game_initialized>();
 }
 
 } // namespace testing

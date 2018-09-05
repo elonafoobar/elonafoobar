@@ -12,17 +12,17 @@ namespace elona
  * Contains a layout of valid config options, to be used by the config
  * class for validating values set on it.
  */
-class config_def : public spec::object
+class ConfigDef : public spec::Object
 {
 public:
-    enum class option_platform
+    enum class Platform
     {
         all,
         desktop,
         android,
     };
 
-    struct metadata
+    struct MetaData
     {
         // True if the config section/option is visible in the options menu.
         bool visible = true;
@@ -38,7 +38,7 @@ public:
 
         // Platform this option applies to. On other platforms it will
         // be hidden.
-        option_platform platform = option_platform::all;
+        Platform platform = Platform::all;
 
         // Overridden default value from platform_default field if the
         // specified platform matches ("android" or "desktop").
@@ -48,27 +48,25 @@ public:
         {
             switch (platform)
             {
-            case option_platform::desktop:
-                return visible && !defines::is_android;
-            case option_platform::android:
-                return visible && defines::is_android;
-            case option_platform::all:
+            case Platform::desktop: return visible && !defines::is_android;
+            case Platform::android: return visible && defines::is_android;
+            case Platform::all:
             default: return visible;
             }
         }
     };
 
-    config_def()
-        : spec::object("config")
+    ConfigDef()
+        : spec::Object("config")
     {
         locale_root = "core.locale.config.menu";
     }
 
-    ~config_def() = default;
+    ~ConfigDef() = default;
 
     void clear()
     {
-        spec::object::clear();
+        spec::Object::clear();
         data.clear();
     }
 
@@ -83,10 +81,10 @@ public:
             }
         }
 
-        return spec::object::get_default(key);
+        return spec::Object::get_default(key);
     }
 
-    const metadata& get_metadata(const spec_key& key) const
+    const MetaData& get_metadata(const SpecKey& key) const
     {
         return data.at(key);
     }
@@ -96,10 +94,10 @@ public:
         return locale_root;
     }
 
-    void post_visit(const spec_key&, const spec::section_def&);
-    void pre_visit_section(const spec_key&, const hcl::Object&);
-    void pre_visit_item(const spec_key&, const hcl::Object&);
-    void pre_visit_bare_value(const spec_key&, const hcl::Value&);
+    void post_visit(const SpecKey&, const spec::SectionDef&);
+    void pre_visit_section(const SpecKey&, const hcl::Object&);
+    void pre_visit_item(const SpecKey&, const hcl::Object&);
+    void pre_visit_bare_value(const SpecKey&, const hcl::Value&);
 
 private:
     /***
@@ -107,9 +105,9 @@ private:
      * of its parent sections. This is needed for determining whether
      * or not to save certain items based on visibility.
      */
-    bool is_child_visible(const spec_key&);
+    bool is_child_visible(const SpecKey&);
 
     std::string locale_root;
-    std::map<std::string, metadata> data;
+    std::map<std::string, MetaData> data;
 };
 } // namespace elona

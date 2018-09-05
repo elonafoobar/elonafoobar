@@ -30,7 +30,7 @@ namespace
 
 int chatval_ = 0;
 
-talk_result_t talk_unique_zeome()
+TalkResult talk_unique_zeome()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.zeome");
@@ -41,11 +41,11 @@ talk_result_t talk_unique_zeome()
 
     gdata_main_quest_flag = 170;
 
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
-talk_result_t talk_unique_orphe()
+TalkResult talk_unique_orphe()
 {
     if (event_id() == 1)
     {
@@ -88,13 +88,13 @@ talk_result_t talk_unique_orphe()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
-talk_result_t talk_unique_whom_dwell_in_the_vanity()
+TalkResult talk_unique_whom_dwell_in_the_vanity()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.whom_dwell_in_the_vanity");
@@ -102,7 +102,7 @@ talk_result_t talk_unique_whom_dwell_in_the_vanity()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -135,7 +135,7 @@ void _loyter_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_loyter()
+TalkResult talk_unique_loyter()
 {
     if (cdata.player().fame < 20000)
     {
@@ -145,7 +145,7 @@ talk_result_t talk_unique_loyter()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_nightmare == 1000)
     {
@@ -155,7 +155,7 @@ talk_result_t talk_unique_loyter()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_nightmare == 0)
     {
@@ -181,7 +181,7 @@ talk_result_t talk_unique_loyter()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -193,7 +193,7 @@ talk_result_t talk_unique_loyter()
 
         gdata_nightmare = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_nightmare == 1 || gdata_nightmare == 2)
     {
@@ -215,7 +215,7 @@ talk_result_t talk_unique_loyter()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -228,7 +228,7 @@ talk_result_t talk_unique_loyter()
         gdata_nightmare = 2;
         _loyter_goto_map();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_nightmare == 3)
     {
@@ -243,9 +243,9 @@ talk_result_t talk_unique_loyter()
 
         gdata_nightmare = 1000;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -267,7 +267,7 @@ void _miches_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_miches()
+TalkResult talk_unique_miches()
 {
     if (gdata_putit_attacks == 1000)
     {
@@ -277,7 +277,7 @@ talk_result_t talk_unique_miches()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_putit_attacks == 0)
     {
@@ -303,7 +303,7 @@ talk_result_t talk_unique_miches()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -315,7 +315,7 @@ talk_result_t talk_unique_miches()
 
         gdata_putit_attacks = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_putit_attacks == 1)
     {
@@ -325,7 +325,7 @@ talk_result_t talk_unique_miches()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_putit_attacks == 2)
     {
@@ -340,9 +340,9 @@ talk_result_t talk_unique_miches()
 
         gdata_putit_attacks = 1000;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -367,7 +367,7 @@ void _shena_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_shena()
+TalkResult talk_unique_shena()
 {
     if (gdata_thieves_hideout == 1000)
     {
@@ -377,7 +377,7 @@ talk_result_t talk_unique_shena()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_thieves_hideout == 0)
     {
@@ -403,7 +403,7 @@ talk_result_t talk_unique_shena()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -416,7 +416,7 @@ talk_result_t talk_unique_shena()
         gdata_thieves_hideout = 1;
         cell_featset(48, 5, tile_downstairs, 11, 4);
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_thieves_hideout == 1)
     {
@@ -426,7 +426,7 @@ talk_result_t talk_unique_shena()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_thieves_hideout == 2)
     {
@@ -441,13 +441,13 @@ talk_result_t talk_unique_shena()
 
         gdata_thieves_hideout = 1000;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
-talk_result_t talk_unique_larnneire()
+TalkResult talk_unique_larnneire()
 {
     ELONA_APPEND_RESPONSE(
         3, i18n::s.get("core.locale.talk.unique.larnneire.choices.mission"));
@@ -503,7 +503,7 @@ talk_result_t talk_unique_larnneire()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 2)
     {
@@ -521,7 +521,7 @@ talk_result_t talk_unique_larnneire()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 3)
     {
@@ -531,9 +531,9 @@ talk_result_t talk_unique_larnneire()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -542,8 +542,7 @@ void _lomias_create_scroll_of_identify()
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     flt();
     itemcreate(-1, 14, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
 }
 
 void _lomias_create_chest()
@@ -566,8 +565,7 @@ void _lomias_create_corpse()
     itemcreate(
         -1, 204, cdata.player().position.x, cdata.player().position.y, 0);
     inv[ci].subname = 9;
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 
@@ -592,16 +590,15 @@ void _lomias_create_equipment()
 {
     flt();
     itemcreate(-1, 58, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(-1, 61, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(
         -1, 363, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].identification_state = IdentifyState::completely_identified;
+    inv[ci].curse_state = CurseState::blessed;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 
@@ -620,12 +617,11 @@ void _lomias_release_putits()
     }
     flt();
     itemcreate(-1, 68, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 
-talk_result_t talk_unique_lomias()
+TalkResult talk_unique_lomias()
 {
     if (chatflag == 0)
     {
@@ -766,7 +762,7 @@ talk_result_t talk_unique_lomias()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
             listmax = 0;
             buff = i18n::s.get(
@@ -810,7 +806,7 @@ talk_result_t talk_unique_lomias()
 
             gdata_tutorial_flag = 8;
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         if (gdata_tutorial_flag == 8)
         {
@@ -864,7 +860,7 @@ talk_result_t talk_unique_lomias()
 
             gdata_tutorial_flag = -1;
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         if (gdata_tutorial_flag == -1)
         {
@@ -896,12 +892,12 @@ talk_result_t talk_unique_lomias()
         _lomias_create_corpse();
         gdata_tutorial_flag = 1;
 
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 2)
     {
         tc = chara_find(33);
-        if (tc == 0 || cdata[tc].state() != character::state_t::alive)
+        if (tc == 0 || cdata[tc].state() != Character::State::alive)
         {
             tc = chara_find(34);
             hostileaction(0, tc);
@@ -913,7 +909,7 @@ talk_result_t talk_unique_lomias()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -974,7 +970,7 @@ talk_result_t talk_unique_lomias()
 
         gdata_tutorial_flag = 2;
 
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 4)
     {
@@ -996,7 +992,7 @@ talk_result_t talk_unique_lomias()
         _lomias_create_equipment();
         gdata_tutorial_flag = 5;
 
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 5)
     {
@@ -1025,11 +1021,11 @@ talk_result_t talk_unique_lomias()
         _lomias_release_putits();
         gdata_tutorial_flag = 6;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
-talk_result_t talk_unique_stersha()
+TalkResult talk_unique_stersha()
 {
     if (gdata_main_quest_flag == 200)
     {
@@ -1039,7 +1035,7 @@ talk_result_t talk_unique_stersha()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag < 90)
     {
@@ -1059,7 +1055,7 @@ talk_result_t talk_unique_stersha()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -1080,7 +1076,7 @@ void _xabi_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_xabi()
+TalkResult talk_unique_xabi()
 {
     if (gdata_main_quest_flag >= 60)
     {
@@ -1090,7 +1086,7 @@ talk_result_t talk_unique_xabi()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag == 50)
     {
@@ -1100,7 +1096,7 @@ talk_result_t talk_unique_xabi()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag == 40)
     {
@@ -1130,9 +1126,9 @@ talk_result_t talk_unique_xabi()
 
         _xabi_receive_reward();
 
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -1159,7 +1155,7 @@ void _slan_receive_reward()
     chara_vanquish(tc);
 }
 
-talk_result_t talk_unique_slan()
+TalkResult talk_unique_slan()
 {
     if (gdata_main_quest_flag == 20)
     {
@@ -1186,9 +1182,9 @@ talk_result_t talk_unique_slan()
 
         _slan_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -1222,7 +1218,7 @@ void _erystia_receive_key_4th_level()
     gdata_main_quest_flag = 60;
 }
 
-talk_result_t talk_unique_erystia()
+TalkResult talk_unique_erystia()
 {
     if (gdata_main_quest_flag == 200)
     {
@@ -1248,7 +1244,7 @@ talk_result_t talk_unique_erystia()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag == 120)
     {
@@ -1287,7 +1283,7 @@ talk_result_t talk_unique_erystia()
 
         _erystia_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag == 105)
     {
@@ -1337,7 +1333,7 @@ talk_result_t talk_unique_erystia()
 
         _erystia_receive_key_17th_level();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag >= 60)
     {
@@ -1407,7 +1403,7 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 5)
         {
@@ -1431,7 +1427,7 @@ talk_result_t talk_unique_erystia()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             if (gdata_main_quest_flag >= 110)
             {
@@ -1444,7 +1440,7 @@ talk_result_t talk_unique_erystia()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -1455,7 +1451,7 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 3)
         {
@@ -1480,7 +1476,7 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 2)
         {
@@ -1505,7 +1501,7 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 1)
         {
@@ -1530,9 +1526,9 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_main_quest_flag == 50)
     {
@@ -1559,7 +1555,7 @@ talk_result_t talk_unique_erystia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get_enum(
@@ -1601,9 +1597,9 @@ talk_result_t talk_unique_erystia()
 
         _erystia_receive_key_4th_level();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -1628,7 +1624,7 @@ void _karam_receive_reward()
     chara_vanquish(tc);
 }
 
-talk_result_t talk_unique_karam()
+TalkResult talk_unique_karam()
 {
     if (gdata_main_quest_flag == 90)
     {
@@ -1673,13 +1669,13 @@ talk_result_t talk_unique_karam()
 
         _karam_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
-talk_result_t talk_unique_garokk()
+TalkResult talk_unique_garokk()
 {
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     buff = i18n::s.get("core.locale.talk.unique.garokk");
@@ -1689,9 +1685,9 @@ talk_result_t talk_unique_garokk()
         invctrl = 1;
         snd(26);
         crafting_menu();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -1717,7 +1713,7 @@ void _miral_upgrade_cargo_limit()
     refresh_burden_state();
 }
 
-talk_result_t talk_unique_miral()
+TalkResult talk_unique_miral()
 {
     ELONA_APPEND_RESPONSE(
         2, i18n::s.get("core.locale.talk.unique.miral.choices.small_medals"));
@@ -1737,7 +1733,7 @@ talk_result_t talk_unique_miral()
 
         _miral_trade_small_medals();
 
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 3)
     {
@@ -1772,7 +1768,7 @@ talk_result_t talk_unique_miral()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
 
         _miral_upgrade_cargo_limit();
@@ -1784,17 +1780,17 @@ talk_result_t talk_unique_miral()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
-talk_result_t talk_unique_pael()
+TalkResult talk_unique_pael()
 {
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::map_id_t::noyel
+        if (gdata_current_map == mdata_t::MapId::noyel
             && adata(29, gdata_current_map))
         {
             listmax = 0;
@@ -1803,7 +1799,7 @@ talk_result_t talk_unique_pael()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.pael.after_face");
@@ -1811,7 +1807,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 1001)
     {
@@ -1821,7 +1817,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 1002)
     {
@@ -1831,7 +1827,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 0)
     {
@@ -1839,11 +1835,11 @@ talk_result_t talk_unique_pael()
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         gdata_pael_and_her_mom = 1;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3)
     {
@@ -1853,7 +1849,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
     {
@@ -1864,7 +1860,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
     {
@@ -1873,11 +1869,11 @@ talk_result_t talk_unique_pael()
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 6)
     {
@@ -1886,11 +1882,11 @@ talk_result_t talk_unique_pael()
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 8)
     {
@@ -1899,11 +1895,11 @@ talk_result_t talk_unique_pael()
         bool stat = talk_give_potion_of_cure_corruption();
         if (!stat)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         ++gdata_pael_and_her_mom;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 9)
     {
@@ -1913,7 +1909,7 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 10)
     {
@@ -1924,9 +1920,9 @@ talk_result_t talk_unique_pael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -1958,7 +1954,7 @@ void _paels_mom_give_potion()
     modify_karma(cdata.player(), 20);
 }
 
-talk_result_t talk_unique_paels_mom()
+TalkResult talk_unique_paels_mom()
 {
     if (gdata_pael_and_her_mom == 1002)
     {
@@ -1968,7 +1964,7 @@ talk_result_t talk_unique_paels_mom()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom == 10)
     {
@@ -2002,7 +1998,7 @@ talk_result_t talk_unique_paels_mom()
     }
     if (gdata_pael_and_her_mom == 1000)
     {
-        if (gdata_current_map == mdata_t::map_id_t::noyel
+        if (gdata_current_map == mdata_t::MapId::noyel
             && adata(29, gdata_current_map))
         {
             buff = i18n::s.get(
@@ -2033,7 +2029,7 @@ talk_result_t talk_unique_paels_mom()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
             listmax = 0;
             buff = i18n::s.get(
@@ -2043,7 +2039,7 @@ talk_result_t talk_unique_paels_mom()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     if (gdata_pael_and_her_mom == 1000)
@@ -2089,7 +2085,7 @@ talk_result_t talk_unique_paels_mom()
 
             event_add(20, tc);
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         if (chatval_ == 2)
         {
@@ -2103,7 +2099,7 @@ talk_result_t talk_unique_paels_mom()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get(
@@ -2112,7 +2108,7 @@ talk_result_t talk_unique_paels_mom()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom > 7)
     {
@@ -2123,7 +2119,7 @@ talk_result_t talk_unique_paels_mom()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom > 5)
     {
@@ -2134,7 +2130,7 @@ talk_result_t talk_unique_paels_mom()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pael_and_her_mom > 3)
     {
@@ -2144,7 +2140,7 @@ talk_result_t talk_unique_paels_mom()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.unique.paels_mom.progress.early");
@@ -2152,7 +2148,7 @@ talk_result_t talk_unique_paels_mom()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -2161,7 +2157,7 @@ void _raphael_give_wife()
     s = chara_refstr(cdata[tc].id, 8);
     if (!strutil::contains(s(0), u8"/man/"))
     {
-        dmgcon(tcbk, status_ailment_t::insane, 1000);
+        dmgcon(tcbk, StatusAilment::insane, 1000);
         f = 1;
         modify_karma(cdata.player(), 2);
     }
@@ -2195,7 +2191,7 @@ void _raphael_receive_wife_reward()
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 
-talk_result_t talk_unique_raphael()
+TalkResult talk_unique_raphael()
 {
     if (gdata_wife_collector == 0)
     {
@@ -2214,7 +2210,7 @@ talk_result_t talk_unique_raphael()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2226,7 +2222,7 @@ talk_result_t talk_unique_raphael()
 
         gdata_wife_collector = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
     {
@@ -2249,9 +2245,9 @@ talk_result_t talk_unique_raphael()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
-        int stat = ctrl_ally(ctrl_ally_operation::sell);
+        int stat = ctrl_ally(ControlAllyOperation::sell);
         if (stat == -1)
         {
             listmax = 0;
@@ -2262,7 +2258,7 @@ talk_result_t talk_unique_raphael()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         rc = stat;
         if (cdata[rc].is_married() == 0)
@@ -2275,7 +2271,7 @@ talk_result_t talk_unique_raphael()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get(
@@ -2323,9 +2319,9 @@ talk_result_t talk_unique_raphael()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -2346,7 +2342,7 @@ void _ainc_receive_reward()
     gdata_novice_knight = 1000;
 }
 
-talk_result_t talk_unique_ainc()
+TalkResult talk_unique_ainc()
 {
     if (gdata_novice_knight == 1000)
     {
@@ -2357,7 +2353,7 @@ talk_result_t talk_unique_ainc()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_novice_knight == 0)
     {
@@ -2374,7 +2370,7 @@ talk_result_t talk_unique_ainc()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2386,7 +2382,7 @@ talk_result_t talk_unique_ainc()
 
         gdata_novice_knight = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_novice_knight == 1)
     {
@@ -2396,7 +2392,7 @@ talk_result_t talk_unique_ainc()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_novice_knight == 2)
     {
@@ -2409,9 +2405,9 @@ talk_result_t talk_unique_ainc()
 
         _ainc_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -2425,7 +2421,7 @@ void _poppy_add_to_party()
     chara_refresh(rc);
 }
 
-talk_result_t talk_unique_poppy()
+TalkResult talk_unique_poppy()
 {
     if (gdata_puppys_cave == 1000)
     {
@@ -2435,7 +2431,7 @@ talk_result_t talk_unique_poppy()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (chara_get_free_slot_ally() != 0)
     {
@@ -2448,13 +2444,13 @@ talk_result_t talk_unique_poppy()
     if (chatval_ == 1)
     {
         _poppy_add_to_party();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     else
     {
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -2479,7 +2475,7 @@ void _rilian_receive_reward()
     cdata[rc].character_role = 3;
 }
 
-talk_result_t talk_unique_rilian()
+TalkResult talk_unique_rilian()
 {
     if (gdata_puppys_cave == 1000)
     {
@@ -2489,7 +2485,7 @@ talk_result_t talk_unique_rilian()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_puppys_cave == 0)
     {
@@ -2507,7 +2503,7 @@ talk_result_t talk_unique_rilian()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2519,7 +2515,7 @@ talk_result_t talk_unique_rilian()
 
         gdata_puppys_cave = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_puppys_cave == 1)
     {
@@ -2531,7 +2527,7 @@ talk_result_t talk_unique_rilian()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.rilian.quest.end");
@@ -2542,9 +2538,9 @@ talk_result_t talk_unique_rilian()
 
         _rilian_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -2567,7 +2563,7 @@ void _tam_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_tam()
+TalkResult talk_unique_tam()
 {
     if (gdata_cat_house == 1000)
     {
@@ -2577,7 +2573,7 @@ talk_result_t talk_unique_tam()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_cat_house == 0)
     {
@@ -2595,7 +2591,7 @@ talk_result_t talk_unique_tam()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2608,7 +2604,7 @@ talk_result_t talk_unique_tam()
         gdata_cat_house = 1;
         cell_featset(23, 22, tile_downstairs, 11, 3);
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_cat_house == 1)
     {
@@ -2618,7 +2614,7 @@ talk_result_t talk_unique_tam()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_cat_house == 2)
     {
@@ -2631,9 +2627,9 @@ talk_result_t talk_unique_tam()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_cat_house = 1000;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -2664,7 +2660,7 @@ void _gilbert_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_gilbert()
+TalkResult talk_unique_gilbert()
 {
     if (gdata_defense_line == 1000)
     {
@@ -2674,7 +2670,7 @@ talk_result_t talk_unique_gilbert()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (cdata.player().fame < 5000)
     {
@@ -2684,7 +2680,7 @@ talk_result_t talk_unique_gilbert()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_defense_line == 0)
     {
@@ -2711,7 +2707,7 @@ talk_result_t talk_unique_gilbert()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2723,7 +2719,7 @@ talk_result_t talk_unique_gilbert()
 
         gdata_defense_line = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_defense_line == 1 || gdata_defense_line == 2)
     {
@@ -2747,7 +2743,7 @@ talk_result_t talk_unique_gilbert()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2759,7 +2755,7 @@ talk_result_t talk_unique_gilbert()
 
         _gilbert_goto_map();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_defense_line == 3)
     {
@@ -2774,9 +2770,9 @@ talk_result_t talk_unique_gilbert()
 
         gdata_defense_line = 1000;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -2807,7 +2803,7 @@ void _arnord_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_arnord()
+TalkResult talk_unique_arnord()
 {
     if (gdata_kamikaze_attack == 1000)
     {
@@ -2818,7 +2814,7 @@ talk_result_t talk_unique_arnord()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_kamikaze_attack == 0)
     {
@@ -2836,7 +2832,7 @@ talk_result_t talk_unique_arnord()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2848,7 +2844,7 @@ talk_result_t talk_unique_arnord()
 
         gdata_kamikaze_attack = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
     {
@@ -2870,7 +2866,7 @@ talk_result_t talk_unique_arnord()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2882,7 +2878,7 @@ talk_result_t talk_unique_arnord()
 
         _arnord_goto_map();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_kamikaze_attack == 3)
     {
@@ -2897,9 +2893,9 @@ talk_result_t talk_unique_arnord()
 
         gdata_kamikaze_attack = 1000;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -2924,7 +2920,7 @@ void _mia_receive_reward()
     cdata[rc].character_role = 3;
 }
 
-talk_result_t talk_unique_mia()
+TalkResult talk_unique_mia()
 {
     if (gdata_mias_dream == 1000)
     {
@@ -2934,7 +2930,7 @@ talk_result_t talk_unique_mia()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_mias_dream == 0)
     {
@@ -2952,7 +2948,7 @@ talk_result_t talk_unique_mia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -2964,7 +2960,7 @@ talk_result_t talk_unique_mia()
 
         gdata_mias_dream = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_mias_dream == 1)
     {
@@ -2976,7 +2972,7 @@ talk_result_t talk_unique_mia()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.locale.talk.unique.mia.quest.end", 0);
@@ -2993,9 +2989,9 @@ talk_result_t talk_unique_mia()
 
         _mia_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -3044,7 +3040,7 @@ void _renton_receive_reward()
     gdata_rare_books = 1000;
 }
 
-talk_result_t talk_unique_renton()
+TalkResult talk_unique_renton()
 {
     if (gdata_rare_books == 1000)
     {
@@ -3054,7 +3050,7 @@ talk_result_t talk_unique_renton()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_rare_books == 0 || gdata_rare_books == 1)
     {
@@ -3091,7 +3087,7 @@ talk_result_t talk_unique_renton()
         {
             quest_update_journal_msg();
             gdata_rare_books = 1;
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
 
         p(0) = 0;
@@ -3127,7 +3123,7 @@ talk_result_t talk_unique_renton()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
 
             _renton_take_books();
@@ -3178,9 +3174,9 @@ talk_result_t talk_unique_renton()
 
             _renton_receive_reward();
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -3193,7 +3189,7 @@ void _marks_receive_invitation()
     inv[ci].param1 = 13;
 }
 
-talk_result_t talk_unique_marks()
+TalkResult talk_unique_marks()
 {
     if (gdata_pyramid_trial != 0)
     {
@@ -3203,7 +3199,7 @@ talk_result_t talk_unique_marks()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (cdata.player().fame < 3000)
     {
@@ -3213,7 +3209,7 @@ talk_result_t talk_unique_marks()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_pyramid_trial == 0)
     {
@@ -3242,7 +3238,7 @@ talk_result_t talk_unique_marks()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
@@ -3258,9 +3254,9 @@ talk_result_t talk_unique_marks()
 
         gdata_pyramid_trial = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -3290,7 +3286,7 @@ void _noel_buy_nuke()
         -1, 671, cdata.player().position.x, cdata.player().position.y, 0);
 }
 
-talk_result_t talk_unique_noel()
+TalkResult talk_unique_noel()
 {
     if (gdata_red_blossom_in_palmia == 1000)
     {
@@ -3344,7 +3340,7 @@ talk_result_t talk_unique_noel()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
 
         quest_update_journal_msg();
@@ -3375,7 +3371,7 @@ talk_result_t talk_unique_noel()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
 
     _noel_buy_nuke();
@@ -3386,7 +3382,7 @@ talk_result_t talk_unique_noel()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -3451,7 +3447,7 @@ void _icolle_receive_reward()
     gdata_ambitious_scientist = 1000;
 }
 
-talk_result_t talk_unique_icolle()
+TalkResult talk_unique_icolle()
 {
     if (gdata_ambitious_scientist >= 1000)
     {
@@ -3461,7 +3457,7 @@ talk_result_t talk_unique_icolle()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_ambitious_scientist == 0)
     {
@@ -3480,7 +3476,7 @@ talk_result_t talk_unique_icolle()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
 
         _icolle_receive_monster_balls();
@@ -3495,7 +3491,7 @@ talk_result_t talk_unique_icolle()
 
         gdata_ambitious_scientist = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
     {
@@ -3533,7 +3529,7 @@ talk_result_t talk_unique_icolle()
 
         _icolle_receive_reward();
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -3558,7 +3554,7 @@ void _balzak_receive_reward()
     quest_update_journal_msg();
 }
 
-talk_result_t talk_unique_balzak()
+TalkResult talk_unique_balzak()
 {
     if (gdata_sewer_sweeping == 1000)
     {
@@ -3568,7 +3564,7 @@ talk_result_t talk_unique_balzak()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_sewer_sweeping == 0)
     {
@@ -3594,7 +3590,7 @@ talk_result_t talk_unique_balzak()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -3607,7 +3603,7 @@ talk_result_t talk_unique_balzak()
         gdata_sewer_sweeping = 1;
         cell_featset(18, 45, tile_downstairs, 11, 20);
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_sewer_sweeping == 1)
     {
@@ -3617,7 +3613,7 @@ talk_result_t talk_unique_balzak()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_sewer_sweeping == 2)
     {
@@ -3630,9 +3626,9 @@ talk_result_t talk_unique_balzak()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_sewer_sweeping = 1000;
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -3705,7 +3701,7 @@ void _lexus_receive_reward()
     modrank(8, 500, 8);
 }
 
-talk_result_t talk_unique_lexus()
+TalkResult talk_unique_lexus()
 {
     if (gdata_belongs_to_mages_guild == 0)
     {
@@ -3729,7 +3725,7 @@ talk_result_t talk_unique_lexus()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 1)
         {
@@ -3759,7 +3755,7 @@ talk_result_t talk_unique_lexus()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             if (gdata_mages_guild_quota > 0)
             {
@@ -3770,7 +3766,7 @@ talk_result_t talk_unique_lexus()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -3792,7 +3788,7 @@ talk_result_t talk_unique_lexus()
 
             _lexus_move_self();
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     _lexus_move_self();
 
@@ -3828,7 +3824,7 @@ talk_result_t talk_unique_lexus()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 2)
     {
@@ -3841,7 +3837,7 @@ talk_result_t talk_unique_lexus()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
 
         _lexus_receive_reward();
@@ -3853,9 +3849,9 @@ talk_result_t talk_unique_lexus()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -3927,7 +3923,7 @@ void _abyss_receive_reward()
     modrank(8, 500, 8);
 }
 
-talk_result_t talk_unique_abyss()
+TalkResult talk_unique_abyss()
 {
     if (gdata_belongs_to_thieves_guild == 0)
     {
@@ -3951,7 +3947,7 @@ talk_result_t talk_unique_abyss()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 1)
         {
@@ -3974,7 +3970,7 @@ talk_result_t talk_unique_abyss()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             if (gdata_left_bill <= 4)
             {
@@ -3985,7 +3981,7 @@ talk_result_t talk_unique_abyss()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -4007,7 +4003,7 @@ talk_result_t talk_unique_abyss()
 
             _abyss_move_self();
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     _abyss_move_self();
 
@@ -4043,7 +4039,7 @@ talk_result_t talk_unique_abyss()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 2)
     {
@@ -4056,7 +4052,7 @@ talk_result_t talk_unique_abyss()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
 
         _abyss_receive_reward();
@@ -4068,9 +4064,9 @@ talk_result_t talk_unique_abyss()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -4183,7 +4179,7 @@ void _doria_receive_reward()
     modrank(8, 500, 8);
 }
 
-talk_result_t talk_unique_doria()
+TalkResult talk_unique_doria()
 {
     if (gdata_belongs_to_fighters_guild == 0)
     {
@@ -4207,7 +4203,7 @@ talk_result_t talk_unique_doria()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
         if (chatval_ == 1)
         {
@@ -4233,7 +4229,7 @@ talk_result_t talk_unique_doria()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             if (gdata_fighters_guild_quota > 0)
             {
@@ -4246,7 +4242,7 @@ talk_result_t talk_unique_doria()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                return talk_result_t::talk_unique;
+                return TalkResult::talk_unique;
             }
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -4268,7 +4264,7 @@ talk_result_t talk_unique_doria()
 
             _doria_move_self();
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     _doria_move_self();
 
@@ -4305,7 +4301,7 @@ talk_result_t talk_unique_doria()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_unique;
+        return TalkResult::talk_unique;
     }
     if (chatval_ == 2)
     {
@@ -4318,7 +4314,7 @@ talk_result_t talk_unique_doria()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_unique;
+            return TalkResult::talk_unique;
         }
 
         _doria_receive_reward();
@@ -4330,9 +4326,9 @@ talk_result_t talk_unique_doria()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -4356,7 +4352,7 @@ void _conery_receive_reward()
     gdata_minotaur_king = 1000;
 }
 
-talk_result_t talk_unique_conery()
+TalkResult talk_unique_conery()
 {
     if (gdata_minotaur_king == 1000)
     {
@@ -4366,7 +4362,7 @@ talk_result_t talk_unique_conery()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_minotaur_king == 0)
     {
@@ -4385,7 +4381,7 @@ talk_result_t talk_unique_conery()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         quest_update_journal_msg();
         listmax = 0;
@@ -4398,7 +4394,7 @@ talk_result_t talk_unique_conery()
 
         gdata_minotaur_king = 1;
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_minotaur_king == 1)
     {
@@ -4408,7 +4404,7 @@ talk_result_t talk_unique_conery()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_minotaur_king == 2)
     {
@@ -4421,9 +4417,9 @@ talk_result_t talk_unique_conery()
 
         _conery_receive_reward();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 void _rogue_boss_surrender()
@@ -4452,7 +4448,7 @@ void _rogue_boss_leave_map()
     snd(49);
 }
 
-talk_result_t talk_unique_rogue_boss()
+TalkResult talk_unique_rogue_boss()
 {
     if (cdata.player().gold <= 10)
     {
@@ -4463,7 +4459,7 @@ talk_result_t talk_unique_rogue_boss()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     ELONA_APPEND_RESPONSE(
         1,
@@ -4494,7 +4490,7 @@ talk_result_t talk_unique_rogue_boss()
 
         _rogue_boss_leave_map();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get(
@@ -4503,7 +4499,7 @@ talk_result_t talk_unique_rogue_boss()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -4619,7 +4615,7 @@ void _strange_scientist_turn_over()
     snd(51);
 }
 
-talk_result_t talk_unique_strange_scientist()
+TalkResult talk_unique_strange_scientist()
 {
     if (gdata_little_sister == 0)
     {
@@ -4632,7 +4628,7 @@ talk_result_t talk_unique_strange_scientist()
 
         _strange_scientist_receive_little_balls();
 
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (gdata_little_sister > 0)
     {
@@ -4687,7 +4683,7 @@ talk_result_t talk_unique_strange_scientist()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         if (chatval_ == 2)
         {
@@ -4701,7 +4697,7 @@ talk_result_t talk_unique_strange_scientist()
 
             _strange_scientist_replenish_little_balls();
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         if (chatval_ == 3)
         {
@@ -4715,9 +4711,9 @@ talk_result_t talk_unique_strange_scientist()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 
@@ -4738,7 +4734,7 @@ void _kaneda_bike_give_drug()
     snd(13);
 }
 
-talk_result_t talk_unique_kaneda_bike()
+TalkResult talk_unique_kaneda_bike()
 {
     if (gdata_blue_capsule_drug >= 3)
     {
@@ -4778,7 +4774,7 @@ talk_result_t talk_unique_kaneda_bike()
 
             _kaneda_bike_join_party();
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
         listmax = 0;
         buff = i18n::s.get("core.locale.talk.unique.kaneda_bike.after_drug.no");
@@ -4786,7 +4782,7 @@ talk_result_t talk_unique_kaneda_bike()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     {
         int stat = inv_find(771, 0);
@@ -4819,7 +4815,7 @@ talk_result_t talk_unique_kaneda_bike()
 
                 ++gdata_blue_capsule_drug;
 
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
     }
@@ -4829,7 +4825,7 @@ talk_result_t talk_unique_kaneda_bike()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
@@ -4842,12 +4838,12 @@ void _part_time_worker_switch_religion()
     switch_religion();
 }
 
-talk_result_t talk_unique_part_time_worker()
+TalkResult talk_unique_part_time_worker()
 {
-    if (gdata_current_map != mdata_t::map_id_t::noyel
+    if (gdata_current_map != mdata_t::MapId::noyel
         || adata(29, gdata_current_map) == 0)
     {
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     if (cdata.player().god_id == core_god::jure)
     {
@@ -4858,7 +4854,7 @@ talk_result_t talk_unique_part_time_worker()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        return talk_result_t::talk_end;
+        return TalkResult::talk_end;
     }
     ELONA_APPEND_RESPONSE(
         1, i18n::s.get("core.locale.talk.unique.part_time_worker.choices.yes"));
@@ -4895,7 +4891,7 @@ talk_result_t talk_unique_part_time_worker()
 
             _part_time_worker_switch_religion();
 
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -4904,12 +4900,12 @@ talk_result_t talk_unique_part_time_worker()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 } // namespace
 
-talk_result_t talk_unique()
+TalkResult talk_unique()
 {
     listmax = 0;
     switch (*chatval_unique_chara_id)
@@ -4953,7 +4949,7 @@ talk_result_t talk_unique()
     case 345: return talk_unique_kaneda_bike();
     case 348: return talk_unique_part_time_worker();
     }
-    return talk_result_t::talk_ignored;
+    return TalkResult::talk_ignored;
 }
 
 } // namespace elona

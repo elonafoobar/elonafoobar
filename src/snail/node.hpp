@@ -11,7 +11,7 @@ namespace snail
 
 
 
-class node : public lib::noncopyable
+class Node : public lib::noncopyable
 {
 public:
     int frame() const noexcept
@@ -20,11 +20,11 @@ public:
     }
 
 
-    node() = default;
-    virtual ~node() override = default;
+    Node() = default;
+    virtual ~Node() override = default;
 
     virtual void update() = 0;
-    virtual void render(renderer& renderer) = 0;
+    virtual void render(Renderer& renderer) = 0;
 
 
     // internal

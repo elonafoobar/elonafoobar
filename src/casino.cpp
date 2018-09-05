@@ -163,7 +163,7 @@ label_1868_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -400,23 +400,23 @@ void casino_random_site()
     {
         atxid(1) = 3;
         atxlv = gdata_current_dungeon_level;
-        if (mdata_map_type == mdata_t::map_type_t::dungeon)
+        if (mdata_map_type == mdata_t::MapType::dungeon)
         {
             atxid(1) = 1;
         }
-        if (mdata_map_type == mdata_t::map_type_t::dungeon_tower)
+        if (mdata_map_type == mdata_t::MapType::dungeon_tower)
         {
             atxid(1) = 4;
         }
-        if (mdata_map_type == mdata_t::map_type_t::dungeon_forest)
+        if (mdata_map_type == mdata_t::MapType::dungeon_forest)
         {
             atxid(1) = 2;
         }
-        if (mdata_map_type == mdata_t::map_type_t::dungeon_castle)
+        if (mdata_map_type == mdata_t::MapType::dungeon_castle)
         {
             atxid(1) = 4;
         }
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             atxlv = cdata.player().level;
             if (4 <= gdata(62) && gdata(62) < 9)
@@ -969,7 +969,7 @@ bool casino_blackjack()
     stake = rtval;
     winrow = 0;
     cardround = 0;
-    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     for (int cnt = 0;; ++cnt)
     {
         screenupdate = -1;
@@ -989,7 +989,7 @@ bool casino_blackjack()
             cardplayeradd(0, 220, 124);
             cardplayeradd(1, 220, 240);
         }
-        font(14 - en * 2, snail::font_t::style_t::bold);
+        font(14 - en * 2, snail::Font::Style::bold);
         color(255, 255, 255);
         pos(152, 154);
         mes(i18n::s.get("core.locale.casino.blackjack.game.dealer"));

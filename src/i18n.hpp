@@ -22,18 +22,18 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
-typedef std::string i18n_key;
+using I18NKey = std::string;
 
-struct character;
-struct item;
+struct Character;
+
 
 namespace i18n
 {
 
-class i18n_error : public std::exception
+class I18NError : public std::exception
 {
 public:
-    i18n_error(const std::string& path, std::string str)
+    I18NError(const std::string& path, std::string str)
     {
         std::ostringstream oss;
         oss << path << ": ";
@@ -67,9 +67,9 @@ std::string _(const std::string& key_head, const Args&... key_tail)
 
 
 
-struct formattable_string
+struct FormattableString
 {
-    explicit formattable_string(
+    explicit FormattableString(
         const std::string& key_head,
         const std::vector<std::string>& key_tail)
         : key_head(key_head)
@@ -103,18 +103,18 @@ private:
 
 
 // TODO rename
-inline formattable_string fmt(
+inline FormattableString fmt(
     const std::string& key_head,
     const std::vector<std::string>& key_tail)
 {
-    return formattable_string{key_head, key_tail};
+    return FormattableString{key_head, key_tail};
 }
 
 
 
 // TODO rename
 template <typename... Args>
-formattable_string fmt(const std::string& key_head, const Args&... key_tail)
+FormattableString fmt(const std::string& key_head, const Args&... key_tail)
 {
     return fmt(key_head, {key_tail...});
 }
@@ -140,24 +140,24 @@ std::string format_builtins_string(const hil::FunctionCall&, std::string);
 std::string format_builtins_integer(const hil::FunctionCall&, int);
 std::string format_builtins_character(
     const hil::FunctionCall&,
-    const character&);
-std::string format_builtins_item(const hil::FunctionCall&, const item&);
+    const Character&);
+std::string format_builtins_item(const hil::FunctionCall&, const Item&);
 
 std::string space_if_needed();
 
 namespace detail
 {
 
-template <typename Head = character const&>
-std::string format_literal_type(character const& c)
+template <typename Head = Character const&>
+std::string format_literal_type(Character const& c)
 {
-    return "<character: "s + std::to_string(c.index) + ">"s;
+    return "<Character: "s + std::to_string(c.index) + ">"s;
 }
 
-template <typename Head = item const&>
-std::string format_literal_type(item const& i)
+template <typename Head = Item const&>
+std::string format_literal_type(Item const& i)
 {
-    return "<item: "s + std::to_string(i.index) + ">"s;
+    return "<Item: "s + std::to_string(i.index) + ">"s;
 }
 
 template <typename Head>
@@ -210,18 +210,18 @@ std::string format_literal_type(Head const& head)
     return std::to_string(head);
 }
 
-template <typename Head = const character&>
+template <typename Head = const Character&>
 std::string format_function_type(
     hil::FunctionCall const& func,
-    const character& chara)
+    const Character& chara)
 {
     return format_builtins_character(func, chara);
 }
 
-template <typename Head = const item&>
+template <typename Head = const Item&>
 std::string format_function_type(
     hil::FunctionCall const& func,
-    const item& item)
+    const Item& item)
 {
     return format_builtins_item(func, item);
 }
@@ -246,16 +246,16 @@ std::string format_function_type(
     else if (object.is<sol::table>())
     {
         sol::table table = object.as<sol::table>();
-        if (lua::lua->get_handle_manager().handle_is<character>(table))
+        if (lua::lua->get_handle_manager().handle_is<Character>(table))
         {
             auto& chara =
-                lua::lua->get_handle_manager().get_ref<character>(table);
+                lua::lua->get_handle_manager().get_ref<Character>(table);
             return format_builtins_character(func, chara);
         }
-        else if (lua::lua->get_handle_manager().handle_is<item>(table))
+        else if (lua::lua->get_handle_manager().handle_is<Item>(table))
         {
             auto& item_ref =
-                lua::lua->get_handle_manager().get_ref<item>(table);
+                lua::lua->get_handle_manager().get_ref<Item>(table);
             return format_builtins_item(func, item_ref);
         }
     }
@@ -446,15 +446,15 @@ std::string fmt_hil(const std::string& hil, Tail&&... tail)
 
 
 
-class store
+class Store
 {
 public:
-    store(){};
-    ~store() = default;
+    Store(){};
+    ~Store() = default;
 
-    struct location
+    struct Location
     {
-        location(fs::path locale_dir, std::string mod_name)
+        Location(fs::path locale_dir, std::string mod_name)
             : locale_dir(locale_dir)
             , mod_name(mod_name)
         {
@@ -464,7 +464,7 @@ public:
         std::string mod_name;
     };
 
-    void init(const std::vector<store::location>&);
+    void init(const std::vector<Store::Location>&);
 
     // For testing use.
     void load(std::istream&, const std::string&, const std::string&);
@@ -474,7 +474,7 @@ public:
         storage.clear();
     }
 
-    optional<const hil::Context&> find_translation(const i18n_key& key)
+    optional<const hil::Context&> find_translation(const I18NKey& key)
     {
         // In the unlikely event that a single locale key refers to
         // both a single string and a list, the string will be chosen.
@@ -500,7 +500,7 @@ public:
 
     template <typename Head, typename... Tail>
     optional<std::string>
-    get_optional(const i18n_key& key, Head const& head, Tail&&... tail)
+    get_optional(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         const auto& found = find_translation(key);
         if (!found)
@@ -512,7 +512,7 @@ public:
     }
 
     template <typename... Tail>
-    optional<std::string> get_optional(const i18n_key& key, Tail&&... tail)
+    optional<std::string> get_optional(const I18NKey& key, Tail&&... tail)
     {
         const auto& found = find_translation(key);
         if (!found)
@@ -524,7 +524,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    std::string get(const i18n_key& key, Head const& head, Tail&&... tail)
+    std::string get(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         if (auto text = get_optional(key, head, std::forward<Tail>(tail)...))
         {
@@ -542,7 +542,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get(const i18n_key& key, Tail&&... tail)
+    std::string get(const I18NKey& key, Tail&&... tail)
     {
         if (auto text = get_optional(key, std::forward<Tail>(tail)...))
         {
@@ -564,7 +564,7 @@ public:
 
     template <typename Head, typename... Tail>
     std::string
-    get_enum(const i18n_key& key, int index, Head const& head, Tail&&... tail)
+    get_enum(const I18NKey& key, int index, Head const& head, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index),
@@ -573,7 +573,7 @@ public:
     }
 
     template <typename... Tail>
-    std::string get_enum(const i18n_key& key, int index, Tail&&... tail)
+    std::string get_enum(const I18NKey& key, int index, Tail&&... tail)
     {
         return get(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -581,7 +581,7 @@ public:
 
     template <typename Head, typename... Tail>
     optional<std::string> get_enum_optional(
-        const i18n_key& key,
+        const I18NKey& key,
         int index,
         Head const& head,
         Tail&&... tail)
@@ -594,7 +594,7 @@ public:
 
     template <typename... Tail>
     optional<std::string>
-    get_enum_optional(const i18n_key& key, int index, Tail&&... tail)
+    get_enum_optional(const I18NKey& key, int index, Tail&&... tail)
     {
         return get_optional(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
@@ -656,7 +656,7 @@ public:
     // returns 1-size list which contains the value. If `key` does not exist,
     // returns empty list.
     template <typename... Args>
-    std::vector<std::string> get_list(const i18n_key& key, Args&&... args)
+    std::vector<std::string> get_list(const I18NKey& key, Args&&... args)
     {
         std::vector<std::string> ret;
 
@@ -704,7 +704,7 @@ private:
     /***
      * Storage for single pieces of localized texts.
      */
-    std::unordered_map<i18n_key, hil::Context> storage;
+    std::unordered_map<I18NKey, hil::Context> storage;
 
     /***
      * Storage for lists of localized text.
@@ -712,16 +712,16 @@ private:
      * When retrieving text using a locale key referring to a list element,
      * the text will be chosen randomly.
      */
-    std::unordered_map<i18n_key, std::vector<hil::Context>> list_storage;
+    std::unordered_map<I18NKey, std::vector<hil::Context>> list_storage;
 
-    std::set<i18n_key> unknown_keys;
+    std::set<I18NKey> unknown_keys;
 
     // Key: mod name.
     // Value: locale directory.
     std::unordered_map<std::string, fs::path> locale_dir_table;
 };
 
-extern i18n::store s;
+extern i18n::Store s;
 
 } // namespace i18n
 } // namespace elona

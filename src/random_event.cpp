@@ -26,7 +26,7 @@ namespace
 
 
 
-struct random_event
+struct RandomEvent
 {
     int id;
     int luck_threshold;
@@ -52,7 +52,7 @@ std::vector<int> fsetremain{
 
 
 
-optional<random_event> generate_random_event_in_sleep()
+optional<RandomEvent> generate_random_event_in_sleep()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -133,13 +133,13 @@ optional<random_event> generate_random_event_in_sleep()
     }
     else
     {
-        return random_event{id, luck_threshold};
+        return RandomEvent{id, luck_threshold};
     }
 }
 
 
 
-optional<random_event> generate_random_event()
+optional<RandomEvent> generate_random_event()
 {
     int id = 0;
     int luck_threshold = 0;
@@ -160,14 +160,14 @@ optional<random_event> generate_random_event()
     {
         return generate_random_event_in_sleep();
     }
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         if (cdata.player().continuous_action_id != 0)
         {
             return none;
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::player_owned)
+    if (mdata_map_type == mdata_t::MapType::player_owned)
     {
         return none;
     }
@@ -201,7 +201,7 @@ optional<random_event> generate_random_event()
         id = 13;
         luck_threshold = 45;
     }
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         if (rnd(25) == 0)
         {
@@ -209,7 +209,7 @@ optional<random_event> generate_random_event()
             luck_threshold = 80;
         }
     }
-    else if (mdata_map_type == mdata_t::map_type_t::world_map)
+    else if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (rnd(40))
         {
@@ -234,13 +234,13 @@ optional<random_event> generate_random_event()
     }
     else
     {
-        return random_event{id, luck_threshold};
+        return RandomEvent{id, luck_threshold};
     }
 }
 
 
 
-void run_random_event(random_event event)
+void run_random_event(RandomEvent event)
 {
     assert(event.id != 0);
 
@@ -267,7 +267,7 @@ void run_random_event(random_event event)
                 --cnt;
                 continue;
             }
-            if (cdata[p].state() == character::state_t::alive)
+            if (cdata[p].state() == Character::State::alive)
             {
                 txt(i18n::s.get_enum_property(
                     "core.locale.event.popup", "scream", 15, cdata[p]));
@@ -581,7 +581,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (config::instance().skiprandevents && choices.size() == 1)
+    if (Config::instance().skiprandevents && choices.size() == 1)
     {
         // Skip this event.
         snd(62);
@@ -686,7 +686,7 @@ int show_random_event_window(
             cs_bk = cs;
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_ITEM(rtval, snd(40));

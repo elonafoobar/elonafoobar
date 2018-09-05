@@ -7,14 +7,14 @@ namespace snail
 {
 
 
-scene_base::scene_base(std::shared_ptr<scene_base> parent)
+SceneBase::SceneBase(std::shared_ptr<SceneBase> parent)
     : _parent(parent)
 {
 }
 
 
 
-std::shared_ptr<scene_base> scene_manager::current_scene()
+std::shared_ptr<SceneBase> SceneManager::current_scene()
 {
     assert(_scene_stack.size() >= 1);
     return _scene_stack.top();
@@ -22,14 +22,14 @@ std::shared_ptr<scene_base> scene_manager::current_scene()
 
 
 
-void scene_manager::push(std::shared_ptr<scene_base> new_scene)
+void SceneManager::push(std::shared_ptr<SceneBase> new_scene)
 {
     _scene_stack.push(new_scene);
 }
 
 
 
-void scene_manager::pop()
+void SceneManager::pop()
 {
     assert(_scene_stack.size() >= 1);
     _scene_stack.pop();
@@ -37,7 +37,7 @@ void scene_manager::pop()
 
 
 
-void scene_manager::pop_all()
+void SceneManager::pop_all()
 {
     while (!_scene_stack.empty())
     {
@@ -47,7 +47,7 @@ void scene_manager::pop_all()
 
 
 
-void scene_manager::replace(std::shared_ptr<scene_base> new_scene)
+void SceneManager::replace(std::shared_ptr<SceneBase> new_scene)
 {
     pop();
     push(new_scene);

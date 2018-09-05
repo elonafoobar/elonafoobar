@@ -28,7 +28,7 @@ namespace elona
 namespace mdata_t
 {
 
-enum map_type_t
+enum class MapType
 {
     world_map = 1,
     guild = 2,
@@ -43,7 +43,28 @@ enum map_type_t
     dungeon_castle = 23,
 };
 
-enum map_id_t
+// FIXME: Delete them for secure comparison.
+inline bool operator==(int lhs, MapType rhs)
+{
+    return lhs == static_cast<int>(rhs);
+}
+
+inline bool operator==(MapType lhs, int rhs)
+{
+    return rhs == lhs;
+}
+
+inline bool operator!=(int lhs, MapType rhs)
+{
+    return !(lhs == rhs);
+}
+
+inline bool operator!=(MapType lhs, int rhs)
+{
+    return !(lhs == rhs);
+}
+
+enum class MapId
 {
     none = 0,
     fields = 2,
@@ -101,6 +122,27 @@ enum map_id_t
 
     debug_map = 9999,
 };
+
+// FIXME: Delete them for secure comparison.
+inline bool operator==(int lhs, MapId rhs)
+{
+    return lhs == static_cast<int>(rhs);
+}
+
+inline bool operator==(MapId lhs, int rhs)
+{
+    return rhs == lhs;
+}
+
+inline bool operator!=(int lhs, MapId rhs)
+{
+    return !(lhs == rhs);
+}
+
+inline bool operator!=(MapId lhs, int rhs)
+{
+    return !(lhs == rhs);
+}
 
 } // namespace mdata_t
 

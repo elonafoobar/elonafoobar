@@ -8,7 +8,7 @@ namespace elona
 {
 
 
-struct item_material_data
+struct ItemMaterialData
 {
     int id;
     int weight;
@@ -19,23 +19,23 @@ struct item_material_data
     int pv;
     int dice_y;
     int color;
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
     bool fireproof;
     bool acidproof;
 };
 
 
-class item_material_db;
+class ItemMaterialDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<item_material_db>
+struct CatDBTraits<ItemMaterialDB>
 {
-    using id_type = int;
-    using data_type = item_material_data;
+    using IdType = int;
+    using DataType = ItemMaterialData;
     static constexpr const char* filename = u8"item_material.lua";
     static constexpr const char* table_name = u8"item_material";
 };
@@ -44,10 +44,10 @@ struct cat_db_traits<item_material_db>
 
 
 
-class item_material_db : public cat::cat_db<item_material_db>
+class ItemMaterialDB : public cat::CatDB<ItemMaterialDB>
 {
 public:
-    item_material_db() = default;
+    ItemMaterialDB() = default;
 
     int lookup_leather(int x, int y);
     int lookup_metal(int x, int y);
@@ -58,7 +58,7 @@ public:
 };
 
 
-extern item_material_db the_item_material_db;
+extern ItemMaterialDB the_item_material_db;
 
 
 

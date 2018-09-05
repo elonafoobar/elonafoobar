@@ -22,27 +22,27 @@
 namespace
 {
 
-pic_loader loader;
+PicLoader loader;
 
 
-struct damage_popup_t
+struct DamagePopup
 {
     int frame;
     std::string text;
     int character;
-    snail::color color;
+    snail::Color color;
 
-    damage_popup_t()
+    DamagePopup()
         : frame(-1)
         , text(std::string())
         , character(-1)
-        , color(snail::color(255, 255, 255, 255))
+        , color(snail::Color(255, 255, 255, 255))
     {
     }
 };
 
 
-std::vector<damage_popup_t> damage_popups;
+std::vector<DamagePopup> damage_popups;
 int damage_popups_active = 0;
 
 
@@ -99,7 +99,7 @@ double easing(double t)
 
 
 
-std::unordered_map<std::string, image_info> images = {};
+std::unordered_map<std::string, ImageInfo> images = {};
 
 std::unordered_map<std::string, int> window_id_table = {
     {"item.bmp", 1},
@@ -115,28 +115,28 @@ namespace elona
 {
 
 
-std::vector<item_chip_t> item_chips{825};
-std::vector<chara_chip_t> chara_chips{925};
+std::vector<ItemChip> item_chips{825};
+std::vector<CharaChip> chara_chips{925};
 
 
 
-optional_ref<extent> draw_get_rect_chara(int id)
+optional_ref<Extent> draw_get_rect_chara(int id)
 {
     return draw_get_rect(chara_chips[id].key);
 }
 
-optional_ref<extent> draw_get_rect_item(int id)
+optional_ref<Extent> draw_get_rect_item(int id)
 {
     return draw_get_rect(item_chips[id].key);
 }
 
-optional_ref<extent> draw_get_rect(const std::string& key)
+optional_ref<Extent> draw_get_rect(const std::string& key)
 {
     return loader[key];
 }
 
 
-optional_ref<extent> prepare_item_image(int id, int color)
+optional_ref<Extent> prepare_item_image(int id, int color)
 {
     const auto rect = draw_get_rect_item(id);
 
@@ -161,14 +161,14 @@ optional_ref<extent> prepare_item_image(int id, int color)
 
 
 
-optional_ref<extent> prepare_item_image(int id, int color, int character_image)
+optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
     {
         return prepare_item_image(id, color);
     }
 
-    optional_ref<extent> item_rect;
+    optional_ref<Extent> item_rect;
 
     if (id == 528) // Cards
     {
@@ -277,16 +277,16 @@ optional_ref<extent> prepare_item_image(int id, int color, int character_image)
 
 
 
-void show_hp_bar(show_hp_bar_side side, int inf_clocky)
+void show_hp_bar(HPBarSide side, int inf_clocky)
 {
-    const bool right = side == show_hp_bar_side::right_side;
+    const bool right = side == HPBarSide::right_side;
 
     int cnt{};
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state() == character::state_t::alive
-             || cc.state() == character::state_t::pet_dead)
+        if ((cc.state() == Character::State::alive
+             || cc.state() == Character::State::pet_dead)
             && cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
@@ -310,10 +310,10 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 name,
                 x,
                 y,
-                cc.state() == character::state_t::alive
-                    ? snail::color{255, 255, 255}
-                    : snail::color{255, 35, 35});
-            if (cc.state() == character::state_t::alive)
+                cc.state() == Character::State::alive
+                    ? snail::Color{255, 255, 255}
+                    : snail::Color{255, 35, 35});
+            if (cc.state() == Character::State::alive)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
@@ -322,7 +322,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
-                if (config::instance().leash_icon && cdata[i].is_leashed())
+                if (Config::instance().leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
                     auto rect = prepare_item_image(leash, 2);
@@ -361,7 +361,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    damage_popups.resize(config::instance().max_damage_popup);
+    damage_popups.resize(Config::instance().max_damage_popup);
 }
 
 
@@ -369,10 +369,10 @@ void initialize_damage_popups()
 void add_damage_popup(
     const std::string& text,
     int character,
-    const snail::color& color)
+    const snail::Color& color)
 {
-    damage_popups.resize(config::instance().max_damage_popup);
-    if (damage_popups_active == config::instance().max_damage_popup)
+    damage_popups.resize(Config::instance().max_damage_popup);
+    if (damage_popups_active == Config::instance().max_damage_popup)
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(
@@ -414,7 +414,7 @@ void clear_damage_popups()
 
 void show_damage_popups()
 {
-    if (config::instance().damage_popup == 0)
+    if (Config::instance().damage_popup == 0)
     {
         return;
     }
@@ -552,14 +552,14 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 
 
 
-optional_ref<extent> chara_preparepic(const character& cc)
+optional_ref<Extent> chara_preparepic(const Character& cc)
 {
     return chara_preparepic(cc.image);
 }
 
 
 
-optional_ref<extent> chara_preparepic(int image_id)
+optional_ref<Extent> chara_preparepic(int image_id)
 {
     const auto chip_id = image_id % 1000;
     const auto color_id = image_id / 1000;
@@ -690,7 +690,7 @@ void initialize_map_chip()
 {
     // TODO: this could be called multiple times outside of
     // initialize_all_chips. Add a method to clear only map chip
-    // buffers from pic_loader so they can be loaded again, or keep
+    // buffers from PicLoader so they can be loaded again, or keep
     // all chips loaded at once.
     DIM3(chipm, 8, 825);
     if (mdata_map_atlas_number == 0)
@@ -851,17 +851,17 @@ void initialize_map_chip()
 }
 
 
-void initialize_item_chips(const item_chip_db& db)
+void initialize_item_chips(const ItemChipDB& db)
 {
-    pic_loader::map_type predefined_extents;
+    PicLoader::MapType predefined_extents;
 
     for (const auto& chip_data : db)
     {
-        shared_id key = chip_data.chip.key;
+        SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.
-        if (item_chips.size() < legacy_id)
+        if (static_cast<int>(item_chips.size()) < legacy_id)
         {
             item_chips.resize(legacy_id + 1);
         }
@@ -871,7 +871,7 @@ void initialize_item_chips(const item_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::page_type::character);
+                *chip_data.filepath, key, PicLoader::PageType::character);
         }
         else
         {
@@ -883,21 +883,21 @@ void initialize_item_chips(const item_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"item.bmp",
         predefined_extents,
-        pic_loader::page_type::item);
+        PicLoader::PageType::item);
 }
 
 
-void initialize_chara_chips(const chara_chip_db& db)
+void initialize_chara_chips(const CharaChipDB& db)
 {
-    pic_loader::map_type predefined_extents;
+    PicLoader::MapType predefined_extents;
 
     for (const auto& chip_data : db)
     {
-        shared_id key = chip_data.chip.key;
+        SharedId key = chip_data.chip.key;
         int legacy_id = chip_data.id;
 
         // Insert chip data into global vector.
-        if (chara_chips.size() < legacy_id)
+        if (static_cast<int>(chara_chips.size()) < legacy_id)
         {
             chara_chips.resize(legacy_id + 1);
         }
@@ -907,7 +907,7 @@ void initialize_chara_chips(const chara_chip_db& db)
         {
             // Chip is from an external file.
             loader.load(
-                *chip_data.filepath, key, pic_loader::page_type::character);
+                *chip_data.filepath, key, PicLoader::PageType::character);
         }
         else
         {
@@ -919,7 +919,7 @@ void initialize_chara_chips(const chara_chip_db& db)
     loader.add_predefined_extents(
         filesystem::dir::graphic() / u8"character.bmp",
         predefined_extents,
-        pic_loader::page_type::character);
+        PicLoader::PageType::character);
 }
 
 
@@ -938,8 +938,8 @@ void bmes(
     const std::string& message,
     int x,
     int y,
-    const snail::color& text_color,
-    const snail::color& shadow_color)
+    const snail::Color& text_color,
+    const snail::Color& shadow_color)
 {
     color(shadow_color.r, shadow_color.g, shadow_color.b);
     for (int dy = -1; dy <= 1; ++dy)
@@ -1058,7 +1058,7 @@ void draw_rotated(
 
 
 
-const image_info& get_image_info(const std::string& key)
+const ImageInfo& get_image_info(const std::string& key)
 {
     const auto itr = images.find(key);
     if (itr == std::end(images))
@@ -1066,7 +1066,7 @@ const image_info& get_image_info(const std::string& key)
     return itr->second;
 }
 
-void draw_chara(const character& chara, int x, int y, int scale, int alpha)
+void draw_chara(const Character& chara, int x, int y, int scale, int alpha)
 {
     draw_chara(chara.image, x, y, scale, alpha);
 }
@@ -1094,7 +1094,7 @@ void draw_chara(int image_id, int x, int y, int scale, int alpha)
         rect->height * scale);
 }
 
-void draw_chara_scale_height(const character& chara, int x, int y)
+void draw_chara_scale_height(const Character& chara, int x, int y)
 {
     draw_chara_scale_height(chara.image, x, y);
 }
@@ -1126,7 +1126,7 @@ void draw_item_material(int image_id, int x, int y)
     gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
 }
 
-void draw_item_with_portrait(const item& item, int x, int y)
+void draw_item_with_portrait(const Item& item, int x, int y)
 {
     draw_item_with_portrait(item.image, item.color, item.param1, x, y);
 }
@@ -1138,7 +1138,7 @@ void draw_item_with_portrait(
     int x,
     int y)
 {
-    optional_ref<extent> rect;
+    optional_ref<Extent> rect;
 
     if (chara_chip_id)
     {
@@ -1155,7 +1155,7 @@ void draw_item_with_portrait(
     gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
 }
 
-void draw_item_with_portrait_scale_height(const item& item, int x, int y)
+void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
 {
     draw_item_with_portrait_scale_height(
         item.image, item.color, item.param1, x, y);
@@ -1168,7 +1168,7 @@ void draw_item_with_portrait_scale_height(
     int x,
     int y)
 {
-    optional_ref<extent> rect;
+    optional_ref<Extent> rect;
 
     if (chara_chip_id)
     {

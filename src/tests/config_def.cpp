@@ -10,9 +10,9 @@ using namespace elona;
 namespace
 {
 
-config_def load(const std::string& str)
+ConfigDef load(const std::string& str)
 {
-    config_def def;
+    ConfigDef def;
 
     std::stringstream ss(str);
 
@@ -23,7 +23,7 @@ config_def load(const std::string& str)
 
 TEST_CASE("Test metadata: visible", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = "bar"
     baz = {
@@ -44,7 +44,7 @@ config def {
 
 TEST_CASE("Test metadata: preload", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = "bar"
     baz = {
@@ -65,7 +65,7 @@ config def {
 
 TEST_CASE("Test metadata: translate_variants", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = "bar"
     baz = {
@@ -86,7 +86,7 @@ config def {
 
 TEST_CASE("Test metadata: platform", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = "bar"
     baz = {
@@ -106,21 +106,21 @@ config def {
 
     REQUIRE(
         def.get_metadata("core.config.foo").platform
-        == config_def::option_platform::all);
+        == ConfigDef::Platform::all);
     REQUIRE(
         def.get_metadata("core.config.baz").platform
-        == config_def::option_platform::desktop);
+        == ConfigDef::Platform::desktop);
     REQUIRE(
         def.get_metadata("core.config.hoge").platform
-        == config_def::option_platform::android);
+        == ConfigDef::Platform::android);
     REQUIRE(
         def.get_metadata("core.config.fuga").platform
-        == config_def::option_platform::all);
+        == ConfigDef::Platform::all);
 }
 
 TEST_CASE("Test metadata: platform_default", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = false
     bar = {
@@ -151,7 +151,7 @@ config def {
 
 TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")
 {
-    config_def def = load(R"(
+    ConfigDef def = load(R"(
 config def {
     foo = "bar"
     baz = {

@@ -8,7 +8,7 @@
 #include "../variables.hpp"
 #include "tests.hpp"
 
-static sol::table load(elona::lua::lua_env& lua, const std::string& name)
+static sol::table load(elona::lua::LuaEnv& lua, const std::string& name)
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
@@ -26,7 +26,7 @@ static sol::table load(elona::lua::lua_env& lua, const std::string& name)
 
 TEST_CASE("test registering item", "[Lua: Registry]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     auto table = load(lua, "item");
 
     item_db_ex db;

@@ -23,7 +23,7 @@ static void _populate_book_list()
     sort_list_by_column1();
 }
 
-bool ui_menu_spell_writer::init()
+bool UIMenuSpellWriter::init()
 {
     snd(26);
     listmax = 0;
@@ -39,7 +39,7 @@ bool ui_menu_spell_writer::init()
     return true;
 }
 
-void ui_menu_spell_writer::update()
+void UIMenuSpellWriter::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -145,7 +145,7 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_spell_writer::draw()
+void UIMenuSpellWriter::draw()
 {
     _draw_window();
     _draw_keys();
@@ -169,7 +169,7 @@ static void _toggle_book_reserve(int _p)
     }
 }
 
-optional<ui_menu_spell_writer::result_type> ui_menu_spell_writer::on_key(
+optional<UIMenuSpellWriter::ResultType> UIMenuSpellWriter::on_key(
     const std::string& key)
 {
     int _p;
@@ -211,7 +211,7 @@ optional<ui_menu_spell_writer::result_type> ui_menu_spell_writer::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_spell_writer::result::finish();
+        return UIMenuSpellWriter::Result::finish();
     }
 
     return none;

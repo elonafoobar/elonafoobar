@@ -13,7 +13,7 @@ namespace elona
 {
 
 
-struct item_data
+struct ItemData
 {
     int id;
     int image;
@@ -43,14 +43,14 @@ struct item_data
     int light;
     std::string originalnameref2;
     bool has_random_name;
-    color_index_t color;
+    ColorIndex color;
     std::string filter;
     std::string rffilter;
-    i18n_key locale_key_prefix;
+    I18NKey locale_key_prefix;
     optional<std::string> on_use_callback;
 };
 
-ELONA_LION_DEFINE_DB(item_db_ex, item_data, int, u8"item")
+ELONA_LION_DEFINE_DB(item_db_ex, ItemData, int, u8"item")
 
 extern item_db_ex the_item_db;
 

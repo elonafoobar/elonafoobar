@@ -386,8 +386,8 @@ label_2699_internal:
     }
     ++t;
     redraw();
-    await(config::instance().wait1);
-    key_check(key_wait_delay_t::none);
+    await(Config::instance().wait1);
+    key_check(KeyWaitDelay::none);
     if (key == key_north)
     {
         key = listn(1, 3);
@@ -536,7 +536,7 @@ void show_ex_help()
         gcopy(3, 960, 96, 48, 48);
         pos(wx + 10, wy + 42);
         gcopy(3, 960, 144, 96, 120);
-        font(16 - en * 2, snail::font_t::style_t::bold);
+        font(16 - en * 2, snail::Font::Style::bold);
         bmes(
             i18n::s.get("core.locale.ui.exhelp.title"),
             wx + 142,
@@ -576,30 +576,31 @@ void show_ex_help()
 
 void show_game_help()
 {
-    ui::ui_menu_game_help().show();
+    ui::UIMenuGameHelp().show();
 }
 
-turn_result_t show_journal()
+TurnResult show_journal()
 {
-    ui::ui_menu_composite_message(ui::ui_menu_composite_message::index::journal)
+    ui::UIMenuCompositeMessage(
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::journal))
         .show();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t show_message_log()
+TurnResult show_message_log()
 {
-    ui::ui_menu_composite_message(
-        ui::ui_menu_composite_message::index::message_log)
+    ui::UIMenuCompositeMessage(
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::message_log))
         .show();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t show_chat_history()
+TurnResult show_chat_history()
 {
-    ui::ui_menu_composite_message(
-        ui::ui_menu_composite_message::index::chat_history)
+    ui::UIMenuCompositeMessage(
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::chat_history))
         .show();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 void load_showroom_user_info()
@@ -629,50 +630,52 @@ int cnvjkey(const std::string& prm_1092)
     return p_at_m198 + 1;
 }
 
-turn_result_t play_scene()
+TurnResult play_scene()
 {
-    auto result = ui::ui_menu_scene().show();
+    auto result = ui::UIMenuScene().show();
 
     if (result.canceled)
     {
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     else
     {
-        return turn_result_t::play_scene;
+        return TurnResult::play_scene;
     }
 }
 
 
-static turn_result_t _show_skill_spell_menu(size_t menu_index)
+static TurnResult _show_skill_spell_menu(size_t menu_index)
 {
-    auto result = ui::ui_menu_composite_skills(menu_index).show();
+    auto result = ui::UIMenuCompositeSkills(menu_index).show();
 
     if (result.canceled || !result.value)
     {
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
 
-    if (result.value->type() == typeid(ui::ui_menu_skills_result))
+    if (result.value->type() == typeid(ui::UIMenuSkillsResult))
     {
-        efid = boost::get<ui::ui_menu_skills_result>(*result.value).effect_id;
+        efid = boost::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
         return do_use_magic();
     }
     else
     {
-        efid = boost::get<ui::ui_menu_spells_result>(*result.value).effect_id;
+        efid = boost::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
         return do_cast_command();
     }
 }
 
-turn_result_t show_spell_list()
+TurnResult show_spell_list()
 {
-    return _show_skill_spell_menu(ui::ui_menu_composite_skills::index::spells);
+    return _show_skill_spell_menu(
+        static_cast<size_t>(ui::UIMenuCompositeSkills::Index::spells));
 }
 
-turn_result_t show_skill_list()
+TurnResult show_skill_list()
 {
-    return _show_skill_spell_menu(ui::ui_menu_composite_skills::index::skills);
+    return _show_skill_spell_menu(
+        static_cast<size_t>(ui::UIMenuCompositeSkills::Index::skills));
 }
 
 
@@ -738,43 +741,43 @@ void draw_spell_power_entry(int skill_id)
     return;
 }
 
-menu_result _show_character_sheet_menu(size_t menu_index)
+MenuResult _show_character_sheet_menu(size_t menu_index)
 {
-    ui::ui_menu_composite_character(menu_index).show();
+    ui::UIMenuCompositeCharacter(menu_index).show();
 
     update_screen();
-    return {false, false, turn_result_t::pc_turn_user_error};
+    return {false, false, TurnResult::pc_turn_user_error};
 }
 
-menu_result menu_character_sheet_normal()
+MenuResult menu_character_sheet_normal()
 {
-    return _show_character_sheet_menu(
-        ui::ui_menu_composite_character::index::character_sheet);
+    return _show_character_sheet_menu(static_cast<size_t>(
+        ui::UIMenuCompositeCharacter::Index::character_sheet));
 }
 
-menu_result menu_feats()
+MenuResult menu_feats()
 {
     return _show_character_sheet_menu(
-        ui::ui_menu_composite_character::index::feats);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::feats));
 }
 
-menu_result menu_equipment()
+MenuResult menu_equipment()
 {
     return _show_character_sheet_menu(
-        ui::ui_menu_composite_character::index::equipment);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::equipment));
 }
 
-menu_result menu_materials()
+MenuResult menu_materials()
 {
     return _show_character_sheet_menu(
-        ui::ui_menu_composite_character::index::materials);
+        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::materials));
 }
 
 // Returns false if canceled, true if confirmed
 bool menu_character_sheet_character_making()
 {
     auto result =
-        ui::ui_menu_character_sheet(character_sheet_operation::character_making)
+        ui::UIMenuCharacterSheet(CharacterSheetOperation::character_making)
             .show();
 
     if (result.canceled)
@@ -788,40 +791,38 @@ bool menu_character_sheet_character_making()
 // Returns skill ID if skill selected, none if canceled
 optional<int> menu_character_sheet_trainer(bool is_training)
 {
-    character_sheet_operation op;
+    CharacterSheetOperation op;
     if (is_training)
     {
-        op = character_sheet_operation::train_skill;
+        op = CharacterSheetOperation::train_skill;
     }
     else
     {
-        op = character_sheet_operation::learn_skill;
+        op = CharacterSheetOperation::learn_skill;
     }
 
-    auto result = ui::ui_menu_character_sheet(op).show();
+    auto result = ui::UIMenuCharacterSheet(op).show();
 
     if (result.canceled || !result.value)
     {
         return none;
     }
 
-    auto sheet_result = boost::get<ui::character_sheet_result>(*result.value);
+    auto sheet_result = boost::get<ui::CharacterSheetResult>(*result.value);
     return sheet_result.trainer_skill_id;
 }
 
 void menu_character_sheet_investigate()
 {
-    ui::ui_menu_character_sheet(character_sheet_operation::investigate_ally)
-        .show();
+    ui::UIMenuCharacterSheet(CharacterSheetOperation::investigate_ally).show();
 }
 
-menu_result menu_feats_character_making()
+MenuResult menu_feats_character_making()
 {
-    menu_result m_result = {false, false, turn_result_t::none};
+    MenuResult m_result = {false, false, TurnResult::none};
 
     auto result =
-        ui::ui_menu_feats(ui::ui_menu_feats::operation::character_making)
-            .show();
+        ui::UIMenuFeats(ui::UIMenuFeats::Operation::character_making).show();
 
     if (result.canceled)
     {
@@ -829,9 +830,9 @@ menu_result menu_feats_character_making()
     }
     else if (result.value)
     {
-        auto feats_result = boost::get<ui::feats_result>(*result.value);
+        auto FeatsResult = boost::get<ui::FeatsResult>(*result.value);
 
-        if (feats_result == ui::feats_result::pressed_f1)
+        if (FeatsResult == ui::FeatsResult::pressed_f1)
         {
             m_result.pressed_f1 = true;
         }
@@ -1161,7 +1162,7 @@ label_2041_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     set_pcc_info(cs);
@@ -1274,7 +1275,7 @@ label_2041_internal:
     }
     if (mode == 1)
     {
-        if (getkey(snail::key::f1))
+        if (getkey(snail::Key::f1))
         {
             return -1;
         }
@@ -1373,7 +1374,7 @@ int change_appearance_equipment()
             cs_bk = cs;
         }
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         if (cs != 0)
@@ -1456,7 +1457,7 @@ void append_accuracy_info(int val0)
 void show_weapon_dice(int val0)
 {
     tc = cc;
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     if (val0 == 0)
     {
@@ -1504,7 +1505,7 @@ void show_weapon_dice(int val0)
     return;
 }
 
-static turn_result_t _visit_quest_giver(int quest_index)
+static TurnResult _visit_quest_giver(int quest_index)
 {
     // TODO move the below somewhere else to decouple quest_teleport
     tc = qdata(0, quest_index);
@@ -1513,7 +1514,7 @@ static turn_result_t _visit_quest_giver(int quest_index)
     efid = 619;
     magic();
     tc = client;
-    if (cdata.player().state() == character::state_t::alive)
+    if (cdata.player().state() == Character::State::alive)
     {
         quest_teleport = true;
         talk_to_npc();
@@ -1521,14 +1522,14 @@ static turn_result_t _visit_quest_giver(int quest_index)
     if (chatteleport == 1)
     {
         chatteleport = 0;
-        return turn_result_t::exit_map;
+        return TurnResult::exit_map;
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t show_quest_board()
+TurnResult show_quest_board()
 {
-    if (config::instance().extrahelp)
+    if (Config::instance().extrahelp)
     {
         if (gdata(204) == 0)
         {
@@ -1546,20 +1547,20 @@ turn_result_t show_quest_board()
         }
     }
 
-    auto result = ui::ui_menu_quest_board().show();
+    auto result = ui::UIMenuQuestBoard().show();
 
     if (result.canceled)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
 
     int quest_index = *result.value;
     return _visit_quest_giver(quest_index);
 }
 
-int show_hire_menu(hire_operation operation)
+int show_hire_menu(HireOperation operation)
 {
-    auto result = ui::ui_menu_hire(operation).show();
+    auto result = ui::UIMenuHire(operation).show();
 
     if (result.canceled)
     {
@@ -1573,19 +1574,19 @@ int show_hire_menu(hire_operation operation)
 
 int show_spell_writer_menu()
 {
-    ui::ui_menu_spell_writer().show();
+    ui::UIMenuSpellWriter().show();
 
     return -1;
 }
 
 void list_adventurers()
 {
-    ui::ui_menu_adventurers().show();
+    ui::UIMenuAdventurers().show();
 }
 
 int select_alias(int val0)
 {
-    auto result = ui::ui_menu_alias(val0).show();
+    auto result = ui::UIMenuAlias(val0).show();
 
     if (result.canceled)
     {
@@ -1605,14 +1606,16 @@ int select_alias(int val0)
 
 void show_city_chart()
 {
-    ui::ui_menu_composite_town(ui::ui_menu_composite_town::index::chart).show();
+    ui::UIMenuCompositeTown(
+        static_cast<size_t>(ui::UIMenuCompositeTown::Index::chart))
+        .show();
 }
 
 void begin_to_believe_god(int god_id)
 {
     bool already_believing = !cdata.player().god_id.empty();
 
-    auto result = ui::ui_menu_god(god_id, already_believing).show();
+    auto result = ui::UIMenuGod(god_id, already_believing).show();
 
     if (!result.canceled && result.value)
     {
@@ -1630,9 +1633,9 @@ void house_board_update_screen()
 
 
 
-int ctrl_ally(ctrl_ally_operation operation)
+int ctrl_ally(ControlAllyOperation operation)
 {
-    auto result = ui::ui_menu_ctrl_ally(operation).show();
+    auto result = ui::UIMenuCtrlAlly(operation).show();
 
     if (!result.canceled && result.value)
     {
@@ -1722,7 +1725,7 @@ label_1965_internal:
     redraw();
 label_1966_internal:
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     p = -1;
@@ -1753,7 +1756,7 @@ label_1966_internal:
 
 int change_npc_tone()
 {
-    auto result = ui::ui_menu_npc_tone().show();
+    auto result = ui::UIMenuNPCTone().show();
 
     if (result.canceled)
     {
@@ -1783,7 +1786,7 @@ int change_npc_tone()
 
 void show_book_window()
 {
-    ui::ui_menu_book(inv[ci].param1).show();
+    ui::UIMenuBook(inv[ci].param1).show();
 }
 
 
@@ -1795,7 +1798,7 @@ void item_show_description()
         return;
     }
 
-    ui::ui_menu_item_desc(inv[ci]).show();
+    ui::UIMenuItemDesc(inv[ci]).show();
 
     returnfromidentify = 1;
 }

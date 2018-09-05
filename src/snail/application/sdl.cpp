@@ -16,14 +16,14 @@ namespace snail
 
 
 
-application& application::instance()
+Application& Application::instance()
 {
-    static application the_instance;
+    static Application the_instance;
     return the_instance;
 }
 
 
-void application::set_title(const std::string& title)
+void Application::set_title(const std::string& title)
 {
     _title = title;
     if (_window)
@@ -33,7 +33,7 @@ void application::set_title(const std::string& title)
 }
 
 
-void application::initialize_dpi()
+void Application::initialize_dpi()
 {
     const constexpr int display_in_use =
         0; // Assume the first display is being used.
@@ -51,22 +51,22 @@ void application::initialize_dpi()
 }
 
 
-void application::initialize(const std::string& title)
+void Application::initialize(const std::string& title)
 {
     _width = 800;
     _height = 600;
     _physical_width = _width;
     _physical_height = _height;
     _title = title;
-    _window.reset(new window(
+    _window.reset(new Window(
         title,
-        window::position_undefined,
-        window::position_undefined,
+        Window::InitialPosition::undefined,
+        Window::InitialPosition::undefined,
         _width,
         _height,
-        window::shown));
-    _renderer.reset(new renderer(
-        *_window, renderer::accelerated | renderer::present_vsync));
+        Window::Flag::shown));
+    _renderer.reset(new Renderer(
+        *_window, Renderer::Flag::accelerated | Renderer::Flag::present_vsync));
 
     initialize_dpi();
 
@@ -80,7 +80,7 @@ void application::initialize(const std::string& title)
 
 
 
-void application::run(std::shared_ptr<scene_base> initial_scene)
+void Application::run(std::shared_ptr<SceneBase> initial_scene)
 {
     _scene_manager.push(initial_scene);
     main_loop();
@@ -88,28 +88,28 @@ void application::run(std::shared_ptr<scene_base> initial_scene)
 
 
 
-void application::quit()
+void Application::quit()
 {
     _will_quit = true;
 }
 
 
 
-void application::add_effect(std::unique_ptr<effect_base> effect)
+void Application::add_effect(std::unique_ptr<EffectBase> effect)
 {
     _effects.push_back(std::move(effect));
 }
 
 
 
-void application::register_finalizer(std::function<void()> finalizer)
+void Application::register_finalizer(std::function<void()> finalizer)
 {
     _finalizers.emplace_back(finalizer);
 }
 
 
 
-void application::main_loop()
+void Application::main_loop()
 {
     while (1)
     {
@@ -119,7 +119,7 @@ void application::main_loop()
             handle_event(event);
         }
 
-        input::instance()._update();
+        Input::instance()._update();
 
         bool user_input_blocked = false;
         for (auto&& effect : _effects)
@@ -166,7 +166,7 @@ void application::main_loop()
 
 
 
-void application::render_scene(std::shared_ptr<scene_base> scene)
+void Application::render_scene(std::shared_ptr<SceneBase> scene)
 {
     if (scene->parent())
     {
@@ -177,7 +177,7 @@ void application::render_scene(std::shared_ptr<scene_base> scene)
 
 
 
-void application::handle_event(const ::SDL_Event& event)
+void Application::handle_event(const ::SDL_Event& event)
 {
     switch (event.type)
     {
@@ -185,15 +185,15 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_MOUSEMOTION:
     case SDL_MOUSEBUTTONUP:
     case SDL_MOUSEBUTTONDOWN:
-        input::instance()._handle_event(event.button);
+        Input::instance()._handle_event(event.button);
         break;
     case SDL_KEYUP:
-    case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
-    case SDL_TEXTINPUT: input::instance()._handle_event(event.text); break;
-    case SDL_TEXTEDITING: input::instance()._handle_event(event.edit); break;
+    case SDL_KEYDOWN: Input::instance()._handle_event(event.key); break;
+    case SDL_TEXTINPUT: Input::instance()._handle_event(event.text); break;
+    case SDL_TEXTEDITING: Input::instance()._handle_event(event.edit); break;
     case SDL_FINGERMOTION:
     case SDL_FINGERDOWN:
-    case SDL_FINGERUP: input::instance()._handle_event(event.tfinger); break;
+    case SDL_FINGERUP: Input::instance()._handle_event(event.tfinger); break;
     case SDL_WINDOWEVENT: handle_window_event(event.window); break;
     default: break;
     }
@@ -201,7 +201,7 @@ void application::handle_event(const ::SDL_Event& event)
 
 
 
-void application::on_size_changed(const ::SDL_WindowEvent& event)
+void Application::on_size_changed(const ::SDL_WindowEvent& event)
 {
     int new_width = event.data1;
     int new_height = event.data2;
@@ -219,13 +219,13 @@ void application::on_size_changed(const ::SDL_WindowEvent& event)
 
     if (is_android)
     {
-        touch_input::instance().initialize_quick_actions();
+        TouchInput::instance().initialize_quick_actions();
     }
 }
 
 
 
-void application::handle_window_event(const ::SDL_WindowEvent& event)
+void Application::handle_window_event(const ::SDL_WindowEvent& event)
 {
     switch (event.event)
     {
@@ -243,7 +243,7 @@ void application::handle_window_event(const ::SDL_WindowEvent& event)
 
 
 
-void application::proc_event()
+void Application::proc_event()
 {
     ::SDL_Event event;
     while (::SDL_PollEvent(&event))
@@ -251,7 +251,7 @@ void application::proc_event()
         handle_event(event);
     }
 
-    input::instance()._update();
+    Input::instance()._update();
 
     if (_will_quit)
     {
@@ -259,13 +259,13 @@ void application::proc_event()
     }
 }
 
-void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
+void Application::set_fullscreen_mode(Window::FullscreenMode fullscreen_mode)
 {
     (*_window).set_fullscreen_mode(fullscreen_mode);
     _fullscreen_mode = fullscreen_mode;
 }
 
-std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
+std::map<std::string, ::SDL_DisplayMode> Application::get_display_modes()
 {
     const constexpr int display_in_use =
         0; // Assume the first display is being used.
@@ -274,7 +274,7 @@ std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
     int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
     if (display_mode_count < 1)
     {
-        throw detail::sdl_error("No display modes available");
+        throw detail::SDLError("No display modes available");
     }
 
     for (int i = 0; i < display_mode_count; ++i)
@@ -296,12 +296,12 @@ std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
     return display_modes;
 }
 
-std::string application::get_default_display_mode()
+std::string Application::get_default_display_mode()
 {
     auto display_modes = get_display_modes();
     if (display_modes.size() == 0)
     {
-        throw detail::sdl_error("No display modes available");
+        throw detail::SDLError("No display modes available");
     }
 
     for (const auto pair : display_modes)
@@ -315,13 +315,13 @@ std::string application::get_default_display_mode()
     return display_modes.begin()->first;
 }
 
-void application::set_display_mode(const std::string& display_mode_str)
+void Application::set_display_mode(const std::string& display_mode_str)
 {
     std::string display_mode = display_mode_str;
     auto display_modes = get_display_modes();
     if (display_modes.size() == 0)
     {
-        throw detail::sdl_error("No display modes available");
+        throw detail::SDLError("No display modes available");
     }
     if (display_modes.find(display_mode_str) == display_modes.end())
     {
@@ -331,7 +331,7 @@ void application::set_display_mode(const std::string& display_mode_str)
     set_display_mode(display_modes[display_mode]);
 }
 
-void application::set_display_mode(::SDL_DisplayMode display_mode)
+void Application::set_display_mode(::SDL_DisplayMode display_mode)
 {
     if (is_fullscreen())
     {
@@ -358,7 +358,7 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
     update_orientation();
 }
 
-void application::set_subwindow_display_mode(const std::string& mode)
+void Application::set_subwindow_display_mode(const std::string& mode)
 {
     size_t found;
 
@@ -393,21 +393,21 @@ void application::set_subwindow_display_mode(const std::string& mode)
     }
 }
 
-void application::update_orientation()
+void Application::update_orientation()
 {
     if (_physical_width < _physical_height)
     {
-        _orientation = screen_orientation::portrait;
+        _orientation = Orientation::portrait;
     }
     else
     {
-        _orientation = screen_orientation::landscape;
+        _orientation = Orientation::landscape;
     }
 
     _window_pos = calculate_android_window_pos();
 }
 
-static rect calculate_android_window_pos_portrait(
+static Rect calculate_android_window_pos_portrait(
     int window_width,
     int window_height,
     int physical_width)
@@ -420,7 +420,7 @@ static rect calculate_android_window_pos_portrait(
     return {0, 0, physical_width, height};
 }
 
-static rect calculate_android_window_pos_landscape(
+static Rect calculate_android_window_pos_landscape(
     int window_width,
     int window_height,
     int physical_width,
@@ -460,14 +460,14 @@ static rect calculate_android_window_pos_landscape(
     return {x, y, width, height};
 }
 
-rect application::calculate_android_window_pos()
+Rect Application::calculate_android_window_pos()
 {
     int x, y, width, height;
 
     x = 0;
     y = 0;
 
-    if (_orientation == screen_orientation::portrait)
+    if (_orientation == Orientation::portrait)
     {
         return calculate_android_window_pos_portrait(
             _width, _height, _physical_width);

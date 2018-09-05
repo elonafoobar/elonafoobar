@@ -10,7 +10,7 @@ namespace snail
 
 
 
-font_t::font_t(const fs::path& filepath, int size, style_t style)
+Font::Font(const fs::path& filepath, int size, Style style)
     : _filepath(filepath)
     , _size(size)
     , _style(style)

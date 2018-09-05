@@ -28,7 +28,7 @@ namespace android
     env->DeleteLocalRef(clazz)
 
 
-void toast(std::string message, toast_length length)
+void toast(std::string message, ToastLength length)
 {
     JNIEnv* env = (JNIEnv*)SDL_AndroidGetJNIEnv();
     jobject activity = (jobject)SDL_AndroidGetActivity();
@@ -42,7 +42,7 @@ void toast(std::string message, toast_length length)
     env->DeleteLocalRef(clazz);
 }
 
-void set_requested_orientation(orientation orientation)
+void set_requested_orientation(Orientation orientation)
 {
     JNI_METHOD(
         "setRequestedOrientation", "(I)V", static_cast<int>(orientation));

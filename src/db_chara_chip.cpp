@@ -5,10 +5,10 @@
 namespace elona
 {
 
-chara_chip_data chara_chip_db::convert(
+CharaChipData CharaChipDB::convert(
     const std::string& id_,
     const sol::table& data,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     UNUSED(lua);
     ELONA_LION_DB_FIELD_REQUIRED(_mod, std::string);
@@ -46,10 +46,10 @@ chara_chip_data chara_chip_db::convert(
         offset_y += inf_tiles;
     }
 
-    return chara_chip_data{id,
-                           extent{x, y, width, height},
-                           chara_chip_t{shared_id(id_), offset_y},
-                           filepath};
+    return CharaChipData{id,
+                         Extent{x, y, width, height},
+                         CharaChip{SharedId(id_), offset_y},
+                         filepath};
 }
 
 } // namespace elona

@@ -25,7 +25,7 @@ TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 
     save_and_reload();
 
-    REQUIRE(elona::cdata[index].state() != character::state_t::empty);
+    REQUIRE(elona::cdata[index].state() != Character::State::empty);
     REQUIRE(elona::cdata[index].position.x == 4);
     REQUIRE(elona::cdata[index].position.y == 8);
     REQUIRE(elona::cdata[index].id == 3);
@@ -41,7 +41,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, x, y, number));
     int index = elona::ci;
     ibitmod(6, index, 1);
-    elona::inv[index].curse_state = curse_state_t::blessed;
+    elona::inv[index].curse_state = CurseState::blessed;
 
     save_and_reload();
 
@@ -49,7 +49,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::inv[index].id == PUTITORO_PROTO_ID);
     REQUIRE(elona::inv[index].position.x == 4);
     REQUIRE(elona::inv[index].position.y == 8);
-    REQUIRE(elona::inv[index].curse_state == curse_state_t::blessed);
+    REQUIRE(elona::inv[index].curse_state == CurseState::blessed);
     REQUIRE(elona::ibit(6, index) == 1);
     REQUIRE(itemname(index) == u8"3個のプチトロ(媚薬混入)");
 }

@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_spell_writer : public ui_menu<dummy_result>
+class UIMenuSpellWriter : public UIMenu<DummyResult>
 {
 public:
-    ui_menu_spell_writer()
+    UIMenuSpellWriter()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_spell_writer::result_type> on_key(
+    virtual optional<UIMenuSpellWriter::ResultType> on_key(
         const std::string& key);
 };
 

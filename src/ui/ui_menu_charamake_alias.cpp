@@ -9,7 +9,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_charamake_alias::init()
+bool UIMenuCharamakeAlias::init()
 {
     pagemax = 0;
     page = 0;
@@ -30,7 +30,7 @@ bool ui_menu_charamake_alias::init()
     return true;
 }
 
-void ui_menu_charamake_alias::_reroll_aliases()
+void UIMenuCharamakeAlias::_reroll_aliases()
 {
     for (int cnt = 0; cnt < 17; ++cnt)
     {
@@ -58,7 +58,7 @@ void ui_menu_charamake_alias::_reroll_aliases()
     }
 }
 
-void ui_menu_charamake_alias::update()
+void UIMenuCharamakeAlias::update()
 {
     _reroll_aliases();
     _redraw_aliases = true;
@@ -86,7 +86,7 @@ static void _draw_window()
 
 static void _draw_alias_locked(int cnt)
 {
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 280, wy + 66 + cnt * 19 + 2);
     color(20, 20, 140);
     mes(u8"Locked!"s);
@@ -106,7 +106,7 @@ static void _draw_alias(int cnt, const std::string& text, bool is_locked)
     }
 }
 
-void ui_menu_charamake_alias::draw()
+void UIMenuCharamakeAlias::draw()
 {
     if (!_redraw_aliases)
     {
@@ -130,7 +130,7 @@ void ui_menu_charamake_alias::draw()
     _redraw_aliases = false;
 }
 
-optional<ui_menu_charamake_alias::result_type> ui_menu_charamake_alias::on_key(
+optional<UIMenuCharamakeAlias::ResultType> UIMenuCharamakeAlias::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -148,7 +148,7 @@ optional<ui_menu_charamake_alias::result_type> ui_menu_charamake_alias::on_key(
         else
         {
             std::string alias = listn(0, p);
-            return ui_menu_charamake_alias::result::finish(alias);
+            return UIMenuCharamakeAlias::Result::finish(alias);
         }
     }
     else if (key == key_mode2 && cs != -1)
@@ -166,12 +166,12 @@ optional<ui_menu_charamake_alias::result_type> ui_menu_charamake_alias::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_charamake_alias::result::cancel();
+        return UIMenuCharamakeAlias::Result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return ui_menu_charamake_alias::result::finish();
+        return UIMenuCharamakeAlias::Result::finish();
     }
 
     if (cs != cs_bk)

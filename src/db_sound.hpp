@@ -4,14 +4,14 @@
 namespace elona
 {
 
-struct sound_data
+struct SoundData
 {
     int id;
     fs::path file;
 };
 
-ELONA_LION_DEFINE_DB(sound_db, sound_data, int, "sound")
+ELONA_LION_DEFINE_DB(SoundDB, SoundData, int, "sound")
 
-extern sound_db the_sound_db;
+extern SoundDB the_sound_db;
 
 } // namespace elona

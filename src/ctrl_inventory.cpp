@@ -24,9 +24,9 @@
 namespace elona
 {
 
-menu_result ctrl_inventory()
+MenuResult ctrl_inventory()
 {
-    menu_result result = {false, false, turn_result_t::none};
+    MenuResult result = {false, false, TurnResult::none};
     int mainweapon = 0;
     int countequip = 0;
     int showmoney = 0;
@@ -42,7 +42,7 @@ label_20591:
     }
     if (menucycle == 1)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             p = 0;
             for (int cnt = 0; cnt < 12; ++cnt)
@@ -144,7 +144,7 @@ label_20591:
                 inv[cnt].id = 0;
                 continue;
             }
-            if (mdata_map_type == mdata_t::map_type_t::world_map)
+            if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 if (invctrl == 7)
                 {
@@ -287,7 +287,7 @@ label_20591:
             if (invctrl == 13)
             {
                 if (inv[cnt].identification_state
-                    == identification_state_t::completely_identified)
+                    == IdentifyState::completely_identified)
                 {
                     continue;
                 }
@@ -435,7 +435,7 @@ label_20591:
             {
                 if (invctrl(1) == 0)
                 {
-                    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+                    if (gdata_current_map == mdata_t::MapId::lumiest)
                     {
                         if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
                         {
@@ -595,7 +595,7 @@ label_20591:
     {
         if (invctrl(1) == 0)
         {
-            if (gdata_current_map == mdata_t::map_id_t::lumiest)
+            if (gdata_current_map == mdata_t::MapId::lumiest)
             {
                 if (gdata_mages_guild_quota <= 0)
                 {
@@ -615,7 +615,7 @@ label_20591:
             return result;
         }
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_user_error;
+        result.turn_result = TurnResult::pc_turn_user_error;
         return result;
     }
     sort_list_by_column1();
@@ -623,7 +623,7 @@ label_20591:
     {
         if (listmax == 0)
         {
-            result.turn_result = turn_result_t::turn_end;
+            result.turn_result = TurnResult::turn_end;
             return result;
         }
     }
@@ -677,7 +677,7 @@ label_20591:
         {
             if (invctrl(1) == 0)
             {
-                if (gdata_current_map == mdata_t::map_id_t::lumiest)
+                if (gdata_current_map == mdata_t::MapId::lumiest)
                 {
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.guild.remaining",
@@ -731,18 +731,18 @@ label_2060_internal:
             }
             invsc = 0;
             update_screen();
-            result.turn_result = turn_result_t::pc_turn_user_error;
+            result.turn_result = TurnResult::pc_turn_user_error;
             return result;
         }
         invsc = 0;
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             if (invctrl == 9 || invctrl == 15 || invctrl == 26)
             {
                 txtnew();
                 txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
                 update_screen();
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
         }
@@ -778,7 +778,7 @@ label_2060_internal:
         {
             i = 3;
         }
-        else if (mdata_map_type == mdata_t::map_type_t::world_map)
+        else if (mdata_map_type == mdata_t::MapType::world_map)
         {
             i = 1;
         }
@@ -809,8 +809,8 @@ label_2060_internal:
                           i18n::_(u8"ui", u8"inventory_command", u8"_"s + p))
                         * 3,
                 y + 7,
-                invctrl == p ? snail::color{255, 255, 255}
-                             : snail::color{165, 165, 165});
+                invctrl == p ? snail::Color{255, 255, 255}
+                             : snail::Color{165, 165, 165});
             if (invkey(p) != ""s)
             {
                 bmes(
@@ -1037,7 +1037,7 @@ label_2061_internal:
         }
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     invmark(invctrl) = page * 1000 + cs;
@@ -1133,7 +1133,7 @@ label_2061_internal:
                 ++dropcontinue;
                 goto label_20591;
             }
-            result.turn_result = turn_result_t::turn_end;
+            result.turn_result = TurnResult::turn_end;
             return result;
         }
         if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
@@ -1223,7 +1223,7 @@ label_2061_internal:
                     txt(i18n::s.get("core.locale.action.get.not_owned"));
                 }
                 update_screen();
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
             page_save();
@@ -1324,7 +1324,7 @@ label_2061_internal:
             }
             if (stat == -1)
             {
-                result.turn_result = turn_result_t::turn_end;
+                result.turn_result = TurnResult::turn_end;
                 return result;
             }
             if (invctrl == 22)
@@ -1366,7 +1366,7 @@ label_2061_internal:
             {
                 txt(i18n::s.get("core.locale.ui.inv.eat.too_bloated"));
                 update_screen();
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
             result.turn_result = do_eat_command();
@@ -1395,14 +1395,14 @@ label_2061_internal:
             gdata(808) = 1;
             switch (inv[ci].curse_state)
             {
-            case curse_state_t::doomed:
+            case CurseState::doomed:
                 txt(i18n::s.get("core.locale.ui.inv.equip.doomed", cdata[cc]));
                 break;
-            case curse_state_t::cursed:
+            case CurseState::cursed:
                 txt(i18n::s.get("core.locale.ui.inv.equip.cursed", cdata[cc]));
                 break;
-            case curse_state_t::none: break;
-            case curse_state_t::blessed:
+            case CurseState::none: break;
+            case CurseState::blessed:
                 txt(i18n::s.get("core.locale.ui.inv.equip.blessed", cdata[cc]));
                 break;
             }
@@ -1411,7 +1411,7 @@ label_2061_internal:
                 equip_melee_weapon();
             }
             menucycle = 1;
-            result.turn_result = turn_result_t::menu_equipment;
+            result.turn_result = TurnResult::menu_equipment;
             return result;
         }
         if (invctrl == 7)
@@ -1474,7 +1474,7 @@ label_2061_internal:
                 chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
             f = 0;
@@ -1518,7 +1518,7 @@ label_2061_internal:
             else
             {
                 if (inv[ci].identification_state
-                    <= identification_state_t::partly_identified)
+                    <= IdentifyState::partly_identified)
                 {
                     snd(27);
                     txt(i18n::s.get(
@@ -1641,7 +1641,7 @@ label_2061_internal:
                     goto label_20591;
                 }
                 update_screen();
-                result.turn_result = turn_result_t::turn_end;
+                result.turn_result = TurnResult::turn_end;
                 return result;
             }
             snd(27);
@@ -1654,13 +1654,11 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             const auto identify_result = item_identify(inv[ci], efp);
-            if (identify_result == identification_state_t::unidentified)
+            if (identify_result == IdentifyState::unidentified)
             {
                 txt(i18n::s.get("core.locale.ui.inv.identify.need_more_power"));
             }
-            else if (
-                identify_result
-                != identification_state_t::completely_identified)
+            else if (identify_result != IdentifyState::completely_identified)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.identify.partially", inv[ci]));
@@ -1802,7 +1800,7 @@ label_2061_internal:
             if (invctrl(1) == 0)
             {
                 snd(100);
-                if (gdata_current_map == mdata_t::map_id_t::lumiest)
+                if (gdata_current_map == mdata_t::MapId::lumiest)
                 {
                     gdata_mages_guild_quota -=
                         (inv[ci].param1 + 1) * inv[ci].number();
@@ -1964,7 +1962,7 @@ label_2061_internal:
                     txt(i18n::s.get("core.locale.ui.inv.throw.cannot_see"));
                     update_screen();
                 }
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
             if (chipm(7, map(tlocx, tlocy, 0)) & 4)
@@ -1972,7 +1970,7 @@ label_2061_internal:
                 txt(i18n::s.get(
                     "core.locale.ui.inv.throw.location_is_blocked"));
                 update_screen();
-                result.turn_result = turn_result_t::pc_turn_user_error;
+                result.turn_result = TurnResult::pc_turn_user_error;
                 return result;
             }
             result.turn_result = do_throw_command();
@@ -2066,7 +2064,7 @@ label_2061_internal:
             {
                 i = 3;
             }
-            else if (mdata_map_type == mdata_t::map_type_t::world_map)
+            else if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 i = 1;
             }
@@ -2189,7 +2187,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             menucycle = 1;
-            result.turn_result = turn_result_t::menu_equipment;
+            result.turn_result = TurnResult::menu_equipment;
             return result;
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
@@ -2205,12 +2203,12 @@ label_2061_internal:
         if (dropcontinue)
         {
             dropcontinue = 0;
-            result.turn_result = turn_result_t::turn_end;
+            result.turn_result = TurnResult::turn_end;
             return result;
         }
         screenupdate = 0;
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_user_error;
+        result.turn_result = TurnResult::pc_turn_user_error;
         return result;
     }
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9

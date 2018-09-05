@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_charamake_gender : public ui_menu<int>
+class UIMenuCharamakeGender : public UIMenu<int>
 {
 public:
-    ui_menu_charamake_gender()
+    UIMenuCharamakeGender()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_charamake_gender::result_type> on_key(
+    virtual optional<UIMenuCharamakeGender::ResultType> on_key(
         const std::string& key);
 };
 

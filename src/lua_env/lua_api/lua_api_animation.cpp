@@ -6,74 +6,72 @@ namespace elona
 namespace lua
 {
 
-void Animation::play_failure_to_cast(const position_t& caster_pos)
+void Animation::play_failure_to_cast(const Position& caster_pos)
 {
-    failure_to_cast_animation(caster_pos).play();
+    FailureToCastAnimation(caster_pos).play();
 }
 
-void Animation::play_bright_aura(const position_t& target_pos, int kind)
+void Animation::play_bright_aura(const Position& target_pos, int kind)
 {
-    auto anim_type = static_cast<bright_aura_animation::type_t>(kind);
-    bright_aura_animation(target_pos, anim_type).play();
+    auto anim_type = static_cast<BrightAuraAnimation::Type>(kind);
+    BrightAuraAnimation(target_pos, anim_type).play();
 }
 
 void Animation::play_breath(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
-    const enum_string& element_name)
+    const Position& attacker_pos,
+    const Position& target_pos,
+    const EnumString& element_name)
 {
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
-    breath_animation(attacker_pos, target_pos, static_cast<int>(element))
-        .play();
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
+    BreathAnimation(attacker_pos, target_pos, static_cast<int>(element)).play();
 }
 
-void Animation::play_ball_atomic_bomb(const position_t& pos, int range)
+void Animation::play_ball_atomic_bomb(const Position& pos, int range)
 {
-    ball_animation(pos, range, ball_animation::type_t::atomic_bomb).play();
+    BallAnimation(pos, range, BallAnimation::Type::atomic_bomb).play();
 }
 
-void Animation::play_ball_magic(const position_t& pos, int range, int element)
+void Animation::play_ball_magic(const Position& pos, int range, int element)
 {
-    ball_animation(pos, range, ball_animation::type_t::ball, element).play();
+    BallAnimation(pos, range, BallAnimation::Type::ball, element).play();
 }
 
 void Animation::play_bolt(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
-    const enum_string& element_name,
+    const Position& attacker_pos,
+    const Position& target_pos,
+    const EnumString& element_name,
     int distance)
 {
-    element_t element = LuaEnums::Element.ensure_from_string(element_name);
-    bolt_animation(
-        attacker_pos, target_pos, static_cast<int>(element), distance)
+    Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
+    BoltAnimation(attacker_pos, target_pos, static_cast<int>(element), distance)
         .play();
 }
 
 void Animation::play_throwing_object(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     int item_chip,
     int item_color)
 {
-    throwing_object_animation(target_pos, attacker_pos, item_chip, item_color)
+    ThrowingObjectAnimation(target_pos, attacker_pos, item_chip, item_color)
         .play();
 }
 
-void Animation::play_swarm(const position_t& target_pos)
+void Animation::play_swarm(const Position& target_pos)
 {
-    swarm_animation(target_pos).play();
+    SwarmAnimation(target_pos).play();
 }
 
 void Animation::play_ranged_attack(
-    const position_t& attacker_pos,
-    const position_t& target_pos,
+    const Position& attacker_pos,
+    const Position& target_pos,
     int kind,
     int fired_item_subcategory,
     int fired_item_image,
     int fired_item_color)
 {
-    auto anim_type = static_cast<ranged_attack_animation::type_t>(kind);
-    ranged_attack_animation(
+    auto anim_type = static_cast<RangedAttackAnimation::Type>(kind);
+    RangedAttackAnimation(
         attacker_pos,
         target_pos,
         anim_type,
@@ -84,40 +82,40 @@ void Animation::play_ranged_attack(
 }
 
 void Animation::play_melee_attack(
-    const position_t& target_pos,
+    const Position& target_pos,
     bool debris,
     int attack_skill,
     int damage_percent,
     bool is_critical)
 {
-    melee_attack_animation(
+    MeleeAttackAnimation(
         target_pos, debris, attack_skill, damage_percent, is_critical)
         .play();
 }
 
-void Animation::play_gene_engineering(const position_t& pos)
+void Animation::play_gene_engineering(const Position& pos)
 {
-    gene_engineering_animation(pos).play();
+    GeneEngineeringAnimation(pos).play();
 }
 
 void Animation::play_miracle()
 {
-    miracle_animation().play();
+    MiracleAnimation().play();
 }
 
 void Animation::play_meteor()
 {
-    meteor_animation().play();
+    MeteorAnimation().play();
 }
 
 void Animation::play_ragnarok()
 {
-    ragnarok_animation().play();
+    RagnarokAnimation().play();
 }
 
-void Animation::play_breaking(const position_t& pos)
+void Animation::play_breaking(const Position& pos)
 {
-    breaking_animation(pos).play();
+    BreakingAnimation(pos).play();
 }
 
 void Animation::bind(sol::table& api_table)

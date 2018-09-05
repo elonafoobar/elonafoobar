@@ -8,7 +8,7 @@ namespace snail
 {
 
 
-struct rect
+struct Rect
 {
     int x;
     int y;

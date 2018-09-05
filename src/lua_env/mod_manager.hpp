@@ -22,9 +22,9 @@ using namespace std::literals::string_literals;
  * internal C++ storage object for storing, serializing and
  * deserializing mod data alongside the base game data.
  */
-struct mod_info
+struct ModInfo
 {
-    explicit mod_info(
+    explicit ModInfo(
         const std::string name_,
         const optional<fs::path> path_,
         std::shared_ptr<sol::state> state)
@@ -39,16 +39,16 @@ struct mod_info
 
         if (path)
         {
-            chunk_cache = loaded_chunk_cache{*path};
+            chunk_cache = LoadedChunkCache{*path};
         }
     }
-    mod_info(const mod_info&) = delete;
-    mod_info& operator=(const mod_info&) = delete;
-    ~mod_info() = default;
+    ModInfo(const ModInfo&) = delete;
+    ModInfo& operator=(const ModInfo&) = delete;
+    ~ModInfo() = default;
 
     std::string name;
     optional<fs::path> path;
-    optional<loaded_chunk_cache> chunk_cache;
+    optional<LoadedChunkCache> chunk_cache;
     sol::environment env;
     sol::table store_local;
     sol::table store_global;
@@ -57,7 +57,7 @@ struct mod_info
 /***
  * The stage of loading the lua environment is currently in.
  */
-enum class mod_loading_stage_t : unsigned
+enum class ModLoadingStage : unsigned
 {
     not_started,
     scan_finished,
@@ -70,16 +70,16 @@ enum class mod_loading_stage_t : unsigned
  * interface for more specialized API handling mechanisms and for
  * keeping track of mods.
  */
-class mod_manager
+class ModManager
 {
-    using mod_storage_type =
-        std::unordered_map<std::string, std::unique_ptr<mod_info>>;
+    using ModStorageType =
+        std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
 
 public:
-    using iterator = mod_storage_type::iterator;
-    using const_iterator = mod_storage_type::const_iterator;
+    using iterator = ModStorageType::iterator;
+    using const_iterator = ModStorageType::const_iterator;
 
-    explicit mod_manager(lua_env*);
+    explicit ModManager(LuaEnv*);
 
     // Iterator for mods.
     iterator begin()
@@ -174,7 +174,7 @@ public:
      *
      * For testing use only.
      */
-    mod_info* get_mod(const std::string& name)
+    ModInfo* get_mod(const std::string& name)
     {
         auto val = mods.find(name);
         if (val == mods.end())
@@ -228,24 +228,24 @@ private:
      *
      * Will throw if there was an error on running the script.
      */
-    void load_mod(mod_info& mod);
+    void load_mod(ModInfo& mod);
 
     /***
      * Sets up the global variables of a mod and locks them so they
      * cannot be overwritten.
      */
-    void setup_and_lock_mod_globals(mod_info&);
+    void setup_and_lock_mod_globals(ModInfo&);
 
     /***
      * Sets the global variables of a mod on the given table.
      */
-    void setup_mod_globals(mod_info& mod, sol::table&);
+    void setup_mod_globals(ModInfo& mod, sol::table&);
 
 
     /***
      * Binds the Store global variable to a mod's environment.
      */
-    static void bind_store(sol::state&, mod_info&, sol::table&);
+    static void bind_store(sol::state&, ModInfo&, sol::table&);
 
     /***
      * Whitelists functions that are safe for usage in user-written scripts.
@@ -269,16 +269,16 @@ private:
     }
 
 private:
-    mod_storage_type mods;
+    ModStorageType mods;
 
     /***
      * The loading stage the environment is currently in. Used for
      * tracking the lifecycle of mod loading and ensuring the loading
      * functions are ran in the correct order.
      */
-    mod_loading_stage_t stage = mod_loading_stage_t::not_started;
+    ModLoadingStage stage = ModLoadingStage::not_started;
 
-    lua_env* lua_;
+    LuaEnv* lua_;
 };
 
 } // namespace lua

@@ -10,7 +10,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_journal::init()
+bool UIMenuJournal::init()
 {
     curmenu = 1;
     page = 99;
@@ -154,7 +154,7 @@ bool ui_menu_journal::init()
     return true;
 }
 
-void ui_menu_journal::update()
+void UIMenuJournal::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -186,7 +186,7 @@ void ui_menu_journal::update()
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(10 + en - en * 2, snail::font_t::style_t::bold);
+            font(10 + en - en * 2, snail::Font::Style::bold);
             color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
@@ -220,7 +220,7 @@ void ui_menu_journal::update()
         color(0, 0, 0);
         if (p % 20 == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::Font::Style::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)
@@ -235,11 +235,11 @@ void ui_menu_journal::update()
     }
 }
 
-void ui_menu_journal::draw()
+void UIMenuJournal::draw()
 {
 }
 
-optional<ui_menu_journal::result_type> ui_menu_journal::on_key(
+optional<UIMenuJournal::ResultType> UIMenuJournal::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -264,7 +264,7 @@ optional<ui_menu_journal::result_type> ui_menu_journal::on_key(
     {
         menucycle = 0;
         update_screen();
-        return ui_menu_journal::result::finish();
+        return UIMenuJournal::Result::finish();
     }
 
     return none;

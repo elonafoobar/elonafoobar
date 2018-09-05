@@ -8,52 +8,53 @@ namespace lua
 
 void LuaItem::bind(sol::state& lua)
 {
-    sol::usertype<item> LuaItem(
+    sol::usertype<Item> LuaItem(
         "lua_type",
-        &item::lua_type,
+        &Item::lua_type,
 
         "set_number",
-        &item::set_number,
+        &Item::set_number,
 
         "index",
-        sol::readonly(&item::index),
+        sol::readonly(&Item::index),
         "position",
-        &item::position,
+        &Item::position,
         "number",
-        sol::property([](item& i) { return i.number(); }),
+        sol::property([](Item& i) { return i.number(); }),
         "id",
-        &item::id,
+        &Item::id,
         "count",
-        &item::count,
+        &Item::count,
         "name",
-        sol::property([](item& i) { return elona::itemname(i.index); }),
+        sol::property([](Item& i) { return elona::itemname(i.index); }),
         "subname",
-        &item::subname,
+        &Item::subname,
         "param1",
-        &item::param1,
+        &Item::param1,
         "param2",
-        &item::param2,
+        &Item::param2,
 
         "curse_state",
         sol::property(
-            [](item& i) {
-                return LuaEnums::CurseState.convert_to_string(i.curse_state);
+            [](Item& i) {
+                return LuaEnums::CurseStateTable.convert_to_string(
+                    i.curse_state);
             },
-            [](item& i, const enum_string& s) {
-                i.curse_state = LuaEnums::CurseState.ensure_from_string(s);
+            [](Item& i, const EnumString& s) {
+                i.curse_state = LuaEnums::CurseStateTable.ensure_from_string(s);
             }),
         "identify_state",
         sol::property(
-            [](item& i) {
-                return LuaEnums::IdentifyState.convert_to_string(
+            [](Item& i) {
+                return LuaEnums::IdentifyStateTable.convert_to_string(
                     i.identification_state);
             },
-            [](item& i, const enum_string& s) {
+            [](Item& i, const EnumString& s) {
                 i.identification_state =
-                    LuaEnums::IdentifyState.ensure_from_string(s);
+                    LuaEnums::IdentifyStateTable.ensure_from_string(s);
             }));
 
-    lua.set_usertype(item::lua_type(), LuaItem);
+    lua.set_usertype(Item::lua_type(), LuaItem);
 }
 
 } // namespace lua

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../lib/enumutil.hpp"
 #include "../lib/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
@@ -19,10 +20,10 @@ namespace snail
 
 
 
-class renderer : public lib::noncopyable
+class Renderer : public lib::noncopyable
 {
 public:
-    enum flag_t
+    enum class Flag
     {
         none = 0,
         software = SDL_RENDERER_SOFTWARE,
@@ -32,7 +33,7 @@ public:
     };
 
 
-    enum class text_alignment_t
+    enum class TextAlignment
     {
         left,
         center,
@@ -40,34 +41,34 @@ public:
     };
 
 
-    enum class text_baseline_t
+    enum class TextBaseline
     {
         top,
         middle,
         bottom,
     };
 
-    ~renderer();
+    ~Renderer();
 
-    text_alignment_t text_alignment() const noexcept
+    TextAlignment text_alignment() const noexcept
     {
         return _text_alignment;
     }
 
 
-    void set_text_alignment(text_alignment_t text_alignment)
+    void set_text_alignment(TextAlignment text_alignment)
     {
         _text_alignment = text_alignment;
     }
 
 
-    text_baseline_t text_baseline() const noexcept
+    TextBaseline text_baseline() const noexcept
     {
         return _text_baseline;
     }
 
 
-    void set_text_baseline(text_baseline_t text_baseline)
+    void set_text_baseline(TextBaseline text_baseline)
     {
         _text_baseline = text_baseline;
     }
@@ -79,26 +80,26 @@ public:
     }
 
 
-    const font_t& font() const noexcept
+    const Font& font() const noexcept
     {
         return _font;
     }
 
 
-    void set_font(const font_t& font)
+    void set_font(const Font& font)
     {
         _font = font;
     }
 
 
-    blend_mode_t blend_mode() const noexcept
+    BlendMode blend_mode() const noexcept
     {
         return _blend_mode;
     }
 
-    void set_blend_mode(blend_mode_t blend_mode);
+    void set_blend_mode(BlendMode blend_mode);
 
-    void set_draw_color(const color&);
+    void set_draw_color(const Color&);
 
     ::SDL_Texture* render_target();
 
@@ -108,42 +109,42 @@ public:
     ::SDL_Renderer* ptr();
 
 
-    renderer(window& target_window, int flag);
+    Renderer(Window& target_window, Flag flag);
 
 
     void clear();
     void present();
     void render_point(int x, int y);
     void fill_rect(int x, int y, int width, int height);
-    rect render_text(
+    Rect render_text(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::black,
+        const Color& text_color = palette::black,
         double scale = 1.0);
-    rect render_text_with_shadow(
+    Rect render_text_with_shadow(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::white,
-        const color& shadow_color = palette::black,
+        const Color& text_color = palette::white,
+        const Color& shadow_color = palette::black,
         double scale = 1.0);
-    rect render_multiline_text(
+    Rect render_multiline_text(
         const std::string& text,
         int x,
         int y,
-        const color& text_color = palette::black);
-    size calculate_text_size(const std::string& text);
+        const Color& text_color = palette::black);
+    Size calculate_text_size(const std::string& text);
     void render_line(int start_x, int start_y, int end_x, int end_y);
-    void render_image(image_base& image, int dst_x, int dst_y);
+    void render_image(ImageBase& image, int dst_x, int dst_y);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int dst_x,
         int dst_y,
         int dst_width,
         int dst_height);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,
@@ -151,7 +152,7 @@ public:
         int dst_x,
         int dst_y);
     void render_image(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,
@@ -188,7 +189,7 @@ public:
 
 
     void render_image_crop(
-        image_base& image,
+        ImageBase& image,
         int src_x,
         int src_y,
         int src_width,
@@ -205,11 +206,14 @@ public:
         int dst_y);
 
 private:
-    text_alignment_t _text_alignment = text_alignment_t::left;
-    text_baseline_t _text_baseline = text_baseline_t::top;
-    font_t _font;
-    blend_mode_t _blend_mode = blend_mode_t::blend;
+    TextAlignment _text_alignment = TextAlignment::left;
+    TextBaseline _text_baseline = TextBaseline::top;
+    Font _font;
+    BlendMode _blend_mode = BlendMode::blend;
 };
+
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(Renderer::Flag)
 
 
 

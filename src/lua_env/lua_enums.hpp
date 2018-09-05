@@ -14,22 +14,22 @@ namespace elona
 namespace lua
 {
 
-typedef std::string enum_string;
+using EnumString = std::string;
 
 template <typename T>
-class enum_map
+class EnumMap
 {
-    using map_type = std::unordered_map<std::string, T>;
+    using MapType = std::unordered_map<std::string, T>;
 
 public:
-    enum_map(std::string name, map_type storage)
+    EnumMap(std::string name, MapType storage)
         : name(name)
         , storage(storage)
     {
     }
 
 public:
-    enum_string convert_to_string(T val)
+    EnumString convert_to_string(T val)
     {
         for (const auto& pair : storage)
         {
@@ -91,21 +91,21 @@ public:
 
 private:
     std::string name;
-    map_type storage;
+    MapType storage;
 };
 
 namespace LuaEnums
 {
-extern enum_map<damage_source_t> DamageSource;
-extern enum_map<color_index_t> Color;
-extern enum_map<curse_state_t> CurseState;
-extern enum_map<identification_state_t> IdentifyState;
-extern enum_map<status_ailment_t> StatusAilment;
-extern enum_map<element_t> Element;
-extern enum_map<tile_kind_t> TileKind;
-extern enum_map<int> Gender;
-extern enum_map<int> Relation;
-extern enum_map<int> CharaFlag;
+extern EnumMap<DamageSource> DamageSourceTable;
+extern EnumMap<ColorIndex> ColorIndexTable;
+extern EnumMap<CurseState> CurseStateTable;
+extern EnumMap<IdentifyState> IdentifyStateTable;
+extern EnumMap<StatusAilment> StatusAilmentTable;
+extern EnumMap<Element> ElementTable;
+extern EnumMap<TileKind> TileKindTable;
+extern EnumMap<int> GenderTable;
+extern EnumMap<int> RelationTable;
+extern EnumMap<int> CharaFlagTable;
 
 void bind(sol::table&);
 } // namespace LuaEnums

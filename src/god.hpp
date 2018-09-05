@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-using god_id_t = std::string;
+using GodId = std::string;
 
 
 namespace core_god
@@ -26,7 +26,7 @@ constexpr const char* jure = u8"jure"; // 6
 constexpr const char* kumiromi = u8"kumiromi"; // 7
 
 
-inline god_id_t int2godid(int n)
+inline GodId int2godid(int n)
 {
     switch (n)
     {
@@ -42,7 +42,7 @@ inline god_id_t int2godid(int n)
 }
 
 
-inline int godid2int(const god_id_t& id)
+inline int godid2int(const GodId& id)
 {
     if (id == mani)
         return 1;
@@ -67,23 +67,23 @@ inline int godid2int(const god_id_t& id)
 } // namespace core_god
 
 
-struct god_data
+struct GodData
 {
-    god_id_t id;
+    GodId id;
 };
 
 
-class god_db;
+class GodDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<god_db>
+struct CatDBTraits<GodDB>
 {
-    using id_type = god_id_t;
-    using data_type = god_data;
+    using IdType = GodId;
+    using DataType = GodData;
     static constexpr const char* filename = u8"god.lua";
     static constexpr const char* table_name = u8"god";
 };
@@ -91,27 +91,27 @@ struct cat_db_traits<god_db>
 } // namespace cat
 
 
-class god_db : public cat::cat_db<god_db>
+class GodDB : public cat::CatDB<GodDB>
 {
 public:
-    god_db() = default;
+    GodDB() = default;
 
     void define(lua_State* L);
 };
 
 
-extern god_db the_god_db;
+extern GodDB the_god_db;
 
 
-void txtgod(const god_id_t& id, int type);
+void txtgod(const GodId& id, int type);
 int modpiety(int prm_1035);
 void set_npc_religion();
 void apply_god_blessing(int cc);
 std::string get_god_description(int);
 void god_proc_switching_penalty();
 void switch_religion();
-turn_result_t do_pray();
-turn_result_t do_offer();
+TurnResult do_pray();
+TurnResult do_offer();
 
 
 

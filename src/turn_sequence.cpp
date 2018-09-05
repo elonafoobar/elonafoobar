@@ -44,7 +44,7 @@ namespace elona
 {
 
 
-turn_result_t npc_turn()
+TurnResult npc_turn()
 {
     int searchfov = 0;
     if (cdata[cc].is_hung_on_sand_bag())
@@ -58,7 +58,7 @@ turn_result_t npc_turn()
             }
         }
         cdata[cc].hate = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (is_in_fov(cdata[cc]) == 0)
     {
@@ -66,11 +66,11 @@ turn_result_t npc_turn()
         {
             if (rnd(4) == 0)
             {
-                if (mdata_map_type != mdata_t::map_type_t::world_map)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
                     if (cdata[cc].is_leashed())
                     {
-                        if (gdata_current_map != mdata_t::map_id_t::pet_arena)
+                        if (gdata_current_map != mdata_t::MapId::pet_arena)
                         {
                             if (cc < 16)
                             {
@@ -97,7 +97,7 @@ turn_result_t npc_turn()
                             tc = 0;
                             efid = 619;
                             magic();
-                            return turn_result_t::turn_end;
+                            return TurnResult::turn_end;
                         }
                     }
                 }
@@ -110,7 +110,7 @@ turn_result_t npc_turn()
         tlocy = cdata[cc].position.y;
         efid = 644;
         magic();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].relationship >= 10)
     {
@@ -124,7 +124,7 @@ turn_result_t npc_turn()
             {
                 if (cdata[pcattacker].relationship <= -3)
                 {
-                    if (cdata[pcattacker].state() == character::state_t::alive)
+                    if (cdata[pcattacker].state() == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -144,7 +144,7 @@ turn_result_t npc_turn()
                     && cdata[cdata.player().enemy_id].relationship <= -3)
                 {
                     if (cdata[cdata.player().enemy_id].state()
-                        == character::state_t::alive)
+                        == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -175,13 +175,13 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].enemy_id != 0)
     {
-        if (cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
+        if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             cdata[cc].enemy_id = 0;
             cdata[cc].hate = 0;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         if (cdata[cc].relationship != -3)
         {
@@ -210,7 +210,7 @@ turn_result_t npc_turn()
         }
         i = cdata[cc].enemy_id;
         if (cdata[i].relationship == p
-            && cdata[i].state() == character::state_t::alive && i >= p(1)
+            && cdata[i].state() == Character::State::alive && i >= p(1)
             && i < p(1) + p(2))
         {
             if (rnd(10) != 0)
@@ -223,7 +223,7 @@ turn_result_t npc_turn()
         for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
-            if (cdata[i].state() == character::state_t::alive)
+            if (cdata[i].state() == Character::State::alive)
             {
                 if (cdata[i].relationship == p)
                 {
@@ -233,12 +233,12 @@ turn_result_t npc_turn()
             }
         }
         if (cdata[cdata[cc].enemy_id].relationship != p
-            || cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
+            || cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     if (cdata[cnt].relationship == p)
                     {
@@ -258,11 +258,11 @@ turn_result_t npc_turn()
                 {
                     petarenawin = 2;
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         if (cc != gdata_fire_giant)
         {
@@ -271,7 +271,7 @@ turn_result_t npc_turn()
                 if (gdata_released_fire_giant != 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::state_t::alive)
+                        == Character::State::alive)
                     {
                         cdata[cc].enemy_id = gdata_fire_giant;
                         cdata[cc].hate = 500;
@@ -376,7 +376,7 @@ turn_result_t npc_turn()
                     int stat = do_cast_magic();
                     if (stat == 1)
                     {
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
                 else if (efid >= 600)
@@ -384,7 +384,7 @@ turn_result_t npc_turn()
                     int stat = do_magic_attempt();
                     if (stat == 1)
                     {
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
@@ -494,7 +494,7 @@ label_2689_internal:
                                 if (ibit(5, ci) == 0)
                                 {
                                     if (mdata_map_type
-                                        != mdata_t::map_type_t::player_owned)
+                                        != mdata_t::MapType::player_owned)
                                     {
                                         in = inv[ci].number();
                                         if (gdata_mount != cc)
@@ -502,7 +502,7 @@ label_2689_internal:
                                             int stat = pick_up_item();
                                             if (stat == 1)
                                             {
-                                                return turn_result_t::turn_end;
+                                                return TurnResult::turn_end;
                                             }
                                         }
                                     }
@@ -627,98 +627,88 @@ label_2689_internal:
 bool turn_wrapper()
 {
     bool finished = false;
-    turn_result_t result = turn_begin();
+    TurnResult result = turn_begin();
     while (!finished)
     {
         switch (result)
         {
             // Turn lifecycle
 
-        case turn_result_t::turn_begin: result = turn_begin(); break;
-        case turn_result_t::turn_end: result = turn_end(); break;
-        case turn_result_t::pass_one_turn: result = pass_turns(true); break;
-        case turn_result_t::pass_one_turn_freeze_time:
+        case TurnResult::turn_begin: result = turn_begin(); break;
+        case TurnResult::turn_end: result = turn_end(); break;
+        case TurnResult::pass_one_turn: result = pass_turns(true); break;
+        case TurnResult::pass_one_turn_freeze_time:
             result = pass_turns(false);
             break;
-        case turn_result_t::pc_turn: result = pc_turn(); break;
-        case turn_result_t::npc_turn: result = npc_turn(); break;
-        case turn_result_t::pc_turn_user_error: result = pc_turn(false); break;
-        case turn_result_t::pc_died: result = pc_died(); break;
-        case turn_result_t::initialize_map: result = initialize_map(); break;
-        case turn_result_t::exit_map: result = exit_map(); break;
-        case turn_result_t::play_scene: result = play_scene(); break;
-        case turn_result_t::finish_elona:
+        case TurnResult::pc_turn: result = pc_turn(); break;
+        case TurnResult::npc_turn: result = npc_turn(); break;
+        case TurnResult::pc_turn_user_error: result = pc_turn(false); break;
+        case TurnResult::pc_died: result = pc_died(); break;
+        case TurnResult::initialize_map: result = initialize_map(); break;
+        case TurnResult::exit_map: result = exit_map(); break;
+        case TurnResult::play_scene: result = play_scene(); break;
+        case TurnResult::finish_elona:
             finish_elona();
             finished = true;
             break;
 
             // Menus that don't return success status
 
-        case turn_result_t::show_chat_history:
-            result = show_chat_history();
-            break;
-        case turn_result_t::show_message_log:
-            result = show_message_log();
-            break;
-        case turn_result_t::show_journal: result = show_journal(); break;
-        case turn_result_t::show_house_board:
-            result = show_house_board();
-            break;
-        case turn_result_t::show_quest_board:
-            result = show_quest_board();
-            break;
-        case turn_result_t::show_skill_list: result = show_skill_list(); break;
-        case turn_result_t::show_spell_list:
+        case TurnResult::show_chat_history: result = show_chat_history(); break;
+        case TurnResult::show_message_log: result = show_message_log(); break;
+        case TurnResult::show_journal: result = show_journal(); break;
+        case TurnResult::show_house_board: result = show_house_board(); break;
+        case TurnResult::show_quest_board: result = show_quest_board(); break;
+        case TurnResult::show_skill_list: result = show_skill_list(); break;
+        case TurnResult::show_spell_list:
             result = show_spell_list();
             break;
 
             // Menus with a success status
 
-        case turn_result_t::menu_materials:
+        case TurnResult::menu_materials:
             result = menu_materials().turn_result;
             break;
-        case turn_result_t::menu_character_sheet:
+        case TurnResult::menu_character_sheet:
             result = menu_character_sheet_normal().turn_result;
             break;
-        case turn_result_t::menu_equipment:
+        case TurnResult::menu_equipment:
             result = menu_equipment().turn_result;
             break;
-        case turn_result_t::menu_feats:
-            result = menu_feats().turn_result;
-            break;
-        case turn_result_t::ctrl_inventory:
+        case TurnResult::menu_feats: result = menu_feats().turn_result; break;
+        case TurnResult::ctrl_inventory:
             result = ctrl_inventory().turn_result;
             break;
 
-        case turn_result_t::all_turns_finished:
-            result = turn_result_t::turn_begin;
+        case TurnResult::all_turns_finished:
+            result = TurnResult::turn_begin;
             break;
-        case turn_result_t::none:
+        case TurnResult::none:
         default: assert(0); break;
         }
     }
     return finished;
 }
 
-turn_result_t pass_turns(bool time)
+TurnResult pass_turns(bool time)
 {
     bool finished = false;
-    turn_result_t result = pass_one_turn(time);
+    TurnResult result = pass_one_turn(time);
     while (!finished)
     {
         switch (result)
         {
-        case turn_result_t::all_turns_finished: finished = true; break;
-        case turn_result_t::pass_one_turn: time = true; break;
-        case turn_result_t::pass_one_turn_freeze_time: time = false; break;
+        case TurnResult::all_turns_finished: finished = true; break;
+        case TurnResult::pass_one_turn: time = true; break;
+        case TurnResult::pass_one_turn_freeze_time: time = false; break;
         default: return result;
         }
         result = pass_one_turn(time);
     }
-    return turn_result_t::all_turns_finished;
+    return TurnResult::all_turns_finished;
 }
 
-turn_result_t turn_begin()
+TurnResult turn_begin()
 {
     int turncost = 0;
     int spd = 0;
@@ -735,13 +725,13 @@ turn_result_t turn_begin()
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
-    if (cdata.player().state() != character::state_t::alive)
+    if (cdata.player().state() != Character::State::alive)
     {
-        return turn_result_t::pc_died;
+        return TurnResult::pc_died;
     }
 
     bool update_turn_cost = true;
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (cdata.player().continuous_action_turn > 2)
         {
@@ -753,7 +743,7 @@ turn_result_t turn_begin()
     {
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -805,18 +795,18 @@ turn_result_t turn_begin()
             weather_changes();
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
 
-turn_result_t pass_one_turn(bool label_2738_flg)
+TurnResult pass_one_turn(bool label_2738_flg)
 {
     if (label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
         {
-            if (cdata[ct].state() != character::state_t::alive)
+            if (cdata[ct].state() != Character::State::alive)
             {
                 ++ct;
                 continue;
@@ -834,8 +824,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (ct >= ELONA_MAX_CHARACTERS)
         {
             lua::lua->get_event_manager()
-                .run_callbacks<lua::event_kind_t::all_turns_finished>();
-            return turn_result_t::all_turns_finished;
+                .run_callbacks<lua::EventKind::all_turns_finished>();
+            return TurnResult::all_turns_finished;
         }
     }
     cc = ct;
@@ -852,7 +842,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     gain_healing_and_meditation_experience(cnt);
                 }
@@ -876,9 +866,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (gdata_is_returning_or_escaping != 0)
         {
             --gdata_is_returning_or_escaping;
-            if (mdata_map_type == mdata_t::map_type_t::temporary
-                || gdata_current_map == mdata_t::map_id_t::shelter_
-                || gdata_current_map == mdata_t::map_id_t::jail)
+            if (mdata_map_type == mdata_t::MapType::temporary
+                || gdata_current_map == mdata_t::MapId::shelter_
+                || gdata_current_map == mdata_t::MapId::jail)
             {
                 gdata_is_returning_or_escaping = 0;
                 txt(i18n::s.get("core.locale.magic.return.prevented.normal"));
@@ -889,7 +879,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::state_t::alive)
+                    if (cdata[cnt].state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -934,15 +924,15 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 msg_halt();
                 update_screen();
                 levelexitby = 2;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             goto label_2740_internal;
         }
     label_2740_internal:
         map_proc_special_events();
-        if (cdata.player().state() != character::state_t::alive)
+        if (cdata.player().state() != Character::State::alive)
         {
-            return turn_result_t::pc_died;
+            return TurnResult::pc_died;
         }
         if (gdata_weather == 1)
         {
@@ -974,8 +964,8 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         else if (rnd(1500) == 0)
         {
-            if (adata(16, gdata_current_map) != mdata_t::map_id_t::your_home
-                && gdata_current_map != mdata_t::map_id_t::shelter_)
+            if (adata(16, gdata_current_map) != mdata_t::MapId::your_home
+                && gdata_current_map != mdata_t::MapId::shelter_)
             {
                 modify_ether_disease_stage(10);
             }
@@ -1014,14 +1004,14 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(config::instance().animewait * 6);
+                await(Config::instance().animewait * 6);
             }
-            await(config::instance().animewait * 3);
+            await(Config::instance().animewait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
@@ -1031,7 +1021,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             {
                 for (auto&& cnt : cdata.all())
                 {
-                    if (cnt.state() != character::state_t::alive)
+                    if (cnt.state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -1054,7 +1044,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                         continue;
                     }
                     if (cnt.index == cc || rnd(3)
-                        || mdata_map_type == mdata_t::map_type_t::world_map)
+                        || mdata_map_type == mdata_t::MapType::world_map)
                     {
                         continue;
                     }
@@ -1097,7 +1087,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (rnd(60) == 0)
         {
             chara_vomit(cdata[cc]);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (cdata[cc].stops_continuous_action_if_damaged == 1)
@@ -1130,18 +1120,18 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         chara_refresh(cc);
     }
-    if (cdata[cc].state() == character::state_t::alive)
+    if (cdata[cc].state() == Character::State::alive)
     {
         if (ct == 0)
         {
-            return turn_result_t::pc_turn;
+            return TurnResult::pc_turn;
         }
         else
         {
-            return turn_result_t::npc_turn;
+            return TurnResult::npc_turn;
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
@@ -1171,12 +1161,12 @@ void update_emoicon()
 
 
 
-turn_result_t turn_end()
+TurnResult turn_end()
 {
     cc = ct;
-    if (cdata[cc].state() != character::state_t::alive)
+    if (cdata[cc].state() != Character::State::alive)
     {
-        return turn_result_t::pass_one_turn;
+        return TurnResult::pass_one_turn;
     }
     proc_turn_end(cc);
     if (cc == 0)
@@ -1210,7 +1200,7 @@ turn_result_t turn_end()
         get_hungry(cdata[cc]);
         refresh_speed(cdata[cc]);
     }
-    else if (mdata_map_type != mdata_t::map_type_t::world_map)
+    else if (mdata_map_type != mdata_t::MapType::world_map)
     {
         cdata[cc].nutrition -= 16;
         if (cdata[cc].nutrition < 6000)
@@ -1224,7 +1214,7 @@ turn_result_t turn_end()
     if (gdata_left_turns_of_timestop > 0)
     {
         --gdata_left_turns_of_timestop;
-        if (cdata[cc].state() != character::state_t::alive
+        if (cdata[cc].state() != Character::State::alive
             || gdata_left_turns_of_timestop == 0)
         {
             txtef(9);
@@ -1235,24 +1225,24 @@ turn_result_t turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(config::instance().animewait * 10);
+                await(Config::instance().animewait * 10);
             }
             txtef(9);
             txt(u8" *tick* "s);
-            return turn_result_t::pass_one_turn_freeze_time;
+            return TurnResult::pass_one_turn_freeze_time;
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
 
-turn_result_t pc_turn(bool advance_time)
+TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
     {
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::player_turn>();
+            .run_callbacks<lua::EventKind::player_turn>();
         if (gdata_catches_god_signal)
         {
             if (rnd(1000) == 0)
@@ -1266,7 +1256,7 @@ turn_result_t pc_turn(bool advance_time)
         {
             cdata[gdata_mount].position = cdata.player().position;
         }
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
         }
@@ -1274,13 +1264,13 @@ turn_result_t pc_turn(bool advance_time)
         {
             damage_hp(cdata.player(), 999999, -14);
         }
-        if (cdata.player().state() != character::state_t::alive)
+        if (cdata.player().state() != Character::State::alive)
         {
-            return turn_result_t::pc_died;
+            return TurnResult::pc_died;
         }
         if (gdata(30))
         {
-            await(config::instance().wait1 / 3);
+            await(Config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
@@ -1359,8 +1349,8 @@ turn_result_t pc_turn(bool advance_time)
         {
             autosave = 0;
             if (gdata_wizard == 0
-                && gdata_current_map != mdata_t::map_id_t::pet_arena
-                && config::instance().autosave)
+                && gdata_current_map != mdata_t::MapId::pet_arena
+                && Config::instance().autosave)
             {
                 do_save_game();
             }
@@ -1374,13 +1364,13 @@ turn_result_t pc_turn(bool advance_time)
         {
             update_screen();
         }
-        if (gdata_current_map == mdata_t::map_id_t::pet_arena)
+        if (gdata_current_map == mdata_t::MapId::pet_arena)
         {
             gdata(73) = 3;
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
-                if (cdata[cc].state() == character::state_t::alive
+                if (cdata[cc].state() == Character::State::alive
                     && cdata[cc].relationship == 10)
                 {
                     pet_exists = true;
@@ -1403,19 +1393,19 @@ turn_result_t pc_turn(bool advance_time)
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
-                        && cdata[cc].state() == character::state_t::pet_dead)
+                        && cdata[cc].state() == Character::State::pet_dead)
                         continue;
                     if (petarenawin != 1 && followerin(cc) == 1
-                        && cdata[cc].state() == character::state_t::pet_dead
+                        && cdata[cc].state() == Character::State::pet_dead
                         && rnd(5) == 0)
                         continue;
                     cdata[cc].set_state(
-                        static_cast<character::state_t>(followerexist(cc)));
+                        static_cast<Character::State>(followerexist(cc)));
                 }
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
         label_2744_internal:
-            await(config::instance().wait1);
+            await(Config::instance().wait1);
             cdata.player().direction = 0;
             key_check();
             f = 0;
@@ -1429,7 +1419,7 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     p = cnt;
                 }
-                if (cdata[p].state() != character::state_t::alive)
+                if (cdata[p].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1441,7 +1431,7 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     continue;
                 }
-                if (cdata[camera].state() != character::state_t::alive
+                if (cdata[camera].state() != Character::State::alive
                     || camera == 0)
                 {
                     camera = p;
@@ -1484,13 +1474,13 @@ turn_result_t pc_turn(bool advance_time)
                 if (rtval == 0)
                 {
                     petarenawin = 2;
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 goto label_2744_internal;
             }
             if (key != key_cancel && key != ""s)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             goto label_2744_internal;
         }
@@ -1505,7 +1495,7 @@ turn_result_t pc_turn(bool advance_time)
             }
         }
         if (trait(214) != 0 && rnd(250) == 0
-            && mdata_map_type != mdata_t::map_type_t::world_map)
+            && mdata_map_type != mdata_t::MapType::world_map)
         {
             efid = 408;
             magic();
@@ -1535,16 +1525,16 @@ label_2747:
     if (gdata(808))
     {
         txt(i18n::s.get("core.locale.action.equip.you_change"));
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     ++t;
-    if (t % config::instance().scrsync == 1)
+    if (t % Config::instance().scrsync == 1)
     {
         ++scrturn;
         ui_render_from_screensync();
     }
 
-    if (config::instance().net && config::instance().netwish && key == ""s)
+    if (Config::instance().net && Config::instance().netwish && key == ""s)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -1558,7 +1548,7 @@ label_2747:
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
                 {
-                    if (config::instance().netchat)
+                    if (Config::instance().netchat)
                     {
                         continue;
                     }
@@ -1590,8 +1580,8 @@ label_2747:
     // queried, but it would probably be dangerous to allow the game
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
-    await(config::instance().wait1);
-    key_check(key_wait_delay_t::walk_run);
+    await(Config::instance().wait1);
+    key_check(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 
     if (ginfo(2) != 0)
@@ -1601,37 +1591,37 @@ label_2747:
 
     if (gdata_wizard)
     {
-        if (getkey(snail::key::f3))
+        if (getkey(snail::Key::f3))
         {
             efid = 657;
             magic();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (getkey(snail::key::f5))
+        if (getkey(snail::Key::f5))
         {
             what_do_you_wish_for();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (getkey(snail::key::f6))
+        if (getkey(snail::Key::f6))
         {
             dbg_skipevent = 1;
             ++gdata_hour;
             weather_changes();
             dbg_skipevent = 0;
             mode = 0;
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (getkey(snail::key::f7))
+        if (getkey(snail::Key::f7))
         {
-            if (mdata_map_type != mdata_t::map_type_t::town)
+            if (mdata_map_type != mdata_t::MapType::town)
             {
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                ctrl_file(file_operation_t::map_delete);
+                ctrl_file(FileOperation::map_delete);
                 mode = 2;
                 levelexitby = 4;
-                return turn_result_t::initialize_map;
+                return TurnResult::initialize_map;
             }
         }
     }
@@ -1650,17 +1640,17 @@ label_2747:
         firstturn = 1;
         load_save_data();
         mode = 3;
-        return turn_result_t::initialize_map;
+        return TurnResult::initialize_map;
     }
 
-    if (getkey(snail::key::f3))
+    if (getkey(snail::Key::f3))
     {
         tcgmain();
         map_prepare_tileset_atlas();
         update_entire_screen();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
-    if (getkey(snail::key::f9))
+    if (getkey(snail::Key::f9))
     {
         gmode(2);
         sxfix = 0;
@@ -1688,13 +1678,13 @@ label_2747:
         snd(20);
         goto label_2747;
     }
-    if (getkey(snail::key::f11))
+    if (getkey(snail::Key::f11))
     {
         dump_player_info();
         await(500);
         goto label_2747;
     }
-    if (getkey(snail::key::f12))
+    if (getkey(snail::Key::f12))
     {
         debug::voldemort = true;
         if (debug::voldemort)
@@ -1719,7 +1709,7 @@ label_2747:
     {
         key = key_search;
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
-        if (feat(1) == 11 || mdata_map_type == mdata_t::map_type_t::world_map)
+        if (feat(1) == 11 || mdata_map_type == mdata_t::MapType::world_map)
         {
             key = key_godown;
         }
@@ -1764,12 +1754,12 @@ label_2747:
                 key = key_godown;
             }
             if (inv[ci].id == 750
-                && gdata_current_map == mdata_t::map_id_t::your_home)
+                && gdata_current_map == mdata_t::MapId::your_home)
             {
                 key = key_goup;
             }
             if (inv[ci].id == 751
-                && gdata_current_map == mdata_t::map_id_t::your_home)
+                && gdata_current_map == mdata_t::MapId::your_home)
             {
                 key = key_godown;
             }
@@ -1863,13 +1853,13 @@ label_2747:
     {
         invctrl = lastctrl;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_throw)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1881,8 +1871,8 @@ label_2747:
         {
             invctrl = 26;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -1890,13 +1880,13 @@ label_2747:
     {
         invctrl = 1;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_drop)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1908,8 +1898,8 @@ label_2747:
         {
             invctrl = 2;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -1917,29 +1907,29 @@ label_2747:
     {
         invctrl = 5;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_read)
     {
         invctrl = 7;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_drink)
     {
         invctrl = 8;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_zap)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1951,8 +1941,8 @@ label_2747:
         {
             invctrl = 9;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -1960,13 +1950,13 @@ label_2747:
     {
         invctrl = 14;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_open)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1978,14 +1968,14 @@ label_2747:
         {
             invctrl = 15;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
     if (key == key_dip)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -1997,28 +1987,28 @@ label_2747:
         {
             invctrl = 17;
             snd(100);
-            return turn_result_t::ctrl_inventory;
+            return TurnResult::ctrl_inventory;
         }
     }
     if (key == key_charainfo)
     {
-        return turn_result_t::menu_character_sheet;
+        return TurnResult::menu_character_sheet;
     }
     if (key == key_material)
     {
-        return turn_result_t::menu_materials;
+        return TurnResult::menu_materials;
     }
     if (key == key_trait)
     {
-        return turn_result_t::menu_feats;
+        return TurnResult::menu_feats;
     }
     if (key == key_wear)
     {
-        return turn_result_t::menu_equipment;
+        return TurnResult::menu_equipment;
     }
     if (key == key_cast)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2028,12 +2018,12 @@ label_2747:
         }
         else
         {
-            return turn_result_t::show_spell_list;
+            return TurnResult::show_spell_list;
         }
     }
     if (key == key_skill)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2043,21 +2033,21 @@ label_2747:
         }
         else
         {
-            return turn_result_t::show_skill_list;
+            return TurnResult::show_skill_list;
         }
     }
     if (key == key_msglog)
     {
-        return turn_result_t::show_message_log;
+        return TurnResult::show_message_log;
     }
     if (key == key_journal)
     {
-        return turn_result_t::show_journal;
+        return TurnResult::show_journal;
     }
     menucycle = 0;
     if (key == key_offer)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2069,8 +2059,8 @@ label_2747:
         {
             invctrl = 19;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -2086,7 +2076,7 @@ label_2747:
     }
     if (key == key_interact)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2108,7 +2098,7 @@ label_2747:
     }
     if (key == key_fire)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2123,7 +2113,7 @@ label_2747:
     }
     if (key == key_give)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2142,7 +2132,7 @@ label_2747:
     }
     if (key == key_look)
     {
-        if (mdata_map_type != mdata_t::map_type_t::world_map)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
             return do_look_command();
         }
@@ -2173,7 +2163,7 @@ label_2747:
 
     if (key == key_bash)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2192,7 +2182,7 @@ label_2747:
     }
     if (key == key_close)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2207,7 +2197,7 @@ label_2747:
     }
     if (key == key_pray)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
@@ -2305,7 +2295,7 @@ label_2747:
         {
             if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
-                && mdata_map_type != mdata_t::map_type_t::world_map)
+                && mdata_map_type != mdata_t::MapType::world_map)
             {
                 refx = x;
                 refy = y;
@@ -2328,7 +2318,7 @@ label_2747:
     }
     if (key == key_wait)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (key == key_enter)
     {

@@ -15,9 +15,9 @@ using namespace elona;
 
 namespace
 {
-i18n::store load(const std::string& str)
+i18n::Store load(const std::string& str)
 {
-    i18n::store store;
+    i18n::Store store;
 
     std::stringstream ss(str);
 
@@ -44,28 +44,28 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    character& chara = elona::cdata[elona::rc];
+    Character& chara = elona::cdata[elona::rc];
 
     REQUIRE(
         i18n::fmt_hil("${_1}", chara)
-        == u8"<character: "s + std::to_string(chara.index) + u8">"s);
+        == u8"<Character: "s + std::to_string(chara.index) + u8">"s);
 }
 
 TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
-    item& i = elona::inv[elona::ci];
+    Item& i = elona::inv[elona::ci];
 
     REQUIRE(
         i18n::fmt_hil("${_1}", i)
-        == u8"<item: "s + std::to_string(i.index) + u8">"s);
+        == u8"<Item: "s + std::to_string(i.index) + u8">"s);
 }
 
 TEST_CASE("test format character by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
@@ -74,7 +74,7 @@ TEST_CASE("test format character by function", "[I18N: Formatting]")
 TEST_CASE("test format item by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
+    Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
     REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::fmt_hil("${itembasename(_1)}", i) == u8"プチトロ"s);
@@ -83,7 +83,7 @@ TEST_CASE("test format item by function", "[I18N: Formatting]")
 
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo = "bar"
 }
@@ -96,7 +96,7 @@ locale {
 
 TEST_CASE("test i18n store nested literal", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo {
         bar = "baz"
@@ -109,7 +109,7 @@ locale {
 
 TEST_CASE("test i18n store multiple nested literals", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo {
         bar = "baz"
@@ -126,7 +126,7 @@ locale {
 
 TEST_CASE("test i18n store enum", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo {
         _1 = "bar"
@@ -142,7 +142,7 @@ locale {
 
 TEST_CASE("test i18n store complex enum", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo {
         _1 {
@@ -161,7 +161,7 @@ locale {
 
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo = "bar: ${_1}"
 }
@@ -175,7 +175,7 @@ locale {
 
 TEST_CASE("test i18n store multiple interpolation", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo = "${_2}: ${_1}"
 }
@@ -193,7 +193,7 @@ locale {
 
 TEST_CASE("test i18n store enum interpolation", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo {
         _1 {
@@ -217,7 +217,7 @@ locale {
 
 TEST_CASE("test i18n lists", "[I18N: Store]")
 {
-    i18n::store store = load(R"(
+    i18n::Store store = load(R"(
 locale {
     foo = ["baz: ${_1}"]
 }
@@ -228,7 +228,7 @@ locale {
 
 TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
 {
-    i18n::store store = load(
+    i18n::Store store = load(
         u8"\
 locale {\
     ether_disease = \"ｴｰﾃﾙ病\"\
@@ -240,7 +240,7 @@ locale {\
 
 TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
 {
-    i18n::store store;
+    i18n::Store store;
     store.init({{testing::get_mods_path() / "test_i18n_a" / "locale" / "jp",
                  "test_i18n_a"},
                 {testing::get_mods_path() / "test_i18n_b" / "locale" / "jp",

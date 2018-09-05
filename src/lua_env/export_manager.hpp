@@ -11,7 +11,7 @@ namespace elona
 namespace lua
 {
 
-class lua_env;
+class LuaEnv;
 
 /***
  * Stores references to Lua functions that can be provided by mods by
@@ -21,10 +21,10 @@ class lua_env;
  * corpse is eaten, a trap is activated, and so forth, without having
  * to hardcode anything in C++.
  */
-class export_manager
+class ExportManager
 {
 public:
-    explicit export_manager(lua_env*);
+    explicit ExportManager(LuaEnv*);
 
     /***
      * Registers function exports that are inside the "Exports" table
@@ -41,7 +41,7 @@ public:
      * Obtains a Lua callback where name is like
      * "exports:<mod_name>.<namespaces>", if it exists.
      */
-    optional<exported_function> get_exported_function(
+    optional<ExportedFunction> get_exported_function(
         const std::string& name) const;
 
     bool has_function(const std::string& name) const
@@ -58,7 +58,7 @@ public:
         }
         else
         {
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(name + ": Script callback error: no such exported function was found");
         }
     }
@@ -76,7 +76,7 @@ public:
         }
         else
         {
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(name + ": Script callback error: no such exported function was found");
             return default_value;
         }
@@ -88,7 +88,7 @@ private:
      */
     sol::environment export_env;
 
-    lua_env* lua_;
+    LuaEnv* lua_;
 };
 
 } // namespace lua

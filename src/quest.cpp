@@ -18,7 +18,7 @@
 namespace elona
 {
 
-enum class turn_result_t;
+enum class TurnResult;
 
 int rewardfix = 0;
 
@@ -46,7 +46,7 @@ void quest_place_target()
 {
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::state_t::alive)
+        if (cnt.state() == Character::State::alive)
         {
             cnt.is_quest_target() = true;
             cnt.relationship = -3;
@@ -62,7 +62,7 @@ int quest_targets_remaining()
     f_at_m119 = 0;
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::state_t::alive)
+        if (cnt.state() == Character::State::alive)
         {
             if (cnt.is_quest_target() == 1)
             {
@@ -78,7 +78,7 @@ int quest_targets_remaining()
 void quest_check()
 {
     int p_at_m119 = 0;
-    if (gdata_current_map == mdata_t::map_id_t::vernis)
+    if (gdata_current_map == mdata_t::MapId::vernis)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -114,7 +114,7 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::yowyn)
+    if (gdata_current_map == mdata_t::MapId::yowyn)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -139,7 +139,7 @@ void quest_check()
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    if (gdata_current_map == mdata_t::MapId::lumiest)
     {
         if (gdata_current_dungeon_level == 20)
         {
@@ -164,7 +164,7 @@ void quest_check()
             p_at_m119 = 0;
             for (auto&& cnt : cdata.others())
             {
-                if (cnt.state() == character::state_t::alive)
+                if (cnt.state() == Character::State::alive)
                 {
                     ++p_at_m119;
                 }
@@ -429,7 +429,7 @@ void quest_on_map_initialize()
 {
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.state() == character::state_t::empty)
+        if (cnt.state() == Character::State::empty)
         {
             continue;
         }
@@ -539,7 +539,7 @@ int quest_generate()
             {
                 continue;
             }
-            if (cdata[n].state() != character::state_t::alive)
+            if (cdata[n].state() != Character::State::alive)
             {
                 continue;
             }
@@ -712,15 +712,14 @@ int quest_generate()
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33
-            || gdata_current_map == mdata_t::map_id_t::noyel)
+        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
     if (rnd(23) == 0
-        || (gdata_current_map == mdata_t::map_id_t::palmia && rnd(8) == 0))
+        || (gdata_current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
@@ -741,7 +740,7 @@ int quest_generate()
         return 0;
     }
     if (rnd(30) == 0
-        || (gdata_current_map == mdata_t::map_id_t::yowyn && rnd(2) == 0))
+        || (gdata_current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(cdata.player().level + 5) + rnd((cdata.player().fame / 800 + 1))
@@ -825,7 +824,7 @@ int quest_generate()
                       adata(1, p),
                       adata(2, p))
                     * 2;
-            if (p == 33 || gdata_current_map == mdata_t::map_id_t::noyel)
+            if (p == 33 || gdata_current_map == mdata_t::MapId::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
             }
@@ -1021,7 +1020,7 @@ void quest_exit_map()
 
 
 
-turn_result_t quest_pc_died_during_immediate_quest()
+TurnResult quest_pc_died_during_immediate_quest()
 {
     rc = 0;
     revive_player();
@@ -1029,7 +1028,7 @@ turn_result_t quest_pc_died_during_immediate_quest()
     chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
-    return turn_result_t::exit_map;
+    return TurnResult::exit_map;
 }
 
 
@@ -1067,7 +1066,7 @@ void quest_failed(int val0)
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;
-                            if (cdata[tc].state() == character::state_t::alive)
+                            if (cdata[tc].state() == Character::State::alive)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
@@ -1106,7 +1105,7 @@ void quest_failed(int val0)
                                 txt(s);
                                 damage_hp(cdata[tc], 999999, p);
                             }
-                            cdata[tc].set_state(character::state_t::empty);
+                            cdata[tc].set_state(Character::State::empty);
                             break;
                         }
                     }
@@ -1343,7 +1342,7 @@ void quest_complete()
     }
     qdata(3, rq) = 0;
     qdata(8, rq) = 0;
-    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     return;
 }
 

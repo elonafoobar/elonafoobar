@@ -12,28 +12,28 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_ctrl_ally::_should_display_ally(const character& chara)
+bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
 {
-    if (chara.state() == character::state_t::empty)
+    if (chara.state() == Character::State::empty)
     {
         return false;
     }
-    if (_operation == ctrl_ally_operation::sell)
+    if (_operation == ControlAllyOperation::sell)
     {
-        if (chara.state() == character::state_t::pet_dead)
+        if (chara.state() == Character::State::pet_dead)
         {
             return false;
         }
     }
-    if (_operation == ctrl_ally_operation::staying
-        || _operation == ctrl_ally_operation::gene_engineer)
+    if (_operation == ControlAllyOperation::staying
+        || _operation == ControlAllyOperation::gene_engineer)
     {
-        if (chara.state() != character::state_t::alive)
+        if (chara.state() != Character::State::alive)
         {
             return false;
         }
     }
-    if (_operation == ctrl_ally_operation::gene_engineer)
+    if (_operation == ControlAllyOperation::gene_engineer)
     {
         if (chara.index == rc)
         {
@@ -42,13 +42,13 @@ bool ui_menu_ctrl_ally::_should_display_ally(const character& chara)
     }
     if (chara.current_map != 0)
     {
-        if (_operation == ctrl_ally_operation::sell
-            || _operation == ctrl_ally_operation::pet_arena)
+        if (_operation == ControlAllyOperation::sell
+            || _operation == ControlAllyOperation::pet_arena)
         {
             return false;
         }
     }
-    if (_operation != ctrl_ally_operation::sell)
+    if (_operation != ControlAllyOperation::sell)
     {
         if (chara.is_escorted() || chara.is_escorted_in_sub_quest())
         {
@@ -67,7 +67,7 @@ bool ui_menu_ctrl_ally::_should_display_ally(const character& chara)
     return true;
 }
 
-void ui_menu_ctrl_ally::_insert_proceed_entry()
+void UIMenuCtrlAlly::_insert_proceed_entry()
 {
     list(0, listmax) = 99;
     list(1, listmax) = -9999;
@@ -85,7 +85,7 @@ static void _init_pet_arena_selection()
             continue;
         }
         i = list(0, cnt);
-        if (cdata[i].state() != character::state_t::pet_dead)
+        if (cdata[i].state() != Character::State::pet_dead)
         {
             followerin(i) = 1;
             ++_p;
@@ -97,7 +97,7 @@ static void _init_pet_arena_selection()
     }
 }
 
-bool ui_menu_ctrl_ally::init()
+bool UIMenuCtrlAlly::init()
 {
     snd(26);
     listmax = 0;
@@ -106,7 +106,7 @@ bool ui_menu_ctrl_ally::init()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    if (_operation == ctrl_ally_operation::pet_arena)
+    if (_operation == ControlAllyOperation::pet_arena)
     {
         _insert_proceed_entry();
     }
@@ -120,7 +120,7 @@ bool ui_menu_ctrl_ally::init()
         }
     }
     sort_list_by_column1();
-    if (_operation == ctrl_ally_operation::pet_arena)
+    if (_operation == ControlAllyOperation::pet_arena)
     {
         _init_pet_arena_selection();
     }
@@ -175,7 +175,7 @@ static void _update_pet_arena()
 
 static void _update_staying()
 {
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.shop.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.shop.title");
@@ -183,7 +183,7 @@ static void _update_staying()
         s(12) = i18n::s.get("core.locale.ui.ally_list.name");
         s(13) = i18n::s.get("core.locale.ui.ally_list.shop.chr_negotiation");
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.ranch.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.ranch.title");
@@ -191,7 +191,7 @@ static void _update_staying()
         s(12) = i18n::s.get("core.locale.ui.ally_list.name");
         s(13) = i18n::s.get("core.locale.ui.ally_list.ranch.breed_power");
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         txt(i18n::s.get("core.locale.ui.ally_list.stayer.prompt"));
         s(10) = i18n::s.get("core.locale.ui.ally_list.stayer.title");
@@ -220,7 +220,7 @@ static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
     x = 0;
 }
 
-void ui_menu_ctrl_ally::update()
+void UIMenuCtrlAlly::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -236,19 +236,19 @@ void ui_menu_ctrl_ally::update()
 
     switch (_operation)
     {
-    case ctrl_ally_operation::call_back: _update_call_back(); break;
-    case ctrl_ally_operation::sell: _update_sell(); break;
-    case ctrl_ally_operation::pet_arena: _update_pet_arena(); break;
-    case ctrl_ally_operation::staying: _update_staying(); break;
-    case ctrl_ally_operation::investigate:
-    case ctrl_ally_operation::gene_engineer:
+    case ControlAllyOperation::call_back: _update_call_back(); break;
+    case ControlAllyOperation::sell: _update_sell(); break;
+    case ControlAllyOperation::pet_arena: _update_pet_arena(); break;
+    case ControlAllyOperation::staying: _update_staying(); break;
+    case ControlAllyOperation::investigate:
+    case ControlAllyOperation::gene_engineer:
         _update_investigate_and_gene_engineer(
-            _operation == ctrl_ally_operation::gene_engineer);
+            _operation == ControlAllyOperation::gene_engineer);
         break;
     }
 }
 
-static void _draw_info_pet_arena(const character& chara, std::string& _s)
+static void _draw_info_pet_arena(const Character& chara, std::string& _s)
 {
     if (followerin(chara.index) == 1)
     {
@@ -256,11 +256,11 @@ static void _draw_info_pet_arena(const character& chara, std::string& _s)
     }
 }
 
-int ui_menu_ctrl_ally::_draw_get_color_mode(const character& chara)
+int UIMenuCtrlAlly::_draw_get_color_mode(const Character& chara)
 {
     int n = 0;
 
-    if (_operation == ctrl_ally_operation::gene_engineer)
+    if (_operation == ControlAllyOperation::gene_engineer)
     {
         if (chara.level > sdata(151, 0) + 5)
         {
@@ -271,7 +271,7 @@ int ui_menu_ctrl_ally::_draw_get_color_mode(const character& chara)
     return n;
 }
 
-std::string ui_menu_ctrl_ally::_get_ally_name(const character& chara)
+std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 {
     std::string ally_name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -280,7 +280,7 @@ std::string ui_menu_ctrl_ally::_get_ally_name(const character& chara)
     {
         ally_name = ally_name + u8"("s + mapname(chara.current_map) + u8")"s;
     }
-    if (_operation == ctrl_ally_operation::pet_arena)
+    if (_operation == ControlAllyOperation::pet_arena)
     {
         _draw_info_pet_arena(chara, ally_name);
     }
@@ -288,17 +288,17 @@ std::string ui_menu_ctrl_ally::_get_ally_name(const character& chara)
     return ally_name;
 }
 
-std::string ui_menu_ctrl_ally::_get_general_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
 {
     std::string ally_info = u8"Lv."s + chara.level + u8" "s;
 
-    if (chara.state() == character::state_t::pet_dead)
+    if (chara.state() == Character::State::pet_dead)
     {
         ally_info += i18n::s.get("core.locale.ui.ally_list.dead");
     }
-    if (chara.state() == character::state_t::pet_waiting)
+    if (chara.state() == Character::State::pet_waiting)
     {
-        if (_operation == ctrl_ally_operation::call_back)
+        if (_operation == ControlAllyOperation::call_back)
         {
             ally_info += i18n::s.get("core.locale.ui.ally_list.call.waiting");
         }
@@ -308,9 +308,9 @@ std::string ui_menu_ctrl_ally::_get_general_ally_info(const character& chara)
                 + i18n::s.get("core.locale.ui.ally_list.waiting");
         }
     }
-    if (chara.state() == character::state_t::alive)
+    if (chara.state() == Character::State::alive)
     {
-        if (_operation == ctrl_ally_operation::call_back)
+        if (_operation == ControlAllyOperation::call_back)
         {
             ally_info += i18n::s.get("core.locale.ui.ally_list.alive");
         }
@@ -323,16 +323,16 @@ std::string ui_menu_ctrl_ally::_get_general_ally_info(const character& chara)
     return ally_info;
 }
 
-std::string ui_menu_ctrl_ally::_get_specific_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 {
     std::string _s = "";
 
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         _s = u8"   "s + sdata(17, chara.index) + u8" / "
             + sdata(156, chara.index);
     }
-    else if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
+    else if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
     {
         _s = u8"   "s + cbreeder(chara.index);
     }
@@ -340,14 +340,14 @@ std::string ui_menu_ctrl_ally::_get_specific_ally_info(const character& chara)
     return _s;
 }
 
-static bool _has_general_info(ctrl_ally_operation operation)
+static bool _has_general_info(ControlAllyOperation operation)
 {
-    return operation != ctrl_ally_operation::staying
-        || (operation == ctrl_ally_operation::staying
-            && gdata_current_map == mdata_t::map_id_t::your_home);
+    return operation != ControlAllyOperation::staying
+        || (operation == ControlAllyOperation::staying
+            && gdata_current_map == mdata_t::MapId::your_home);
 }
 
-std::string ui_menu_ctrl_ally::_get_ally_info(const character& chara)
+std::string UIMenuCtrlAlly::_get_ally_info(const Character& chara)
 {
     std::string _s = "";
 
@@ -363,8 +363,8 @@ std::string ui_menu_ctrl_ally::_get_ally_info(const character& chara)
     return _s;
 }
 
-std::string ui_menu_ctrl_ally::_modify_ally_info_gene_engineer(
-    const character& chara,
+std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
+    const Character& chara,
     const std::string& ally_info_)
 {
     std::string ally_info = ally_info_;
@@ -410,9 +410,7 @@ std::string ui_menu_ctrl_ally::_modify_ally_info_gene_engineer(
     return ally_info;
 }
 
-void ui_menu_ctrl_ally::_draw_ally_list_entry_sell(
-    int cnt,
-    const character& chara)
+void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 {
     std::string ally_name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -427,7 +425,7 @@ void ui_menu_ctrl_ally::_draw_ally_list_entry_sell(
     mes(ally_info);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_name(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_name(int cnt, const Character& chara)
 {
     std::string ally_name = _get_ally_name(chara);
     int color_mode = _draw_get_color_mode(chara);
@@ -436,11 +434,11 @@ void ui_menu_ctrl_ally::_draw_ally_name(int cnt, const character& chara)
         cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1, 0, color_mode);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_info(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_info(int cnt, const Character& chara)
 {
     std::string ally_info = _get_ally_info(chara);
 
-    if (_operation == ctrl_ally_operation::gene_engineer)
+    if (_operation == ControlAllyOperation::gene_engineer)
     {
         ally_info = _modify_ally_info_gene_engineer(chara, ally_info);
     }
@@ -449,20 +447,20 @@ void ui_menu_ctrl_ally::_draw_ally_info(int cnt, const character& chara)
     mes(ally_info);
 }
 
-void ui_menu_ctrl_ally::_draw_ally_list_entry(int cnt, const character& chara)
+void UIMenuCtrlAlly::_draw_ally_list_entry(int cnt, const Character& chara)
 {
-    if (_operation != ctrl_ally_operation::sell)
+    if (_operation != ControlAllyOperation::sell)
     {
         _draw_ally_name(cnt, chara);
         _draw_ally_info(cnt, chara);
     }
-    else if (_operation == ctrl_ally_operation::sell)
+    else if (_operation == ControlAllyOperation::sell)
     {
         _draw_ally_list_entry_sell(cnt, chara);
     }
 }
 
-void ui_menu_ctrl_ally::draw()
+void UIMenuCtrlAlly::draw()
 {
     s(0) = s(10);
     s(1) = s(11);
@@ -518,8 +516,7 @@ void ui_menu_ctrl_ally::draw()
     }
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_gene_engineer(
-    int _p)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 {
     if (cdata[_p].level > sdata(151, 0) + 5)
     {
@@ -530,10 +527,10 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_gene_engineer(
         return none;
     }
 
-    return ui_menu_ctrl_ally::result::finish(_p);
+    return UIMenuCtrlAlly::Result::finish(_p);
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
 {
     i = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -557,10 +554,10 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
         else
         {
             snd(20);
-            return ui_menu_ctrl_ally::result::finish(1);
+            return UIMenuCtrlAlly::Result::finish(1);
         }
     }
-    else if (cdata[_p].state() == character::state_t::pet_dead)
+    else if (cdata[_p].state() == Character::State::pet_dead)
     {
         txt(i18n::s.get(
             "core.locale.ui.ally_list.pet_arena.is_dead", cdata[_p]));
@@ -589,24 +586,23 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::_select_pet_arena(int _p)
     return none;
 }
 
-optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
-    const std::string& key)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
 
     if (p != -1)
     {
-        if (_operation == ctrl_ally_operation::gene_engineer)
+        if (_operation == ControlAllyOperation::gene_engineer)
         {
             return _select_gene_engineer(p);
         }
-        else if (_operation == ctrl_ally_operation::pet_arena)
+        else if (_operation == ControlAllyOperation::pet_arena)
         {
             return _select_pet_arena(p);
         }
         else
         {
-            return ui_menu_ctrl_ally::result::finish(p(0));
+            return UIMenuCtrlAlly::Result::finish(p(0));
         }
     }
     else if (key == key_pageup)
@@ -629,7 +625,7 @@ optional<ui_menu_ctrl_ally::result> ui_menu_ctrl_ally::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_ctrl_ally::result::cancel();
+        return UIMenuCtrlAlly::Result::cancel();
     }
 
     return none;

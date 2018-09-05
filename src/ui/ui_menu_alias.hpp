@@ -6,16 +6,16 @@ namespace elona
 namespace ui
 {
 
-struct ui_menu_alias_result
+struct UIMenuAliasResult
 {
     std::string alias = "";
     int seed = -1;
 };
 
-class ui_menu_alias : public ui_menu<ui_menu_alias_result>
+class UIMenuAlias : public UIMenu<UIMenuAliasResult>
 {
 public:
-    ui_menu_alias(int alias_type)
+    UIMenuAlias(int alias_type)
         : _alias_type(alias_type)
     {
         _seed = 10500;
@@ -25,7 +25,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_alias::result_type> on_key(const std::string& key);
+    virtual optional<UIMenuAlias::ResultType> on_key(const std::string& key);
 
 private:
     void _set_reroll_aliases();

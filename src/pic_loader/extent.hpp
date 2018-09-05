@@ -6,12 +6,12 @@ namespace elona
 {
 
 
-struct extent
+struct Extent
 {
-    extent()
-        : extent(0, 0, 0, 0){};
+    Extent()
+        : Extent(0, 0, 0, 0){};
 
-    extent(int x, int y, int width, int height)
+    Extent(int x, int y, int width, int height)
         : x(x)
         , y(y)
         , width(width)
@@ -20,7 +20,7 @@ struct extent
     {
     }
 
-    extent(int x, int y, int width, int height, int frame_width)
+    Extent(int x, int y, int width, int height, int frame_width)
         : x(x)
         , y(y)
         , width(width)

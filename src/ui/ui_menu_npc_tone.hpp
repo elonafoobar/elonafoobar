@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_npc_tone : public ui_menu<std::string>
+class UIMenuNPCTone : public UIMenu<std::string>
 {
 public:
-    ui_menu_npc_tone()
+    UIMenuNPCTone()
     {
     }
 
@@ -17,8 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_npc_tone::result_type> on_key(
-        const std::string& key);
+    virtual optional<UIMenuNPCTone::ResultType> on_key(const std::string& key);
 };
 
 } // namespace ui

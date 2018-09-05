@@ -442,7 +442,7 @@ ELONA_EXTERN(int efcancel);
 ELONA_EXTERN(int efid);
 ELONA_EXTERN(int efp);
 ELONA_EXTERN(int efsource);
-ELONA_EXTERN(curse_state_t efstatus);
+ELONA_EXTERN(CurseState efstatus);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int ele);
@@ -481,7 +481,7 @@ ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int hour_played);
 ELONA_EXTERN(int ichargelevel);
-ELONA_EXTERN(identification_state_t idtresult);
+ELONA_EXTERN(IdentifyState idtresult);
 ELONA_EXTERN(int importmode);
 ELONA_EXTERN(int in);
 ELONA_EXTERN(int inf_clockh);
@@ -909,15 +909,15 @@ int unlock_box(int);
 void do_ranged_attack();
 
 //// Command
-turn_result_t step_into_gate();
-optional<turn_result_t> check_angband();
-turn_result_t do_bash();
-turn_result_t do_enter_strange_gate();
-turn_result_t do_gatcha();
-turn_result_t do_use_magic();
-turn_result_t do_use_stairs_command(int);
-turn_result_t try_interact_with_npc();
-turn_result_t try_to_open_locked_door();
+TurnResult step_into_gate();
+optional<TurnResult> check_angband();
+TurnResult do_bash();
+TurnResult do_enter_strange_gate();
+TurnResult do_gatcha();
+TurnResult do_use_magic();
+TurnResult do_use_stairs_command(int);
+TurnResult try_interact_with_npc();
+TurnResult try_to_open_locked_door();
 
 // Attacking
 void build_target_list();
@@ -931,7 +931,7 @@ void do_physical_attack();
 void proc_weapon_enchantments();
 
 // Planting
-turn_result_t do_plant();
+TurnResult do_plant();
 void grow_plant(int);
 void try_to_grow_plant(int = 0);
 void harvest_plant(int);
@@ -954,7 +954,7 @@ void open_box();
 void open_new_year_gift();
 
 // NPC interact
-turn_result_t call_npc();
+TurnResult call_npc();
 
 
 //// Action effect
@@ -975,7 +975,7 @@ void map_proc_special_events();
 
 
 //// proc_movement_event
-turn_result_t proc_movement_event();
+TurnResult proc_movement_event();
 void map_global_proc_travel_events();
 void proc_trap();
 void sense_map_feats_on_move();
@@ -1034,7 +1034,7 @@ void spillfrag(int = 0, int = 0, int = 0);
 void delmef(int = 0);
 
 // Map initialization
-turn_result_t initialize_map();
+TurnResult initialize_map();
 void map_proc_regen_and_update();
 void map_global_proc_diastrophism();
 void map_global_prepare();
@@ -1045,7 +1045,7 @@ void map_reload_noyel();
 void initialize_map_adjust_spawns();
 
 // Map lifecycle
-turn_result_t exit_map();
+TurnResult exit_map();
 void prepare_charas_for_map_unload();
 void save_map_local_data();
 
@@ -1082,9 +1082,9 @@ void cnvbonus(int = 0, int = 0);
 
 
 //// AI
-turn_result_t proc_ai_basic();
-turn_result_t proc_misc_npc_map_events();
-turn_result_t proc_ally_town_training(bool = false);
+TurnResult proc_ai_basic();
+TurnResult proc_misc_npc_map_events();
+TurnResult proc_ally_town_training(bool = false);
 int ai_dir_check_1();
 int ai_dir_check_2();
 
@@ -1266,8 +1266,8 @@ void god_fail_to_take_over_penalty();
 
 
 //// debug console
-turn_result_t do_debug_console();
-turn_result_t do_exit_debug_console();
+TurnResult do_debug_console();
+TurnResult do_exit_debug_console();
 
 
 //// ether disease
@@ -1287,7 +1287,7 @@ std::vector<std::string> txtsetwinword(int);
 
 //// Game lifecycle
 void proc_turn_end(int);
-turn_result_t pc_died();
+TurnResult pc_died();
 void show_game_score_ranking();
 void finish_elona();
 
@@ -1304,7 +1304,7 @@ void page_save();
 //// Message
 void txt_conv();
 void txtcontinue();
-void txtef(color_index_t);
+void txtef(ColorIndex);
 void txtef(int = 0);
 void txtnew();
 void stxt(int, const std::string&);

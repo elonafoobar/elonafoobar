@@ -6,9 +6,9 @@ namespace elona
 namespace lua
 {
 
-std::unique_ptr<lua_env> lua;
+std::unique_ptr<LuaEnv> lua;
 
-lua_env::lua_env()
+LuaEnv::LuaEnv()
 {
     lua_ = std::make_shared<sol::state>();
     lua_->open_libraries(
@@ -30,15 +30,15 @@ lua_env::lua_env()
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like
     // the event manager registering Elona.Event)
-    api_mgr = std::make_unique<api_manager>(this);
-    event_mgr = std::make_unique<event_manager>(this);
-    mod_mgr = std::make_unique<mod_manager>(this);
-    handle_mgr = std::make_unique<handle_manager>(this);
-    registry_mgr = std::make_unique<registry_manager>(this);
-    export_mgr = std::make_unique<export_manager>(this);
+    api_mgr = std::make_unique<APIManager>(this);
+    event_mgr = std::make_unique<EventManager>(this);
+    mod_mgr = std::make_unique<ModManager>(this);
+    handle_mgr = std::make_unique<HandleManager>(this);
+    registry_mgr = std::make_unique<RegistryManager>(this);
+    export_mgr = std::make_unique<ExportManager>(this);
 }
 
-void lua_env::clear()
+void LuaEnv::clear()
 {
     for (int i = 0; i < 5480; i++)
     {
@@ -50,7 +50,7 @@ void lua_env::clear()
 
     for (int i = 0; i < ELONA_MAX_CHARACTERS; i++)
     {
-        if (cdata[i].state() != character::state_t::empty)
+        if (cdata[i].state() != Character::State::empty)
         {
             handle_mgr->remove_chara_handle(cdata[i]);
         }
@@ -61,10 +61,10 @@ void lua_env::clear()
     lua_->collect_garbage();
 }
 
-void lua_env::reload()
+void LuaEnv::reload()
 {
     clear(); // Unload character/item handles while they're still available.
-    get_state()->set("_IS_TEST", config::instance().is_test);
+    get_state()->set("_IS_TEST", Config::instance().is_test);
 }
 
 } // namespace lua

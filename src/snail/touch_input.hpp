@@ -14,11 +14,11 @@ namespace elona
 namespace snail
 {
 
-struct quick_action
+struct QuickAction
 {
-    quick_action(
+    QuickAction(
         std::string text,
-        optional<snail::key> key,
+        optional<snail::Key> key,
         int center_x,
         int center_y)
         : center_x(center_x)
@@ -39,15 +39,15 @@ struct quick_action
     // SDL_KeyboardEvent. This is a result of the use of HSP's
     // "mesbox" function to check if alphanumeric keys are pressed by
     // checking the string input it receives.
-    optional<snail::key> key;
+    optional<snail::Key> key;
     std::string text;
 
     bool touched = false;
 };
 
-class touch_input : public lib::noncopyable
+class TouchInput : public lib::noncopyable
 {
-    enum event_type
+    enum class EventType
     {
         motion = SDL_FINGERMOTION,
         down = SDL_FINGERDOWN,
@@ -55,10 +55,10 @@ class touch_input : public lib::noncopyable
     };
 
 public:
-    virtual ~touch_input() override = default;
-    static touch_input& instance();
+    virtual ~TouchInput() override = default;
+    static TouchInput& instance();
 
-    optional<quick_action> last_touched_quick_action() const
+    optional<QuickAction> last_touched_quick_action() const
     {
         if (_last_touched_quick_action_idx)
         {
@@ -87,18 +87,18 @@ public:
     void on_touch_event(::SDL_TouchFingerEvent);
 
 private:
-    touch_input() = default;
+    TouchInput() = default;
 
-    void draw_quick_action(const quick_action&);
+    void draw_quick_action(const QuickAction&);
     int quick_action_size() const noexcept;
-    bool is_touched(int, int, const quick_action&);
+    bool is_touched(int, int, const QuickAction&);
 
     uint8_t quick_action_alpha() const noexcept
     {
         return static_cast<uint8_t>(_quick_action_transparency * 255);
     }
 
-    std::vector<quick_action> _quick_actions;
+    std::vector<QuickAction> _quick_actions;
     optional<size_t> _last_touched_quick_action_idx = none;
     float _base_quick_action_size = 0.5;
     float _quick_action_transparency = 0.5;
@@ -107,7 +107,7 @@ private:
 
     static const constexpr float _base_font_size = 0.0089f;
 
-    std::unique_ptr<basic_image> _quick_action_image;
+    std::unique_ptr<BasicImage> _quick_action_image;
 };
 
 } // namespace snail

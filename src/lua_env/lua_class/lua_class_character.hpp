@@ -9,34 +9,34 @@ namespace lua
 
 namespace LuaCharacter
 {
-void damage_hp(character&, int);
-void damage_hp_source(character&, int, const enum_string&);
-void damage_hp_chara(character&, int, lua_character_handle handle);
+void damage_hp(Character&, int);
+void damage_hp_source(Character&, int, const EnumString&);
+void damage_hp_chara(Character&, int, LuaCharacterHandle handle);
 
-void apply_ailment(character&, const enum_string&, int);
+void apply_ailment(Character&, const EnumString&, int);
 
-bool recruit_as_ally(character&);
+bool recruit_as_ally(Character&);
 
-void set_flag(character&, const enum_string&, bool);
+void set_flag(Character&, const EnumString&, bool);
 
-void gain_skill(character&, int, int);
-void gain_skill_stock(character&, int, int, int);
+void gain_skill(Character&, int, int);
+void gain_skill_stock(Character&, int, int, int);
 
-void gain_skill_exp(character&, int, int);
+void gain_skill_exp(Character&, int, int);
 
-void modify_trait(character&, int, int);
+void modify_trait(Character&, int, int);
 
-void modify_resistance(character&, const enum_string&, int);
+void modify_resistance(Character&, const EnumString&, int);
 
-void modify_sanity(character&, int);
+void modify_sanity(Character&, int);
 
-void modify_karma(character&, int);
+void modify_karma(Character&, int);
 
-void modify_corruption(character&, int);
+void modify_corruption(Character&, int);
 
-void make_pregnant(character&);
+void make_pregnant(Character&);
 
-void eat_rotten_food(character&);
+void eat_rotten_food(Character&);
 
 
 void bind(sol::state&);

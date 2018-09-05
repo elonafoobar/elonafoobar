@@ -10,7 +10,7 @@ namespace elona
 namespace lua
 {
 
-api_manager::api_manager(lua_env* lua)
+APIManager::APIManager(LuaEnv* lua)
 {
     this->lua = lua;
     this->api_env = sol::environment(
@@ -33,13 +33,13 @@ api_manager::api_manager(lua_env* lua)
     LuaEnums::bind(core);
 }
 
-bool api_manager::is_loaded()
+bool APIManager::is_loaded()
 {
     bool loaded = api_env["_LOADED"];
     return loaded;
 }
 
-sol::optional<sol::table> api_manager::try_find_api(
+sol::optional<sol::table> APIManager::try_find_api(
     const std::string& module_namespace,
     const std::string& module_name) const
 {
@@ -53,7 +53,7 @@ sol::optional<sol::table> api_manager::try_find_api(
     return result;
 }
 
-void api_manager::add_api(
+void APIManager::add_api(
     const std::string& module_namespace,
     sol::table& module_table)
 {
@@ -75,7 +75,7 @@ void api_manager::add_api(
     }
 }
 
-void api_manager::load_lua_support_libraries(lua_env& lua)
+void APIManager::load_lua_support_libraries(LuaEnv& lua)
 {
     // Don't load the support libraries again if they're already
     // loaded, because all the tables will be read-only.
@@ -98,7 +98,7 @@ void api_manager::load_lua_support_libraries(lua_env& lua)
     }
 }
 
-void api_manager::lock()
+void APIManager::lock()
 {
     lua->get_state()->safe_script(
         R"(
@@ -107,7 +107,7 @@ Elona = Elona.core.ReadOnly.make_read_only(Elona)
         api_env);
 }
 
-sol::table api_manager::bind(lua_env& lua)
+sol::table APIManager::bind(LuaEnv& lua)
 {
     return lua.get_state()->create_table_with(
         "require",
@@ -126,17 +126,17 @@ sol::table api_manager::bind(lua_env& lua)
             }));
 }
 
-void api_manager::set_on(lua_env& lua)
+void APIManager::set_on(LuaEnv& lua)
 {
     lua.get_state()->set("Elona", bind(lua));
 }
 
-sol::table api_manager::get_master_api_table()
+sol::table APIManager::get_master_api_table()
 {
     return api_env["Elona"];
 }
 
-sol::table api_manager::get_api_table()
+sol::table APIManager::get_api_table()
 {
     return api_env["Elona"]["core"];
 }

@@ -28,7 +28,7 @@ namespace elona
 {
 
 
-inventory inv;
+Inventory inv;
 
 int ci_at_m138 = 0;
 int p_at_m138 = 0;
@@ -39,21 +39,21 @@ int f_at_m138 = 0;
 int a_at_m138 = 0;
 
 
-item::item()
+Item::Item()
     : enchantments(15)
 {
 }
 
 
 
-void item::clear()
+void Item::clear()
 {
     copy({}, *this);
 }
 
 
 
-bool item::almost_equals(const item& other, bool ignore_position)
+bool Item::almost_equals(const Item& other, bool ignore_position)
 {
     return true
         // && number == other.number
@@ -79,7 +79,7 @@ bool item::almost_equals(const item& other, bool ignore_position)
         && range::equal(enchantments, other.enchantments);
 }
 
-inventory::inventory()
+Inventory::Inventory()
     : storage(5480)
 {
     for (size_t i = 0; i < storage.size(); ++i)
@@ -90,7 +90,7 @@ inventory::inventory()
 
 int ibit(size_t type, int ci)
 {
-    assert(type < sizeof(item::flags) * 8);
+    assert(type < sizeof(Item::flags) * 8);
     return inv[ci].flags & (1 << type) ? 1 : 0;
 }
 
@@ -98,7 +98,7 @@ int ibit(size_t type, int ci)
 
 void ibitmod(size_t type, int ci, int on)
 {
-    assert(type < sizeof(item::flags) * 8);
+    assert(type < sizeof(Item::flags) * 8);
     if (on)
     {
         inv[ci].flags |= 1 << type;
@@ -281,7 +281,7 @@ int itemusingfind(int ci, bool disallow_pc)
 {
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() != character::state_t::alive)
+        if (cnt.state() != Character::State::alive)
         {
             continue;
         }
@@ -347,7 +347,7 @@ int mapitemfind(int x, int y, int id)
         {
             continue;
         }
-        if (inv[cnt].id == id && inv[cnt].position == position_t{x, y})
+        if (inv[cnt].id == id && inv[cnt].position == Position{x, y})
         {
             return cnt;
         }
@@ -464,7 +464,7 @@ void item_copy(int a, int b)
 
     bool was_empty = inv[b].number() == 0;
 
-    item::copy(inv[a], inv[b]);
+    Item::copy(inv[a], inv[b]);
 
     if (was_empty && inv[b].number() != 0)
     {
@@ -480,17 +480,17 @@ void item_copy(int a, int b)
 
 void item_exchange(int a, int b)
 {
-    item tmp;
-    item::copy(inv[a], tmp);
-    item::copy(inv[b], inv[a]);
-    item::copy(tmp, inv[b]);
+    Item tmp;
+    Item::copy(inv[a], tmp);
+    Item::copy(inv[b], inv[a]);
+    Item::copy(tmp, inv[b]);
 
-    lua::lua->get_handle_manager().swap_handles<item>(inv[b], inv[a]);
+    lua::lua->get_handle_manager().swap_handles<Item>(inv[b], inv[a]);
 }
 
 
 
-void item::remove()
+void Item::remove()
 {
     number_ = 0;
     lua::lua->get_handle_manager().remove_item_handle_run_callbacks(*this);
@@ -507,7 +507,7 @@ void item_delete(int ci)
 
 
 
-void item_refresh(item& i)
+void item_refresh(Item& i)
 {
     if (i.number() <= 0)
     {
@@ -528,14 +528,14 @@ void item_refresh(item& i)
 
 
 
-void item::modify_number(int delta)
+void Item::modify_number(int delta)
 {
     this->set_number(this->number_ + delta);
 }
 
 
 
-void item::set_number(int number_)
+void Item::set_number(int number_)
 {
     bool item_was_empty = this->number_ <= 0;
 
@@ -607,20 +607,20 @@ bool chara_unequip(int ci)
 }
 
 
-identification_state_t item_identify(item& ci, identification_state_t level)
+IdentifyState item_identify(Item& ci, IdentifyState level)
 {
-    if (level == identification_state_t::almost_identified
+    if (level == IdentifyState::almost_identified
         && the_item_db[ci.id]->category >= 50000)
     {
-        level = identification_state_t::completely_identified;
+        level = IdentifyState::completely_identified;
     }
     if (ci.identification_state >= level)
     {
-        idtresult = identification_state_t::unidentified;
+        idtresult = IdentifyState::unidentified;
         return idtresult;
     }
     ci.identification_state = level;
-    if (ci.identification_state >= identification_state_t::partly_identified)
+    if (ci.identification_state >= IdentifyState::partly_identified)
     {
         itemmemory(0, ci.id) = 1;
     }
@@ -629,28 +629,26 @@ identification_state_t item_identify(item& ci, identification_state_t level)
 }
 
 
-identification_state_t item_identify(item& ci, int power)
+IdentifyState item_identify(Item& ci, int power)
 {
     return item_identify(
         ci,
         power >= ci.difficulty_of_identification
-            ? identification_state_t::completely_identified
-            : identification_state_t::unidentified);
+            ? IdentifyState::completely_identified
+            : IdentifyState::unidentified);
 }
 
 
 void item_checkknown(int ci)
 {
-    if (inv[ci].identification_state
-        == identification_state_t::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (itemmemory(0, inv[ci].id)
-        && inv[ci].identification_state == identification_state_t::unidentified)
+        && inv[ci].identification_state == IdentifyState::unidentified)
     {
-        item_identify(inv[ci], identification_state_t::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly_identified);
     }
 }
 
@@ -684,7 +682,7 @@ void itemname_additional_info()
             }
         }
         if (inv[prm_518].identification_state
-            == identification_state_t::completely_identified)
+            == IdentifyState::completely_identified)
         {
             s_ += lang(
                 u8"《"s
@@ -984,20 +982,14 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             s_ = "";
         }
         if (inv[prm_518].identification_state
-            == identification_state_t::completely_identified)
+            == IdentifyState::completely_identified)
         {
             switch (inv[prm_518].curse_state)
             {
-            case curse_state_t::doomed:
-                s_ += i18n::_(u8"ui", u8"doomed");
-                break;
-            case curse_state_t::cursed:
-                s_ += i18n::_(u8"ui", u8"cursed");
-                break;
-            case curse_state_t::none: break;
-            case curse_state_t::blessed:
-                s_ += i18n::_(u8"ui", u8"blessed");
-                break;
+            case CurseState::doomed: s_ += i18n::_(u8"ui", u8"doomed"); break;
+            case CurseState::cursed: s_ += i18n::_(u8"ui", u8"cursed"); break;
+            case CurseState::none: break;
+            case CurseState::blessed: s_ += i18n::_(u8"ui", u8"blessed"); break;
             }
         }
     }
@@ -1005,25 +997,24 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         s_ = "";
         if (inv[prm_518].identification_state
-            == identification_state_t::completely_identified)
+            == IdentifyState::completely_identified)
         {
             switch (inv[prm_518].curse_state)
             {
-            case curse_state_t::doomed:
+            case CurseState::doomed:
                 s_ = i18n::_(u8"ui", u8"doomed") + u8" "s;
                 break;
-            case curse_state_t::cursed:
+            case CurseState::cursed:
                 s_ = i18n::_(u8"ui", u8"cursed") + u8" "s;
                 break;
-            case curse_state_t::none: break;
-            case curse_state_t::blessed:
+            case CurseState::none: break;
+            case CurseState::blessed:
                 s_ = i18n::_(u8"ui", u8"blessed") + u8" "s;
                 break;
             }
         }
         if (irandomname(inv[prm_518].id) == 1
-            && inv[prm_518].identification_state
-                == identification_state_t::unidentified)
+            && inv[prm_518].identification_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
@@ -1038,8 +1029,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             {
                 s3_ = u8"of"s;
             }
-            if (inv[prm_518].identification_state
-                    != identification_state_t::unidentified
+            if (inv[prm_518].identification_state != IdentifyState::unidentified
                 && s2_ == ""s)
             {
                 if (inv[prm_518].weight < 0)
@@ -1158,7 +1148,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     alpha_ = 0;
     if (inv[prm_518].identification_state
-            == identification_state_t::completely_identified
+            == IdentifyState::completely_identified
         && a_ < 50000)
     {
         if (ibit(15, prm_518))
@@ -1217,14 +1207,13 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
         }
     }
-    if (inv[prm_518].identification_state
-        == identification_state_t::unidentified)
+    if (inv[prm_518].identification_state == IdentifyState::unidentified)
     {
         s_ += iknownnameref(inv[prm_518].id);
     }
     else if (
         inv[prm_518].identification_state
-        != identification_state_t::completely_identified)
+        != IdentifyState::completely_identified)
     {
         if (inv[prm_518].quality < 4 || a_ >= 50000)
         {
@@ -1289,7 +1278,7 @@ label_0313_internal:
         if (prm_520 == 0)
         {
             if (inv[prm_518].identification_state
-                    == identification_state_t::completely_identified
+                    == IdentifyState::completely_identified
                 && (inv[prm_518].quality >= 4 && a_ < 50000))
             {
                 s_ = u8"the "s + s_;
@@ -1315,7 +1304,7 @@ label_0313_internal:
         itemname_additional_info();
     }
     if (inv[prm_518].identification_state
-        == identification_state_t::completely_identified)
+        == IdentifyState::completely_identified)
     {
         if (inv[prm_518].enhancement != 0)
         {
@@ -1392,8 +1381,7 @@ label_0313_internal:
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2;
     }
-    if (inv[prm_518].identification_state
-            == identification_state_t::almost_identified
+    if (inv[prm_518].identification_state == IdentifyState::almost_identified
         && a_ < 50000)
     {
         s_ += u8" ("s
@@ -1417,12 +1405,12 @@ label_0313_internal:
                       u8"name"))
                 + u8"]"s;
         }
-        if (inv[prm_518].curse_state == curse_state_t::cursed)
+        if (inv[prm_518].curse_state == CurseState::cursed)
         {
             s_ +=
                 i18n::s.get("core.locale.item.approximate_curse_state.cursed");
         }
-        if (inv[prm_518].curse_state == curse_state_t::doomed)
+        if (inv[prm_518].curse_state == CurseState::doomed)
         {
             s_ +=
                 i18n::s.get("core.locale.item.approximate_curse_state.doomed");
@@ -1566,7 +1554,7 @@ int item_stack(int inventory_id, int ci, int show_message)
     return did_stack;
 }
 
-void item_dump_desc(const item& i)
+void item_dump_desc(const Item& i)
 {
     reftype = the_item_db[i.id]->category;
 
@@ -1582,7 +1570,7 @@ void item_dump_desc(const item& i)
 
 
 
-void item_acid(const character& owner, int ci)
+void item_acid(const Character& owner, int ci)
 {
     if (ci == -1)
     {
@@ -1840,7 +1828,7 @@ void mapitem_fire(int x, int y)
         {
             continue;
         }
-        if (inv[cnt].position == position_t{x, y})
+        if (inv[cnt].position == Position{x, y})
         {
             ci = cnt;
             break;
@@ -2003,7 +1991,7 @@ void mapitem_cold(int x, int y)
         {
             continue;
         }
-        if (inv[cnt].position == position_t{x, y})
+        if (inv[cnt].position == Position{x, y})
         {
             ci = cnt;
             break;

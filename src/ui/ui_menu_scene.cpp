@@ -40,7 +40,7 @@ static void _load_scenes()
     }
 }
 
-bool ui_menu_scene::init()
+bool UIMenuScene::init()
 {
     snd(59);
     gsel(4);
@@ -63,7 +63,7 @@ bool ui_menu_scene::init()
     return true;
 }
 
-void ui_menu_scene::update()
+void UIMenuScene::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -117,7 +117,7 @@ static void _draw_title()
 {
     font(
         12 - en * 2,
-        snail::font_t::style_t::italic | snail::font_t::style_t::underline);
+        snail::Font::Style::italic | snail::Font::Style::underline);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
     font(12 - en * 2);
@@ -152,7 +152,7 @@ static void _draw_list_entries()
 
 static void _draw_more()
 {
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
@@ -162,7 +162,7 @@ static void _draw_more()
     }
 }
 
-void ui_menu_scene::draw()
+void UIMenuScene::draw()
 {
     _draw_window();
     _draw_keys();
@@ -186,8 +186,7 @@ static void _do_play_scene(int scene_id)
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 
-optional<ui_menu_scene::result_type> ui_menu_scene::on_key(
-    const std::string& key)
+optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
 {
     int p_ = 0;
     ELONA_GET_SELECTED_ITEM(p_, 0);
@@ -195,7 +194,7 @@ optional<ui_menu_scene::result_type> ui_menu_scene::on_key(
     if (p_ != -1)
     {
         _do_play_scene(p_);
-        return ui_menu_scene::result::finish();
+        return UIMenuScene::Result::finish();
     }
     else if (key == key_pageup)
     {
@@ -219,7 +218,7 @@ optional<ui_menu_scene::result_type> ui_menu_scene::on_key(
     {
         play_music();
         update_screen();
-        return ui_menu_scene::result::cancel();
+        return UIMenuScene::Result::cancel();
     }
 
     return none;

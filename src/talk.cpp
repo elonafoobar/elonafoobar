@@ -40,7 +40,7 @@ void talk_to_npc()
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(207) == 0)
             {
@@ -60,7 +60,7 @@ void talk_to_npc()
     }
     if (cdata[tc].character_role == 7)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(208) == 0)
             {
@@ -112,7 +112,7 @@ void talk_to_npc()
     talk_start();
     if (scenemode == 1)
     {
-        talk_wrapper(talk_result_t::talk_more);
+        talk_wrapper(TalkResult::talk_more);
         return;
     }
     chatval_unique_chara_id = none;
@@ -124,41 +124,41 @@ void talk_to_npc()
     }
     if (event_id() == 2)
     {
-        talk_wrapper(talk_result_t::talk_game_begin);
+        talk_wrapper(TalkResult::talk_game_begin);
         return;
     }
     if (event_id() == 16)
     {
-        talk_wrapper(talk_result_t::talk_finish_escort);
+        talk_wrapper(TalkResult::talk_finish_escort);
         return;
     }
     if (cdata[tc].sleep != 0)
     {
-        talk_wrapper(talk_result_t::talk_sleeping);
+        talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
     if (cdata[tc].continuous_action_id)
     {
-        talk_wrapper(talk_result_t::talk_busy);
+        talk_wrapper(TalkResult::talk_busy);
         return;
     }
     if (tc == 0)
     {
-        talk_wrapper(talk_result_t::talk_end);
+        talk_wrapper(TalkResult::talk_end);
         return;
     }
     if (cdata[tc].visited_just_now())
     {
         cdata[tc].visited_just_now() = false;
-        talk_wrapper(talk_result_t::talk_house_visitor);
+        talk_wrapper(TalkResult::talk_house_visitor);
     }
     if (chatval_unique_chara_id)
     {
-        if (gdata_current_map != mdata_t::map_id_t::show_house)
+        if (gdata_current_map != mdata_t::MapId::show_house)
         {
             if (tc >= 16)
             {
-                talk_wrapper(talk_result_t::talk_unique);
+                talk_wrapper(TalkResult::talk_unique);
                 return;
             }
         }
@@ -166,16 +166,16 @@ void talk_to_npc()
     if (quest_teleport)
     {
         quest_teleport = false;
-        talk_wrapper(talk_result_t::talk_quest_giver);
+        talk_wrapper(TalkResult::talk_quest_giver);
         return;
     }
     buff = "";
-    talk_wrapper(talk_result_t::talk_npc);
+    talk_wrapper(TalkResult::talk_npc);
 }
 
 
 
-talk_result_t talk_more()
+TalkResult talk_more()
 {
     listmax = 0;
     buff = buff;
@@ -189,14 +189,14 @@ talk_result_t talk_more()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 
-talk_result_t talk_sleeping()
+TalkResult talk_sleeping()
 {
     listmax = 0;
     buff = u8"("s + i18n::s.get("core.locale.talk.is_sleeping", cdata[tc])
@@ -211,13 +211,13 @@ talk_result_t talk_sleeping()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_busy()
+TalkResult talk_busy()
 {
     listmax = 0;
     buff = u8"("s + i18n::s.get("core.locale.talk.is_busy", cdata[tc]) + u8")"s;
@@ -231,13 +231,13 @@ talk_result_t talk_busy()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
-talk_result_t talk_ignored()
+TalkResult talk_ignored()
 {
     listmax = 0;
     buff = i18n::s.get("core.locale.talk.ignores_you", cdata[tc]);
@@ -245,7 +245,7 @@ talk_result_t talk_ignored()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    return talk_result_t::talk_end;
+    return TalkResult::talk_end;
 }
 
 static void _give_potion_of_cure_corruption(int stat)
@@ -312,7 +312,7 @@ bool talk_give_potion_of_cure_corruption()
 
 
 
-talk_result_t talk_game_begin()
+TalkResult talk_game_begin()
 {
     if (lomiaseaster)
     {
@@ -331,7 +331,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         listmax = 0;
@@ -348,7 +348,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         update_screen();
@@ -380,7 +380,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         listmax = 0;
@@ -397,7 +397,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         listmax = 0;
@@ -414,7 +414,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         listmax = 0;
@@ -431,7 +431,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         listmax = 0;
@@ -448,7 +448,7 @@ talk_result_t talk_game_begin()
         {
             if (scene_cut == 1)
             {
-                return talk_result_t::talk_end;
+                return TalkResult::talk_end;
             }
         }
         await(1500);
@@ -480,7 +480,7 @@ talk_result_t talk_game_begin()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -495,7 +495,7 @@ talk_result_t talk_game_begin()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -510,7 +510,7 @@ talk_result_t talk_game_begin()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -525,7 +525,7 @@ talk_result_t talk_game_begin()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     listmax = 0;
@@ -541,12 +541,12 @@ talk_result_t talk_game_begin()
     {
         if (scene_cut == 1)
         {
-            return talk_result_t::talk_end;
+            return TalkResult::talk_end;
         }
     }
     mdata_map_bgm = 67;
     play_music();
-    return talk_result_t::talk_unique;
+    return TalkResult::talk_unique;
 }
 
 
@@ -601,12 +601,12 @@ int talk_window_query()
         }
         cs_bk = cs;
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         int a{};
-        a = stick(stick_key::escape);
-        if (a == stick_key::escape)
+        a = stick(static_cast<int>(StickKey::escape));
+        if (a == static_cast<int>(StickKey::escape))
         {
             if (scenemode)
             {
@@ -727,7 +727,7 @@ void talk_window_show()
         i18n::s.get("core.locale.talk.window.impress"), wx + 28, wy + 170);
     display_topic(
         i18n::s.get("core.locale.talk.window.attract"), wx + 28, wy + 215);
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (cdatan(1, tc) == ""s)
     {
         s = cdatan(0, tc) + u8" "s;

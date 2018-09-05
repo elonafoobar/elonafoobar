@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include "../../lib/enumutil.hpp"
 #include "../../lib/noncopyable.hpp"
 #include "../detail/sdl.hpp"
 
@@ -13,17 +14,17 @@ namespace snail
 {
 
 
-class window : public lib::noncopyable
+class Window : public lib::noncopyable
 {
 public:
-    enum initial_position
+    enum class InitialPosition
     {
-        position_undefined = SDL_WINDOWPOS_UNDEFINED,
-        position_centered = SDL_WINDOWPOS_CENTERED,
+        undefined = SDL_WINDOWPOS_UNDEFINED,
+        centered = SDL_WINDOWPOS_CENTERED,
     };
 
 
-    enum flag
+    enum class Flag
     {
         none = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -49,7 +50,7 @@ public:
     };
 
 
-    enum class fullscreen_mode_t : Uint32
+    enum class FullscreenMode : Uint32
     {
         windowed = 0,
         fullscreen = SDL_WINDOW_FULLSCREEN,
@@ -73,22 +74,65 @@ public:
 
     ::SDL_DisplayMode get_display_mode();
 
-    void set_fullscreen_mode(fullscreen_mode_t fullscreen_mode);
+    void set_fullscreen_mode(FullscreenMode fullscreen_mode);
 
-    window(
+    Window(
         const std::string& title,
         int x,
         int y,
         int width,
         int height,
-        int flag);
+        Flag flag);
 
-    virtual ~window() override = default;
+    Window(
+        const std::string& title,
+        InitialPosition x,
+        int y,
+        int width,
+        int height,
+        Flag flag)
+        : Window(title, static_cast<int>(x), y, width, height, flag)
+    {
+    }
+
+    Window(
+        const std::string& title,
+        int x,
+        InitialPosition y,
+        int width,
+        int height,
+        Flag flag)
+        : Window(title, x, static_cast<int>(y), width, height, flag)
+    {
+    }
+
+    Window(
+        const std::string& title,
+        InitialPosition x,
+        InitialPosition y,
+        int width,
+        int height,
+        Flag flag)
+        : Window(
+              title,
+              static_cast<int>(x),
+              static_cast<int>(y),
+              width,
+              height,
+              flag)
+    {
+    }
+
+
+    virtual ~Window() override = default;
 
 
 private:
     std::unique_ptr<::SDL_Window, decltype(&::SDL_DestroyWindow)> _ptr;
 };
+
+
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(Window::Flag)
 
 
 

@@ -20,7 +20,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
     int p_at_m66 = 0;
     std::string s_at_m66;
     if (inv[prm_529].identification_state
-        != identification_state_t::completely_identified)
+        != IdentifyState::completely_identified)
     {
         return;
     }
@@ -324,8 +324,7 @@ void supply_new_equipment()
         {
             break;
         }
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
         if (inv[ci].quality >= 4)
         {
             if (the_item_db[inv[ci].id]->category < 50000)

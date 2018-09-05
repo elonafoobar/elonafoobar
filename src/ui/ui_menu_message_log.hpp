@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_message_log : public ui_menu<dummy_result>
+class UIMenuMessageLog : public UIMenu<DummyResult>
 {
 public:
-    ui_menu_message_log()
+    UIMenuMessageLog()
     {
     }
 
@@ -17,7 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_message_log::result_type> on_key(
+    virtual optional<UIMenuMessageLog::ResultType> on_key(
         const std::string& key);
 };
 

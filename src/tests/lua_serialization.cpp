@@ -14,7 +14,7 @@ using namespace elona::testing;
 
 TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
@@ -28,7 +28,7 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
@@ -50,7 +50,7 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 
 TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
@@ -65,7 +65,7 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
@@ -82,7 +82,7 @@ TEST_CASE(
     "Test that store can be reset and map init hooks re-run",
     "[Lua: Serialization]")
 {
-    elona::lua::lua_env lua;
+    elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
@@ -96,7 +96,7 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
 )"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::map_initialized>();
+        .run_callbacks<elona::lua::EventKind::map_initialized>();
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(Store.global.val == 42)"));
 
@@ -106,7 +106,7 @@ Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
         "test", "assert(Store.global.thing == nil)"));
 
     lua.get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::map_initialized>();
+        .run_callbacks<elona::lua::EventKind::map_initialized>();
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(Store.global.val == 42)"));
 }
@@ -129,7 +129,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_hook)
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_global", "assert(Store.global.val == nil)"));
     elona::lua::lua->get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_global", "assert(Store.global.val == 42)"));
 
@@ -161,7 +161,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_hook)
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_map_local", "assert(Store.map_local.val == nil)"));
     elona::lua::lua->get_event_manager()
-        .run_callbacks<elona::lua::event_kind_t::all_turns_finished>();
+        .run_callbacks<elona::lua::EventKind::all_turns_finished>();
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_map_local", "assert(Store.map_local.val == 42)"));
 

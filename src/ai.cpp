@@ -94,7 +94,7 @@ int ai_check()
     return 0;
 }
 
-turn_result_t ai_proc_basic()
+TurnResult ai_proc_basic()
 {
     if (tc == 0)
     {
@@ -152,7 +152,7 @@ turn_result_t ai_proc_basic()
                         {
                             return do_throw_command();
                         }
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
@@ -169,7 +169,7 @@ turn_result_t ai_proc_basic()
         }
         else
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (act == -2)
@@ -186,7 +186,7 @@ turn_result_t ai_proc_basic()
                 if (stat == 1)
                 {
                     do_ranged_attack();
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
             }
         }
@@ -202,14 +202,14 @@ turn_result_t ai_proc_basic()
                     || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
             }
             npccostmp = 1;
             int stat = do_cast_magic();
             if (stat == 1)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -219,7 +219,7 @@ turn_result_t ai_proc_basic()
         int stat = do_magic_attempt();
         if (stat == 1)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (act == -3)
@@ -242,17 +242,17 @@ turn_result_t ai_proc_basic()
                     if (stat == 1)
                     {
                         do_ranged_attack();
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (distance == 1)
     {
         try_to_melee_attack();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (distance < 6)
     {
@@ -266,7 +266,7 @@ turn_result_t ai_proc_basic()
             if (stat == 1)
             {
                 do_ranged_attack();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -274,7 +274,7 @@ turn_result_t ai_proc_basic()
     {
         if (rnd(3) == 0)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (rnd(5) == 0)
@@ -287,13 +287,13 @@ turn_result_t ai_proc_basic()
     }
     else
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
 }
 
-turn_result_t proc_npc_movement_event(bool retreat)
+TurnResult proc_npc_movement_event(bool retreat)
 {
-    if (mdata_map_type == mdata_t::map_type_t::town)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         if (cc < 16)
         {
@@ -364,7 +364,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
     if (tc == cc)
     {
         cdata[cc].enemy_id = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc]._203 <= 0)
     {
@@ -434,7 +434,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                         rowactend(tc);
                     }
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -458,7 +458,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                     {
                                         map(x, y, 0) = tile_tunnel;
                                         snd(45);
-                                        breaking_animation({x, y}).play();
+                                        BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);
                                         if (is_in_fov(cdata[cc]))
                                         {
@@ -466,7 +466,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                                 "core.locale.ai.crushes_wall",
                                                 cdata[cc]));
                                         }
-                                        return turn_result_t::turn_end;
+                                        return TurnResult::turn_end;
                                     }
                                 }
                             }
@@ -553,7 +553,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
             cdata[cc]._205 = cdata[tc].position.x;
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 int ai_dir_check_1()
@@ -642,7 +642,7 @@ int ai_dir_check_2()
     return 0;
 }
 
-turn_result_t ai_proc_misc_map_events()
+TurnResult ai_proc_misc_map_events()
 {
     if (cdata[cc].ai_calm == 4)
     {
@@ -656,7 +656,7 @@ turn_result_t ai_proc_misc_map_events()
     }
     if (rnd(5) != 0)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
@@ -723,8 +723,8 @@ turn_result_t ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (mdata_map_type == mdata_t::map_type_t::town
-            || mdata_map_type == mdata_t::map_type_t::guild)
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild)
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {
@@ -732,7 +732,7 @@ label_2692_internal:
                 {
                     if (rnd(100) == 0)
                     {
-                        dmgcon(cc, status_ailment_t::sleep, 4000);
+                        dmgcon(cc, StatusAilment::sleep, 4000);
                     }
                 }
             }
@@ -742,7 +742,7 @@ label_2692_internal:
     {
         if (cdata[cc].relationship != 10)
         {
-            if (gdata_current_map == mdata_t::map_id_t::quest)
+            if (gdata_current_map == mdata_t::MapId::quest)
             {
                 if (gdata_executing_immediate_quest_type == 1009)
                 {
@@ -769,9 +769,9 @@ label_2692_internal:
                     }
                 }
             }
-            if (gdata_current_map == mdata_t::map_id_t::noyel
+            if (gdata_current_map == mdata_t::MapId::noyel
                 || gdata_current_map
-                    == mdata_t::map_id_t::mansion_of_younger_sister)
+                    == mdata_t::MapId::mansion_of_younger_sister)
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {
@@ -787,7 +787,7 @@ label_2692_internal:
                             if (rnd(4) == 0)
                             {
                                 if (cdata[gdata_fire_giant].state()
-                                    == character::state_t::alive)
+                                    == Character::State::alive)
                                 {
                                     if (is_in_fov(cdata[gdata_fire_giant]))
                                     {
@@ -858,7 +858,7 @@ label_2692_internal:
                                             "core.locale.ai.makes_snowman",
                                             cdata[cc],
                                             inv[ci]));
-                                        return turn_result_t::turn_end;
+                                        return TurnResult::turn_end;
                                     }
                                 }
                             }
@@ -943,7 +943,7 @@ label_2692_internal:
             {
                 efid = 183;
                 magic();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
         if (cdata[cc].id == 320 || cdata[cc].id == 280)
@@ -983,7 +983,7 @@ label_2692_internal:
             {
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < 97; ++cnt)
                 {
-                    if (cdata[cnt].state() != character::state_t::alive)
+                    if (cdata[cnt].state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -1024,7 +1024,7 @@ label_2692_internal:
                     {
                         cdata[cc].enemy_id = 0;
                         continuous_action_sex();
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
                 if (distance < 6)
@@ -1083,7 +1083,7 @@ label_2692_internal:
             return proc_movement_event();
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 } // namespace elona

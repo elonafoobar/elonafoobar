@@ -41,7 +41,7 @@ namespace elona
 
 // TODO organize by order in pc_turn()
 
-turn_result_t do_give_command()
+TurnResult do_give_command()
 {
     txt(i18n::s.get("core.locale.action.which_direction.default"));
     update_screen();
@@ -50,14 +50,14 @@ turn_result_t do_give_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     tc -= 1;
     if (tc == 0)
@@ -80,16 +80,16 @@ turn_result_t do_give_command()
         update_screen();
         invctrl = 10;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     txt(i18n::_(u8"ui", u8"invalid_target"));
     update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t do_interact_command()
+TurnResult do_interact_command()
 {
     txt(i18n::s.get("core.locale.action.interact.choose"));
     int stat = ask_direction();
@@ -97,14 +97,14 @@ turn_result_t do_interact_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     tc -= 1;
     txt(i18n::s.get("core.locale.action.interact.prompt", cdata[tc]));
@@ -167,7 +167,7 @@ turn_result_t do_interact_command()
             i18n::s.get("core.locale.action.interact.choices.change_tone"),
             u8"null"s,
             ""s + 10);
-        if (gdata_current_map != mdata_t::map_id_t::show_house)
+        if (gdata_current_map != mdata_t::MapId::show_house)
         {
             if (cdata[tc].is_hung_on_sand_bag())
             {
@@ -194,7 +194,7 @@ turn_result_t do_interact_command()
         if (stat == -1)
         {
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         rtval = stat;
     }
@@ -207,26 +207,26 @@ turn_result_t do_interact_command()
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            return turn_result_t::exit_map;
+            return TurnResult::exit_map;
         }
         else
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (p == 1)
     {
         update_screen();
         try_to_melee_attack();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (p == 2)
     {
         update_screen();
         invctrl = 10;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (p == 3)
@@ -243,7 +243,7 @@ turn_result_t do_interact_command()
         rc = tc;
         new_ally_joins();
         update_screen();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (p == 6)
     {
@@ -251,7 +251,7 @@ turn_result_t do_interact_command()
         cc = tc;
         menu_character_sheet_investigate();
         cc = 0;
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (p == 7)
     {
@@ -271,7 +271,7 @@ turn_result_t do_interact_command()
             txt(""s + cdatan(4, tc));
         }
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (p == 8)
     {
@@ -284,7 +284,7 @@ turn_result_t do_interact_command()
         change_appearance();
         cc = ccbk;
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (p == 9)
     {
@@ -299,11 +299,11 @@ turn_result_t do_interact_command()
         change_npc_tone();
     }
     update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 
-turn_result_t call_npc()
+TurnResult call_npc()
 {
     txt(i18n::s.get("core.locale.action.interact.name.prompt", cdata[tc]));
     inputlog = "";
@@ -321,11 +321,11 @@ turn_result_t call_npc()
     }
     gmode(2);
     update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 
-turn_result_t do_bash_command()
+TurnResult do_bash_command()
 {
     txt(i18n::s.get("core.locale.action.bash.prompt"));
     int stat = ask_direction();
@@ -333,12 +333,12 @@ turn_result_t do_bash_command()
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     return do_bash();
 }
 
-turn_result_t do_dig_command()
+TurnResult do_dig_command()
 {
     txt(i18n::s.get("core.locale.action.dig.prompt"));
     int stat = ask_direction();
@@ -346,7 +346,7 @@ turn_result_t do_dig_command()
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     refx = x;
     refy = y;
@@ -358,26 +358,26 @@ turn_result_t do_dig_command()
         {
             rowactre = 0;
             spot_digging();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
-        || mdata_map_type == mdata_t::map_type_t::world_map)
+        || mdata_map_type == mdata_t::MapType::world_map)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     screenupdate = -1;
     update_screen();
     return do_dig_after_sp_check();
 }
 
-turn_result_t do_search_command()
+TurnResult do_search_command()
 {
     ++msgdup;
     txt(i18n::s.get("core.locale.action.search.execute"));
-    if (gdata_current_map == mdata_t::map_id_t::show_house)
+    if (gdata_current_map == mdata_t::MapId::show_house)
     {
         p = 9999;
         for (const auto& cnt : items(-1))
@@ -480,7 +480,7 @@ turn_result_t do_search_command()
                 }
                 if (feat(1) == 32)
                 {
-                    if (gdata_current_map != mdata_t::map_id_t::show_house)
+                    if (gdata_current_map != mdata_t::MapId::show_house)
                     {
                         if (cdata[cc].position.x == x
                             && cdata[cc].position.y == y)
@@ -559,10 +559,10 @@ turn_result_t do_search_command()
             spot_material();
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_pray_command()
+TurnResult do_pray_command()
 {
     int stat = item_find(60002);
     if (stat != -1)
@@ -572,13 +572,13 @@ turn_result_t do_pray_command()
         if (core_god::int2godid(god_id_int) != cdata.player().god_id)
         {
             begin_to_believe_god(god_id_int);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     return do_pray();
 }
 
-turn_result_t do_throw_command()
+TurnResult do_throw_command()
 {
     int ccthrowpotion = 0;
     if (is_in_fov(cdata[cc]))
@@ -610,7 +610,7 @@ turn_result_t do_throw_command()
             }
         }
     }
-    throwing_object_animation(
+    ThrowingObjectAnimation(
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
     ti = inv_getfreeid(-1);
@@ -632,7 +632,7 @@ turn_result_t do_throw_command()
     }
     x = tlocx;
     y = tlocy;
-    breaking_animation({x, y}).play();
+    BreakingAnimation({x, y}).play();
     if (inv[ci].id == 685 || inv[ci].id == 699)
     {
         snd(91);
@@ -650,21 +650,21 @@ turn_result_t do_throw_command()
                     txt(
                         i18n::s.get("core.locale.action.throw.monster_ball."
                                     "cannot_be_captured"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (cdata[tc].level > inv[ci].param2)
                 {
                     txt(
                         i18n::s.get("core.locale.action.throw.monster_ball.not_"
                                     "enough_power"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (cdata[tc].hp > cdata[tc].max_hp / 10)
                 {
                     txt(
                         i18n::s.get("core.locale.action.throw.monster_ball.not_"
                                     "weak_enough"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 txtef(2);
                 txt(i18n::s.get(
@@ -681,15 +681,15 @@ turn_result_t do_throw_command()
                 if (cdata[tc].id != 319 || tc < 16)
                 {
                     txt(i18n::s.get("core.locale.common.nothing_happens"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
-                if (gdata_current_map == mdata_t::map_id_t::arena
-                    || gdata_current_map == mdata_t::map_id_t::pet_arena
-                    || gdata_current_map == mdata_t::map_id_t::show_house)
+                if (gdata_current_map == mdata_t::MapId::arena
+                    || gdata_current_map == mdata_t::MapId::pet_arena
+                    || gdata_current_map == mdata_t::MapId::show_house)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.throw.monster_ball.does_not_work"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 rc = tc;
                 new_ally_joins();
@@ -697,7 +697,7 @@ turn_result_t do_throw_command()
             chara_vanquish(tc);
             quest_check();
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (the_item_db[inv[ci].id]->category == 52000 || inv[ci].id == 772)
     {
@@ -735,7 +735,7 @@ turn_result_t do_throw_command()
                                 "core.locale.action.throw.snow.dialog"));
                         }
                     }
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (inv[ci].id == 772)
                 {
@@ -755,7 +755,7 @@ turn_result_t do_throw_command()
                         }
                         cdata[tc].furious += rnd(10) + 5;
                     }
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (tc >= 16)
                 {
@@ -767,7 +767,7 @@ turn_result_t do_throw_command()
                 dbid = inv[ci].id;
                 access_item_db(15);
                 cc = ccthrowpotion;
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             if (inv[ci].id == 587)
             {
@@ -795,7 +795,7 @@ turn_result_t do_throw_command()
                     if (f == 1)
                     {
                         cell_refresh(tlocx, tlocy);
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
@@ -803,7 +803,7 @@ turn_result_t do_throw_command()
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 4)
                 {
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (is_in_fov({tlocx, tlocy}))
                 {
@@ -821,19 +821,19 @@ turn_result_t do_throw_command()
                     txtef(4);
                     txt(i18n::s.get("core.locale.action.throw.tomato"));
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             efp = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
                 mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             if (inv[ci].id == 577)
             {
                 mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             mef_add(
                 tlocx,
@@ -846,7 +846,7 @@ turn_result_t do_throw_command()
                 inv[ci].id,
                 static_cast<int>(inv[ci].curse_state), // TODO
                 inv[ci].color);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (is_in_fov({tlocx, tlocy}))
@@ -859,37 +859,37 @@ turn_result_t do_throw_command()
         flt();
         itemcreate(-1, 54, tlocx, tlocy, inv[ci].param1);
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_close_command()
+TurnResult do_close_command()
 {
     int stat = ask_direction_to_close();
     if (stat == 0)
     {
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     cell_featread(x, y);
     if (feat(1) != 20)
     {
         txt(i18n::s.get("core.locale.action.close.nothing_to_close"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (map(x, y, 1) != 0)
     {
         txt(i18n::s.get("core.locale.action.close.blocked"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
     txt(i18n::s.get("core.locale.action.close.execute", cdata[cc]));
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_change_ammo_command()
+TurnResult do_change_ammo_command()
 {
     f = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -909,7 +909,7 @@ turn_result_t do_change_ammo_command()
     if (f == 0)
     {
         txt(i18n::s.get("core.locale.action.ammo.need_to_equip"));
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     listmax = 0;
     cs = -1;
@@ -940,7 +940,7 @@ turn_result_t do_change_ammo_command()
     {
         inv[ci].count = -1;
         txt(i18n::s.get("core.locale.action.ammo.is_not_capable", inv[ci]));
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     snd(90);
     ++cs;
@@ -980,15 +980,15 @@ turn_result_t do_change_ammo_command()
         }
         txt(u8" "s + s);
     }
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t do_offer_command()
+TurnResult do_offer_command()
 {
     if (cdata.player().god_id.empty())
     {
         txt(i18n::s.get("core.locale.action.offer.do_not_believe"));
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     rowact_item(ci);
     item_separate(ci);
@@ -999,8 +999,7 @@ turn_result_t do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    bright_aura_animation(
-        cdata[tc].position, bright_aura_animation::type_t::offering)
+    BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
     int stat = item_find(60002);
@@ -1010,7 +1009,7 @@ turn_result_t do_offer_command()
     }
     else
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].id == 204)
     {
@@ -1055,7 +1054,7 @@ turn_result_t do_offer_command()
             modpiety(i * 5);
             cdata.player().praying_point += i * 30;
             animode = 100;
-            miracle_animation().play();
+            MiracleAnimation().play();
             snd(120);
             if (inv[ti].param1 != 0)
             {
@@ -1113,10 +1112,10 @@ turn_result_t do_offer_command()
         cdata.player().praying_point += i * 7;
     }
     inv[ci].modify_number((-inv[ci].number()));
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_look_command()
+TurnResult do_look_command()
 {
     page = 0;
     pagesize = 16;
@@ -1127,7 +1126,7 @@ turn_result_t do_look_command()
         ++msgdup;
         txt(i18n::s.get("core.locale.action.look.find_nothing"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     cs = 0;
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
@@ -1155,7 +1154,7 @@ label_1953_internal:
         screenupdate = -1;
         update_screen();
         keyrange = 0;
-        font(20 - en * 2, snail::font_t::style_t::bold);
+        font(20 - en * 2, snail::Font::Style::bold);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -1197,13 +1196,13 @@ label_1953_internal:
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
                             pos(sx, sy * (sy > 0));
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
-                                .set_blend_mode(snail::blend_mode_t::blend);
-                            snail::application::instance()
+                                .set_blend_mode(snail::BlendMode::blend);
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_draw_color({255, 255, 255, 25});
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .fill_rect(
                                     sx,
@@ -1223,13 +1222,13 @@ label_1953_internal:
                 if (sy + inf_tiles <= windowh - inf_verh)
                 {
                     pos(sx, sy * (sy > 0));
-                    snail::application::instance()
+                    snail::Application::instance()
                         .get_renderer()
-                        .set_blend_mode(snail::blend_mode_t::blend);
-                    snail::application::instance()
+                        .set_blend_mode(snail::BlendMode::blend);
+                    snail::Application::instance()
                         .get_renderer()
                         .set_draw_color({127, 127, 255, 50});
-                    snail::application::instance().get_renderer().fill_rect(
+                    snail::Application::instance().get_renderer().fill_rect(
                         sx,
                         sy * (sy > 0),
                         inf_tiles,
@@ -1250,7 +1249,7 @@ label_1953_internal:
         render_hud();
         redraw();
     }
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_target)
@@ -1264,7 +1263,7 @@ label_1953_internal:
         snd(20);
         txt(i18n::s.get("core.locale.action.look.target", cdata[p(0)]));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (key == key_pageup)
     {
@@ -1287,12 +1286,12 @@ label_1953_internal:
     if (key == key_cancel)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     goto label_1953_internal;
 }
 
-turn_result_t do_dip_command()
+TurnResult do_dip_command()
 {
     if (inv[cidip].id == 617)
     {
@@ -1312,7 +1311,7 @@ turn_result_t do_dip_command()
             inv[ci].count = rnd(10) + 15;
             inv[ci].param4 = inv[cidip].param1;
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     snd(17);
     if (the_item_db[inv[cidip].id]->category == 52000)
@@ -1329,13 +1328,13 @@ turn_result_t do_dip_command()
                 {
                     txt(i18n::s.get(
                         "core.locale.action.dip.result.holy_well_polluted"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (inv[ci].param3 >= 20)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.dip.result.well_dry", inv[ci]));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
                     "core.locale.action.dip.result.well_refilled", inv[ci]));
@@ -1347,7 +1346,7 @@ turn_result_t do_dip_command()
                 {
                     inv[ci].param1 += rnd(3);
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             else
             {
@@ -1359,13 +1358,13 @@ turn_result_t do_dip_command()
                         inv[ci]));
                     txt(i18n::s.get(
                         "core.locale.action.dip.result.natural_potion_drop"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (inv_getfreeid(0) == -1)
                 {
                     txt(i18n::s.get(
                         "core.locale.ui.inv.common.inventory_is_full"));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 if (inv[ci].id == 602)
                 {
@@ -1374,7 +1373,7 @@ turn_result_t do_dip_command()
                     int stat = itemcreate(0, 516, -1, -1, 0);
                     if (stat != 0)
                     {
-                        inv[ci].curse_state = curse_state_t::blessed;
+                        inv[ci].curse_state = CurseState::blessed;
                     }
                 }
                 else
@@ -1388,7 +1387,7 @@ turn_result_t do_dip_command()
                     "core.locale.action.dip.result.natural_potion"));
                 txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
                 item_stack(0, ci, 1);
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -1408,7 +1407,7 @@ turn_result_t do_dip_command()
                 dipcursed(ci);
             }
             ibitmod(14, ci, 1);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (inv[cidip].id == 620)
@@ -1428,12 +1427,12 @@ turn_result_t do_dip_command()
                 dipcursed(ci);
             }
             ibitmod(6, ci, 1);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (inv[cidip].id == 519)
     {
-        if (inv[cidip].curse_state == curse_state_t::blessed)
+        if (inv[cidip].curse_state == CurseState::blessed)
         {
             in = inv[cidip].number();
         }
@@ -1453,11 +1452,11 @@ turn_result_t do_dip_command()
         {
             create_pcpic(cc, true);
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[cidip].id == 566)
     {
-        if (inv[cidip].curse_state == curse_state_t::blessed)
+        if (inv[cidip].curse_state == CurseState::blessed)
         {
             in = inv[cidip].number();
         }
@@ -1479,11 +1478,11 @@ turn_result_t do_dip_command()
                 "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         }
         inv[cidip].modify_number(-1);
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[cidip].id == 736)
     {
-        if (inv[cidip].curse_state == curse_state_t::blessed)
+        if (inv[cidip].curse_state == CurseState::blessed)
         {
             in = inv[cidip].number();
         }
@@ -1509,35 +1508,35 @@ turn_result_t do_dip_command()
                 "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
         inv[cidip].modify_number(-1);
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[cidip].id == 516)
     {
         inv[cidip].modify_number(-1);
-        if (inv[cidip].curse_state == curse_state_t::blessed)
+        if (inv[cidip].curse_state == CurseState::blessed)
         {
             txtef(2);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_blessed", inv[ci]));
-            inv[ci].curse_state = curse_state_t::blessed;
+            inv[ci].curse_state = CurseState::blessed;
             chara_refresh(cc);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         if (is_cursed(inv[cidip].curse_state))
         {
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.action.dip.result.becomes_cursed", inv[ci]));
-            inv[ci].curse_state = curse_state_t::cursed;
+            inv[ci].curse_state = CurseState::cursed;
             chara_refresh(cc);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     txt(i18n::s.get("core.locale.common.nothing_happens"));
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_use_command()
+TurnResult do_use_command()
 {
     screenupdate = -1;
     update_screen();
@@ -1559,12 +1558,12 @@ turn_result_t do_use_command()
 
         if (success)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         else
         {
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
 
@@ -1578,7 +1577,7 @@ turn_result_t do_use_command()
                 "core.locale.action.use.useable_again_at",
                 cnvdate(inv[ci].count)));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
         inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -1590,7 +1589,7 @@ turn_result_t do_use_command()
         {
             txt(i18n::s.get("core.locale.action.use.out_of_charge"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
         --inv[ci].count;
@@ -1609,11 +1608,11 @@ turn_result_t do_use_command()
         {
             txt(i18n::s.get("core.locale.action.use.not_sleepy"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         gdata(91) = 100;
         continuous_action_others();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].id == 413 || inv[ci].id == 414)
     {
@@ -1624,7 +1623,7 @@ turn_result_t do_use_command()
     {
         atxid = 1;
         casino_dealer();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].function == 1 || inv[ci].function == 2 || inv[ci].function == 3
         || inv[ci].function == 4)
@@ -1633,7 +1632,7 @@ turn_result_t do_use_command()
         snd(26);
         invctrl = 0;
         crafting_menu();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (ibit(10, ci))
     {
@@ -1724,23 +1723,23 @@ turn_result_t do_use_command()
         }
         chara_refresh(cc);
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     switch (inv[ci].function)
     {
     case 24:
         x = cdata[cc].position.x;
         y = cdata[cc].position.y;
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (map(x, y, 6) != 0)
         {
             txt(i18n::s.get("core.locale.action.use.mine.cannot_place_here"));
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         inv[ci].modify_number(-1);
         cell_featset(x, y, 0, 14, 7, cc);
@@ -1753,7 +1752,7 @@ turn_result_t do_use_command()
             txt(i18n::s.get(
                 "core.locale.action.use.chair.needs_place_on_ground"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         txt(i18n::s.get("core.locale.action.use.chair.you_sit_on", inv[ci]));
         ELONA_APPEND_PROMPT(
@@ -1814,16 +1813,16 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 8:
-        if (mdata_map_type != mdata_t::map_type_t::player_owned)
+        if (mdata_map_type != mdata_t::MapType::player_owned)
         {
             txt(i18n::s.get(
                 "core.locale.action.use.house_board.cannot_use_it_here"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         screenupdate = -1;
         update_screen();
-        return turn_result_t::show_house_board;
+        return TurnResult::show_house_board;
     case 19:
         txt(i18n::s.get("core.locale.action.use.dresser.prompt"));
         {
@@ -1852,7 +1851,7 @@ turn_result_t do_use_command()
             txt(i18n::s.get("core.locale.common.it_is_impossible"));
         }
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
         break;
     case 15:
         efid = 184;
@@ -1873,7 +1872,7 @@ turn_result_t do_use_command()
             {
                 txt(i18n::s.get("core.locale.action.use.snow.need_more"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
             inv[ci].modify_number(-5);
         }
@@ -1906,12 +1905,12 @@ turn_result_t do_use_command()
         int stat = read_textbook();
         if (stat == 1)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         else
         {
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
         goto label_2229_internal;
@@ -1924,7 +1923,7 @@ turn_result_t do_use_command()
             {
                 txt(i18n::s.get("core.locale.common.it_is_impossible"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         tc = map(x, y, 1) - 1;
@@ -1932,11 +1931,11 @@ turn_result_t do_use_command()
         {
             txt(i18n::s.get("core.locale.action.use.stethoscope.self"));
             gdata(94) = 0;
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         if (tc > 0 && tc < 16)
         {
-            if (cdata[tc].state() == character::state_t::alive)
+            if (cdata[tc].state() == Character::State::alive)
             {
                 gdata(94) = 0;
                 if (cdata[tc].has_been_used_stethoscope() == 1)
@@ -1945,7 +1944,7 @@ turn_result_t do_use_command()
                     txt(i18n::s.get(
                         "core.locale.action.use.stethoscope.other.stop",
                         cdata[tc]));
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
                     "core.locale.action.use.stethoscope.other.start.text",
@@ -1963,12 +1962,12 @@ turn_result_t do_use_command()
                         cdata[tc]));
                 }
                 cdata[tc].has_been_used_stethoscope() = true;
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
         txt(i18n::s.get("core.locale.common.it_is_impossible"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
         break;
     case 23:
         txt(i18n::s.get("core.locale.action.use.leash.prompt"));
@@ -2033,11 +2032,11 @@ turn_result_t do_use_command()
         }
         goto label_2229_internal;
     case 45:
-        if (gdata_current_map == mdata_t::map_id_t::show_house)
+        if (gdata_current_map == mdata_t::MapId::show_house)
         {
             txt(i18n::s.get("core.locale.action.use.sandbag.cannot_use_here"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         txt(i18n::s.get("core.locale.action.use.sandbag.prompt"));
         update_screen();
@@ -2053,7 +2052,7 @@ turn_result_t do_use_command()
                     {
                         txt(i18n::s.get(
                             "core.locale.action.use.sandbag.not_weak_enough"));
-                        return turn_result_t::pc_turn_user_error;
+                        return TurnResult::pc_turn_user_error;
                     }
                     if (tc != 0)
                     {
@@ -2061,14 +2060,14 @@ turn_result_t do_use_command()
                         {
                             txt(i18n::s.get(
                                 "core.locale.action.use.sandbag.ally"));
-                            return turn_result_t::pc_turn_user_error;
+                            return TurnResult::pc_turn_user_error;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
                     {
                         txt(i18n::s.get(
                             "core.locale.action.use.sandbag.already"));
-                        return turn_result_t::pc_turn_user_error;
+                        return TurnResult::pc_turn_user_error;
                     }
                     if (tc == 0)
                     {
@@ -2119,15 +2118,15 @@ turn_result_t do_use_command()
     case 10:
         screenupdate = -1;
         update_screen();
-        return turn_result_t::play_scene;
+        return TurnResult::play_scene;
     case 7:
         if (inv[ci].own_state != 3)
         {
             if (mdata_map_refresh_type == 0
-                || gdata_current_map == mdata_t::map_id_t::quest
-                || gdata_current_map == mdata_t::map_id_t::shelter_)
+                || gdata_current_map == mdata_t::MapId::quest
+                || gdata_current_map == mdata_t::MapId::shelter_)
             {
-                if (gdata_current_map == mdata_t::map_id_t::fields)
+                if (gdata_current_map == mdata_t::MapId::fields)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.shelter.only_in_world_map"));
@@ -2138,13 +2137,13 @@ turn_result_t do_use_command()
                         "core.locale.action.use.shelter.cannot_build_it_here"));
                 }
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
             gdata(91) = 101;
             continuous_action_others();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
@@ -2157,7 +2156,7 @@ turn_result_t do_use_command()
                     if (rtval != 0)
                     {
                         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+                        return TurnResult::pc_turn_user_error;
                     }
                 }
             }
@@ -2171,13 +2170,13 @@ turn_result_t do_use_command()
             txt(i18n::s.get(
                 "core.locale.action.use.money_box.not_enough_gold"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (inv[ci].param1 >= 1000000000)
         {
             txt(i18n::s.get("core.locale.action.use.money_box.full"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
         snd(12);
@@ -2195,8 +2194,8 @@ turn_result_t do_use_command()
         goto label_2229_internal;
     case 22:
         snd(118);
-        if (mdata_map_type != mdata_t::map_type_t::town
-            && mdata_map_type != mdata_t::map_type_t::guild)
+        if (mdata_map_type != mdata_t::MapType::town
+            && mdata_map_type != mdata_t::MapType::guild)
         {
             txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
             goto label_2229_internal;
@@ -2297,11 +2296,11 @@ turn_result_t do_use_command()
         sound_play_environmental();
         goto label_2229_internal;
     case 28:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (cdata.player().position.x != 33 || cdata.player().position.y != 16)
         {
@@ -2313,7 +2312,7 @@ turn_result_t do_use_command()
                 if (rtval != 0)
                 {
                     update_screen();
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
             }
         }
@@ -2325,8 +2324,7 @@ turn_result_t do_use_command()
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
-        if (gdata_current_map != mdata_t::map_id_t::show_house
-            || usermapid == 0)
+        if (gdata_current_map != mdata_t::MapId::show_house || usermapid == 0)
         {
             txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
             goto label_2229_internal;
@@ -2353,7 +2351,7 @@ turn_result_t do_use_command()
         efid = inv[ci].param1;
         efp = inv[ci].param2;
         tc = cc;
-        efstatus = curse_state_t::none;
+        efstatus = CurseState::none;
         magic();
         goto label_2229_internal;
     case 41:
@@ -2364,7 +2362,7 @@ turn_result_t do_use_command()
                 i18n::s.get("core.locale.action.use.secret_experience.kumiromi."
                             "not_enough_exp"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
@@ -2388,7 +2386,7 @@ turn_result_t do_use_command()
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         damage_hp(cdata.player(), 99999, -20);
         goto label_2229_internal;
@@ -2448,20 +2446,20 @@ turn_result_t do_use_command()
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_original"));
         rc = 0;
         {
-            int stat = ctrl_ally(ctrl_ally_operation::gene_engineer);
+            int stat = ctrl_ally(ControlAllyOperation::gene_engineer);
             if (stat == -1)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             rc = stat;
         }
         txtnew();
         txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
         {
-            int stat = ctrl_ally(ctrl_ally_operation::gene_engineer);
+            int stat = ctrl_ally(ControlAllyOperation::gene_engineer);
             if (stat == -1)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             tc = stat;
         }
@@ -2475,7 +2473,7 @@ turn_result_t do_use_command()
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         txtnew();
         txtef(5);
@@ -2483,7 +2481,7 @@ turn_result_t do_use_command()
             "core.locale.action.use.gene_machine.has_inherited",
             cdata[rc],
             cdata[tc]));
-        gene_engineering_animation(cdata[rc].position).play();
+        GeneEngineeringAnimation(cdata[rc].position).play();
         {
             int stat = transplant_body_parts();
             if (stat != -1)
@@ -2553,7 +2551,7 @@ turn_result_t do_use_command()
             }
         }
         chara_vanquish(tc);
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         chara_gain_skill_exp(cdata.player(), 151, 1200);
         randomize();
         screenupdate = -1;
@@ -2591,10 +2589,10 @@ turn_result_t do_use_command()
     }
 label_2229_internal:
     refresh_burden_state();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_open_command()
+TurnResult do_open_command()
 {
     int refweight = 0;
     if (inv[ci].id == 361)
@@ -2607,15 +2605,15 @@ turn_result_t do_open_command()
         shop_sell_item();
         screenupdate = -1;
         update_screen();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].id == 560)
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (inv[ci].id == 616)
@@ -2623,8 +2621,8 @@ turn_result_t do_open_command()
         invctrl(0) = 24;
         invctrl(1) = 2;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (inv[ci].id == 701)
@@ -2633,20 +2631,20 @@ turn_result_t do_open_command()
         invctrl(1) = 8;
         snd(100);
         ctrl_inventory();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].id == 600)
     {
         snd(22);
         txt(i18n::s.get("core.locale.action.open.shackle.text"));
-        if (gdata_current_map == mdata_t::map_id_t::noyel)
+        if (gdata_current_map == mdata_t::MapId::noyel)
         {
             if (gdata_current_dungeon_level == 1)
             {
                 if (gdata_released_fire_giant == 0)
                 {
                     if (cdata[gdata_fire_giant].state()
-                        == character::state_t::alive)
+                        == Character::State::alive)
                     {
                         tc = chara_find(203);
                         if (tc != 0)
@@ -2662,7 +2660,7 @@ turn_result_t do_open_command()
                 }
             }
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (inv[ci].count != 0)
     {
@@ -2679,30 +2677,29 @@ turn_result_t do_open_command()
         }
         if (inv[ci].count == 3 || inv[ci].count == 4 || inv[ci].count == 6)
         {
-            if (gdata_current_map != mdata_t::map_id_t::your_home)
+            if (gdata_current_map != mdata_t::MapId::your_home)
             {
                 txt(i18n::s.get("core.locale.action.open.only_in_home"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         if (inv[ci].count == 5)
         {
-            if (adata(16, gdata_current_map) != mdata_t::map_id_t::shop)
+            if (adata(16, gdata_current_map) != mdata_t::MapId::shop)
             {
                 txt(i18n::s.get("core.locale.action.open.only_in_shop"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
-        ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
-                file_operation2_t::map_items_read,
-                u8"shop"s + invfile + u8".s2");
+                FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -2744,8 +2741,8 @@ turn_result_t do_open_command()
             refweight = inv_weight(-1) + 2500;
         }
         ctrl_file(
-            file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
-        ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
+            FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
         if (refweight != 0)
         {
             inv[container_ci].weight = refweight;
@@ -2753,7 +2750,7 @@ turn_result_t do_open_command()
         }
         update_screen();
         mode = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     item_separate(ci);
     if (inv[ci].param1 != 0)
@@ -2765,7 +2762,7 @@ turn_result_t do_open_command()
             {
                 screenupdate = -1;
                 update_screen();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -2787,22 +2784,22 @@ turn_result_t do_open_command()
     }
     screenupdate = -1;
     update_screen();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_use_stairs_command(int val0)
+TurnResult do_use_stairs_command(int val0)
 {
     int movelevelbystairs = 0;
     if (dbg_freemove)
     {
         txt(i18n::s.get("core.locale.action.use_stairs.cannot_during_debug"));
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     int stat = item_find(631, 3, -1);
     if (stat != -1)
     {
-        if (mdata_map_type == mdata_t::map_type_t::town
-            || mdata_map_type == mdata_t::map_type_t::guild)
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild)
         {
             ci = stat;
             return step_into_gate();
@@ -2820,14 +2817,14 @@ turn_result_t do_use_stairs_command(int val0)
             if (rtval != 0)
             {
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
             txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.use"));
             cdata.player().blind += 2;
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         if (val0 == 1)
         {
@@ -2838,7 +2835,7 @@ turn_result_t do_use_stairs_command(int val0)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.down"));
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
                 else
                 {
@@ -2855,7 +2852,7 @@ turn_result_t do_use_stairs_command(int val0)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.cannot_go.up"));
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
                 else
                 {
@@ -2866,7 +2863,7 @@ turn_result_t do_use_stairs_command(int val0)
     }
     if (movelevelbystairs == 0)
     {
-        if (mdata_map_type != mdata_t::map_type_t::world_map)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
             if (val0 == 1)
             {
@@ -2875,18 +2872,18 @@ turn_result_t do_use_stairs_command(int val0)
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.no.downstairs"));
                     update_screen();
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
                 else
                 {
                     movelevelbystairs = 1;
-                    if (gdata_current_map == mdata_t::map_id_t::the_void
+                    if (gdata_current_map == mdata_t::MapId::the_void
                         && gdata_current_dungeon_level >= gdata(186))
                     {
                         txt(
                             i18n::s.get("core.locale.action.use_stairs.blocked_"
                                         "by_barrier"));
-                        return turn_result_t::pc_turn_user_error;
+                        return TurnResult::pc_turn_user_error;
                     }
                 }
             }
@@ -2897,7 +2894,7 @@ turn_result_t do_use_stairs_command(int val0)
                     txt(i18n::s.get(
                         "core.locale.action.use_stairs.no.upstairs"));
                     update_screen();
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
                 else
                 {
@@ -2953,13 +2950,13 @@ turn_result_t do_use_stairs_command(int val0)
                 cdata[cc].position.y,
                 tile_downstairs,
                 11);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         snd(22);
         txt(i18n::s.get("core.locale.action.use_stairs.locked"));
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
@@ -2972,7 +2969,7 @@ turn_result_t do_use_stairs_command(int val0)
                 if (rtval != 0)
                 {
                     update_screen();
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
             }
         }
@@ -2996,9 +2993,9 @@ turn_result_t do_use_stairs_command(int val0)
                     -7);
                 msg_halt();
             }
-            if (cdata.player().state() == character::state_t::empty)
+            if (cdata.player().state() == Character::State::empty)
             {
-                return turn_result_t::turn_begin;
+                return TurnResult::turn_begin;
             }
         }
     }
@@ -3014,16 +3011,16 @@ turn_result_t do_use_stairs_command(int val0)
             }
             else
             {
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
     }
     snd(49);
     levelexitby = 4;
-    return turn_result_t::exit_map;
+    return TurnResult::exit_map;
 }
 
-turn_result_t do_movement_command()
+TurnResult do_movement_command()
 {
     f = 0;
     if (cdata[cc].dimmed != 0)
@@ -3066,26 +3063,26 @@ turn_result_t do_movement_command()
         ++msgdup;
         txt(i18n::s.get("core.locale.action.move.carry_too_much"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (cellchara != -1 && cellchara != 0)
     {
         tc = cellchara;
         if (cdata[tc].relationship >= 10
             || (cdata[tc].relationship == -1
-                && !config::instance().attack_neutral_npcs)
+                && !Config::instance().attack_neutral_npcs)
             || (cdata[tc].relationship == 0
-                && (adata(16, gdata_current_map) == mdata_t::map_id_t::museum
-                    || adata(16, gdata_current_map) == mdata_t::map_id_t::shop
+                && (adata(16, gdata_current_map) == mdata_t::MapId::museum
+                    || adata(16, gdata_current_map) == mdata_t::MapId::shop
                     || key_shift)))
         {
             if (cdata[tc].is_hung_on_sand_bag() == 0)
             {
-                if (mdata_map_type == mdata_t::map_type_t::world_map)
+                if (mdata_map_type == mdata_t::MapType::world_map)
                 {
                     goto label_2204_internal;
                 }
-                if (config::instance().scroll)
+                if (Config::instance().scroll)
                 {
                     cdata.player().next_position.x = cdata[tc].position.x;
                     cdata.player().next_position.y = cdata[tc].position.y;
@@ -3127,14 +3124,14 @@ turn_result_t do_movement_command()
                     }
                 }
                 sense_map_feats_on_move();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
         if (running)
         {
             if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
             {
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         if (cdata[tc].relationship <= -1)
@@ -3156,21 +3153,21 @@ turn_result_t do_movement_command()
                 keybd_attacking = 1;
             }
             try_to_melee_attack();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         talk_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            return turn_result_t::exit_map;
+            return TurnResult::exit_map;
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     else
     {
         keybd_attacking = 0;
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (dbg_freemove)
         {
@@ -3188,7 +3185,7 @@ turn_result_t do_movement_command()
     if (cellaccess == 1)
     {
     label_2204_internal:
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             if (264 <= map(cdata[cc].next_position.x,
                            cdata[cc].next_position.y,
@@ -3196,16 +3193,17 @@ turn_result_t do_movement_command()
                 && map(cdata[cc].next_position.x, cdata[cc].next_position.y, 0)
                     < 363)
             {
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         return proc_movement_event();
     }
-    if (mdata_map_type == mdata_t::map_type_t::shelter
+    if (mdata_map_type == mdata_t::MapType::shelter
         || (gdata_current_dungeon_level == 1
-            && mdata_map_type != mdata_t::map_type_t::world_map
-            && (mdata_map_type < mdata_t::map_type_t::dungeon
-                || mdata_t::map_type_t::dungeon_castle < mdata_map_type)))
+            && mdata_map_type != mdata_t::MapType::world_map
+            && (mdata_map_type < static_cast<int>(mdata_t::MapType::dungeon)
+                || static_cast<int>(mdata_t::MapType::dungeon_castle)
+                    < mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
             || cdata[cc].next_position.x > mdata_map_width - 1
@@ -3213,7 +3211,7 @@ turn_result_t do_movement_command()
             || cdata[cc].next_position.y > mdata_map_height - 1)
         {
             txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
-            if (mdata_map_type == mdata_t::map_type_t::temporary)
+            if (mdata_map_type == mdata_t::MapType::temporary)
             {
                 if (gdata(73) != 3)
                 {
@@ -3231,9 +3229,9 @@ turn_result_t do_movement_command()
                 snd(49);
                 --gdata_current_dungeon_level;
                 levelexitby = 4;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
     if (cellfeat != -1)
@@ -3246,19 +3244,19 @@ turn_result_t do_movement_command()
         if (cellfeat == 23)
         {
             snd(99);
-            return turn_result_t::show_quest_board;
+            return TurnResult::show_quest_board;
         }
         if (cellfeat == 31)
         {
             snd(99);
             voting_box();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         if (cellfeat == 33)
         {
             menucycle = 1;
             show_city_chart();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
     if (cdata.player().confused != 0)
@@ -3267,17 +3265,17 @@ turn_result_t do_movement_command()
         txt(i18n::s.get("core.locale.action.move.confused"));
         update_screen();
     }
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t do_read_command()
+TurnResult do_read_command()
 {
     if (inv[ci].id == 783)
     {
         if (inv[ci].subname == 0)
         {
             txt(i18n::s.get("core.locale.action.read.recipe.info"));
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     efid = 0;
@@ -3287,10 +3285,10 @@ turn_result_t do_read_command()
     {
         return build_new_building();
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_eat_command()
+TurnResult do_eat_command()
 {
     if (cc == 0)
     {
@@ -3298,12 +3296,12 @@ turn_result_t do_eat_command()
         if (stat == 0)
         {
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (itemusingfind(ci) > 0)
         {
             txt(i18n::s.get("core.locale.action.someone_else_is_using"));
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
     else if (itemusingfind(ci) != -1)
@@ -3321,17 +3319,17 @@ turn_result_t do_eat_command()
     }
     cdata[cc].emotion_icon = 116;
     continuous_action_eating();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_drink_command()
+TurnResult do_drink_command()
 {
     dbid = inv[ci].id;
     access_item_db(15);
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_zap_command()
+TurnResult do_zap_command()
 {
     dbid = inv[ci].id;
     access_item_db(14);
@@ -3339,24 +3337,24 @@ turn_result_t do_zap_command()
     if (stat == 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_rest_command()
+TurnResult do_rest_command()
 {
     do_rest();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_fire_command()
+TurnResult do_fire_command()
 {
     cc = 0;
     int stat = find_enemy_target();
     if (stat == 0)
     {
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     tc = cdata.player().enemy_id;
     if (cdata[tc].relationship >= 0)
@@ -3364,7 +3362,7 @@ turn_result_t do_fire_command()
         int stat = prompt_really_attack();
         if (stat == 0)
         {
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
     {
@@ -3374,35 +3372,35 @@ turn_result_t do_fire_command()
             ++msgdup;
             txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (stat == -2)
         {
             ++msgdup;
             txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (stat == -3)
         {
             ++msgdup;
             txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
     }
     do_ranged_attack();
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_get_command()
+TurnResult do_get_command()
 {
     const auto item_info = cell_itemoncell(cdata.player().position);
     const auto number = item_info.first;
     const auto item = item_info.second;
 
     if (map(cdata.player().position.x, cdata.player().position.y, 6) != 0
-        && gdata_current_map != mdata_t::map_id_t::show_house && number == 0)
+        && gdata_current_map != mdata_t::MapId::show_house && number == 0)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (feat(1) == 29)
@@ -3412,20 +3410,20 @@ turn_result_t do_get_command()
                 txt(i18n::s.get("core.locale.action.get.plant.young"));
                 map(cdata.player().position.x, cdata.player().position.y, 6) =
                     0;
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             if (feat == tile_plant + 3)
             {
                 txt(i18n::s.get("core.locale.action.get.plant.dead"));
                 map(cdata.player().position.x, cdata.player().position.y, 6) =
                     0;
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             if (!inv_getspace(0))
             {
                 txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
             create_harvested_item();
             harvest_plant(
@@ -3440,12 +3438,12 @@ turn_result_t do_get_command()
             if (feat(2) == 40)
             {
                 autosave =
-                    1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+                    1 * (gdata_current_map != mdata_t::MapId::show_house);
             }
             refresh_burden_state();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (mdata_map_type == mdata_t::map_type_t::world_map && feat(1) == 15
+        if (mdata_map_type == mdata_t::MapType::world_map && feat(1) == 15
             && feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
             txt(i18n::s.get("core.locale.action.get.building.prompt"));
@@ -3454,24 +3452,24 @@ turn_result_t do_get_command()
             if (rtval != 0)
             {
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
             area = feat(2) + feat(3) * 100;
             map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
-            adata(16, area) = mdata_t::map_id_t::none;
+            adata(16, area) = static_cast<int>(mdata_t::MapId::none);
             removeworker(area);
             map_global_prepare();
-            ctrl_file(file_operation_t::temp_dir_delete_area);
+            ctrl_file(FileOperation::temp_dir_delete_area);
             snd(58);
             txt(i18n::s.get("core.locale.action.get.building.remove"));
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
 
     if (number == 0)
     {
-        if ((mdata_map_type == mdata_t::map_type_t::town
-             || mdata_map_type == mdata_t::map_type_t::guild)
+        if ((mdata_map_type == mdata_t::MapType::town
+             || mdata_map_type == mdata_t::MapType::guild)
             && chipm(
                    0,
                    map(cdata.player().position.x, cdata.player().position.y, 0))
@@ -3482,25 +3480,25 @@ turn_result_t do_get_command()
             if (!action_sp(cdata.player(), 10))
             {
                 txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             flt();
             {
                 int stat = itemcreate(0, 587, -1, -1, 0);
                 if (stat != 0)
                 {
-                    inv[ci].curse_state = curse_state_t::none;
+                    inv[ci].curse_state = CurseState::none;
                     inv[ci].identification_state =
-                        identification_state_t::completely_identified;
+                        IdentifyState::completely_identified;
                     item_stack(0, ci, 1);
                 }
             }
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         ++msgdup;
         txt(i18n::s.get("core.locale.action.get.air"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
 
     ci = item;
@@ -3508,8 +3506,8 @@ turn_result_t do_get_command()
     {
         invctrl = 3;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if ((inv[ci].own_state > 0 && inv[ci].own_state < 3)
@@ -3526,34 +3524,34 @@ turn_result_t do_get_command()
             txt(i18n::s.get("core.locale.action.get.not_owned"));
         }
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     in = inv[ci].number();
 
     int stat = pick_up_item();
     if (stat == 1 || stat == -1)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     else
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
 }
 
-turn_result_t do_cast_command()
+TurnResult do_cast_command()
 {
     tc = cc;
     int stat = do_cast_magic();
     if (stat == 0)
     {
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-turn_result_t do_short_cut_command()
+TurnResult do_short_cut_command()
 {
     menucycle = 0;
     if (gdata(40 + sc) == 0)
@@ -3561,15 +3559,15 @@ turn_result_t do_short_cut_command()
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (gdata(40 + sc) >= 10000)
     {
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     efid = gdata(40 + sc);
@@ -3579,13 +3577,13 @@ turn_result_t do_short_cut_command()
     }
     if (efid >= 600)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (efid < 661)
         {
@@ -3594,20 +3592,20 @@ turn_result_t do_short_cut_command()
                 txt(i18n::s.get(
                     "core.locale.action.shortcut.cannot_use_anymore"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         return do_use_magic();
     }
     if (efid >= 400)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (spell(efid - 400) <= 0)
         {
@@ -3615,17 +3613,17 @@ turn_result_t do_short_cut_command()
             txt(i18n::s.get(
                 "core.locale.action.shortcut.cannot_use_spell_anymore"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         return do_cast_command();
     }
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
-turn_result_t do_exit_command()
+TurnResult do_exit_command()
 {
     txtnew();
-    if (gdata_current_map == mdata_t::map_id_t::show_house)
+    if (gdata_current_map == mdata_t::MapId::show_house)
     {
         txtef(3);
         txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"));
@@ -3649,7 +3647,7 @@ turn_result_t do_exit_command()
     rtval = show_prompt(promptx, prompty, 190);
     if (rtval == 0)
     {
-        if (gdata_current_map != mdata_t::map_id_t::show_house)
+        if (gdata_current_map != mdata_t::MapId::show_house)
         {
             snd(44);
             save_game();
@@ -3659,7 +3657,7 @@ turn_result_t do_exit_command()
             msg_halt();
             update_screen();
         }
-        return turn_result_t::finish_elona;
+        return TurnResult::finish_elona;
     }
     if (rtval == 2)
     {
@@ -3667,13 +3665,13 @@ turn_result_t do_exit_command()
         set_option();
     }
     update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 int ask_direction_to_close()
 {
     int number_of_doors{};
-    position_t pos;
+    Position pos;
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)

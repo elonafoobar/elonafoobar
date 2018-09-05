@@ -25,7 +25,7 @@ static void _trainer_get_gainable_skills()
     ++dbmax;
     dblist(0, dbmax) = 173;
     ++dbmax;
-    if (gdata_current_map == mdata_t::map_id_t::yowyn)
+    if (gdata_current_map == mdata_t::MapId::yowyn)
     {
         dblist(0, dbmax) = 154;
         ++dbmax;
@@ -46,7 +46,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::map_id_t::vernis)
+    if (gdata_current_map == mdata_t::MapId::vernis)
     {
         dblist(0, dbmax) = 178;
         ++dbmax;
@@ -63,7 +63,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 158;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::map_id_t::palmia)
+    if (gdata_current_map == mdata_t::MapId::palmia)
     {
         dblist(0, dbmax) = 151;
         ++dbmax;
@@ -84,7 +84,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 178;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         dblist(0, dbmax) = 181;
         ++dbmax;
@@ -101,7 +101,7 @@ static void _trainer_get_gainable_skills()
         dblist(0, dbmax) = 153;
         ++dbmax;
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    if (gdata_current_map == mdata_t::MapId::lumiest)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -123,7 +123,7 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::lumiest)
+    if (gdata_current_map == mdata_t::MapId::lumiest)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -145,7 +145,7 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::derphy)
+    if (gdata_current_map == mdata_t::MapId::derphy)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -167,7 +167,7 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::derphy)
+    if (gdata_current_map == mdata_t::MapId::derphy)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -183,7 +183,7 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         if (gdata_current_dungeon_level == 1)
         {
@@ -201,7 +201,7 @@ static void _trainer_get_gainable_skills()
             ++dbmax;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -245,7 +245,7 @@ static void _trainer_get_gainable_skills()
     return;
 }
 
-static void _load_skill_list(character_sheet_operation op)
+static void _load_skill_list(CharacterSheetOperation op)
 {
     for (int cnt = 150; cnt < 400; ++cnt)
     {
@@ -253,7 +253,7 @@ static void _load_skill_list(character_sheet_operation op)
         if (sdata(cnt, cc) != 0)
         {
             f = 1;
-            if (op == character_sheet_operation::train_skill)
+            if (op == CharacterSheetOperation::train_skill)
             {
                 if (sdata.get(cnt, cc).original_level == 0)
                 {
@@ -271,12 +271,12 @@ static void _load_skill_list(character_sheet_operation op)
     }
 }
 
-static void _load_weapon_proficiency_list(character_sheet_operation op)
+static void _load_weapon_proficiency_list(CharacterSheetOperation op)
 {
     for (int cnt = 100; cnt < 150; ++cnt)
     {
         f = 0;
-        if (op != character_sheet_operation::learn_skill)
+        if (op != CharacterSheetOperation::learn_skill)
         {
             if (sdata(cnt, cc) != 0)
             {
@@ -319,14 +319,14 @@ static void _load_resistances_list()
     }
 }
 
-static void _load_list_skill_category(character_sheet_operation op)
+static void _load_list_skill_category(CharacterSheetOperation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 20000;
     listn(0, listmax) =
         i18n::s.get("core.locale.ui.chara_sheet.category.skill");
     ++listmax;
-    if (op == character_sheet_operation::learn_skill)
+    if (op == CharacterSheetOperation::learn_skill)
     {
         _trainer_get_gainable_skills();
     }
@@ -336,7 +336,7 @@ static void _load_list_skill_category(character_sheet_operation op)
     }
 }
 
-static void _load_list_proficiency_category(character_sheet_operation op)
+static void _load_list_proficiency_category(CharacterSheetOperation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 30000;
@@ -345,14 +345,14 @@ static void _load_list_proficiency_category(character_sheet_operation op)
     ++listmax;
     _load_weapon_proficiency_list(op);
 
-    if (op != character_sheet_operation::train_skill
-        && op != character_sheet_operation::learn_skill)
+    if (op != CharacterSheetOperation::train_skill
+        && op != CharacterSheetOperation::learn_skill)
     {
         _load_resistances_list();
     }
 }
 
-static void _load_list(character_sheet_operation op)
+static void _load_list(CharacterSheetOperation op)
 {
     _load_list_skill_category(op);
     _load_list_proficiency_category(op);
@@ -380,19 +380,19 @@ static void _load_portrait()
     }
 }
 
-bool ui_menu_character_sheet::init()
+bool UIMenuCharacterSheet::init()
 {
     page = 0;
     pagesize = 16;
     listmax = 0;
     cs = 0;
-    if (_operation != character_sheet_operation::investigate_ally)
+    if (_operation != CharacterSheetOperation::investigate_ally)
     {
         cc = 0;
     }
     curmenu = 0;
-    if (_operation == character_sheet_operation::train_skill
-        || _operation == character_sheet_operation::learn_skill)
+    if (_operation == CharacterSheetOperation::train_skill
+        || _operation == CharacterSheetOperation::learn_skill)
     {
         page = 1;
     }
@@ -407,15 +407,15 @@ bool ui_menu_character_sheet::init()
     ww = 700;
     wh = 400;
     s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
-    if (_operation == character_sheet_operation::train_skill)
+    if (_operation == CharacterSheetOperation::train_skill)
     {
         s = i18n::s.get("core.locale.ui.chara_sheet.title.training");
     }
-    if (_operation == character_sheet_operation::learn_skill)
+    if (_operation == CharacterSheetOperation::learn_skill)
     {
         s = i18n::s.get("core.locale.ui.chara_sheet.title.learning");
     }
-    if (_operation != character_sheet_operation::character_making)
+    if (_operation != CharacterSheetOperation::character_making)
     {
         snd(94);
     }
@@ -431,7 +431,7 @@ bool ui_menu_character_sheet::init()
         gcopy(7, 0, 0, 700, 400);
         gmode(2);
     }
-    if (_operation == character_sheet_operation::train_skill)
+    if (_operation == CharacterSheetOperation::train_skill)
     {
         txtnew();
         txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
@@ -441,14 +441,14 @@ bool ui_menu_character_sheet::init()
     return true;
 }
 
-static void _draw_title(character_sheet_operation op)
+static void _draw_title(CharacterSheetOperation op)
 {
     std::string title = "";
     std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
 
     switch (op)
     {
-    case character_sheet_operation::normal:
+    case CharacterSheetOperation::normal:
         if (page == 0)
         {
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.hint")
@@ -460,11 +460,11 @@ static void _draw_title(character_sheet_operation op)
                 + strhint2 + strhint3;
         }
         break;
-    case character_sheet_operation::character_making:
+    case CharacterSheetOperation::character_making:
         title = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll") + strhint6
             + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
         break;
-    case character_sheet_operation::train_skill:
+    case CharacterSheetOperation::train_skill:
         if (page == 0)
         {
             title = strhint6 + strhint2 + strhint3;
@@ -475,7 +475,7 @@ static void _draw_title(character_sheet_operation op)
                 + strhint2 + strhint3;
         }
         break;
-    case character_sheet_operation::learn_skill:
+    case CharacterSheetOperation::learn_skill:
         if (page == 0)
         {
             title = strhint6 + strhint2 + strhint3;
@@ -486,7 +486,7 @@ static void _draw_title(character_sheet_operation op)
                 + strhint2 + strhint3;
         }
         break;
-    case character_sheet_operation::investigate_ally:
+    case CharacterSheetOperation::investigate_ally:
         if (page == 0)
         {
             title = i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info")
@@ -499,7 +499,7 @@ static void _draw_title(character_sheet_operation op)
         break;
     }
 
-    if (op != character_sheet_operation::character_making)
+    if (op != CharacterSheetOperation::character_making)
     {
         if (page != 0)
         {
@@ -513,9 +513,9 @@ static void _draw_title(character_sheet_operation op)
     show_title(title);
 }
 
-void ui_menu_character_sheet::update()
+void UIMenuCharacterSheet::update()
 {
-    if (_operation != character_sheet_operation::character_making)
+    if (_operation != CharacterSheetOperation::character_making)
     {
         display_msg(inf_tiles + inf_screeny);
     }
@@ -529,7 +529,7 @@ void ui_menu_character_sheet::update()
     {
         page = 0;
     }
-    if (_operation == character_sheet_operation::character_making)
+    if (_operation == CharacterSheetOperation::character_making)
     {
         // Don't allow moving to skills list during character
         // creation.
@@ -621,7 +621,7 @@ static void _draw_first_page_portrait()
 
 static void _draw_first_page_text_exp()
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
     s(1) = i18n::s.get("core.locale.ui.chara_sheet.exp.exp");
     s(2) = i18n::s.get("core.locale.ui.chara_sheet.exp.next_level");
@@ -819,7 +819,7 @@ static void _draw_first_page_weapon_info()
 {
     append_accuracy_info(0);
     tc = cc;
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     pos(wx + 417, wy + 281 + p(2) * 16);
     mes(i18n::s.get("core.locale.ui.chara_sheet.damage.protect"));
@@ -972,7 +972,7 @@ static void _draw_first_page_buffs(int& _cs_buff, int& _cs_buffmax)
     font(13 - en * 2);
     pos(wx + 108, wy + 366);
     mes(buff_desc);
-    font(11 + sizefix * 2 - en * 2, snail::font_t::style_t::bold);
+    font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
     color(20, 10, 0);
     pos(wx + 70, wy + 369 - en * 3);
     mes(i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":");
@@ -1113,7 +1113,7 @@ static void _draw_skill_name(int cnt, int skill_id)
 
     // [TRACKING] Shows the star in the (c) menu
     for (int cnt = 0;
-         cnt < (elona::config::instance().allow_enhanced_skill ? 10 : 3);
+         cnt < (elona::Config::instance().allow_enhanced_skill ? 10 : 3);
          ++cnt)
     {
         if (gdata(750 + cnt) == cc * 10000 + skill_id)
@@ -1195,18 +1195,17 @@ static void _draw_skill_enchantment_power(int cnt, int skill_id)
     mes(enchantment_level);
 }
 
-static void
-_draw_skill_entry(int cnt, int skill_id, character_sheet_operation op)
+static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);
     _draw_skill_power(cnt, skill_id);
     _draw_skill_desc(cnt, skill_id);
 
-    if (op == character_sheet_operation::train_skill
-        || op == character_sheet_operation::learn_skill)
+    if (op == CharacterSheetOperation::train_skill
+        || op == CharacterSheetOperation::learn_skill)
     {
-        bool is_training = op == character_sheet_operation::train_skill;
+        bool is_training = op == CharacterSheetOperation::train_skill;
         _draw_skill_train_cost(cnt, skill_id, is_training);
     }
     else if (_has_enchantment(cc, skill_id))
@@ -1217,7 +1216,7 @@ _draw_skill_entry(int cnt, int skill_id, character_sheet_operation op)
 
 static void _draw_text_entry(int cnt, const std::string& text)
 {
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     cs_list(cs == cnt, text, wx + 88, wy + 66 + cnt * 19);
     font(14 - en * 2);
 }
@@ -1226,7 +1225,7 @@ static void _draw_other_page_single_list_entry(
     int cnt,
     int list_item,
     const std::string& text,
-    character_sheet_operation op)
+    CharacterSheetOperation op)
 {
     if (list_item >= 0)
     {
@@ -1238,7 +1237,7 @@ static void _draw_other_page_single_list_entry(
     }
 }
 
-static void _draw_other_page_list_entries(character_sheet_operation op)
+static void _draw_other_page_list_entries(CharacterSheetOperation op)
 {
     font(14 - en * 2);
     cs_listbk();
@@ -1257,10 +1256,10 @@ static void _draw_other_page_list_entries(character_sheet_operation op)
     cs_bk = cs;
 }
 
-void ui_menu_character_sheet::draw()
+void UIMenuCharacterSheet::draw()
 {
     cs_bk = -1;
-    bool show_bonus = _operation == character_sheet_operation::normal;
+    bool show_bonus = _operation == CharacterSheetOperation::normal;
     _draw_window(show_bonus);
 
     if (page == 0)
@@ -1281,7 +1280,7 @@ static void _track_skill(int skill_id)
 {
     int gdata_index = 750;
     int max_tracked_skills =
-        elona::config::instance().allow_enhanced_skill ? 10 : 3;
+        elona::Config::instance().allow_enhanced_skill ? 10 : 3;
 
     for (int cnt = 750; cnt < 750 + max_tracked_skills; ++cnt)
     {
@@ -1311,7 +1310,7 @@ static void _apply_skill_bonus(int csskill_)
         clamp(15 - sdata.get(csskill_, cc).potential / 15, 2, 15));
 }
 
-optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
+optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
     const std::string& key)
 {
     if (page == 0)
@@ -1321,7 +1320,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             if (cc < 16)
             {
                 change_appearance();
-                if (_operation != character_sheet_operation::character_making)
+                if (_operation != CharacterSheetOperation::character_making)
                 {
                     nowindowanime = 1;
                 }
@@ -1352,17 +1351,17 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
         }
     }
 
-    if (_operation == character_sheet_operation::character_making)
+    if (_operation == CharacterSheetOperation::character_making)
     {
         if (key == key_enter)
         {
             snd(103);
-            return ui_menu_character_sheet::result::cancel();
+            return UIMenuCharacterSheet::Result::cancel();
         }
         if (key == key_cancel)
         {
-            return ui_menu_character_sheet::result::finish(
-                ui_menu_composite_character_result{false});
+            return UIMenuCharacterSheet::Result::finish(
+                UIMenuCompositeCharacterResult{false});
         }
         return none;
     }
@@ -1392,17 +1391,17 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     }
     if (p != -1)
     {
-        if (_operation != character_sheet_operation::investigate_ally)
+        if (_operation != CharacterSheetOperation::investigate_ally)
         {
             int skill_id = p;
-            if (_operation == character_sheet_operation::train_skill
-                || _operation == character_sheet_operation::learn_skill)
+            if (_operation == CharacterSheetOperation::train_skill
+                || _operation == CharacterSheetOperation::learn_skill)
             {
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
-                return ui_menu_character_sheet::result::finish(
-                    ui_menu_composite_character_result{skill_id});
+                return UIMenuCharacterSheet::Result::finish(
+                    UIMenuCompositeCharacterResult{skill_id});
             }
             if (cdata.player().skill_bonus < 1 || skill_id < 0
                 || skill_id < 100)
@@ -1438,7 +1437,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
     else if (key == key_cancel)
     {
         menucycle = 0;
-        if (_operation == character_sheet_operation::normal)
+        if (_operation == CharacterSheetOperation::normal)
         {
             update_screen();
         }
@@ -1448,7 +1447,7 @@ optional<ui_menu_character_sheet::result_type> ui_menu_character_sheet::on_key(
             update_screen();
             tc = tcbk;
         }
-        return ui_menu_character_sheet::result::cancel();
+        return UIMenuCharacterSheet::Result::cancel();
     }
 
     return none;

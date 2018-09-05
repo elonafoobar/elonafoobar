@@ -10,7 +10,7 @@ namespace elona
 {
 
 
-struct class_data
+struct ClassData
 {
     std::string id;
     int ordering;
@@ -22,17 +22,17 @@ struct class_data
 
 
 
-class class_db;
+class ClassDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<class_db>
+struct CatDBTraits<ClassDB>
 {
-    using id_type = std::string;
-    using data_type = class_data;
+    using IdType = std::string;
+    using DataType = ClassData;
     static constexpr const char* filename = u8"class.lua";
     static constexpr const char* table_name = u8"class";
 };
@@ -41,18 +41,18 @@ struct cat_db_traits<class_db>
 
 
 
-class class_db : public cat::cat_db<class_db>
+class ClassDB : public cat::CatDB<ClassDB>
 {
 public:
-    class_db() = default;
+    ClassDB() = default;
 
     void define(lua_State* L);
-    std::vector<std::reference_wrapper<const class_data>> get_available_classes(
+    std::vector<std::reference_wrapper<const ClassData>> get_available_classes(
         bool is_extra_class) const;
 };
 
 
-extern class_db the_class_db;
+extern ClassDB the_class_db;
 
 
 extern int cequipment;

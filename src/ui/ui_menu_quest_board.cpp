@@ -25,7 +25,7 @@ static bool _should_display_quest(int cnt)
         return false;
     }
     rc = qdata(0, cnt);
-    if (cdata[rc].state() != character::state_t::alive)
+    if (cdata[rc].state() != Character::State::alive)
     {
         return false;
     }
@@ -77,7 +77,7 @@ static void _draw_background()
     gsel(0);
 }
 
-bool ui_menu_quest_board::init()
+bool UIMenuQuestBoard::init()
 {
     listmax = 0;
     page = 0;
@@ -99,7 +99,7 @@ bool ui_menu_quest_board::init()
     return true;
 }
 
-void ui_menu_quest_board::update()
+void UIMenuQuestBoard::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -148,7 +148,7 @@ static void _draw_keys()
     }
 }
 
-static snail::color _get_quest_difficulty_color(
+static snail::Color _get_quest_difficulty_color(
     int player_level,
     int quest_difficulty)
 {
@@ -268,14 +268,14 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_quest_board::draw()
+void UIMenuQuestBoard::draw()
 {
     _draw_window();
     _draw_keys();
     _draw_list_entries();
 }
 
-optional<ui_menu_quest_board::result_type> ui_menu_quest_board::on_key(
+optional<UIMenuQuestBoard::ResultType> UIMenuQuestBoard::on_key(
     const std::string& key)
 {
     int _p;
@@ -293,7 +293,7 @@ optional<ui_menu_quest_board::result_type> ui_menu_quest_board::on_key(
             set_reupdate();
             return none;
         }
-        return ui_menu_quest_board::result::finish(_p);
+        return UIMenuQuestBoard::Result::finish(_p);
     }
     else if (key == key_pageup)
     {
@@ -315,7 +315,7 @@ optional<ui_menu_quest_board::result_type> ui_menu_quest_board::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_quest_board::result::cancel();
+        return UIMenuQuestBoard::Result::cancel();
     }
 
     return none;

@@ -11,7 +11,7 @@ namespace ui
 
 const constexpr int trait_desc_value = 99999;
 
-bool ui_menu_feats::init()
+bool UIMenuFeats::init()
 {
     listmax = 0;
     page = 0;
@@ -100,7 +100,7 @@ static void _load_traits_by_enchantments()
     }
 }
 
-void ui_menu_feats::update()
+void UIMenuFeats::update()
 {
     trait_load_desc();
     _load_traits_by_enchantments();
@@ -244,7 +244,7 @@ static void _draw_acquirable_trait_number(int tc_)
 
 static void _draw_single_list_entry_name(
     int cnt,
-    const snail::color& text_color)
+    const snail::Color& text_color)
 {
     pos(wx + 270, wy + 66 + cnt * 19 + 2);
 
@@ -256,7 +256,7 @@ static void _draw_single_list_entry_name(
 static void _draw_single_list_entry_text(
     int cnt,
     bool draw_name,
-    const snail::color& text_color,
+    const snail::Color& text_color,
     const std::string& text)
 {
     if (draw_name)
@@ -281,7 +281,7 @@ static void _draw_single_list_entry_text(
     }
 }
 
-static snail::color _get_trait_color(int trait_value)
+static snail::Color _get_trait_color(int trait_value)
 {
     if (trait_value == 0)
     {
@@ -309,7 +309,7 @@ static void _draw_single_list_entry(
         return;
     }
 
-    snail::color text_color = {10, 10, 10};
+    snail::Color text_color = {10, 10, 10};
 
     if (list_value != trait_desc_value)
     {
@@ -348,9 +348,9 @@ static void _draw_list_entries()
     }
 }
 
-void ui_menu_feats::draw()
+void UIMenuFeats::draw()
 {
-    _draw_window(_operation == operation::character_making);
+    _draw_window(_operation == Operation::character_making);
     _draw_keys();
     _draw_acquirable_trait_number(tc);
     _draw_list_entries();
@@ -405,7 +405,7 @@ static void _switch_target(bool is_forwards)
                 new_index = 15;
             }
         }
-        if (cdata[new_index].state() == character::state_t::alive)
+        if (cdata[new_index].state() == Character::State::alive)
         {
             break;
         }
@@ -416,8 +416,7 @@ static void _switch_target(bool is_forwards)
     cs = 0;
 }
 
-optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
-    const std::string& key)
+optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
 {
     int p_;
 
@@ -425,16 +424,15 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
 
     if (p_ > 0 && _can_select_trait(p_, tc))
     {
-        bool show_text = _operation == operation::normal;
+        bool show_text = _operation == Operation::normal;
         if (_gain_trait(p_, show_text))
         {
-            if (_operation == operation::character_making)
+            if (_operation == Operation::character_making)
             {
                 if (gdata_acquirable_feat_count == 0)
                 {
-                    return ui_menu_feats::result::finish(
-                        ui_menu_composite_character_result{
-                            feats_result::confirmed});
+                    return UIMenuFeats::Result::finish(
+                        UIMenuCompositeCharacterResult{FeatsResult::confirmed});
                 }
             }
             else
@@ -472,18 +470,18 @@ optional<ui_menu_feats::result_type> ui_menu_feats::on_key(
     }
     else if (key == key_cancel)
     {
-        if (_operation == operation::normal)
+        if (_operation == Operation::normal)
         {
             update_screen();
         }
-        return ui_menu_feats::result::cancel();
+        return UIMenuFeats::Result::cancel();
     }
     else if (
-        getkey(snail::key::f1) && _operation == operation::character_making)
+        getkey(snail::Key::f1) && _operation == Operation::character_making)
     {
         show_game_help();
-        return ui_menu_feats::result::finish(
-            ui_menu_composite_character_result{feats_result::pressed_f1});
+        return UIMenuFeats::Result::finish(
+            UIMenuCompositeCharacterResult{FeatsResult::pressed_f1});
     }
 
     return none;

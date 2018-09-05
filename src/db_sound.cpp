@@ -4,11 +4,11 @@ namespace elona
 {
 
 
-sound_db the_sound_db;
+SoundDB the_sound_db;
 
 
-sound_data
-sound_db::convert(const std::string& id_, const sol::table& data, lua::lua_env&)
+SoundData
+SoundDB::convert(const std::string& id_, const sol::table& data, lua::LuaEnv&)
 {
     ELONA_LION_DB_FIELD_REQUIRED(_mod, std::string);
     ELONA_LION_DB_FIELD_REQUIRED(id, int); // TODO remove at some point
@@ -33,7 +33,7 @@ sound_db::convert(const std::string& id_, const sol::table& data, lua::lua_env&)
             id_ + ": Sound file doesn't exist: " + sound_file.string());
     }
 
-    return sound_data{id, sound_file};
+    return SoundData{id, sound_file};
 }
 
 } // namespace elona

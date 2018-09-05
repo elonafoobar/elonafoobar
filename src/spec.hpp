@@ -15,17 +15,17 @@ using namespace std::literals::string_literals;
 namespace elona
 {
 
-class spec_error : public std::exception
+class SpecError : public std::exception
 {
 public:
-    spec_error(const std::string& key, std::string str)
+    SpecError(const std::string& key, std::string str)
     {
         std::ostringstream oss;
         oss << key << ": Config definition loading error: ";
         oss << str;
         what_ = oss.str();
     }
-    spec_error(const std::string& file, const std::string& key, std::string str)
+    SpecError(const std::string& file, const std::string& key, std::string str)
     {
         std::ostringstream oss;
         oss << file << ": Config definition loading error at " << key << ": ";
@@ -43,7 +43,7 @@ private:
 };
 
 
-typedef std::string spec_key;
+using SpecKey = std::string;
 
 
 namespace spec
@@ -51,34 +51,34 @@ namespace spec
 
 // Valid types a spec can have.
 
-struct section_def
+struct SectionDef
 {
     std::vector<std::string> children;
 };
 
-struct bool_def
+struct BoolDef
 {
     bool default_value = true;
 };
 
-struct int_def
+struct IntDef
 {
     int default_value = 0;
     int min = 0;
     int max = 0;
 };
 
-struct string_def
+struct StringDef
 {
     std::string default_value = "";
 };
 
-struct list_def
+struct ListDef
 {
     std::vector<hcl::Value> default_value;
 };
 
-struct enum_def
+struct EnumDef
 {
     int default_index;
     std::vector<std::string> variants;
@@ -119,9 +119,8 @@ struct enum_def
     }
 };
 
-typedef boost::
-    variant<section_def, bool_def, int_def, string_def, list_def, enum_def>
-        item;
+using Item =
+    boost::variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>;
 
 static const constexpr char* unknown_enum_variant = "__unknown__";
 
@@ -131,16 +130,16 @@ static const constexpr char* unknown_enum_variant = "__unknown__";
  * HCL document. Used for validating the correctness of user-inputted
  * HCL files. For an example, see runtime/mods/core/config/config_def.hcl.
  */
-class object
+class Object
 {
 public:
-    typedef tsl::ordered_map<std::string, item>::const_iterator const_iterator;
+    using const_iterator = tsl::ordered_map<std::string, Item>::const_iterator;
 
-    object(std::string name_)
+    Object(std::string name_)
         : name(name_)
     {
     }
-    ~object() = default;
+    ~Object() = default;
 
     void init(const fs::path&);
     void load(std::istream&, const std::string&);
@@ -176,13 +175,13 @@ public:
         std::vector<std::string> variants,
         std::string default_variant)
     {
-        if (!exists(key) || !is<enum_def>(key))
+        if (!exists(key) || !is<EnumDef>(key))
         {
-            throw spec_error(key, "No such enum " + key);
+            throw SpecError(key, "No such enum " + key);
         }
-        if (!get<enum_def>(key).pending)
+        if (!get<EnumDef>(key).pending)
         {
-            throw spec_error(
+            throw SpecError(
                 key,
                 "Attempted to inject an enum, but it was not of type "
                 "runtime_enum: "
@@ -190,7 +189,7 @@ public:
         }
 
 
-        auto& def = get<enum_def>(key);
+        auto& def = get<EnumDef>(key);
         def.variants = std::move(variants);
         def.variants.insert(def.variants.begin(), unknown_enum_variant);
 
@@ -200,7 +199,7 @@ public:
         if (!index)
         {
             def.variants = std::vector<std::string>();
-            throw spec_error(
+            throw SpecError(
                 key,
                 "Default variant \"" + default_variant
                     + "\" not found: " + key);
@@ -230,29 +229,29 @@ public:
 
     inline std::string type_to_string(const std::string& key) const
     {
-        if (is<section_def>(key))
+        if (is<SectionDef>(key))
         {
             return "section";
         }
-        else if (is<int_def>(key))
+        else if (is<IntDef>(key))
         {
             return "integer";
         }
-        else if (is<bool_def>(key))
+        else if (is<BoolDef>(key))
         {
             return "boolean";
         }
-        else if (is<string_def>(key))
+        else if (is<StringDef>(key))
         {
             return "string";
         }
-        else if (is<list_def>(key))
+        else if (is<ListDef>(key))
         {
             return "list of strings";
         }
-        else if (is<enum_def>(key))
+        else if (is<EnumDef>(key))
         {
-            return "enum variant: " + get<enum_def>(key).to_string();
+            return "enum variant: " + get<EnumDef>(key).to_string();
         }
         else
         {
@@ -262,29 +261,29 @@ public:
 
     virtual hcl::Value get_default(const std::string& key) const
     {
-        if (is<section_def>(key))
+        if (is<SectionDef>(key))
         {
-            throw spec_error(key, "Sections cannot have default values.");
+            throw SpecError(key, "Sections cannot have default values.");
         }
-        else if (is<int_def>(key))
+        else if (is<IntDef>(key))
         {
-            return get<int_def>(key).default_value;
+            return get<IntDef>(key).default_value;
         }
-        else if (is<bool_def>(key))
+        else if (is<BoolDef>(key))
         {
-            return get<bool_def>(key).default_value;
+            return get<BoolDef>(key).default_value;
         }
-        else if (is<string_def>(key))
+        else if (is<StringDef>(key))
         {
-            return get<string_def>(key).default_value;
+            return get<StringDef>(key).default_value;
         }
-        else if (is<list_def>(key))
+        else if (is<ListDef>(key))
         {
-            return get<list_def>(key).default_value;
+            return get<ListDef>(key).default_value;
         }
         else
         {
-            return get<enum_def>(key).get_default();
+            return get<EnumDef>(key).get_default();
         }
     }
 
@@ -293,11 +292,11 @@ public:
      */
     std::vector<std::string> get_children(const std::string& key) const
     {
-        if (!is<section_def>(key))
+        if (!is<SectionDef>(key))
         {
-            throw spec_error(key, "Cannot get children for non-section " + key);
+            throw SpecError(key, "Cannot get children for non-section " + key);
         }
-        return get<section_def>(key).children;
+        return get<SectionDef>(key).children;
     }
 
     /***
@@ -305,11 +304,11 @@ public:
      */
     std::vector<std::string> get_variants(const std::string& key) const
     {
-        if (!is<enum_def>(key))
+        if (!is<EnumDef>(key))
         {
-            throw spec_error(key, "Cannot get variants for non-enum " + key);
+            throw SpecError(key, "Cannot get variants for non-enum " + key);
         }
-        return get<enum_def>(key).variants;
+        return get<EnumDef>(key).variants;
     }
 
     /***
@@ -317,16 +316,16 @@ public:
      */
     int get_max(const std::string& key) const
     {
-        if (is<enum_def>(key))
+        if (is<EnumDef>(key))
         {
-            return static_cast<int>(get<enum_def>(key).variants.size() - 1);
+            return static_cast<int>(get<EnumDef>(key).variants.size() - 1);
         }
-        if (!is<int_def>(key))
+        if (!is<IntDef>(key))
         {
-            throw spec_error(
+            throw SpecError(
                 key, "Cannot get max value for non-integer option " + key);
         }
-        return get<int_def>(key).max;
+        return get<IntDef>(key).max;
     }
 
     /***
@@ -334,59 +333,59 @@ public:
      */
     int get_min(const std::string& key) const
     {
-        if (is<enum_def>(key))
+        if (is<EnumDef>(key))
         {
             return 0;
         }
-        if (!is<int_def>(key))
+        if (!is<IntDef>(key))
         {
-            throw spec_error(
+            throw SpecError(
                 key, "Cannot get min value for non-integer option " + key);
         }
-        return get<int_def>(key).min;
+        return get<IntDef>(key).min;
     }
 
     // These functions allow for injecting more specific validations
     // or data in subclasses, like config option visibility based on
     // object properties.
-    virtual void post_visit(const spec_key&, const section_def&)
+    virtual void post_visit(const SpecKey&, const SectionDef&)
     {
     }
-    virtual void pre_visit_section(const spec_key&, const hcl::Object&)
+    virtual void pre_visit_section(const SpecKey&, const hcl::Object&)
     {
     }
-    virtual void pre_visit_item(const spec_key&, const hcl::Object&)
+    virtual void pre_visit_item(const SpecKey&, const hcl::Object&)
     {
     }
-    virtual void pre_visit_bare_value(const spec_key&, const hcl::Value&)
+    virtual void pre_visit_bare_value(const SpecKey&, const hcl::Value&)
     {
     }
 
 private:
     // Visitor methods for general object types
-    section_def
+    SectionDef
     visit_object(const hcl::Object&, const std::string&, const std::string&);
     void visit(const hcl::Value&, const std::string&, const std::string&);
-    item
+    Item
     visit_bare_value(const hcl::Value&, const std::string&, const std::string&);
     void visit_item(const hcl::Object&, const std::string&, const std::string&);
 
     // Visitor methods for specific object types
-    section_def
+    SectionDef
     visit_section(const hcl::Object&, const std::string&, const std::string&);
-    int_def
+    IntDef
     visit_int(int, const hcl::Object&, const std::string&, const std::string&);
-    bool_def visit_bool(bool);
-    string_def visit_string(const std::string&);
-    list_def visit_list(const hcl::List&);
-    enum_def visit_enum(
+    BoolDef visit_bool(bool);
+    StringDef visit_string(const std::string&);
+    ListDef visit_list(const hcl::List&);
+    EnumDef visit_enum(
         const std::string&,
         const hcl::Object&,
         const std::string&,
         const std::string&);
 
     std::string name;
-    tsl::ordered_map<std::string, item> items;
+    tsl::ordered_map<std::string, Item> items;
 };
 } // namespace spec
 } // namespace elona

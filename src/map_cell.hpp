@@ -5,10 +5,10 @@
 namespace elona
 {
 
-struct position_t;
+struct Position;
 
 // Maps from an enumeration to an ID in the current tileset.
-enum class tile_kind_t : int
+enum class TileKind : int
 {
     normal = 0,
     wall = 1,
@@ -17,7 +17,7 @@ enum class tile_kind_t : int
     fog = 4
 };
 
-std::pair<int, int> cell_itemoncell(const position_t& pos);
+std::pair<int, int> cell_itemoncell(const Position& pos);
 int cell_featread(int = 0, int = 0, int = 0);
 int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);
@@ -38,6 +38,6 @@ bool cell_swap(int = 0, int = 0, int = 0, int = 0);
  * The ID is only valid until the tileset is changed.
  * Tilesets can have multiple variations for the same tile type.
  */
-int cell_get_type(tile_kind_t type);
+int cell_get_type(TileKind type);
 
 } // namespace elona

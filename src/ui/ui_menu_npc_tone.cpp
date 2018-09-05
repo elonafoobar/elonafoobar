@@ -19,10 +19,10 @@ static int _load_talk_entries()
 
     ++_listmax;
     const auto base_dir = filesystem::dir::user() / u8"talk";
-    for (const auto& entry :
-         filesystem::dir_entries{base_dir,
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{u8R"(.*\.txt)"}})
+    for (const auto& entry : filesystem::dir_entries(
+             base_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(.*\.txt)"}))
     {
         list(0, _listmax) = _listmax;
         listn(0, _listmax) =
@@ -33,7 +33,7 @@ static int _load_talk_entries()
     return _listmax;
 }
 
-bool ui_menu_npc_tone::init()
+bool UIMenuNPCTone::init()
 {
     load_background_variants(4);
     gsel(0);
@@ -49,7 +49,7 @@ bool ui_menu_npc_tone::init()
     return true;
 }
 
-void ui_menu_npc_tone::update()
+void UIMenuNPCTone::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -63,7 +63,7 @@ void ui_menu_npc_tone::update()
     }
 }
 
-void ui_menu_npc_tone::draw()
+void UIMenuNPCTone::draw()
 {
     s(0) = i18n::s.get("core.locale.action.interact.change_tone.title");
     s(1) = i18n::s.get("core.locale.action.interact.change_tone.hint")
@@ -122,7 +122,7 @@ void ui_menu_npc_tone::draw()
     }
 }
 
-optional<ui_menu_npc_tone::result_type> ui_menu_npc_tone::on_key(
+optional<UIMenuNPCTone::ResultType> UIMenuNPCTone::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -131,12 +131,12 @@ optional<ui_menu_npc_tone::result_type> ui_menu_npc_tone::on_key(
     {
         if (p == _default_tone_index)
         {
-            return ui_menu_npc_tone::result_type::finish();
+            return UIMenuNPCTone::ResultType::finish();
         }
         else
         {
             std::string chosen = listn(0, p);
-            return ui_menu_npc_tone::result_type::finish(chosen);
+            return UIMenuNPCTone::ResultType::finish(chosen);
         }
     }
     else if (key == key_pageup)
@@ -159,7 +159,7 @@ optional<ui_menu_npc_tone::result_type> ui_menu_npc_tone::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_npc_tone::result_type::cancel();
+        return UIMenuNPCTone::ResultType::cancel();
     }
 
     return none;

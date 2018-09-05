@@ -130,7 +130,7 @@ reset_page:
         }
 
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -165,19 +165,18 @@ reset_page:
             && (p != -1 || key == key_identify))
         {
             const int ci_save = ci;
-            item tmp;
-            item::copy(inv[ci], tmp);
+            Item tmp;
+            Item::copy(inv[ci], tmp);
             inv[ci].set_number(0);
             itemcreate(0, 504, -1, -1, 0);
             inv[ci].subname = list(0, pagesize * page + cs);
-            inv[ci].identification_state =
-                identification_state_t::completely_identified;
+            inv[ci].identification_state = IdentifyState::completely_identified;
             int pagesize_bk = pagesize;
             int page_bk = page;
             int cs_bk = cs;
             item_show_description();
             inv[ci].set_number(0);
-            item::copy(tmp, inv[ci_save]);
+            Item::copy(tmp, inv[ci_save]);
             pagesize = pagesize_bk;
             page = page_bk;
             cs = cs_bk;

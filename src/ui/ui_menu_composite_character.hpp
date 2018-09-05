@@ -6,14 +6,14 @@ namespace elona
 namespace ui
 {
 
-struct character_sheet_result
+struct CharacterSheetResult
 {
-    character_sheet_result(bool returned_from_portrait)
+    CharacterSheetResult(bool returned_from_portrait)
         : returned_from_portrait(returned_from_portrait)
         , trainer_skill_id(none)
     {
     }
-    character_sheet_result(int trainer_skill_id)
+    CharacterSheetResult(int trainer_skill_id)
         : returned_from_portrait(false)
         , trainer_skill_id(trainer_skill_id)
     {
@@ -23,20 +23,20 @@ struct character_sheet_result
     optional<int> trainer_skill_id;
 };
 
-enum class feats_result
+enum class FeatsResult
 {
     confirmed,
     pressed_f1,
 };
 
-typedef boost::variant<character_sheet_result, feats_result>
-    ui_menu_composite_character_result;
+using UIMenuCompositeCharacterResult =
+    boost::variant<CharacterSheetResult, FeatsResult>;
 
-class ui_menu_composite_character
-    : public ui_menu_composite<ui_menu_composite_character_result>
+class UIMenuCompositeCharacter
+    : public UIMenuComposite<UIMenuCompositeCharacterResult>
 {
 public:
-    enum index : size_t
+    enum class Index : size_t
     {
         character_sheet = 0,
         equipment = 1,
@@ -44,8 +44,8 @@ public:
         materials = 3,
     };
 
-    ui_menu_composite_character(size_t selected)
-        : ui_menu_composite(selected)
+    UIMenuCompositeCharacter(size_t selected)
+        : UIMenuComposite(selected)
     {
     }
 

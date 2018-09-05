@@ -6,10 +6,10 @@ namespace elona
 namespace ui
 {
 
-class ui_menu_journal : public ui_menu<dummy_result>
+class UIMenuJournal : public UIMenu<DummyResult>
 {
 public:
-    ui_menu_journal()
+    UIMenuJournal()
     {
     }
 
@@ -17,8 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<ui_menu_journal::result_type> on_key(
-        const std::string& key);
+    virtual optional<UIMenuJournal::ResultType> on_key(const std::string& key);
 };
 
 } // namespace ui

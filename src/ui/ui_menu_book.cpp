@@ -8,7 +8,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_book::init()
+bool UIMenuBook::init()
 {
     snd(59);
     gsel(4);
@@ -46,7 +46,7 @@ bool ui_menu_book::init()
     return true;
 }
 
-void ui_menu_book::update()
+void UIMenuBook::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -60,7 +60,7 @@ void ui_menu_book::update()
     }
 }
 
-void ui_menu_book::draw()
+void UIMenuBook::draw()
 {
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
@@ -78,7 +78,7 @@ void ui_menu_book::draw()
         noteget(s, p);
         if (p == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::Font::Style::bold);
         }
         if (p == 1)
         {
@@ -92,14 +92,14 @@ void ui_menu_book::draw()
         mes(s);
         if (p % 20 == 0)
         {
-            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+            font(12 + sizefix - en * 2, snail::Font::Style::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
         }
     }
 }
 
-optional<ui_menu_book::result_type> ui_menu_book::on_key(const std::string& key)
+optional<UIMenuBook::ResultType> UIMenuBook::on_key(const std::string& key)
 {
     if (key == key_pageup)
     {
@@ -122,7 +122,7 @@ optional<ui_menu_book::result_type> ui_menu_book::on_key(const std::string& key)
     else if (key == key_cancel || key == key_enter)
     {
         update_screen();
-        return ui_menu_book::result_type::finish();
+        return UIMenuBook::ResultType::finish();
     }
 
     return none;

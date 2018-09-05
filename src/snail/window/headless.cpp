@@ -4,40 +4,40 @@ namespace snail
 {
 
 
-void window::move_to_center()
+void Window::move_to_center()
 {
 }
 
-std::pair<int, int> window::get_size()
+std::pair<int, int> Window::get_size()
 {
     return {800, 600};
 }
 
-void window::set_size(int width, int height)
+void Window::set_size(int width, int height)
 {
 }
 
-void window::set_display_mode(::SDL_DisplayMode display_mode)
+void Window::set_display_mode(::SDL_DisplayMode display_mode)
 {
 }
 
-::SDL_DisplayMode window::get_display_mode()
+::SDL_DisplayMode Window::get_display_mode()
 {
     ::SDL_DisplayMode mode{};
     return mode;
 }
 
-void window::set_fullscreen_mode(fullscreen_mode_t fullscreen_mode)
+void Window::set_fullscreen_mode(FullscreenMode fullscreen_mode)
 {
 }
 
-window::window(
+Window::Window(
     const std::string& title,
     int x,
     int y,
     int width,
     int height,
-    int flag)
+    Flag flag)
 {
 }
 

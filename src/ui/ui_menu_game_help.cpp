@@ -9,7 +9,7 @@ namespace elona
 {
 namespace ui
 {
-bool ui_menu_game_help::init()
+bool UIMenuGameHelp::init()
 {
     // pre - notesel init
     snd(26);
@@ -66,7 +66,7 @@ bool ui_menu_game_help::init()
     return true;
 }
 
-void ui_menu_game_help::_remove_parenthesis_around_keys()
+void UIMenuGameHelp::_remove_parenthesis_around_keys()
 {
     if (jp)
         return;
@@ -85,7 +85,7 @@ void ui_menu_game_help::_remove_parenthesis_around_keys()
     return;
 }
 
-void ui_menu_game_help::_update_key_list()
+void UIMenuGameHelp::_update_key_list()
 {
     x = wx + 188;
     y = wy + 6;
@@ -223,7 +223,7 @@ void ui_menu_game_help::_update_key_list()
         + u8"F12  " + i18n::s.get("core.locale.ui.manual.keys.other.console"));
 }
 
-void ui_menu_game_help::_update_regular_pages()
+void UIMenuGameHelp::_update_regular_pages()
 {
     s(1) = listn(0, pagesize * page_bk + cs_bk2);
     display_topic(s(1), wx + 206, wy + 36);
@@ -246,7 +246,7 @@ void ui_menu_game_help::_update_regular_pages()
     }
 }
 
-void ui_menu_game_help::_draw_navigation_menu()
+void UIMenuGameHelp::_draw_navigation_menu()
 {
     font(14 - en * 2);
     cs_listbk();
@@ -267,7 +267,7 @@ void ui_menu_game_help::_draw_navigation_menu()
     }
 }
 
-void ui_menu_game_help::_draw_background_vignette(int id)
+void UIMenuGameHelp::_draw_background_vignette(int id)
 {
     cmbg = id;
     x = ww / 5 * 2;
@@ -278,7 +278,7 @@ void ui_menu_game_help::_draw_background_vignette(int id)
     gmode(2);
 }
 
-void ui_menu_game_help::update()
+void UIMenuGameHelp::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -329,14 +329,14 @@ void ui_menu_game_help::update()
 }
 
 
-void ui_menu_game_help::draw()
+void UIMenuGameHelp::draw()
 {
     // Draws the elft part of the window continuously, ensuring key refreshing
     _draw_navigation_menu();
 }
 
 
-optional<ui_menu_game_help::result_type> ui_menu_game_help::on_key(
+optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
     const std::string& key)
 {
     // Key selection
@@ -372,7 +372,7 @@ optional<ui_menu_game_help::result_type> ui_menu_game_help::on_key(
     // Closing menu
     if (key == key_cancel)
     {
-        return ui_menu_game_help::result_type::finish();
+        return UIMenuGameHelp::ResultType::finish();
     }
     return none;
 }

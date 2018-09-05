@@ -18,11 +18,11 @@ void Debug::report_error(const std::string& message)
     std::istringstream sstream(message);
     std::string line;
 
-    txtef(color_index_t::red);
+    txtef(ColorIndex::red);
     txt("Script error: ");
     while (getline(sstream, line, '\n'))
     {
-        txtef(color_index_t::red);
+        txtef(ColorIndex::red);
         txt(line + "  ");
     }
 
@@ -35,7 +35,7 @@ void Debug::dump_characters()
     ELONA_LOG("===== Charas =====")
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (elona::cdata[cnt].state() != character::state_t::empty)
+        if (elona::cdata[cnt].state() != Character::State::empty)
             ELONA_LOG(
                 elona::cdata[cnt].index
                 << ") Name: " << elona::name(cnt)

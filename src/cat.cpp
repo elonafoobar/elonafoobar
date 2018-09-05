@@ -18,11 +18,11 @@ namespace cat
 {
 
 
-engine global;
+Engine global;
 
 
 
-void engine::initialize()
+void Engine::initialize()
 {
     L.reset(luaL_newstate());
     luaL_openlibs(ptr());
@@ -30,7 +30,7 @@ void engine::initialize()
 }
 
 
-void engine::load(const fs::path& filepath)
+void Engine::load(const fs::path& filepath)
 {
     if (ELONA_luaL_dofile(ptr(), filepath.native().c_str()) != 0)
     {
@@ -41,7 +41,7 @@ void engine::load(const fs::path& filepath)
 }
 
 
-void engine::register_function(const char* name, lua_CFunction func)
+void Engine::register_function(const char* name, lua_CFunction func)
 {
     lua_pushcfunction(ptr(), func);
     lua_setglobal(ptr(), name);

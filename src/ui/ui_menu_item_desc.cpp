@@ -10,7 +10,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_item_desc::init()
+bool UIMenuItemDesc::init()
 {
     snd(26);
     page_save();
@@ -27,7 +27,7 @@ bool ui_menu_item_desc::init()
     return true;
 }
 
-void ui_menu_item_desc::update()
+void UIMenuItemDesc::update()
 {
     key_list = key_enter;
     keyrange = 0;
@@ -43,16 +43,16 @@ void ui_menu_item_desc::update()
     }
 }
 
-static snail::color _desc_to_color(int desc)
+static snail::Color _desc_to_color(int desc)
 {
-    switch (desc)
+    switch (static_cast<ItemDescriptionType>(desc))
     {
-    case desc_entry_t::raises_skill: return {0, 100, 0};
-    case desc_entry_t::raises_stat: return {0, 0, 100};
-    case desc_entry_t::raises_resist: return {80, 100, 0};
-    case desc_entry_t::enchantment: return {80, 50, 0};
-    case desc_entry_t::maintains_skill: return {0, 100, 100};
-    case desc_entry_t::negative_effect: return {180, 0, 0};
+    case ItemDescriptionType::raises_skill: return {0, 100, 0};
+    case ItemDescriptionType::raises_stat: return {0, 0, 100};
+    case ItemDescriptionType::raises_resist: return {80, 100, 0};
+    case ItemDescriptionType::enchantment: return {80, 50, 0};
+    case ItemDescriptionType::maintains_skill: return {0, 100, 100};
+    case ItemDescriptionType::negative_effect: return {180, 0, 0};
     }
 
     return {0, 0, 0};
@@ -67,13 +67,14 @@ static void _set_color(int list_item)
 
 static void _set_font(int list_item)
 {
-    if (list_item == desc_entry_t::small_font)
+    if (list_item == static_cast<int>(ItemDescriptionType::small_font))
     {
         font(13 - en * 2);
     }
-    else if (list_item == desc_entry_t::small_font_italic)
+    else if (
+        list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
-        font(13 - en * 2, snail::font_t::style_t::italic);
+        font(13 - en * 2, snail::Font::Style::italic);
     }
     else
     {
@@ -83,7 +84,7 @@ static void _set_font(int list_item)
 
 static void _set_pos(int cnt, int list_item, const std::string& list_text)
 {
-    if (list_item == desc_entry_t::small_font_italic)
+    if (list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
         pos(wx + ww - strlen_u(list_text) * 6 - 80, wy + 68 + cnt * 18);
     }
@@ -103,7 +104,7 @@ static void _draw_normal_mark(int cnt, int list_item)
 
 static void _draw_marks(int cnt, int list_item)
 {
-    if (list_item > desc_entry_t::normal)
+    if (list_item > static_cast<int>(ItemDescriptionType::normal))
     {
         _draw_normal_mark(cnt, list_item);
     }
@@ -125,7 +126,7 @@ static void _draw_message(int cnt, int list_item, const std::string& list_text)
     _draw_marks(cnt, list_item);
 }
 
-void ui_menu_item_desc::draw()
+void UIMenuItemDesc::draw()
 {
     s(0) = i18n::s.get("core.locale.item.desc.window.title");
     s(1) = strhint4 + strhint3;
@@ -144,7 +145,7 @@ void ui_menu_item_desc::draw()
     }
 }
 
-optional<ui_menu_item_desc::result_type> ui_menu_item_desc::on_key(
+optional<UIMenuItemDesc::ResultType> UIMenuItemDesc::on_key(
     const std::string& key)
 {
     if (key == key_pageup)
@@ -167,7 +168,7 @@ optional<ui_menu_item_desc::result_type> ui_menu_item_desc::on_key(
     }
     else if (key == key_cancel || key == key_enter)
     {
-        return ui_menu_item_desc::result_type::finish();
+        return UIMenuItemDesc::ResultType::finish();
     }
 
     return none;

@@ -12,10 +12,9 @@ namespace elona
 // Locking: The game is only single-threaded, so having a flyweight
 // locking policy is unnecessary. It also causes aborts on exit.
 // Tracking: Unnecessary use of memory.
-typedef boost::flyweight<
+using SharedId = boost::flyweight<
     std::string,
     boost::flyweights::no_tracking,
-    boost::flyweights::no_locking>
-    shared_id;
+    boost::flyweights::no_locking>;
 
 } // namespace elona

@@ -20,7 +20,7 @@ static void _load_race_list()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (config::instance().extrarace)
+    if (Config::instance().extrarace)
     {
         for (const auto& race : the_race_db.get_available_races(true))
         {
@@ -39,7 +39,7 @@ static void _load_race_list()
     }
 }
 
-bool ui_menu_charamake_race::init()
+bool UIMenuCharamakeRace::init()
 {
     cs = 0;
     cs_bk = -1;
@@ -56,7 +56,7 @@ bool ui_menu_charamake_race::init()
     return true;
 }
 
-void ui_menu_charamake_race::update()
+void UIMenuCharamakeRace::update()
 {
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -140,7 +140,7 @@ static void _reload_selected_race(const std::string& race)
     access_race_info(11, race);
 }
 
-void ui_menu_charamake_race::draw()
+void UIMenuCharamakeRace::draw()
 {
     if (cs == cs_bk)
     {
@@ -157,7 +157,7 @@ void ui_menu_charamake_race::draw()
     _draw_race_info(ref1, ref2);
 }
 
-optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(
+optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
     const std::string& key)
 {
     ELONA_GET_SELECTED_INDEX(p);
@@ -168,8 +168,8 @@ optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(
         const std::string& race_id = listn(1, race_index);
         const std::string& race_name = listn(0, race_index);
 
-        return ui_menu_charamake_race::result::finish(
-            ui_menu_charamake_race_result{race_id, race_name});
+        return UIMenuCharamakeRace::Result::finish(
+            UIMenuCharamakeRaceResult{race_id, race_name});
     }
     else if (key == key_pageup)
     {
@@ -191,12 +191,12 @@ optional<ui_menu_charamake_race::result_type> ui_menu_charamake_race::on_key(
     }
     else if (key == key_cancel)
     {
-        return ui_menu_charamake_race::result::cancel();
+        return UIMenuCharamakeRace::Result::cancel();
     }
-    else if (getkey(snail::key::f1))
+    else if (getkey(snail::Key::f1))
     {
         show_game_help();
-        return ui_menu_charamake_race::result::finish();
+        return UIMenuCharamakeRace::Result::finish();
     }
 
     return none;

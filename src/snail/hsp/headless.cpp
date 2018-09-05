@@ -21,7 +21,7 @@ void mesbox(std::string&, int, bool)
 {
 }
 
-void picload(basic_image&, int)
+void picload(BasicImage&, int)
 {
 }
 
@@ -45,11 +45,11 @@ void await(int)
 {
 }
 
-void boxf(int, int, int, int, const snail::color&)
+void boxf(int, int, int, int, const snail::Color&)
 {
 }
 
-void boxf(const snail::color&)
+void boxf(const snail::Color&)
 {
 }
 
@@ -61,7 +61,7 @@ void color(int, int, int)
 {
 }
 
-void font(int, snail::font_t::style_t, const fs::path&)
+void font(int, snail::Font::Style, const fs::path&)
 {
 }
 
@@ -98,16 +98,16 @@ void gsel(int)
 
 
 
-void line(int, int, int, int, const snail::color&)
+void line(int, int, int, int, const snail::Color&)
 {
 }
 
 void title(
     const std::string& title_str,
     const std::string&,
-    window::fullscreen_mode_t)
+    Window::FullscreenMode)
 {
-    application::instance().initialize(title_str);
+    Application::instance().initialize(title_str);
 }
 
 

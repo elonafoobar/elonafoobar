@@ -7,19 +7,19 @@ namespace elona
 
 
 
-enum class curse_state_t;
-struct character;
+enum class CurseState;
+struct Character;
 
-void chara_anorexia(character& cc);
-void cure_anorexia(character& cc);
+void chara_anorexia(Character& cc);
+void cure_anorexia(Character& cc);
 
-void chara_vomit(character& cc);
+void chara_vomit(Character& cc);
 
-void eatstatus(curse_state_t, int);
+void eatstatus(CurseState, int);
 
-void get_sick_if_cursed(curse_state_t state, character& drinker);
+void get_sick_if_cursed(CurseState state, Character& drinker);
 
-void get_hungry(character& cc);
+void get_hungry(Character& cc);
 
 void show_eating_message();
 void eat_rotten_food();

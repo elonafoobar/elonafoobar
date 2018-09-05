@@ -10,9 +10,9 @@ namespace lua
 
 // Holds identifier and function pointer from an exported Lua
 // function.
-struct exported_function
+struct ExportedFunction
 {
-    exported_function(std::string id, sol::protected_function func)
+    ExportedFunction(std::string id, sol::protected_function func)
         : id(id)
         , func(func)
     {
@@ -28,7 +28,7 @@ struct exported_function
         if (!result.valid())
         {
             sol::error err = result;
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(id + ": Script callback error: " + err.what());
         }
     }
@@ -40,7 +40,7 @@ struct exported_function
         if (!result.valid())
         {
             sol::error err = result;
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(id + ": Script callback error: " + err.what());
             return default_value;
         }
@@ -55,14 +55,14 @@ struct exported_function
             }
             else
             {
-                txtef(color_index_t::red);
+                txtef(ColorIndex::red);
                 txt(id + ": Script callback error: incorrect type returned");
                 return default_value;
             }
         }
         catch (const std::exception& e)
         {
-            txtef(color_index_t::red);
+            txtef(ColorIndex::red);
             txt(id + ": Script callback error: " + e.what());
             return default_value;
         }

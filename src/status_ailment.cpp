@@ -17,7 +17,7 @@ namespace
 {
 
 
-int calc_power_decreased_by_resistance(int cc, int power, element_t element)
+int calc_power_decreased_by_resistance(int cc, int power, Element element)
 {
     const auto resistance_level = sdata(int(element), cc) / 50;
     power =
@@ -43,7 +43,7 @@ namespace elona
 
 
 
-void dmgcon(int cc, status_ailment_t status_ailment, int power)
+void dmgcon(int cc, StatusAilment status_ailment, int power)
 {
     if (power <= 0)
         return;
@@ -52,13 +52,13 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
 
     switch (status_ailment)
     {
-    case status_ailment_t::blinded:
+    case StatusAilment::blinded:
         if (cdata[cc].is_immune_to_blindness())
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
             return;
         power =
-            calc_power_decreased_by_resistance(cc, power, element_t::darkness);
+            calc_power_decreased_by_resistance(cc, power, Element::darkness);
         turn = power / 6;
         if (turn <= 0)
             return;
@@ -78,14 +78,14 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::confused:
+    case StatusAilment::confused:
         if (cdata[cc].is_immune_to_confusion())
             return;
         if (buff_has(cdata[cc], 7))
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, element_t::mind);
+        power = calc_power_decreased_by_resistance(cc, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
@@ -105,12 +105,12 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::paralyzed:
+    case StatusAilment::paralyzed:
         if (cdata[cc].is_immune_to_paralyzation())
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, element_t::nerve);
+        power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
         turn = power / 10;
         if (turn <= 0)
             return;
@@ -130,13 +130,12 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::poisoned:
+    case StatusAilment::poisoned:
         if (cdata[cc].is_immune_to_poison())
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 3 + 1))
             return;
-        power =
-            calc_power_decreased_by_resistance(cc, power, element_t::poison);
+        power = calc_power_decreased_by_resistance(cc, power, Element::poison);
         turn = power / 5;
         if (turn <= 0)
             return;
@@ -156,12 +155,12 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::sleep:
+    case StatusAilment::sleep:
         if (cdata[cc].is_immune_to_sleep())
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, element_t::nerve);
+        power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
         turn = power / 4;
         if (turn <= 0)
             return;
@@ -181,7 +180,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::fear:
+    case StatusAilment::fear:
         if (cdata[cc].is_immune_to_fear())
             return;
         if (buff_has(cdata[cc], 1))
@@ -190,7 +189,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, element_t::mind);
+        power = calc_power_decreased_by_resistance(cc, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
@@ -204,12 +203,12 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
                 "core.locale.status_ailment.fear.apply", cdata[cc]));
         }
         return;
-    case status_ailment_t::dimmed:
+    case StatusAilment::dimmed:
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 3 + 1))
             return;
         if (cdatan(2, cc) == u8"golem"s)
             return;
-        power = calc_power_decreased_by_resistance(cc, power, element_t::sound);
+        power = calc_power_decreased_by_resistance(cc, power, Element::sound);
         turn = power / 8;
         if (turn <= 0)
             return;
@@ -229,7 +228,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::bleeding:
+    case StatusAilment::bleeding:
         if (cdata[cc].quality > 3)
         {
             power /= 2;
@@ -253,7 +252,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::drunk:
+    case StatusAilment::drunk:
         turn = power / 10;
         if (turn <= 0)
             return;
@@ -271,7 +270,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
             cdata[cc].drunk += turn;
         }
         return;
-    case status_ailment_t::insane:
+    case StatusAilment::insane:
         turn = power / 8;
         if (turn <= 0)
             return;
@@ -291,7 +290,7 @@ void dmgcon(int cc, status_ailment_t status_ailment, int power)
         }
         rowactend(cc);
         return;
-    case status_ailment_t::sick:
+    case StatusAilment::sick:
         turn = power / 10;
         if (turn <= 0)
             return;

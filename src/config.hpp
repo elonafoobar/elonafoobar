@@ -15,20 +15,20 @@
 namespace elona
 {
 
-class config_def;
+class ConfigDef;
 
-class config
+class Config
 {
 public:
-    static config& instance();
+    static Config& instance();
 
-    config()
+    Config()
     {
     }
-    ~config() = default;
+    ~Config() = default;
 
     void init(const fs::path&);
-    void init(const config_def);
+    void init(const ConfigDef);
     void load(std::istream&, const std::string&, bool);
     void write();
 
@@ -150,26 +150,26 @@ public:
     {
         def.inject_enum(key, variants, default_variant);
 
-        auto enum_def = def.get<spec::enum_def>(key);
+        auto EnumDef = def.get<spec::EnumDef>(key);
         if (storage.find(key) != storage.end())
         {
             // Check if this enum has an invalid value. If so, set it to the
             // default.
             std::string current = get<std::string>(key);
-            if (!enum_def.get_index_of(current))
+            if (!EnumDef.get_index_of(current))
             {
                 ELONA_LOG(
                     "Config key "s
                     << key << " had invalid variant "s << current << ". "s
                     << "("s << def.type_to_string(key) << ")"s
-                    << "Setting to "s << enum_def.get_default() << "."s);
-                set(key, enum_def.get_default());
+                    << "Setting to "s << EnumDef.get_default() << "."s);
+                set(key, EnumDef.get_default());
             }
         }
         else
         {
             set(key,
-                enum_def.get_default()); // Set the enum to its default value.
+                EnumDef.get_default()); // Set the enum to its default value.
         }
     }
 
@@ -254,7 +254,7 @@ public:
         }
     }
 
-    const config_def& get_def() const
+    const ConfigDef& get_def() const
     {
         return def;
     }
@@ -270,7 +270,7 @@ private:
         bool);
     bool verify_types(const hcl::Value&, const std::string&);
 
-    config_def def;
+    ConfigDef def;
     tsl::ordered_map<std::string, hcl::Value> storage;
     tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters;
     tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
@@ -291,7 +291,7 @@ void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);
 
-snail::window::fullscreen_mode_t config_get_fullscreen_mode();
+snail::Window::FullscreenMode config_get_fullscreen_mode();
 
 
 } // namespace elona

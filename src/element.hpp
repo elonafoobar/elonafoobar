@@ -9,7 +9,7 @@ namespace elona
 
 
 // TODO: they shouldn't be linked to specific magic numbers.
-enum class element_t
+enum class Element
 {
     fire = 50,
     cold = 51,

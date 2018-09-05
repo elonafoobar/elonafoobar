@@ -9,7 +9,7 @@ namespace snail
 {
 
 
-class effect_base : public node
+class EffectBase : public Node
 {
 public:
     bool alive() const noexcept

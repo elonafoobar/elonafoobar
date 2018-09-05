@@ -135,10 +135,10 @@ void select_house_board_tile()
 
         gmode(2);
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int a{};
         a = stick();
-        if (a == stick_key::mouse_left)
+        if (a == static_cast<int>(StickKey::mouse_left))
         {
             p = mousex / 24 + mousey / 24 * 33;
             if (p >= listmax)
@@ -151,7 +151,7 @@ void select_house_board_tile()
             house_board_update_screen();
             return;
         }
-        if (a == stick_key::mouse_right)
+        if (a == static_cast<int>(StickKey::mouse_right))
         {
             house_board_update_screen();
             return;
@@ -562,8 +562,7 @@ void initialize_pc_character()
         {
             continue;
         }
-        inv[cnt].identification_state =
-            identification_state_t::completely_identified;
+        inv[cnt].identification_state = IdentifyState::completely_identified;
     }
     chara_refresh(0);
     return;
@@ -739,17 +738,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (config::instance().autoturn == "normal")
+    if (Config::instance().autoturn == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (config::instance().autoturn != "highest" || firstautoturn == 1)
+    if (Config::instance().autoturn != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (config::instance().autoturn == "normal")
+    if (Config::instance().autoturn == "normal")
     {
         redraw();
     }
@@ -815,31 +814,31 @@ std::string txttargetlevel(int cc, int tc)
 
 std::string mapfile(int prm_365)
 {
-    if (adata(16, prm_365) == mdata_t::map_id_t::vernis)
+    if (adata(16, prm_365) == mdata_t::MapId::vernis)
     {
         return u8"vernis"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::port_kapul)
+    if (adata(16, prm_365) == mdata_t::MapId::port_kapul)
     {
         return u8"kapul"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::yowyn)
+    if (adata(16, prm_365) == mdata_t::MapId::yowyn)
     {
         return u8"yowyn"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::derphy)
+    if (adata(16, prm_365) == mdata_t::MapId::derphy)
     {
         return u8"rogueden"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::palmia)
+    if (adata(16, prm_365) == mdata_t::MapId::palmia)
     {
         return u8"palmia"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::noyel)
+    if (adata(16, prm_365) == mdata_t::MapId::noyel)
     {
         return u8"noyel"s;
     }
-    if (adata(16, prm_365) == mdata_t::map_id_t::lumiest)
+    if (adata(16, prm_365) == mdata_t::MapId::lumiest)
     {
         return u8"lumiest"s;
     }
@@ -938,9 +937,9 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    if (config::instance().autonumlock)
+    if (Config::instance().autonumlock)
     {
-        snail::input::instance().restore_numlock();
+        snail::Input::instance().restore_numlock();
     }
 }
 
@@ -982,8 +981,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{i18n::s.get_locale_dir("core") / "lazy"
-                               / "ndata.csv"},
+        fileutil::read_by_line(
+            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -1005,7 +1004,7 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{filesystem::dir::data() / u8"name.csv"},
+        fileutil::read_by_line(filesystem::dir::data() / u8"name.csv"),
         std::back_inserter(lines));
 
     SDIM3(rn1, 15, lines.size());
@@ -1146,12 +1145,12 @@ int cargocheck()
     {
         return 1;
     }
-    if (mdata_map_type != mdata_t::map_type_t::world_map
-        && mdata_map_type != mdata_t::map_type_t::player_owned
-        && mdata_map_type != mdata_t::map_type_t::town
-        && mdata_map_type != mdata_t::map_type_t::field
-        && mdata_map_type != mdata_t::map_type_t::shelter
-        && mdata_map_type != mdata_t::map_type_t::guild)
+    if (mdata_map_type != mdata_t::MapType::world_map
+        && mdata_map_type != mdata_t::MapType::player_owned
+        && mdata_map_type != mdata_t::MapType::town
+        && mdata_map_type != mdata_t::MapType::field
+        && mdata_map_type != mdata_t::MapType::shelter
+        && mdata_map_type != mdata_t::MapType::guild)
     {
         ++msgdup;
         txt(i18n::s.get("core.locale.ui.inv.cannot_use_cargo_items"));
@@ -1773,7 +1772,7 @@ void make_sound(
 {
     for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -1917,7 +1916,7 @@ void incognitobegin()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -1947,7 +1946,7 @@ void incognitoend()
 {
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
             continue;
         }
@@ -1976,7 +1975,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
     {
         return;
     }
@@ -1993,7 +1992,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = config::instance().animewait * 3.5;
+    i_at_m133(1) = Config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2002,21 +2001,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = config::instance().animewait * 2.5;
+        i_at_m133(1) = Config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = config::instance().animewait * 3.5;
+        i_at_m133(1) = Config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2039,7 +2038,7 @@ void animeblood(int cc, int animation_type, int element)
 {
     if (is_in_fov(cdata[cc]) == 0)
         return;
-    if (config::instance().animewait == 0)
+    if (Config::instance().animewait == 0)
         return;
 
     int cnt2_at_m133 = 0;
@@ -2154,7 +2153,7 @@ void animeblood(int cc, int animation_type, int element)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
+        await(Config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
     gmode(2);
@@ -2232,9 +2231,9 @@ void spillfrag(int prm_833, int prm_834, int prm_835)
 void check_kill(int prm_836, int prm_837)
 {
     int p_at_m137 = 0;
-    if (gdata_current_map == mdata_t::map_id_t::pet_arena
-        || gdata_current_map == mdata_t::map_id_t::show_house
-        || gdata_current_map == mdata_t::map_id_t::arena)
+    if (gdata_current_map == mdata_t::MapId::pet_arena
+        || gdata_current_map == mdata_t::MapId::show_house
+        || gdata_current_map == mdata_t::MapId::arena)
     {
         return;
     }
@@ -2474,7 +2473,7 @@ int try_to_cast_spell()
                 txt(i18n::s.get("core.locale.misc.fail_to_cast.too_difficult"));
             }
         }
-        dmgcon(cc, status_ailment_t::confused, 100);
+        dmgcon(cc, StatusAilment::confused, 100);
         return 0;
     }
     if (rnd(4) == 0)
@@ -2967,7 +2966,7 @@ void chara_set_revived_status()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    cdata[rc].set_state(character::state_t::alive);
+    cdata[rc].set_state(Character::State::alive);
     return;
 }
 
@@ -3089,7 +3088,7 @@ int convertartifact(int prm_930, int prm_931)
         tc_at_m163 = inv_getowner(cnt);
         if (tc_at_m163 != -1)
         {
-            if (cdata[tc_at_m163].state() == character::state_t::empty
+            if (cdata[tc_at_m163].state() == Character::State::empty
                 || cdata[tc_at_m163].character_role == 13)
             {
                 continue;
@@ -3439,12 +3438,12 @@ void character_drops_item()
             }
             if (the_item_db[inv[ci].id]->is_cargo)
             {
-                if (mdata_map_type != mdata_t::map_type_t::world_map
-                    && mdata_map_type != mdata_t::map_type_t::player_owned
-                    && mdata_map_type != mdata_t::map_type_t::town
-                    && mdata_map_type != mdata_t::map_type_t::field
-                    && mdata_map_type != mdata_t::map_type_t::shelter
-                    && mdata_map_type != mdata_t::map_type_t::guild)
+                if (mdata_map_type != mdata_t::MapType::world_map
+                    && mdata_map_type != mdata_t::MapType::player_owned
+                    && mdata_map_type != mdata_t::MapType::town
+                    && mdata_map_type != mdata_t::MapType::field
+                    && mdata_map_type != mdata_t::MapType::shelter
+                    && mdata_map_type != mdata_t::MapType::guild)
                 {
                     continue;
                 }
@@ -3460,7 +3459,7 @@ void character_drops_item()
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state == curse_state_t::blessed)
+                if (inv[ci].curse_state == CurseState::blessed)
                 {
                     if (rnd(2))
                     {
@@ -3474,7 +3473,7 @@ void character_drops_item()
                         f = 0;
                     }
                 }
-                if (inv[ci].curse_state == curse_state_t::doomed)
+                if (inv[ci].curse_state == CurseState::doomed)
                 {
                     if (rnd(2))
                     {
@@ -3484,7 +3483,7 @@ void character_drops_item()
             }
             else if (
                 inv[ci].identification_state
-                == identification_state_t::completely_identified)
+                == IdentifyState::completely_identified)
             {
                 if (rnd(4))
                 {
@@ -3509,7 +3508,7 @@ void character_drops_item()
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state == curse_state_t::blessed)
+                if (inv[ci].curse_state == CurseState::blessed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -3523,7 +3522,7 @@ void character_drops_item()
                         f = 1;
                     }
                 }
-                if (inv[ci].curse_state == curse_state_t::doomed)
+                if (inv[ci].curse_state == CurseState::doomed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -3569,7 +3568,7 @@ void character_drops_item()
             return;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         if (cdata[rc].id == 185)
         {
@@ -3625,7 +3624,7 @@ void character_drops_item()
                 f = 0;
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::arena)
+        if (gdata_current_map == mdata_t::MapId::arena)
         {
             if (rnd(4))
             {
@@ -4028,12 +4027,12 @@ void character_drops_item()
         itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         remain_make(ci, rc);
     }
-    if (gdata_current_map == mdata_t::map_id_t::show_house)
+    if (gdata_current_map == mdata_t::MapId::show_house)
     {
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         return;
     }
-    if (gdata_current_map != mdata_t::map_id_t::arena
+    if (gdata_current_map != mdata_t::MapId::arena
         && cdata[rc].character_role != 20)
     {
         if (rnd(175) == 0 || cdata[rc].quality == 6 || 0
@@ -4141,7 +4140,7 @@ void character_drops_item()
             drop(2) = -1;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::pyramid)
+    if (gdata_current_map == mdata_t::MapId::pyramid)
     {
         if (cdata[rc].id == 257)
         {
@@ -4349,7 +4348,7 @@ void food_gets_rotten()
         else
         {
             p = cnt;
-            if (cdata[p].state() == character::state_t::empty)
+            if (cdata[p].state() == Character::State::empty)
             {
                 continue;
             }
@@ -4461,7 +4460,7 @@ void damage_by_cursed_equipments()
             -5);
         return;
     }
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
         {
@@ -4505,7 +4504,7 @@ void proc_pregnant()
             txt(i18n::s.get("core.locale.misc.pregnant.something_is_wrong"));
         }
     }
-    if (mdata_map_type != mdata_t::map_type_t::world_map)
+    if (mdata_map_type != mdata_t::MapType::world_map)
     {
         if (rnd(30) == 0)
         {
@@ -4562,7 +4561,7 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 21)
             {
-                if (mdata_map_type != mdata_t::map_type_t::world_map)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
                     if (rnd(25)
                         < clamp(
@@ -4620,9 +4619,9 @@ void proc_negative_equipments()
             }
             if (inv[ci].enchantments[cnt].id == 47)
             {
-                if (mdata_map_type != mdata_t::map_type_t::world_map)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
-                    if (mdata_map_type != mdata_t::map_type_t::player_owned)
+                    if (mdata_map_type != mdata_t::MapType::player_owned)
                     {
                         if (rnd(50)
                             < clamp(
@@ -4672,7 +4671,7 @@ void auto_identify()
     {
         if (inv[cnt].number() == 0
             || inv[cnt].identification_state
-                == identification_state_t::completely_identified)
+                == IdentifyState::completely_identified)
         {
             continue;
         }
@@ -4686,10 +4685,9 @@ void auto_identify()
         if (p > rnd(p(1) * 5))
         {
             s = itemname(ci);
-            item_identify(
-                inv[ci], identification_state_t::completely_identified);
+            item_identify(inv[ci], IdentifyState::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (!config::instance().hideautoidentify)
+            if (!Config::instance().hideautoidentify)
             {
                 txt(i18n::s.get(
                     "core.locale.misc.identify.fully_identified",
@@ -4698,12 +4696,11 @@ void auto_identify()
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
-        if (inv[ci].identification_state
-            <= identification_state_t::partly_identified)
+        if (inv[ci].identification_state <= IdentifyState::partly_identified)
         {
             if (p > rnd(p(1)))
             {
-                if (!config::instance().hideautoidentify)
+                if (!Config::instance().hideautoidentify)
                 {
                     txt(i18n::s.get(
                         "core.locale.misc.identify.almost_identified",
@@ -4711,8 +4708,7 @@ void auto_identify()
                         i18n::_(
                             u8"ui", u8"quality", u8"_"s + inv[ci].quality)));
                 }
-                item_identify(
-                    inv[ci], identification_state_t::almost_identified);
+                item_identify(inv[ci], IdentifyState::almost_identified);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
             }
         }
@@ -4797,8 +4793,8 @@ void removeworker(int map_id)
 
 void monster_respawn()
 {
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum
-        || adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::museum
+        || adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
         {
@@ -4841,16 +4837,16 @@ void monster_respawn()
 
 
 
-turn_result_t exit_map()
+TurnResult exit_map()
 {
     int previous_map = gdata_current_map;
     int previous_dungeon_level = gdata_current_dungeon_level;
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
     gdata(171) = 0;
-    if (mdata_map_type == mdata_t::map_type_t::player_owned)
+    if (mdata_map_type == mdata_t::MapType::player_owned)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(201) == 0)
             {
@@ -4866,22 +4862,22 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::temporary)
+    if (mdata_map_type == mdata_t::MapType::temporary)
     {
         rq = gdata_executing_immediate_quest;
         quest_exit_map();
     }
     msg_newline();
     msgtemp = u8"  "s;
-    if (gdata_current_map == mdata_t::map_id_t::show_house
-        || gdata_current_map == mdata_t::map_id_t::arena
-        || gdata_current_map == mdata_t::map_id_t::pet_arena)
+    if (gdata_current_map == mdata_t::MapId::show_house
+        || gdata_current_map == mdata_t::MapId::arena
+        || gdata_current_map == mdata_t::MapId::pet_arena)
     {
         usermapid = 0;
     }
     rdtry = 0;
     fixstart = 0;
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
@@ -4906,7 +4902,7 @@ turn_result_t exit_map()
     if (levelexitby == 4)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
-        if (gdata_current_map == mdata_t::map_id_t::your_home)
+        if (gdata_current_map == mdata_t::MapId::your_home)
         {
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
                 != -1)
@@ -4960,7 +4956,7 @@ turn_result_t exit_map()
         }
         if (f == 0)
         {
-            if (mdata_map_type == mdata_t::map_type_t::world_map)
+            if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 gdata_pc_x_in_world_map = cdata[cc].position.x;
                 gdata_pc_y_in_world_map = cdata[cc].position.y;
@@ -4969,18 +4965,18 @@ turn_result_t exit_map()
                 {
                     gdata_current_map = feat(2) + feat(3) * 100;
                     if (adata(16, gdata_current_map)
-                        == mdata_t::map_id_t::the_void)
+                        == mdata_t::MapId::the_void)
                     {
                         if (itemfind(0, 742) == -1)
                         {
                             txt(i18n::s.get(
                                 "core.locale.action.exit_map.not_permitted"));
                             msg_halt();
-                            gdata_current_map = mdata_t::map_id_t::fields;
+                            gdata_current_map =
+                                static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map)
-                        == mdata_t::map_id_t::pyramid)
+                    if (adata(16, gdata_current_map) == mdata_t::MapId::pyramid)
                     {
                         if (gdata_pyramid_trial == 0)
                         {
@@ -4988,44 +4984,48 @@ turn_result_t exit_map()
                                 i18n::s.get("core.locale.action.exit_map.no_"
                                             "invitation_to_pyramid"));
                             msg_halt();
-                            gdata_current_map = mdata_t::map_id_t::fields;
+                            gdata_current_map =
+                                static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map) == mdata_t::map_id_t::jail)
+                    if (adata(16, gdata_current_map) == mdata_t::MapId::jail)
                     {
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
                         msg_halt();
-                        gdata_current_map = mdata_t::map_id_t::fields;
+                        gdata_current_map =
+                            static_cast<int>(mdata_t::MapId::fields);
                     }
                 }
                 else
                 {
-                    gdata_current_map = mdata_t::map_id_t::fields;
+                    gdata_current_map =
+                        static_cast<int>(mdata_t::MapId::fields);
                 }
                 if (feat(1) != 15)
                 {
-                    gdata_current_map = mdata_t::map_id_t::fields;
+                    gdata_current_map =
+                        static_cast<int>(mdata_t::MapId::fields);
                 }
             }
-            if (mdata_map_type == mdata_t::map_type_t::town
-                || mdata_map_type == mdata_t::map_type_t::field
-                || mdata_map_type == mdata_t::map_type_t::player_owned
-                || mdata_map_type == mdata_t::map_type_t::shelter
-                || mdata_map_type == mdata_t::map_type_t::guild)
+            if (mdata_map_type == mdata_t::MapType::town
+                || mdata_map_type == mdata_t::MapType::field
+                || mdata_map_type == mdata_t::MapType::player_owned
+                || mdata_map_type == mdata_t::MapType::shelter
+                || mdata_map_type == mdata_t::MapType::guild)
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (mdata_map_type >= mdata_t::map_type_t::dungeon
-            || mdata_map_type == mdata_t::map_type_t::shelter)
+        if (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
+            || mdata_map_type == static_cast<int>(mdata_t::MapType::shelter))
         {
             if (gdata_current_dungeon_level < adata(17, gdata_current_map))
             {
                 gdata_current_map = gdata(850);
             }
         }
-        if (adata(0, gdata_current_map) == mdata_t::map_type_t::town)
+        if (adata(0, gdata_current_map) == mdata_t::MapType::town)
         {
             if (gdata_current_map == gdata_previous_map)
             {
@@ -5044,7 +5044,7 @@ turn_result_t exit_map()
             }
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::temporary)
+    if (mdata_map_type == mdata_t::MapType::temporary)
     {
         gdata_current_map = gdata_previous_map2;
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
@@ -5066,7 +5066,7 @@ turn_result_t exit_map()
                 weather_changes_by_location();
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::jail)
+        if (gdata_current_map == mdata_t::MapId::jail)
         {
             mapstartx = 29;
             mapstarty = 3;
@@ -5074,11 +5074,11 @@ turn_result_t exit_map()
             fixstart = 1;
         }
     }
-    if (cdata.player().state() == character::state_t::empty)
+    if (cdata.player().state() == Character::State::empty)
     {
         rc = 0;
         revive_player();
-        gdata_current_map = mdata_t::map_id_t::your_home;
+        gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
         gdata(850) = adata(30, 7);
         gdata_current_dungeon_level = 1;
     }
@@ -5088,9 +5088,9 @@ turn_result_t exit_map()
     }
     if (gdata_current_map != gdata_previous_map)
     {
-        if (mdata_map_type == mdata_t::map_type_t::town
-            || mdata_map_type == mdata_t::map_type_t::guild
-            || gdata_previous_map == mdata_t::map_id_t::your_home
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild
+            || gdata_previous_map == mdata_t::MapId::your_home
             || gdata_departure_date == 0)
         {
             gdata_departure_date = gdata_hour + gdata_day * 24
@@ -5098,16 +5098,16 @@ turn_result_t exit_map()
             gdata_distance_between_town = 0;
             gdata_left_town_map = gdata_previous_map;
         }
-        if (adata(0, gdata_current_map) != mdata_t::map_type_t::world_map
-            && adata(0, gdata_current_map) != mdata_t::map_type_t::field
-            && gdata_current_map != mdata_t::map_id_t::show_house)
+        if (adata(0, gdata_current_map) != mdata_t::MapType::world_map
+            && adata(0, gdata_current_map) != mdata_t::MapType::field
+            && gdata_current_map != mdata_t::MapId::show_house)
         {
-            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+            autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         }
-        if (mdata_map_type != mdata_t::map_type_t::world_map)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
-            if (mdata_map_type != mdata_t::map_type_t::field
-                || mdata_map_type == mdata_t::map_type_t::player_owned)
+            if (mdata_map_type != mdata_t::MapType::field
+                || mdata_map_type == mdata_t::MapType::player_owned)
             {
                 if (fixtransfermap == 0)
                 {
@@ -5130,13 +5130,13 @@ turn_result_t exit_map()
                 "core.locale.action.exit_map.delivered_to_your_home");
             weather_changes_by_location();
         }
-        else if (adata(0, gdata_previous_map) == mdata_t::map_type_t::world_map)
+        else if (adata(0, gdata_previous_map) == mdata_t::MapType::world_map)
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.entered",
                 mapname(gdata_current_map));
         }
-        else if (mdata_map_type == mdata_t::map_type_t::temporary)
+        else if (mdata_map_type == mdata_t::MapType::temporary)
         {
             msgtemp += i18n::s.get(
                 "core.locale.action.exit_map.returned_to",
@@ -5150,29 +5150,29 @@ turn_result_t exit_map()
         }
         if (gdata_cargo_weight > gdata_current_cart_limit)
         {
-            if (adata(0, gdata_current_map) == mdata_t::map_type_t::world_map
-                || adata(0, gdata_current_map) == mdata_t::map_type_t::field)
+            if (adata(0, gdata_current_map) == mdata_t::MapType::world_map
+                || adata(0, gdata_current_map) == mdata_t::MapType::field)
             {
                 msgtemp += i18n::s.get(
                     "core.locale.action.exit_map.burdened_by_cargo");
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::larna)
+    if (gdata_current_map == mdata_t::MapId::larna)
     {
         if (gdata_current_dungeon_level == 2)
         {
-            gdata_current_map = mdata_t::map_id_t::mountain_pass;
+            gdata_current_map = static_cast<int>(mdata_t::MapId::mountain_pass);
             gdata_current_dungeon_level = adata(10, gdata_current_map) - 1;
             gdata_entrance_type = 1;
             msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::mountain_pass)
+    if (gdata_current_map == mdata_t::MapId::mountain_pass)
     {
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
-            gdata_current_map = mdata_t::map_id_t::larna;
+            gdata_current_map = static_cast<int>(mdata_t::MapId::larna);
             gdata_current_dungeon_level = 1;
             gdata_entrance_type = 2;
             msgtemp += i18n::s.get("core.locale.action.exit_map.larna");
@@ -5183,11 +5183,11 @@ turn_result_t exit_map()
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
         rowactend(cnt);
-        if (cdata[cnt].state() != character::state_t::alive)
+        if (cdata[cnt].state() != Character::State::alive)
         {
-            if (cdata[cnt].state() == character::state_t::pet_in_other_map)
+            if (cdata[cnt].state() == Character::State::pet_in_other_map)
             {
-                cdata[cnt].set_state(character::state_t::alive);
+                cdata[cnt].set_state(Character::State::alive);
             }
             continue;
         }
@@ -5196,7 +5196,7 @@ turn_result_t exit_map()
         {
             if (cdata[cnt].current_map != 0)
             {
-                cdata[cnt].set_state(character::state_t::pet_moving_to_map);
+                cdata[cnt].set_state(Character::State::pet_moving_to_map);
             }
         }
     }
@@ -5215,13 +5215,13 @@ turn_result_t exit_map()
         // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
-            ctrl_file(file_operation_t::map_delete);
+            ctrl_file(FileOperation::map_delete);
         }
 
         // forget about all NPCs that were here
         for (auto&& cnt : cdata.others())
         {
-            if (cnt.state() != character::state_t::empty)
+            if (cnt.state() != Character::State::empty)
             {
                 --npcmemory(1, cnt.id);
             }
@@ -5236,14 +5236,14 @@ turn_result_t exit_map()
     if (map_changed)
     {
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::map_unloading>();
+            .run_callbacks<lua::EventKind::map_unloading>();
 
         lua::lua->get_mod_manager().clear_map_local_data();
         lua::lua->get_handle_manager().clear_map_local_handles();
     }
 
     mode = 2;
-    return turn_result_t::initialize_map;
+    return TurnResult::initialize_map;
 }
 
 
@@ -5260,10 +5260,10 @@ void prepare_charas_for_map_unload()
     // remove living adventurers from the map and set their states
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        if (cdata[cnt].state() == character::state_t::alive)
+        if (cdata[cnt].state() == Character::State::alive)
         {
             map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
-            cdata[cnt].set_state(character::state_t::adventurer_in_other_map);
+            cdata[cnt].set_state(Character::State::adventurer_in_other_map);
         }
     }
 }
@@ -5282,10 +5282,10 @@ void save_map_local_data()
     }
 
     // write map data and characters/skill data local to this map
-    ctrl_file(file_operation_t::map_write);
+    ctrl_file(FileOperation::map_write);
 
     // write data for items/character inventories local to this map
-    ctrl_file(file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
 }
 
 
@@ -5342,8 +5342,8 @@ void map_proc_regen_and_update()
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
                     }
-                    if (mdata_map_type == mdata_t::map_type_t::town
-                        || mdata_map_type == mdata_t::map_type_t::guild)
+                    if (mdata_map_type == mdata_t::MapType::town
+                        || mdata_map_type == mdata_t::MapType::guild)
                     {
                         if (inv[cnt].own_state < 0)
                         {
@@ -5362,7 +5362,7 @@ void map_proc_regen_and_update()
             {
                 rc = cnt.index;
                 chara_clear_status_effects_b();
-                if (cnt.state() != character::state_t::alive)
+                if (cnt.state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -5370,21 +5370,21 @@ void map_proc_regen_and_update()
                 {
                     if (rnd(2))
                     {
-                        cnt.set_state(character::state_t::empty);
+                        cnt.set_state(Character::State::empty);
                         map(cnt.position.x, cnt.position.y, 1) = 0;
                     }
                 }
             }
             p = rnd(mdata_map_height * mdata_map_width / 400 + 3);
-            if (mdata_map_type == mdata_t::map_type_t::world_map)
+            if (mdata_map_type == mdata_t::MapType::world_map)
             {
                 p = rnd(40);
             }
-            if (mdata_map_type == mdata_t::map_type_t::town)
+            if (mdata_map_type == mdata_t::MapType::town)
             {
                 p = rnd(rnd(rnd(12) + 1) + 1);
             }
-            if (mdata_map_type == mdata_t::map_type_t::guild)
+            if (mdata_map_type == mdata_t::MapType::guild)
             {
                 p = rnd(p + 1);
             }
@@ -5412,21 +5412,21 @@ void map_proc_regen_and_update()
                     / 24
                 + 1;
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::ranch)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
         {
             update_ranch();
         }
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::your_home)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::your_home)
         {
             for (auto&& cnt : cdata.others())
             {
-                if (cnt.state() != character::state_t::alive)
+                if (cnt.state() != Character::State::alive)
                 {
                     continue;
                 }
                 if (cnt.is_temporary() == 1)
                 {
-                    cnt.set_state(character::state_t::empty);
+                    cnt.set_state(Character::State::empty);
                     map(cnt.position.x, cnt.position.y, 1) = 0;
                 }
             }
@@ -5462,13 +5462,13 @@ void map_proc_regen_and_update()
                     }
                 }
             }
-            if (mdata_map_type == mdata_t::map_type_t::town
-                || mdata_map_type == mdata_t::map_type_t::guild
-                || gdata_current_map == mdata_t::map_id_t::your_home)
+            if (mdata_map_type == mdata_t::MapType::town
+                || mdata_map_type == mdata_t::MapType::guild
+                || gdata_current_map == mdata_t::MapId::your_home)
             {
                 for (auto&& cnt : cdata.others())
                 {
-                    if (cnt.state() != character::state_t::alive)
+                    if (cnt.state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -5575,7 +5575,7 @@ void map_prepare_tileset_atlas()
         {
             shadow = 65;
         }
-        if (gdata_current_map == mdata_t::map_id_t::noyel
+        if (gdata_current_map == mdata_t::MapId::noyel
             && (gdata_hour >= 17 || gdata_hour < 7))
         {
             shadow += 35;
@@ -5616,7 +5616,7 @@ int initialize_world_map()
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
         {
             if (adata(20, cnt) != -1)
             {
@@ -5649,17 +5649,17 @@ void map_global_proc_diastrophism()
         map_global_prepare();
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            adata(16, cnt) = mdata_t::map_id_t::none;
+            adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
         }
     }
     p = 0;
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::none)
+        if (adata(16, cnt) == mdata_t::MapId::none)
         {
             continue;
         }
-        if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
         {
             if (adata(20, cnt) != -1)
             {
@@ -5673,11 +5673,11 @@ void map_global_proc_diastrophism()
         msgtemp += i18n::s.get("core.locale.action.move.global.diastrophism");
         for (int cnt = 450; cnt < 500; ++cnt)
         {
-            if (adata(16, cnt) == mdata_t::map_id_t::random_dungeon)
+            if (adata(16, cnt) == mdata_t::MapId::random_dungeon)
             {
                 if (rnd(5) == 0 || adata(20, cnt) == -1)
                 {
-                    adata(16, cnt) = mdata_t::map_id_t::none;
+                    adata(16, cnt) = static_cast<int>(mdata_t::MapId::none);
                 }
             }
         }
@@ -5726,7 +5726,7 @@ void map_global_place_entrances()
     }
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::none || adata(15, cnt) == 0)
+        if (adata(16, cnt) == mdata_t::MapId::none || adata(15, cnt) == 0)
         {
             continue;
         }
@@ -5790,8 +5790,8 @@ void map_global_place_entrances()
             15,
             cnt % 100,
             cnt / 100);
-        if (adata(0, cnt) == mdata_t::map_type_t::town
-            || adata(0, cnt) == mdata_t::map_type_t::guild)
+        if (adata(0, cnt) == mdata_t::MapType::town
+            || adata(0, cnt) == mdata_t::MapType::guild)
         {
             map(adata(1, cnt), adata(2, cnt), 9) = 11;
         }
@@ -5825,10 +5825,10 @@ void map_clear_material_spots_and_light()
 
 void initialize_adata()
 {
-    p = mdata_t::map_id_t::test_world;
+    p = static_cast<int>(mdata_t::MapId::test_world);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5841,10 +5841,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 47;
-    p = mdata_t::map_id_t::test_world_north_border;
+    p = static_cast<int>(mdata_t::MapId::test_world_north_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 28;
     adata(2, p) = 1;
     adata(3, p) = 8;
@@ -5857,10 +5857,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 47;
-    p = mdata_t::map_id_t::south_tyris;
+    p = static_cast<int>(mdata_t::MapId::south_tyris);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5873,10 +5873,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 44;
-    p = mdata_t::map_id_t::south_tyris_north_border;
+    p = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 42;
     adata(2, p) = 1;
     adata(3, p) = 8;
@@ -5889,10 +5889,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 44;
-    p = mdata_t::map_id_t::the_smoke_and_pipe;
+    p = static_cast<int>(mdata_t::MapId::the_smoke_and_pipe);
     adata(16, p) = p;
     adata(15, p) = 159;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 39;
     adata(2, p) = 13;
     adata(3, p) = 8;
@@ -5905,10 +5905,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 44;
-    p = mdata_t::map_id_t::north_tyris;
+    p = static_cast<int>(mdata_t::MapId::north_tyris);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::world_map;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::world_map);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 6;
@@ -5921,10 +5921,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::vernis;
+    p = static_cast<int>(mdata_t::MapId::vernis);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 26;
     adata(2, p) = 23;
     adata(3, p) = 3;
@@ -5938,10 +5938,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::yowyn;
+    p = static_cast<int>(mdata_t::MapId::yowyn);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 43;
     adata(2, p) = 32;
     adata(3, p) = 3;
@@ -5955,10 +5955,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 2;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::palmia;
+    p = static_cast<int>(mdata_t::MapId::palmia);
     adata(16, p) = p;
     adata(15, p) = 136;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 53;
     adata(2, p) = 24;
     adata(3, p) = 3;
@@ -5972,10 +5972,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 3;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::derphy;
+    p = static_cast<int>(mdata_t::MapId::derphy);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 14;
     adata(2, p) = 35;
     adata(3, p) = 3;
@@ -5989,10 +5989,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 4;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::port_kapul;
+    p = static_cast<int>(mdata_t::MapId::port_kapul);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 3;
     adata(2, p) = 15;
     adata(3, p) = 3;
@@ -6006,10 +6006,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 5;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::noyel;
+    p = static_cast<int>(mdata_t::MapId::noyel);
     adata(16, p) = p;
     adata(15, p) = 156;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 89;
     adata(2, p) = 14;
     adata(3, p) = 3;
@@ -6023,10 +6023,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 6;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::lumiest;
+    p = static_cast<int>(mdata_t::MapId::lumiest);
     adata(16, p) = p;
     adata(15, p) = 132;
-    adata(0, p) = mdata_t::map_type_t::town;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::town);
     adata(1, p) = 61;
     adata(2, p) = 32;
     adata(3, p) = 3;
@@ -6040,10 +6040,10 @@ void initialize_adata()
     adata(12, p) = 1;
     adata(28, p) = 7;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::fields;
+    p = static_cast<int>(mdata_t::MapId::fields);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::field;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::field);
     adata(1, p) = 0;
     adata(2, p) = 0;
     adata(3, p) = 4;
@@ -6056,9 +6056,9 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::your_home;
+    p = static_cast<int>(mdata_t::MapId::your_home);
     adata(16, p) = p;
-    adata(0, p) = mdata_t::map_type_t::player_owned;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
     adata(3, p) = 8;
     adata(9, p) = 10000;
     adata(17, p) = 1;
@@ -6075,9 +6075,9 @@ void initialize_adata()
         adata(18, p) = 3;
         adata(30, p) = 4;
     }
-    p = mdata_t::map_id_t::show_house;
+    p = static_cast<int>(mdata_t::MapId::show_house);
     adata(16, p) = p;
-    adata(0, p) = mdata_t::map_type_t::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(3, p) = 8;
     adata(9, p) = 10000;
     adata(17, p) = 1;
@@ -6091,10 +6091,10 @@ void initialize_adata()
     adata(4, p) = 1;
     adata(18, p) = 3;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::arena;
+    p = static_cast<int>(mdata_t::MapId::arena);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 22;
     adata(2, p) = 21;
     adata(3, p) = 4;
@@ -6107,10 +6107,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::pet_arena;
+    p = static_cast<int>(mdata_t::MapId::pet_arena);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 23;
     adata(2, p) = 21;
     adata(3, p) = 1;
@@ -6123,10 +6123,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::quest;
+    p = static_cast<int>(mdata_t::MapId::quest);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::temporary;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::temporary);
     adata(1, p) = 22;
     adata(2, p) = 21;
     adata(3, p) = 4;
@@ -6139,10 +6139,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::lesimas;
+    p = static_cast<int>(mdata_t::MapId::lesimas);
     adata(16, p) = p;
     adata(15, p) = 139;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 23;
     adata(2, p) = 29;
     adata(3, p) = 1;
@@ -6155,10 +6155,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::the_void;
+    p = static_cast<int>(mdata_t::MapId::the_void);
     adata(16, p) = p;
     adata(15, p) = 139;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 81;
     adata(2, p) = 51;
     adata(3, p) = 1;
@@ -6171,10 +6171,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::tower_of_fire;
+    p = static_cast<int>(mdata_t::MapId::tower_of_fire);
     adata(16, p) = p;
     adata(15, p) = 145;
-    adata(0, p) = mdata_t::map_type_t::dungeon_tower;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_tower);
     adata(1, p) = 43;
     adata(2, p) = 4;
     adata(3, p) = 1;
@@ -6187,10 +6187,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::crypt_of_the_damned;
+    p = static_cast<int>(mdata_t::MapId::crypt_of_the_damned);
     adata(16, p) = p;
     adata(15, p) = 141;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 37;
     adata(2, p) = 20;
     adata(3, p) = 1;
@@ -6203,10 +6203,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::ancient_castle;
+    p = static_cast<int>(mdata_t::MapId::ancient_castle);
     adata(16, p) = p;
     adata(15, p) = 144;
-    adata(0, p) = mdata_t::map_type_t::dungeon_castle;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon_castle);
     adata(1, p) = 26;
     adata(2, p) = 44;
     adata(3, p) = 1;
@@ -6219,10 +6219,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::dragons_nest;
+    p = static_cast<int>(mdata_t::MapId::dragons_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 13;
     adata(2, p) = 32;
     adata(3, p) = 1;
@@ -6235,10 +6235,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::mountain_pass;
+    p = static_cast<int>(mdata_t::MapId::mountain_pass);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 64;
     adata(2, p) = 43;
     adata(3, p) = 2;
@@ -6251,10 +6251,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::puppy_cave;
+    p = static_cast<int>(mdata_t::MapId::puppy_cave);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 29;
     adata(2, p) = 24;
     adata(3, p) = 1;
@@ -6267,10 +6267,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::minotaurs_nest;
+    p = static_cast<int>(mdata_t::MapId::minotaurs_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 43;
     adata(2, p) = 39;
     adata(3, p) = 1;
@@ -6283,10 +6283,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::yeeks_nest;
+    p = static_cast<int>(mdata_t::MapId::yeeks_nest);
     adata(16, p) = p;
     adata(15, p) = 146;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 38;
     adata(2, p) = 31;
     adata(3, p) = 1;
@@ -6299,10 +6299,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::pyramid;
+    p = static_cast<int>(mdata_t::MapId::pyramid);
     adata(16, p) = p;
     adata(15, p) = 160;
-    adata(0, p) = mdata_t::map_type_t::dungeon;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon);
     adata(1, p) = 4;
     adata(2, p) = 11;
     adata(3, p) = 1;
@@ -6315,10 +6315,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::lumiest_graveyard;
+    p = static_cast<int>(mdata_t::MapId::lumiest_graveyard);
     adata(16, p) = p;
     adata(15, p) = 141;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 74;
     adata(2, p) = 31;
     adata(3, p) = 3;
@@ -6331,10 +6331,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::truce_ground;
+    p = static_cast<int>(mdata_t::MapId::truce_ground);
     adata(16, p) = p;
     adata(15, p) = 147;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 51;
     adata(2, p) = 9;
     adata(3, p) = 3;
@@ -6347,10 +6347,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::jail;
+    p = static_cast<int>(mdata_t::MapId::jail);
     adata(16, p) = p;
     adata(15, p) = 161;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 28;
     adata(2, p) = 37;
     adata(3, p) = 1;
@@ -6363,10 +6363,10 @@ void initialize_adata()
     adata(11, p) = 0;
     adata(12, p) = 0;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::cyber_dome;
+    p = static_cast<int>(mdata_t::MapId::cyber_dome);
     adata(16, p) = p;
     adata(15, p) = 148;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 21;
     adata(2, p) = 27;
     adata(3, p) = 8;
@@ -6379,10 +6379,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::larna;
+    p = static_cast<int>(mdata_t::MapId::larna);
     adata(16, p) = p;
     adata(15, p) = 142;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 64;
     adata(2, p) = 47;
     adata(3, p) = 3;
@@ -6395,10 +6395,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::miral_and_garoks_workshop;
+    p = static_cast<int>(mdata_t::MapId::miral_and_garoks_workshop);
     adata(16, p) = p;
     adata(15, p) = 157;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 88;
     adata(2, p) = 25;
     adata(3, p) = 8;
@@ -6411,10 +6411,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::mansion_of_younger_sister;
+    p = static_cast<int>(mdata_t::MapId::mansion_of_younger_sister);
     adata(16, p) = p;
     adata(15, p) = 162;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 18;
     adata(2, p) = 2;
     adata(3, p) = 8;
@@ -6427,10 +6427,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::embassy;
+    p = static_cast<int>(mdata_t::MapId::embassy);
     adata(16, p) = p;
     adata(15, p) = 155;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 53;
     adata(2, p) = 21;
     adata(3, p) = 8;
@@ -6443,10 +6443,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::north_tyris_south_border;
+    p = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
     adata(16, p) = p;
     adata(15, p) = 158;
-    adata(0, p) = mdata_t::map_type_t::guild;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::guild);
     adata(1, p) = 27;
     adata(2, p) = 52;
     adata(3, p) = 8;
@@ -6459,10 +6459,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::fort_of_chaos_beast;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_beast);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 13;
     adata(2, p) = 43;
     adata(3, p) = 8;
@@ -6475,10 +6475,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::fort_of_chaos_machine;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_machine);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 51;
     adata(2, p) = 32;
     adata(3, p) = 8;
@@ -6491,10 +6491,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::fort_of_chaos_collapsed;
+    p = static_cast<int>(mdata_t::MapId::fort_of_chaos_collapsed);
     adata(16, p) = p;
     adata(15, p) = 149;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 35;
     adata(2, p) = 10;
     adata(3, p) = 8;
@@ -6507,10 +6507,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::shelter_;
+    p = static_cast<int>(mdata_t::MapId::shelter_);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::player_owned;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::player_owned);
     adata(1, p) = 35;
     adata(2, p) = 10;
     adata(3, p) = 1;
@@ -6523,10 +6523,10 @@ void initialize_adata()
     adata(11, p) = 1;
     adata(12, p) = 1;
     adata(30, p) = 4;
-    p = mdata_t::map_id_t::test_site;
+    p = static_cast<int>(mdata_t::MapId::test_site);
     adata(16, p) = p;
     adata(15, p) = 0;
-    adata(0, p) = mdata_t::map_type_t::shelter;
+    adata(0, p) = static_cast<int>(mdata_t::MapType::shelter);
     adata(1, p) = 20;
     adata(2, p) = 20;
     adata(3, p) = 4;
@@ -6548,7 +6548,7 @@ int place_random_nefias()
 {
     for (int cnt = 450; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) != mdata_t::map_id_t::none)
+        if (adata(16, cnt) != mdata_t::MapId::none)
         {
             continue;
         }
@@ -6577,7 +6577,7 @@ int place_random_nefias()
             p = 1;
             for (int cnt = 0; cnt < 500; ++cnt)
             {
-                if (adata(16, cnt) == mdata_t::map_id_t::none)
+                if (adata(16, cnt) == mdata_t::MapId::none)
                 {
                     continue;
                 }
@@ -6604,9 +6604,9 @@ int place_random_nefias()
         }
         p = cnt;
         area = p;
-        ctrl_file(file_operation_t::temp_dir_delete_area);
-        adata(0, p) = mdata_t::map_type_t::dungeon + rnd(4);
-        adata(16, p) = mdata_t::map_id_t::random_dungeon;
+        ctrl_file(FileOperation::temp_dir_delete_area);
+        adata(0, p) = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
+        adata(16, p) = static_cast<int>(mdata_t::MapId::random_dungeon);
         adata(15, p) = 133;
         adata(1, p) = x;
         adata(2, p) = y;
@@ -6634,22 +6634,22 @@ int place_random_nefias()
         adata(20, p) = 0;
         adata(5, p) = rnd(mapnamerd.i_size());
         map(x, y, 6) = 1;
-        if (adata(0, p) == mdata_t::map_type_t::dungeon)
+        if (adata(0, p) == mdata_t::MapType::dungeon)
         {
             adata(15, p) = 133;
             adata(18, p) = 0;
         }
-        if (adata(0, p) == mdata_t::map_type_t::dungeon_tower)
+        if (adata(0, p) == mdata_t::MapType::dungeon_tower)
         {
             adata(15, p) = 137;
             adata(18, p) = 100;
         }
-        if (adata(0, p) == mdata_t::map_type_t::dungeon_forest)
+        if (adata(0, p) == mdata_t::MapType::dungeon_forest)
         {
             adata(15, p) = 135;
             adata(18, p) = 300;
         }
-        if (adata(0, p) == mdata_t::map_type_t::dungeon_castle)
+        if (adata(0, p) == mdata_t::MapType::dungeon_castle)
         {
             adata(15, p) = 140;
             adata(18, p) = 200;
@@ -6663,11 +6663,11 @@ int place_random_nefias()
 
 void map_proc_special_events()
 {
-    if (gdata_current_map == mdata_t::map_id_t::noyel)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         if (gdata_released_fire_giant == 1)
         {
-            if (cdata[gdata_fire_giant].state() == character::state_t::alive)
+            if (cdata[gdata_fire_giant].state() == Character::State::alive)
             {
                 if (gdata_crowd_density < 70)
                 {
@@ -6720,7 +6720,7 @@ void map_proc_special_events()
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::tower_of_fire)
+    if (gdata_current_map == mdata_t::MapId::tower_of_fire)
     {
         if (rnd(5) == 0)
         {
@@ -6735,7 +6735,7 @@ void map_proc_special_events()
         }
         return;
     }
-    if (gdata_current_map == mdata_t::map_id_t::port_kapul)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         if (gdata_current_dungeon_level == 25)
         {
@@ -6797,7 +6797,7 @@ void map_proc_special_events()
             return;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::jail)
+    if (gdata_current_map == mdata_t::MapId::jail)
     {
         if (rnd(50) == 0)
         {
@@ -6830,7 +6830,7 @@ void map_proc_special_events()
             }
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::shelter_)
+    if (gdata_current_map == mdata_t::MapId::shelter_)
     {
         if (gdata_weather == 2 || gdata_weather == 4 || gdata_weather == 1)
         {
@@ -6862,7 +6862,7 @@ void map_proc_special_events()
                 "core.locale.misc.map.shelter.no_longer_need_to_stay"));
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
     {
         if (gdata_crowd_density > 0)
         {
@@ -6926,7 +6926,7 @@ void map_proc_special_events()
             return;
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         if (gdata_crowd_density > 0)
         {
@@ -7352,7 +7352,7 @@ void atxinit()
 
 void begintempinv()
 {
-    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
         inv[cnt].remove();
@@ -7364,7 +7364,7 @@ void begintempinv()
 
 void exittempinv()
 {
-    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
+    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     return;
 }
 
@@ -7444,11 +7444,11 @@ int calcincome(int prm_1036)
 void supply_income()
 {
     invfile = 4;
-    ctrl_file(file_operation2_t::map_items_write, u8"shoptmp.s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     tmpload(filesystem::u8path(u8"shop4.s2"));
     if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
     {
-        ctrl_file(file_operation2_t::map_items_read, u8"shop4.s2"s);
+        ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
     }
     else
     {
@@ -7526,13 +7526,13 @@ void supply_income()
                 income(0),
                 income(1)));
         }
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     }
     if (gdata_day == 1)
     {
         if (cdata.player().level > 5)
         {
-            autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+            autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
             p = -1;
             for (const auto& cnt : items(-1))
             {
@@ -7594,11 +7594,10 @@ void supply_income()
             txt(i18n::s.get("core.locale.misc.tax.no_duty"));
         }
     }
-    ctrl_file(
-        file_operation2_t::map_items_write, u8"shop"s + invfile + u8".s2");
-    ctrl_file(file_operation2_t::map_items_read, u8"shoptmp.s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
-    if (config::instance().extrahelp)
+    if (Config::instance().extrahelp)
     {
         if (gdata(216) == 0)
         {
@@ -7744,7 +7743,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     }
     if (map(prm_1057, prm_1058, 6) != 0)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 15)
             {
@@ -7827,9 +7826,9 @@ int key_direction()
 
 
 
-turn_result_t step_into_gate()
+TurnResult step_into_gate()
 {
-    if (config::instance().extrahelp)
+    if (Config::instance().extrahelp)
     {
         if (gdata(217) == 0)
         {
@@ -7842,7 +7841,7 @@ turn_result_t step_into_gate()
                     show_ex_help();
                     screenupdate = -1;
                     update_screen();
-                    return turn_result_t::pc_turn_user_error;
+                    return TurnResult::pc_turn_user_error;
                 }
             }
         }
@@ -7855,7 +7854,7 @@ turn_result_t step_into_gate()
     inv[ci].modify_number(-1);
     txt(i18n::s.get("core.locale.action.exit_map.gate.need_network"));
     update_screen();
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 
@@ -7877,10 +7876,10 @@ label_19431_internal:
     SDIM2(headtemp, 1024);
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
-    for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::user(),
-                                 filesystem::dir_entries::type::file,
-                                 pattern})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::user(),
+             filesystem::DirEntryRange::Type::file,
+             pattern))
     {
         const auto path = entry.path();
         if (path == filesystem::path(u8"temp.enum")
@@ -7901,7 +7900,7 @@ label_19431_internal:
         ++listmax;
         noteunsel();
     }
-    if (config::instance().net != 0)
+    if (Config::instance().net != 0)
     {
         if (comctrl == 1)
         {
@@ -7990,7 +7989,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -8046,7 +8045,7 @@ label_1945_internal:
     {
         if (noteinfo() != 0)
         {
-            if (getkey(snail::key::backspace))
+            if (getkey(snail::Key::backspace))
             {
                 userfile = listn(1, cs + pagesize * page);
                 if (!fs::exists(filesystem::path(u8"./user/"s + userfile)))
@@ -8147,11 +8146,11 @@ int target_position()
         if (dy + inf_tiles <= windowh - inf_verh)
         {
             pos(dx, dy * (dy > 0));
-            snail::application::instance().get_renderer().set_blend_mode(
-                snail::blend_mode_t::blend);
-            snail::application::instance().get_renderer().set_draw_color(
+            snail::Application::instance().get_renderer().set_blend_mode(
+                snail::BlendMode::blend);
+            snail::Application::instance().get_renderer().set_draw_color(
                 {127, 127, 255, 50});
-            snail::application::instance().get_renderer().fill_rect(
+            snail::Application::instance().get_renderer().fill_rect(
                 dx,
                 dy * (dy > 0),
                 inf_tiles
@@ -8226,13 +8225,13 @@ int target_position()
                         if (sy + inf_tiles <= windowh - inf_verh)
                         {
                             pos(sx, sy * (sy > 0));
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
-                                .set_blend_mode(snail::blend_mode_t::blend);
-                            snail::application::instance()
+                                .set_blend_mode(snail::BlendMode::blend);
+                            snail::Application::instance()
                                 .get_renderer()
                                 .set_draw_color({255, 255, 255, 25});
-                            snail::application::instance()
+                            snail::Application::instance()
                                 .get_renderer()
                                 .fill_rect(
                                     sx,
@@ -8251,7 +8250,7 @@ int target_position()
         }
         txttargetnpc(tlocx, tlocy);
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         if (homemapmode == 1)
         {
@@ -8262,12 +8261,13 @@ int target_position()
                 continue;
             }
             int a{};
-            a = stick(stick_key::mouse_left | stick_key::mouse_right);
-            if (a == stick_key::mouse_left)
+            a = stick(
+                static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
+            if (a == static_cast<int>(StickKey::mouse_left))
             {
                 key = key_enter;
             }
-            if (a == stick_key::mouse_right)
+            if (a == static_cast<int>(StickKey::mouse_right))
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 2
                     || chipm(0, map(tlocx, tlocy, 0)) == 1)
@@ -8426,7 +8426,7 @@ int target_position()
 
 
 
-turn_result_t do_short_cut()
+TurnResult do_short_cut()
 {
     menucycle = 0;
     if (gdata(40 + sc) == 0)
@@ -8434,15 +8434,15 @@ turn_result_t do_short_cut()
         ++msgdup;
         txt(i18n::s.get("core.locale.action.shortcut.unassigned"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (gdata(40 + sc) >= 10000)
     {
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     efid = gdata(40 + sc);
@@ -8452,13 +8452,13 @@ turn_result_t do_short_cut()
     }
     if (efid >= 600)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (efid < 661)
         {
@@ -8467,20 +8467,20 @@ turn_result_t do_short_cut()
                 txt(i18n::s.get(
                     "core.locale.action.shortcut.cannot_use_anymore"));
                 update_screen();
-                return turn_result_t::pc_turn_user_error;
+                return TurnResult::pc_turn_user_error;
             }
         }
         return do_use_magic();
     }
     if (efid >= 400)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
             txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         if (spell(efid - 400) <= 0)
         {
@@ -8488,24 +8488,24 @@ turn_result_t do_short_cut()
             txt(i18n::s.get(
                 "core.locale.action.shortcut.cannot_use_spell_anymore"));
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         return do_cast_command();
     }
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 
 
-turn_result_t do_use_magic()
+TurnResult do_use_magic()
 {
     int stat = do_magic_attempt();
     if (stat == 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
@@ -8578,20 +8578,20 @@ void equip_melee_weapon()
 
 
 
-turn_result_t try_interact_with_npc()
+TurnResult try_interact_with_npc()
 {
     if (cdata[tc].continuous_action_turn != 0)
     {
         i18n::s.get("core.locale.action.npc.is_busy_now", cdata[tc]);
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     menucycle = 1;
     invally = 1;
     invctrl = 10;
     snd(100);
-    menu_result mr = ctrl_inventory();
-    assert(mr.turn_result != turn_result_t::none);
+    MenuResult mr = ctrl_inventory();
+    assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
 }
 
@@ -8684,7 +8684,7 @@ void savecycle()
 
 int find_enemy_target()
 {
-    if (cdata[cdata[cc].enemy_id].state() != character::state_t::alive)
+    if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
     {
         cdata[cc].enemy_id = 0;
     }
@@ -8821,7 +8821,7 @@ void build_target_list()
     {
         for (auto&& cnt : cdata.all())
         {
-            if (cnt.state() != character::state_t::alive)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
@@ -8944,7 +8944,7 @@ void try_to_return()
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         i = 500 - (cnt + 1);
-        if (adata(16, i) == mdata_t::map_id_t::none)
+        if (adata(16, i) == mdata_t::MapId::none)
         {
             continue;
         }
@@ -8952,7 +8952,7 @@ void try_to_return()
         {
             continue;
         }
-        if (adata(16, i) == mdata_t::map_id_t::your_home)
+        if (adata(16, i) == mdata_t::MapId::your_home)
         {
             continue;
         }
@@ -8961,17 +8961,17 @@ void try_to_return()
             continue;
         }
         f = 0;
-        if (adata(16, i) == mdata_t::map_id_t::lesimas
-            || adata(16, i) == mdata_t::map_id_t::larna
-            || adata(16, i) == mdata_t::map_id_t::mansion_of_younger_sister
-            || adata(16, i) == mdata_t::map_id_t::the_void)
+        if (adata(16, i) == mdata_t::MapId::lesimas
+            || adata(16, i) == mdata_t::MapId::larna
+            || adata(16, i) == mdata_t::MapId::mansion_of_younger_sister
+            || adata(16, i) == mdata_t::MapId::the_void)
         {
             f = 1;
         }
         if (gdata_wizard)
         {
-            if (adata(0, i) == mdata_t::map_type_t::town
-                || adata(0, i) == mdata_t::map_type_t::guild)
+            if (adata(0, i) == mdata_t::MapType::town
+                || adata(0, i) == mdata_t::MapType::guild)
             {
                 f = 1;
             }
@@ -9001,7 +9001,7 @@ void try_to_return()
     if (rtval >= 0)
     {
         txt(i18n::s.get("core.locale.misc.return.air_becomes_charged"));
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::random_dungeon)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
@@ -9022,7 +9022,7 @@ void try_to_return()
 
 
 
-turn_result_t do_gatcha()
+TurnResult do_gatcha()
 {
     int tmat = 0;
     screenupdate = -1;
@@ -9068,7 +9068,7 @@ turn_result_t do_gatcha()
                 "core.locale.action.gatcha.do_not_have", matname(tmat)));
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
@@ -9282,7 +9282,7 @@ void dump_player_info()
     noteadd(""s);
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cdata[cnt].state() == character::state_t::empty)
+        if (cdata[cnt].state() == Character::State::empty)
         {
             continue;
         }
@@ -9353,7 +9353,7 @@ void initialize_map_adjust_spawns()
 {
     for (auto&& cnt : cdata.all())
     {
-        if (cnt.state() == character::state_t::alive)
+        if (cnt.state() == Character::State::alive)
         {
             if (cnt.position.x < 0 || cnt.position.x >= mdata_map_width
                 || cnt.position.y < 0 || cnt.position.y >= mdata_map_height)
@@ -9363,14 +9363,14 @@ void initialize_map_adjust_spawns()
             }
         }
     }
-    if (mdata_map_type != mdata_t::map_type_t::player_owned)
+    if (mdata_map_type != mdata_t::MapType::player_owned)
     {
         if (mdata_map_max_item_count != 0)
         {
             mdata_map_max_item_count = 0;
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         adata(17, gdata_current_map) = 0;
         adata(10, gdata_current_map) = 10;
@@ -9411,7 +9411,7 @@ void migrate_save_data(const fs::path& save_dir)
     itemmemory(2, 732) = 0;
     if (gdata_version < 1170)
     {
-        if (adata(0, gdata_current_map) != mdata_t::map_type_t::town)
+        if (adata(0, gdata_current_map) != mdata_t::MapType::town)
         {
             dialog(i18n::s.get("core.locale.misc.save.need_to_save_in_town"));
             finish_elona();
@@ -9427,11 +9427,11 @@ void migrate_save_data(const fs::path& save_dir)
             {
                 adata(cnt, p) = 0;
             }
-            for (const auto& entry : filesystem::dir_entries{
+            for (const auto& entry : filesystem::dir_entries(
                      filesystem::dir::tmp(),
-                     filesystem::dir_entries::type::file,
+                     filesystem::DirEntryRange::Type::file,
                      std::regex{u8R"(.*_)"s + std::to_string(p)
-                                + u8R"(_.*\..*)"}})
+                                + u8R"(_.*\..*)"}))
             {
                 const auto file = entry.path().filename();
                 p1 = instr(filesystem::to_utf8_path(file), 0, u8"_"s);
@@ -9454,14 +9454,14 @@ void migrate_save_data(const fs::path& save_dir)
                 const auto file_ = filesystem::dir::tmp() / file;
                 fs::copy_file(
                     file_, file_cnv, fs::copy_option::overwrite_if_exists);
-                save_t::instance().add(file_cnv.filename());
+                Save::instance().add(file_cnv.filename());
                 fs::remove_all(file_);
-                save_t::instance().remove(file_.filename());
+                Save::instance().remove(file_.filename());
             }
         }
         for (int cnt = 0; cnt < 500; ++cnt)
         {
-            if (adata(16, cnt) != mdata_t::map_id_t::none)
+            if (adata(16, cnt) != mdata_t::MapId::none)
             {
                 if (adata(30, cnt) == 0)
                 {
@@ -9498,10 +9498,10 @@ void migrate_save_data(const fs::path& save_dir)
         ELONA_LOG("Update v0.2.5 save");
         // Fix corrupted map data.
         // Iterate all map file
-        for (const auto& entry :
-             filesystem::dir_entries{save_dir,
-                                     filesystem::dir_entries::type::file,
-                                     std::regex{R"(map_\d+_\d+\.s2)"}})
+        for (const auto& entry : filesystem::dir_entries(
+                 save_dir,
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{R"(map_\d+_\d+\.s2)"}))
         {
             int map_id;
             int level;
@@ -9516,9 +9516,9 @@ void migrate_save_data(const fs::path& save_dir)
                     std::to_string(map_id) + "_" + std::to_string(level + 100);
             }
             // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(file_operation_t::map_read);
+            ctrl_file(FileOperation::map_read);
             // Read inv.
-            ctrl_file(file_operation2_t::map_items_read, "inv_" + mid + ".s2");
+            ctrl_file(FileOperation2::map_items_read, "inv_" + mid + ".s2");
 
             ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
             if (mdata_map_refresh_type == 1 && mdata_map_should_regenerate == 0
@@ -9546,17 +9546,16 @@ void migrate_save_data(const fs::path& save_dir)
                     }
                     // Write inv.
                     ctrl_file(
-                        file_operation2_t::map_items_write,
-                        "inv_" + mid + ".s2");
+                        FileOperation2::map_items_write, "inv_" + mid + ".s2");
                     // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-                    ctrl_file(file_operation_t::map_write);
+                    ctrl_file(FileOperation::map_write);
                     continue;
                 }
 
                 ELONA_LOG("Reinitialize map items.");
                 fmapfile =
                     (filesystem::dir::map() / map_filename).generic_string();
-                ctrl_file(file_operation_t::map_load_map_obj_files);
+                ctrl_file(FileOperation::map_load_map_obj_files);
 
                 for (int i = 0; i < 400; ++i)
                 {
@@ -9567,7 +9566,7 @@ void migrate_save_data(const fs::path& save_dir)
                     for (const auto& i : items(-1))
                     {
                         if (inv[i].number() > 0
-                            && inv[i].position == position_t{x, y})
+                            && inv[i].position == Position{x, y})
                         {
                             inv[i].remove();
                         }
@@ -9596,9 +9595,9 @@ void migrate_save_data(const fs::path& save_dir)
                 }
             }
             // Write inv.
-            ctrl_file(file_operation2_t::map_items_write, "inv_" + mid + ".s2");
+            ctrl_file(FileOperation2::map_items_write, "inv_" + mid + ".s2");
             // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
-            ctrl_file(file_operation_t::map_write);
+            ctrl_file(FileOperation::map_write);
         }
     }
 
@@ -9614,14 +9613,13 @@ void clear_existing_quest_list()
     SDIM3(qname, 40, 500);
     gdata_number_of_existing_quests = 0;
     initialize_adata();
-    return;
 }
 
 
 
 void get_inheritance()
 {
-    ctrl_file(file_operation2_t::map_items_write, u8"shop3.s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)
@@ -9667,16 +9665,16 @@ void get_inheritance()
 
 void load_gene_files()
 {
-    ctrl_file(file_operation_t::gene_read);
+    ctrl_file(FileOperation::gene_read);
     DIM2(spell, 200);
     DIM2(spact, 500);
     for (auto&& cnt : cdata.all())
     {
-        cnt.set_state(character::state_t::empty);
+        cnt.set_state(Character::State::empty);
     }
     sdata.copy(56, 0);
     sdata.clear(0);
-    character::copy(cdata.player(), cdata.tmp());
+    Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
     for (const auto& cnt : items(-1))
     {
@@ -9727,7 +9725,7 @@ void load_gene_files()
 
 void save_gene()
 {
-    ctrl_file(file_operation_t::gene_write);
+    ctrl_file(FileOperation::gene_write);
 }
 
 
@@ -9863,10 +9861,10 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
     fs::remove(old_meta_data_filepath);
     foobar_data.version = {0, 2, 5, "", "", ""};
 
-    for (const auto entry :
-         filesystem::dir_entries{save_dir,
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{R"(.*\.s2)"}})
+    for (const auto entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{R"(.*\.s2)"}))
     {
         ELONA_LOG("v0.2.5:copy:" << entry.path());
         fs::copy_file(
@@ -9885,10 +9883,10 @@ void load_save_data()
     // TODO instead serialize/deserialize data
     lua::lua->get_handle_manager().clear_map_local_handles();
 
-    save_t::instance().clear();
+    Save::instance().clear();
     writeloadedbuff_clear();
 
-    ctrl_file(file_operation_t::temp_dir_delete);
+    ctrl_file(FileOperation::temp_dir_delete);
     const auto save_dir = filesystem::dir::save(playerid);
 
     // TODO: Delete these lines when v1.0.0 stable is released.
@@ -9899,7 +9897,7 @@ void load_save_data()
     }
 
     migrate_save_data_from_025_to_026(save_dir);
-    ctrl_file(file_operation2_t::global_read, save_dir);
+    ctrl_file(FileOperation2::global_read, save_dir);
     migrate_save_data(save_dir);
     ELONA_LOG("migrate:end");
     set_item_info();
@@ -9936,18 +9934,18 @@ void save_game()
     ELONA_LOG("Save game: " << playerid);
 
     int save_f = 0;
-    if (gdata_current_map == mdata_t::map_id_t::show_house)
+    if (gdata_current_map == mdata_t::MapId::show_house)
     {
         txtef(3);
         txt(i18n::s.get("core.locale.misc.save.cannot_save_in_user_map"));
         update_screen();
         return;
     }
-    ctrl_file(file_operation_t::map_write);
-    ctrl_file(file_operation2_t::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(FileOperation::map_write);
+    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
     save_f = 0;
-    for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::type::dir})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -9960,15 +9958,15 @@ void save_game()
     {
         fs::create_directory(save_dir);
     }
-    save_t::instance().save(save_dir);
-    ctrl_file(file_operation2_t::global_write, save_dir);
-    save_t::instance().clear();
+    Save::instance().save(save_dir);
+    ctrl_file(FileOperation2::global_write, save_dir);
+    Save::instance().clear();
     ELONA_LOG("Save game: finish");
 }
 
 
 
-turn_result_t do_enter_strange_gate()
+TurnResult do_enter_strange_gate()
 {
     snd(49);
     gdata_previous_map2 = gdata_current_map;
@@ -9978,7 +9976,7 @@ turn_result_t do_enter_strange_gate()
     gdata_destination_map = 35;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
-    return turn_result_t::exit_map;
+    return TurnResult::exit_map;
 }
 
 
@@ -10015,8 +10013,8 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(config::instance().wait1);
-    key_check(key_wait_delay_t::walk_run);
+    await(Config::instance().wait1);
+    key_check(KeyWaitDelay::walk_run);
     x = cdata.player().position.x;
     y = cdata.player().position.y;
     if (key == key_alter)
@@ -10117,7 +10115,7 @@ label_2128_internal:
 
 
 
-turn_result_t do_debug_console()
+TurnResult do_debug_console()
 {
     notesel(dbm);
     buff = "";
@@ -10134,10 +10132,10 @@ turn_result_t do_debug_console()
     mesbox(buff, true);
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         int a{};
         a = stick();
-        if (a == stick_key::escape)
+        if (a == static_cast<int>(StickKey::escape))
         {
             return do_exit_debug_console();
         }
@@ -10146,15 +10144,15 @@ turn_result_t do_debug_console()
 
 
 
-turn_result_t do_exit_debug_console()
+TurnResult do_exit_debug_console()
 {
     if (dbg_exitshowroom == 1)
     {
         dbg_exitshowroom = 0;
         levelexitby = 4;
-        return turn_result_t::exit_map;
+        return TurnResult::exit_map;
     }
-    return turn_result_t::pc_turn_user_error;
+    return TurnResult::pc_turn_user_error;
 }
 
 
@@ -10163,10 +10161,10 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 {
     switch (efstatus)
     {
-    case curse_state_t::doomed: return doomed;
-    case curse_state_t::cursed: return cursed;
-    case curse_state_t::none: return none;
-    case curse_state_t::blessed: return blessed;
+    case CurseState::doomed: return doomed;
+    case CurseState::cursed: return cursed;
+    case CurseState::none: return none;
+    case CurseState::blessed: return blessed;
     default: assert(0); return none;
     }
 }
@@ -10200,7 +10198,7 @@ void disarm_trap()
 void proc_trap()
 {
 label_21451_internal:
-    if (config::instance().scroll)
+    if (Config::instance().scroll)
     {
         if (cc == 0)
         {
@@ -10307,7 +10305,7 @@ label_21451_internal:
                     }
                     dmgcon(
                         cc,
-                        status_ailment_t::blinded,
+                        StatusAilment::blinded,
                         100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 6)
@@ -10319,7 +10317,7 @@ label_21451_internal:
                     }
                     dmgcon(
                         cc,
-                        status_ailment_t::paralyzed,
+                        StatusAilment::paralyzed,
                         100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 5)
@@ -10331,7 +10329,7 @@ label_21451_internal:
                     }
                     dmgcon(
                         cc,
-                        status_ailment_t::confused,
+                        StatusAilment::confused,
                         100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 3)
@@ -10406,7 +10404,7 @@ label_21451_internal:
                     }
                     dmgcon(
                         cc,
-                        status_ailment_t::poisoned,
+                        StatusAilment::poisoned,
                         100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 2)
@@ -10418,7 +10416,7 @@ label_21451_internal:
                     }
                     dmgcon(
                         cc,
-                        status_ailment_t::sleep,
+                        StatusAilment::sleep,
                         100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 7)
@@ -10426,8 +10424,8 @@ label_21451_internal:
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.trap.activate.mine"));
-                    ball_animation(
-                        {movx, movy}, 0, ball_animation::type_t::ball, ele)
+                    BallAnimation(
+                        {movx, movy}, 0, BallAnimation::Type::ball, ele)
                         .play();
                     cell_featset(movx, movy, 0);
                     damage_hp(cdata[cc], 100 + rnd(200), -1);
@@ -10472,7 +10470,7 @@ void load_sleep_background()
 void sleep_start()
 {
     int timeslept = 0;
-    if (gdata_current_map == mdata_t::map_id_t::quest)
+    if (gdata_current_map == mdata_t::MapId::quest)
     {
         txt(i18n::s.get("core.locale.activity.sleep.but_you_cannot"));
         gdata(98) = 0;
@@ -10490,7 +10488,7 @@ void sleep_start()
     {
         gmode(4, cnt * 10);
         draw_sleep_background_frame();
-        await(config::instance().animewait * 10);
+        await(Config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -10545,7 +10543,7 @@ void sleep_start()
         gdata_minute = 0;
         cc = 0;
         draw_sleep_background_frame();
-        await(config::instance().animewait * 25);
+        await(Config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -10554,7 +10552,7 @@ void sleep_start()
         {
             if (cdata[cnt].has_made_gene() == 1)
             {
-                if (cdata[cnt].state() == character::state_t::alive)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     tc = cnt;
                     break;
@@ -10636,8 +10634,8 @@ void sleep_start()
     }
     msg_halt();
     play_music();
-    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::shop)
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
+    if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -10786,7 +10784,7 @@ void map_global_proc_travel_events()
                     "core.locale.action.move.global.weather.snow.eat"));
                 cdata[cc].nutrition += 5000;
                 show_eating_message();
-                dmgcon(0, status_ailment_t::dimmed, 1000);
+                dmgcon(0, StatusAilment::dimmed, 1000);
             }
         }
     }
@@ -10902,7 +10900,7 @@ int decode_book()
             r2 = the_ability_db[efid]->sdataref4;
             r3 = efid;
         }
-        if (inv[ci].curse_state == curse_state_t::blessed)
+        if (inv[ci].curse_state == CurseState::blessed)
         {
             r2 = r2 * 100 / 120;
         }
@@ -10946,7 +10944,7 @@ int decode_book()
         }
         txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
         ++recipememory(inv[ci].subname);
-        item_identify(inv[ci], identification_state_t::partly_identified);
+        item_identify(inv[ci], IdentifyState::partly_identified);
         inv[ci].modify_number(-1);
         if (is_in_fov(cdata[cc]))
         {
@@ -10958,7 +10956,7 @@ int decode_book()
     }
     if (inv[ci].id == 687)
     {
-        item_identify(inv[ci], identification_state_t::completely_identified);
+        item_identify(inv[ci], IdentifyState::completely_identified);
         txt(i18n::s.get(
             "core.locale.action.read.book.finished_decoding", inv[ci]));
         inv[ci].param2 = 1;
@@ -10981,7 +10979,7 @@ int decode_book()
             itemmemory(2, inv[ci].id) = 1;
         }
     }
-    item_identify(inv[ci], identification_state_t::partly_identified);
+    item_identify(inv[ci], IdentifyState::partly_identified);
     if (inv[ci].id != 687)
     {
         --inv[ci].count;
@@ -11040,7 +11038,7 @@ int read_normal_book()
         return 1;
     }
     tc = cc;
-    item_identify(inv[ci], identification_state_t::partly_identified);
+    item_identify(inv[ci], IdentifyState::partly_identified);
     show_book_window();
     return 1;
 }
@@ -11100,7 +11098,7 @@ int do_cast_magic_attempt()
 {
     int mp = 0;
     efsource = 3;
-    efstatus = curse_state_t::none;
+    efstatus = CurseState::none;
     efp = calcspellpower(efid, cc);
     if (cc == 0)
     {
@@ -11130,7 +11128,7 @@ int do_cast_magic_attempt()
         if (the_ability_db[efid]->sdataref1 == 7)
         {
             if (cdata[cc].relationship == 10
-                || gdata_current_map == mdata_t::map_id_t::pet_arena)
+                || gdata_current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
                 return 0;
@@ -11161,7 +11159,7 @@ int do_cast_magic_attempt()
             }
         }
         damage_mp(cdata[cc], mp);
-        if (cdata[cc].state() != character::state_t::alive)
+        if (cdata[cc].state() != Character::State::alive)
         {
             efsource = 0;
             return 1;
@@ -11220,7 +11218,7 @@ int do_cast_magic_attempt()
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get("core.locale.action.cast.fail", cdata[cc]));
-            failure_to_cast_animation(cdata[cc].position).play();
+            FailureToCastAnimation(cdata[cc].position).play();
         }
         efsource = 0;
         return 1;
@@ -11248,7 +11246,7 @@ int do_cast_magic_attempt()
         for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
         {
             magic();
-            if (cdata[tc].state() != character::state_t::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
                 if (stat == 0)
@@ -11310,8 +11308,7 @@ int drink_potion()
         {
             if (tc == 0)
             {
-                item_identify(
-                    inv[ci], identification_state_t::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
         inv[ci].modify_number(-1);
@@ -11582,7 +11579,7 @@ int read_scroll()
     {
         if (obvious == 1)
         {
-            item_identify(inv[ci], identification_state_t::partly_identified);
+            item_identify(inv[ci], IdentifyState::partly_identified);
         }
     }
     return 1;
@@ -11602,9 +11599,9 @@ int do_zap()
         return 0;
     }
     efstatus = inv[ci].curse_state;
-    if (efstatus == curse_state_t::blessed)
+    if (efstatus == CurseState::blessed)
     {
-        efstatus = curse_state_t::none;
+        efstatus = CurseState::none;
     }
     efsource = 1;
     int stat = prompt_magic_location();
@@ -11637,7 +11634,7 @@ int do_zap()
     {
         f = 0;
         int skill = sdata(174, cc) * 20 + 100;
-        if (inv[ci].curse_state == curse_state_t::blessed)
+        if (inv[ci].curse_state == CurseState::blessed)
         {
             skill = skill * 125 / 100;
         }
@@ -11669,8 +11666,7 @@ int do_zap()
         {
             if (obvious == 1)
             {
-                item_identify(
-                    inv[ci], identification_state_t::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
         gain_magic_device_experience(cc);
@@ -11706,7 +11702,7 @@ int do_magic_attempt()
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
-                    if (cdata[cnt].state() == character::state_t::alive)
+                    if (cdata[cnt].state() == Character::State::alive)
                     {
                         if (cdata[cnt].relationship == 10)
                         {
@@ -12148,7 +12144,7 @@ int pick_up_item()
                             filesystem::dir::tmp()
                             / (u8"mdata_"s + mid + u8".s2")))
                     {
-                        ctrl_file(file_operation_t::map_delete);
+                        ctrl_file(FileOperation::map_delete);
                     }
                     mid = midbk;
                     inv[ci].count = 0;
@@ -12326,8 +12322,7 @@ int pick_up_item()
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identification_state =
-                identification_state_t::completely_identified;
+            inv[ti].identification_state = IdentifyState::completely_identified;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -12391,14 +12386,14 @@ int pick_up_item()
         }
         int stat = convertartifact(ti);
         ti = stat;
-        if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
         {
             if (mode == 0)
             {
                 update_museum();
             }
         }
-        if (gdata_current_map == mdata_t::map_id_t::your_home)
+        if (gdata_current_map == mdata_t::MapId::your_home)
         {
             if (mode == 0)
             {
@@ -12459,10 +12454,10 @@ int drop_item()
             p = stat;
             if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
             {
-                if (inv[tibk].curse_state != curse_state_t::blessed)
+                if (inv[tibk].curse_state != CurseState::blessed)
                 {
                     snd(64);
-                    inv[tibk].curse_state = curse_state_t::blessed;
+                    inv[tibk].curse_state = CurseState::blessed;
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.action.drop.water_is_blessed"));
@@ -12470,14 +12465,14 @@ int drop_item()
             }
         }
     }
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
     {
         if (mode == 0)
         {
             update_museum();
         }
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         if (mode == 0)
         {
@@ -12512,7 +12507,7 @@ int equip_item(int cc)
     item_separate(ci);
     if (cc == 0)
     {
-        item_identify(inv[ci], identification_state_t::almost_identified);
+        item_identify(inv[ci], IdentifyState::almost_identified);
     }
     inv[ci].body_part = body;
     cdata[cc].body_parts[body - 100] =
@@ -12560,7 +12555,7 @@ void lost_body_part(int cc)
 }
 
 
-turn_result_t do_bash()
+TurnResult do_bash()
 {
     if (map(x, y, 5) != 0)
     {
@@ -12573,7 +12568,7 @@ turn_result_t do_bash()
             if (inv[ci].own_state == 5 || inv[ci].param1 <= 0)
             {
                 txt(i18n::s.get("core.locale.action.bash.tree.no_fruits"));
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             --inv[ci].param1;
             if (inv[ci].param1 <= 0)
@@ -12593,7 +12588,7 @@ turn_result_t do_bash()
             txt(i18n::s.get(
                 "core.locale.action.bash.tree.falls_down", inv[ci]));
             item_stack(-1, ci);
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (map(x, y, 1) != 0)
@@ -12608,7 +12603,7 @@ turn_result_t do_bash()
                     int stat = prompt_really_attack();
                     if (stat == 0)
                     {
-                        return turn_result_t::pc_turn_user_error;
+                        return TurnResult::pc_turn_user_error;
                     }
                 }
             }
@@ -12620,7 +12615,7 @@ turn_result_t do_bash()
                     cdata[cc],
                     cdata[tc]));
                 damage_hp(cdata[tc], sdata(10, cc) * 5, cc);
-                if (cdata[tc].state() == character::state_t::alive)
+                if (cdata[tc].state() == Character::State::alive)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.bash.choked.spits", cdata[tc]));
@@ -12650,7 +12645,7 @@ turn_result_t do_bash()
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (map(x, y, 6) != 0)
     {
@@ -12661,7 +12656,7 @@ turn_result_t do_bash()
             spillfrag(x, y, 2);
             flt(calcobjlv(
                     gdata_current_dungeon_level
-                    * (gdata_current_map != mdata_t::map_id_t::shelter_)),
+                    * (gdata_current_map != mdata_t::MapId::shelter_)),
                 calcfixlv(2));
             flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
@@ -12671,15 +12666,15 @@ turn_result_t do_bash()
                 txt(i18n::s.get(
                     "core.locale.action.bash.shatters_pot", cdata[cc]));
                 snd(45);
-                breaking_animation({x, y}).play();
+                BreakingAnimation({x, y}).play();
             }
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         if (feat(1) == 21)
         {
             snd(73);
             p = feat(2) * 3 + 30;
-            if (gdata_current_map == mdata_t::map_id_t::jail)
+            if (gdata_current_map == mdata_t::MapId::jail)
             {
                 p *= 20;
             }
@@ -12692,12 +12687,12 @@ turn_result_t do_bash()
                         cdata[cc], 10, (feat(2) - sdata(10, cc)) * 15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             else
             {
                 txt(i18n::s.get("core.locale.action.bash.door.execute"));
-                if (gdata_current_map == mdata_t::map_id_t::jail)
+                if (gdata_current_map == mdata_t::MapId::jail)
                 {
                     txt(i18n::s.get("core.locale.action.bash.door.jail"));
                 }
@@ -12743,27 +12738,27 @@ turn_result_t do_bash()
                         }
                     }
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
     txt(i18n::s.get("core.locale.action.bash.air", cdata[cc]));
     snd(4);
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
 
-turn_result_t proc_movement_event()
+TurnResult proc_movement_event()
 {
     auto handle = lua::lua->get_handle_manager().get_handle(cdata[cc]);
     if (handle != sol::lua_nil)
         lua::lua->get_event_manager()
-            .run_callbacks<lua::event_kind_t::character_moved>(handle);
+            .run_callbacks<lua::EventKind::character_moved>(handle);
 
     if (cdata[cc].is_ridden())
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     dx = cdata[cc].next_position.x;
     dy = cdata[cc].next_position.y;
@@ -12814,10 +12809,10 @@ turn_result_t proc_movement_event()
         bool turn_ended = mef_proc_from_movement(cc);
         if (turn_ended)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (cc == 0)
         {
@@ -12825,7 +12820,7 @@ turn_result_t proc_movement_event()
             {
                 map_global_proc_travel_events();
                 keybd_wait = 1;
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             else
             {
@@ -12848,7 +12843,7 @@ turn_result_t proc_movement_event()
         }
     }
     sense_map_feats_on_move();
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (cc == 0)
         {
@@ -12928,7 +12923,7 @@ turn_result_t proc_movement_event()
                     encounterlv = 1;
                 }
                 levelexitby = 4;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             if (encounter == 3)
             {
@@ -12939,13 +12934,13 @@ turn_result_t proc_movement_event()
                 gdata_previous_x = cdata.player().position.x;
                 gdata_previous_y = cdata.player().position.y;
                 levelexitby = 4;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             if (encounter == 2)
             {
                 encounterlv = 10 + rnd(100);
                 levelexitby = 4;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             if (encounter == 1)
             {
@@ -13017,25 +13012,25 @@ turn_result_t proc_movement_event()
                     + valn);
                 msg_halt();
                 levelexitby = 4;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             encounter = 0;
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
 
 void proc_autopick()
 {
-    if (!config::instance().use_autopick)
+    if (!Config::instance().use_autopick)
         return;
     if (key_ctrl)
         return;
-    if (adata(0, gdata_current_map) == mdata_t::map_type_t::player_owned
-        && adata(16, gdata_current_map) != mdata_t::map_id_t::shelter_
-        && adata(16, gdata_current_map) != mdata_t::map_id_t::ranch)
+    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned
+        && adata(16, gdata_current_map) != mdata_t::MapId::shelter_
+        && adata(16, gdata_current_map) != mdata_t::MapId::ranch)
         return;
 
 
@@ -13054,16 +13049,16 @@ void proc_autopick()
         const auto y = cdata.player().position.y;
 
         bool did_something = true;
-        const auto op = autopick::instance().get_operation(inv[ci]);
+        const auto op = Autopick::instance().get_operation(inv[ci]);
         switch (op.type)
         {
-        case autopick::operation::type_t::do_nothing:
+        case Autopick::Operation::Type::do_nothing:
             did_something = false;
             break;
-        case autopick::operation::type_t::pick_up:
-        case autopick::operation::type_t::save:
-        case autopick::operation::type_t::no_drop:
-        case autopick::operation::type_t::save_and_no_drop:
+        case Autopick::Operation::Type::pick_up:
+        case Autopick::Operation::Type::save:
+        case Autopick::Operation::Type::no_drop:
+        case Autopick::Operation::Type::save_and_no_drop:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13080,13 +13075,13 @@ void proc_autopick()
             in = inv[ci].number();
             elona::ci = ci;
             pick_up_item();
-            if (int(op.type) & int(autopick::operation::type_t::no_drop))
+            if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
                 ibitmod(13, ti, 1);
                 txt(i18n::s.get(
                     "core.locale.ui.inv.examine.no_drop.set", inv[ti]));
             }
-            if (int(op.type) & int(autopick::operation::type_t::save))
+            if (int(op.type) & int(Autopick::Operation::Type::save))
             {
                 if (gdata_wizard == 0)
                 {
@@ -13094,7 +13089,7 @@ void proc_autopick()
                 }
             }
             break;
-        case autopick::operation::type_t::destroy:
+        case Autopick::Operation::Type::destroy:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13114,7 +13109,7 @@ void proc_autopick()
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
-        case autopick::operation::type_t::open:
+        case Autopick::Operation::Type::open:
             // FIXME: DRY
             if (op.show_prompt)
             {
@@ -13153,7 +13148,7 @@ void sense_map_feats_on_move()
         if (key_shift && gdata(30) == 0 && cdata.player().confused == 0
             && cdata.player().dimmed == 0)
         {
-            if (mdata_map_type != mdata_t::map_type_t::world_map)
+            if (mdata_map_type != mdata_t::MapType::world_map)
             {
                 gdata(30) = 1;
                 cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
@@ -13198,17 +13193,17 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= config::instance().walkwait
-                            * config::instance().startrun
+                if (keybd_wait <= Config::instance().walkwait
+                            * Config::instance().startrun
                     || cdata.player().turn % 2 == 0
-                    || mdata_map_type == mdata_t::map_type_t::world_map)
+                    || mdata_map_type == mdata_t::MapType::world_map)
                 {
                     snd(83 + foot % 3);
                     foot += 1 + rnd(2);
                 }
             }
         }
-        else if (mdata_map_type == mdata_t::map_type_t::world_map)
+        else if (mdata_map_type == mdata_t::MapType::world_map)
         {
             addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
             snd(81 + foot % 2);
@@ -13226,9 +13221,9 @@ void sense_map_feats_on_move()
             {
                 txt(mapname(feat(2) + feat(3) * 100, true));
                 if (adata(16, feat(2) + feat(3) * 100)
-                    == mdata_t::map_id_t::random_dungeon)
+                    == mdata_t::MapId::random_dungeon)
                 {
-                    if (config::instance().extrahelp)
+                    if (Config::instance().extrahelp)
                     {
                         if (gdata(206) == 0)
                         {
@@ -13346,7 +13341,7 @@ void sense_map_feats_on_move()
             }
             if (feat(1) >= 24 && feat(1) <= 28)
             {
-                if (config::instance().extrahelp)
+                if (Config::instance().extrahelp)
                 {
                     if (gdata(205) == 0)
                     {
@@ -13589,7 +13584,7 @@ void open_box()
     }
     snd(24);
     txt(i18n::s.get("core.locale.action.open.goods", inv[ri]));
-    autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     inv[ri].param1 = 0;
     if (inv[ri].id == 284)
     {
@@ -13769,7 +13764,7 @@ void open_new_year_gift()
 
 
 
-turn_result_t try_to_open_locked_door()
+TurnResult try_to_open_locked_door()
 {
     cell_featread(dx, dy);
     if (feat == tile_doorclosed4 && feat(2) > 0)
@@ -13781,14 +13776,14 @@ turn_result_t try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(config::instance().animewait * 5);
-                return turn_result_t::turn_end;
+                await(Config::instance().animewait * 5);
+                return TurnResult::turn_end;
             }
             feat(2) = 0;
         }
         else
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (feat(2) > 0)
@@ -13842,9 +13837,9 @@ turn_result_t try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(config::instance().animewait * 5);
+        await(Config::instance().animewait * 5);
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
@@ -13903,7 +13898,7 @@ void do_ranged_attack()
             ele = 0;
             extraattack = 0;
             do_physical_attack();
-            if (cdata[tc].state() != character::state_t::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
                 if (stat == 0)
@@ -14022,7 +14017,7 @@ void try_to_melee_attack()
             damage_hp(cdata[tc], rnd(sdata(168, cc)) + 1, cc);
             dmgcon(
                 tc,
-                status_ailment_t::dimmed,
+                StatusAilment::dimmed,
                 50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata[tc].paralyzed += rnd(3);
         }
@@ -14068,11 +14063,11 @@ void do_physical_attack()
     int attackdmg;
     int expmodifer = 0;
 label_22191_internal:
-    if (cdata[cc].state() != character::state_t::alive)
+    if (cdata[cc].state() != Character::State::alive)
     {
         return;
     }
-    if (cdata[tc].state() != character::state_t::alive)
+    if (cdata[tc].state() != Character::State::alive)
     {
         return;
     }
@@ -14092,10 +14087,10 @@ label_22191_internal:
     }
     if (attackrange == 1)
     {
-        ranged_attack_animation(
+        RangedAttackAnimation(
             cdata[cc].position,
             cdata[tc].position,
-            static_cast<ranged_attack_animation::type_t>(attackskill),
+            static_cast<RangedAttackAnimation::Type>(attackskill),
             the_item_db[inv[cw].id]->subcategory,
             inv[cw].image % 1000,
             inv[cw].image / 1000)
@@ -14106,7 +14101,7 @@ label_22191_internal:
     }
     expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits()
         + cdata[tc].splits2()
-        + (gdata_current_map == mdata_t::map_id_t::show_house);
+        + (gdata_current_map == mdata_t::MapId::show_house);
     int hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -14123,10 +14118,10 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (config::instance().attackanime)
+            if (Config::instance().attackanime)
             {
                 int damage_percent = dmg * 100 / cdata[tc].max_hp;
-                melee_attack_animation(
+                MeleeAttackAnimation(
                     cdata[tc].position,
                     cdata[tc].breaks_into_debris(),
                     attackskill,
@@ -14313,7 +14308,7 @@ label_22191_internal:
                         cdata.player(), 301, 30 / expmodifer, 0, 5);
                 }
             }
-            if (cdata[tc].state() == character::state_t::alive)
+            if (cdata[tc].state() == Character::State::alive)
             {
                 chara_gain_skill_exp(
                     cdata[tc],
@@ -14486,7 +14481,7 @@ label_22191_internal:
     rowact_check(tc);
     if (attackskill != 106)
     {
-        if (cdata[tc].state() != character::state_t::alive)
+        if (cdata[tc].state() != Character::State::alive)
         {
             cw = attackitem;
             if (ibit(10, cw))
@@ -14549,7 +14544,7 @@ void proc_weapon_enchantments()
         {
             p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(cdata[cc], p / 5);
-            if (cdata[tc].state() != character::state_t::alive)
+            if (cdata[tc].state() != Character::State::alive)
             {
                 continue;
             }
@@ -14620,7 +14615,7 @@ void proc_weapon_enchantments()
                     continue;
                 }
                 ele = enc;
-                if (cdata[tc].state() != character::state_t::alive)
+                if (cdata[tc].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -14637,7 +14632,7 @@ void proc_weapon_enchantments()
             }
             if (i == 8)
             {
-                if (cdata[tc].state() != character::state_t::alive)
+                if (cdata[tc].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -14676,7 +14671,7 @@ void proc_weapon_enchantments()
     }
     if (ammoproc == 3)
     {
-        if (cdata[tc].state() == character::state_t::alive)
+        if (cdata[tc].state() == Character::State::alive)
         {
             gdata(809) = 1;
             damage_hp(
@@ -14887,23 +14882,23 @@ int transplant_body_parts()
 
 
 
-turn_result_t do_plant()
+TurnResult do_plant()
 {
     screenupdate = -1;
     update_screen();
-    if (mdata_map_type == mdata_t::map_type_t::world_map
-        || mdata_map_type == mdata_t::map_type_t::town
-        || mdata_map_type == mdata_t::map_type_t::guild)
+    if (mdata_map_type == mdata_t::MapType::world_map
+        || mdata_map_type == mdata_t::MapType::town
+        || mdata_map_type == mdata_t::MapType::guild)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
     {
         txt(i18n::s.get("core.locale.action.plant.cannot_plant_it_here"));
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     int val0;
     if (chipm(0, map(cdata.player().position.x, cdata.player().position.y, 0))
@@ -14938,7 +14933,7 @@ turn_result_t do_plant()
         inv[ci].material,
         feat(3));
     chara_gain_skill_exp(cdata.player(), 180, 300);
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 
@@ -15073,7 +15068,7 @@ void create_harvested_item()
     {
         flttypemajor = choice(fsetplantartifact);
         fixlv = 4;
-        autosave = 1 * (gdata_current_map != mdata_t::map_id_t::show_house);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     }
     if (feat(2) == 36)
     {
@@ -15123,7 +15118,7 @@ void initialize_economy()
     scy = cdata.player().position.y;
     for (int cnt = 0; cnt < 500; ++cnt)
     {
-        if (adata(16, cnt) == mdata_t::map_id_t::none)
+        if (adata(16, cnt) == mdata_t::MapId::none)
         {
             continue;
         }
@@ -15237,7 +15232,7 @@ void do_play_scene()
     {
         gdata_played_scene = sceneid;
     }
-    if (config::instance().story == 0 || (en == 1 && sceneid != 0))
+    if (Config::instance().story == 0 || (en == 1 && sceneid != 0))
     {
         return;
     }
@@ -15270,8 +15265,8 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    a = stick(stick_key::escape);
-    if (a == stick_key::escape)
+    a = stick(static_cast<int>(StickKey::escape));
+    if (a == static_cast<int>(StickKey::escape))
     {
         scene_cut = 1;
     }
@@ -15376,7 +15371,7 @@ label_2682_internal:
     }
     if (s == u8"{mc}"s)
     {
-        shared_id music_id("core.music:"s + s(1));
+        SharedId music_id("core.music:"s + s(1));
         play_music(music_id);
         goto label_2682_internal;
     }
@@ -15466,8 +15461,8 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        a = stick(stick_key::escape);
-        if (a == stick_key::escape)
+        a = stick(static_cast<int>(StickKey::escape));
+        if (a == static_cast<int>(StickKey::escape))
         {
             scene_cut = 1;
         }
@@ -15534,15 +15529,15 @@ void weather_changes_by_location()
 
 void weather_changes()
 {
-    if (adata(16, gdata_current_map) == mdata_t::map_id_t::museum)
+    if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
     {
         update_museum();
     }
-    if (gdata_current_map == mdata_t::map_id_t::your_home)
+    if (gdata_current_map == mdata_t::MapId::your_home)
     {
         calc_home_rank();
     }
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         gdata_pc_x_in_world_map = cdata.player().position.x;
         gdata_pc_y_in_world_map = cdata.player().position.y;
@@ -15669,7 +15664,7 @@ void weather_changes()
         }
         if (gdata_weather == 4)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(211) == 0)
                 {
@@ -15687,7 +15682,7 @@ void weather_changes()
         }
         if (gdata_weather == 2)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(212) == 0)
                 {
@@ -15705,7 +15700,7 @@ void weather_changes()
         }
         if (gdata_weather == 1)
         {
-            if (config::instance().extrahelp)
+            if (Config::instance().extrahelp)
             {
                 if (gdata(213) == 0)
                 {
@@ -15729,7 +15724,7 @@ void weather_changes()
     map_prepare_tileset_atlas();
     adventurer_update();
     food_gets_rotten();
-    if (mdata_map_type == mdata_t::map_type_t::world_map)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
         if (rnd(3) == 0)
         {
@@ -15748,7 +15743,7 @@ void weather_changes()
             }
         }
     }
-    else if (gdata_current_map != mdata_t::map_id_t::shelter_)
+    else if (gdata_current_map != mdata_t::MapId::shelter_)
     {
         ++gdata_continuous_active_hours;
     }
@@ -15759,7 +15754,7 @@ void weather_changes()
     }
     if (gdata_continuous_active_hours >= 15)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(209) == 0)
             {
@@ -15777,7 +15772,7 @@ void weather_changes()
     }
     if (cdata.player().nutrition < 5000)
     {
-        if (config::instance().extrahelp)
+        if (Config::instance().extrahelp)
         {
             if (gdata(210) == 0)
             {
@@ -15855,7 +15850,7 @@ void weather_changes()
             || gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7
             || gdata_pael_and_her_mom == 9)
         {
-            if (adata(16, gdata_current_map) != mdata_t::map_id_t::noyel)
+            if (adata(16, gdata_current_map) != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {
@@ -15867,7 +15862,7 @@ void weather_changes()
     }
     if (mode == 0)
     {
-        if (mdata_map_type == mdata_t::map_type_t::world_map)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             if (rnd(40) == 0)
             {
@@ -15895,9 +15890,9 @@ void weather_changes()
             update_screen();
         }
     }
-    if (gdata_current_map != mdata_t::map_id_t::shelter_)
+    if (gdata_current_map != mdata_t::MapId::shelter_)
     {
-        if (gdata_current_map != mdata_t::map_id_t::jail)
+        if (gdata_current_map != mdata_t::MapId::jail)
         {
             proc_random_event();
         }
@@ -15906,10 +15901,10 @@ void weather_changes()
 
 
 
-optional<turn_result_t> check_angband()
+optional<TurnResult> check_angband()
 {
     if (gdata_angband_flag == -1
-        || mdata_map_type == mdata_t::map_type_t::world_map)
+        || mdata_map_type == mdata_t::MapType::world_map)
         return none;
 
     switch (gdata_angband_flag)
@@ -15920,7 +15915,7 @@ optional<turn_result_t> check_angband()
             txt(i18n::s.get("core.locale.action.angband.q"));
             ++gdata_angband_flag;
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         break;
     case 1:
@@ -15929,7 +15924,7 @@ optional<turn_result_t> check_angband()
             txt(i18n::s.get("core.locale.action.angband.y"));
             ++gdata_angband_flag;
             update_screen();
-            return turn_result_t::pc_turn_user_error;
+            return TurnResult::pc_turn_user_error;
         }
         break;
     case 2:
@@ -15947,7 +15942,7 @@ optional<turn_result_t> check_angband()
             }
             gdata_angband_flag = -1;
             update_screen();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
         break;
     default: break;
@@ -15971,7 +15966,7 @@ void conquer_lesimas()
     {
         ELONA_APPEND_PROMPT(win_words[cnt], key_select(cnt), ""s + promptmax);
     }
-    rtval = show_prompt(promptx, prompty, 310, show_prompt_type::cannot_cancel);
+    rtval = show_prompt(promptx, prompty, 310, PromptType::cannot_cancel);
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -16072,7 +16067,7 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_cancel)
@@ -16103,7 +16098,7 @@ void play_the_last_scene_again()
 
 
 
-turn_result_t pc_died()
+TurnResult pc_died()
 {
     cc = 0;
     snd(50);
@@ -16226,7 +16221,7 @@ turn_result_t pc_died()
         draw_caption();
         redraw();
         wait_key_pressed();
-        return turn_result_t::finish_elona;
+        return TurnResult::finish_elona;
     }
     s = u8"dead"s
         + i18n::s.get(
@@ -16243,7 +16238,7 @@ turn_result_t pc_died()
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;
-    return turn_result_t::exit_map;
+    return TurnResult::exit_map;
 }
 
 

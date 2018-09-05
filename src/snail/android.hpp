@@ -9,7 +9,7 @@ namespace snail
 namespace android
 {
 
-enum orientation
+enum class Orientation
 {
     landscape = SCREEN_ORIENTATION_LANDSCAPE,
     portrait = SCREEN_ORIENTATION_PORTRAIT,
@@ -20,15 +20,15 @@ enum orientation
     sensor = SCREEN_ORIENTATION_SENSOR
 };
 
-enum toast_length
+enum class ToastLength
 {
     short_length = TOAST_LENGTH_SHORT,
     long_length = TOAST_LENGTH_LONG
 };
 
-void set_requested_orientation(orientation);
+void set_requested_orientation(Orientation);
 void set_navigation_bar_visibility(bool);
-void toast(std::string, toast_length);
+void toast(std::string, ToastLength);
 void vibrate(int);
 void vibrate_pulse();
 

@@ -5,14 +5,14 @@
 namespace elona
 {
 
-struct character;
+struct Character;
 
 void rowact_check(int = 0);
 void rowact_item(int = 0);
 void rowactend(int = 0);
 
-void activity_handle_damage(character&);
-optional<turn_result_t> activity_proc(character&);
+void activity_handle_damage(Character&);
+optional<TurnResult> activity_proc(Character&);
 
 void prompt_stop_continuous_action();
 void continuous_action_perform();
@@ -29,7 +29,7 @@ void spot_fishing();
 void spot_material();
 void spot_digging();
 void spot_mining_or_wall();
-turn_result_t do_dig_after_sp_check();
+TurnResult do_dig_after_sp_check();
 void matdelmain(int = 0, int = 0);
 void matgetmain(int = 0, int = 0, int = 0);
 

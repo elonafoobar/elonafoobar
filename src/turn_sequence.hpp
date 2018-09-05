@@ -9,14 +9,14 @@ namespace elona
 
 
 
-turn_result_t npc_turn();
+TurnResult npc_turn();
 bool turn_wrapper();
-turn_result_t pass_turns(bool time);
-turn_result_t turn_begin();
-turn_result_t pass_one_turn(bool label_2738_flg = true);
+TurnResult pass_turns(bool time);
+TurnResult turn_begin();
+TurnResult pass_one_turn(bool label_2738_flg = true);
 void update_emoicon();
-turn_result_t turn_end();
-turn_result_t pc_turn(bool advance_time = true);
+TurnResult turn_end();
+TurnResult pc_turn(bool advance_time = true);
 
 
 

@@ -12,7 +12,7 @@ namespace snail
 {
 
 
-class fps_manager final : private lib::noncopyable
+class FPSManager final : private lib::noncopyable
 {
 public:
     int fps() const noexcept
@@ -25,20 +25,20 @@ public:
     double actual_fps();
 
 
-    explicit fps_manager(int fps = 60);
-    virtual ~fps_manager() override = default;
+    explicit FPSManager(int fps = 60);
+    virtual ~FPSManager() override = default;
 
 
     void wait();
 
 
 private:
-    using time = decltype(snail::hsp::timeGetTime());
+    using Time = decltype(snail::hsp::timeGetTime());
 
     int _fps;
     int _frame_count = 0; // [0, fps)
-    time _t0 = time{0}; // The time when `_frame_count` was zero most recently.
-    time _previous_time = time{0};
+    Time _t0 = Time{0}; // The time when `_frame_count` was zero most recently.
+    Time _previous_time = Time{0};
     std::vector<int> _history;
 };
 

@@ -6,10 +6,10 @@ namespace lua
 {
 
 void Magic::cast_self(
-    lua_character_handle caster_handle,
+    LuaCharacterHandle caster_handle,
     int effect_id,
     int effect_power,
-    const position_t& target_location)
+    const Position& target_location)
 {
     elona::tlocx = target_location.x;
     elona::tlocy = target_location.y;
@@ -17,8 +17,8 @@ void Magic::cast_self(
 }
 
 void Magic::cast(
-    lua_character_handle caster_handle,
-    lua_character_handle target_handle,
+    LuaCharacterHandle caster_handle,
+    LuaCharacterHandle target_handle,
     int effect_id,
     int effect_power)
 {
@@ -28,9 +28,9 @@ void Magic::cast(
     try
     {
         auto& caster =
-            lua::lua->get_handle_manager().get_ref<character>(caster_handle);
+            lua::lua->get_handle_manager().get_ref<Character>(caster_handle);
         auto& target =
-            lua::lua->get_handle_manager().get_ref<character>(target_handle);
+            lua::lua->get_handle_manager().get_ref<Character>(target_handle);
         elona::cc = caster.index;
         elona::tc = target.index;
         elona::efid = effect_id;
