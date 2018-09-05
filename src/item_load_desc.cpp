@@ -67,7 +67,8 @@ static void _load_single_item_description_text(
             listn(0, p) = desc_line;
             if (cnt == noteinfo() - 1)
             {
-                list(0, p) = static_cast<int>(ItemDescriptionType::small_font_italic);
+                list(0, p) =
+                    static_cast<int>(ItemDescriptionType::small_font_italic);
             }
             ++p;
         }
@@ -280,25 +281,21 @@ void item_load_desc(int ci, int& p)
     const I18NKey& locale_key_prefix =
         the_item_db[inv[ci].id]->locale_key_prefix;
 
-    if (inv[ci].identification_state
-        == IdentifyState::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
         _load_item_main_description_text(locale_key_prefix, p);
     }
-    if (inv[ci].identification_state
-        >= IdentifyState::almost_identified)
+    if (inv[ci].identification_state >= IdentifyState::almost_identified)
     {
         _load_item_stat_text(ci, p);
     }
-    if (inv[ci].identification_state
-        <= IdentifyState::partly_identified)
+    if (inv[ci].identification_state <= IdentifyState::partly_identified)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::normal);
         listn(0, p) = i18n::s.get("core.locale.item.desc.have_to_identify");
         ++p;
     }
-    if (inv[ci].identification_state
-        == IdentifyState::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
         _load_item_enchantment_desc(ci, p);
         _load_item_description_text(locale_key_prefix, p);

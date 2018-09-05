@@ -608,8 +608,7 @@ void window_recipe_(
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
     font(13 - en * 2);
-    if (inv[prm_1050].identification_state
-        <= IdentifyState::partly_identified)
+    if (inv[prm_1050].identification_state <= IdentifyState::partly_identified)
     {
         pos(dx_at_m184, dy_at_m184);
         mes(i18n::s.get("core.locale.blending.window.havent_identified"));
@@ -699,8 +698,8 @@ label_1923:
                 }
             }
             rpmode = 1;
-            rtval = show_prompt(
-                promptx, prompty, 220, PromptType::with_number, p);
+            rtval =
+                show_prompt(promptx, prompty, 220, PromptType::with_number, p);
             rpmode = 0;
             if (rtval == 0)
             {

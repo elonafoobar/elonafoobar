@@ -54,8 +54,7 @@ struct Item
     int quality = 0;
     Position position;
     int weight = 0;
-    IdentifyState identification_state =
-        IdentifyState::unidentified;
+    IdentifyState identification_state = IdentifyState::unidentified;
     int count = 0;
     int dice_x = 0;
     int dice_y = 0;

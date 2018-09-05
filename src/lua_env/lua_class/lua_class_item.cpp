@@ -37,7 +37,8 @@ void LuaItem::bind(sol::state& lua)
         "curse_state",
         sol::property(
             [](Item& i) {
-                return LuaEnums::CurseStateTable.convert_to_string(i.curse_state);
+                return LuaEnums::CurseStateTable.convert_to_string(
+                    i.curse_state);
             },
             [](Item& i, const EnumString& s) {
                 i.curse_state = LuaEnums::CurseStateTable.ensure_from_string(s);

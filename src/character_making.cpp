@@ -310,8 +310,8 @@ static int _prompt_satisfied()
 static bool _validate_save_path(const std::string& playerid)
 {
     if (range::any_of(
-            filesystem::dir_entries(filesystem::dir::save(),
-                                    filesystem::DirEntryRange::Type::all),
+            filesystem::dir_entries(
+                filesystem::dir::save(), filesystem::DirEntryRange::Type::all),
             [&](const auto& entry) {
                 return filesystem::to_utf8_path(entry.path().filename())
                     == playerid;

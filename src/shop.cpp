@@ -58,8 +58,7 @@ void shop_refresh_on_talk()
 
 void shop_load_shoptmp()
 {
-    ctrl_file(
-        FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
     return;

@@ -712,8 +712,7 @@ int quest_generate()
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33
-            || gdata_current_map == mdata_t::MapId::noyel)
+        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }

@@ -269,7 +269,8 @@ std::string maplevel(int)
             || adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
             || adata(16, gdata_current_map) == mdata_t::MapId::quest
             || (mdata_map_type >= static_cast<int>(mdata_t::MapType::dungeon)
-                && mdata_map_type <= static_cast<int>(mdata_t::MapType::dungeon_castle))
+                && mdata_map_type
+                    <= static_cast<int>(mdata_t::MapType::dungeon_castle))
                 == 1)
         {
             return ""s

@@ -16,13 +16,15 @@ int Item::count()
 
 bool Item::has_enchantment(const LuaItemHandle handle, int id)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     return elona::encfindspec(item_ref.index, id);
 }
 
 void Item::remove(LuaItemHandle handle)
 {
-    auto& item_ref = lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
+    auto& item_ref =
+        lua::lua->get_handle_manager().get_ref<elona::Item>(handle);
     item_ref.remove();
 }
 

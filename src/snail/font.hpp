@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <string>
+#include "../lib/enumutil.hpp"
 #include "detail/sdl.hpp"
 #include "filesystem.hpp"
-#include "../lib/enumutil.hpp"
 
 
 
@@ -51,10 +51,7 @@ struct Font
 
 
     Font() = default;
-    Font(
-        const fs::path& filepath,
-        int size,
-        Style style = Style::regular);
+    Font(const fs::path& filepath, int size, Style style = Style::regular);
     Font(const Font&) = default;
     Font(Font&&) = default;
     Font& operator=(const Font&) = default;

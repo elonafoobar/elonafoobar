@@ -135,8 +135,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             return;
         if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 3 + 1))
             return;
-        power =
-            calc_power_decreased_by_resistance(cc, power, Element::poison);
+        power = calc_power_decreased_by_resistance(cc, power, Element::poison);
         turn = power / 5;
         if (turn <= 0)
             return;

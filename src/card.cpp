@@ -170,8 +170,7 @@ reset_page:
             inv[ci].set_number(0);
             itemcreate(0, 504, -1, -1, 0);
             inv[ci].subname = list(0, pagesize * page + cs);
-            inv[ci].identification_state =
-                IdentifyState::completely_identified;
+            inv[ci].identification_state = IdentifyState::completely_identified;
             int pagesize_bk = pagesize;
             int page_bk = page;
             int cs_bk = cs;

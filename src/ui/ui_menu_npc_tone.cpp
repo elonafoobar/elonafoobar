@@ -19,10 +19,10 @@ static int _load_talk_entries()
 
     ++_listmax;
     const auto base_dir = filesystem::dir::user() / u8"talk";
-    for (const auto& entry :
-         filesystem::dir_entries(base_dir,
-                                 filesystem::DirEntryRange::Type::file,
-                                 std::regex{u8R"(.*\.txt)"}))
+    for (const auto& entry : filesystem::dir_entries(
+             base_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(.*\.txt)"}))
     {
         list(0, _listmax) = _listmax;
         listn(0, _listmax) =

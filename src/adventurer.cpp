@@ -353,8 +353,7 @@ int adventurer_discover_equipment()
     {
         return 0;
     }
-    inv[ci].identification_state =
-        IdentifyState::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     if (inv[ci].quality >= 4)
     {
         if (the_item_db[inv[ci].id]->category < 50000)

@@ -78,8 +78,8 @@ void UIMenuCharamakeGender::draw()
     _draw_choices();
 }
 
-optional<UIMenuCharamakeGender::ResultType>
-UIMenuCharamakeGender::on_key(const std::string& key)
+optional<UIMenuCharamakeGender::ResultType> UIMenuCharamakeGender::on_key(
+    const std::string& key)
 {
     if (key == key_select(0))
     {

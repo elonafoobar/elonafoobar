@@ -16,9 +16,7 @@ int Skill::level(int skill, LuaCharacterHandle handle)
     return elona::sdata(skill, chara.index);
 }
 
-int Skill::resistance(
-    const EnumString& element_name,
-    LuaCharacterHandle handle)
+int Skill::resistance(const EnumString& element_name, LuaCharacterHandle handle)
 {
     auto& chara = lua::lua->get_handle_manager().get_ref<Character>(handle);
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);

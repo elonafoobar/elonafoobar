@@ -542,8 +542,7 @@ void _lomias_create_scroll_of_identify()
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     flt();
     itemcreate(-1, 14, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        IdentifyState::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
 }
 
 void _lomias_create_chest()
@@ -566,8 +565,7 @@ void _lomias_create_corpse()
     itemcreate(
         -1, 204, cdata.player().position.x, cdata.player().position.y, 0);
     inv[ci].subname = 9;
-    inv[ci].identification_state =
-        IdentifyState::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 
@@ -599,8 +597,7 @@ void _lomias_create_equipment()
     flt();
     itemcreate(
         -1, 363, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        IdentifyState::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     inv[ci].curse_state = CurseState::blessed;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
@@ -620,8 +617,7 @@ void _lomias_release_putits()
     }
     flt();
     itemcreate(-1, 68, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].identification_state =
-        IdentifyState::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
 }
 

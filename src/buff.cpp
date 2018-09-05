@@ -63,10 +63,10 @@ BuffDB::BuffDB()
     storage.emplace(
         0,
         BuffData{0,
-                  LUA_REFNIL,
-                  BuffData::Type::buff,
-                  LUA_REFNIL,
-                  LUA_REFNIL}); // dummy
+                 LUA_REFNIL,
+                 BuffData::Type::buff,
+                 LUA_REFNIL,
+                 LUA_REFNIL}); // dummy
 }
 
 

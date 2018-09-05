@@ -510,8 +510,8 @@ void key_check(KeyWaitDelay delay_type)
     mousel = 0;
     key_tab = 0;
     key_escape = 0;
-    int p_at_m19 = stick(
-        static_cast<int>(StickKey::left | StickKey::up | StickKey::right | StickKey::down));
+    int p_at_m19 = stick(static_cast<int>(
+        StickKey::left | StickKey::up | StickKey::right | StickKey::down));
     if (p_at_m19 != 0)
     {
         if (p_at_m19 == static_cast<int>(StickKey::escape))
@@ -995,7 +995,8 @@ void wait_key_released()
     {
         await(Config::instance().wait1);
         int result{};
-        result = stick(static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
+        result = stick(
+            static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
         if (result == 0)
         {
             await(Config::instance().wait1);

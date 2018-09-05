@@ -444,10 +444,7 @@ void visit_toplevel(Config& conf, ConfigScreen& ret)
     }
 }
 
-void visit_section(
-    Config& conf,
-    const SpecKey& current_key,
-    ConfigScreen& ret)
+void visit_section(Config& conf, const SpecKey& current_key, ConfigScreen& ret)
 {
     // EX: "<core.config>.<language>"
     SpecKey key = "core.config." + current_key;

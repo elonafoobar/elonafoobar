@@ -562,8 +562,7 @@ void initialize_pc_character()
         {
             continue;
         }
-        inv[cnt].identification_state =
-            IdentifyState::completely_identified;
+        inv[cnt].identification_state = IdentifyState::completely_identified;
     }
     chara_refresh(0);
     return;
@@ -982,8 +981,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(i18n::s.get_locale_dir("core") / "lazy"
-                               / "ndata.csv"),
+        fileutil::read_by_line(
+            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -4686,8 +4685,7 @@ void auto_identify()
         if (p > rnd(p(1) * 5))
         {
             s = itemname(ci);
-            item_identify(
-                inv[ci], IdentifyState::completely_identified);
+            item_identify(inv[ci], IdentifyState::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
             if (!Config::instance().hideautoidentify)
             {
@@ -4698,8 +4696,7 @@ void auto_identify()
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
-        if (inv[ci].identification_state
-            <= IdentifyState::partly_identified)
+        if (inv[ci].identification_state <= IdentifyState::partly_identified)
         {
             if (p > rnd(p(1)))
             {
@@ -4711,8 +4708,7 @@ void auto_identify()
                         i18n::_(
                             u8"ui", u8"quality", u8"_"s + inv[ci].quality)));
                 }
-                item_identify(
-                    inv[ci], IdentifyState::almost_identified);
+                item_identify(inv[ci], IdentifyState::almost_identified);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
             }
         }
@@ -4976,11 +4972,11 @@ TurnResult exit_map()
                             txt(i18n::s.get(
                                 "core.locale.action.exit_map.not_permitted"));
                             msg_halt();
-                            gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
+                            gdata_current_map =
+                                static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (adata(16, gdata_current_map)
-                        == mdata_t::MapId::pyramid)
+                    if (adata(16, gdata_current_map) == mdata_t::MapId::pyramid)
                     {
                         if (gdata_pyramid_trial == 0)
                         {
@@ -4988,7 +4984,8 @@ TurnResult exit_map()
                                 i18n::s.get("core.locale.action.exit_map.no_"
                                             "invitation_to_pyramid"));
                             msg_halt();
-                            gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
+                            gdata_current_map =
+                                static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
                     if (adata(16, gdata_current_map) == mdata_t::MapId::jail)
@@ -4996,16 +4993,19 @@ TurnResult exit_map()
                         txt(i18n::s.get(
                             "core.locale.action.exit_map.cannot_enter_jail"));
                         msg_halt();
-                        gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
+                        gdata_current_map =
+                            static_cast<int>(mdata_t::MapId::fields);
                     }
                 }
                 else
                 {
-                    gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
+                    gdata_current_map =
+                        static_cast<int>(mdata_t::MapId::fields);
                 }
                 if (feat(1) != 15)
                 {
-                    gdata_current_map = static_cast<int>(mdata_t::MapId::fields);
+                    gdata_current_map =
+                        static_cast<int>(mdata_t::MapId::fields);
                 }
             }
             if (mdata_map_type == mdata_t::MapType::town
@@ -7594,8 +7594,7 @@ void supply_income()
             txt(i18n::s.get("core.locale.misc.tax.no_duty"));
         }
     }
-    ctrl_file(
-        FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     mode = 0;
     if (Config::instance().extrahelp)
@@ -7877,10 +7876,10 @@ label_19431_internal:
     SDIM2(headtemp, 1024);
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
-    for (const auto& entry :
-         filesystem::dir_entries(filesystem::dir::user(),
-                                 filesystem::DirEntryRange::Type::file,
-                                 pattern))
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::user(),
+             filesystem::DirEntryRange::Type::file,
+             pattern))
     {
         const auto path = entry.path();
         if (path == filesystem::path(u8"temp.enum")
@@ -8262,7 +8261,8 @@ int target_position()
                 continue;
             }
             int a{};
-            a = stick(static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
+            a = stick(
+                static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
             if (a == static_cast<int>(StickKey::mouse_left))
             {
                 key = key_enter;
@@ -9498,10 +9498,10 @@ void migrate_save_data(const fs::path& save_dir)
         ELONA_LOG("Update v0.2.5 save");
         // Fix corrupted map data.
         // Iterate all map file
-        for (const auto& entry :
-             filesystem::dir_entries(save_dir,
-                                     filesystem::DirEntryRange::Type::file,
-                                     std::regex{R"(map_\d+_\d+\.s2)"}))
+        for (const auto& entry : filesystem::dir_entries(
+                 save_dir,
+                 filesystem::DirEntryRange::Type::file,
+                 std::regex{R"(map_\d+_\d+\.s2)"}))
         {
             int map_id;
             int level;
@@ -9546,8 +9546,7 @@ void migrate_save_data(const fs::path& save_dir)
                     }
                     // Write inv.
                     ctrl_file(
-                        FileOperation2::map_items_write,
-                        "inv_" + mid + ".s2");
+                        FileOperation2::map_items_write, "inv_" + mid + ".s2");
                     // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
                     ctrl_file(FileOperation::map_write);
                     continue;
@@ -9862,10 +9861,10 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
     fs::remove(old_meta_data_filepath);
     foobar_data.version = {0, 2, 5, "", "", ""};
 
-    for (const auto entry :
-         filesystem::dir_entries(save_dir,
-                                 filesystem::DirEntryRange::Type::file,
-                                 std::regex{R"(.*\.s2)"}))
+    for (const auto entry : filesystem::dir_entries(
+             save_dir,
+             filesystem::DirEntryRange::Type::file,
+             std::regex{R"(.*\.s2)"}))
     {
         ELONA_LOG("v0.2.5:copy:" << entry.path());
         fs::copy_file(
@@ -11309,8 +11308,7 @@ int drink_potion()
         {
             if (tc == 0)
             {
-                item_identify(
-                    inv[ci], IdentifyState::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
         inv[ci].modify_number(-1);
@@ -11668,8 +11666,7 @@ int do_zap()
         {
             if (obvious == 1)
             {
-                item_identify(
-                    inv[ci], IdentifyState::partly_identified);
+                item_identify(inv[ci], IdentifyState::partly_identified);
             }
         }
         gain_magic_device_experience(cc);
@@ -12325,8 +12322,7 @@ int pick_up_item()
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identification_state =
-                IdentifyState::completely_identified;
+            inv[ti].identification_state = IdentifyState::completely_identified;
         }
         if (invctrl == 22 || invctrl == 24)
         {

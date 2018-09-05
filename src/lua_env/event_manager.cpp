@@ -150,9 +150,7 @@ void EventManager::unregister_event(
     }
 }
 
-void EventManager::clear_mod_callbacks(
-    EventKind event,
-    sol::environment& env)
+void EventManager::clear_mod_callbacks(EventKind event, sol::environment& env)
 {
     auto iter = events.find(event);
     if (iter != events.end())

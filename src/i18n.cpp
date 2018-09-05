@@ -331,8 +331,7 @@ void load(const std::string& language)
 {
     for (auto&& entry : filesystem::dir_entries(
              filesystem::path(u8"lang") / language,
-             filesystem::DirEntryRange::Type::file
-             ))
+             filesystem::DirEntryRange::Type::file))
     {
         cat::global.load(entry.path());
     }

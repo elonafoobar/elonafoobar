@@ -1765,9 +1765,7 @@ void talk_wrapper(TalkResult initial)
         {
         case TalkResult::talk_npc: result = talk_npc(); break;
         case TalkResult::talk_unique: result = talk_unique(); break;
-        case TalkResult::talk_quest_giver:
-            result = talk_quest_giver();
-            break;
+        case TalkResult::talk_quest_giver: result = talk_quest_giver(); break;
         case TalkResult::talk_house_visitor:
             result = talk_house_visitor();
             break;

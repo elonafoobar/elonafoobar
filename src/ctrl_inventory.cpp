@@ -1658,9 +1658,7 @@ label_2061_internal:
             {
                 txt(i18n::s.get("core.locale.ui.inv.identify.need_more_power"));
             }
-            else if (
-                identify_result
-                != IdentifyState::completely_identified)
+            else if (identify_result != IdentifyState::completely_identified)
             {
                 txt(i18n::s.get(
                     "core.locale.ui.inv.identify.partially", inv[ci]));

@@ -21,8 +21,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuCtrlAlly::ResultType> on_key(
-        const std::string& key);
+    virtual optional<UIMenuCtrlAlly::ResultType> on_key(const std::string& key);
 
 private:
     bool _should_display_ally(const Character& chara);

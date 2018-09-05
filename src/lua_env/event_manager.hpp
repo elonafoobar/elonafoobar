@@ -208,8 +208,7 @@ public:
     /***
      * Registers a new event handler from a mod's environment.
      */
-    void
-    register_event(EventKind, sol::environment&, sol::protected_function&);
+    void register_event(EventKind, sol::environment&, sol::protected_function&);
 
     /***
      * Unregisters an event handler from a mod's environment by

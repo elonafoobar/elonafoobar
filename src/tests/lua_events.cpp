@@ -193,8 +193,7 @@ Event.clear(Event.EventKind.AllTurnsFinished)
 
     lua.get_event_manager()
         .run_callbacks<elona::lua::EventKind::all_turns_finished>();
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::player_turn>();
+    lua.get_event_manager().run_callbacks<elona::lua::EventKind::player_turn>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 1))"));
@@ -222,8 +221,7 @@ Event.clear()
 
     lua.get_event_manager()
         .run_callbacks<elona::lua::EventKind::all_turns_finished>();
-    lua.get_event_manager()
-        .run_callbacks<elona::lua::EventKind::player_turn>();
+    lua.get_event_manager().run_callbacks<elona::lua::EventKind::player_turn>();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(Store.global.called_times == 0))"));

@@ -65,7 +65,7 @@ Position Map::bound_within(const Position& position)
 Position Map::random_pos()
 {
     return Map::bound_within(Position{elona::rnd(mdata_map_width - 1),
-                                        elona::rnd(mdata_map_height - 1)});
+                                      elona::rnd(mdata_map_height - 1)});
 }
 
 int Map::generate_tile(const EnumString& type_name)

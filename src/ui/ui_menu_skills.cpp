@@ -214,8 +214,7 @@ static void _assign_shortcut(int sc_, int skill_id)
     display_msg(inf_screeny + inf_tiles);
 }
 
-optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(
-    const std::string& key)
+optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(const std::string& key)
 {
     commark(0) = page * 1000 + cs;
     ELONA_GET_SELECTED_ITEM(p, 0);

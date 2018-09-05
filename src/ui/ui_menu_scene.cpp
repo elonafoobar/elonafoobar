@@ -186,8 +186,7 @@ static void _do_play_scene(int scene_id)
     txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
 }
 
-optional<UIMenuScene::ResultType> UIMenuScene::on_key(
-    const std::string& key)
+optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& key)
 {
     int p_ = 0;
     ELONA_GET_SELECTED_ITEM(p_, 0);

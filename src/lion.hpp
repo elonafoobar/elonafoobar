@@ -136,8 +136,7 @@ public:
                        << storage.size() << ", time: "s << time << "ms"s);
     }
 
-    optional_ref<IdType> get_id_from_legacy(
-        const LegacyIdType& legacy_id) const
+    optional_ref<IdType> get_id_from_legacy(const LegacyIdType& legacy_id) const
     {
         const auto itr = by_legacy_id.find(legacy_id);
         if (itr == std::end(by_legacy_id))
@@ -183,8 +182,7 @@ private:
         }
     }
 
-    void
-    initialize_single(const IdType& id, sol::table data, lua::LuaEnv& lua)
+    void initialize_single(const IdType& id, sol::table data, lua::LuaEnv& lua)
     {
         DataType converted = static_cast<T&>(*this).convert(id, data, lua);
 

@@ -641,11 +641,9 @@ IdentifyState item_identify(Item& ci, int power)
 
 void item_checkknown(int ci)
 {
-    if (inv[ci].identification_state
-        == IdentifyState::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
-        inv[ci].identification_state =
-            IdentifyState::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (itemmemory(0, inv[ci].id)
         && inv[ci].identification_state == IdentifyState::unidentified)
@@ -988,16 +986,10 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             switch (inv[prm_518].curse_state)
             {
-            case CurseState::doomed:
-                s_ += i18n::_(u8"ui", u8"doomed");
-                break;
-            case CurseState::cursed:
-                s_ += i18n::_(u8"ui", u8"cursed");
-                break;
+            case CurseState::doomed: s_ += i18n::_(u8"ui", u8"doomed"); break;
+            case CurseState::cursed: s_ += i18n::_(u8"ui", u8"cursed"); break;
             case CurseState::none: break;
-            case CurseState::blessed:
-                s_ += i18n::_(u8"ui", u8"blessed");
-                break;
+            case CurseState::blessed: s_ += i18n::_(u8"ui", u8"blessed"); break;
             }
         }
     }
@@ -1022,8 +1014,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
         }
         if (irandomname(inv[prm_518].id) == 1
-            && inv[prm_518].identification_state
-                == IdentifyState::unidentified)
+            && inv[prm_518].identification_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
@@ -1038,8 +1029,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             {
                 s3_ = u8"of"s;
             }
-            if (inv[prm_518].identification_state
-                    != IdentifyState::unidentified
+            if (inv[prm_518].identification_state != IdentifyState::unidentified
                 && s2_ == ""s)
             {
                 if (inv[prm_518].weight < 0)
@@ -1217,8 +1207,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
         }
     }
-    if (inv[prm_518].identification_state
-        == IdentifyState::unidentified)
+    if (inv[prm_518].identification_state == IdentifyState::unidentified)
     {
         s_ += iknownnameref(inv[prm_518].id);
     }
@@ -1392,8 +1381,7 @@ label_0313_internal:
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2;
     }
-    if (inv[prm_518].identification_state
-            == IdentifyState::almost_identified
+    if (inv[prm_518].identification_state == IdentifyState::almost_identified
         && a_ < 50000)
     {
         s_ += u8" ("s

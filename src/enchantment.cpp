@@ -1470,8 +1470,7 @@ void add_enchantments()
                 / 100);
         for (int cnt = 0,
                  cnt_end = cnt
-                 + (1 + (inv[ci].curse_state == CurseState::doomed)
-                    + rnd(2));
+                 + (1 + (inv[ci].curse_state == CurseState::doomed) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {

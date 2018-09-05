@@ -416,8 +416,7 @@ static void _switch_target(bool is_forwards)
     cs = 0;
 }
 
-optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(
-    const std::string& key)
+optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& key)
 {
     int p_;
 
@@ -433,8 +432,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(
                 if (gdata_acquirable_feat_count == 0)
                 {
                     return UIMenuFeats::Result::finish(
-                        UIMenuCompositeCharacterResult{
-                            FeatsResult::confirmed});
+                        UIMenuCompositeCharacterResult{FeatsResult::confirmed});
                 }
             }
             else

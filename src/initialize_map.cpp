@@ -956,8 +956,7 @@ label_1741_internal:
                 // Move existing characters/items to the middle of the
                 // map if the home was upgraded.
                 ctrl_file(
-                    FileOperation2::map_items_read,
-                    u8"inv_"s + mid + u8".s2");
+                    FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
                 for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number() == 0)
@@ -2722,8 +2721,7 @@ label_1741_internal:
     randomize();
     mdata_map_regenerate_count = gdata(184);
     mdata_map_mefs_loaded_flag = 1;
-    lua::lua->get_event_manager()
-        .run_callbacks<lua::EventKind::map_created>();
+    lua::lua->get_event_manager().run_callbacks<lua::EventKind::map_created>();
     loaded_from_file = false;
 label_1742_internal:
     if (gdata_current_map == mdata_t::MapId::north_tyris)

@@ -1195,8 +1195,7 @@ static void _draw_skill_enchantment_power(int cnt, int skill_id)
     mes(enchantment_level);
 }
 
-static void
-_draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
+static void _draw_skill_entry(int cnt, int skill_id, CharacterSheetOperation op)
 {
     _draw_skill_icon(cnt, skill_id);
     _draw_skill_name(cnt, skill_id);

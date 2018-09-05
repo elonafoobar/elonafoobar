@@ -999,8 +999,7 @@ TurnResult do_offer_command()
     snd(121);
     const auto tcbk = tc(0);
     tc = 0;
-    BrightAuraAnimation(
-        cdata[tc].position, BrightAuraAnimation::Type::offering)
+    BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
     int stat = item_find(60002);
@@ -2325,8 +2324,7 @@ TurnResult do_use_command()
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
-        if (gdata_current_map != mdata_t::MapId::show_house
-            || usermapid == 0)
+        if (gdata_current_map != mdata_t::MapId::show_house || usermapid == 0)
         {
             txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
             goto label_2229_internal;
@@ -2701,8 +2699,7 @@ TurnResult do_open_command()
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
-                FileOperation2::map_items_read,
-                u8"shop"s + invfile + u8".s2");
+                FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -3205,7 +3202,8 @@ TurnResult do_movement_command()
         || (gdata_current_dungeon_level == 1
             && mdata_map_type != mdata_t::MapType::world_map
             && (mdata_map_type < static_cast<int>(mdata_t::MapType::dungeon)
-                || static_cast<int>(mdata_t::MapType::dungeon_castle) < mdata_map_type)))
+                || static_cast<int>(mdata_t::MapType::dungeon_castle)
+                    < mdata_map_type)))
     {
         if (cdata[cc].next_position.x < 0
             || cdata[cc].next_position.x > mdata_map_width - 1

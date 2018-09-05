@@ -654,19 +654,11 @@ bool turn_wrapper()
 
             // Menus that don't return success status
 
-        case TurnResult::show_chat_history:
-            result = show_chat_history();
-            break;
-        case TurnResult::show_message_log:
-            result = show_message_log();
-            break;
+        case TurnResult::show_chat_history: result = show_chat_history(); break;
+        case TurnResult::show_message_log: result = show_message_log(); break;
         case TurnResult::show_journal: result = show_journal(); break;
-        case TurnResult::show_house_board:
-            result = show_house_board();
-            break;
-        case TurnResult::show_quest_board:
-            result = show_quest_board();
-            break;
+        case TurnResult::show_house_board: result = show_house_board(); break;
+        case TurnResult::show_quest_board: result = show_quest_board(); break;
         case TurnResult::show_skill_list: result = show_skill_list(); break;
         case TurnResult::show_spell_list:
             result = show_spell_list();
@@ -683,9 +675,7 @@ bool turn_wrapper()
         case TurnResult::menu_equipment:
             result = menu_equipment().turn_result;
             break;
-        case TurnResult::menu_feats:
-            result = menu_feats().turn_result;
-            break;
+        case TurnResult::menu_feats: result = menu_feats().turn_result; break;
         case TurnResult::ctrl_inventory:
             result = ctrl_inventory().turn_result;
             break;

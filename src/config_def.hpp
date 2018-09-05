@@ -48,10 +48,8 @@ public:
         {
             switch (platform)
             {
-            case Platform::desktop:
-                return visible && !defines::is_android;
-            case Platform::android:
-                return visible && defines::is_android;
+            case Platform::desktop: return visible && !defines::is_android;
+            case Platform::android: return visible && defines::is_android;
             case Platform::all:
             default: return visible;
             }

@@ -410,9 +410,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
     return ally_info;
 }
 
-void UIMenuCtrlAlly::_draw_ally_list_entry_sell(
-    int cnt,
-    const Character& chara)
+void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 {
     std::string ally_name =
         ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
@@ -518,8 +516,7 @@ void UIMenuCtrlAlly::draw()
     }
 }
 
-optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(
-    int _p)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 {
     if (cdata[_p].level > sdata(151, 0) + 5)
     {
@@ -589,8 +586,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
     return none;
 }
 
-optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(
-    const std::string& key)
+optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::on_key(const std::string& key)
 {
     ELONA_GET_SELECTED_ITEM(p, 0);
 

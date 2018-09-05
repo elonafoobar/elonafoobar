@@ -19,10 +19,7 @@ protected:
 
     struct MenuInfo
     {
-        MenuInfo(
-            std::unique_ptr<MenuType> _menu,
-            int _image,
-            std::string _text)
+        MenuInfo(std::unique_ptr<MenuType> _menu, int _image, std::string _text)
             : image(_image)
             , text(_text)
         {

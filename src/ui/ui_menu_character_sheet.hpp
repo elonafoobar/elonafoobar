@@ -8,8 +8,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuCharacterSheet
-    : public UIMenu<UIMenuCompositeCharacterResult>
+class UIMenuCharacterSheet : public UIMenu<UIMenuCompositeCharacterResult>
 {
 public:
     UIMenuCharacterSheet(CharacterSheetOperation operation)

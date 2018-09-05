@@ -1582,7 +1582,7 @@ void update_slight()
     ++msync;
 
     Position center{cdata.player().position.x - (fov_max + 2) / 2,
-                      (fov_max + 2) / 2 - cdata.player().position.y};
+                    (fov_max + 2) / 2 - cdata.player().position.y};
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 

@@ -1964,8 +1964,7 @@ void generate_random_nefia()
             mdata_map_tileset = 7;
             rdtype = 1;
         }
-        if (adata(16, gdata_current_map)
-            == mdata_t::MapId::crypt_of_the_damned)
+        if (adata(16, gdata_current_map) == mdata_t::MapId::crypt_of_the_damned)
         {
             mdata_map_max_crowd_density += gdata_current_dungeon_level / 2;
             mdata_map_tileset = 0;

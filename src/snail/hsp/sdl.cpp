@@ -182,25 +182,20 @@ void set_blend_mode()
     {
     case 0:
     case 1:
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::none);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::none);
         break;
     case 2:
     case 3:
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::blend);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
         break;
     case 4:
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::blend);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
         break;
     case 5:
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::add);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::add);
         break;
     case 6:
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::blend);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
         break;
     default: break;
     }
@@ -470,13 +465,11 @@ void boxf(int x, int y, int width, int height, const snail::Color& color)
     Application::instance().get_renderer().set_draw_color(color);
     if (color == snail::Color{0, 0, 0, 0})
     {
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::none);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::none);
     }
     else
     {
-        Application::instance().get_renderer().set_blend_mode(
-            BlendMode::blend);
+        Application::instance().get_renderer().set_blend_mode(BlendMode::blend);
     }
     Application::instance().get_renderer().fill_rect(x, y, width, height);
     detail::current_tex_buffer().color = save_color;

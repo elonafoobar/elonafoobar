@@ -20,8 +20,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuItemDesc::ResultType> on_key(
-        const std::string& key);
+    virtual optional<UIMenuItemDesc::ResultType> on_key(const std::string& key);
 
 private:
     const Item& _the_item;

@@ -214,8 +214,7 @@ static void _assign_shortcut(int sc_, int spell_id)
     display_msg(inf_screeny + inf_tiles);
 }
 
-optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(
-    const std::string& key)
+optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(const std::string& key)
 {
     commark(1) = page * 1000 + cs;
     ELONA_GET_SELECTED_ITEM(p, 0);

@@ -71,7 +71,8 @@ static void _set_font(int list_item)
     {
         font(13 - en * 2);
     }
-    else if (list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
+    else if (
+        list_item == static_cast<int>(ItemDescriptionType::small_font_italic))
     {
         font(13 - en * 2, snail::Font::Style::italic);
     }

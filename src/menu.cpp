@@ -581,7 +581,8 @@ void show_game_help()
 
 TurnResult show_journal()
 {
-    ui::UIMenuCompositeMessage(static_cast<size_t>(ui::UIMenuCompositeMessage::Index::journal))
+    ui::UIMenuCompositeMessage(
+        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::journal))
         .show();
     return TurnResult::pc_turn_user_error;
 }
@@ -667,12 +668,14 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
 
 TurnResult show_spell_list()
 {
-    return _show_skill_spell_menu(static_cast<size_t>(ui::UIMenuCompositeSkills::Index::spells));
+    return _show_skill_spell_menu(
+        static_cast<size_t>(ui::UIMenuCompositeSkills::Index::spells));
 }
 
 TurnResult show_skill_list()
 {
-    return _show_skill_spell_menu(static_cast<size_t>(ui::UIMenuCompositeSkills::Index::skills));
+    return _show_skill_spell_menu(
+        static_cast<size_t>(ui::UIMenuCompositeSkills::Index::skills));
 }
 
 
@@ -748,8 +751,8 @@ MenuResult _show_character_sheet_menu(size_t menu_index)
 
 MenuResult menu_character_sheet_normal()
 {
-    return _show_character_sheet_menu(
-        static_cast<size_t>(ui::UIMenuCompositeCharacter::Index::character_sheet));
+    return _show_character_sheet_menu(static_cast<size_t>(
+        ui::UIMenuCompositeCharacter::Index::character_sheet));
 }
 
 MenuResult menu_feats()
@@ -811,8 +814,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
 
 void menu_character_sheet_investigate()
 {
-    ui::UIMenuCharacterSheet(CharacterSheetOperation::investigate_ally)
-        .show();
+    ui::UIMenuCharacterSheet(CharacterSheetOperation::investigate_ally).show();
 }
 
 MenuResult menu_feats_character_making()
@@ -820,8 +822,7 @@ MenuResult menu_feats_character_making()
     MenuResult m_result = {false, false, TurnResult::none};
 
     auto result =
-        ui::UIMenuFeats(ui::UIMenuFeats::Operation::character_making)
-            .show();
+        ui::UIMenuFeats(ui::UIMenuFeats::Operation::character_making).show();
 
     if (result.canceled)
     {
@@ -1605,7 +1606,9 @@ int select_alias(int val0)
 
 void show_city_chart()
 {
-    ui::UIMenuCompositeTown(static_cast<size_t>(ui::UIMenuCompositeTown::Index::chart)).show();
+    ui::UIMenuCompositeTown(
+        static_cast<size_t>(ui::UIMenuCompositeTown::Index::chart))
+        .show();
 }
 
 void begin_to_believe_god(int god_id)

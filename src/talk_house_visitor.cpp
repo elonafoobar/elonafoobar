@@ -127,8 +127,7 @@ void _adventurer_hate_action()
             snd(91);
             ccbk = cc;
             cc = tc;
-            ThrowingObjectAnimation(
-                {tlocx, tlocy}, cdata[cc].position, 223, 0)
+            ThrowingObjectAnimation({tlocx, tlocy}, cdata[cc].position, 223, 0)
                 .play();
             cc = ccbk;
             mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);

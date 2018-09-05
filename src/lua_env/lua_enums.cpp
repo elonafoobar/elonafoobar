@@ -63,12 +63,12 @@ EnumMap<ColorIndex> ColorIndexTable{
     }};
 
 EnumMap<CurseState> CurseStateTable{"CurseState",
-                                   {
-                                       {"Doomed", CurseState::doomed},
-                                       {"Cursed", CurseState::cursed},
-                                       {"None", CurseState::none},
-                                       {"Blessed", CurseState::blessed},
-                                   }};
+                                    {
+                                        {"Doomed", CurseState::doomed},
+                                        {"Cursed", CurseState::cursed},
+                                        {"None", CurseState::none},
+                                        {"Blessed", CurseState::blessed},
+                                    }};
 
 EnumMap<IdentifyState> IdentifyStateTable{
     "IdentifyState",
@@ -96,49 +96,49 @@ EnumMap<StatusAilment> StatusAilmentTable{
     }};
 
 EnumMap<Element> ElementTable{"Element",
-                            {
-                                {"Fire", Element::fire},
-                                {"Cold", Element::cold},
-                                {"Lightning", Element::lightning},
-                                {"Darkness", Element::darkness},
-                                {"Mind", Element::mind},
-                                {"Poison", Element::poison},
-                                {"Nether", Element::nether},
-                                {"Sound", Element::sound},
-                                {"Nerve", Element::nerve},
-                                {"Chaos", Element::chaos},
-                                {"Magic", Element::magic},
-                                {"Cut", Element::cut},
-                                {"Ether", Element::ether},
-                                {"Acid", Element::acid},
-                            }};
+                              {
+                                  {"Fire", Element::fire},
+                                  {"Cold", Element::cold},
+                                  {"Lightning", Element::lightning},
+                                  {"Darkness", Element::darkness},
+                                  {"Mind", Element::mind},
+                                  {"Poison", Element::poison},
+                                  {"Nether", Element::nether},
+                                  {"Sound", Element::sound},
+                                  {"Nerve", Element::nerve},
+                                  {"Chaos", Element::chaos},
+                                  {"Magic", Element::magic},
+                                  {"Cut", Element::cut},
+                                  {"Ether", Element::ether},
+                                  {"Acid", Element::acid},
+                              }};
 
 EnumMap<TileKind> TileKindTable{"TileKind",
-                               {
-                                   {"Normal", TileKind::normal},
-                                   {"Wall", TileKind::wall},
-                                   {"Tunnel", TileKind::tunnel},
-                                   {"Room", TileKind::room},
-                                   {"Fog", TileKind::fog},
-                               }};
+                                {
+                                    {"Normal", TileKind::normal},
+                                    {"Wall", TileKind::wall},
+                                    {"Tunnel", TileKind::tunnel},
+                                    {"Room", TileKind::room},
+                                    {"Fog", TileKind::fog},
+                                }};
 
 
 // TODO: convert the following to enum class.
 EnumMap<int> GenderTable{"Gender",
-                     {
-                         {"Random", -1},
-                         {"Male", 0},
-                         {"Female", 1},
-                     }};
+                         {
+                             {"Random", -1},
+                             {"Male", 0},
+                             {"Female", 1},
+                         }};
 
 EnumMap<int> RelationTable{"Relation",
-                       {
-                           {"Aggressive", -3},
-                           {"Nonaggressive", -2},
-                           {"Unconcerned", -1},
-                           {"Neutral", 0},
-                           {"Friend", 10},
-                       }};
+                           {
+                               {"Aggressive", -3},
+                               {"Nonaggressive", -2},
+                               {"Unconcerned", -1},
+                               {"Neutral", 0},
+                               {"Friend", 10},
+                           }};
 
 EnumMap<int> CharaFlagTable{
     "CharaFlag",

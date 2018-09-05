@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <string>
+#include "../../lib/enumutil.hpp"
 #include "../../lib/noncopyable.hpp"
 #include "../detail/sdl.hpp"
-#include "../../lib/enumutil.hpp"
 
 
 
@@ -91,7 +91,9 @@ public:
         int width,
         int height,
         Flag flag)
-    : Window(title, static_cast<int>(x), y, width, height, flag) {}
+        : Window(title, static_cast<int>(x), y, width, height, flag)
+    {
+    }
 
     Window(
         const std::string& title,
@@ -100,7 +102,9 @@ public:
         int width,
         int height,
         Flag flag)
-    : Window(title, x, static_cast<int>(y), width, height, flag) {}
+        : Window(title, x, static_cast<int>(y), width, height, flag)
+    {
+    }
 
     Window(
         const std::string& title,
@@ -109,7 +113,15 @@ public:
         int width,
         int height,
         Flag flag)
-    : Window(title, static_cast<int>(x), static_cast<int>(y), width, height, flag) {}
+        : Window(
+              title,
+              static_cast<int>(x),
+              static_cast<int>(y),
+              width,
+              height,
+              flag)
+    {
+    }
 
 
     virtual ~Window() override = default;

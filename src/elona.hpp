@@ -408,9 +408,7 @@ int dialog(const std::string& message, int = 0);
 void exec(const std::string&, int);
 
 
-void font(
-    int size,
-    snail::Font::Style style = snail::Font::Style::regular);
+void font(int size, snail::Font::Style style = snail::Font::Style::regular);
 
 void gcopy(
     int window_id,

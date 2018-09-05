@@ -106,8 +106,8 @@ void RaceDB::define(lua_State* L)
 }
 
 
-std::vector<std::reference_wrapper<const RaceData>>
-RaceDB::get_available_races(bool is_extra_race) const
+std::vector<std::reference_wrapper<const RaceData>> RaceDB::get_available_races(
+    bool is_extra_race) const
 {
     std::vector<std::reference_wrapper<const RaceData>> ret;
     for (const auto& pair : storage)

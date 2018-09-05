@@ -119,8 +119,8 @@ struct EnumDef
     }
 };
 
-using Item = boost::
-    variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>;
+using Item =
+    boost::variant<SectionDef, BoolDef, IntDef, StringDef, ListDef, EnumDef>;
 
 static const constexpr char* unknown_enum_variant = "__unknown__";
 

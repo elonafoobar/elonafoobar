@@ -149,10 +149,10 @@ void load_character_sprite()
 
     gmode(0);
     gsel(5);
-    for (const auto& entry :
-         filesystem::dir_entries(filesystem::dir::user() / u8"graphic",
-                                 filesystem::DirEntryRange::Type::file,
-                                 std::regex{u8R"(chara_.*\.bmp)"}))
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::user() / u8"graphic",
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(chara_.*\.bmp)"}))
     {
         const auto file = filesystem::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));

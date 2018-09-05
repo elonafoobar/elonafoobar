@@ -25,13 +25,7 @@ void play_throwing_object(const Position&, const Position&, int, int);
 
 void play_swarm(const Position&);
 
-void play_ranged_attack(
-    const Position&,
-    const Position&,
-    int,
-    int,
-    int,
-    int);
+void play_ranged_attack(const Position&, const Position&, int, int, int, int);
 
 void play_melee_attack(const Position&, bool, int, int, bool);
 

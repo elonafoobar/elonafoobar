@@ -17,8 +17,7 @@ protected:
     virtual bool init();
     virtual void update();
     virtual void draw();
-    virtual optional<UIMenuJournal::ResultType> on_key(
-        const std::string& key);
+    virtual optional<UIMenuJournal::ResultType> on_key(const std::string& key);
 };
 
 } // namespace ui

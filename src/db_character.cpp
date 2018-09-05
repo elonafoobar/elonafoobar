@@ -63,7 +63,8 @@ CharacterData character_db_ex::convert(
     ELONA_LION_DB_FIELD(ai_heal, int, 0);
     ELONA_LION_DB_FIELD(ai_move, int, 0);
     ELONA_LION_DB_FIELD(can_talk, int, 0);
-    ELONA_LION_DB_FIELD_ENUM(color, ColorIndex, ColorIndexTable, ColorIndex::none);
+    ELONA_LION_DB_FIELD_ENUM(
+        color, ColorIndex, ColorIndexTable, ColorIndex::none);
     ELONA_LION_DB_FIELD(creaturepack, int, 0);
     ELONA_LION_DB_FIELD(cspecialeq, int, 0);
     ELONA_LION_DB_FIELD(damage_reaction_info, int, 0);

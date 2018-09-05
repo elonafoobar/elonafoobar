@@ -111,8 +111,7 @@ int magic()
                 else if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
                     BrightAuraAnimation(
-                        cdata[tc].position,
-                        BrightAuraAnimation::Type::debuff)
+                        cdata[tc].position, BrightAuraAnimation::Type::debuff)
                         .play();
                 }
                 if (efid == 625 || efid == 446)
@@ -314,10 +313,7 @@ int magic()
                 if (efid != 404 && efid != 637)
                 {
                     BallAnimation(
-                        {tlocx, tlocy},
-                        range_,
-                        BallAnimation::Type::ball,
-                        ele)
+                        {tlocx, tlocy}, range_, BallAnimation::Type::ball, ele)
                         .play();
                 }
                 for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
@@ -1023,8 +1019,7 @@ int magic()
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 breath_list();
-                BreathAnimation(cdata[cc].position, {tlocx, tlocy}, ele)
-                    .play();
+                BreathAnimation(cdata[cc].position, {tlocx, tlocy}, ele).play();
                 for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
@@ -1751,8 +1746,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type
-                != BuffData::Type::hex)
+            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffData::Type::hex)
             {
                 continue;
             }
@@ -1802,8 +1796,7 @@ label_2181_internal:
         txt(i18n::s.get("core.locale.magic.create_material.apply", s(0)));
         autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         for (int cnt = 0,
-                 cnt_end =
-                     (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
+                 cnt_end = (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
              cnt < cnt_end;
              ++cnt)
         {
@@ -2784,8 +2777,7 @@ label_2181_internal:
                 }
             }
             txt(i18n::s.get("core.locale.magic.escape.begin"));
-            if (adata(16, gdata_current_map)
-                == mdata_t::MapId::random_dungeon)
+            if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
             {
                 if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
@@ -4248,8 +4240,7 @@ label_2181_internal:
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
-                FileOperation2::map_items_read,
-                u8"shop"s + invfile + u8".s2");
+                FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
         }
         else
         {

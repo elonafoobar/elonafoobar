@@ -156,8 +156,8 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
     const std::string init_script = "init.lua";
 
     // TODO: [dependency management] order mods and always load core first.
-    for (const auto& entry :
-         filesystem::dir_entries(mods_dir, filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry : filesystem::dir_entries(
+             mods_dir, filesystem::DirEntryRange::Type::dir))
     {
         if (fs::exists(entry.path() / init_script))
         {

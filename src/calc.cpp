@@ -115,94 +115,94 @@ optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
             1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
     case 414:
         return SkillDamage{power / 125 + 2 + x / 50,
-                            power / 60 + 9 + 1,
-                            0,
-                            60,
-                            100 + power / 4};
+                           power / 60 + 9 + 1,
+                           0,
+                           60,
+                           100 + power / 4};
     case 459:
         return SkillDamage{power / 100 + 3 + x / 25,
-                            power / 40 + 12 + 1,
-                            0,
-                            60,
-                            100 + power / 4};
+                           power / 40 + 12 + 1,
+                           0,
+                           60,
+                           100 + power / 4};
     case 418:
         return SkillDamage{power / 80 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            53,
-                            200 + power / 3};
+                           power / 25 + 8 + 1,
+                           0,
+                           53,
+                           200 + power / 3};
     case 415:
         return SkillDamage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            56,
-                            200 + power / 3};
+                           power / 25 + 8 + 1,
+                           0,
+                           56,
+                           200 + power / 3};
     case 417:
         return SkillDamage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            59,
-                            200 + power / 3};
+                           power / 25 + 8 + 1,
+                           0,
+                           59,
+                           200 + power / 3};
     case 416:
         return SkillDamage{power / 70 + 1 + x / 18,
-                            power / 25 + 8 + 1,
-                            0,
-                            58,
-                            200 + power / 3};
+                           power / 25 + 8 + 1,
+                           0,
+                           58,
+                           200 + power / 3};
     case 419:
         return SkillDamage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            51,
-                            180 + power / 4};
+                           power / 26 + 4 + 1,
+                           0,
+                           51,
+                           180 + power / 4};
     case 420:
         return SkillDamage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            50,
-                            180 + power / 4};
+                           power / 26 + 4 + 1,
+                           0,
+                           50,
+                           180 + power / 4};
     case 421:
         return SkillDamage{power / 50 + 1 + x / 20,
-                            power / 26 + 4 + 1,
-                            0,
-                            52,
-                            180 + power / 4};
+                           power / 26 + 4 + 1,
+                           0,
+                           52,
+                           180 + power / 4};
     case 422:
         return SkillDamage{power / 50 + 1 + x / 20,
-                            power / 25 + 4 + 1,
-                            0,
-                            53,
-                            180 + power / 4};
+                           power / 25 + 4 + 1,
+                           0,
+                           53,
+                           180 + power / 4};
     case 423:
         return SkillDamage{power / 50 + 1 + x / 20,
-                            power / 25 + 4 + 1,
-                            0,
-                            54,
-                            180 + power / 4};
+                           power / 25 + 4 + 1,
+                           0,
+                           54,
+                           180 + power / 4};
     case 431:
         return SkillDamage{power / 100 + 1 + x / 20,
-                            power / 15 + 2 + 1,
-                            0,
-                            51,
-                            150 + power / 5};
+                           power / 15 + 2 + 1,
+                           0,
+                           51,
+                           150 + power / 5};
     case 432:
         return SkillDamage{power / 100 + 1 + x / 20,
-                            power / 15 + 2 + 1,
-                            0,
-                            50,
-                            150 + power / 5};
+                           power / 15 + 2 + 1,
+                           0,
+                           50,
+                           150 + power / 5};
     case 433:
         return SkillDamage{power / 80 + 1 + x / 20,
-                            power / 12 + 2 + 1,
-                            0,
-                            59,
-                            150 + power / 5};
+                           power / 12 + 2 + 1,
+                           0,
+                           59,
+                           150 + power / 5};
     case 434:
         return SkillDamage{power / 80 + 1 + x / 20,
-                            power / 12 + 2 + 1,
-                            0,
-                            57,
-                            150 + power / 5};
+                           power / 12 + 2 + 1,
+                           0,
+                           57,
+                           150 + power / 5};
     case 460:
         return SkillDamage{
             power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, 60, 100};
@@ -876,13 +876,10 @@ int calcitemvalue(int ci, int situation)
         case IdentifyState::almost_identified:
             ret = inv[ci].value * 5 / 10;
             break;
-        case IdentifyState::completely_identified:
-            ret = inv[ci].value;
-            break;
+        case IdentifyState::completely_identified: ret = inv[ci].value; break;
         }
     }
-    if (inv[ci].identification_state
-        == IdentifyState::completely_identified)
+    if (inv[ci].identification_state == IdentifyState::completely_identified)
     {
         switch (inv[ci].curse_state)
         {

@@ -58,9 +58,7 @@ static void set_default_from_platform(
         dat.name = item.at(#name).as<bool>(); \
     }
 
-void ConfigDef::post_visit(
-    const SpecKey& current_key,
-    const spec::SectionDef&)
+void ConfigDef::post_visit(const SpecKey& current_key, const spec::SectionDef&)
 {
     data.emplace(current_key, MetaData{});
 }

@@ -196,8 +196,7 @@ private:
     FPSManager _fps_manager;
     std::vector<std::unique_ptr<EffectBase>> _effects;
     std::vector<lib::scope_guard> _finalizers;
-    Window::FullscreenMode _fullscreen_mode =
-        Window::FullscreenMode::windowed;
+    Window::FullscreenMode _fullscreen_mode = Window::FullscreenMode::windowed;
 
     Application() = default;
 

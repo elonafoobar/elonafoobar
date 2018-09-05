@@ -13,8 +13,7 @@ namespace ui
 void UIMenuCompositeCharacter::add_menus()
 {
     push_back(
-        std::make_unique<UIMenuCharacterSheet>(
-            CharacterSheetOperation::normal),
+        std::make_unique<UIMenuCharacterSheet>(CharacterSheetOperation::normal),
         9,
         "core.locale.ui.menu.chara.chara");
     push_back(

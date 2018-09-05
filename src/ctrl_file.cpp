@@ -1561,8 +1561,7 @@ void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
     {
     case FileOperation2::map_items_read:
     case FileOperation2::map_items_write:
-        fmode_3_4(
-            file_operation == FileOperation2::map_items_read, filepath);
+        fmode_3_4(file_operation == FileOperation2::map_items_read, filepath);
         break;
     case FileOperation2::global_read:
     case FileOperation2::global_write:

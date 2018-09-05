@@ -70,8 +70,7 @@ void UIMenuAlias::draw()
     }
 }
 
-optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(
-    const std::string& key)
+optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& key)
 {
     int _p;
 

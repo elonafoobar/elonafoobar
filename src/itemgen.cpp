@@ -436,20 +436,17 @@ int do_create_item(int slot, int x, int y)
 
     if (mode == 6)
     {
-        inv[ci].identification_state =
-            IdentifyState::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
         || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
         inv[ci].curse_state = CurseState::none;
-        inv[ci].identification_state =
-            IdentifyState::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (reftype == 92000)
     {
-        inv[ci].identification_state =
-            IdentifyState::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
         inv[ci].curse_state = CurseState::none;
         itemmemory(0, inv[ci].id) = 1;
     }
@@ -463,8 +460,7 @@ int do_create_item(int slot, int x, int y)
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv[ci].identification_state =
-                    IdentifyState::almost_identified;
+                inv[ci].identification_state = IdentifyState::almost_identified;
             }
         }
     }

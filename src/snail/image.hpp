@@ -77,17 +77,9 @@ public:
     }
 
 
-    virtual void _render(
-        ::SDL_Renderer*,
-        BlendMode,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int,
-        int) override
+    virtual void
+    _render(::SDL_Renderer*, BlendMode, int, int, int, int, int, int, int, int)
+        override
     {
     }
 };
