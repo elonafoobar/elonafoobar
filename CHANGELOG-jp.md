@@ -1,10 +1,5 @@
 # 更新履歴
 
-重要な変更点は全てこのファイルに記載されています。
-
-このファイルの形式は[Keep a Changelog](http://keepachangelog.com/en/1.0.0/)に則っており、
-[Semantic Versioning](http://semver.org/spec/v2.0.0.html)を使用しています。
-
 
 
 ## [0.2.6] - 2018-06-19
