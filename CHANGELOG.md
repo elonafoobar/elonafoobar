@@ -1,9 +1,59 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [0.2.7] - 2018-09-05
+
+### Added
+
+- Rename ElonaFoobar to Elona foobar.
+- Add many Lua APIs. See also docs/ folder for details.
+- Add Android support experimentally.
+- Speed up loading save data much.
+- Implement vanilla's house design by using a house board.
+  - Also implement tile filling via left-click with Ctrl key.
+- Enhance damage popup feature.
+  - Add an option to change the number of the popups.
+  - Show popups when a buff is added/removed.
+  - Highlight elemental damages and healing.
+- Add option's descriptions in Options menu.
+- Support full-scale PCC.
+- Enhance skill tracker feature.
+  - Increase the amount of the available skill trackers(3->10).
+  - Show skill's potentials together.
+  - Color high potentials in green and low potentials in red.
+- Port English translation from omake EN, omake overhaul EN, and omake overhaul EN hack. Great thanks to Doorknob, the main translator of them.
+- Migrate config file from JSON to HCL.
+  - Almost all of options get avaiable ingame now. You don't need touch it directly, maybe.
+
+### Fixed
+
+- [vanilla] Do not keep keys pressed during cards are dealt at casino.
+- [vanilla] Fix overflow of gold and platinum.
+- [vanilla] Fix crash when you eat an equipment which maintains your luck.
+  - Newly add Luck Growth buff to avoid it.
+- [vanilla] Fix overflow of harvest quest's reward.
+- [vanilla] Fix Y position of recipe window when the Elona window size is other than 800x600.
+- Add a missing map name for the player-owned dungeon.
+- Fix Enter key repeating too fast sometimes.
+- Fix a lot of text errors.
+- Fix Lua's require() failing if the current directory is different from the executable path.
+- Fix wrong item price shown in log window on selling.
+- Fix garbage being shown below the top left clock.
+- Fix number input not rotating in a certain case.
+- Fix heart mark being drawn in wrong position in Japanese mode.
+- Fix glitch of some UI parts in [w]ear menu.
+- Fix crashes related to splitting creatures like bubble.
+- Update links to CONTRIBUTING.md in READMEs.
+- Fix cursed food not being removed after being eaten.
+- Fix strange behaviors of damage by fire/cold and fire/coldproof blanket.
+  - Fix blanket being separated even when no item is destroyed.
+  - Fix messages saying about cold damage being displayed even if you cannot see the incident.
+  - Fix fireproof blanket's behavior changing based on your vision.
+- Fix not being able to walk diagonally in a certan condition.
+- Fix typos, mainly in English.
+- Fix being able to change your alias via wishing even if you are in wizard mode.
+- Fix your karma changing via wishing even if you are a good citizen.
 
 
 
@@ -27,7 +77,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - Fix some of errors not being displayed.
-- Fix README.md and README-jp.md to fix the current state.
+- Fix README.md and README-jp.md to fit the current state.
 - Fix overflow of character level experience.
 - Fix being unable to sell/buy in Derphy if you are a criminal.
 - Fix glitch of log window if you use the default font bundled in foobar.
