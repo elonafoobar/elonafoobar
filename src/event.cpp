@@ -58,7 +58,7 @@ void event_add(int prm_289, int prm_290, int prm_291)
     return;
 }
 
-turn_result_t event_start_proc()
+TurnResult event_start_proc()
 {
     evproc = 1;
     proc_event();
@@ -68,9 +68,9 @@ turn_result_t event_start_proc()
     if (chatteleport == 1)
     {
         chatteleport = 0;
-        return turn_result_t::exit_map;
+        return TurnResult::exit_map;
     }
-    return turn_result_t::turn_begin;
+    return TurnResult::turn_begin;
 }
 
 } // namespace elona

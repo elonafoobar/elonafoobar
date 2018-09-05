@@ -1,7 +1,7 @@
 #include "fpsmanager.hpp"
+#include <numeric>
 #include "detail/sdl.hpp"
 #include "hsp.hpp"
-#include <numeric>
 
 
 
@@ -25,28 +25,28 @@ namespace snail
 {
 
 
-void fps_manager::set_fps(int new_fps)
+void FPSManager::set_fps(int new_fps)
 {
     _fps = new_fps;
     _history = std::vector<int>(new_fps, 1000 / _fps);
 }
 
 
-double fps_manager::actual_fps()
+double FPSManager::actual_fps()
 {
     return _fps * 1000.0 / sum(_history);
 }
 
 
 
-fps_manager::fps_manager(int fps)
+FPSManager::FPSManager(int fps)
 {
     set_fps(fps);
 }
 
 
 
-void fps_manager::wait()
+void FPSManager::wait()
 {
     int duration_to_wait;
 
@@ -63,7 +63,8 @@ void fps_manager::wait()
     }
     else
     {
-        duration_to_wait = _t0 + _frame_count * 1000 / fps() - hsp::timeGetTime();
+        duration_to_wait =
+            _t0 + _frame_count * 1000 / fps() - hsp::timeGetTime();
     }
 
     if (duration_to_wait > 0)

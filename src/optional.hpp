@@ -49,6 +49,12 @@ struct optional_ref
 
     const T* operator->() const noexcept
     {
+        assert(data);
+        return data;
+    }
+
+    const T* operator*() const noexcept
+    {
         return data;
     }
 

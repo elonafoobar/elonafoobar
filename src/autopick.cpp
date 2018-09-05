@@ -8,15 +8,15 @@ namespace elona
 {
 
 
-autopick& autopick::instance()
+Autopick& Autopick::instance()
 {
-    static autopick the_instance;
+    static Autopick the_instance;
     return the_instance;
 }
 
 
 
-void autopick::load(const std::string& player_id)
+void Autopick::load(const std::string& player_id)
 {
     clear();
 
@@ -37,19 +37,19 @@ void autopick::load(const std::string& player_id)
 
 
 
-void autopick::clear()
+void Autopick::clear()
 {
     matchers.clear();
 }
 
 
 
-bool autopick::try_load(const fs::path& filepath)
+bool Autopick::try_load(const fs::path& filepath)
 {
     if (!fs::exists(filepath))
         return false;
 
-    for (const auto& line : fileutil::read_by_line{filepath})
+    for (const auto& line : fileutil::read_by_line(filepath))
     {
         if (line.empty())
             continue;
@@ -57,12 +57,12 @@ bool autopick::try_load(const fs::path& filepath)
             continue;
 
         std::string line_ = line;
-        operation op{operation::type_t::pick_up};
+        Operation op{Operation::Type::pick_up};
 
         if (strutil::starts_with(line_, u8"%=")
             || strutil::starts_with(line_, u8"=%"))
         {
-            op.type = operation::type_t::save_and_no_drop;
+            op.type = Operation::Type::save_and_no_drop;
             line_ = line_.substr(2);
         }
         else
@@ -70,23 +70,23 @@ bool autopick::try_load(const fs::path& filepath)
             switch (line_.front())
             {
             case '~':
-                op.type = operation::type_t::do_nothing;
+                op.type = Operation::Type::do_nothing;
                 line_ = line_.substr(1);
                 break;
             case '%':
-                op.type = operation::type_t::save;
+                op.type = Operation::Type::save;
                 line_ = line_.substr(1);
                 break;
             case '=':
-                op.type = operation::type_t::no_drop;
+                op.type = Operation::Type::no_drop;
                 line_ = line_.substr(1);
                 break;
             case '!':
-                op.type = operation::type_t::destroy;
+                op.type = Operation::Type::destroy;
                 line_ = line_.substr(1);
                 break;
             case '+':
-                op.type = operation::type_t::open;
+                op.type = Operation::Type::open;
                 line_ = line_.substr(1);
                 break;
             default: break;
@@ -123,7 +123,7 @@ bool autopick::try_load(const fs::path& filepath)
 
 
 
-autopick::operation autopick::get_operation(const item& ci)
+Autopick::Operation Autopick::get_operation(const Item& ci)
 {
     for (const auto& m : matchers)
     {
@@ -133,16 +133,16 @@ autopick::operation autopick::get_operation(const item& ci)
         }
     }
 
-    return operation{};
+    return Operation{};
 }
 
 
 
-bool autopick::matcher::matches(const item& ci) const
+bool Autopick::Matcher::matches(const Item& ci) const
 {
     const auto id = ci.id;
     const auto name = cnvitemname(id);
-    return ci.identification_state != identification_state_t::unidentified
+    return ci.identification_state != IdentifyState::unidentified
         && name.find(text) != std::string::npos;
 }
 

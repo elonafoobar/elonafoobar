@@ -4,8 +4,8 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
+#include "db_item.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -20,7 +20,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
     int p_at_m66 = 0;
     std::string s_at_m66;
     if (inv[prm_529].identification_state
-        != identification_state_t::completely_identified)
+        != IdentifyState::completely_identified)
     {
         return;
     }
@@ -137,7 +137,7 @@ void wear_most_valuable_equipment_for_all_body_parts()
     for (const auto& cnt : items(rc))
     {
         ci = cnt;
-        if (inv[cnt].number == 0 || inv[cnt].body_part != 0)
+        if (inv[cnt].number() == 0 || inv[cnt].body_part != 0)
         {
             continue;
         }
@@ -158,7 +158,7 @@ void wear_most_valuable_equipment()
         eqdup = 0;
         for (int j = 0; j < 30; ++j)
         {
-            if (cdata_body_part(rc, j) / 10000 == i)
+            if (cdata[rc].body_parts[j] / 10000 == i)
             {
                 bodylist(eqdup) = j + 100;
                 ++eqdup;
@@ -171,7 +171,7 @@ void wear_most_valuable_equipment()
         for (int cnt = 0, cnt_end = (eqdup); cnt < cnt_end; ++cnt)
         {
             body = bodylist(cnt);
-            i = cdata_body_part(rc, body) % 10000;
+            i = cdata[rc].body_parts[body - 100] % 10000;
             if (i == 0)
             {
                 equip_item(rc);
@@ -185,13 +185,14 @@ void wear_most_valuable_equipment()
             }
             if (eqdup > cnt + 1)
             {
-                if (cdata_body_part(rc, bodylist(cnt + 1)) % 10000 == 0)
+                if (cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000 == 0)
                 {
                     f = 0;
                 }
                 else if (
                     inv[i].value
-                    >= inv[cdata_body_part(rc, bodylist(cnt + 1)) % 10000 - 1]
+                    >= inv[cdata[rc].body_parts[bodylist(cnt + 1) - 100] % 10000
+                           - 1]
                            .value)
                 {
                     f = 0;
@@ -223,7 +224,7 @@ void supply_new_equipment()
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             ci = get_random_inv(rc);
-            if (inv[ci].number == 0)
+            if (inv[ci].number() == 0)
             {
                 f = 1;
                 break;
@@ -236,9 +237,9 @@ void supply_new_equipment()
             {
                 continue;
             }
-            if (inv[ci].number != 0)
+            if (inv[ci].number() != 0)
             {
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 f = 1;
                 break;
             }
@@ -256,21 +257,21 @@ void supply_new_equipment()
             flt(cdata[rc].level, calcfixlv(2));
         }
         mustequip = 0;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            p = cdata_body_part(rc, cnt) / 10000;
+            p = cdata[rc].body_parts[cnt] / 10000;
             if (p == 0)
             {
                 break;
             }
-            if (cdata_body_part(rc, cnt) % 10000 != 0)
+            if (cdata[rc].body_parts[cnt] % 10000 != 0)
             {
                 if (p == 5)
                 {
                     if (haveweapon == 0)
                     {
                         if (the_item_db
-                                [inv[cdata_body_part(rc, cnt) % 10000 - 1].id]
+                                [inv[cdata[rc].body_parts[cnt] % 10000 - 1].id]
                                     ->category
                             == 10000)
                         {
@@ -323,8 +324,7 @@ void supply_new_equipment()
         {
             break;
         }
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
         if (inv[ci].quality >= 4)
         {
             if (the_item_db[inv[ci].id]->category < 50000)
@@ -371,7 +371,7 @@ void supply_initial_equipments()
              cnt < cnt_end;
              ++cnt)
         {
-            gain_new_body_part(rc);
+            gain_new_body_part(cdata[rc]);
         }
     }
 
@@ -727,7 +727,7 @@ void supply_initial_equipments()
     }
     for (int i = 0; i < 30; ++i)
     {
-        p = cdata_body_part(rc, i) / 10000;
+        p = cdata[rc].body_parts[i] / 10000;
         if (p == 0)
         {
             break;
@@ -974,7 +974,7 @@ void supply_initial_equipments()
                     {
                         if (cnt < 14)
                         {
-                            item_remove(inv[ci]);
+                            inv[ci].remove();
                             continue;
                         }
                     }
@@ -1002,7 +1002,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1013,7 +1013,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1049,7 +1049,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    item_remove(inv[ci]);
+                                    inv[ci].remove();
                                     continue;
                                 }
                             }
@@ -1162,7 +1162,7 @@ void supply_initial_equipments()
             int stat = itemcreate(rc, 772, -1, -1, 0);
             if (stat != 0)
             {
-                inv[ci].number += rnd(4);
+                inv[ci].modify_number(rnd(4));
                 if (rnd(2))
                 {
                     inv[ci].param3 = -1;

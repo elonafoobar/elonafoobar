@@ -8,6 +8,7 @@
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
@@ -15,6 +16,7 @@
 #include "mef.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "random_event.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -32,32 +34,25 @@ void proc_event()
         switch (gdata_executing_immediate_quest_type)
         {
         case 1009:
-            txt(lang(u8"パーティーは終了した。"s, u8"The party is over."s));
+            txt(i18n::s.get("core.locale.quest.party.is_over"));
             calcpartyscore();
             calcpartyscore2();
-            txt(lang(
-                u8"最終得点は"s + qdata(13, gdata_executing_immediate_quest)
-                    + u8"ポイントだった！"s,
-                u8"Your final score is "s
-                    + qdata(13, gdata_executing_immediate_quest)
-                    + u8" points!"s));
+            txt(i18n::s.get(
+                "core.locale.quest.party.final_score",
+                qdata(13, gdata_executing_immediate_quest)));
             if (qdata(12, gdata_executing_immediate_quest)
                 <= qdata(13, gdata_executing_immediate_quest))
             {
                 gdata(73) = 3;
                 qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
-                txt(lang(
-                    u8"パーティーは大盛況だった！"s,
-                    u8"People had a hell of a good time!"s));
+                txt(i18n::s.get("core.locale.quest.party.complete"));
                 msg_halt();
             }
             else
             {
                 txtef(8);
-                txt(lang(
-                    u8"パーティーはぐだぐだになった…"s,
-                    u8"The party turned out to be a big flop..."s));
+                txt(i18n::s.get("core.locale.quest.party.fail"));
             }
             break;
         case 1006:
@@ -67,22 +62,18 @@ void proc_event()
                 gdata(73) = 3;
                 qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
-                txt(lang(
-                    u8"無事に納入を終えた！"s, u8"You complete the task!"s));
+                txt(i18n::s.get("core.locale.quest.collect.complete"));
                 msg_halt();
             }
             else
             {
                 txtef(8);
-                txt(lang(
-                    u8"納入は間に合わなかった…"s,
-                    u8"You fail to fulfill your task..."s));
+                txt(i18n::s.get("core.locale.quest.collect.fail"));
             }
             break;
         case 1008:
             txtef(8);
-            txt(lang(
-                u8"討伐に失敗した…"s, u8"You failed to slay the target..."s));
+            txt(i18n::s.get("core.locale.quest.conquer.fail"));
             break;
         }
         levelexitby = 4;
@@ -92,10 +83,11 @@ void proc_event()
     case 1:
         conquer_lesimas();
         flt();
-        chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 23, cdata.player().position.x, cdata.player().position.y);
         break;
     case 27:
-        if (gdata_current_map == 35)
+        if (gdata_current_map == mdata_t::MapId::show_house)
         {
             break;
         }
@@ -106,18 +98,13 @@ void proc_event()
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
         txtef(4);
-        txt(lang(
-            u8"ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」"s,
-            u8"The little sister slips from Big Daddy's shoulder, "s
-                + u8"\"Mr.Bubbles!\""s));
+        txt(i18n::s.get("core.locale.event.little_sister_slips"));
         break;
     case 28:
         txtef(5);
-        txt(lang(
-            u8"…ぅっぅぅ…っぅぅっぅううううみみゃぁ！！！"s,
-            u8"memememw...MEMEMEM...MEWWWWWW!"s));
+        txt(i18n::s.get("core.locale.event.ehekatl"));
         msg_halt();
-        play_animation(21);
+        RagnarokAnimation().play();
         flt();
         chara_create(
             -1,
@@ -148,74 +135,67 @@ void proc_event()
         break;
     case 12:
         update_screen();
-        s = lang(u8"ペットとの再会"s, u8"Reunion with your pet"s);
-        buff = lang(
-            u8"あなたは懐かしい鳴き声に気付いて、ふと歩みを止めた。なんと、船が難破した時に居なくなったあなたのペットが、嬉しそうに走ってくる！あなたのペットは…"s,
-            u8"As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is..."s);
-        listmax = 0;
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"犬だ！"s, u8"a dog!"s);
-        ++listmax;
-        list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"猫だ！"s, u8"a cat!"s);
-        ++listmax;
-        list(0, listmax) = 3;
-        listn(0, listmax) = lang(u8"クマだ！"s, u8"a bear!"s);
-        ++listmax;
-        list(0, listmax) = 4;
-        listn(0, listmax) = lang(u8"少女だ！"s, u8"a little girl!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re13");
-        p = 3;
-        if (rtval == 1)
         {
-            p = 165;
-        }
-        if (rtval == 2)
-        {
-            p = 164;
-        }
-        if (rtval == 3)
-        {
-            p = 108;
-        }
-        if (rtval == 4)
-        {
-            p = 166;
+            std::vector<std::string> choices;
+            for (int i = 0; i < 4; ++i)
+            {
+                choices.push_back(i18n::s.get_enum(
+                    "core.locale.event.popup.reunion_with_pet.choices", i));
+            }
+            int result = show_random_event_window(
+                i18n::s.get("core.locale.event.popup.reunion_with_pet.title"),
+                i18n::s.get("core.locale.event.popup.reunion_with_pet.text"),
+                choices,
+                u8"bg_re13");
+            p = 3;
+            if (result == 0)
+            {
+                p = 165;
+            }
+            if (result == 1)
+            {
+                p = 164;
+            }
+            if (result == 2)
+            {
+                p = 108;
+            }
+            if (result == 3)
+            {
+                p = 166;
+            }
         }
         flt();
-        initlv = cdata[0].level * 2 / 3 + 1;
+        initlv = cdata.player().level * 2 / 3 + 1;
         novoidlv = 1;
         chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         new_ally_joins();
         break;
     case 13:
-        play_music(80);
-        s = lang(u8"結婚"s, u8"Marriage"s);
-        buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
-                u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
-            u8"At last, you and "s + name(marry) +
-                u8" are united in marriage! After the wedding ceremony, you receive some gifts."s);
-        listmax = 0;
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(
-            u8"生涯をあなたに捧げる"s, u8"Without you, life has no meaning."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re14");
+        play_music("core.mcWedding");
+        show_random_event_window(
+            i18n::s.get("core.locale.event.popup.marriage.title"),
+            i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]),
+            {i18n::s.get_enum("core.locale.event.popup.marriage.choices", 0)},
+            u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
             flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
-            flttypemajor = fsetchest(rnd(length(fsetchest)));
-            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            flttypemajor = choice(fsetchest);
+            itemcreate(
+                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         }
-        itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 559, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
         itemcreate(
-            -1, 55, cdata[0].position.x, cdata[0].position.y, rnd(3) + 2);
-        txt(lang(
-            u8"何かが足元に転がってきた。"s,
-            u8"Something is put on the ground."s));
-        autosave = 1 * (gdata_current_map != 35);
+            -1,
+            55,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            rnd(3) + 2);
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 29:
     {
@@ -235,12 +215,10 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
-        txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
-                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
-            u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.event.guarded_by_lord",
+            mapname(gdata_current_map),
+            cdata[tc]));
     }
     break;
     case 4:
@@ -263,60 +241,53 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
-        txt(lang(
-            u8"どうやら最深層まで辿り着いたらしい…"s,
-            u8"It seems you have reached the deepest level of this dungeon."s));
+        txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
-        txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
-                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
-            u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.event.guarded_by_lord",
+            mapname(gdata_current_map),
+            cdata[tc]));
         break;
     case 5:
-        play_music(64);
+        play_music("core.mcVictory");
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;
-        itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         flt();
-        itemcreate(-1, 236, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 236, cdata.player().position.x, cdata.player().position.y, 0);
         nostack = 1;
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y);
-        inv[ci].number = 200 + inv[ci].number * 5;
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y);
+        inv[ci].set_number(200 + inv[ci].number() * 5);
         flt();
         itemcreate(
             -1,
             55,
-            cdata[0].position.x,
-            cdata[0].position.y,
+            cdata.player().position.x,
+            cdata.player().position.y,
             clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
-        itemcreate(-1, 239, cdata[0].position.x, cdata[0].position.y, 0);
+        itemcreate(
+            -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 0;
         txtef(2);
-        txt(lang(
-            u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
-        txt(lang(
-            u8"何かが足元に転がってきた。"s,
-            u8"Something is put on the ground."s));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
-        cdata[0].fame += gdata(74);
-        if (gdata_current_map == 42)
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
+        cdata.player().fame += gdata(74);
+        if (gdata_current_map == mdata_t::MapId::the_void)
         {
             adata(20, gdata_current_map) = 0;
             gdata(186) = gdata(186) + 5;
-            txt(lang(
-                u8"この階の封印が解けたようだ！"s,
-                u8"The seal of this level is now broken!"s));
+            txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
         {
@@ -324,9 +295,7 @@ void proc_event()
         }
         break;
     case 16:
-        txt(lang(
-            u8"あなたは無事に護衛の任務を終えた。"s,
-            u8"You complete the escort."s));
+        txt(i18n::s.get("core.locale.quest.escort.complete"));
         tc = evdata2(evnum - (evnum != 0) * 1);
         talk_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
@@ -346,40 +315,39 @@ void proc_event()
         }
         break;
     case 6:
-        if (cdata[0].level > 5)
+        if (cdata.player().level > 5)
         {
             for (int i = 10; i < 18; ++i)
             {
                 if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
-                    skillexp(i, 0, -500);
+                    chara_gain_skill_exp(cdata.player(), i, -500);
                 }
             }
-            if (cdata[0].karma < -30)
+            if (cdata.player().karma < -30)
             {
-                modify_karma(0, 10);
+                modify_karma(cdata.player(), 10);
             }
         }
         else
         {
-            txt(lang(
-                u8"レベル6に達していないので能力値の減少はない。"s,
-                u8"Death penalty won't be applied until you hit Lv 6."s));
+            txt(i18n::s.get("core.locale.event.death_penalty_not_applied"));
         }
         if (gdata_ether_disease_stage >= 20000)
         {
-            modcorrupt(-2000);
+            modify_ether_disease_stage(-2000);
         }
-        txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
-        cdata[0].gold -= cdata[0].gold / 3;
+        txt(i18n::s.get("core.locale.event.you_lost_some_money"));
+        cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 20:
-        dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
+        damage_hp(cdata[evdata1(evnum - (evnum != 0) * 1)], 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
-        cdata[evdata1(evnum - (evnum != 0) * 1)].state = 0;
+        cdata[evdata1(evnum - (evnum != 0) * 1)].set_state(
+            Character::State::empty);
         flt();
         itemcreate(
             -1,
@@ -391,11 +359,10 @@ void proc_event()
         tc = chara_find(221);
         if (tc != 0)
         {
-            if (cdata[tc].state == 1)
+            if (cdata[tc].state() == Character::State::alive)
             {
                 txtef(4);
-                txt(lang(
-                    u8"パエル「おかあさんーー！！」"s, u8"\"M-mom...!!\""s));
+                txt(i18n::s.get("core.locale.event.pael"));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
                 cdata[tc].enemy_id = 0;
@@ -403,7 +370,7 @@ void proc_event()
         }
         break;
     case 7:
-        label_1444();
+        event_7_setup();
         wait_key_pressed();
         screenupdate = -1;
         update_entire_screen();
@@ -417,8 +384,7 @@ void proc_event()
         --gdata_number_of_waiting_guests;
         if (chara_get_free_slot() == -1)
         {
-            txt(lang(
-                u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
+            txt(i18n::s.get("core.locale.event.guest_lost_his_way"));
             break;
         }
         if (rnd(3) == 0)
@@ -446,7 +412,8 @@ void proc_event()
                 {
                     chara_create(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
-                    cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
+                    cdata[rc].shop_rank =
+                        clamp(cdata.player().fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
@@ -477,7 +444,9 @@ void proc_event()
             for (int j = 0; j < 100; ++j)
             {
                 i = rnd(39) + 16;
-                if (cdata[i].state == 3 && cdata[i].is_contracting() == 0
+                if (cdata[i].state()
+                        == Character::State::adventurer_in_other_map
+                    && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
                 {
@@ -514,15 +483,13 @@ void proc_event()
             }
             if (tc == 0)
             {
-                txt(lang(
-                    u8"ゲストはすでに居なくなっていた。"s,
-                    u8"It seems the guest has already left your house."s));
+                txt(i18n::s.get("core.locale.event.guest_already_left"));
                 break;
             }
-            cdata[tc].state = 1;
+            cdata[tc].set_state(Character::State::alive);
             rc = tc;
-            cxinit = cdata[0].position.x;
-            cyinit = cdata[0].position.y;
+            cxinit = cdata.player().position.x;
+            cyinit = cdata.player().position.y;
             chara_place();
         }
         cdata[tc].visited_just_now() = true;
@@ -538,7 +505,7 @@ void proc_event()
             {
                 c = cnt - 1;
             }
-            if (cdata[c].state != 1)
+            if (cdata[c].state() != Character::State::alive)
             {
                 continue;
             }
@@ -553,7 +520,7 @@ void proc_event()
             p(1) = 6;
             for (const auto& ci : items(-1))
             {
-                if (inv[ci].number == 0)
+                if (inv[ci].number() == 0)
                     continue;
                 if (inv[ci].function != 44)
                     continue;
@@ -620,15 +587,12 @@ void proc_event()
         i = 0;
         for (int cc = 0; cc < 16; ++cc)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != Character::State::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
                 cdata[cc].emotion_icon = 2010;
-                txt(lang(
-                    name(cc) + u8"「目が！目がー！！」"s,
-                    name(cc) + u8" shout"s + _s(cc) + u8" "s
-                        + u8"\"Eyes! My eyes!\""s));
+                txt(i18n::s.get("core.locale.event.my_eyes", cdata[cc]));
             }
         }
         break;
@@ -636,7 +600,7 @@ void proc_event()
         i = 0;
         for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != Character::State::alive)
                 continue;
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
@@ -655,34 +619,18 @@ void proc_event()
         for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
             txtef(9);
-            if (jp)
-            {
-                txt(u8"「おかえり」"s,
-                    u8"「よう戻ったか」"s,
-                    u8"「無事で何よりです」"s,
-                    u8"「おかか♪」"s,
-                    u8"「待ってたよ」"s,
-                    u8"「おかえりなさい！」"s);
-            }
-            if (en)
-            {
-                txt(u8"\"Welcome home!\""s,
-                    u8"\"Hey, dear.\""s,
-                    u8"\"You're back!\""s,
-                    u8"\"I was waiting for you.\""s,
-                    u8"\"Nice to see you again.\""s);
-            }
+            txt(i18n::s.get("core.locale.event.okaeri"));
         }
         if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
-            for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (auto&& cc : cdata.all())
             {
-                if (cdata[cc].state != 1)
+                if (cc.state() != Character::State::alive)
                     continue;
-                if (cdata[cc].character_role == 18)
+                if (cc.character_role == 18)
                 {
-                    tc = cc;
+                    tc = cc.index;
                     break;
                 }
             }
@@ -693,18 +641,18 @@ void proc_event()
         }
         break;
     case 21:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
         txtef(3);
-        txt(lang(u8" *ゴゴゴゴゴゴ* "s, u8"* RRROOM-KABOOOOM*"s));
+        txt(i18n::s.get("core.locale.event.bomb"));
         msg_halt();
         gsel(7);
         pos(0, 0);
         picload(filesystem::dir::graphic() / u8"bg22.bmp");
         gsel(4);
         pos(windoww / 2 - 1, windowh / 2 - 1);
-        gmode(0, 640, 480);
-        grotate(7, 0, 0, 0, windoww + 4, windowh + 4);
+        gmode(0);
+        gcopy_c(7, 0, 0, 640, 480, windoww + 4, windowh + 4);
         gsel(7);
         picload(filesystem::dir::graphic() / u8"anime9.bmp");
         gsel(0);
@@ -739,13 +687,14 @@ void proc_event()
             {
                 ++p;
             }
-            gmode(4, 192, 48, 255 - p * 5);
             pos(dx, dy);
-            grotate(
+            gmode(4, 255 - p * 5);
+            gcopy_c(
                 7,
                 i / 2 % 2 * 192,
                 408,
-                0,
+                192,
+                48,
                 clamp(p * 32, 0, 192),
                 clamp(p * 8, 0, 48));
             if (i > 14)
@@ -760,13 +709,14 @@ void proc_event()
             {
                 p(1) = i % 3;
             }
-            gmode(2, 96, 48);
             pos(dx, dy - clamp(i * 3 / 2, 0, 18) - 16);
-            grotate(
+            gmode(2);
+            gcopy_c(
                 7,
                 p(1) * 96,
                 288,
-                0,
+                96,
+                48,
                 clamp(i * 12, 0, 144),
                 clamp(i * 6, 0, 72));
             if (i > 4)
@@ -774,28 +724,41 @@ void proc_event()
                 ++p(2);
                 ++p(3);
             }
-            gmode(4, 96, 96, clamp(p(2) * 6, 0, 100));
             pos(dx, dy - clamp(p(2) * 2, 0, 40));
-            grotate(
-                7, 0, 0, 0, clamp(p(2) * 8, 0, 240), clamp(p(2) * 5, 0, 96));
-            gmode(4, 96, 96, p(3) * 10);
+            gmode(4, clamp(p(2) * 6, 0, 100));
+            gcopy_c(
+                7,
+                0,
+                0,
+                96,
+                96,
+                clamp(p(2) * 8, 0, 240),
+                clamp(p(2) * 5, 0, 96));
             pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
-            grotate(
-                7, 96, 0, 0, clamp(p(3) * 10, 0, 96), clamp(p(3) * 10, 0, 96));
-            gmode(4, 192, 80, clamp(p(3) * 5, 0, 100));
+            gmode(4, p(3) * 10);
+            gcopy_c(
+                7,
+                96,
+                0,
+                96,
+                96,
+                clamp(p(3) * 10, 0, 96),
+                clamp(p(3) * 10, 0, 96));
             pos(dx, dy - 4);
-            grotate(
+            gmode(4, clamp(p(3) * 5, 0, 100));
+            gcopy_c(
                 7,
                 i / 4 % 2 * 192,
                 96,
-                0,
+                192,
+                80,
                 clamp(p(2) * 8, 0, 400),
                 clamp(p(2), 0, 48));
-            gmode(4, 192, 96, p(3) * 10);
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
-            grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
+            gmode(4, p(3) * 10);
+            gcopy_c(7, i / 3 % 2 * 192, 192, 96, 96, 192, 96);
             redraw();
-            await(config::instance().animewait * 3.5);
+            await(Config::instance().animewait * 3.5);
         }
         gmode(2);
         update_entire_screen();
@@ -803,21 +766,20 @@ void proc_event()
         tlocy = evdata2(evnum - (evnum != 0) * 1);
         range_ = 31;
         ele = 59;
-        aniref = range_;
-        anix = tlocx;
-        aniy = tlocy;
-        play_animation(17);
+        BallAnimation(
+            {tlocx, tlocy}, range_, BallAnimation::Type::atomic_bomb, ele)
+            .play();
         update_screen();
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
             dy = tlocy - range_ + i;
-            if (dy < 0 || dy >= mdata(1))
+            if (dy < 0 || dy >= mdata_map_height)
                 continue;
             {
                 for (int j = 0; j < range_ * 2 + 1; ++j)
                 {
                     dx = tlocx - range_ + j;
-                    if (dx < 0 || dx >= mdata(0))
+                    if (dx < 0 || dx >= mdata_map_width)
                         continue;
                     if (dist(tlocx, tlocy, dx, dy) > range_)
                         continue;
@@ -838,7 +800,7 @@ void proc_event()
                     {
                         tc = map(dx, dy, 1) - 1;
                         dmg = 1000;
-                        dmghp(tc, dmg, -17);
+                        damage_hp(cdata[tc], dmg, -17);
                     }
                     mapitem_fire(dx, dy);
                 }
@@ -846,47 +808,45 @@ void proc_event()
         }
         if (evdata1(evnum - (evnum != 0) * 1) == 33
             && evdata2(evnum - (evnum != 0) * 1) == 16
-            && gdata_current_map == 15 && gdata_red_blossom_in_palmia == 1)
+            && gdata_current_map == mdata_t::MapId::palmia
+            && gdata_red_blossom_in_palmia == 1)
         {
             gdata_red_blossom_in_palmia = 2;
-            snd(44);
-            txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            quest_update_journal_msg();
         }
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild)
         {
-            modify_karma(0, -80 + trait(162) * 60);
+            modify_karma(cdata.player(), -80 + trait(162) * 60);
         }
         else
         {
-            modify_karma(0, -10);
+            modify_karma(cdata.player(), -10);
         }
         break;
     case 18:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
         gdata_weather = 1;
-        envonly = 1;
-        play_music();
-        txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
+        sound_play_environmental();
+        txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
-        play_animation(21);
+        RagnarokAnimation().play();
         for (int i = 0; i < 200; ++i)
         {
             for (int j = 0; j < 2; ++j)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
                 map(x, y, 0) = 37;
             }
             x = rnd(inf_screenw) + scx;
             y = rnd(inf_screenh) + scy;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1) || rnd(5) == 0)
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height
+                || rnd(5) == 0)
             {
-                x = rnd(mdata(0));
-                y = rnd(mdata(1));
+                x = rnd(mdata_map_width);
+                y = rnd(mdata_map_height);
             }
             mef_add(
                 x,
@@ -925,7 +885,7 @@ void proc_event()
                 {
                     snd(45);
                 }
-                await(config::instance().animewait);
+                await(Config::instance().animewait);
             }
         }
         break;
@@ -933,29 +893,27 @@ void proc_event()
         if (evdata1(evnum - (evnum != 0) * 1) != 0)
             break;
         txtef(3);
-        txt(lang(
-            u8"けたたましい警報が鳴り響いた！"s,
-            u8"*beeeeeep!* An alarm sounds loudly!"s));
-        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-             ++cc)
+        txt(i18n::s.get("core.locale.event.alarm"));
+        for (auto&& cc : cdata.others())
         {
-            if (cdata[cc].state == 1)
+            if (cc.state() == Character::State::alive)
             {
-                cdata[cc].relationship = -3;
-                cdata[cc].enemy_id = 0;
-                cdata[cc].hate = 250;
+                cc.relationship = -3;
+                cc.enemy_id = 0;
+                cc.hate = 250;
             }
         }
         break;
     case 26:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
             break;
-        txt(lang(u8"強盗があなたに目をつけた！"s, u8"Blaggers pick on you!"s));
+        txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)
         {
             flt();
-            initlv = cdata[0].level;
-            chara_create(-1, 215, cdata[0].position.x, cdata[0].position.y);
+            initlv = cdata.player().level;
+            chara_create(
+                -1, 215, cdata.player().position.x, cdata.player().position.y);
         }
         break;
     }

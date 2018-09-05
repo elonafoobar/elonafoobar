@@ -3,6 +3,8 @@ local Enums = Elona.require("Enums")
 local Item = Elona.require("Item")
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
+local Iter = Elona.require("Iter")
+local Map = Elona.require("Map")
 local table = Elona.require("table")
 
 local potions = {736, 711, 706, 626, 577, 566, 559, 519, 433, 432,
@@ -45,19 +47,23 @@ local function make_item_variants(x, y, item_id)
 end
 
 local function switch_item_type(chara)
+   if not Store.map_local.potion_chara then
+      return
+   end
+
    local list
-   GUI.txt_color(2)
-   if chara.index == Store.potion_chara.index then
+   GUI.txtef("Green")
+   if chara.index == Store.map_local.potion_chara.index then
       list = potions
       GUI.txt("*potion* ")
-   elseif chara.index == Store.rod_chara.index then
+   elseif chara.index == Store.map_local.rod_chara.index then
       list = rods
       GUI.txt("*rod* ")
-   elseif chara.index == Store.scroll_chara.index then
+   elseif chara.index == Store.map_local.scroll_chara.index then
       list = scrolls
       GUI.txt("*scroll* ")
    else
-      GUI.txt_color(0)
+      GUI.txtef("White")
       return
    end
 
@@ -74,6 +80,15 @@ local function switch_item_type(chara)
    end
 end
 
+local function gain_magic_skills()
+   Chara.player():gain_skill_exp(14, 999999)
+   Chara.player():gain_skill_exp(155, 999999)
+   Chara.player():gain_skill_exp(174, 999999)
+   Chara.player():gain_skill(164, 9999)
+   Chara.player():gain_skill(172, 9999)
+   Chara.player():gain_skill(188, 9999)
+end
+
 local function gain_all_spells()
    for spell_id=400, 466 do
       if spell_id ~= 426 and spell_id ~= 427 then
@@ -83,21 +98,21 @@ local function gain_all_spells()
 end
 
 local function setup()
-   Store.potion_chara = make_sandbag(23, 28, potion_switcher)
-   Store.scroll_chara = make_sandbag(25, 28, scroll_switcher)
-   Store.rod_chara = make_sandbag(27, 28, rod_switcher)
+   Store.map_local.potion_chara = make_sandbag(23, 28, potion_switcher)
+   Store.map_local.scroll_chara = make_sandbag(25, 28, scroll_switcher)
+   Store.map_local.rod_chara = make_sandbag(27, 28, rod_switcher)
 
-   Store.test_chara = make_sandbag(25, 22, 34)
+   Store.map_local.test_chara = make_sandbag(25, 22, 34)
 
-   -- TODO add docs
-   Chara.player():gain_skill_exp(14, 999999)
-   Chara.player():gain_skill_exp(155, 999999)
-   Chara.player():gain_skill_exp(174, 999999)
-   Chara.player():gain_skill(164, 9999)
-   Chara.player():gain_skill(172, 9999)
-   Chara.player():gain_skill(188, 9999)
+   gain_magic_skills()
    gain_all_spells()
+
+   for pos in Iter.rectangle_iter(17, 17, 33, 33) do
+      if pos.x == 17 or pos.y == 17 or pos.x == 33 or pos.y == 33 then
+         Map.set_tile(pos.x, pos.y, Map.generate_tile(Enums.TileKind.Wall))
+      end
+   end
 end
 
-Event.register(Event.EventKind.MapInitialized, setup)
+Event.register(Event.EventKind.ScriptLoaded, setup)
 Event.register(Event.EventKind.CharaDamaged, switch_item_type)

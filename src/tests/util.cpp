@@ -1,10 +1,12 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
 #include "../enums.hpp"
+#include "../i18n.hpp"
+#include "../init.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../variables.hpp"
+#include "tests.hpp"
 
 namespace elona
 {
@@ -15,6 +17,7 @@ void set_english()
 {
     elona::jp = 0;
     elona::en = 1;
+    initialize_i18n();
     set_item_info();
 }
 
@@ -22,14 +25,15 @@ void set_japanese()
 {
     elona::jp = 1;
     elona::en = 0;
+    initialize_i18n();
     set_item_info();
 }
 
-void normalize_item(item& i)
+void normalize_item(Item& i)
 {
     i.quality = 3;
-    i.curse_state = curse_state_t::none;
-    i.identification_state = identification_state_t::completely_identified;
+    i.curse_state = CurseState::none;
+    i.identification_state = IdentifyState::completely_identified;
     i.material = 34;
     i.quality = 1;
     i.dv = 0;
@@ -53,14 +57,14 @@ std::string test_itemname(int id, int number, bool prefix)
     return name;
 }
 
-item& create_item(int id, int number)
+Item& create_item(int id, int number)
 {
     REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
     normalize_item(elona::inv[elona::ci]);
     return elona::inv[elona::ci];
 }
 
-character& create_chara(int id, int x, int y)
+Character& create_chara(int id, int x, int y)
 {
     elona::fixlv = 0;
     REQUIRE(chara_create(-1, id, x, y));

@@ -1,43 +1,381 @@
 #pragma once
 
+#include "optional.hpp"
+#include "position.hpp"
+
 
 
 namespace elona
 {
 
 
-enum class animation_type
-{
-    bolt = 0,
-    magic_arrow = 1,
-    ball = 2,
-    breath = 3,
-    heal = 5,
-    debuff = 6,
-    offer = 7,
-    fail_to_cast = 8,
-    swarm = 9,
-    healing_rain = 11,
-    melee_attack = 12,
-    break_ = 14,
-    throw_ = 15,
-    atomic_bomb = 17,
-    distant_attack = 18,
-    miracle = 19,
-    geen_engeneering = 20,
-    ragnarok = 21,
-    meteor = 22,
 
-    // TODO(ranged weapon)
-    // 108, 109, 110, 111
+class AbstractAnimation
+{
+public:
+    void play();
+
+
+protected:
+    virtual void do_play() = 0;
+
+
+    virtual bool updates_screen()
+    {
+        return true;
+    }
 };
 
 
-void play_animation(int);
+
+class FailureToCastAnimation : public AbstractAnimation
+{
+public:
+    FailureToCastAnimation(const Position& caster_pos)
+        : caster_pos(caster_pos)
+    {
+    }
 
 
-extern int FIXME_dig_animation_x;
-extern int FIXME_dig_animation_y;
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& caster_pos;
+};
+
+
+
+class BrightAuraAnimation : public AbstractAnimation
+{
+public:
+    enum class Type
+    {
+        debuff,
+        offering,
+        healing,
+        healing_rain,
+    };
+
+
+    BrightAuraAnimation(const Position& target_pos, Type type)
+        : target_pos(target_pos)
+        , type(type)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& target_pos;
+    Type type;
+};
+
+
+
+class BreathAnimation : public AbstractAnimation
+{
+public:
+    BreathAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
+        int element)
+        : attacker_pos(attacker_pos)
+        , target_pos(target_pos)
+        , element(element)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& attacker_pos;
+    const Position& target_pos;
+    int element;
+};
+
+
+
+class BallAnimation : public AbstractAnimation
+{
+public:
+    enum class Type
+    {
+        ball,
+        atomic_bomb,
+    };
+
+
+    BallAnimation(
+        const Position& position,
+        int range,
+        Type type,
+        int element = 0)
+        : position(position)
+        , range(range)
+        , type(type)
+        , element(element)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& position;
+    int range;
+    Type type;
+    int element;
+};
+
+
+
+class BoltAnimation : public AbstractAnimation
+{
+public:
+    BoltAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
+        int element,
+        int distance)
+        : attacker_pos(attacker_pos)
+        , target_pos(target_pos)
+        , element(element)
+        , distance(distance)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& attacker_pos;
+    const Position& target_pos;
+    int element;
+    int distance;
+};
+
+
+
+class ThrowingObjectAnimation : public AbstractAnimation
+{
+public:
+    ThrowingObjectAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
+        int item_chip,
+        int item_color)
+        : attacker_pos(attacker_pos)
+        , target_pos(target_pos)
+        , item_chip(item_chip)
+        , item_color(item_color)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& attacker_pos;
+    const Position& target_pos;
+    int item_chip;
+    int item_color;
+};
+
+
+
+class SwarmAnimation : public AbstractAnimation
+{
+public:
+    SwarmAnimation(const Position& target_pos)
+        : target_pos(target_pos)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& target_pos;
+};
+
+
+
+class RangedAttackAnimation : public AbstractAnimation
+{
+public:
+    enum class Type
+    {
+        magic_arrow = 0,
+        distant_attack = 1,
+        bow = 108,
+        crossbow = 109,
+        firearm = 110,
+        throwing = 111,
+    };
+
+
+    RangedAttackAnimation(
+        const Position& attacker_pos,
+        const Position& target_pos,
+        Type type,
+        int fired_item_subcategory = 0,
+        int fired_item_image = 0,
+        int fired_item_color = 0)
+        : attacker_pos(attacker_pos)
+        , target_pos(target_pos)
+        , type(type)
+        , fired_item_subcategory(fired_item_subcategory)
+        , fired_item_image(fired_item_image)
+        , fired_item_color(fired_item_color)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    const Position& attacker_pos;
+    const Position& target_pos;
+    Type type;
+    int fired_item_subcategory;
+    int fired_item_image;
+    int fired_item_color;
+};
+
+
+
+class MeleeAttackAnimation : public AbstractAnimation
+{
+public:
+    MeleeAttackAnimation(
+        const Position& position,
+        bool debris,
+        int attack_skill,
+        int damage_percent,
+        bool is_critical)
+        : position(position)
+        , debris(debris)
+        , attack_skill(attack_skill)
+        , damage_percent(damage_percent)
+        , is_critical(is_critical)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+private:
+    const Position& position;
+    bool debris;
+    int attack_skill;
+    int damage_percent;
+    bool is_critical;
+};
+
+
+
+class GeneEngineeringAnimation : public AbstractAnimation
+{
+public:
+    GeneEngineeringAnimation(const Position& position)
+        : position(position)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+private:
+    const Position& position;
+};
+
+
+
+class MiracleAnimation : public AbstractAnimation
+{
+public:
+    MiracleAnimation()
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+};
+
+
+
+class MeteorAnimation : public AbstractAnimation
+{
+public:
+    MeteorAnimation()
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+};
+
+
+
+class RagnarokAnimation : public AbstractAnimation
+{
+public:
+    RagnarokAnimation()
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+    virtual bool updates_screen() override
+    {
+        return false;
+    }
+};
+
+
+
+class BreakingAnimation : public AbstractAnimation
+{
+public:
+    BreakingAnimation(const Position& position)
+        : position(position)
+    {
+    }
+
+
+protected:
+    virtual void do_play() override;
+
+
+private:
+    Position position;
+};
+
 
 
 } // namespace elona

@@ -29,49 +29,49 @@ void enforce_mixer(int)
 
 
 
-sdl_core::sdl_core()
+SDLCore::SDLCore()
 {
 }
 
 
 
-sdl_core::~sdl_core()
+SDLCore::~SDLCore()
 {
 }
 
 
 
-sdl_ttf::sdl_ttf()
+SDLTTF::SDLTTF()
 {
 }
 
 
 
-sdl_ttf::~sdl_ttf()
+SDLTTF::~SDLTTF()
 {
 }
 
 
 
-sdl_image::sdl_image()
+SDLImage::SDLImage()
 {
 }
 
 
 
-sdl_image::~sdl_image()
+SDLImage::~SDLImage()
 {
 }
 
 
 
-sdl_mixer::sdl_mixer()
+SDLMixer::SDLMixer()
 {
 }
 
 
 
-sdl_mixer::~sdl_mixer()
+SDLMixer::~SDLMixer()
 {
 }
 

@@ -3,12 +3,14 @@ The following is ideal; not all of these are being regarded at the moment.
 
 ## C++
 
+- C++ formatting style is handled by the use of `clang-format`. It's best to set up `clang-format` to be run after saving a `.cpp`/`.hpp` file in your editor. If it can't be done, you'll have to remember to use `make format`/`nmake -f Makefile.win format` after finishing your changes. Continuous integration is set up so code with inconsistent formatting will fail the build.
 - C++ source files use `.cpp`, header files use `.hpp`.
 - Try to keep source files below 5,000SLoC. This makes a high-level overview of pieces of related functionality easier to parse.
 - Break up large methods as much as possible, especially things like long `switch` statements.
   + Even better, see if there are ways to externalize data in declarative file formats, like item/character definitions.
 - For large hunks of related code, split them up into files named with a common prefix. For example, `action.cpp`, `action_dig.cpp` and `action_melee.cpp`.
 - We use `snake_case` for C++ code.
+  - For struct/class/enum names, Use `PascaleCase` except for `std`-library-like types such as `iterator`.
 - Prefix public methods inside C++ source files with the name of the file. For example, `enchantment.hpp` could contain `enchantment_add()` and `enchantment_remove()`. This makes it easier to work out where the functions come from. Of course this needn't always be the case, for example if a large group of related functionality is spread out throughout related files. In that case, use the prefix of the main file (for `action_dig.cpp`, use `action_`).
 - Use names that make sense in English. Instead of `dmghp`, use `damage_hp`.
 - Use `#pragma once` inside headers.

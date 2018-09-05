@@ -1,10 +1,9 @@
 --luacheck: ignore
---ldoc -c doc/config.ld -s doc -l doc ./lua_api.cpp
-project = "elomod"
-title = "elomod"
-description = "ElonaFoobar Mod API"
+project = "Lua API"
+title = "Lua API"
+description = "Elona foobar Mod API"
 full_description = [[
-  Core API for modding ElonaFoobar
+  Core API for modding Elona foobar
 ]]
 no_lua_ref = true
 convert_opt = true
@@ -17,12 +16,11 @@ format = "discount"
 template_escape = ">"
 dir = "./doc"
 examples = {"./doc/examples"}
-readme = "./doc/readme.md"
+topics = {"./doc/readme.md", "./doc/topics/i18n.md", "./doc/topics/i18n_functions.md"}
 
 new_type("event", "Events", false, "Event Parameters")
 new_type("enum", "Enums", false, "Enum Values")
 
--- https://forums.factorio.com/viewtopic.php?t=32039#p202158
 custom_see_handler("^(http[s]?%:%/%/.-) (.+)$",
     function(url, name)
         return name, url

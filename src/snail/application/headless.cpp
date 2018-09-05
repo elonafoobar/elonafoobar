@@ -10,41 +10,48 @@ namespace snail
 
 
 
-application& application::instance()
+Application& Application::instance()
 {
-    static application the_instance;
+    static Application the_instance;
     return the_instance;
 }
 
 
-void application::set_title(const std::string&)
+void Application::set_title(const std::string&)
 {
 }
 
 
 
-void initialize(const std::string&)
+void Application::initialize(const std::string&)
 {
+    _window.reset(new Window(
+        "snail headless",
+        Window::InitialPosition::undefined,
+        Window::InitialPosition::undefined,
+        width(),
+        height(),
+        Window::Flag::shown));
+    _renderer.reset(new Renderer(
+        *_window, Renderer::Flag::accelerated | Renderer::Flag::present_vsync));
 }
 
 
 
-
-
-void application::quit()
+void Application::quit()
 {
     _will_quit = true;
 }
 
 
 
-void application::register_finalizer(std::function<void()>)
+void Application::register_finalizer(std::function<void()>)
 {
 }
 
 
 
-void application::main_loop()
+void Application::main_loop()
 {
     while (1)
     {
@@ -55,12 +62,12 @@ void application::main_loop()
 
 
 
-void application::proc_event()
+void Application::proc_event()
 {
 }
 
 
-void set_fullscreen_mode(window::fullscreen_mode_t)
+void set_fullscreen_mode(Window::FullscreenMode)
 {
 }
 

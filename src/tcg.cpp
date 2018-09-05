@@ -4,6 +4,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
 #include "random.hpp"
@@ -112,20 +113,21 @@ int emax_at_tcg = 0;
 
 int cdbit(int prm_985, int prm_986)
 {
-    return HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
+    return (card_at_tcg(30, prm_986) & (1 << prm_985)) ? 1 : 0;
 }
 
 
 
 void cdbitmod(int prm_987, int prm_988, int prm_989)
 {
-    if (prm_989 == 0)
+    if (prm_989)
     {
-        HMMBITOFF(card_at_tcg(30 + prm_987 / 32, prm_988), prm_987 % 32);
-        return;
+        card_at_tcg(30, prm_988) |= (1 << prm_987);
     }
-    HMMBITON(card_at_tcg(30 + prm_987 / 32, prm_988), prm_987 % 32);
-    return;
+    else
+    {
+        card_at_tcg(30, prm_988) &= ~(1 << prm_987);
+    }
 }
 
 
@@ -237,29 +239,30 @@ int card_ref(int prm_991)
     if (cardreftype == 10)
     {
         cardrefbg = cardrefdomain;
-        rtvaln += lang(u8" <クリーチャー>"s, u8" <Creature>"s)
-            + lang(u8"  種族:"s, u8"  Race:"s) + cardrefrace + u8"  Hp:"s
-            + cardrefhp + u8"  Atk:"s + cardrefattack;
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.creature") + ">  "
+            + i18n::s.get("core.locale.tcg.card.race") + ":" + cardrefrace
+            + u8"  Hp:"s + cardrefhp + u8"  Atk:"s + cardrefattack;
     }
     if (cardreftype == 30)
     {
         cardrefbg = 6;
-        rtvaln += lang(u8" <土地>"s, u8" <Land>"s);
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.land") + ">";
     }
     if (cardreftype == 20)
     {
         cardrefbg = 5;
-        rtvaln += lang(u8" <スペル>"s, u8" <Spell>"s);
+        rtvaln += " <" + i18n::s.get("core.locale.tcg.card.spell") + ">";
     }
-    rtvaln +=
-        lang(u8"  ドメイン:"s, u8"  Domain:"s) + domname_at_tcg(cardrefdomain);
-    rtvaln += lang(u8"  レア度:"s, u8"  Rare:"s) + cnvrare(cardrefrare);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.domain") + ":"
+        + domname_at_tcg(cardrefdomain);
+    rtvaln += "  " + i18n::s.get("core.locale.tcg.card.rare") + ":"
+        + cnvrare(cardrefrare);
     if (cardrefskill != 0)
     {
         s_at_tcg = "";
         if (cardreftype == 10)
         {
-            s_at_tcg += lang(u8"スキル:"s, u8"Skill:"s);
+            s_at_tcg += i18n::s.get("core.locale.tcg.card.skill") + ":";
         }
         s_at_tcg += cdrefn_at_tcg(cardrefskill);
         talk_conv(s_at_tcg, 95);
@@ -361,7 +364,7 @@ void makecardlist()
             }
         }
     }
-    label_1844();
+    tcg_proc_ai_elist();
     return;
 }
 
@@ -442,14 +445,14 @@ void tcgdrawcard(int prm_994, int prm_995)
             }
             x_at_tcg = basex_at_tcg + 20;
             y_at_tcg = basey_at_tcg + 490;
-            gmode(6, -1, -1, 140);
+            gmode(6, 140);
             pos(x_at_tcg - 6, y_at_tcg - 6);
             gcopy(7, 168, 144, 82, 106);
         }
         gmode(2);
         if (card_at_tcg(6, prm_994) == 2)
         {
-            gmode(4, -1, -1, card_at_tcg(7, prm_994) * 15);
+            gmode(4, card_at_tcg(7, prm_994) * 15);
         }
         pos(x_at_tcg, y_at_tcg);
         if (cdbit(1, prm_994) == 1
@@ -459,11 +462,11 @@ void tcgdrawcard(int prm_994, int prm_995)
             {
                 gcopy(7, 72 + card_at_tcg(19, prm_994) * 72, 0, 72, 96);
                 p_at_tcg = card_at_tcg(17, prm_994) % 1000;
-                chara_preparepic(p_at_tcg, card_at_tcg(17, prm_994) / 1000);
+                auto rect = chara_preparepic(card_at_tcg(17, prm_994));
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chipc(4, p_at_tcg)
-                        + chipc(3, p_at_tcg) / 6);
-                gcopy(5, 0, 960, chipc(2, p_at_tcg), chipc(3, p_at_tcg));
+                    y_at_tcg + 32 - chara_chips[p_at_tcg].offset_y
+                        + rect->height / 6);
+                gcopy(rect->buffer, 0, 960, rect->width, rect->height);
             }
             else
             {
@@ -555,7 +558,7 @@ void tcgdraw()
     while (1)
     {
         ++t_at_tcg;
-        label_1825();
+        tcg_draw_deck_editor();
         anime_at_tcg = 0;
         font(12 + en - en * 2);
         color(255, 255, 255);
@@ -651,13 +654,11 @@ void tcgdraw()
                 {
                     if (selectmode_at_tcg == 0)
                     {
-                        cardhelp(lang(
-                            u8"メインフェイズを終了する。"s,
-                            u8"End your main phase."s));
+                        cardhelp(i18n::s.get("core.locale.tcg.end_main_phase"));
                     }
                     else
                     {
-                        cardhelp(lang(u8"ブロックしない。"s, u8"No blocker."s));
+                        cardhelp(i18n::s.get("core.locale.tcg.no_blocker"));
                     }
                 }
                 pos(holderix_at_tcg - holderspace_at_tcg - 5,
@@ -679,7 +680,7 @@ void tcgdraw()
             }
             if (chaintime_at_tcg > 5)
             {
-                gmode(5, -1, -1, clamp(chaintime_at_tcg * 3 - 40, 0, 255));
+                gmode(5, clamp(chaintime_at_tcg * 3 - 40, 0, 255));
                 cnt2_at_tcg = 0;
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
@@ -697,13 +698,14 @@ void tcgdraw()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
-                color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
                 boxl(
                     chainx_at_tcg - p_at_tcg,
                     chainy_at_tcg - p_at_tcg,
-                    chainx_at_tcg + 72 + p_at_tcg,
-                    chainy_at_tcg + 96 + p_at_tcg);
-                color(0, 0, 0);
+                    72,
+                    96,
+                    {static_cast<uint8_t>(p_at_tcg * 20),
+                     static_cast<uint8_t>(25 + p_at_tcg * 20),
+                     static_cast<uint8_t>(60 + p_at_tcg * 20)});
             }
         }
         for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
@@ -715,7 +717,7 @@ void tcgdraw()
             --efllist_at_tcg(4, cnt);
             if (efllist_at_tcg(0, cnt) == 1)
             {
-                font(20 - en * 2, snail::font_t::style_t::bold);
+                font(20 - en * 2, snail::Font::Style::bold);
                 pos(efllist_at_tcg(5, cnt) + 11,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -725,7 +727,7 @@ void tcgdraw()
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
                 font(13 - en * 2);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
@@ -736,7 +738,7 @@ void tcgdraw()
             }
             if (efllist_at_tcg(0, cnt) == 2)
             {
-                font(20 - en * 2, snail::font_t::style_t::bold);
+                font(20 - en * 2, snail::Font::Style::bold);
                 pos(efllist_at_tcg(2, cnt) + 31,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -746,7 +748,7 @@ void tcgdraw()
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
                 font(13 - en * 2);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                gmode(5, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
                     7,
@@ -767,7 +769,6 @@ void tcgdraw()
         if (screenupdate_at_tcg == -1)
         {
             screenupdate_at_tcg = 0;
-            label_1773();
             return;
         }
         else
@@ -777,17 +778,9 @@ void tcgdraw()
         }
         if (anime_at_tcg == 0)
         {
-            label_1773();
             return;
         }
     }
-}
-
-
-
-void label_1773()
-{
-    return;
 }
 
 
@@ -946,7 +939,7 @@ void gravecard(int prm_1006)
     }
     makecardlist();
     cardpos(card_at_tcg(1, prm_1006), -1);
-    label_1823();
+    tcg_update_mana();
     return;
 }
 
@@ -1217,15 +1210,11 @@ void saccard(int prm_1019, int prm_1020)
     ++sac_at_tcg;
     if (prm_1020 == 0)
     {
-        cardhelp(lang(u8"カードを捧げた。"s, u8"You sacrifice the card."s), 40);
+        cardhelp(i18n::s.get("core.locale.tcg.sacrifice.you"), 40);
     }
     else
     {
-        cardhelp(
-            lang(
-                u8"相手はカードを捧げた。"s,
-                u8"The opponent sacrifices the card."s),
-            40);
+        cardhelp(i18n::s.get("core.locale.tcg.sacrifice.opponent"), 40);
     }
     for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
@@ -1261,7 +1250,7 @@ void saccard(int prm_1019, int prm_1020)
     makecardlist();
     card_at_tcg(0, prm_1019) = 4;
     makecardlist();
-    label_1823();
+    tcg_update_mana();
     efllistadd(
         2,
         1,
@@ -1284,20 +1273,18 @@ void opencard(int prm_1021)
 
 
 
-void label_1793()
+void tcg_show_refs()
 {
     SDIM3(cdrefn_at_tcg, 50, 4);
     p_at_tcg = 0;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"自分のデッキからカードを1枚選び受け取る。"s,
-        u8"Player chooses and receives 1 card from his deck."s);
+    cdrefn_at_tcg(p_at_tcg) =
+        i18n::s.get("core.locale.tcg.ref.choose_one_card");
     p_at_tcg = 2;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"プレイヤーはカードを2枚ドローする。"s, u8"Player draws 2 cards."s);
+    cdrefn_at_tcg(p_at_tcg) =
+        i18n::s.get("core.locale.tcg.ref.draws_two_cards");
     p_at_tcg = 3;
-    cdrefn_at_tcg(p_at_tcg) = lang(
-        u8"場のクリーチャー1体を選択し、所有者の手札に戻す。"s,
-        u8"Return target creature to its owner's hand."s);
+    cdrefn_at_tcg(p_at_tcg) =
+        i18n::s.get("core.locale.tcg.ref.return_creature");
     return;
 }
 
@@ -1351,13 +1338,13 @@ void actionproc()
                             }
                         }
                         selectmode_at_tcg = 1;
-                        label_1836();
+                        tcg_prompt_action();
                         selectmode_at_tcg = -1;
                     }
                     else
                     {
                         aiblock_at_tcg = 1;
-                        label_18462();
+                        tcg_proc_ai();
                         aiblock_at_tcg = 0;
                     }
                     chainmode_at_tcg = 0;
@@ -1371,7 +1358,7 @@ void actionproc()
         --stack_at_tcg;
         if (stack_at_tcg < 0)
         {
-            label_1802();
+            tcg_clear_stack();
             return;
         }
         ac_at_tcg = cardstack_at_tcg(0, stack_at_tcg);
@@ -1441,11 +1428,11 @@ void actionproc()
         case 1:
             deckmode_at_tcg = 1;
             deckrefn_at_tcg = cardn_at_tcg(0, ac_at_tcg);
-            label_1828();
+            tcg_draw_menu();
             break;
         case 0:
             deckmode_at_tcg = 2;
-            label_1828();
+            tcg_draw_menu();
             break;
         }
 
@@ -1461,7 +1448,7 @@ void actionproc()
 
 
 
-void label_1802()
+void tcg_clear_stack()
 {
     stack_at_tcg = 0;
     return;
@@ -1476,9 +1463,7 @@ int putcard(int prm_1024, int prm_1025)
         if (prm_1025 == player_at_tcg)
         {
             snd(27);
-            cardhelp(
-                lang(u8"これ以上は場に出せない。"s, u8"Your field is full."s),
-                40);
+            cardhelp(i18n::s.get("core.locale.tcg.put.field_full"), 40);
         }
         return -1;
     }
@@ -1487,9 +1472,7 @@ int putcard(int prm_1024, int prm_1025)
         if (prm_1025 == player_at_tcg)
         {
             snd(27);
-            cardhelp(
-                lang(u8"マナが足りない。"s, u8"You don't have enough mana."s),
-                40);
+            cardhelp(i18n::s.get("core.locale.tcg.put.not_enough_mana"), 40);
         }
         return -3;
     }
@@ -1535,7 +1518,7 @@ int putcard(int prm_1024, int prm_1025)
         makecardlist();
         card_at_tcg(0, prm_1024) = 4;
         makecardlist();
-        label_1823();
+        tcg_update_mana();
         return 1;
     }
     p_at_tcg = getspotsum(prm_1025);
@@ -1585,7 +1568,7 @@ void tcginit()
     turn_at_tcg = 0;
     efllistmax_at_tcg = 10;
     cardmode_at_tcg = 0;
-    label_1793();
+    tcg_show_refs();
     DIM3(card_at_tcg, 50, maxcard_at_tcg);
     SDIM4(cardn_at_tcg, 16, 2, maxcard_at_tcg);
     DIM3(cpdata_at_tcg, 20, 2);
@@ -1606,11 +1589,11 @@ void tcginit()
     phasen_at_tcg(2) = u8"Main"s;
     phasen_at_tcg(3) = u8"End"s;
     phasen_at_tcg(4) = "";
-    domname_at_tcg(0) = lang(u8"ルルウィ"s, u8"Lulwy"s);
-    domname_at_tcg(1) = lang(u8"クミロミ"s, u8"Kumiromi"s);
-    domname_at_tcg(2) = lang(u8"ヤカテクト"s, u8"Yacatect"s);
-    domname_at_tcg(3) = lang(u8"ジュア"s, u8"Jure"s);
-    domname_at_tcg(4) = lang(u8"マニ"s, u8"etc"s);
+    domname_at_tcg(0) = i18n::s.get("core.locale.tcg.domain.lulwy");
+    domname_at_tcg(1) = i18n::s.get("core.locale.tcg.domain.kumiromi");
+    domname_at_tcg(2) = i18n::s.get("core.locale.tcg.domain.yacatect");
+    domname_at_tcg(3) = i18n::s.get("core.locale.tcg.domain.jure");
+    domname_at_tcg(4) = i18n::s.get("core.locale.tcg.domain.mani");
     chainx_at_tcg = 0;
     chainy_at_tcg = 0;
     cfg_chaintime = 50;
@@ -1654,7 +1637,7 @@ void tcginit()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
-    label_1826();
+    tcg_prepare_cnt2();
     tcgdrawbg();
     return;
 }
@@ -1761,19 +1744,22 @@ void tcgdeck()
     while (1)
     {
         tcgdrawbg();
-        s_at_tcg(0) = lang(u8"白"s, u8"White"s);
-        s_at_tcg(1) = lang(u8"青"s, u8"Blue"s);
-        s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
-        s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
-        s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
+        s_at_tcg(0) = i18n::s.get("core.locale.tcg.deck.color.white");
+        s_at_tcg(1) = i18n::s.get("core.locale.tcg.deck.color.blue");
+        s_at_tcg(2) = i18n::s.get("core.locale.tcg.deck.color.silver");
+        s_at_tcg(3) = i18n::s.get("core.locale.tcg.deck.color.red");
+        s_at_tcg(4) = i18n::s.get("core.locale.tcg.deck.color.black");
         for (int cnt = 0; cnt < 5; ++cnt)
         {
-            s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
+            s_at_tcg(cnt) =
+                i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
                 filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
+            tmpload(filesystem::u8path(u8"deck_"s + cnt + u8".s2"));
             if (!fs::exists(deck_filepath))
             {
-                s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
+                s_at_tcg(cnt) +=
+                    " (" + i18n::s.get("core.locale.tcg.deck.new") + ")";
             }
             else
             {
@@ -1796,15 +1782,16 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
+        tmpload(filesystem::u8path(u8"deck_"s + curdeck + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"デッキの構築"s, u8"Edit Deck"s),
+                i18n::s.get("core.locale.tcg.deck.choices.edit"),
                 u8"null"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s),
+                i18n::s.get("core.locale.tcg.deck.choices.set_as_main"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(400, basey_at_tcg + 230, 240);
@@ -1820,7 +1807,7 @@ void tcgdeck()
             if (rtval == 0)
             {
                 ctrl_file(
-                    file_operation2_t::_24,
+                    FileOperation2::deck_read,
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
         }
@@ -1829,7 +1816,7 @@ void tcgdeck()
         calcdecksize();
         deckmode_at_tcg(0) = 0;
         deckmode_at_tcg(1) = rtval_at_tcg;
-        label_1828();
+        tcg_draw_menu();
     }
 }
 
@@ -1877,25 +1864,25 @@ void tcgmain()
     while (1)
     {
         cpisme();
-        label_1816();
+        tcg_phase_one();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1817();
+        tcg_phase_two();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1818();
+        tcg_phase_three();
         if (gameover())
         {
-            label_1815();
+            tcg_game_over();
             return;
         }
-        label_1819();
+        tcg_phase_four();
         if (ct_at_tcg == 0)
         {
             ct_at_tcg = 1;
@@ -1909,14 +1896,14 @@ void tcgmain()
 
 
 
-void label_1815()
+void tcg_game_over()
 {
     return;
 }
 
 
 
-void label_1816()
+void tcg_phase_one()
 {
     phase_at_tcg = 0;
     ++turn_at_tcg;
@@ -1944,7 +1931,7 @@ void label_1816()
 
 
 
-void label_1817()
+void tcg_phase_two()
 {
     phase_at_tcg = 1;
     tcgdraw();
@@ -1956,7 +1943,7 @@ void label_1817()
 
 
 
-void label_1818()
+void tcg_phase_three()
 {
     phase_at_tcg = 2;
     tcgdraw();
@@ -1964,19 +1951,19 @@ void label_1818()
     if (cp_at_tcg == player_at_tcg)
     {
         selectmode_at_tcg = 0;
-        label_1836();
+        tcg_prompt_action();
     }
     else
     {
         selectmode_at_tcg = -1;
-        label_18462();
+        tcg_proc_ai();
     }
     return;
 }
 
 
 
-void label_1819()
+void tcg_phase_four()
 {
     phase_at_tcg = 3;
     if (cp_at_tcg == player_at_tcg)
@@ -2109,7 +2096,7 @@ void cslinedown()
 
 
 
-void label_1823()
+void tcg_update_mana()
 {
     elona_vector1<int> mana_at_tcg;
     int m_at_tcg = 0;
@@ -2175,12 +2162,12 @@ void label_1823()
                 pos(x_at_tcg, y_at_tcg);
                 gcopy(7, 72 + card_at_tcg(19, m_at_tcg) * 72, 0, 72, 96);
                 n_at_tcg = card_at_tcg(17, m_at_tcg) % 1000;
-                chara_preparepic(n_at_tcg, card_at_tcg(17, m_at_tcg) / 1000);
+                auto rect = chara_preparepic(card_at_tcg(17, m_at_tcg));
                 gsel(4);
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chipc(4, n_at_tcg)
-                        + chipc(3, n_at_tcg) / 6);
-                gcopy(5, 0, 960, chipc(2, n_at_tcg), chipc(3, n_at_tcg));
+                    y_at_tcg + 32 - chara_chips[n_at_tcg].offset_y
+                        + rect->height / 6);
+                gcopy(rect->buffer, 0, 960, rect->width, rect->height);
             }
             else
             {
@@ -2198,7 +2185,7 @@ void label_1823()
 
 
 
-void label_1824()
+void tcg_draw_selection()
 {
     font(12 + en - en * 2);
     gmode(2);
@@ -2210,12 +2197,12 @@ void label_1824()
         color(0, 0, 0);
         if (ccf_at_tcg == cnt)
         {
-            gmode(4, -1, -1, 255);
+            gmode(4, 255);
             color(255, 255, 255);
         }
         else
         {
-            gmode(4, -1, -1, 120);
+            gmode(4, 120);
             color(200, 200, 200);
         }
         pos(x_at_tcg, y_at_tcg);
@@ -2274,11 +2261,8 @@ void label_1824()
     font(13 - en * 2);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
-    mes(lang(
-        ""s + key_next + u8","s + key_prev
-            + u8",Tab [フィルター切替]  決定ｷｰ [カード選択]  ｷｬﾝｾﾙｷｰ [終了]"s,
-        ""s + key_next + u8","s + key_prev
-            + u8" [Change Filter]  Enter [Select]  Cancel [Exit]"s));
+    mes(""s + key_next + u8","s + key_prev
+        + i18n::s.get("core.locale.tcg.select.hint"));
     pos(basex_at_tcg + 700, basey_at_tcg + 510);
     mes(u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s
         + (dlistmax_at_tcg - 1) / 8 / 3);
@@ -2288,7 +2272,7 @@ void label_1824()
 
 
 
-void label_1825()
+void tcg_draw_deck_editor()
 {
     gmode(0);
     pos(basex_at_tcg, basey_at_tcg);
@@ -2412,9 +2396,9 @@ void label_1825()
 
 
 
-void label_1826()
+void tcg_prepare_cnt2()
 {
-    gmode(4, -1, -1, 180);
+    gmode(4, 180);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
@@ -2425,7 +2409,7 @@ void label_1826()
 
 
 
-void label_1827()
+void tcg_update_page()
 {
     if (dsc_at_tcg < 0)
     {
@@ -2449,7 +2433,7 @@ void label_1827()
 
 
 
-void label_1828()
+void tcg_draw_menu()
 {
     gsel(4);
     pos(0, 0);
@@ -2458,8 +2442,8 @@ void label_1828()
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
     SDIM3(cfname_at_tcg, 16, 10);
-    cfname_at_tcg(0) = lang(u8"候補"s, u8"List"s);
-    cfname_at_tcg(1) = lang(u8"デッキ"s, u8"Deck"s);
+    cfname_at_tcg(0) = i18n::s.get("core.locale.tcg.menu.list");
+    cfname_at_tcg(1) = i18n::s.get("core.locale.tcg.menu.deck");
     cfname_at_tcg(2) = domname_at_tcg(0);
     cfname_at_tcg(3) = domname_at_tcg(1);
     cfname_at_tcg(4) = domname_at_tcg(2);
@@ -2566,10 +2550,10 @@ label_1829_internal:
             break;
         }
     }
-    label_1827();
+    tcg_update_page();
 label_1830_internal:
-    label_1825();
-    label_1824();
+    tcg_draw_deck_editor();
+    tcg_draw_selection();
     redraw();
     await(30);
     key_check();
@@ -2613,7 +2597,7 @@ label_1830_internal:
         dsc_at_tcg -= 8;
         snd(5);
     }
-    label_1827();
+    tcg_update_page();
     if (key == key_enter)
     {
         if (dlistmax_at_tcg == 0)
@@ -2628,17 +2612,14 @@ label_1830_internal:
                 {
                     snd(27);
                     cardhelp(
-                        lang(
-                            u8"未実装のカード"s,
-                            u8"The card isn't available in this version."s),
-                        40);
+                        i18n::s.get("core.locale.tcg.card_not_available"), 40);
                     goto label_1830_internal;
                 }
             }
         label_1831_internal:
             calcdecksize();
-            label_1825();
-            label_1824();
+            tcg_draw_deck_editor();
+            tcg_draw_selection();
             act_at_tcg(0) = 0;
             act_at_tcg(1) = 0;
             act_at_tcg(2) = 0;
@@ -2660,7 +2641,7 @@ label_1830_internal:
                     goto label_1833_internal;
                 }
             }
-            label_1840();
+            tcg_update_selection();
             if (f_at_tcg == 0)
             {
                 if (act_at_tcg(0))
@@ -2687,7 +2668,7 @@ label_1830_internal:
         }
         rtval_at_tcg = dlist_at_tcg(0, dsc_at_tcg);
         rtval_at_tcg = 1;
-        label_1835();
+        tcg_draw_background();
         return;
     }
     if (key == key_cancel)
@@ -2695,19 +2676,20 @@ label_1830_internal:
         if (deckmode_at_tcg == 0)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"セーブして終了"s, u8"Save & Exit"s),
+                i18n::s.get("core.locale.tcg.menu.save_and_exit"),
                 u8"null"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"セーブしないで終了"s, u8"Just Exit"s),
+                i18n::s.get("core.locale.tcg.menu.just_exit"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
                 ctrl_file(
-                    file_operation2_t::_23,
+                    FileOperation2::deck_write,
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
             }
             else
             {
@@ -2719,7 +2701,7 @@ label_1830_internal:
             }
         }
         rtval_at_tcg = 0;
-        label_1835();
+        tcg_draw_background();
         return;
     }
     goto label_1830_internal;
@@ -2727,18 +2709,18 @@ label_1830_internal:
 
 
 
-int label_1835()
+int tcg_draw_background()
 {
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
-    label_1826();
+    tcg_prepare_cnt2();
     return rtval_at_tcg;
 }
 
 
 
-void label_1836()
+void tcg_prompt_action()
 {
     if (selectmode_at_tcg == 0)
     {
@@ -2813,7 +2795,7 @@ void label_1836()
         {
             if (cs_at_tcg == -1)
             {
-                label_1839();
+                tcg_clear_cursor();
                 return;
             }
             act_at_tcg(0) = 0;
@@ -2829,9 +2811,8 @@ void label_1836()
                         || selectmode_at_tcg == 0)
                     {
                         act_at_tcg(0) = 1;
-                        s_at_tcg += lang(
-                            u8"↑   カードを出す。\n"s,
-                            u8"UP: Put the card.\n"s);
+                        s_at_tcg +=
+                            i18n::s.get("core.locale.tcg.action.put") + "\n";
                     }
                 }
                 if (sac_at_tcg == 0)
@@ -2839,9 +2820,9 @@ void label_1836()
                     if (selectmode_at_tcg == 0)
                     {
                         act_at_tcg(1) = 1;
-                        s_at_tcg += lang(
-                            u8"↓   カードを捧げてマナを得る(1ターンに1回)。\n"s,
-                            u8"Down: Sacrifice the card.\n"s);
+                        s_at_tcg +=
+                            i18n::s.get("core.locale.tcg.action.sacrifice")
+                            + "\n";
                     }
                 }
             }
@@ -2854,9 +2835,10 @@ void label_1836()
                         if (cardcandeclareattack(cc_at_tcg))
                         {
                             act_at_tcg(0) = 1;
-                            s_at_tcg += lang(
-                                u8"↑   攻撃を宣言する。\n"s,
-                                u8"UP: Declare an attack.\n"s);
+                            s_at_tcg +=
+                                i18n::s.get(
+                                    "core.locale.tcg.action.declare_attack")
+                                + "\n";
                         }
                     }
                 }
@@ -2866,15 +2848,14 @@ void label_1836()
                     {
                         act_at_tcg(0) = 1;
                         s_at_tcg +=
-                            lang(u8"↑   ブロックする。\n"s, u8"UP: Block.\n"s);
+                            i18n::s.get("core.locale.tcg.action.block") + "\n";
                     }
                 }
                 if (cardcanuseskill(cc_at_tcg))
                 {
                     act_at_tcg(2) = 1;
-                    s_at_tcg += lang(
-                        u8"決定 スキルを使用する。\n"s,
-                        u8"ENTER: Use the skill.\n"s);
+                    s_at_tcg +=
+                        i18n::s.get("core.locale.tcg.action.use_skill") + "\n";
                 }
             }
             f_at_tcg = 0;
@@ -2890,16 +2871,14 @@ void label_1836()
             {
                 snd(27);
                 cardhelp(
-                    lang(
-                        u8"可能な行動はない。"s,
-                        u8"There is no action available."s),
+                    i18n::s.get("core.locale.tcg.action.no_action_available"),
                     40);
                 continue;
             }
             snd(40);
             cardhelp(s_at_tcg, 10);
             tcgdraw();
-            label_1840();
+            tcg_update_selection();
             cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
             key = "";
             if (f_at_tcg == -1)
@@ -2917,7 +2896,7 @@ void label_1836()
                     if (selectmode_at_tcg == 1)
                     {
                         attacktarget_at_tcg = cc_at_tcg;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
@@ -2927,7 +2906,7 @@ void label_1836()
                     actionproc();
                     if (gameover())
                     {
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
@@ -2951,13 +2930,13 @@ void label_1836()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     actionproc();
                     if (gameover())
                     {
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                 }
@@ -2985,7 +2964,7 @@ void label_1836()
                 putcard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
                 if (gameover())
                 {
-                    label_1839();
+                    tcg_clear_cursor();
                     return;
                 }
                 if (card_at_tcg(9, cc_at_tcg) == 20)
@@ -2998,14 +2977,14 @@ void label_1836()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1839();
+                        tcg_clear_cursor();
                         return;
                     }
                     actionproc();
                 }
                 if (gameover())
                 {
-                    label_1839();
+                    tcg_clear_cursor();
                     return;
                 }
             }
@@ -3017,13 +2996,13 @@ void label_1836()
         }
         if (key == key_cancel || key_escape)
         {
-            label_1839();
+            tcg_clear_cursor();
             return;
         }
         if (key == u8"s"s)
         {
             ELONA_APPEND_PROMPT(
-                lang(u8"降参する"s, u8"Surrender"s),
+                i18n::s.get("core.locale.tcg.action.surrender"),
                 u8"null"s,
                 ""s + promptmax);
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
@@ -3039,7 +3018,7 @@ void label_1836()
 
 
 
-void label_1839()
+void tcg_clear_cursor()
 {
     cursor_at_tcg = 0;
     return;
@@ -3047,7 +3026,7 @@ void label_1839()
 
 
 
-void label_1840()
+void tcg_update_selection()
 {
     p_at_tcg = 0;
     i_at_tcg = 0;
@@ -3091,10 +3070,10 @@ void label_1840()
             {
                 continue;
             }
-            gmode(4, 0, 0, clamp(p_at_tcg * 30 + 20, 0, 255));
+            gmode(4, clamp(p_at_tcg * 30 + 20, 0, 255));
             pos(x_at_tcg(cnt), y_at_tcg(cnt));
             gcopy(7, 192, 96, 36, 36);
-            gmode(4, 0, 0, 50 + i_at_tcg * 2);
+            gmode(4, 50 + i_at_tcg * 2);
             pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
             gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
         }
@@ -3114,25 +3093,25 @@ void label_1840()
         if (key == key_north)
         {
             f_at_tcg = 0;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key == key_south)
         {
             f_at_tcg = 1;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key == key_enter)
         {
             f_at_tcg = 2;
-            label_1842();
+            tcg_card_selected();
             return;
         }
         if (key != ""s)
         {
             f_at_tcg = -1;
-            label_1842();
+            tcg_card_selected();
             return;
         }
     }
@@ -3140,14 +3119,14 @@ void label_1840()
 
 
 
-void label_1842()
+void tcg_card_selected()
 {
     return;
 }
 
 
 
-void label_1844()
+void tcg_proc_ai_elist()
 {
     emax_at_tcg = 0;
     for (int cnt = 0, cnt_end = (clistmax_at_tcg(ch_at_tcg)); cnt < cnt_end;
@@ -3241,7 +3220,7 @@ void label_1844()
 
 
 
-int label_1845()
+int tcg_try_sacrifice()
 {
     if (sac_at_tcg > 0)
     {
@@ -3286,7 +3265,7 @@ int label_1845()
 
 
 
-void label_18462()
+void tcg_proc_ai()
 {
     int ec_at_tcg = 0;
 
@@ -3301,23 +3280,23 @@ void label_18462()
             {
                 cpdata_at_tcg(4, 0) = 0;
             }
-            label_1844();
+            tcg_proc_ai_elist();
             ec_at_tcg = 0;
             init = false;
         }
         if (gameover())
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         if (ec_at_tcg >= emax_at_tcg)
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         if (elist_at_tcg(0, ec_at_tcg) <= 0)
         {
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         cc_at_tcg = elist_at_tcg(1, ec_at_tcg);
@@ -3328,7 +3307,7 @@ void label_18462()
                 putcard(cc_at_tcg, cp_at_tcg);
                 if (gameover())
                 {
-                    label_1848();
+                    tcg_proc_ai_sacrifice();
                     return;
                 }
                 if (card_at_tcg(9, cc_at_tcg) == 20)
@@ -3341,7 +3320,7 @@ void label_18462()
                     {
                         chaincontinue_at_tcg = 1;
                         spellused_at_tcg = 1;
-                        label_1848();
+                        tcg_proc_ai_sacrifice();
                         return;
                     }
                     actionproc();
@@ -3351,7 +3330,7 @@ void label_18462()
             }
             else
             {
-                int stat = label_1845();
+                int stat = tcg_try_sacrifice();
                 if (stat == 1)
                 {
                     init = true;
@@ -3370,7 +3349,7 @@ void label_18462()
         if (elist_at_tcg(2, ec_at_tcg) == -2)
         {
             attacktarget_at_tcg = cc_at_tcg;
-            label_1848();
+            tcg_proc_ai_sacrifice();
             return;
         }
         ++ec_at_tcg;
@@ -3379,16 +3358,16 @@ void label_18462()
 
 
 
-void label_1848()
+void tcg_proc_ai_sacrifice()
 {
     if (aiblock_at_tcg == 0)
     {
         if (sac_at_tcg == 0)
         {
-            int stat = label_1845();
+            int stat = tcg_try_sacrifice();
             if (stat == 1)
             {
-                label_18462();
+                tcg_proc_ai();
                 return;
             }
         }

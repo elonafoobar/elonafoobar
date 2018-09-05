@@ -3,8 +3,10 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "event.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
 #include "random.hpp"
@@ -126,9 +128,9 @@ void mef_update()
         }
         if (mef(0, cnt) == 5)
         {
-            if (mdata(14) == 2)
+            if (mdata_map_indoors_flag == 2)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
                     if (gdata_weather == 3 || gdata_weather == 4)
                     {
@@ -145,8 +147,8 @@ void mef_update()
                         if (dist(
                                 dx,
                                 dy,
-                                cdata[0].position.x,
-                                cdata[0].position.y)
+                                cdata.player().position.x,
+                                cdata.player().position.y)
                             < 6)
                         {
                             sound = 6;
@@ -156,7 +158,8 @@ void mef_update()
                     {
                         x = rnd(2) + dx - rnd(2);
                         y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+                        if (x < 0 || y < 0 || x >= mdata_map_width
+                            || y >= mdata_map_height)
                         {
                             f = 0;
                             continue;
@@ -176,7 +179,7 @@ void mef_update()
         if (mef(0, cnt) == 7)
         {
             txtef(3);
-            txt(lang(u8" *"s, u8"*"s) + mef(4, cnt) + lang(u8"* "s, u8"*"s));
+            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)));
         }
         if (mef(4, cnt) != -1)
         {
@@ -206,12 +209,10 @@ void mef_proc(int tc)
         {
             if (sdata(63, tc) / 50 < 7)
             {
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
                     snd(46);
-                    txt(lang(
-                        name(tc) + u8"は酸に焼かれた。"s,
-                        name(tc) + u8" melt"s + _s(tc) + u8"."s));
+                    txt(i18n::s.get("core.locale.mef.melts", cdata[tc]));
                 }
                 if (mef(6, ef) == 0)
                 {
@@ -220,8 +221,12 @@ void mef_proc(int tc)
                         hostileaction(0, tc);
                     }
                 }
-                int stat = dmghp(
-                    tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
+                int stat = damage_hp(
+                    cdata[tc],
+                    rnd(mef(5, ef) / 25 + 5) + 1,
+                    -15,
+                    63,
+                    mef(5, ef));
                 if (stat == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -231,12 +236,10 @@ void mef_proc(int tc)
     }
     if (mef(0, ef) == 5)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd(6);
-            txt(lang(
-                name(tc) + u8"は燃えた。"s,
-                name(tc) + u8" "s + is(tc) + u8" burnt."s));
+            txt(i18n::s.get("core.locale.mef.is_burnt", cdata[tc]));
         }
         if (mef(6, ef) == 0)
         {
@@ -245,7 +248,8 @@ void mef_proc(int tc)
                 hostileaction(0, tc);
             }
         }
-        int stat = dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+        int stat = damage_hp(
+            cdata[tc], rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
             check_kill(mef(6, ef), tc);
@@ -255,12 +259,10 @@ void mef_proc(int tc)
     {
         if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 snd(46);
-                txt(lang(
-                    name(tc) + u8"は地面の液体を浴びた。"s,
-                    name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
+                txt(i18n::s.get("core.locale.mef.steps_in_pool", cdata[tc]));
             }
             wet(tc, 25);
             if (mef(6, ef) == 0)
@@ -271,10 +273,10 @@ void mef_proc(int tc)
                 }
             }
             potionspill = 1;
-            efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
+            efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
             dbid = mef(7, ef);
             access_item_db(15);
-            if (cdata[tc].state == 0)
+            if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);
             }
@@ -298,23 +300,20 @@ bool mef_proc_from_movement(int cc)
             if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
                 || cdata[cc].weight > 100)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"は蜘蛛の巣を振り払った。"s,
-                        name(cc) + u8" destroy"s + _s(cc) + u8" the cobweb."s));
+                    txt(i18n::s.get(
+                        "core.locale.mef.destroys_cobweb", cdata[cc]));
                 }
                 mef_delete(i);
             }
             else
             {
                 mef(5, i) = mef(5, i) * 3 / 4;
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
-                        name(cc) + u8" "s + is(cc)
-                            + u8" caught in a cobweb."s));
+                    txt(i18n::s.get(
+                        "core.locale.mef.is_caught_in_cobweb", cdata[cc]));
                 }
                 return true;
             }
@@ -335,12 +334,11 @@ bool mef_proc_from_physical_attack(int tc)
     {
         if (rnd(2) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    name(cc) + u8"は霧の中の幻影を攻撃した。"s,
-                    name(cc) + u8" attack"s + _s(cc)
-                        + u8" an illusion in the mist."s));
+                txt(i18n::s.get(
+                    "core.locale.mef.attacks_illusion_in_mist", cdata[cc]));
+                add_damage_popup(u8"miss", tc, {191, 191, 191});
             }
             return true;
         }

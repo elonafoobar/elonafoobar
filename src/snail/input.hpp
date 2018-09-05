@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include "../lib/noncopyable.hpp"
+#include "../optional.hpp"
 #include "detail/sdl.hpp"
 
 
@@ -13,11 +14,16 @@ namespace snail
 
 
 
-struct button
+struct KeyState : public lib::noncopyable
 {
     bool is_pressed() const noexcept
     {
         return _is_pressed;
+    }
+
+    bool was_released_immediately() const noexcept
+    {
+        return _was_released_immediately;
     }
 
     int repeat() const noexcept
@@ -36,6 +42,13 @@ struct button
     {
         _is_pressed = false;
         _repeat = -1;
+        _was_released_immediately = false;
+    }
+
+
+    void _release_immediately()
+    {
+        _was_released_immediately = true;
     }
 
 
@@ -47,12 +60,13 @@ struct button
 
 private:
     bool _is_pressed = false;
+    bool _was_released_immediately = false;
     int _repeat = -1;
 };
 
 
 
-enum class key
+enum class Key
 {
     none,
 
@@ -228,50 +242,110 @@ enum class key
     keypad_enter,
     keypad_equal,
 
+    android_back,
+
     _size,
 };
 
-inline bool is_modifier(key k)
+inline bool is_modifier(Key k)
 {
     switch (k)
     {
-    case key::ctrl:
-    case key::ctrl_l:
-    case key::ctrl_r:
-    case key::shift:
-    case key::shift_l:
-    case key::shift_r:
-    case key::gui:
-    case key::gui_l:
-    case key::gui_r:
-    case key::alt:
-    case key::alt_l:
-    case key::alt_r: return true;
+    case Key::ctrl:
+    case Key::ctrl_l:
+    case Key::ctrl_r:
+    case Key::shift:
+    case Key::shift_l:
+    case Key::shift_r:
+    case Key::gui:
+    case Key::gui_l:
+    case Key::gui_r:
+    case Key::alt:
+    case Key::alt_l:
+    case Key::alt_r: return true;
     default: return false;
     }
 }
 
 
-class input final : public lib::noncopyable
+
+class Mouse
 {
 public:
-    bool is_pressed(key k, int key_wait = 1) const;
-    bool was_pressed_just_now(key k) const;
+    enum class Button
+    {
+        left,
+        middle,
+        right,
+        x1,
+        x2,
+
+        _size,
+    };
+
+
+    int x() const
+    {
+        return _x;
+    }
+
+
+    int y() const
+    {
+        return _y;
+    }
+
+
+    const KeyState& operator[](Button button) const
+    {
+        return buttons[static_cast<size_t>(button)];
+    }
+
+
+    void _handle_event(const ::SDL_MouseButtonEvent& event);
+
+    void update();
+
+
+private:
+    int _x;
+    int _y;
+    std::array<KeyState, static_cast<size_t>(Button::_size)> buttons;
+};
+
+
+
+class Input final : public lib::noncopyable
+{
+public:
+    bool is_pressed(Key k, int key_wait = 1) const;
+    bool is_pressed(Mouse::Button b) const;
+    bool was_pressed_just_now(Key k) const;
+    bool was_pressed_just_now(Mouse::Button b) const;
 
     bool is_ime_active() const;
 
+    void show_soft_keyboard();
+    void hide_soft_keyboard();
+    void toggle_soft_keyboard();
 
-   /***
-    * Disables NumLock to prevent strange Windows-specific behavior when
-    * holding Shift and pressing a numpad key. What happens with NumLock
-    * enabled is the numpad key reverts to its non-NumLock functionality,
-    * but Shift becomes depressed for some reason. This prevents the
-    * player from running when holding Shift and pressing a numpad
-    * movement key. This does not happen on Linux, so it's probably a
-    * Windows-specific quirk.
-    *
-    * This method has no effect on platforms besides Windows.
-    */
+    const Mouse& mouse() const
+    {
+        return _mouse;
+    }
+
+
+    /***
+     * Disables NumLock to prevent strange Windows-specific behavior when
+     * holding Shift and pressing a numpad key. What happens with NumLock
+     * enabled is the numpad key reverts to its non-NumLock functionality,
+     * but Shift becomes depressed for some reason. This prevents the
+     * player from running when holding Shift and pressing a numpad
+     * movement key. This does not happen on Linux, so it's probably a
+     * Windows-specific quirk.
+     *
+     * This method has no effect on platforms besides Windows.
+     */
     void disable_numlock();
 
     /***
@@ -281,7 +355,7 @@ public:
      */
     void restore_numlock();
 
-    std::string get_text()
+    std::string pop_text()
     {
         std::string ret = _text;
         _text.clear();
@@ -289,25 +363,50 @@ public:
     }
 
 
-    virtual ~input() override = default;
+    void set_quick_action_repeat_start_wait(int wait) noexcept
+    {
+        _quick_action_repeat_start_wait = wait;
+    }
+
+    void set_quick_action_repeat_wait(int wait) noexcept
+    {
+        _quick_action_repeat_wait = wait;
+    }
 
 
-    static input& instance() noexcept;
+    virtual ~Input() override = default;
+
+
+    static Input& instance() noexcept;
 
 
     void _update();
     void _handle_event(const ::SDL_KeyboardEvent& event);
     void _handle_event(const ::SDL_TextInputEvent& event);
     void _handle_event(const ::SDL_TextEditingEvent& event);
+    void _handle_event(const ::SDL_TouchFingerEvent& event);
+    void _handle_event(const ::SDL_MouseButtonEvent& event);
 
 
 private:
-    std::array<button, static_cast<size_t>(key::_size)> _keys;
+    std::array<KeyState, static_cast<size_t>(Key::_size)> _keys;
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
 
-    input() = default;
+    // Members for handling text input of on-screen quick action
+    // buttons on Android. They need to be here since quick actions
+    // can modify inputted text.
+    optional<snail::Key> _last_quick_action_key = none;
+    optional<std::string> _last_quick_action_text = none;
+    int _quick_action_key_repeat = -1;
+    int _quick_action_text_repeat = -1;
+    int _quick_action_repeat_start_wait = 10;
+    int _quick_action_repeat_wait = 2;
+
+    Mouse _mouse;
+
+    Input() = default;
 };
 
 

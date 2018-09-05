@@ -1,11 +1,13 @@
 #include "quest.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "dmgheal.hpp"
 #include "event.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
@@ -16,7 +18,7 @@
 namespace elona
 {
 
-enum class turn_result_t;
+enum class TurnResult;
 
 int rewardfix = 0;
 
@@ -38,18 +40,18 @@ int quest_is_return_forbidden()
     return f;
 }
 
+
+
 void quest_place_target()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state == 1)
+        if (cnt.state() == Character::State::alive)
         {
-            cdata[cnt].is_quest_target() = true;
-            cdata[cnt].relationship = -3;
+            cnt.is_quest_target() = true;
+            cnt.relationship = -3;
         }
     }
-    return;
 }
 
 
@@ -58,12 +60,11 @@ int quest_targets_remaining()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state == 1)
+        if (cnt.state() == Character::State::alive)
         {
-            if (cdata[cnt].is_quest_target() == 1)
+            if (cnt.is_quest_target() == 1)
             {
                 ++f_at_m119;
             }
@@ -77,7 +78,7 @@ int quest_targets_remaining()
 void quest_check()
 {
     int p_at_m119 = 0;
-    if (gdata_current_map == 5)
+    if (gdata_current_map == mdata_t::MapId::vernis)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -86,11 +87,7 @@ void quest_check()
                 if (gdata_putit_attacks < 2)
                 {
                     gdata_putit_attacks = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -101,11 +98,7 @@ void quest_check()
                 if (gdata_thieves_hideout < 2)
                 {
                     gdata_thieves_hideout = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -116,16 +109,12 @@ void quest_check()
                 if (gdata_nightmare < 3)
                 {
                     gdata_nightmare = 3;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
     }
-    if (gdata_current_map == 12)
+    if (gdata_current_map == mdata_t::MapId::yowyn)
     {
         if (gdata_current_dungeon_level == 3)
         {
@@ -134,11 +123,7 @@ void quest_check()
                 if (gdata_cat_house < 2)
                 {
                     gdata_cat_house = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -149,16 +134,12 @@ void quest_check()
                 if (gdata_defense_line < 3)
                 {
                     gdata_defense_line = 3;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
     }
-    if (gdata_current_map == 36)
+    if (gdata_current_map == mdata_t::MapId::lumiest)
     {
         if (gdata_current_dungeon_level == 20)
         {
@@ -167,11 +148,7 @@ void quest_check()
                 if (gdata_sewer_sweeping < 2)
                 {
                     gdata_sewer_sweeping = 2;
-                    snd(44);
-                    txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    quest_update_journal_msg();
                 }
             }
         }
@@ -185,11 +162,9 @@ void quest_check()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-                 cnt < ELONA_MAX_CHARACTERS;
-                 ++cnt)
+            for (auto&& cnt : cdata.others())
             {
-                if (cdata[cnt].state == 1)
+                if (cnt.state() == Character::State::alive)
                 {
                     ++p_at_m119;
                 }
@@ -201,9 +176,7 @@ void quest_check()
             else
             {
                 txtef(4);
-                txt(lang(
-                    u8"[殲滅依頼]残り"s + p_at_m119 + u8"体"s + u8"] "s,
-                    ""s + p_at_m119 + u8" more to go."s));
+                txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119));
             }
         }
         if (gdata_executing_immediate_quest_type == 1008)
@@ -222,28 +195,27 @@ void quest_set_data(int val0)
 {
     randomize(qdata(0, rq) + 1);
     s(6) = "";
-    s(5) = lang(
-        u8"金貨"s + qdata(6, rq) + u8"枚"s,
-        ""s + qdata(6, rq) + u8" gold pieces"s);
+    s(5) = i18n::s.get("core.locale.quest.info.gold_pieces", qdata(6, rq));
     if (qdata(7, rq) != 0)
     {
         if (qdata(7, rq) < 10000)
         {
-            s(5) += lang(u8"と"s, u8" and "s)
+            s(5) += i18n::s.get("core.locale.quest.info.and")
                 + i18n::_(u8"ui", u8"reward", u8"_"s + qdata(7, rq));
         }
         else
         {
-            s(5) += lang(u8"と"s, u8" and "s) + fltname(qdata(7, rq));
+            s(5) += i18n::s.get("core.locale.quest.info.and")
+                + fltname(qdata(7, rq));
         }
     }
     if (qdata(9, rq) == -1)
     {
-        nquestdate = lang(u8"即時"s, u8"-"s);
+        nquestdate = i18n::s.get("core.locale.quest.info.no_deadline");
     }
     else
     {
-        nquestdate = ""s + qdata(9, rq) + lang(u8"日"s, u8"d"s);
+        nquestdate = i18n::s.get("core.locale.quest.info.days", qdata(9, rq));
     }
     if (qdata(3, rq) == 1006)
     {
@@ -251,13 +223,11 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(10) = ""s + cnvweight(qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(
-            ""s + s(10) + u8"の作物の納入"s,
-            u8"Gather harvests weight "s + s(10) + u8"."s);
+        s(4) = i18n::s.get("core.locale.quest.info.harvest.text", s(10));
         if (gdata_executing_immediate_quest == rq)
         {
-            s(4) += lang(u8"(現在"s, u8" (Now "s) + cnvweight(qdata(13, rq))
-                + u8")"s;
+            s(4) += i18n::s.get(
+                "core.locale.quest.info.now", cnvweight(qdata(13, rq)));
         }
         s(6) = s(4);
     }
@@ -265,12 +235,13 @@ void quest_set_data(int val0)
     {
         s = u8"%PARTY"s;
         parse_quest_board_text(val0);
-        s(10) = ""s + qdata(12, rq) + lang(u8"ポイント"s, u8" points"s);
+        s(10) =
+            i18n::s.get("core.locale.quest.info.party.points", qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(""s + s(10) + u8"の獲得"s, u8"Gather "s + s(10) + u8"."s);
+        s(4) = i18n::s.get("core.locale.quest.info.party.text", s(10));
         if (gdata_executing_immediate_quest == rq)
         {
-            s(4) += lang(u8"(現在"s, u8" (Now "s) + qdata(13, rq) + u8")"s;
+            s(4) += i18n::s.get("core.locale.quest.info.now", qdata(13, rq));
         }
         s(6) = s(4);
     }
@@ -279,16 +250,14 @@ void quest_set_data(int val0)
         s = u8"%ESCORT,"s + qdata(4, rq);
         parse_quest_board_text(val0);
         s(11) = ""s + mapname(qdata(12, rq));
-        s(4) = lang(
-            u8"クライアントを"s + s(11),
-            u8"Escort the client to "s + s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"まで護衛"s, ""s);
+        s(4) = i18n::s.get("core.locale.quest.info.escort.text", s(11));
+        s(6) = s(4);
     }
     if (qdata(3, rq) == 1001)
     {
         s = u8"%HUNT"s;
         parse_quest_board_text(val0);
-        s(4) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters."s);
+        s(4) = i18n::s.get("core.locale.quest.info.hunt.text");
         s(6) = s(4);
     }
     if (qdata(3, rq) == 1004)
@@ -296,8 +265,7 @@ void quest_set_data(int val0)
         s = u8"%SUPPLY"s;
         parse_quest_board_text(val0);
         s(4) = cnvarticle(cnvitemname(qdata(11, rq)));
-        s(6) =
-            lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
+        s(6) = i18n::s.get("core.locale.quest.info.supply.text", s(4));
     }
     if (qdata(3, rq) == 1002)
     {
@@ -308,13 +276,11 @@ void quest_set_data(int val0)
         s(12) = ""s + qname(qdata(10, rq));
         if (iorgweight(qdata(11, rq)) > 50000)
         {
-            s(10) += lang(u8"(凄く重い)"s, u8"(Heavy!)"s);
+            s(10) += i18n::s.get("core.locale.quest.info.heavy");
         }
-        s(4) = lang(
-            ""s + s(11) + u8"に住む"s + s(12) + u8"に"s + s(10),
-            u8"Deliver "s + s(10) + u8" to "s + s(12) + u8" who lives in "s
-                + s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"を配達"s, ""s);
+        s(4) = i18n::s.get(
+            "core.locale.quest.info.deliver.text", s(10), s(11), s(12));
+        s(6) = s(4);
     }
     if (qdata(3, rq) == 1003)
     {
@@ -325,8 +291,7 @@ void quest_set_data(int val0)
         }
         parse_quest_board_text(val0);
         s(4) = cnvarticle(foodname(qdata(12, rq), ""s, qdata(13, rq)));
-        s(6) =
-            lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
+        s(6) = i18n::s.get("core.locale.quest.info.supply.text", s(4));
     }
     if (qdata(3, rq) == 1008)
     {
@@ -335,10 +300,11 @@ void quest_set_data(int val0)
         s(4) = chara_refstr(qdata(12, rq), 2);
         if (qdata(12, rq) == 343)
         {
-            s(4) = lang(u8"正体不明の存在"s, u8"unknown monster"s);
+            s(4) =
+                i18n::s.get("core.locale.quest.info.conquer.unknown_monster");
         }
         s(10) = ""s + qdata(5, rq) * 10 / 6;
-        s(6) = lang(s(4) + u8"の討伐"s, u8"Slay "s + s(4) + u8"."s);
+        s(6) = i18n::s.get("core.locale.quest.info.conquer.text", s(4));
     }
     if (qdata(3, rq) == 1010)
     {
@@ -346,7 +312,7 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(4) = chara_refstr(qdata(12, rq), 2);
         s(10) = ""s + qdata(5, rq) * 3 / 2;
-        s(6) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters"s);
+        s(6) = i18n::s.get("core.locale.quest.info.huntex.text");
     }
     if (qdata(3, rq) == 1011)
     {
@@ -361,94 +327,95 @@ void quest_set_data(int val0)
         }
         else
         {
-            s(12) = lang(s(11) + u8"に住む人物"s, u8"the target in "s + s(11));
+            s(12) = i18n::s.get("core.locale.quest.info.collect.target", s(11));
         }
         if (iorgweight(qdata(11, rq)) > 50000)
         {
-            s(10) += lang(u8"(凄く重い)"s, u8"(Heavy!)"s);
+            s(10) += i18n::s.get("core.locale.quest.info.heavy");
         }
-        s(4) = lang(
-            u8"依頼人のために"s + s(12) + u8"から"s + s(10),
-            u8"Acquire "s + s(10) + u8" from "s + s(12)
-                + u8" for the client."s);
-        s(6) = s(4) + lang(u8"を調達"s, ""s);
+        s(4) = i18n::s.get("core.locale.quest.info.collect.text", s(10), s(12));
+        s(6) = s(4);
     }
     text_replace_tags_in_quest_text();
     if (val0 == 1)
     {
-        buff = lang(_kimi(3) + u8"に頼みたいことがある"s + _nda(), ""s) + buff;
+        buff = i18n::s.get(
+                   "core.locale.quest.giver.have_something_to_ask", cdata[cc])
+            + buff;
         if (qdata(9, rq) != -1)
         {
-            buff += lang(
-                u8"期限は残り"s + qdata(9, rq) + u8"日"s + _da(),
-                u8" You have "s + qdata(9, rq)
-                    + u8" days to perform the task. "s);
+            buff += i18n::s.get(
+                "core.locale.quest.giver.days_to_perform",
+                qdata(9, rq),
+                cdata[cc]);
         }
-        buff += lang(u8"依頼を受けてくれるの"s + _kana(1), u8"How about it?"s);
+        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cdata[cc]);
     }
     if (val0 == 2)
     {
         if (qdata(8, rq) == 3)
         {
-            buff += u8"@QC["s + lang(u8"依頼 完了"s, u8"Complete"s) + u8"]"s
+            buff += u8"@QC["s
+                + i18n::s.get("core.locale.quest.journal.complete") + u8"]"s
                 + s(3) + u8"\n"s;
         }
         else
         {
-            buff += u8"@QL["s + lang(u8"依頼"s, u8"Job"s) + u8"] "s + s(3)
-                + u8"\n"s;
+            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job")
+                + u8"] "s + s(3) + u8"\n"s;
         }
-        buff += lang(u8"依頼: "s, u8"Client  : "s) + qname(rq) + u8"\n"s;
-        buff += lang(u8"場所: "s, u8"Location: "s) + mapname(qdata(1, rq))
+        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq)
             + u8"\n"s;
-        buff += lang(u8"期限: "s, u8"Deadline: "s);
+        buff += i18n::s.get("core.locale.quest.journal.location")
+            + mapname(qdata(1, rq)) + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.deadline");
         if (qdata(9, rq) != -1)
         {
-            buff += lang(u8"残り"s, ""s);
+            buff += i18n::s.get("core.locale.quest.journal.remaining");
         }
         buff += nquestdate + u8"\n"s;
-        s(5) = lang(u8"報酬: "s, u8"Reward  : "s) + s(5);
+        s(5) = i18n::s.get("core.locale.quest.journal.reward") + s(5);
         talk_conv(s(5), 40 - en * 10);
         buff += s(5) + u8"\n"s;
+        s(4) = i18n::s.get("core.locale.quest.journal.detail");
         if (qdata(8, rq) == 3)
         {
-            s(4) = lang(
-                u8"内容: あとは報告するだけだ。"s,
-                u8"Detail  : Report to the client."s);
+            s(4) +=
+                i18n::s.get("core.locale.quest.journal.report_to_the_client");
         }
         else
         {
-            s(4) = lang(u8"内容: "s, u8"Detail  : "s) + s(6);
+            s(4) += s(6);
         }
         talk_conv(s(4), 40 - en * 10);
         buff += s(4) + u8"\n"s;
     }
     if (val0 == 3)
     {
-        buff = lang(
-            u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
-            u8"You've done well. Thanks. Here's your reward."s);
+        buff = i18n::s.get(
+            "core.locale.quest.giver.complete.done_well", cdata[cc]);
         if (elona::stoi(s(5)) != 0)
         {
-            txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
+            txt(i18n::s.get(
+                "core.locale.quest.giver.complete.take_reward",
+                s(5),
+                cdata[cc]));
         }
         if (qdata(3, rq) == 1006)
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                buff += lang(
-                    u8"予想以上にいい働きだったから、幾らか色を付けておいた"s
-                        + _yo(),
-                    u8"I've added some extra coins since you worked really hard."s);
+                buff += i18n::s.get(
+                    "core.locale.quest.giver.complete.extra_coins", cdata[cc]);
             }
         }
         if (qdata(3, rq) == 1009)
         {
             if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
             {
-                buff += lang(
-                    u8"予想以上の盛り上がりだったから、おまけをあげる"s + _yo(),
-                    u8"The party was terrific! I'll give you these tickets as an extra bonus."s);
+                buff += i18n::s.get(
+                    "core.locale.quest.giver.complete.music_tickets",
+                    cdata[cc]);
             }
         }
     }
@@ -460,22 +427,21 @@ void quest_set_data(int val0)
 
 void quest_on_map_initialize()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    for (auto&& cnt : cdata.others())
     {
-        if (cdata[cnt].state == 0)
+        if (cnt.state() == Character::State::empty)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 0)
+        if (cnt.character_role == 0)
         {
             continue;
         }
-        if (cdata[cnt].quality == 6)
+        if (cnt.quality == 6)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 3)
+        if (cnt.character_role == 3)
         {
             continue;
         }
@@ -488,7 +454,7 @@ void quest_on_map_initialize()
                 break;
             }
         }
-        int cnt2 = cnt;
+        int cnt2 = cnt.index;
         for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (qdata(0, cnt) == cnt2)
@@ -504,13 +470,12 @@ void quest_on_map_initialize()
         {
             break;
         }
-        qdata(0, i) = cnt;
+        qdata(0, i) = cnt.index;
         qdata(1, i) = gdata_current_map;
-        qname(i) = cdatan(0, cnt);
-        cdata[cnt].related_quest_id = i + 1;
+        qname(i) = cdatan(0, cnt.index);
+        cnt.related_quest_id = i + 1;
         gdata_number_of_existing_quests = i + 1;
     }
-    return;
 }
 
 
@@ -543,6 +508,13 @@ void quest_refresh_list()
     }
 }
 
+void quest_update_journal_msg()
+{
+    snd(44);
+    txtef(2);
+    txt(i18n::s.get("core.locale.quest.journal_updated"));
+}
+
 int quest_generate()
 {
     qdata(3, rq) = 0;
@@ -567,7 +539,7 @@ int quest_generate()
             {
                 continue;
             }
-            if (cdata[n].state != 1)
+            if (cdata[n].state() != Character::State::alive)
             {
                 continue;
             }
@@ -578,7 +550,7 @@ int quest_generate()
                 continue;
             }
             flt(40, 2);
-            flttypemajor = fsetcollect(rnd(length(fsetcollect)));
+            flttypemajor = choice(fsetcollect);
             int stat = itemcreate(n, 0, -1, -1, 0);
             if (stat != 0)
             {
@@ -609,13 +581,13 @@ int quest_generate()
         }
         return 0;
     }
-    if (cdata[0].fame >= 30000)
+    if (cdata.player().fame >= 30000)
     {
         if (rnd(13) == 0)
         {
-            qdata(5, rq) =
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+            qdata(5, rq) = rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
             minlevel = clamp(qdata(5, rq) / 7, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
@@ -631,7 +603,7 @@ int quest_generate()
                 }
                 break;
             }
-            qdata(12, rq) = cdata[56].id;
+            qdata(12, rq) = cdata.tmp().id;
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                    + gdata_year * 24 * 30 * 12);
@@ -645,13 +617,13 @@ int quest_generate()
             return 0;
         }
     }
-    if (cdata[0].fame >= 50000)
+    if (cdata.player().fame >= 50000)
     {
         if (rnd(20) == 0)
         {
-            qdata(5, rq) =
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
-            qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+            qdata(5, rq) = rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 2500 + 1));
+            qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
             minlevel = clamp(qdata(5, rq) / 4, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
@@ -667,7 +639,7 @@ int quest_generate()
                 }
                 break;
             }
-            qdata(12, rq) = cdata[56].id;
+            qdata(12, rq) = cdata.tmp().id;
             qdata(2, rq) = (rnd(6) + 2) * 24
                 + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                    + gdata_year * 24 * 30 * 12);
@@ -693,7 +665,7 @@ int quest_generate()
         qdata(7, rq) = 5;
         while (1)
         {
-            qdata(12, rq) = asettown(rnd(length(asettown)));
+            qdata(12, rq) = choice(asettown);
             if (qdata(12, rq) != gdata_current_map)
             {
                 break;
@@ -711,7 +683,8 @@ int quest_generate()
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(
-                rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
+                rnd(cdata.player().level + 10)
+                    + rnd((cdata.player().fame / 500 + 1)) + 1,
                 1,
                 80);
         }
@@ -739,18 +712,19 @@ int quest_generate()
             qdata(9, rq) = rnd(8) + 6;
             qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
-        if (qdata(12, rq) == 33 || gdata_current_map == 33)
+        if (qdata(12, rq) == 33 || gdata_current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
         return 0;
     }
-    if (rnd(23) == 0 || (gdata_current_map == 15 && rnd(8) == 0))
+    if (rnd(23) == 0
+        || (gdata_current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
             int(1.5 * std::sqrt(sdata(183, 0))) + 1,
-            cdata[0].fame / 1000 + 10);
+            cdata.player().fame / 1000 + 10);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                + gdata_year * 24 * 30 * 12);
@@ -765,10 +739,12 @@ int quest_generate()
         rewardfix = 0;
         return 0;
     }
-    if (rnd(30) == 0 || (gdata_current_map == 12 && rnd(2) == 0))
+    if (rnd(30) == 0
+        || (gdata_current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         qdata(5, rq) = clamp(
-            rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
+            rnd(cdata.player().level + 5) + rnd((cdata.player().fame / 800 + 1))
+                + 1,
             1,
             50);
         qdata(2, rq) = (rnd(6) + 2) * 24
@@ -787,10 +763,11 @@ int quest_generate()
     if (rnd(8) == 0)
     {
         qdata(5, rq) = clamp(
-            rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
+            rnd(cdata.player().level + 10)
+                + rnd((cdata.player().fame / 500 + 1)) + 1,
             1,
             80);
-        qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
+        qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
         qdata(2, rq) = (rnd(6) + 2) * 24
             + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                + gdata_year * 24 * 30 * 12);
@@ -847,14 +824,14 @@ int quest_generate()
                       adata(1, p),
                       adata(2, p))
                     * 2;
-            if (p == 33 || gdata_current_map == 33)
+            if (p == 33 || gdata_current_map == mdata_t::MapId::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
             }
             qdata(10, rq) = i;
             flt();
             dbmode = 1;
-            flttypemajor = fsetdeliver(rnd(length(fsetdeliver)));
+            flttypemajor = choice(fsetdeliver);
             get_random_item_id();
             qdata(12, rq) = flttypemajor;
             qdata(7, rq) = 5;
@@ -930,11 +907,11 @@ int quest_generate()
         qdata(9, rq) = rnd(6) + 2;
         flt();
         dbmode = 1;
-        flttypemajor = fsetsupply(rnd(length(fsetsupply)));
+        flttypemajor = choice(fsetsupply);
         get_random_item_id();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
-        qdata(5, rq) = clamp(rnd(cdata[0].level + 5) + 1, 1, 30);
+        qdata(5, rq) = clamp(rnd(cdata.player().level + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
         return 0;
     }
@@ -951,15 +928,16 @@ void quest_gen_scale_by_level()
     {
         return;
     }
-    if (cdata[0].level >= qdata(5, rq))
+    if (cdata.player().level >= qdata(5, rq))
     {
-        qdata(6, rq) =
-            qdata(6, rq) * 100 / (100 + (cdata[0].level - qdata(5, rq)) * 10);
+        qdata(6, rq) = qdata(6, rq) * 100
+            / (100 + (cdata.player().level - qdata(5, rq)) * 10);
     }
     else
     {
         qdata(6, rq) = qdata(6, rq)
-            * (100 + clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
+            * (100
+               + clamp((qdata(5, rq) - cdata.player().level) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -1003,7 +981,7 @@ void quest_exit_map()
         {
             if (inv[cnt].own_state == 4)
             {
-                item_remove(inv[cnt]);
+                inv[cnt].remove();
             }
         }
         refresh_burden_state();
@@ -1026,9 +1004,8 @@ void quest_exit_map()
             }
             else
             {
-                txt(lang(
-                    u8"あなたはクライアントを置き去りにした。"s,
-                    u8"You left your client."s));
+                txt(i18n::s.get(
+                    "core.locale.quest.escort.you_left_your_client"));
             }
         }
         quest_failed(gdata_executing_immediate_quest_type);
@@ -1043,15 +1020,15 @@ void quest_exit_map()
 
 
 
-turn_result_t quest_pc_died_during_immediate_quest()
+TurnResult quest_pc_died_during_immediate_quest()
 {
     rc = 0;
-    label_1540();
-    skillexp(17, 0, -500);
-    skillexp(15, 0, -500);
+    revive_player();
+    chara_gain_skill_exp(cdata.player(), 17, -500);
+    chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
-    return turn_result_t::exit_map;
+    return TurnResult::exit_map;
 }
 
 
@@ -1061,29 +1038,24 @@ void quest_failed(int val0)
     if (val0 == 1)
     {
         adata(22, gdata_previous_map2) = 0;
-        txt(lang(u8"あなたは敗北した。"s, u8"You were defeated."s));
+        txt(i18n::s.get("core.locale.quest.you_were_defeated"));
         modrank(0, -100);
     }
     if (val0 >= 1000)
     {
-        txt(lang(
-            qname(rq) + u8"から受けた依頼は失敗に終わった。"s,
-            u8"You have failed the quest taken from "s + qname(rq) + u8"."s));
+        txt(i18n::s.get("core.locale.quest.failed_taken_from", qname(rq)));
         if (qdata(3, rq) == 1002)
         {
             --qdata(15, qdata(10, rq));
             txtef(8);
-            txt(lang(
-                u8"あなたは重大な罪を犯した!"s,
-                u8"You commit a serious crime!"s));
-            modify_karma(0, -20);
+            txt(i18n::s.get(
+                "core.locale.quest.deliver.you_commit_a_serious_crime"));
+            modify_karma(cdata.player(), -20);
         }
         if (qdata(3, rq) == 1007)
         {
             txtef(8);
-            txt(lang(
-                u8"あなたは護衛の任務を果たせなかった。"s,
-                u8"You have failed to protect the client."s));
+            txt(i18n::s.get("core.locale.quest.escort.you_failed_to_protect"));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cnt != 0)
@@ -1094,35 +1066,31 @@ void quest_failed(int val0)
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;
-                            if (cdata[tc].state == 1)
+                            if (cdata[tc].state() == Character::State::alive)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
-                                    s = lang(
-                                        u8"「おい、暗殺者が私の後ろにいるぞ」"s,
-                                        u8"\"Hey, the assassins are killing me.\""s);
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "assassin");
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
-                                    s = lang(
-                                        u8"「毒が、毒がー！」"s,
-                                        u8"\"Poison! P-P-Poison in my vein!!\""s);
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "poison");
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
                                 {
-                                    s = lang(
-                                        u8"「時間切れだ。こうなったら…」"s +
-                                            name(tc) +
-                                            u8"は火をかぶった。"s,
-                                            u8"\"I missed the deadline. I don't have a right to live anymore.\""s +
-                                            u8" "s + name(tc) +
-                                            u8" pours a bottole of molotov cocktail over "s +
-                                            him(tc) + u8"self."s);
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "deadline",
+                                        cdata[tc]);
                                     mef_add(
-                                        cdata[0].position.x,
-                                        cdata[0].position.y,
+                                        cdata.player().position.x,
+                                        cdata.player().position.y,
                                         5,
                                         24,
                                         rnd(15) + 25,
@@ -1135,15 +1103,15 @@ void quest_failed(int val0)
                                 }
                                 txtef(9);
                                 txt(s);
-                                dmghp(tc, 999999, p);
+                                damage_hp(cdata[tc], 999999, p);
                             }
-                            cdata[tc].state = 0;
+                            cdata[tc].set_state(Character::State::empty);
                             break;
                         }
                     }
                 }
             }
-            modify_karma(0, -10);
+            modify_karma(cdata.player(), -10);
         }
         qdata(3, rq) = 0;
         qdata(8, rq) = 0;
@@ -1151,8 +1119,7 @@ void quest_failed(int val0)
     int stat = decfame(0, 40);
     p = stat;
     txtef(3);
-    txt(lang(
-        u8"名声値を"s + p + u8"失った。"s, u8"You lose "s + p + u8" fame."s));
+    txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
     return;
 }
 
@@ -1175,13 +1142,10 @@ void quest_team_victorious()
     if (petarenawin == 1)
     {
         txtef(2);
-        txt(lang(
-            u8"あなたのチームは勝利した！"s, u8"Your team is victorious!"s));
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"));
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
-        cdata[0].fame += gdata(74);
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
+        cdata.player().fame += gdata(74);
         modrank(1, 100, 2);
         ++adata(23, gdata_previous_map2);
         if (adata(23, gdata_previous_map2) % 20 == 0)
@@ -1196,7 +1160,7 @@ void quest_team_victorious()
     else
     {
         txtef(8);
-        txt(lang(u8"あなたのチームは敗北した。"s, u8"Your team is defeated."s));
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
         adata(23, gdata_previous_map2) = 0;
         modrank(1, -100);
         int stat = decfame(0, 60);
@@ -1204,9 +1168,7 @@ void quest_team_victorious()
         if (arenaop == 0)
         {
             txtef(3);
-            txt(lang(
-                u8"名声値を"s + p + u8"失った。"s,
-                u8"You lose "s + p + u8" fame."s));
+            txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
         }
     }
     return;
@@ -1217,21 +1179,19 @@ void quest_team_victorious()
 void quest_all_targets_killed()
 {
     musicloop = 1;
-    play_music(74);
+    play_music("core.mcFanfare");
     gdata(73) = 3;
     if (gdata_executing_immediate_quest_type == 1)
     {
         snd(69);
         txtef(2);
-        txt(lang(u8"あなたは勝利した！"s, u8"You are victorious!"s));
+        txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"));
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         modrank(0, 100, 2);
-        cdata[0].fame += gdata(74);
-        txt(lang(u8"外への階段が現れた。"s, u8"Stairs appear."s));
-        map_placeupstairs(mdata(0) / 2, mdata(1) / 2);
+        cdata.player().fame += gdata(74);
+        txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
+        map_placeupstairs(mdata_map_width / 2, mdata_map_height / 2);
         ++adata(22, gdata_previous_map2);
         if (adata(22, gdata_previous_map2) % 20 == 0)
         {
@@ -1247,20 +1207,19 @@ void quest_all_targets_killed()
     {
         qdata(8, gdata_executing_immediate_quest) = 3;
         txtef(2);
-        txt(lang(u8"エリアを制圧した！"s, u8"The area is secured!"s));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (gdata_executing_immediate_quest_type == 1007)
     {
         txtef(2);
-        txt(lang(u8"エリアを制圧した！"s, u8"The area is secured!"s));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (gdata_executing_immediate_quest_type == 1008)
     {
         gdata_left_minutes_of_executing_quest = 0;
         qdata(8, gdata_executing_immediate_quest) = 3;
         txtef(2);
-        txt(lang(
-            u8"討伐に成功した！"s, u8"You successfully slay the target."s));
+        txt(i18n::s.get("core.locale.quest.conquer.complete"));
     }
     return;
 }
@@ -1275,14 +1234,21 @@ void quest_complete()
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                p = clamp(p * qdata(13, rq) / qdata(12, rq), p(0), p * 3);
+                p = clamp(
+                    p
+                        * static_cast<int>(
+                              static_cast<double>(qdata(13, rq))
+                              / qdata(12, rq)),
+                    p(0),
+                    p * 3);
             }
         }
     }
     if (p != 0)
     {
         flt();
-        itemcreate(-1, 54, cdata[0].position.x, cdata[0].position.y, p);
+        itemcreate(
+            -1, 54, cdata.player().position.x, cdata.player().position.y, p);
     }
     if (qdata(3, rq) == 1002)
     {
@@ -1294,10 +1260,10 @@ void quest_complete()
     }
     if (qdata(3, rq) == 1008 || qdata(3, rq) == 1010)
     {
-        p = 2 + (rnd(100) < rnd(cdata[0].fame / 5000 + 1));
+        p = 2 + (rnd(100) < rnd(cdata.player().fame / 5000 + 1));
     }
     flt();
-    itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, p);
+    itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, p);
     if (qdata(3, rq) == 1009)
     {
         if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
@@ -1306,8 +1272,8 @@ void quest_complete()
             itemcreate(
                 -1,
                 724,
-                cdata[0].position.x,
-                cdata[0].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y,
                 1 + qdata(13, rq) / 10);
         }
     }
@@ -1329,58 +1295,54 @@ void quest_complete()
                     fixlv = 4;
                 }
             }
-            flt((qdata(5, rq) + cdata[0].level) / 2 + 1, calcfixlv(fixlv));
+            flt((qdata(5, rq) + cdata.player().level) / 2 + 1,
+                calcfixlv(fixlv));
             if (qdata(7, rq) < 10000)
             {
                 if (qdata(7, rq) == 1)
                 {
-                    flttypemajor = fsetwear(rnd(length(fsetwear)));
+                    flttypemajor = choice(fsetwear);
                 }
                 if (qdata(7, rq) == 2)
                 {
-                    flttypemajor = fsetmagic(rnd(length(fsetmagic)));
+                    flttypemajor = choice(fsetmagic);
                 }
                 if (qdata(7, rq) == 3)
                 {
-                    flttypemajor = fsetarmor(rnd(length(fsetarmor)));
+                    flttypemajor = choice(fsetarmor);
                 }
                 if (qdata(7, rq) == 4)
                 {
-                    flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+                    flttypemajor = choice(fsetweapon);
                 }
                 if (qdata(7, rq) == 5)
                 {
-                    flttypemajor =
-                        fsetrewardsupply(rnd(length(fsetrewardsupply)));
+                    flttypemajor = choice(fsetrewardsupply);
                 }
             }
             else
             {
                 flttypemajor = qdata(7, rq);
             }
-            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            itemcreate(
+                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
         }
     }
-    modify_karma(0, 1);
+    modify_karma(cdata.player(), 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
-    txt(lang(
-        qname(rq) + u8"から受けた依頼を完了した。"s,
-        u8"You have completed the quest taken from "s + qname(rq) + u8"."s));
+    txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
     txtef(2);
-    txt(lang(
-        ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-        u8"You gain "s + gdata(74) + u8" fame."s));
-    cdata[0].fame += gdata(74);
-    txt(lang(
-        u8"何かが足元に転がってきた。"s, u8"Something is put on the ground."s));
+    txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
+    cdata.player().fame += gdata(74);
+    txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (qdata(3, rq) == 1002)
     {
         --qdata(15, qdata(10, rq));
     }
     qdata(3, rq) = 0;
     qdata(8, rq) = 0;
-    autosave = 1 * (gdata_current_map != 35);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     return;
 }
 

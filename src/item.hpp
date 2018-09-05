@@ -12,14 +12,14 @@ namespace elona
 
 
 // FIXME
-struct enc_t
+struct Enchantment
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
     int id = 0;
     int power = 0;
 
-    bool operator==(const enc_t& other) const noexcept
+    bool operator==(const Enchantment& other) const noexcept
     {
         return id == other.id && power == other.power;
     }
@@ -35,28 +35,26 @@ struct enc_t
 };
 
 
-struct item
+struct Item
 {
-    item();
+    Item();
 
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
 
     // Index of this item into the global cdata array.
-    // Used for communicating with legacy code that takes integer index arguments.
-    // New code should pass item& instead.
-    // Not serialized; set on creation and load.
+    // Used for communicating with legacy code that takes integer index
+    // arguments. New code should pass Item& instead. Not serialized; set on
+    // creation and load.
     int index = -1;
 
-    int number = 0;
     int value = 0;
     int image = 0;
     int id = 0;
     int quality = 0;
-    position_t position;
+    Position position;
     int weight = 0;
-    identification_state_t identification_state =
-        identification_state_t::unidentified;
+    IdentifyState identification_state = IdentifyState::unidentified;
     int count = 0;
     int dice_x = 0;
     int dice_y = 0;
@@ -65,7 +63,7 @@ struct item
     int dv = 0;
     int pv = 0;
     int skill = 0;
-    curse_state_t curse_state = curse_state_t::none;
+    CurseState curse_state = CurseState::none;
     int body_part = 0;
     int function = 0;
     int enhancement = 0;
@@ -82,19 +80,34 @@ struct item
 
     int flags = 0;
 
-    std::vector<enc_t> enchantments;
+    std::vector<Enchantment> enchantments;
 
 
     void clear();
 
-    bool almost_equals(const item& other, bool ignore_position);
+    bool almost_equals(const Item& other, bool ignore_position);
+
+    // for identifying the type of a Lua reference
+    static std::string lua_type()
+    {
+        return "LuaItem";
+    }
+
+    int number() const
+    {
+        return number_;
+    }
+
+    void set_number(int number_);
+    void modify_number(int delta);
+    void remove();
 
 
     template <typename Archive>
     void serialize(Archive& ar)
     {
         // WARNING: Changing this will break save compatibility!
-        ar(number);
+        ar(number_);
         ar(value);
         ar(image);
         ar(id);
@@ -128,33 +141,49 @@ struct item
         range::for_each(
             enchantments, [&](auto&& enchantment) { ar(enchantment); });
     }
+
+
+    static void copy(const Item& from, Item& to)
+    {
+        const auto index_save = to.index;
+        to = from;
+        to.index = index_save;
+    }
+
+
+private:
+    static void refresh();
+    int number_ = 0;
+
+
+    Item(const Item&) = default;
+    Item(Item&&) = default;
+    Item& operator=(const Item&) = default;
+    Item& operator=(Item&&) = default;
 };
 
 
 
-struct inventory
+struct Inventory
 {
-    inventory();
+    Inventory();
 
 
-    item& operator()(int index)
-    {
-        return storage[index];
-    }
-
-
-    item& operator[](int index)
+    Item& operator[](int index)
     {
         return storage[index];
     }
 
 
 private:
-    std::vector<item> storage;
+    std::vector<Item> storage;
 };
 
 
-extern inventory inv;
+extern Inventory inv;
+
+
+struct Character;
 
 
 
@@ -162,8 +191,8 @@ int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
 
 
-identification_state_t item_identify(item& ci, identification_state_t level);
-identification_state_t item_identify(item& ci, int power);
+IdentifyState item_identify(Item& ci, IdentifyState level);
+IdentifyState item_identify(Item& ci, int power);
 
 range::iota<int> items(int owner);
 std::vector<int> itemlist(int owner, int id);
@@ -172,22 +201,23 @@ void itemname_additional_info();
 void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
-void item_acid(int = 0, int = 0);
-void item_remove(item&);
-void item_delete(int = 0);
+void item_acid(const Character& owner, int ci = -1);
+void item_delete(int);
 void item_exchange(int = 0, int = 0);
-void item_num(int = 0, int = 0);
+void item_modify_num(Item&, int);
+void item_set_num(Item&, int);
 void itemturn(int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
 int item_find(int = 0, int = 0, int = 0);
 int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
+void item_dump_desc(const Item&);
 
-int item_cold(int = 0, int = 0);
-int item_fire(int = 0, int = 0);
-void mapitem_cold(int = 0, int = 0);
-void mapitem_fire(int = 0, int = 0);
+bool item_fire(int owner, int ci = -1);
+void mapitem_fire(int x, int y);
+bool item_cold(int owner, int ci = -1);
+void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
@@ -198,5 +228,25 @@ int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 int inv_getfreeid_force();
+
+
+enum class ItemDescriptionType : int
+{
+    normal = 0, // rgb(0, 0, 0)
+    raises_skill = 1, // rgb(0, 100, 0)
+    raises_stat = 2, // rgb(0, 0, 100)
+    raises_resist = 3, // rgb(80, 100, 0)
+    enchantment = 4, // rgb(80, 50, 0)
+    weapon_info = 5, // rgb(0, 0, 0)
+    armor_info = 6, // rgb(0, 0, 0)
+    text = 7, // rgb(0, 0, 0)
+    maintains_skill = 8, // rgb(0, 100, 100)
+    negative_effect = 9, // rgb(180, 0, 0)
+
+    small_font = -1,
+    small_font_italic = -2,
+};
+
+void item_load_desc(int ci, int& p);
 
 } // namespace elona

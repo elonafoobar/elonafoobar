@@ -3,16 +3,20 @@
 namespace elona
 {
 
-void modcorrupt(int = 0);
-void modify_potential(int, int, int);
-void modify_karma(int, int);
-void modheight(int = 0, int = 0);
-void modweight(int, int, bool = false);
-void refreshspeed(int = 0);
-void refresh_speed_correction_value(int);
-void gain_new_body_part(int);
-void gain_level(int);
-void grow_primary_skills(int);
-void update_required_experience(int);
+struct Character;
+
+void modify_ether_disease_stage(int delta);
+void modify_potential(Character& cc, int id, int delta);
+void modify_karma(Character& cc, int delta);
+void modify_weight(Character& cc, int delta, bool force = false);
+void modify_height(Character& cc, int delta);
+void refresh_speed(Character& cc);
+void refresh_speed_correction_value(Character& cc);
+void gain_new_body_part(Character& cc);
+void gain_level(Character& cc);
+void grow_primary_skills(Character& cc);
+void update_required_experience(Character& cc);
+void earn_gold(Character& cc, int delta);
+void earn_platinum(Character& cc, int delta);
 
 } // namespace elona

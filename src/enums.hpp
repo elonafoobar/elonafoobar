@@ -1,48 +1,101 @@
 #pragma once
 
+#include "lib/enumutil.hpp"
 
 
+
+// NOTE: If anything is changed, be sure to update lua_env/lua_enums.hpp.
 namespace elona
 {
 
-enum stick_key {
-    left         = 1 << 0,
-    up           = 1 << 1,
-    right        = 1 << 2,
-    down         = 1 << 3,
-    space        = 1 << 4,
-    enter        = 1 << 5,
-    ctrl         = 1 << 6,
-    escape       = 1 << 7,
-    mouse_left   = 1 << 8,
-    mouse_right  = 1 << 9,
-    tab          = 1 << 10,
+enum class StickKey
+{
+    left = 1 << 0,
+    up = 1 << 1,
+    right = 1 << 2,
+    down = 1 << 3,
+    space = 1 << 4,
+    enter = 1 << 5,
+    ctrl = 1 << 6,
+    escape = 1 << 7,
+    mouse_left = 1 << 8,
+    mouse_right = 1 << 9,
+    tab = 1 << 10,
 };
 
-enum class curse_state_t
+ENUMUTIL_DEFINE_BITWISE_OPERATORS(StickKey)
+
+enum class KeyWaitDelay
 {
-    doomed,
-    cursed,
+    always,
+    walk_run,
     none,
-    blessed,
+};
+
+// Index into c_col.
+enum class ColorIndex : int
+{
+    // These two colors are exactly the same.
+    none = 0,
+    white = 1,
+
+    green = 2,
+    red = 3,
+    blue = 4,
+    orange = 5,
+    yellow = 6,
+    grey = 7,
+    purple = 8,
+    cyan = 9,
+    light_red = 10,
+    gold = 11,
+    white2 = 12, // same as none/white
+    light_brown = 13,
+    dark_green = 14,
+    light_grey = 15,
+    pale_red = 16,
+    light_blue = 17,
+    light_purple = 18,
+    light_green = 19,
+    yellow_green = 20,
+
+    // Items that are generated with a specific subset of colors.
+    // Mainly used for furniture.
+    random_furniture = 21,
+
+    // Items where the color must be the same for every item of its
+    // type, but the color is based on a random seed (potions, rods,
+    // etc.)
+    random_seeded = 22,
+
+    // Any of the first 21 colors.
+    random_any = 23,
+};
+
+enum class CurseState : int
+{
+    doomed = 0,
+    cursed = 1,
+    none = 2,
+    blessed = 3,
 };
 
 
-inline bool is_cursed(curse_state_t s)
+inline bool is_cursed(CurseState s)
 {
-    return s <= curse_state_t::cursed;
+    return s <= CurseState::cursed;
 }
 
 
-enum class identification_state_t
+enum class IdentifyState : int
 {
-    unidentified,
-    partly_identified,
-    almost_identified,
-    completely_identified,
+    unidentified = 0,
+    partly_identified = 1,
+    almost_identified = 2,
+    completely_identified = 3,
 };
 
-enum class damage_source_t : int
+enum class DamageSource : int
 {
     trap = -1,
     overcasting = -2,
@@ -67,7 +120,7 @@ enum class damage_source_t : int
     mochi = -21,
 };
 
-enum class turn_result_t
+enum class TurnResult
 {
     none,
     all_turns_finished,
@@ -90,8 +143,8 @@ enum class turn_result_t
     show_chat_history,
     show_message_log,
     show_quest_board,
+    show_journal,
 
-    menu_journal,
     menu_materials,
     menu_character_sheet,
     menu_equipment,

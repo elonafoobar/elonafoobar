@@ -1,16 +1,15 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
-#include "util.hpp"
-#include "../testing.hpp"
+#include <cassert>
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../debug.hpp"
 #include "../lua_env/lua_env.hpp"
+#include "../testing.hpp"
 #include "../variables.hpp"
-#include <cassert>
+#include "util.hpp"
 
-class LuaCallbacksWanderFixture
-    :   public ::hayai::Fixture
+class LuaCallbacksWanderFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()
@@ -39,10 +38,10 @@ public:
 
     void AddCallbacks(int amount)
     {
-        elona::lua::lua.load_mod_from_script("bench", "");
+        elona::lua::lua->get_mod_manager().load_mod_from_script("bench", "");
         for (int i = 0; i < amount; i++)
         {
-            elona::lua::lua.run_in_mod("bench", R"(
+            elona::lua::lua->get_mod_manager().run_in_mod("bench", R"(
 local GUI = Elona.require("GUI")
 local Event = Elona.require("Event")
 
@@ -62,8 +61,7 @@ BENCHMARK_F(LuaCallbacksWanderFixture, BenchLuaCallbacksWander1000, 5, 50)
     run_npc_turns();
 }
 
-class LuaCallbacksWanderNoneFixture
-    :   public ::hayai::Fixture
+class LuaCallbacksWanderNoneFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()

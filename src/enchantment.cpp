@@ -1,7 +1,9 @@
 #include "enchantment.hpp"
+#include "db_item.hpp"
+#include "element.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -75,12 +77,13 @@ void initialize_enchantment_data()
     encammoref(0, 5) = 2;
     encammoref(1, 5) = 5;
     encammoref(2, 5) = 15;
-    ammoname(0) = lang(u8"連射弾"s, u8"rapid ammo"s);
-    ammoname(1) = lang(u8"炸裂弾"s, u8"explosive ammo"s);
-    ammoname(2) = lang(u8"貫通弾"s, u8"piercing ammo"s);
-    ammoname(3) = lang(u8"魔弾"s, u8"magic ammo"s);
-    ammoname(4) = lang(u8"時止弾"s, u8"time stop ammo"s);
-    ammoname(5) = lang(u8"バースト"s, u8"burst ammo"s);
+
+    for (int cnt = 0; cnt < 6; cnt++)
+    {
+        ammoname(cnt) = i18n::s.get_enum(
+            "core.locale.enchantment.with_parameters.ammo.kinds", cnt);
+    }
+
     encref(0, 21) = -1;
     encref(1, 21) = 50;
     encref(2, 21) = 75;
@@ -448,8 +451,9 @@ void initialize_enchantment_data()
     return;
 }
 
-void enchantment_print_level(int prm_448)
+std::string enchantment_print_level(int prm_448)
 {
+    std::string s = "";
     for (int cnt = 0, cnt_end = (std::abs(prm_448) + 1); cnt < cnt_end; ++cnt)
     {
         if (cnt > 4)
@@ -457,10 +461,431 @@ void enchantment_print_level(int prm_448)
             s += u8"+"s;
             break;
         }
-        s += lang(u8"*"s, u8"#"s);
+        s += i18n::s.get("core.locale.enchantment.level");
     }
-    return;
+    return s;
 }
+
+std::string enchantment_level_string(int prm_448)
+{
+    return " [" + enchantment_print_level(prm_448) + "]";
+}
+
+void get_enchantment_description(int val0, int power, int category, bool trait)
+{
+    rtval(0) = static_cast<int>(ItemDescriptionType::enchantment);
+    rtval(1) = 0;
+
+    s = "";
+
+    if (val0 / 10000 != 0)
+    {
+        if (trait)
+            return;
+
+        int sid = val0 % 10000;
+        switch (val0 / 10000)
+        {
+        case 1:
+            rtval = static_cast<int>(ItemDescriptionType::raises_stat);
+            if (power / 50 + 1 < 0)
+            {
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+                const auto skill_name =
+                    i18n::_(u8"ability", std::to_string(sid), u8"name");
+                if (category == 57000)
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "food.decreases",
+                        skill_name);
+                    s += enchantment_level_string(power / 50);
+                }
+                else
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute."
+                        "other.decreases",
+                        skill_name,
+                        std::abs(power / 50 + 1));
+                }
+            }
+            else
+            {
+                const auto skill_name =
+                    i18n::_(u8"ability", std::to_string(sid), u8"name");
+                if (category == 57000)
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "food.increases",
+                        skill_name);
+                    s += enchantment_level_string(power / 50);
+                }
+                else
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.attribute."
+                        "other.increases",
+                        skill_name,
+                        std::abs(power / 50 + 1));
+                }
+            }
+            break;
+        case 2:
+            rtval = static_cast<int>(ItemDescriptionType::raises_resist);
+            if (power / 2 < 0)
+            {
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.resistance."
+                    "decreases",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            }
+            else
+            {
+                s = i18n::_(
+                    u8"ability",
+                    std::to_string(sid),
+                    u8"enchantment_description");
+                if (s == ""s)
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.resistance."
+                        "increases",
+                        i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                }
+            }
+            s += enchantment_level_string(power / 100);
+            break;
+        case 3:
+            rtval = static_cast<int>(ItemDescriptionType::raises_skill);
+            if (power / 50 + 1 < 0)
+            {
+                rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill.decreases",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            }
+            else
+            {
+                s = i18n::_(
+                    u8"ability",
+                    std::to_string(sid),
+                    u8"enchantment_description");
+                if (s == ""s)
+                {
+                    s = i18n::s.get(
+                        "core.locale.enchantment.with_parameters.skill."
+                        "increases",
+                        i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                }
+            }
+            s += enchantment_level_string((power / 50 + 1) / 5);
+            break;
+        case 6:
+            rtval = static_cast<int>(ItemDescriptionType::maintains_skill);
+            if (category == 57000)
+            {
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "in_food",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s += enchantment_level_string(power / 50);
+            }
+            else
+            {
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "other",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            }
+            break;
+        case 7:
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
+            s = i18n::_(
+                u8"ability", std::to_string(sid), u8"enchantment_description");
+            if (s == ""s)
+            {
+                s = i18n::s.get(
+                    "core.locale.enchantment.with_parameters.extra_damage",
+                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            }
+            s += enchantment_level_string(power / 100);
+            break;
+        case 8:
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
+            sid = encprocref(0, sid);
+            s = i18n::s.get(
+                "core.locale.enchantment.with_parameters.invokes",
+                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+            s += enchantment_level_string(power / 50);
+            break;
+        case 9:
+            rtval = static_cast<int>(ItemDescriptionType::enchantment);
+            s = i18n::s.get(
+                "core.locale.enchantment.with_parameters.ammo.text",
+                ammoname(sid));
+            s += " ["
+                + i18n::s.get(
+                      "core.locale.enchantment.with_parameters.ammo.max",
+                      power / 1000)
+                + "]";
+            break;
+        }
+        return;
+    }
+
+    s = i18n::s.get_enum("core.locale.enchantment.no_parameters", val0);
+
+    switch (val0)
+    {
+    case 0: s = u8"?????"s; break;
+    case 21:
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 45:
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 46:
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 47:
+        rtval = static_cast<int>(ItemDescriptionType::negative_effect);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 22: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 23: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 24: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 25: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 26: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 27: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 28: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 41: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 42: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 29:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 100;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 100);
+        }
+        break;
+    case 30: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 31: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 48: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 32: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 33: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 34:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 35: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 36:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 37: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 38:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 39:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 44:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 50:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 51:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 40:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 100;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 100);
+        }
+        break;
+    case 43:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 49: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 52:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 53:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 54:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 55: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 56: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 57:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 58:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    case 59: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 60: rtval = static_cast<int>(ItemDescriptionType::enchantment); break;
+    case 61:
+        rtval = static_cast<int>(ItemDescriptionType::enchantment);
+        if (trait)
+        {
+            rtval(1) = power / 50;
+        }
+        else
+        {
+            s += enchantment_level_string(power / 50);
+        }
+        break;
+    }
+}
+
+
 
 int enchantment_filter(int prm_449, int prm_450)
 {
@@ -1010,7 +1435,7 @@ void add_enchantments()
                     ibitmod(15, ci, 1);
                     enchantment_add(
                         ci, enchantment_generate(99), enchantment_gen_p());
-                    inv[ci].curse_state = curse_state_t::blessed;
+                    inv[ci].curse_state = CurseState::blessed;
                 }
             }
         }
@@ -1041,12 +1466,11 @@ void add_enchantments()
             ci,
             enchantment_generate(enchantment_gen_level(egolv)),
             clamp(enchantment_gen_p(), 250, 10000)
-                * (125 + (inv[ci].curse_state == curse_state_t::doomed) * 25)
+                * (125 + (inv[ci].curse_state == CurseState::doomed) * 25)
                 / 100);
         for (int cnt = 0,
                  cnt_end = cnt
-                 + (1 + (inv[ci].curse_state == curse_state_t::doomed)
-                    + rnd(2));
+                 + (1 + (inv[ci].curse_state == CurseState::doomed) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {
@@ -1074,7 +1498,13 @@ void initialize_ego_data()
     DIM3(egoenc, 20, 11);
     DIM3(egoref, 2, 11);
     DIM2(egolist, 11);
-    egoname(1) = lang(u8"静寂の"s, u8"of silence"s);
+
+    for (int cnt = 0; cnt < 11; cnt++)
+    {
+        egoname(cnt) =
+            i18n::s.get_enum("core.locale.enchantment.item_ego.major", cnt);
+    }
+
     egoref(0, 1) = 0;
     egoref(1, 1) = 1;
     p = 1;
@@ -1082,19 +1512,16 @@ void initialize_ego_data()
     egoenc(1, p) = 100;
     egoenc(2, p) = 22;
     egoenc(3, p) = 100;
-    egoname(6) = lang(u8"耐盲目の"s, u8"of resist blind"s);
     egoref(0, 6) = 1;
     egoref(1, 6) = 1;
     p = 6;
     egoenc(0, p) = 23;
     egoenc(1, p) = 100;
-    egoname(8) = lang(u8"耐混乱の"s, u8"of resist confusion"s);
     egoref(0, 8) = 1;
     egoref(1, 8) = 1;
     p = 8;
     egoenc(0, p) = 25;
     egoenc(1, p) = 100;
-    egoname(0) = lang(u8"烈火の"s, u8"of fire"s);
     egoref(0, 0) = 1;
     egoref(1, 0) = 3;
     p = 0;
@@ -1102,7 +1529,6 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70050;
     egoenc(3, p) = 150;
-    egoname(2) = lang(u8"氷結の"s, u8"of cold"s);
     egoref(0, 2) = 1;
     egoref(1, 2) = 3;
     p = 2;
@@ -1110,7 +1536,6 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70051;
     egoenc(3, p) = 150;
-    egoname(3) = lang(u8"稲妻の"s, u8"of lightning"s);
     egoref(0, 3) = 1;
     egoref(1, 3) = 3;
     p = 3;
@@ -1118,31 +1543,26 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70052;
     egoenc(3, p) = 150;
-    egoname(5) = lang(u8"癒し手の"s, u8"of healing"s);
     egoref(0, 5) = 1;
     egoref(1, 5) = 1;
     p = 5;
     egoenc(0, p) = 30154;
     egoenc(1, p) = 100;
-    egoname(7) = lang(u8"耐麻痺の"s, u8"of resist paralysis"s);
     egoref(0, 7) = 2;
     egoref(1, 7) = 1;
     p = 7;
     egoenc(0, p) = 24;
     egoenc(1, p) = 100;
-    egoname(9) = lang(u8"耐恐怖の"s, u8"of resist fear"s);
     egoref(0, 9) = 0;
     egoref(1, 9) = 1;
     p = 9;
     egoenc(0, p) = 26;
     egoenc(1, p) = 100;
-    egoname(10) = lang(u8"睡眠防止の"s, u8"of resist sleep"s);
     egoref(0, 10) = 0;
     egoref(1, 10) = 1;
     p = 10;
     egoenc(0, p) = 27;
     egoenc(1, p) = 100;
-    egoname(4) = lang(u8"防衛者の"s, u8"of defender"s);
     egoref(0, 4) = 3;
     egoref(1, 4) = 10000;
     p = 4;
@@ -1152,18 +1572,14 @@ void initialize_ego_data()
     egoenc(3, p) = 100;
     egoenc(4, p) = 20052;
     egoenc(5, p) = 100;
-    egominorn(0) = lang(u8"唄う"s, u8"singing"s);
-    egominorn(1) = lang(u8"召使の"s, u8"servant's"s);
-    egominorn(2) = lang(u8"従者の"s, u8"follower's"s);
-    egominorn(3) = lang(u8"呻く"s, u8"howling"s);
-    egominorn(4) = lang(u8"輝く"s, u8"glowing"s);
-    egominorn(5) = lang(u8"異彩の"s, u8"conspicuous"s);
-    egominorn(6) = lang(u8"魔力を帯びた"s, u8"magical"s);
-    egominorn(7) = lang(u8"闇を砕く"s, u8"enchanted"s);
-    egominorn(8) = lang(u8"強力な"s, u8"mighty"s);
-    egominorn(9) = lang(u8"頼れる"s, u8"trustworthy"s);
-    maxegominorn = length(egominorn);
-    return;
+
+    for (int cnt = 0; cnt < 10; cnt++)
+    {
+        egominorn(cnt) =
+            i18n::s.get_enum("core.locale.enchantment.item_ego.minor", cnt);
+    }
+
+    maxegominorn = egominorn.size();
 }
 
 void ego_add(int prm_465, int prm_466)

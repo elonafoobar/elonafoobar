@@ -154,74 +154,82 @@ buff['19'] = {
 }
 buff['20'] = {
   name = "Grow Strength",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid STR growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['10'].name .. " by " .. self._effect(power)
   end,
 }
 buff['21'] = {
-  name = "Grow Endurance",
-  message_0 = "",
-  message_1 = " magical effect.",
+  name = "Grow Constitution",
+  message_0 = "feel",
+  message_1 = " rapid CON growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['11'].name .. " by " .. self._effect(power)
   end,
 }
 buff['22'] = {
   name = "Grow Dexterity",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid DEX growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['12'].name .. " by " .. self._effect(power)
   end,
 }
 buff['23'] = {
   name = "Grow Perception",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid PER growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['13'].name .. " by " .. self._effect(power)
   end,
 }
 buff['24'] = {
   name = "Grow Learning",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid LER growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['14'].name .. " by " .. self._effect(power)
   end,
 }
 buff['25'] = {
   name = "Grow Will",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid WIL growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['15'].name .. " by " .. self._effect(power)
   end,
 }
 buff['26'] = {
   name = "Grow Magic",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid MAG growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['16'].name .. " by " .. self._effect(power)
   end,
 }
 buff['27'] = {
   name = "Grow Charisma",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid CHR growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['17'].name .. " by " .. self._effect(power)
   end,
 }
 buff['28'] = {
   name = "Grow Speed",
-  message_0 = "",
-  message_1 = " magical effect.",
+  message_0 = "feel",
+  message_1 = " rapid SPD growth.",
   description = function(self, power)
     return "Increases the growth rate " .. ability['18'].name .. " by " .. self._effect(power)
+  end,
+}
+buff['29'] = {
+  name = "Grow Luck",
+  message_0 = "feel",
+  message_1 = " rapid LCK growth.",
+  description = function(self, power)
+    return "Increases the growth rate " .. ability['19'].name .. " by " .. self._effect(power)
   end,
 }
 

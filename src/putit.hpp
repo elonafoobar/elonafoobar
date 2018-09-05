@@ -12,20 +12,20 @@ namespace putit
 {
 
 
-class iarchive_base
+class IArchiveBase
 {
 };
 
 
-class oarchive_base
+class OArchiveBase
 {
 };
 
 
-class binary_iarchive : public iarchive_base
+class BinaryIArchive : public IArchiveBase
 {
 public:
-    binary_iarchive(std::istream& in, bool gzip = false)
+    BinaryIArchive(std::istream& in, bool gzip = false)
         : memory(new char[sizeof(long long)])
     {
         if (gzip)
@@ -103,10 +103,10 @@ private:
 
 
 
-class binary_oarchive : public oarchive_base
+class BinaryOArchive : public OArchiveBase
 {
 public:
-    binary_oarchive(std::ostream& out, bool gzip = false)
+    BinaryOArchive(std::ostream& out, bool gzip = false)
     {
         if (gzip)
         {
@@ -191,13 +191,13 @@ template <
     typename E,
     std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
     std::enable_if_t<
-        std::is_base_of<iarchive_base, Archive>::value,
+        std::is_base_of<IArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
-    using primitive_type = std::underlying_type_t<E>;
+    using PrimitiveType = std::underlying_type_t<E>;
 
-    primitive_type tmp;
+    PrimitiveType tmp;
     ar.primitive(tmp);
     data = static_cast<E>(tmp);
 }
@@ -209,13 +209,13 @@ template <
     typename E,
     std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
     std::enable_if_t<
-        std::is_base_of<oarchive_base, Archive>::value,
+        std::is_base_of<OArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
-    using primitive_type = std::underlying_type_t<E>;
+    using PrimitiveType = std::underlying_type_t<E>;
 
-    primitive_type tmp = static_cast<primitive_type>(data);
+    PrimitiveType tmp = static_cast<PrimitiveType>(data);
     ar.primitive(tmp);
 }
 
@@ -224,7 +224,7 @@ void serialize(Archive& ar, E& data)
 template <
     typename Archive,
     std::enable_if_t<
-        std::is_base_of<iarchive_base, Archive>::value,
+        std::is_base_of<IArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
@@ -240,7 +240,7 @@ void serialize(Archive& ar, std::string& data)
 template <
     typename Archive,
     std::enable_if_t<
-        std::is_base_of<oarchive_base, Archive>::value,
+        std::is_base_of<OArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
@@ -255,7 +255,7 @@ template <
     typename Archive,
     typename T,
     std::enable_if_t<
-        std::is_base_of<iarchive_base, Archive>::value,
+        std::is_base_of<IArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
@@ -272,7 +272,7 @@ template <
     typename Archive,
     typename T,
     std::enable_if_t<
-        std::is_base_of<oarchive_base, Archive>::value,
+        std::is_base_of<OArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
@@ -290,7 +290,7 @@ template <
     typename Archive,
     size_t N,
     std::enable_if_t<
-        std::is_base_of<iarchive_base, Archive>::value,
+        std::is_base_of<IArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::bitset<N>& data)
 {
@@ -305,7 +305,7 @@ template <
     typename Archive,
     size_t N,
     std::enable_if_t<
-        std::is_base_of<oarchive_base, Archive>::value,
+        std::is_base_of<OArchiveBase, Archive>::value,
         std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::bitset<N>& data)
 {

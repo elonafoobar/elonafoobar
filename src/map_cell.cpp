@@ -82,8 +82,8 @@ void cell_check(int prm_603, int prm_604)
     cellaccess = 1;
     cellchara = -1;
     cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= mdata(0) || prm_604 < 0
-        || prm_604 >= mdata(1))
+    if (prm_603 < 0 || prm_603 >= mdata_map_width || prm_604 < 0
+        || prm_604 >= mdata_map_height)
     {
         cellaccess = 0;
         return;
@@ -151,8 +151,8 @@ bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     {
         if (gdata_mount)
         {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
+            cdata[gdata_mount].position.x = cdata.player().position.x;
+            cdata[gdata_mount].position.y = cdata.player().position.y;
         }
     }
     return true;
@@ -183,7 +183,7 @@ int cell_itemlist(int prm_625, int prm_626)
     listmax = 0;
     for (const auto& cnt : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[cnt].number() > 0)
         {
             if (inv[cnt].position.x == prm_625
                 && inv[cnt].position.y == prm_626)
@@ -197,14 +197,14 @@ int cell_itemlist(int prm_625, int prm_626)
 }
 
 // Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const position_t& pos)
+std::pair<int, int> cell_itemoncell(const Position& pos)
 {
     int number{};
     int item{};
 
     for (const auto& ci : items(-1))
     {
-        if (inv[ci].number > 0 && inv[ci].position == pos)
+        if (inv[ci].number() > 0 && inv[ci].position == pos)
         {
             ++number;
             item = ci;
@@ -217,7 +217,7 @@ std::pair<int, int> cell_itemoncell(const position_t& pos)
 void cell_setchara(int cc, int x, int y)
 {
     map(x, y, 1) = cc + 1;
-    cdata[cc].position = position_t{x, y};
+    cdata[cc].position = Position{x, y};
 }
 
 
@@ -238,14 +238,14 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
     for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
     {
         dy_at_m130 = prm_797 + cnt - 1;
-        if (dy_at_m130 < 0 || dy_at_m130 >= mdata(1))
+        if (dy_at_m130 < 0 || dy_at_m130 >= mdata_map_height)
         {
             continue;
         }
         for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
         {
             dx_at_m130 = prm_796 + cnt - 1;
-            if (dx_at_m130 < 0 || dx_at_m130 >= mdata(0))
+            if (dx_at_m130 < 0 || dx_at_m130 >= mdata_map_width)
             {
                 continue;
             }
@@ -275,36 +275,25 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
 
 static int _random_tile(elona_vector1<int> tile)
 {
-    if(tile(1) == 0 || tile(2) == 0)
+    if (tile(1) == 0 || tile(2) == 0)
     {
         return tile(0);
     }
     return tile(0) + (rnd(tile(2)) == 0) * rnd(tile(1));
 }
 
-int cell_get_type(tile_kind_t type)
+int cell_get_type(TileKind type)
 {
     // TODO dedup from map_converttile?
     elona_vector1<int> tile;
-    switch(type)
+    switch (type)
     {
-    case tile_kind_t::normal:
-        tile = tile_default;
-        break;
-    case tile_kind_t::wall:
-        tile = tile_wall;
-        break;
-    case tile_kind_t::tunnel:
-        tile = tile_tunnel;
-        break;
-    case tile_kind_t::room:
-        tile = tile_room;
-        break;
-    case tile_kind_t::fog:
-        tile = tile_fog;
-        break;
-    default:
-        assert(0);
+    case TileKind::normal: tile = tile_default; break;
+    case TileKind::wall: tile = tile_wall; break;
+    case TileKind::tunnel: tile = tile_tunnel; break;
+    case TileKind::room: tile = tile_room; break;
+    case TileKind::fog: tile = tile_fog; break;
+    default: assert(0);
     }
 
     return _random_tile(tile);

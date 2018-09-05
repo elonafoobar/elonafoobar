@@ -8,10 +8,15 @@
 #include "building.hpp"
 #include "cat.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "class.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "db_chara_chip.hpp"
+#include "db_item.hpp"
+#include "db_item_chip.hpp"
+#include "defines.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -22,7 +27,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
@@ -31,16 +35,18 @@
 #include "main.hpp"
 #include "main_menu.hpp"
 #include "mef.hpp"
+#include "menu.hpp"
 #include "network.hpp"
 #include "race.hpp"
 #include "random.hpp"
 #include "range.hpp"
+#include "snail/touch_input.hpp"
 #include "trait.hpp"
+#include "turn_sequence.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
-#include <iostream>
 
 using namespace elona;
 
@@ -51,7 +57,8 @@ namespace
 
 void main_loop()
 {
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::game_initialized>();
+    lua::lua->get_event_manager()
+        .run_callbacks<lua::EventKind::game_initialized>();
 
     while (true)
     {
@@ -72,7 +79,7 @@ void load_musiclist()
         return;
 
     size_t i = 0;
-    for (auto&& line : fileutil::read_by_line{filepath})
+    for (auto&& line : fileutil::read_by_line(filepath))
     {
         if (line.empty())
             continue;
@@ -87,8 +94,6 @@ void backup_config_files()
 {
     std::pair<const char*, const char*> files[] = {
         {u8"./original/export.txt", u8"./user/export.txt"},
-        {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},
-        {u8"./original/lastwords-e.txt", u8"./user/lastwords-e.txt"},
         {u8"./original/musiclist.txt", u8"./user/music/musiclist.txt"},
         {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
     };
@@ -99,8 +104,11 @@ void backup_config_files()
         const auto to_path = filesystem::path(from_to.second);
         if (!fs::exists(to_path))
         {
-            if (!fs::exists(from_path)) {
-                throw std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
+            if (!fs::exists(from_path))
+            {
+                throw std::runtime_error(
+                    "Original config file " + from_path.string()
+                    + " didn't exist.");
             }
             fs::copy_file(from_path, to_path);
         }
@@ -108,22 +116,6 @@ void backup_config_files()
 }
 
 
-
-void check_double_launching()
-{
-    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
-    if (func_3() == 183)
-    {
-        dialog(
-            lang(
-                u8"二重起動のため終了します。"s,
-                u8"The program is already running."s),
-            1);
-        end();
-        return;
-    }
-    return;
-}
 
 void initialize_directories()
 {
@@ -149,14 +141,18 @@ void load_character_sprite()
     SDIM1(untaglist);
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
+
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"character.bmp", 1);
+    pos(640, 1120);
+    picload(filesystem::dir::graphic() / u8"bufficon.png", 1);
+
     gmode(0);
     gsel(5);
-    for (const auto& entry :
-         filesystem::dir_entries{filesystem::dir::user() / u8"graphic",
-                                 filesystem::dir_entries::type::file,
-                                 std::regex{u8R"(chara_.*\.bmp)"}})
+    for (const auto& entry : filesystem::dir_entries(
+             filesystem::dir::user() / u8"graphic",
+             filesystem::DirEntryRange::Type::file,
+             std::regex{u8R"(chara_.*\.bmp)"}))
     {
         const auto file = filesystem::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
@@ -176,14 +172,17 @@ void start_elona()
     gdata_hour = 16;
     gdata_minute = 10;
     quickpage = 1;
-    if (config::instance().noadebug)
+    if (Config::instance().noadebug)
     {
         mode = 4;
         initialize_game();
         main_loop();
         return;
     }
-    else if (config::instance().startup_script != ""s)
+    else if (
+        Config::instance().startup_script != ""s
+        && !Config::instance().get<bool>(
+               "core.config.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();
@@ -286,23 +285,23 @@ int cat_get_field_with_index(lua_State* L)
 
 
 const luaL_Reg cdata_functions[] = {
-    {u8"pv", &cat_get_field<character, int, &character::pv>},
-    {u8"fear", &cat_get_field<character, int, &character::fear>},
-    {u8"confused", &cat_get_field<character, int, &character::confused>},
-    {u8"dv", &cat_get_field<character, int, &character::dv>},
-    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
+    {u8"pv", &cat_get_field<Character, int, &Character::pv>},
+    {u8"fear", &cat_get_field<Character, int, &Character::fear>},
+    {u8"confused", &cat_get_field<Character, int, &Character::confused>},
+    {u8"dv", &cat_get_field<Character, int, &Character::dv>},
+    {u8"hit_bonus", &cat_get_field<Character, int, &Character::hit_bonus>},
     {u8"growth_buffs",
-     &cat_get_field_with_index<character, int, &character::growth_buffs>},
+     &cat_get_field_with_index<Character, int, &Character::growth_buffs>},
     {nullptr, nullptr},
 };
 
 
 const luaL_Reg sdata_functions[] = {
-    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
+    {u8"current_level", &cat_get_field<Ability, int, &Ability::current_level>},
     {u8"original_level",
-     &cat_get_field<ability, int, &ability::original_level>},
-    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
-    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
+     &cat_get_field<Ability, int, &Ability::original_level>},
+    {u8"experience", &cat_get_field<Ability, int, &Ability::experience>},
+    {u8"potential", &cat_get_field<Ability, int, &Ability::potential>},
     {nullptr, nullptr},
 };
 
@@ -328,7 +327,7 @@ int cat_cdata(lua_State* L)
 {
     int cc = luaL_checknumber(L, 1);
 
-    cat::userdata<character>::push_new(L, &cdata(cc));
+    cat::userdata<Character>::push_new(L, &cdata[cc]);
     luaL_setmetatable(L, "elona__cdata");
 
     return 1;
@@ -340,7 +339,7 @@ int cat_sdata(lua_State* L)
     int id = luaL_checknumber(L, 1);
     int cc = luaL_checknumber(L, 2);
 
-    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
+    cat::userdata<Ability>::push_new(L, &sdata.get(id, cc));
     luaL_setmetatable(L, "elona__sdata");
 
     return 1;
@@ -369,19 +368,78 @@ void initialize_cat_db()
 
     the_ability_db.initialize();
     the_buff_db.initialize();
-    the_character_db.initialize();
     the_class_db.initialize();
     the_fish_db.initialize();
-    the_item_db.initialize();
     the_item_material_db.initialize();
     the_race_db.initialize();
     the_trait_db.initialize();
 }
 
+static std::vector<lua::RegistryManager::Location>
+collect_mod_datafile_locations()
+{
+    std::vector<lua::RegistryManager::Location> locations;
+
+    for (const auto& pair : lua::lua->get_mod_manager())
+    {
+        const auto& mod = pair.second;
+        if (mod->path)
+        {
+            const auto path = *mod->path / "data.hcl";
+            if (fs::exists(path))
+            {
+                locations.emplace_back(path, mod->name);
+            }
+        }
+    }
+
+    return locations;
+}
+
+void initialize_lion_db()
+{
+    // Register base game data types. Without these, it wouldn't be
+    // possible to run the game, so they're baked in.
+    lua::lua->get_registry_manager().register_native_datatype(
+        "chara", [](auto table) { the_character_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "item", [](auto table) { the_item_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "sound", [](auto table) { the_sound_db.initialize(table); });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "music", [](auto table) { the_music_db.initialize(table); });
+
+    lua::lua->get_registry_manager().register_native_datatype(
+        "chara_chip", [](auto table) {
+            CharaChipDB db;
+            db.initialize(table);
+            initialize_chara_chips(db);
+        });
+    lua::lua->get_registry_manager().register_native_datatype(
+        "item_chip", [](auto table) {
+            ItemChipDB db;
+            db.initialize(table);
+            initialize_item_chips(db);
+        });
+
+    auto locations = collect_mod_datafile_locations();
+    lua::lua->get_registry_manager().load_mod_data(locations);
+}
+
+static void _initialize_jkey()
+{
+    SDIM3(jkey, 2, 12);
+}
+
 void initialize_config(const fs::path& config_file)
 {
-    windoww = snail::application::instance().width();
-    windowh = snail::application::instance().height();
+    windoww = snail::Application::instance().width();
+    windowh = snail::Application::instance().height();
+
+    if (defines::is_android)
+    {
+        snail::TouchInput::instance().initialize(filesystem::dir::graphic());
+    }
 
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
@@ -389,8 +447,6 @@ void initialize_config(const fs::path& config_file)
     mesbox(keylog);
 
     backup_config_files();
-
-    check_double_launching();
 
     initialize_directories();
 
@@ -402,27 +458,39 @@ void initialize_config(const fs::path& config_file)
     SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
-    initialize_jkey();
+    _initialize_jkey();
 
     load_config(config_file);
 }
 
+void initialize_i18n()
+{
+    const std::string language = jp ? "jp" : "en";
+    i18n::load(language);
+
+    // Load built-in translations in data/locale/(jp|en).
+    std::vector<i18n::Store::Location> locations{
+        {filesystem::dir::locale() / language, "core"}};
+
+    // Load translations for each mod.
+    for (const auto& pair : lua::lua->get_mod_manager())
+    {
+        const auto& mod = pair.second;
+        if (mod->path)
+        {
+            const auto path = *mod->path / "locale" / language;
+            if (fs::exists(path))
+            {
+                locations.emplace_back(path, mod->name);
+            }
+        }
+    }
+    i18n::s.init(locations);
+}
+
 void initialize_elona()
 {
-    i18n::load(jp ? u8"jp" : u8"en");
-    i18n::s.init(jp ? filesystem::path("locale") / "jp" : filesystem::path("locale") / "en");
-
     initialize_ui_constants();
-    if (config::instance().fullscreen != 0)
-    {
-        chgdisp(1, windoww, windowh);
-        bgscr(0, windoww, windowh, 0, 0);
-        width(windoww, windowh, 0, 0);
-    }
-    else
-    {
-        screen(0, windoww, windowh, 0, windowx, windowy);
-    }
     gsel(0);
     boxf();
     redraw();
@@ -444,7 +512,7 @@ void initialize_elona()
     if (inf_tiles != 48)
     {
         pos(0, 0);
-        gzoom(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
+        gcopy(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
     }
     buffer(2, 33 * inf_tiles, 25 * inf_tiles);
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
@@ -455,7 +523,6 @@ void initialize_elona()
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
-    SDIM1(filemod);
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);
@@ -500,15 +567,9 @@ void initialize_elona()
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
 
-    DIM2(chatval, 5);
     DIM2(evlist, 10);
-    DIM2(matneed, 20);
     DIM3(pcc, 30, 20);
 
-    maxrain = windoww * windowh / 3500;
-
-    DIM2(rainx, maxrain * 2);
-    DIM2(rainy, maxrain * 2);
     SDIM1(fltnrace);
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
@@ -531,6 +592,9 @@ void initialize_elona()
     c_col(0, 0) = 0;
     c_col(1, 0) = 0;
     c_col(2, 0) = 0;
+    c_col(0, 1) = 0;
+    c_col(1, 1) = 0;
+    c_col(2, 1) = 0;
     c_col(0, 2) = 80;
     c_col(1, 2) = 0;
     c_col(2, 2) = 80;
@@ -611,17 +675,13 @@ void initialize_elona()
     font(15 - en * 2);
     for (int i = 0; i < 18; ++i)
     {
-        pos(i * 24 + 72, 30);
-        gcopy(3, 0, 30, 24, 18);
-        pos(i * 24 + 77, 31);
-        color(50, 60, 80);
-        bmes(key_select(i), 250, 240, 230);
-        color(0, 0, 0);
+        draw("select_key", i * 24 + 72, 30);
+        bmes(key_select(i), i * 24 + 77, 31, {250, 240, 230}, {50, 60, 80});
     }
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(file_operation_t::_10);
+    ctrl_file(FileOperation::temp_dir_delete);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;
@@ -646,12 +706,11 @@ void initialize_elona()
     SDIM1(iknownnameref);
     SDIM1(ialphanameref);
     DIM2(irandomname, 800);
-    DIM1(icolref);
     DIM2(trate, 8);
     SDIM1(filtern);
     SDIM1(filter_creature);
     initialize_character_filters();
-    initialize_item_chip();
+    initialize_all_chips();
     initialize_building_daga();
     initialize_adata();
     initialize_cell_object_data();
@@ -672,17 +731,17 @@ void initialize_elona()
     initialize_home_adata();
     initialize_damage_popups();
     load_character_sprite();
-    if (config::instance().music == 1 && DMINIT() == 0)
+    if (Config::instance().music == "direct_music" && DMINIT() == 0)
     {
-        config::instance().music = 2;
+        Config::instance().music = "mci";
     }
     DSINIT();
-    if (config::instance().joypad == 1)
+    if (Config::instance().joypad == 1)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            config::instance().joypad = 0;
+            Config::instance().joypad = 0;
         }
     }
     initialize_sound_file();
@@ -723,24 +782,6 @@ void initialize_elona()
     cyclemax(2) = 1;
     cyclemax(3) = 1;
     cyclemax(4) = 0;
-
-    shadowmap(0) = 0;
-    shadowmap(1) = 9;
-    shadowmap(2) = 10;
-    shadowmap(3) = 5;
-    shadowmap(4) = 12;
-    shadowmap(5) = 7;
-    shadowmap(6) = 0;
-    shadowmap(7) = 1;
-    shadowmap(8) = 11;
-    shadowmap(9) = 0;
-    shadowmap(10) = 6;
-    shadowmap(11) = 3;
-    shadowmap(12) = 8;
-    shadowmap(13) = 4;
-    shadowmap(14) = 2;
-    shadowmap(15) = 0;
-    shadowmap(16) = 0;
 
     lastctrl = 1;
 
@@ -796,33 +837,78 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (config::instance().autonumlock)
+    if (Config::instance().autonumlock)
     {
-        snail::input::instance().disable_numlock();
+        snail::Input::instance().disable_numlock();
     }
+}
+
+static void initialize_screen()
+{
+    std::string display_mode = Config::instance().display_mode;
+
+    if (defines::is_android)
+    {
+        display_mode = Config::instance().get<std::string>(
+            "core.config.screen.window_mode");
+    }
+
+    title(
+        u8"Elona foobar version "s + latest_version.short_string(),
+        display_mode,
+        config_get_fullscreen_mode());
+}
+
+static void initialize_mods()
+{
+    lua::lua->get_mod_manager().load_mods(filesystem::dir::mods());
+    lua::lua->get_api_manager().lock();
 }
 
 int run()
 {
-    const fs::path config_file = filesystem::dir::exe() / u8"config.json";
+    const fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+
+    lua::lua = std::make_unique<lua::LuaEnv>();
     initialize_cat_db();
 
-    load_config2(config_file);
+    Config::instance().init(config_def_file);
+    initialize_config_preload(config_file);
+    initialize_screen();
 
-    title(u8"Elona Foobar version "s + latest_version.short_string(),
-          config::instance().display_mode,
-          config_get_fullscreen_mode());
+    filesystem::dir::set_base_save_directory(filesystem::path("save"));
 
     initialize_config(config_file);
+    init_assets();
+
+    // Scan all mods and load mod script code.
+    initialize_mods();
+    // Load translations from scanned mods.
+    initialize_i18n();
+
+    if (Config::instance().font_filename.empty())
+    {
+        // If no font is specified in `config.hcl`, use a pre-defined font
+        // depending on each language.
+        Config::instance().font_filename =
+            i18n::s.get("core.locale.meta.default_font");
+    }
+
+    // Load data from scanned mods.
+    initialize_lion_db();
+
     initialize_elona();
 
-    lua::lua.scan_all_mods(filesystem::dir::mods());
-    lua::lua.load_core_mod(filesystem::dir::mods());
+    Config::instance().write();
 
     start_elona();
 
     return 0;
 }
+
+
 
 void initialize_debug_globals()
 {
@@ -836,17 +922,17 @@ void initialize_debug_globals()
     gdata(43) = 631;
     gdata_next_inventory_serial_id = 1000;
     gdata_next_shelter_serial_id = 100;
-    gdata_pc_home_x = 22;
-    gdata_pc_home_y = 21;
+    gdata_pc_x_in_world_map = 22;
+    gdata_pc_y_in_world_map = 21;
     gdata_previous_map = -1;
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    gdata_current_map = 4;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     gdata_current_dungeon_level = 0;
     gdata_entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    gdata_current_map = 5;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::vernis);
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 7;
     mapstartx = 10;
@@ -871,17 +957,17 @@ void initialize_debug_globals()
     gdata_home_scale = 0;
     gdata_number_of_waiting_guests = 2;
     gdata_charge_power = 1000;
-    cdata[0].god_id = core_god::int2godid(2);
-    cdata[0].piety_point = 1000;
-    cdata[0].praying_point = 1000;
+    cdata.player().god_id = core_god::int2godid(2);
+    cdata.player().piety_point = 1000;
+    cdata.player().praying_point = 1000;
     gdata_pael_and_her_mom = 1000;
-    cdata[0].gold += 1000000;
-    cdata[0].platinum_coin = 30;
-    cdata[0].fame = 65000;
+    earn_gold(cdata.player(), 1000000);
+    cdata.player().platinum_coin = 30;
+    cdata.player().fame = 65000;
     gdata_main_quest_flag = 100;
     chara_refresh(0);
 
-    cdata[0].can_cast_rapid_magic() = true;
+    cdata.player().can_cast_rapid_magic() = true;
     mode = 0;
     refresh_burden_state();
     for (int cnt = 0; cnt < 55; ++cnt)
@@ -898,81 +984,81 @@ void initialize_noa_items()
 {
     flt();
     itemcreate(0, 284, -1, -1, 0);
-    inv[ci].number = 20;
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].set_number(20);
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 127, -1, -1, 0);
-    inv[ci].number = 20;
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].set_number(20);
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 617, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     flt();
     itemcreate(0, 671, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 749, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 748, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 601, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 342, -1, -1, 0);
-    inv[ci].number = 12;
+    inv[ci].set_number(12);
     flt();
     itemcreate(0, 343, -1, -1, 0);
-    inv[ci].number = 50;
+    inv[ci].set_number(50);
     flt();
     itemcreate(0, 519, -1, -1, 0);
-    inv[ci].number = 50;
+    inv[ci].set_number(50);
     inv[ci].color = 4;
     flt();
     itemcreate(0, 622, -1, -1, 0);
-    inv[ci].number = 50000;
+    inv[ci].set_number(50000);
     flt();
     itemcreate(0, 603, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 620, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 736, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 516, -1, -1, 0);
-    inv[ci].number = 5;
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].set_number(5);
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 262, -1, -1, 0);
-    inv[ci].number = 5;
+    inv[ci].set_number(5);
     flt();
     itemcreate(0, 632, -1, -1, 0);
-    inv[ci].number = 10;
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].set_number(10);
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 632, -1, -1, 0);
-    inv[ci].number = 10;
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].set_number(10);
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 204, -1, -1, 0);
     inv[ci].subname = 330;
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 636, -1, -1, 0);
-    inv[ci].number = 3;
-    inv[ci].curse_state = curse_state_t::none;
+    inv[ci].set_number(3);
+    inv[ci].curse_state = CurseState::none;
     flt();
     itemcreate(0, 342, -1, -1, 0);
     inv[ci].count = 100;
     flt();
     itemcreate(0, 350, -1, -1, 0);
-    inv[ci].number = 20;
+    inv[ci].set_number(20);
     flt();
     itemcreate(0, 707, -1, -1, 0);
     flt();
@@ -1009,10 +1095,10 @@ void initialize_noa_items()
     itemcreate(0, 784, -1, -1, 0);
     flt();
     itemcreate(0, 785, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 786, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 787, -1, -1, 0);
     flt();
@@ -1027,7 +1113,7 @@ void initialize_noa_items()
     itemcreate(0, 792, -1, -1, 0);
     flt();
     itemcreate(0, 260, -1, -1, 0);
-    inv[ci].number = 100;
+    inv[ci].set_number(100);
     gdata(41) = 140789;
     gdata(42) = 140790;
     for (int cnt = 0; cnt < 1200; ++cnt)
@@ -1048,32 +1134,32 @@ void initialize_noa_items()
     inv[ci].param1 = 164;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
-    inv[ci].curse_state = curse_state_t::blessed;
+    inv[ci].set_number(10);
+    inv[ci].curse_state = CurseState::blessed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
-    inv[ci].curse_state = curse_state_t::cursed;
+    inv[ci].set_number(10);
+    inv[ci].curse_state = CurseState::cursed;
     flt();
     itemcreate(0, 566, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 55, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 385, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     flt();
     itemcreate(0, 672, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].param1 = 169;
     flt();
     itemcreate(0, 672, -1, -1, 0);
-    inv[ci].number = 10;
+    inv[ci].set_number(10);
     inv[ci].param1 = 162;
     flt();
     itemcreate(0, 771, -1, -1, 0);
-    inv[ci].number = 100;
+    inv[ci].set_number(100);
     flt();
     itemcreate(0, 761, -1, -1, 0);
     flt();
@@ -1092,7 +1178,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     flt();
@@ -1101,7 +1187,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     flt();
@@ -1110,7 +1196,7 @@ void initialize_noa_items()
         if (stat != 0)
         {
             inv[ci].param3 = 240;
-            inv[ci].number = 50;
+            inv[ci].set_number(50);
         }
     }
     for (int cnt = 0; cnt < 40; ++cnt)
@@ -1135,12 +1221,12 @@ void initialize_world()
     gdata_day = 12;
     gdata_hour = 1;
     gdata_minute = 10;
-    gdata_pc_home_x = 22;
-    gdata_pc_home_y = 21;
+    gdata_pc_x_in_world_map = 22;
+    gdata_pc_y_in_world_map = 21;
     gdata_previous_map = -1;
     gdata(850) = 4;
     ghelp = 1;
-    gdata_current_map = 7;
+    gdata_current_map = static_cast<int>(mdata_t::MapId::your_home);
     gdata_current_dungeon_level = 1;
     gdata_entrance_type = 4;
     gdata_version = 1220;
@@ -1162,12 +1248,14 @@ void initialize_testbed()
 
 void initialize_game()
 {
-    autopick::instance().load(playerid);
+    bool script_loaded = false;
+    bool will_load_script = false;
+    Autopick::instance().load(playerid);
 
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
-    if (config::instance().net)
+    if (Config::instance().net)
     {
         initialize_server_info();
     }
@@ -1193,10 +1281,7 @@ void initialize_game()
         playerid = u8"sav_testbed"s;
         initialize_debug_globals();
         initialize_testbed();
-        if(config::instance().startup_script != ""s)
-        {
-            lua::lua.run_startup_script(config::instance().startup_script);
-        }
+        will_load_script = true;
         mode = 2;
     }
     if (mode == 2)
@@ -1207,29 +1292,48 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        const fs::path& save_dir = filesystem::dir::save();
-        load_save_data(save_dir);
+        load_save_data();
+
+        if (Config::instance().get<bool>(
+                "core.config.foobar.run_script_in_save"))
+        {
+            will_load_script = true;
+        }
     }
+
+    if (will_load_script && Config::instance().startup_script != ""s)
+    {
+        lua::lua->get_mod_manager().run_startup_script(
+            Config::instance().startup_script);
+        script_loaded = true;
+    }
+
     init_fovlist();
     initialize_map();
+
+    if (script_loaded)
+    {
+        lua::lua->get_event_manager()
+            .run_callbacks<lua::EventKind::script_loaded>();
+    }
 }
 
 void main_title_loop()
 {
-    main_menu_result_t result = main_menu_wrapper();
+    MainMenuResult result = main_menu_wrapper();
     bool finished = false;
     while (!finished)
     {
         switch (result)
         {
-        case main_menu_result_t::main_title_menu:
+        case MainMenuResult::main_title_menu:
             result = main_menu_wrapper();
             break;
-        case main_menu_result_t::initialize_game:
+        case MainMenuResult::initialize_game:
             initialize_game();
             finished = true;
             break;
-        case main_menu_result_t::finish_elona:
+        case MainMenuResult::finish_elona:
             finish_elona();
             finished = true;
             break;
@@ -1237,7 +1341,7 @@ void main_title_loop()
         }
     }
 
-    if (result == main_menu_result_t::initialize_game)
+    if (result == MainMenuResult::initialize_game)
     {
         main_loop();
     }

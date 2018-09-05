@@ -3,7 +3,7 @@
 namespace elona
 {
 
-enum class talk_result_t
+enum class TalkResult
 {
     talk_npc,
     talk_unique,
@@ -11,6 +11,7 @@ enum class talk_result_t
     talk_house_visitor,
     talk_sleeping,
     talk_busy,
+    talk_ignored,
     talk_finish_escort,
     talk_game_begin,
     talk_more,
@@ -24,24 +25,20 @@ void talk_reset_variables();
 void talk_window_init_and_show();
 void talk_window_init();
 void talk_window_show();
-void talk_window_query();
+int talk_window_query();
 int talk_check_trade(int = 0);
 int talk_guide_quest_client();
 
-talk_result_t talk_more();
-talk_result_t talk_sleeping();
-talk_result_t talk_busy();
-talk_result_t talk_house_visitor();
-talk_result_t talk_game_begin();
-talk_result_t talk_finish_escort();
-talk_result_t talk_quest_giver();
-talk_result_t talk_accepted_quest();
-talk_result_t talk_trainer();
-talk_result_t talk_invest();
+TalkResult talk_more();
+TalkResult talk_sleeping();
+TalkResult talk_busy();
+TalkResult talk_ignored();
+TalkResult talk_house_visitor();
+TalkResult talk_game_begin();
 bool talk_give_potion_of_cure_corruption();
 
-void talk_wrapper(talk_result_t);
-talk_result_t talk_npc();
-talk_result_t talk_unique();
+void talk_wrapper(TalkResult);
+TalkResult talk_npc();
+TalkResult talk_unique();
 
 } // namespace elona

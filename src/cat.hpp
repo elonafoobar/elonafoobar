@@ -1,13 +1,16 @@
 #pragma once
 
+#include <chrono>
 #include <memory>
 #include <unordered_map>
 #include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
+#include "log.hpp"
 #include "macro.hpp"
 #include "optional.hpp"
 
+using namespace std::literals::string_literals;
 
 namespace elona
 {
@@ -15,14 +18,14 @@ namespace cat
 {
 
 
-using ref = int;
+using Ref = int;
 
 
 
-class engine : lib::noncopyable
+class Engine : lib::noncopyable
 {
 public:
-    engine() = default;
+    Engine() = default;
 
     void initialize();
     void load(const fs::path& filepath);
@@ -35,7 +38,7 @@ public:
 
 
     template <typename T, typename... Args>
-    T call(ref func, Args&&... args)
+    T call(Ref func, Args&&... args)
     {
         lua_rawgeti(ptr(), LUA_REGISTRYINDEX, func);
         using swallow = std::initializer_list<int>;
@@ -62,7 +65,7 @@ public:
 
     // FIXME: rename
     template <typename T, typename... Args>
-    T call_with_self(ref self, ref func, Args&&... args)
+    T call_with_self(Ref self, Ref func, Args&&... args)
     {
         lua_rawgeti(ptr(), LUA_REGISTRYINDEX, func);
         lua_rawgeti(ptr(), LUA_REGISTRYINDEX, self);
@@ -138,7 +141,7 @@ private:
 };
 
 
-extern engine global;
+extern Engine global;
 
 
 
@@ -163,27 +166,27 @@ private:
 
 
 template <typename>
-struct cat_db_traits;
+struct CatDBTraits;
 
 
 template <class T>
-class cat_db : public lib::noncopyable
+class CatDB : public lib::noncopyable
 {
-    using traits_type = cat_db_traits<T>;
+    using TraitsType = CatDBTraits<T>;
 
 public:
-    using id_type = typename traits_type::id_type;
-    using data_type = typename traits_type::data_type;
-    using map_type = std::unordered_map<id_type, data_type>;
+    using IdType = typename TraitsType::IdType;
+    using DataType = typename TraitsType::DataType;
+    using MapType = std::unordered_map<IdType, DataType>;
 
 
     struct iterator
     {
     private:
-        using base_iterator_type = typename map_type::const_iterator;
+        using base_iterator_type = typename MapType::const_iterator;
 
     public:
-        using value_type = const data_type;
+        using value_type = const DataType;
         using difference_type = typename base_iterator_type::difference_type;
         using pointer = value_type*;
         using reference = value_type&;
@@ -191,7 +194,7 @@ public:
             typename base_iterator_type::iterator_category;
 
 
-        iterator(const typename map_type::const_iterator& itr)
+        iterator(const typename MapType::const_iterator& itr)
             : itr(itr)
         {
         }
@@ -217,7 +220,7 @@ public:
         }
 
     private:
-        typename map_type::const_iterator itr;
+        typename MapType::const_iterator itr;
     };
 
 
@@ -235,11 +238,14 @@ public:
 
     void initialize()
     {
-        cat::global.load(filesystem::path(u8"data") / traits_type::filename);
+        using namespace std::chrono;
+        steady_clock::time_point begin = steady_clock::now();
+
+        cat::global.load(filesystem::path(u8"data") / TraitsType::filename);
 
         auto L = cat::global.ptr();
 
-        lua_getglobal(L, traits_type::table_name);
+        lua_getglobal(L, TraitsType::table_name);
         lua_getfield(L, -1, u8"__storage__");
         lua_pushnil(L);
         while (lua_next(L, -2))
@@ -248,10 +254,18 @@ public:
             lua_pop(L, 1);
         }
         lua_pop(L, 2);
+
+        steady_clock::time_point end = steady_clock::now();
+        auto time =
+            std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)
+                .count();
+        ELONA_LOG(
+            "[CAT ("s << TraitsType::filename << ")] Elements: "s
+                      << storage.size() << ", time: []"s << time << "ms"s);
     }
 
 
-    optional_ref<data_type> operator[](const id_type& id) const
+    optional_ref<DataType> operator[](const IdType& id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
@@ -262,7 +276,7 @@ public:
 
 
 protected:
-    map_type storage;
+    MapType storage;
 };
 
 
@@ -282,7 +296,7 @@ protected:
     lua_pop(L, 1);
 #define ELONA_CAT_DB_FIELD_REF(name) \
     lua_getfield(L, -1, #name); \
-    cat::ref name = luaL_ref(L, LUA_REGISTRYINDEX);
+    cat::Ref name = luaL_ref(L, LUA_REGISTRYINDEX);
 
 
 

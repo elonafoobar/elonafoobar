@@ -7,6 +7,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "menu.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -30,7 +31,7 @@ void show_card_collection()
     wh = 400;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    windowanime(wx, wy, ww, wh, 10, 4);
+    window_animation(wx, wy, ww, wh, 9, 4);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
@@ -60,7 +61,7 @@ reset_page:
 
     while (1)
     {
-        s(0) = lang(u8"カード", u8"Card");
+        s(0) = i18n::s.get("core.locale.action.use.deck.title");
         s(1) = strhint5;
         display_window(
             (windoww - 730) / 2 + inf_screenx,
@@ -70,9 +71,16 @@ reset_page:
             55,
             40);
 
-        display_topic(lang(u8"NPCの名前", u8"NPC name"), wx + 46, wy + 36);
-        display_topic(lang(u8"殺害数", u8"Kill"), wx + 385, wy + 36);
-        display_topic(lang(u8"生成数", u8"Generate"), wx + 475, wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.npc_name"),
+            wx + 46,
+            wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.kill"), wx + 385, wy + 36);
+        display_topic(
+            i18n::s.get("core.locale.action.use.deck.generate"),
+            wx + 475,
+            wy + 36);
 
         keyrange = 0;
         for (int i = 0; i < pagesize; ++i)
@@ -122,7 +130,7 @@ reset_page:
         }
 
         redraw();
-        await(config::instance().wait1);
+        await(Config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -156,18 +164,19 @@ reset_page:
         if (card(0, list(0, pagesize * page + cs))
             && (p != -1 || key == key_identify))
         {
-            item tmp = inv[ci];
-            inv[ci].number = 0;
+            const int ci_save = ci;
+            Item tmp;
+            Item::copy(inv[ci], tmp);
+            inv[ci].set_number(0);
             itemcreate(0, 504, -1, -1, 0);
             inv[ci].subname = list(0, pagesize * page + cs);
-            inv[ci].identification_state =
-                identification_state_t::completely_identified;
+            inv[ci].identification_state = IdentifyState::completely_identified;
             int pagesize_bk = pagesize;
             int page_bk = page;
             int cs_bk = cs;
-            show_item_description();
-            inv[ci].number = 0;
-            inv[tmp.index] = tmp;
+            item_show_description();
+            inv[ci].set_number(0);
+            Item::copy(tmp, inv[ci_save]);
             pagesize = pagesize_bk;
             page = page_bk;
             cs = cs_bk;

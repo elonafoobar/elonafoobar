@@ -1,0 +1,36 @@
+item counter {
+    id = 900
+    image = 900
+    value = 780
+    weight = 500
+    dice_x = 0
+    dice_y = 0
+    hit_bonus = 0
+    damage_bonus = 0
+    pv = 0
+    dv = 0
+    material = 31
+    chargelevel = 0
+    is_readable = false
+    is_zappable = false
+    is_drinkable = false
+    is_cargo = false
+    is_usable = true
+    appearance = 0
+    expiration_date = 0
+    level = 1
+    fltselect = 0
+    category = 60000
+    subcategory = 99999
+    rarity = 1000000
+    coefficient = 100
+    light = 0
+    originalnameref2 = ""
+    has_random_name = false
+    tags = []
+    rftags = []
+    color = Blue
+    locale_key_prefix = kiroku.locale.item.counter
+
+    on_use_callback = exports:kiroku.on_use.counter
+}

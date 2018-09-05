@@ -66,7 +66,7 @@ Iterator sample(const Range& range, Iterator result, Distance n)
 
 
 template <typename T>
-struct weighted_random_sampler
+struct WeightedRandomSampler
 {
     void add(const T& value, int weight)
     {

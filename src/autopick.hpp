@@ -10,12 +10,12 @@ namespace elona
 {
 
 
-class autopick : public lib::noncopyable
+class Autopick : public lib::noncopyable
 {
 public:
-    struct operation
+    struct Operation
     {
-        enum class type_t
+        enum class Type
         {
             do_nothing = 0,
             pick_up = 1,
@@ -26,41 +26,41 @@ public:
             open = 16,
         };
 
-        explicit operation(type_t type = type_t::do_nothing)
+        explicit Operation(Type type = Type::do_nothing)
             : type(type)
         {
         }
 
-        type_t type = type_t::do_nothing;
+        Type type = Type::do_nothing;
         bool show_prompt = false;
         std::string sound;
     };
 
-    static autopick& instance();
+    static Autopick& instance();
 
     void load(const std::string& player_id);
 
-    operation get_operation(const item&);
+    Operation get_operation(const Item&);
 
 
 private:
-    struct matcher
+    struct Matcher
     {
-        matcher(const std::string& text, const operation& op)
+        Matcher(const std::string& text, const Operation& op)
             : text(text)
             , op(op)
         {
         }
 
         std::string text;
-        operation op;
+        Operation op;
 
-        bool matches(const item&) const;
+        bool matches(const Item&) const;
     };
 
 
-    std::vector<matcher> matchers;
-    autopick() = default;
+    std::vector<Matcher> matchers;
+    Autopick() = default;
 
 
     void clear();

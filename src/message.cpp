@@ -1,13 +1,15 @@
+#include <ctype.h>
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "map.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include <ctype.h>
 
 
 namespace elona
@@ -27,20 +29,26 @@ void msg_write(std::string& message)
 {
     constexpr const auto musical_note = u8"♪";
 
-    for (auto pos = message.find(musical_note); pos != std::string::npos;
-         pos = message.find(musical_note))
+    for (auto pos = strutil::find_widthwise(message, musical_note);
+         pos.first != std::string::npos;
+         pos = strutil::find_widthwise(message, musical_note))
     {
-        const auto symbol_type =
-            elona::stoi(message.substr(pos + std::strlen(musical_note), 1));
+        auto bytewise_pos = pos.first;
+        auto widthwise_pos = pos.second;
+
+        const auto symbol_type = elona::stoi(
+            message.substr(bytewise_pos + std::strlen(musical_note), 1));
         if (jp && symbol_type == 0)
         {
             break;
         }
-        message = message.substr(0, pos) + u8"  "
+        message = message.substr(0, bytewise_pos) + u8"  "
             + message.substr(
-                  pos + std::strlen(musical_note) + (symbol_type != 0));
+                  bytewise_pos + std::strlen(musical_note)
+                  + (symbol_type != 0));
         elona::pos(
-            (message_width + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (message_width + widthwise_pos) * inf_mesfont / 2 + inf_msgx + 7
+                + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
         gmode(2);
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
@@ -51,6 +59,7 @@ void msg_write(std::string& message)
         message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
     font(inf_mesfont - en * 2);
+    gmode(0, 255);
     mes(message);
     elona::color(0, 0, 0);
 }
@@ -81,26 +90,6 @@ namespace elona
 
 
 
-void bmes(const std::string& str, int r, int g, int b)
-{
-    int x = ginfo(22);
-    int y = ginfo(23);
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            pos(x + dx, y + dy);
-            mes(str);
-        }
-    }
-    color(r, g, b);
-    pos(x, y);
-    mes(str);
-    color(0, 0, 0);
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
@@ -121,22 +110,30 @@ void anime_halt()
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(config::instance().wait1 / 3);
-        pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-        gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
+        await(Config::instance().wait1 / 3);
+        draw(
+            "label_more",
+            x_at_txtfunc,
+            y_at_txtfunc + 12 - cnt,
+            120,
+            cnt * 2 + 1);
         redraw();
     }
     wait_key_pressed(true);
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(config::instance().wait1 / 3);
+        await(Config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc);
         gcopy(3, 672, 504, 120, 24);
         if (cnt != 6)
         {
-            pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-            gzoom(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
+            draw(
+                "label_more",
+                x_at_txtfunc,
+                y_at_txtfunc + cnt * 2,
+                120,
+                22 - cnt * 4);
         }
         redraw();
     }
@@ -164,6 +161,13 @@ void help_halt()
     y_at_txtfunc = wy + dy - 1;
     anime_halt();
     return;
+}
+
+
+
+void txtef(ColorIndex color)
+{
+    txtef(static_cast<int>(color) % 21);
 }
 
 
@@ -268,10 +272,10 @@ void txt_conv()
         {
             msg_newline();
             tnew = 0;
-            if (config::instance().msgtrans)
+            if (Config::instance().msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                gmode(4, -1, -1, config::instance().msgtrans * 20);
+                gmode(4, Config::instance().msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)
@@ -286,7 +290,7 @@ void txt_conv()
                     gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
                 }
             }
-            if (config::instance().msgaddtime)
+            if (Config::instance().msgaddtime)
             {
                 msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
             }
@@ -424,17 +428,17 @@ std::string name(int cc)
 {
     if (cc == 0)
     {
-        return lang(u8"あなた"s, u8"you"s);
+        return i18n::s.get("core.locale.chara.you");
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
-        return lang(u8"何か"s, u8"something"s);
+        return i18n::s.get("core.locale.chara.something");
     }
-    if (cdata[0].blind != 0
-        || (cdata[cc].is_invisible() == 1 && cdata[0].can_see_invisible() == 0
-            && cdata[cc].wet == 0))
+    if (cdata.player().blind != 0
+        || (cdata[cc].is_invisible() == 1
+            && cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
     {
-        return lang(u8"何か"s, u8"something"s);
+        return i18n::s.get("core.locale.chara.something");
     }
     if (en)
     {
@@ -459,7 +463,7 @@ std::string aln(int cc)
     {
         return "";
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"それは";
     }
@@ -474,7 +478,7 @@ std::string npcn(int cc)
     {
         return "";
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"それは";
     }
@@ -612,7 +616,7 @@ std::string he(int cc, int prm_321)
     {
         return u8"it"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"it"s;
     }
@@ -665,7 +669,7 @@ std::string his(int cc, int prm_323)
     {
         return u8"its"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"its"s;
     }
@@ -710,7 +714,7 @@ std::string him(int cc, int prm_325)
     {
         return u8"it"s;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
         return u8"it"s;
     }
@@ -748,7 +752,7 @@ std::string yourself(int x)
     {
         return u8"itself"s;
     }
-    if (is_in_fov(x) == 0)
+    if (is_in_fov(cdata[x]) == 0)
     {
         return u8"itself"s;
     }
@@ -767,7 +771,7 @@ std::string yourself(int x)
 
 void stxt(int cc, const std::string& str)
 {
-    if (cc == 0 || (is_in_fov(cc) && cdata[0].blind == 0))
+    if (cc == 0 || (is_in_fov(cdata[cc]) && cdata.player().blind == 0))
     {
         txt(str);
     }

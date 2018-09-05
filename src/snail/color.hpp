@@ -11,7 +11,7 @@ namespace snail
 {
 
 
-struct color
+struct Color
 {
     uint8_t r;
     uint8_t g;
@@ -19,7 +19,7 @@ struct color
     uint8_t a;
 
 
-    constexpr color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+    constexpr Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
         : r(r)
         , g(g)
         , b(b)
@@ -29,20 +29,20 @@ struct color
 
 
     // Grayscale
-    explicit constexpr color(uint8_t v, uint8_t a = 255)
-        : color(v, v, v, a)
+    explicit constexpr Color(uint8_t v, uint8_t a = 255)
+        : Color(v, v, v, a)
     {
     }
 };
 
 
-inline bool operator==(const color& x, const color& y)
+inline bool operator==(const Color& x, const Color& y)
 {
     return x.r == y.r && x.g == y.g && x.b == y.b && x.a == y.a;
 }
 
 
-inline bool operator!=(const color& x, const color& y)
+inline bool operator!=(const Color& x, const Color& y)
 {
     return !(x == y);
 }
@@ -51,8 +51,8 @@ inline bool operator!=(const color& x, const color& y)
 
 namespace palette
 {
-constexpr color black = {0, 0, 0};
-constexpr color white = {255, 255, 255};
+constexpr Color black = {0, 0, 0, 255};
+constexpr Color white = {255, 255, 255, 255};
 } // namespace palette
 
 
@@ -60,7 +60,7 @@ constexpr color white = {255, 255, 255};
 namespace detail
 {
 
-inline ::SDL_Color to_sdl_color(const color& c)
+inline ::SDL_Color to_sdl_color(const Color& c)
 {
     return ::SDL_Color{c.r, c.g, c.b, c.a};
 }

@@ -6,7 +6,7 @@
 
 namespace snail
 {
-enum MessageBox
+enum class MessageBox
 {
     error = SDL_MESSAGEBOX_ERROR,
     warning = SDL_MESSAGEBOX_WARNING,

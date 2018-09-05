@@ -7,7 +7,7 @@ namespace elona
 
 
 // TODO: they shouldn't be linked to specific magic numbers.
-enum class status_ailment_t
+enum class StatusAilment
 {
     blinded = 4,
     confused = 5,
@@ -23,8 +23,8 @@ enum class status_ailment_t
 };
 
 
-void dmgcon(int cc, status_ailment_t status_ailment, int power);
-void healcon(int prm_827, int prm_828, int prm_829);
+void dmgcon(int cc, StatusAilment status_ailment, int power);
+void healcon(int prm_827, int prm_828, int prm_829 = 0);
 
 
 } // namespace elona

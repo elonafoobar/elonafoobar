@@ -4,19 +4,21 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
+#include "menu.hpp"
 #include "network.hpp"
 #include "optional.hpp"
 #include "random.hpp"
 #include "variables.hpp"
+
 
 
 namespace
@@ -24,7 +26,7 @@ namespace
 
 
 template <typename T, typename Similarity = int>
-class by_similarity_selector
+class BySimilaritySelector
 {
 public:
     void add(const T& value, const Similarity& similarity)
@@ -72,19 +74,19 @@ public:
     }
 
 private:
-    struct candidate_t
+    struct Candidate
     {
         T value;
         Similarity similarity;
 
-        candidate_t(const T& value, const Similarity& similarity)
+        Candidate(const T& value, const Similarity& similarity)
             : value(value)
             , similarity(similarity)
         {
         }
     };
 
-    std::vector<candidate_t> candidates;
+    std::vector<Candidate> candidates;
 };
 
 
@@ -94,6 +96,7 @@ std::string fix_wish(const std::string& text)
 
     auto ret{text};
 
+    // TODO
     if (debug::voldemort)
     {
         const auto pos = ret.find_first_not_of(u8"0123456789");
@@ -120,9 +123,11 @@ std::string fix_wish(const std::string& text)
     {
         ret = to_lower(ret);
     }
-    ret = remove_str(ret, lang(u8"アイテム", u8"item"));
-    ret = remove_str(ret, lang(u8"スキル", u8"skill "));
-    ret = remove_str(ret, lang(u8"スキル", u8"skill"));
+    ret = remove_str(ret, u8"item");
+    ret = remove_str(ret, u8"アイテム");
+    ret = remove_str(ret, u8"skill");
+    ret = remove_str(ret, u8"skill ");
+    ret = remove_str(ret, u8"スキル");
 
     return ret;
 }
@@ -134,6 +139,7 @@ std::string remove_extra_str(const std::string& text)
 
     auto ret{text};
 
+    // TODO
     ret = remove_str(ret, u8"の剥製");
     ret = remove_str(ret, u8"剥製");
     ret = remove_str(ret, u8"のはく製");
@@ -155,12 +161,13 @@ void wish_end()
         return;
 
     net_send(
-        u8"wish"
-        + lang(
-              cdatan(1, 0) + cdatan(0, 0) + u8"は狂喜して叫んだ。「" + inputlog
-                  + u8"！！」" + txtcopy,
-              cdatan(1, 0) + u8" " + cdatan(0, 0) + u8" goes wild with joy, \""
-                  + inputlog + u8"!!\" " + cnven(txtcopy)));
+        "wish"
+        + i18n::s.get(
+              "core.locale.wish.sent_message",
+              cdatan(1, 0),
+              cdatan(0, 0),
+              i18n::s.get("core.locale.wish.your_wish", inputlog(0)),
+              cnven(txtcopy)));
 
     wishfilter = 1;
 }
@@ -171,7 +178,7 @@ int select_wished_character(const std::string& input)
     constexpr int default_result = 37;
     using namespace strutil;
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = remove_extra_str(input);
     for (int i = 0; i < 800; ++i)
     {
@@ -200,10 +207,12 @@ void wish_for_character()
     inputlog = strutil::remove_str(inputlog, u8"summon");
     dbid = select_wished_character(inputlog);
     flt();
-    chara_create(-1, dbid, cdata[0].position.x, cdata[0].position.y);
+    chara_create(
+        -1, dbid, cdata.player().position.x, cdata.player().position.y);
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     txt(cdatan(0, rc) + " is summoned.");
 }
+
 
 
 void wish_for_card()
@@ -212,16 +221,16 @@ void wish_for_card()
     flt();
     chara_create(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 504, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
+    itemcreate(
+        -1, 504, cdata.player().position.x, cdata.player().position.y, 0);
+    inv[ci].subname = cdata.tmp().id;
+    inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
-    txt(lang(
-        u8"足元に" + itemname(ci) + u8"が転がってきた。",
-        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number)
-            + u8" from nowhere."));
+    cell_refresh(cdata.player().position.x, cdata.player().position.y);
+    txt(i18n::s.get(
+        "core.locale.wish.something_appears_from_nowhere", inv[ci]));
 }
+
 
 
 void wish_for_figure()
@@ -230,177 +239,220 @@ void wish_for_figure()
     flt();
     chara_create(56, dbid, -3, 0);
     flt();
-    itemcreate(-1, 503, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
+    itemcreate(
+        -1, 503, cdata.player().position.x, cdata.player().position.y, 0);
+    inv[ci].subname = cdata.tmp().id;
+    inv[ci].param1 = cdata.tmp().image;
     chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
-    txt(lang(
-        u8"足元に" + itemname(ci) + u8"が転がってきた。",
-        "" + itemname(ci) + u8" appear" + _s2(inv[ci].number)
-            + u8" from nowhere."));
+    cell_refresh(cdata.player().position.x, cdata.player().position.y);
+    txt(i18n::s.get(
+        "core.locale.wish.something_appears_from_nowhere", inv[ci]));
 }
+
+
+
+template <typename F>
+bool _match_wish(
+    const std::string& key,
+    const std::vector<std::string>& english_words,
+    F match)
+{
+    auto words = i18n::s.get_list(key);
+    words.insert(
+        std::end(words), std::begin(english_words), std::end(english_words));
+    return std::any_of(std::begin(words), std::end(words), match);
+}
+
+
+
+/// Returns true if `wish` equals one of the special words. English words are
+/// available in all languages.
+/// @params key The I18N key associated with the special words. Note that it
+/// does not contain the prefix, "core.locale.wish.special_wish.".
+bool match_special_wish(
+    const std::string& wish,
+    const std::string& key,
+    const std::vector<std::string>& english_words)
+{
+    return _match_wish(
+        "core.locale.wish.special_wish." + key,
+        english_words,
+        [&](const auto& word) { return wish == word; });
+}
+
+
+
+/// Returns true if `wish` equals one of the special words. English words are
+/// available in all languages.
+/// @params key The I18N key associated with the special words. Note that it
+/// does not contain the prefix, "core.locale.wish.general_wish.".
+bool match_general_wish(
+    const std::string& wish,
+    const std::string& key,
+    const std::vector<std::string>& english_words)
+{
+    return _match_wish(
+        "core.locale.wish.general_wish." + key,
+        english_words,
+        [&](const auto& word) { return strutil::contains(wish, word); });
+}
+
 
 
 bool grant_special_wishing(const std::string& wish)
 {
-    using namespace strutil;
-
-    if (contains(wish, u8"中の神") || contains(wish, u8"god inside"))
+    if (match_special_wish(wish, "god_inside", {"god inside"}))
     {
-        txt(lang(
-            u8"中の神も大変…あ…中の神なんているわけないじゃない！…ねえ、聞かな"
-            u8"かったことにしてね。",
-            u8"There's no God inside."));
+        txt(i18n::s.get("core.locale.wish.wish_god_inside"));
     }
-    else if (contains(wish, u8"中の人") || contains(wish, u8"man inside"))
+    else if (match_special_wish(wish, "man_inside", {"man inside"}))
     {
-        txt(lang(u8"中の人も大変ね。", u8"There's no man inside."));
+        txt(i18n::s.get("core.locale.wish.wish_man_inside"));
     }
-    else if (wish == u8"エヘカトル" || wish == u8"ehekatl")
+    else if (match_special_wish(wish, "ehekatl", {"ehekatl"}))
     {
-        txt(lang(u8"「うみみゅみゅぁ！」", u8"\"Meeewmew!\""));
+        txt(i18n::s.get("core.locale.wish.wish_ehekatl"));
         flt();
-        chara_create(-1, 331, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 331, cdata.player().position.x, cdata.player().position.y);
     }
-    else if (wish == u8"ルルウィ" || wish == u8"lulwy")
+    else if (match_special_wish(wish, "lulwy", {"lulwy"}))
     {
-        txt(lang(
-            u8"「アタシを呼びつけるとは生意気ね。」",
-            u8"\"You dare to call my name?\""));
+        txt(i18n::s.get("core.locale.wish.wish_lulwy"));
         flt();
-        chara_create(-1, 306, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 306, cdata.player().position.x, cdata.player().position.y);
     }
-    else if (wish == u8"オパートス" || wish == u8"opatos")
+    else if (match_special_wish(wish, "opatos", {"opatos"}))
     {
-        txt(lang(u8"工事中。", u8"\"Under construction.\""));
+        txt(i18n::s.get("core.locale.wish.wish_opatos"));
         flt();
-        chara_create(-1, 338, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 338, cdata.player().position.x, cdata.player().position.y);
     }
-    else if (wish == u8"クミロミ" || wish == u8"kumiromi")
+    else if (match_special_wish(wish, "kumiromi", {"kumiromi"}))
     {
-        txt(lang(u8"工事中。", u8"\"Under construction.\""));
+        txt(i18n::s.get("core.locale.wish.wish_kumiromi"));
         flt();
-        chara_create(-1, 339, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 339, cdata.player().position.x, cdata.player().position.y);
     }
-    else if (wish == u8"マニ" || wish == u8"mani")
+    else if (match_special_wish(wish, "mani", {"mani"}))
     {
-        txt(lang(u8"工事中。", u8"\"Under construction.\""));
+        txt(i18n::s.get("core.locale.wish.wish_mani"));
         flt();
-        chara_create(-1, 342, cdata[0].position.x, cdata[0].position.y);
+        chara_create(
+            -1, 342, cdata.player().position.x, cdata.player().position.y);
     }
-    else if (
-        wish == u8"若さ" || wish == u8"若返り" || wish == u8"年"
-        || wish == u8"美貌" || wish == u8"youth" || wish == u8"age"
-        || wish == u8"beauty")
+    else if (match_special_wish(wish, "youth", {"youth", "age", "beauty"}))
     {
-        txt(lang(u8"ふぅん…そんな願いでいいんだ。", u8"A typical wish."));
-        cdata[0].birth_year += 20;
-        if (cdata[0].birth_year + 12 > gdata_year)
+        txt(i18n::s.get("core.locale.wish.wish_youth"));
+        cdata.player().birth_year += 20;
+        if (cdata.player().birth_year + 12 > gdata_year)
         {
-            cdata[0].birth_year = gdata_year - 12;
+            cdata.player().birth_year = gdata_year - 12;
         }
     }
-    else if (
-        wish == u8"通り名" || wish == u8"異名" || wish == u8"aka"
-        || wish == u8"title" || wish == u8"name" || wish == u8"alias")
+    else if (match_special_wish(
+                 wish, "alias", {"aka", "title", "name", "alias"}))
     {
         if (gdata_wizard)
         {
-            txt(lang(u8"だめよ。", u8"*laugh*"));
-        }
-        txt(lang(u8"新しい異名は？", u8"What's your new alias?"));
-        int stat = select_alias(0);
-        if (stat == 1)
-        {
-            txt(lang(
-                u8"あなたの新しい異名は「" + cmaka + u8"」。満足したかしら？",
-                u8"You will be known as <" + cmaka + u8">."));
-            cdatan(1, 0) = cmaka;
+            txt(i18n::s.get("core.locale.wish.wish_alias.impossible"));
         }
         else
         {
-            txt(lang(
-                u8"あら、そのままでいいの？", u8"What a waste of a wish!"));
+            txt(i18n::s.get(
+                "core.locale.wish.wish_alias.what_is_your_new_alias"));
+            int stat = select_alias(0);
+            if (stat == 1)
+            {
+                txt(i18n::s.get(
+                    "core.locale.wish.wish_alias.new_alias", cmaka));
+                cdatan(1, 0) = cmaka;
+            }
+            else
+            {
+                txt(i18n::s.get("core.locale.wish.wish_alias.no_change"));
+            }
         }
     }
-    else if (
-        wish == u8"性転換" || wish == u8"性" || wish == u8"異性"
-        || wish == u8"sex")
+    else if (match_special_wish(wish, "sex", {"sex"}))
     {
-        cdata[0].sex = !cdata[0].sex;
+        cdata.player().sex = !cdata.player().sex;
 
-        txt(lang(
-            name(0) + u8"は" + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex)
-                + u8"になった！ …もう後戻りはできないわよ。",
-            name(0) + u8" become "
-                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8"!"));
+        txt(i18n::s.get(
+            "core.locale.wish.wish_sex",
+            cdata.player(),
+            i18n::_(u8"ui", u8"sex", u8"_"s + cdata.player().sex)));
     }
-    else if (
-        wish == u8"贖罪" || wish == u8"redemption" || wish == u8"atonement")
+    else if (match_special_wish(
+                 wish, "redemption", {"redemption", "atonement"}))
     {
-        if (cdata[0].karma >= 0)
+        if (cdata.player().karma >= 0)
         {
-            txt(lang(
-                u8"…罪なんて犯してないじゃない。", u8"You aren't a sinner."));
+            txt(i18n::s.get(
+                "core.locale.wish.wish_redemption.you_are_not_a_sinner"));
         }
-        modify_karma(0, -cdata[0].karma / 2);
-        txt(lang(
-            u8"あら…都合のいいことを言うのね。", u8"What a convenient wish!"));
+        else
+        {
+            modify_karma(cdata.player(), -cdata.player().karma / 2);
+            txt(i18n::s.get(
+                "core.locale.wish.wish_redemption.what_a_convenient_wish"));
+        }
     }
-    else if (wish == u8"死" || wish == u8"death")
+    else if (match_special_wish(wish, "death", {"death"}))
     {
-        txt(lang(u8"それがお望みなら…", u8"If you wish so..."));
-        dmghp(0, 99999, -11);
+        txt(i18n::s.get("core.locale.wish.wish_death"));
+        damage_hp(cdata.player(), 99999, -11);
     }
-    else if (
-        wish == u8"仲間" || wish == u8"friend" || wish == u8"company"
-        || wish == u8"ally")
+    else if (match_special_wish(wish, "ally", {"friend", "company", "ally"}))
     {
         event_add(12);
     }
-    else if (
-        wish == u8"金" || wish == u8"金貨" || wish == u8"富" || wish == u8"財産"
-        || wish == u8"money" || wish == u8"gold" || wish == u8"wealth"
-        || wish == u8"fortune")
+    else if (match_special_wish(
+                 wish, "gold", {"money", "gold", "wealth", "fortune"}))
     {
         txtef(5);
-        txt(lang(u8"金貨が降ってきた！", u8"Lots of gold pieces appear."));
+        txt(i18n::s.get("core.locale.wish.wish_gold"));
         flt();
         itemcreate(
             -1,
             54,
-            cdata[0].position.x,
-            cdata[0].position.y,
-            (cdata[0].level / 3 + 1) * 10000);
+            cdata.player().position.x,
+            cdata.player().position.y,
+            (cdata.player().level / 3 + 1) * 10000);
     }
-    else if (
-        wish == u8"メダル" || wish == u8"小さなメダル"
-        || wish == u8"ちいさなメダル" || wish == u8"coin" || wish == u8"medal"
-        || wish == u8"small coin" || wish == u8"small medal")
+    else if (match_special_wish(
+                 wish,
+                 "small_medal",
+                 {"small medal", "small coin", "medal", "coin"}))
     {
         txtef(5);
-        txt(lang(u8"小さなメダルが降ってきた！", u8"A small coin appears."));
+        txt(i18n::s.get("core.locale.wish.wish_small_medal"));
         flt();
         itemcreate(
-            -1, 622, cdata[0].position.x, cdata[0].position.y, 3 + rnd(3));
+            -1,
+            622,
+            cdata.player().position.x,
+            cdata.player().position.y,
+            3 + rnd(3));
     }
-    else if (
-        wish == u8"プラチナ" || wish == u8"プラチナ硬貨" || wish == u8"platina"
-        || wish == u8"platinum")
+    else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
         txtef(5);
-        txt(lang(u8"プラチナ硬貨が降ってきた！", u8"Platinum pieces appear."));
+        txt(i18n::s.get("core.locale.wish.wish_platinum"));
         flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
+        itemcreate(
+            -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
     }
     else if (gdata_wizard)
     {
-        if (wish == u8"名声" || wish == u8"fame")
+        if (match_special_wish(wish, "fame", {"fame"}))
         {
             txtef(5);
             txt(u8"fame +1,000,000");
-            cdata[0].fame += 1'000'000;
+            cdata.player().fame += 1'000'000;
         }
         else
         {
@@ -416,37 +468,39 @@ bool grant_special_wishing(const std::string& wish)
 }
 
 
+
 bool wish_for_item(const std::string& input)
 {
     using namespace strutil;
 
     const auto number_of_items = elona::stoi(input);
-    optional<curse_state_t> curse_state;
+    optional<CurseState> curse_state;
 
+    // TODO
     if (debug::voldemort)
     {
         if (contains(input, u8"呪われた") || contains(input, u8"cursed "))
         {
-            curse_state = curse_state_t::cursed;
+            curse_state = CurseState::cursed;
         }
         else if (contains(input, u8"堕落した") || contains(input, u8"doomed "))
         {
-            curse_state = curse_state_t::doomed;
+            curse_state = CurseState::doomed;
         }
         else if (
             contains(input, u8"祝福された") || contains(input, u8"blessed "))
         {
-            curse_state = curse_state_t::blessed;
+            curse_state = CurseState::blessed;
         }
         else if (
             contains(input, u8"呪われていない")
             || contains(input, u8"uncursed "))
         {
-            curse_state = curse_state_t::none;
+            curse_state = CurseState::none;
         }
     }
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
     for (const auto& item_data : the_item_db)
     {
@@ -493,7 +547,7 @@ bool wish_for_item(const std::string& input)
 
         const auto id = *opt_id;
 
-        flt(cdata[0].level + 10, 4);
+        flt(cdata.player().level + 10, 4);
         if (id == 558 || id == 556 || id == 557 || id == 664)
         {
             fixlv = calcfixlv(3);
@@ -515,7 +569,7 @@ bool wish_for_item(const std::string& input)
             {
                 // Remove this item and retry.
                 selector.remove(id);
-                item_remove(inv[ci]);
+                inv[ci].remove();
                 --itemmemory(1, inv[ci].id);
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 continue;
@@ -524,58 +578,57 @@ bool wish_for_item(const std::string& input)
 
         if (inv[ci].id == 54)
         {
-            inv[ci].number = cdata[0].level * cdata[0].level * 50 + 20000;
+            inv[ci].set_number(
+                cdata.player().level * cdata.player().level * 50 + 20000);
         }
         else if (inv[ci].id == 55)
         {
-            inv[ci].number = 8 + rnd(5);
+            inv[ci].set_number(8 + rnd(5));
         }
         else if (inv[ci].id == 602)
         {
-            item_remove(inv[ci]);
+            inv[ci].remove();
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-            inv[ci].curse_state = curse_state_t::blessed;
-            txt(lang(u8"あ、それ在庫切れ。", u8"It's sold out."));
+            inv[ci].curse_state = CurseState::blessed;
+            txt(i18n::s.get("core.locale.wish.it_is_sold_out"));
         }
         if (the_item_db[inv[ci].id]->category == 52000
             || the_item_db[inv[ci].id]->category == 53000)
         {
-            inv[ci].number = 3 + rnd(2);
+            inv[ci].set_number(3 + rnd(2));
             if (inv[ci].value >= 20000)
             {
-                inv[ci].number = 1;
+                inv[ci].set_number(1);
             }
             else if (inv[ci].value >= 10000)
             {
-                inv[ci].number = 2;
+                inv[ci].set_number(2);
             }
             else if (inv[ci].value >= 5000)
             {
-                inv[ci].number = 3;
+                inv[ci].set_number(3);
             }
             switch (inv[ci].id)
             {
-            case 559: inv[ci].number = 2 + rnd(2); break;
-            case 502: inv[ci].number = 2; break;
-            case 243: inv[ci].number = 1; break;
-            case 621: inv[ci].number = 1; break;
-            case 706: inv[ci].number = 1; break;
+            case 559: inv[ci].set_number(2 + rnd(2)); break;
+            case 502: inv[ci].set_number(2); break;
+            case 243: inv[ci].set_number(1); break;
+            case 621: inv[ci].set_number(1); break;
+            case 706: inv[ci].set_number(1); break;
             }
         }
         if (debug::voldemort && number_of_items != 0)
         {
-            inv[ci].number = number_of_items;
+            inv[ci].set_number(number_of_items);
         }
         if (debug::voldemort && curse_state)
         {
             inv[ci].curse_state = curse_state.get();
         }
 
-        item_identify(inv[ci], identification_state_t::completely_identified);
-        txt(lang(
-            u8"足元に" + itemname(ci) + u8"が転がってきた。",
-            "" + itemname(ci) + u8" appear" + _s2(inv[ci].number) + u8"."));
+        item_identify(inv[ci], IdentifyState::completely_identified);
+        txt(i18n::s.get("core.locale.wish.something_appears", inv[ci]));
         return true;
     }
 
@@ -583,11 +636,12 @@ bool wish_for_item(const std::string& input)
 }
 
 
+
 bool wish_for_skill(const std::string& input)
 {
     using namespace strutil;
 
-    by_similarity_selector<int> selector;
+    BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
 
     for (const auto& ability_data : the_ability_db)
@@ -637,33 +691,30 @@ bool wish_for_skill(const std::string& input)
             txtef(5);
             if (sdata.get(id, 0).original_level == 0)
             {
-                txt(lang(
-                    name + u8"の技術を会得した！",
-                    u8"You learn " + name + u8"!"));
-                skillgain(0, id, 1);
+                txt(i18n::s.get("core.locale.wish.you_learn_skill", name));
+                chara_gain_skill(cdata.player(), id, 1);
             }
             else
             {
-                txt(lang(
-                    name + u8"が上昇した！",
-                    u8"Your " + name + u8" skill improves!"));
-                skillmod(id, 0, 1000);
-                modify_potential(0, id, 25);
+                txt(i18n::s.get("core.locale.wish.your_skill_improves", name));
+                chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
+                modify_potential(cdata.player(), id, 25);
             }
         }
         else
         {
-            txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             return false;
         }
     }
     else
     {
-        txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         return false;
     }
     return true;
 }
+
 
 
 bool process_wish()
@@ -672,20 +723,20 @@ bool process_wish()
 
     txtcopy = "";
     txtef(5);
-    txt(lang(u8"何を望む？", u8"What do you wish for? "));
+    txt(i18n::s.get("core.locale.wish.what_do_you_wish_for"));
 
     input_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
 
-    txt(lang(u8"「" + inputlog + u8"！！」", u8"\"" + inputlog + u8"!!\""));
+    txt(i18n::s.get("core.locale.wish.your_wish", inputlog(0)));
 
     msgtemp = "";
-    autosave = 1 * (gdata_current_map != 35);
+    autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
     tcopy = 1;
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
-        txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         return false;
     }
     if (en)
@@ -703,33 +754,32 @@ bool process_wish()
     bool skip_character{};
     bool skip_item{};
 
-    if (contains(inputlog, lang(u8"スキル", u8"skill")))
+    if (match_general_wish(inputlog, "skill", {"skill"}))
     {
         skip_character = true;
         skip_item = true;
     }
-    if (contains(inputlog, lang(u8"アイテム", u8"item")))
+    if (match_general_wish(inputlog, "item", {"item"}))
     {
         skip_character = true;
     }
 
     if (!skip_character)
     {
-        if (contains(inputlog, lang(u8"カード", u8"card")))
+        if (match_general_wish(inputlog, "card", {"card"}))
         {
             wish_for_card();
             return true;
         }
         if (debug::voldemort)
         {
-            if (contains(inputlog, u8"summon"))
+            if (match_general_wish(inputlog, "summon", {"summon"}))
             {
                 wish_for_character();
                 return true;
             }
         }
-        if (contains(inputlog, lang(u8"剥製", u8"figure"))
-            || contains(inputlog, u8"はく製"))
+        if (match_general_wish(inputlog, "figure", {"figure"}))
         {
             wish_for_figure();
             return true;
@@ -747,6 +797,7 @@ bool process_wish()
 
     return true;
 }
+
 
 
 } // namespace

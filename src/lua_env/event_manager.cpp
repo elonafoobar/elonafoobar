@@ -8,99 +8,185 @@ namespace elona
 namespace lua
 {
 
-void init_event_kinds(sol::table& Event)
+EventManager::EventManager(LuaEnv* lua)
 {
-    Event["EventKind"] = Event.create_with(
-        "MapCreated", event_kind_t::map_created,
-        "CharaCreated", event_kind_t::character_created,
-        "ItemCreated", event_kind_t::item_created,
+    this->lua = lua;
+    init_events();
 
-        // "CharaInitialized", event_kind_t::character_initialized,
-        // "ItemInitialized", event_kind_t::item_initialized,
-        "MapInitialized", event_kind_t::map_initialized,
-        "GameInitialized", event_kind_t::game_initialized,
-
-        "CharaRemoved", event_kind_t::character_removed,
-
-        // TODO there are many edge cases to work out, like dropping items, copying items...
-        // "ItemRemoved", event_kind_t::item_removed,
-
-        "CharaRefreshed", event_kind_t::character_refreshed,
-
-        "CharaDamaged", event_kind_t::character_damaged,
-        "CharaKilled", event_kind_t::character_killed,
-
-        "CharaMoved", event_kind_t::character_moved,
-        "PlayerTurn", event_kind_t::player_turn,
-        "AllTurnsFinished", event_kind_t::all_turns_finished
-        );
+    bind_api(*lua);
 }
 
-void event_manager::init(lua_env& lua)
+void EventManager::bind_api(LuaEnv& lua)
 {
     sol::table core = lua.get_api_manager().get_api_table();
     sol::table Event = core.create_named("Event");
 
-    Event.set_function("register", [&lua](event_kind_t event,
-                                          sol::protected_function func,
-                                          sol::this_environment this_env) {
-                           sol::environment& env = this_env;
-                           lua.get_event_manager().register_event(event, env, func);
-                       });
+    Event.set_function(
+        "register",
+        [this](
+            EventKind event,
+            sol::protected_function func,
+            sol::this_environment this_env) {
+            sol::environment& env = this_env;
+            register_event(event, env, func);
+        });
 
-    Event.set_function("trigger", [&lua](event_kind_t event,
-                                         sol::table data) {
-                           lua.get_event_manager().trigger_event(event, data);
-                       });
+    Event.set_function(
+        "unregister",
+        [this](
+            EventKind event,
+            sol::protected_function func,
+            sol::this_environment this_env) {
+            sol::environment& env = this_env;
+            unregister_event(event, env, func);
+        });
+
+    Event.set_function(
+        "clear",
+        sol::overload(
+            [this](sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                clear_mod_callbacks(env);
+            },
+            [this](EventKind event, sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                clear_mod_callbacks(event, env);
+            }));
+
+    Event.set_function("trigger", [this](EventKind event, sol::table data) {
+        trigger_event(event, data);
+    });
 
     init_event_kinds(Event);
 }
 
-event_manager::event_manager(lua_env* lua)
+void EventManager::init_event_kinds(sol::table& Event)
 {
-    this->lua = lua;
-    init_events();
+    Event["EventKind"] = Event.create_with(
+        "MapCreated",
+        EventKind::map_created,
+        "CharaCreated",
+        EventKind::character_created,
+        "ItemCreated",
+        EventKind::item_created,
+
+        // "CharaInitialized", EventKind::character_initialized,
+        // "ItemInitialized", EventKind::item_initialized,
+        "MapInitialized",
+        EventKind::map_initialized,
+        "GameInitialized",
+        EventKind::game_initialized,
+
+        "MapUnloading",
+        EventKind::map_unloading,
+        "MapLoaded",
+        EventKind::map_loaded,
+
+        "CharaRemoved",
+        EventKind::character_removed,
+
+        // TODO there are many edge cases to work out, like dropping items,
+        // copying items...
+        //"ItemRemoved", EventKind::item_removed,
+
+        "CharaRefreshed",
+        EventKind::character_refreshed,
+
+        "CharaDamaged",
+        EventKind::character_damaged,
+        "CharaKilled",
+        EventKind::character_killed,
+
+        "CharaMoved",
+        EventKind::character_moved,
+        "PlayerTurn",
+        EventKind::player_turn,
+        "AllTurnsFinished",
+        EventKind::all_turns_finished,
+
+        "AllModsLoaded",
+        EventKind::all_mods_loaded,
+        "ScriptLoaded",
+        EventKind::script_loaded);
 }
 
-void event_manager::init_events()
+void EventManager::init_events()
 {
-    unsigned event_count = static_cast<unsigned>(event_kind_t::COUNT);
-    sol::function error_handler = lua->get_api_manager().get_api_table()["Debug"]["report_error"];
-    for(unsigned i = 0; i < event_count; i++)
+    unsigned event_count = static_cast<unsigned>(EventKind::COUNT);
+    sol::function error_handler =
+        lua->get_api_manager().get_api_table()["Debug"]["report_error"];
+    for (unsigned i = 0; i < event_count; i++)
     {
-        event_kind_t event_kind = static_cast<event_kind_t>(i);
-        callbacks cb;
+        EventKind event_kind = static_cast<EventKind>(i);
+        Callbacks cb;
         cb.set_error_handler(error_handler);
         events[event_kind] = std::move(cb);
     }
 }
 
-void event_manager::register_event(event_kind_t event,
-                                   sol::environment& env,
-                                   sol::protected_function& callback)
+void EventManager::register_event(
+    EventKind event,
+    sol::environment& env,
+    sol::protected_function& callback)
 {
     auto iter = events.find(event);
-    if(iter != events.end())
+    if (iter != events.end())
     {
         iter->second.push(env, callback);
     }
 }
 
-void event_manager::trigger_event(event_kind_t event,
-                                  sol::table data)
+void EventManager::unregister_event(
+    EventKind event,
+    sol::environment& env,
+    sol::protected_function& callback)
 {
     auto iter = events.find(event);
-    if(iter != events.end())
+    if (iter != events.end())
     {
-        iter->second.run(callbacks::retval_type<void>(), data);
-    }
-    else
-    {
-        ELONA_LOG("No callbacks registered for event " << static_cast<int>(event) << ", skipping.");
+        sol::optional<std::string> mod_name = env["_MOD_NAME"];
+        assert(mod_name);
+        iter->second.remove(*mod_name, callback);
     }
 }
 
-void event_manager::clear()
+void EventManager::clear_mod_callbacks(EventKind event, sol::environment& env)
+{
+    auto iter = events.find(event);
+    if (iter != events.end())
+    {
+        sol::optional<std::string> mod_name = env["_MOD_NAME"];
+        assert(mod_name);
+        iter->second.remove_all_from_mod(mod_name.value());
+    }
+}
+
+void EventManager::clear_mod_callbacks(sol::environment& env)
+{
+    unsigned event_count = static_cast<unsigned>(EventKind::COUNT);
+    for (unsigned i = 0; i < event_count; i++)
+    {
+        EventKind event_kind = static_cast<EventKind>(i);
+        clear_mod_callbacks(event_kind, env);
+    }
+}
+
+void EventManager::trigger_event(EventKind event, sol::table data)
+{
+    auto iter = events.find(event);
+    if (iter != events.end())
+    {
+        iter->second.run(Callbacks::RetValType<void>(), data);
+    }
+    else
+    {
+        ELONA_LOG(
+            "No callbacks registered for event " << static_cast<int>(event)
+                                                 << ", skipping.");
+    }
+}
+
+void EventManager::clear()
 {
     events.clear();
     init_events();

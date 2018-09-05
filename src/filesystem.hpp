@@ -9,6 +9,23 @@
 #include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 
+
+namespace std
+{
+
+template <>
+struct hash<fs::path>
+{
+    size_t operator()(const fs::path& key) const
+    {
+        return hash<fs::path::string_type>()(key.native());
+    }
+};
+
+} // namespace std
+
+
+
 #include "range.hpp"
 
 
@@ -25,7 +42,9 @@ namespace dir
 
 fs::path exe();
 fs::path data();
+fs::path for_mod(const std::string& mod_id);
 fs::path graphic();
+fs::path locale();
 fs::path map();
 fs::path mods();
 fs::path save();
@@ -34,20 +53,22 @@ fs::path sound();
 fs::path tmp();
 fs::path user();
 
+void set_base_save_directory(const fs::path& base_save_dir);
+
 } // namespace dir
 
 
 fs::path path(const std::string&);
 fs::path u8path(const std::string&);
 std::string make_preferred_path_in_utf8(const fs::path& path);
-std::string to_narrow_path(const fs::path& path);
 std::string to_utf8_path(const fs::path& path);
+std::string to_forward_slashes(const fs::path& path);
 
 
 
-struct dir_entries
+struct DirEntryRange
 {
-    enum class type
+    enum class Type
     {
         dir,
         file,
@@ -55,10 +76,10 @@ struct dir_entries
     };
 
 
-    dir_entries(
+    DirEntryRange(
         const fs::path& base_dir,
-        type entry_type,
-        const std::regex& pattern = std::regex{u8".*"})
+        Type entry_type,
+        const std::regex& pattern)
         : base_dir(base_dir)
         , entry_type(entry_type)
         , pattern(pattern)
@@ -143,19 +164,19 @@ struct dir_entries
                         return true;
                     switch (entry_type)
                     {
-                    case type::dir:
+                    case Type::dir:
                         if (!fs::is_directory(itr->path()))
                         {
                             return true;
                         }
                         break;
-                    case type::file:
+                    case Type::file:
                         if (!fs::is_regular_file(itr->path()))
                         {
                             return true;
                         }
                         break;
-                    case type::all: break;
+                    case Type::all: break;
                     }
                     return !std::regex_match(
                         filesystem::to_utf8_path(itr->path().filename()),
@@ -172,9 +193,18 @@ struct dir_entries
 
 private:
     const fs::path base_dir;
-    const type entry_type;
+    const Type entry_type;
     const std::regex pattern;
 };
+
+
+inline DirEntryRange dir_entries(
+    const fs::path& base_dir,
+    DirEntryRange::Type entry_type,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return {base_dir, entry_type, pattern};
+}
 
 
 

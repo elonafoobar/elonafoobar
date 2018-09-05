@@ -11,23 +11,25 @@
 #include <iterator>
 #include <sstream>
 #include <string>
-#ifdef MICROHCL_USE_MAP
-#include <map>
-#else
+#include <vector>
+
+#ifndef MICROHCL_MAP_TYPE
 #include <unordered_map>
 #endif
-#include <vector>
 
 namespace hcl {
 
 class Value;
 typedef std::vector<Value> List;
 
-#ifdef MICROHCL_USE_MAP
-typedef std::map<std::string, Value> Object;
-#else
-typedef std::unordered_map<std::string, Value> Object;
+#ifndef MICROHCL_MAP_TYPE
+#define MICROHCL_MAP_TYPE std::unordered_map
 #endif
+#ifndef MICROHCL_MAP_ACCESSOR
+#define MICROHCL_MAP_ACCESSOR &it->second
+#endif
+
+typedef MICROHCL_MAP_TYPE<std::string, Value> Object;
 
 namespace internal {
 template<typename T> struct call_traits_value {
@@ -222,6 +224,7 @@ struct ParseResult {
 
 // Parses from std::istream.
 ParseResult parse(std::istream&);
+ParseResult parse(std::istream&, const std::string&);
 // Parses a file.
 ParseResult parseFile(const std::string& filename);
 
@@ -278,14 +281,17 @@ private:
 
 class Lexer {
 public:
-    explicit Lexer(std::istream& is) : is_(is),
-                                       lineNo_(1),
-                                       columnNo_(0) {}
+    explicit Lexer(std::istream& is, const std::string& filename)
+        : is_(is),
+          lineNo_(1),
+          columnNo_(0),
+          filename_(filename) {}
 
     Token nextToken();
 
     int lineNo() const { return lineNo_; }
     int columnNo() const { return columnNo_; }
+    const std::string& filename() const { return filename_; }
 
     // Skips if UTF8BOM is found.
     // Returns true if success. Returns false if intermediate state is left.
@@ -309,11 +315,12 @@ private:
     std::istream& is_;
     int lineNo_;
     int columnNo_;
+    std::string filename_;
 };
 
 class Parser {
 public:
-    explicit Parser(std::istream& is) : lexer_(is), token_(TokenType::ILLEGAL)
+    explicit Parser(std::istream& is, const std::string& filename) : lexer_(is, filename), token_(TokenType::ILLEGAL)
     {
         if (!lexer_.skipUTF8BOM()) {
             token_ = Token(TokenType::ILLEGAL, std::string("Invalid UTF8 BOM"));
@@ -364,11 +371,16 @@ private:
 
 inline ParseResult parse(std::istream& is)
 {
+    return parse(is, "[input stream]");
+}
+
+inline ParseResult parse(std::istream& is, const std::string& filename)
+{
     if (!is) {
         return ParseResult(hcl::Value(), "stream is in bad state. file does not exist?");
     }
 
-    internal::Parser parser(is);
+    internal::Parser parser(is, filename);
     hcl::Value v = parser.parse();
 
     if (v.valid())
@@ -647,6 +659,7 @@ inline Token Lexer::nextStringDoubleQuote()
         return Token(TokenType::ILLEGAL, std::string("string didn't start with '\"'"));
 
     std::string s;
+    int startLine = lineNo_;
     char c;
     int braces = 0;
     bool dollar = false;
@@ -714,7 +727,7 @@ inline Token Lexer::nextStringDoubleQuote()
                 return Token(TokenType::ILLEGAL, std::string("string has unknown escape sequence"));
             }
         } else if (c == '\n' && braces == 0) {
-            return Token(TokenType::ILLEGAL, std::string("found newline while parsing non-HIL string literal"));
+            return Token(TokenType::ILLEGAL, std::string("found newline while parsing non-HIL string literal (begun on line " + std::to_string(startLine) + ")"));
         } else if (c == '"' && braces == 0) {
             if (hil)
                 return Token(TokenType::HIL, s);
@@ -1485,7 +1498,7 @@ inline const Value* Value::find(const std::string& key) const
         return nullptr;
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     const Value* current = this;
     while (true) {
@@ -1679,7 +1692,7 @@ inline bool Value::erase(const std::string& key)
         return false;
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     Value* current = this;
     while (true) {
@@ -1751,7 +1764,7 @@ inline const Value& Value::operator[](size_t index) const
     if (const Value* v = find(index))
         return *v;
 
-    failwith("no such key");
+    failwith("no such index: " + std::to_string(index));
 }
 
 inline const Value& Value::operator[](const std::string& key) const
@@ -1762,7 +1775,7 @@ inline const Value& Value::operator[](const std::string& key) const
     if (const Value* v = findChild(key))
         return *v;
 
-    failwith("no such key");
+    failwith("no such key: " + key);
 }
 
 template<typename T>
@@ -1822,7 +1835,7 @@ inline Value* Value::ensureValue(const std::string& key)
     }
 
     std::istringstream ss(key);
-    internal::Lexer lexer(ss);
+    internal::Lexer lexer(ss, "[object list]");
 
     Value* current = this;
     while (true) {
@@ -1865,7 +1878,7 @@ inline Value* Value::findChild(const std::string& key)
     if (it == object_->end())
         return nullptr;
 
-    return &it->second;
+    return MICROHCL_MAP_ACCESSOR;
 }
 
 inline const Value* Value::findChild(const std::string& key) const
@@ -1877,7 +1890,7 @@ inline const Value* Value::findChild(const std::string& key) const
     if (it == object_->end())
         return nullptr;
 
-    return &it->second;
+    return MICROHCL_MAP_ACCESSOR;
 }
 
 // ----------------------------------------------------------------------
@@ -1888,7 +1901,7 @@ namespace internal {
 inline void Parser::addError(const std::string& reason)
 {
     std::stringstream ss;
-    ss << "Error:" << lexer_.lineNo() << ":" << lexer_.columnNo() << ": " << reason << "\n";
+    ss << lexer_.filename() << ":" << lexer_.lineNo() << ":" << lexer_.columnNo() << ": " << reason << "\n";
     errorReason_ += ss.str();
 }
 
@@ -2048,7 +2061,6 @@ inline bool Parser::parseObjectType(Value& currentValue)
     Value result = parseObjectList(true);
 
     if(!errorReason().empty()) {
-        addError("failed parsing object list");
         return false;
     }
 

@@ -50,5 +50,3 @@ lrun("test FOV.you_see", function()
         lequal(FOV.you_see(chara.position), false)
         lequal(FOV.you_see(chara.position.x, chara.position.y), false)
 end)
-
-assert(lresults())

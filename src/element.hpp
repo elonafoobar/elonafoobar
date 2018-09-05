@@ -9,7 +9,7 @@ namespace elona
 
 
 // TODO: they shouldn't be linked to specific magic numbers.
-enum class element_t
+enum class Element
 {
     fire = 50,
     cold = 51,
@@ -23,13 +23,13 @@ enum class element_t
     nerve = 58,
     magic = 60,
     cut = 61,
-    ehter = 62,
+    ether = 62,
     acid = 63,
 };
 
 
 int randomele();
-std::string elename(int prm_348);
+std::string elename(int ele);
 int eleinfo(int prm_754, int prm_755);
 void resistmod(int cc, int element, int delta);
 void txteledmg(int type, int attacker, int target, int element);

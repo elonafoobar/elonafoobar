@@ -1,0 +1,32 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="xyz.ki.elonafoobar" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application android:label="@string/appName"
+                 android:icon="@drawable/ic_launcher"
+                 android:allowBackup="true"
+                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                 android:hardwareAccelerated="true"
+                 android:isGame="true"
+                 >
+        <activity android:name="SplashScreen"
+                  android:label="@string/appName"
+                  android:launchMode="singleInstance"
+                  android:keepScreenOn="true"
+                  android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
+                  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ElonaFoobarActivity"
+                  android:label="@string/appName"
+                  android:launchMode="singleInstance"
+                  android:keepScreenOn="true"
+                  android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
+                  >
+        </activity>
+    </application>
+</manifest>

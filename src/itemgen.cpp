@@ -2,10 +2,11 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
+#include "db_item.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "item_material.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
@@ -17,7 +18,7 @@ namespace
 {
 
 
-int calculate_original_value(const item& ci)
+int calculate_original_value(const Item& ci)
 {
     if (the_item_db[ci.id]->category == 60000)
     {
@@ -52,7 +53,7 @@ int itemcreate(int slot, int id, int x, int y, int number)
 
 void get_random_item_id()
 {
-    weighted_random_sampler<int> sampler;
+    WeightedRandomSampler<int> sampler;
 
     for (const auto& data : the_item_db)
     {
@@ -114,8 +115,8 @@ int do_create_item(int slot, int x, int y)
         {
             if (x == -1)
             {
-                sx = rnd(mdata(0) - 2) + 2;
-                sy = rnd(mdata(1) - 2) + 2;
+                sx = rnd(mdata_map_width - 2) + 2;
+                sy = rnd(mdata_map_height - 2) + 2;
                 if (map(sx, sy, 4) != 0)
                 {
                     continue;
@@ -133,7 +134,8 @@ int do_create_item(int slot, int x, int y)
                     sx = x + rnd(i + 1) - rnd(i + 1);
                     sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (sx < 0 || sy < 0 || sx > mdata(0) - 1 || sy > mdata(1) - 1)
+                if (sx < 0 || sy < 0 || sx > mdata_map_width - 1
+                    || sy > mdata_map_height - 1)
                 {
                     continue;
                 }
@@ -208,18 +210,11 @@ int do_create_item(int slot, int x, int y)
     access_item_db(3);
     access_item_db(2);
 
-    inv[ci].color = icolref(inv[ci].id);
-    if (inv[ci].color == 1)
-    {
-        inv[ci].color = randcolor(rnd(length(randcolor)));
-    }
-    if (inv[ci].id == 519)
-    {
-        inv[ci].color = rnd(21);
-    }
+    inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
+
     if (inv[ci].id == 24 && inv[ci].param1 == 0)
     {
-        inv[ci].param1 = isetbook(rnd(length(isetbook)));
+        inv[ci].param1 = choice(isetbook);
     }
     if (inv[ci].id == 563 && inv[ci].param1 == 0)
     {
@@ -227,7 +222,7 @@ int do_create_item(int slot, int x, int y)
     }
     if (inv[ci].id == 783)
     {
-        inv[ci].subname = rpsourcelist(rnd(length(rpsourcelist)));
+        inv[ci].subname = choice(rpsourcelist);
         inv[ci].param1 = 1;
     }
 
@@ -241,16 +236,14 @@ int do_create_item(int slot, int x, int y)
         {
             if (cdata[owner].character_role == 13)
             {
-                artifactlocation.push_back(lang(
-                    iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                        + gdata_month + u8"月に"s
-                        + mapname(cdata[owner].current_map) + u8"の"s
-                        + cdatan(0, owner) + u8"の手に渡った。"s,
-                    cnven(iknownnameref(inv[ci].id)) + u8" was held by "s
-                        + cdatan(0, owner) + u8" at "s
-                        + mapname(cdata[owner].current_map) + u8" in "s
-                        + gdata_day + u8"/"s + gdata_month + u8", "s
-                        + gdata_year + u8". "s));
+                artifactlocation.push_back(i18n::s.get(
+                    "core.locale.magic.oracle.was_held_by",
+                    cnven(iknownnameref(inv[ci].id)),
+                    cdata[owner],
+                    mapname(cdata[owner].current_map),
+                    gdata_day,
+                    gdata_month,
+                    gdata_year));
             }
             else
             {
@@ -259,12 +252,13 @@ int do_create_item(int slot, int x, int y)
         }
         if (owner == -1)
         {
-            artifactlocation.push_back(lang(
-                iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                    + gdata_month + u8"月に"s + mdatan(0) + u8"で生成された。"s,
-                cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
-                    + mdatan(0) + u8" in "s + gdata_day + u8"/"s + gdata_month
-                    + u8", "s + gdata_year + u8". "s));
+            artifactlocation.push_back(i18n::s.get(
+                "core.locale.magic.oracle.was_created_at",
+                iknownnameref(inv[ci].id),
+                mdatan(0),
+                gdata_day,
+                gdata_month,
+                gdata_year));
         }
     }
 
@@ -294,32 +288,32 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 54)
     {
-        inv[ci].number = calcinitgold(slot);
+        inv[ci].set_number(calcinitgold(slot));
         if (inv[ci].quality == 3)
         {
-            inv[ci].number = inv[ci].number * 2;
+            inv[ci].set_number(inv[ci].number() * 2);
         }
         if (inv[ci].quality >= 4)
         {
-            inv[ci].number = inv[ci].number * 4;
+            inv[ci].set_number(inv[ci].number() * 4);
         }
         if (slot >= 0)
         {
-            cdata[slot].gold += inv[ci].number;
-            item_remove(inv[ci]);
+            earn_gold(cdata[slot], inv[ci].number());
+            inv[ci].remove();
             return 1;
         }
     }
 
     if (inv[ci].id == 729)
     {
-        inv[ci].param4 = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
+        inv[ci].param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
         inv[ci].value = inv[ci].param4 * 2500 + 500;
     }
 
     if (inv[ci].id == 578)
     {
-        inv[ci].param2 = rnd(rnd(length(moneybox)) + 1);
+        inv[ci].param2 = rnd(rnd(moneybox.size()) + 1);
         inv[ci].value =
             inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
     }
@@ -375,19 +369,21 @@ int do_create_item(int slot, int x, int y)
 
     if (reftype == 72000)
     {
-        inv[ci].param1 =
-            gdata_current_dungeon_level * (gdata_current_map != 30) + 5;
+        inv[ci].param1 = gdata_current_dungeon_level
+                * (gdata_current_map != mdata_t::MapId::shelter_)
+            + 5;
         if (inv[ci].id == 283)
         {
-            inv[ci].param1 = (rnd(10) + 1) * (cdata[0].level / 10 + 1);
+            inv[ci].param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
         }
         if (inv[ci].id == 415 || inv[ci].id == 416)
         {
-            inv[ci].param1 = cdata[0].level;
+            inv[ci].param1 = cdata.player().level;
         }
-        inv[ci].param2 = rnd(
-            std::abs(gdata_current_dungeon_level) * (gdata_current_map != 30)
-            + 1);
+        inv[ci].param2 =
+            rnd(std::abs(gdata_current_dungeon_level)
+                    * (gdata_current_map != mdata_t::MapId::shelter_)
+                + 1);
         if (inv[ci].id == 284 || inv[ci].id == 283)
         {
             inv[ci].param2 = rnd(15);
@@ -440,26 +436,23 @@ int do_create_item(int slot, int x, int y)
 
     if (mode == 6)
     {
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
         || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
-        inv[ci].curse_state = curse_state_t::none;
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
+        inv[ci].curse_state = CurseState::none;
+        inv[ci].identification_state = IdentifyState::completely_identified;
     }
     if (reftype == 92000)
     {
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].curse_state = CurseState::none;
         itemmemory(0, inv[ci].id) = 1;
     }
     if (reftype == 62000 || reftype == 64000 || reftype == 77000)
     {
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].curse_state = CurseState::none;
     }
     if (mode != 6)
     {
@@ -467,8 +460,7 @@ int do_create_item(int slot, int x, int y)
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv[ci].identification_state =
-                    identification_state_t::almost_identified;
+                inv[ci].identification_state = IdentifyState::almost_identified;
             }
         }
     }
@@ -479,10 +471,8 @@ int do_create_item(int slot, int x, int y)
 
     if (initnum != 0)
     {
-        inv[ci].number = initnum;
+        inv[ci].set_number(initnum);
     }
-
-    lua::lua.on_item_creation(inv[ci]);
 
     if (nostack == 1)
     {
@@ -511,23 +501,23 @@ void init_item_quality_curse_state_material_and_equipments()
     {
         if (rnd(12) == 0)
         {
-            inv[ci].curse_state = curse_state_t::blessed;
+            inv[ci].curse_state = CurseState::blessed;
         }
         if (rnd(13) == 0)
         {
-            inv[ci].curse_state = curse_state_t::cursed;
+            inv[ci].curse_state = CurseState::cursed;
             if (the_item_db[inv[ci].id]->category < 50000)
             {
                 if (rnd(4) == 0)
                 {
-                    inv[ci].curse_state = curse_state_t::doomed;
+                    inv[ci].curse_state = CurseState::doomed;
                 }
             }
         }
     }
     if (cm || mode == 1 || inv[ci].quality == 6)
     {
-        inv[ci].curse_state = curse_state_t::none;
+        inv[ci].curse_state = CurseState::none;
     }
     if (reftype < 50000 || (reftype == 60000 && rnd(5) == 0))
     {

@@ -1,17 +1,16 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
-#include "util.hpp"
-#include "../testing.hpp"
+#include <cassert>
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../debug.hpp"
+#include "../testing.hpp"
 #include "../variables.hpp"
-#include <cassert>
+#include "util.hpp"
 
 using namespace elona;
 
-class MagicChainBombFixture
-    :   public ::hayai::Fixture
+class MagicChainBombFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()
@@ -27,7 +26,7 @@ public:
         for (int i = 1; i < 10; i++)
         {
             chara_delete(i);
-            cdata[i].state = 0;
+            cdata[i].set_state(character::state_t::empty);
         }
         testing::post_run();
     }

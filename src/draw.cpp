@@ -2,41 +2,47 @@
 #include <cmath>
 #include "character.hpp"
 #include "config.hpp"
+#include "db_chara_chip.hpp"
+#include "db_item.hpp"
+#include "db_item_chip.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "hcl.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "pic_loader/extent.hpp"
+#include "pic_loader/pic_loader.hpp"
 #include "random.hpp"
 #include "variables.hpp"
+
 
 
 namespace
 {
 
+PicLoader loader;
 
-// TODO: it should be configurable.
-constexpr size_t max_damage_popups = 20; // compatible with oomEx
 
-struct damage_popup_t
+struct DamagePopup
 {
     int frame;
     std::string text;
     int character;
-    snail::color color;
+    snail::Color color;
 
-    damage_popup_t()
+    DamagePopup()
         : frame(-1)
         , text(std::string())
         , character(-1)
-        , color(snail::color(255, 255, 255, 255))
+        , color(snail::Color(255, 255, 255, 255))
     {
     }
 };
 
 
-std::vector<damage_popup_t> damage_popups;
+std::vector<DamagePopup> damage_popups;
 int damage_popups_active = 0;
 
 
@@ -92,6 +98,16 @@ double easing(double t)
 }
 
 
+
+std::unordered_map<std::string, ImageInfo> images = {};
+
+std::unordered_map<std::string, int> window_id_table = {
+    {"item.bmp", 1},
+    {"interface.bmp", 3},
+};
+
+
+
 } // namespace
 
 
@@ -99,71 +115,105 @@ namespace elona
 {
 
 
-void prepare_item_image(int id, int color)
+std::vector<ItemChip> item_chips{825};
+std::vector<CharaChip> chara_chips{925};
+
+
+
+optional_ref<Extent> draw_get_rect_chara(int id)
 {
-    const auto x = chipi(0, id);
-    const auto y = chipi(1, id);
-    const auto w = chipi(2, id);
-    const auto h = chipi(3, id);
+    return draw_get_rect(chara_chips[id].key);
+}
+
+optional_ref<Extent> draw_get_rect_item(int id)
+{
+    return draw_get_rect(item_chips[id].key);
+}
+
+optional_ref<Extent> draw_get_rect(const std::string& key)
+{
+    return loader[key];
+}
+
+
+optional_ref<Extent> prepare_item_image(int id, int color)
+{
+    const auto rect = draw_get_rect_item(id);
 
     gsel(1);
-    boxf(0, 960, w, h + 960);
+    boxf(0, 960, rect->width, rect->height);
 
     pos(0, 960);
+
+    // The color modifier is applied to the source buffer before
+    // copying it to the scratch region. It is restored after copying.
     set_color_mod(
-        255 - c_col(0, color), 255 - c_col(1, color), 255 - c_col(2, color));
-    gcopy(1, x, y, w, h);
-    set_color_mod(255, 255, 255);
-    gfini(w, h);
-    gfdec2(c_col(0, color), c_col(1, color), c_col(2, color));
+        255 - c_col(0, color),
+        255 - c_col(1, color),
+        255 - c_col(2, color),
+        rect->buffer);
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
+    set_color_mod(255, 255, 255, rect->buffer);
+
     gsel(0);
+    return rect;
 }
 
 
 
-void prepare_item_image(int id, int color, int character_image)
+optional_ref<Extent> prepare_item_image(int id, int color, int character_image)
 {
     if (id != 528 && id != 531)
     {
-        prepare_item_image(id, color);
-        return;
+        return prepare_item_image(id, color);
     }
 
-    const auto w = chipi(2, id);
-    const auto h = chipi(3, id);
-
-    gsel(1);
-    boxf(0, 960, w, h + 960);
+    optional_ref<Extent> item_rect;
 
     if (id == 528) // Cards
     {
+        item_rect = draw_get_rect_item(id);
+        gsel(1);
+        boxf(0, 960, inf_tiles, inf_tiles * 2);
+
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
+        auto rect = draw_get_rect_chara(character_id);
         gmode(2);
         pos(0, 960);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
-            255 - c_col(2, color));
-        gcopy(1, 0, 768, inf_tiles, inf_tiles);
-        set_color_mod(255, 255, 255);
+            255 - c_col(2, color),
+            item_rect->buffer);
+        gcopy(
+            item_rect->buffer,
+            item_rect->x,
+            item_rect->y,
+            item_rect->width,
+            item_rect->height);
+        set_color_mod(255, 255, 255, item_rect->buffer);
+
         pos(0, 1008);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
-            5);
-        gzoom(
-            5,
-            chipc(0, character_id) + 8,
-            chipc(1, character_id) + 4
-                + (chipc(3, character_id) > inf_tiles) * 8,
-            chipc(2, character_id) - 16,
-            chipc(3, character_id) - 8
-                - (chipc(3, character_id) > inf_tiles) * 10,
+            rect->buffer);
+        gcopy(
+            rect->buffer,
+            rect->x + 8,
+            rect->y + 4 + (rect->height > inf_tiles) * 8,
+            rect->width - 16,
+            rect->height - 8 - (rect->height > inf_tiles) * 10,
             22,
             20);
-        set_color_mod(255, 255, 255, 5);
+        set_color_mod(255, 255, 255, rect->buffer);
+
         pos(6, 974);
         gcopy(1, 0, 1008, 22, 20);
         gsel(0);
@@ -172,100 +222,133 @@ void prepare_item_image(int id, int color, int character_image)
     {
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
-        pos(8, 1058 - chipc(3, character_id));
+        auto rect = draw_get_rect_chara(character_id);
+
+        if (rect->height > inf_tiles)
+        {
+            item_rect = draw_get_rect_item(564); // Tall variant
+        }
+        else
+        {
+            item_rect = draw_get_rect_item(531); // Short variant
+        }
+        gsel(1);
+        boxf(0, 960, item_rect->width, item_rect->height);
+
+        pos(8, 1058 - rect->height);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
-            5);
+            rect->buffer);
         gcopy(
-            5,
-            chipc(0, character_id) + 8,
-            chipc(1, character_id) + 2,
-            chipc(2, character_id) - 16,
-            chipc(3, character_id) - 8);
-        set_color_mod(255, 255, 255, 5);
-        gmode(4, -1, -1, 192);
-        pos(0, 960 + (chipc(3, character_id) == inf_tiles) * 48);
+            rect->buffer,
+            rect->x + 8,
+            rect->y + 2,
+            rect->width - 16,
+            rect->height - 8);
+        set_color_mod(255, 255, 255, rect->buffer);
+
+        gmode(4, 192);
+        pos(0, 960 + (rect->height == inf_tiles) * 48);
+
+        // Modify color and restore it afterwards.
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
-            255 - c_col(2, color));
+            255 - c_col(2, color),
+            item_rect->buffer);
         gcopy(
-            1,
-            144,
-            768 + (chipc(3, character_id) > inf_tiles) * 48,
+            item_rect->buffer,
+            item_rect->x,
+            item_rect->y,
             inf_tiles,
-            chipc(3, character_id) + (chipc(3, character_id) > inf_tiles) * 48);
-        set_color_mod(255, 255, 255);
+            rect->height + (rect->height > inf_tiles) * 48);
+        set_color_mod(255, 255, 255, item_rect->buffer);
+
         gmode(2);
         gsel(0);
     }
+
+    return item_rect;
 }
 
 
 
-void show_hp_bar(show_hp_bar_side side, int inf_clocky)
+void show_hp_bar(HPBarSide side, int inf_clocky)
 {
-    const bool right = side == show_hp_bar_side::right_side;
+    const bool right = side == HPBarSide::right_side;
 
     int cnt{};
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state == 1 || cc.state == 6)
+        if ((cc.state() == Character::State::alive
+             || cc.state() == Character::State::pet_dead)
             && cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
-            const int y = inf_clocky + 200 - 180 * right + cnt * 32;
-            // std::cout << "HP bar(" << i << "):name: " << position_t{x, y} <<
-            // std::endl;
-            pos(x, y);
-            color(0, 0, 0);
-            const auto color = cc.state == 1 ? snail::color{255, 255, 255}
-                                             : snail::color{255, 35, 35};
-            bmes(name, color.r, color.g, color.b);
-            if (cc.state == 1)
+            int y = inf_clocky + (right ? 20 : 136) + cnt * 32;
+
+            // If they are shown left side, move them below the skill
+            // trackers.
+            if (!right)
+            {
+                for (int i = 0; i < 10; ++i)
+                {
+                    if (gdata(750 + i) % 10000 != 0)
+                    {
+                        y += 16;
+                    }
+                }
+            }
+
+            bmes(
+                name,
+                x,
+                y,
+                cc.state() == Character::State::alive
+                    ? snail::Color{255, 255, 255}
+                    : snail::Color{255, 35, 35});
+            if (cc.state() == Character::State::alive)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
-                // std::cout << "HP bar(" << i << "):bar:  " << position_t{x_,
-                // y_} << std::endl;
                 pos(x_, y_);
-                gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
+                gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
-                if (config::instance().leash_icon && cdata[i].is_leashed())
+                if (Config::instance().leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
-                    prepare_item_image(leash, 2);
-                    const int icon_width = chipi(2, leash);
-                    const int icon_height = chipi(3, leash);
+                    auto rect = prepare_item_image(leash, 2);
+                    const int icon_width = rect->frame_width;
+                    const int icon_height = rect->height;
 
                     pos(right ? std::min(x, x_) - icon_width / 2
                               : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
                         y);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(5);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(2);
                 }
             }
@@ -278,18 +361,18 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    for (size_t i = 0; i < max_damage_popups; i++)
-    {
-        damage_popups.emplace_back(damage_popup_t{});
-    }
+    damage_popups.resize(Config::instance().max_damage_popup);
 }
+
+
 
 void add_damage_popup(
     const std::string& text,
     int character,
-    const snail::color& color)
+    const snail::Color& color)
 {
-    if (damage_popups_active == max_damage_popups)
+    damage_popups.resize(Config::instance().max_damage_popup);
+    if (damage_popups_active == Config::instance().max_damage_popup)
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(
@@ -331,7 +414,7 @@ void clear_damage_popups()
 
 void show_damage_popups()
 {
-    if (config::instance().damage_popup == 0)
+    if (Config::instance().damage_popup == 0)
     {
         return;
     }
@@ -356,11 +439,11 @@ void show_damage_popups()
                 continue;
             }
             if (dist(
-                    cdata[0].position.x,
-                    cdata[0].position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
                     cc.position.x,
                     cc.position.y)
-                > cdata[0].vision_distance / 2)
+                > cdata.player().vision_distance / 2)
             {
                 ++damage_popup.frame;
                 continue;
@@ -392,10 +475,15 @@ void show_damage_popups()
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
         font(2 + cfg_dmgfont - en * 2);
-        pos(x, y);
-        color(damage_popup.color.r, damage_popup.color.g, damage_popup.color.b);
-        bmes(damage_popup.text, 255, 255, 255);
-        color(0, 0, 0);
+
+        bmes(
+            damage_popup.text,
+            x,
+            y,
+            damage_popup.color,
+            {static_cast<uint8_t>(damage_popup.color.r / 3),
+             static_cast<uint8_t>(damage_popup.color.g / 3),
+             static_cast<uint8_t>(damage_popup.color.b / 3)});
 
         ++damage_popup.frame;
 
@@ -409,9 +497,9 @@ void show_damage_popups()
 
 void draw_emo(int cc, int x, int y)
 {
-    gmode(2, 16, 16);
+    gmode(2);
     pos(x + 16, y);
-    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16);
 }
 
 
@@ -425,26 +513,21 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
 
     pos(128, 0);
     picload(filepath, 1);
-    boxf(256, 0, 384, 198);
-    gmode(4, -1, -1, 256);
+    boxf(256, 0, 128, 198);
+    gmode(4, 256);
     pget(128, 0);
     pos(256, 0);
-    gcopy(10 + cc, 128, 0, 128, 198);
+    gcopy(20 + cc, 128, 0, 128, 198);
     pos(256, 0);
-    gfini(128, 198);
-    gfdec2(
-        c_col(0, pcc(body_part, cc) / 1000),
-        c_col(1, pcc(body_part, cc) / 1000),
-        c_col(2, pcc(body_part, cc) / 1000));
     gmode(2);
     pos(0, 0);
     set_color_mod(
         255 - c_col(0, pcc(body_part, cc) / 1000),
         255 - c_col(1, pcc(body_part, cc) / 1000),
         255 - c_col(2, pcc(body_part, cc) / 1000),
-        10 + cc);
-    gcopy(10 + cc, 256, 0, 128, 198);
-    set_color_mod(255, 255, 255, 10 + cc);
+        20 + cc);
+    gcopy(20 + cc, 256, 0, 128, 198);
+    set_color_mod(255, 255, 255, 20 + cc);
 }
 
 
@@ -468,42 +551,42 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 }
 
 
-void chara_preparepic(int prm_618, int prm_619)
+
+optional_ref<Extent> chara_preparepic(const Character& cc)
 {
-    int p_at_m83 = 0;
-    if (prm_619 == 0)
-    {
-        p_at_m83 = prm_618 / 1000;
-    }
-    else
-    {
-        p_at_m83 = prm_619;
-    }
-    gsel(5);
-    boxf(0, 960, chipc(2, prm_618), chipc(3, prm_618) + 960);
+    return chara_preparepic(cc.image);
+}
+
+
+
+optional_ref<Extent> chara_preparepic(int image_id)
+{
+    const auto chip_id = image_id % 1000;
+    const auto color_id = image_id / 1000;
+    const auto& chip = chara_chips[chip_id];
+    const auto rect = draw_get_rect(chip.key);
+
+    // TODO don't crash, and instead return a default.
+    assert(rect);
+
+    gsel(rect->buffer);
+    boxf(0, 960, rect->width, rect->height);
     pos(0, 960);
     set_color_mod(
-        255 - c_col(0, p_at_m83),
-        255 - c_col(1, p_at_m83),
-        255 - c_col(2, p_at_m83));
-    gcopy(
-        5,
-        chipc(0, prm_618),
-        chipc(1, prm_618),
-        chipc(2, prm_618),
-        chipc(3, prm_618));
+        255 - c_col(0, color_id),
+        255 - c_col(1, color_id),
+        255 - c_col(2, color_id));
+    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height);
     set_color_mod(255, 255, 255);
-    gfini(chipc(2, prm_618), chipc(3, prm_618));
-    gfdec2(c_col(0, p_at_m83), c_col(1, p_at_m83), c_col(2, p_at_m83));
     gsel(0);
-    return;
+    return rect;
 }
 
 
 
 void create_pcpic(int cc, bool prm_410)
 {
-    buffer(10 + cc, 384, 198);
+    buffer(20 + cc, 384, 198);
     boxf();
 
     if (pcc(15, cc) == 0)
@@ -526,10 +609,10 @@ void create_pcpic(int cc, bool prm_410)
         pcc(5, cc) = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (cdata_body_part(cc, i) % 10000 != 0)
+            if (cdata[cc].body_parts[i] % 10000 != 0)
             {
                 set_pcc_depending_on_equipments(
-                    cc, cdata_body_part(cc, i) % 10000 - 1);
+                    cc, cdata[cc].body_parts[i] % 10000 - 1);
             }
         }
     }
@@ -605,8 +688,12 @@ void create_pcpic(int cc, bool prm_410)
 
 void initialize_map_chip()
 {
+    // TODO: this could be called multiple times outside of
+    // initialize_all_chips. Add a method to clear only map chip
+    // buffers from PicLoader so they can be loaded again, or keep
+    // all chips loaded at once.
     DIM3(chipm, 8, 825);
-    if (mdata(2) == 0)
+    if (mdata_map_atlas_number == 0)
     {
         chipm(5, 233) = 0;
         chipm(6, 233) = 0;
@@ -669,7 +756,7 @@ void initialize_map_chip()
         chipm(5, 145) = 16;
         chipm(5, 149) = 16;
     }
-    if (mdata(2) == 1)
+    if (mdata_map_atlas_number == 1)
     {
         for (int cnt = 396; cnt < 825; ++cnt)
         {
@@ -715,7 +802,7 @@ void initialize_map_chip()
         chipm(0, 594) = 3;
         chipm(3, 594) = 3;
     }
-    if (mdata(2) == 2)
+    if (mdata_map_atlas_number == 2)
     {
         for (int cnt = 0; cnt < 11; ++cnt)
         {
@@ -764,527 +851,345 @@ void initialize_map_chip()
 }
 
 
+void initialize_item_chips(const ItemChipDB& db)
+{
+    PicLoader::MapType predefined_extents;
 
-void initialize_item_chip()
+    for (const auto& chip_data : db)
+    {
+        SharedId key = chip_data.chip.key;
+        int legacy_id = chip_data.id;
+
+        // Insert chip data into global vector.
+        if (static_cast<int>(item_chips.size()) < legacy_id)
+        {
+            item_chips.resize(legacy_id + 1);
+        }
+        item_chips[legacy_id] = chip_data.chip;
+
+        if (chip_data.filepath)
+        {
+            // Chip is from an external file.
+            loader.load(
+                *chip_data.filepath, key, PicLoader::PageType::character);
+        }
+        else
+        {
+            // Chip is located in item.bmp.
+            predefined_extents[key] = chip_data.rect;
+        }
+    }
+
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"item.bmp",
+        predefined_extents,
+        PicLoader::PageType::item);
+}
+
+
+void initialize_chara_chips(const CharaChipDB& db)
+{
+    PicLoader::MapType predefined_extents;
+
+    for (const auto& chip_data : db)
+    {
+        SharedId key = chip_data.chip.key;
+        int legacy_id = chip_data.id;
+
+        // Insert chip data into global vector.
+        if (static_cast<int>(chara_chips.size()) < legacy_id)
+        {
+            chara_chips.resize(legacy_id + 1);
+        }
+        chara_chips[legacy_id] = chip_data.chip;
+
+        if (chip_data.filepath)
+        {
+            // Chip is from an external file.
+            loader.load(
+                *chip_data.filepath, key, PicLoader::PageType::character);
+        }
+        else
+        {
+            // Chip is located in character.bmp.
+            predefined_extents[key] = chip_data.rect;
+        }
+    }
+
+    loader.add_predefined_extents(
+        filesystem::dir::graphic() / u8"character.bmp",
+        predefined_extents,
+        PicLoader::PageType::character);
+}
+
+
+void initialize_all_chips()
 {
     initialize_mef();
     SDIM3(tname, 16, 11);
-    tname(1) = lang(u8"日干し岩"s, u8"a dryrock"s);
-    tname(2) = lang(u8"畑"s, u8"a field"s);
-    DIM3(chipc, 6, 925);
-    DIM3(chipi, 8, 825);
-    for (int cnt = 0; cnt < 825; ++cnt)
-    {
-        chipc(0, cnt) = cnt % 33 * inf_tiles;
-        chipc(1, cnt) = cnt / 33 * inf_tiles;
-        chipc(2, cnt) = inf_tiles;
-        chipc(3, cnt) = inf_tiles;
-        chipc(4, cnt) = 16;
-        chipi(0, cnt) = cnt % 33 * inf_tiles;
-        chipi(1, cnt) = cnt / 33 * inf_tiles;
-        chipi(2, cnt) = inf_tiles;
-        chipi(3, cnt) = inf_tiles;
-        chipi(4, cnt) = 0;
-        chipi(5, cnt) = 8;
-        chipi(6, cnt) = 40;
-    }
-    for (int cnt = 825; cnt < 925; ++cnt)
-    {
-        chipc(0, cnt) = cnt % 33 * inf_tiles;
-        chipc(1, cnt) = cnt / 33 * inf_tiles;
-        chipc(2, cnt) = inf_tiles;
-        chipc(3, cnt) = inf_tiles;
-        chipc(4, cnt) = 16;
-    }
-    chipi(4, 24) = 16;
-    chipi(4, 30) = 16;
-    chipi(4, 72) = 22;
-    chipi(4, 73) = 22;
-    chipi(4, 74) = 22;
-    chipi(4, 75) = 22;
-    chipi(4, 76) = 22;
-    chipi(5, 76) = 28;
-    chipi(4, 78) = 22;
-    chipi(4, 80) = 22;
-    chipi(4, 85) = 8;
-    chipi(5, 85) = 8;
-    chipi(6, 85) = 150;
-    chipi(4, 87) = 22;
-    chipi(4, 88) = 22;
-    chipi(4, 91) = 22;
-    chipi(4, 95) = 22;
-    chipi(4, 96) = 22;
-    chipi(5, 96) = 18;
-    chipi(4, 97) = 22;
-    chipi(4, 99) = 22;
-    chipi(4, 98) = 22;
-    chipi(4, 100) = 22;
-    chipi(4, 102) = 22;
-    chipi(4, 103) = 22;
-    chipi(4, 104) = 22;
-    chipi(4, 107) = 22;
-    chipi(4, 116) = 22;
-    chipi(4, 117) = 22;
-    chipi(4, 123) = 12;
-    chipi(4, 125) = 12;
-    chipi(4, 130) = 12;
-    chipi(4, 132) = 22;
-    chipi(4, 134) = 12;
-    chipi(4, 136) = 12;
-    chipi(4, 137) = 22;
-    chipi(4, 138) = 22;
-    chipi(4, 139) = 22;
-    chipi(4, 142) = 22;
-    chipi(5, 142) = 36;
-    chipi(4, 143) = 22;
-    chipi(5, 143) = 36;
-    chipi(4, 145) = 22;
-    chipi(4, 146) = 22;
-    chipi(4, 147) = 22;
-    chipi(4, 150) = 22;
-    chipi(5, 150) = 8;
-    chipi(6, 150) = 70;
-    chipi(4, 151) = 22;
-    chipi(4, 156) = 8;
-    chipi(5, 156) = 20;
-    chipi(6, 156) = 150;
-    chipi(4, 158) = 8;
-    chipi(5, 158) = 24;
-    chipi(6, 158) = 150;
-    chipi(4, 159) = 8;
-    chipi(5, 159) = 24;
-    chipi(6, 159) = 150;
-    chipi(4, 160) = 22;
-    chipi(4, 163) = 22;
-    chipi(5, 163) = 16;
-    chipi(4, 164) = 22;
-    chipi(4, 118) = 22;
-    chipi(4, 166) = 22;
-    chipi(4, 197) = 22;
-    chipi(5, 197) = 24;
-    chipi(4, 232) = 22;
-    chipi(4, 248) = 22;
-    chipi(4, 234) = 22;
-    chipi(5, 234) = 24;
-    chipi(4, 235) = 22;
-    chipi(5, 235) = 36;
-    chipi(4, 236) = 22;
-    chipi(4, 242) = 22;
-    chipi(5, 242) = 8;
-    chipi(6, 242) = 250;
-    chipi(4, 259) = 8;
-    chipi(5, 259) = 12;
-    chipi(4, 260) = 22;
-    chipi(5, 260) = 22;
-    chipi(4, 262) = 22;
-    chipi(4, 263) = 22;
-    chipi(4, 264) = 22;
-    chipi(4, 266) = 22;
-    chipi(5, 266) = 24;
-    chipi(4, 270) = 22;
-    chipi(4, 272) = 22;
-    chipi(5, 272) = 34;
-    chipi(4, 273) = 22;
-    chipi(4, 276) = 22;
-    chipi(4, 277) = 8;
-    chipi(4, 278) = 22;
-    chipi(4, 279) = 22;
-    chipi(4, 281) = 22;
-    chipi(5, 281) = 40;
-    chipi(4, 282) = 22;
-    chipi(4, 285) = 22;
-    chipi(4, 286) = 22;
-    chipi(4, 288) = 22;
-    chipi(5, 288) = 18;
-    chipi(4, 291) = 22;
-    chipi(4, 292) = 22;
-    chipi(5, 292) = 32;
-    chipi(4, 293) = 22;
-    chipi(4, 295) = 22;
-    chipi(4, 296) = 22;
-    chipi(4, 299) = 22;
-    chipi(5, 299) = 8;
-    chipi(6, 299) = 250;
-    chipi(4, 300) = 22;
-    chipi(4, 320) = 22;
-    chipi(4, 321) = 22;
-    chipi(4, 325) = 22;
-    chipi(4, 327) = 22;
-    chipi(4, 331) = 22;
-    chipi(4, 332) = 22;
-    chipi(4, 348) = 22;
-    chipi(4, 353) = 48;
-    chipi(5, 354) = 8;
-    chipi(6, 354) = 20;
-    chipi(4, 360) = 0;
-    chipi(5, 360) = 2;
-    chipi(6, 360) = 1;
-    chipi(4, 364) = 22;
-    chipi(5, 364) = 8;
-    chipi(6, 364) = 250;
-    chipi(4, 367) = 22;
-    chipi(4, 368) = 22;
-    chipi(4, 370) = 8;
-    chipi(4, 372) = 22;
-    chipi(4, 373) = 22;
-    chipi(4, 375) = 22;
-    chipi(4, 376) = 22;
-    chipi(4, 377) = 22;
-    chipi(4, 395) = 22;
-    chipi(4, 378) = 48;
-    chipi(4, 379) = 48;
-    chipi(4, 380) = 8;
-    chipi(4, 381) = 22;
-    chipi(4, 382) = 48;
-    chipi(4, 384) = 22;
-    chipi(4, 442) = 8;
-    chipi(5, 442) = 24;
-    chipi(6, 442) = 100;
-    chipi(4, 507) = 22;
-    chipi(4, 508) = 22;
-    chipi(4, 506) = 22;
-    chipi(4, 510) = 22;
-    chipi(4, 511) = 22;
-    chipi(5, 511) = 28;
-    chipi(4, 512) = 22;
-    chipi(4, 513) = 22;
-    chipi(4, 541) = 22;
-    chipi(5, 541) = 36;
-    chipi(4, 543) = 22;
-    chipi(4, 544) = 48;
-    chipi(4, 545) = 0;
-    chipi(5, 545) = 0;
-    chipi(6, 545) = 0;
-    chipi(4, 627) = 22;
-    chipi(4, 637) = 22;
-    chipi(4, 639) = 48;
-    chipi(4, 640) = 22;
-    chipi(5, 640) = 34;
-    chipi(4, 641) = 22;
-    chipi(4, 642) = 22;
-    chipi(4, 643) = 22;
-    chipi(4, 644) = 32;
-    chipi(4, 646) = 22;
-    chipi(4, 647) = 22;
-    chipi(4, 648) = 22;
-    chipi(4, 650) = 22;
-    chipi(4, 651) = 48;
-    chipi(4, 652) = 48;
-    chipi(4, 653) = 32;
-    chipi(4, 655) = 22;
-    chipi(4, 659) = 22;
-    chipi(4, 662) = 22;
-    chipi(6, 664) = 0;
-    chipi(6, 665) = 0;
-    chipi(6, 667) = 0;
-    chipi(4, 668) = 8;
-    chipi(4, 669) = 8;
-    chipi(4, 672) = 38;
-    chipi(4, 674) = 22;
-    chipi(5, 674) = 24;
-    chipi(4, 675) = 16;
-    chipi(4, 676) = 40;
-    chipi(4, 677) = 16;
-    chipi(5, 677) = 8;
-    chipi(6, 677) = 50;
-    chipi(6, 679) = 1;
-    chipi(3, 523) = inf_tiles * 2;
-    chipi(4, 523) = inf_tiles + 16;
-    chipi(5, 523) = 40;
-    chipi(6, 523) = 6;
-    chipi(3, 524) = inf_tiles * 2;
-    chipi(4, 524) = inf_tiles + 16;
-    chipi(5, 524) = 65;
-    chipi(3, 525) = inf_tiles * 2;
-    chipi(4, 525) = inf_tiles + 20;
-    chipi(3, 526) = inf_tiles * 2;
-    chipi(4, 526) = inf_tiles + 20;
-    chipi(3, 527) = inf_tiles * 2;
-    chipi(4, 527) = inf_tiles + 20;
-    chipi(3, 531) = inf_tiles * 2;
-    chipi(4, 531) = inf_tiles + 16;
-    chipi(5, 531) = 40;
-    chipi(3, 563) = inf_tiles * 2;
-    chipi(4, 563) = inf_tiles + 15;
-    chipi(3, 566) = inf_tiles * 2;
-    chipi(4, 566) = inf_tiles + 12;
-    chipi(3, 567) = inf_tiles * 2;
-    chipi(4, 567) = inf_tiles + 12;
-    chipi(3, 568) = inf_tiles * 2;
-    chipi(4, 568) = inf_tiles + 12;
-    chipi(3, 569) = inf_tiles * 2;
-    chipi(4, 569) = inf_tiles + 12;
-    chipi(5, 569) = 70;
-    chipi(6, 569) = 6;
-    chipi(3, 570) = inf_tiles * 2;
-    chipi(4, 570) = inf_tiles + 20;
-    chipi(3, 571) = inf_tiles * 2;
-    chipi(4, 571) = inf_tiles + 20;
-    chipi(5, 571) = 64;
-    chipi(3, 572) = inf_tiles * 2;
-    chipi(4, 572) = inf_tiles + 20;
-    chipi(3, 573) = inf_tiles * 2;
-    chipi(4, 573) = inf_tiles + 20;
-    chipi(3, 574) = inf_tiles * 2;
-    chipi(4, 574) = inf_tiles + 20;
-    chipi(3, 575) = inf_tiles * 2;
-    chipi(4, 575) = inf_tiles + 20;
-    chipi(3, 576) = inf_tiles * 2;
-    chipi(4, 576) = inf_tiles + 20;
-    chipi(3, 577) = inf_tiles * 2;
-    chipi(4, 577) = inf_tiles + 20;
-    chipi(5, 577) = 48;
-    chipi(6, 577) = 6;
-    chipi(3, 578) = inf_tiles * 2;
-    chipi(4, 578) = inf_tiles + 20;
-    chipi(3, 579) = inf_tiles * 2;
-    chipi(4, 579) = inf_tiles + 20;
-    chipi(3, 580) = inf_tiles * 2;
-    chipi(4, 580) = inf_tiles + 20;
-    chipi(5, 580) = 40;
-    chipi(6, 580) = 6;
-    chipi(3, 581) = inf_tiles * 2;
-    chipi(4, 581) = inf_tiles + 20;
-    chipi(3, 582) = inf_tiles * 2;
-    chipi(4, 582) = inf_tiles + 20;
-    chipi(3, 583) = inf_tiles * 2;
-    chipi(4, 583) = inf_tiles + 20;
-    chipi(5, 583) = 44;
-    chipi(6, 583) = 6;
-    chipi(3, 584) = inf_tiles * 2;
-    chipi(4, 584) = inf_tiles + 20;
-    chipi(5, 584) = 40;
-    chipi(6, 584) = 6;
-    chipi(3, 585) = inf_tiles * 2;
-    chipi(4, 585) = inf_tiles + 20;
-    chipi(3, 586) = inf_tiles * 2;
-    chipi(4, 586) = inf_tiles + 20;
-    chipi(5, 586) = 44;
-    chipi(6, 586) = 6;
-    chipi(3, 587) = inf_tiles * 2;
-    chipi(4, 587) = inf_tiles + 20;
-    chipi(3, 588) = inf_tiles * 2;
-    chipi(4, 588) = inf_tiles + 20;
-    chipi(3, 589) = inf_tiles * 2;
-    chipi(4, 589) = inf_tiles + 20;
-    chipi(3, 590) = inf_tiles * 2;
-    chipi(4, 590) = inf_tiles + 20;
-    chipi(3, 591) = inf_tiles * 2;
-    chipi(4, 591) = inf_tiles + 20;
-    chipi(3, 592) = inf_tiles * 2;
-    chipi(4, 592) = inf_tiles + 20;
-    chipi(3, 593) = inf_tiles * 2;
-    chipi(4, 593) = inf_tiles + 20;
-    chipi(3, 680) = inf_tiles * 2;
-    chipi(4, 680) = inf_tiles + 16;
-    chipi(3, 681) = inf_tiles * 2;
-    chipi(4, 681) = inf_tiles + 16;
-    chipi(3, 682) = inf_tiles * 2;
-    chipi(4, 682) = inf_tiles + 16;
-    chipi(3, 683) = inf_tiles * 2;
-    chipi(4, 683) = inf_tiles + 22;
-    chipi(5, 683) = 50;
-    chipi(3, 685) = inf_tiles * 2;
-    chipi(4, 685) = inf_tiles + 52;
-    chipi(5, 685) = 50;
-    chipi(6, 685) = 18;
-    chipi(3, 684) = inf_tiles * 2;
-    chipi(4, 684) = inf_tiles + 52;
-    chipi(5, 684) = 50;
-    chipi(6, 684) = 18;
-    chipi(3, 686) = inf_tiles * 2;
-    chipi(4, 686) = inf_tiles + 16;
-    chipi(3, 687) = inf_tiles * 2;
-    chipi(4, 687) = inf_tiles + 16;
-    chipi(3, 688) = inf_tiles * 2;
-    chipi(4, 688) = inf_tiles + 16;
-    chipi(3, 689) = inf_tiles * 2;
-    chipi(4, 689) = inf_tiles + 16;
-    chipi(3, 690) = inf_tiles * 2;
-    chipi(4, 690) = inf_tiles + 16;
-    chipi(3, 691) = inf_tiles * 2;
-    chipi(4, 691) = inf_tiles + 16;
-    chipi(5, 691) = 48;
-    chipi(3, 692) = inf_tiles * 2;
-    chipi(4, 692) = inf_tiles + 16;
-    chipi(7, 19) = 2;
-    chipi(7, 24) = 3;
-    chipi(7, 27) = 3;
-    chipi(7, 30) = 2;
-    chipi(7, 349) = 3;
-    chipi(7, 355) = 3;
-    chipc(4, 176) = 8;
-    chipc(4, 225) = 29;
-    chipc(4, 230) = 12;
-    chipc(4, 256) = 16;
-    chipc(4, 277) = 29;
-    chipc(3, 201) = inf_tiles * 2;
-    chipc(4, 201) = inf_tiles + 16;
-    chipc(3, 228) = inf_tiles * 2;
-    chipc(4, 228) = inf_tiles + 8;
-    chipc(3, 231) = inf_tiles * 2;
-    chipc(4, 231) = inf_tiles + 16;
-    chipc(3, 232) = inf_tiles * 2;
-    chipc(4, 232) = inf_tiles + 16;
-    chipc(3, 233) = inf_tiles * 2;
-    chipc(4, 233) = inf_tiles + 8;
-    chipc(3, 297) = inf_tiles * 2;
-    chipc(4, 297) = inf_tiles + 16;
-    chipc(3, 235) = inf_tiles * 2;
-    chipc(4, 235) = inf_tiles + 16;
-    chipc(3, 280) = inf_tiles * 2;
-    chipc(4, 280) = inf_tiles + 32;
-    chipc(3, 338) = inf_tiles * 2;
-    chipc(4, 338) = inf_tiles + 32;
-    chipc(3, 339) = inf_tiles * 2;
-    chipc(4, 339) = inf_tiles + 16;
-    chipc(3, 341) = inf_tiles * 2;
-    chipc(4, 341) = inf_tiles + 16;
-    chipc(3, 342) = inf_tiles * 2;
-    chipc(4, 342) = inf_tiles + 12;
-    chipc(3, 343) = inf_tiles * 2;
-    chipc(4, 343) = inf_tiles + 16;
-    chipc(3, 349) = inf_tiles * 2;
-    chipc(4, 349) = inf_tiles + 8;
-    chipc(3, 351) = inf_tiles * 2;
-    chipc(4, 351) = inf_tiles + 8;
-    chipc(3, 389) = inf_tiles * 2;
-    chipc(4, 389) = inf_tiles + 16;
-    chipc(3, 391) = inf_tiles * 2;
-    chipc(4, 391) = inf_tiles + 16;
-    chipc(3, 393) = inf_tiles * 2;
-    chipc(4, 393) = inf_tiles + 16;
-    chipc(3, 398) = inf_tiles * 2;
-    chipc(4, 398) = inf_tiles + 16;
-    chipc(3, 404) = inf_tiles * 2;
-    chipc(4, 404) = inf_tiles + 16;
-    chipc(3, 405) = inf_tiles * 2;
-    chipc(4, 405) = inf_tiles + 16;
-    chipc(3, 408) = inf_tiles * 2;
-    chipc(4, 408) = inf_tiles + 16;
-    chipc(3, 413) = inf_tiles * 2;
-    chipc(4, 413) = inf_tiles + 16;
-    chipc(3, 429) = inf_tiles * 2;
-    chipc(4, 429) = inf_tiles + 8;
-    chipc(3, 430) = inf_tiles * 2;
-    chipc(4, 430) = inf_tiles + 8;
-    chipc(3, 432) = inf_tiles * 2;
-    chipc(4, 432) = inf_tiles + 8;
-    chipc(3, 433) = inf_tiles * 2;
-    chipc(4, 433) = inf_tiles + 8;
-    chipc(3, 439) = inf_tiles * 2;
-    chipc(4, 439) = inf_tiles + 8;
-    chipc(3, 442) = inf_tiles * 2;
-    chipc(4, 442) = inf_tiles + 8;
-    chipc(3, 447) = inf_tiles * 2;
-    chipc(4, 447) = inf_tiles + 16;
-    DIM3(deco, 3, 300);
-    for (int cnt = 0; cnt < 16; ++cnt)
-    {
-        deco(0, 1 + cnt * 16) = 0;
-        deco(1, 1 + cnt * 16) = 1;
-        deco(0, 2 + cnt * 16) = 1;
-        deco(1, 2 + cnt * 16) = 2;
-        deco(0, 4 + cnt * 16) = 1;
-        deco(1, 4 + cnt * 16) = 0;
-        deco(0, 6 + cnt * 16) = -1;
-        deco(1, 6 + cnt * 16) = 21;
-        deco(0, 7 + cnt * 16) = -1;
-        deco(1, 7 + cnt * 16) = 30;
-        deco(0, 8 + cnt * 16) = 2;
-        deco(1, 8 + cnt * 16) = 1;
-        deco(0, 9 + cnt * 16) = -1;
-        deco(1, 9 + cnt * 16) = 20;
-        deco(0, 10 + cnt * 16) = 2;
-        deco(1, 10 + cnt * 16) = 2;
-        deco(0, 11 + cnt * 16) = -1;
-        deco(1, 11 + cnt * 16) = 33;
-        deco(0, 12 + cnt * 16) = 2;
-        deco(1, 12 + cnt * 16) = 0;
-        deco(0, 13 + cnt * 16) = -1;
-        deco(1, 13 + cnt * 16) = 32;
-        deco(0, 14 + cnt * 16) = -1;
-        deco(1, 14 + cnt * 16) = 31;
-        deco(0, 15 + cnt * 16) = 3;
-        deco(1, 15 + cnt * 16) = 1;
-        deco(0, 16 + cnt * 16) = -1;
-        deco(1, 16 + cnt * 16) = -1;
-        deco(0, 19 + cnt * 16) = 0;
-        deco(1, 19 + cnt * 16) = 2;
-    }
-    deco(2, 49) = 2;
-    deco(2, 52) = 2;
-    deco(2, 53) = 2;
-    deco(2, 97) = 2;
-    deco(2, 113) = 2;
-    deco(2, 117) = 2;
-    deco(2, 164) = 2;
-    deco(2, 180) = 2;
-    deco(2, 181) = 2;
-    deco(2, 145) = 4;
-    deco(2, 162) = 4;
-    deco(2, 194) = 4;
-    deco(2, 195) = 4;
-    deco(2, 209) = 4;
-    deco(2, 226) = 4;
-    deco(2, 243) = 4;
-    deco(2, 84) = 3;
-    deco(2, 104) = 3;
-    deco(2, 196) = 3;
-    deco(2, 200) = 3;
-    deco(2, 204) = 3;
-    deco(2, 212) = 3;
-    deco(2, 220) = 3;
-    deco(2, 232) = 3;
-    deco(2, 236) = 3;
-    deco(2, 24) = 1;
-    deco(2, 50) = 1;
-    deco(2, 56) = 1;
-    deco(2, 58) = 1;
-    deco(2, 82) = 1;
-    deco(2, 114) = 1;
-    deco(2, 122) = 1;
-    deco(2, 152) = 1;
-    deco(2, 184) = 1;
-    deco(2, 186) = 1;
-    deco(2, 178) = 8;
-    deco(2, 241) = 10;
-    deco(2, 242) = 8;
-    deco(2, 244) = 7;
-    deco(0, 16) = -1;
-    deco(1, 16) = 1;
-    deco(0, 32) = -1;
-    deco(1, 32) = 2;
-    deco(0, 64) = -1;
-    deco(1, 64) = 3;
-    deco(0, 128) = -1;
-    deco(1, 128) = 4;
-    deco(0, 48) = -1;
-    deco(1, 48) = 5;
-    deco(0, 192) = -1;
-    deco(1, 192) = 6;
-    deco(0, 96) = -1;
-    deco(1, 96) = 7;
-    deco(0, 144) = -1;
-    deco(1, 144) = 8;
-    deco(0, 80) = -1;
-    deco(1, 80) = 9;
-    deco(0, 160) = -1;
-    deco(1, 160) = 10;
-    deco(0, 91) = 0;
-    deco(1, 91) = 1;
-    deco(0, 93) = 0;
-    deco(1, 93) = 1;
-    deco(0, 21) = 0;
-    deco(1, 21) = 0;
-    deco(0, 85) = 0;
-    deco(1, 85) = 0;
-    deco(0, 213) = 0;
-    deco(1, 213) = 0;
-    deco(0, 149) = 0;
-    deco(1, 149) = 0;
+    tname(1) = i18n::s.get("core.locale.item.chip.dryrock");
+    tname(2) = i18n::s.get("core.locale.item.chip.field");
     initialize_map_chip();
-    return;
+}
+
+
+
+void bmes(
+    const std::string& message,
+    int x,
+    int y,
+    const snail::Color& text_color,
+    const snail::Color& shadow_color)
+{
+    color(shadow_color.r, shadow_color.g, shadow_color.b);
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            pos(x + dx, y + dy);
+            mes(message);
+        }
+    }
+    color(text_color.r, text_color.g, text_color.b);
+    pos(x, y);
+    mes(message);
+    color(0, 0, 0);
+}
+
+
+
+void init_assets()
+{
+    const auto filepath = filesystem::dir::exe() / "assets.hcl";
+    std::ifstream in{filepath.native()};
+    if (!in)
+    {
+        throw std::runtime_error{
+            "Failed to open "
+            + filesystem::make_preferred_path_in_utf8(filepath)};
+    }
+    const auto& result = hcl::parse(in);
+    if (!result.valid())
+    {
+        throw std::runtime_error{result.errorReason};
+    }
+    const auto& value = result.value;
+    if (!value.is<hcl::Object>() || !value.has("images"))
+    {
+        throw std::runtime_error{"\"images\" object not found"};
+    }
+
+    for (const auto& pair : value.get<hcl::Object>("images"))
+    {
+        images[pair.first] = {
+            window_id_table[pair.second.get<std::string>("source")],
+            pair.second.get<int>("x"),
+            pair.second.get<int>("y"),
+            pair.second.get<int>("width"),
+            pair.second.get<int>("height"),
+        };
+    }
+}
+
+
+
+void draw(const std::string& key, int x, int y)
+{
+    const auto& info = get_image_info(key);
+
+    pos(x, y);
+    gcopy(info.window_id, info.x, info.y, info.width, info.height);
+}
+
+
+
+void draw(const std::string& key, int x, int y, int width, int height)
+{
+    const auto& info = get_image_info(key);
+
+    pos(x, y);
+    gcopy(
+        info.window_id, info.x, info.y, info.width, info.height, width, height);
+}
+
+
+
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    double angle)
+{
+    const auto& info = get_image_info(key);
+
+    pos(center_x, center_y);
+    grotate(
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        3.14159265 / 180 * angle);
+}
+
+
+
+void draw_rotated(
+    const std::string& key,
+    int center_x,
+    int center_y,
+    int width,
+    int height,
+    double angle)
+{
+    const auto& info = get_image_info(key);
+
+    pos(center_x, center_y);
+    grotate(
+        info.window_id,
+        info.x,
+        info.y,
+        info.width,
+        info.height,
+        width,
+        height,
+        3.14159265 / 180 * angle);
+}
+
+
+
+const ImageInfo& get_image_info(const std::string& key)
+{
+    const auto itr = images.find(key);
+    if (itr == std::end(images))
+        throw std::runtime_error{u8"Unknown image ID: "s + key};
+    return itr->second;
+}
+
+void draw_chara(const Character& chara, int x, int y, int scale, int alpha)
+{
+    draw_chara(chara.image, x, y, scale, alpha);
+}
+
+void draw_chara(int image_id, int x, int y, int scale, int alpha)
+{
+    auto rect = chara_preparepic(image_id);
+    pos(x, y);
+    if (alpha != 0)
+    {
+        gmode(4, alpha);
+    }
+    else
+    {
+        gmode(2);
+    }
+
+    gcopy_c(
+        rect->buffer,
+        0,
+        960,
+        rect->width,
+        rect->height,
+        rect->width * scale,
+        rect->height * scale);
+}
+
+void draw_chara_scale_height(const Character& chara, int x, int y)
+{
+    draw_chara_scale_height(chara.image, x, y);
+}
+
+void draw_chara_scale_height(int image_id, int x, int y)
+{
+    auto rect = chara_preparepic(image_id);
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        rect->buffer,
+        0,
+        960,
+        rect->width,
+        rect->height,
+        rect->width / (1 + (rect->height > inf_tiles)),
+        inf_tiles);
+}
+
+
+void draw_item_material(int image_id, int x, int y)
+{
+    auto rect = prepare_item_image(image_id, 0);
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
+}
+
+void draw_item_with_portrait(const Item& item, int x, int y)
+{
+    draw_item_with_portrait(item.image, item.color, item.param1, x, y);
+}
+
+void draw_item_with_portrait(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y)
+{
+    optional_ref<Extent> rect;
+
+    if (chara_chip_id)
+    {
+        rect = prepare_item_image(image_id, color, *chara_chip_id);
+    }
+    else
+    {
+        rect = prepare_item_image(image_id, color);
+    }
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(1, 0, 960, inf_tiles, inf_tiles, rect->frame_width, rect->height);
+}
+
+void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
+{
+    draw_item_with_portrait_scale_height(
+        item.image, item.color, item.param1, x, y);
+}
+
+void draw_item_with_portrait_scale_height(
+    int image_id,
+    int color,
+    optional<int> chara_chip_id,
+    int x,
+    int y)
+{
+    optional_ref<Extent> rect;
+
+    if (chara_chip_id)
+    {
+        rect = prepare_item_image(image_id, color, *chara_chip_id);
+    }
+    else
+    {
+        rect = prepare_item_image(image_id, color);
+    }
+
+    pos(x, y);
+    gmode(2);
+
+    gcopy_c(
+        1,
+        0,
+        960,
+        rect->frame_width,
+        rect->height,
+        rect->frame_width * inf_tiles / rect->height,
+        inf_tiles);
 }
 
 

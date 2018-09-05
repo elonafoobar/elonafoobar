@@ -1,6 +1,65 @@
 locale {
     map {
+        prompt_initialize = "マップを初期化しますか？（注：ゲームに影響が出る可能性があります。エラーが出てマップが読み込めない場合のみ、必ず元のセーブのバックアップをとった上で実行してください。）"
+        loading_failed = "マップのロードに失敗しました。"
+        location_changed = "エリアが再配置されます。${_1}の位置は、x${_2}:y${_3}からx${_4}:y${_5}に変更されます。"
+
+        no_dungeon_master = "辺りからは何の緊張感も感じられない。${_1}の主はもういないようだ。"
+
+        since_leaving {
+            time_passed = "${_4}に${_3}を発ってから、${_1}日と${_2}時間の旅を終えた。"
+            walked {
+                you = "あなたは${_1}マイルの距離を歩き、経験を積んだ。"
+                you_and_allies = "あなたとその仲間は${_1}マイルの距離を歩き、経験を積んだ。"
+            }
+        }
+
         unique {
+            thieves_guild {
+                name = "盗賊ギルド"
+            }
+            mages_guild {
+                name = "魔術士ギルド"
+            }
+            fighters_guild {
+                name ="戦士ギルド"
+            }
+            the_sewer {
+                name ="ルミエスト下水道"
+            }
+            cat_mansion {
+                name ="タムの猫屋敷"
+            }
+            battle_field {
+                name ="防衛線"
+            }
+            doom_ground {
+                name ="戦場"
+            }
+            the_mine {
+                name ="スライムの坑道"
+            }
+            robbers_hideout {
+                name ="盗賊の隠れ家"
+            }
+            test_site {
+                name ="生体兵器実験場"
+            }
+
+            # Wilderness
+            _2 {
+                forest = "森"
+                sea = "水上"
+                grassland = "草原"
+                desert = "草原"
+                snow_field = "雪原"
+                plain_field = "平地"
+            }
+
+            # Lesimas
+            _3 {
+                the_depth = "レシマス最深層"
+            }
             _4 {
                 name = "ノースティリス"
             }
@@ -36,6 +95,10 @@ locale {
             _7 {
                 name = "わが家"
                 desc = "あなたの家だ。"
+            }
+            _39 {
+                name = "ダンジョン"
+                desc = "あなたのダンジョンだ。"
             }
             _3 {
                 name = "レシマス"
@@ -162,18 +225,57 @@ locale {
             _48 {
                 name = "テストワールド北関所"
             }
+            _9999 {
+                name = "デバッグマップ"
+            }
+        }
+
+        nefia {
+            level = "層"
+
+            prefix {
+                type_a {
+                    _0 = "はじまりの"
+                    _1 = "冒険者の"
+                    _2 = "迷いの"
+                    _3 = "死の"
+                    _4 = "不帰の"
+                }
+                type_b {
+                    _0 = "安全な"
+                    _1 = "時めきの"
+                    _2 = "勇者の"
+                    _3 = "闇の"
+                    _4 = "混沌の"
+                }
+            }
+            suffix {
+                _20 = "洞窟"
+                _21 = "塔"
+                _22 = "森"
+                _23 = "砦"
+            }
         }
 
         quest {
             outskirts = "街近辺"
             urban_area = "市街地"
+            party_room = "パーティー場"
+
+            on_enter {
+                party = "${_1}分間の間にパーティーを盛り上げよう。目標は${_2}ポイント。"
+                harvest = "${_2}分以内に、納入箱に${_1}の作物を納入しよう。"
+                conquer = "${_2}分以内に、${_1}を討伐しなければならない。"
+            }
         }
 
-        dungeon {
-            _20 = "洞窟"
-            _21 = "塔"
-            _22 = "森"
-            _23 = "砦"
+        misc_location {
+            _1 = "炭鉱"
+            _2 = "畑"
+            _3 = "アトリエ"
+            _4 = "寺院" # Unused in vanilla
+            _5 = "盗賊の隠れ家"
+            _6 = "灯台"
         }
 
         you_see = "${_1}がある。"

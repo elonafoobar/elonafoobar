@@ -9,7 +9,7 @@ namespace elona
 {
 
 
-struct race_data
+struct RaceData
 {
     std::string id;
     bool is_extra;
@@ -33,17 +33,17 @@ struct race_data
 
 
 
-class race_db;
+class RaceDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<race_db>
+struct CatDBTraits<RaceDB>
 {
-    using id_type = std::string;
-    using data_type = race_data;
+    using IdType = std::string;
+    using DataType = RaceData;
     static constexpr const char* filename = u8"race.lua";
     static constexpr const char* table_name = u8"race";
 };
@@ -52,19 +52,19 @@ struct cat_db_traits<race_db>
 
 
 
-class race_db : public cat::cat_db<race_db>
+class RaceDB : public cat::CatDB<RaceDB>
 {
 public:
-    race_db() = default;
+    RaceDB() = default;
 
-    std::vector<std::reference_wrapper<const race_data>> get_available_races(
+    std::vector<std::reference_wrapper<const RaceData>> get_available_races(
         bool is_extra_race) const;
 
     void define(lua_State* L);
 };
 
 
-extern race_db the_race_db;
+extern RaceDB the_race_db;
 
 
 

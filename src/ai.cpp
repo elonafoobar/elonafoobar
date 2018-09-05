@@ -1,13 +1,15 @@
 #include "ai.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
+#include "db_item.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -92,7 +94,7 @@ int ai_check()
     return 0;
 }
 
-turn_result_t ai_proc_basic()
+TurnResult ai_proc_basic()
 {
     if (tc == 0)
     {
@@ -125,36 +127,21 @@ turn_result_t ai_proc_basic()
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotionminor(
-                                    rnd(length(isetthrowpotionminor))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotionminor), -1, -1, 0);
                         }
                         if (act == -9998)
                         {
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotionmajor(
-                                    rnd(length(isetthrowpotionmajor))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotionmajor), -1, -1, 0);
                         }
                         if (act == -9997)
                         {
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotiongreater(
-                                    rnd(length(isetthrowpotiongreater))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotiongreater), -1, -1, 0);
                         }
                         if (act == -9996)
                         {
@@ -165,7 +152,7 @@ turn_result_t ai_proc_basic()
                         {
                             return do_throw_command();
                         }
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
@@ -182,7 +169,7 @@ turn_result_t ai_proc_basic()
         }
         else
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (act == -2)
@@ -199,7 +186,7 @@ turn_result_t ai_proc_basic()
                 if (stat == 1)
                 {
                     do_ranged_attack();
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
             }
         }
@@ -215,24 +202,24 @@ turn_result_t ai_proc_basic()
                     || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
             }
             npccostmp = 1;
-            int stat = label_2167();
+            int stat = do_cast_magic();
             if (stat == 1)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
     if (act >= 600)
     {
         efid = act;
-        int stat = label_2174();
+        int stat = do_magic_attempt();
         if (stat == 1)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (act == -3)
@@ -255,17 +242,17 @@ turn_result_t ai_proc_basic()
                     if (stat == 1)
                     {
                         do_ranged_attack();
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (distance == 1)
     {
         try_to_melee_attack();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (distance < 6)
     {
@@ -279,7 +266,7 @@ turn_result_t ai_proc_basic()
             if (stat == 1)
             {
                 do_ranged_attack();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -287,7 +274,7 @@ turn_result_t ai_proc_basic()
     {
         if (rnd(3) == 0)
         {
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
     }
     if (rnd(5) == 0)
@@ -300,13 +287,13 @@ turn_result_t ai_proc_basic()
     }
     else
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
 }
 
-turn_result_t proc_npc_movement_event(bool retreat)
+TurnResult proc_npc_movement_event(bool retreat)
 {
-    if (mdata(6) == 3)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         if (cc < 16)
         {
@@ -316,29 +303,28 @@ turn_result_t proc_npc_movement_event(bool retreat)
                 sell(1) = 0;
                 for (const auto& cnt : items(cc))
                 {
-                    if (inv[cnt].number == 0)
+                    if (inv[cnt].number() == 0)
                     {
                         continue;
                     }
                     int category = the_item_db[inv[cnt].id]->category;
                     if (category == 77000)
                     {
-                        p = inv[cnt].value * inv[cnt].number;
-                        sell += inv[cnt].number;
+                        p = inv[cnt].value * inv[cnt].number();
+                        sell += inv[cnt].number();
                         sell(1) += p;
-                        item_remove(inv[cnt]);
-                        cdata[cc].gold += p;
+                        inv[cnt].remove();
+                        earn_gold(cdata[cc], p);
                     }
                 }
                 if (sell != 0)
                 {
                     txtef(9);
-                    txt(lang(
-                        name(cc) + u8"は"s + sell
-                            + u8"個のアイテムを売りさばき"s + sell(1)
-                            + u8"goldを稼いだ。"s,
-                        name(cc) + u8" sells "s + sell + u8" items and earns "s
-                            + sell(1) + u8" gold pieces."s));
+                    txt(i18n::s.get(
+                        "core.locale.ai.ally.sells_items",
+                        cdata[cc],
+                        sell(0),
+                        sell(1)));
                 }
             }
             if (rnd(100) == 0)
@@ -348,10 +334,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd(61);
                     txtef(9);
-                    txt(lang(
-                        cdatan(0, cc) + u8"は訓練所に通い潜在能力を伸ばした！"s,
-                        cdatan(0, cc) + u8" visits a trainer and develops "s
-                            + his(cc) + u8" potential!"s));
+                    txt(i18n::s.get(
+                        "core.locale.ai.ally.visits_trainer", cdata[cc]));
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
                         while (1)
@@ -368,7 +352,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                             {
                                 continue;
                             }
-                            modify_potential(cc, p, 4);
+                            modify_potential(cdata[cc], p, 4);
                             break;
                         }
                     }
@@ -380,7 +364,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
     if (tc == cc)
     {
         cdata[cc].enemy_id = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc]._203 <= 0)
     {
@@ -431,29 +415,26 @@ turn_result_t proc_npc_movement_event(bool retreat)
             if (cdata[cc].enemy_id != tc)
             {
                 const auto did_swap = cell_swap(cc, tc);
-                if (did_swap && is_in_fov(cc))
+                if (did_swap && is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
-                        name(cc) + u8" displace"s + _s(cc) + u8" "s + name(tc)
-                            + u8"."s));
+                    txt(i18n::s.get(
+                        "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
                 if (cdata[tc].continuous_action_id == 1)
                 {
                     if (cdata[tc].continuous_action_turn > 0)
                     {
-                        if (is_in_fov(cc))
+                        if (is_in_fov(cdata[cc]))
                         {
-                            txt(lang(
-                                name(tc) + u8"は"s + name(cc)
-                                    + u8"を睨み付けた。"s,
-                                name(tc) + u8" glare"s + _s(tc) + u8" "s
-                                    + name(cc) + u8"."s));
+                            txt(i18n::s.get(
+                                "core.locale.ai.swap.glare",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                         rowactend(tc);
                     }
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
@@ -465,11 +446,11 @@ turn_result_t proc_npc_movement_event(bool retreat)
             {
                 if (x >= 0)
                 {
-                    if (x < mdata(0))
+                    if (x < mdata_map_width)
                     {
                         if (y >= 0)
                         {
-                            if (y < mdata(1))
+                            if (y < mdata_map_height)
                             {
                                 if (chipm(7, map(x, y, 0)) & 4)
                                 {
@@ -477,17 +458,15 @@ turn_result_t proc_npc_movement_event(bool retreat)
                                     {
                                         map(x, y, 0) = tile_tunnel;
                                         snd(45);
-                                        play_animation(14);
+                                        BreakingAnimation({x, y}).play();
                                         spillfrag(x, y, 2);
-                                        if (is_in_fov(cc))
+                                        if (is_in_fov(cdata[cc]))
                                         {
-                                            txt(lang(
-                                                name(cc)
-                                                    + u8"は壁を破壊した！"s,
-                                                name(cc) + u8" crush"s + _s(cc)
-                                                    + u8" the wall!"s));
+                                            txt(i18n::s.get(
+                                                "core.locale.ai.crushes_wall",
+                                                cdata[cc]));
                                         }
-                                        return turn_result_t::turn_end;
+                                        return TurnResult::turn_end;
                                     }
                                 }
                             }
@@ -501,14 +480,14 @@ turn_result_t proc_npc_movement_event(bool retreat)
         >= std::abs(cdata[cc]._206 - cdata[cc].position.y))
     {
         {
-            int stat = label_2694();
+            int stat = ai_dir_check_1();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = label_2695();
+            int stat = ai_dir_check_2();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -518,14 +497,14 @@ turn_result_t proc_npc_movement_event(bool retreat)
     else
     {
         {
-            int stat = label_2695();
+            int stat = ai_dir_check_2();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = label_2694();
+            int stat = ai_dir_check_1();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -574,10 +553,10 @@ turn_result_t proc_npc_movement_event(bool retreat)
             cdata[cc]._205 = cdata[tc].position.x;
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
-int label_2694()
+int ai_dir_check_1()
 {
     if (cdata[cc]._205 > cdata[cc].position.x)
     {
@@ -620,7 +599,7 @@ int label_2694()
     return 0;
 }
 
-int label_2695()
+int ai_dir_check_2()
 {
     if (cdata[cc]._206 > cdata[cc].position.y)
     {
@@ -663,7 +642,7 @@ int label_2695()
     return 0;
 }
 
-turn_result_t ai_proc_misc_map_events()
+TurnResult ai_proc_misc_map_events()
 {
     if (cdata[cc].ai_calm == 4)
     {
@@ -677,11 +656,11 @@ turn_result_t ai_proc_misc_map_events()
     }
     if (rnd(5) != 0)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (cdatan(2, cc) == u8"cat"s)
             {
@@ -744,7 +723,8 @@ turn_result_t ai_proc_misc_map_events()
 label_2692_internal:
     if (cc >= 16)
     {
-        if (mdata(6) == 3 || mdata(6) == 2)
+        if (mdata_map_type == mdata_t::MapType::town
+            || mdata_map_type == mdata_t::MapType::guild)
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {
@@ -752,7 +732,7 @@ label_2692_internal:
                 {
                     if (rnd(100) == 0)
                     {
-                        dmgcon(cc, status_ailment_t::sleep, 4000);
+                        dmgcon(cc, StatusAilment::sleep, 4000);
                     }
                 }
             }
@@ -762,7 +742,7 @@ label_2692_internal:
     {
         if (cdata[cc].relationship != 10)
         {
-            if (gdata_current_map == 13)
+            if (gdata_current_map == mdata_t::MapId::quest)
             {
                 if (gdata_executing_immediate_quest_type == 1009)
                 {
@@ -789,11 +769,13 @@ label_2692_internal:
                     }
                 }
             }
-            if (gdata_current_map == 33 || gdata_current_map == 29)
+            if (gdata_current_map == mdata_t::MapId::noyel
+                || gdata_current_map
+                    == mdata_t::MapId::mansion_of_younger_sister)
             {
                 if (cdata[cc].id == 35 || cdata[cc].id == 211)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         if (chipm(
                                 0,
@@ -804,9 +786,10 @@ label_2692_internal:
                         {
                             if (rnd(4) == 0)
                             {
-                                if (cdata[gdata_fire_giant].state == 1)
+                                if (cdata[gdata_fire_giant].state()
+                                    == Character::State::alive)
                                 {
-                                    if (is_in_fov(gdata_fire_giant))
+                                    if (is_in_fov(cdata[gdata_fire_giant]))
                                     {
                                         flt();
                                         int stat =
@@ -818,18 +801,8 @@ label_2692_internal:
                                             tlocy = cdata[gdata_fire_giant]
                                                         .position.y;
                                             txtef(9);
-                                            txt(lang(
-                                                    u8"「化け物め！」"s,
-                                                    u8"\"Filthy monster!\""s),
-                                                lang(
-                                                    u8"「くたばれっ」"s,
-                                                    u8"\"Go to hell!\""s),
-                                                lang(
-                                                    u8"「退治してやるぅ！」"s,
-                                                    u8"\"I'll get rid of you.\""s),
-                                                lang(
-                                                    u8"「くらえー！」"s,
-                                                    u8"\"Eat this!\""s));
+                                            txt(i18n::s.get(
+                                                "core.locale.ai.fire_giant"));
                                             return do_throw_command();
                                         }
                                     }
@@ -881,13 +854,11 @@ label_2692_internal:
                                     if (stat == 1)
                                     {
                                         snd(86);
-                                        txt(lang(
-                                            name(cc) + u8"は"s + itemname(ci)
-                                                + u8"を作った！"s,
-                                            name(cc) + u8" make"s + _s(cc)
-                                                + u8" "s + itemname(ci)
-                                                + u8"!"s));
-                                        return turn_result_t::turn_end;
+                                        txt(i18n::s.get(
+                                            "core.locale.ai.makes_snowman",
+                                            cdata[cc],
+                                            inv[ci]));
+                                        return TurnResult::turn_end;
                                     }
                                 }
                             }
@@ -897,24 +868,10 @@ label_2692_internal:
                                 int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
+                                    tlocx = cdata.player().position.x;
+                                    tlocy = cdata.player().position.y;
                                     txtef(9);
-                                    txt(lang(u8" *クスクス* "s, u8"*grin*"s),
-                                        lang(
-                                            u8"「えいっ」"s,
-                                            u8"\"Fire in the hole!\""s),
-                                        lang(
-                                            u8"「うりゃ」"s,
-                                            u8"\"Tee-hee-hee!\""s),
-                                        lang(
-                                            u8"「くらえー！」"s,
-                                            u8"\"Eat this!\""s),
-                                        lang(
-                                            u8"「危ないっ！」"s,
-                                            u8"\"Watch out!\""s),
-                                        lang(
-                                            u8"「避けてー」"s, u8"\"Scut!\""s));
+                                    txt(i18n::s.get("core.locale.ai.snowball"));
                                     return do_throw_command();
                                 }
                             }
@@ -958,7 +915,7 @@ label_2692_internal:
                         {
                             if (rnd(5) == 0)
                             {
-                                item_remove(inv[ci]);
+                                inv[ci].remove();
                             }
                         }
                         else
@@ -986,12 +943,12 @@ label_2692_internal:
             {
                 efid = 183;
                 magic();
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
         if (cdata[cc].id == 320 || cdata[cc].id == 280)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
                 tc = 0;
                 distance = dist(
@@ -1003,18 +960,16 @@ label_2692_internal:
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
+                        tlocx = cdata.player().position.x;
+                        tlocy = cdata.player().position.y;
                         flt();
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
                                 txtef(9);
-                                txt(lang(
-                                        u8"「なめくじだ！」"s, u8"\"Snail!\""s),
-                                    lang(u8"「殺す！」"s, u8"\"Kill!\""s));
+                                txt(i18n::s.get("core.locale.ai.snail"));
                             }
                             return do_throw_command();
                         }
@@ -1028,7 +983,7 @@ label_2692_internal:
             {
                 for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < 97; ++cnt)
                 {
-                    if (cdata[cnt].state != 1)
+                    if (cdata[cnt].state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -1069,7 +1024,7 @@ label_2692_internal:
                     {
                         cdata[cc].enemy_id = 0;
                         continuous_action_sex();
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
                 if (distance < 6)
@@ -1098,7 +1053,7 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 2)
     {
-        if (mdata(8) == 1
+        if (mdata_map_designated_spawns == 1
             && dist(
                    cdata[cc].position.x,
                    cdata[cc].position.y,
@@ -1128,7 +1083,7 @@ label_2692_internal:
             return proc_movement_event();
         }
     }
-    return turn_result_t::turn_end;
+    return TurnResult::turn_end;
 }
 
 } // namespace elona

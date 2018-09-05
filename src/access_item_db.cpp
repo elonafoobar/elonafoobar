@@ -1,9 +1,11 @@
 #include <unordered_map>
 #include "character.hpp"
+#include "db_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
+#include "menu.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -40,16 +42,26 @@ int access_item_db(int dbmode)
         }
         else if (dbmode == 17)
         {
-            if (jp)
+            const auto& locale_key_prefix = info->locale_key_prefix;
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_0"))
             {
-                description(0) = info->description_jp[0];
-                description(1) = info->description_jp[1];
-                description(2) = info->description_jp[2];
-                description(3) = info->description_jp[3];
+                description(0) = *text;
             }
-            else
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_1"))
             {
-                description(3) = info->description_en;
+                description(1) = *text;
+            }
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_2"))
+            {
+                description(2) = *text;
+            }
+            if (auto text =
+                    i18n::s.get_optional(locale_key_prefix + ".description_3"))
+            {
+                description(3) = *text;
             }
             return 0;
         }
@@ -63,7 +75,7 @@ int access_item_db(int dbmode)
     {
         // Common initialization
         inv[ci].id = dbid;
-        inv[ci].number = 1;
+        inv[ci].set_number(1);
         inv[ci].difficulty_of_identification = 0; // Default value
         inv[ci].image = info->image;
         fixeditemenc(0) = 0; // Default value
@@ -112,7 +124,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 787:
@@ -1473,7 +1485,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 616:
@@ -1788,7 +1800,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 553:
@@ -1798,7 +1810,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 552:
@@ -1911,7 +1923,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].param1 = rnd(5) + 2;
-            inv[ci].param2 = isetfruit(rnd(length(isetfruit)));
+            inv[ci].param2 = choice(isetfruit);
         }
         break;
     case 522:
@@ -2030,7 +2042,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 511:
@@ -2147,43 +2159,43 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 495:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 494:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 492:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 491:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 490:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 489:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 488:
@@ -2193,19 +2205,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 487:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 486:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 485:
@@ -2248,7 +2260,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 481:
@@ -2437,7 +2449,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 420:
@@ -2447,7 +2459,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 419:
@@ -2457,7 +2469,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 418:
@@ -2467,7 +2479,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 417:
@@ -2477,7 +2489,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 412:
@@ -3128,7 +3140,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 353:
@@ -3139,7 +3151,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 352:
@@ -3150,7 +3162,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 351:
@@ -3161,7 +3173,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 350:
@@ -3172,7 +3184,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 349:
@@ -3183,7 +3195,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 348:
@@ -3194,7 +3206,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 347:
@@ -3205,7 +3217,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 346:
@@ -3216,7 +3228,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 345:
@@ -3227,7 +3239,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 344:
@@ -3570,7 +3582,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            return cdata.player().god_id == core_god::ehekatl;
         }
         break;
     case 260:
@@ -3812,7 +3824,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 230:
@@ -3822,7 +3834,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 229:
@@ -3832,7 +3844,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            return cdata.player().god_id == core_god::itzpalt;
         }
         break;
     case 228:
@@ -3891,7 +3903,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            return cdata.player().god_id == core_god::itzpalt;
         }
         break;
     case 211:
@@ -4012,7 +4024,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 200:
@@ -4023,7 +4035,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 199:
@@ -4034,7 +4046,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 198:
@@ -4045,7 +4057,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 197:
@@ -4083,7 +4095,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 192:
@@ -4106,7 +4118,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 188:
@@ -4117,7 +4129,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 187:
@@ -4127,7 +4139,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 186:
@@ -4138,7 +4150,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 185:
@@ -4149,7 +4161,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 184:
@@ -4195,7 +4207,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            return cdata.player().god_id == core_god::kumiromi;
         }
         break;
     case 178:
@@ -4614,7 +4626,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            return cdata.player().god_id == core_god::mani;
         }
         break;
     case 59:
@@ -4630,7 +4642,7 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            return cdata.player().god_id == core_god::lulwy;
         }
         break;
     case 57:
@@ -4672,64 +4684,64 @@ int access_item_db(int dbmode)
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
-                || cdata[0].god_id == core_god::opatos;
+            return cdata.player().god_id == core_god::jure
+                || cdata.player().god_id == core_god::opatos;
         }
         break;
     case 34:

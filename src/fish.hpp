@@ -8,7 +8,7 @@ namespace elona
 {
 
 
-struct fish_data
+struct FishData
 {
     int id;
     bool no_generate;
@@ -22,17 +22,17 @@ struct fish_data
 
 
 
-class fish_db;
+class FishDB;
 
 
 namespace cat
 {
 
 template <>
-struct cat_db_traits<fish_db>
+struct CatDBTraits<FishDB>
 {
-    using id_type = int;
-    using data_type = fish_data;
+    using IdType = int;
+    using DataType = FishData;
     static constexpr const char* filename = u8"fish.lua";
     static constexpr const char* table_name = u8"fish";
 };
@@ -40,17 +40,17 @@ struct cat_db_traits<fish_db>
 } // namespace cat
 
 
-class fish_db : public cat::cat_db<fish_db>
+class FishDB : public cat::CatDB<FishDB>
 {
 public:
-    fish_db() = default;
+    FishDB() = default;
 
     void define(lua_State* L);
 };
 
 
 
-extern fish_db the_fish_db;
+extern FishDB the_fish_db;
 
 
 } // namespace elona

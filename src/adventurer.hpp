@@ -6,8 +6,8 @@ namespace elona
 
 void create_all_adventurers();
 void create_adventurer();
-void label_2662();
-int label_2664();
+void adventurer_update();
+int adventurer_discover_equipment();
 int advfavoriteskill(int = 0);
 int advfavoritestat(int = 0);
 

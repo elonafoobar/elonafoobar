@@ -1,6 +1,67 @@
 locale {
     map {
+        prompt_initialize = "Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)"
+        loading_failed = "Map loading failed."
+        location_changed = "The location of ${_1} has been changed from x${_2}:y${_3} to x${_4}:y${_5}."
+
+        no_dungeon_master = "This place is pretty dull. The dungeon master is no longer sighted here."
+
+        since_leaving {
+            time_passed = "${_1} day${s(_1)} and ${_2} hour${s(_2)} have passed since you left ${_3}."
+            walked {
+                you = "You've walked about ${_1} miles and have gained experience."
+                # NOTE: new for EN
+                you_and_allies = "You and your allies have walked about ${_1} miles and have gained experience."
+            }
+        }
+
         unique {
+            thieves_guild {
+                name = "Thieves Guild"
+            }
+            mages_guild {
+                name = "Mages Guild"
+            }
+            fighters_guild {
+                name = "Fighters Guild"
+            }
+            the_sewer {
+                name = "The Sewer"
+            }
+            cat_mansion {
+                name = "Cat Mansion"
+            }
+            battle_field {
+                name = "Battle Field"
+            }
+            doom_ground {
+                name = "Doom Ground"
+            }
+            the_mine {
+                name = "The Mine"
+            }
+            robbers_hideout {
+                name = "Robber's Hideout"
+            }
+            test_site {
+                name = "Test Site"
+            }
+
+            # Wilderness
+            _2 {
+                forest = "Forest"
+                sea = "Sea"
+                grassland = "Grassland"
+                desert = "Desert"
+                snow_field = "Snow Field"
+                plain_field = "Plain Field"
+            }
+
+            # Lesimas
+            _3 {
+                the_depth = "The Depth"
+            }
+
             _4 {
                 name = "North Tyris"
             }
@@ -36,6 +97,10 @@ locale {
             _7 {
                 name = "Your Home"
                 desc = "It's your sweet home."
+            }
+            _39 {
+                name = "Your Dungeon"
+                desc = "It's your dungeon."
             }
             _3 {
                 name = "Lesimas"
@@ -162,18 +227,57 @@ locale {
             _48 {
                 name = "Test World north border"
             }
+            _9999 {
+                name = "Debug Map"
+            }
+        }
+
+        nefia {
+            level = ""
+
+            prefix {
+                type_a {
+                    _0 = "Beginner's "
+                    _1 = "Adventurer's "
+                    _2 = "Dangerous "
+                    _3 = "Fearful "
+                    _4 = "King's "
+                }
+                type_b {
+                    _0 = "Safe "
+                    _1 = "Exciting "
+                    _2 = "Servant's "
+                    _3 = "Shadow "
+                    _4 = "Chaotic "
+                }
+            }
+            suffix {
+                _20 = "Dungeon"
+                _21 = "Tower"
+                _22 = "Forest"
+                _23 = "Fort"
+            }
         }
 
         quest {
             outskirts = "The outskirts"
             urban_area = "Urban area"
+            party_room = "Party Room"
+
+            on_enter {
+                party = "You have to warm up the party within ${_1} minites. Your target score is ${_2} points."
+                harvest = "To complete the quest, you have to harvest ${_1} worth farm products and put them into the delivery chest within ${_2} minutes."
+                conquer = "You have to slay ${_1} within ${_2} minites."
+            }
         }
 
-        dungeon {
-            _20 = "Dungeon"
-            _21 = "Tower"
-            _22 = "Forest"
-            _23 = "Fort"
+        misc_location {
+            _1 = "Mine"
+            _2 = "Crop"
+            _3 = "Art Atelier"
+            _4 = "Temple" # Unused in vanilla
+            _5 = "Smuggler's Hideout"
+            _6 = "Light House"
         }
 
         you_see = "You see ${_1}."

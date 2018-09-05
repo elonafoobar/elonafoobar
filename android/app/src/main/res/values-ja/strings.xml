@@ -1,0 +1,18 @@
+<resources>
+    <string name="appName">Elona foobar</string>
+    <string name="upgrading">アップグレード中</string>
+    <string name="installing">インストール中</string>
+
+    <string name="chooseArchiveFile">elona122.zipの場所を選んでください。</string>
+    <string name="installFileManager">ファイルマネージャをインストールしてください。</string>
+    <string name="archiveNotFound">elona122.zipが見つかりませんでした。http://ylvania.orgからダウンロードしてください。</string>
+    <string name="dirNotFound">ディレクトリ%1$sには%2$sのルートディレクトリに見つかりませんでした。</string>
+    <string name="errorTallyingFiles">ファイル集計のエラー：%1$s</string>
+    <string name="errorCopyingFiles">%1$sにファイルコーピーのエラー：%2$s</string>
+
+    <string name="installationFailed">インストール失敗</string>
+    <string name="ok">OK</string>
+
+    <string name="extracting">解凍中</string>
+    <string name="extractionFailed">%1$sにファイル解凍のエラー：%2$s</string>
+</resources>

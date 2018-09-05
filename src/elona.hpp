@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include "enums.hpp"
 #include "gdata.hpp"
+#include "mdata.hpp"
 #include "snail/color.hpp"
 #include "snail/font.hpp"
 #include "snail/input.hpp"
@@ -122,6 +123,34 @@ struct elona_vector1
     size_t size() const noexcept
     {
         return storage.size();
+    }
+
+
+
+    typename std::vector<T>::iterator begin()
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::iterator end()
+    {
+        return std::end(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator begin() const
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator end() const
+    {
+        return std::end(storage);
     }
 
 
@@ -354,40 +383,23 @@ DEFINE_CMP(<=)
 
 void await(int msec);
 
-// CANNOT BE IMPLEMENTED
-void axobj(int, const std::string&, int, int);
-
-
-void bcopy(const fs::path& from, const fs::path& to);
-
-// fullscreen
-void bgscr(int window_id, int width, int height, int, int);
-
 
 void boxf(
-    int x1,
-    int y1,
-    int x2,
-    int y2,
-    const snail::color& color = {0, 0, 0, 0});
-void boxf(const snail::color& color = {0, 0, 0, 0});
+    int x,
+    int y,
+    int width,
+    int height,
+    const snail::Color& color = {0, 0, 0, 0});
+void boxf();
+
+void boxl(int x, int y, int width, int height, const snail::Color& color);
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
 
-void chgdisp(int, int width, int height);
-
-
-void clrobj(int);
-
 
 void color(int r, int g, int b);
 
-
-
-void delcom(int);
-
-void elona_delete(const fs::path& filename);
 
 int dialog(const std::string& message, int = 0);
 
@@ -396,18 +408,35 @@ int dialog(const std::string& message, int = 0);
 void exec(const std::string&, int);
 
 
-void font(
-    int size,
-    snail::font_t::style_t style = snail::font_t::style_t::regular);
+void font(int size, snail::Font::Style style = snail::Font::Style::regular);
 
 void gcopy(
     int window_id,
     int src_x,
     int src_y,
-    int src_width = 0,
-    int src_height = 0);
+    int src_width,
+    int src_height,
+    int dst_width = -1,
+    int dst_height = -1);
 
-bool getkey(snail::key);
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height);
+
+void gcopy_c(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height);
+
+
+bool getkey(snail::Key);
 
 void getstr(
     std::string& out,
@@ -419,19 +448,20 @@ void getstr(
 int ginfo(int type);
 
 
-void gmode(int mode, int width = -1, int height = -1, int alpha = 255);
+
+void gmode(int mode, int alpha = 255);
+
+
 
 void grotate(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
-    int dst_width = 0,
-    int dst_height = 0);
+    int src_width,
+    int src_height,
+    double angle);
 
-void gsel(int window_id);
-
-void gzoom(
+void grotate(
     int window_id,
     int src_x,
     int src_y,
@@ -439,8 +469,9 @@ void gzoom(
     int src_height,
     int dst_width,
     int dst_height,
-    bool blend = false);
+    double angle);
 
+void gsel(int window_id);
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
@@ -448,57 +479,13 @@ int instr(const std::string& str, size_t pos, const std::string pattern);
 int stoi(const std::string&);
 
 
-template <typename T>
-size_t length(elona_vector2<T>& arr)
-{
-    return arr.i_size();
-}
+void line(
+    int x1,
+    int y1,
+    int x2,
+    int y2,
+    const snail::Color& color = {0, 0, 0});
 
-
-
-template <typename T>
-size_t length(const elona_vector1<T>& arr)
-{
-    return arr.size();
-}
-
-
-
-size_t length(const std::string& str);
-
-template <typename T>
-size_t length2(const elona_vector2<T>& arr)
-{
-    return arr.j_size();
-}
-
-
-
-void line(int x1, int y1, int x2, int y2);
-
-void line(int x, int y);
-
-
-
-void memcpy(
-    elona_vector2<int>& src,
-    int src_i,
-    int src_j,
-    elona_vector2<int>& dst,
-    int dst_i,
-    int dst_j,
-    size_t size);
-
-
-// void memexpand(void* memory, size_t size)
-// {
-// }
-#define memexpand(a, b)
-
-// void memfile(void* buf)
-// {
-// }
-#define memfile(a)
 
 
 void mes(const std::string& text);
@@ -506,8 +493,6 @@ void mes(const std::string& text);
 void mes(int n);
 
 void mesbox(std::string& buffer, bool text = false);
-
-void mkdir(const fs::path& path);
 
 void mmload(const fs::path& filepath, int id, int mode = 0);
 
@@ -528,11 +513,7 @@ int notesel(std::string&);
 void noteunsel();
 
 
-void objmode(int, int = 0);
-
 void objprm(int, const std::string&);
-
-void objsel(int);
 
 
 
@@ -546,8 +527,6 @@ void pos(int x, int y = 0);
 
 void redraw();
 
-void screen(int window_id, int width, int height, int mode, int x, int y);
-
 
 int stick(int allow_repeat_keys = 0);
 
@@ -556,11 +535,11 @@ size_t strlen_u(const std::string& str);
 
 std::string strmid(const std::string& source, int pos, int length);
 
-void title(const std::string& title_str,
-           const std::string& display_mode = "",
-           snail::window::fullscreen_mode_t fullscreen_mode = snail::window::fullscreen_mode_t::windowed);
-
-void width(int width, int height, int, int);
+void title(
+    const std::string& title_str,
+    const std::string& display_mode = "",
+    snail::Window::FullscreenMode fullscreen_mode =
+        snail::Window::FullscreenMode::windowed);
 
 
 int wpeek(int x, size_t index);
@@ -573,22 +552,7 @@ void wpoke(int& x, size_t index, int y);
 
 
 
-void func_1(const std::string&, int);
-
-void gfini(int width, int height);
-
-void gfdec(int r, int g, int b);
-
-void gfdec2(int r, int g, int b);
-
-void gfinc(int r, int g, int b);
-
 void ematan(int, int, int);
-
-
-int aplsel(const std::string&);
-
-int aplobj(const std::string&, int);
 
 void apledit(int&, int, int = 0);
 
@@ -601,67 +565,12 @@ int DIGETJOYNUM();
 
 void DIGETJOYSTATE(int, int);
 
-void HMMBITON(int&, int);
-
-void HMMBITOFF(int&, int);
-
 int HMMBITCHECK(int, int);
 
-
-int sockopen(int, const std::string&, int);
-
-void sockclose();
-
-int sockget(const std::string&, int);
-
-int sockput(const std::string&);
-
-void netinit();
-
-
-void netexec(int&);
-
-void neterror(const std::string&);
-
-void neturl(const std::string&);
-
-void netdlname(const std::string&);
-
-void netrequest(const std::string&);
-
-
-void GetLastError();
 
 int CreateMutexA(int, int, const std::string&);
 
 
-void CloseHandle(int id);
-
-int func_3();
-
-
-int LCMapStringA(int, int, const std::string&, int, const std::string&, int);
-
-
-int GetUserDefaultLCID();
-
-void AppendMenuA();
-
-void CheckMenuRadioItem();
-
-void CreateMenu();
-
-
-void CreatePopupMenu();
-
-void DrawMenuBar();
-
-void SetMenu();
-
-
-void keybd_event(int, int = 0, int = 0);
-
-void GetKeyboardState(elona_vector1<int>&);
 
 int timeGetTime();
 
@@ -678,12 +587,6 @@ int ImmGetOpenStatus(int);
 
 
 void onkey_0();
-
-
-void onkey_1();
-
-
-void end();
 
 
 
@@ -703,15 +606,6 @@ void bload(
 void bsave(const fs::path& filename, const std::string& data);
 void bsave(const fs::path& filename, int data);
 void bsave(const fs::path& filename, elona_vector1<int>& data);
-
-
-void memcpy_(
-    std::string& dst,
-    std::string& src,
-    int size,
-    int dst_offset = 0,
-    int src_offset = 0);
-
 
 
 template <typename T>

@@ -35,9 +35,9 @@
 
 > if not ldoc.single then
 > if module then
-    <img src="../red_putit.png" alt="elomod" class="icon">
+    <img src="../red_putit.png" alt="Lua API" class="icon">
 > else
-    <img src="red_putit.png" alt="elomod" class="icon">
+    <img src="red_putit.png" alt="Lua API" class="icon">
 > end
 > end
 

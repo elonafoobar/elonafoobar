@@ -1,8 +1,8 @@
 #pragma once
 
 #include <map>
-#include "../scene.hpp"
 #include "../effect.hpp"
+#include "../scene.hpp"
 
 
 namespace elona
@@ -10,9 +10,17 @@ namespace elona
 namespace snail
 {
 
-class application final
+class Application final
 {
 public:
+    enum class Orientation
+    {
+        portrait,
+        landscape
+    };
+
+    static const constexpr bool is_android = false;
+
     size_t frame() const noexcept
     {
         return 1;
@@ -30,6 +38,31 @@ public:
         return 600;
     }
 
+    int physical_width() const noexcept
+    {
+        return 800;
+    }
+
+    int physical_height() const noexcept
+    {
+        return 600;
+    }
+
+    float dpi() const noexcept
+    {
+        return 96.0f;
+    }
+
+    Orientation orientation() const noexcept
+    {
+        return Orientation::landscape;
+    }
+
+    bool was_focus_lost_just_now() noexcept
+    {
+        return false;
+    }
+
     const std::string& title() const noexcept
     {
         return _title;
@@ -39,9 +72,9 @@ public:
     void set_title(const std::string& title);
 
 
-    ~application() = default;
+    ~Application() = default;
 
-    static application& instance();
+    static Application& instance();
 
 
     void initialize(const std::string& title);
@@ -52,7 +85,7 @@ public:
     void register_finalizer(std::function<void()> finalizer);
 
 
-    renderer& get_renderer()
+    Renderer& get_renderer()
     {
         return *_renderer;
     }
@@ -60,31 +93,47 @@ public:
 
     void proc_event();
 
-    bool is_fullscreen() { return false; }
+    bool is_fullscreen()
+    {
+        return false;
+    }
 
-    window::fullscreen_mode_t get_fullscreen_mode() { return window::fullscreen_mode_t::windowed; }
+    Window::FullscreenMode get_fullscreen_mode()
+    {
+        return Window::FullscreenMode::windowed;
+    }
 
-    void set_fullscreen_mode(window::fullscreen_mode_t);
+    void set_fullscreen_mode(Window::FullscreenMode);
 
 
-    std::map<std::string, ::SDL_DisplayMode> get_display_modes() { return {}; }
+    std::map<std::string, ::SDL_DisplayMode> get_display_modes()
+    {
+        return {};
+    }
 
-    std::string get_default_display_mode() { return ""; }
+    std::string get_default_display_mode()
+    {
+        return "";
+    }
 
-    ::SDL_DisplayMode get_display_mode() { return ::SDL_DisplayMode{}; }
+    ::SDL_DisplayMode get_display_mode()
+    {
+        return ::SDL_DisplayMode{};
+    }
 
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
 
 
 private:
-    application() = default;
-    std::unique_ptr<renderer> _renderer;
+    Application() = default;
+    std::unique_ptr<Window> _window;
+    std::unique_ptr<Renderer> _renderer;
     bool _will_quit = false;
     const std::string _title = "";
 
     void main_loop();
 };
 
-}
-}
+} // namespace snail
+} // namespace elona

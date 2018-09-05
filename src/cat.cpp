@@ -1,8 +1,16 @@
 #include "cat.hpp"
-#include "defines.hpp"
 #include <iostream>
 #include <string>
+#include "defines.hpp"
 using namespace std::string_literals;
+
+
+#ifdef ELONA_OS_WINDOWS
+#define ELONA_luaL_dofile luaL_dowfile
+#else
+#define ELONA_luaL_dofile luaL_dofile
+#endif
+
 
 namespace elona
 {
@@ -10,11 +18,11 @@ namespace cat
 {
 
 
-engine global;
+Engine global;
 
 
 
-void engine::initialize()
+void Engine::initialize()
 {
     L.reset(luaL_newstate());
     luaL_openlibs(ptr());
@@ -22,15 +30,9 @@ void engine::initialize()
 }
 
 
-void engine::load(const fs::path& filepath)
+void Engine::load(const fs::path& filepath)
 {
-#ifdef ELONA_OS_WINDOWS
-    std::wstring filepath_str = filepath.native();
-    if (luaL_dowfile(ptr(), filepath_str.c_str()) != 0)
-#else
-    std::string filepath_str = filesystem::to_narrow_path(filepath);
-    if (luaL_dofile(ptr(), filepath_str.c_str()) != 0)
-#endif
+    if (ELONA_luaL_dofile(ptr(), filepath.native().c_str()) != 0)
     {
         const char* error_msg = lua_tostring(ptr(), -1);
         throw std::runtime_error(
@@ -39,7 +41,7 @@ void engine::load(const fs::path& filepath)
 }
 
 
-void engine::register_function(const char* name, lua_CFunction func)
+void Engine::register_function(const char* name, lua_CFunction func)
 {
     lua_pushcfunction(ptr(), func);
     lua_setglobal(ptr(), name);

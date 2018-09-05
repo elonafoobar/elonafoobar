@@ -16,10 +16,10 @@
 namespace elona
 {
 
-ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
+
 // casino.cpp / casino_card.cpp
 ELONA_EXTERN(int atxthrough);
 ELONA_EXTERN(std::string atxbg);
@@ -48,23 +48,9 @@ ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
 ELONA_EXTERN(elona_vector2<int> bdref);
 
-
 // ui.cpp
-ELONA_EXTERN(int inf_clockarrowx);
-ELONA_EXTERN(int inf_clockarrowy);
 ELONA_EXTERN(int inf_clocky);
-ELONA_EXTERN(int inf_barh);
 ELONA_EXTERN(int inf_msgh);
-ELONA_EXTERN(int inf_raderx);
-ELONA_EXTERN(int inf_raderw);
-ELONA_EXTERN(int inf_bary);
-ELONA_EXTERN(int inf_radery);
-ELONA_EXTERN(int scposy);
-ELONA_EXTERN(int inf_hpx);
-ELONA_EXTERN(int inf_hpy);
-ELONA_EXTERN(int inf_mpx);
-ELONA_EXTERN(int inf_mpy);
-ELONA_EXTERN(int screendrawhack);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
@@ -74,7 +60,6 @@ ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
-ELONA_EXTERN(int csskill);
 ELONA_EXTERN(elona_vector1<int> randcolor);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(int attackvar);
@@ -83,14 +68,14 @@ ELONA_EXTERN(std::string nquestdate);
 ELONA_EXTERN(int lv);
 ELONA_EXTERN(elona_vector3<int> pochart);
 ELONA_EXTERN(elona_vector2<int> podata);
-ELONA_EXTERN(elona_vector1<std::string> popostname);
 ELONA_EXTERN(int refreshmode);
 ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
-ELONA_EXTERN(int s_p);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
+ELONA_EXTERN(elona_vector1<int> inhlist);
+
 
 // crafting.cpp / blending.cpp
 ELONA_EXTERN(elona_vector1<int> rpsourcelist);
@@ -180,15 +165,16 @@ ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
+ELONA_EXTERN(bool player_queried_for_input);
 
 // network.cpp
 ELONA_EXTERN(elona_vector1<std::string> netbuf);
 
+// activity.cpp
+ELONA_EXTERN(elona_vector1<int> fsetperform);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
-ELONA_EXTERN(elona_vector1<int> aniref);
-ELONA_EXTERN(elona_vector1<int> anix);
 ELONA_EXTERN(elona_vector1<int> arenaop);
-ELONA_EXTERN(elona_vector1<int> chatval);
 ELONA_EXTERN(elona_vector1<int> commark);
 ELONA_EXTERN(elona_vector1<int> cyclemax);
 ELONA_EXTERN(elona_vector1<int> deck);
@@ -210,7 +196,6 @@ ELONA_EXTERN(elona_vector1<int> gdata);
 ELONA_EXTERN(elona_vector1<int> genetemp);
 ELONA_EXTERN(elona_vector1<int> giftvalue);
 ELONA_EXTERN(elona_vector1<int> i);
-ELONA_EXTERN(elona_vector1<int> icolref);
 ELONA_EXTERN(elona_vector1<int> ilight);
 ELONA_EXTERN(elona_vector1<int> invcontainer);
 ELONA_EXTERN(elona_vector1<int> invctrl);
@@ -222,19 +207,15 @@ ELONA_EXTERN(elona_vector1<int> irandomname);
 ELONA_EXTERN(elona_vector1<int> isetfruit);
 ELONA_EXTERN(elona_vector1<int> mainskill);
 ELONA_EXTERN(elona_vector1<int> mat);
-ELONA_EXTERN(elona_vector1<int> matneed);
 ELONA_EXTERN(elona_vector1<int> mdata);
 ELONA_EXTERN(elona_vector1<int> mdatatmp);
 ELONA_EXTERN(elona_vector1<int> p);
-ELONA_EXTERN(elona_vector1<int> rainx);
-ELONA_EXTERN(elona_vector1<int> rainy);
 ELONA_EXTERN(elona_vector1<int> recipememory);
 ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
 ELONA_EXTERN(elona_vector1<int> rowactre);
 ELONA_EXTERN(elona_vector1<int> rtval);
 ELONA_EXTERN(elona_vector1<int> sell);
-ELONA_EXTERN(elona_vector1<int> shadowmap);
 ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
@@ -256,8 +237,6 @@ ELONA_EXTERN(elona_vector1<int> x);
 ELONA_EXTERN(elona_vector1<int> y);
 ELONA_EXTERN(elona_vector1<std::string> ammoname);
 ELONA_EXTERN(std::vector<std::string> artifactlocation);
-ELONA_EXTERN(elona_vector1<std::string> bdrefn);
-ELONA_EXTERN(elona_vector1<std::string> biten);
 ELONA_EXTERN(elona_vector1<std::string> booktitle);
 ELONA_EXTERN(elona_vector1<std::string> buff);
 ELONA_EXTERN(elona_vector1<std::string> buffboard);
@@ -265,12 +244,10 @@ ELONA_EXTERN(elona_vector1<std::string> cardrefn);
 ELONA_EXTERN(elona_vector1<std::string> description);
 ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
-ELONA_EXTERN(elona_vector1<std::string> filemod);
 ELONA_EXTERN(elona_vector1<std::string> filter_creature);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
 ELONA_EXTERN(elona_vector1<std::string> gdatan);
-ELONA_EXTERN(elona_vector1<std::string> giftn);
 ELONA_EXTERN(elona_vector1<std::string> ialphanameref);
 ELONA_EXTERN(elona_vector1<std::string> iknownnameref);
 ELONA_EXTERN(elona_vector1<std::string> inputlog);
@@ -345,9 +322,7 @@ ELONA_EXTERN(std::string key_autodig);
 ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
-ELONA_EXTERN(elona_vector1<std::string> magebookn);
 ELONA_EXTERN(elona_vector1<std::string> mdatan);
-ELONA_EXTERN(elona_vector1<std::string> moneyboxn);
 ELONA_EXTERN(elona_vector1<std::string> msg);
 ELONA_EXTERN(elona_vector1<std::string> msgtemp);
 ELONA_EXTERN(elona_vector1<std::string> msgtempprev);
@@ -369,13 +344,10 @@ ELONA_EXTERN(elona_vector2<int> adata);
 ELONA_EXTERN(elona_vector2<int> breathlist);
 ELONA_EXTERN(elona_vector2<int> c_col);
 ELONA_EXTERN(elona_vector2<int> card);
-ELONA_EXTERN(elona_vector2<int> chipc);
-ELONA_EXTERN(elona_vector2<int> chipi);
 ELONA_EXTERN(elona_vector2<int> chipm);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);
-ELONA_EXTERN(elona_vector2<int> deco);
 ELONA_EXTERN(elona_vector2<int> dirchk);
 ELONA_EXTERN(elona_vector2<int> dirxy);
 ELONA_EXTERN(elona_vector2<int> encprocref);
@@ -403,7 +375,6 @@ ELONA_EXTERN(elona_vector2<std::string> userdatan);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
-ELONA_EXTERN(int allyctrl);
 ELONA_EXTERN(int am);
 ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
@@ -436,7 +407,6 @@ ELONA_EXTERN(int chatflag);
 ELONA_EXTERN(int chatteleport);
 ELONA_EXTERN(int ci);
 ELONA_EXTERN(int cidip);
-ELONA_EXTERN(int city);
 ELONA_EXTERN(int client);
 ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);
@@ -472,7 +442,7 @@ ELONA_EXTERN(int efcancel);
 ELONA_EXTERN(int efid);
 ELONA_EXTERN(int efp);
 ELONA_EXTERN(int efsource);
-ELONA_EXTERN(curse_state_t efstatus);
+ELONA_EXTERN(CurseState efstatus);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int ele);
@@ -484,7 +454,6 @@ ELONA_EXTERN(int encounterlv);
 ELONA_EXTERN(int encounterref);
 ELONA_EXTERN(int enemylv);
 ELONA_EXTERN(int enemyteam);
-ELONA_EXTERN(int envonly);
 ELONA_EXTERN(int eqmultiweapon);
 ELONA_EXTERN(int eqtwohand);
 ELONA_EXTERN(int equip);
@@ -512,7 +481,7 @@ ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int hour_played);
 ELONA_EXTERN(int ichargelevel);
-ELONA_EXTERN(identification_state_t idtresult);
+ELONA_EXTERN(IdentifyState idtresult);
 ELONA_EXTERN(int importmode);
 ELONA_EXTERN(int in);
 ELONA_EXTERN(int inf_clockh);
@@ -564,7 +533,6 @@ ELONA_EXTERN(int mapupdate);
 ELONA_EXTERN(int marry);
 ELONA_EXTERN(int maxbreath);
 ELONA_EXTERN(int maxitemid);
-ELONA_EXTERN(int maxrain);
 ELONA_EXTERN(int medit);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);
@@ -690,13 +658,11 @@ ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
 ELONA_EXTERN(std::string homepage);
 ELONA_EXTERN(std::string key_alter);
-ELONA_EXTERN(std::string lastword);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);
 ELONA_EXTERN(std::string refstr);
 ELONA_EXTERN(std::string s2);
-ELONA_EXTERN(std::string strblank);
 ELONA_EXTERN(std::string strhint1);
 ELONA_EXTERN(std::string strhint2);
 ELONA_EXTERN(std::string strhint3);
@@ -708,94 +674,338 @@ ELONA_EXTERN(std::string strhint7);
 ELONA_EXTERN(std::string txtcopy);
 ELONA_EXTERN(std::string userfile);
 ELONA_EXTERN(std::string usermsg);
-int access_character_info();
-bool actionsp(int, int);
-int breath_list();
+
+ELONA_EXTERN(optional<int> chatval_unique_chara_id);
+ELONA_EXTERN(bool chatval_show_impress);
+
+//// Game formulae
 int calcincome(int = 0);
 int calcmagiccontrol(int = 0, int = 0);
 int calcstartcard(int = 0);
+int randskill();
+
+
+//// TCG
+void actionproc();
+void tcgdeck();
+void tcgdraw();
+void tcgdrawbg();
+void tcgdrawcard(int = 0, int = 0);
+void tcginit();
+void tcgmain();
+void gravecard(int = 0);
+void calcdecksize();
+void calcdomain();
+void calcstartattb(int = 0);
+void cardpos(int = 0, int = 0);
+void cdbitmod(int = 0, int = 0, int = 0);
+void cpflip();
+void csfix();
+void cslinedown();
+void cslineup();
+int pileremain();
+void delbottomcard(int = 0);
+int gameover();
+void getrandomcard(int = 0);
+void opencard(int = 0);
+void saccard(int = 0, int = 0);
+void makecardlist();
+void efllistadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+
+// Game phases
+void tcg_game_over();
+void tcg_phase_one();
+void tcg_phase_two();
+void tcg_phase_three();
+void tcg_phase_four();
+void tcg_update_mana();
+
+// Game flow
+void tcg_show_refs();
+void tcg_clear_stack();
+void tcg_draw_selection();
+void tcg_draw_deck_editor();
+void tcg_prepare_cnt2();
+void tcg_update_page();
+void tcg_draw_menu();
+void tcg_prompt_action();
+void tcg_clear_cursor();
+void tcg_update_selection();
+void tcg_card_selected();
+void tcg_proc_ai_elist();
+void tcg_proc_ai();
+void tcg_proc_ai_sacrifice();
+int tcg_draw_background();
+int tcg_try_sacrifice();
+void dmgcard(int = 0, int = 0);
+void dmgplayer(int = 0, int = 0);
+
+// Game actions
+int getdecksum(int = 0);
+int getholdersum(int = 0);
+int getspotsum(int = 0);
+void cpisenemy();
+void cpisme();
+
+// Card queries
+int get_card_info();
 int card_ref(int = 0);
 int cardcanblock(int = 0);
 int cardcandeclareattack(int = 0);
 int cardcanuseskill(int = 0);
-int cargocheck();
-int cbreeder(int = 0);
 int cdbit(int = 0, int = 0);
-void initialize_pc_character();
-int convertartifact(int = 0, int = 0);
+
+// Card actions
 int create_card(int = 0, int = 0);
-int direction(int = 0, int = 0, int = 0, int = 0);
-int discsetmc();
-int dist(int = 0, int = 0, int = 0, int = 0);
-int dist_town();
-int efstatusfix(int = 0, int = 0, int = 0, int = 0);
-int eleinfo(int = 0, int = 0);
-int findunid(const std::string&);
-int fltsetdungeon();
-int gameover();
+int putcard(int = 0, int = 0);
+
+
+//// Ranch
+int cbreeder(int = 0);
+
+
+//// Init
+void initialize_pc_character();
+int initialize_world_map();
+void initialize_rankn();
+void initialize_post_data();
+void initialize_building_daga();
+void initialize_nefia_names();
+void initialize_picfood();
+void initialize_cloud_data();
+void load_random_name_table();
+void load_random_title_table();
+void initialize_item_material_data();
+void initialize_set_of_random_generation();
+void initialize_economy();
+void clear_existing_quest_list();
+
+
+//// Character querying
+int relationbetween(int, int);
+
+//// Character generation
+void get_random_npc_id();
+
+// CNPC
+void create_cnpc();
+void create_new_cnpc();
+void fixaiact(int = 0);
+
+
+//// Character manipulation
+void refresh_burden_state();
+int new_ally_joins();
+void go_hostile();
+void get_pregnant();
+void wet(int = 0, int = 0);
+
+// Character revival
+void revive_character();
+void do_chara_revival();
+void chara_set_revived_status();
+void chara_clear_status_effects_b();
+void chara_clear_status_effects();
+void revive_player();
+
+// Trait
+void clear_trait_data();
+void gain_race_feat();
+
+
+//// Items
+
+// Item status querying
+int cargocheck();
 void getinheritance(int, elona_vector1<int>&, int&);
-int getdecksum(int = 0);
-int getholdersum(int = 0);
-int getspotsum(int = 0);
-int getunid(int = 0);
-int getworker(int = 0, int = 0);
 int iequiploc(int = 0);
-int imeget();
-int key_direction();
+
+// Item manipulation
 int access_item_db(int);
-int get_required_craft_materials();
-int try_to_cast_spell();
+int convertartifact(int = 0, int = 0);
+int discsetmc();
+void set_item_info();
+
+// Item generation
+int random_material(int = 0, int = 0);
+int randattb();
+
+// Equipment
+int equip_item(int);
+void unequip_item(int);
+
+// Inventory
+std::pair<int, int> inv_getheader(int);
+
+
+// Math utility functions
+int direction(int = 0, int = 0, int = 0, int = 0);
+int dist(int = 0, int = 0, int = 0, int = 0);
+int roll(int, int, int);
+int roll_max(int, int, int);
+int roundmargin(int = 0, int = 0);
+
+
+// Network/showroom
+int query_for_showroom_to_visit();
+int findunid(const std::string&);
+int getunid(int = 0);
+void setunid(int = 0, int = 0);
+
+
+// Player-owned building
+int getworker(int = 0, int = 0);
+void removeworker(int = 0);
+
+
+//// flt
+int fltsetdungeon();
+std::string fltname(int = 0);
+void flt(int = 0, int = 0);
+void fltn(const std::string&);
+
+
+// Input translation
+int key_direction();
+int imeget();
+void imeset(int = 0);
+void cursor_check();
+
+
+//// Actions
+
+// Querying input
+int ask_direction();
+int target_position();
+int prompt_magic_location();
+int prompt_really_attack();
+
+// Action calculation
+int find_enemy_target();
+int can_do_ranged_attack();
+
+// Main action body
 int try_to_reveal();
 int can_evade_trap();
 int try_to_disarm_trap();
 int try_to_perceive_npc(int);
-int initialize_world_map();
-int label_1753();
-int get_card_info();
-int label_1835();
-int label_1845();
-int proc_random_event();
-int show_random_event_window(const std::string&);
-int label_1898();
-int label_1931();
-int label_1932();
-int label_19432();
-int target_position();
-int ctrl_ally();
-int show_hire_menu();
-int show_spell_writer_menu();
-int select_alias(int);
-int change_npc_tone();
-int change_appearance();
-int label_2044();
-int label_2072();
-int label_2073();
-int can_do_ranged_attack();
-int label_2083();
-int ask_direction();
-int search_material_spot();
+
+int read_textbook();
 int decode_book();
 int read_normal_book();
-int label_2167();
-int label_2168();
+
+int try_to_cast_spell();
+int do_cast_magic();
+int do_cast_magic_attempt();
+
 int drink_potion();
 int drink_well();
 int read_scroll();
-int label_2172();
-int label_2174();
-int label_2175();
-int magic();
+int do_zap();
+int do_magic_attempt();
 int pick_up_item();
 int drop_item();
-int equip_item(int);
 int unlock_box(int);
 void do_ranged_attack();
-int gain_skills_by_geen_engineering();
-int transplant_body_parts();
-int new_ally_joins();
-int label_2672();
-int label_2694();
-int label_2695();
+
+//// Command
+TurnResult step_into_gate();
+optional<TurnResult> check_angband();
+TurnResult do_bash();
+TurnResult do_enter_strange_gate();
+TurnResult do_gatcha();
+TurnResult do_use_magic();
+TurnResult do_use_stairs_command(int);
+TurnResult try_interact_with_npc();
+TurnResult try_to_open_locked_door();
+
+// Attacking
+void build_target_list();
+void equip_melee_weapon();
+void get_inheritance();
+void main_title_loop();
+void remove_card_and_figures();
+
+void try_to_melee_attack();
+void do_physical_attack();
+void proc_weapon_enchantments();
+
+// Planting
+TurnResult do_plant();
+void grow_plant(int);
+void try_to_grow_plant(int = 0);
+void harvest_plant(int);
+void create_harvested_item();
+
+// Searching
+void disarm_trap();
+void discover_trap();
+void discover_hidden_path();
+
+// Sleeping
+void draw_sleep_background_frame();
+void load_sleep_background();
+void sleep_start();
+void wake_up();
+void do_rest();
+
+// Opening
+void open_box();
+void open_new_year_gift();
+
+// NPC interact
+TurnResult call_npc();
+
+
+//// Action effect
+void dipcursed(int = 0, int = 0);
+void start_stealing();
+void hostileaction(int = 0, int = 0);
+void turn_aggro(int = 0, int = 0, int = 0);
+void ride_begin(int = 0);
+void ride_end();
+void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+
+
+//// pass_one_turn
+void proc_pregnant();
+void proc_negative_equipments();
+void damage_by_cursed_equipments();
+void map_proc_special_events();
+
+
+//// proc_movement_event
+TurnResult proc_movement_event();
+void map_global_proc_travel_events();
+void proc_trap();
+void sense_map_feats_on_move();
+
+
+//// Magic
+int magic();
+int breath_list();
+int efstatusfix(int = 0, int = 0, int = 0, int = 0);
+int route_info(int&, int&, int = 0);
+void try_to_return();
+void heal_both_rider_and_mount();
+void heal_completely();
+void incognitobegin();
+void incognitoend();
+void lovemiracle(int = 0);
+
+
+//// Blending
+int blending_find_required_mat();
+int blending_spend_materials();
+void blending_start_attempt();
+void blending_proc_on_success_events();
+
+
+//// Menus
+int change_appearance_equipment();
+
+
+//// Map
 int map_barrel(int = 0, int = 0);
 int map_connectroom();
 int map_createroom(int = 0);
@@ -806,21 +1016,110 @@ int map_placeupstairs(int = 0, int = 0);
 int map_trap(int = 0, int = 0, int = 0, int = 0);
 int map_web(int = 0, int = 0, int = 0);
 int mapitemfind(int = 0, int = 0, int = 0);
-int pileremain();
-int prodcheck();
-int putcard(int = 0, int = 0);
-int randattb();
-int random_material(int = 0, int = 0);
-int randomele();
-int randskill();
-int relationbetween(int, int);
-int roll(int, int, int);
-int roll_max(int, int, int);
-int roundmargin(int = 0, int = 0);
-int route_info(int&, int&, int = 0);
-int talk_conv(std::string&, int = 0);
+int place_random_nefias();
+
+// Map drawing
+void cell_draw();
+void map_prepare_tileset_atlas();
+void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+
+// Map animation
+void anime_halt();
+void animeblood(int = 0, int = 0, int = 0);
+void animeload(int = 0, int = 0);
+void spillblood(int = 0, int = 0, int = 0);
+void spillfrag(int = 0, int = 0, int = 0);
+
+// Mef
+void delmef(int = 0);
+
+// Map initialization
+TurnResult initialize_map();
+void map_proc_regen_and_update();
+void map_global_proc_diastrophism();
+void map_global_prepare();
+void map_global_place_entrances();
+void map_clear_material_spots_and_light();
+void initialize_adata();
+void map_reload_noyel();
+void initialize_map_adjust_spawns();
+
+// Map lifecycle
+TurnResult exit_map();
+void prepare_charas_for_map_unload();
+void save_map_local_data();
+
+
+//// Map generation
+void initialize_cell_object_data();
+void initialize_random_nefia_rdtype6();
+void initialize_quest_map_town();
+void initialize_random_nefia_rdtype8();
+void initialize_random_nefia_rdtype9();
+void mapgen_dig_maze();
+void initialize_random_nefia_rdtype10();
+void initialize_home_mdata();
+
+
+//// weather_changes
+void supply_income();
+void food_gets_rotten();
+
+
+//// list/listn
+void sort_list_by_column1();
+void sort_list_and_listn_by_column1();
+
+
+//// Special items
+
+// Gene engineering
+int gain_skills_by_geen_engineering();
+int transplant_body_parts();
+
+// objet of heart
+void cnvbonus(int = 0, int = 0);
+
+
+//// AI
+TurnResult proc_ai_basic();
+TurnResult proc_misc_npc_map_events();
+TurnResult proc_ally_town_training(bool = false);
+int ai_dir_check_1();
+int ai_dir_check_2();
+
+
+//// UI
+void help_halt();
 int winposy(int = 0, int = 0);
-int zentohan(const std::string&, std::string&, int = 0);
+void txttargetnpc(int = 0, int = 0, int = 0);
+void set_pcc_info(int);
+
+// character sheet
+void append_accuracy_info(int);
+void show_weapon_dice(int);
+
+// Screen refresh
+void auto_turn(int delay);
+void house_board_update_screen();
+
+// inventory
+void savecycle();
+
+
+//// Text parsing
+int talk_conv(std::string&, int = 0);
+void parse_quest_board_text(int);
+void parse_talk_file();
+void read_talk_file(const std::string&);
+void get_npc_talk();
+void text_replace_tags_in_quest_board();
+void text_replace_tags_in_quest_text();
+
+
+//// Text
+
+// Japanese sentence parts
 std::string _aru(int = 0);
 std::string _da(int = 0);
 std::string _dana(int = 0);
@@ -845,10 +1144,42 @@ std::string _thanks(int = 0);
 std::string _u(int = 0);
 std::string _yo(int = 0);
 std::string _yoro(int = 0);
+
+// Japanese constructs
 std::string aln(int = 0);
+std::string npcn(int = 0);
+
+// English sentence parts
+std::string does(int = 0);
+std::string have(int = 0);
+std::string he(int = 0, int = 0);
+std::string him(int = 0, int = 0);
+std::string his(int = 0, int = 0);
+std::string is(int = 0);
+std::string is2(int = 0);
+std::string your(int);
+std::string yourself(int = 0);
+
+
+// Text manipulation
+std::string zentohan(const std::string&);
+std::string cnven(const std::string&);
+std::string fixtxt(const std::string&, int = 0);
+std::string sncnv(const std::string&);
+void rm_crlf(std::string&);
+void cutname(std::string&, int = 0);
+void lenfix(std::string&, int = 0);
+void fix_input_chat(std::string&);
+void fix_input_chat2(std::string&);
+
+
+// Text generation
+std::string randomname();
+std::string random_title(int = 0);
+
+// Text fragments
 std::string cnvarticle(const std::string&);
 std::string cnvdate(int, bool = true);
-std::string cnven(const std::string&);
 std::string cnveqweight(int = 0);
 std::string cnvfix(int = 0);
 std::string cnvitemname(int = 0);
@@ -856,375 +1187,26 @@ std::string cnvplaytime(int = 0);
 std::string cnvrank(int = 0);
 std::string cnvrare(int = 0);
 std::string cnvweight(int = 0);
-std::string does(int = 0);
-std::string elename(int = 0);
-std::string fixtxt(const std::string&, int = 0);
-std::string fltname(int = 0);
-std::string foodname(int, const std::string&, int = 0, int = 0);
+
+// Whole message creation
 std::string getnpctxt(const std::string&, const std::string&);
-std::string guildname();
-std::string have(int = 0);
-std::string he(int = 0, int = 0);
-std::string him(int = 0, int = 0);
-std::string his(int = 0, int = 0);
-std::string is(int = 0);
-std::string is2(int = 0);
-std::string itemname(int = 0, int = 0, int = 0);
-std::string lang(const std::string&, const std::string&);
-std::string mapfile(int = 0);
-std::string maplevel(int = 0);
-std::string mapname(int, bool = false);
-std::string name(int = 0);
-std::string npcn(int = 0);
-std::string random_title(int = 0);
-std::string randomname();
-std::string ranktitle(int = 0);
-std::string sncnv(const std::string&);
-std::string trim_item_description(const std::string&, bool);
 std::string txtbuilding(int = 0, int = 0);
 std::string txtitemoncell(int = 0, int = 0);
 std::string txtskillchange(int, int, bool);
-std::string your(int);
-std::string yourself(int = 0);
-void actionproc();
-void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void anime_halt();
-void animeblood(int = 0, int = 0, int = 0);
-void animeload(int = 0, int = 0);
-void auto_turn(int delay);
-void atxinit();
-void begintempinv();
-void bmes(const std::string&, int = 0, int = 0, int = 0);
-void boxl(int = 0, int = 0, int = 0, int = 0);
-void calcdecksize();
-void calcdomain();
-void calcstartattb(int = 0);
-void cardpos(int = 0, int = 0);
-void cdbitmod(int = 0, int = 0, int = 0);
-void check_kill(int = 0, int = 0);
-void cnvbonus(int = 0, int = 0);
-void cpflip();
-void cpisenemy();
-void cpisme();
-void csfix();
-void cslinedown();
-void cslineup();
-void cursor_check();
-void cutname(std::string&, int = 0);
-void delbottomcard(int = 0);
-void delmef(int = 0);
-void dipcursed(int = 0, int = 0);
-void dmgcard(int = 0, int = 0);
-void dmgplayer(int = 0, int = 0);
-void eatstatus(curse_state_t, int);
-void efllistadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void exittempinv();
-void fix_input_chat(std::string&);
-void fix_input_chat2(std::string&);
-void fixaiact(int = 0);
-void flt(int = 0, int = 0);
-void fltn(const std::string&);
-void getrandomcard(int = 0);
-void go_hostile();
-void gravecard(int = 0);
-void healcon(int = 0, int = 0, int = 0);
-void healhp(int = 0, int = 0);
-void healmp(int = 0, int = 0);
-void healsan(int = 0, int = 0);
-void healsp(int = 0, int = 0);
-void help_halt();
-void hostileaction(int = 0, int = 0);
-void imeset(int = 0);
-void incognitobegin();
-void incognitoend();
-std::pair<int, int> inv_getheader(int);
-void initialize_rankn();
-void initialize_post_data();
-void initialize_building_daga();
-void clear_trait_data();
-void gain_race_feat();
-void initialize_nefia_names();
-void initialize_picfood();
-void parse_talk_file();
-void read_talk_file(const std::string&);
-void get_npc_talk();
-void finish_elona();
-void append_subquest_journal(int);
-void append_quest_item_journal();
-void parse_quest_board_text(int);
-void initialize_cloud_data();
-void load_random_name_table();
-void load_random_title_table();
+std::string txttargetlevel(int, int);
 std::string cheer_up_message(int);
-void initialize_enchantment_data();
-void get_enchantment_description(int, int, int, bool = false);
-void initialize_ego_data();
-void add_enchantments_depending_on_ego();
-void add_enchantment_by_fixed_ego();
-void add_enchantments();
-void initialize_item_material_data();
-void initialize_item_material();
-void determine_item_material();
-void change_item_material();
-void apply_item_material();
-void set_material_specific_attributes();
-void itemname_additional_info();
-void initialize_craft_material_data();
-void get_random_item_id();
-void set_item_info();
-void end_dmghp();
-void init_character_skills(int);
-void get_hungry(int);
-void proc_turn_end(int);
-void refresh_burden_state();
-void gain_special_action();
-void revive_character();
-void do_chara_revival();
-void label_15380();
-void label_1539();
-void label_15390();
-void label_1540();
-void clear_background_in_character_making();
-void initialize_set_of_random_generation();
-void character_drops_item();
-void food_gets_rotten();
-void damage_by_cursed_equipments();
-void proc_pregnant();
-void proc_negative_equipments();
-void auto_identify();
-void init_item_quality_curse_state_material_and_equipments();
-void calc_furniture_value();
-void get_pregnant();
-void initialize_cell_object_data();
-void initialize_random_nefia_rdtype6();
-void initialize_quest_map_town();
-void initialize_random_nefia_rdtype8();
-void initialize_random_nefia_rdtype9();
-void label_1709();
-void initialize_random_nefia_rdtype10();
-void initialize_home_mdata();
-turn_result_t build_new_building();
-void initialize_home_adata();
-turn_result_t show_house_board();
-void prepare_hourse_board_tiles();
-void label_1724();
-void show_shop_log();
-void label_1726();
-void calc_collection_value(bool);
-void calc_museum_rank();
-void calc_hairloom_value(int);
-void calc_home_rank();
-void update_ranch();
-void set_character_generation_filter();
-void monster_respawn();
-turn_result_t exit_map();
-void prepare_charas_for_map_unload();
-void save_map_local_data();
-turn_result_t initialize_map();
-void label_1745();
-void label_1746();
-void label_1748();
-void label_1749();
-void label_1750();
-void label_1751();
-void initialize_adata();
-void label_1754();
-void label_1755();
-void label_1773();
-void label_1793();
-void label_1802();
-void label_1815();
-void label_1816();
-void label_1817();
-void label_1818();
-void label_1819();
-void label_1823();
-void label_1824();
-void label_1825();
-void label_1826();
-void label_1827();
-void label_1828();
-void label_1836();
-void label_1839();
-void label_1840();
-void label_1842();
-void label_1844();
-void label_18462();
-void label_1848();
-void casino_dealer();
-void casino_choose_card();
-void label_1870();
-void label_1871();
-void label_1872();
-void casino_acquire_items();
-void casino_random_site();
-void label_1877();
-void casino_wrapper();
-bool casino_start();
-bool casino_blackjack();
-void begin_to_believe_god();
-void label_1892();
-void start_stealing();
-void supply_income();
-void initialize_recipememory();
-void initialize_recipe();
-void label_1933();
-void label_19342();
-void label_1935();
-turn_result_t step_into_gate();
-void label_1955();
-void label_1958();
-void label_1964();
-void deco_traits_menu();
-void list_adventurers();
-turn_result_t call_npc();
-void label_2022();
-void label_2031();
-void label_2032();
-void set_pcc_info(int);
-void append_accuracy_info(int);
-void show_weapon_dice(int);
-void equip_melee_weapon();
-turn_result_t try_interact_with_npc();
-void sort_list_by_column1();
-void sort_list_and_listn_by_column1();
-void show_item_description();
-void label_2076();
-void prompt_stop_continuous_action();
-void try_to_return();
-turn_result_t do_gatcha();
-void dump_player_info();
-void remove_card_and_figures();
-void label_2088();
-void migrate_save_data(const fs::path& filepath);
-void label_2090();
-void get_inheritance();
-void load_gene_files();
-void save_gene();
-void create_cnpc();
-void create_new_cnpc();
-void label_2109(int);
-void load_save_data(const fs::path&);
-void save_game();
-void save_game(const fs::path&);
-turn_result_t do_enter_strange_gate();
-void main_title_loop();
-turn_result_t do_debug_console();
-turn_result_t do_exit_debug_console();
-void disarm_trap();
-void proc_trap();
-void continuous_action_perform();
-void continuous_action_sex();
-void continuous_action_others();
-void label_2149();
-void label_2150();
-void label_2151();
-void do_rest();
-void label_2153();
-void select_random_fish();
-void get_fish();
-void spot_fishing();
-void spot_material();
-void spot_digging();
-void spot_mining_or_wall();
-void continuous_action_eat();
-void label_2161();
-void show_eating_message();
-void heal_both_rider_and_mount();
-void heal_completely();
-void unequip_item(int);
-void lost_body_part(int);
-turn_result_t do_bash();
-turn_result_t proc_movement_event();
-void label_2206();
-turn_result_t do_use_stairs_command(int);
-void open_box();
-void open_new_year_gift();
-turn_result_t try_to_open_locked_door();
-void try_to_melee_attack();
-void do_physical_attack();
-void proc_weapon_enchantments();
-void discover_trap();
-void discover_hidden_path();
-turn_result_t do_dig_after_sp_check();
-turn_result_t do_plant();
-void grow_plant(int);
-void try_to_grow_plant(int = 0);
-void harvest_plant(int);
-void label_2236();
-void initialize_economy();
-void show_city_chart();
-void show_economy_window();
-void show_politics_window();
-void get_random_npc_id();
-void do_play_scene();
-void text_replace_tags_in_quest_board();
-void text_replace_tags_in_quest_text();
-void label_2685();
-turn_result_t npc_turn();
-turn_result_t proc_misc_npc_map_events();
-turn_result_t proc_ally_town_training(bool = false);
-turn_result_t proc_ai_basic();
-void show_quick_menu();
-void show_ex_help();
-void label_2702();
-void show_game_help();
-turn_result_t show_chat_history();
-turn_result_t show_message_log();
-void initialize_jkey();
-void label_2720();
-void set_option();
-turn_result_t play_scene();
-bool turn_wrapper();
-turn_result_t pass_turns(bool);
-turn_result_t turn_begin();
-void lovemiracle(int = 0);
-void resistmod(int = 0, int = 0, int = 0);
-void weather_changes_by_location();
-void weather_changes();
-void label_27412();
-turn_result_t turn_end();
-optional<turn_result_t> check_angband();
-void conquer_lesimas();
-void play_the_last_scene_again();
-turn_result_t pc_died();
-void show_game_score_ranking();
-void proc_event();
-void lenfix(std::string&, int = 0);
-void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void makecardlist();
-void map_converttile();
-void map_createroomdoor();
-void map_initcustom(const std::string&);
-void map_initialize();
-void matdelmain(int = 0, int = 0);
-turn_result_t do_use_magic();
-void matgetmain(int = 0, int = 0, int = 0);
-void modrank(int = 0, int = 0, int = 0);
-void msg_clear();
-void msg_halt();
-void msg_newline();
-void opencard(int = 0);
-void page_load();
-void page_save();
-void remain_make(int = 0, int = 0);
-void removeitem(int, int);
-void removeworker(int = 0);
-void ride_begin(int = 0);
-void ride_end();
-void rm_crlf(std::string&);
-void rowact_check(int = 0);
-void rowact_item(int = 0);
-void rowactend(int = 0);
-void saccard(int = 0, int = 0);
-void savecycle();
-void setunid(int = 0, int = 0);
-void showcard();
-void showcardholder();
-void showcardpile();
-void sickifcursed(curse_state_t, int, int);
-void skillgain(int = 0, int = 0, int = 0, int = 0);
-void skillinit(int = 0, int = 0, int = 0);
+
+
+// Name retrieval
+std::string name(int = 0);
+std::string itemname(int = 0, int = 0, int = 0);
+std::string guildname();
+std::string mapfile(int = 0);
+std::string maplevel(int = 0);
+std::string mapname(int, bool = false);
+std::string ranktitle(int = 0);
+
+// Job names
 std::string snarmor(const std::string&);
 std::string snbakery(const std::string&);
 std::string snblack(const std::string&);
@@ -1236,30 +1218,99 @@ std::string sninn(const std::string&);
 std::string snmagic(const std::string&);
 std::string sntrade(const std::string&);
 std::string sntrainer(const std::string&);
-void sortenc(int = 0);
-void spillblood(int = 0, int = 0, int = 0);
-void spillfrag(int = 0, int = 0, int = 0);
-void stxt(int, const std::string&);
-void tcgdeck();
-void tcgdraw();
-void tcgdrawbg();
-void tcgdrawcard(int = 0, int = 0);
-void tcginit();
-void tcgmain();
-void text_set();
-void turn_aggro(int = 0, int = 0, int = 0);
+
+
+//// Casino/ATX
+void atxinit();
+
+
+//// Save/load
+void load_save_data();
+void do_save_game();
+void save_game();
+
+// Save manipulation
+void begintempinv();
+void exittempinv();
+void migrate_save_data(const fs::path& filepath);
+void load_gene_files();
+void save_gene();
+void dump_player_info();
+
+
+//// dmgheal
+void character_drops_item();
+void check_kill(int = 0, int = 0);
+
+// character_drops_item
+void remain_make(int = 0, int = 0);
+
+
+//// Journal
+void append_subquest_journal(int);
+void append_quest_item_journal();
+
+
+//// turn_begin
+void auto_identify();
+void monster_respawn();
+
+
+//// weather
+void weather_changes_by_location();
+void weather_changes();
+
+
+//// Religion
+void god_fail_to_take_over_penalty();
+
+
+//// debug console
+TurnResult do_debug_console();
+TurnResult do_exit_debug_console();
+
+
+//// ether disease
+void lost_body_part(int);
+
+
+//// Scene
+void do_play_scene();
+void scene_fade_to_black();
+
+
+//// Scenario
+void conquer_lesimas();
+void play_the_last_scene_again();
+std::vector<std::string> txtsetwinword(int);
+
+
+//// Game lifecycle
+void proc_turn_end(int);
+TurnResult pc_died();
+void show_game_score_ranking();
+void finish_elona();
+
+
+//// Status manipulation
+void modrank(int = 0, int = 0, int = 0);
+
+
+//// item_show_description
+void page_load();
+void page_save();
+
+
+//// Message
 void txt_conv();
 void txtcontinue();
+void txtef(ColorIndex);
 void txtef(int = 0);
-void txteledmg(int = 0, int = 0, int = 0, int = 0);
 void txtnew();
-void txtsetlastword();
-std::vector<std::string> txtsetwinword(int);
-std::string txttargetlevel(int, int);
-void txttargetnpc(int = 0, int = 0, int = 0);
-void wake_up();
-void wet(int = 0, int = 0);
-void cell_draw();
+void stxt(int, const std::string&);
+void msg_clear();
+void msg_halt();
+void msg_newline();
 
 template <typename T>
 void txt()

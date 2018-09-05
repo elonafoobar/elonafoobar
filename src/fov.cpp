@@ -22,21 +22,26 @@ int qy_at_modfov = 0;
 int m_at_modfov = 0;
 int qx_at_modfov = 0;
 
-bool is_in_fov(const position_t& pos)
+bool is_in_fov(const Position& pos)
 {
     return mapsync(pos.x, pos.y) == msync;
 }
 
-bool is_in_fov(int cc)
+
+
+bool is_in_fov(const Character& cc)
 {
-    return cdata[cc].vision_flag == msync || cc == gdata_mount;
+    return cc.vision_flag == msync || cc.index == gdata_mount;
 }
+
+
 
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
-    if (prm_629 < 0 || mdata(0) <= prm_629 || prm_630 < 0 || mdata(1) <= prm_630
-        || prm_631 < 0 || mdata(0) <= prm_631 || prm_632 < 0
-        || mdata(1) <= prm_632)
+    if (prm_629 < 0 || mdata_map_width <= prm_629 || prm_630 < 0
+        || mdata_map_height <= prm_630 || prm_631 < 0
+        || mdata_map_width <= prm_631 || prm_632 < 0
+        || mdata_map_height <= prm_632)
     {
         // Out of range
         return 0;

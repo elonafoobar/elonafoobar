@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
 #include "random.hpp"
@@ -18,6 +19,77 @@ elona_vector1<std::string> cgiurl2;
 std::string textreadurl;
 std::string chatreadurl;
 std::string votereadurl;
+
+
+namespace
+{
+
+
+
+int sockopen(int, const std::string&, int)
+{
+    return 0;
+}
+
+
+
+void sockclose()
+{
+}
+
+
+
+int sockget(const std::string&, int)
+{
+    return 0;
+}
+
+
+
+int sockput(const std::string&)
+{
+    return 0;
+}
+
+
+
+void netinit()
+{
+}
+
+
+
+void netexec(int&)
+{
+}
+
+
+
+void neterror(const std::string&)
+{
+}
+
+
+
+void neturl(const std::string&)
+{
+}
+
+
+
+void netdlname(const std::string&)
+{
+}
+
+
+
+void netrequest(const std::string&)
+{
+}
+
+
+
+} // namespace
 
 
 
@@ -55,7 +127,7 @@ int net_send(const std::string& prm_883, int prm_884)
 {
     std::string chattemp;
     std::string msg_at_m147;
-    if (config::instance().net == 0)
+    if (Config::instance().net == 0)
     {
         return 0;
     }
@@ -97,9 +169,7 @@ int net_send(const std::string& prm_883, int prm_884)
         {
             sockclose();
             txt(u8"["s + stat + u8"]"s
-                + lang(
-                      u8"ネットに繋がっていない。"s,
-                      u8"You need an internet connection."s));
+                + i18n::s.get("core.locale.network.need_connection"));
             return 0;
         }
     }
@@ -109,7 +179,7 @@ int net_send(const std::string& prm_883, int prm_884)
         if (stat)
         {
             sockclose();
-            txt(lang(u8"送信に失敗した。"s, u8"Failed to send a message."s));
+            txt(i18n::s.get("core.locale.network.failed_to_send"));
             return 0;
         }
     }
@@ -135,7 +205,7 @@ int net_read(int prm_885)
     chatnew = "";
     SDIM2(netbuf, 20000);
     netbuf = "";
-    if (config::instance().net == 0)
+    if (Config::instance().net == 0)
     {
         return 0;
     }
@@ -195,7 +265,7 @@ label_1393_internal:
     ++t_at_m147;
     if (t_at_m147 > 10000)
     {
-        if (getkey(snail::key::escape))
+        if (getkey(snail::Key::escape))
         {
             txt(u8"[Chat Skipped]"s);
             sockclose();
@@ -357,7 +427,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     file_at_m147 = (filesystem::dir::user() / u8"net.tmp").generic_string();
     if (fs::exists(file_at_m147))
     {
-        elona_delete(file_at_m147);
+        fs::remove_all(file_at_m147);
     }
     netdlname(file_at_m147);
     netload(u8"cliplog.txt"s);
@@ -442,7 +512,7 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
     if (fs::exists(filesystem::dir::user() / prm_889))
     {
-        elona_delete(filesystem::dir::user() / prm_889);
+        fs::remove_all(filesystem::dir::user() / prm_889);
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     netdlname((filesystem::dir::user() / prm_889).generic_string());
@@ -464,7 +534,7 @@ void initialize_server_info()
     SDIM2(serverlist, 200);
     notesel(serverlist);
     int stat = net_read(4);
-    if (stat == 1 && config::instance().serverlist == 0)
+    if (stat == 1 && Config::instance().serverlist == 0)
     {
         serverlist = netbuf;
     }
@@ -526,9 +596,7 @@ void show_chat_dialog()
         }
         else
         {
-            txt(lang(
-                u8"もう少し待った方がいい気がする。"s,
-                u8"You think you should wait a little more."s));
+            txt(i18n::s.get("core.locale.network.chat.wait_more"));
             return;
         }
     }
@@ -553,8 +621,12 @@ void show_chat_dialog()
     }
     txt(inputlog);
     net_send(
-        u8"chat"s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0)
-        + lang(""s, u8" says, "s) + inputlog);
+        "chat"
+        + i18n::s.get(
+              "core.locale.network.chat.says",
+              cdatan(1, 0),
+              cdatan(0, 0),
+              inputlog(0)));
     chatturn = 0;
     chatdeny = 1;
     return;
@@ -579,23 +651,20 @@ label_14001_internal:
     }
     listmax = 0;
     net_read(5);
-    txt(lang(listn(0, 1), listn(0, 2)));
+    // Disable: txt(lang(listn(0, 1), listn(0, 2)));
     listmax = 0;
     list(0, listmax) = -999;
     list(1, listmax) = 0;
-    listn(0, listmax) =
-        lang(u8"あなたの異名を登録する"s, u8"Submit your alias."s);
+    listn(0, listmax) = i18n::s.get("core.locale.network.alias.submit");
     ++listmax;
     net_read(1);
     if (gdata_next_voting_time > gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
     {
         comctrl = 0;
-        txt(lang(
-            u8"あなたの投票権はまだ復活していない("s
-                + cnvdate(gdata_next_voting_time) + u8"まで)"s,
-            u8"You can't vote until "s + cnvdate(gdata_next_voting_time)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.network.alias.cannot_vote_until",
+            cnvdate(gdata_next_voting_time)));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             if (cnt == 0)
@@ -609,8 +678,7 @@ label_14001_internal:
     else
     {
         comctrl = 1;
-        txt(lang(
-            u8"どの候補に投票する？"s, u8"Which one do you want to vote?"s));
+        txt(i18n::s.get("core.locale.network.alias.prompt"));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             if (cnt == 0)
@@ -638,19 +706,18 @@ label_1401_internal:
         page = 0;
     }
 label_1402_internal:
-    s(0) = lang(u8"投票箱"s, u8"Voting Box"s);
-    s(1) = lang(u8"決定 [投票する項目を選択]  "s, u8"Enter [Vote] "s) + strhint2
-        + strhint3;
+    s(0) = i18n::s.get("core.locale.network.alias.title");
+    s(1) = i18n::s.get("core.locale.network.alias.hint") + strhint2 + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
     x = ww / 5 * 3;
     y = wh - 80;
-    gmode(4, 180, 300, 50);
     pos(wx + ww / 3 * 2, wy + wh / 2);
-    grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+    gmode(4, 50);
+    gcopy_c(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 180, 300, x, y);
     gmode(2);
-    s(0) = lang(u8"投票項目"s, u8"Choice"s);
+    s(0) = i18n::s.get("core.locale.network.alias.choice");
     s(1) = "";
-    s(2) = lang(u8"備考"s, u8"Vote"s);
+    s(2) = i18n::s.get("core.locale.network.alias.vote");
     display_topic(s, wx + 28, wy + 36);
     display_topic(s(2), wx + 440, wy + 36);
     keyrange = 0;
@@ -665,9 +732,7 @@ label_1402_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(540, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -689,11 +754,12 @@ label_1402_internal:
             pos(wx + 90, wy + 66 + cnt * 19 + 2);
             if (comctrl == 0)
             {
-                mes(lang(u8"第"s + p + u8"位"s, cnvrank(p)));
+                mes(i18n::s.get(
+                    "core.locale.network.alias.rank", cnvrank(p), p(0)));
             }
             else
             {
-                mes(lang(u8"候補"s, ""s));
+                mes(i18n::s.get("core.locale.network.alias.selected"));
             }
         }
         cs_list(cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
@@ -708,7 +774,7 @@ label_1402_internal:
         cs_bk = cs;
     }
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -716,8 +782,10 @@ label_1402_internal:
     {
         if (p == -999)
         {
-            net_send(""s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0), 1);
-            ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
+            net_send(
+                ""s + cdatan(1, 0) + i18n::space_if_needed() + cdatan(0, 0), 1);
+            ELONA_APPEND_PROMPT(
+                i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
             rtval = show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
@@ -725,20 +793,19 @@ label_1402_internal:
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
         {
             snd(27);
-            txt(lang(
-                u8"まだ投票権が復活していない。"s,
-                u8"You need to wait before submitting a new vote."s));
+            txt(i18n::s.get("core.locale.network.alias.need_to_wait"));
             goto label_1401_internal;
         }
         gdata_next_voting_time = gdata_hour + gdata_day * 24
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
-        txt(lang(
-            u8"「"s + listn(0, (cs + pagesize * page)) + u8"は素敵！」"s,
-            u8"\"I like "s + listn(0, (cs + pagesize * page)) + u8"!\""s));
-        txt(lang(u8"投票した。"s, u8"You vote."s));
+        txt(i18n::s.get(
+            "core.locale.network.alias.i_like",
+            listn(0, (cs + pagesize * page))));
+        txt(i18n::s.get("core.locale.network.alias.you_vote"));
         net_send(""s + p, 2);
         modrank(6, 100, 5);
-        ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.network.alias.ok"), u8"y"s, u8"0"s);
         rtval = show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }

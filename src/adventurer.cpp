@@ -3,9 +3,10 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "db_item.hpp"
 #include "equipment.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -30,7 +31,7 @@ void create_all_adventurers()
 void create_adventurer()
 {
     flt(0, 4);
-    initlv = rnd(60 + cdata[0].level) + 1;
+    initlv = rnd(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
@@ -39,13 +40,15 @@ void create_adventurer()
     cdata[rc].relationship = 0;
     cdata[rc].original_relationship = 0;
     cdata[rc]._156 = 100;
-    cdata[rc].state = 3;
+    cdata[rc].set_state(Character::State::adventurer_in_other_map);
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
     cdatan(0, rc) = randomname();
     cdatan(1, rc) = random_title();
     cdata[rc].character_role = 13;
     p = rnd(450);
-    if (adata(16, p) == 0 || adata(16, p) == 7 || adata(0, p) == 7)
+    if (adata(16, p) == mdata_t::MapId::none
+        || adata(16, p) == mdata_t::MapId::your_home
+        || adata(0, p) == mdata_t::MapType::temporary)
     {
         p = 4;
     }
@@ -133,54 +136,47 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
     {
     case 0: addnews2(valn); break;
     case 1:
-        addnewstopic(u8"@01"s, lang(u8"アイテム発見"s, u8"Discovery"s));
+        addnewstopic(u8"@01"s, i18n::s.get("core.locale.news.discovery.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は"s
-                    + mapname(cdata[adventurer].current_map) + u8"にて"s + valn
-                    + u8"を入手した。"s,
-                cdatan(1, adventurer) + u8" has discovered "s + valn + u8" in "s
-                    + mapname(cdata[adventurer].current_map) + u8"."s),
+            i18n::s.get(
+                "core.locale.news.discovery.text",
+                cdatan(1, adventurer),
+                valn,
+                mapname(cdata[adventurer].current_map)),
             1);
         break;
     case 2:
-        addnewstopic(u8"@02"s, lang(u8"新たなる力"s, u8"Growth"s));
+        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.growth.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は経験をつみ、レベル"s
-                    + cdata[adventurer].level + u8"になった。"s,
-                cdatan(1, adventurer)
-                    + u8" has gained experience and achieved level "s
-                    + cdata[adventurer].level + u8"."s),
+            i18n::s.get(
+                "core.locale.news.growth.text",
+                cdatan(1, adventurer),
+                cdata[adventurer].level),
             1);
         break;
     case 3:
-        addnewstopic(
-            u8"@02"s, lang(u8"怪我からの復帰"s, u8"Recovery from injury"s));
+        addnewstopic(u8"@02"s, i18n::s.get("core.locale.news.recovery.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"は怪我から回復した。"s,
-                cdatan(1, adventurer) + u8" has fully recovered from injury."s),
+            i18n::s.get(
+                "core.locale.news.recovery.text", cdatan(1, adventurer)),
             1);
         break;
     case 4:
-        addnewstopic(u8"@03"s, lang(u8"クエストの達成"s, u8"Accomplishment"s));
+        addnewstopic(
+            u8"@03"s, i18n::s.get("core.locale.news.accomplishment.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer) + u8"はクエストを達成し、"s + fame
-                    + u8"の名声を手にした。"s,
-                cdatan(1, adventurer) + u8" has finished a quest and gained "s
-                    + fame + u8" fame."s),
+            i18n::s.get(
+                "core.locale.news.accomplishment.text",
+                cdatan(1, adventurer),
+                fame),
             1);
         break;
     case 5:
-        addnewstopic(u8"@04"s, lang(u8"引退"s, u8"Retirement"s));
+        addnewstopic(
+            u8"@04"s, i18n::s.get("core.locale.news.retirement.title"));
         addnews2(
-            lang(
-                cdatan(1, adventurer)
-                    + u8"は自分の力の限界を悟り、ノースティリスから去っていった。"s,
-                cdatan(1, adventurer)
-                    + u8" realizes the limitations and leaves North Tyris."s),
+            i18n::s.get(
+                "core.locale.news.retirement.text", cdatan(1, adventurer)),
             1);
         break;
     }
@@ -188,7 +184,7 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
 }
 
 
-void label_2662()
+void adventurer_update()
 {
     for (int cnt = 16; cnt < 55; ++cnt)
     {
@@ -202,20 +198,18 @@ void label_2662()
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
-                txt(lang(
-                    cdatan(0, rc) + u8"との契約期間が切れた。"s,
-                    u8"The period of contract with "s + cdatan(0, rc)
-                        + u8" has been expired."s));
+                txt(i18n::s.get(
+                    "core.locale.chara.contract_expired", cdata[rc]));
             }
         }
         if (cdata[rc].current_map != gdata_current_map)
         {
-            if (cdata[rc].state == 5)
+            if (cdata[rc].state() == Character::State::adventurer_empty)
             {
                 create_adventurer();
                 continue;
             }
-            if (cdata[rc].state == 4)
+            if (cdata[rc].state() == Character::State::adventurer_dead)
             {
                 if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                         + gdata_year * 24 * 30 * 12
@@ -224,19 +218,21 @@ void label_2662()
                     if (rnd(3) == 0)
                     {
                         addnews(5, rc);
-                        cdata[rc].state = 0;
+                        cdata[rc].set_state(Character::State::empty);
                         create_adventurer();
                     }
                     else
                     {
                         addnews(3, rc);
-                        cdata[rc].state = 3;
+                        cdata[rc].set_state(
+                            Character::State::adventurer_in_other_map);
                     }
                     continue;
                 }
             }
         }
-        if ((cdata[rc].current_map != gdata_current_map || mdata(6) == 1)
+        if ((cdata[rc].current_map != gdata_current_map
+             || mdata_map_type == mdata_t::MapType::world_map)
             && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)
@@ -249,13 +245,14 @@ void label_2662()
                 {
                     p = rnd(300);
                 }
-                if (adata(16, p) == 0 || p == 7 || adata(0, p) == 7 || p == 9)
+                if (adata(16, p) == mdata_t::MapId::none || p == 7
+                    || adata(0, p) == mdata_t::MapType::temporary || p == 9)
                 {
                     p = 4;
                 }
                 if (cnt < 5)
                 {
-                    if (adata(0, p) != 3)
+                    if (adata(0, p) != mdata_t::MapType::town)
                     {
                         continue;
                     }
@@ -271,9 +268,9 @@ void label_2662()
         }
         if (rnd(200) == 0)
         {
-            if (adata(0, cdata[rc].current_map) != 3)
+            if (adata(0, cdata[rc].current_map) != mdata_t::MapType::town)
             {
-                label_2664();
+                adventurer_discover_equipment();
             }
         }
         if (rnd(10) == 0)
@@ -292,12 +289,12 @@ void label_2662()
             int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
-            label_2664();
+            adventurer_discover_equipment();
         }
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
             r2 = 0;
-            gain_level(rc);
+            gain_level(cdata[rc]);
         }
     }
     notesel(newsbuff);
@@ -312,13 +309,13 @@ void label_2662()
 }
 
 
-int label_2664()
+int adventurer_discover_equipment()
 {
     f = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         ci = get_random_inv(rc);
-        if (inv[ci].number == 0)
+        if (inv[ci].number() == 0)
         {
             f = 1;
             break;
@@ -327,13 +324,13 @@ int label_2664()
         {
             continue;
         }
-        if (inv[ci].number != 0)
+        if (inv[ci].number() != 0)
         {
             if (cdata[rc].item_which_will_be_used == ci)
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            item_remove(inv[ci]);
+            inv[ci].remove();
             f = 1;
             break;
         }
@@ -345,19 +342,18 @@ int label_2664()
     flt(cdata[rc].level, 4);
     if (rnd(3) == 0)
     {
-        flttypemajor = fsetwear(rnd(length(fsetwear)));
+        flttypemajor = choice(fsetwear);
     }
     else
     {
-        flttypemajor = fsetitem(rnd(length(fsetitem)));
+        flttypemajor = choice(fsetitem);
     }
     int stat = itemcreate(rc, 0, -1, -1, 0);
     if (stat == 0)
     {
         return 0;
     }
-    inv[ci].identification_state =
-        identification_state_t::completely_identified;
+    inv[ci].identification_state = IdentifyState::completely_identified;
     if (inv[ci].quality >= 4)
     {
         if (the_item_db[inv[ci].id]->category < 50000)

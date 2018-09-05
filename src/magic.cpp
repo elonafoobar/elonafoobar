@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "activity.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -7,8 +8,10 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
+#include "element.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"
@@ -16,7 +19,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
@@ -54,7 +56,7 @@ int magic()
     obvious = 1;
     if (efsource != 4 && efsource != 1 && efsource != 2)
     {
-        efstatus = curse_state_t::none;
+        efstatus = CurseState::none;
     }
     efsource = 0;
     efbad = 0;
@@ -69,7 +71,7 @@ int magic()
             {
                 f = 1;
                 p = the_ability_db[efid]->sdataref1 % 1000;
-                if (the_buff_db[p]->type == buff_data::type_t::hex)
+                if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
                     efbad = 1;
                 }
@@ -80,7 +82,7 @@ int magic()
             }
             if (efbad == 0)
             {
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     efp = efp * 150 / 100;
                 }
@@ -91,7 +93,7 @@ int magic()
             }
             else
             {
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     efp = 50;
                 }
@@ -102,13 +104,15 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p]->type == buff_data::type_t::buff)
+                if (the_buff_db[p]->type == BuffData::Type::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p]->type == buff_data::type_t::hex)
+                else if (the_buff_db[p]->type == BuffData::Type::hex)
                 {
-                    play_animation(6);
+                    BrightAuraAnimation(
+                        cdata[tc].position, BrightAuraAnimation::Type::debuff)
+                        .play();
                 }
                 if (efid == 625 || efid == 446)
                 {
@@ -120,23 +124,22 @@ int magic()
                         }
                     }
                 }
-                buff_add(tc, p, efp, calc_buff_duration(p, efp));
+                buff_add(
+                    cdata[tc], p, efp, calc_buff_duration(p, efp), cdata[cc]);
                 if (efid == 447)
                 {
-                    if (efstatus == curse_state_t::blessed)
+                    if (efstatus == CurseState::blessed)
                     {
                         cdata[tc].birth_year += rnd(3) + 1;
                         if (cdata[tc].birth_year + 12 > gdata_year)
                         {
                             cdata[tc].birth_year = gdata_year - 12;
                         }
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txtef(2);
-                            txt(lang(
-                                name(tc) + u8"の老化は遅くなった。"s,
-                                name(tc) + your(tc)
-                                    + u8" aging process slows down."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.slow", cdata[tc]));
                         }
                     }
                 }
@@ -145,13 +148,11 @@ int magic()
                     if (is_cursed(efstatus))
                     {
                         cdata[tc].birth_year -= rnd(3) + 1;
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txtef(8);
-                            txt(lang(
-                                name(tc) + u8"の老化は速くなった。"s,
-                                name(tc) + your(tc)
-                                    + u8" aging process speeds up."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.speed", cdata[tc]));
                         }
                     }
                 }
@@ -192,7 +193,11 @@ int magic()
             switch (the_ability_db[efid]->sdataref1)
             {
             case 10:
-                play_animation(18);
+                RangedAttackAnimation(
+                    cdata[cc].position,
+                    cdata[tc].position,
+                    RangedAttackAnimation::Type::distant_attack)
+                    .play();
                 try_to_melee_attack();
                 goto the_end;
             case 1:
@@ -204,7 +209,12 @@ int magic()
                     goto the_end;
                 }
             }
-                play_animation(0);
+                {
+                    int distance = the_ability_db[efid]->sdataref3 % 1000 + 1;
+                    BoltAnimation(
+                        cdata[cc].position, {tlocx, tlocy}, ele, distance)
+                        .play();
+                }
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 for (int cnt = 0; cnt < 20; ++cnt)
@@ -257,28 +267,24 @@ int magic()
                             {
                                 continue;
                             }
-                            if (is_in_fov(tc))
+                            if (is_in_fov(cdata[tc]))
                             {
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(lang(
-                                        u8"ボルトは"s + name(tc)
-                                            + u8"に命中し"s,
-                                        u8"The bolt hits "s + name(tc)
-                                            + u8" and"s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.bolt.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(lang(
-                                        u8"ボルトが"s + name(tc)
-                                            + u8"に命中した。"s,
-                                        u8"The bolt hits "s + name(tc)
-                                            + u8"."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.bolt.ally",
+                                        cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -290,9 +296,8 @@ int magic()
                 {
                     stxt(
                         cc,
-                        lang(
-                            name(cc) + u8"は爆発した。"s,
-                            name(cc) + u8" explode"s + _s(cc) + u8"."s));
+                        i18n::s.get(
+                            "core.locale.magic.explosion.begins", cdata[cc]));
                 }
             label_2177_internal:
                 cdata[cc].will_explode_soon() = false;
@@ -307,16 +312,15 @@ int magic()
                 }
                 if (efid != 404 && efid != 637)
                 {
-                    aniref = range_;
-                    anix = tlocx;
-                    aniy = tlocy;
-                    play_animation(2);
+                    BallAnimation(
+                        {tlocx, tlocy}, range_, BallAnimation::Type::ball, ele)
+                        .play();
                 }
                 for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                      ++cnt)
                 {
                     dy = tlocy - range_ + cnt;
-                    if (dy < 0 || dy >= mdata(1))
+                    if (dy < 0 || dy >= mdata_map_height)
                     {
                         continue;
                     }
@@ -324,7 +328,7 @@ int magic()
                          ++cnt)
                     {
                         dx = tlocx - range_ + cnt;
-                        if (dx < 0 || dx >= mdata(0))
+                        if (dx < 0 || dx >= mdata_map_width)
                         {
                             continue;
                         }
@@ -357,13 +361,15 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                play_animation(11);
-                                if (is_in_fov(tc))
+                                BrightAuraAnimation(
+                                    cdata[tc].position,
+                                    BrightAuraAnimation::Type::healing_rain)
+                                    .play();
+                                if (is_in_fov(cdata[tc]))
                                 {
-                                    txt(lang(
-                                        name(tc) + u8"は回復した。"s,
-                                        name(tc) + u8" "s + is(tc)
-                                            + u8" healed."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.healed.normal",
+                                        cdata[tc]));
                                 }
                                 heal_both_rider_and_mount();
                             }
@@ -385,12 +391,14 @@ int magic()
                             }
                             if (f == 1)
                             {
-                                play_animation(11);
-                                txt(lang(
-                                    name(tc) + u8"の狂気は消え去った。"s,
-                                    name(tc) + u8" "s + is(tc)
-                                        + u8" completely sane again."s));
-                                healsan(tc, efp / 10);
+                                BrightAuraAnimation(
+                                    cdata[tc].position,
+                                    BrightAuraAnimation::Type::healing_rain)
+                                    .play();
+                                txt(i18n::s.get(
+                                    "core.locale.magic.rain_of_sanity",
+                                    cdata[tc]));
+                                heal_insanity(cdata[tc], efp / 10);
                                 healcon(tc, 11, 9999);
                             }
                             continue;
@@ -429,25 +437,21 @@ int magic()
                             }
                             if (efid == 644)
                             {
-                                if (is_in_fov(tc))
+                                if (is_in_fov(cdata[tc]))
                                 {
                                     if (tc >= 16)
                                     {
                                         gdata(809) = 2;
                                         txt3rd = 1;
-                                        txt(lang(
-                                            u8"爆風は"s + name(tc)
-                                                + u8"に命中し"s,
-                                            u8"The explosion hits "s + name(tc)
-                                                + u8" and"s));
+                                        txt(i18n::s.get(
+                                            "core.locale.magic.explosion.other",
+                                            cdata[tc]));
                                     }
                                     else
                                     {
-                                        txt(lang(
-                                            u8"爆風が"s + name(tc)
-                                                + u8"に命中した。"s,
-                                            u8"The explosion hits "s + name(tc)
-                                                + u8"."s));
+                                        txt(i18n::s.get(
+                                            "core.locale.magic.explosion.ally",
+                                            cdata[tc]));
                                     }
                                 }
                                 if (cdata[tc].explodes())
@@ -457,34 +461,30 @@ int magic()
                                     continue;
                                 }
                             }
-                            else if (is_in_fov(tc))
+                            else if (is_in_fov(cdata[tc]))
                             {
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(lang(
-                                        u8"ボールは"s + name(tc)
-                                            + u8"に命中し"s,
-                                        u8"The ball hits "s + name(tc)
-                                            + u8" and"s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.ball.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(lang(
-                                        u8"ボールが"s + name(tc)
-                                            + u8"に命中した。"s,
-                                        u8"The Ball hits "s + name(tc)
-                                            + u8"."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.ball.ally",
+                                        cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
                 if (efid == 644)
                 {
-                    dmghp(cc, 99999, -16);
+                    damage_hp(cdata[cc], 99999, -16);
                 }
                 if (chainbomb > 0)
                 {
@@ -496,7 +496,7 @@ int magic()
                         cc = chainbomblist(chainbomb);
                         tlocx = cdata[cc].position.x;
                         tlocy = cdata[cc].position.y;
-                        if (cdata[cc].state == 1)
+                        if (cdata[cc].state() == Character::State::alive)
                         {
                             const auto damage =
                                 calc_skill_damage(efid, cc, efp);
@@ -507,10 +507,9 @@ int magic()
                             elep = damage->element_power;
                             stxt(
                                 cc,
-                                lang(
-                                    name(cc) + u8"は誘爆した。"s,
-                                    name(cc) + u8" explode"s + _s(cc)
-                                        + u8"."s));
+                                i18n::s.get(
+                                    "core.locale.magic.explosion.chain",
+                                    cdata[cc]));
                             goto label_2177_internal;
                         }
                     }
@@ -518,179 +517,156 @@ int magic()
                 cc = ccbk;
                 goto the_end;
             case 2:
-                play_animation(1);
+                RangedAttackAnimation(
+                    cdata[cc].position,
+                    cdata[tc].position,
+                    RangedAttackAnimation::Type::magic_arrow)
+                    .play();
                 dmg = roll(dice1, dice2, bonus);
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
                         txt3rd = 1;
-                        txt(lang(
-                            u8"矢は"s + name(tc) + u8"に命中し"s,
-                            u8"The arrow hits "s + name(tc) + u8" and"s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.arrow.other", cdata[tc]));
                     }
                     else
                     {
-                        txt(lang(
-                            u8"矢が"s + name(tc) + u8"に命中した。"s,
-                            u8"The arrow hits "s + name(tc) + u8"."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.arrow.ally", cdata[tc]));
                     }
                 }
-                dmghp(tc, dmg, cc, ele, elep);
+                damage_hp(cdata[tc], dmg, cc, ele, elep);
                 goto the_end;
             case 4:
                 if (efid == 400)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            name(tc) + u8"の傷はふさがった。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" slightly healed."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.slightly", cdata[tc]));
                     }
                 }
                 if (efid == 401 || efid == 405)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            name(tc) + u8"は回復した。"s,
-                            name(tc) + u8" "s + is(tc) + u8" healed."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.normal", cdata[tc]));
                     }
                 }
                 if (efid == 402)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            name(tc) + u8"の身体に生命力がみなぎった。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" greatly healed."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.greatly", cdata[tc]));
                     }
                 }
                 if (efid == 403)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            name(tc) + u8"は完全に回復した。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" completely healed."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.healed.completely", cdata[tc]));
                     }
                 }
                 heal_both_rider_and_mount();
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
                     healcon(tc, 12, 5 + rnd(5));
                 }
-                sickifcursed(efstatus, tc, 3);
-                play_animation(5);
+                if (rnd(3) == 0)
+                {
+                    get_sick_if_cursed(efstatus, cdata[tc]);
+                }
+                BrightAuraAnimation(
+                    cdata[tc].position, BrightAuraAnimation::Type::healing)
+                    .play();
                 goto the_end;
             case 6:
                 if (cdata[cc].special_attack_type != 0)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         if (cc == 0)
                         {
-                            txt(lang(
-                                name(cc) + u8"は"s
-                                    + i18n::_(
-                                          u8"ability",
-                                          std::to_string(efid),
-                                          u8"name")
-                                    + u8"の"s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc].special_attack_type),
-                                name(cc) + u8" cast "s
-                                    + i18n::_(
-                                          u8"ability",
-                                          std::to_string(efid),
-                                          u8"name")
-                                    + u8"."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.special_attack.self",
+                                cdata[cc],
+                                i18n::_(
+                                    u8"ability",
+                                    std::to_string(efid),
+                                    u8"name"),
+                                i18n::_(
+                                    u8"ui",
+                                    u8"cast_style",
+                                    u8"_"s + cdata[cc].special_attack_type)));
                         }
                         else
                         {
-                            txt(lang(
-                                name(cc) + u8"は"s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc].special_attack_type),
-                                name(cc) + ""s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc]
-                                                    .special_attack_type)));
+                            txt(i18n::s.get(
+                                "core.locale.magic.special_attack.other",
+                                cdata[cc],
+                                i18n::_(
+                                    u8"ui",
+                                    u8"cast_style",
+                                    u8"_"s + cdata[cc].special_attack_type)));
                         }
                     }
                 }
                 else if (efid == 601)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
                         if (tc >= 16)
                         {
                             gdata(809) = 2;
-                            txt(lang(
-                                aln(cc) + name(tc) + u8"の血を吸い"s,
-                                name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                    + name(tc) + your(tc) + u8" blood and"s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.sucks_blood.other",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                         else
                         {
-                            txt(lang(
-                                name(cc) + u8"に血を吸われた。"s,
-                                name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                    + name(tc) + your(tc) + u8" blood."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.sucks_blood.ally",
+                                cdata[cc],
+                                cdata[tc]));
                         }
                     }
                 }
                 else if (efid == 660)
                 {
-                    if (is_in_fov(cc))
+                    if (is_in_fov(cdata[cc]))
                     {
-                        txt(lang(
-                            u8"「余分な機能は削除してしまえ」"s,
-                            u8"\"Delete.\""s));
+                        txt(i18n::s.get("core.locale.magic.disassembly"));
                     }
                 }
-                else if (is_in_fov(cc))
+                else if (is_in_fov(cdata[cc]))
                 {
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
-                        txt(lang(
-                            aln(cc) + name(tc) + u8"を"s + elename(ele)
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"で"s
-                                + _melee(0, cdata[cc].melee_attack_type),
-                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
-                                + u8" with "s + his(cc) + u8" "s + elename(ele)
-                                + u8" "s
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8" and"s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.touch.other",
+                            cdata[cc],
+                            cdata[tc],
+                            elename(ele),
+                            _melee(2, cdata[cc].melee_attack_type),
+                            _melee(0, cdata[cc].melee_attack_type)));
                     }
                     else
                     {
-                        txt(lang(
-                            name(tc) + u8"は"s + name(cc) + u8"に"s
-                                + elename(ele)
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"で"s
-                                + _melee(1, cdata[cc].melee_attack_type),
-                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
-                                + u8" with "s + his(cc) + u8" "s + elename(ele)
-                                + u8" "s
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.touch.ally",
+                            cdata[cc],
+                            cdata[tc],
+                            elename(ele),
+                            _melee(2, cdata[cc].melee_attack_type),
+                            _melee(1, cdata[cc].melee_attack_type)));
                     }
                 }
                 if (efid == 660)
@@ -698,27 +674,24 @@ int magic()
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
-                dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
+                damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
-                    dmgcon(tc, status_ailment_t::fear, elep);
+                    dmgcon(tc, StatusAilment::fear, elep);
                 }
                 if (efid == 618)
                 {
-                    dmgcon(tc, status_ailment_t::sleep, elep);
+                    dmgcon(tc, StatusAilment::sleep, elep);
                 }
                 if (efid == 614)
                 {
                     cdata[tc].nutrition -= 800;
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
                         txtef(8);
-                        txt(lang(
-                            name(tc) + u8"はお腹が減った。"s,
-                            u8"Suddenly "s + name(tc) + u8" feel"s + _s(tc)
-                                + u8" hungry."s));
+                        txt(i18n::s.get("core.locale.magic.hunger", cdata[tc]));
                     }
-                    get_hungry(tc);
+                    get_hungry(cdata[tc]);
                 }
                 if (efid == 613)
                 {
@@ -737,12 +710,11 @@ int magic()
                             i = i * efp / 2000 + 1;
                             cdata[tc].attr_adjs[p] -= i;
                         }
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             txtef(8);
-                            txt(lang(
-                                name(tc) + u8"は弱くなった。"s,
-                                name(tc) + u8" "s + is(tc) + u8" weakened."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.weaken", cdata[tc]));
                         }
                         chara_refresh(tc);
                     }
@@ -753,7 +725,7 @@ int magic()
                 {
                     if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
                         goto the_end;
                     }
@@ -824,11 +796,9 @@ int magic()
                         }
                     }
                 }
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        u8"魔法でモンスターが召喚された。"s,
-                        u8"Several monsters come out from a portal."s));
+                    txt(i18n::s.get("core.locale.magic.summon"));
                 }
                 goto the_end;
             case 5:
@@ -863,30 +833,30 @@ int magic()
                 {
                     if (map(tlocx, tlocy, 1) == 0)
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
                         goto the_end;
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
-                if (gdata_current_map == 40 || mdata(6) == 1
-                    || gdata_current_map == 37 || gdata_current_map == 41)
+                if (gdata_current_map == mdata_t::MapId::pet_arena
+                    || mdata_map_type == mdata_t::MapType::world_map
+                    || gdata_current_map == mdata_t::MapId::pyramid
+                    || gdata_current_map == mdata_t::MapId::jail)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            u8"魔法の力がテレポートを防いだ。"s,
-                            u8"Magical field prevents teleportation."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.prevented"));
                     }
                     goto the_end;
                 }
                 if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
-                        txt(lang(
-                            u8"魔法の力がテレポートを防いだ。"s,
-                            u8"Magical field prevents teleportation."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.prevented"));
                     }
                     goto the_end;
                 }
@@ -894,11 +864,10 @@ int magic()
                 {
                     if (encfind(cc, 22) != -1)
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
-                            txt(lang(
-                                u8"魔法の力がテレポートを防いだ。"s,
-                                u8"Magical field prevents teleportation."s));
+                            txt(i18n::s.get(
+                                "core.locale.magic.teleport.prevented"));
                         }
                         goto the_end;
                     }
@@ -906,22 +875,23 @@ int magic()
                     if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
                         || cdata[tc].is_protected_from_thieves() == 1)
                     {
-                        txt(lang(
-                            name(tc) + u8"は自分の財布を守った。"s,
-                            name(tc) + u8" guard"s + _s(tc) + u8" "s + his(tc)
-                                + u8" wallet from a thief."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.suspicious_hand."
+                            "prevented",
+                            cdata[tc]));
                         p = 0;
                     }
                     if (p != 0)
                     {
                         snd(12);
                         cdata[tc].gold -= p;
-                        txt(lang(
-                            name(cc) + u8"は"s + name(tc) + u8"から"s + p
-                                + u8"枚の金貨を奪った。"s,
-                            name(cc) + u8" steal"s + _s(cc) + u8" "s + p
-                                + u8" gold pieces from "s + name(tc) + u8"."s));
-                        cdata[cc].gold += p;
+                        txt(i18n::s.get(
+                            "core.locale.magic.teleport.suspicious_hand."
+                            "succeeded",
+                            cdata[cc],
+                            cdata[tc],
+                            p(0)));
+                        earn_gold(cdata[cc], p);
                     }
                     tc = cc;
                     if (gdata_mount != 0)
@@ -932,9 +902,9 @@ int magic()
                         }
                     }
                 }
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
-                    snd(72);
+                    snd_at(72, cdata[tc].position);
                 }
                 tx = cdata[tc].position.x;
                 ty = cdata[tc].position.y;
@@ -966,8 +936,10 @@ int magic()
                     }
                     else
                     {
-                        cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
-                        cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
+                        cdata[tc].next_position.x =
+                            rnd(mdata_map_width - 2) + 1;
+                        cdata[tc].next_position.y =
+                            rnd(mdata_map_height - 2) + 1;
                     }
                     cell_check(
                         cdata[tc].next_position.x, cdata[tc].next_position.y);
@@ -975,39 +947,36 @@ int magic()
                     {
                         if (efidprev == 619)
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
-                                txt(lang(
-                                    name(cc) + u8"は"s + cdatan(0, tcprev)
-                                        + u8"の元に移動した。"s,
-                                    name(cc) + u8" teleport"s + _s(cc)
-                                        + u8" toward "s + cdatan(0, tcprev)
-                                        + u8"."s));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.shadow_step",
+                                    cdata[cc],
+                                    cdata[tcprev]));
                             }
                         }
                         else if (efidprev == 620)
                         {
-                            if (is_in_fov(cc))
+                            if (is_in_fov(cdata[cc]))
                             {
-                                txt(lang(
-                                    name(tc) + u8"は引き寄せられた。"s,
-                                    name(tc) + u8" "s + is(tc) + u8" drawn."s));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.draw_shadow",
+                                    cdata[tc]));
                             }
                         }
-                        else if (is_in_fov(cc))
+                        else if (is_in_fov(cdata[cc]))
                         {
                             if (efidprev == 635)
                             {
-                                txt(lang(
-                                    u8"泥棒は笑って逃げた。"s,
-                                    u8"A thief escapes laughing."s));
+                                txt(
+                                    i18n::s.get("core.locale.magic.teleport."
+                                                "suspicious_hand.after"));
                             }
                             else
                             {
-                                txt(lang(
-                                    name(tc) + u8"は突然消えた。"s,
-                                    u8"Suddenly, "s + name(tc) + u8" disappear"s
-                                        + _s(tc) + u8"."s));
+                                txt(i18n::s.get(
+                                    "core.locale.magic.teleport.disappears",
+                                    cdata[tc]));
                             }
                         }
                         rowactend(cc);
@@ -1034,24 +1003,23 @@ int magic()
                 std::string valn;
                 if (ele)
                 {
-                    valn = i18n::_(u8"ability", std::to_string(ele), u8"name")
-                        + lang(u8"の"s, u8" breath"s);
+                    valn = i18n::s.get(
+                        "core.locale.magic.breath.named",
+                        i18n::_(u8"ability", std::to_string(ele), u8"name"));
                 }
                 else
                 {
-                    valn = lang(""s, u8"breath"s);
+                    valn = i18n::s.get("core.locale.magic.breath.no_element");
                 }
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"は"s + valn + u8"ブレスを吐いた。"s,
-                        name(cc) + u8" bellow"s + _s(cc) + u8" "s + valn
-                            + u8" from "s + his(cc) + u8" mouth."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.breath.bellows", cdata[cc], valn));
                 }
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
                 breath_list();
-                play_animation(3);
+                BreathAnimation(cdata[cc].position, {tlocx, tlocy}, ele).play();
                 for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
@@ -1091,28 +1059,24 @@ int magic()
                         if (cc != tc)
                         {
                             dmg = roll(dice1, dice2, bonus);
-                            if (is_in_fov(tc))
+                            if (is_in_fov(cdata[tc]))
                             {
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
                                     txt3rd = 1;
-                                    txt(lang(
-                                        u8"ブレスは"s + name(tc)
-                                            + u8"に命中し"s,
-                                        u8"The breath hits "s + name(tc)
-                                            + u8" and"s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.breath.other",
+                                        cdata[tc]));
                                 }
                                 else
                                 {
-                                    txt(lang(
-                                        u8"ブレスは"s + name(tc)
-                                            + u8"に命中した。"s,
-                                        u8"The breath hits "s + name(tc)
-                                            + u8"."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.magic.breath.ally",
+                                        cdata[tc]));
                                 }
                             }
-                            dmghp(tc, dmg, cc, ele, elep);
+                            damage_hp(cdata[tc], dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -1122,7 +1086,7 @@ int magic()
         }
         else
         {
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 efp = efp * 150 / 100;
             }
@@ -1139,50 +1103,21 @@ label_2181_internal:
     {
     case 636:
         txtef(8);
-        if (jp)
-        {
-            txt(name(tc) + u8"は"s + name(cc)
-                    + u8"の腹の亀裂から蛆虫が沸き出るのを見た。"s,
-                name(tc) + u8"は"s + name(cc) + u8"が屍を貪る姿を目撃した。"s,
-                name(tc) + u8"は"s + name(cc) + u8"の恐ろしい瞳に震えた。"s,
-                name(tc) + u8"は"s + name(cc)
-                    + u8"の触手に絡まる臓物に吐き気を感じた。"s);
-        }
-        if (en)
-        {
-            txt(name(tc) + u8" see"s + _s(tc)
-                    + u8" maggots breed in the rent stomach of "s + name(cc)
-                    + u8"."s,
-                name(tc) + u8" see"s + _s(tc) + u8" "s + name(cc) + u8" chow"s
-                    + _s(cc) + u8" dead bodies."s,
-                name(tc) + u8" shudder"s + _s(tc) + u8" at "s + name(cc)
-                    + your(cc) + u8" terrifying eyes."s,
-                name(tc) + u8" feel"s + _s(tc)
-                    + u8" sick at entrails caught in "s + name(cc) + your(cc)
-                    + u8" tentacles."s);
-        }
-        damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
+        txt(i18n::s.get("core.locale.magic.insanity", cdata[cc], cdata[tc]));
+        damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
-        if (mdata(6) != 1)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
-            txt(lang(
-                u8"それはグローバルマップで読む必要がある。"s,
-                u8"You need to read it while you are in the global map."s));
+            txt(i18n::s.get("core.locale.magic.map.need_global_map"));
             break;
         }
         if (is_cursed(efstatus))
         {
             if (rnd(5) == 0)
             {
-                txt(lang(
-                    u8"呪われた地図は触れると崩れ落ちた。"s,
-                    u8"The cursed map crumbles as you touch."s));
-                --inv[ci].number;
-                if (ci >= 5080)
-                {
-                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                }
+                txt(i18n::s.get("core.locale.magic.map.cursed"));
+                inv[ci].modify_number(-1);
                 break;
             }
         }
@@ -1191,8 +1126,8 @@ label_2181_internal:
             item_separate(ci);
             for (int cnt = 0; cnt < 1000; ++cnt)
             {
-                dx = 4 + rnd((mdata(0) - 8));
-                dy = 3 + rnd((mdata(1) - 6));
+                dx = 4 + rnd((mdata_map_width - 8));
+                dy = 3 + rnd((mdata_map_height - 6));
                 if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
                 {
                     continue;
@@ -1231,9 +1166,7 @@ label_2181_internal:
             inv[ci].param1 = dx;
             inv[ci].param2 = dy;
         }
-        txt(lang(
-            u8"何かの場所を記した地図のようだ…"s,
-            u8"There's a mark on the map..."s));
+        txt(i18n::s.get("core.locale.magic.map.apply"));
         snd(59);
         gsel(4);
         pos(0, 0);
@@ -1246,7 +1179,7 @@ label_2181_internal:
         gmode(2);
         pos(wx, wy);
         gcopy(4, 0, 0, ww, wh);
-        gmode(1, inf_tiles, inf_tiles);
+        gmode(1);
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             y = cnt + inv[ci].param2 - 2;
@@ -1257,15 +1190,20 @@ label_2181_internal:
                 sx = cnt * inf_tiles + wx + 46;
                 p = map(x, y, 0);
                 pos(sx + 1, sy + 1);
-                gcopy(2, p % 33 * inf_tiles, p / 33 * inf_tiles);
+                gcopy(
+                    2,
+                    p % 33 * inf_tiles,
+                    p / 33 * inf_tiles,
+                    inf_tiles,
+                    inf_tiles);
                 if (x == inv[ci].param1)
                 {
                     if (y == inv[ci].param2)
                     {
                         pos(sx, sy);
-                        font(40 - en * 2, snail::font_t::style_t::italic);
+                        font(40 - en * 2, snail::Font::Style::italic);
                         color(255, 20, 20);
-                        mes(lang(u8"○"s, u8"O"s));
+                        mes(i18n::s.get("core.locale.magic.map.mark"));
                         color(0, 0, 0);
                     }
                 }
@@ -1287,13 +1225,9 @@ label_2181_internal:
             }
             else
             {
-                txt(lang(
-                    u8"媚薬は呪われていた。"s + name(tc) + u8"は"s + name(0)
-                        + u8"を軽蔑のまなざしで見つめた。"s,
-                    u8"This love potion is cursed. "s + name(tc) + u8" look"s
-                        + _s(tc) + u8" at "s + name(0)
-                        + u8" with a contemptuous glance."s));
-                chara_mod_impression(tc, -15);
+                txt(i18n::s.get(
+                    "core.locale.magic.love_potion.cursed", cdata[tc]));
+                chara_modify_impression(cdata[tc], -15);
             }
             obvious = 0;
             break;
@@ -1301,85 +1235,70 @@ label_2181_internal:
         cdata[tc].emotion_icon = 317;
         if (potionspill || potionthrow)
         {
-            txt(lang(
-                name(tc) + u8"は恋の予感がした。"s,
-                name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
-            chara_mod_impression(tc, clamp(efp / 15, 0, 15));
-            dmgcon(tc, status_ailment_t::dimmed, 100);
+            txt(i18n::s.get("core.locale.magic.love_potion.spill", cdata[tc]));
+            chara_modify_impression(cdata[tc], clamp(efp / 15, 0, 15));
+            dmgcon(tc, StatusAilment::dimmed, 100);
             lovemiracle(tc);
             break;
         }
         if (tc == 0)
         {
-            txt(lang(name(tc) + u8"は興奮した！"s, u8"You are excited!"s));
+            txt(i18n::s.get("core.locale.magic.love_potion.self", cdata[tc]));
         }
         else
         {
-            txt(lang(
-                name(tc) + u8"は"s + name(0) + u8"を熱いまなざしで見つめた。"s,
-                name(tc) + u8" give"s + _s(tc) + u8" "s + name(0)
-                    + u8" the eye."s));
+            txt(i18n::s.get("core.locale.magic.love_potion.other", cdata[tc]));
             lovemiracle(tc);
-            chara_mod_impression(tc, clamp(efp / 4, 0, 25));
+            chara_modify_impression(cdata[tc], clamp(efp / 4, 0, 25));
         }
-        dmgcon(tc, status_ailment_t::dimmed, 500);
+        dmgcon(tc, StatusAilment::dimmed, 500);
         break;
     case 654:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(cc) + u8"は"s + name(tc)
-                    + u8"の口の中に何かを送り込んだ！"s,
-                name(cc) + u8" put"s + _s(cc) + u8" something into "s + name(tc)
-                    + your(tc) + u8" body!"s));
+            txt(i18n::s.get(
+                "core.locale.magic.pregnant", cdata[cc], cdata[tc]));
         }
         get_pregnant();
         break;
     case 626:
-        txt(lang(
-            u8"あなたは自分の状態を調べた。"s, u8"You examine yourself."s));
+        txt(i18n::s.get("core.locale.magic.mirror"));
         animeload(10, tc);
-        label_1964();
+        screen_analyze_self();
         break;
     case 1101:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd(107);
             if (is_cursed(efstatus))
             {
                 if (tc == 0)
                 {
-                    txt(lang(
-                        u8"うわ、これは呪われている。なんだかやばい味だ…"s,
-                        u8"Geee it's cursed! The taste is very dangerous."s));
+                    txt(i18n::s.get("core.locale.magic.milk.cursed.self"));
                 }
                 else
                 {
                     txtef(9);
-                    txt(lang(
-                        u8"「ぺっぺっ、まずー」"s,
-                        u8"\"Argh, the milk is cursed!\""s));
+                    txt(i18n::s.get("core.locale.magic.milk.cursed.other"));
                 }
             }
             else if (tc == 0)
             {
-                txt(lang(
-                    u8"濃厚で病み付きになりそうな味だ。"s,
-                    u8"The taste is very thick, almost addictive."s));
+                txt(i18n::s.get("core.locale.magic.milk.self"));
             }
             else
             {
                 txtef(9);
-                txt(lang(u8"「うまー」"s, u8"\"Yummy!\""s));
+                txt(i18n::s.get("core.locale.magic.milk.other"));
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
-            modheight(tc, rnd(5) + 1);
+            modify_height(cdata[tc], rnd(5) + 1);
         }
         if (is_cursed(efstatus))
         {
-            modheight(tc, (rnd(5) + 1) * -1);
+            modify_height(cdata[tc], (rnd(5) + 1) * -1);
         }
         cdata[tc].nutrition += 1000 * (efp / 100);
         if (tc == 0)
@@ -1390,159 +1309,141 @@ label_2181_internal:
         animeload(15, tc);
         break;
     case 1102:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             if (is_cursed(efstatus))
             {
                 txtef(9);
-                txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
-                    lang(u8"「まずいぜ」"s, u8"\"Ah, bad booze.\""s),
-                    lang(u8"「げー♪」"s, u8"\"Ugh...\""s),
-                    lang(
-                        u8"「腐ったミルクみたいな味だ」"s,
-                        u8"\"Bah, smells like rotten milk.\""s));
+                txt(i18n::s.get("core.locale.magic.alcohol.cursed"));
             }
             else
             {
                 txtef(9);
-                txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                    lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
-                    lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
-                    lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
-                    lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
-                    lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
-                    lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
+                txt(i18n::s.get("core.locale.magic.alcohol.normal"));
             }
         }
-        dmgcon(tc, status_ailment_t::drunk, efp);
+        dmgcon(tc, StatusAilment::drunk, efp);
         eatstatus(efstatus, tc);
         break;
     case 1116:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             if (tc == 0)
             {
-                txt(lang(u8"ぐわぁぁ！"s, u8"Arrrrg!"s));
+                txt(i18n::s.get("core.locale.magic.acid.self"));
             }
-            txt(lang(
-                u8"酸が"s + name(tc) + u8"を溶かした。"s,
-                u8"The sulfuric acid melts "s + name(tc) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.acid.apply", cdata[tc]));
         }
         if (cdata[tc].is_pregnant())
         {
             cdata[tc].is_pregnant() = false;
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"の体内のエイリアンは溶けた。"s,
-                    name(tc) + your(tc) + u8" alien children melt in "s
-                        + his(tc) + u8" stomach."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.common.melts_alien_children",
+                    cdata[tc]));
             }
         }
-        dmghp(tc, efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
+        damage_hp(
+            cdata[tc],
+            efp * efstatusfix(500, 400, 100, 50) / 1000,
+            -15,
+            63,
+            efp);
         break;
     case 1103:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             if (tc == 0)
             {
-                txt(lang(
-                    u8"*ごくっ* 綺麗な水だ。"s,
-                    u8"*quaff* The water is refreshing."s));
+                txt(i18n::s.get("core.locale.magic.water.self"));
             }
             else
             {
-                txt(lang(u8" *ごくっ* "s, u8"*quaff*"s));
+                txt(i18n::s.get("core.locale.magic.water.other"));
             }
         }
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1146:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(u8"*シュワワ* 刺激的！"s, u8"*quaff* Juicy!"s));
-            txt(lang(
-                name(tc) + u8"のスタミナが少し回復した。"s,
-                name(tc) + u8" restore"s + _s(tc) + u8" some stamina."s));
+            txt(i18n::s.get("core.locale.magic.restore_stamina.dialog"));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina.apply", cdata[tc]));
         }
-        healsp(tc, 25);
-        sickifcursed(efstatus, tc, 1);
+        heal_sp(cdata[tc], 25);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1147:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(u8"*ごくり*"s, u8"*quaff*"s));
-            txt(lang(
-                name(tc) + u8"のスタミナはかなり回復した。"s,
-                name(tc) + u8" greatly restore"s + _s(tc) + u8" stamina."s));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina_greater.dialog"));
+            txt(i18n::s.get(
+                "core.locale.magic.restore_stamina_greater.apply", cdata[tc]));
         }
-        healsp(tc, 100);
-        sickifcursed(efstatus, tc, 1);
+        heal_sp(cdata[tc], 100);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 1142:
         if (cdatan(2, tc) == u8"snail"s)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 txtef(3);
-                txt(lang(
-                    u8"塩だ！"s + name(tc) + u8"は溶けはじめた！"s,
-                    u8"It's salt! "s + name(tc) + u8" start"s + _s(tc)
-                        + u8" to melt."s));
+                txt(i18n::s.get("core.locale.magic.salt.snail", cdata[tc]));
             }
             if (cdata[tc].hp > 10)
             {
-                dmghp(tc, cdata[tc].hp - rnd(10), -15);
+                damage_hp(cdata[tc], cdata[tc].hp - rnd(10), -15);
             }
             else
             {
-                dmghp(tc, rnd(20000), -15);
+                damage_hp(cdata[tc], rnd(20000), -15);
             }
         }
-        else if (is_in_fov(tc))
+        else if (is_in_fov(cdata[tc]))
         {
             txtef(9);
-            txt(lang(u8"「しょっぱ〜」"s, u8"\"Salty!\""s));
+            txt(i18n::s.get("core.locale.magic.salt.apply"));
         }
         break;
     case 1130:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             if (tc == 0)
             {
-                txt(lang(u8"*ごくっ* まずい！"s, u8"*quaff* Yucky!"s));
+                txt(i18n::s.get("core.locale.magic.dirty_water.self"));
             }
             else
             {
-                txt(lang(u8" *ごくっ* "s, u8"*quaff*"s));
+                txt(i18n::s.get("core.locale.magic.dirty_water.other"));
             }
         }
-        sickifcursed(efstatus, tc, 1);
+        get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 300:
         if (gdata_executing_immediate_quest_type == 1008
             || gdata_executing_immediate_quest_type == 1010)
         {
-            txt(lang(
-                u8"そんなことをしている余裕はない！"s,
-                u8"You have no time for it!"s));
+            txt(i18n::s.get("core.locale.magic.steal.in_quest"));
             return 0;
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1555,19 +1456,18 @@ label_2181_internal:
     case 301:
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1575,97 +1475,62 @@ label_2181_internal:
         {
             if (tc == cc)
             {
-                int stat =
-                    cell_findspace(cdata[0].position.x, cdata[0].position.y, 1);
+                int stat = cell_findspace(
+                    cdata.player().position.x, cdata.player().position.y, 1);
                 if (stat == 0)
                 {
-                    txt(lang(
-                        u8"降りるスペースがない。"s,
-                        u8"There's no place to get off."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.mount.no_place_to_get_off"));
                     break;
                 }
                 cell_setchara(gdata_mount, rtval, rtval(1));
-                txt(lang(
-                    name(gdata_mount) + u8"から降りた。"s,
-                    u8"You dismount from "s + name(gdata_mount) + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.mount.dismount", cdata[gdata_mount]));
                 txtef(9);
-                if (jp)
-                {
-                    txt(name(gdata_mount) + u8"「ふぅ」"s,
-                        name(gdata_mount) + u8"「乗り心地はよかった？」"s,
-                        name(gdata_mount) + u8"「疲れた…」"s,
-                        name(gdata_mount) + u8"「またいつでも乗ってね♪」"s);
-                }
-                if (en)
-                {
-                    txt(name(gdata_mount) + u8" "s + u8"\"Phew.\""s,
-                        name(gdata_mount) + u8" "s + u8"\"How was my ride?\""s,
-                        name(gdata_mount) + u8" "s + u8"\"Tired...tired...\""s,
-                        name(gdata_mount) + u8" "s + u8"\"It was nice.\""s);
-                }
+                txt(name(gdata_mount)
+                    + i18n::s.get("core.locale.magic.mount.dismount_dialog"));
                 ride_end();
                 break;
             }
         }
         if (tc >= 16)
         {
-            txt(lang(
-                u8"仲間にしか騎乗できない。"s,
-                u8"You can only ride an ally."s));
+            txt(i18n::s.get("core.locale.magic.mount.only_ally"));
             break;
         }
         if (cdata[tc].is_escorted() == 1
             || cdata[tc].is_escorted_in_sub_quest() == 1)
         {
-            txt(lang(
-                u8"護衛対象には騎乗できない。"s,
-                u8"You can't ride a client."s));
+            txt(i18n::s.get("core.locale.magic.mount.not_client"));
             break;
         }
         if (tc == cc)
         {
             if (gdata_mount == 0)
             {
-                txt(lang(
-                    name(cc) + u8"は自分に乗ろうとした。"s,
-                    u8"You try to ride yourself."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.mount.ride_self", cdata[cc]));
             }
             break;
         }
         if (cdata[tc].current_map != 0)
         {
-            txt(lang(
-                u8"その仲間はこの場所に滞在中だ。"s,
-                u8"The ally currently stays in this area."s));
+            txt(i18n::s.get("core.locale.magic.mount.stays_in_area"));
             break;
         }
         if (gdata_mount != 0)
         {
-            txt(lang(
-                u8"現在"s + name(cc) + u8"は"s + name(gdata_mount)
-                    + u8"に騎乗している。"s,
-                name(cc) + u8" "s + is(cc) + u8" currently riding "s
-                    + name(gdata_mount) + u8"."s));
+            txt(i18n::s.get(
+                "core.locale.magic.mount.currently_riding",
+                cdata[cc],
+                cdata[gdata_mount]));
         }
         else
         {
             ride_begin(tc);
             txtef(9);
-            if (jp)
-            {
-                txt(name(gdata_mount) + u8"「うぐぅ」"s,
-                    name(gdata_mount) + u8"「ダイエットしてよ…」"s,
-                    name(gdata_mount) + u8"「いくよ！」"s,
-                    name(gdata_mount) + u8"「やさしくしてね♪」"s);
-            }
-            if (en)
-            {
-                txt(name(gdata_mount) + u8" "s + u8"\"Awww.\""s,
-                    name(gdata_mount) + u8" "s
-                        + u8"\"You should go on a diet.\""s,
-                    name(gdata_mount) + u8" "s + u8"\"Let's roll!\""s,
-                    name(gdata_mount) + u8" "s + u8"\"Be gentle.\""s);
-            }
+            txt(name(gdata_mount)
+                + i18n::s.get("core.locale.magic.mount.mount.dialog"));
         }
         break;
     case 183:
@@ -1674,7 +1539,7 @@ label_2181_internal:
             f = 0;
             for (const auto& cnt : items(cc))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }
@@ -1692,30 +1557,27 @@ label_2181_internal:
         }
         if (sdata(183, cc) == 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(cdata[cc]))
             {
-                txt(lang(
-                    name(cc) + u8"は演奏のやり方を知らない。"s,
-                    name(cc) + u8" "s + does((cc == 0))
-                        + u8"n't know how to play an instrument."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.perform.do_not_know", cdata[cc]));
                 return 0;
             }
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1724,8 +1586,7 @@ label_2181_internal:
     case 184:
         if (sdata(184, 0) == 0)
         {
-            txt(lang(
-                u8"料理の仕方を知らない。"s, u8"You don't know how to cook."s));
+            txt(i18n::s.get("core.locale.magic.cook.do_not_know"));
             return 0;
         }
         cooktool = ci;
@@ -1733,7 +1594,7 @@ label_2181_internal:
         invctrl = 16;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (!result.succeeded)
             {
                 return 0;
@@ -1741,19 +1602,18 @@ label_2181_internal:
         }
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1762,21 +1622,17 @@ label_2181_internal:
     case 185:
         if (sdata(185, 0) == 0)
         {
-            txt(lang(
-                u8"釣りの仕方を知らない。"s, u8"You don't know how to fish."s));
+            txt(i18n::s.get("core.locale.magic.fish.do_not_know"));
             return 0;
         }
         if (!inv_getspace(0))
         {
-            txt(lang(
-                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
             return 0;
         }
         if (inv[ci].count == 0)
         {
-            txt(lang(
-                u8"釣竿には餌が付いていない。"s,
-                u8"You need a bait to fish."s));
+            txt(i18n::s.get("core.locale.magic.fish.need_bait"));
             return 0;
         }
         f = 0;
@@ -1784,7 +1640,7 @@ label_2181_internal:
         {
             y = cdata[cc].position.y + cnt - 1;
             x = cdata[cc].position.x;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {
                 continue;
             }
@@ -1800,7 +1656,8 @@ label_2181_internal:
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
-                if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+                if (x < 0 || y < 0 || x >= mdata_map_width
+                    || y >= mdata_map_height)
                 {
                     continue;
                 }
@@ -1814,55 +1671,52 @@ label_2181_internal:
         if (f == 0)
         {
             ++msgdup;
-            txt(lang(
-                u8"釣りをする場所が見当たらない。"s,
-                u8"This isn't a good place to fish."s));
+            txt(i18n::s.get("core.locale.magic.fish.not_good_place"));
             update_screen();
             return 0;
         }
-        if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 3)
+        if (chipm(
+                0, map(cdata.player().position.x, cdata.player().position.y, 0))
+            == 3)
         {
-            txt(lang(
-                u8"水の中からは釣れない。"s,
-                u8"You can't fish while swimming."s));
+            txt(i18n::s.get("core.locale.magic.fish.cannot_during_swim"));
             update_screen();
             return 0;
         }
-        if (cdata[0].position.x - x > 0)
+        if (cdata.player().position.x - x > 0)
         {
-            cdata[0].direction = 1;
+            cdata.player().direction = 1;
         }
-        if (cdata[0].position.x - x < 0)
+        if (cdata.player().position.x - x < 0)
         {
-            cdata[0].direction = 2;
+            cdata.player().direction = 2;
         }
-        if (cdata[0].position.y - y > 0)
+        if (cdata.player().position.y - y > 0)
         {
-            cdata[0].direction = 3;
+            cdata.player().direction = 3;
         }
-        if (cdata[0].position.y - y < 0)
+        if (cdata.player().position.y - y < 0)
         {
-            cdata[0].direction = 0;
+            cdata.player().direction = 0;
         }
-        gdata(35) = cdata[0].direction;
+        gdata(35) = cdata.player().direction;
         fishx = x;
         fishy = y;
         addefmap(fishx, fishy, 1, 3);
         if (cc == 0)
         {
-            if (cdata[0].sp < 50)
+            if (cdata.player().sp < 50)
             {
-                if (cdata[0].sp < rnd(75))
+                if (cdata.player().sp < rnd(75))
                 {
-                    txt(lang(
-                        u8"疲労し過ぎて失敗した！"s,
-                        u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
+                    txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                    damage_sp(
+                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
-            dmgsp(
-                0,
+            damage_sp(
+                cdata.player(),
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
@@ -1875,11 +1729,9 @@ label_2181_internal:
     case 407:
         if (is_cursed(efstatus))
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
-                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
+                txt(i18n::s.get("core.locale.magic.common.cursed", cdata[tc]));
             }
             goto label_2183_internal;
         }
@@ -1894,8 +1746,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type
-                != buff_data::type_t::hex)
+            if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffData::Type::hex)
             {
                 continue;
             }
@@ -1909,46 +1760,43 @@ label_2181_internal:
             }
             if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
             {
-                buff_delete(tc, i);
+                buff_delete(cdata[tc], i);
                 ++p;
                 --cnt;
                 continue;
             }
         }
-        buff_add(tc, 10, efp, 5 + efp / 30);
+        buff_add(cdata[tc], 10, efp, 5 + efp / 30, cdata[cc]);
         animeload(11, tc);
         break;
     case 1120:
         txtef(5);
-        txt(lang(
-            name(tc) + u8"は黄金の輝きに包まれた！"s,
-            u8"A golden aura wraps "s + name(tc) + u8"!"s));
+        txt(i18n::s.get("core.locale.magic.prayer", cdata[tc]));
         heal_completely();
-        play_animation(5);
+        BrightAuraAnimation(
+            cdata[tc].position, BrightAuraAnimation::Type::healing)
+            .play();
         break;
     case 1117:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (!is_cursed(efstatus))
         {
-            s = lang(u8"素材"s, u8"materials"s);
+            s = i18n::s.get("core.locale.magic.create_material.materials");
         }
         else
         {
-            s = lang(u8"クズ"s, u8"junks"s);
+            s = i18n::s.get("core.locale.magic.create_material.junks");
         }
         snd(24);
-        txt(lang(
-            u8"たくさんの"s + s + u8"が降ってきた！"s,
-            u8"Some "s + s + u8" fall from above!"s));
-        autosave = 1 * (gdata_current_map != 35);
+        txt(i18n::s.get("core.locale.magic.create_material.apply", s(0)));
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         for (int cnt = 0,
-                 cnt_end =
-                     (rnd(3) + 3 + (efstatus == curse_state_t::blessed) * 6);
+                 cnt_end = (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
              cnt < cnt_end;
              ++cnt)
         {
@@ -1973,11 +1821,8 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txt(lang(
-                name(cc) + u8"は"s + name(tc)
-                    + u8"を気の狂いそうな眼差しで見た。"s,
-                name(cc) + u8" cast"s + _s(cc) + u8" an insane glance on "s
-                    + name(tc) + u8"."s));
+            txt(i18n::s.get(
+                "core.locale.magic.mutation.spell", cdata[cc], cdata[tc]));
             if (rnd(3))
             {
                 break;
@@ -1985,16 +1830,14 @@ label_2181_internal:
         }
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (encfind(tc, 33) != -1)
         {
             if (rnd(5))
             {
-                txt(lang(
-                    u8"あなたは変異を受け付けなかった。"s,
-                    u8"You resist the threat of mutation."s));
+                txt(i18n::s.get("core.locale.magic.mutation.resist"));
                 break;
             }
         }
@@ -2010,7 +1853,7 @@ label_2181_internal:
             for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(45);
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 1)
                 {
                     continue;
@@ -2040,7 +1883,7 @@ label_2181_internal:
                 }
                 else if (p == -1)
                 {
-                    if (efstatus == curse_state_t::blessed)
+                    if (efstatus == CurseState::blessed)
                     {
                         if (rnd(3) == 0)
                         {
@@ -2053,7 +1896,7 @@ label_2181_internal:
                     }
                 }
                 trait(tid) += p;
-                txt(lang(u8"あなたは変容した！ "s, u8"You mutate."s));
+                txt(i18n::s.get("core.locale.magic.mutation.apply"));
                 if (p > 0)
                 {
                     txtef(2);
@@ -2071,7 +1914,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         chara_refresh(0);
@@ -2079,21 +1922,21 @@ label_2181_internal:
     case 1121:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (is_cursed(efstatus))
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+                txt(i18n::s.get("core.locale.magic.common.it_is_cursed"));
             }
             goto label_2182_internal;
         }
         f = 0;
         for (int cnt = 0,
                  cnt_end = cnt
-                 + (1 + (efstatus == curse_state_t::blessed)
+                 + (1 + (efstatus == CurseState::blessed)
                     + (!is_cursed(efstatus)) + rnd(2));
              cnt < cnt_end;
              ++cnt)
@@ -2101,7 +1944,7 @@ label_2181_internal:
             for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(217);
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 1)
                 {
                     continue;
@@ -2119,9 +1962,7 @@ label_2181_internal:
                     p = 1;
                 }
                 trait(tid) = 0;
-                txt(lang(
-                    u8"あなたは元の自分に近づいた気がした。"s,
-                    u8"You are now one step closer to yourself."s));
+                txt(i18n::s.get("core.locale.magic.cure_mutation"));
                 if (p > 0)
                 {
                     txtef(2);
@@ -2138,7 +1979,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         chara_refresh(0);
@@ -2146,7 +1987,7 @@ label_2181_internal:
     case 411:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2156,43 +1997,42 @@ label_2181_internal:
         ctrl_inventory();
         break;
     case 461:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (is_cursed(efstatus))
         {
-            txt(lang(
-                u8"冥界から死霊が呼び出された！"s,
-                u8"Hoards of undead raise from the hell!"s));
+            txt(i18n::s.get("core.locale.magic.resurrection.cursed"));
             for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata[0].level), calcfixlv(3));
+                flt(calcobjlv(cdata.player().level), calcfixlv(3));
                 fltn(u8"undead"s);
-                chara_create(-1, 0, cdata[0].position.x, cdata[0].position.y);
+                chara_create(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
             }
             obvious = 0;
             break;
         }
-        allyctrl = 2;
         {
-            int stat = show_hire_menu();
+            int stat = show_hire_menu(HireOperation::revive);
             if (stat == -1)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
                 break;
             }
             if (bonus < rnd(100))
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(cdata[cc]))
                 {
-                    txt(lang(
-                        name(cc) + u8"の力は冥界に及ばなかった。"s,
-                        name(cc) + your(cc)
-                            + u8" prayer doesn't reach the underworld."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.resurrection.fail", cdata[cc]));
                 }
                 break;
             }
@@ -2204,52 +2044,45 @@ label_2181_internal:
         chara_place();
         cdata[rc].current_map = 0;
         txtef(5);
-        txt(cnven(cdatan(0, rc))
-            + lang(
-                  u8"は復活した！"s,
-                  (u8" "s + have(rc) + u8" been resurrected!"s)));
-        txt(lang(u8"「ありがとう！」"s, u8"\"Thanks!\""s));
+        txt(i18n::s.get(
+            "core.locale.magic.resurrection.apply",
+            cnven(cdatan(0, rc)),
+            cdata[rc]));
+        txt(i18n::s.get("core.locale.magic.resurrection.dialog"));
         animode = 100 + rc;
-        play_animation(19);
+        MiracleAnimation().play();
         snd(120);
         cdata[rc].emotion_icon = 317;
         if (cc == 0)
         {
-            chara_mod_impression(rc, 15);
+            chara_modify_impression(cdata[rc], 15);
             if (rc >= 16)
             {
-                modify_karma(0, 2);
+                modify_karma(cdata.player(), 2);
             }
         }
         break;
     case 412:
-        if (efstatus == curse_state_t::none)
+        if (efstatus == CurseState::none)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"の装備品は白い光に包まれた。"s,
-                    name(tc) + u8" "s + your(tc)
-                        + u8" equipment are surrounded by a white aura."s));
+                txt(i18n::s.get("core.locale.magic.uncurse.apply", cdata[tc]));
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"は聖なる光に包み込まれた。"s,
-                    name(tc) + u8" "s + is(tc)
-                        + u8" surrounded by a holy aura."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.uncurse.blessed", cdata[tc]));
             }
         }
         if (is_cursed(efstatus))
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
-                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
+                txt(i18n::s.get("core.locale.magic.common.cursed", cdata[tc]));
             }
             goto label_2183_internal;
         }
@@ -2257,7 +2090,7 @@ label_2181_internal:
         p(2) = 0;
         for (const auto& cnt : items(tc))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -2267,15 +2100,15 @@ label_2181_internal:
             }
             ci = cnt;
             p = 0;
-            if (inv[ci].curse_state == curse_state_t::cursed)
+            if (inv[ci].curse_state == CurseState::cursed)
             {
                 p = rnd(200) + 1;
             }
-            if (inv[ci].curse_state == curse_state_t::doomed)
+            if (inv[ci].curse_state == CurseState::doomed)
             {
                 p = rnd(1000) + 1;
             }
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 p = p / 2 + 1;
             }
@@ -2288,7 +2121,7 @@ label_2181_internal:
                 if (efp >= p)
                 {
                     ++p(1);
-                    inv[ci].curse_state = curse_state_t::none;
+                    inv[ci].curse_state = CurseState::none;
                     item_stack(tc, ci, 1);
                 }
                 else
@@ -2297,40 +2130,35 @@ label_2181_internal:
                 }
             }
         }
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             if (p(1) != 0)
             {
-                if (is_in_fov(tc))
+                if (is_in_fov(cdata[tc]))
                 {
-                    txt(lang(
-                        u8"幾つかのアイテムが浄化された。"s,
-                        u8"The aura uncurses some "s + his(tc) + u8" stuff."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.uncurse.item", cdata[tc]));
                 }
             }
         }
         else if (p(1) != 0)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    u8"身に付けている装備の幾つかが浄化された。"s,
-                    u8"The aura uncurses some of "s + his(tc)
-                        + u8" equipment."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.uncurse.equipment", cdata[tc]));
             }
         }
         if (p(2) != 0)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    u8"幾つかのアイテムは抵抗した。"s,
-                    u8"Several items resist the aura and remain cursed."s));
+                txt(i18n::s.get("core.locale.magic.uncurse.resist"));
             }
         }
         if (p(1) == 0 && p(2) == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         else
@@ -2342,22 +2170,18 @@ label_2181_internal:
     case 413:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (is_cursed(efstatus))
         {
             artifactlocation.clear();
-            txt(lang(
-                u8"何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"s,
-                u8"You hear a sepulchral whisper but the voice is too small to distinguish a word."s));
+            txt(i18n::s.get("core.locale.magic.oracle.cursed"));
             break;
         }
         if (artifactlocation.empty())
         {
-            txt(lang(
-                u8"まだ特殊なアイテムは生成されていない。"s,
-                u8"No artifacts have been generated yet."s));
+            txt(i18n::s.get("core.locale.magic.oracle.no_artifacts"));
         }
         else
         {
@@ -2369,12 +2193,12 @@ label_2181_internal:
     case 1104:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+        for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2395,23 +2219,23 @@ label_2181_internal:
                     {
                         if (cnt2 == 0)
                         {
-                            s = lang(u8"突然、"s, u8"Suddenly, "s);
+                            s = i18n::s.get(
+                                "core.locale.magic.gain_knowledge.suddenly");
                         }
                         else
                         {
-                            s = lang(u8"さらに、"s, u8"Furthermore, "s);
+                            s = i18n::s.get(
+                                "core.locale.magic.gain_knowledge.furthermore");
                         }
-                        skillgain(0, p, 1, 200);
+                        chara_gain_skill(cdata.player(), p, 1, 200);
                         txtef(2);
-                        txt(lang(
-                            s + name(0) + u8"は"s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8"の魔法の知識を得た。"s,
-                            s + u8"you gain knowledge of a spell, "s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8"."s));
+                        txt(s
+                            + i18n::s.get(
+                                  "core.locale.magic.gain_knowledge.gain",
+                                  i18n::_(
+                                      u8"ability",
+                                      std::to_string(p),
+                                      u8"name")));
                         snd(24);
                         f = 1;
                         break;
@@ -2423,21 +2247,15 @@ label_2181_internal:
                     if (spell(p) > 0)
                     {
                         spell(p) = 0;
-                        txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.it_is_cursed"));
                         txtef(3);
-                        txt(lang(
-                            u8"突然、"s + name(0) + u8"は"s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(p + 400),
-                                      u8"name")
-                                + u8"の魔法の知識を失った。"s,
-                            u8"Suddenly, you lose knowledge of a spell, "s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(p + 400),
-                                      u8"name")
-                                + u8"."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_knowledge.lose",
+                            i18n::_(
+                                u8"ability",
+                                std::to_string(p + 400),
+                                u8"name")));
                         snd(117);
                         animeload(14, 0);
                         f = 1;
@@ -2448,19 +2266,19 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1143:
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             cdata[tc].experience = cdata[tc].required_experience;
             r2 = 0;
-            gain_level(tc);
-            if (is_in_fov(tc))
+            gain_level(cdata[tc]);
+            if (is_in_fov(cdata[tc]))
             {
                 snd(60);
             }
@@ -2469,21 +2287,19 @@ label_2181_internal:
         {
             if (cdata[tc].level <= 1)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
                 break;
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
-            update_required_experience(tc);
+            update_required_experience(cdata[tc]);
             txtef(8);
-            txt(lang(
-                name(tc) + u8"のレベルが下がった…"s,
-                name(tc) + u8" lose"s + _s(tc) + u8" a level..."s));
+            txt(i18n::s.get("core.locale.magic.descent", cdata[tc]));
         }
         if (is_cursed(efstatus))
         {
-            txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+            txt(i18n::s.get("core.locale.magic.common.it_is_cursed"));
             for (int cnt = 10; cnt < 50; ++cnt)
             {
                 if (rnd(3) == 0)
@@ -2492,7 +2308,7 @@ label_2181_internal:
                     {
                         if (sdata(cnt, tc) != 0)
                         {
-                            skillexp(cnt, tc, -1000);
+                            chara_gain_skill_exp(cdata[tc], cnt, -1000);
                         }
                     }
                 }
@@ -2516,20 +2332,15 @@ label_2181_internal:
                             continue;
                         }
                     }
-                    skillgain(tc, p, 1);
-                    if (is_in_fov(tc))
+                    chara_gain_skill(cdata[tc], p, 1);
+                    if (is_in_fov(cdata[tc]))
                     {
                         snd(24);
                         txtef(2);
-                        txt(lang(
-                            ""s + name(tc) + u8"は"s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8"の技術を獲得した！"s,
-                            name(tc) + u8" gain"s + _s(tc) + u8" a skill of "s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8"!"s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_skill",
+                            cdata[tc],
+                            i18n::_(u8"ability", std::to_string(p), u8"name")));
                     }
                     break;
                 }
@@ -2539,78 +2350,72 @@ label_2181_internal:
                     {
                         continue;
                     }
-                    if (is_in_fov(tc))
+                    if (is_in_fov(cdata[tc]))
                     {
                         snd(38);
-                        txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.common.it_is_cursed"));
                     }
-                    skillexp(p, tc, -1000);
+                    chara_gain_skill_exp(cdata[tc], p, -1000);
                     break;
                 }
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1107:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
-        if (cdata[0].god_id.empty())
+        if (cdata.player().god_id.empty())
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (is_cursed(efstatus))
         {
-            txt(lang(
-                u8"あなたの神はあなたの信仰に疑問を抱いた。"s,
-                u8"Your god doubts your faith."s));
+            txt(i18n::s.get("core.locale.magic.faith.doubt"));
             snd(117);
             animeload(14, 0);
-            skillexp(181, 0, -1000);
+            chara_gain_skill_exp(cdata.player(), 181, -1000);
             break;
         }
-        if (cdata[0].god_id.empty())
+        if (cdata.player().god_id.empty())
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         else
         {
             txtef(2);
-            txt(lang(
-                u8"あなたは"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8"の暖かい眼差しを感じた。"s,
-                u8"You feel as if "s
-                    + i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" is watching you."s));
-            if (efstatus == curse_state_t::blessed)
+            txt(i18n::s.get(
+                "core.locale.magic.faith.apply",
+                i18n::_(u8"god", cdata.player().god_id, u8"name")));
+            if (efstatus == CurseState::blessed)
             {
-                txt(lang(
-                    u8"空から三つ葉のクローバーがふってきた。"s,
-                    u8"A three-leaved falls from the sky."s));
+                txt(i18n::s.get("core.locale.magic.faith.blessed"));
             }
             animode = 100 + tc;
-            play_animation(19);
+            MiracleAnimation().play();
             snd(120);
-            cdata[0].praying_point += 500;
+            cdata.player().praying_point += 500;
             modpiety(75);
-            skillexp(
+            chara_gain_skill_exp(
+                cdata.player(),
                 181,
-                0,
-                1000 + (efstatus == curse_state_t::blessed) * 750,
+                1000 + (efstatus == CurseState::blessed) * 750,
                 6,
                 1000);
         }
         chara_refresh(tc);
         break;
     case 1119:
-        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+        for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2625,123 +2430,118 @@ label_2181_internal:
                         continue;
                     }
                     modify_potential(
-                        tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                        cdata[tc], p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                     if (cnt2 == 0)
                     {
-                        s = lang(""s, u8"The "s);
+                        s = i18n::s.get(
+                            "core.locale.magic.gain_skill_potential.the");
                     }
                     else
                     {
-                        s = lang(u8"さらに"s, u8"Furthermore, the "s);
+                        s = i18n::s.get(
+                            "core.locale.magic.gain_skill_potential."
+                            "furthermore_the");
                     }
                     if (!is_cursed(efstatus))
                     {
-                        if (is_in_fov(tc))
+                        if (is_in_fov(cdata[tc]))
                         {
                             snd(24);
                             txtef(2);
-                            txt(lang(
-                                s + ""s + name(tc) + u8"の"s
-                                    + i18n::_(
+                            txt(s
+                                + i18n::s.get(
+                                      "core.locale.magic.gain_skill_potential."
+                                      "increases",
+                                      cdata[tc],
+                                      i18n::_(
                                           u8"ability",
                                           std::to_string(p),
-                                          u8"name")
-                                    + u8"の技術の潜在能力が上昇した。"s,
-                                s + u8"potential of "s + name(tc) + your(tc)
-                                    + u8" "s
-                                    + i18n::_(
-                                          u8"ability",
-                                          std::to_string(p),
-                                          u8"name")
-                                    + u8" skill increases."s));
+                                          u8"name")));
                         }
                     }
-                    else if (is_in_fov(tc))
+                    else if (is_in_fov(cdata[tc]))
                     {
                         snd(117);
                         txtef(3);
-                        txt(lang(
-                            ""s + name(tc) + u8"の"s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8"の技術の潜在能力が減少した。"s,
-                            u8"The potential of "s + name(tc) + your(tc)
-                                + u8" "s
-                                + i18n::_(
-                                      u8"ability", std::to_string(p), u8"name")
-                                + u8" skill decreases."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.gain_skill_potential.decreases",
+                            cdata[tc],
+                            i18n::_(u8"ability", std::to_string(p), u8"name")));
                     }
                     break;
                 }
             }
         }
         chara_refresh(tc);
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 1106:
         i = rnd(10) + 10;
-        skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
-        play_animation(6);
+        chara_gain_skill_exp(
+            cdata[tc], i, efstatusfix(-2000, -2000, -1000, -250));
+        BrightAuraAnimation(
+            cdata[tc].position, BrightAuraAnimation::Type::debuff)
+            .play();
         chara_refresh(tc);
         break;
     case 1139:
-        txt(lang(
-            name(tc) + u8"の血は沸きあがるように熱くなった。"s,
-            name(tc) + your(tc) + u8" blood burns and a new strength fills "s
-                + his(tc) + u8" body!"s));
-        skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
-        if (efstatus == curse_state_t::blessed)
+        txt(i18n::s.get("core.locale.magic.troll_blood.apply", cdata[tc]));
+        chara_gain_skill_exp(
+            cdata[tc], 18, efstatusfix(-4000, -1000, 8000, 12000));
+        if (efstatus == CurseState::blessed)
         {
-            modify_potential(tc, 18, 15);
+            modify_potential(cdata[tc], 18, 15);
             txtef(2);
-            txt(lang(u8"あつつ！"s, u8"It really burns!"s));
+            txt(i18n::s.get("core.locale.magic.troll_blood.blessed"));
         }
         chara_refresh(tc);
         break;
     case 1113:
-        if (efstatus == curse_state_t::blessed)
+        if (efstatus == CurseState::blessed)
         {
             for (int cnt = 10; cnt < 18; ++cnt)
             {
                 modify_potential(
-                    tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
+                    cdata[tc],
+                    cnt,
+                    rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
             }
-            txt(lang(
-                name(tc) + u8"の全ての能力の潜在能力が上昇した。"s,
-                name(tc) + your(tc)
-                    + u8" potential of every attribute expands."s));
+            txt(i18n::s.get(
+                "core.locale.magic.gain_potential.blessed", cdata[tc]));
             animode = 100 + tc;
-            play_animation(19);
+            MiracleAnimation().play();
             snd(61);
         }
         else
         {
             i = rnd(8) + 10;
             const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
-            if (efstatus == curse_state_t::none)
+            if (efstatus == CurseState::none)
             {
-                txt(lang(
-                    name(tc) + u8"の"s + valn + u8"の潜在能力が上昇した。"s,
-                    name(tc) + your(tc) + u8" potential of "s + valn
-                        + u8" expands."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.gain_potential.increases",
+                    cdata[tc],
+                    valn));
                 modify_potential(
-                    tc, i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
+                    cdata[tc],
+                    i,
+                    rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
                 snd(24);
             }
             else
             {
-                txt(lang(
-                    name(tc) + u8"の"s + valn + u8"の潜在能力が減少した。"s,
-                    name(tc) + your(tc) + u8" potential of "s + valn
-                        + u8" decreases."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.gain_potential.decreases",
+                    cdata[tc],
+                    valn));
                 modify_potential(
-                    tc,
+                    cdata[tc],
                     i,
                     (rnd(sdata.get(i, tc).potential / 10 + 10) + 1) * -1);
                 snd(117);
             }
         }
-        autosave = 1 * (gdata_current_map != 35);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 653:
         if (tc < 57)
@@ -2752,16 +2552,14 @@ label_2181_internal:
         {
             break;
         }
-        txt(lang(
-            name(tc) + u8"は消え去った。"s,
-            name(tc) + u8" vanish"s + _s(tc) + u8"."s));
+        txt(i18n::s.get("core.locale.magic.vanish", cdata[tc]));
         chara_vanquish(tc);
         break;
     case 430:
     case 429:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2772,10 +2570,12 @@ label_2181_internal:
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end;
+                 ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end;
+                     ++cnt)
                 {
                     x = cnt;
                     p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
@@ -2792,7 +2592,7 @@ label_2181_internal:
                         continue;
                     }
                     if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
-                        || efstatus == curse_state_t::blessed)
+                        || efstatus == CurseState::blessed)
                     {
                         if (efid == 429)
                         {
@@ -2811,23 +2611,19 @@ label_2181_internal:
         }
         if (is_cursed(efstatus))
         {
-            txt(lang(
-                u8"あれ…？あなたは軽い記憶障害を受けた。"s,
-                u8"Hmm? You suffer minor memory defect."s));
+            txt(i18n::s.get("core.locale.magic.sense.cursed"));
         }
         else
         {
             if (efid == 429)
             {
-                txt(lang(
-                    name(tc) + u8"は周囲の地形を察知した。"s,
-                    name(tc) + u8" sense"s + _s(tc) + u8" nearby locations."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.sense.magic_mapping", cdata[tc]));
             }
             if (efid == 430)
             {
-                txt(lang(
-                    name(tc) + u8"は周囲の物質を感知した。"s,
-                    name(tc) + u8" sense"s + _s(tc) + u8" nearby objects."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.sense.sense_object", cdata[tc]));
             }
         }
         animeload(10, tc);
@@ -2839,56 +2635,48 @@ label_2181_internal:
         {
             break;
         }
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd(105);
             txtef(3);
-            txt(lang(u8" *ブシュッ* "s, u8"*Gash*"s));
+            txt(i18n::s.get("core.locale.magic.vorpal.sound"));
             if (tc >= 16)
             {
                 gdata(809) = 2;
                 txt3rd = 1;
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"の首をちょんぎり"s,
-                    name(cc) + u8" cut"s + _s(cc) + u8" "s + name(tc) + your(tc)
-                        + u8" head and"s));
+                txt(i18n::s.get(
+                    "core.locale.magic.vorpal.other", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"の首をちょんぎった。"s,
-                    name(cc) + u8" cut"s + _s(cc) + u8" "s + name(tc) + your(tc)
-                        + u8" head."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.vorpal.ally", cdata[cc], cdata[tc]));
             }
         }
-        dmghp(tc, cdata[tc].max_hp, cc, 658);
+        damage_hp(cdata[tc], cdata[tc].max_hp, cc, 658);
         break;
     case 440:
     case 439:
         if (efid == 439)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 if (is_cursed(efstatus))
                 {
                     snd(117);
-                    txt(lang(
-                        name(tc) + u8"の肉体は蝕まれた。"s,
-                        name(tc) + your(tc) + u8" body is damaged."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.cursed", cdata[tc]));
                 }
                 else
                 {
-                    txt(lang(
-                        name(tc) + u8"の肉体は復活した。"s,
-                        name(tc) + your(tc) + u8" body is restored."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.apply", cdata[tc]));
                     animeload(10, tc);
                 }
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
-                    txt(lang(
-                        u8"さらに、"s + name(tc) + u8"の肉体は強化された。"s,
-                        u8"In addition, "s + his(tc)
-                            + u8" body is enchanted."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.body.blessed", cdata[tc]));
                     animeload(10, tc);
                 }
             }
@@ -2901,28 +2689,24 @@ label_2181_internal:
         }
         if (efid == 440)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 if (is_cursed(efstatus))
                 {
                     snd(117);
-                    txt(lang(
-                        name(tc) + u8"の精神は蝕まれた。"s,
-                        name(tc) + your(tc) + u8" spirit is damaged."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.cursed", cdata[tc]));
                 }
                 else
                 {
-                    txt(lang(
-                        name(tc) + u8"の精神は復活した。"s,
-                        name(tc) + your(tc) + u8" spirit is restored."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.apply", cdata[tc]));
                     animeload(10, tc);
                 }
-                if (efstatus == curse_state_t::blessed)
+                if (efstatus == CurseState::blessed)
                 {
-                    txt(lang(
-                        u8"さらに、"s + name(tc) + u8"の精神は強化された。"s,
-                        u8"In addition, "s + his(tc)
-                            + u8" spirit is enchanted."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.restore.mind.blessed", cdata[tc]));
                     animeload(10, tc);
                 }
             }
@@ -2953,7 +2737,7 @@ label_2181_internal:
             {
                 cdata[tc].attr_adjs[attr] = 0;
             }
-            if (efstatus == curse_state_t::blessed)
+            if (efstatus == CurseState::blessed)
             {
                 cdata[tc].attr_adjs[attr] =
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
@@ -2964,20 +2748,19 @@ label_2181_internal:
     case 441:
         what_do_you_wish_for();
         screenupdate = -1;
-        label_1416();
+        gmode(2);
+        update_screen();
         break;
     case 1141:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (gdata_is_returning_or_escaping != 0)
         {
-            txt(lang(
-                u8"脱出を中止した。"s,
-                u8"The air around you gradually loses power."s));
+            txt(i18n::s.get("core.locale.magic.escape.cancel"));
             gdata_is_returning_or_escaping = 0;
         }
         else
@@ -2985,9 +2768,7 @@ label_2181_internal:
             int stat = quest_is_return_forbidden();
             if (stat == 1)
             {
-                txt(lang(
-                    u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
-                    u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
+                txt(i18n::s.get("core.locale.magic.escape.during_quest"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
@@ -2995,18 +2776,15 @@ label_2181_internal:
                     break;
                 }
             }
-            txt(lang(
-                u8"周囲の大気がざわめきだした。"s,
-                u8"The air around you becomes charged."s));
-            if (adata(16, gdata_current_map) == 8)
+            txt(i18n::s.get("core.locale.magic.escape.begin"));
+            if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
             {
                 if (gdata_current_dungeon_level == adata(10, gdata_current_map))
                 {
                     if (adata(20, gdata_current_map) != -1)
                     {
-                        txt(lang(
-                            u8"このままダンジョンを出ると、この階のクエストは達成できない…"s,
-                            u8"The lord of the dungeon might disappear if you escape now."s));
+                        txt(i18n::s.get(
+                            "core.locale.magic.escape.lord_may_disappear"));
                     }
                 }
             }
@@ -3026,15 +2804,13 @@ label_2181_internal:
     case 428:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (gdata_is_returning_or_escaping != 0)
         {
-            txt(lang(
-                u8"帰還を中止した。"s,
-                u8"The air around you gradually loses power."s));
+            txt(i18n::s.get("core.locale.magic.return.cancel"));
             gdata_is_returning_or_escaping = 0;
         }
         else
@@ -3051,94 +2827,79 @@ label_2181_internal:
         }
         break;
     case 621:
-        healmp(tc, efp / 2 + rnd((efp / 2 + 1)));
-        if (is_in_fov(tc))
+        heal_mp(cdata[tc], efp / 2 + rnd((efp / 2 + 1)));
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"のマナが回復した。"s,
-                name(tc) + your(tc) + u8" mana is restored."s));
-            play_animation(5);
+            txt(i18n::s.get("core.locale.magic.harvest_mana", cdata[tc]));
+            BrightAuraAnimation(
+                cdata[tc].position, BrightAuraAnimation::Type::healing)
+                .play();
         }
         break;
     case 624:
-        healmp(tc, roll(dice1, dice2, bonus));
-        if (is_in_fov(tc))
+        heal_mp(cdata[tc], roll(dice1, dice2, bonus));
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は周囲からマナを吸い取った。"s,
-                name(tc) + u8" absorb"s + _s(tc) + u8" mana from the air."s));
-            play_animation(5);
+            txt(i18n::s.get("core.locale.magic.absorb_magic", cdata[tc]));
+            BrightAuraAnimation(
+                cdata[tc].position, BrightAuraAnimation::Type::healing)
+                .play();
         }
         break;
     case 1108:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は毒を浴びた！"s,
-                name(tc) + u8" "s + is(tc) + u8" hit by poison!"s));
+            txt(i18n::s.get("core.locale.magic.poison_attack", cdata[tc]));
         }
         if (cdata[tc].is_pregnant())
         {
             cdata[tc].is_pregnant() = false;
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"の体内のエイリアンは溶けた。"s,
-                    name(tc) + your(tc) + u8" alien children melt in "s
-                        + his(tc) + u8" stomach."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.common.melts_alien_children",
+                    cdata[tc]));
             }
         }
-        dmgcon(tc, status_ailment_t::poisoned, efp);
+        dmgcon(tc, StatusAilment::poisoned, efp);
         break;
     case 1111:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は墨を浴びた！"s,
-                u8"Ink squirts into "s + name(tc) + your(tc) + u8" face!"s));
+            txt(i18n::s.get("core.locale.magic.ink_attack", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::blinded, efp);
+        dmgcon(tc, StatusAilment::blinded, efp);
         break;
     case 1109:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"はひどい頭痛におそわれた！"s,
-                u8"A foul stench floods "s + name(tc) + your(tc)
-                    + u8" nostrils!"s));
+            txt(i18n::s.get("core.locale.magic.confusion", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::confused, efp);
+        dmgcon(tc, StatusAilment::confused, efp);
         break;
     case 1110:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は痺れた！"s,
-                name(tc) + u8" get"s + _s(tc) + u8" numbness!"s));
+            txt(i18n::s.get("core.locale.magic.paralysis", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::paralyzed, efp);
+        dmgcon(tc, StatusAilment::paralyzed, efp);
         break;
     case 1112:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は甘い液体を浴びた！"s,
-                u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
+            txt(i18n::s.get("core.locale.magic.sleep", cdata[tc]));
         }
-        dmgcon(tc, status_ailment_t::sleep, efp);
+        dmgcon(tc, StatusAilment::sleep, efp);
         break;
     case 645:
     case 1114:
     label_2183_internal:
         if (efid == 645)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc)
-                        + u8"を指差して呪いの言葉を呟いた。"s,
-                    name(cc) + u8" point"s + _s(cc) + u8" "s + name(tc)
-                        + u8" and mutter"s + _s(cc) + u8" a curse."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.curse.spell", cdata[cc], cdata[tc]));
             }
         }
         p = 75 + sdata(19, tc);
@@ -3156,22 +2917,20 @@ label_2181_internal:
             {
                 if (trait(42))
                 {
-                    txt(lang(
-                        u8"あなたは祈祷を捧げ呪いのつぶやきを無効にした。"s,
-                        u8"Your prayer nullifies the curse."s));
+                    txt(i18n::s.get("core.locale.magic.curse.no_effect"));
                     break;
                 }
             }
         }
         i = 0;
-        for (int cnt = 100; cnt < 130; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
-            if (cdata_body_part(tc, cnt) % 10000 == 0)
+            if (cdata[tc].body_parts[cnt] % 10000 == 0)
             {
                 continue;
             }
-            p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
-            if (inv[p(i)].curse_state == curse_state_t::blessed)
+            p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
+            if (inv[p(i)].curse_state == CurseState::blessed)
             {
                 if (rnd(10))
                 {
@@ -3185,11 +2944,11 @@ label_2181_internal:
             for (int cnt = 0; cnt < 200; ++cnt)
             {
                 p = get_random_inv(tc);
-                if (inv[p].number == 0)
+                if (inv[p].number() == 0)
                 {
                     continue;
                 }
-                if (inv[p].curse_state == curse_state_t::blessed)
+                if (inv[p].curse_state == CurseState::blessed)
                 {
                     if (rnd(10))
                     {
@@ -3204,19 +2963,18 @@ label_2181_internal:
         {
             i = p(rnd(i));
             const auto valn = itemname(i, 1, 1);
-            if (inv[i].curse_state == curse_state_t::cursed)
+            if (inv[i].curse_state == CurseState::cursed)
             {
-                inv[i].curse_state = curse_state_t::doomed;
+                inv[i].curse_state = CurseState::doomed;
             }
             else
             {
-                inv[i].curse_state = curse_state_t::cursed;
+                inv[i].curse_state = CurseState::cursed;
             }
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"の"s + valn + u8"は黒く輝いた。"s,
-                    name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.curse.apply", cdata[tc], valn));
             }
             chara_refresh(tc);
             snd(117);
@@ -3225,7 +2983,7 @@ label_2181_internal:
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         break;
@@ -3246,7 +3004,8 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何も起こらなかったようだ。"s, u8"Nothing happens."s));
+            txt(i18n::s.get(
+                "core.locale.magic.weaken_resistance.nothing_happens"));
             obvious = 0;
         }
         else
@@ -3261,10 +3020,10 @@ label_2181_internal:
     case 1137:
         if (cc != 0 && cc < 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
-        flt(cdata[0].level / 2 + 5, 3);
+        flt(cdata.player().level / 2 + 5, 3);
         p = 0;
         if (rnd(3) == 0)
         {
@@ -3272,23 +3031,17 @@ label_2181_internal:
         }
         if (efid == 1138)
         {
-            txt(lang(
-                u8"なんと、あなたには生き別れた血の繋がっていないぬこの妹がいた！"s,
-                u8"How...! You suddenly get a younger cat sister!"s));
+            txt(i18n::s.get("core.locale.magic.diary.cat_sister"));
             p = 210;
         }
         if (efid == 1123)
         {
-            txt(lang(
-                u8"なんと、あなたには生き別れた血の繋がっていない妹がいた！"s,
-                u8"How...! You suddenly get a younger sister!"s));
+            txt(i18n::s.get("core.locale.magic.diary.younger_sister"));
             p = 176;
         }
         if (efid == 1137)
         {
-            txt(lang(
-                u8"お嬢さんが空から降ってきた！"s,
-                u8"A young lady falls from the sky."s));
+            txt(i18n::s.get("core.locale.magic.diary.young_lady"));
             p = 211;
         }
         novoidlv = 1;
@@ -3299,17 +3052,17 @@ label_2181_internal:
     case 435:
         if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
-        if (gdata_current_map == 6 || gdata_current_map == 40
-            || gdata_current_map == 42)
+        if (gdata_current_map == mdata_t::MapId::arena
+            || gdata_current_map == mdata_t::MapId::pet_arena
+            || gdata_current_map == mdata_t::MapId::the_void)
         {
             obvious = 0;
-            txt(lang(
-                u8"この場所では効果がない。"s,
-                u8"The effect doesn't work in this area."s));
+            txt(i18n::s.get(
+                "core.locale.magic.domination.does_not_work_in_area"));
             break;
         }
         f = 1;
@@ -3337,15 +3090,12 @@ label_2181_internal:
         }
         else if (f == 0)
         {
-            txt(lang(
-                name(tc) + u8"は抵抗した。"s,
-                name(tc) + u8" resist"s + _s(tc) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.common.resists", cdata[tc]));
         }
         else
         {
-            txt(lang(
-                name(tc) + u8"は支配できない。"s,
-                name(tc) + u8" cannot be charmed."s));
+            txt(i18n::s.get(
+                "core.locale.magic.domination.cannot_be_charmed", cdata[tc]));
         }
         break;
     case 436:
@@ -3357,36 +3107,29 @@ label_2181_internal:
         {
             p(0) = 3;
             p(1) = 2 + rnd((efp / 50 + 1));
-            txt(lang(
-                u8"蜘蛛の巣が辺りを覆った。"s,
-                u8"The ground is covered with thick webbing."s));
+            txt(i18n::s.get("core.locale.magic.map_effect.web"));
         }
         if (efid == 437)
         {
-            txt(lang(
-                u8"辺りを濃い霧が覆った。"s,
-                u8"The air is wrapped in a dense fog."s));
+            txt(i18n::s.get("core.locale.magic.map_effect.fog"));
             p(0) = 3;
             p(1) = 2 + rnd((efp / 50 + 1));
         }
         if (efid == 455)
         {
-            txt(lang(
-                u8"酸の水溜りが発生した。"s, u8"Acid puddles are generated."s));
+            txt(i18n::s.get("core.locale.magic.map_effect.acid"));
             p(0) = 2;
             p(1) = 2 + rnd((efp / 50 + 1));
         }
         if (efid == 456)
         {
-            txt(lang(
-                u8"火柱が発生した。"s,
-                u8"Walls of fire come out from the ground."s));
+            txt(i18n::s.get("core.locale.magic.map_effect.fire"));
             p(0) = 2;
             p(1) = 2 + rnd((efp / 50 + 1));
         }
         if (efid == 634)
         {
-            txt(lang(u8"エーテルの霧が発生した。"s, u8"Ether mist spreads."s));
+            txt(i18n::s.get("core.locale.magic.map_effect.ether_mist"));
             p(0) = 2;
             p(1) = 1 + rnd((efp / 100 + 2));
         }
@@ -3396,7 +3139,7 @@ label_2181_internal:
             x = rnd(p) + tlocx - rnd(p);
             y = rnd(p) + tlocy - rnd(p);
             f = 1;
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+            if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {
                 f = 0;
             }
@@ -3446,7 +3189,7 @@ label_2181_internal:
     case 1145:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3457,13 +3200,11 @@ label_2181_internal:
         ctrl_inventory();
         if (inv[ci].quality < 4 || inv[ci].quality == 6)
         {
-            txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
+            txt(i18n::s.get("core.locale.common.it_is_impossible"));
             obvious = 0;
             break;
         }
-        txt(lang(
-            u8"アーティファクトの新しい銘は？"s,
-            u8"What do you want to name this artifact?"s));
+        txt(i18n::s.get("core.locale.magic.name.prompt"));
         {
             int stat = select_alias(3);
             if (stat == 0)
@@ -3476,14 +3217,12 @@ label_2181_internal:
         }
         inv[ci].subname = list(1, p) + 40000;
         randomize();
-        txt(lang(
-            u8"それは"s + listn(0, p) + u8"という銘になった。"s,
-            u8"It's now called "s + listn(0, p) + u8"."s));
+        txt(i18n::s.get("core.locale.magic.name.apply", listn(0, p)));
         break;
     case 49:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3492,7 +3231,7 @@ label_2181_internal:
         invctrl(1) = 7;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (!result.succeeded)
             {
                 break;
@@ -3500,9 +3239,7 @@ label_2181_internal:
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
         {
-            txt(lang(
-                u8"そのアイテムに改良の余地はない。"s,
-                u8"This item leaves no room for improvement."s));
+            txt(i18n::s.get("core.locale.magic.garoks_hammer.no_effect"));
             fixmaterial = 0;
             objfix = 0;
             break;
@@ -3528,28 +3265,25 @@ label_2181_internal:
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
-        txt(lang(
-            u8"それは"s + itemname(ci, 1) + u8"になった。"s,
-            u8"It becomes "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.magic.garoks_hammer.apply", inv[ci]));
         if (equip != 0)
         {
-            cdata_body_part(cc, equip) =
-                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata[cc].body_parts[equip - 100] =
+                cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
         chara_refresh(cc);
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        autosave = 1 * (gdata_current_map != 35);
+        inv[ci].modify_number(-1);
+        autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
         break;
     case 21:
     case 1127:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3558,7 +3292,7 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
         if (inv[ci].quality == 5 || ibit(10, ci) == 1)
@@ -3575,19 +3309,16 @@ label_2181_internal:
             {
                 if (efp < 350)
                 {
-                    txt(lang(
-                        u8"アーティファクトの再生成にはパワーが足りない。"s,
-                        u8"More magic power is needed to reconstruct an artifact."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.change_material.more_power_needed"));
                     break;
                 }
                 animeload(8, cc);
-                txt(lang(
-                    name(cc) + u8"の"s + itemname(ci, 1)
-                        + u8"は再生成された。"s,
-                    name(cc) + your(cc) + u8" "s + itemname(ci, 1, 1)
-                        + u8" is reconstructed."s));
-                --inv[ci].number;
-                cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                txt(i18n::s.get(
+                    "core.locale.magic.change_material.artifact_reconstructed",
+                    cdata[cc],
+                    inv[ci]));
+                inv[ci].modify_number(-1);
                 flt();
                 itemcreate(0, inv[ci].id, -1, -1, 0);
             }
@@ -3606,22 +3337,22 @@ label_2181_internal:
                 objfix = efp / 100;
                 randomize();
                 change_item_material();
-                txt(lang(
-                    name(cc) + u8"の"s + s + u8"は"s + itemname(ci, 1)
-                        + u8"に変化した。"s,
-                    name(cc) + your(cc) + u8" "s + s + u8" transforms into "s
-                        + itemname(ci, 1) + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.change_material.apply",
+                    cdata[cc],
+                    s(0),
+                    inv[ci]));
             }
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         if (equip != 0)
         {
-            cdata_body_part(cc, equip) =
-                cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
+            cdata[cc].body_parts[equip - 100] =
+                cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
         chara_refresh(cc);
@@ -3631,7 +3362,7 @@ label_2181_internal:
     case 1128:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3639,20 +3370,16 @@ label_2181_internal:
         p = rnd((efp + 1)) / 100 + 1;
         gdata_rights_to_succeed_to += p;
         txtef(5);
-        txt(lang(
-            u8"あなたは遺産相続人として認められた(+"s + p + u8")。"s,
-            u8"You claim the right of succession. (+"s + p + u8")"s));
-        txt(lang(
-            u8"今やあなたは"s + gdata_rights_to_succeed_to
-                + u8"個の遺産を相続できる。"s,
-            u8"You can now inherit "s + gdata_rights_to_succeed_to
-                + u8" items."s));
+        txt(i18n::s.get("core.locale.magic.deed_of_inheritance.claim", p(0)));
+        txt(i18n::s.get(
+            "core.locale.magic.deed_of_inheritance.can_now_inherit",
+            gdata_rights_to_succeed_to));
         break;
     case 1124:
     case 1125:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         invsubroutine = 1;
@@ -3668,24 +3395,20 @@ label_2181_internal:
         }
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 if (inv[ci].enhancement < efp / 100)
                 {
                     snd(24);
-                    txt(lang(
-                        itemname(ci) + u8"は黄金の光に包まれた。"s,
-                        itemname(ci) + u8" "s + is2(inv[ci].number)
-                            + u8" surrounded by a golden aura."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.enchant.apply", inv[ci]));
                     ++inv[ci].enhancement;
                 }
                 else
                 {
-                    txt(lang(
-                        itemname(ci) + u8"は抵抗した。"s,
-                        itemname(ci) + u8" resist"s + _s2(inv[ci].number)
-                            + u8"."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.enchant.resist", inv[ci]));
                 }
                 chara_refresh(cc);
             }
@@ -3699,7 +3422,7 @@ label_2181_internal:
     case 1129:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3707,23 +3430,20 @@ label_2181_internal:
         {
             if (gdata_charge_power < 10)
             {
-                txt(lang(
-                    u8"充填するには最低でも魔力の貯蓄が10必要だ。"s,
-                    u8"You need at least 10 recharge powers to recharge items."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.fill_charge.more_power_needed"));
                 break;
             }
             gdata_charge_power -= 10;
-            txt(lang(
-                u8"魔力の貯蓄を10消費した(残り"s + gdata_charge_power + u8")"s,
-                u8"You spend 10 recharge powers. (Total:"s + gdata_charge_power
-                    + u8")"s));
+            txt(i18n::s.get(
+                "core.locale.magic.fill_charge.spend", gdata_charge_power));
         }
         invsubroutine = 1;
         invctrl(0) = 23;
         invctrl(1) = 3;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 dbid = inv[ci].id;
@@ -3732,9 +3452,8 @@ label_2181_internal:
                     || inv[ci].id == 289 || inv[ci].id == 732
                     || (inv[ci].id == 687 && inv[ci].param2 != 0))
                 {
-                    txt(lang(
-                        u8"それは充填ができないようだ。"s,
-                        u8"You can't recharge this item."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.cannot_recharge"));
                     break;
                 }
                 f = 1;
@@ -3744,9 +3463,9 @@ label_2181_internal:
                 }
                 if (f == -1)
                 {
-                    txt(lang(
-                        itemname(ci) + u8"はこれ以上充填できないようだ。"s,
-                        itemname(ci) + u8" cannot be recharged anymore."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.cannot_recharge_anymore",
+                        inv[ci]));
                     break;
                 }
                 if (rnd(efp / 25 + 1) == 0)
@@ -3775,10 +3494,8 @@ label_2181_internal:
                     {
                         p = 1;
                     }
-                    txt(lang(
-                        itemname(ci) + u8"は充填された(+"s + p + u8")。"s,
-                        itemname(ci) + u8" "s + is2(inv[ci].number)
-                            + u8" recharged by +"s + p + u8"."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.apply", inv[ci], p(0)));
                     inv[ci].count += p;
                     animeload(8, cc);
                 }
@@ -3786,17 +3503,14 @@ label_2181_internal:
                 {
                     if (rnd(4) == 0)
                     {
-                        txt(lang(
-                            itemname(ci) + u8"は破裂した。"s,
-                            itemname(ci) + u8" explode"s + _s2(inv[ci].number)
-                                + u8"."s));
-                        --inv[ci].number;
+                        txt(i18n::s.get(
+                            "core.locale.magic.fill_charge.explodes", inv[ci]));
+                        inv[ci].modify_number(-1);
                         refresh_burden_state();
                         break;
                     }
-                    txt(lang(
-                        itemname(ci) + u8"への充填は失敗した。"s,
-                        u8"You fail to recharge "s + itemname(ci) + u8"."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.fill_charge.fail", inv[ci]));
                 }
             }
             else
@@ -3808,7 +3522,7 @@ label_2181_internal:
     case 629:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3817,7 +3531,7 @@ label_2181_internal:
         invctrl(1) = 5;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
                 dbid = inv[ci].id;
@@ -3849,14 +3563,12 @@ label_2181_internal:
                 animeload(8, cc);
                 p = p * inv[ci].count;
                 gdata_charge_power += p;
-                txt(lang(
-                    itemname(ci) + u8"を破壊して"s + p
-                        + u8"の魔力を抽出した(計"s + gdata_charge_power
-                        + u8")"s,
-                    u8"You destroy "s + itemname(ci) + u8" and extract "s + p
-                        + u8" recharge powers. (Total:"s + gdata_charge_power
-                        + u8")"s));
-                item_remove(inv[ci]);
+                txt(i18n::s.get(
+                    "core.locale.magic.draw_charge",
+                    inv[ci],
+                    p(0),
+                    gdata_charge_power));
+                inv[ci].remove();
                 refresh_burden_state();
             }
         }
@@ -3865,7 +3577,7 @@ label_2181_internal:
     label_2184_internal:
         if (tc == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3887,33 +3599,28 @@ label_2181_internal:
         if (f == 1)
         {
             animeload(8, tc);
-            txt(lang(
-                name(tc) + u8"は変化した。"s,
-                name(tc) + u8" change"s + _s(tc) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.change.apply", cdata[tc]));
             flt(calcobjlv(cdata[tc].level + 3), 2);
             chara_create(56, 0, -3, 0);
-            chara_relocate(56, tc, 1);
+            chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
             cdata[tc].enemy_id = cc;
             cdata[tc].is_quest_target() = false;
             quest_check();
         }
         else if (f == 0)
         {
-            txt(lang(
-                name(tc) + u8"は抵抗した。"s,
-                name(tc) + u8" resist"s + _s(tc) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.common.resists", cdata[tc]));
         }
         else
         {
-            txt(lang(
-                name(tc) + u8"は変化できない。"s,
-                name(tc) + u8" cannot be changed."s));
+            txt(i18n::s.get(
+                "core.locale.magic.change.cannot_be_changed", cdata[tc]));
         }
         break;
     case 1140:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3922,10 +3629,11 @@ label_2181_internal:
         invctrl(1) = 6;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             if (result.succeeded)
             {
-                autosave = 1 * (gdata_current_map != 35);
+                autosave =
+                    1 * (gdata_current_map != mdata_t::MapId::show_house);
                 animeload(8, cc);
                 if (!is_cursed(efstatus))
                 {
@@ -3938,18 +3646,15 @@ label_2181_internal:
                         if (inv[ci].pv > 0)
                         {
                             inv[ci].pv -= inv[ci].pv / 10 + 1
-                                + (efstatus != curse_state_t::blessed);
+                                + (efstatus != CurseState::blessed);
                         }
                         if (inv[ci].damage_bonus > 0)
                         {
                             inv[ci].damage_bonus -= inv[ci].damage_bonus / 10
-                                + 1 + (efstatus != curse_state_t::blessed);
+                                + 1 + (efstatus != CurseState::blessed);
                         }
                     }
-                    txt(lang(
-                        ""s + itemname(ci, 1)
-                            + u8"は羽が生えたように軽くなった。"s,
-                        itemname(ci, 1) + u8" becomes light as a feather."s));
+                    txt(i18n::s.get("core.locale.magic.flying.apply", inv[ci]));
                 }
                 else
                 {
@@ -3963,15 +3668,14 @@ label_2181_internal:
                         inv[ci].damage_bonus +=
                             clamp(inv[ci].damage_bonus / 10, 1, 5);
                     }
-                    txt(lang(
-                        ""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
-                        itemname(ci, 1) + u8" becomes heavy."s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.flying.cursed", inv[ci]));
                 }
                 refresh_burden_state();
             }
             else
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
             }
         }
@@ -3980,7 +3684,7 @@ label_2181_internal:
     case 1132:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3989,7 +3693,7 @@ label_2181_internal:
         invctrl(1) = 4;
         snd(100);
         {
-            menu_result result = ctrl_inventory();
+            MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
         if (f)
@@ -4001,11 +3705,11 @@ label_2181_internal:
         }
         if (f == 1)
         {
-            autosave = 1 * (gdata_current_map != 35);
+            autosave = 1 * (gdata_current_map != mdata_t::MapId::show_house);
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
-            item_remove(inv[ci]);
+            inv[ci].remove();
             for (int cnt = 0;; ++cnt)
             {
                 flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
@@ -4020,7 +3724,7 @@ label_2181_internal:
                 }
                 if (inv[ci].value > valuebk * 3 / 2 + 1000)
                 {
-                    item_remove(inv[ci]);
+                    inv[ci].remove();
                     continue;
                 }
                 else
@@ -4028,14 +3732,12 @@ label_2181_internal:
                     break;
                 }
             }
-            txt(lang(
-                u8"それは"s + itemname(ci, 1) + u8"に変容した。"s,
-                u8"It is metamorphosed into "s + itemname(ci, 1) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.alchemy", inv[ci]));
             refresh_burden_state();
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         break;
@@ -4044,7 +3746,7 @@ label_2181_internal:
         x = tlocx;
         y = tlocy;
         f = 1;
-        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+        if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
         {
             f = 0;
         }
@@ -4075,8 +3777,7 @@ label_2181_internal:
             {
                 if (homemapmode == 0)
                 {
-                    txt(lang(
-                        u8"床が盛り上がってきた。"s, u8"A wall appears."s));
+                    txt(i18n::s.get("core.locale.magic.create.wall"));
                     p = tile_wall;
                 }
                 else
@@ -4095,12 +3796,10 @@ label_2181_internal:
                 snd(65);
                 if (chipm(0, map(x, y, 0)) == 6)
                 {
-                    txt(lang(
-                        u8"この壁は魔法を受け付けないようだ。"s,
-                        u8"These walls seem to resist your magic."s));
+                    txt(i18n::s.get("core.locale.magic.create.door.resist"));
                     break;
                 }
-                txt(lang(u8"扉が出現した。"s, u8"A door appears."s));
+                txt(i18n::s.get("core.locale.magic.create.door.apply"));
                 cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
                 if (chipm(7, map(x, y, 0)) & 4)
                 {
@@ -4112,33 +3811,33 @@ label_2181_internal:
         {
             if (homemapmode == 0)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
             }
             obvious = 0;
         }
         break;
     case 631:
         txtef(4);
-        txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        txt(i18n::s.get("core.locale.magic.swarm"));
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != Character::State::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state != 1)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            if (belong_to_same_team(cdata[cc], cdata[cnt]))
+            if (belong_to_same_team(cdata[cc], cnt))
             {
                 continue;
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
@@ -4151,12 +3850,12 @@ label_2181_internal:
             {
                 continue;
             }
-            play_animation(9);
+            SwarmAnimation(cdata[tc].position).play();
             try_to_melee_attack();
         }
         break;
     case 659:
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             break;
         }
@@ -4165,78 +3864,71 @@ label_2181_internal:
             break;
         }
         cell_featset(cdata[cc].position.x, cdata[cc].position.y, 0, 14, 7, cc);
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
-            txt(lang(
-                name(cc) + u8"は何かを投下した。"s,
-                name(cc) + u8" drop"s + _s(cc)
-                    + u8" something on the ground."s));
+            txt(i18n::s.get("core.locale.magic.drop_mine", cdata[cc]));
         }
         break;
     case 466:
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state != 1)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            if (cdata[cnt].is_immune_to_mine())
+            if (cnt.is_immune_to_mine())
             {
                 continue;
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) > 4)
             {
                 continue;
             }
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(tc) + u8"は重力を感じた。"s,
-                    name(tc) + u8" feel"s + _s(tc) + u8" gravity."s));
+                txt(i18n::s.get("core.locale.magic.gravity", cdata[tc]));
             }
             cdata[tc].gravity += 100 + rnd(100);
         }
         break;
     case 657:
         txtef(4);
-        txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
+        txt(i18n::s.get("core.locale.magic.mewmewmew"));
         animode = 0;
-        play_animation(19);
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        MiracleAnimation().play();
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cc].state != 1)
+            if (cdata[cc].state() != Character::State::alive)
             {
                 continue;
             }
-            if (cdata[cnt].state != 1)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
-            tc = cnt;
-            dmghp(tc, 9999999, cc);
+            tc = cnt.index;
+            damage_hp(cdata[tc], 9999999, cc);
         }
         break;
     case 465:
         txtef(4);
-        txt(lang(
-            u8"隕石が落ちてきた！"s,
-            u8"Innumerable meteorites fall all over the area!"s));
-        play_animation(22);
-        for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+        txt(i18n::s.get("core.locale.magic.meteor"));
+        MeteorAnimation().play();
+        for (int cnt = 0, cnt_end = (mdata_map_height); cnt < cnt_end; ++cnt)
         {
             dy = cnt;
-            for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata_map_width); cnt < cnt_end; ++cnt)
             {
                 dx = cnt;
                 if (rnd(3) == 0)
@@ -4251,31 +3943,29 @@ label_2181_internal:
                 {
                     tc = map(dx, dy, 1) - 1;
                     dmg = sdata(16, cc) * efp / 10;
-                    dmghp(tc, dmg, cc, 50, 1000);
+                    damage_hp(cdata[tc], dmg, cc, 50, 1000);
                 }
             }
         }
         break;
     case 656:
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
-            txt(lang(
-                name(cc) + u8"は仲間を鼓舞した。"s,
-                name(cc) + u8" cheer"s + _s(cc) + u8"."s));
+            txt(i18n::s.get("core.locale.magic.cheer.apply", cdata[cc]));
         }
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state != 1)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
-            if (cc == cnt)
+            if (cc == cnt.index)
             {
                 continue;
             }
             if (cc < 16)
             {
-                if (cnt >= 16)
+                if (cnt.index >= 16)
                 {
                     continue;
                 }
@@ -4284,7 +3974,7 @@ label_2181_internal:
                     continue;
                 }
             }
-            tc = cnt;
+            tc = cnt.index;
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
@@ -4297,40 +3987,35 @@ label_2181_internal:
             {
                 continue;
             }
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
                 txtef(4);
-                txt(lang(
-                    name(tc) + u8"は興奮した！"s,
-                    name(tc) + u8" "s + is(tc) + u8" excited!"s));
+                txt(i18n::s.get(
+                    "core.locale.magic.cheer.is_excited", cdata[tc]));
             }
-            buff_add(tc, 5, sdata(17, cc) * 5 + 50, 15);
-            buff_add(tc, 7, sdata(17, cc) * 5 + 100, 60);
-            buff_add(tc, 18, 1500, 30);
+            buff_add(cdata[tc], 5, sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            buff_add(cdata[tc], 7, sdata(17, cc) * 5 + 100, 60, cdata[cc]);
+            buff_add(cdata[tc], 18, 1500, 30, cdata[cc]);
         }
         break;
     case 1131:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         snd(64);
         if (!is_cursed(efstatus))
         {
             txtef(2);
-            txt(lang(
-                u8"エーテルの抗体があなたの体内に行き渡った。"s,
-                u8"Your Ether Disease is cured greatly."s));
-            modcorrupt(efp * -10);
+            txt(i18n::s.get("core.locale.magic.cure_corruption.apply"));
+            modify_ether_disease_stage(efp * -10);
         }
         else
         {
             txtef(8);
-            txt(lang(
-                u8"エーテルの病菌があなたの体内に行き渡った。"s,
-                u8" The Ether Disease spreads around your body."s));
-            modcorrupt(200);
+            txt(i18n::s.get("core.locale.magic.cure_corruption.cursed"));
+            modify_ether_disease_stage(200);
         }
         break;
     case 633:
@@ -4339,21 +4024,17 @@ label_2181_internal:
             break;
         }
         txtef(8);
-        txt(lang(
-            name(cc) + u8"に睨まれ、あなたはエーテルに侵食された。"s,
-            name(cc) + u8" gazes at you. Your Ether Disease deteriorates."s));
-        modcorrupt(100);
+        txt(i18n::s.get("core.locale.magic.eye_of_ether", cdata[cc]));
+        modify_ether_disease_stage(100);
         break;
     case 638:
     case 648:
         if (efid == 648)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"を罵倒した。"s,
-                    name(cc) + u8" insult"s + _s(cc) + u8" "s + name(tc)
-                        + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.insult.apply", cdata[cc], cdata[tc]));
                 txtef(9);
                 if (jp)
                 {
@@ -4405,32 +4086,25 @@ label_2181_internal:
         }
         if (efid == 638)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
-                    name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
-                        + u8"."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.gaze", cdata[cc], cdata[tc]));
             }
         }
-        dmgcon(tc, status_ailment_t::dimmed, 200);
+        dmgcon(tc, StatusAilment::dimmed, 200);
         break;
     case 652:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
-                name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
-                    + u8"."s));
+            txt(i18n::s.get("core.locale.magic.gaze", cdata[cc], cdata[tc]));
         }
-        dmgmp(tc, rnd(20) + 1);
+        damage_mp(cdata[tc], rnd(20) + 1);
         break;
     case 1133:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(tc) + u8"は炎に包まれた。"s,
-                name(tc) + u8" "s + is(tc) + u8" surrounded by flames."s));
+            txt(i18n::s.get("core.locale.magic.molotov", cdata[tc]));
         }
         mef_add(
             cdata[tc].position.x,
@@ -4443,17 +4117,15 @@ label_2181_internal:
         mapitem_fire(cdata[tc].position.x, cdata[tc].position.y);
         return 0;
     case 651:
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
-            txt(lang(
-                name(cc) + u8"は"s + name(tc) + u8"のバックパックを漁った。"s,
-                name(cc) + u8" loot"s + _s(cc) + u8" "s + name(tc) + your(tc)
-                    + u8" backpack."s));
+            txt(i18n::s.get(
+                "core.locale.magic.scavenge.apply", cdata[cc], cdata[tc]));
         }
         p = -1;
         for (const auto& cnt : items(tc))
         {
-            if (inv[cnt].number == 0)
+            if (inv[cnt].number() == 0)
             {
                 continue;
             }
@@ -4467,7 +4139,7 @@ label_2181_internal:
         {
             for (const auto& cnt : items(tc))
             {
-                if (inv[cnt].number == 0)
+                if (inv[cnt].number() == 0)
                 {
                     continue;
                 }
@@ -4490,33 +4162,27 @@ label_2181_internal:
         ci = p;
         if (ibit(6, ci))
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(cdata[tc]))
             {
-                txt(lang(
-                    name(cc) + u8"は"s + itemname(ci, 1)
-                        + u8"の異臭に気付き手をひっこめた。"s,
-                    name(cc) + u8" notice"s + _s(cc) + u8" unusual odor from "s
-                        + itemname(ci, 1) + u8" and step"s + _s(cc)
-                        + u8" back."s));
+                txt(i18n::s.get(
+                    "core.locale.magic.scavenge.rotten", cdata[cc], inv[ci]));
             }
             break;
         }
         rowact_item(ci);
-        if (is_in_fov(tc))
+        if (is_in_fov(cdata[tc]))
         {
             snd(18);
-            txt(lang(
-                name(cc) + u8"は"s + itemname(ci, 1) + u8"を食べた！"s,
-                name(cc) + u8" eat"s + _s(cc) + u8" "s + itemname(ci, 1)
-                    + u8"!"s));
+            txt(i18n::s.get(
+                "core.locale.magic.scavenge.eats", cdata[cc], inv[ci]));
         }
-        healhp(cc, cdata[cc].max_hp / 3);
+        heal_hp(cdata[cc], cdata[cc].max_hp / 3);
         continuous_action_eating_finish();
         refresh_burden_state();
         break;
     case 464:
     {
-        bool fastest = config::instance().animewait == 0;
+        bool fastest = Config::instance().animewait == 0;
         std::string messages;
 
         animeload(10, tc);
@@ -4544,9 +4210,8 @@ label_2181_internal:
             nostack = 1;
             itemcreate(
                 -1, dbid, cdata[cc].position.x, cdata[cc].position.y, number);
-            const auto message = lang(
-                itemname(ci) + u8"が降ってきた！"s,
-                itemname(ci) + u8" fall"s + _s2(inv[ci].number) + u8" down!"s);
+            const auto message =
+                i18n::s.get("core.locale.magic.wizards_harvest", inv[ci]);
             if (fastest)
             {
                 messages += message;
@@ -4554,7 +4219,7 @@ label_2181_internal:
             else
             {
                 txt(message);
-                await(config::instance().animewait * 4);
+                await(Config::instance().animewait * 4);
                 redraw();
             }
         }
@@ -4567,21 +4232,21 @@ label_2181_internal:
     }
     case 463:
         snd(72);
-        txt(lang(
-            u8"あなたは四次元のポケットを召喚した。"s,
-            u8"You summon 4 dimensional pocket."s));
+        txt(i18n::s.get("core.locale.magic.four_dimensional_pocket"));
         invfile = 8;
-        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+        tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+            ctrl_file(
+                FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
         }
         else
         {
             for (const auto& cnt : items(-1))
             {
-                item_remove(inv[cnt]);
+                inv[cnt].remove();
             }
         }
         shoptrade = 0;
@@ -4594,15 +4259,16 @@ label_2181_internal:
         snd(100);
         ctrl_inventory();
         invcontainer = 0;
-        ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
-        ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
+        ctrl_file(
+            FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
         mode = 0;
         break;
     }
 
 the_end:
     ci = efcibk;
-    efstatus = curse_state_t::none;
+    efstatus = CurseState::none;
     efsource = 0;
     return 1;
 }

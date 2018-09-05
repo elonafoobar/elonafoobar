@@ -1,10 +1,13 @@
 #include "audio.hpp"
+#include <cmath>
 #include <unordered_map>
+#include <boost/math/special_functions/gamma.hpp>
+#include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
 #include "snail/application.hpp"
-#include "variables.hpp"
 #include "snail/audio.hpp"
+#include "variables.hpp"
 
 
 namespace
@@ -19,22 +22,237 @@ constexpr int max_volume = MIX_MAX_VOLUME;
 // 8-12: temporary
 // 13-16: reserved for weather effect
 
-constexpr int max_channels = 17;
 constexpr int temporary_channels_head = 7;
 constexpr int temporary_channels_size = 6;
 
-
-std::vector<fs::path> soundfile;
 std::vector<int> soundlist;
 
 int envwprev{};
-int musicprev{};
+SharedId musicprev{};
+
+
+void sound_set_position(int channel, short angle, unsigned char distance)
+{
+    snail::audio::set_position(channel, angle, distance);
+}
+
+SharedId get_default_music()
+{
+    optional<std::string> music_id = none;
+
+    if (adata(0, gdata_current_map) == mdata_t::MapType::field)
+    {
+        return musicprev;
+    }
+    if (adata(0, gdata_current_map) == mdata_t::MapType::town)
+    {
+        music_id = "core.music:core.mcTown1"s;
+    }
+    if (adata(0, gdata_current_map) == mdata_t::MapType::player_owned)
+    {
+        music_id = "core.music:core.mcHome"s;
+    }
+    if (mdata_map_bgm != 0)
+    {
+        music_id = **the_music_db.get_id_from_legacy(mdata_map_bgm);
+    }
+    if (adata(0, gdata_current_map)
+        >= static_cast<int>(mdata_t::MapType::dungeon))
+    {
+        static const std::vector<std::string> choices = {
+            "core.music:core.mcDungeon1",
+            "core.music:core.mcDungeon2",
+            "core.music:core.mcDungeon3",
+            "core.music:core.mcDungeon4",
+            "core.music:core.mcDungeon5",
+            "core.music:core.mcDungeon6"};
+        music_id = choices[gdata_hour % 6];
+    }
+    if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
+        || adata(16, gdata_current_map) == mdata_t::MapId::the_void)
+    {
+        if (gdata_current_dungeon_level == adata(10, gdata_current_map))
+        {
+            if (adata(20, gdata_current_map) != -1)
+            {
+                music_id = "core.music:core.mcBoss"s;
+            }
+        }
+    }
+    if (gdata_current_map == mdata_t::MapId::quest)
+    {
+        if (gdata_executing_immediate_quest_type == 1001)
+        {
+            music_id = "core.music:core.mcBattle1"s;
+        }
+        if (gdata_executing_immediate_quest_type == 1006)
+        {
+            music_id = "core.music:core.mcVillage1"s;
+        }
+        if (gdata_executing_immediate_quest_type == 1009)
+        {
+            music_id = "core.music:core.mcCasino"s;
+        }
+        if (gdata_executing_immediate_quest_type == 1008)
+        {
+            music_id = "core.music:core.mcBoss"s;
+        }
+        if (gdata_executing_immediate_quest_type == 1010)
+        {
+            music_id = "core.music:core.mcArena";
+        }
+    }
+    if (gdata_current_map == mdata_t::MapId::arena)
+    {
+        music_id = "core.music:core.mcArena"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::larna)
+    {
+        music_id = "core.music:core.mcVillage1"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
+    {
+        music_id = "core.music:core.mcTown2"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::lumiest)
+    {
+        music_id = "core.music:core.mcTown2"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::yowyn)
+    {
+        music_id = "core.music:core.mcVillage1"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::derphy)
+    {
+        music_id = "core.music:core.mcTown3"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::palmia)
+    {
+        music_id = "core.music:core.mcTown4"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::cyber_dome)
+    {
+        music_id = "core.music:core.mcTown5"s;
+    }
+    if (gdata_current_map == mdata_t::MapId::noyel)
+    {
+        music_id = "core.music:core.mcTown6"s;
+    }
+
+    if (!music_id || adata(0, gdata_current_map) == mdata_t::MapType::world_map)
+    {
+        static const std::vector<std::string> choices = {
+            "core.music:core.mcField1",
+            "core.music:core.mcField2",
+            "core.music:core.mcField3"};
+        music_id = choices[gdata_day % 3];
+    }
+
+    return SharedId(*music_id);
+}
+
+void play_music_inner(const SharedId& music_id, int musicloop)
+{
+    if (musicprev != music_id)
+    {
+        musicprev = music_id;
+        stop_music();
+        auto music = the_music_db[music_id];
+        assert(music);
+        if (!fs::exists(music->file))
+        {
+            return;
+        }
+
+        // Since we're using SDL mixer, this should load any file
+        // format that mixer was compiled to support.
+        DMLOADFNAME(music->file, 0);
+        DMPLAY(musicloop, 0);
+    }
+}
 
 } // namespace
 
 
 namespace elona
 {
+
+namespace detail
+{
+
+void snd_inner(
+    const SoundData& sound,
+    short angle,
+    unsigned char dist,
+    bool loop,
+    bool allow_duplicate)
+{
+    if (!Config::instance().sound)
+        return;
+
+    int channel = sound.id;
+    if (channel > temporary_channels_head)
+    {
+        if (loop)
+        {
+            switch (sound.id)
+            {
+            case 78: channel = 14; break;
+            case 79: channel = 15; break;
+            case 80: channel = 16; break;
+            default: channel = 13; break;
+            }
+        }
+        else
+        {
+            channel = temporary_channels_head;
+            bool found{};
+            if (!allow_duplicate)
+            {
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
+                {
+                    if (CHECKPLAY(i)
+                        && soundlist[i - temporary_channels_head] == sound.id)
+                    {
+                        channel = i;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found)
+            {
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
+                {
+                    if (!CHECKPLAY(i))
+                    {
+                        channel = i;
+                        soundlist[i - temporary_channels_head] = sound.id;
+                    }
+                }
+            }
+        }
+        DSLOADFNAME(sound.file, channel);
+    }
+
+    if (dist != 0)
+    {
+        sound_set_position(channel, angle, dist);
+    }
+    else
+    {
+        // implicitly unregisters distance effect on mixer
+        sound_set_position(channel, 0, 0);
+    }
+
+    DSPLAY(channel, loop);
+}
+
+} // namespace detail
 
 
 int DSINIT()
@@ -113,146 +331,79 @@ void sndload(const fs::path& filepath, int prm_293)
     {
         DSLOADFNAME(filepath, prm_293);
     }
-    soundfile[prm_293] = filepath;
 }
 
 
 
 void initialize_sound_file()
 {
-    soundfile.resize(122);
     soundlist.resize(temporary_channels_size);
 
-    const std::pair<const char*, int> se_list[] = {
-        {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
-        {u8"write1.wav", 44},     {u8"pop1.wav", 1},
-        {u8"kill1.wav", 8},       {u8"kill2.wav", 9},
-        {u8"trap1.wav", 70},      {u8"more1.wav", 10},
-        {u8"getgold1.wav", 11},   {u8"paygold1.wav", 12},
-        {u8"equip1.wav", 13},     {u8"get1.wav", 14},
-        {u8"get2.wav", 15},       {u8"drop1.wav", 16},
-        {u8"drink1.wav", 17},     {u8"eat1.wav", 18},
-        {u8"spend1.wav", 19},     {u8"ding1.wav", 60},
-        {u8"ding3.wav", 61},      {u8"dead1.wav", 50},
-        {u8"ok1.wav", 20},        {u8"dig1.wav", 52},
-        {u8"bash1.wav", 73},      {u8"complete1.wav", 51},
-        {u8"alert1.wav", 21},     {u8"locked1.wav", 22},
-        {u8"chest1.wav", 23},     {u8"ding2.wav", 24},
-        {u8"cook1.wav", 25},      {u8"pop2.wav", 26},
-        {u8"fail1.wav", 27},      {u8"build1.wav", 58},
-        {u8"bow1.wav", 29},       {u8"atk1.wav", 2},
-        {u8"atk2.wav", 3},        {u8"gun1.wav", 30},
-        {u8"throw1.wav", 31},     {u8"Heart1.wav", 32},
-        {u8"heal1.wav", 33},      {u8"teleport1.wav", 72},
-        {u8"ball1.wav", 34},      {u8"breath1.wav", 35},
-        {u8"bolt1.wav", 37},      {u8"arrow1.wav", 36},
-        {u8"curse1.wav", 38},     {u8"pop3.wav", 39},
-        {u8"chime.wav", 53},      {u8"laser1.wav", 42},
-        {u8"web.wav", 68},        {u8"cheer.wav", 69},
-        {u8"door1.wav", 48},      {u8"crush1.wav", 45},
-        {u8"crush2.wav", 47},     {u8"fire1.wav", 6},
-        {u8"snow.wav", 86},       {u8"fish_cast.wav", 87},
-        {u8"fish_get.wav", 88},   {u8"fish_fight.wav", 89},
-        {u8"ammo.wav", 90},       {u8"throw2.wav", 91},
-        {u8"foot1a.wav", 81},     {u8"foot2a.wav", 83},
-        {u8"foot1b.wav", 82},     {u8"foot2b.wav", 84},
-        {u8"foot2c.wav", 85},     {u8"click1.wav", 40},
-        {u8"get3.wav", 41},       {u8"card1.wav", 71},
-        {u8"water.wav", 57},      {u8"water2.wav", 46},
-        {u8"dig2.wav", 54},       {u8"bush1.wav", 55},
-        {u8"gasha.wav", 56},      {u8"cursor1.wav", 5},
-        {u8"pop4.wav", 62},       {u8"punish1.wav", 63},
-        {u8"pray1.wav", 64},      {u8"offer1.wav", 65},
-        {u8"fizzle.wav", 66},     {u8"door2.wav", 67},
-        {u8"foot.wav", 43},       {u8"miss.wav", 4},
-        {u8"night.wav", 74},      {u8"bg_rain.wav", 75},
-        {u8"bg_thunder.wav", 76}, {u8"bg_wind.wav", 77},
-        {u8"bg_sea.wav", 78},     {u8"bg_town.wav", 79},
-        {u8"bg_fire.wav", 80},    {u8"scroll.wav", 92},
-        {u8"log.wav", 93},        {u8"chara.wav", 94},
-        {u8"wear.wav", 95},       {u8"feat.wav", 96},
-        {u8"port.wav", 97},       {u8"unpop1.wav", 98},
-        {u8"chat.wav", 99},       {u8"inv.wav", 100},
-        {u8"skill.wav", 101},     {u8"spell.wav", 102},
-        {u8"dice.wav", 103},      {u8"vomit.wav", 104},
-        {u8"atksword.wav", 105},  {u8"atk_ice.wav", 106},
-        {u8"atk_elec.wav", 107},  {u8"atk_fire.wav", 108},
-        {u8"atk_hell.wav", 109},  {u8"atk_poison.wav", 110},
-        {u8"atk_nerve.wav", 111}, {u8"atk_sound.wav", 112},
-        {u8"atk_mind.wav", 113},  {u8"atk_chaos.wav", 114},
-        {u8"atk_dark.wav", 115},  {u8"curse2.wav", 116},
-        {u8"curse3.wav", 117},    {u8"enc.wav", 118},
-        {u8"enc2.wav", 119},      {u8"pray2.wav", 120},
-        {u8"offer2.wav", 121},
-    };
-
-    for (const auto& se : se_list)
+    for (const auto& se : the_sound_db)
     {
-        sndload(filesystem::dir::sound() / se.first, se.second);
+        sndload(se.file, se.id);
     }
 }
 
-
-
-void snd(int sound_id, bool loop, bool allow_duplicate)
+std::pair<short, unsigned char> sound_calculate_position(
+    int listener_x,
+    int listener_y,
+    int source_x,
+    int source_y)
 {
-    if (!config::instance().sound)
-        return;
+    // Larger means it takes more distance for sounds to become quiet.
+    const constexpr double distance_factor = 7.0;
 
-    int channel = sound_id;
-    if (channel > temporary_channels_head)
+    double x = static_cast<double>(source_x - listener_x);
+    double y = static_cast<double>(source_y - listener_y);
+
+    double angle_raw = std::atan2(y, x);
+    if (angle_raw < 0)
     {
-        if (loop)
-        {
-            switch (sound_id)
-            {
-            case 78: channel = 14; break;
-            case 79: channel = 15; break;
-            case 80: channel = 16; break;
-            default: channel = 13; break;
-            }
-        }
-        else
-        {
-            channel = temporary_channels_head;
-            bool found{};
-            if (!allow_duplicate)
-            {
-                for (int i = temporary_channels_head;
-                     i < temporary_channels_head + temporary_channels_size;
-                     ++i)
-                {
-                    if (CHECKPLAY(i)
-                        && soundlist[i - temporary_channels_head] == sound_id)
-                    {
-                        channel = i;
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (!found)
-            {
-                for (int i = temporary_channels_head;
-                     i < temporary_channels_head + temporary_channels_size;
-                     ++i)
-                {
-                    if (!CHECKPLAY(i))
-                    {
-                        channel = i;
-                        soundlist[i - temporary_channels_head] = sound_id;
-                    }
-                }
-            }
-        }
-        DSLOADFNAME(soundfile[sound_id], channel);
+        angle_raw += 2 * M_PI;
     }
-    DSPLAY(channel, loop);
+
+    angle_raw += M_PI / 2;
+
+    short angle = static_cast<short>(angle_raw * 180.0 / M_PI) % 360;
+    int dist_raw = dist(listener_x, listener_y, source_x, source_y);
+    double dist_norm =
+        boost::math::gamma_p(distance_factor, static_cast<double>(dist_raw));
+    unsigned char dist = static_cast<unsigned char>(dist_norm * 255.0);
+
+    return {angle, dist};
+}
+
+std::pair<short, unsigned char> sound_calculate_position(const Position& p)
+{
+    if (!Config::instance().get<bool>("core.config.screen.stereo_sound"))
+    {
+        return {0, 0};
+    }
+    if (cdata.player().state() == Character::State::empty)
+    {
+        return {0, 0};
+    }
+
+    return sound_calculate_position(
+        cdata.player().position.x, cdata.player().position.y, p.x, p.y);
 }
 
 
 
-void play_music(int music_id)
+void stop_music()
+{
+    mmstop();
+    if (Config::instance().music == "direct_music")
+    {
+        DMSTOP();
+        DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
+        DMPLAY(1, 0);
+    }
+}
+
+
+void sound_play_environmental()
 {
     int env{};
 
@@ -271,7 +422,7 @@ void play_music(int music_id)
     if (env != envwprev)
     {
         envwprev = env;
-        if (config::instance().sound)
+        if (Config::instance().sound)
         {
             if (env == 0)
             {
@@ -283,11 +434,13 @@ void play_music(int music_id)
             }
         }
     }
-    if (mdata(14) == 2)
+    if (mdata_map_indoors_flag == 2)
     {
         DSSETVOLUME(13, max_volume * 0.8);
     }
-    else if (gdata_current_dungeon_level == 1 || gdata_current_map == 30)
+    else if (
+        gdata_current_dungeon_level == 1
+        || gdata_current_map == mdata_t::MapId::shelter_)
     {
         DSSETVOLUME(13, max_volume * 0.2);
     }
@@ -295,7 +448,7 @@ void play_music(int music_id)
     {
         DSSETVOLUME(13, max_volume);
     }
-    if (gdata_current_map == 11)
+    if (gdata_current_map == mdata_t::MapId::port_kapul)
     {
         snd(78, true);
     }
@@ -303,7 +456,7 @@ void play_music(int music_id)
     {
         DSSTOP(14);
     }
-    if (mdata(6) == 3)
+    if (mdata_map_type == mdata_t::MapType::town)
     {
         snd(79, true);
     }
@@ -311,7 +464,7 @@ void play_music(int music_id)
     {
         DSSTOP(15);
     }
-    if (mdata(20) == 1)
+    if (mdata_map_play_campfire_sound == 1)
     {
         snd(80, true);
     }
@@ -319,112 +472,28 @@ void play_music(int music_id)
     {
         DSSTOP(16);
     }
-    if (envonly == 1)
+}
+
+void play_music(const char* music_id)
+{
+    SharedId id = SharedId("core.music:"s + std::string(music_id));
+    play_music(id);
+}
+
+void play_music(optional<SharedId> music_id)
+{
+    sound_play_environmental();
+
+    if (Config::instance().music == "none")
     {
-        envonly = 0;
         return;
     }
-    if (config::instance().music == 0)
+
+    if (!music_id)
     {
-        return;
+        music_id = get_default_music();
     }
-    if (music_id == 0)
-    {
-        if (adata(0, gdata_current_map) == 4)
-        {
-            music_id = musicprev;
-        }
-        if (adata(0, gdata_current_map) == 3)
-        {
-            music_id = 51;
-        }
-        if (adata(0, gdata_current_map) == 5)
-        {
-            music_id = 67;
-        }
-        if (mdata(13) != 0)
-        {
-            music_id = mdata(13);
-        }
-        if (adata(0, gdata_current_map) >= 20)
-        {
-            music_id = 55 + gdata_hour % 6;
-        }
-        if (adata(16, gdata_current_map) == 8
-            || adata(16, gdata_current_map) == 42)
-        {
-            if (gdata_current_dungeon_level == adata(10, gdata_current_map))
-            {
-                if (adata(20, gdata_current_map) != -1)
-                {
-                    music_id = 62;
-                }
-            }
-        }
-        if (gdata_current_map == 13)
-        {
-            if (gdata_executing_immediate_quest_type == 1001)
-            {
-                music_id = 76;
-            }
-            if (gdata_executing_immediate_quest_type == 1006)
-            {
-                music_id = 75;
-            }
-            if (gdata_executing_immediate_quest_type == 1009)
-            {
-                music_id = 77;
-            }
-            if (gdata_executing_immediate_quest_type == 1008)
-            {
-                music_id = 62;
-            }
-            if (gdata_executing_immediate_quest_type == 1010)
-            {
-                music_id = 73;
-            }
-        }
-        if (gdata_current_map == 6)
-        {
-            music_id = 73;
-        }
-        if (gdata_current_map == 25)
-        {
-            music_id = 75;
-        }
-        if (gdata_current_map == 11)
-        {
-            music_id = 52;
-        }
-        if (gdata_current_map == 36)
-        {
-            music_id = 52;
-        }
-        if (gdata_current_map == 12)
-        {
-            music_id = 75;
-        }
-        if (gdata_current_map == 14)
-        {
-            music_id = 53;
-        }
-        if (gdata_current_map == 15)
-        {
-            music_id = 54;
-        }
-        if (gdata_current_map == 21)
-        {
-            music_id = 83;
-        }
-        if (gdata_current_map == 33)
-        {
-            music_id = 85;
-        }
-    }
-    if (music_id == 0 || adata(0, gdata_current_map) == 1)
-    {
-        music_id = 86 + gdata_day % 3;
-    }
+
     if (musicloop == 1)
     {
         musicloop = 0;
@@ -433,43 +502,9 @@ void play_music(int music_id)
     {
         musicloop = 65535;
     }
-    if (musicprev != music_id || music_id == 91)
-    {
-        musicprev = music_id;
-        mmstop();
-        if (config::instance().music == 1)
-        {
-            DMSTOP();
-            DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
-            DMPLAY(1, 0);
-        }
-        if (music_id != -1)
-        {
-            auto music_dir = filesystem::dir::user() / u8"music";
-            if (!fs::exists(music_dir / musicfile(music_id)))
-            {
-                music_dir = filesystem::dir::sound();
-                if (!fs::exists(music_dir / musicfile(music_id)))
-                {
-                    return;
-                }
-            }
 
-            const auto is_mp3 =
-                strutil::contains(musicfile(music_id), u8".mp3");
+    play_music_inner(*music_id, musicloop);
 
-            if (config::instance().music == 2 || is_mp3)
-            {
-                mmload(music_dir / musicfile(music_id), 0, musicloop == 65535);
-                mmplay(0);
-            }
-            else
-            {
-                DMLOADFNAME(music_dir / musicfile(music_id), 0);
-                DMPLAY(musicloop, 0);
-            }
-        }
-    }
     musicloop = 0;
 }
 

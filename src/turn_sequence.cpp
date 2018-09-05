@@ -1,13 +1,16 @@
 #include "turn_sequence.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "ai.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "building.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "db_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
@@ -17,7 +20,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
@@ -42,40 +44,33 @@ namespace elona
 {
 
 
-turn_result_t npc_turn()
+TurnResult npc_turn()
 {
     int searchfov = 0;
     if (cdata[cc].is_hung_on_sand_bag())
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(cdata[cc]))
         {
             if (rnd(30) == 0)
             {
                 tc = cc;
-                txt(lang(
-                        u8"「もっとぶって"s + _yo(2) + u8"」"s,
-                        u8"\"Release me now.\""s),
-                    lang(
-                        u8"「こんなことして、許さない"s + _yo() + u8"」"s,
-                        u8"\"I won't forget this.\""s),
-                    lang(
-                        u8"「何をする"s + _nda(2) + u8"」"s, u8"\"Hit me!\""s));
+                txt(i18n::s.get("core.locale.action.npc.sand_bag", cdata[tc]));
             }
         }
         cdata[cc].hate = 0;
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
-    if (is_in_fov(cc) == 0)
+    if (is_in_fov(cdata[cc]) == 0)
     {
-        if (cdata[0].blind == 0)
+        if (cdata.player().blind == 0)
         {
             if (rnd(4) == 0)
             {
-                if (mdata(6) != 1)
+                if (mdata_map_type != mdata_t::MapType::world_map)
                 {
                     if (cdata[cc].is_leashed())
                     {
-                        if (gdata_current_map != 40)
+                        if (gdata_current_map != mdata_t::MapId::pet_arena)
                         {
                             if (cc < 16)
                             {
@@ -86,27 +81,23 @@ turn_result_t npc_turn()
                             {
                                 if (rnd(2))
                                 {
-                                    txt(lang(u8"「痛っ！」"s, u8"\"Ouch!\""s),
-                                        lang(
-                                            u8"「やめて！」"s,
-                                            u8"\"Stop it!\""s));
+                                    txt(i18n::s.get(
+                                        "core.locale.action.npc.leash.dialog"));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
                                 {
                                     cdata[cc].is_leashed() = false;
                                     txtef(9);
-                                    txt(lang(
-                                        name(cc)
-                                            + u8"は巻きついていた紐をほどいた。"s,
-                                        name(cc) + u8" untangle"s + _s(cc)
-                                            + u8" the leash."s));
+                                    txt(i18n::s.get(
+                                        "core.locale.action.npc.leash.untangle",
+                                        cdata[cc]));
                                 }
                             }
                             tc = 0;
                             efid = 619;
                             magic();
-                            return turn_result_t::turn_end;
+                            return TurnResult::turn_end;
                         }
                     }
                 }
@@ -119,7 +110,7 @@ turn_result_t npc_turn()
         tlocy = cdata[cc].position.y;
         efid = 644;
         magic();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].relationship >= 10)
     {
@@ -133,7 +124,7 @@ turn_result_t npc_turn()
             {
                 if (cdata[pcattacker].relationship <= -3)
                 {
-                    if (cdata[pcattacker].state == 1)
+                    if (cdata[pcattacker].state() == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
@@ -149,19 +140,20 @@ turn_result_t npc_turn()
             }
             if (cdata[cc].enemy_id == 0)
             {
-                if (cdata[0].enemy_id != 0
-                    && cdata[cdata[0].enemy_id].relationship <= -3)
+                if (cdata.player().enemy_id != 0
+                    && cdata[cdata.player().enemy_id].relationship <= -3)
                 {
-                    if (cdata[cdata[0].enemy_id].state == 1)
+                    if (cdata[cdata.player().enemy_id].state()
+                        == Character::State::alive)
                     {
                         if (fov_los(
                                 cdata[cc].position.x,
                                 cdata[cc].position.y,
-                                cdata[cdata[0].enemy_id].position.x,
-                                cdata[cdata[0].enemy_id].position.y))
+                                cdata[cdata.player().enemy_id].position.x,
+                                cdata[cdata.player().enemy_id].position.y))
                         {
                             cdata[cc].hate = 5;
-                            cdata[cc].enemy_id = cdata[0].enemy_id;
+                            cdata[cc].enemy_id = cdata.player().enemy_id;
                         }
                     }
                 }
@@ -183,13 +175,13 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].enemy_id != 0)
     {
-        if (cdata[cdata[cc].enemy_id].state != 1)
+        if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             cdata[cc].enemy_id = 0;
             cdata[cc].hate = 0;
         }
     }
-    if (gdata_current_map == 40)
+    if (gdata_current_map == mdata_t::MapId::pet_arena)
     {
         if (cdata[cc].relationship != -3)
         {
@@ -198,14 +190,7 @@ turn_result_t npc_turn()
                 if (rnd(40) == 0)
                 {
                     txtef(4);
-                    txt(lang(u8"「いいぞ！」"s, u8"\"Come on!\""s),
-                        lang(u8"「もっとやれー」"s, u8"\"More blood!\""s),
-                        lang(u8"「血をみせろー」"s, u8"\"Beat'em!\""s),
-                        lang(u8"「頑張って！」"s, u8"\"Use your brain!\""s),
-                        lang(u8"「うぉぉぉぉ！」"s, u8"\"Wooooo!\""s),
-                        lang(u8"「行けぇ！」"s, u8"\"Go go!\""s),
-                        lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
-                        lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
+                    txt(i18n::s.get("core.locale.action.npc.arena"));
                 }
                 return ai_proc_misc_map_events();
             }
@@ -224,7 +209,8 @@ turn_result_t npc_turn()
             p(2) = 16;
         }
         i = cdata[cc].enemy_id;
-        if (cdata[i].relationship == p && cdata[i].state == 1 && i >= p(1)
+        if (cdata[i].relationship == p
+            && cdata[i].state() == Character::State::alive && i >= p(1)
             && i < p(1) + p(2))
         {
             if (rnd(10) != 0)
@@ -237,7 +223,7 @@ turn_result_t npc_turn()
         for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
-            if (cdata[i].state == 1)
+            if (cdata[i].state() == Character::State::alive)
             {
                 if (cdata[i].relationship == p)
                 {
@@ -247,12 +233,12 @@ turn_result_t npc_turn()
             }
         }
         if (cdata[cdata[cc].enemy_id].relationship != p
-            || cdata[cdata[cc].enemy_id].state != 1)
+            || cdata[cdata[cc].enemy_id].state() != Character::State::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     if (cdata[cnt].relationship == p)
                     {
@@ -272,11 +258,11 @@ turn_result_t npc_turn()
                 {
                     petarenawin = 2;
                 }
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
         }
     }
-    if (gdata_current_map == 33)
+    if (gdata_current_map == mdata_t::MapId::noyel)
     {
         if (cc != gdata_fire_giant)
         {
@@ -284,7 +270,8 @@ turn_result_t npc_turn()
             {
                 if (gdata_released_fire_giant != 0)
                 {
-                    if (cdata[gdata_fire_giant].state == 1)
+                    if (cdata[gdata_fire_giant].state()
+                        == Character::State::alive)
                     {
                         cdata[cc].enemy_id = gdata_fire_giant;
                         cdata[cc].hate = 500;
@@ -333,13 +320,16 @@ turn_result_t npc_turn()
             {
                 if (rnd(4) == 0)
                 {
-                    if (cdata[0].position.x > cdata[cc].position.x - 10
-                        && cdata[0].position.x < cdata[cc].position.x + 10)
+                    if (cdata.player().position.x > cdata[cc].position.x - 10
+                        && cdata.player().position.x
+                            < cdata[cc].position.x + 10)
                     {
-                        if (cdata[0].position.y > cdata[cc].position.y - 10
-                            && cdata[0].position.y < cdata[cc].position.y + 10)
+                        if (cdata.player().position.y
+                                > cdata[cc].position.y - 10
+                            && cdata.player().position.y
+                                < cdata[cc].position.y + 10)
                         {
-                            if (cdata[0].continuous_action_id != 6)
+                            if (cdata.player().continuous_action_id != 6)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -358,17 +348,17 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].relationship >= 0)
     {
-        if (cdata[0].choked)
+        if (cdata.player().choked)
         {
             if (dist(
-                    cdata[0].position.x,
-                    cdata[0].position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y,
                     cdata[cc].position.x,
                     cdata[cc].position.y)
                 == 1)
             {
-                x = cdata[0].position.x;
-                y = cdata[0].position.y;
+                x = cdata.player().position.x;
+                y = cdata.player().position.y;
                 return do_bash();
             }
         }
@@ -383,18 +373,18 @@ turn_result_t npc_turn()
                 if (efid >= 400 && efid < 467)
                 {
                     npccostmp = 1;
-                    int stat = label_2167();
+                    int stat = do_cast_magic();
                     if (stat == 1)
                     {
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
                 else if (efid >= 600)
                 {
-                    int stat = label_2174();
+                    int stat = do_magic_attempt();
                     if (stat == 1)
                     {
-                        return turn_result_t::turn_end;
+                        return TurnResult::turn_end;
                     }
                 }
             }
@@ -405,7 +395,7 @@ turn_result_t npc_turn()
         goto label_2689_internal;
     }
     ci = cdata[cc].item_which_will_be_used;
-    if (inv[ci].number == 0)
+    if (inv[ci].number() == 0)
     {
         cdata[cc].item_which_will_be_used = 0;
         goto label_2689_internal;
@@ -503,15 +493,16 @@ label_2689_internal:
                             {
                                 if (ibit(5, ci) == 0)
                                 {
-                                    if (mdata(6) != 5)
+                                    if (mdata_map_type
+                                        != mdata_t::MapType::player_owned)
                                     {
-                                        in = inv[ci].number;
+                                        in = inv[ci].number();
                                         if (gdata_mount != cc)
                                         {
                                             int stat = pick_up_item();
                                             if (stat == 1)
                                             {
-                                                return turn_result_t::turn_end;
+                                                return TurnResult::turn_end;
                                             }
                                         }
                                     }
@@ -564,7 +555,7 @@ label_2689_internal:
         for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
         {
             y = cdata[cc].position.y - 2 + cnt;
-            if (y < 0 || y >= mdata(1))
+            if (y < 0 || y >= mdata_map_height)
             {
                 continue;
             }
@@ -572,7 +563,7 @@ label_2689_internal:
             for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
             {
                 x = cdata[cc].position.x - 2 + cnt;
-                if (x < 0 || x >= mdata(0))
+                if (x < 0 || x >= mdata_map_width)
                 {
                     continue;
                 }
@@ -636,144 +627,132 @@ label_2689_internal:
 bool turn_wrapper()
 {
     bool finished = false;
-    turn_result_t result = turn_begin();
+    TurnResult result = turn_begin();
     while (!finished)
     {
         switch (result)
         {
             // Turn lifecycle
 
-        case turn_result_t::turn_begin: result = turn_begin(); break;
-        case turn_result_t::turn_end: result = turn_end(); break;
-        case turn_result_t::pass_one_turn: result = pass_turns(true); break;
-        case turn_result_t::pass_one_turn_freeze_time:
+        case TurnResult::turn_begin: result = turn_begin(); break;
+        case TurnResult::turn_end: result = turn_end(); break;
+        case TurnResult::pass_one_turn: result = pass_turns(true); break;
+        case TurnResult::pass_one_turn_freeze_time:
             result = pass_turns(false);
             break;
-        case turn_result_t::pc_turn: result = pc_turn(); break;
-        case turn_result_t::npc_turn: result = npc_turn(); break;
-        case turn_result_t::pc_turn_user_error: result = pc_turn(false); break;
-        case turn_result_t::pc_died: result = pc_died(); break;
-        case turn_result_t::initialize_map: result = initialize_map(); break;
-        case turn_result_t::exit_map: result = exit_map(); break;
-        case turn_result_t::play_scene: result = play_scene(); break;
-        case turn_result_t::finish_elona:
+        case TurnResult::pc_turn: result = pc_turn(); break;
+        case TurnResult::npc_turn: result = npc_turn(); break;
+        case TurnResult::pc_turn_user_error: result = pc_turn(false); break;
+        case TurnResult::pc_died: result = pc_died(); break;
+        case TurnResult::initialize_map: result = initialize_map(); break;
+        case TurnResult::exit_map: result = exit_map(); break;
+        case TurnResult::play_scene: result = play_scene(); break;
+        case TurnResult::finish_elona:
             finish_elona();
             finished = true;
             break;
 
             // Menus that don't return success status
 
-        case turn_result_t::show_chat_history:
-            result = show_chat_history();
-            break;
-        case turn_result_t::show_message_log:
-            result = show_message_log();
-            break;
-        case turn_result_t::show_house_board:
-            result = show_house_board();
-            break;
-        case turn_result_t::show_quest_board:
-            result = show_quest_board();
-            break;
-        case turn_result_t::show_skill_list: result = show_skill_list(); break;
-        case turn_result_t::show_spell_list:
+        case TurnResult::show_chat_history: result = show_chat_history(); break;
+        case TurnResult::show_message_log: result = show_message_log(); break;
+        case TurnResult::show_journal: result = show_journal(); break;
+        case TurnResult::show_house_board: result = show_house_board(); break;
+        case TurnResult::show_quest_board: result = show_quest_board(); break;
+        case TurnResult::show_skill_list: result = show_skill_list(); break;
+        case TurnResult::show_spell_list:
             result = show_spell_list();
             break;
 
             // Menus with a success status
 
-        case turn_result_t::menu_journal:
-            result = menu_journal().turn_result;
-            break;
-        case turn_result_t::menu_materials:
+        case TurnResult::menu_materials:
             result = menu_materials().turn_result;
             break;
-        case turn_result_t::menu_character_sheet:
-            result = menu_character_sheet().turn_result;
+        case TurnResult::menu_character_sheet:
+            result = menu_character_sheet_normal().turn_result;
             break;
-        case turn_result_t::menu_equipment:
+        case TurnResult::menu_equipment:
             result = menu_equipment().turn_result;
             break;
-        case turn_result_t::menu_feats:
-            result = menu_feats().turn_result;
-            break;
-        case turn_result_t::ctrl_inventory:
+        case TurnResult::menu_feats: result = menu_feats().turn_result; break;
+        case TurnResult::ctrl_inventory:
             result = ctrl_inventory().turn_result;
             break;
 
-        case turn_result_t::all_turns_finished:
-            result = turn_result_t::turn_begin;
+        case TurnResult::all_turns_finished:
+            result = TurnResult::turn_begin;
             break;
-        case turn_result_t::none:
+        case TurnResult::none:
         default: assert(0); break;
         }
     }
     return finished;
 }
 
-turn_result_t pass_turns(bool time)
+TurnResult pass_turns(bool time)
 {
     bool finished = false;
-    turn_result_t result = pass_one_turn(time);
+    TurnResult result = pass_one_turn(time);
     while (!finished)
     {
         switch (result)
         {
-        case turn_result_t::all_turns_finished: finished = true; break;
-        case turn_result_t::pass_one_turn: time = true; break;
-        case turn_result_t::pass_one_turn_freeze_time: time = false; break;
+        case TurnResult::all_turns_finished: finished = true; break;
+        case TurnResult::pass_one_turn: time = true; break;
+        case TurnResult::pass_one_turn_freeze_time: time = false; break;
         default: return result;
         }
         result = pass_one_turn(time);
     }
-    return turn_result_t::all_turns_finished;
+    return TurnResult::all_turns_finished;
 }
 
-turn_result_t turn_begin()
+TurnResult turn_begin()
 {
     int turncost = 0;
     int spd = 0;
     ct = 0;
     mef_update();
-    gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
+    gspd = cdata.player().current_speed
+        * (100 + cdata.player().speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
     }
-    turncost = (mdata(9) - cdata[0].turn_cost) / gspd + 1;
+    turncost = (mdata_map_turn_cost - cdata.player().turn_cost) / gspd + 1;
     if (event_was_set())
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
-    if (cdata[0].state != 1)
+    if (cdata.player().state() != Character::State::alive)
     {
-        return turn_result_t::pc_died;
+        return TurnResult::pc_died;
     }
 
     bool update_turn_cost = true;
-    if (mdata(6) == 1)
+    if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (cdata[0].continuous_action_turn > 2)
+        if (cdata.player().continuous_action_turn > 2)
         {
-            cdata[0].turn_cost = mdata(9);
+            cdata.player().turn_cost = mdata_map_turn_cost;
             update_turn_cost = false;
         }
     }
     if (update_turn_cost)
     {
-        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (auto&& cnt : cdata.all())
         {
-            if (cdata[cnt].state != 1)
+            if (cnt.state() != Character::State::alive)
             {
                 continue;
             }
-            spd = cdata[cnt].current_speed * (100 + cdata[cnt].speed_percentage)
-                / 100;
+            spd = cnt.current_speed * (100 + cnt.speed_percentage) / 100;
             if (spd < 10)
             {
                 spd = 10;
             }
-            cdata[cnt].turn_cost += spd * turncost;
+            cnt.turn_cost += spd * turncost;
         }
     }
 
@@ -797,12 +776,9 @@ turn_result_t turn_begin()
             if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
-                txt(lang(
-                    u8"クエスト[残り"s
-                        + (gdata_left_minutes_of_executing_quest + 1)
-                        + u8"分]"s,
-                    ""s + (gdata_left_minutes_of_executing_quest + 1)
-                        + u8" min left for the quest."s));
+                txt(i18n::s.get(
+                    "core.locale.quest.minutes_left",
+                    (gdata_left_minutes_of_executing_quest + 1)));
                 gdata(87) = gdata_left_minutes_of_executing_quest / 10;
             }
             if (gdata_left_minutes_of_executing_quest <= 0)
@@ -819,25 +795,25 @@ turn_result_t turn_begin()
             weather_changes();
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
 
-turn_result_t pass_one_turn(bool label_2738_flg)
+TurnResult pass_one_turn(bool label_2738_flg)
 {
     if (label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
         {
-            if (cdata[ct].state != 1)
+            if (cdata[ct].state() != Character::State::alive)
             {
                 ++ct;
                 continue;
             }
-            if (cdata[ct].turn_cost >= mdata(9))
+            if (cdata[ct].turn_cost >= mdata_map_turn_cost)
             {
-                cdata[ct].turn_cost -= mdata(9);
+                cdata[ct].turn_cost -= mdata_map_turn_cost;
                 break;
             }
             else
@@ -847,25 +823,26 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
-            lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::all_turns_finished>();
-            return turn_result_t::all_turns_finished;
+            lua::lua->get_event_manager()
+                .run_callbacks<lua::EventKind::all_turns_finished>();
+            return TurnResult::all_turns_finished;
         }
     }
     cc = ct;
     cdata[cc].speed_percentage = cdata[cc].speed_percentage_in_next_turn;
     ++cdata[cc].turn;
-    label_27412();
+    update_emoicon();
     if (ct == 0)
     {
         tnew = 1;
         pcnoise = 0;
-        refreshspeed(0);
-        p = cdata[0].turn % 10;
+        refresh_speed(cdata.player());
+        p = cdata.player().turn % 10;
         if (p == 1)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (cdata[cnt].state == 1)
+                if (cdata[cnt].state() == Character::State::alive)
                 {
                     gain_healing_and_meditation_experience(cnt);
                 }
@@ -881,21 +858,20 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (p == 4)
         {
-            if (cdata[0].continuous_action_id == 0)
+            if (cdata.player().continuous_action_id == 0)
             {
-                healsp(0, 2);
+                heal_sp(cdata.player(), 2);
             }
         }
         if (gdata_is_returning_or_escaping != 0)
         {
             --gdata_is_returning_or_escaping;
-            if (mdata(6) == 7 || gdata_current_map == 30
-                || gdata_current_map == 41)
+            if (mdata_map_type == mdata_t::MapType::temporary
+                || gdata_current_map == mdata_t::MapId::shelter_
+                || gdata_current_map == mdata_t::MapId::jail)
             {
                 gdata_is_returning_or_escaping = 0;
-                txt(lang(
-                    u8"不思議な力が帰還を阻止した。"s,
-                    u8"Strange power prevents you from returning."s));
+                txt(i18n::s.get("core.locale.magic.return.prevented.normal"));
                 goto label_2740_internal;
             }
             if (gdata_is_returning_or_escaping <= 0 && !event_was_set())
@@ -903,7 +879,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
                 {
-                    if (cdata[cnt].state != 1)
+                    if (cdata[cnt].state() != Character::State::alive)
                     {
                         continue;
                     }
@@ -914,69 +890,64 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 }
                 if (f)
                 {
-                    txt(lang(
-                        u8"今は帰還できない仲間を連れている。"s,
-                        u8"One of your allies prevents you from returning."s));
+                    txt(i18n::s.get("core.locale.magic.return.prevented.ally"));
                     goto label_2740_internal;
                 }
-                if (1 && cdata[0].inventory_weight_type >= 4)
+                if (1 && cdata.player().inventory_weight_type >= 4)
                 {
-                    txt(lang(
-                        u8"どこからか声が聞こえた。「悪いが重量オーバーだ」"s,
-                        u8"Someone shouts, \"Sorry, overweight.\""s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.prevented.overweight"));
                     goto label_2740_internal;
                 }
                 if (gdata_destination_map == gdata(850))
                 {
                     if (gdata_current_map == gdata(850))
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         goto label_2740_internal;
                     }
                 }
                 int stat = quest_is_return_forbidden();
                 if (stat == 1)
                 {
-                    txt(lang(
-                        u8"あなたは法を犯した。"s, u8"You commit a crime."s));
-                    modify_karma(0, -10);
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.you_commit_a_crime"));
+                    modify_karma(cdata.player(), -10);
                 }
                 snd(72);
-                txt(lang(
-                    u8"あなたは次元の扉を開けた。"s,
-                    u8"A dimensional door opens in front of you."s));
+                txt(i18n::s.get("core.locale.magic.return.door_opens"));
                 if (gdata_destination_map == 41)
                 {
-                    txt(lang(
-                        u8"気まぐれな時の管理者により次元は歪められた！"s,
-                        u8"The capricious controller of time has changed your destination!"s));
+                    txt(i18n::s.get(
+                        "core.locale.magic.return.destination_changed"));
                 }
                 msg_halt();
                 update_screen();
                 levelexitby = 2;
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
             goto label_2740_internal;
         }
     label_2740_internal:
-        label_1754();
-        if (cdata[0].state != 1)
+        map_proc_special_events();
+        if (cdata.player().state() != Character::State::alive)
         {
-            return turn_result_t::pc_died;
+            return TurnResult::pc_died;
         }
         if (gdata_weather == 1)
         {
-            if (mdata(14) == 2)
+            if (mdata_map_indoors_flag == 2)
             {
                 if (rnd(2) == 0)
                 {
                     if (gdata_protects_from_etherwind == 0)
                     {
-                        modcorrupt(5 + clamp(gdata_play_turns / 20000, 0, 15));
+                        modify_ether_disease_stage(
+                            5 + clamp(gdata_play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
-                        modcorrupt(5);
+                        modify_ether_disease_stage(5);
                     }
                 }
                 if (gdata_protects_from_etherwind == 0 || rnd(4) == 0)
@@ -993,9 +964,10 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         else if (rnd(1500) == 0)
         {
-            if (adata(16, gdata_current_map) != 7 && gdata_current_map != 30)
+            if (adata(16, gdata_current_map) != mdata_t::MapId::your_home
+                && gdata_current_map != mdata_t::MapId::shelter_)
             {
-                modcorrupt(10);
+                modify_ether_disease_stage(10);
             }
         }
     }
@@ -1017,9 +989,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cc].buffs[cnt].id == 16)
                 {
-                    dmghp(cc, 9999, -11);
+                    damage_hp(cdata[cc], 9999, -11);
                 }
-                buff_delete(cc, cnt);
+                buff_delete(cdata[cc], cnt);
                 --cnt;
                 continue;
             }
@@ -1032,14 +1004,14 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(config::instance().animewait * 6);
+                await(Config::instance().animewait * 6);
             }
-            await(config::instance().animewait * 3);
+            await(Config::instance().animewait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
         }
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
@@ -1047,17 +1019,17 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cc != 0)
             {
-                for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+                for (auto&& cnt : cdata.all())
                 {
-                    if (cdata[cnt].state != 1)
+                    if (cnt.state() != Character::State::alive)
                     {
                         continue;
                     }
                     if (dist(
                             cdata[cc].position.x,
                             cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y)
+                            cnt.position.x,
+                            cnt.position.y)
                         > 5)
                     {
                         continue;
@@ -1065,55 +1037,40 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     if (fov_los(
                             cdata[cc].position.x,
                             cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y)
+                            cnt.position.x,
+                            cnt.position.y)
                         == 0)
                     {
                         continue;
                     }
-                    if (cnt == cc || rnd(3) || mdata(6) == 1)
+                    if (cnt.index == cc || rnd(3)
+                        || mdata_map_type == mdata_t::MapType::world_map)
                     {
                         continue;
                     }
-                    tc = cnt;
-                    if (is_in_fov(cc) || is_in_fov(tc))
+                    tc = cnt.index;
+                    if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                     {
                         txtef(9);
-                        txt(lang(
-                            name(cc) + u8"は酔っ払って"s + name(tc)
-                                + u8"にからんだ。"s,
-                            name(cc)
-                                + u8" gets the worse for drink and catches "s
-                                + name(tc) + u8"."s));
-                        if (jp)
-                        {
-                            txt(u8"「一杯どうだい？」"s,
-                                u8"「飲んでないよ」"s,
-                                u8"「何見てるのさ」"s,
-                                u8"「遊ぼうぜ」"s);
-                        }
-                        if (en)
-                        {
-                            txt(u8"\"Have a drink baby.\""s,
-                                u8"\"What are you looking at?\""s,
-                                u8"\"I ain't drunk.\""s,
-                                u8"\"Let's have fun.\""s);
-                        }
+                        txt(i18n::s.get(
+                            "core.locale.action.npc.drunk.gets_the_worse",
+                            cdata[cc],
+                            cdata[tc]));
+                        txt(i18n::s.get("core.locale.action.npc.drunk.dialog"));
                     }
                     if (rnd(4) == 0)
                     {
                         if (tc != 0)
                         {
-                            if (is_in_fov(cc) || is_in_fov(tc))
+                            if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                             {
                                 txtef(9);
-                                txt(lang(
-                                    name(tc) + u8"はカチンときた。"s,
-                                    name(tc)
-                                        + u8" is pretty annoyed with the drunkard."s));
-                                txt(lang(
-                                    u8"「酔っ払いにはうんざり！」"s,
-                                    u8"\"Your time is over, drunk!\""s));
+                                txt(i18n::s.get(
+                                    "core.locale.action.npc.drunk.annoyed.text",
+                                    cdata[tc]));
+                                txt(
+                                    i18n::s.get("core.locale.action.npc.drunk."
+                                                "annoyed.dialog"));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;
@@ -1129,50 +1086,13 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         if (rnd(60) == 0)
         {
-            chara_vomit(cc);
-            return turn_result_t::turn_end;
+            chara_vomit(cdata[cc]);
+            return TurnResult::turn_end;
         }
     }
     if (cdata[cc].stops_continuous_action_if_damaged == 1)
     {
-        if (cc == 0)
-        {
-            if (cdata[cc].continuous_action_id != 1
-                && cdata[cc].continuous_action_id != 2
-                && cdata[cc].continuous_action_id != 3)
-            {
-                rtval = 0;
-            }
-            else
-            {
-                screenupdate = -1;
-                update_screen();
-                prompt_stop_continuous_action();
-            }
-        }
-        if (cc != 0 || rtval == 0)
-        {
-            if (is_in_fov(cc))
-            {
-                txt(lang(
-                    name(cc) + u8"は"s
-                        + i18n::_(
-                              u8"ui",
-                              u8"action",
-                              u8"_"s + cdata[cc].continuous_action_id)
-                        + u8"を中断した。"s,
-                    name(cc) + u8" stop"s + _s(cc) + u8" "s
-                        + i18n::_(
-                              u8"ui",
-                              u8"action",
-                              u8"_"s + cdata[cc].continuous_action_id)
-                        + u8"."s));
-            }
-            rowactend(cc);
-        }
-        screenupdate = -1;
-        update_screen();
-        cdata[cc].stops_continuous_action_if_damaged = 0;
+        activity_handle_damage(cdata[cc]);
     }
     if (cdata[cc].turn % 25 == 0)
     {
@@ -1191,133 +1111,43 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     }
     if (cdata[cc].continuous_action_id != 0)
     {
-        ci = cdata[cc].continuous_action_item;
-        --cdata[cc].continuous_action_turn;
-        if (cdata[cc].continuous_action_id == 7)
+        if (auto result = activity_proc(cdata[cc]))
         {
-            auto_turn(config::instance().animewait * 2);
-            spot_fishing();
-        }
-        if (cdata[cc].continuous_action_id == 5)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_mining_or_wall();
-        }
-        if (cdata[cc].continuous_action_id == 8)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_material();
-        }
-        if (cdata[cc].continuous_action_id == 9)
-        {
-            auto_turn(config::instance().animewait * 0.75);
-            spot_digging();
-        }
-        if (cdata[cc].continuous_action_id == 4)
-        {
-            auto_turn(config::instance().animewait / 4);
-            do_rest();
-        }
-        if (cdata[cc].continuous_action_id == 1)
-        {
-            auto_turn(config::instance().animewait * 5);
-            return do_eat_command();
-        }
-        if (cdata[cc].continuous_action_id == 2)
-        {
-            auto_turn(config::instance().animewait * 1.25);
-            return do_read_command();
-        }
-        if (cdata[cc].continuous_action_id == 11)
-        {
-            auto_turn(config::instance().animewait * 2.5);
-            continuous_action_sex();
-        }
-        if (cdata[cc].continuous_action_id == 10)
-        {
-            if (gdata(91) == 103)
-            {
-                auto_turn(config::instance().animewait * 2);
-            }
-            else if (gdata(91) == 104)
-            {
-                auto_turn(config::instance().animewait * 2);
-            }
-            else if (gdata(91) == 105)
-            {
-                auto_turn(config::instance().animewait * 2.5);
-            }
-            else
-            {
-                auto_turn(config::instance().animewait);
-            }
-            continuous_action_others();
-        }
-        if (cdata[cc].continuous_action_id == 12)
-        {
-            auto_turn(config::instance().animewait);
-            label_19342();
-        }
-        if (cdata[cc].continuous_action_id == 6)
-        {
-            auto_turn(config::instance().animewait * 2);
-            continuous_action_perform();
-        }
-        if (cdata[cc].continuous_action_id == 3)
-        {
-            label_2153();
-            return proc_movement_event();
-        }
-        if (cdata[cc].continuous_action_turn > 0)
-        {
-            return turn_result_t::turn_end;
-        }
-        rowactend(cc);
-        if (cc == 0)
-        {
-            if (chatteleport == 1)
-            {
-                chatteleport = 0;
-                return turn_result_t::exit_map;
-            }
+            return *result;
         }
     }
     if (cdata[cc].needs_refreshing_status())
     {
         chara_refresh(cc);
     }
-    if (cdata[cc].state == 1)
+    if (cdata[cc].state() == Character::State::alive)
     {
         if (ct == 0)
         {
-            return turn_result_t::pc_turn;
+            return TurnResult::pc_turn;
         }
         else
         {
-            return turn_result_t::npc_turn;
+            return TurnResult::npc_turn;
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
 
-void label_27412()
+void update_emoicon()
 {
-label_27411_internal:
     cdata[cc].emotion_icon -= 100;
     if (cdata[cc].emotion_icon < 0)
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata(14) == 2)
+    if (mdata_map_indoors_flag == 2 && gdata_weather >= 3)
     {
-        if (gdata_weather >= 3)
-        {
-            cdata[cc].wet = 50;
-        }
+        cdata[cc].wet = 50;
     }
-    if (cdata[cc].experience >= cdata[cc].required_experience)
+    while (cdata[cc].experience >= cdata[cc].required_experience)
     {
         if (cc == 0)
         {
@@ -1325,20 +1155,18 @@ label_27411_internal:
             msgalert = 1;
         }
         r2 = 0;
-        gain_level(cc);
-        goto label_27411_internal;
+        gain_level(cdata[cc]);
     }
-    return;
 }
 
 
 
-turn_result_t turn_end()
+TurnResult turn_end()
 {
     cc = ct;
-    if (cdata[cc].state != 1)
+    if (cdata[cc].state() != Character::State::alive)
     {
-        return turn_result_t::pass_one_turn;
+        return TurnResult::pass_one_turn;
     }
     proc_turn_end(cc);
     if (cc == 0)
@@ -1353,28 +1181,26 @@ turn_result_t turn_end()
                 continuous_action_others();
             }
         }
-        if (cdata[0].inventory_weight_type >= 3)
+        if (cdata.player().inventory_weight_type >= 3)
         {
             if (rnd(20) == 0)
             {
-                txt(lang(
-                    name(0) + u8"は荷物に圧迫されもがいた。"s,
-                    u8"Your backpack is squashing you!"s));
-                dmghp(
-                    cc,
+                txt(i18n::s.get("core.locale.action.backpack_squashing"));
+                damage_hp(
+                    cdata[cc],
                     cdata[cc].max_hp
-                            * (cdata[0].inventory_weight * 10
-                                   / cdata[0].max_inventory_weight
+                            * (cdata.player().inventory_weight * 10
+                                   / cdata.player().max_inventory_weight
                                + 10)
                             / 200
                         + 1,
                     -6);
             }
         }
-        get_hungry(cc);
-        refreshspeed(cc);
+        get_hungry(cdata[cc]);
+        refresh_speed(cdata[cc]);
     }
-    else if (mdata(6) != 1)
+    else if (mdata_map_type != mdata_t::MapType::world_map)
     {
         cdata[cc].nutrition -= 16;
         if (cdata[cc].nutrition < 6000)
@@ -1388,71 +1214,72 @@ turn_result_t turn_end()
     if (gdata_left_turns_of_timestop > 0)
     {
         --gdata_left_turns_of_timestop;
-        if (cdata[cc].state != 1 || gdata_left_turns_of_timestop == 0)
+        if (cdata[cc].state() != Character::State::alive
+            || gdata_left_turns_of_timestop == 0)
         {
             txtef(9);
-            txt(lang(
-                u8"時は再び動き出した。"s, u8"Time starts to run again."s));
+            txt(i18n::s.get("core.locale.action.time_stop.ends"));
         }
         else
         {
             if (cc != 0)
             {
                 update_screen();
-                await(config::instance().animewait * 10);
+                await(Config::instance().animewait * 10);
             }
             txtef(9);
             txt(u8" *tick* "s);
-            return turn_result_t::pass_one_turn_freeze_time;
+            return TurnResult::pass_one_turn_freeze_time;
         }
     }
-    return turn_result_t::pass_one_turn;
+    return TurnResult::pass_one_turn;
 }
 
 
 
-turn_result_t pc_turn(bool advance_time)
+TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
     {
-        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::player_turn>();
+        lua::lua->get_event_manager()
+            .run_callbacks<lua::EventKind::player_turn>();
         if (gdata_catches_god_signal)
         {
             if (rnd(1000) == 0)
             {
-                txtgod(cdata[0].god_id, 12);
+                txtgod(cdata.player().god_id, 12);
             }
         }
         gdata(808) = 0;
         tgloc = 0;
         if (gdata_mount != 0)
         {
-            cdata[gdata_mount].position = cdata[0].position;
+            cdata[gdata_mount].position = cdata.player().position;
         }
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
-            map(cdata[0].position.x, cdata[0].position.y, 1) = 1;
+            map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
         }
         if (gdata_ether_disease_stage >= 20000)
         {
-            dmghp(0, 999999, -14);
+            damage_hp(cdata.player(), 999999, -14);
         }
-        if (cdata[0].state != 1)
+        if (cdata.player().state() != Character::State::alive)
         {
-            return turn_result_t::pc_died;
+            return TurnResult::pc_died;
         }
         if (gdata(30))
         {
-            await(config::instance().wait1 / 3);
+            await(Config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
-                y = cdata[0].position.y + dy;
-                if (y < 0 || y <= mdata(1))
+                y = cdata.player().position.y + dy;
+                if (y < 0 || y <= mdata_map_height)
                     continue;
                 for (int dx = -1; dx <= 1; ++dx)
                 {
-                    x = cdata[0].position.x + dx;
-                    if (x < 0 || x <= mdata(0))
+                    x = cdata.player().position.x + dx;
+                    if (x < 0 || x <= mdata_map_width)
                         continue;
                     if (map(x, y, 1) != 0)
                     {
@@ -1464,10 +1291,10 @@ turn_result_t pc_turn(bool advance_time)
                     }
                 }
             }
-            x = cdata[0].position.x;
-            y = cdata[0].position.y;
-            cdata[0].next_position.x = x + dirxy(0, gdata(35));
-            cdata[0].next_position.y = y + dirxy(1, gdata(35));
+            x = cdata.player().position.x;
+            y = cdata.player().position.y;
+            cdata.player().next_position.x = x + dirxy(0, gdata(35));
+            cdata.player().next_position.y = y + dirxy(1, gdata(35));
             if (map(x, y, 5) != 0)
             {
                 gdata(30) = 0;
@@ -1508,7 +1335,8 @@ turn_result_t pc_turn(bool advance_time)
                     gdata(30) = 0;
                 }
             }
-            cell_check(cdata[0].next_position.x, cdata[0].next_position.y);
+            cell_check(
+                cdata.player().next_position.x, cdata.player().next_position.y);
             if (cellaccess == 0)
             {
                 if (cellchara >= 16 || cellchara == -1)
@@ -1520,13 +1348,11 @@ turn_result_t pc_turn(bool advance_time)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != 40
-                && config::instance().autosave)
+            if (gdata_wizard == 0
+                && gdata_current_map != mdata_t::MapId::pet_arena
+                && Config::instance().autosave)
             {
-                snd(44);
-                save_game();
-                txtef(5);
-                txt(lang(u8" *保存* "s, u8"*saving*"s));
+                do_save_game();
             }
         }
         if (autoturn == 1)
@@ -1538,13 +1364,14 @@ turn_result_t pc_turn(bool advance_time)
         {
             update_screen();
         }
-        if (gdata_current_map == 40)
+        if (gdata_current_map == mdata_t::MapId::pet_arena)
         {
             gdata(73) = 3;
             bool pet_exists = false;
             for (int cc = 1; cc < 16; ++cc)
             {
-                if (cdata[cc].state == 1 && cdata[cc].relationship == 10)
+                if (cdata[cc].state() == Character::State::alive
+                    && cdata[cc].relationship == 10)
                 {
                     pet_exists = true;
                     break;
@@ -1566,18 +1393,20 @@ turn_result_t pc_turn(bool advance_time)
                 for (int cc = 0; cc < 16; ++cc)
                 {
                     if (arenaop == 0 && followerin(cc) == 1
-                        && cdata[cc].state == 6)
+                        && cdata[cc].state() == Character::State::pet_dead)
                         continue;
                     if (petarenawin != 1 && followerin(cc) == 1
-                        && cdata[cc].state == 6 && rnd(5) == 0)
+                        && cdata[cc].state() == Character::State::pet_dead
+                        && rnd(5) == 0)
                         continue;
-                    cdata[cc].state = followerexist(cc);
+                    cdata[cc].set_state(
+                        static_cast<Character::State>(followerexist(cc)));
                 }
-                return turn_result_t::exit_map;
+                return TurnResult::exit_map;
             }
         label_2744_internal:
-            await(config::instance().wait1);
-            cdata[0].direction = 0;
+            await(Config::instance().wait1);
+            cdata.player().direction = 0;
             key_check();
             f = 0;
             for (int cnt = 0; cnt < 16; ++cnt)
@@ -1590,7 +1419,7 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     p = cnt;
                 }
-                if (cdata[p].state != 1)
+                if (cdata[p].state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -1602,7 +1431,8 @@ turn_result_t pc_turn(bool advance_time)
                 {
                     continue;
                 }
-                if (cdata[camera].state != 1 || camera == 0)
+                if (cdata[camera].state() != Character::State::alive
+                    || camera == 0)
                 {
                     camera = p;
                     break;
@@ -1637,44 +1467,44 @@ turn_result_t pc_turn(bool advance_time)
             update_screen();
             if (key == key_goup || key_escape == 1)
             {
-                txt(lang(
-                    u8"試合を放棄する？"s,
-                    u8"Do you want to give up the game?"s));
+                txt(i18n::s.get(
+                    "core.locale.action.use_stairs.prompt_give_up_game"));
                 ELONA_YES_NO_PROMPT();
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     petarenawin = 2;
-                    return turn_result_t::turn_end;
+                    return TurnResult::turn_end;
                 }
                 goto label_2744_internal;
             }
             if (key != key_cancel && key != ""s)
             {
-                return turn_result_t::turn_end;
+                return TurnResult::turn_end;
             }
             goto label_2744_internal;
         }
         if (trait(210) != 0 && rnd(5) == 0)
         {
             ci = get_random_inv(0);
-            if (inv[ci].number > 0
+            if (inv[ci].number() > 0
                 && the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
                 access_item_db(15);
             }
         }
-        if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
+        if (trait(214) != 0 && rnd(250) == 0
+            && mdata_map_type != mdata_t::MapType::world_map)
         {
             efid = 408;
             magic();
         }
-        if (cdata[cdata[0].enemy_id].is_invisible() == 1
-            && cdata[0].can_see_invisible() == 0
-            && cdata[cdata[0].enemy_id].wet == 0)
+        if (cdata[cdata.player().enemy_id].is_invisible() == 1
+            && cdata.player().can_see_invisible() == 0
+            && cdata[cdata.player().enemy_id].wet == 0)
         {
-            cdata[0].enemy_id = 0;
+            cdata.player().enemy_id = 0;
         }
         t = 1;
         keylog = "";
@@ -1687,24 +1517,24 @@ label_2747:
     {
         if (gdata_catches_god_signal)
         {
-            txtgod(cdata[0].god_id, 11);
+            txtgod(cdata.player().god_id, 11);
         }
         firstturn = 0;
     }
 
     if (gdata(808))
     {
-        txt(lang(u8"装備を変更した。"s, u8"You change your equipment."s));
-        return turn_result_t::turn_end;
+        txt(i18n::s.get("core.locale.action.equip.you_change"));
+        return TurnResult::turn_end;
     }
     ++t;
-    if (t % config::instance().scrsync == 1)
+    if (t % Config::instance().scrsync == 1)
     {
         ++scrturn;
-        label_1420();
+        ui_render_from_screensync();
     }
 
-    if (config::instance().net && config::instance().netwish && key == ""s)
+    if (Config::instance().net && Config::instance().netwish && key == ""s)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -1718,7 +1548,7 @@ label_2747:
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
                 {
-                    if (config::instance().netchat)
+                    if (Config::instance().netchat)
                     {
                         continue;
                     }
@@ -1738,18 +1568,21 @@ label_2747:
         time_warn = timeGetTime() / 1000;
         wishfilter = 0;
         ++hour_played;
-        s = lang(
-            u8"Elonaをはじめてから"s + hour_played
-                + u8"時間が経過しています。"s,
-            u8"You have been playing Elona for "s + hour_played + u8" hour"s
-                + _s2(hour_played) + u8"."s);
+        s = i18n::s.get("core.locale.action.playtime_report", hour_played);
         s += cheer_up_message(hour_played);
         txtef(5);
         txt(s);
     }
 
-    await(config::instance().wait1);
-    key_check(1);
+    // Provide the opportunity for the game to quicksave if app focus
+    // is lost on Android by setting whether or not player input is
+    // being queried. This won't be true for any other place input is
+    // queried, but it would probably be dangerous to allow the game
+    // to quicksave at any place await() could be called.
+    player_queried_for_input = true;
+    await(Config::instance().wait1);
+    key_check(KeyWaitDelay::walk_run);
+    player_queried_for_input = false;
 
     if (ginfo(2) != 0)
     {
@@ -1758,31 +1591,37 @@ label_2747:
 
     if (gdata_wizard)
     {
-        if (getkey(snail::key::f5))
+        if (getkey(snail::Key::f3))
+        {
+            efid = 657;
+            magic();
+            return TurnResult::turn_end;
+        }
+        if (getkey(snail::Key::f5))
         {
             what_do_you_wish_for();
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (getkey(snail::key::f6))
+        if (getkey(snail::Key::f6))
         {
             dbg_skipevent = 1;
             ++gdata_hour;
             weather_changes();
             dbg_skipevent = 0;
             mode = 0;
-            return turn_result_t::turn_end;
+            return TurnResult::turn_end;
         }
-        if (getkey(snail::key::f7))
+        if (getkey(snail::Key::f7))
         {
-            if (mdata(6) != 3)
+            if (mdata_map_type != mdata_t::MapType::town)
             {
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                ctrl_file(file_operation_t::_11);
+                ctrl_file(FileOperation::map_delete);
                 mode = 2;
                 levelexitby = 4;
-                return turn_result_t::initialize_map;
+                return TurnResult::initialize_map;
             }
         }
     }
@@ -1791,7 +1630,7 @@ label_2747:
     {
         key = "";
         save_game();
-        txt(lang(u8" *保存* "s, u8" *Save* "s));
+        txt(i18n::s.get("core.locale.action.quicksave"));
     }
     if (key == key_quickload)
     {
@@ -1799,27 +1638,26 @@ label_2747:
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
-        const auto save_dir = filesystem::dir::save();
-        load_save_data(save_dir);
+        load_save_data();
         mode = 3;
-        return turn_result_t::initialize_map;
+        return TurnResult::initialize_map;
     }
 
-    if (getkey(snail::key::f3))
+    if (getkey(snail::Key::f3))
     {
         tcgmain();
-        label_1746();
+        map_prepare_tileset_atlas();
         update_entire_screen();
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
-    if (getkey(snail::key::f9))
+    if (getkey(snail::Key::f9))
     {
         gmode(2);
         sxfix = 0;
         syfix = 0;
         update_scrolling_info();
         update_slight();
-        label_1433();
+        ui_render_non_hud();
         p = windoww / 192;
         for (int i = 0; i < p + 1; ++i)
         {
@@ -1840,13 +1678,13 @@ label_2747:
         snd(20);
         goto label_2747;
     }
-    if (getkey(snail::key::f11))
+    if (getkey(snail::Key::f11))
     {
         dump_player_info();
         await(500);
         goto label_2747;
     }
-    if (getkey(snail::key::f12))
+    if (getkey(snail::Key::f12))
     {
         debug::voldemort = true;
         if (debug::voldemort)
@@ -1856,7 +1694,7 @@ label_2747:
             {
                 if (i != 426 && i != 427)
                 {
-                    skillgain(0, i, 100, 10000);
+                    chara_gain_skill(cdata.player(), i, 100, 10000);
                 }
             }
             goto label_2747;
@@ -1871,7 +1709,7 @@ label_2747:
     {
         key = key_search;
         cell_featread(cdata[cc].position.x, cdata[cc].position.y);
-        if (feat(1) == 11 || mdata(6) == 1)
+        if (feat(1) == 11 || mdata_map_type == mdata_t::MapType::world_map)
         {
             key = key_godown;
         }
@@ -1886,7 +1724,7 @@ label_2747:
         p = 0;
         for (const auto& ci : items(-1))
         {
-            if (inv[ci].number == 0)
+            if (inv[ci].number() == 0)
                 continue;
             if (inv[ci].position != cdata[cc].position)
                 continue;
@@ -1903,12 +1741,11 @@ label_2747:
                 p(0) = 3;
                 p(1) = ci;
             }
-            if (inv[ci].function != 0
-                || the_item_db[inv[ci].id]->is_usable != 0)
+            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[inv[ci].id]->is_readable != 0)
+            if (the_item_db[inv[ci].id]->is_readable)
             {
                 p = 5;
             }
@@ -1916,11 +1753,13 @@ label_2747:
             {
                 key = key_godown;
             }
-            if (inv[ci].id == 750 && gdata_current_map == 7)
+            if (inv[ci].id == 750
+                && gdata_current_map == mdata_t::MapId::your_home)
             {
                 key = key_goup;
             }
-            if (inv[ci].id == 751 && gdata_current_map == 7)
+            if (inv[ci].id == 751
+                && gdata_current_map == mdata_t::MapId::your_home)
             {
                 key = key_godown;
             }
@@ -1947,7 +1786,7 @@ label_2747:
         }
         if (p == 3)
         {
-            if (!cdata[0].god_id.empty())
+            if (!cdata.player().god_id.empty())
             {
                 key = key_offer;
             }
@@ -2014,18 +1853,16 @@ label_2747:
     {
         invctrl = lastctrl;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_throw)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2034,8 +1871,8 @@ label_2747:
         {
             invctrl = 26;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -2043,18 +1880,16 @@ label_2747:
     {
         invctrl = 1;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_drop)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2063,8 +1898,8 @@ label_2747:
         {
             invctrl = 2;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -2072,34 +1907,32 @@ label_2747:
     {
         invctrl = 5;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_read)
     {
         invctrl = 7;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_drink)
     {
         invctrl = 8;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_zap)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2108,8 +1941,8 @@ label_2747:
         {
             invctrl = 9;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -2117,18 +1950,16 @@ label_2747:
     {
         invctrl = 14;
         snd(100);
-        menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result_t::none);
+        MenuResult mr = ctrl_inventory();
+        assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (key == key_open)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2137,19 +1968,17 @@ label_2747:
         {
             invctrl = 15;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
     if (key == key_dip)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2158,79 +1987,70 @@ label_2747:
         {
             invctrl = 17;
             snd(100);
-            return turn_result_t::ctrl_inventory;
+            return TurnResult::ctrl_inventory;
         }
     }
     if (key == key_charainfo)
     {
-        csctrl = 0;
-        return turn_result_t::menu_character_sheet;
+        return TurnResult::menu_character_sheet;
     }
     if (key == key_material)
     {
-        return turn_result_t::menu_materials;
+        return TurnResult::menu_materials;
     }
     if (key == key_trait)
     {
-        return turn_result_t::menu_feats;
+        return TurnResult::menu_feats;
     }
     if (key == key_wear)
     {
-        return turn_result_t::menu_equipment;
+        return TurnResult::menu_equipment;
     }
     if (key == key_cast)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
         }
         else
         {
-            snd(102);
-            return turn_result_t::show_spell_list;
+            return TurnResult::show_spell_list;
         }
     }
     if (key == key_skill)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
         }
         else
         {
-            snd(101);
-            return turn_result_t::show_skill_list;
+            return TurnResult::show_skill_list;
         }
     }
     if (key == key_msglog)
     {
-        return turn_result_t::show_message_log;
+        return TurnResult::show_message_log;
     }
     if (key == key_journal)
     {
-        return turn_result_t::menu_journal;
+        return TurnResult::show_journal;
     }
     menucycle = 0;
     if (key == key_offer)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2239,8 +2059,8 @@ label_2747:
         {
             invctrl = 19;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
+            MenuResult mr = ctrl_inventory();
+            assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
     }
@@ -2256,12 +2076,10 @@ label_2747:
     }
     if (key == key_interact)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2280,12 +2098,10 @@ label_2747:
     }
     if (key == key_fire)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2297,12 +2113,10 @@ label_2747:
     }
     if (key == key_give)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2318,7 +2132,7 @@ label_2747:
     }
     if (key == key_look)
     {
-        if (mdata(6) != 1)
+        if (mdata_map_type != mdata_t::MapType::world_map)
         {
             return do_look_command();
         }
@@ -2349,12 +2163,10 @@ label_2747:
 
     if (key == key_bash)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2370,12 +2182,10 @@ label_2747:
     }
     if (key == key_close)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2387,12 +2197,10 @@ label_2747:
     }
     if (key == key_pray)
     {
-        if (mdata(6) == 1)
+        if (mdata_map_type == mdata_t::MapType::world_map)
         {
             txtnew();
-            txt(lang(
-                u8"その行為は、ワールドマップにいる間はできない。"s,
-                u8"You can't do that while you're in a global area."s));
+            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
             display_msg();
             redraw();
             goto label_2747;
@@ -2416,78 +2224,78 @@ label_2747:
     if (key == key_north)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 0;
     }
     if (key == key_south)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 4;
     }
     if (key == key_west)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y;
         gdata(35) = 1;
         dirsub = 6;
     }
     if (key == key_east)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y;
         gdata(35) = 2;
         dirsub = 2;
     }
     if (key == key_northwest)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 7;
     }
     if (key == key_northeast)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y - 1;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y - 1;
         gdata(35) = 3;
         dirsub = 1;
     }
     if (key == key_southwest)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x - 1;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x - 1;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 5;
     }
     if (key == key_southeast)
     {
         p = 1;
-        cdata[0].next_position.x = cdata[0].position.x + 1;
-        cdata[0].next_position.y = cdata[0].position.y + 1;
+        cdata.player().next_position.x = cdata.player().position.x + 1;
+        cdata.player().next_position.y = cdata.player().position.y + 1;
         gdata(35) = 0;
         dirsub = 3;
     }
-    cdata[0].direction = gdata(35);
+    cdata.player().direction = gdata(35);
     if (p == 1)
     {
         // Autodig
-        int x = cdata[0].next_position.x;
-        int y = cdata[0].next_position.y;
+        int x = cdata.player().next_position.x;
+        int y = cdata.player().next_position.y;
         if (foobar_data.is_autodig_enabled)
         {
-            if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
+            if (0 <= x && x < mdata_map_width && 0 <= y && y < mdata_map_height
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
-                && mdata(6) != 1)
+                && mdata_map_type != mdata_t::MapType::world_map)
             {
                 refx = x;
                 refy = y;
@@ -2510,7 +2318,7 @@ label_2747:
     }
     if (key == key_wait)
     {
-        return turn_result_t::turn_end;
+        return TurnResult::turn_end;
     }
     if (key == key_enter)
     {
@@ -2520,9 +2328,7 @@ label_2747:
     if (key != ""s && key != key_cancel && key != key_alter)
     {
         ++msgdup;
-        txt(lang(
-            u8"?キーを押すと、コマンドの一覧が見られる。"s,
-            u8"Hit ? key to display help."s));
+        txt(i18n::s.get("core.locale.action.hit_key_for_help"));
         update_screen();
     }
 

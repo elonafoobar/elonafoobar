@@ -10,7 +10,7 @@ namespace elona
 /* clang-format off */
 
 
-struct version_t
+struct Version
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
@@ -33,10 +33,10 @@ struct version_t
         return std::to_string(major) + '.' + std::to_string(minor) + '.' + std::to_string(patch);
     }
 
-    // Like "Elona Foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
+    // Like "Elona foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
     std::string long_string() const
     {
-        return u8"Elona Foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
+        return u8"Elona foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
     }
 
 
@@ -57,7 +57,7 @@ struct version_t
 /* clang-format on */
 
 
-extern const version_t latest_version;
+extern const Version latest_version;
 
 
 } // namespace elona

@@ -1,32 +1,31 @@
 #include "handle_manager.hpp"
+#include <cassert>
+#include <set>
 #include "../character.hpp"
 #include "../config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
 #include "lua_env.hpp"
-#include <cassert>
-#include <set>
 
 namespace elona
 {
 namespace lua
 {
 
-handle_manager::handle_manager(lua_env* lua)
+HandleManager::HandleManager(LuaEnv* lua_)
 {
-    this->lua = lua;
-    this->lua->get_state()->set("_IS_TEST", config::instance().is_test);
-    this->handle_env = sol::environment(*(this->lua->get_state()),
-                                        sol::create,
-                                        this->lua->get_state()->globals());
+    lua = lua_;
+    lua->get_state()->set("_IS_TEST", Config::instance().is_test);
+    handle_env = sol::environment(
+        *(lua->get_state()), sol::create, lua->get_state()->globals());
 
     // Load the Lua chunk for storing handles.
-    this->lua->get_state()->safe_script(R"(Handle = require "mods/core/handle")", this->handle_env);
+    lua->get_state()->safe_script(R"(Handle = require "handle")", handle_env);
 
     bind(*lua);
 }
 
-void handle_manager::bind(lua_env& lua)
+void HandleManager::bind(LuaEnv& lua)
 {
     sol::table core = lua.get_api_manager().get_api_table();
     sol::table Chara = core["Chara"];
@@ -40,104 +39,101 @@ void handle_manager::bind(lua_env& lua)
     Item.set("iter", handle_env["Handle"]["iter_items"]);
 }
 
-void handle_manager::create_chara_handle(character& chara)
+void HandleManager::create_chara_handle(const Character& chara)
 {
-    if(chara_handles.find(chara.index) != chara_handles.end())
+    if (chara.state() == Character::State::empty)
     {
-        handle_env["Handle"]["assert_chara_valid"](chara);
         return;
     }
-    chara_handles.emplace(chara.index);
-    handle_env["Handle"]["create_chara_handle"](chara);
+
+    create_handle(chara);
 }
 
-void handle_manager::create_item_handle(item& item)
+void HandleManager::create_item_handle(const Item& item)
 {
-    if(item_handles.find(item.index) != item_handles.end())
+    if (item.number() == 0)
     {
-        handle_env["Handle"]["assert_item_valid"](item);
         return;
     }
-    item_handles.emplace(item.index);
-    handle_env["Handle"]["create_item_handle"](item);
+
+    create_handle(item);
 }
 
-void handle_manager::remove_chara_handle(character& chara)
+void HandleManager::remove_chara_handle(const Character& chara)
 {
-    // TODO should chara.state == 0 mean the handle is invalid?
-    // Some characters can die and respawn again.
-    if (chara_handles.find(chara.index) == chara_handles.end())
-    {
-        handle_env["Handle"]["assert_chara_invalid"](chara);
-        return;
-    }
-    chara_handles.erase(chara.index);
-    handle_env["Handle"]["remove_chara_handle"](chara);
+    remove_handle(chara);
 }
 
-void handle_manager::remove_item_handle(item& item)
+void HandleManager::remove_item_handle(const Item& item)
 {
-    // item.number is set to zero often, but it doesn't seem to
-    // signify whether or not the item was deleted.
-    if (item_handles.find(item.index) == item_handles.end())
-    {
-        handle_env["Handle"]["assert_item_invalid"](item);
-        return;
-    }
-    item_handles.erase(item.index);
-    handle_env["Handle"]["remove_item_handle"](item);
+    remove_handle(item);
 }
 
-sol::object handle_manager::get_chara_handle(character& chara)
+
+// Handlers for brand-new instances of characters/objects being created
+void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
 {
-    if(chara.index == -1)
-    {
-        ELONA_LOG("Tried getting handle to character of index -1");
-        return sol::lua_nil;
-    }
-    if(chara_handles.find(chara.index) == chara_handles.end())
-    {
-        //std::cout << "Character " << chara.index << " not found." << std::endl;
-        return sol::lua_nil;
-    }
-    sol::object handle = handle_env["Handle"]["CharaHandles"][chara.index];
+    assert(chara.state() != Character::State::empty);
+    create_chara_handle(chara);
+
+    auto handle = get_handle(chara);
     assert(handle != sol::lua_nil);
-    return handle;
+    lua->get_event_manager().run_callbacks<EventKind::character_created>(
+        handle);
 }
 
-sol::object handle_manager::get_item_handle(item& item)
+void HandleManager::create_item_handle_run_callbacks(const Item& item)
 {
-    if(item.index == -1)
-    {
-        ELONA_LOG("Tried getting handle to item of index -1");
-        return sol::lua_nil;
-    }
-    if(item_handles.find(item.index) == item_handles.end())
-    {
-        //std::cout << "Item " << item.index << " not found." << std::endl;
-        return sol::lua_nil;
-    }
-    sol::object handle = handle_env["Handle"]["ItemHandles"][item.index];
+    assert(item.number() != 0);
+    create_item_handle(item);
+
+    auto handle = get_handle(item);
     assert(handle != sol::lua_nil);
-    return handle;
+    lua->get_event_manager().run_callbacks<EventKind::item_created>(handle);
 }
 
-void handle_manager::clear_all_handles()
+
+// Handlers for invalidation of characters/items (character death, item count is
+// 0)
+void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
 {
-    chara_handles.clear();
-    item_handles.clear();
-    handle_env["Handle"]["CharaHandles"] = this->lua->get_state()->create_table_with();
-    handle_env["Handle"]["ItemHandles"] = this->lua->get_state()->create_table_with();
+    auto handle = get_handle(chara);
+    if (handle == sol::lua_nil)
+    {
+        return;
+    }
+
+    lua->get_event_manager().run_callbacks<EventKind::character_removed>(
+        handle);
+    remove_chara_handle(chara);
+}
+
+void HandleManager::remove_item_handle_run_callbacks(const Item& item)
+{
+    auto handle = get_handle(item);
+    if (handle == sol::lua_nil)
+    {
+        return;
+    }
+
+    lua->get_event_manager().run_callbacks<EventKind::item_removed>(handle);
+    remove_item_handle(item);
+}
+
+
+void HandleManager::clear_all_handles()
+{
+    handle_env["Handle"]["clear"]();
 }
 
 // Player/party handles are global, so don't clear them when e.g. changing maps
-void handle_manager::clear_map_local_handles()
+void HandleManager::clear_map_local_handles()
 {
-    for(int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; i++)
+    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; i++)
     {
         remove_chara_handle(cdata[i]);
     }
-    for(int i = 1320; i < 5480; i++)
+    for (int i = 1320; i < 5480; i++)
     {
         remove_item_handle(inv[i]);
     }

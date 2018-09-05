@@ -1,8 +1,10 @@
 #include "blending.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "db_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -10,7 +12,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "item_db.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
@@ -30,6 +31,95 @@ int rpmode = 0;
 elona_vector1<int> rppage;
 int rpresult = 0;
 elona_vector1<int> inhlist_at_m184;
+
+void continuous_action_blending()
+{
+label_19341_internal:
+    rpid = rpref(0);
+    if (rpid == 0)
+    {
+        rowactend(cc);
+        return;
+    }
+    if (cdata[cc].continuous_action_id == 0)
+    {
+        txtnew();
+        txt(i18n::s.get(
+            "core.locale.blending.started", cdata[cc], rpname(rpid)));
+        cdata[cc].continuous_action_id = 12;
+        cdata[cc].continuous_action_turn = rpref(2) % 10000;
+        return;
+    }
+    if (cdata[cc].continuous_action_turn > 0)
+    {
+        if (rnd(30) == 0)
+        {
+            txtef(4);
+            txt(i18n::s.get("core.locale.blending.sounds"));
+        }
+        return;
+    }
+    if (rpref(2) >= 10000)
+    {
+        cdata[cc].continuous_action_turn = rpref(2) / 10000;
+        for (int cnt = 0;; ++cnt)
+        {
+            mode = 12;
+            ++gdata_hour;
+            weather_changes();
+            render_hud();
+            if (cnt % 5 == 0)
+            {
+                txtef(4);
+                txt(i18n::s.get("core.locale.blending.sounds"));
+            }
+            redraw();
+            await(Config::instance().animewait * 5);
+            gdata_minute = 0;
+            cc = 0;
+            --cdata[cc].continuous_action_turn;
+            if (cdata[cc].continuous_action_turn <= 0)
+            {
+                int stat = blending_find_required_mat();
+                if (stat == 0)
+                {
+                    txt(i18n::s.get(
+                        "core.locale.blending.required_material_not_found"));
+                    break;
+                }
+                blending_start_attempt();
+                if (rpref(1) > 0)
+                {
+                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
+                    cnt = 0 - 1;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        rowactend(cc);
+        mode = 0;
+        return;
+    }
+    int stat = blending_find_required_mat();
+    if (stat == 0)
+    {
+        txt(i18n::s.get("core.locale.blending.required_material_not_found"));
+        rowactend(cc);
+        return;
+    }
+    blending_start_attempt();
+    if (rpref(1) > 0)
+    {
+        cdata[cc].continuous_action_id = 0;
+        goto label_19341_internal;
+    }
+    rowactend(cc);
+    return;
+}
 
 void initialize_recipememory()
 {
@@ -53,7 +143,7 @@ void initialize_recipe()
     rpsourcelist(4) = 209;
     rpsourcelist(5) = 210;
     rpid = 200;
-    rpdatan(rpid) = lang(u8"媚薬混入食品"s, u8"love food"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10000;
     rpdata(1, rpid) = 10;
     rpdata(2, rpid) = 1;
@@ -64,7 +154,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 57000;
     rpdata(21, rpid) = 620;
     rpid = 201;
-    rpdatan(rpid) = lang(u8"染色"s, u8"dyeing"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10001;
     rpdata(1, rpid) = 4;
     rpdata(2, rpid) = 1;
@@ -73,7 +163,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 519;
     rpid = 202;
-    rpdatan(rpid) = lang(u8"特製毒入り食品"s, u8"poisoned food"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10002;
     rpdata(1, rpid) = 7;
     rpdata(2, rpid) = 1;
@@ -82,7 +172,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 57000;
     rpdata(21, rpid) = 262;
     rpid = 203;
-    rpdatan(rpid) = lang(u8"耐火コーティング"s, u8"fireproof coating"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10003;
     rpdata(1, rpid) = 15;
     rpdata(2, rpid) = 1;
@@ -91,7 +181,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 736;
     rpid = 204;
-    rpdatan(rpid) = lang(u8"耐酸コーティング"s, u8"acidproof coating"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10004;
     rpdata(1, rpid) = 15;
     rpdata(2, rpid) = 1;
@@ -100,7 +190,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 566;
     rpid = 205;
-    rpdatan(rpid) = lang(u8"釣り餌の装着"s, u8"bait attachment"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10005;
     rpdata(1, rpid) = 10;
     rpdata(2, rpid) = 1;
@@ -111,7 +201,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 342;
     rpdata(21, rpid) = 617;
     rpid = 206;
-    rpdatan(rpid) = lang(u8"アイテムの祝福"s, u8"blessed item"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10006;
     rpdata(1, rpid) = 5;
     rpdata(2, rpid) = 1;
@@ -120,7 +210,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 516;
     rpid = 207;
-    rpdatan(rpid) = lang(u8"井戸水の回復"s, u8"well refill"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10007;
     rpdata(1, rpid) = 3;
     rpdata(2, rpid) = 2;
@@ -129,7 +219,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 60001;
     rpdata(21, rpid) = 52000;
     rpid = 208;
-    rpdatan(rpid) = lang(u8"天然ポーション"s, u8"natural potion"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10008;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -138,7 +228,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 60001;
     rpdata(21, rpid) = 601;
     rpid = 209;
-    rpdatan(rpid) = lang(u8"2種アーティファクト合成"s, u8"2 artifacts fusion"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10009;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -147,7 +237,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 9004;
     rpid = 210;
-    rpdatan(rpid) = lang(u8"3種アーティファクト合成"s, u8"3 artifacts fusion"s);
+    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
     rpdata(0, rpid) = 10009;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -232,15 +322,15 @@ void initialize_recipe()
     rpdata(64, rpid) = 60011;
     rpdata(65, rpid) = 200;
     rfnameorg(0, 1) = u8"flavor"s;
-    rfnameorg(1, 1) = lang(u8"適当な調味料"s, u8"suitable flavoring"s);
+    rfnameorg(1, 1) = i18n::s.get_enum("core.locale.blending.ingredient", 1);
     rfnameorg(0, 2) = u8"ore"s;
-    rfnameorg(1, 2) = lang(u8"適当な鉱石"s, u8"any ore"s);
+    rfnameorg(1, 2) = i18n::s.get_enum("core.locale.blending.ingredient", 2);
     rfnameorg(0, 3) = u8"wood"s;
-    rfnameorg(1, 3) = lang(u8"木材を含む何か"s, u8"something made of wood"s);
+    rfnameorg(1, 3) = i18n::s.get_enum("core.locale.blending.ingredient", 3);
     rfnameorg(0, 5) = u8"fish"s;
-    rfnameorg(1, 5) = lang(u8"魚介類"s, u8"fish"s);
+    rfnameorg(1, 5) = i18n::s.get_enum("core.locale.blending.ingredient", 4);
     rfnameorg(0, 4) = "";
-    rfnameorg(1, 4) = lang(u8"何か物体"s, u8"any item"s);
+    rfnameorg(1, 4) = i18n::s.get_enum("core.locale.blending.ingredient", 5);
     return;
 }
 
@@ -259,12 +349,14 @@ void window_recipe2(int val0)
     gcopy(3, 960, 288, 480, 68);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
-    font(15 - en * 2, snail::font_t::style_t::bold);
+    font(15 - en * 2, snail::Font::Style::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
-    pos(dx_at_m183 + 140, dy_at_m183);
-    color(30, 30, 30);
-    bmes(lang(u8"成功率: "s, u8"Success Rate: "s) + s_at_m183, 235, 235, 235);
-    color(0, 0, 0);
+    bmes(
+        i18n::s.get("core.locale.blending.rate_panel.success_rate", s_at_m183),
+        dx_at_m183 + 140,
+        dy_at_m183,
+        {235, 235, 235},
+        {30, 30, 30});
     p_at_m183 = rpdata(1, rpid);
     if (rpmode)
     {
@@ -278,18 +370,22 @@ void window_recipe2(int val0)
         }
         p_at_m183 += rpdata(1, rpid) / 10000 * val0 * 10000;
     }
-    s_at_m183 = ""s + p_at_m183 % 10000 + lang(u8"ターン"s, u8" turns"s);
+    s_at_m183 =
+        i18n::s.get("core.locale.blending.rate_panel.turns", p_at_m183 % 10000);
     if (p_at_m183 >= 10000)
     {
-        s_at_m183 += lang(u8"と"s, u8" and "s) + p_at_m183 / 10000
-            + lang(u8"時間"s, u8" hours"s);
+        s_at_m183 += i18n::s.get(
+            "core.locale.blending.rate_panel.and_hours", p_at_m183 / 10000);
     }
-    pos(dx_at_m183 + 140, dy_at_m183 + 20);
-    color(40, 40, 40);
-    bmes(lang(u8"必要時間: "s, u8"Time: "s) + s_at_m183, 235, 235, 235);
-    color(0, 0, 0);
-    return;
+    bmes(
+        i18n::s.get("core.locale.blending.rate_panel.required_time", s_at_m183),
+        dx_at_m183 + 140,
+        dy_at_m183 + 20,
+        {235, 235, 235},
+        {40, 40, 40});
 }
+
+
 
 void window_recipe_(
     int prm_1050,
@@ -313,33 +409,28 @@ void window_recipe_(
             prm_1052 + 4,
             prm_1053,
             prm_1054 - prm_1054 % 8,
-            0,
-            -1);
-        pos(prm_1051 + prm_1053 - 522, 0);
-        gfini(486, 69);
-        gfdec(40, 40, 40);
+            true);
+        boxf(prm_1051 + prm_1053 - 522, 0, 486, 69, {30, 30, 30});
         windowshadow = 0;
     }
-    window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8, 0, 0);
+    window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8);
     window_recipe2();
     gmode(2);
-    color(194, 170, 146);
     line(
         prm_1051 + 50 + 0,
         prm_1052 + prm_1054 - 48 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 48 - prm_1054 % 8);
-    color(0, 0, 0);
-    color(234, 220, 188);
+        prm_1052 + prm_1054 - 48 - prm_1054 % 8,
+        {194, 170, 146});
     line(
         prm_1051 + 50 + 0,
         prm_1052 + prm_1054 - 49 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 49 - prm_1054 % 8);
-    color(0, 0, 0);
+        prm_1052 + prm_1054 - 49 - prm_1054 % 8,
+        {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s
-        + lang(u8"[ページ切替]  "s, u8"[Page]  "s);
+        + i18n::s.get("core.locale.blending.recipe.hint");
     if (step == -1)
     {
         s_at_m184(1) += strhint3;
@@ -351,41 +442,50 @@ void window_recipe_(
     font(12 + sizefix - en * 2);
     pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
     mes(s_at_m184(1));
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
-    dy_at_m184 = y + 48;
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    dy_at_m184 = prm_1052 + 48;
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
-    mes(lang(u8"調合の手順"s, u8"Blending Procedure"s));
+    mes(i18n::s.get("core.locale.blending.window.procedure"));
     dy_at_m184 = dy_at_m184 + 18;
     font(13 - en * 2);
     i_at_m184 = 1;
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
-    gfini(prm_1053 - 60, 17);
     if (step == i_at_m184 - 2)
     {
-        gfdec2(10, 20, 30);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        gfdec2(25, 30, 35);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {20, 20, 20, 32});
     }
     if (step == -1)
     {
         pos(dx_at_m184, dy_at_m184);
         mes(""s + i_at_m184 + u8"."s
-            + lang(u8"レシピを選ぶ"s, u8"Choose a recipe"s));
+            + i18n::s.get("core.locale.blending.window.choose_a_recipe"));
     }
     else
     {
         pos(dx_at_m184, dy_at_m184);
         mes(""s + i_at_m184 + u8"."s
-            + lang(
-                  (rpname(rpid) + u8"のレシピを選んだ"s),
-                  (u8"Chose the recipe of "s + rpname(rpid))));
+            + i18n::s.get(
+                  "core.locale.blending.window.chose_the_recipe_of",
+                  rpname(rpid)));
     }
     dy_at_m184 += 17;
     ++i_at_m184;
@@ -396,28 +496,36 @@ void window_recipe_(
             break;
         }
         pos(dx_at_m184 - 10, dy_at_m184 - 2);
-        gfini(prm_1053 - 60, 17);
         if (step == i_at_m184 - 2)
         {
-            gfdec2(10, 20, 30);
+            boxf(
+                dx_at_m184 - 10,
+                dy_at_m184 - 2,
+                prm_1053 - 60,
+                17,
+                {60, 20, 10, 32});
         }
         else if (step > i_at_m184 - 2)
         {
-            gfdec2(25, 30, 35);
+            boxf(
+                dx_at_m184 - 10,
+                dy_at_m184 - 2,
+                prm_1053 - 60,
+                17,
+                {20, 20, 20, 32});
         }
         if (step <= cnt)
         {
             int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
             p_at_m184 = stat;
-            s_at_m184 = lang(
-                            rpmatname(cnt) + u8"を加える"s,
-                            u8"Add "s + rpmatname(cnt) + ""s)
-                + u8"("s + lang(u8"所持:"s, u8"Stock:"s) + p_at_m184 + u8")"s;
+            s_at_m184 = i18n::s.get(
+                "core.locale.blending.window.add", rpmatname(cnt), p_at_m184);
         }
         else
         {
-            s_at_m184 = lang(""s, u8"Selected "s)
-                + itemname(rpref((10 + cnt * 2))) + lang(u8"を選んだ"s, ""s);
+            s_at_m184 = i18n::s.get(
+                "core.locale.blending.window.selected",
+                inv[rpref(10 + cnt * 2)]);
             s_at_m184 = strmid(s_at_m184, 0, 44);
         }
         pos(dx_at_m184, dy_at_m184);
@@ -428,28 +536,37 @@ void window_recipe_(
     pos(wx + ww + 243, wy - 4);
     gcopy(3, 1040, 96, 160, 70);
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
-    gfini(prm_1053 - 60, 17);
     if (step == i_at_m184 - 2)
     {
-        gfdec2(10, 20, 30);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        gfdec2(25, 30, 35);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {20, 20, 20, 32});
     }
     pos(dx_at_m184, dy_at_m184);
     mes(""s + i_at_m184 + u8"."s
-        + lang(u8"調合を始める！"s, u8"Start blending!"s));
+        + i18n::s.get("core.locale.blending.window.start"));
     dy_at_m184 += 30;
     if (rppage == 0)
     {
-        font(12 - en * 2, snail::font_t::style_t::bold);
+        font(12 - en * 2, snail::Font::Style::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
-        mes(lang(
-            rpname(rpid) + u8"のレシピ"s, u8"The recipe of "s + rpname(rpid)));
+        mes(i18n::s.get(
+            "core.locale.blending.window.the_recipe_of", rpname(rpid)));
         dy_at_m184 += 20;
         pos(dx_at_m184 - 10, dy_at_m184);
-        mes(lang(u8"必要なスキル:"s, u8"Required Skills:"s));
+        mes(i18n::s.get("core.locale.blending.window.required_skills"));
         dy_at_m184 = dy_at_m184 + 18;
         font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -477,27 +594,24 @@ void window_recipe_(
             color(0, 0, 0);
         }
         dy_at_m184 += 50;
-        font(12 - en * 2, snail::font_t::style_t::bold);
+        font(12 - en * 2, snail::Font::Style::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
-        mes(lang(u8"必要な機材:"s, u8"Required equipment:"s));
+        mes(i18n::s.get("core.locale.blending.window.required_equipment"));
         return;
     }
     if (prm_1050 == -1)
     {
         return;
     }
-    font(12 - en * 2, snail::font_t::style_t::bold);
+    font(12 - en * 2, snail::Font::Style::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
     font(13 - en * 2);
-    if (inv[prm_1050].identification_state
-        <= identification_state_t::partly_identified)
+    if (inv[prm_1050].identification_state <= IdentifyState::partly_identified)
     {
         pos(dx_at_m184, dy_at_m184);
-        mes(lang(
-            u8"このアイテムは鑑定されていない。"s,
-            u8"You haven't identified it yet."s));
+        mes(i18n::s.get("core.locale.blending.window.havent_identified"));
         dy_at_m184 += 16;
         return;
     }
@@ -529,14 +643,14 @@ void window_recipe_(
     else
     {
         pos(dx_at_m184, dy_at_m184);
-        mes(lang(u8"継承効果なし"s, u8"No inheritance effects"s));
+        mes(i18n::s.get("core.locale.blending.window.no_inherited_effects"));
         dy_at_m184 += 16;
         ++p_at_m184;
     }
     return;
 }
 
-turn_result_t blending_menu()
+TurnResult blending_menu()
 {
     elona_vector1<int> blendchecklist;
     step = -1;
@@ -554,16 +668,17 @@ label_1923:
             rppage = 0;
             window_recipe(list2, -1, wx + ww, wy, 400, wh);
             txtnew();
-            txt(lang(
-                u8"幾つ作る？"s, u8"How many items do you want to create?"s));
+            txt(i18n::s.get("core.locale.blending.prompt.how_many"));
             ELONA_APPEND_PROMPT(
-                lang(u8"調合を始める"s, u8"Start blending"s),
+                i18n::s.get("core.locale.blending.prompt.start"),
                 u8"a"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"前に戻る"s, u8"Go back"s), u8"b"s, ""s + promptmax);
+                i18n::s.get("core.locale.blending.prompt.go_back"),
+                u8"b"s,
+                ""s + promptmax);
             ELONA_APPEND_PROMPT(
-                lang(u8"最初から"s, u8"From the start"s),
+                i18n::s.get("core.locale.blending.prompt.from_the_start"),
                 u8"c"s,
                 ""s + promptmax);
             p = 10;
@@ -577,22 +692,22 @@ label_1923:
                 {
                     continue;
                 }
-                if (inv[rpref(10 + cnt * 2)].number < p)
+                if (inv[rpref(10 + cnt * 2)].number() < p)
                 {
-                    p = inv[rpref(10 + cnt * 2)].number;
+                    p = inv[rpref(10 + cnt * 2)].number();
                 }
             }
             rpmode = 1;
-            rtval = show_prompt(
-                promptx, prompty, 220, show_prompt_type::with_number, p);
+            rtval =
+                show_prompt(promptx, prompty, 220, PromptType::with_number, p);
             rpmode = 0;
             if (rtval == 0)
             {
                 rpref(1) = TODO_show_prompt_val;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
-                label_19342();
-                return turn_result_t::turn_end;
+                continuous_action_blending();
+                return TurnResult::turn_end;
             }
             if (rtval == 2)
             {
@@ -632,12 +747,9 @@ label_1923:
         sort_list_by_column1();
         windowshadow(1) = 1;
         txtnew();
-        txt(lang(
-            u8"(製作中)だめまだ"s,
-            u8"(*) The feature is not implemented yet."s));
+        txt(i18n::s.get("core.locale.blending.recipe.warning"));
         txtnew();
-        txt(lang(
-            u8"どのレシピを使う？"s, u8"Which recipe do you want to use?"s));
+        txt(i18n::s.get("core.locale.blending.recipe.which"));
         goto label_1924_internal;
     }
     rppage = 1;
@@ -669,19 +781,19 @@ label_1924_internal:
         blendchecklist(cnt) = blendcheckmat(list(0, p));
     }
 label_1925_internal:
-    s(0) = lang(u8"レシピの選択"s, u8"Choose a recipe"s);
+    s(0) = i18n::s.get("core.locale.blending.recipe.title");
     s(1) = strhint2;
     windowshadow = windowshadow(1);
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
-    display_topic(lang(u8"レシピの名称"s, u8"Name"s), wx + 28, wy + 30);
-    s = ""s + listmax + u8" recipes"s;
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    display_topic(
+        i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
+    s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
     gmode(2);
-    prepare_item_image(550, 0);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -693,13 +805,11 @@ label_1925_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
-            gfini(ww - 100, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
-        pos(wx + 37, wy + 70 + cnt * 19);
-        gmode(2, chipi(2, 550), chipi(3, 550));
-        grotate(1, 0, 960, 0, inf_tiles, inf_tiles);
+
+        draw_item_material(550, wx + 37, wy + 70 + cnt * 19); // Recipe image
+
         pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
@@ -720,8 +830,7 @@ label_1925_internal:
         }
         p = list(0, p);
         rpid = p;
-        s = lang(""s, u8"Recipe of "s) + cnven(rpname(rpid))
-            + lang(u8"のレシピ"s, ""s);
+        s = i18n::s.get("core.locale.blending.recipe.of", cnven(rpname(rpid)));
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
     }
@@ -739,7 +848,7 @@ label_1925_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -774,15 +883,14 @@ label_1925_internal:
     {
         screenupdate = 0;
         update_screen();
-        return turn_result_t::pc_turn_user_error;
+        return TurnResult::pc_turn_user_error;
     }
     goto label_1925_internal;
 label_1927_internal:
     windowshadow(1) = 1;
     txtnew();
-    txt(lang(
-        rpmatname(step) + u8"を追加しよう。"s,
-        u8"Add \""s + rpmatname(step) + u8"\"."s));
+    txt(i18n::s.get(
+        "core.locale.blending.steps.add_ingredient", rpmatname(step)));
 label_1928_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -794,21 +902,16 @@ label_1928_internal:
     {
         page = 0;
     }
-    if (jp)
-    {
-        s = rpmatname(step) + u8"を追加"s;
-    }
-    else
-    {
-        s = u8"Add "s + rpmatname(step);
-    }
+    s(0) = i18n::s.get(
+        "core.locale.blending.steps.add_ingredient_prompt", rpmatname(step));
     s(1) = strhint2;
     windowshadow = windowshadow(1);
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
-    display_topic(lang(u8"アイテムの名称"s, u8"Name"s), wx + 28, wy + 30);
-    s = ""s + listmax + u8" items"s;
-    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+    display_topic(
+        i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
+    s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -823,9 +926,7 @@ label_1928_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
-            gfini(ww - 100, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
     }
     font(14 - en * 2);
@@ -838,28 +939,20 @@ label_1928_internal:
             break;
         }
         p = list(0, p);
-        s = itemname(p, inv[p].number);
+        s = itemname(p, inv[p].number());
         s = strmid(s, 0, 28);
         if (p >= 5080)
         {
-            s += lang(u8"(地面)"s, u8" (Ground)"s);
+            s += i18n::s.get("core.locale.blending.steps.ground");
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        p(1) = inv[p].image % 1000;
-        prepare_item_image(p(1), inv[p].color, inv[p].param1);
-        pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2, chipi(2, p(1)), chipi(3, p(1)));
-        grotate(
-            1,
-            0,
-            960,
-            0,
-            chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
-            inf_tiles);
+
+        draw_item_with_portrait_scale_height(
+            inv[p], wx + 37, wy + 69 + cnt * 19);
+
         if (inv[p].body_part != 0)
         {
-            pos(wx + 46, wy + 72 + cnt * 18 - 3);
-            gcopy(3, 12, 348, 12, 12);
+            draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
         }
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
     }
@@ -881,7 +974,7 @@ label_1928_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(config::instance().wait1);
+    await(Config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -909,17 +1002,13 @@ label_1928_internal:
         if (ibit(13, ci))
         {
             snd(27);
-            txt(lang(
-                u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
-                u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
             goto label_1928_internal;
         }
         rpref(10 + step * 2 + 0) = ci;
         rpref(10 + step * 2 + 1) = inv[ci].id;
         snd(17);
-        txt(lang(
-            itemname(ci) + u8"を選んだ。"s,
-            u8"You add "s + itemname(ci) + u8"."s));
+        txt(i18n::s.get("core.locale.blending.steps.you_add", inv[ci]));
         ++step;
         p = rpdiff(rpid, step, step - 1);
         goto label_1923;
@@ -981,8 +1070,9 @@ std::string rpmatname(int prm_1037)
             s_at_m177 += u8"/bugged/"s;
             return s_at_m177;
         }
-        s_at_m177 =
-            chara_refstr(p_at_m177, 2) + lang(u8"の死体"s, u8" corpse"s);
+        s_at_m177 = i18n::s.get(
+            "core.locale.blending.ingredient.corpse",
+            chara_refstr(p_at_m177, 2));
         return s_at_m177;
     }
     return s_at_m177;
@@ -993,41 +1083,42 @@ std::string rpsuccessrate(int prm_1040)
 {
     if (prm_1040 == 100)
     {
-        return lang(u8"もう完璧！"s, u8"Perfect!"s);
+        return i18n::s.get("core.locale.blending.success_rate.perfect");
     }
     if (prm_1040 >= 90)
     {
-        return lang(u8"朝飯前！"s, u8"A piece of cake!"s);
+        return i18n::s.get("core.locale.blending.success_rate.piece_of_cake");
     }
     if (prm_1040 >= 80)
     {
-        return lang(u8"かんたんね"s, u8"Very likely"s);
+        return i18n::s.get("core.locale.blending.success_rate.very_likely");
     }
     if (prm_1040 >= 70)
     {
-        return lang(u8"まず大丈夫"s, u8"No problem"s);
+        return i18n::s.get("core.locale.blending.success_rate.no_problem");
     }
     if (prm_1040 >= 60)
     {
-        return lang(u8"たぶんいける"s, u8"Probably OK"s);
+        return i18n::s.get("core.locale.blending.success_rate.probably_ok");
     }
     if (prm_1040 >= 50)
     {
-        return lang(u8"ちょっと不安"s, u8"Maybe"s);
+        return i18n::s.get("core.locale.blending.success_rate.maybe");
     }
     if (prm_1040 >= 40)
     {
-        return lang(u8"だめかも"s, u8"Bad"s);
+        return i18n::s.get("core.locale.blending.success_rate.bad");
     }
     if (prm_1040 >= 30)
     {
-        return lang(u8"やばい"s, u8"Very bad"s);
+        return i18n::s.get("core.locale.blending.success_rate.very_bad");
     }
     if (prm_1040 >= 20)
     {
-        return lang(u8"まず無理"s, u8"Almost impossible"s);
+        return i18n::s.get(
+            "core.locale.blending.success_rate.almost_impossible");
     }
-    return lang(u8"絶対ムリ！"s, u8"Impossible!"s);
+    return i18n::s.get("core.locale.blending.success_rate.impossible");
 }
 
 std::string rpname(int prm_516)
@@ -1065,7 +1156,7 @@ int rpdiff(int, int prm_1042, int prm_1043)
                 break;
             }
             i_at_m180 = rpref(10 + cnt * 2);
-            if (inv[i_at_m180].curse_state == curse_state_t::blessed)
+            if (inv[i_at_m180].curse_state == CurseState::blessed)
             {
                 f2_at_m180 -= 10;
             }
@@ -1081,17 +1172,15 @@ int rpdiff(int, int prm_1042, int prm_1043)
                     if (f2_at_m180 < 0)
                     {
                         txtef(2);
-                        txt(lang(
-                            u8"調合の成功率が上がった。"s,
-                            u8"The success rate goes up."s));
+                        txt(i18n::s.get(
+                            "core.locale.blending.success_rate.goes_up"));
                         break;
                     }
                     if (f2_at_m180 > 0)
                     {
                         txtef(3);
-                        txt(lang(
-                            u8"調合の成功率が下がった。"s,
-                            u8"The success rate goes down."s));
+                        txt(i18n::s.get(
+                            "core.locale.blending.success_rate.goes_down"));
                         break;
                     }
                     break;
@@ -1195,7 +1284,7 @@ int blendcheckmat(int prm_1044)
             }
             for (const auto& cnt : items(o_at_m181))
             {
-                if (inv[cnt].number <= 0)
+                if (inv[cnt].number() <= 0)
                 {
                     continue;
                 }
@@ -1209,8 +1298,8 @@ int blendcheckmat(int prm_1044)
                     if (dist(
                             inv[cnt].position.x,
                             inv[cnt].position.y,
-                            cdata[0].position.x,
-                            cdata[0].position.y)
+                            cdata.player().position.x,
+                            cdata.player().position.y)
                         > 4)
                     {
                         continue;
@@ -1283,7 +1372,7 @@ int blendmatnum(int prm_1045, int prm_1046)
         }
         for (const auto& cnt : items(o_at_m182))
         {
-            if (inv[cnt].number <= 0)
+            if (inv[cnt].number() <= 0)
             {
                 continue;
             }
@@ -1297,8 +1386,8 @@ int blendmatnum(int prm_1045, int prm_1046)
                 if (dist(
                         inv[cnt].position.x,
                         inv[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 4)
                 {
                     continue;
@@ -1316,7 +1405,7 @@ int blendmatnum(int prm_1045, int prm_1046)
             {
                 if (inv[cnt].id == prm_1045)
                 {
-                    m_at_m182 += inv[cnt].number;
+                    m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
@@ -1329,13 +1418,13 @@ int blendmatnum(int prm_1045, int prm_1046)
                         != -1
                     || prm_1045 == 9004)
                 {
-                    m_at_m182 += inv[cnt].number;
+                    m_at_m182 += inv[cnt].number();
                 }
                 continue;
             }
             if (the_item_db[inv[cnt].id]->category == prm_1045)
             {
-                m_at_m182 += inv[cnt].number;
+                m_at_m182 += inv[cnt].number();
                 continue;
             }
         }
@@ -1368,7 +1457,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
             {
                 break;
             }
-            if (inv[cnt].number <= 0)
+            if (inv[cnt].number() <= 0)
             {
                 continue;
             }
@@ -1381,8 +1470,8 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
                 if (dist(
                         inv[cnt].position.x,
                         inv[cnt].position.y,
-                        cdata[0].position.x,
-                        cdata[0].position.y)
+                        cdata.player().position.x,
+                        cdata.player().position.y)
                     > 4)
                 {
                     continue;
@@ -1454,7 +1543,7 @@ void clear_rprefmat()
 }
 
 
-int label_1931()
+int blending_find_required_mat()
 {
     f = 1;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -1468,7 +1557,7 @@ int label_1931()
             f = 0;
             break;
         }
-        if (inv[rpref(10 + cnt * 2)].number <= 0
+        if (inv[rpref(10 + cnt * 2)].number() <= 0
             || inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
         {
             f = 0;
@@ -1478,7 +1567,7 @@ int label_1931()
     return f;
 }
 
-int label_1932()
+int blending_spend_materials()
 {
     p = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -1493,14 +1582,14 @@ int label_1932()
         }
         if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
         {
-            --inv[rpref(10 + cnt * 2)].number;
+            inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         else if (rnd(3) == 0)
         {
-            txt(lang(
-                itemname(rpref(10 + cnt * 2), 1) + u8"を失った。"s,
-                u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1) + u8"."s));
-            --inv[rpref(10 + cnt * 2)].number;
+
+            txt(i18n::s.get(
+                "core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
+            inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
@@ -1514,20 +1603,20 @@ int label_1932()
     return 1;
 }
 
-void label_1933()
+void blending_start_attempt()
 {
     rpresult = 1;
     if (rpdiff(rpid, -1, -1) < rnd(100))
     {
         rpresult = 0;
         txtef(3);
-        txt(lang(u8"調合失敗！"s, u8"The blending attempt failed!"s));
+        txt(i18n::s.get("core.locale.blending.failed"));
     }
     else
     {
         if (rpdata(0, rpid) >= 10000)
         {
-            label_1935();
+            blending_proc_on_success_events();
         }
         else
         {
@@ -1536,8 +1625,8 @@ void label_1933()
             int stat = itemcreate(
                 -1,
                 rpdata(0, rpid),
-                cdata[0].position.x,
-                cdata[0].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y,
                 0);
             if (stat != 0)
             {
@@ -1556,9 +1645,7 @@ void label_1933()
                 }
             }
             txtef(2);
-            txt(lang(
-                itemname(ci, 1) + u8"の作成に成功した！"s,
-                u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
+            txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
             snd(17);
         }
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -1567,116 +1654,21 @@ void label_1933()
             {
                 break;
             }
-            skillexp(
+            chara_gain_skill_exp(
+                cdata.player(),
                 rpdata(10 + cnt * 2, rpid),
-                0,
                 50 + rpdata((11 + cnt * 2), rpid) + rpref(2) / 10000 * 25,
                 2,
                 50);
         }
     }
     --rpref(1);
-    label_1932();
+    blending_spend_materials();
     return;
 }
 
-void label_19342()
-{
-label_19341_internal:
-    rpid = rpref(0);
-    if (rpid == 0)
-    {
-        rowactend(cc);
-        return;
-    }
-    if (cdata[cc].continuous_action_id == 0)
-    {
-        txtnew();
-        txt(lang(
-            name(cc) + u8"は"s + rpname(rpid) + u8"の調合をはじめた。"s,
-            name(cc) + u8" start"s + _s(cc) + u8" blending of "s + rpname(rpid)
-                + u8"."s));
-        cdata[cc].continuous_action_id = 12;
-        cdata[cc].continuous_action_turn = rpref(2) % 10000;
-        return;
-    }
-    if (cdata[cc].continuous_action_turn > 0)
-    {
-        if (rnd(30) == 0)
-        {
-            txtef(4);
-            txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                lang(u8" *トントン* "s, u8"*clank*"s));
-        }
-        return;
-    }
-    if (rpref(2) >= 10000)
-    {
-        cdata[cc].continuous_action_turn = rpref(2) / 10000;
-        for (int cnt = 0;; ++cnt)
-        {
-            mode = 12;
-            ++gdata_hour;
-            weather_changes();
-            render_hud();
-            if (cnt % 5 == 0)
-            {
-                txtef(4);
-                txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                    lang(u8" *トントン* "s, u8"*clank*"s));
-            }
-            redraw();
-            await(config::instance().animewait * 5);
-            gdata_minute = 0;
-            cc = 0;
-            --cdata[cc].continuous_action_turn;
-            if (cdata[cc].continuous_action_turn <= 0)
-            {
-                int stat = label_1931();
-                if (stat == 0)
-                {
-                    txt(lang(
-                        u8"調合に必要な材料が見つからない。"s,
-                        u8"A required material cannot be found."s));
-                    break;
-                }
-                label_1933();
-                if (rpref(1) > 0)
-                {
-                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
-                    cnt = 0 - 1;
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        rowactend(cc);
-        mode = 0;
-        return;
-    }
-    int stat = label_1931();
-    if (stat == 0)
-    {
-        txt(lang(
-            u8"調合に必要な材料が見つからない。"s,
-            u8"A required material cannot be found."s));
-        rowactend(cc);
-        return;
-    }
-    label_1933();
-    if (rpref(1) > 0)
-    {
-        cdata[cc].continuous_action_id = 0;
-        goto label_19341_internal;
-    }
-    rowactend(cc);
-    return;
-}
-
-void label_1935()
+// TODO: Much duplication with do_dip_command()
+void blending_proc_on_success_events()
 {
     int cibk = ci;
     ci = rpref(10);
@@ -1685,7 +1677,7 @@ void label_1935()
     {
         item_separate(ci);
     }
-    else if (inv[ci].number <= 1)
+    else if (inv[ci].number() <= 1)
     {
         rpref(10) = -2;
     }
@@ -1706,68 +1698,52 @@ void label_1935()
     case 10000:
         ibitmod(6, ci, 1);
         txtef(2);
-        txt(lang(
-            itemname(ci, 1) + u8"の作成に成功した！"s,
-            u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
-        txt(lang(
-            u8"あなたはうしろめたさを感じた…"s,
-            u8"You kind of feel guilty..."s));
+        txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
+        txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
         snd(65);
         break;
     case 10001:
         inv[ci].color = inv[ti].color;
         txtef(2);
-        txt(lang(
-            u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
-            u8"You dye "s + itemname(ci) + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
         snd(17);
         break;
     case 10002:
         ibitmod(14, ci, 1);
         txtef(2);
-        txt(lang(
-            itemname(ci, 1) + u8"の作成に成功した！"s,
-            u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
-        txt(lang(u8"あなたはにやりと口元を歪めた。"s, u8"You grin."s));
+        txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]));
+        txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
         snd(65);
         break;
     case 10003:
         txtef(2);
-        txt(lang(
-            itemname(ci) + u8"に"s + itemname(ti, 1) + u8"を塗りたくった。"s,
-            u8"You put "s + itemname(ti, 1) + u8" on "s + itemname(ci)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         if (inv[ci].id == 567)
         {
-            txt(lang(u8"いいアイデアだ！しかし…"s, u8"A good idea! But..."s));
+            txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
         }
         else
         {
             ibitmod(2, ci, 1);
-            txt(lang(
-                itemname(ci) + u8"は熱から守られた。"s,
-                itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.gains_fireproof", inv[ci]));
         }
         snd(17);
         break;
     case 10004:
         txtef(2);
-        txt(lang(
-            itemname(ci) + u8"に"s + itemname(ti, 1) + u8"を塗りたくった。"s,
-            u8"You put "s + itemname(ti, 1) + u8" on "s + itemname(ci)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.put_on", inv[ci], inv[ti]));
         ibitmod(1, ci, 1);
-        txt(lang(
-            itemname(ci) + u8"は酸から守られた。"s,
-            itemname(ci) + u8" gain"s + _s2(in) + u8" acidproof."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.gains_acidproof", inv[ci]));
         snd(17);
         break;
     case 10005:
         txtef(2);
-        txt(lang(
-            itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に装着した。"s,
-            u8"You bait "s + itemname(ci) + u8" with "s + itemname(ti, 1)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.bait_attachment", inv[ci], inv[ti]));
         if (inv[ci].param4 == inv[ti].param1)
         {
             inv[ci].count += rnd(10) + 15;
@@ -1781,62 +1757,52 @@ void label_1935()
         break;
     case 10006:
         txtef(2);
-        txt(lang(
-            itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に降りかけた。"s,
-            u8"You shower "s + itemname(ci) + u8" on "s + itemname(ti, 1)
-                + u8"."s));
-        if (inv[ti].curse_state == curse_state_t::blessed)
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]));
+        if (inv[ti].curse_state == CurseState::blessed)
         {
             txtef(5);
-            txt(lang(
-                itemname(ci) + u8"は銀色に輝いた。"s,
-                itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                    + u8" silvery."s));
-            inv[ci].curse_state = curse_state_t::blessed;
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.becomes_blessed", inv[ci]));
+            inv[ci].curse_state = CurseState::blessed;
         }
         if (is_cursed(inv[ti].curse_state))
         {
             txtef(8);
-            txt(lang(
-                itemname(ci) + u8"は黒いオーラに包まれた。"s,
-                itemname(ci) + u8" "s + is2(inv[ci].number)
-                    + u8" wrapped by a dark aura."s));
-            inv[ci].curse_state = curse_state_t::cursed;
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.becomes_cursed", inv[ci]));
+            inv[ci].curse_state = CurseState::cursed;
         }
         snd(17);
         break;
     case 10007:
-        txt(lang(
-            itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に放り込んだ。"s,
-            u8"You throw "s + itemname(ci) + u8" into "s + itemname(ti, 1)
-                + u8"."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.well_refill", inv[ci], inv[ti]));
         if (inv[ti].id == 601)
         {
-            txt(lang(
-                u8"空き瓶の割れる音がした。"s,
-                u8"You hear the sound of the empty bottle shatters."s));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd(17);
         if (inv[ci].id == 602)
         {
-            txt(lang(u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.holy_well_polluted"));
             break;
         }
         if (inv[ci].param3 >= 20)
         {
-            txt(lang(
-                itemname(ci) + u8"は完全に枯れている。"s,
-                itemname(ci) + u8" is completely dry."s));
+            txt(i18n::s.get("core.locale.action.dip.result.well_dry", inv[ci]));
             break;
         }
         txtef(2);
-        txt(lang(
-            itemname(ci) + u8"は一瞬輝いた。"s,
-            itemname(ci) + u8" shines for a moment."s));
+        txt(i18n::s.get(
+            "core.locale.action.dip.result.well_refilled", inv[ci]));
         if (inv[ti].id == 587)
         {
-            txt(lang(u8"しかしこんな量では… "s, u8"But the snow just melts."s));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.snow_melts.blending"));
         }
         else
         {
@@ -1847,17 +1813,15 @@ void label_1935()
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
         {
-            const auto valn = itemname(ci);
-            txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
-            txt(lang(
-                u8"あっ！空き瓶を井戸に落としてしまった…"s,
-                u8"Ops! You drop the empty bottle into the well..."s));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.natural_potion_dry", inv[ci]));
+            txt(i18n::s.get(
+                "core.locale.action.dip.result.natural_potion_drop"));
             break;
         }
         if (inv_getfreeid(0) == -1)
         {
-            txt(lang(
-                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
             break;
         }
         cibk = ci;
@@ -1868,7 +1832,7 @@ void label_1935()
             int stat = itemcreate(0, 516, -1, -1, 0);
             if (stat != 0)
             {
-                inv[ci].curse_state = curse_state_t::blessed;
+                inv[ci].curse_state = CurseState::blessed;
             }
         }
         else
@@ -1878,13 +1842,9 @@ void label_1935()
             flttypemajor = 52000;
             itemcreate(0, 0, -1, -1, 0);
         }
-        txt(lang(
-            u8"空き瓶に水をすくった。"s,
-            u8"You draw water from the well into the empty bottle."s));
+        txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
         txtef(2);
-        txt(lang(
-            itemname(ci, 1) + u8"を手に入れた。"s,
-            u8"You get "s + itemname(ci, 1) + u8"."s));
+        txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
         item_stack(0, ci, 1);
         item_stack(0, ci);
         ci = cibk;

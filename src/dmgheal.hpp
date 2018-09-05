@@ -7,16 +7,21 @@ namespace elona
 
 
 
-void healhp(int cc, int delta);
-void healmp(int cc, int delta);
-void healsp(int cc, int delta);
-int dmghp(int, int, int = 0, int = 0, int = 0);
-void end_dmghp();
-void dmgmp(int cc, int delta);
-void dmgsp(int cc, int delta);
-void healsan(int prm_862, int prm_863);
-void damage_insanity(int cc, int delta);
-bool actionsp(int cc, int sp);
+struct Character;
+
+
+int damage_hp(Character& cc, int, int = 0, int = 0, int = 0);
+void heal_hp(Character& cc, int delta);
+
+void damage_mp(Character& cc, int delta);
+void heal_mp(Character& cc, int delta);
+
+bool action_sp(Character& cc, int sp);
+void damage_sp(Character& cc, int delta);
+void heal_sp(Character& cc, int delta);
+
+void damage_insanity(Character& cc, int delta);
+void heal_insanity(Character& cc, int delta);
 
 
 

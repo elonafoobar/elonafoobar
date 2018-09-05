@@ -1,5 +1,6 @@
 #include "casino_card.hpp"
 #include "audio.hpp"
+#include "draw.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -80,8 +81,8 @@ void showcard2(int prm_425, int prm_426)
     elona_vector1<int> col_at_cardcontrol;
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
-    font(43 - en * 2, snail::font_t::style_t::bold);
-    gmode(2, 64, 96);
+    font(43 - en * 2, snail::Font::Style::bold);
+    gmode(2);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
     {
@@ -92,12 +93,21 @@ void showcard2(int prm_425, int prm_426)
         gcopy(3, 672, 216, 64, 96);
         if (prm_426 == 0)
         {
-            gmode(4, inf_tiles, inf_tiles, 220);
+            gmode(4, 220);
             if (card_at_cardcontrol(1, prm_425) == 0)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 36);
-                grotate(5, 144, 240, 0, 64, 104);
+                gmode(4, 220);
+                auto rect = draw_get_rect_chara(168); // slime
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    104);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 255;
@@ -106,7 +116,16 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 40);
-                grotate(5, 1104, 288, 0, 64, 104);
+                gmode(4, 220);
+                auto rect = draw_get_rect_chara(211); // black cat
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    104);
                 col_at_cardcontrol(0) = 255;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 140;
@@ -115,7 +134,16 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 50);
-                grotate(5, 480, 336, 0, 64, 84);
+                gmode(4, 220);
+                auto rect = draw_get_rect_chara(241); // skeleton
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    84);
                 col_at_cardcontrol(0) = 240;
                 col_at_cardcontrol(1) = 240;
                 col_at_cardcontrol(2) = 240;
@@ -124,7 +152,16 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 48);
-                grotate(5, 1200, 288, 0, 64, 80);
+                gmode(4, 220);
+                auto rect = draw_get_rect_chara(223); // armor
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    64,
+                    80);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 255;
                 col_at_cardcontrol(2) = 140;
@@ -133,7 +170,16 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 44);
-                grotate(5, 1296, 336, 0, 72, 86);
+                gmode(4, 220);
+                auto rect = draw_get_rect_chara(258); // public performer
+                gcopy_c(
+                    rect->buffer,
+                    rect->x,
+                    rect->y,
+                    rect->width,
+                    rect->height,
+                    72,
+                    86);
                 col_at_cardcontrol(0) = 250;
                 col_at_cardcontrol(1) = 250;
                 col_at_cardcontrol(2) = 105;
@@ -166,17 +212,16 @@ void showcard2(int prm_425, int prm_426)
                 s_at_cardcontrol = u8"Jo"s;
                 tx_at_cardcontrol = -12;
             }
-            pos(card_at_cardcontrol(3, prm_425) + 18
-                    - (card_at_cardcontrol(0, prm_425) >= 10) * 12
-                    + tx_at_cardcontrol,
-                card_at_cardcontrol(4, prm_425) + 28);
-            color(10, 10, 10);
             bmes(
                 s_at_cardcontrol,
-                col_at_cardcontrol(0),
-                col_at_cardcontrol(1),
-                col_at_cardcontrol(2));
-            color(0, 0, 0);
+                card_at_cardcontrol(3, prm_425) + 18
+                    - (card_at_cardcontrol(0, prm_425) >= 10) * 12
+                    + tx_at_cardcontrol,
+                card_at_cardcontrol(4, prm_425) + 28,
+                {static_cast<uint8_t>(col_at_cardcontrol(0)),
+                 static_cast<uint8_t>(col_at_cardcontrol(1)),
+                 static_cast<uint8_t>(col_at_cardcontrol(2))},
+                {10, 10, 10});
         }
         else
         {
@@ -208,13 +253,16 @@ void showcardpile()
             showcard2(cnt);
         }
     }
-    font(16 - en * 2, snail::font_t::style_t::bold);
-    color(10, 10, 10);
-    pos(pilex_at_cardcontrol + 8, piley_at_cardcontrol + 70);
-    bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
-    color(0, 0, 0);
-    return;
+    font(16 - en * 2, snail::Font::Style::bold);
+    bmes(
+        u8"X "s + pilestack_at_cardcontrol,
+        pilex_at_cardcontrol + 8,
+        piley_at_cardcontrol + 70,
+        {240, 240, 240},
+        {10, 10, 10});
 }
+
+
 
 void showcard()
 {
@@ -340,7 +388,6 @@ int opencard2(int prm_428, int prm_429)
             pos(card_at_cardcontrol(3, prm_428) - 8,
                 card_at_cardcontrol(4, prm_428) - 8);
             gcopy(3, 528, 216, 80, 112);
-            gmode(2, 64, 96);
         }
         else
         {
@@ -352,11 +399,11 @@ int opencard2(int prm_428, int prm_429)
                 card_at_cardcontrol(4, prm_428) - wy - 4,
                 80,
                 112);
-            gmode(2, 64, 96);
         }
         pos(card_at_cardcontrol(3, prm_428) + 32,
             card_at_cardcontrol(4, prm_428) + 48);
-        grotate(3, 736, 216, 0, 64 - cnt * 14, 96);
+        gmode(2);
+        gcopy_c(3, 736, 216, 64, 96, 64 - cnt * 14, 96);
         await(10);
         redraw();
     }
@@ -373,7 +420,7 @@ int trashcard(int prm_430)
         pos(card_at_cardcontrol(3, prm_430) - 8,
             card_at_cardcontrol(4, prm_430) - 8);
         gcopy(3, 528, 216, 80, 112);
-        gmode(2, 64, 96);
+        gmode(2);
         if (cnt == 20)
         {
             redraw();
@@ -381,7 +428,8 @@ int trashcard(int prm_430)
         }
         pos(card_at_cardcontrol(3, prm_430) + 32,
             card_at_cardcontrol(4, prm_430) + 48);
-        grotate(3, 736, 216, 0.015 * cnt * cnt, 64 - cnt * 3, 96 - cnt * 4);
+        grotate(
+            3, 736, 216, 64, 96, 64 - cnt * 3, 96 - cnt * 4, 0.015 * cnt * cnt);
         await(10);
         redraw();
     }

@@ -1,4 +1,5 @@
 #include "class.hpp"
+#include "ability.hpp"
 #include "cat.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -9,7 +10,7 @@ namespace elona
 {
 
 
-class_db the_class_db;
+ClassDB the_class_db;
 int cequipment = 0;
 
 
@@ -44,14 +45,14 @@ int access_class_info(int dbmode, const std::string& dbidn)
     cequipment = data->equipment_type;
     for (const auto& pair : data->skills)
     {
-        skillinit(pair.first, rc, pair.second);
+        chara_init_skill(cdata[rc], pair.first, pair.second);
     }
 
     return 0;
 }
 
 
-void class_db::define(lua_State* L)
+void ClassDB::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
@@ -79,7 +80,7 @@ void class_db::define(lua_State* L)
 
     storage.emplace(
         id,
-        class_data{
+        ClassData{
             id,
             ordering,
             is_extra,
@@ -91,10 +92,10 @@ void class_db::define(lua_State* L)
 
 
 
-std::vector<std::reference_wrapper<const class_data>>
-class_db::get_available_classes(bool is_extra_class) const
+std::vector<std::reference_wrapper<const ClassData>>
+ClassDB::get_available_classes(bool is_extra_class) const
 {
-    std::vector<std::reference_wrapper<const class_data>> ret;
+    std::vector<std::reference_wrapper<const ClassData>> ret;
     for (const auto& pair : storage)
     {
         if (pair.second.is_extra == is_extra_class)

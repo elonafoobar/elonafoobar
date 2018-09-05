@@ -1,17 +1,68 @@
 #include "character_status.hpp"
+#include <limits>
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
+#include "menu.hpp"
 #include "random.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
+
+
+namespace
+{
+
+
+
+int get_random_body_part()
+{
+    if (rnd(7) == 0)
+    {
+        return 2;
+    }
+    if (rnd(9) == 0)
+    {
+        return 3;
+    }
+    if (rnd(8) == 0)
+    {
+        return 5;
+    }
+    if (rnd(4) == 0)
+    {
+        return 6;
+    }
+    if (rnd(6) == 0)
+    {
+        return 7;
+    }
+    if (rnd(5) == 0)
+    {
+        return 8;
+    }
+    if (rnd(5) == 0)
+    {
+        return 9;
+    }
+    return 1;
+}
+
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
-void modcorrupt(int prm_815)
+
+
+void modify_ether_disease_stage(int delta)
 {
     int org_at_m134 = 0;
     int p_at_m134 = 0;
@@ -19,10 +70,10 @@ void modcorrupt(int prm_815)
     int cnt2_at_m134 = 0;
     int i_at_m134 = 0;
     org_at_m134 = gdata_ether_disease_stage / 1000;
-    p_at_m134 = prm_815 + (prm_815 > 0) * gdata_ether_disease_speed;
+    p_at_m134 = delta + (delta > 0) * gdata_ether_disease_speed;
     if (trait(168))
     {
-        if (prm_815 > 0)
+        if (delta > 0)
         {
             p_at_m134 = p_at_m134 * 100 / 150;
         }
@@ -38,16 +89,14 @@ void modcorrupt(int prm_815)
         if (org_at_m134 == 0)
         {
             txtef(8);
-            txt(lang(
-                u8"エーテルの病が発症した。"s,
-                u8"The symptom of the Ether disease is shown up on you."s));
-            if (config::instance().extrahelp)
+            txt(i18n::s.get("core.locale.chara.corruption.symptom"));
+            if (Config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
                 {
                     if (mode == 0)
                     {
-                        if (cdata[0].continuous_action_turn == 0)
+                        if (cdata.player().continuous_action_turn == 0)
                         {
                             gdata(215) = 1;
                             ghelp = 15;
@@ -75,7 +124,7 @@ void modcorrupt(int prm_815)
             for (int cnt = 0; cnt < 100000; ++cnt)
             {
                 int tid = rnd(17) + 200;
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 3)
                 {
                     continue;
@@ -88,9 +137,7 @@ void modcorrupt(int prm_815)
                 i_at_m134 = 700 + org_at_m134 + cnt2_at_m134;
                 gdata(i_at_m134) = tid;
                 txtef(8);
-                txt(lang(
-                    u8"あなたはエーテルに侵食された。"s,
-                    u8"Your disease is getting worse."s));
+                txt(i18n::s.get("core.locale.chara.corruption.add"));
                 txtef(3);
                 txt(traitrefn(1));
                 if (tid == 203)
@@ -143,7 +190,7 @@ void modcorrupt(int prm_815)
                         tid = gdata(i_at_m134);
                     }
                 }
-                int stat = get_trait_info(0, tid);
+                int stat = trait_get_info(0, tid);
                 if (stat == 0 || traitref != 3)
                 {
                     continue;
@@ -154,9 +201,7 @@ void modcorrupt(int prm_815)
                 }
                 ++trait(tid);
                 txtef(2);
-                txt(lang(
-                    u8"あなたのエーテルの侵食はやわらいだ。"s,
-                    u8"The symptoms of the Ether disease seem to calm down."s));
+                txt(i18n::s.get("core.locale.chara.corruption.remove"));
                 txtef(2);
                 txt(traitrefn(0));
                 break;
@@ -166,122 +211,325 @@ void modcorrupt(int prm_815)
         chara_refresh(0);
         return;
     }
-    return;
 }
 
 
 
-void modweight(int cc, int delta, bool force)
+void modify_potential(Character& cc, int id, int delta)
 {
-    int min = cdata[cc].height * cdata[cc].height * 18 / 25000;
-    int max = cdata[cc].height * cdata[cc].height * 24 / 10000;
+    sdata.get(id, cc.index).potential =
+        clamp(sdata.get(id, cc.index).potential + delta, 2, 400);
+}
 
-    if (cdata[cc].weight < min)
+
+
+void modify_karma(Character& cc, int delta)
+{
+    if (trait(162) && delta < 0)
     {
-        cdata[cc].weight = min;
+        delta = delta * 75 / 100;
+        if (delta == 0)
+            return;
+    }
+    if (trait(169) && delta < 0)
+    {
+        delta = delta * 150 / 100;
+    }
+
+    if (delta >= 0)
+    {
+        txtef(5);
+    }
+    else
+    {
+        txtef(8);
+    }
+    txt(i18n::s.get("core.locale.chara_status.karma.changed", delta));
+    if (delta > 0)
+    {
+        if (cc.karma < -30 && cc.karma + delta >= -30)
+        {
+            txtef(2);
+            txt(i18n::s.get(
+                "core.locale.chara_status.karma.you_are_no_longer_criminal"));
+        }
+    }
+    else if (delta < 0)
+    {
+        if (cc.karma >= -30 && cc.karma + delta < -30)
+        {
+            txtef(8);
+            txt(i18n::s.get(
+                "core.locale.chara_status.karma.you_are_criminal_now"));
+            go_hostile();
+        }
+    }
+
+    cc.karma += delta;
+
+    int max = 20;
+    if (trait(162))
+    {
+        max -= 20;
+    }
+    if (trait(169))
+    {
+        max += 20;
+    }
+    cc.karma = clamp(cc.karma, -100, max);
+}
+
+
+
+void modify_weight(Character& cc, int delta, bool force)
+{
+    int min = cc.height * cc.height * 18 / 25000;
+    int max = cc.height * cc.height * 24 / 10000;
+
+    if (cc.weight < min)
+    {
+        cc.weight = min;
         return;
     }
     if (!force && delta > 0)
     {
-        if (cdata[cc].weight > max)
+        if (cc.weight > max)
         {
             return;
         }
     }
 
-    cdata[cc].weight =
-        cdata[cc].weight * (100 + delta) / 100 + (delta > 0) - (delta < 0);
+    cc.weight = cc.weight * (100 + delta) / 100 + (delta > 0) - (delta < 0);
 
-    if (cdata[cc].weight <= 0)
+    if (cc.weight < 1)
     {
-        cdata[cc].weight = 1;
+        cc.weight = 1;
     }
     if (is_in_fov(cc))
     {
         if (delta >= 3)
         {
-            txt(lang(
-                name(cc) + u8"は太った。"s,
-                name(cc) + u8" gain"s + _s(cc) + u8" weight."s));
+            txt(i18n::s.get("core.locale.chara.weight.gain", cc));
         }
         if (delta <= -3)
         {
-            txt(lang(
-                name(cc) + u8"は痩せた。"s,
-                name(cc) + u8" lose"s + _s(cc) + u8" weight."s));
+            txt(i18n::s.get("core.locale.chara.weight.lose", cc));
         }
     }
 }
 
 
 
-void modheight(int cc, int delta)
+void modify_height(Character& cc, int delta)
 {
-    cdata[cc].height =
-        cdata[cc].height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
-    if (cdata[cc].height <= 1)
+    cc.height = cc.height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
+    if (cc.height < 1)
     {
-        cdata[cc].height = 1;
+        cc.height = 1;
     }
     if (is_in_fov(cc))
     {
         if (delta > 0)
         {
-            txt(lang(
-                name(cc) + u8"の身長は少し伸びた。"s,
-                name(cc) + u8" grow"s + _s(cc) + u8" taller."s));
+            txt(i18n::s.get("core.locale.chara.height.gain", cc));
         }
         if (delta < 0)
         {
-            txt(lang(
-                name(cc) + u8"の身長は少し縮んだ。"s,
-                name(cc) + u8" grow"s + _s(cc) + u8" smaller."s));
+            txt(i18n::s.get("core.locale.chara.height.lose", cc));
         }
     }
 }
 
-void gain_level(int cc)
+
+
+void refresh_speed(Character& cc)
 {
-    cdata[cc].experience -= cdata[cc].required_experience;
-    if (cdata[cc].experience < 0)
+    cc.current_speed = sdata(18, cc.index)
+        * clamp((100 - cc.speed_correction_value), 0, 100) / 100;
+    if (cc.current_speed < 10)
     {
-        cdata[cc].experience = 0;
+        cc.current_speed = 10;
     }
-    ++cdata[cc].level;
-    if (cdata[cc].character_role != 13)
+    cc.speed_percentage_in_next_turn = 0;
+
+    if (cc.index != 0 && gdata_mount != cc.index)
+        return;
+
+    if (gdata_mount != 0)
+    {
+        const auto mount_speed = sdata(18, gdata_mount)
+            * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
+            / 100;
+
+        cdata.player().current_speed = mount_speed * 100
+            / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
+                        - sdata(301, 0) * 2
+                        - (cdata[gdata_mount].is_suitable_for_mount() == 1)
+                            * 50,
+                    100,
+                    1000);
+        if (cdata[gdata_mount].is_unsuitable_for_mount())
+        {
+            cdata.player().current_speed /= 10;
+        }
+        if (gdata_mount == cc.index)
+        {
+            cc.current_speed =
+                clamp(sdata(10, cc.index) + sdata(301, 0), 10, mount_speed);
+            return;
+        }
+    }
+
+    gspdorg = sdata.get(18, 0).original_level;
+
+    if (gdata_mount == 0)
+    {
+        int n = cdata.player().nutrition / 1000 * 1000;
+        if (n < 1000)
+        {
+            cdata.player().speed_percentage_in_next_turn -= 30;
+        }
+        if (n < 2000)
+        {
+            cdata.player().speed_percentage_in_next_turn -= 10;
+        }
+        if (cdata.player().sp < 0)
+        {
+            cdata.player().speed_percentage_in_next_turn -= 30;
+        }
+        if (cdata.player().sp < 25)
+        {
+            cdata.player().speed_percentage_in_next_turn -= 20;
+        }
+        if (cdata.player().sp < 50)
+        {
+            cdata.player().speed_percentage_in_next_turn -= 10;
+        }
+    }
+    if (cdata.player().inventory_weight_type >= 3)
+    {
+        cdata.player().speed_percentage_in_next_turn -= 50;
+    }
+    if (cdata.player().inventory_weight_type == 2)
+    {
+        cdata.player().speed_percentage_in_next_turn -= 30;
+    }
+    if (cdata.player().inventory_weight_type == 1)
+    {
+        cdata.player().speed_percentage_in_next_turn -= 10;
+    }
+    if (mdata_map_type == mdata_t::MapType::world_map
+        || mdata_map_type == mdata_t::MapType::field)
+    {
+        if (gdata_cargo_weight > gdata_current_cart_limit)
+        {
+            cdata.player().speed_percentage_in_next_turn -=
+                25 + 25 * (gdata_cargo_weight / (gdata_current_cart_limit + 1));
+        }
+    }
+    gspd = cdata.player().current_speed
+        * (100 + cdata.player().speed_percentage) / 100;
+    if (gspd < 10)
+    {
+        gspd = 10;
+    }
+}
+
+
+
+void refresh_speed_correction_value(Character& cc)
+{
+    int number_of_body_parts{};
+    for (const auto& body_part : cc.body_parts)
+    {
+        if (body_part)
+        {
+            ++number_of_body_parts;
+        }
+    }
+    if (number_of_body_parts > 13)
+    {
+        cc.speed_correction_value = (number_of_body_parts - 13) * 5;
+    }
+    else
+    {
+        cc.speed_correction_value = 0;
+    }
+}
+
+
+
+void gain_new_body_part(Character& cc)
+{
+    int slot = -1;
+    for (size_t i = 0; i < cc.body_parts.size(); ++i)
+    {
+        if (cc.body_parts[i] == 0)
+        {
+            slot = static_cast<int>(i);
+            break;
+        }
+    }
+
+    if (slot == -1)
+    {
+        refresh_speed_correction_value(cc);
+        return;
+    }
+
+    const auto body_part = get_random_body_part();
+    cc.body_parts[slot] = body_part * 10000;
+    if (!cm)
+    {
+        txt(i18n::s.get(
+            "core.locale.chara_status.gain_new_body_part",
+            cc,
+            i18n::_(u8"ui", u8"body_part", u8"_"s + body_part)));
+    }
+
+    refresh_speed_correction_value(cc);
+}
+
+
+
+void gain_level(Character& cc)
+{
+    cc.experience -= cc.required_experience;
+    if (cc.experience < 0)
+    {
+        cc.experience = 0;
+    }
+    ++cc.level;
+    if (cc.character_role != 13)
     {
         if (r2 == 0)
         {
             txtef(2);
-            if (cc == 0)
+            if (cc.index == 0)
             {
-                txt(lang(
-                    name(cc) + u8"はレベル"s + cdata[cc].level
-                        + u8"になった！"s,
-                    name(cc) + u8" have gained a level."s));
+                txt(i18n::s.get(
+                    "core.locale.chara.gain_level.self", cc, cc.level));
             }
             else
             {
-                txt(lang(
-                    name(cc) + u8"は成長した。"s,
-                    name(cc) + u8" "s + have(cc) + u8" grown up."s));
+                txt(i18n::s.get("core.locale.chara.gain_level.other", cc));
             }
         }
     }
     else
     {
-        addnews(2, cc);
+        addnews(2, cc.index);
     }
-    p = 5 * (100 + sdata.get(14, cc).original_level * 10)
-            / (300 + cdata[cc].level * 15)
+    p = 5 * (100 + sdata.get(14, cc.index).original_level * 10)
+            / (300 + cc.level * 15)
         + 1;
-    if (cc == 0)
+    if (cc.index == 0)
     {
-        if (cdata[cc].level % 5 == 0)
+        if (cc.level % 5 == 0)
         {
-            if (cdata[cc].max_level < cdata[cc].level)
+            if (cc.max_level < cc.level)
             {
-                if (cdata[cc].level <= 50)
+                if (cc.level <= 50)
                 {
                     ++gdata_acquirable_feat_count;
                 }
@@ -290,68 +538,98 @@ void gain_level(int cc)
         gain_special_action();
         p += trait(154);
     }
-    cdata[cc].skill_bonus += p;
-    cdata[cc].total_skill_bonus += p;
-    if (cdatan(2, cc) == u8"mutant"s || (cc == 0 && trait(0) == 1))
+    cc.skill_bonus += p;
+    cc.total_skill_bonus += p;
+    if (cdatan(2, cc.index) == u8"mutant"s || (cc.index == 0 && trait(0) == 1))
     {
-        if (cdata[cc].level < 37)
+        if (cc.level < 37)
         {
-            if (cdata[cc].level % 3 == 0)
+            if (cc.level % 3 == 0)
             {
-                if (cdata[cc].max_level < cdata[cc].level)
+                if (cc.max_level < cc.level)
                 {
                     gain_new_body_part(cc);
                 }
             }
         }
     }
-    if (cdata[cc].max_level < cdata[cc].level)
+    if (cc.max_level < cc.level)
     {
-        cdata[cc].max_level = cdata[cc].level;
+        cc.max_level = cc.level;
     }
-    if (cc >= 16)
+    if (cc.index >= 16)
     {
         grow_primary_skills(cc);
     }
     update_required_experience(cc);
-    chara_refresh(cc);
+    chara_refresh(cc.index);
 }
 
 
 
-void grow_primary_skills(int cc)
+void grow_primary_skills(Character& cc)
 {
-    for (int cnt = 10; cnt < 20; ++cnt)
+    for (int i = 10; i < 20; ++i)
     {
-        sdata.get(cnt, cc).original_level += rnd(3);
-        if (sdata.get(cnt, cc).original_level > 2000)
+        sdata.get(i, cc.index).original_level += rnd(3);
+        if (sdata.get(i, cc.index).original_level > 2000)
         {
-            sdata.get(cnt, cc).original_level = 2000;
+            sdata.get(i, cc.index).original_level = 2000;
         }
     }
-    for (int cnt = 0, cnt_end = (length(mainskill)); cnt < cnt_end; ++cnt)
+    for (const auto& skill : mainskill)
     {
-        sdata.get(mainskill(cnt), cc).original_level += rnd(3);
-        if (sdata.get(mainskill(cnt), cc).original_level > 2000)
+        sdata.get(skill, cc.index).original_level += rnd(3);
+        if (sdata.get(skill, cc.index).original_level > 2000)
         {
-            sdata.get(mainskill(cnt), cc).original_level = 2000;
+            sdata.get(skill, cc.index).original_level = 2000;
         }
     }
 }
 
 
 
-void update_required_experience(int cc)
+void update_required_experience(Character& cc)
 {
-    cdata[cc].required_experience = clamp(cdata[cc].level, 1, 200)
-            * (clamp(cdata[cc].level, 1, 200) + 1)
-            * (clamp(cdata[cc].level, 1, 200) + 2)
-            * (clamp(cdata[cc].level, 1, 200) + 3)
+    cc.required_experience = clamp(cc.level, 1, 200)
+            * (clamp(cc.level, 1, 200) + 1) * (clamp(cc.level, 1, 200) + 2)
+            * (clamp(cc.level, 1, 200) + 3)
         + 3000;
-    if (cdata[cc].required_experience > 100000000
-        || cdata[cc].required_experience < 0)
+    if (cc.required_experience > 100000000 || cc.required_experience < 0)
     {
-        cdata[cc].required_experience = 100000000;
+        cc.required_experience = 100000000;
+    }
+}
+
+
+
+void earn_gold(Character& cc, int delta)
+{
+    constexpr auto max = std::numeric_limits<decltype(cc.gold)>::max();
+
+    if (cc.gold > max - delta)
+    {
+        cc.gold = max;
+    }
+    else
+    {
+        cc.gold += delta;
+    }
+}
+
+
+
+void earn_platinum(Character& cc, int delta)
+{
+    constexpr auto max = std::numeric_limits<decltype(cc.platinum_coin)>::max();
+
+    if (cc.platinum_coin > max - delta)
+    {
+        cc.platinum_coin = max;
+    }
+    else
+    {
+        cc.platinum_coin += delta;
     }
 }
 
