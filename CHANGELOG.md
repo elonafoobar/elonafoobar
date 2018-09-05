@@ -22,7 +22,7 @@
 ### Fixed
 
 - Fix some of errors not being displayed.
-- Fix README.md and README-jp.md to fix the current state.
+- Fix README.md and README-jp.md to fit the current state.
 - Fix overflow of character level experience.
 - Fix being unable to sell/buy in Derphy if you are a criminal.
 - Fix glitch of log window if you use the default font bundled in foobar.
