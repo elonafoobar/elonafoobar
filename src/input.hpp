@@ -32,6 +32,8 @@ bool input_text_dialog(
     bool is_cancelable = true,
     bool limit_length = true);
 
+StickKey stick(StickKey allow_repeat_keys = StickKey::none);
+
 void key_check(KeyWaitDelay = KeyWaitDelay::always);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);

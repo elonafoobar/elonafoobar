@@ -10,6 +10,7 @@ namespace elona
 
 enum class StickKey
 {
+    none = 0,
     left = 1 << 0,
     up = 1 << 1,
     right = 1 << 2,

@@ -743,51 +743,64 @@ void redraw()
 
 
 
-int stick(int allow_repeat_keys)
+StickKey stick(StickKey allow_repeat_keys)
 {
-    auto check_key_pressed = [allow_repeat_keys](int n, auto&& key) {
-        if ((1 << n) & allow_repeat_keys)
+    const auto& input = snail::Input::instance();
+
+    auto is_enabled = [](StickKey n, StickKey flag) {
+        return (n & flag) == flag;
+    };
+
+    auto check_key_pressed = [&](StickKey n, auto&& key) {
+        if (is_enabled(allow_repeat_keys, n))
         {
-            return (1 << n) * snail::Input::instance().is_pressed(key);
+            return input.is_pressed(key) ? n : StickKey::none;
         }
         else
         {
-            return (1 << n)
-                * snail::Input::instance().was_pressed_just_now(key);
+            return input.was_pressed_just_now(key) ? n : StickKey::none;
         }
     };
 
-    int ret{};
+    StickKey ret = StickKey::none;
 
-    ret += check_key_pressed(0, snail::Key::left);
-    ret += check_key_pressed(1, snail::Key::up);
-    ret += check_key_pressed(2, snail::Key::right);
-    ret += check_key_pressed(3, snail::Key::down);
-    ret += check_key_pressed(4, snail::Key::space);
-    ret += check_key_pressed(5, snail::Key::enter);
-    ret += check_key_pressed(5, snail::Key::keypad_enter);
-    ret += check_key_pressed(6, snail::Key::ctrl);
-    ret += check_key_pressed(7, snail::Key::escape);
-    ret += check_key_pressed(8, snail::Mouse::Button::left);
-    ret += check_key_pressed(9, snail::Mouse::Button::right);
-    ret += check_key_pressed(10, snail::Key::tab);
+    ret |= check_key_pressed(StickKey::left, snail::Key::left);
+    ret |= check_key_pressed(StickKey::up, snail::Key::up);
+    ret |= check_key_pressed(StickKey::right, snail::Key::right);
+    ret |= check_key_pressed(StickKey::down, snail::Key::down);
+    ret |= check_key_pressed(StickKey::space, snail::Key::space);
+    ret |= check_key_pressed(StickKey::enter, snail::Key::enter);
+    ret |= check_key_pressed(StickKey::enter, snail::Key::keypad_enter);
+    ret |= check_key_pressed(StickKey::ctrl, snail::Key::ctrl);
+    ret |= check_key_pressed(StickKey::escape, snail::Key::escape);
+    ret |= check_key_pressed(StickKey::mouse_left, snail::Mouse::Button::left);
+    ret |=
+        check_key_pressed(StickKey::mouse_right, snail::Mouse::Button::right);
+    ret |= check_key_pressed(StickKey::tab, snail::Key::tab);
 
-    if (allow_repeat_keys == 15)
+    if (allow_repeat_keys
+        == (StickKey::left | StickKey::up | StickKey::right | StickKey::down))
     {
-        if (ret & 1 || ret & 4)
+        if (is_enabled(allow_repeat_keys, StickKey::left)
+            || is_enabled(allow_repeat_keys, StickKey::right))
         {
-            ret |= 2 * snail::Input::instance().is_pressed(snail::Key::up);
-            ret |= 8 * snail::Input::instance().is_pressed(snail::Key::down);
+            ret |= input.is_pressed(snail::Key::up) ? StickKey::up
+                                                    : StickKey::none;
+            ret |= input.is_pressed(snail::Key::down) ? StickKey::down
+                                                      : StickKey::none;
         }
-        if (ret & 2 || ret & 8)
+        if (is_enabled(allow_repeat_keys, StickKey::up)
+            || is_enabled(allow_repeat_keys, StickKey::down))
         {
-            ret |= 1 * snail::Input::instance().is_pressed(snail::Key::left);
-            ret |= 4 * snail::Input::instance().is_pressed(snail::Key::right);
+            ret |= input.is_pressed(snail::Key::left) ? StickKey::left
+                                                      : StickKey::none;
+            ret |= input.is_pressed(snail::Key::right) ? StickKey::right
+                                                       : StickKey::none;
         }
     }
 
-    mousex = snail::Input::instance().mouse().x();
-    mousey = snail::Input::instance().mouse().y();
+    mousex = input.mouse().x();
+    mousey = input.mouse().y();
 
     return ret;
 }
