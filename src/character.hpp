@@ -90,7 +90,7 @@ struct Character
     int birth_year = 0;
     int nutrition = 0;
     int can_talk = 0;
-    int quality = 0;
+    Quality quality = Quality::none;
     int turn = 0;
     int id = 0;
     int vision_distance = 0;
