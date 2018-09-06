@@ -563,7 +563,7 @@ bool wish_for_item(const std::string& input)
         nooracle = 0;
 
         // Unwishable item
-        if (ibit(5, ci) || inv[ci].quality == 6)
+        if (ibit(5, ci) || inv[ci].quality == Quality::special)
         {
             if (!gdata_wizard)
             {

@@ -1125,11 +1125,11 @@ void continuous_action_others()
             {
                 i = i * 15 / 10;
             }
-            if (inv[ci].quality == 3)
+            if (inv[ci].quality == Quality::great)
             {
                 i = i * 8 / 10;
             }
-            if (inv[ci].quality >= 4)
+            if (inv[ci].quality >= Quality::miracle)
             {
                 i = i * 5 / 10;
             }

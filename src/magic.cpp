@@ -3199,7 +3199,8 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         ctrl_inventory();
-        if (inv[ci].quality < 4 || inv[ci].quality == 6)
+        if (inv[ci].quality < Quality::miracle
+            || inv[ci].quality == Quality::special)
         {
             txt(i18n::s.get("core.locale.common.it_is_impossible"));
             obvious = 0;
@@ -3238,7 +3239,7 @@ label_2181_internal:
                 break;
             }
         }
-        if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
+        if (inv[ci].quality >= Quality::miracle || ibit(10, ci) == 1)
         {
             txt(i18n::s.get("core.locale.magic.garoks_hammer.no_effect"));
             fixmaterial = 0;
@@ -3248,7 +3249,7 @@ label_2181_internal:
         randomize(inv[efcibk].param1);
         equip = inv[ci].body_part;
         animeload(8, cc);
-        inv[ci].quality = 4;
+        inv[ci].quality = Quality::miracle;
         fixmaterial = inv[ci].material;
         change_item_material();
         randomize(inv[efcibk].param1);
@@ -3296,7 +3297,7 @@ label_2181_internal:
             MenuResult result = ctrl_inventory();
             f = result.succeeded ? 1 : 0;
         }
-        if (inv[ci].quality == 5 || ibit(10, ci) == 1)
+        if (inv[ci].quality == Quality::godly || ibit(10, ci) == 1)
         {
             if (efid == 1127)
             {
@@ -3306,7 +3307,7 @@ label_2181_internal:
         equip = inv[ci].body_part;
         if (f == 1)
         {
-            if (inv[ci].quality == 6)
+            if (inv[ci].quality == Quality::special)
             {
                 if (efp < 350)
                 {
@@ -3699,7 +3700,7 @@ label_2181_internal:
         }
         if (f)
         {
-            if (inv[ci].quality > 4 || ibit(5, ci) == 1)
+            if (inv[ci].quality > Quality::miracle || ibit(5, ci) == 1)
             {
                 f = 0;
             }

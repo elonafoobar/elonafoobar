@@ -279,7 +279,7 @@ label_20591:
                 {
                     continue;
                 }
-                if (inv[cnt].quality == 6)
+                if (inv[cnt].quality == Quality::special)
                 {
                     continue;
                 }
@@ -425,7 +425,8 @@ label_20591:
                 }
                 if (invctrl(1) == 7)
                 {
-                    if (inv[cnt].quality >= 4 || reftype >= 50000)
+                    if (inv[cnt].quality >= Quality::miracle
+                        || reftype >= 50000)
                     {
                         continue;
                     }

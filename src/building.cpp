@@ -974,7 +974,7 @@ void show_shop_log()
         {
             continue;
         }
-        if (inv[cnt].quality >= 6)
+        if (inv[cnt].quality >= Quality::special)
         {
             continue;
         }
@@ -1025,7 +1025,7 @@ void show_shop_log()
         if (rnd(4) == 0)
         {
             list(0, listmax) = the_item_db[inv[ci].id]->level;
-            list(1, listmax) = inv[ci].quality;
+            list(1, listmax) = static_cast<int>(inv[ci].quality);
             listn(0, listmax) = std::to_string(category);
             listn(1, listmax) = std::to_string(val0);
             ++listmax;

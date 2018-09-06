@@ -325,7 +325,7 @@ void supply_new_equipment()
             break;
         }
         inv[ci].identification_state = IdentifyState::completely_identified;
-        if (inv[ci].quality >= 4)
+        if (inv[ci].quality >= Quality::miracle)
         {
             if (the_item_db[inv[ci].id]->category < 50000)
             {

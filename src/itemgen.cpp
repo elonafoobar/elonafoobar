@@ -228,7 +228,7 @@ int do_create_item(int slot, int x, int y)
 
     ++itemmemory(1, dbid);
 
-    inv[ci].quality = fixlv;
+    inv[ci].quality = static_cast<Quality>(fixlv);
     if (fixlv == 6 && mode != 6 && nooracle == 0)
     {
         int owner = inv_getowner(ci);
@@ -289,11 +289,11 @@ int do_create_item(int slot, int x, int y)
     if (inv[ci].id == 54)
     {
         inv[ci].set_number(calcinitgold(slot));
-        if (inv[ci].quality == 3)
+        if (inv[ci].quality == Quality::great)
         {
             inv[ci].set_number(inv[ci].number() * 2);
         }
-        if (inv[ci].quality >= 4)
+        if (inv[ci].quality >= Quality::miracle)
         {
             inv[ci].set_number(inv[ci].number() * 4);
         }
@@ -515,7 +515,7 @@ void init_item_quality_curse_state_material_and_equipments()
             }
         }
     }
-    if (cm || mode == 1 || inv[ci].quality == 6)
+    if (cm || mode == 1 || inv[ci].quality == Quality::special)
     {
         inv[ci].curse_state = CurseState::none;
     }
@@ -552,9 +552,9 @@ void init_item_quality_curse_state_material_and_equipments()
     {
         add_enchantments();
     }
-    else if (inv[ci].quality != 6)
+    else if (inv[ci].quality != Quality::special)
     {
-        inv[ci].quality = 2;
+        inv[ci].quality = Quality::good;
     }
     return;
 }
@@ -678,7 +678,7 @@ void change_item_material()
     inv[ci].color = 0;
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
-    fixlv = inv[ci].quality;
+    fixlv = static_cast<int>(inv[ci].quality);
     for (auto e : the_item_material_db[p]->enchantments)
     {
         enchantment_remove(ci, e.id, e.power);

@@ -51,7 +51,7 @@ struct Item
     int value = 0;
     int image = 0;
     int id = 0;
-    int quality = 0;
+    Quality quality = Quality::none;
     Position position;
     int weight = 0;
     IdentifyState identification_state = IdentifyState::unidentified;

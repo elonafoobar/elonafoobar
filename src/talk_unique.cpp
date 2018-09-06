@@ -4574,7 +4574,7 @@ void _strange_scientist_pick_reward()
             int stat = itemcreate(-1, cnt, -1, -1, 0);
             if (stat == 1)
             {
-                if (inv[ci].quality < 4)
+                if (inv[ci].quality < Quality::miracle)
                 {
                     inv[ci].remove();
                 }

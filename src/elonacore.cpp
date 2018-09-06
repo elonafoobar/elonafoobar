@@ -3062,7 +3062,7 @@ int convertartifact(int prm_930, int prm_931)
     {
         return prm_930;
     }
-    if (inv[prm_930].quality != 6)
+    if (inv[prm_930].quality != Quality::special)
     {
         return prm_930;
     }
@@ -3123,7 +3123,7 @@ int convertartifact(int prm_930, int prm_931)
             inv[prm_930].position.x,
             inv[prm_930].position.y,
             0);
-        if (inv[prm_930].quality != 6)
+        if (inv[prm_930].quality != Quality::special)
         {
             break;
         }
@@ -3601,7 +3601,7 @@ void character_drops_item()
         {
             break;
         }
-        if (inv[ci].quality > 4 || inv[ci].id == 55)
+        if (inv[ci].quality > Quality::miracle || inv[ci].id == 55)
         {
             f = 1;
         }
@@ -3630,7 +3630,7 @@ void character_drops_item()
                 f = 0;
             }
         }
-        if (inv[ci].quality == 6)
+        if (inv[ci].quality == Quality::special)
         {
             f = 1;
         }
@@ -3648,7 +3648,7 @@ void character_drops_item()
             {
                 if (the_item_db[inv[ci].id]->category < 50000)
                 {
-                    if (inv[ci].quality >= 3)
+                    if (inv[ci].quality >= Quality::great)
                     {
                         if (rnd(3))
                         {
@@ -4705,7 +4705,9 @@ void auto_identify()
                         "core.locale.misc.identify.almost_identified",
                         inv[ci],
                         i18n::_(
-                            u8"ui", u8"quality", u8"_"s + inv[ci].quality)));
+                            u8"ui",
+                            u8"quality",
+                            u8"_"s + static_cast<int>(inv[ci].quality))));
                 }
                 item_identify(inv[ci], IdentifyState::almost_identified);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
@@ -9697,7 +9699,7 @@ void load_gene_files()
         {
             continue;
         }
-        if (inv[cnt].quality == 6)
+        if (inv[cnt].quality == Quality::special)
         {
             continue;
         }
@@ -14131,9 +14133,9 @@ label_22191_internal:
         }
         if (attackskill != 106)
         {
-            if (inv[cw].quality >= 4)
+            if (inv[cw].quality >= Quality::miracle)
             {
-                if (inv[cw].quality == 6)
+                if (inv[cw].quality == Quality::special)
                 {
                     s(1) = i18n::s.get("core.locale.misc.wields_proudly")
                         + iknownnameref(inv[cw].id);
@@ -14149,7 +14151,7 @@ label_22191_internal:
                     s(1) = i18n::s.get("core.locale.misc.wields_proudly")
                         + iknownnameref(inv[cw].id);
                 }
-                if (inv[cw].quality == 5)
+                if (inv[cw].quality == Quality::godly)
                 {
                     s(1) = i18n::s.get("core.locale.item.godly_paren", s(1));
                 }

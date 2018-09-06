@@ -916,7 +916,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         return i18n::s.get("core.locale.item.unknown_item");
     }
-    if (inv[prm_518].quality >= 5)
+    if (inv[prm_518].quality >= Quality::godly)
     {
         iqiality_(prm_518) = 5;
     }
@@ -1175,9 +1175,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                         + i18n::space_if_needed();
                 }
             }
-            if (inv[prm_518].quality != 6)
+            if (inv[prm_518].quality != Quality::special)
             {
-                if (inv[prm_518].quality >= 4)
+                if (inv[prm_518].quality >= Quality::miracle)
                 {
                     s_ += i18n::_(
                               u8"item_material",
@@ -1215,7 +1215,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         inv[prm_518].identification_state
         != IdentifyState::completely_identified)
     {
-        if (inv[prm_518].quality < 4 || a_ >= 50000)
+        if (inv[prm_518].quality < Quality::miracle || a_ >= 50000)
         {
             s_ += ioriginalnameref(inv[prm_518].id);
         }
@@ -1224,7 +1224,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             s_ += iknownnameref(inv[prm_518].id);
         }
     }
-    else if (inv[prm_518].quality == 6 || ibit(5, prm_518) == 1)
+    else if (inv[prm_518].quality == Quality::special || ibit(5, prm_518) == 1)
     {
         if (jp)
         {
@@ -1237,7 +1237,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     else
     {
-        if (inv[prm_518].quality >= 4 && jp)
+        if (inv[prm_518].quality >= Quality::miracle && jp)
         {
             s_ = u8"☆"s + s_;
         }
@@ -1257,7 +1257,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         if (inv[prm_518].subname >= 40000)
         {
             randomize(inv[prm_518].subname - 40000);
-            if (inv[prm_518].quality == 4)
+            if (inv[prm_518].quality == Quality::miracle)
             {
                 s_ += i18n::space_if_needed()
                     + i18n::s.get(
@@ -1279,7 +1279,7 @@ label_0313_internal:
         {
             if (inv[prm_518].identification_state
                     == IdentifyState::completely_identified
-                && (inv[prm_518].quality >= 4 && a_ < 50000))
+                && (inv[prm_518].quality >= Quality::miracle && a_ < 50000))
             {
                 s_ = u8"the "s + s_;
             }
@@ -1385,7 +1385,10 @@ label_0313_internal:
         && a_ < 50000)
     {
         s_ += u8" ("s
-            + cnven(i18n::_(u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
+            + cnven(i18n::_(
+                  u8"ui",
+                  u8"quality",
+                  u8"_"s + static_cast<int>(inv[prm_518].quality)))
             + u8")"s;
         if (jp)
         {
@@ -1508,7 +1511,8 @@ void remain_make(int ci, int cc)
 
 int item_stack(int inventory_id, int ci, int show_message)
 {
-    if (inv[ci].quality == 6 && the_item_db[inv[ci].id]->category < 50000)
+    if (inv[ci].quality == Quality::special
+        && the_item_db[inv[ci].id]->category < 50000)
     {
         return 0;
     }
@@ -1708,7 +1712,8 @@ bool item_fire(int owner, int ci)
             continue;
         }
 
-        if (a_ == 72000 || a_ == 59000 || a_ == 68000 || inv[ci_].quality >= 4)
+        if (a_ == 72000 || a_ == 59000 || a_ == 68000
+            || inv[ci_].quality >= Quality::miracle)
         {
             continue;
         }
@@ -1908,7 +1913,7 @@ bool item_cold(int owner, int ci)
         {
             continue;
         }
-        if (inv[ci_].quality >= 4 || inv[ci_].body_part != 0)
+        if (inv[ci_].quality >= Quality::miracle || inv[ci_].body_part != 0)
         {
             continue;
         }
