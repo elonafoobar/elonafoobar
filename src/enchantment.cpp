@@ -1317,7 +1317,7 @@ void add_enchantment_by_fixed_ego()
     {
         return;
     }
-    p = egolist(rnd(p));
+    p = egolist(rnd(p(0)));
     inv[ci].subname = 10000 + p;
     ego_add(ci, p);
     if (rnd(2) == 0)

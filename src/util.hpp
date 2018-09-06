@@ -45,7 +45,7 @@ inline std::string to_lower(const std::string& source)
         std::begin(source),
         std::end(source),
         std::back_inserter(ret),
-        [](char c) { return std::tolower(c); });
+        [](char c) { return static_cast<char>(std::tolower(c)); });
     return ret;
 }
 

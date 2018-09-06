@@ -422,8 +422,9 @@ void chara_gain_skill_exp(
             if (experience_divisor_of_character_level != 1000)
             {
                 const auto lvl_exp =
-                    rnd(double(cc.required_experience) * exp / 1000
-                            / (cc.level + experience_divisor_of_character_level)
+                    rnd(int(double(cc.required_experience) * exp / 1000
+                            / (cc.level
+                               + experience_divisor_of_character_level))
                         + 1)
                     + rnd(2);
                 cc.experience += lvl_exp;

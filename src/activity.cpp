@@ -1078,12 +1078,12 @@ void continuous_action_others()
             }
             if (inv[ci].id == 563)
             {
-                if (rnd(p) == 0)
+                if (rnd(p(0)) == 0)
                 {
                     chara_gain_skill_exp(cdata[cc], inv[ci].param1, 25);
                 }
             }
-            else if (rnd(p) == 0)
+            else if (rnd(p(0)) == 0)
             {
                 chara_gain_skill_exp(cdata[cc], randattb(), 25);
             }

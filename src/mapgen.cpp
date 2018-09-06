@@ -1105,8 +1105,8 @@ int map_createroom(int prm_966)
             {
                 break;
             }
-            roomx(cr) = rdroomsizemin + 1 + rnd(x);
-            roomy(cr) = rdroomsizemin + 1 + rnd(y);
+            roomx(cr) = rdroomsizemin + 1 + rnd(x(0));
+            roomy(cr) = rdroomsizemin + 1 + rnd(y(0));
         }
         if (roompos == 4)
         {
@@ -2657,7 +2657,7 @@ int initialize_random_nefia_rdtype2()
             {
                 dx = rnd(rdroomsizemax) + rdroomsizemin;
                 dy = rnd(rdroomsizemax) + rdroomsizemin;
-                rx = rnd(dx);
+                rx = rnd(dx(0));
                 ry = rnd(dy);
                 if (x > 1 && y > 1 && x + dx < mdata_map_width - 2
                     && y + dy < mdata_map_height - 2)

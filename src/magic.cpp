@@ -756,7 +756,8 @@ int magic()
                 {
                     p = 10;
                 }
-                for (int cnt = 0, cnt_end = (1 + rnd(p)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end;
+                     ++cnt)
                 {
                     flt(calcobjlv(efp), 2);
                     dbid = 0;
@@ -2907,7 +2908,7 @@ label_2181_internal:
         {
             p += encfind(tc, 43) / 2;
         }
-        if (rnd(p) > efp / 2 + (is_cursed(efstatus)) * 100)
+        if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
         {
             break;
         }
@@ -2961,7 +2962,7 @@ label_2181_internal:
         }
         if (i > 0)
         {
-            i = p(rnd(i));
+            i = p(rnd(i(0)));
             const auto valn = itemname(i, 1, 1);
             if (inv[i].curse_state == CurseState::cursed)
             {
@@ -3136,8 +3137,8 @@ label_2181_internal:
         snd(68);
         for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
         {
-            x = rnd(p) + tlocx - rnd(p);
-            y = rnd(p) + tlocy - rnd(p);
+            x = rnd(p(0)) + tlocx - rnd(p(0));
+            y = rnd(p(0)) + tlocy - rnd(p(0));
             f = 1;
             if (x < 0 || y < 0 || x >= mdata_map_width || y >= mdata_map_height)
             {

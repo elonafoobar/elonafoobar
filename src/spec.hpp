@@ -80,7 +80,7 @@ struct ListDef
 
 struct EnumDef
 {
-    int default_index;
+    size_t default_index;
     std::vector<std::string> variants;
     bool pending = false;
 
@@ -104,13 +104,13 @@ struct EnumDef
      * Given a string, return its index in the enum's variants, if
      * found.
      */
-    optional<int> get_index_of(std::string variant) const
+    optional<size_t> get_index_of(std::string variant) const
     {
         auto it = std::find(variants.begin(), variants.end(), variant);
         if (it == variants.end())
             return none;
 
-        return std::distance(variants.begin(), it);
+        return static_cast<size_t>(std::distance(variants.begin(), it));
     }
 
     std::string get_default() const
@@ -195,7 +195,7 @@ public:
 
         // The default variant provided must be contained in the list
         // of provided variants.
-        optional<int> index = def.get_index_of(default_variant);
+        optional<size_t> index = def.get_index_of(default_variant);
         if (!index)
         {
             def.variants = std::vector<std::string>();
