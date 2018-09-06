@@ -600,7 +600,7 @@ void shop_refresh()
             flttypemajor = 60000;
         }
         calc_number_of_items_sold_at_shop();
-        inv[ci].set_number(rnd(rtval) + 1);
+        inv[ci].set_number(rnd(rtval(0)) + 1);
         if (cdata[tc].character_role == 1009)
         {
             p = trate(inv[ci].param1);

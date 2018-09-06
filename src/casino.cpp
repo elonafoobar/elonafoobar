@@ -1165,7 +1165,7 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd(sdata(12, 0)) < rnd(p))
+            if (rnd(sdata(12, 0)) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get(

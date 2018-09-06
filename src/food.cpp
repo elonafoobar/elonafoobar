@@ -337,7 +337,7 @@ void cook()
     p = rnd(p + 1);
     if (p > 3)
     {
-        p = rnd(p);
+        p = rnd(p(0));
     }
     if (sdata(184, cc) >= 5)
     {

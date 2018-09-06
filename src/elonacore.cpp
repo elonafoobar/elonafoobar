@@ -2581,7 +2581,7 @@ int try_to_perceive_npc(int cc)
                     cdata[r2].position.y)
                     * 150
                 + (sdata(157, cc) * 100 + 150) + 1;
-            if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
+            if (rnd(p(0)) < rnd(sdata(13, r2) * 60 + 150))
             {
                 return 1;
             }
@@ -5759,7 +5759,7 @@ void map_global_place_entrances()
             {
                 dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
-                x = adata(1, p) + rnd(dx) - rnd(dx);
+                x = adata(1, p) + rnd(dx(0)) - rnd(dx(0));
                 y = adata(2, p) + rnd(dy) - rnd(dy);
                 if (x <= 0 || y <= 0 || x >= mdata_map_width - 1
                     || y >= mdata_map_height - 1)
@@ -12680,7 +12680,7 @@ TurnResult do_bash()
             {
                 p *= 20;
             }
-            if (rnd(p) < sdata(10, cc) && rnd(2))
+            if (rnd(p(0)) < sdata(10, cc) && rnd(2))
             {
                 txt(i18n::s.get("core.locale.action.bash.door.destroyed"));
                 if (feat(2) > sdata(10, cc))

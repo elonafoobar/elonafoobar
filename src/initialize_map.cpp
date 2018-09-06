@@ -2633,7 +2633,7 @@ label_1741_internal:
                                     rnd(cnt / 4 + 1) + 1, 1, mdata_map_width);
                                 dy = clamp(
                                     rnd(cnt / 4 + 1) + 1, 1, mdata_map_height);
-                                x = adata(1, p) + rnd(dx) - rnd(dx);
+                                x = adata(1, p) + rnd(dx(0)) - rnd(dx(0));
                                 y = adata(2, p) + rnd(dy) - rnd(dy);
                                 if (x < 0 || y < 0 || x >= mdata_map_width
                                     || y >= mdata_map_height)
