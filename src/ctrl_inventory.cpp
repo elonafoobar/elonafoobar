@@ -1740,11 +1740,11 @@ label_2061_internal:
                 txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
-            if (cdata[tc].continuous_action_id != 0)
+            if (cdata[tc].continuous_action)
             {
-                cdata[tc].continuous_action_id = 0;
-                cdata[tc].continuous_action_turn = 0;
-                cdata[tc].continuous_action_item = 0;
+                cdata[tc].continuous_action.type = ContinuousAction::Type::none;
+                cdata[tc].continuous_action.turn = 0;
+                cdata[tc].continuous_action.item = 0;
             }
             snd(13);
             ibitmod(12, citrade, 0);

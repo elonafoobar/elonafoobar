@@ -3419,7 +3419,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(202) = 1;
                         ghelp = 2;
@@ -3437,7 +3437,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(203) = 1;
                         ghelp = 3;
@@ -3455,7 +3455,7 @@ label_1744_internal:
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(214) = 1;
                         ghelp = 14;

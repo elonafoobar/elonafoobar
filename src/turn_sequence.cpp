@@ -329,7 +329,8 @@ TurnResult npc_turn()
                             && cdata.player().position.y
                                 < cdata[cc].position.y + 10)
                         {
-                            if (cdata.player().continuous_action_id != 6)
+                            if (cdata.player().continuous_action.type
+                                != ContinuousAction::Type::perform)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -733,7 +734,7 @@ TurnResult turn_begin()
     bool update_turn_cost = true;
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action_turn > 2)
+        if (cdata.player().continuous_action.turn > 2)
         {
             cdata.player().turn_cost = mdata_map_turn_cost;
             update_turn_cost = false;
@@ -858,7 +859,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (p == 4)
         {
-            if (cdata.player().continuous_action_id == 0)
+            if (!cdata.player().continuous_action)
             {
                 heal_sp(cdata.player(), 2);
             }
@@ -1109,7 +1110,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             proc_pregnant();
         }
     }
-    if (cdata[cc].continuous_action_id != 0)
+    if (cdata[cc].continuous_action)
     {
         if (auto result = activity_proc(cdata[cc]))
         {

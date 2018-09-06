@@ -980,7 +980,7 @@ int magic()
                                     cdata[tc]));
                             }
                         }
-                        rowactend(cc);
+                        cdata[cc].continuous_action.finish();
                         ccprev = cc;
                         cc = tc;
                         proc_trap();

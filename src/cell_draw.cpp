@@ -1293,7 +1293,8 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().continuous_action_id == 7)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
                     {
                         ani_ = 0;
                     }

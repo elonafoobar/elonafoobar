@@ -1284,7 +1284,7 @@ void render_hud()
         {
             if (mdata_map_type != mdata_t::MapType::world_map)
             {
-                if (cdata.player().continuous_action_id == 0)
+                if (!cdata.player().continuous_action)
                 {
                     gmode(4, 150);
                 }
@@ -1328,22 +1328,25 @@ void load_continuous_action_animation()
 {
     gsel(9);
     pos(0, 0);
-    if (cdata.player().continuous_action_id == 5)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::dig_wall)
     {
         picload(filesystem::dir::graphic() / u8"anime1.bmp");
     }
-    if (cdata.player().continuous_action_id == 7)
+    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
             picload(filesystem::dir::graphic() / u8"anime2.bmp");
         }
     }
-    if (cdata.player().continuous_action_id == 8)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::search_material)
     {
         picload(filesystem::dir::graphic() / u8"anime3.bmp");
     }
-    if (cdata.player().continuous_action_id == 9)
+    if (cdata.player().continuous_action.type
+        == ContinuousAction::Type::dig_ground)
     {
         picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
@@ -1359,14 +1362,15 @@ void render_autoturn_animation()
         load_continuous_action_animation();
     }
     if (msgtemp != ""s
-        || (cdata.player().continuous_action_id == 7 && rowactre == 0
-            && fishanime == 0))
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre == 0 && fishanime == 0))
     {
         ui_render_non_hud();
         msgtemp = "";
         render_hud();
     }
-    if (cdata.player().continuous_action_id == 7)
+    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre == 0 && Config::instance().animewait != 0)
         {
@@ -1384,10 +1388,15 @@ void render_autoturn_animation()
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
 
-    if (cdata.player().continuous_action_id == 9
-        || cdata.player().continuous_action_id == 5
-        || cdata.player().continuous_action_id == 8
-        || (cdata.player().continuous_action_id == 7 && rowactre != 0))
+    if (cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_ground
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::dig_wall
+        || cdata.player().continuous_action.type
+            == ContinuousAction::Type::search_material
+        || (cdata.player().continuous_action.type
+                == ContinuousAction::Type::fish
+            && rowactre != 0))
     {
         if (Config::instance().animewait != 0)
         {
@@ -1398,7 +1407,8 @@ void render_autoturn_animation()
                 {
                     gmode(0);
                     pos(sx + 2, sy - 102);
-                    if (cdata.player().continuous_action_id == 5)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_wall)
                     {
                         if (cnt == 2)
                         {
@@ -1407,7 +1417,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2);
                     }
-                    if (cdata.player().continuous_action_id == 7)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::fish)
                     {
                         if (racount == 0)
                         {
@@ -1419,7 +1430,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.5);
                     }
-                    if (cdata.player().continuous_action_id == 8)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::search_material)
                     {
                         if (cnt == 4)
                         {
@@ -1428,7 +1440,8 @@ void render_autoturn_animation()
                         gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
                         await(Config::instance().animewait * 2.75);
                     }
-                    if (cdata.player().continuous_action_id == 9)
+                    if (cdata.player().continuous_action.type
+                        == ContinuousAction::Type::dig_ground)
                     {
                         if (cnt == 2)
                         {

@@ -3046,14 +3046,15 @@ TurnResult do_movement_command()
     }
     if (gdata_mount != 0)
     {
-        if (cdata[gdata_mount].continuous_action_id != 0)
+        if (cdata[gdata_mount].continuous_action)
         {
-            if (cdata[gdata_mount].continuous_action_turn > 0)
+            if (cdata[gdata_mount].continuous_action.turn > 0)
             {
                 txt(i18n::s.get(
                     "core.locale.action.move.interrupt", cdata[gdata_mount]));
-                cdata[gdata_mount].continuous_action_id = 0;
-                cdata[gdata_mount].continuous_action_turn = 0;
+                cdata[gdata_mount].continuous_action.type =
+                    ContinuousAction::Type::none;
+                cdata[gdata_mount].continuous_action.turn = 0;
             }
         }
     }
@@ -3113,14 +3114,16 @@ TurnResult do_movement_command()
                         }
                     }
                 }
-                if (cdata[tc].continuous_action_id == 1)
+                if (cdata[tc].continuous_action.type
+                    == ContinuousAction::Type::eat)
                 {
-                    if (cdata[tc].continuous_action_turn > 0)
+                    if (cdata[tc].continuous_action.turn > 0)
                     {
                         txt(i18n::s.get(
                             "core.locale.action.move.interrupt", cdata[tc]));
-                        cdata[tc].continuous_action_id = 0;
-                        cdata[tc].continuous_action_turn = 0;
+                        cdata[tc].continuous_action.type =
+                            ContinuousAction::Type::none;
+                        cdata[tc].continuous_action.turn = 0;
                     }
                 }
                 sense_map_feats_on_move();
@@ -3309,7 +3312,7 @@ TurnResult do_eat_command()
         tc = itemusingfind(ci);
         if (tc != cc)
         {
-            rowactend(tc);
+            cdata[tc].continuous_action.finish();
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(

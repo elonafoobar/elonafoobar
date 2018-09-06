@@ -9,7 +9,6 @@ struct Character;
 
 void rowact_check(int = 0);
 void rowact_item(int = 0);
-void rowactend(int = 0);
 
 void activity_handle_damage(Character&);
 optional<TurnResult> activity_proc(Character&);

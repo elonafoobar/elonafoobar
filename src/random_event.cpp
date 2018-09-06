@@ -162,7 +162,7 @@ optional<RandomEvent> generate_random_event()
     }
     if (mdata_map_type != mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action_id != 0)
+        if (cdata.player().continuous_action)
         {
             return none;
         }

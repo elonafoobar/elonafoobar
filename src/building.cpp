@@ -807,7 +807,7 @@ void prompt_move_ally()
         cdata[tc].initial_position.x = tlocx;
         cdata[tc].position.y = tlocy;
         cdata[tc].initial_position.y = tlocy;
-        rowactend(tc);
+        cdata[tc].continuous_action.finish();
         txtnew();
         txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
         snd(43);
@@ -1042,14 +1042,13 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (cnt.continuous_action_id == 0
-                    || cnt.continuous_action_turn == 0)
+                if (!cnt.continuous_action || cnt.continuous_action.turn == 0)
                 {
                     continue;
                 }
-                if (cnt.continuous_action_item == ci)
+                if (cnt.continuous_action.item == ci)
                 {
-                    rowactend(cnt.index);
+                    cdata[cnt.index].continuous_action.finish();
                 }
             }
         }
