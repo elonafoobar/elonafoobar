@@ -516,7 +516,7 @@ int damage_hp(
             }
             if (element == 52)
             {
-                if (rnd(3 + (victim.quality >= 4) * 3) == 0)
+                if (rnd(3 + (victim.quality >= Quality::miracle) * 3) == 0)
                 {
                     ++victim.paralyzed;
                 }
@@ -1280,7 +1280,7 @@ void heal_sp(Character& cc, int delta)
 
 void damage_insanity(Character& cc, int delta)
 {
-    if (cc.quality >= 4)
+    if (cc.quality >= Quality::miracle)
         return;
 
     int resistance = std::max(sdata(54, cc.index) / 50, 1);

@@ -93,11 +93,11 @@ void get_random_item_id()
 
 int do_create_item(int slot, int x, int y)
 {
-    if ((slot == 0 || slot == -1) && fixlv < 5)
+    if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
         if (sdata(19, 0) > rnd(5000)) // TODO coupling
         {
-            ++fixlv;
+            fixlv = static_cast<Quality>(static_cast<int>(fixlv) + 1);
         }
     }
 
@@ -172,14 +172,14 @@ int do_create_item(int slot, int x, int y)
     {
         if (fltselect == 0 && mode != 6)
         {
-            if (fixlv == 3)
+            if (fixlv == Quality::great)
             {
                 if (rnd(1000) == 0)
                 {
                     fltselect = 2;
                 }
             }
-            if (fixlv == 4)
+            if (fixlv == Quality::miracle)
             {
                 if (rnd(100) == 0)
                 {
@@ -193,7 +193,7 @@ int do_create_item(int slot, int x, int y)
         {
             if (fltselect == 2)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
             objlv += 10;
             fltselect = 0;
@@ -229,7 +229,7 @@ int do_create_item(int slot, int x, int y)
     ++itemmemory(1, dbid);
 
     inv[ci].quality = static_cast<Quality>(fixlv);
-    if (fixlv == 6 && mode != 6 && nooracle == 0)
+    if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
         int owner = inv_getowner(ci);
         if (owner != -1)
@@ -678,7 +678,7 @@ void change_item_material()
     inv[ci].color = 0;
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
-    fixlv = static_cast<int>(inv[ci].quality);
+    fixlv = inv[ci].quality;
     for (auto e : the_item_material_db[p]->enchantments)
     {
         enchantment_remove(ci, e.id, e.power);
@@ -730,17 +730,17 @@ void apply_item_material()
     }
     p(1) = 120;
     p(2) = 80;
-    if (fixlv == 1)
+    if (fixlv == Quality::bad)
     {
         p(1) = 150;
         p(2) = 80;
     }
-    if (fixlv == 3)
+    if (fixlv == Quality::great)
     {
         p(1) = 100;
         p(2) = 70;
     }
-    if (fixlv >= 4)
+    if (fixlv >= Quality::miracle)
     {
         p(1) = 80;
         p(2) = 70;

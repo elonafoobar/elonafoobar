@@ -117,7 +117,7 @@ void talk_to_npc()
     }
     chatval_unique_chara_id = none;
     chatval_show_impress = true;
-    if (cdata[tc].quality == 6 && tc >= 16)
+    if (cdata[tc].quality == Quality::special && tc >= 16)
     {
         chatval_unique_chara_id = cdata[tc].id;
         chatval_show_impress = false;

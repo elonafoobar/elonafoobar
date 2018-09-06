@@ -23,7 +23,7 @@ struct SkillDamage
 };
 optional<SkillDamage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);
-int calcfixlv(int = 0);
+Quality calcfixlv(Quality base_quality = Quality::none);
 int calcfame(int = 0, int = 0);
 int decfame(int = 0, int = 0);
 int calcshopreform();

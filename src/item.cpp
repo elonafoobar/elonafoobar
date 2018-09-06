@@ -1636,7 +1636,8 @@ bool item_fire(int owner, int ci)
 
     if (owner != -1)
     {
-        if (sdata(50, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        if (sdata(50, owner) / 50 >= 6
+            || cdata[owner].quality >= Quality::miracle)
         {
             return false;
         }
@@ -1865,7 +1866,8 @@ bool item_cold(int owner, int ci)
     }
     if (owner != -1)
     {
-        if (sdata(51, owner) / 50 >= 6 || cdata[owner].quality >= 4)
+        if (sdata(51, owner) / 50 >= 6
+            || cdata[owner].quality >= Quality::miracle)
         {
             return false;
         }

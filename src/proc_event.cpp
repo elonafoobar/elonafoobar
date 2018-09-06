@@ -180,7 +180,7 @@ void proc_event()
             u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
-            flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
+            flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
             flttypemajor = choice(fsetchest);
             itemcreate(
                 -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
@@ -206,7 +206,7 @@ void proc_event()
         });
         randomize();
         flt();
-        fixlv = 4;
+        fixlv = Quality::miracle;
         initlv = clamp(gdata_current_dungeon_level / 4, 50, 250);
         chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
@@ -225,7 +225,7 @@ void proc_event()
         while (1)
         {
             chara_set_generation_filter();
-            fixlv = 4;
+            fixlv = Quality::miracle;
             initlv = gdata_current_dungeon_level + rnd(5);
             int stat = chara_create(-1, 0, -3, 0);
             if (stat == 0)
@@ -389,7 +389,7 @@ void proc_event()
         }
         if (rnd(3) == 0)
         {
-            flt(0, 2);
+            flt(0, Quality::good);
             for (int i = 0; i < 1; ++i)
             {
                 if (gdata_last_month_when_trainer_visited != gdata_month
@@ -859,7 +859,7 @@ void proc_event()
             mapitem_fire(x, y);
             if (i % 4 == 0)
             {
-                flt(100, calcfixlv(3));
+                flt(100, calcfixlv(Quality::good));
                 if (rnd(4))
                 {
                     fltnrace = u8"dragon"s;

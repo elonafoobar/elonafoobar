@@ -104,7 +104,7 @@ int access_character_info()
         eqweapon1 = data->eqweapon1;
         if (data->fixlv == 6)
         {
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         cspecialeq = data->cspecialeq;
         cdata[rc].damage_reaction_info = data->damage_reaction_info;

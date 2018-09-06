@@ -1455,7 +1455,8 @@ void map_randsite(int prm_971, int prm_972)
         }
         if (rnd(18) == 0)
         {
-            flt(calcobjlv(rnd(cdata.player().level + 10)), calcfixlv(3));
+            flt(calcobjlv(rnd(cdata.player().level + 10)),
+                calcfixlv(Quality::good));
             flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, x_at_m169, y_at_m169, 0);
             return;
@@ -2081,7 +2082,8 @@ void generate_random_nefia()
         {
             if (rnd(2) == 0)
             {
-                flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+                flt(calcobjlv(gdata_current_dungeon_level),
+                    calcfixlv(Quality::bad));
                 flttypemajor = fltsetdungeon();
                 itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
             }
@@ -2100,7 +2102,7 @@ void generate_random_nefia()
                                  cnt < cnt_end;
                                  ++cnt)
                             {
-                                flt(cdata[rc].level, calcfixlv(2));
+                                flt(cdata[rc].level, calcfixlv(Quality::bad));
                                 flttypemajor = creaturepack;
                                 chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
                             }
@@ -2157,7 +2159,7 @@ void generate_random_nefia()
     {
         flt();
         flttypemajor = choice(fsetwear);
-        fixlv = 4;
+        fixlv = Quality::miracle;
         itemcreate(-1, 0, -1, -1, 0);
         mobdensity = mdata_map_max_crowd_density / 2;
         itemdensity = mdata_map_max_crowd_density / 3;
@@ -2184,7 +2186,7 @@ void generate_random_nefia()
     }
     for (int cnt = 0, cnt_end = (itemdensity); cnt < cnt_end; ++cnt)
     {
-        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
         itemcreate(-1, 0, -1, -1, 0);
     }
@@ -2942,7 +2944,7 @@ int initialize_quest_map_party()
              cnt < cnt_end;
              ++cnt)
         {
-            flt(roomdiff * 5, calcfixlv(2));
+            flt(roomdiff * 5, calcfixlv(Quality::bad));
             initlv = roomdiff * 7 + rnd(5);
             dbid = list(rnd(3), roomdiff);
             chara_create(-1, dbid, rnd(rw) + rx, rnd(rh) + ry);
@@ -3065,7 +3067,7 @@ void initialize_quest_map_town()
         gdata(87) = 9999;
         flt();
         initlv = qdata(5, gdata_executing_immediate_quest);
-        fixlv = 5;
+        fixlv = Quality::godly;
         chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
@@ -3077,7 +3079,7 @@ void initialize_quest_map_town()
         {
             flt();
             initlv = qdata(5, gdata_executing_immediate_quest) * 3 / 2;
-            fixlv = 1;
+            fixlv = Quality::bad;
             chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;

@@ -696,7 +696,7 @@ int magic()
                 if (efid == 613)
                 {
                     p = rnd(10);
-                    if ((cdata[tc].quality >= 4 && rnd(4))
+                    if ((cdata[tc].quality >= Quality::miracle && rnd(4))
                         || encfind(tc, 60010 + p) != -1)
                     {
                         p = -1;
@@ -759,7 +759,7 @@ int magic()
                 for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end;
                      ++cnt)
                 {
-                    flt(calcobjlv(efp), 2);
+                    flt(calcobjlv(efp), Quality::good);
                     dbid = 0;
                     if (efid == 425)
                     {
@@ -2009,7 +2009,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.magic.resurrection.cursed"));
             for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata.player().level), calcfixlv(3));
+                flt(calcobjlv(cdata.player().level), calcfixlv(Quality::good));
                 fltn(u8"undead"s);
                 chara_create(
                     -1,
@@ -2549,7 +2549,7 @@ label_2181_internal:
         {
             break;
         }
-        if (cdata[tc].quality >= 4)
+        if (cdata[tc].quality >= Quality::miracle)
         {
             break;
         }
@@ -2727,7 +2727,7 @@ label_2181_internal:
             const auto attr = p(cnt) - 10;
             if (is_cursed(efstatus))
             {
-                if (cdata[tc].quality <= 3)
+                if (cdata[tc].quality <= Quality::great)
                 {
                     cdata[tc].attr_adjs[attr] -=
                         rnd(sdata.get(p(cnt), tc).original_level) / 5 + rnd(5);
@@ -3024,7 +3024,7 @@ label_2181_internal:
             txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
-        flt(cdata.player().level / 2 + 5, 3);
+        flt(cdata.player().level / 2 + 5, Quality::great);
         p = 0;
         if (rnd(3) == 0)
         {
@@ -3078,7 +3078,8 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0
             || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
@@ -3262,9 +3263,9 @@ label_2181_internal:
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
                     + (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
+                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
         txt(i18n::s.get("core.locale.magic.garoks_hammer.apply", inv[ci]));
@@ -3588,8 +3589,8 @@ label_2181_internal:
         {
             f = 0;
         }
-        if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
-            || cdata[tc].is_escorted() == 1
+        if (cdata[tc].quality >= Quality::miracle
+            || cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1
             || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
@@ -3602,7 +3603,7 @@ label_2181_internal:
         {
             animeload(8, tc);
             txt(i18n::s.get("core.locale.magic.change.apply", cdata[tc]));
-            flt(calcobjlv(cdata[tc].level + 3), 2);
+            flt(calcobjlv(cdata[tc].level + 3), Quality::good);
             chara_create(56, 0, -3, 0);
             chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
             cdata[tc].enemy_id = cc;
@@ -3714,7 +3715,7 @@ label_2181_internal:
             inv[ci].remove();
             for (int cnt = 0;; ++cnt)
             {
-                flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
+                flt(calcobjlv(efp / 10) + 5, calcfixlv(Quality::good));
                 if (cnt < 10)
                 {
                     flttypemajor = fltbk;
@@ -4191,7 +4192,7 @@ label_2181_internal:
         for (int i = 0; i < clamp(4 + rnd(efp / 50 + 1), 1, 15); ++i)
         {
             snd(64);
-            flt(calcobjlv(efp / 10), calcfixlv(3));
+            flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
             dbid = 54;
             int number = 400 + rnd(efp);
             if (rnd(30) == 0)

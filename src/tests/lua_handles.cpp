@@ -394,7 +394,7 @@ TEST_CASE(
     REQUIRE(handle["__index"].get<int>() == first_index);
 
     int tc = elona::rc;
-    flt(20, 2);
+    flt(20, Quality::good);
     REQUIRE(chara_create(56, 0, -3, 0));
     chara_relocate(cdata.tmp(), tc, CharaRelocationMode::change);
 

@@ -55,7 +55,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::blinded:
         if (cdata[cc].is_immune_to_blindness())
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
             return;
         power =
             calc_power_decreased_by_resistance(cc, power, Element::darkness);
@@ -83,7 +83,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             return;
         if (buff_has(cdata[cc], 7))
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 2 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
             return;
         power = calc_power_decreased_by_resistance(cc, power, Element::mind);
         turn = power / 7;
@@ -108,7 +108,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::paralyzed:
         if (cdata[cc].is_immune_to_paralyzation())
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level + 1))
             return;
         power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
         turn = power / 10;
@@ -133,7 +133,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::poisoned:
         if (cdata[cc].is_immune_to_poison())
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 3 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 3 + 1))
             return;
         power = calc_power_decreased_by_resistance(cc, power, Element::poison);
         turn = power / 5;
@@ -158,7 +158,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     case StatusAilment::sleep:
         if (cdata[cc].is_immune_to_sleep())
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
             return;
         power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
         turn = power / 4;
@@ -187,7 +187,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
             return;
         if (buff_has(cdata[cc], 7))
             return;
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 5 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
             return;
         power = calc_power_decreased_by_resistance(cc, power, Element::mind);
         turn = power / 7;
@@ -204,7 +204,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
         }
         return;
     case StatusAilment::dimmed:
-        if (cdata[cc].quality > 3 && rnd(cdata[cc].level / 3 + 1))
+        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 3 + 1))
             return;
         if (cdatan(2, cc) == u8"golem"s)
             return;
@@ -229,7 +229,7 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
         rowactend(cc);
         return;
     case StatusAilment::bleeding:
-        if (cdata[cc].quality > 3)
+        if (cdata[cc].quality > Quality::great)
         {
             power /= 2;
         }

@@ -476,14 +476,17 @@ void continuous_action_perform()
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance
                                                 / 8),
-                                            calcfixlv(3 + (rnd(4) == 0)));
+                                            calcfixlv(
+                                                (rnd(4) == 0)
+                                                    ? Quality::miracle
+                                                    : Quality::great));
                                     }
                                     else
                                     {
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance
                                                 / 10),
-                                            calcfixlv(3));
+                                            calcfixlv(Quality::good));
                                     }
                                     flttypemajor = choice(fsetperform);
                                     dbid = 0;
@@ -1735,10 +1738,10 @@ void spot_digging()
                                  ++cnt)
                             {
                                 flt(calcobjlv(cdata.player().level + 10),
-                                    calcfixlv(3));
+                                    calcfixlv(Quality::good));
                                 if (cnt == 0)
                                 {
-                                    fixlv = 5;
+                                    fixlv = Quality::godly;
                                 }
                                 flttypemajor = choice(fsetchest);
                                 itemcreate(
@@ -1881,7 +1884,8 @@ void spot_mining_or_wall()
                 }
                 else if (rtval == -1)
                 {
-                    flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(3));
+                    flt(calcobjlv(gdata_current_dungeon_level),
+                        calcfixlv(Quality::good));
                     flttypemajor = 77000;
                     itemcreate(-1, 0, digx, digy, 0);
                 }

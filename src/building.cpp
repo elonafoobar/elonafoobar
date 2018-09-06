@@ -1086,7 +1086,7 @@ void show_shop_log()
         int cnt2 = cnt;
         for (int cnt = 0; cnt < 4; ++cnt)
         {
-            flt(list(0, cnt2), list(1, cnt2));
+            flt(list(0, cnt2), static_cast<Quality>(list(1, cnt2)));
             flttypemajor = elona::stoi(listn(0, cnt2));
             nostack = 1;
             int stat = itemcreate(-1, 0, -1, -1, 0);
@@ -1201,11 +1201,11 @@ void update_shop()
 void calc_collection_value(bool val0)
 {
     rc = 56;
-    fixlv = 2;
+    fixlv = Quality::good;
     dbmode = 3;
     access_character_info();
     ++dblist(val0 ? 1 : 0, cdata.tmp().id);
-    if (fixlv == 6)
+    if (fixlv == Quality::special)
     {
         rtval = 70 + cdata.tmp().level;
     }
@@ -1453,7 +1453,7 @@ void update_ranch()
                 goto label_1734_internal;
             }
         }
-        flt(calcobjlv(cdata[worker].level), 1);
+        flt(calcobjlv(cdata[worker].level), Quality::bad);
         if (rnd(2))
         {
             dbid = cdata[worker].id;
@@ -1496,7 +1496,7 @@ void update_ranch()
             {
                 continue;
             }
-            flt(calcobjlv(cnt.level), 2);
+            flt(calcobjlv(cnt.level), Quality::good);
             p = rnd(5);
             f = 0;
             if (rnd(egg + 1) > 2)

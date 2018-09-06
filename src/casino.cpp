@@ -1201,27 +1201,27 @@ bool casino_blackjack()
             "core.locale.casino.blackjack.game.total_wins", winrow));
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            i = 2;
+            Quality quality = Quality::good;
             if (winrow > 2)
             {
-                i = 3;
+                quality = Quality::great;
             }
             if (winrow > 7)
             {
                 if (stake >= 5)
                 {
-                    i = 4;
+                    quality = Quality::miracle;
                 }
             }
             if (winrow > 15)
             {
                 if (stake >= 20)
                 {
-                    i = 5;
+                    quality = Quality::godly;
                 }
             }
             flt(calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2),
-                i);
+                quality);
             flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, -1, -1, 0);
             if (inv[ci].number() == 0)

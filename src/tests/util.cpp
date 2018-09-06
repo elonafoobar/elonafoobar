@@ -66,7 +66,7 @@ Item& create_item(int id, int number)
 
 Character& create_chara(int id, int x, int y)
 {
-    elona::fixlv = 0;
+    elona::fixlv = Quality::none;
     REQUIRE(chara_create(-1, id, x, y));
     return elona::cdata[elona::rc];
 }

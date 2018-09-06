@@ -521,7 +521,7 @@ void run_random_event(RandomEvent event)
             modify_karma(cdata.player(), -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(0, calcfixlv(3));
+                flt(0, calcfixlv(Quality::good));
                 if (rnd(3) == 0)
                 {
                     flttypemajor = fsetwear(rnd(fsetwear.size()));
