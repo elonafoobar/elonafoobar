@@ -604,9 +604,8 @@ int talk_window_query()
         await(Config::instance().wait1);
         key_check();
         cursor_check();
-        int a{};
-        a = stick(static_cast<int>(StickKey::escape));
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick(StickKey::escape);
+        if (input == StickKey::escape)
         {
             if (scenemode)
             {

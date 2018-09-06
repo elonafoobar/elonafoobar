@@ -136,9 +136,8 @@ void select_house_board_tile()
         gmode(2);
         redraw();
         await(Config::instance().wait1);
-        int a{};
-        a = stick();
-        if (a == static_cast<int>(StickKey::mouse_left))
+        const auto input = stick();
+        if (input == StickKey::mouse_left)
         {
             p = mousex / 24 + mousey / 24 * 33;
             if (p >= listmax)
@@ -151,7 +150,7 @@ void select_house_board_tile()
             house_board_update_screen();
             return;
         }
-        if (a == static_cast<int>(StickKey::mouse_right))
+        if (input == StickKey::mouse_right)
         {
             house_board_update_screen();
             return;
@@ -8260,14 +8259,13 @@ int target_position()
                 wait_key_released();
                 continue;
             }
-            int a{};
-            a = stick(
-                static_cast<int>(StickKey::mouse_left | StickKey::mouse_right));
-            if (a == static_cast<int>(StickKey::mouse_left))
+            const auto input =
+                stick(StickKey::mouse_left | StickKey::mouse_right);
+            if (input == StickKey::mouse_left)
             {
                 key = key_enter;
             }
-            if (a == static_cast<int>(StickKey::mouse_right))
+            if (input == StickKey::mouse_right)
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 2
                     || chipm(0, map(tlocx, tlocy, 0)) == 1)
@@ -10133,9 +10131,8 @@ TurnResult do_debug_console()
     while (1)
     {
         await(Config::instance().wait1);
-        int a{};
-        a = stick();
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick();
+        if (input == StickKey::escape)
         {
             return do_exit_debug_console();
         }
@@ -15266,9 +15263,8 @@ void do_play_scene()
     }
     scidx += s(0).size();
 label_2681:
-    int a{};
-    a = stick(static_cast<int>(StickKey::escape));
-    if (a == static_cast<int>(StickKey::escape))
+    const auto input = stick(StickKey::escape);
+    if (input == StickKey::escape)
     {
         scene_cut = 1;
     }
@@ -15463,8 +15459,8 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        a = stick(static_cast<int>(StickKey::escape));
-        if (a == static_cast<int>(StickKey::escape))
+        const auto input = stick(StickKey::escape);
+        if (input == StickKey::escape)
         {
             scene_cut = 1;
         }

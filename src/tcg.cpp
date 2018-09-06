@@ -105,7 +105,6 @@ elona_vector1<int> cflist_at_tcg;
 elona_vector1<std::string> cfname_at_tcg;
 int page_at_tcg = 0;
 int dlistmax_at_tcg = 0;
-int a_at_tcg = 0;
 int chaincontinue_at_tcg = 0;
 int emax_at_tcg = 0;
 
@@ -2744,7 +2743,6 @@ void tcg_prompt_action()
         tcgdraw();
         cursor_at_tcg = 1;
         await(15);
-        a_at_tcg = stick();
         key_check();
         if (key == key_east)
         {
@@ -3275,8 +3273,8 @@ void tcg_proc_ai()
         if (init)
         {
             spellused_at_tcg = 0;
-            a_at_tcg = stick();
-            if (a_at_tcg)
+            const auto input = stick();
+            if (input != StickKey::none)
             {
                 cpdata_at_tcg(4, 0) = 0;
             }
