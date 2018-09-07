@@ -5,29 +5,7 @@
 #include "../testing.hpp"
 #include "../variables.hpp"
 #include "tests.hpp"
-
-static void register_export(
-    lua::LuaEnv& lua,
-    std::string mod_name,
-    std::string callback_signature,
-    std::string callback_body,
-    std::string setup = "")
-{
-    lua.get_mod_manager().load_mods(filesystem::dir::mods());
-
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(mod_name, R"(
-local Exports = {}
-
-function Exports.)" + callback_signature + "\n" + callback_body + R"(
-end
-
-)" + setup + R"(
-return {
-    Exports = Exports
-}
-)"));
-    lua.get_export_manager().register_all_exports();
-}
+#include "util.hpp"
 
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
@@ -83,7 +61,7 @@ TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    register_export(
+    testing::register_lua_function(
         lua, "test", "my_callback(arg)", "Store.global.value = arg");
 
     auto function = lua.get_export_manager().get_exported_function(
@@ -149,7 +127,8 @@ TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    register_export(lua, "test", "my_callback(arg)", "return 42");
+    testing::register_lua_function(
+        lua, "test", "my_callback(arg)", "return 42");
 
     SECTION("wrong return type")
     {
@@ -171,7 +150,7 @@ TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    register_export(lua, "test", "my_callback()", "return nil");
+    testing::register_lua_function(lua, "test", "my_callback()", "return nil");
 
     int result = lua.get_export_manager().call_with_result(
         "exports:test.my_callback", -1);
@@ -183,7 +162,8 @@ TEST_CASE("test calling exported function with error", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    register_export(lua, "test", "my_callback()", "error(\"error\")");
+    testing::register_lua_function(
+        lua, "test", "my_callback()", "error(\"error\")");
 
     int result = lua.get_export_manager().call_with_result(
         "exports:test.my_callback", -1);

@@ -305,9 +305,8 @@ bool DialogData::advance_internal(
 
 void DialogData::show()
 {
-    set_node(starting_node);
-
-    // The defe
+    // The large amount of returns is to guard against user error, since dialogs
+    // are loaded externally.
 
     if (!state_is_valid())
     {

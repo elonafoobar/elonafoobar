@@ -6,6 +6,8 @@
 namespace elona
 {
 
+// TODO: make wrapper for sol::table for getting fields easier
+
 optional<DialogData> DialogDecoder::decode(const std::string& id)
 {
     return decode(id, *lua::lua.get());
@@ -66,7 +68,8 @@ optional<DialogData> DialogDecoder::decode(
 
         sol::table dialog_table_data = dialog_table[mod_name][data_id];
 
-        return decode(dialog_table_data, lua);
+        return DialogDecoderLogic(lua.get_export_manager())
+            .decode(dialog_table_data);
     }
     catch (const std::exception& e)
     {
@@ -76,7 +79,7 @@ optional<DialogData> DialogDecoder::decode(
     }
 }
 
-DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
+DialogData DialogDecoderLogic::decode(sol::table table)
 {
     DialogData::map_type nodes;
     std::string full_id = table["_full_id"];
@@ -94,19 +97,64 @@ DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
         std::string node_id = full_id + "." + node_name;
         the_dialog_node.id = node_id;
 
+        // TODO: make getter
         sol::object node_text = node_data["text"];
-        if (node_text != sol::lua_nil)
+        if (node_text == sol::lua_nil)
         {
-            if (node_text.is<std::string>())
+            throw std::runtime_error(full_id + ": missing \"text\" field");
+        }
+
+        if (node_text.is<std::string>())
+        {
+            the_dialog_node.text.emplace_back(node_text.as<std::string>());
+        }
+        else if (node_text.is<sol::table>())
+        {
+            for (const auto& pair : node_text.as<sol::table>())
             {
-                the_dialog_node.text.emplace_back(node_text.as<std::string>());
+                std::string text = pair.second.as<std::string>();
+                the_dialog_node.text.emplace_back(text);
             }
-            else if (node_text.is<sol::table>())
+        }
+
+        // TODO: make getter
+        sol::object node_choices = node_data["choices"];
+        if (node_choices == sol::lua_nil)
+        {
+            throw std::runtime_error(full_id + ": missing \"choices\" field");
+        }
+
+        if (node_choices.is<std::string>())
+        {
+            if (node_choices.as<std::string>() == "End")
             {
-                for (const auto& pair : node_text.as<sol::table>())
+                // TODO: move "bye" text into locale
+                the_dialog_node.choices.emplace_back("bye"s, none);
+            }
+        }
+        else if (node_choices.is<sol::table>())
+        {
+            sol::table node_choices_table = node_choices.as<sol::table>();
+            for (const auto& pair : node_choices_table)
+            {
+                sol::table choice_data = pair.second.as<sol::table>();
+                std::string text_key = choice_data["text"];
+                std::string next_node = choice_data["node"];
+
+                if (text_key == ""s || next_node == ""s)
                 {
-                    std::string text = pair.second.as<std::string>();
-                    the_dialog_node.text.emplace_back(text);
+                    throw std::runtime_error(
+                            full_id + ": Expected \"text\" and \"node\" fields for choice in node \""s
+                            + node_name + "\"");
+                }
+
+                if (next_node == "End")
+                {
+                    the_dialog_node.choices.emplace_back(text_key, none);
+                }
+                else
+                {
+                    the_dialog_node.choices.emplace_back(text_key, next_node);
                 }
             }
         }
@@ -115,7 +163,7 @@ DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
         if (node_data["generator"] != sol::lua_nil)
         {
             std::string callback_generator = node_data["generator"];
-            if (!lua.get_export_manager().has_function(callback_generator))
+            if (!export_manager.has_function(callback_generator))
             {
                 throw std::runtime_error(
                     full_id + ": Node \"" + node_name
@@ -130,7 +178,7 @@ DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
         {
             // TODO dry
             std::string callback_redirector = node_data["redirector"];
-            if (!lua.get_export_manager().has_function(callback_redirector))
+            if (!export_manager.has_function(callback_redirector))
             {
                 throw std::runtime_error(
                     full_id + ": Node \"" + node_name
@@ -161,7 +209,7 @@ DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
         {
             // TODO dry
             std::string callback_before = node_data["run_before"];
-            if (!lua.get_export_manager().has_function(callback_before))
+            if (!export_manager.has_function(callback_before))
             {
                 throw std::runtime_error(
                     full_id + ": Node \"" + node_name
@@ -174,53 +222,13 @@ DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
         {
             // TODO dry
             std::string callback_after = node_data["run_after"];
-            if (!lua.get_export_manager().has_function(callback_after))
+            if (!export_manager.has_function(callback_after))
             {
                 throw std::runtime_error(
                     full_id + ": Node \"" + node_name
                     + "\" has unknown Lua callback " + callback_after);
             }
             the_dialog_node.callback_after = callback_after;
-        }
-
-        sol::object node_choices = node_data["choices"];
-        if (node_choices != sol::lua_nil)
-        {
-            if (node_choices.is<std::string>())
-            {
-                if (node_choices.as<std::string>() == "End")
-                {
-                    // TODO: move "bye" text into locale
-                    the_dialog_node.choices.emplace_back("bye"s, none);
-                }
-            }
-            else if (node_choices.is<sol::table>())
-            {
-                sol::table node_choices_table = node_choices.as<sol::table>();
-                for (const auto& pair : node_choices_table)
-                {
-                    sol::table choice_data = pair.second.as<sol::table>();
-                    std::string text_key = choice_data["text"];
-                    std::string next_node = choice_data["node"];
-
-                    if (text_key == ""s || next_node == ""s)
-                    {
-                        throw std::runtime_error(
-                            full_id + ": Expected \"text\" and \"node\" fields for choice in node \""s
-                            + node_name + "\"");
-                    }
-
-                    if (next_node == "End")
-                    {
-                        the_dialog_node.choices.emplace_back(text_key, none);
-                    }
-                    else
-                    {
-                        the_dialog_node.choices.emplace_back(
-                            text_key, next_node);
-                    }
-                }
-            }
         }
 
         nodes.insert(std::make_pair(node_id, std::move(the_dialog_node)));

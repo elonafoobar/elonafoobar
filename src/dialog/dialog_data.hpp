@@ -99,8 +99,8 @@ public:
 public:
     DialogData(map_type nodes, std::string starting_node)
         : nodes(nodes)
-        , starting_node(starting_node)
     {
+        set_node(starting_node);
     }
 
 public:
@@ -170,11 +170,9 @@ private:
     /// Returns false on failure.
     bool advance_internal(optional<std::string> node_id, size_t text_index);
 
+    map_type nodes;
     size_t current_text_index = 0;
     optional<std::string> current_node_id = none;
-
-    map_type nodes;
-    std::string starting_node;
 };
 
 } // namespace elona

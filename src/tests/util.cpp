@@ -71,5 +71,28 @@ Character& create_chara(int id, int x, int y)
     return elona::cdata[elona::rc];
 }
 
+void register_lua_function(
+    lua::LuaEnv& lua,
+    std::string mod_name,
+    std::string callback_signature,
+    std::string callback_body,
+    std::string setup)
+{
+    lua.get_mod_manager().load_mods(filesystem::dir::mods());
+
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(mod_name, R"(
+local Exports = {}
+
+function Exports.)" + callback_signature + "\n" + callback_body + R"(
+end
+
+)" + setup + R"(
+return {
+    Exports = Exports
+}
+)"));
+    lua.get_export_manager().register_all_exports();
+}
+
 } // namespace testing
 } // namespace elona
