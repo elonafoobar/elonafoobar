@@ -6,7 +6,7 @@
 namespace elona
 {
 
-optional<dialog_data> dialog_decoder::decode(const std::string& id)
+optional<DialogData> DialogDecoder::decode(const std::string& id)
 {
     return decode(id, *lua::lua.get());
 }
@@ -51,9 +51,9 @@ static std::pair<std::string, std::string> _parse_id(
             datatype_id.substr(period_pos + 1)};
 }
 
-optional<dialog_data> dialog_decoder::decode(
+optional<DialogData> DialogDecoder::decode(
     const std::string& id,
-    lua::lua_env& lua)
+    lua::LuaEnv& lua)
 {
     try
     {
@@ -70,26 +70,26 @@ optional<dialog_data> dialog_decoder::decode(
     }
     catch (const std::exception& e)
     {
-        txtef(color_index_t::red);
+        txtef(ColorIndex::red);
         txt(id + ": Dialog decoding error: " + e.what());
         return none;
     }
 }
 
-dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
+DialogData DialogDecoder::decode(sol::table table, lua::LuaEnv& lua)
 {
-    dialog_data::map_type nodes;
+    DialogData::map_type nodes;
     std::string full_id = table["_full_id"];
 
     sol::table nodes_table = table["nodes"];
     for (const auto& pair : nodes_table)
     {
-        dialog_node the_dialog_node;
+        DialogNode the_dialog_node;
 
         std::string node_name = pair.first.as<std::string>();
         sol::table node_data = pair.second.as<sol::table>();
 
-        the_dialog_node.behavior = std::make_shared<dialog_node_behavior>();
+        the_dialog_node.behavior = std::make_shared<DialogNodeBehavior>();
 
         std::string node_id = full_id + "." + node_name;
         the_dialog_node.id = node_id;
@@ -122,7 +122,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
                     + "\" has unknown Lua callback " + callback_generator);
             }
             the_dialog_node.behavior =
-                std::make_shared<dialog_node_behavior_generator>(
+                std::make_shared<DialogNodeBehaviorGenerator>(
                     callback_generator);
             behaviors++;
         }
@@ -137,7 +137,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
                     + "\" has unknown Lua callback " + callback_redirector);
             }
             the_dialog_node.behavior =
-                std::make_shared<dialog_node_behavior_redirector>(
+                std::make_shared<DialogNodeBehaviorRedirector>(
                     callback_redirector);
             behaviors++;
         }
@@ -146,7 +146,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
             // TODO dry
             std::string node_id_for_choices = node_data["inherit"];
             the_dialog_node.behavior =
-                std::make_shared<dialog_node_behavior_inherit_choices>(
+                std::make_shared<DialogNodeBehaviorInheritChoices>(
                     node_id_for_choices);
             behaviors++;
         }
@@ -233,7 +233,7 @@ dialog_data dialog_decoder::decode(sol::table table, lua::lua_env& lua)
             full_id + ": Cannot find starting dialog node " + starting_node);
     }
 
-    dialog_data the_dialog(nodes, starting_node);
+    DialogData the_dialog(nodes, starting_node);
     return the_dialog;
 }
 

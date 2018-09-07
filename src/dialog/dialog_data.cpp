@@ -9,13 +9,13 @@ namespace elona
 
 static void _dialog_error(const std::string& node_id, const std::string& text)
 {
-    txtef(color_index_t::red);
+    txtef(ColorIndex::red);
     txt(node_id + ": Dialog error: " + text);
 }
 
-bool dialog_node_behavior_generator::apply(
-    dialog_data&,
-    dialog_node& the_dialog_node)
+bool DialogNodeBehaviorGenerator::apply(
+    DialogData&,
+    DialogNode& the_dialog_node)
 {
     sol::table result = lua::lua->get_export_manager().call_with_result(
         callback_generator, sol::lua_nil);
@@ -30,10 +30,10 @@ bool dialog_node_behavior_generator::apply(
 
     // Expects a Lua table of this format.
     // {
-    //   text = {"id.1", "id.2", "id.3"},
+    //   text = {"mod.locale.1", "mod.locale.2", "mod.locale.3"},
     //   choices = {
-    //     {text = "id.1", node = "core.dialog:dialog.node1},
-    //     {text = "id.2", node = "core.dialog:dialog.node2},
+    //     {text = "mod.locale.4", node = "core.dialog:dialog.node1},
+    //     {text = "mod.locale.5", node = "core.dialog:dialog.node2},
     //   }
     // }
 
@@ -69,9 +69,9 @@ bool dialog_node_behavior_generator::apply(
     return true;
 }
 
-bool dialog_node_behavior_redirector::apply(
-    dialog_data& the_dialog,
-    dialog_node& the_dialog_node)
+bool DialogNodeBehaviorRedirector::apply(
+    DialogData& the_dialog,
+    DialogNode& the_dialog_node)
 {
     std::cout << " REDIRECT " << std::endl;
 
@@ -91,9 +91,9 @@ bool dialog_node_behavior_redirector::apply(
     return the_dialog.set_node(result.as<std::string>());
 }
 
-bool dialog_node_behavior_inherit_choices::apply(
-    dialog_data& the_dialog,
-    dialog_node& the_dialog_node)
+bool DialogNodeBehaviorInheritChoices::apply(
+    DialogData& the_dialog,
+    DialogNode& the_dialog_node)
 {
     if (is_applying)
     {
@@ -124,7 +124,7 @@ bool dialog_node_behavior_inherit_choices::apply(
 }
 
 
-bool dialog_data::has_more_text()
+bool DialogData::has_more_text()
 {
     if (!current_node_id)
     {
@@ -134,7 +134,7 @@ bool dialog_data::has_more_text()
     return true;
 }
 
-bool dialog_data::state_is_valid()
+bool DialogData::state_is_valid()
 {
     const auto it = nodes.find(*current_node_id);
     if (it == nodes.end())
@@ -170,7 +170,7 @@ bool dialog_data::state_is_valid()
     return true;
 }
 
-bool dialog_data::is_cancelable_now()
+bool DialogData::is_cancelable_now()
 {
     return false;
 }
@@ -191,17 +191,17 @@ static bool _run_callback(optional<std::string>& callback)
     }
 }
 
-bool dialog_data::run_callback_before()
+bool DialogData::run_callback_before()
 {
     return _run_callback(current_node().callback_before);
 }
 
-bool dialog_data::run_callback_after()
+bool DialogData::run_callback_after()
 {
     return _run_callback(current_node().callback_after);
 }
 
-bool dialog_data::apply_node_behavior(dialog_node& node)
+bool DialogData::apply_node_behavior(DialogNode& node)
 {
     try
     {
@@ -215,7 +215,7 @@ bool dialog_data::apply_node_behavior(dialog_node& node)
     }
 }
 
-bool dialog_data::advance(size_t choice_index)
+bool DialogData::advance(size_t choice_index)
 {
     if (!choices())
     {
@@ -245,12 +245,12 @@ bool dialog_data::advance(size_t choice_index)
     return set_node(choice.node_id);
 }
 
-bool dialog_data::set_node(optional<std::string> node_id)
+bool DialogData::set_node(optional<std::string> node_id)
 {
     return advance_internal(node_id, 0);
 }
 
-optional<const std::vector<dialog_choice>&> dialog_data::choices_for_node(
+optional<const std::vector<DialogChoice>&> DialogData::choices_for_node(
     const std::string& node_id)
 {
     auto it = nodes.find(node_id);
@@ -268,7 +268,7 @@ optional<const std::vector<dialog_choice>&> dialog_data::choices_for_node(
     return it->second.choices;
 }
 
-bool dialog_data::advance_internal(
+bool DialogData::advance_internal(
     optional<std::string> node_id,
     size_t text_index)
 {
@@ -303,9 +303,11 @@ bool dialog_data::advance_internal(
     return true;
 }
 
-void dialog_data::show()
+void DialogData::show()
 {
     set_node(starting_node);
+
+    // The defe
 
     if (!state_is_valid())
     {
@@ -320,7 +322,7 @@ void dialog_data::show()
         }
 
         bool cancelable = is_cancelable_now();
-        auto result = ui::ui_menu_dialog(*this, cancelable).show();
+        auto result = ui::UIMenuDialog(*this, cancelable).show();
 
         if (result.canceled)
         {

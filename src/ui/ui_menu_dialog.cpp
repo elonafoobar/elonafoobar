@@ -8,7 +8,7 @@ namespace elona
 namespace ui
 {
 
-bool ui_menu_dialog::init()
+bool UIMenuDialog::init()
 {
     cs_bk = -1;
     key_list = key_enter;
@@ -42,11 +42,11 @@ bool ui_menu_dialog::init()
     return true;
 }
 
-void ui_menu_dialog::update()
+void UIMenuDialog::update()
 {
 }
 
-void ui_menu_dialog::draw()
+void UIMenuDialog::draw()
 {
     talk_window_show();
 
@@ -72,15 +72,14 @@ void ui_menu_dialog::draw()
     cs_bk = cs;
 }
 
-optional<ui_menu_dialog::result_type> ui_menu_dialog::on_key(
-    const std::string& key)
+optional<UIMenuDialog::ResultType> UIMenuDialog::on_key(const std::string& key)
 {
-    int a = stick(stick_key::escape);
-    if (a == stick_key::escape)
+    StickKey a = stick(StickKey::escape);
+    if (a == StickKey::escape)
     {
         if (_is_cancelable)
         {
-            return ui_menu_dialog::result::cancel();
+            return UIMenuDialog::Result::cancel();
         }
     }
 
@@ -96,14 +95,14 @@ optional<ui_menu_dialog::result_type> ui_menu_dialog::on_key(
     }
     if (p != -1)
     {
-        return ui_menu_dialog::result::finish(static_cast<size_t>(p(0)));
+        return UIMenuDialog::Result::finish(static_cast<size_t>(p(0)));
     }
 
     if (key == key_cancel)
     {
         if (_is_cancelable)
         {
-            return ui_menu_dialog::result::cancel();
+            return UIMenuDialog::Result::cancel();
         }
     }
 

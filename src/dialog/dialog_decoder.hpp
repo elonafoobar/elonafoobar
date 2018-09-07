@@ -8,19 +8,19 @@ namespace elona
 
 namespace lua
 {
-class lua_env;
+class LuaEnv;
 }
 
-class dialog_data;
+class DialogData;
 
-class dialog_decoder
+class DialogDecoder
 {
 public:
-    optional<dialog_data> decode(const std::string& id);
-    optional<dialog_data> decode(const std::string& id, lua::lua_env& lua);
+    optional<DialogData> decode(const std::string& id);
+    optional<DialogData> decode(const std::string& id, lua::LuaEnv& lua);
 
 private:
-    dialog_data decode(sol::table data, lua::lua_env& lua);
+    DialogData decode(sol::table data, lua::LuaEnv& lua);
 };
 
 } // namespace elona
