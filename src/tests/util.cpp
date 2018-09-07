@@ -31,11 +31,11 @@ void set_japanese()
 
 void normalize_item(Item& i)
 {
-    i.quality = 3;
+    i.quality = Quality::great;
     i.curse_state = CurseState::none;
     i.identification_state = IdentifyState::completely_identified;
     i.material = 34;
-    i.quality = 1;
+    i.quality = Quality::bad;
     i.dv = 0;
     i.pv = 0;
     i.count = 1;
@@ -66,7 +66,7 @@ Item& create_item(int id, int number)
 
 Character& create_chara(int id, int x, int y)
 {
-    elona::fixlv = 0;
+    elona::fixlv = Quality::none;
     REQUIRE(chara_create(-1, id, x, y));
     return elona::cdata[elona::rc];
 }

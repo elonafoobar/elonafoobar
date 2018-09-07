@@ -375,21 +375,21 @@ optional<const CraftingRecipe&> crafting_find_recipe(int matid_)
     return it->second;
 }
 
-static int _determine_crafted_fixlv(const CraftingRecipe& recipe)
+static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 {
-    int fixlv_ = 2;
+    Quality ret = Quality::good;
     if (rnd(200 + recipe.required_skill_level * 2)
         < sdata(recipe.skill_used, 0) + 20)
     {
-        fixlv_ = 4;
+        ret = Quality::miracle;
     }
     if (rnd(100 + recipe.required_skill_level * 2)
         < sdata(recipe.skill_used, 0) + 20)
     {
-        fixlv_ = 3;
+        ret = Quality::great;
     }
 
-    return fixlv_;
+    return ret;
 }
 
 static void _craft_item(int matid, const CraftingRecipe& recipe)

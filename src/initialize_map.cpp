@@ -794,7 +794,7 @@ label_1741_internal:
         }
         if (arenaop == 0)
         {
-            fixlv = arenaop(2);
+            fixlv = static_cast<Quality>(arenaop(2));
             chara_create(
                 -1,
                 arenaop(1),
@@ -810,7 +810,7 @@ label_1741_internal:
         {
             for (int cnt = 0, cnt_end = (3 + rnd(4)); cnt < cnt_end; ++cnt)
             {
-                flt(arenaop(1), 2);
+                flt(arenaop(1), Quality::good);
                 chara_create(
                     -1,
                     0,
@@ -857,7 +857,7 @@ label_1741_internal:
         petarenawin = 0;
         for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
         {
-            flt(arenaop(2), calcfixlv(3));
+            flt(arenaop(2), calcfixlv(Quality::good));
             chara_create(-1, 0, -3, 0);
             map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             f = 1;
@@ -2298,7 +2298,7 @@ label_1741_internal:
             p = rnd(3) + 5;
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
             {
-                flt(qdata(5, rq), 3);
+                flt(qdata(5, rq), Quality::great);
                 int stat = chara_create(
                     -1,
                     0,
@@ -2346,12 +2346,12 @@ label_1741_internal:
             }
             for (int cnt = 0, cnt_end = (2 + p); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(encounterlv), calcfixlv(2));
+                flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
                 if (gdata_weather == 1)
                 {
                     if ((33 > gdata(62) || gdata(62) >= 66) && rnd(3) == 0)
                     {
-                        fixlv = 5;
+                        fixlv = Quality::godly;
                     }
                 }
                 if (cnt < 4)

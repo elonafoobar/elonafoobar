@@ -1201,13 +1201,13 @@ void initialize_noa_items()
     }
     for (int cnt = 0; cnt < 40; ++cnt)
     {
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 56000;
         itemcreate(0, -1, -1, -1, 0);
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 34000;
         itemcreate(0, -1, -1, -1, 0);
-        flt(50, 5);
+        flt(50, Quality::godly);
         flttypemajor = 32000;
         itemcreate(0, -1, -1, -1, 0);
     }

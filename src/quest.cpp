@@ -437,7 +437,7 @@ void quest_on_map_initialize()
         {
             continue;
         }
-        if (cnt.quality == 6)
+        if (cnt.quality == Quality::special)
         {
             continue;
         }
@@ -549,7 +549,7 @@ int quest_generate()
             {
                 continue;
             }
-            flt(40, 2);
+            flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
             int stat = itemcreate(n, 0, -1, -1, 0);
             if (stat != 0)
@@ -591,7 +591,7 @@ int quest_generate()
             minlevel = clamp(qdata(5, rq) / 7, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
-                flt(qdata(5, rq), 2);
+                flt(qdata(5, rq), Quality::good);
                 chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
@@ -627,7 +627,7 @@ int quest_generate()
             minlevel = clamp(qdata(5, rq) / 4, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
-                flt(qdata(5, rq), 2);
+                flt(qdata(5, rq), Quality::good);
                 chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
@@ -1286,13 +1286,13 @@ void quest_complete()
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            fixlv = 2;
+            fixlv = Quality::good;
             if (rnd(2))
             {
-                fixlv = 3;
+                fixlv = Quality::great;
                 if (rnd(12) == 0)
                 {
-                    fixlv = 4;
+                    fixlv = Quality::miracle;
                 }
             }
             flt((qdata(5, rq) + cdata.player().level) / 2 + 1,

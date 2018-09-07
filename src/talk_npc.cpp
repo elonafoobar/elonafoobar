@@ -283,7 +283,7 @@ TalkResult talk_arena_master(int chatval_)
             }
             minlevel = arenaop(1) / 3 * 2;
             flt(arenaop(1));
-            fixlv = arenaop(2);
+            fixlv = static_cast<Quality>(arenaop(2));
             chara_create(56, 0, -3, 0);
             if (cmshade)
             {
@@ -663,7 +663,7 @@ TalkResult talk_slave_buy(int chatval_)
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         flt(cdata.player().level / 2 + 5);
-        fixlv = 2;
+        fixlv = Quality::good;
         if (chatval_ == 36)
         {
             fltn(u8"man"s);
@@ -1686,7 +1686,7 @@ TalkResult talk_quest_giver()
                 {
                     dbid = 0;
                 }
-                flt(qdata(5, rq) + cnt, 1);
+                flt(qdata(5, rq) + cnt, Quality::bad);
                 fltn(u8"man"s);
                 int stat = chara_create(56, dbid, -3, 0);
                 f = stat;

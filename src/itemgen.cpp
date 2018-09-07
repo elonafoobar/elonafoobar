@@ -93,11 +93,11 @@ void get_random_item_id()
 
 int do_create_item(int slot, int x, int y)
 {
-    if ((slot == 0 || slot == -1) && fixlv < 5)
+    if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
         if (sdata(19, 0) > rnd(5000)) // TODO coupling
         {
-            ++fixlv;
+            fixlv = static_cast<Quality>(static_cast<int>(fixlv) + 1);
         }
     }
 
@@ -172,14 +172,14 @@ int do_create_item(int slot, int x, int y)
     {
         if (fltselect == 0 && mode != 6)
         {
-            if (fixlv == 3)
+            if (fixlv == Quality::great)
             {
                 if (rnd(1000) == 0)
                 {
                     fltselect = 2;
                 }
             }
-            if (fixlv == 4)
+            if (fixlv == Quality::miracle)
             {
                 if (rnd(100) == 0)
                 {
@@ -193,7 +193,7 @@ int do_create_item(int slot, int x, int y)
         {
             if (fltselect == 2)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
             objlv += 10;
             fltselect = 0;
@@ -228,8 +228,8 @@ int do_create_item(int slot, int x, int y)
 
     ++itemmemory(1, dbid);
 
-    inv[ci].quality = fixlv;
-    if (fixlv == 6 && mode != 6 && nooracle == 0)
+    inv[ci].quality = static_cast<Quality>(fixlv);
+    if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
         int owner = inv_getowner(ci);
         if (owner != -1)
@@ -289,11 +289,11 @@ int do_create_item(int slot, int x, int y)
     if (inv[ci].id == 54)
     {
         inv[ci].set_number(calcinitgold(slot));
-        if (inv[ci].quality == 3)
+        if (inv[ci].quality == Quality::great)
         {
             inv[ci].set_number(inv[ci].number() * 2);
         }
-        if (inv[ci].quality >= 4)
+        if (inv[ci].quality >= Quality::miracle)
         {
             inv[ci].set_number(inv[ci].number() * 4);
         }
@@ -515,7 +515,7 @@ void init_item_quality_curse_state_material_and_equipments()
             }
         }
     }
-    if (cm || mode == 1 || inv[ci].quality == 6)
+    if (cm || mode == 1 || inv[ci].quality == Quality::special)
     {
         inv[ci].curse_state = CurseState::none;
     }
@@ -552,9 +552,9 @@ void init_item_quality_curse_state_material_and_equipments()
     {
         add_enchantments();
     }
-    else if (inv[ci].quality != 6)
+    else if (inv[ci].quality != Quality::special)
     {
-        inv[ci].quality = 2;
+        inv[ci].quality = Quality::good;
     }
     return;
 }
@@ -730,17 +730,17 @@ void apply_item_material()
     }
     p(1) = 120;
     p(2) = 80;
-    if (fixlv == 1)
+    if (fixlv == Quality::bad)
     {
         p(1) = 150;
         p(2) = 80;
     }
-    if (fixlv == 3)
+    if (fixlv == Quality::great)
     {
         p(1) = 100;
         p(2) = 70;
     }
-    if (fixlv >= 4)
+    if (fixlv >= Quality::miracle)
     {
         p(1) = 80;
         p(2) = 70;

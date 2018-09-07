@@ -547,10 +547,10 @@ bool wish_for_item(const std::string& input)
 
         const auto id = *opt_id;
 
-        flt(cdata.player().level + 10, 4);
+        flt(cdata.player().level + 10, Quality::miracle);
         if (id == 558 || id == 556 || id == 557 || id == 664)
         {
-            fixlv = calcfixlv(3);
+            fixlv = calcfixlv(Quality::good);
         }
         if (id == 630)
         {
@@ -563,7 +563,7 @@ bool wish_for_item(const std::string& input)
         nooracle = 0;
 
         // Unwishable item
-        if (ibit(5, ci) || inv[ci].quality == 6)
+        if (ibit(5, ci) || inv[ci].quality == Quality::special)
         {
             if (!gdata_wizard)
             {

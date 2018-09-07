@@ -30,7 +30,7 @@ void create_all_adventurers()
 
 void create_adventurer()
 {
-    flt(0, 4);
+    flt(0, Quality::miracle);
     initlv = rnd(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
@@ -339,7 +339,7 @@ int adventurer_discover_equipment()
     {
         return 0;
     }
-    flt(cdata[rc].level, 4);
+    flt(cdata[rc].level, Quality::miracle);
     if (rnd(3) == 0)
     {
         flttypemajor = choice(fsetwear);
@@ -354,7 +354,7 @@ int adventurer_discover_equipment()
         return 0;
     }
     inv[ci].identification_state = IdentifyState::completely_identified;
-    if (inv[ci].quality >= 4)
+    if (inv[ci].quality >= Quality::miracle)
     {
         if (the_item_db[inv[ci].id]->category < 50000)
         {

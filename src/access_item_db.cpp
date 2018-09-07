@@ -102,7 +102,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 790:
@@ -172,7 +172,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 240;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 776:
@@ -182,7 +182,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 240;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 775:
@@ -202,7 +202,7 @@ int access_item_db(int dbmode)
     case 771:
         if (dbmode == 3)
         {
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         if (dbmode == 15)
         {
@@ -237,7 +237,7 @@ int access_item_db(int dbmode)
             inv[ci].function = 17;
             ibitmod(5, ci, 1);
             inv[ci].param1 = 200;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 760:
@@ -246,7 +246,7 @@ int access_item_db(int dbmode)
             inv[ci].function = 49;
             ibitmod(5, ci, 1);
             inv[ci].param1 = rnd(20000) + 1;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 759:
@@ -264,7 +264,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 757:
@@ -283,7 +283,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 756:
@@ -373,7 +373,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         if (dbmode == 13)
         {
@@ -396,7 +396,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 740:
@@ -411,7 +411,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 739:
@@ -433,7 +433,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 738:
@@ -521,7 +521,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 727:
@@ -535,7 +535,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 726:
@@ -551,7 +551,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 725:
@@ -567,7 +567,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 724:
@@ -586,7 +586,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 722:
@@ -599,7 +599,7 @@ int access_item_db(int dbmode)
             fixeditemenc(4) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 721:
@@ -609,7 +609,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 480;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 720:
@@ -631,7 +631,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 718:
@@ -651,7 +651,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 717:
@@ -666,7 +666,7 @@ int access_item_db(int dbmode)
             inv[ci].skill = 111;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 715:
@@ -751,7 +751,7 @@ int access_item_db(int dbmode)
             inv[ci].function = 17;
             ibitmod(5, ci, 1);
             inv[ci].param1 = 180;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 706:
@@ -775,7 +775,7 @@ int access_item_db(int dbmode)
             fixeditemenc(6) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 704:
@@ -798,7 +798,7 @@ int access_item_db(int dbmode)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 4;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 701:
@@ -867,7 +867,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 693:
@@ -933,7 +933,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 720;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 685:
@@ -958,7 +958,7 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 1132;
             inv[ci].param2 = 100;
             inv[ci].param3 = 24;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 682:
@@ -968,7 +968,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 72;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 681:
@@ -980,7 +980,7 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 404;
             inv[ci].param2 = 400;
             inv[ci].param3 = 8;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 680:
@@ -992,7 +992,7 @@ int access_item_db(int dbmode)
             inv[ci].param1 = 446;
             inv[ci].param2 = 300;
             inv[ci].param3 = 12;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 679:
@@ -1012,7 +1012,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 678:
@@ -1032,7 +1032,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 677:
@@ -1052,7 +1052,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 676:
@@ -1076,7 +1076,7 @@ int access_item_db(int dbmode)
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 675:
@@ -1100,7 +1100,7 @@ int access_item_db(int dbmode)
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 674:
@@ -1118,7 +1118,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 673:
@@ -1136,7 +1136,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 672:
@@ -1144,7 +1144,7 @@ int access_item_db(int dbmode)
         {
             inv[ci].function = 29;
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 671:
@@ -1152,7 +1152,7 @@ int access_item_db(int dbmode)
         {
             inv[ci].function = 28;
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 670:
@@ -1192,7 +1192,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 120;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 665:
@@ -1202,7 +1202,7 @@ int access_item_db(int dbmode)
             ibitmod(5, ci, 1);
             ibitmod(7, ci, 1);
             inv[ci].param3 = 240;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 664:
@@ -1217,7 +1217,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 662:
@@ -1225,7 +1225,7 @@ int access_item_db(int dbmode)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 661:
@@ -1242,7 +1242,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 660:
@@ -1264,7 +1264,7 @@ int access_item_db(int dbmode)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 654:
@@ -1296,7 +1296,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 640:
@@ -1310,7 +1310,7 @@ int access_item_db(int dbmode)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 638:
@@ -1326,7 +1326,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             ibitmod(5, ci, 1);
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 635:
@@ -1405,7 +1405,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 626:
@@ -2026,7 +2026,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 513:
@@ -3019,7 +3019,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 359:
@@ -3037,7 +3037,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 358:
@@ -3059,7 +3059,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 357:
@@ -3084,7 +3084,7 @@ int access_item_db(int dbmode)
             fixeditemenc(16) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 356:
@@ -3106,7 +3106,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 355:
@@ -3129,7 +3129,7 @@ int access_item_db(int dbmode)
             fixeditemenc(14) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 354:
@@ -3949,7 +3949,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 206:
@@ -3967,7 +3967,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 205:
@@ -4517,7 +4517,7 @@ int access_item_db(int dbmode)
             fixeditemenc(2) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 72:
@@ -4584,7 +4584,7 @@ int access_item_db(int dbmode)
             fixeditemenc(12) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 63:
@@ -4604,7 +4604,7 @@ int access_item_db(int dbmode)
             fixeditemenc(10) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 62:
@@ -4660,7 +4660,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 56:
@@ -4678,7 +4678,7 @@ int access_item_db(int dbmode)
             fixeditemenc(8) = 0;
             ibitmod(5, ci, 1);
             inv[ci].difficulty_of_identification = 500;
-            fixlv = 6;
+            fixlv = Quality::special;
         }
         break;
     case 44:

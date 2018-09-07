@@ -198,7 +198,7 @@ TurnResult ai_proc_basic()
             efid = act;
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
-                if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
+                if (rnd(3) || cc < 16 || cdata[cc].quality >= Quality::miracle
                     || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
@@ -409,7 +409,8 @@ TurnResult proc_npc_movement_event(bool retreat)
             return ai_proc_basic();
         }
         else if (
-            (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
+            (cdata[cc].quality > Quality::great
+             && cdata[cc].level > cdata[tc].level)
             || cdata[tc].is_hung_on_sand_bag())
         {
             if (cdata[cc].enemy_id != tc)
@@ -440,7 +441,7 @@ TurnResult proc_npc_movement_event(bool retreat)
     }
     if (cc >= 16)
     {
-        if (cdata[cc].quality > 3)
+        if (cdata[cc].quality > Quality::great)
         {
             if (cdata[cc].relationship <= -2)
             {

@@ -49,3 +49,21 @@
     ENUMUTIL_DEFINE_BITWISE_OR_OPERATOR(Enum) \
     ENUMUTIL_DEFINE_BITWISE_XOR_OPERATOR(Enum) \
     ENUMUTIL_DEFINE_BITWISE_NOT_OPERATOR(Enum)
+
+
+
+#define ENUMUTIL_INTERNAL_DEFINE_COMPARISON_OPERATOR(Enum, op) \
+    inline constexpr bool operator op(Enum lhs, Enum rhs) \
+    { \
+        using underlying_type = std::underlying_type_t<Enum>; \
+        return static_cast<underlying_type>(lhs) \
+            op static_cast<underlying_type>(rhs); \
+    }
+
+
+/// Define 4 comparison operators.
+#define ENUMUTIL_DEFINE_COMPARISON_OPERATORS(Enum) \
+    ENUMUTIL_INTERNAL_DEFINE_COMPARISON_OPERATOR(Enum, <) \
+    ENUMUTIL_INTERNAL_DEFINE_COMPARISON_OPERATOR(Enum, <=) \
+    ENUMUTIL_INTERNAL_DEFINE_COMPARISON_OPERATOR(Enum, >) \
+    ENUMUTIL_INTERNAL_DEFINE_COMPARISON_OPERATOR(Enum, >=)

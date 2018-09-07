@@ -265,9 +265,10 @@ int calcobjlv(int base)
 
 
 
-int calcfixlv(int base)
+Quality calcfixlv(Quality base_quality)
 {
-    int ret = base == 0 ? 2 : base;
+    int ret = static_cast<int>(
+        base_quality == Quality::none ? Quality::good : base_quality);
     for (int i = 1; i < 4; ++i)
     {
         int p = rnd(30 + i * 5);
@@ -283,7 +284,8 @@ int calcfixlv(int base)
         }
         break;
     }
-    return clamp(ret, 1, 5);
+    return static_cast<Quality>(clamp(
+        ret, static_cast<int>(Quality::bad), static_cast<int>(Quality::godly)));
 }
 
 
@@ -1537,7 +1539,7 @@ void calcpartyscore2()
         {
             continue;
         }
-        if (cnt.impression >= 53 && cnt.quality >= 4)
+        if (cnt.impression >= 53 && cnt.quality >= Quality::miracle)
         {
             score += 20 + cnt.level / 2;
             txt(i18n::s.get("core.locale.quest.party.is_satisfied", cnt));

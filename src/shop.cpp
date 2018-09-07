@@ -93,7 +93,7 @@ void shop_refresh()
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        flt(calcobjlv(cdata[tc].shop_rank), calcfixlv(2));
+        flt(calcobjlv(cdata[tc].shop_rank), calcfixlv(Quality::bad));
         dbid = 0;
         if (cdata[tc].character_role == 1004)
         {
@@ -161,11 +161,11 @@ void shop_refresh()
             }
             if (rnd(3) == 0)
             {
-                fixlv = 3;
+                fixlv = Quality::great;
             }
             if (rnd(10) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1006)
@@ -236,21 +236,21 @@ void shop_refresh()
             flttypemajor = choice(fsetwear);
             if (rnd(3) == 0)
             {
-                fixlv = 3;
+                fixlv = Quality::great;
             }
             if (rnd(10) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1010
             || cdata[tc].character_role == 2003)
         {
             flttypemajor = choice(fsetwear);
-            fixlv = 3;
+            fixlv = Quality::great;
             if (rnd(2) == 0)
             {
-                fixlv = 4;
+                fixlv = Quality::miracle;
             }
         }
         if (cdata[tc].character_role == 1005)

@@ -96,6 +96,28 @@ enum class IdentifyState : int
     completely_identified = 3,
 };
 
+
+
+/**
+ * Quality of items or characters. They are mainly used for identification.
+ * "unique" is also used instead of special.
+ */
+enum class Quality : int
+{
+    none,
+    bad,
+    good,
+    great,
+    miracle,
+    godly,
+    special,
+};
+
+
+ENUMUTIL_DEFINE_COMPARISON_OPERATORS(Quality)
+
+
+
 enum class DamageSource : int
 {
     trap = -1,

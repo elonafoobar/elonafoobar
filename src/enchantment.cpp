@@ -1347,11 +1347,11 @@ void add_enchantments()
     {
         inv[ci].count = -1;
     }
-    if (fixlv <= 2)
+    if (fixlv <= Quality::good)
     {
         return;
     }
-    if (fixlv == 6)
+    if (fixlv == Quality::special)
     {
         egolv = 4;
     }
@@ -1359,8 +1359,11 @@ void add_enchantments()
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         inv[ci].value = inv[ci].value * 3;
-        inv[ci].difficulty_of_identification =
-            50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
+        inv[ci].difficulty_of_identification = 50
+            + rnd(std::abs(
+                      static_cast<int>(fixlv) - static_cast<int>(Quality::good))
+                      * 100
+                  + 100);
     }
     if (reftypeminor == 10006)
     {
@@ -1391,7 +1394,7 @@ void add_enchantments()
             }
         }
     }
-    if (fixlv < 4)
+    if (fixlv < Quality::miracle)
     {
         if (rnd(2))
         {
@@ -1402,10 +1405,11 @@ void add_enchantments()
             add_enchantment_by_fixed_ego();
         }
     }
-    if (fixlv == 4 || fixlv == 5)
+    if (fixlv == Quality::miracle || fixlv == Quality::godly)
     {
         inv[ci].subname = 40000 + rnd(30000);
-        if (fixlv == 5 || (fixlv == 4 && rnd(10) == 0))
+        if (fixlv == Quality::godly
+            || (fixlv == Quality::miracle && rnd(10) == 0))
         {
             enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
         }
@@ -1418,11 +1422,11 @@ void add_enchantments()
                 return;
             }
         }
-        if (fixlv == 4)
+        if (fixlv == Quality::miracle)
         {
             p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         }
-        if (fixlv == 5)
+        if (fixlv == Quality::godly)
         {
             p = rnd(rnd(rnd(10) + 1) + 3) + 6;
         }
@@ -1444,12 +1448,12 @@ void add_enchantments()
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100
+                enchantment_gen_p() + (fixlv == Quality::godly) * 100
                     + (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
+                20 - (fixlv == Quality::godly) * 10 - (ibit(15, ci) == 1) * 20);
         }
     }
-    if (fixlv == 6)
+    if (fixlv == Quality::special)
     {
         for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
         {
