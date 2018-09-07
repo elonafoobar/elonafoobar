@@ -28,9 +28,10 @@ int digy = 0;
 
 void rowact_check(int prm_789)
 {
-    if (cdata[prm_789].continuous_action_id != 0)
+    if (cdata[prm_789].continuous_action)
     {
-        if (cdata[prm_789].continuous_action_id != 3)
+        if (cdata[prm_789].continuous_action.type
+            != ContinuousAction::Type::travel)
         {
             cdata[prm_789].stops_continuous_action_if_damaged = 1;
         }
@@ -48,15 +49,16 @@ void rowact_item(int prm_790)
         {
             continue;
         }
-        if (cc.continuous_action_turn <= 0)
+        if (cc.continuous_action.turn <= 0)
         {
             continue;
         }
-        if (cc.continuous_action_id == 1 || cc.continuous_action_id == 2)
+        if (cc.continuous_action.type == ContinuousAction::Type::eat
+            || cc.continuous_action.type == ContinuousAction::Type::read)
         {
-            if (cc.continuous_action_item == prm_790)
+            if (cc.continuous_action.item == prm_790)
             {
-                rowactend(cc.index);
+                cdata[cc.index].continuous_action.finish();
                 txt(i18n::s.get("core.locale.activity.cancel.item", cc));
             }
         }
@@ -65,21 +67,13 @@ void rowact_item(int prm_790)
 
 
 
-void rowactend(int cc)
-{
-    cdata[cc].continuous_action_id = 0;
-    cdata[cc].continuous_action_turn = 0;
-    cdata[cc].continuous_action_item = 0;
-}
-
-
-
 void activity_handle_damage(Character& chara)
 {
     if (chara.index == 0)
     {
-        if (chara.continuous_action_id != 1 && chara.continuous_action_id != 2
-            && chara.continuous_action_id != 3)
+        if (chara.continuous_action.type != ContinuousAction::Type::eat
+            && chara.continuous_action.type != ContinuousAction::Type::read
+            && chara.continuous_action.type != ContinuousAction::Type::travel)
         {
             rtval = 0;
         }
@@ -98,9 +92,11 @@ void activity_handle_damage(Character& chara)
                 "core.locale.activity.cancel.normal",
                 chara,
                 i18n::_(
-                    u8"ui", u8"action", u8"_"s + chara.continuous_action_id)));
+                    u8"ui",
+                    u8"action",
+                    u8"_"s + static_cast<int>(chara.continuous_action.type))));
         }
-        rowactend(chara.index);
+        chara.continuous_action.finish();
     }
     screenupdate = -1;
     update_screen();
@@ -109,49 +105,49 @@ void activity_handle_damage(Character& chara)
 
 optional<TurnResult> activity_proc(Character& chara)
 {
-    ci = chara.continuous_action_item;
-    --chara.continuous_action_turn;
-    if (chara.continuous_action_id == 7)
+    ci = chara.continuous_action.item;
+    --chara.continuous_action.turn;
+    if (chara.continuous_action.type == ContinuousAction::Type::fish)
     {
         auto_turn(Config::instance().animewait * 2);
         spot_fishing();
     }
-    if (chara.continuous_action_id == 5)
+    if (chara.continuous_action.type == ContinuousAction::Type::dig_wall)
     {
         auto_turn(Config::instance().animewait * 0.75);
         spot_mining_or_wall();
     }
-    if (chara.continuous_action_id == 8)
+    if (chara.continuous_action.type == ContinuousAction::Type::search_material)
     {
         auto_turn(Config::instance().animewait * 0.75);
         spot_material();
     }
-    if (chara.continuous_action_id == 9)
+    if (chara.continuous_action.type == ContinuousAction::Type::dig_ground)
     {
         auto_turn(Config::instance().animewait * 0.75);
         spot_digging();
     }
-    if (chara.continuous_action_id == 4)
+    if (chara.continuous_action.type == ContinuousAction::Type::sleep)
     {
         auto_turn(Config::instance().animewait / 4);
         do_rest();
     }
-    if (chara.continuous_action_id == 1)
+    if (chara.continuous_action.type == ContinuousAction::Type::eat)
     {
         auto_turn(Config::instance().animewait * 5);
         return do_eat_command();
     }
-    if (chara.continuous_action_id == 2)
+    if (chara.continuous_action.type == ContinuousAction::Type::read)
     {
         auto_turn(Config::instance().animewait * 1.25);
         return do_read_command();
     }
-    if (chara.continuous_action_id == 11)
+    if (chara.continuous_action.type == ContinuousAction::Type::sex)
     {
         auto_turn(Config::instance().animewait * 2.5);
         continuous_action_sex();
     }
-    if (chara.continuous_action_id == 10)
+    if (chara.continuous_action.type == ContinuousAction::Type::others)
     {
         if (gdata(91) == 103)
         {
@@ -171,26 +167,26 @@ optional<TurnResult> activity_proc(Character& chara)
         }
         continuous_action_others();
     }
-    if (chara.continuous_action_id == 12)
+    if (chara.continuous_action.type == ContinuousAction::Type::blend)
     {
         auto_turn(Config::instance().animewait);
         continuous_action_blending();
     }
-    if (chara.continuous_action_id == 6)
+    if (chara.continuous_action.type == ContinuousAction::Type::perform)
     {
         auto_turn(Config::instance().animewait * 2);
         continuous_action_perform();
     }
-    if (chara.continuous_action_id == 3)
+    if (chara.continuous_action.type == ContinuousAction::Type::travel)
     {
         map_global_proc_travel_events();
         return proc_movement_event();
     }
-    if (chara.continuous_action_turn > 0)
+    if (chara.continuous_action.turn > 0)
     {
         return TurnResult::turn_end;
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     if (cc == 0)
     {
         if (chatteleport == 1)
@@ -207,7 +203,10 @@ void prompt_stop_continuous_action()
 {
     txt(i18n::s.get(
         "core.locale.activity.cancel.prompt",
-        i18n::_(u8"ui", u8"action", u8"_"s + cdata[cc].continuous_action_id)));
+        i18n::_(
+            u8"ui",
+            u8"action",
+            u8"_"s + static_cast<int>(cdata[cc].continuous_action.type))));
     ELONA_YES_NO_PROMPT();
     rtval = show_prompt(promptx, prompty, 160);
     return;
@@ -219,16 +218,16 @@ void continuous_action_perform()
 {
     static int performtips;
 
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
                 "core.locale.activity.perform.start", cdata[cc], inv[ci]));
         }
-        cdata[cc].continuous_action_id = 6;
-        cdata[cc].continuous_action_turn = 61;
-        cdata[cc].continuous_action_item = ci;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::perform;
+        cdata[cc].continuous_action.turn = 61;
+        cdata[cc].continuous_action.item = ci;
         cdata[cc].quality_of_performance = 40;
         cdata[cc].tip_gold = 0;
         if (cc == 0)
@@ -237,10 +236,10 @@ void continuous_action_perform()
         }
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        ci = cdata[cc].continuous_action_item;
-        if (cdata[cc].continuous_action_turn % 10 == 0)
+        ci = cdata[cc].continuous_action.item;
+        if (cdata[cc].continuous_action.turn % 10 == 0)
         {
             if (is_in_fov(cdata[cc]))
             {
@@ -254,7 +253,7 @@ void continuous_action_perform()
                 txt(i18n::s.get("core.locale.activity.perform.sound.cha"));
             }
         }
-        if (cdata[cc].continuous_action_turn % 20 == 0)
+        if (cdata[cc].continuous_action.turn % 20 == 0)
         {
             gold = 0;
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
@@ -371,7 +370,7 @@ void continuous_action_perform()
                     p = cdata[cc].quality_of_performance
                             * cdata[cc].quality_of_performance
                             * (100
-                               + inv[cdata[cc].continuous_action_item].param1
+                               + inv[cdata[cc].continuous_action.item].param1
                                    / 5)
                             / 100 / 1000
                         + rnd(10);
@@ -421,7 +420,7 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(cdata[cc].continuous_action_item, 60))
+                if (encfindspec(cdata[cc].continuous_action.item, 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -470,7 +469,7 @@ void continuous_action_perform()
                                         continue;
                                     }
                                     if (encfindspec(
-                                            cdata[cc].continuous_action_item,
+                                            cdata[cc].continuous_action.item,
                                             49))
                                     {
                                         flt(calcobjlv(
@@ -618,7 +617,7 @@ void continuous_action_perform()
     if (cdata[cc].quality_of_performance > 40)
     {
         cdata[cc].quality_of_performance = cdata[cc].quality_of_performance
-            * (100 + inv[cdata[cc].continuous_action_item].param1 / 5) / 100;
+            * (100 + inv[cdata[cc].continuous_action.item].param1 / 5) / 100;
     }
     if (cdata[cc].tip_gold != 0)
     {
@@ -630,7 +629,7 @@ void continuous_action_perform()
                 cdata[cc].tip_gold));
         }
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
     if (experience > 0)
     {
@@ -642,13 +641,13 @@ void continuous_action_perform()
 void continuous_action_sex()
 {
     int sexhost = 0;
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 11;
-        cdata[cc].continuous_action_turn = 25 + rnd(10);
+        cdata[cc].continuous_action.type = ContinuousAction::Type::sex;
+        cdata[cc].continuous_action.turn = 25 + rnd(10);
         cdata[cc].continuous_action_target = tc;
-        cdata[tc].continuous_action_id = 11;
-        cdata[tc].continuous_action_turn = cdata[cc].continuous_action_turn * 2;
+        cdata[tc].continuous_action.type = ContinuousAction::Type::sex;
+        cdata[tc].continuous_action.turn = cdata[cc].continuous_action.turn * 2;
         cdata[tc].continuous_action_target = cc + 10000;
         if (is_in_fov(cdata[cc]))
         {
@@ -665,7 +664,7 @@ void continuous_action_sex()
         sexhost = 0;
     }
     if (cdata[tc].state() != Character::State::alive
-        || cdata[tc].continuous_action_id != 11)
+        || cdata[tc].continuous_action.type != ContinuousAction::Type::sex)
     {
         if (is_in_fov(cdata[cc]))
         {
@@ -674,8 +673,8 @@ void continuous_action_sex()
                 i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex),
                 cdata[tc]));
         }
-        rowactend(cc);
-        rowactend(tc);
+        cdata[cc].continuous_action.finish();
+        cdata[tc].continuous_action.finish();
         return;
     }
     if (cc == 0)
@@ -683,17 +682,17 @@ void continuous_action_sex()
         if (!action_sp(cdata.player(), 1 + rnd(2)))
         {
             txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
-            rowactend(cc);
-            rowactend(tc);
+            cdata[cc].continuous_action.finish();
+            cdata[tc].continuous_action.finish();
             return;
         }
     }
     cdata[cc].emotion_icon = 317;
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (sexhost == 0)
         {
-            if (cdata[cc].continuous_action_turn % 5 == 0)
+            if (cdata[cc].continuous_action.turn % 5 == 0)
             {
                 if (is_in_fov(cdata[cc]))
                 {
@@ -706,7 +705,7 @@ void continuous_action_sex()
     }
     if (sexhost == 0)
     {
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -806,19 +805,19 @@ void continuous_action_sex()
     }
     txt(i18n::s.get("core.locale.activity.sex.format", dialog_head, dialog_tail)
         + dialog_after);
-    rowactend(cc);
-    rowactend(tc);
+    cdata[cc].continuous_action.finish();
+    cdata[tc].continuous_action.finish();
     return;
 }
 
 
 void continuous_action_eating()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 1;
-        cdata[cc].continuous_action_turn = 8;
-        cdata[cc].continuous_action_item = ci;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::eat;
+        cdata[cc].continuous_action.turn = 8;
+        cdata[cc].continuous_action.item = ci;
         if (is_in_fov(cdata[cc]))
         {
             snd(18);
@@ -843,7 +842,7 @@ void continuous_action_eating()
         }
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         return;
     }
@@ -852,7 +851,7 @@ void continuous_action_eating()
         txt(i18n::s.get("core.locale.activity.eat.finish", cdata[cc], inv[ci]));
     }
     continuous_action_eating_finish();
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -928,18 +927,18 @@ void continuous_action_others()
 {
     if (cc != 0)
     {
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 10;
-        cdata[cc].continuous_action_item = ci;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::others;
+        cdata[cc].continuous_action.item = ci;
         cdata[cc].continuous_action_target = tc;
         if (gdata(91) == 105)
         {
             txt(i18n::s.get("core.locale.activity.steal.start", inv[ci]));
-            cdata[cc].continuous_action_turn =
+            cdata[cc].continuous_action.turn =
                 2 + clamp(inv[ci].weight / 500, 0, 50);
         }
         if (gdata(91) == 100)
@@ -949,28 +948,28 @@ void continuous_action_others()
                 || mdata_map_type == mdata_t::MapType::guild)
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.other"));
-                cdata[cc].continuous_action_turn = 5;
+                cdata[cc].continuous_action.turn = 5;
             }
             else
             {
                 txt(i18n::s.get("core.locale.activity.sleep.start.global"));
-                cdata[cc].continuous_action_turn = 20;
+                cdata[cc].continuous_action.turn = 20;
             }
         }
         if (gdata(91) == 101)
         {
             txt(i18n::s.get("core.locale.activity.construct.start", inv[ci]));
-            cdata[cc].continuous_action_turn = 25;
+            cdata[cc].continuous_action.turn = 25;
         }
         if (gdata(91) == 102)
         {
             txt(i18n::s.get("core.locale.activity.pull_hatch.start", inv[ci]));
-            cdata[cc].continuous_action_turn = 10;
+            cdata[cc].continuous_action.turn = 10;
         }
         if (gdata(91) == 103)
         {
             txt(i18n::s.get("core.locale.activity.dig", inv[ci]));
-            cdata[cc].continuous_action_turn = 10
+            cdata[cc].continuous_action.turn = 10
                 + clamp(inv[ci].weight
                             / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
                         1,
@@ -985,7 +984,7 @@ void continuous_action_others()
                         + gdata_year * 24 * 30 * 12)
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.bored"));
-                    rowactend(cc);
+                    cdata[cc].continuous_action.finish();
                     return;
                 }
             }
@@ -1017,13 +1016,13 @@ void continuous_action_others()
                         "core.locale.activity.study.start.weather_is_bad"));
                 }
             }
-            cdata[cc].continuous_action_turn = 50;
+            cdata[cc].continuous_action.turn = 50;
         }
         update_screen();
         return;
     }
     tc = cdata[cc].continuous_action_target;
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (gdata(91) == 103)
         {
@@ -1097,7 +1096,7 @@ void continuous_action_others()
             {
                 if (rnd(15) == 0)
                 {
-                    rowactend(cc);
+                    cdata[cc].continuous_action.finish();
                     txt(i18n::s.get("core.locale.activity.iron_maiden"));
                     damage_hp(cdata[cc], 9999, -18);
                     return;
@@ -1107,7 +1106,7 @@ void continuous_action_others()
             {
                 if (rnd(15) == 0)
                 {
-                    rowactend(cc);
+                    cdata[cc].continuous_action.finish();
                     txt(i18n::s.get("core.locale.activity.guillotine"));
                     damage_hp(cdata[cc], 9999, -19);
                     return;
@@ -1296,7 +1295,7 @@ void continuous_action_others()
             if (f)
             {
                 txt(i18n::s.get("core.locale.activity.steal.abort"));
-                rowactend(cc);
+                cdata[cc].continuous_action.finish();
             }
         }
         return;
@@ -1308,7 +1307,7 @@ void continuous_action_others()
             || inv[ci].number() <= 0)
         {
             txt(i18n::s.get("core.locale.activity.steal.abort"));
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             return;
         }
         in = 1;
@@ -1418,7 +1417,7 @@ void continuous_action_others()
             txt(i18n::s.get("core.locale.activity.study.finish.training"));
         }
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -1429,7 +1428,7 @@ void select_random_fish()
     {
         return;
     }
-    ci = cdata.player().continuous_action_item;
+    ci = cdata.player().continuous_action.item;
     int dbmax = 0;
     int dbsum = 0;
     for (const auto fish : the_fish_db)
@@ -1484,16 +1483,16 @@ void spot_fishing()
 {
     static int fishstat;
 
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         txt(i18n::s.get("core.locale.activity.fishing.start"));
         snd(87);
         if (rowactre == 0)
         {
-            cdata[cc].continuous_action_item = ci;
+            cdata[cc].continuous_action.item = ci;
         }
-        cdata[cc].continuous_action_id = 7;
-        cdata[cc].continuous_action_turn = 100;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::fish;
+        cdata[cc].continuous_action.turn = 100;
         racount = 0;
         fishstat = 0;
         gsel(9);
@@ -1507,7 +1506,7 @@ void spot_fishing()
         search_material_spot();
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (rnd(5) == 0)
         {
@@ -1619,7 +1618,7 @@ void spot_fishing()
             }
             snd(14 + rnd(2));
             fishanime = 0;
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             get_fish();
             gain_fishing_experience(0);
             cdata.player().emotion_icon = 306;
@@ -1631,7 +1630,7 @@ void spot_fishing()
         return;
     }
     txt(i18n::s.get("core.locale.activity.fishing.fail"));
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -1639,10 +1638,11 @@ void spot_fishing()
 
 void spot_material()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 8;
-        cdata[cc].continuous_action_turn = 40;
+        cdata[cc].continuous_action.type =
+            ContinuousAction::Type::search_material;
+        cdata[cc].continuous_action.turn = 40;
         txt(i18n::s.get("core.locale.activity.material.start"));
         racount = 0;
         return;
@@ -1652,7 +1652,7 @@ void spot_material()
         search_material_spot();
         return;
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -1660,10 +1660,10 @@ void spot_material()
 
 void spot_digging()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 9;
-        cdata[cc].continuous_action_turn = 20;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::dig_ground;
+        cdata[cc].continuous_action.turn = 20;
         if (rowactre == 0)
         {
             txt(i18n::s.get("core.locale.activity.dig_spot.start.global"));
@@ -1680,7 +1680,7 @@ void spot_digging()
         search_material_spot();
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (cdata[cc].turn % 5 == 0)
         {
@@ -1766,7 +1766,7 @@ void spot_digging()
         }
     }
     spillfrag(refx, refy, 1);
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -1776,10 +1776,10 @@ void spot_mining_or_wall()
 {
     static int countdig{};
 
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 5;
-        cdata[cc].continuous_action_turn = 40;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::dig_wall;
+        cdata[cc].continuous_action.turn = 40;
         if (rowactre == 0)
         {
             txt(i18n::s.get("core.locale.activity.dig_mining.start.wall"));
@@ -1801,7 +1801,7 @@ void spot_mining_or_wall()
         search_material_spot();
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (rnd(5) == 0)
         {
@@ -1892,7 +1892,7 @@ void spot_mining_or_wall()
                 txt(i18n::s.get("core.locale.activity.dig_mining.finish.find"));
             }
             gain_digging_experience();
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
         }
         else if (cdata[cc].turn % 5 == 0)
         {
@@ -1902,7 +1902,7 @@ void spot_mining_or_wall()
         return;
     }
     txt(i18n::s.get("core.locale.activity.dig_mining.fail"));
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -2048,7 +2048,7 @@ int search_material_spot()
             s = i18n::s.get("core.locale.activity.material.harvesting.no_more");
         }
         txt(s);
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         map(cdata.player().position.x, cdata.player().position.y, 6) = 0;
     }
     return 0;

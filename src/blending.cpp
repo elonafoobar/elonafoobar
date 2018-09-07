@@ -38,19 +38,19 @@ label_19341_internal:
     rpid = rpref(0);
     if (rpid == 0)
     {
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         txtnew();
         txt(i18n::s.get(
             "core.locale.blending.started", cdata[cc], rpname(rpid)));
-        cdata[cc].continuous_action_id = 12;
-        cdata[cc].continuous_action_turn = rpref(2) % 10000;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
+        cdata[cc].continuous_action.turn = rpref(2) % 10000;
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         if (rnd(30) == 0)
         {
@@ -61,7 +61,7 @@ label_19341_internal:
     }
     if (rpref(2) >= 10000)
     {
-        cdata[cc].continuous_action_turn = rpref(2) / 10000;
+        cdata[cc].continuous_action.turn = rpref(2) / 10000;
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
@@ -77,8 +77,8 @@ label_19341_internal:
             await(Config::instance().animewait * 5);
             gdata_minute = 0;
             cc = 0;
-            --cdata[cc].continuous_action_turn;
-            if (cdata[cc].continuous_action_turn <= 0)
+            --cdata[cc].continuous_action.turn;
+            if (cdata[cc].continuous_action.turn <= 0)
             {
                 int stat = blending_find_required_mat();
                 if (stat == 0)
@@ -90,7 +90,7 @@ label_19341_internal:
                 blending_start_attempt();
                 if (rpref(1) > 0)
                 {
-                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
+                    cdata[cc].continuous_action.turn = rpref(2) / 10000;
                     cnt = 0 - 1;
                     continue;
                 }
@@ -100,7 +100,7 @@ label_19341_internal:
                 }
             }
         }
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         mode = 0;
         return;
     }
@@ -108,16 +108,16 @@ label_19341_internal:
     if (stat == 0)
     {
         txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return;
     }
     blending_start_attempt();
     if (rpref(1) > 0)
     {
-        cdata[cc].continuous_action_id = 0;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::none;
         goto label_19341_internal;
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 

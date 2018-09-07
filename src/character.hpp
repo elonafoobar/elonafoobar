@@ -39,6 +39,67 @@ struct Buff
 
 
 
+struct ContinuousAction
+{
+    enum class Type : int
+    {
+        none,
+        eat,
+        read,
+        travel,
+        sleep,
+        dig_wall,
+        perform,
+        fish,
+        search_material,
+        dig_ground,
+        others,
+        sex,
+        blend,
+    };
+
+    Type type = ContinuousAction::Type::none;
+    int turn = 0;
+    int item = 0;
+
+
+    bool is_doing_nothing() const
+    {
+        return type == ContinuousAction::Type::none;
+    }
+
+
+    bool is_doing_something() const
+    {
+        return !is_doing_nothing();
+    }
+
+
+    explicit operator bool() const
+    {
+        return is_doing_something();
+    }
+
+
+    void finish()
+    {
+        type = ContinuousAction::Type::none;
+        turn = 0;
+        item = 0;
+    }
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(type);
+        ar(turn);
+        ar(item);
+    }
+};
+
+
+
 struct Character
 {
     enum class State : int
@@ -150,9 +211,7 @@ struct Character
     int nullify_damage = 0;
     int cut_counterattack = 0;
     int anorexia_count = 0;
-    int continuous_action_id = 0;
-    int continuous_action_turn = 0;
-    int continuous_action_item = 0;
+    ContinuousAction continuous_action;
     int stops_continuous_action_if_damaged = 0;
     int quality_of_performance = 0;
     int tip_gold = 0;
@@ -311,9 +370,7 @@ struct Character
         ar(nullify_damage);
         ar(cut_counterattack);
         ar(anorexia_count);
-        ar(continuous_action_id);
-        ar(continuous_action_turn);
-        ar(continuous_action_item);
+        ar(continuous_action);
         ar(stops_continuous_action_if_damaged);
         ar(quality_of_performance);
         ar(tip_gold);

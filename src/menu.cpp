@@ -1535,7 +1535,7 @@ TurnResult show_quest_board()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(204) = 1;
                     ghelp = 4;

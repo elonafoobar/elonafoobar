@@ -46,7 +46,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(207) = 1;
                         ghelp = 7;
@@ -66,7 +66,7 @@ void talk_to_npc()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(208) = 1;
                         ghelp = 8;
@@ -137,7 +137,7 @@ void talk_to_npc()
         talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
-    if (cdata[tc].continuous_action_id)
+    if (cdata[tc].continuous_action)
     {
         talk_wrapper(TalkResult::talk_busy);
         return;

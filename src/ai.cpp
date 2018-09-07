@@ -421,9 +421,10 @@ TurnResult proc_npc_movement_event(bool retreat)
                     txt(i18n::s.get(
                         "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
-                if (cdata[tc].continuous_action_id == 1)
+                if (cdata[tc].continuous_action.type
+                    == ContinuousAction::Type::eat)
                 {
-                    if (cdata[tc].continuous_action_turn > 0)
+                    if (cdata[tc].continuous_action.turn > 0)
                     {
                         if (is_in_fov(cdata[cc]))
                         {
@@ -432,7 +433,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                 cdata[cc],
                                 cdata[tc]));
                         }
-                        rowactend(tc);
+                        cdata[tc].continuous_action.finish();
                     }
                 }
                 return TurnResult::turn_end;
@@ -729,7 +730,7 @@ label_2692_internal:
         {
             if (gdata_hour >= 22 || gdata_hour < 7)
             {
-                if (cdata[cc].continuous_action_id == 0)
+                if (!cdata[cc].continuous_action)
                 {
                     if (rnd(100) == 0)
                     {
@@ -1021,7 +1022,7 @@ label_2692_internal:
             {
                 if (distance == 1)
                 {
-                    if (cdata[tc].continuous_action_id == 0)
+                    if (!cdata[tc].continuous_action)
                     {
                         cdata[cc].enemy_id = 0;
                         continuous_action_sex();

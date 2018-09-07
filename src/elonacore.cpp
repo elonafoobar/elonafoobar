@@ -1721,7 +1721,7 @@ void ride_begin(int mount)
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
     create_pcpic(0, true);
-    rowactend(gdata_mount);
+    cdata[gdata_mount].continuous_action.finish();
     refresh_speed(cdata[gdata_mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
     if (cdata[gdata_mount].is_suitable_for_mount())
@@ -1740,7 +1740,7 @@ void ride_end()
 {
     int mount = gdata_mount;
     cdata[mount].is_ridden() = false;
-    rowactend(mount);
+    cdata[mount].continuous_action.finish();
     gdata_mount = 0;
     create_pcpic(0, true);
     refresh_speed(cdata[mount]);
@@ -1887,7 +1887,7 @@ void hostileaction(int prm_787, int prm_788)
             }
         }
     }
-    rowactend(prm_788);
+    cdata[prm_788].continuous_action.finish();
 }
 
 
@@ -2806,7 +2806,8 @@ void proc_turn_end(int cc)
         {
             if (cdata[cc].nutrition < 1000)
             {
-                if (cdata[cc].continuous_action_id != 1)
+                if (cdata[cc].continuous_action.type
+                    != ContinuousAction::Type::eat)
                 {
                     damage_hp(
                         cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
@@ -2975,7 +2976,7 @@ void chara_set_revived_status()
 void chara_clear_status_effects()
 {
     cdata[rc].is_contracting_with_reaper() = false;
-    rowactend(rc);
+    cdata[rc].continuous_action.finish();
     cdata[rc].poisoned = 0;
     cdata[rc].sleep = 0;
     cdata[rc].confused = 0;
@@ -4854,7 +4855,7 @@ TurnResult exit_map()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(201) = 1;
                         ghelp = 1;
@@ -5184,7 +5185,7 @@ TurnResult exit_map()
     {
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
-        rowactend(cnt);
+        cdata[cnt].continuous_action.finish();
         if (cdata[cnt].state() != Character::State::alive)
         {
             if (cdata[cnt].state() == Character::State::pet_in_other_map)
@@ -5255,7 +5256,7 @@ void prepare_charas_for_map_unload()
     // interrupt continuous actions
     for (int cnt = 0; cnt < 57; ++cnt)
     {
-        rowactend(cnt);
+        cdata[cnt].continuous_action.finish();
         cdata[cnt].item_which_will_be_used = 0;
     }
 
@@ -7607,7 +7608,7 @@ void supply_income()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(216) = 1;
                     ghelp = 16;
@@ -7838,7 +7839,7 @@ TurnResult step_into_gate()
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action_turn == 0)
+                if (cdata.player().continuous_action.turn == 0)
                 {
                     gdata(217) = 1;
                     ghelp = 17;
@@ -8583,7 +8584,7 @@ void equip_melee_weapon()
 
 TurnResult try_interact_with_npc()
 {
-    if (cdata[tc].continuous_action_turn != 0)
+    if (cdata[tc].continuous_action.turn != 0)
     {
         i18n::s.get("core.locale.action.npc.is_busy_now", cdata[tc]);
         update_screen();
@@ -10367,7 +10368,7 @@ label_21451_internal:
                                     "core.locale.magic.teleport.disappears",
                                     cdata[cc]));
                             }
-                            rowactend(cc);
+                            cdata[cc].continuous_action.finish();
                             update_screen();
                             break;
                         }
@@ -10585,13 +10586,13 @@ void sleep_start()
     txtef(2);
     txt(i18n::s.get("core.locale.activity.sleep.slept_for", timeslept));
     f = 0;
-    if (cdata.player().continuous_action_item == -1)
+    if (cdata.player().continuous_action.item == -1)
     {
         f = 1;
     }
     else
     {
-        ci = cdata.player().continuous_action_item;
+        ci = cdata.player().continuous_action.item;
         if (inv[ci].param1 == 0 || inv[ci].number() == 0
             || the_item_db[inv[ci].id]->subcategory != 60004)
         {
@@ -10650,21 +10651,21 @@ void sleep_start()
 
 void do_rest()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 4;
-        cdata[cc].continuous_action_turn = 50;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::sleep;
+        cdata[cc].continuous_action.turn = 50;
         txt(i18n::s.get("core.locale.activity.rest.start"));
         update_screen();
         return;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        if (cdata[cc].continuous_action_turn % 2 == 0)
+        if (cdata[cc].continuous_action.turn % 2 == 0)
         {
             heal_sp(cdata[cc], 1);
         }
-        if (cdata[cc].continuous_action_turn % 3 == 0)
+        if (cdata[cc].continuous_action.turn % 3 == 0)
         {
             heal_hp(cdata[cc], 1);
             heal_mp(cdata[cc], 1);
@@ -10685,14 +10686,14 @@ void do_rest()
         if (f == 1)
         {
             txt(i18n::s.get("core.locale.activity.rest.drop_off_to_sleep"));
-            cdata[cc].continuous_action_item = -1;
+            cdata[cc].continuous_action.item = -1;
             sleep_start();
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             return;
         }
     }
     txt(i18n::s.get("core.locale.activity.rest.finish"));
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -10700,33 +10701,33 @@ void do_rest()
 
 void map_global_proc_travel_events()
 {
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
-        cdata[cc].continuous_action_id = 3;
-        cdata[cc].continuous_action_turn = 20;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::travel;
+        cdata[cc].continuous_action.turn = 20;
         if (gdata_weather == 3)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 13 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 13 / 10;
         }
         if (gdata_weather == 4)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 16 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 16 / 10;
         }
         if (gdata_weather == 2
             || chipm(0, map(cdata[cc].position.x, cdata[cc].position.y, 0))
                 == 4)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 22 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 22 / 10;
         }
         if (gdata_weather == 1)
         {
-            cdata[cc].continuous_action_turn =
-                cdata[cc].continuous_action_turn * 5 / 10;
+            cdata[cc].continuous_action.turn =
+                cdata[cc].continuous_action.turn * 5 / 10;
         }
-        cdata[cc].continuous_action_turn = cdata[cc].continuous_action_turn
+        cdata[cc].continuous_action.turn = cdata[cc].continuous_action.turn
             * 100 / (100 + gdata_seven_league_boot_effect + sdata(182, 0));
         return;
     }
@@ -10769,7 +10770,7 @@ void map_global_proc_travel_events()
                     txtef(9);
                     txt(i18n::s.get(
                         "core.locale.action.move.global.weather.snow.sound"));
-                    cdata[cc].continuous_action_turn += 10;
+                    cdata[cc].continuous_action.turn += 10;
                 }
             }
             if (rnd(1000) == 0)
@@ -10777,7 +10778,7 @@ void map_global_proc_travel_events()
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.action.move.global.weather.snow.message"));
-                cdata[cc].continuous_action_turn += 50;
+                cdata[cc].continuous_action.turn += 50;
             }
         }
         if (cdata.player().nutrition <= 2000)
@@ -10806,7 +10807,7 @@ void map_global_proc_travel_events()
                     txt(i18n::s.get(
                         "core.locale.action.move.global.weather.heavy_rain."
                         "sound"));
-                    cdata[cc].continuous_action_turn += 5;
+                    cdata[cc].continuous_action.turn += 5;
                 }
             }
             if (cdata.player().confused == 0)
@@ -10827,14 +10828,14 @@ void map_global_proc_travel_events()
         }
         cdata.player().blind = 3;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
         ++gdata_minute;
         return;
     }
     traveldone = 1;
     gdata_distance_between_town += 4;
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return;
 }
 
@@ -10842,7 +10843,7 @@ void map_global_proc_travel_events()
 int decode_book()
 {
     int cibkread = 0;
-    if (cdata[cc].continuous_action_id == 0)
+    if (!cdata[cc].continuous_action)
     {
         if (inv[ci].id == 687)
         {
@@ -10862,7 +10863,7 @@ int decode_book()
             }
             return 0;
         }
-        cdata[cc].continuous_action_id = 2;
+        cdata[cc].continuous_action.type = ContinuousAction::Type::read;
         if (inv[ci].id == 783)
         {
             p = 50;
@@ -10875,8 +10876,8 @@ int decode_book()
         {
             p = the_ability_db[efid]->sdataref4;
         }
-        cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
-        cdata[cc].continuous_action_item = ci;
+        cdata[cc].continuous_action.turn = p / (2 + sdata(150, 0)) + 1;
+        cdata[cc].continuous_action.item = ci;
         if (is_in_fov(cdata[cc]))
         {
             txt(i18n::s.get(
@@ -10885,9 +10886,9 @@ int decode_book()
         item_separate(ci);
         return 0;
     }
-    if (cdata[cc].continuous_action_turn > 0)
+    if (cdata[cc].continuous_action.turn > 0)
     {
-        ci = cdata[cc].continuous_action_item;
+        ci = cdata[cc].continuous_action.item;
         cibkread = ci;
         gain_literacy_experience();
         if (inv[ci].id == 783)
@@ -10917,7 +10918,7 @@ int decode_book()
         ci = cibkread;
         if (stat == 0)
         {
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             --inv[ci].count;
             if (inv[ci].count < 0)
             {
@@ -10944,7 +10945,7 @@ int decode_book()
     {
         if (inv[ci].param1 == 0)
         {
-            rowactend(cc);
+            cdata[cc].continuous_action.finish();
             return 1;
         }
         txt(i18n::s.get("core.locale.action.read.recipe.learned", inv[ci]));
@@ -10956,7 +10957,7 @@ int decode_book()
             txt(i18n::s.get(
                 "core.locale.action.read.book.falls_apart", inv[ci]));
         }
-        rowactend(cc);
+        cdata[cc].continuous_action.finish();
         return 1;
     }
     if (inv[ci].id == 687)
@@ -11002,7 +11003,7 @@ int decode_book()
             }
         }
     }
-    rowactend(cc);
+    cdata[cc].continuous_action.finish();
     return 1;
 }
 
@@ -12105,9 +12106,9 @@ int pick_up_item()
     {
         if (gdata_mount != 0)
         {
-            if (cdata[gdata_mount].continuous_action_id != 0)
+            if (cdata[gdata_mount].continuous_action)
             {
-                if (cdata[gdata_mount].continuous_action_item == ci)
+                if (cdata[gdata_mount].continuous_action.item == ci)
                 {
                     txt(i18n::s.get(
                         "core.locale.action.pick_up.used_by_mount",
@@ -12120,7 +12121,7 @@ int pick_up_item()
         {
             if (inv[ci].own_state == 4)
             {
-                if (cdata.player().continuous_action_id == 0)
+                if (!cdata.player().continuous_action)
                 {
                     if (!inv_getspace(0))
                     {
@@ -13238,7 +13239,7 @@ void sense_map_feats_on_move()
                         {
                             if (mode == 0)
                             {
-                                if (cdata.player().continuous_action_turn == 0)
+                                if (cdata.player().continuous_action.turn == 0)
                                 {
                                     gdata(206) = 1;
                                     ghelp = 6;
@@ -13356,7 +13357,7 @@ void sense_map_feats_on_move()
                     {
                         if (mode == 0)
                         {
-                            if (cdata.player().continuous_action_turn == 0)
+                            if (cdata.player().continuous_action.turn == 0)
                             {
                                 gdata(205) = 1;
                                 ghelp = 5;
@@ -15680,7 +15681,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(211) = 1;
                             ghelp = 11;
@@ -15698,7 +15699,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(212) = 1;
                             ghelp = 12;
@@ -15716,7 +15717,7 @@ void weather_changes()
                 {
                     if (mode == 0)
                     {
-                        if (cdata.player().continuous_action_turn == 0)
+                        if (cdata.player().continuous_action.turn == 0)
                         {
                             gdata(213) = 1;
                             ghelp = 13;
@@ -15770,7 +15771,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(209) = 1;
                         ghelp = 9;
@@ -15788,7 +15789,7 @@ void weather_changes()
             {
                 if (mode == 0)
                 {
-                    if (cdata.player().continuous_action_turn == 0)
+                    if (cdata.player().continuous_action.turn == 0)
                     {
                         gdata(210) = 1;
                         ghelp = 10;
@@ -15893,9 +15894,10 @@ void weather_changes()
     {
         cdata.player().piety_point = 0;
     }
-    if (cdata.player().continuous_action_turn != 0)
+    if (cdata.player().continuous_action.turn != 0)
     {
-        if (cdata.player().continuous_action_id != 3)
+        if (cdata.player().continuous_action.type
+            != ContinuousAction::Type::travel)
         {
             update_screen();
         }
