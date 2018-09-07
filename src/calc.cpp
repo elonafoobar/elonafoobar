@@ -1578,6 +1578,234 @@ int generate_color(ColorIndex index, int id)
     return color % 21;
 }
 
+int calc_potential_on_gain(int potential)
+{
+    return static_cast<int>(potential * 1.1) + 1;
+}
 
+int calc_potential_on_loss(int potential)
+{
+    return static_cast<int>(potential * 0.9);
+}
+
+int calc_initial_skill_base_potential(
+    int skill_id,
+    int original_level,
+    int initial_level)
+{
+    int potential{};
+
+    // Excludes resistance and attributes.
+    bool is_skill_or_spell = skill_id >= 100;
+
+    if (is_skill_or_spell)
+    {
+        potential = initial_level * 5;
+        if (original_level == 0)
+        {
+            potential += 100;
+        }
+        else
+        {
+            potential += 50;
+        }
+    }
+    else
+    {
+        potential = initial_level * 20;
+        if (potential > 400)
+        {
+            potential = 400;
+        }
+    }
+
+    return potential;
+}
+
+int calc_initial_skill_level_speed(int initial_level, int chara_level)
+{
+    return initial_level * (100 + chara_level * 2) / 100;
+}
+
+int calc_initial_skill_level(int initial_level, int chara_level, int potential)
+{
+    return potential * potential * chara_level / 45000 + initial_level
+        + chara_level / 3;
+}
+
+int calc_initial_skill_decayed_potential(int chara_level, int potential)
+{
+    if (chara_level <= 1)
+    {
+        return potential;
+    }
+
+    return std::exp(std::log(0.9) * chara_level) * potential;
+}
+
+int calc_initial_resistance_level(
+    const Character& chara,
+    int initial_level,
+    int element_id)
+{
+    if (chara.index == 0)
+    {
+        return 100;
+    }
+
+    int level = chara.level * 4 + 96;
+    if (level > 300)
+    {
+        level = 300;
+    }
+    if (initial_level != 0)
+    {
+        if (initial_level < 100 || initial_level >= 500)
+        {
+            level = initial_level;
+        }
+        else
+        {
+            level += initial_level;
+        }
+    }
+    if (element_id == 60 && level < 500)
+    {
+        level = 100;
+    }
+
+    return level;
+}
+
+int calc_skill_related_attribute_exp(int experience, int divisor)
+{
+    return experience / (2 + divisor);
+}
+
+int calc_base_skill_exp_gained(
+    int base_experience,
+    int potential,
+    int skill_level)
+{
+    return base_experience * potential / (100 + skill_level * 15);
+}
+
+int calc_boosted_skill_exp_gained(int experience, int buff_amount)
+{
+    if (buff_amount <= 0)
+    {
+        return experience;
+    }
+
+    return experience * (100 + buff_amount) / 100;
+}
+
+int calc_chara_exp_from_skill_exp(
+    const Character& chara,
+    int skill_exp,
+    int divisor)
+{
+    return rnd(int(double(chara.required_experience) * skill_exp / 1000
+                   / (chara.level + divisor))
+               + 1)
+        + rnd(2);
+}
+
+int calc_exp_gain_negotiation_gold_threshold(int current_level)
+{
+    return (current_level + 10) * (current_level + 10);
+}
+
+int calc_exp_gain_negotiation(int coefficient, int current_level)
+{
+    return clamp(
+        coefficient * coefficient / (current_level * 5 + 10), 10, 1000);
+}
+
+int calc_exp_gain_detection(int dungeon_level)
+{
+    return dungeon_level * 2 + 20;
+}
+
+int calc_spell_exp_gain(int spell_id)
+{
+    return the_ability_db[spell_id]->cost * 4 + 20;
+}
+
+int calc_exp_gain_casting(int spell_id)
+{
+    return the_ability_db[spell_id]->cost + 10;
+}
+
+int calc_exp_gain_mana_capacity(const Character& chara)
+{
+    return std::abs(chara.mp) * 200 / (chara.max_mp + 1);
+}
+
+int calc_exp_gain_healing(const Character& chara)
+{
+    if (chara.hp != chara.max_hp)
+    {
+        if (sdata(154, chara.index) < sdata(11, chara.index))
+        {
+            return 5 + sdata(154, chara.index) / 5;
+        }
+    }
+
+    return 0;
+}
+
+int calc_exp_gain_meditation(const Character& chara)
+{
+    if (chara.mp != chara.max_mp)
+    {
+        if (sdata(155, chara.index) < sdata(16, chara.index))
+        {
+            return 5 + sdata(155, chara.index) / 5;
+        }
+    }
+
+    return 0;
+}
+
+int calc_exp_gain_stealth()
+{
+    if (mdata_map_type == mdata_t::MapType::world_map)
+    {
+        if (rnd(20))
+        {
+            return 0;
+        }
+    }
+
+    return 2;
+}
+
+int calc_exp_gain_weight_lifting(const Character& chara)
+{
+    if (chara.inventory_weight_type == 0)
+    {
+        return 0;
+    }
+    if (mdata_map_type == mdata_t::MapType::world_map)
+    {
+        if (rnd(20))
+        {
+            return 0;
+        }
+    }
+
+    return 4;
+}
+
+int calc_exp_gain_memorization(int spell_id)
+{
+    return 10 + the_ability_db[spell_id]->sdataref4 / 5;
+}
+
+int calc_exp_gain_crafting(int mat_amount)
+{
+    return 50 + mat_amount * 20;
+}
 
 } // namespace elona
