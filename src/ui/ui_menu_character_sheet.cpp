@@ -896,7 +896,7 @@ static void _draw_first_page_stats_time()
         "core.locale.ui.chara_sheet.time.turn_counter", gdata_play_turns);
     s(1) = i18n::s.get(
         "core.locale.ui.chara_sheet.time.days_counter", gdata_play_days);
-    s(2) = ""s + gdata_kill_count;
+    s(2) = ""s + game_data.kill_count;
     s(3) = ""s
         + cnvplaytime((gdata_play_time + timeGetTime() / 1000 - time_begin));
     s(4) = "";
@@ -916,7 +916,7 @@ static void _draw_first_page_stats_weight()
         cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s + cnveqweight(cc);
     s(3) = i18n::s.get(
         "core.locale.ui.chara_sheet.weight.level_counter",
-        cnvrank(gdata_deepest_dungeon_level));
+        cnvrank(game_data.deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         pos(wx + 287 + en * 14, wy + 299 + cnt * 15);

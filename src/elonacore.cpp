@@ -2243,7 +2243,7 @@ void check_kill(int prm_836, int prm_837)
         {
             if (prm_837 >= 16)
             {
-                ++gdata_kill_count;
+                ++game_data.kill_count;
                 if (cdata[prm_837].id == gdata_fighters_guild_target)
                 {
                     if (gdata_fighters_guild_quota > 0)
@@ -4799,7 +4799,7 @@ void monster_respawn()
     if (adata(16, gdata_current_map) == mdata_t::MapId::museum
         || adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
-        if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
+        if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
         {
             if (rnd(2) == 0)
             {
@@ -4812,7 +4812,7 @@ void monster_respawn()
     {
         return;
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density / 4)
+    if (game_data.crowd_density < mdata_map_max_crowd_density / 4)
     {
         if (rnd(2) == 0)
         {
@@ -4820,7 +4820,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density / 2)
+    if (game_data.crowd_density < mdata_map_max_crowd_density / 2)
     {
         if (rnd(4) == 0)
         {
@@ -4828,7 +4828,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_crowd_density < mdata_map_max_crowd_density)
+    if (game_data.crowd_density < mdata_map_max_crowd_density)
     {
         if (rnd(8) == 0)
         {
@@ -6673,7 +6673,7 @@ void map_proc_special_events()
         {
             if (cdata[gdata_fire_giant].state() == Character::State::alive)
             {
-                if (gdata_crowd_density < 70)
+                if (game_data.crowd_density < 70)
                 {
                     if (rnd(4) == 0)
                     {
@@ -6695,7 +6695,7 @@ void map_proc_special_events()
     {
         if (qdata(8, gdata_executing_immediate_quest) != 3)
         {
-            if (gdata_crowd_density
+            if (game_data.crowd_density
                 < gdata_left_minutes_of_executing_quest / 60)
             {
                 dbid = 0;
@@ -6868,7 +6868,7 @@ void map_proc_special_events()
     }
     if (adata(16, gdata_current_map) == mdata_t::MapId::museum)
     {
-        if (gdata_crowd_density > 0)
+        if (game_data.crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -6932,7 +6932,7 @@ void map_proc_special_events()
     }
     if (adata(16, gdata_current_map) == mdata_t::MapId::shop)
     {
-        if (gdata_crowd_density > 0)
+        if (game_data.crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -9135,11 +9135,12 @@ void dump_player_info()
         + fixtxt((u8"経過ターン: "s + gdata_play_turns), 32));
     noteadd(
         fixtxt(u8"金貨       : "s + cdata.player().gold, 30)
-        + fixtxt((u8"殺害数    : "s + gdata_kill_count), 32));
+        + fixtxt((u8"殺害数    : "s + game_data.kill_count), 32));
     noteadd(
         fixtxt(u8"プラチナ   : "s + cdata.player().platinum_coin, 30)
         + fixtxt(
-              (u8"最深到達  : "s + gdata_deepest_dungeon_level + u8"階相当"s),
+              (u8"最深到達  : "s + game_data.deepest_dungeon_level
+               + u8"階相当"s),
               32));
     noteadd(fixtxt(
         u8"プレイ時間 : "s
@@ -16060,8 +16061,8 @@ void conquer_lesimas()
     pos(wx + 40, wy + 116);
     mes(i18n::s.get(
         "core.locale.win.window.have_killed",
-        gdata_deepest_dungeon_level,
-        gdata_kill_count));
+        game_data.deepest_dungeon_level,
+        game_data.kill_count));
     pos(wx + 40, wy + 146);
     mes(i18n::s.get("core.locale.win.window.score", calcscore()));
     pos(wx + 40, wy + 186);

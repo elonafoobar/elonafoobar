@@ -723,7 +723,8 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (game_data.crowd_density + 100
+                        >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;

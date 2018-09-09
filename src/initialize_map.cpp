@@ -49,11 +49,11 @@ label_17401:
     {
         gdata_current_dungeon_level = adata(17, gdata_current_map);
     }
-    if (gdata_deepest_dungeon_level < gdata_current_dungeon_level)
+    if (game_data.deepest_dungeon_level < gdata_current_dungeon_level)
     {
         if (gdata_current_map != mdata_t::MapId::shelter_)
         {
-            gdata_deepest_dungeon_level = gdata_current_dungeon_level;
+            game_data.deepest_dungeon_level = gdata_current_dungeon_level;
         }
     }
     if (adata(6, gdata_current_map) < gdata_current_dungeon_level)
@@ -2991,7 +2991,7 @@ label_1744_internal:
         }
     }
     map_proc_regen_and_update();
-    gdata_crowd_density = 0;
+    game_data.crowd_density = 0;
     for (auto&& cnt : cdata.all())
     {
         cnt.turn_cost = 0;

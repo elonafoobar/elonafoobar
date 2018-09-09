@@ -1480,9 +1480,9 @@ int calcspellcoststock(int id, int cc)
 int calcscore()
 {
     int score = cdata.player().level * cdata.player().level
-        + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
-        + gdata_kill_count;
-    if (gdata_death_count > 1)
+        + game_data.deepest_dungeon_level * game_data.deepest_dungeon_level
+        + game_data.kill_count;
+    if (game_data.death_count > 1)
     {
         score = score / 10 + 1;
     }

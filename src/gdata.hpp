@@ -133,6 +133,33 @@
 namespace elona
 {
 
+template <typename T>
+class elona_vector1;
+
+/**
+ * Global game data that is serialized. Replaces gdata.
+ */
+struct GameData
+{
+    int death_count;
+    int deepest_dungeon_level;
+    int kill_count;
+    int crowd_density;
+
+    /**
+     * Moves this struct's fields into `gdata` so they can be serialized, for
+     * compatibility. To be called before serializing `gdata`.
+     */
+    void pack_to(elona_vector1<int>&);
+
+    /**
+     * Moves `gdata` fields into this struct. To be called after deserializing
+     * `gdata`.
+     */
+    void unpack_from(elona_vector1<int>&);
+};
+
+extern GameData game_data;
 
 struct FoobarData
 {

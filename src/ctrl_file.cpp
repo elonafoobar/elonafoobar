@@ -441,10 +441,12 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load_v1(filepath, gdata, 0, 1000);
+                game_data.unpack_from(gdata);
             }
         }
         else
         {
+            game_data.pack_to(gdata);
             save_v1(filepath, gdata, 0, 1000);
         }
     }
