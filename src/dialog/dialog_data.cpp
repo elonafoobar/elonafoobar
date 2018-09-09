@@ -3,67 +3,51 @@
 #include "../talk.hpp"
 #include "../ui/ui_menu_dialog.hpp"
 #include "../variables.hpp"
+#include "dialog_decoder.hpp"
 
 namespace elona
 {
 
 static void _dialog_error(const std::string& node_id, const std::string& text)
 {
+    std::string message = "Dialog error (" + node_id + "): " + text;
+
     txtef(ColorIndex::red);
-    txt(node_id + ": Dialog error: " + text);
+    txt(message);
+    std::cerr << message << std::endl;
 }
 
 bool DialogNodeBehaviorGenerator::apply(
-    DialogData&,
+    DialogData& the_dialog,
     DialogNode& the_dialog_node)
 {
-    sol::table result = lua::lua->get_export_manager().call_with_result(
-        callback_generator, sol::lua_nil);
+    the_dialog_node.text.clear();
+    the_dialog_node.choices.clear();
+
+    sol::table result = the_dialog.export_manager.call_with_result(
+        callback_generator,
+        // Type of templated function will be wrong unless there is a cast, for
+        // some reason.
+        static_cast<sol::table>(sol::lua_nil));
 
     if (result == sol::lua_nil)
     {
         _dialog_error(
             the_dialog_node.id,
-            callback_generator + ": Returned value was nil.");
+            callback_generator + ": Returned value was nil or not a table.");
         return false;
     }
 
-    // Expects a Lua table of this format.
-    // {
-    //   text = {"mod.locale.1", "mod.locale.2", "mod.locale.3"},
-    //   choices = {
-    //     {text = "mod.locale.4", node = "core.dialog:dialog.node1},
-    //     {text = "mod.locale.5", node = "core.dialog:dialog.node2},
-    //   }
-    // }
-
-    the_dialog_node.text.clear();
-    sol::table result_text = result["text"];
-    for (const auto& pair : result_text)
+    // The table format is the same as that of the parsed dialog HCL.
+    try
     {
-        std::string text = pair.second.as<std::string>();
-        the_dialog_node.text.emplace_back(text);
+        DialogDecoderLogic(the_dialog.export_manager)
+            .parse_text_choices(result, "<generated node>", the_dialog_node);
     }
-
-    the_dialog_node.choices.clear();
-    sol::table result_choices = result["choices"];
-    for (const auto& pair : result_choices)
+    catch (const std::exception& e)
     {
-        sol::table choice_data = pair.second.as<sol::table>();
-        std::string locale_key = choice_data["locale_key"];
-        sol::optional<std::string> node_id_opt = choice_data["node_id"];
-        optional<std::string> node_id;
-
-        if (node_id_opt)
-        {
-            node_id = *node_id_opt;
-        }
-        else
-        {
-            node_id = none;
-        }
-
-        the_dialog_node.choices.emplace_back(locale_key, node_id);
+        _dialog_error(the_dialog_node.id, e.what());
+        return false;
     }
 
     return true;
@@ -75,8 +59,11 @@ bool DialogNodeBehaviorRedirector::apply(
 {
     std::cout << " REDIRECT " << std::endl;
 
-    sol::object result = lua::lua->get_export_manager().call_with_result(
-        callback_redirector, sol::lua_nil);
+    sol::object result = the_dialog.export_manager.call_with_result(
+        callback_redirector,
+        // Type of templated function will be wrong unless there is a cast, for
+        // some reason.
+        static_cast<sol::object>(sol::lua_nil));
 
     if (result == sol::lua_nil || !result.is<std::string>())
     {
@@ -95,19 +82,7 @@ bool DialogNodeBehaviorInheritChoices::apply(
     DialogData& the_dialog,
     DialogNode& the_dialog_node)
 {
-    if (is_applying)
-    {
-        _dialog_error(
-            the_dialog_node.id,
-            "Cannot inherit dialog choices from other inherit nodes "
-            "cyclically.");
-        is_applying = false;
-        return false;
-    }
-
-    is_applying = true;
     auto choices = the_dialog.choices_for_node(node_id_for_choices);
-    is_applying = false;
 
     if (choices)
     {
@@ -136,6 +111,11 @@ bool DialogData::has_more_text()
 
 bool DialogData::state_is_valid()
 {
+    if (!current_node_id)
+    {
+        return true;
+    }
+
     const auto it = nodes.find(*current_node_id);
     if (it == nodes.end())
     {
@@ -175,13 +155,15 @@ bool DialogData::is_cancelable_now()
     return false;
 }
 
-static bool _run_callback(optional<std::string>& callback)
+static bool _run_callback(
+    optional<std::string>& callback,
+    lua::ExportManager& export_manager)
 {
     try
     {
         if (callback)
         {
-            lua::lua->get_export_manager().call_unsafely(*callback);
+            export_manager.call_unsafely(*callback);
         }
         return true;
     }
@@ -193,12 +175,12 @@ static bool _run_callback(optional<std::string>& callback)
 
 bool DialogData::run_callback_before()
 {
-    return _run_callback(current_node().callback_before);
+    return _run_callback(current_node().callback_before, export_manager);
 }
 
 bool DialogData::run_callback_after()
 {
-    return _run_callback(current_node().callback_after);
+    return _run_callback(current_node().callback_after, export_manager);
 }
 
 bool DialogData::apply_node_behavior(DialogNode& node)
@@ -260,6 +242,11 @@ optional<const std::vector<DialogChoice>&> DialogData::choices_for_node(
         return none;
     }
 
+    if (!it->second.behavior->has_choices())
+    {
+        return none;
+    }
+
     if (!apply_node_behavior(it->second))
     {
         return none;
@@ -287,13 +274,13 @@ bool DialogData::advance_internal(
         return false;
     }
 
+    current_node_id = *node_id;
+    current_text_index = text_index;
+
     if (!apply_node_behavior(it->second))
     {
         return false;
     }
-
-    current_node_id = *node_id;
-    current_text_index = text_index;
 
     if (!state_is_valid())
     {

@@ -28,8 +28,6 @@ struct ExportedFunction
         if (!result.valid())
         {
             sol::error err = result;
-            txtef(ColorIndex::red);
-            txt(id + ": Script callback error: " + err.what());
             throw err;
         }
     }
@@ -43,6 +41,11 @@ struct ExportedFunction
         }
         catch (const sol::error& err)
         {
+            std::string message = id + ": Script callback error: " + err.what();
+
+            txtef(ColorIndex::red);
+            txt(message);
+            std::cerr << message << std::endl;
         }
     }
 
@@ -53,8 +56,11 @@ struct ExportedFunction
         if (!result.valid())
         {
             sol::error err = result;
+            std::string message = id + ": Script callback error: " + err.what();
+
             txtef(ColorIndex::red);
-            txt(id + ": Script callback error: " + err.what());
+            txt(message);
+            std::cerr << message << std::endl;
             return default_value;
         }
 
@@ -68,15 +74,22 @@ struct ExportedFunction
             }
             else
             {
+                std::string message =
+                    id + ": Script callback error: incorrect type returned";
+
                 txtef(ColorIndex::red);
-                txt(id + ": Script callback error: incorrect type returned");
+                txt(message);
+                std::cerr << message << std::endl;
                 return default_value;
             }
         }
         catch (const std::exception& e)
         {
+            std::string message = id + ": Script callback error: " + e.what();
+
             txtef(ColorIndex::red);
-            txt(id + ": Script callback error: " + e.what());
+            txt(message);
+            std::cerr << message << std::endl;
             return default_value;
         }
     }

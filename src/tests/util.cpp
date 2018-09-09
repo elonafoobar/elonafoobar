@@ -75,18 +75,19 @@ void register_lua_function(
     lua::LuaEnv& lua,
     std::string mod_name,
     std::string callback_signature,
-    std::string callback_body,
-    std::string setup)
+    std::string callback_body)
 {
     lua.get_mod_manager().load_mods(filesystem::dir::mods());
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(mod_name, R"(
-local Exports = {}
-
-function Exports.)" + callback_signature + "\n" + callback_body + R"(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+        mod_name,
+        "\
+local Exports = {}\
+\
+function Exports."
+            + callback_signature + "\n" + callback_body + R"(
 end
 
-)" + setup + R"(
 return {
     Exports = Exports
 }

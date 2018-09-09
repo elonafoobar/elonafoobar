@@ -170,3 +170,19 @@ TEST_CASE("test calling exported function with error", "[Lua: Exports]")
 
     REQUIRE(result == -1);
 }
+
+TEST_CASE("test calling exported function with table result", "[Lua: Exports]")
+{
+    elona::lua::LuaEnv lua;
+
+    testing::register_lua_function(
+        lua, "test", "my_callback()", "return {foo = \"bar\"}");
+
+    sol::table result = lua.get_export_manager().call_with_result(
+        "exports:test.my_callback", static_cast<sol::table>(sol::lua_nil));
+
+    REQUIRE(result != sol::lua_nil);
+
+    std::string foo = result["foo"];
+    REQUIRE(foo == "bar");
+}

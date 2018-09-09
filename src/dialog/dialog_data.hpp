@@ -4,9 +4,15 @@
 #include <unordered_map>
 #include <vector>
 #include "../optional.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 
 namespace elona
 {
+
+namespace lua
+{
+class ExportManager;
+}
 
 class DialogData;
 struct DialogNode;
@@ -28,6 +34,11 @@ struct DialogNodeBehavior
     virtual ~DialogNodeBehavior() = default;
 
     virtual bool apply(DialogData&, DialogNode&)
+    {
+        return true;
+    }
+
+    virtual bool has_choices()
     {
         return true;
     }
@@ -57,6 +68,11 @@ struct DialogNodeBehaviorRedirector : public DialogNodeBehavior
 
     bool apply(DialogData&, DialogNode&);
 
+    bool has_choices()
+    {
+        return false;
+    }
+
     std::string callback_redirector;
 };
 
@@ -70,8 +86,12 @@ struct DialogNodeBehaviorInheritChoices : public DialogNodeBehavior
 
     bool apply(DialogData&, DialogNode&);
 
+    bool has_choices()
+    {
+        return false;
+    }
+
     std::string node_id_for_choices;
-    bool is_applying = false;
 };
 
 struct DialogNode
@@ -92,13 +112,18 @@ struct DialogNode
 class DialogData
 {
 public:
-    friend struct DialogNodeBehavior;
+    friend struct DialogNodeBehaviorGenerator;
+    friend struct DialogNodeBehaviorRedirector;
 
     typedef std::unordered_map<std::string, DialogNode> map_type;
 
 public:
-    DialogData(map_type nodes, std::string starting_node)
+    DialogData(
+        map_type nodes,
+        std::string starting_node,
+        lua::ExportManager& export_manager)
         : nodes(nodes)
+        , export_manager(export_manager)
     {
         set_node(starting_node);
     }
@@ -140,6 +165,7 @@ public:
     optional<const std::vector<DialogChoice>&> choices_for_node(
         const std::string& node_id);
 
+    bool state_is_valid();
 
 private:
     DialogNode& current_node()
@@ -155,7 +181,6 @@ private:
     }
 
     bool has_more_text();
-    bool state_is_valid();
     bool is_cancelable_now();
 
     /// Returns false on failure.
@@ -173,6 +198,9 @@ private:
     map_type nodes;
     size_t current_text_index = 0;
     optional<std::string> current_node_id = none;
+
+    // for injecting non-global instance of exports for testing
+    lua::ExportManager& export_manager;
 };
 
 } // namespace elona

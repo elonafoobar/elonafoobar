@@ -59,7 +59,8 @@ public:
         else
         {
             throw std::runtime_error(
-                "Script callback error: no such exported function was found");
+                "Script callback error (" + name
+                + "): no such exported function was found");
         }
     }
 
@@ -72,8 +73,11 @@ public:
         }
         catch (const std::exception& e)
         {
+            std::string message =
+                "Script callback error (" + name + "): " + e.what();
             txtef(ColorIndex::red);
-            txt(name + ": " + e.what());
+            txt(message);
+            std::cerr << message << std::endl;
         }
     }
 
@@ -90,8 +94,13 @@ public:
         }
         else
         {
+            std::string message =
+                "Script callback error (" + name + "): no such exported function was "
+                  "found";
+
             txtef(ColorIndex::red);
-            txt(name + ": Script callback error: no such exported function was found");
+            txt(message);
+            std::cerr << message << std::endl;
             return default_value;
         }
     }
