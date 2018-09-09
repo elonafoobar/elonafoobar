@@ -219,7 +219,7 @@ void _adventurer_learn_skill(int skill_id)
 {
     cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
     chara_gain_skill(cdata[cc], skill_id);
-    ++gdata_number_of_learned_skills_by_trainer;
+    ++game_data.number_of_learned_skills_by_trainer;
 }
 
 void _adventurer_train_skill(int skill_id)

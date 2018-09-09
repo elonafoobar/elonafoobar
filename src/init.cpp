@@ -925,7 +925,7 @@ void initialize_debug_globals()
     gdata(42) = 300;
     gdata(43) = 631;
     game_data.next_inventory_serial_id = 1000;
-    gdata_next_shelter_serial_id = 100;
+    game_data.next_shelter_serial_id = 100;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
@@ -951,7 +951,7 @@ void initialize_debug_globals()
     game_data.date.day = 30;
     game_data.date.hour = 1;
     game_data.date.minute = 10;
-    gdata_played_scene = 50;
+    game_data.played_scene = 50;
     gdata_has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
     gdata(850) = area_data[game_data.current_map].outer_map;
@@ -1291,7 +1291,7 @@ void initialize_game()
     if (mode == 2)
     {
         game_data.next_inventory_serial_id = 1000;
-        gdata_next_shelter_serial_id = 100;
+        game_data.next_shelter_serial_id = 100;
         initialize_recipememory();
     }
     if (mode == 3)

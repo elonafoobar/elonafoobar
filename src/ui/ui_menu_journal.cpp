@@ -45,7 +45,7 @@ bool UIMenuJournal::init()
     noteadd(u8" - Quest - "s);
     noteadd(""s);
     quest_update_main_quest_journal();
-    for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {

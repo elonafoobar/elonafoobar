@@ -1265,7 +1265,7 @@ int calclearncost(int skill_id, int cc, bool discount)
     UNUSED(skill_id);
     UNUSED(cc);
 
-    int platinum = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
+    int platinum = 15 + 3 * game_data.number_of_learned_skills_by_trainer;
     return discount ? platinum * 2 / 3 : platinum;
 }
 
@@ -1515,19 +1515,19 @@ void calcpartyscore()
             score -= 20;
         }
     }
-    if (score > qdata(13, gdata_executing_immediate_quest))
+    if (score > qdata(13, game_data.executing_immediate_quest))
     {
         txtef(4);
-        txt(u8"(+"s + (score - qdata(13, gdata_executing_immediate_quest))
+        txt(u8"(+"s + (score - qdata(13, game_data.executing_immediate_quest))
             + u8") "s);
     }
-    if (score < qdata(13, gdata_executing_immediate_quest))
+    if (score < qdata(13, game_data.executing_immediate_quest))
     {
         txtef(3);
-        txt(u8"("s + (score - qdata(13, gdata_executing_immediate_quest))
+        txt(u8"("s + (score - qdata(13, game_data.executing_immediate_quest))
             + u8") "s);
     }
-    qdata(13, gdata_executing_immediate_quest) = score;
+    qdata(13, game_data.executing_immediate_quest) = score;
 }
 
 
@@ -1551,8 +1551,8 @@ void calcpartyscore2()
     {
         txt(i18n::s.get("core.locale.quest.party.total_bonus", score));
     }
-    qdata(13, gdata_executing_immediate_quest) =
-        qdata(13, gdata_executing_immediate_quest) * (100 + score) / 100;
+    qdata(13, game_data.executing_immediate_quest) =
+        qdata(13, game_data.executing_immediate_quest) * (100 + score) / 100;
 }
 
 

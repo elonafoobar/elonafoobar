@@ -305,12 +305,12 @@ std::string mapname(int id, bool description)
     switch (static_cast<mdata_t::MapId>(area_data[id].id))
     {
     case mdata_t::MapId::quest:
-        if (gdata_executing_immediate_quest_type == 1001)
+        if (game_data.executing_immediate_quest_type == 1001)
         {
             name = i18n::s.get("core.locale.map.quest.outskirts");
         }
-        if (gdata_executing_immediate_quest_type == 1010
-            || gdata_executing_immediate_quest_type == 1008)
+        if (game_data.executing_immediate_quest_type == 1010
+            || game_data.executing_immediate_quest_type == 1008)
         {
             name = i18n::s.get("core.locale.map.quest.urban_area");
         }

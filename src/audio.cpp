@@ -82,23 +82,23 @@ SharedId get_default_music()
     }
     if (game_data.current_map == mdata_t::MapId::quest)
     {
-        if (gdata_executing_immediate_quest_type == 1001)
+        if (game_data.executing_immediate_quest_type == 1001)
         {
             music_id = "core.music:core.mcBattle1"s;
         }
-        if (gdata_executing_immediate_quest_type == 1006)
+        if (game_data.executing_immediate_quest_type == 1006)
         {
             music_id = "core.music:core.mcVillage1"s;
         }
-        if (gdata_executing_immediate_quest_type == 1009)
+        if (game_data.executing_immediate_quest_type == 1009)
         {
             music_id = "core.music:core.mcCasino"s;
         }
-        if (gdata_executing_immediate_quest_type == 1008)
+        if (game_data.executing_immediate_quest_type == 1008)
         {
             music_id = "core.music:core.mcBoss"s;
         }
-        if (gdata_executing_immediate_quest_type == 1010)
+        if (game_data.executing_immediate_quest_type == 1010)
         {
             music_id = "core.music:core.mcArena";
         }

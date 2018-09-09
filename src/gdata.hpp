@@ -2,18 +2,6 @@
 
 #include "version.hpp"
 
-#define gdata_next_shelter_serial_id gdata(27)
-#define gdata_seven_league_boot_effect gdata(28)
-#define gdata_protects_from_etherwind gdata(29)
-#define gdata_played_scene gdata(36)
-#define gdata_torch gdata(37)
-#define gdata_angband_flag gdata(38)
-#define gdata_number_of_learned_skills_by_trainer gdata(39)
-
-#define gdata_is_returning_or_escaping gdata(63)
-#define gdata_executing_immediate_quest_type gdata(70)
-#define gdata_executing_immediate_quest gdata(72)
-#define gdata_number_of_existing_quests gdata(75)
 #define gdata_basic_point_of_home_rank gdata(76)
 #define gdata_cargo_weight gdata(80)
 #define gdata_initial_cart_limit gdata(81)
@@ -151,16 +139,27 @@ struct GameData
     int previous_dungeon_level;
     int previous_x;
     int previous_y;
+    int next_shelter_serial_id;
+    int seven_league_boot_effect;
+    int protects_from_etherwind;
+    int played_scene;
+    int torch;
+    int angband_flag;
+    int number_of_learned_skills_by_trainer;
+    int is_returning_or_escaping;
+    int executing_immediate_quest_type;
+    int executing_immediate_quest;
+    int number_of_existing_quests;
 
     /**
-     * Moves this struct's fields into `gdata` so they can be serialized, for
-     * compatibility. To be called before serializing `gdata`.
+     * Moves this struct's fields into `gdata` so they can be serialized,
+     * for compatibility. To be called before serializing `gdata`.
      */
     void pack_to(elona_vector1<int>&);
 
     /**
-     * Moves `gdata` fields into this struct. To be called after deserializing
-     * `gdata`.
+     * Moves `gdata` fields into this struct. To be called after
+     * deserializing `gdata`.
      */
     void unpack_from(elona_vector1<int>&);
 };
@@ -169,8 +168,8 @@ extern GameData game_data;
 
 struct FoobarData
 {
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
+    // NOTE: Don't add new fields unless you add them to serialization,
+    // which will break save compatibility.
     bool is_autodig_enabled{};
 
 

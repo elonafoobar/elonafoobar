@@ -39,12 +39,23 @@ FoobarData foobar_data;
     SERIALIZE(25, charge_power); \
     SERIALIZE(26, entrance_type); \
 \
+    SERIALIZE(27, next_shelter_serial_id); \
+    SERIALIZE(28, seven_league_boot_effect); \
+    SERIALIZE(29, protects_from_etherwind); \
+    SERIALIZE(36, played_scene); \
+    SERIALIZE(37, torch); \
+    SERIALIZE(38, angband_flag); \
+    SERIALIZE(39, number_of_learned_skills_by_trainer); \
+    SERIALIZE(63, is_returning_or_escaping); \
     SERIALIZE(64, destination_map); \
     SERIALIZE(65, destination_dungeon_level); \
     SERIALIZE(66, previous_map2); \
     SERIALIZE(67, previous_dungeon_level); \
     SERIALIZE(68, previous_x); \
-    SERIALIZE(69, previous_y);
+    SERIALIZE(69, previous_y); \
+    SERIALIZE(70, executing_immediate_quest_type); \
+    SERIALIZE(72, executing_immediate_quest); \
+    SERIALIZE(75, number_of_existing_quests);
 
 #define SERIALIZE GDATA_PACK
 void GameData::pack_to(elona_vector1<int>& gdata)

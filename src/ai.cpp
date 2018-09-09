@@ -746,7 +746,7 @@ label_2692_internal:
         {
             if (game_data.current_map == mdata_t::MapId::quest)
             {
-                if (gdata_executing_immediate_quest_type == 1009)
+                if (game_data.executing_immediate_quest_type == 1009)
                 {
                     if (rnd(30) == 0)
                     {

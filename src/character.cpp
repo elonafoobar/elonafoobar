@@ -991,12 +991,12 @@ void chara_set_generation_filter()
     }
     if (game_data.current_map == mdata_t::MapId::quest)
     {
-        if (gdata_executing_immediate_quest_type >= 1000)
+        if (game_data.executing_immediate_quest_type >= 1000)
         {
-            flt(calcobjlv(qdata(5, gdata_executing_immediate_quest) + 1),
+            flt(calcobjlv(qdata(5, game_data.executing_immediate_quest) + 1),
                 calcfixlv(Quality::bad));
         }
-        if (gdata_executing_immediate_quest_type == 1006)
+        if (game_data.executing_immediate_quest_type == 1006)
         {
             fltn(u8"wild"s);
             objlv = clamp(objlv / 4, 1, 8);
@@ -1195,9 +1195,9 @@ void chara_refresh(int cc)
     int rp3 = 0;
     if (cc == 0)
     {
-        gdata_seven_league_boot_effect = 0;
+        game_data.seven_league_boot_effect = 0;
         gdata_ether_disease_speed = 0;
-        gdata_protects_from_etherwind = 0;
+        game_data.protects_from_etherwind = 0;
         gdata_protects_from_bad_weather = 0;
         gdata(89) = 70;
         gdata_catches_god_signal = 0;
@@ -1368,7 +1368,7 @@ void chara_refresh(int cc)
                     sdata(18, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
                     if (cc == 0)
                     {
-                        gdata_seven_league_boot_effect +=
+                        game_data.seven_league_boot_effect +=
                             inv[rp].enchantments[cnt].power / 8;
                         continue;
                     }
@@ -1480,7 +1480,7 @@ void chara_refresh(int cc)
                 {
                     if (rp2 == 30)
                     {
-                        gdata_protects_from_etherwind = 1;
+                        game_data.protects_from_etherwind = 1;
                         continue;
                     }
                     if (rp2 == 31)

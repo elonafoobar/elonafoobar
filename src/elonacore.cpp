@@ -2838,7 +2838,7 @@ void proc_turn_end(int cc)
             }
         }
     }
-    if (gdata_executing_immediate_quest_type == 1009)
+    if (game_data.executing_immediate_quest_type == 1009)
     {
         if (cc >= 57)
         {
@@ -3001,9 +3001,9 @@ void revive_player()
     do_chara_revival();
     if (rc == 0)
     {
-        gdata_is_returning_or_escaping = 0;
+        game_data.is_returning_or_escaping = 0;
         traveldone = 0;
-        if (gdata_executing_immediate_quest_type == 0)
+        if (game_data.executing_immediate_quest_type == 0)
         {
             event_add(6);
         }
@@ -3382,7 +3382,7 @@ void character_drops_item()
     int lootrich = 0;
     if (rc == 0)
     {
-        if (gdata_executing_immediate_quest_type != 0)
+        if (game_data.executing_immediate_quest_type != 0)
         {
             return;
         }
@@ -4836,7 +4836,7 @@ TurnResult exit_map()
     }
     if (mdata_map_type == mdata_t::MapType::temporary)
     {
-        rq = gdata_executing_immediate_quest;
+        rq = game_data.executing_immediate_quest;
         quest_exit_map();
     }
     msg_newline();
@@ -5034,7 +5034,7 @@ TurnResult exit_map()
     {
         game_data.current_map = game_data.destination_map;
         game_data.current_dungeon_level = game_data.destination_dungeon_level;
-        if (gdata_executing_immediate_quest_type == 0)
+        if (game_data.executing_immediate_quest_type == 0)
         {
             if (game_data.previous_map != 2)
             {
@@ -6669,9 +6669,9 @@ void map_proc_special_events()
             }
         }
     }
-    if (gdata_executing_immediate_quest_type == 1008)
+    if (game_data.executing_immediate_quest_type == 1008)
     {
-        if (qdata(8, gdata_executing_immediate_quest) != 3)
+        if (qdata(8, game_data.executing_immediate_quest) != 3)
         {
             if (game_data.crowd_density
                 < gdata_left_minutes_of_executing_quest / 60)
@@ -6696,7 +6696,7 @@ void map_proc_special_events()
                         cdata[rc].original_relationship = -1;
                         cdata[rc].hate = 100;
                         cdata[rc].enemy_id =
-                            qdata(13, gdata_executing_immediate_quest);
+                            qdata(13, game_data.executing_immediate_quest);
                     }
                 }
             }
@@ -8993,7 +8993,7 @@ void try_to_return()
         }
         game_data.destination_map = list(0, rtval);
         game_data.destination_dungeon_level = list(1, rtval);
-        gdata_is_returning_or_escaping = 15 + rnd(15);
+        game_data.is_returning_or_escaping = 15 + rnd(15);
     }
     update_screen();
 }
@@ -9367,7 +9367,7 @@ void clear_existing_quest_list()
     ++gdata(184);
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
-    gdata_number_of_existing_quests = 0;
+    game_data.number_of_existing_quests = 0;
     initialize_adata();
 }
 
@@ -10517,7 +10517,7 @@ void map_global_proc_travel_events()
                 cdata[cc].continuous_action.turn * 5 / 10;
         }
         cdata[cc].continuous_action.turn = cdata[cc].continuous_action.turn
-            * 100 / (100 + gdata_seven_league_boot_effect + sdata(182, 0));
+            * 100 / (100 + game_data.seven_league_boot_effect + sdata(182, 0));
         return;
     }
     if (cdata.player().nutrition <= 5000)
@@ -14930,9 +14930,9 @@ void do_play_scene()
     int scidx = 0;
     int scidxtop = 0;
     int val0{};
-    if (gdata_played_scene < sceneid)
+    if (game_data.played_scene < sceneid)
     {
-        gdata_played_scene = sceneid;
+        game_data.played_scene = sceneid;
     }
     if (Config::instance().story == 0 || (en == 1 && sceneid != 0))
     {
@@ -15606,17 +15606,17 @@ void weather_changes()
 
 optional<TurnResult> check_angband()
 {
-    if (gdata_angband_flag == -1
+    if (game_data.angband_flag == -1
         || mdata_map_type == mdata_t::MapType::world_map)
         return none;
 
-    switch (gdata_angband_flag)
+    switch (game_data.angband_flag)
     {
     case 0:
         if (key == u8"Q"s)
         {
             txt(i18n::s.get("core.locale.action.angband.q"));
-            ++gdata_angband_flag;
+            ++game_data.angband_flag;
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -15625,7 +15625,7 @@ optional<TurnResult> check_angband()
         if (key == u8"y"s)
         {
             txt(i18n::s.get("core.locale.action.angband.y"));
-            ++gdata_angband_flag;
+            ++game_data.angband_flag;
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -15643,7 +15643,7 @@ optional<TurnResult> check_angband()
                     cdata.player().position.x,
                     cdata.player().position.y);
             }
-            gdata_angband_flag = -1;
+            game_data.angband_flag = -1;
             update_screen();
             return TurnResult::turn_end;
         }
@@ -15651,7 +15651,7 @@ optional<TurnResult> check_angband()
     default: break;
     }
 
-    gdata_angband_flag = 0;
+    game_data.angband_flag = 0;
     return none;
 }
 
@@ -15809,7 +15809,7 @@ TurnResult pc_died()
     snd(50);
     screenupdate = -1;
     update_screen();
-    if (gdata_executing_immediate_quest_type)
+    if (game_data.executing_immediate_quest_type)
     {
         return quest_pc_died_during_immediate_quest();
     }

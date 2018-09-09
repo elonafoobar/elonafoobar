@@ -1823,15 +1823,17 @@ label_2061_internal:
                 }
                 else
                 {
-                    qdata(13, gdata_executing_immediate_quest) +=
+                    qdata(13, game_data.executing_immediate_quest) +=
                         inv[ci].weight * inv[ci].number();
                     txtef(2);
                     txt(i18n::s.get(
                         "core.locale.ui.inv.put.harvest",
                         inv[ci],
                         cnvweight(inv[ci].weight * inv[ci].number()),
-                        cnvweight(qdata(13, gdata_executing_immediate_quest)),
-                        cnvweight(qdata(12, gdata_executing_immediate_quest))));
+                        cnvweight(
+                            qdata(13, game_data.executing_immediate_quest)),
+                        cnvweight(
+                            qdata(12, game_data.executing_immediate_quest))));
                 }
                 inv[ci].remove();
                 refresh_burden_state();

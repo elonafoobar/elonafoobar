@@ -1887,14 +1887,14 @@ TurnResult do_use_command()
         goto label_2229_internal;
     case 13:
         snd(6);
-        if (gdata_torch == 0)
+        if (game_data.torch == 0)
         {
-            gdata_torch = 1;
+            game_data.torch = 1;
             txt(i18n::s.get("core.locale.action.use.torch.light"));
         }
         else
         {
-            gdata_torch = 0;
+            game_data.torch = 0;
             txt(i18n::s.get("core.locale.action.use.torch.put_out"));
         }
         chara_refresh(0);

@@ -398,7 +398,7 @@ void continuous_action_perform()
                 p = rnd(cdata[tc].level + 1) + 1;
                 if (rnd(sdata(183, cc) + 1) > rnd(cdata[tc].level * 2 + 1))
                 {
-                    if (gdata_executing_immediate_quest_type == 1009)
+                    if (game_data.executing_immediate_quest_type == 1009)
                     {
                         if (tc >= 57)
                         {
@@ -484,7 +484,7 @@ void continuous_action_perform()
                                     }
                                     flttypemajor = choice(fsetperform);
                                     dbid = 0;
-                                    if (gdata_executing_immediate_quest_type
+                                    if (game_data.executing_immediate_quest_type
                                         == 1009)
                                     {
                                         if (rnd(150) == 0)

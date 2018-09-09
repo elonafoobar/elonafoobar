@@ -1427,8 +1427,8 @@ label_2181_internal:
         get_sick_if_cursed(efstatus, cdata[tc]);
         break;
     case 300:
-        if (gdata_executing_immediate_quest_type == 1008
-            || gdata_executing_immediate_quest_type == 1010)
+        if (game_data.executing_immediate_quest_type == 1008
+            || game_data.executing_immediate_quest_type == 1010)
         {
             txt(i18n::s.get("core.locale.magic.steal.in_quest"));
             return 0;
@@ -2761,10 +2761,10 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (gdata_is_returning_or_escaping != 0)
+        if (game_data.is_returning_or_escaping != 0)
         {
             txt(i18n::s.get("core.locale.magic.escape.cancel"));
-            gdata_is_returning_or_escaping = 0;
+            game_data.is_returning_or_escaping = 0;
         }
         else
         {
@@ -2804,7 +2804,7 @@ label_2181_internal:
                     game_data.destination_dungeon_level = 1;
                 }
             }
-            gdata_is_returning_or_escaping = 5 + rnd(10);
+            game_data.is_returning_or_escaping = 5 + rnd(10);
         }
         break;
     case 428:
@@ -2814,10 +2814,10 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (gdata_is_returning_or_escaping != 0)
+        if (game_data.is_returning_or_escaping != 0)
         {
             txt(i18n::s.get("core.locale.magic.return.cancel"));
-            gdata_is_returning_or_escaping = 0;
+            game_data.is_returning_or_escaping = 0;
         }
         else
         {
