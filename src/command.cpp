@@ -2262,32 +2262,32 @@ TurnResult do_use_command()
         txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
         snd(64);
         txtef(5);
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             txt(i18n::s.get(
                 "core.locale.action.use.statue.lulwy.during_etherwind"));
             goto label_2229_internal;
         }
-        p = gdata_weather;
+        p = game_data.weather;
         while (1)
         {
             if (rnd(10) == 0)
             {
-                gdata_weather = 0;
+                game_data.weather = 0;
             }
             if (rnd(10) == 0)
             {
-                gdata_weather = 3;
+                game_data.weather = 3;
             }
             if (rnd(15) == 0)
             {
-                gdata_weather = 4;
+                game_data.weather = 4;
             }
             if (rnd(20) == 0)
             {
-                gdata_weather = 2;
+                game_data.weather = 2;
             }
-            if (gdata_weather != p)
+            if (game_data.weather != p)
             {
                 break;
             }

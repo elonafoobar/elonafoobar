@@ -99,7 +99,7 @@ void set_npc_religion()
     {
         return;
     }
-    randomize(gdata_random_seed + gdata_current_map);
+    randomize(game_data.random_seed + gdata_current_map);
     cdata[tc].god_id = core_god::int2godid(rnd(8));
     randomize();
     if (cdata[tc].god_id.empty() || rnd(4) == 0)

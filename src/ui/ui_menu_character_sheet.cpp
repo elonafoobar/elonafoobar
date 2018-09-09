@@ -893,9 +893,9 @@ static void _draw_first_page_stats_fame()
 static void _draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.turn_counter", gdata_play_turns);
+        "core.locale.ui.chara_sheet.time.turn_counter", game_data.play_turns);
     s(1) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.days_counter", gdata_play_days);
+        "core.locale.ui.chara_sheet.time.days_counter", game_data.play_days);
     s(2) = ""s + game_data.kill_count;
     s(3) = ""s
         + cnvplaytime((gdata_play_time + timeGetTime() / 1000 - time_begin));

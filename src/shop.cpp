@@ -34,8 +34,8 @@ void shop_refresh_on_talk()
         }
         else
         {
-            ++gdata_next_inventory_serial_id;
-            cdata[tc].shop_store_id = gdata_next_inventory_serial_id;
+            ++game_data.next_inventory_serial_id;
+            cdata[tc].shop_store_id = game_data.next_inventory_serial_id;
         }
         shop_refresh();
     }

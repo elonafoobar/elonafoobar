@@ -85,7 +85,7 @@ void prepare_house_board_tiles()
         }
         if (chipm(0, cnt) == 3)
         {
-            if (gdata_home_scale <= 3)
+            if (game_data.home_scale <= 3)
             {
                 continue;
             }
@@ -133,19 +133,19 @@ void initialize_home_adata()
 {
     p = 7;
     adata(15, p) = 143;
-    if (gdata_home_scale == 0)
+    if (game_data.home_scale == 0)
     {
         adata(15, p) = 138;
     }
-    if (gdata_home_scale == 4)
+    if (game_data.home_scale == 4)
     {
         adata(15, p) = 148;
     }
-    if (gdata_home_scale == 5)
+    if (game_data.home_scale == 5)
     {
         adata(15, p) = 144;
     }
-    if (gdata_home_scale != 0)
+    if (game_data.home_scale != 0)
     {
         adata(1, p) = cdata.player().position.x;
         adata(2, p) = cdata.player().position.y;
@@ -194,7 +194,7 @@ TurnResult build_new_building()
     }
     if (inv[ci].id == 344)
     {
-        gdata_home_scale = inv[ci].param1;
+        game_data.home_scale = inv[ci].param1;
         inv[ci].modify_number(-1);
         initialize_home_adata();
         std::string midbk = mid;
@@ -205,8 +205,8 @@ TurnResult build_new_building()
         levelexitby = 2;
         gdata_destination_map = 7;
         gdata_destination_dungeon_level = 1;
-        gdata_pc_x_in_world_map = adata(1, 7);
-        gdata_pc_y_in_world_map = adata(2, 7);
+        game_data.pc_x_in_world_map = adata(1, 7);
+        game_data.pc_y_in_world_map = adata(2, 7);
         snd(58);
         txtef(2);
         txt(i18n::s.get("core.locale.building.built_new_house"));
@@ -380,7 +380,7 @@ TurnResult show_house_board()
         txt(i18n::s.get(
             "core.locale.building.home.staying.count",
             p(0),
-            gdata_home_scale + 2));
+            game_data.home_scale + 2));
     }
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
@@ -478,7 +478,7 @@ void prompt_hiring()
             }
         }
     }
-    if (p >= gdata_home_scale + 2)
+    if (p >= game_data.home_scale + 2)
     {
         txt(i18n::s.get("core.locale.building.home.hire.too_many_guests"));
         return;

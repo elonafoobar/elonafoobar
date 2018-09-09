@@ -2811,7 +2811,7 @@ void proc_turn_end(int cc)
                 {
                     damage_hp(
                         cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
-                    if (gdata_play_turns % 10 == 0)
+                    if (game_data.play_turns % 10 == 0)
                     {
                         rowact_check(cc);
                         if (rnd(50) == 0)
@@ -2829,7 +2829,7 @@ void proc_turn_end(int cc)
             {
                 gdata_continuous_active_hours = 0;
             }
-            if (gdata_play_turns % 100 == 0)
+            if (game_data.play_turns % 100 == 0)
             {
                 txt(i18n::s.get("core.locale.misc.status_ailment.sleepy"));
             }
@@ -4379,7 +4379,7 @@ void food_gets_rotten()
                                                 0))
                                         == 1)
                                     {
-                                        if (gdata_weather != 0)
+                                        if (game_data.weather != 0)
                                         {
                                             continue;
                                         }
@@ -4898,7 +4898,7 @@ TurnResult exit_map()
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
         mapstarty = gdata_previous_y;
-        gdata_entrance_type = 7;
+        game_data.entrance_type = 7;
         fixstart = 1;
         levelexitby = 5;
     }
@@ -4925,7 +4925,7 @@ TurnResult exit_map()
         {
             msgtemp += i18n::s.get("core.locale.misc.walk_down_stairs");
             f = 1;
-            gdata_entrance_type = 1;
+            game_data.entrance_type = 1;
             mdata_map_stair_down_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
@@ -4943,7 +4943,7 @@ TurnResult exit_map()
         {
             msgtemp += i18n::s.get("core.locale.misc.walk_up_stairs");
             f = 1;
-            gdata_entrance_type = 2;
+            game_data.entrance_type = 2;
             mdata_map_stair_up_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
@@ -4961,8 +4961,8 @@ TurnResult exit_map()
         {
             if (mdata_map_type == mdata_t::MapType::world_map)
             {
-                gdata_pc_x_in_world_map = cdata[cc].position.x;
-                gdata_pc_y_in_world_map = cdata[cc].position.y;
+                game_data.pc_x_in_world_map = cdata[cc].position.x;
+                game_data.pc_y_in_world_map = cdata[cc].position.y;
                 gdata_current_dungeon_level = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
@@ -5053,7 +5053,7 @@ TurnResult exit_map()
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
         mapstarty = gdata_previous_y;
-        gdata_entrance_type = 7;
+        game_data.entrance_type = 7;
         fixstart = 1;
     }
     if (levelexitby == 2)
@@ -5064,8 +5064,8 @@ TurnResult exit_map()
         {
             if (gdata_previous_map != 2)
             {
-                gdata_pc_x_in_world_map = adata(1, gdata_current_map);
-                gdata_pc_y_in_world_map = adata(2, gdata_current_map);
+                game_data.pc_x_in_world_map = adata(1, gdata_current_map);
+                game_data.pc_y_in_world_map = adata(2, gdata_current_map);
                 weather_changes_by_location();
             }
         }
@@ -5073,7 +5073,7 @@ TurnResult exit_map()
         {
             mapstartx = 29;
             mapstarty = 3;
-            gdata_entrance_type = 7;
+            game_data.entrance_type = 7;
             fixstart = 1;
         }
     }
@@ -5114,8 +5114,8 @@ TurnResult exit_map()
             {
                 if (fixtransfermap == 0)
                 {
-                    gdata_pc_x_in_world_map = adata(1, gdata_previous_map);
-                    gdata_pc_y_in_world_map = adata(2, gdata_previous_map);
+                    game_data.pc_x_in_world_map = adata(1, gdata_previous_map);
+                    game_data.pc_y_in_world_map = adata(2, gdata_previous_map);
                 }
                 else
                 {
@@ -5125,7 +5125,7 @@ TurnResult exit_map()
         }
         if (fixstart == 0)
         {
-            gdata_entrance_type = adata(3, gdata_current_map);
+            game_data.entrance_type = adata(3, gdata_current_map);
         }
         if (event_find(6))
         {
@@ -5167,7 +5167,7 @@ TurnResult exit_map()
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::mountain_pass);
             gdata_current_dungeon_level = adata(10, gdata_current_map) - 1;
-            gdata_entrance_type = 1;
+            game_data.entrance_type = 1;
             msgtemp += i18n::s.get("core.locale.action.exit_map.mountain_pass");
         }
     }
@@ -5177,7 +5177,7 @@ TurnResult exit_map()
         {
             gdata_current_map = static_cast<int>(mdata_t::MapId::larna);
             gdata_current_dungeon_level = 1;
-            gdata_entrance_type = 2;
+            game_data.entrance_type = 2;
             msgtemp += i18n::s.get("core.locale.action.exit_map.larna");
         }
     }
@@ -5571,11 +5571,11 @@ void map_prepare_tileset_atlas()
         {
             shadow = 80 + (gdata_hour - 21) * 10;
         }
-        if (gdata_weather == 3 && shadow < 40)
+        if (game_data.weather == 3 && shadow < 40)
         {
             shadow = 40;
         }
-        if (gdata_weather == 4 && shadow < 65)
+        if (game_data.weather == 4 && shadow < 65)
         {
             shadow = 65;
         }
@@ -6070,7 +6070,7 @@ void initialize_adata()
     adata(21, p) = 1;
     adata(11, p) = 1;
     adata(12, p) = 1;
-    if (gdata_home_scale == 0)
+    if (game_data.home_scale == 0)
     {
         adata(15, p) = 138;
         adata(1, p) = 22;
@@ -6836,7 +6836,8 @@ void map_proc_special_events()
     }
     if (gdata_current_map == mdata_t::MapId::shelter_)
     {
-        if (gdata_weather == 2 || gdata_weather == 4 || gdata_weather == 1)
+        if (game_data.weather == 2 || game_data.weather == 4
+            || game_data.weather == 1)
         {
             if (cdata.player().nutrition < 5000)
             {
@@ -9129,10 +9130,10 @@ void dump_player_info()
         + fixtxt((u8"所属      : "s + guildname()), 32));
     noteadd(
         fixtxt(u8"レベル     : "s + cdata.player().level, 30)
-        + fixtxt((u8"経過日数  : "s + gdata_play_days), 32));
+        + fixtxt((u8"経過日数  : "s + game_data.play_days), 32));
     noteadd(
         fixtxt(u8"残りBP     : "s + cdata.player().skill_bonus, 30)
-        + fixtxt((u8"経過ターン: "s + gdata_play_turns), 32));
+        + fixtxt((u8"経過ターン: "s + game_data.play_turns), 32));
     noteadd(
         fixtxt(u8"金貨       : "s + cdata.player().gold, 30)
         + fixtxt((u8"殺害数    : "s + game_data.kill_count), 32));
@@ -10706,24 +10707,24 @@ void map_global_proc_travel_events()
     {
         cdata[cc].continuous_action.type = ContinuousAction::Type::travel;
         cdata[cc].continuous_action.turn = 20;
-        if (gdata_weather == 3)
+        if (game_data.weather == 3)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 13 / 10;
         }
-        if (gdata_weather == 4)
+        if (game_data.weather == 4)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 16 / 10;
         }
-        if (gdata_weather == 2
+        if (game_data.weather == 2
             || chipm(0, map(cdata[cc].position.x, cdata[cc].position.y, 0))
                 == 4)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 22 / 10;
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             cdata[cc].continuous_action.turn =
                 cdata[cc].continuous_action.turn * 5 / 10;
@@ -10758,7 +10759,7 @@ void map_global_proc_travel_events()
             continuous_action_eating_finish();
         }
     }
-    if (gdata_weather == 2
+    if (game_data.weather == 2
         || chipm(0, map(cdata[cc].position.x, cdata[cc].position.y, 0)) == 4)
     {
         if (gdata_protects_from_bad_weather == 0)
@@ -10795,7 +10796,7 @@ void map_global_proc_travel_events()
             }
         }
     }
-    if (gdata_weather == 4)
+    if (game_data.weather == 4)
     {
         if (gdata_protects_from_bad_weather == 0)
         {
@@ -11141,7 +11142,7 @@ int do_cast_magic_attempt()
                 efsource = 0;
                 return 0;
             }
-            if (gdata_play_turns % 10 > 4)
+            if (game_data.play_turns % 10 > 4)
             {
                 efsource = 0;
                 return 0;
@@ -12865,14 +12866,14 @@ TurnResult proc_movement_event()
                 {
                     encounter = 1;
                 }
-                if (gdata_weather == 4)
+                if (game_data.weather == 4)
                 {
                     if (rnd(10) == 0)
                     {
                         encounter = 1;
                     }
                 }
-                if (gdata_weather == 1)
+                if (game_data.weather == 1)
                 {
                     if (rnd(13) == 0)
                     {
@@ -12964,7 +12965,7 @@ TurnResult proc_movement_event()
                 {
                     encounterlv /= 2;
                 }
-                else if (gdata_weather == 1)
+                else if (game_data.weather == 1)
                 {
                     encounterlv = encounterlv * 3 / 2 + 10;
                 }
@@ -14999,7 +15000,7 @@ void try_to_grow_plant(int val0)
     }
     if (feat == tile_plant)
     {
-        if (gdata_weather < 3)
+        if (game_data.weather < 3)
         {
             p = p * 2;
         }
@@ -15036,7 +15037,7 @@ void harvest_plant(int val)
     {
         p = p * 2;
     }
-    if (gdata_weather < 3)
+    if (game_data.weather < 3)
     {
         p = p * 4 / 3;
     }
@@ -15512,23 +15513,25 @@ void scene_fade_to_black()
 
 void weather_changes_by_location()
 {
-    if (gdata_weather == 2)
+    if (game_data.weather == 2)
     {
-        if (gdata_pc_x_in_world_map < 65 && gdata_pc_y_in_world_map > 10)
+        if (game_data.pc_x_in_world_map < 65
+            && game_data.pc_y_in_world_map > 10)
         {
-            gdata_weather = 3;
+            game_data.weather = 3;
             sound_play_environmental();
-            gdata_hours_until_weather_changes += 3;
+            game_data.hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
     }
-    if (gdata_weather == 4 || gdata_weather == 3)
+    if (game_data.weather == 4 || game_data.weather == 3)
     {
-        if (gdata_pc_x_in_world_map > 65 || gdata_pc_y_in_world_map < 10)
+        if (game_data.pc_x_in_world_map > 65
+            || game_data.pc_y_in_world_map < 10)
         {
-            gdata_weather = 2;
+            game_data.weather = 2;
             sound_play_environmental();
-            gdata_hours_until_weather_changes += 3;
+            game_data.hours_until_weather_changes += 3;
             txt(i18n::s.get("core.locale.action.weather.changes"));
         }
     }
@@ -15549,15 +15552,15 @@ void weather_changes()
     }
     if (mdata_map_type == mdata_t::MapType::world_map)
     {
-        gdata_pc_x_in_world_map = cdata.player().position.x;
-        gdata_pc_y_in_world_map = cdata.player().position.y;
+        game_data.pc_x_in_world_map = cdata.player().position.x;
+        game_data.pc_y_in_world_map = cdata.player().position.y;
     }
-    --gdata_hours_until_weather_changes;
+    --game_data.hours_until_weather_changes;
     weather_changes_by_location();
-    if (gdata_hours_until_weather_changes < 0)
+    if (game_data.hours_until_weather_changes < 0)
     {
-        gdata_hours_until_weather_changes = rnd(22) + 2;
-        p = gdata_weather;
+        game_data.hours_until_weather_changes = rnd(22) + 2;
+        p = game_data.weather;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (gdata_month % 3 == 0)
@@ -15568,13 +15571,14 @@ void weather_changes()
                     {
                         if (rnd(15) < gdata_day + 5)
                         {
-                            gdata_weather = 1;
+                            game_data.weather = 1;
                             txtef(3);
                             txt(
                                 i18n::s.get("core.locale.action.weather.ether_"
                                             "wind.starts"));
                             gdata_last_etherwind_month = gdata_month;
-                            gdata_hours_until_weather_changes = rnd(24) + 24;
+                            game_data.hours_until_weather_changes =
+                                rnd(24) + 24;
                             break;
                         }
                     }
@@ -15587,18 +15591,18 @@ void weather_changes()
                 {
                     if (rnd(4) == 0)
                     {
-                        gdata_weather = 3;
+                        game_data.weather = 3;
                         txt(i18n::s.get(
                             "core.locale.action.weather.rain.draw_cloud"));
                         break;
                     }
                 }
-                if (gdata_pc_x_in_world_map > 65
-                    || gdata_pc_y_in_world_map < 10)
+                if (game_data.pc_x_in_world_map > 65
+                    || game_data.pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {
-                        gdata_weather = 2;
+                        game_data.weather = 2;
                         i18n::s.get("core.locale.action.weather.snow.starts");
                         break;
                     }
@@ -15607,20 +15611,20 @@ void weather_changes()
                 {
                     if (rnd(10) == 0)
                     {
-                        gdata_weather = 3;
+                        game_data.weather = 3;
                         i18n::s.get("core.locale.action.weather.rain.starts");
                         break;
                     }
                     if (rnd(40) == 0)
                     {
-                        gdata_weather = 4;
+                        game_data.weather = 4;
                         i18n::s.get(
                             "core.locale.action.weather.rain.starts_heavy");
                         break;
                     }
                     if (rnd(60) == 0)
                     {
-                        gdata_weather = 2;
+                        game_data.weather = 2;
                         i18n::s.get("core.locale.action.weather.snow.starts");
                         break;
                     }
@@ -15630,13 +15634,13 @@ void weather_changes()
             {
                 if (rnd(4) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get("core.locale.action.weather.rain.stops"));
                     break;
                 }
                 if (rnd(15) == 0)
                 {
-                    gdata_weather = 4;
+                    game_data.weather = 4;
                     txt(i18n::s.get(
                         "core.locale.action.weather.rain.becomes_heavier"));
                     break;
@@ -15646,7 +15650,7 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    gdata_weather = 3;
+                    game_data.weather = 3;
                     txt(i18n::s.get(
                         "core.locale.action.weather.rain.becomes_lighter"));
                     break;
@@ -15656,7 +15660,7 @@ void weather_changes()
             {
                 if (rnd(2) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get(
                         "core.locale.action.weather.ether_wind.stops"));
                     break;
@@ -15666,13 +15670,13 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    gdata_weather = 0;
+                    game_data.weather = 0;
                     txt(i18n::s.get("core.locale.action.weather.snow.stops"));
                     break;
                 }
             }
         }
-        if (gdata_weather == 4)
+        if (game_data.weather == 4)
         {
             if (Config::instance().extrahelp)
             {
@@ -15690,7 +15694,7 @@ void weather_changes()
                 }
             }
         }
-        if (gdata_weather == 2)
+        if (game_data.weather == 2)
         {
             if (Config::instance().extrahelp)
             {
@@ -15708,7 +15712,7 @@ void weather_changes()
                 }
             }
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             if (Config::instance().extrahelp)
             {
@@ -15726,7 +15730,7 @@ void weather_changes()
                 }
             }
         }
-        if (p != gdata_weather)
+        if (p != game_data.weather)
         {
             sound_play_environmental();
         }
@@ -15831,7 +15835,7 @@ void weather_changes()
         }
         snd(74);
         event_add(10);
-        gdata_play_days += gdata_hour / 24;
+        game_data.play_days += gdata_hour / 24;
         gdata_day += gdata_hour / 24;
         gdata_hour = gdata_hour % 24;
         if (gdata_day >= 31)

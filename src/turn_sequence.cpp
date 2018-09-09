@@ -760,13 +760,13 @@ TurnResult turn_begin()
     gdata_second += turncost / 5 + 1;
     if (gdata_second >= 60)
     {
-        ++gdata_play_turns;
+        ++game_data.play_turns;
         cc = 0;
-        if (gdata_play_turns % 20 == 0)
+        if (game_data.play_turns % 20 == 0)
         {
             monster_respawn();
         }
-        if (gdata_play_turns % 10 == 1)
+        if (game_data.play_turns % 10 == 1)
         {
             auto_identify();
         }
@@ -935,7 +935,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             return TurnResult::pc_died;
         }
-        if (gdata_weather == 1)
+        if (game_data.weather == 1)
         {
             if (mdata_map_indoors_flag == 2)
             {
@@ -944,7 +944,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
                     if (gdata_protects_from_etherwind == 0)
                     {
                         modify_ether_disease_stage(
-                            5 + clamp(gdata_play_turns / 20000, 0, 15));
+                            5 + clamp(game_data.play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
@@ -1144,7 +1144,7 @@ void update_emoicon()
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata_map_indoors_flag == 2 && gdata_weather >= 3)
+    if (mdata_map_indoors_flag == 2 && game_data.weather >= 3)
     {
         cdata[cc].wet = 50;
     }

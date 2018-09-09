@@ -977,7 +977,7 @@ void continuous_action_others()
         }
         if (gdata(91) == 104)
         {
-            if (gdata_weather == 0 || gdata_weather == 3)
+            if (game_data.weather == 0 || game_data.weather == 3)
             {
                 if (gdata_time_when_textbook_becomes_available > gdata_hour
                         + gdata_day * 24 + gdata_month * 24 * 30
@@ -1004,7 +1004,7 @@ void continuous_action_others()
             {
                 txt(i18n::s.get("core.locale.activity.study.start.training"));
             }
-            if (gdata_weather != 0 && gdata_weather != 3)
+            if (game_data.weather != 0 && game_data.weather != 3)
             {
                 if (gdata_current_map == mdata_t::MapId::shelter_
                     || (mdata_map_indoors_flag == 1
@@ -1060,7 +1060,7 @@ void continuous_action_others()
         if (gdata(91) == 104)
         {
             p = 25;
-            if (gdata_weather != 0 && gdata_weather != 3)
+            if (game_data.weather != 0 && game_data.weather != 3)
             {
                 if (gdata_current_map == mdata_t::MapId::shelter_)
                 {

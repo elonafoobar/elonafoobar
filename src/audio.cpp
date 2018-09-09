@@ -407,15 +407,15 @@ void sound_play_environmental()
 {
     int env{};
 
-    if (gdata_weather == 3)
+    if (game_data.weather == 3)
     {
         env = 75;
     }
-    if (gdata_weather == 4)
+    if (game_data.weather == 4)
     {
         env = 76;
     }
-    if (gdata_weather == 1)
+    if (game_data.weather == 1)
     {
         env = 77;
     }

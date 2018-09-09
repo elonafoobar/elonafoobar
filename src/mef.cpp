@@ -132,7 +132,7 @@ void mef_update()
             {
                 if (mdata_map_type != mdata_t::MapType::world_map)
                 {
-                    if (gdata_weather == 3 || gdata_weather == 4)
+                    if (game_data.weather == 3 || game_data.weather == 4)
                     {
                         mef_delete(cnt);
                         continue;
