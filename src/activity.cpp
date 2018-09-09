@@ -803,11 +803,14 @@ void continuous_action_sex()
             earn_gold(cdata[cc], sexvalue);
         }
     }
-    txt(i18n::s.get("core.locale.activity.sex.format", dialog_head, dialog_tail)
-        + dialog_after);
+    if (!dialog_head.empty() || !dialog_tail.empty() || !dialog_after.empty())
+    {
+        txt(i18n::s.get(
+                "core.locale.activity.sex.format", dialog_head, dialog_tail)
+            + dialog_after);
+    }
     cdata[cc].continuous_action.finish();
     cdata[tc].continuous_action.finish();
-    return;
 }
 
 
