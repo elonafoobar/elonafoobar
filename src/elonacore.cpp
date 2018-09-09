@@ -13223,7 +13223,7 @@ void sense_map_feats_on_move()
             if (feat(1) == 32)
             {
                 txtef(5);
-                i18n::s.get("core.locale.action.move.twinkle");
+                txt(i18n::s.get("core.locale.action.move.twinkle"));
             }
             if (feat(1) == 15)
             {
