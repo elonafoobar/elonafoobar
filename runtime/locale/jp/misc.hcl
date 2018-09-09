@@ -232,7 +232,7 @@ locale {
 
         living_weapon_taste_blood = "${itemname(_1)}は十分に血を味わった！"
         caught_by_assassins = "暗殺者につかまった。あなたはクライアントを守らなければならない。"
-        finished_eating = "${kare_wa(_1)}${itemname(_1, 1)}を食べ終えた。"
+        finished_eating = "${kare_wa(_1)}${itemname(_2, 1)}を食べ終えた。"
         spell_passes_through = "${name(_1)}は巻き込みを免れた。"
         shakes_head = "${name(_1)}は頭を振った。"
 
