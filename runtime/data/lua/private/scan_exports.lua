@@ -29,12 +29,10 @@ local function scan_exports(all_apis)
       if exports ~= nil and type(exports) == "table" then
          local base_key = "exports:" .. mod_name
          for key, value in pairs(scan_recursive(exports, base_key)) do
-            print("add export " .. key)
             all_exports[key] = value
          end
       end
    end
-   print("done\n")
    return all_exports
 end
 

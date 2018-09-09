@@ -1,4 +1,5 @@
 #include "dialog_decoder.hpp"
+#include "../lua_env/config_table.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "dialog.hpp"
 #include "dialog_data.hpp"
@@ -13,44 +14,35 @@ optional<DialogData> DialogDecoder::decode(const std::string& id)
     return decode(id, *lua::lua.get());
 }
 
-static std::pair<std::string, std::string> _parse_id(
+/**
+ * Parse an id of the format "core.dialog:test.some_dialog".
+ *
+ * @param datatype_mod_name Expected originating mod ("core")
+ * @param datatype_name Expected data kind ("dialog")
+ * @param id "core.dialog:test.some_dialog"
+ *
+ * @throws if the ID is not of the form "1.2:3.4"
+ * @return ("test", "some_dialog")
+ */
+static std::pair<std::string, std::string> parse_id(
     const std::string& datatype_mod_name,
     const std::string& datatype_name,
     const std::string& id)
 {
-    // TODO dry
-    auto colon_pos = id.find(":");
-    if (colon_pos == std::string::npos)
-    {
-        throw std::runtime_error("Bad ID \"" + id + "\"");
-    }
+    std::string datatype_fqn, datatype_id;
+    std::tie(datatype_fqn, datatype_id) = strutil::split_on_string(id, ":");
 
-    std::string datatype_fqn = id.substr(0, colon_pos);
-    std::string datatype_id = id.substr(colon_pos + 1);
+    std::string mod_name, data_name;
+    std::tie(mod_name, data_name) = strutil::split_on_string(datatype_fqn, ".");
 
-    auto period_pos = datatype_fqn.find(".");
-    if (period_pos == std::string::npos)
-    {
-        throw std::runtime_error("Bad datatype name \"" + datatype_fqn + "\"");
-    }
-
-    std::string mod_name = datatype_fqn.substr(0, period_pos);
-    std::string name = datatype_fqn.substr(period_pos + 1);
-    if (datatype_mod_name != mod_name || datatype_name != name)
+    if (datatype_mod_name != mod_name || datatype_name != data_name)
     {
         throw std::runtime_error(
             "Expected id of format \"" + datatype_mod_name + "." + datatype_name
-            + "\", got \"" + mod_name + "." + name + "\"");
+            + "\", got \"" + mod_name + "." + data_name + "\"");
     }
 
-    period_pos = datatype_id.find(".");
-    if (period_pos == std::string::npos)
-    {
-        throw std::runtime_error("Bad datatype name \"" + datatype_fqn + "\"");
-    }
-
-    return {datatype_id.substr(0, period_pos),
-            datatype_id.substr(period_pos + 1)};
+    return strutil::split_on_string(datatype_id, ".");
 }
 
 optional<DialogData> DialogDecoder::decode(
@@ -62,11 +54,11 @@ optional<DialogData> DialogDecoder::decode(
         sol::table dialog_table =
             *lua.get_registry_manager().get_table("core", "dialog");
 
-        std::string mod_name;
-        std::string data_id;
-        std::tie(mod_name, data_id) = _parse_id("core", "dialog", id);
+        std::string mod_name, data_id;
+        std::tie(mod_name, data_id) = parse_id("core", "dialog", id);
 
-        sol::table dialog_table_data = dialog_table[mod_name][data_id];
+        lua::ConfigTable dialog_table_data(
+            dialog_table[mod_name][data_id].get<sol::table>());
 
         return DialogDecoderLogic(lua.get_export_manager())
             .decode(dialog_table_data);
@@ -79,149 +71,135 @@ optional<DialogData> DialogDecoder::decode(
     }
 }
 
-void DialogDecoderLogic::_parse_text(
-    sol::table node_data,
+void DialogDecoderLogic::parse_text(
+    lua::ConfigTable& node_data,
     const std::string& full_id,
     DialogNode& the_dialog_node)
 {
     // TODO: make getter
-    sol::object node_text = node_data["text"];
-    if (node_text == sol::lua_nil)
+    if (auto node_text_opt = node_data.get_optional<sol::object>("text"))
     {
-        return;
-    }
-
-    if (node_text.is<std::string>())
-    {
-        the_dialog_node.text.emplace_back(node_text.as<std::string>());
-    }
-    else if (node_text.is<sol::table>())
-    {
-        for (const auto& pair : node_text.as<sol::table>())
+        sol::object node_text = *node_text_opt;
+        if (node_text.is<std::string>())
         {
-            std::string text = pair.second.as<std::string>();
-            the_dialog_node.text.emplace_back(text);
+            the_dialog_node.text.emplace_back(node_text.as<std::string>());
         }
-    }
-    else
-    {
-        throw std::runtime_error(
-            full_id + ": \"text\" must be either a table or string.");
-    }
-}
-
-void DialogDecoderLogic::_parse_choices(
-    sol::table node_data,
-    const std::string& full_id,
-    DialogNode& the_dialog_node)
-{
-    // TODO: make getter
-    sol::object node_choices = node_data["choices"];
-    if (node_choices == sol::lua_nil)
-    {
-        return;
-    }
-
-    if (node_choices.is<std::string>())
-    {
-        if (node_choices.as<std::string>() == "End")
+        else if (node_text.is<sol::table>())
         {
-            // TODO: move "bye" text into locale
-            the_dialog_node.choices.emplace_back("bye"s, none);
+            for (const auto& pair : node_text.as<sol::table>())
+            {
+                std::string text = pair.second.as<std::string>();
+                the_dialog_node.text.emplace_back(text);
+            }
         }
         else
         {
-            // Value acts as next node label to move to
-            the_dialog_node.choices.emplace_back(
-                "more"s, node_choices.as<std::string>());
+            throw std::runtime_error(
+                full_id + ": \"text\" must be either a table or string.");
         }
     }
-    else if (node_choices.is<sol::table>())
+}
+
+void DialogDecoderLogic::parse_choice_string(
+    const std::string& choice,
+    DialogNode& the_dialog_node)
+{
+    if (choice == "End")
     {
-        sol::table node_choices_table = node_choices.as<sol::table>();
-        for (const auto& pair : node_choices_table)
-        {
-            sol::table choice_data = pair.second.as<sol::table>();
-            std::string text_key = choice_data["text"];
-            std::string next_node = choice_data["node"];
-
-            if (text_key == ""s || next_node == ""s)
-            {
-                throw std::runtime_error(
-                    full_id
-                    + ": Expected \"text\" and \"node\" fields for choice"s);
-            }
-
-            if (next_node == "End")
-            {
-                the_dialog_node.choices.emplace_back(text_key, none);
-            }
-            else
-            {
-                the_dialog_node.choices.emplace_back(text_key, next_node);
-            }
-        }
+        // TODO: move "bye" text into locale
+        the_dialog_node.choices.emplace_back("bye"s, none);
     }
     else
     {
-        throw std::runtime_error(
-            full_id + ": \"choices\" must be either a table or string.");
+        // Value acts as next node label to move to
+        the_dialog_node.choices.emplace_back("more"s, choice);
+    }
+}
+
+void DialogDecoderLogic::parse_choice_table(
+    sol::table& node_choices_table,
+    const std::string& full_id,
+    DialogNode& the_dialog_node)
+{
+    for (const auto& pair : node_choices_table)
+    {
+        lua::ConfigTable choice_data(pair.second.as<sol::table>(), full_id);
+
+        auto text_key = choice_data.get_required<std::string>("text");
+        auto next_node = choice_data.get_required<std::string>("node");
+
+        if (next_node == "End")
+        {
+            the_dialog_node.choices.emplace_back(text_key, none);
+        }
+        else
+        {
+            the_dialog_node.choices.emplace_back(text_key, next_node);
+        }
+    }
+}
+
+void DialogDecoderLogic::parse_choices(
+    lua::ConfigTable& node_data,
+    const std::string& full_id,
+    DialogNode& the_dialog_node)
+{
+    if (auto node_choices_opt = node_data.get_optional<sol::object>("choices"))
+    {
+        sol::object node_choices = *node_choices_opt;
+
+        if (node_choices.is<std::string>())
+        {
+            parse_choice_string(
+                node_choices.as<std::string>(), the_dialog_node);
+        }
+        else if (node_choices.is<sol::table>())
+        {
+            sol::table node_choices_table = node_choices.as<sol::table>();
+            parse_choice_table(node_choices_table, full_id, the_dialog_node);
+        }
+        else
+        {
+            throw std::runtime_error(
+                full_id + ": \"choices\" must be either a table or string.");
+        }
     }
 }
 
 // Shared between decoder and node generator logic
 void DialogDecoderLogic::parse_text_choices(
-    sol::table node_data,
+    lua::ConfigTable& node_data,
     const std::string& full_id,
     DialogNode& the_dialog_node)
 {
-    _parse_text(node_data, full_id, the_dialog_node);
-    _parse_choices(node_data, full_id, the_dialog_node);
+    parse_text(node_data, full_id, the_dialog_node);
+    parse_choices(node_data, full_id, the_dialog_node);
 }
 
-void DialogDecoderLogic::_parse_node_behavior(
-    sol::table node_data,
+void DialogDecoderLogic::parse_node_behavior(
+    lua::ConfigTable& node_data,
     const std::string& full_id,
-    const std::string& node_name,
     DialogNode& the_dialog_node)
 {
     the_dialog_node.behavior = std::make_shared<DialogNodeBehavior>();
 
     int behaviors = 0;
-    if (node_data["generator"] != sol::lua_nil)
+    if (auto cb = node_data.get_optional_callback("generator", export_manager))
     {
-        std::string callback_generator = node_data["generator"];
-        if (!export_manager.has_function(callback_generator))
-        {
-            throw std::runtime_error(
-                full_id + ": Node \"" + node_name
-                + "\" has unknown Lua callback " + callback_generator);
-        }
         the_dialog_node.behavior =
-            std::make_shared<DialogNodeBehaviorGenerator>(callback_generator);
+            std::make_shared<DialogNodeBehaviorGenerator>(*cb);
         behaviors++;
     }
-    if (node_data["redirector"] != sol::lua_nil)
+    if (auto cb = node_data.get_optional_callback("redirector", export_manager))
     {
-        // TODO dry
-        std::string callback_redirector = node_data["redirector"];
-        if (!export_manager.has_function(callback_redirector))
-        {
-            throw std::runtime_error(
-                full_id + ": Node \"" + node_name
-                + "\" has unknown Lua callback " + callback_redirector);
-        }
         the_dialog_node.behavior =
-            std::make_shared<DialogNodeBehaviorRedirector>(callback_redirector);
+            std::make_shared<DialogNodeBehaviorRedirector>(*cb);
         behaviors++;
     }
-    if (node_data["inherit_choices"] != sol::lua_nil)
+    if (auto node_id = node_data.get_optional<std::string>("inherit_choices"))
     {
-        // TODO dry
-        std::string node_id_for_choices = node_data["inherit_choices"];
         the_dialog_node.behavior =
-            std::make_shared<DialogNodeBehaviorInheritChoices>(
-                node_id_for_choices);
+            std::make_shared<DialogNodeBehaviorInheritChoices>(*node_id);
         behaviors++;
     }
 
@@ -232,45 +210,40 @@ void DialogDecoderLogic::_parse_node_behavior(
     }
 }
 
-void DialogDecoderLogic::_parse_run_before_after(
-    sol::table node_data,
-    const std::string& full_id,
-    const std::string& node_name,
+void DialogDecoderLogic::parse_run_before_after(
+    lua::ConfigTable& node_data,
     DialogNode& the_dialog_node)
 {
-    if (node_data["run_before"] != sol::lua_nil)
+    if (auto cb = node_data.get_optional_callback("run_before", export_manager))
     {
-        // TODO dry
-        std::string callback_before = node_data["run_before"];
-        if (!export_manager.has_function(callback_before))
-        {
-            throw std::runtime_error(
-                full_id + ": Node \"" + node_name
-                + "\" has unknown Lua callback " + callback_before);
-        }
-        the_dialog_node.callback_before = callback_before;
+        the_dialog_node.callback_before = *cb;
     }
 
-    if (node_data["run_after"] != sol::lua_nil)
+    if (auto cb = node_data.get_optional_callback("run_after", export_manager))
     {
-        // TODO dry
-        std::string callback_after = node_data["run_after"];
-        if (!export_manager.has_function(callback_after))
-        {
-            throw std::runtime_error(
-                full_id + ": Node \"" + node_name
-                + "\" has unknown Lua callback " + callback_after);
-        }
-        the_dialog_node.callback_after = callback_after;
+        the_dialog_node.callback_after = *cb;
     }
 }
 
-DialogData DialogDecoderLogic::decode(sol::table table)
+DialogNode DialogDecoderLogic::parse_node(
+    lua::ConfigTable node_data,
+    const std::string& node_id)
+{
+    DialogNode the_dialog_node;
+
+    parse_text_choices(node_data, node_id, the_dialog_node);
+    parse_node_behavior(node_data, node_id, the_dialog_node);
+    parse_run_before_after(node_data, the_dialog_node);
+
+    return the_dialog_node;
+}
+
+DialogData DialogDecoderLogic::decode(lua::ConfigTable& table)
 {
     DialogData::map_type nodes;
-    std::string full_id = table["_full_id"];
+    std::string full_id = table.get_required<std::string>("_full_id");
 
-    sol::object nodes_table = table["nodes"];
+    sol::object nodes_table = table.get_required<sol::object>("nodes");
     if (nodes_table == sol::lua_nil)
     {
         throw std::runtime_error(full_id + ": missing \"nodes\" field");
@@ -278,17 +251,12 @@ DialogData DialogDecoderLogic::decode(sol::table table)
 
     for (const auto& pair : nodes_table.as<sol::table>())
     {
-        DialogNode the_dialog_node;
-
         std::string node_name = pair.first.as<std::string>();
-        sol::table node_data = pair.second.as<sol::table>();
-
         std::string node_id = full_id + "." + node_name;
-        the_dialog_node.id = node_id;
+        lua::ConfigTable node_data(pair.second.as<sol::table>(), node_id);
 
-        parse_text_choices(node_data, full_id, the_dialog_node);
-        _parse_node_behavior(node_data, full_id, node_name, the_dialog_node);
-        _parse_run_before_after(node_data, full_id, node_name, the_dialog_node);
+        DialogNode the_dialog_node = parse_node(node_data, node_id);
+        the_dialog_node.id = node_id;
 
         nodes.insert(std::make_pair(node_id, std::move(the_dialog_node)));
     }

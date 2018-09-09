@@ -1,4 +1,5 @@
 #include "dialog_data.hpp"
+#include "../lua_env/config_table.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../talk.hpp"
 #include "../ui/ui_menu_dialog.hpp"
@@ -41,8 +42,11 @@ bool DialogNodeBehaviorGenerator::apply(
     // The table format is the same as that of the parsed dialog HCL.
     try
     {
+        lua::ConfigTable wrapped_result(
+            result, "<retval of " + callback_generator + ">");
         DialogDecoderLogic(the_dialog.export_manager)
-            .parse_text_choices(result, "<generated node>", the_dialog_node);
+            .parse_text_choices(
+                wrapped_result, "<generated node>", the_dialog_node);
     }
     catch (const std::exception& e)
     {
@@ -57,8 +61,6 @@ bool DialogNodeBehaviorRedirector::apply(
     DialogData& the_dialog,
     DialogNode& the_dialog_node)
 {
-    std::cout << " REDIRECT " << std::endl;
-
     sol::object result = the_dialog.export_manager.call_with_result(
         callback_redirector,
         // Type of templated function will be wrong unless there is a cast, for
@@ -73,7 +75,6 @@ bool DialogNodeBehaviorRedirector::apply(
                 + ": Redirector callback returned invalid node id");
         return false;
     }
-    std::cout << " REDIRECT " << result.as<std::string>() << std::endl;
 
     return the_dialog.set_node(result.as<std::string>());
 }
@@ -187,7 +188,6 @@ bool DialogData::apply_node_behavior(DialogNode& node)
 {
     try
     {
-        std::cout << " APPLY " << node.id << std::endl;
         return node.behavior->apply(*this, node);
     }
     catch (const std::exception& e)
@@ -265,7 +265,6 @@ bool DialogData::advance_internal(
         current_text_index = 0;
         return true;
     }
-    std::cout << " NEXT: '" << *node_id << std::endl;
 
     auto it = nodes.find(*node_id);
     if (it == nodes.end())
@@ -290,6 +289,41 @@ bool DialogData::advance_internal(
     return true;
 }
 
+bool DialogData::show_dialog()
+{
+    if (!run_callback_before())
+    {
+        return false;
+    }
+
+    bool cancelable = is_cancelable_now();
+    auto result = ui::UIMenuDialog(*this, cancelable).show();
+
+    if (result.canceled)
+    {
+        if (scenemode)
+        {
+            scene_cut = 1;
+        }
+        talk_reset_variables();
+        // return talk_result_t::talk_end;
+        return false;
+    }
+
+    if (!run_callback_after())
+    {
+        return false;
+    }
+
+    size_t choice_index = *result.value;
+    if (!advance(choice_index))
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void DialogData::show()
 {
     // The large amount of returns is to guard against user error, since dialogs
@@ -302,32 +336,7 @@ void DialogData::show()
 
     while (has_more_text())
     {
-        if (!run_callback_before())
-        {
-            return;
-        }
-
-        bool cancelable = is_cancelable_now();
-        auto result = ui::UIMenuDialog(*this, cancelable).show();
-
-        if (result.canceled)
-        {
-            if (scenemode)
-            {
-                scene_cut = 1;
-            }
-            talk_reset_variables();
-            // return talk_result_t::talk_end;
-            return;
-        }
-
-        if (!run_callback_after())
-        {
-            return;
-        }
-
-        size_t choice_index = *result.value;
-        if (!advance(choice_index))
+        if (!show_dialog())
         {
             return;
         }

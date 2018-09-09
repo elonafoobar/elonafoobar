@@ -2,6 +2,7 @@
 
 #include "../dialog/dialog_data.hpp"
 #include "../dialog/dialog_decoder.hpp"
+#include "../lua_env/config_table.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
 #include "tests.hpp"
@@ -44,7 +45,9 @@ return dialog
 
     try
     {
-        return DialogDecoderLogic(lua.get_export_manager()).decode(parsed);
+        lua::ConfigTable wrapped_result(parsed);
+        return DialogDecoderLogic(lua.get_export_manager())
+            .decode(wrapped_result);
     }
     catch (const std::exception& e)
     {
@@ -123,10 +126,6 @@ dialog {
 }
 )",
         lua);
-
-    REQUIRE_SOME(data);
-
-    REQUIRE_FALSE(data->state_is_valid());
 }
 
 TEST_CASE(

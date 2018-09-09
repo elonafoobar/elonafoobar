@@ -195,6 +195,9 @@ private:
     /// Returns false on failure.
     bool advance_internal(optional<std::string> node_id, size_t text_index);
 
+    /// Returns false on failure.
+    bool show_dialog();
+
     map_type nodes;
     size_t current_text_index = 0;
     optional<std::string> current_node_id = none;

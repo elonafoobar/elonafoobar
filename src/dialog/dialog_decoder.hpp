@@ -8,8 +8,9 @@ namespace elona
 
 namespace lua
 {
-class LuaEnv;
 class ExportManager;
+class LuaEnv;
+class ConfigTable;
 } // namespace lua
 
 class DialogData;
@@ -31,7 +32,7 @@ public:
     }
 
 public:
-    DialogData decode(sol::table data);
+    DialogData decode(lua::ConfigTable& data);
 
     /**
      * Parses a Lua table containing the text and choices of a dialog node.
@@ -61,34 +62,43 @@ public:
      * @param the_dialog_node Dialog node to add data to (will be modified)
      */
     void parse_text_choices(
-        sol::table node_data,
+        lua::ConfigTable& node_data,
         const std::string& full_id,
         DialogNode& the_dialog_node);
 
 private:
     lua::ExportManager& export_manager;
 
-    void _parse_text(
-        sol::table node_data,
+    void parse_text(
+        lua::ConfigTable& node_data,
         const std::string& full_id,
         DialogNode& the_dialog_node);
 
-    void _parse_choices(
-        sol::table node_data,
+
+    void parse_choice_string(
+        const std::string& choice,
+        DialogNode& the_dialog_node);
+    void parse_choice_table(
+        sol::table& node_choices_table,
+        const std::string& full_id,
+        DialogNode& the_dialog_node);
+    void parse_choices(
+        lua::ConfigTable& node_data,
         const std::string& full_id,
         DialogNode& the_dialog_node);
 
-    void _parse_node_behavior(
-        sol::table node_data,
+    void parse_node_behavior(
+        lua::ConfigTable& node_data,
         const std::string& full_id,
-        const std::string& node_name,
         DialogNode& the_dialog_node);
 
-    void _parse_run_before_after(
-        sol::table node_data,
-        const std::string& full_id,
-        const std::string& node_name,
+    void parse_run_before_after(
+        lua::ConfigTable& node_data,
         DialogNode& the_dialog_node);
+
+    DialogNode parse_node(
+        lua::ConfigTable node_data,
+        const std::string& node_id);
 };
 
 } // namespace elona
