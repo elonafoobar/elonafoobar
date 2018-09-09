@@ -256,15 +256,6 @@ locale {
             left_bills = "税金を${_1}ヶ月分滞納している。"
             accused = "あなたは税金を${_1}ヶ月滞納した罪で訴えられた。"
             lose_fame = "名声値を${_1}失った。"
-
-            bill = "A bill has been sent to your house."
-            no_duty = "You don't have to pay tax until you hit level 6."
-            caution = "Caution! "
-            warning = "Warning!! "
-            have_to_go_embassy = "You have to go to the Embassy of Palmia and pay tax at once. "
-            left_bills = "You are in arrears with your tax for ${_1} month${s(_1)}."
-            accused = "You have been accused for being in arrears with your tax for${_1} months."
-            lose_fame = "You lose ${_1} fame."
         }
     }
 }
