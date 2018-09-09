@@ -1,5 +1,8 @@
 locale {
     ui {
+        bye = "さようなら"
+        more = "(続く)"
+
         save = " *保存* "
         playtime = "${_1}時間${_2}分${_3}秒"
         save_on_suspend = "アプリが中断された。セーブします。"

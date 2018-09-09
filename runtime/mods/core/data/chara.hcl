@@ -542,6 +542,8 @@ chara whom_dwell_in_the_vanity {
     category = 0
     rarity = 1000
     coefficient = 400
+
+    dialog_id = "core.dialog:core.whom_dwell_in_the_vanity"
 }
 
 chara loyter {

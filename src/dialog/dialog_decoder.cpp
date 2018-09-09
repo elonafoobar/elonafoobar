@@ -7,8 +7,6 @@
 namespace elona
 {
 
-// TODO: make wrapper for sol::table for getting fields easier
-
 optional<DialogData> DialogDecoder::decode(const std::string& id)
 {
     return decode(id, *lua::lua.get());
@@ -76,7 +74,6 @@ void DialogDecoderLogic::parse_text(
     const std::string& full_id,
     DialogNode& the_dialog_node)
 {
-    // TODO: make getter
     if (auto node_text_opt = node_data.get_optional<sol::object>("text"))
     {
         sol::object node_text = *node_text_opt;
@@ -106,13 +103,12 @@ void DialogDecoderLogic::parse_choice_string(
 {
     if (choice == "End")
     {
-        // TODO: move "bye" text into locale
-        the_dialog_node.choices.emplace_back("bye"s, none);
+        the_dialog_node.choices.emplace_back("core.locale.ui.bye"s, none);
     }
     else
     {
-        // Value acts as next node label to move to
-        the_dialog_node.choices.emplace_back("more"s, choice);
+        // value acts as next node label to move to
+        the_dialog_node.choices.emplace_back("core.locale.ui.more"s, choice);
     }
 }
 

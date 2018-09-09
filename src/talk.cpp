@@ -154,17 +154,24 @@ void talk_to_npc()
         cdata[tc].visited_just_now() = false;
         talk_wrapper(TalkResult::talk_house_visitor);
     }
-    if (chatval_unique_chara_id)
+
+    if (chatval_unique_chara_id
+        && gdata_current_map != mdata_t::MapId::show_house && tc >= 16)
     {
-        if (gdata_current_map != mdata_t::MapId::show_house)
+        const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
+
+        if (dialog_id)
         {
-            if (tc >= 16)
-            {
-                talk_wrapper(TalkResult::talk_unique);
-                return;
-            }
+            dialog_start(*dialog_id);
         }
+        else
+        {
+            talk_wrapper(TalkResult::talk_unique);
+        }
+
+        return;
     }
+
     if (quest_teleport)
     {
         quest_teleport = false;
@@ -173,15 +180,7 @@ void talk_to_npc()
     }
     buff = "";
 
-    const auto& dialog_id = the_character_db[cdata[tc].id]->dialog_id;
-    if (dialog_id)
-    {
-        dialog_start(*dialog_id);
-    }
-    else
-    {
-        talk_wrapper(TalkResult::talk_npc);
-    }
+    talk_wrapper(TalkResult::talk_npc);
 }
 
 

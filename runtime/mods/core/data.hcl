@@ -8,5 +8,6 @@ data {
         core.item_chip  = ["data/item_chip.hcl"]
         core.music      = ["data/music.hcl"]
         core.sound      = ["data/sound.hcl"]
+        core.dialog     = ["data/dialog.hcl"]
     }
 }

@@ -26,7 +26,7 @@ bool UIMenuDialog::init()
     }
     else
     {
-        _choice_text.emplace_back(i18n::_(u8"ui", u8"more"));
+        _choice_text.emplace_back(i18n::s.get("core.locale.ui.more"));
         key_list(listmax) = key_select(listmax);
         ++listmax;
     }
