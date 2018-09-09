@@ -376,7 +376,7 @@ std::string txtbuilding(int prm_368, int prm_369)
     p_at_m32 = bddata(0, prm_368, prm_369);
     s_at_m32 = i18n::s.get(
         "core.locale.map.you_see",
-        i18n::s.get_enum("core.locate.map.misc_location", p_at_m32));
+        i18n::s.get_enum("core.locale.map.misc_location", p_at_m32));
     return s_at_m32;
 }
 
