@@ -2787,10 +2787,7 @@ label_1742_internal:
     }
     if (mdata_map_refresh_type == 1)
     {
-        if (game_data.date.hour + game_data.date.day * 24
-                + game_data.date.month * 24 * 30
-                + game_data.date.year * 24 * 30 * 12
-            >= mdata_map_next_regenerate_date)
+        if (game_data.date.hours() >= mdata_map_next_regenerate_date)
         {
             if (mdata_map_should_regenerate == 0)
             {
@@ -2869,10 +2866,7 @@ label_1742_internal:
             }
             if (cdata[rc].state() == Character::State::villager_dead)
             {
-                if (game_data.date.hour + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12
-                    >= cdata[rc].time_to_revive)
+                if (game_data.date.hours() >= cdata[rc].time_to_revive)
                 {
                     revive_player();
                 }
@@ -3473,9 +3467,7 @@ label_1744_internal:
     {
         if (gdata_distance_between_town >= 16)
         {
-            p = game_data.date.hour + game_data.date.day * 24
-                + game_data.date.month * 24 * 30
-                + game_data.date.year * 24 * 30 * 12 - gdata_departure_date;
+            p = game_data.date.hours() - gdata_departure_date;
             txt(i18n::s.get(
                 "core.locale.map.since_leaving.time_passed",
                 p / 24,

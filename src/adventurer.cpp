@@ -193,9 +193,7 @@ void adventurer_update()
         cc = rc;
         if (cdata[rc].period_of_contract != 0)
         {
-            if (cdata[rc].period_of_contract < game_data.date.hour
-                    + game_data.date.day * 24 + game_data.date.month * 24 * 30
-                    + game_data.date.year * 24 * 30 * 12)
+            if (cdata[rc].period_of_contract < game_data.date.hours())
             {
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
@@ -213,10 +211,7 @@ void adventurer_update()
             }
             if (cdata[rc].state() == Character::State::adventurer_dead)
             {
-                if (game_data.date.hour + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12
-                    >= cdata[rc].time_to_revive)
+                if (game_data.date.hours() >= cdata[rc].time_to_revive)
                 {
                     if (rnd(3) == 0)
                     {

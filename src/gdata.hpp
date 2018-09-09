@@ -124,6 +124,11 @@ struct Date
     int hour;
     int minute;
     int second;
+
+    int hours()
+    {
+        return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
+    }
 };
 
 /**

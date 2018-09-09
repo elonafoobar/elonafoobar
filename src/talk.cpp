@@ -97,10 +97,7 @@ void talk_to_npc()
             return;
         }
     }
-    if (game_data.date.hour + game_data.date.day * 24
-            + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12
-        >= cdata[tc].time_interest_revive)
+    if (game_data.date.hours() >= cdata[tc].time_interest_revive)
     {
         cdata[tc].interest = 100;
     }

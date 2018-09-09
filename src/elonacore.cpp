@@ -4338,8 +4338,7 @@ void character_drops_item()
 
 void food_gets_rotten()
 {
-    i = game_data.date.hour + game_data.date.day * 24
-        + game_data.date.month * 24 * 30 + game_data.date.year * 24 * 30 * 12;
+    i = game_data.date.hours();
     for (int cnt = 0; cnt < 246; ++cnt)
     {
         if (cnt == ELONA_MAX_CHARACTERS)
@@ -4387,11 +4386,8 @@ void food_gets_rotten()
                                             "core.locale.misc.corpse_is_dried_"
                                             "up",
                                             inv[cnt]));
-                                        inv[cnt].param3 = game_data.date.hour
-                                            + game_data.date.day * 24
-                                            + game_data.date.month * 24 * 30
-                                            + game_data.date.year * 24 * 30 * 12
-                                            + 2160;
+                                        inv[cnt].param3 =
+                                            game_data.date.hours() + 2160;
                                         inv[cnt].image = 337;
                                         inv[cnt].id = 571;
                                         inv[cnt].param1 = 0;
@@ -4436,11 +4432,7 @@ void food_gets_rotten()
                                         flttypeminor = 58500;
                                         itemcreate(0, 0, -1, -1, p);
                                         p = 0;
-                                        i = game_data.date.hour
-                                            + game_data.date.day * 24
-                                            + game_data.date.month * 24 * 30
-                                            + game_data.date.year * 24 * 30
-                                                * 12;
+                                        i = game_data.date.hours();
                                     }
                                 }
                             }
@@ -5099,9 +5091,7 @@ TurnResult exit_map()
             || gdata_previous_map == mdata_t::MapId::your_home
             || gdata_departure_date == 0)
         {
-            gdata_departure_date = game_data.date.hour + game_data.date.day * 24
-                + game_data.date.month * 24 * 30
-                + game_data.date.year * 24 * 30 * 12;
+            gdata_departure_date = game_data.date.hours();
             gdata_distance_between_town = 0;
             gdata_left_town_map = gdata_previous_map;
         }
@@ -5299,20 +5289,12 @@ void save_map_local_data()
 
 void map_proc_regen_and_update()
 {
-    if (game_data.date.hour + game_data.date.day * 24
-            + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12
-        >= adata(25, gdata_current_map))
+    if (game_data.date.hours() >= adata(25, gdata_current_map))
     {
         adata(24, gdata_current_map) = rnd(10000);
-        adata(25, gdata_current_map) = game_data.date.hour
-            + game_data.date.day * 24 + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12 + 24;
+        adata(25, gdata_current_map) = game_data.date.hours() + 24;
     }
-    if (game_data.date.hour + game_data.date.day * 24
-            + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12
-        >= mdata_map_next_regenerate_date)
+    if (game_data.date.hours() >= mdata_map_next_regenerate_date)
     {
         if (mdata_map_should_regenerate == 0)
         {
@@ -5403,14 +5385,9 @@ void map_proc_regen_and_update()
                 map_randsite();
             }
         }
-        mdata_map_next_regenerate_date = game_data.date.hour
-            + game_data.date.day * 24 + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12 + 120;
+        mdata_map_next_regenerate_date = game_data.date.hours() + 120;
     }
-    if (game_data.date.hour + game_data.date.day * 24
-            + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12
-        >= mdata_map_next_restock_date)
+    if (game_data.date.hours() >= mdata_map_next_restock_date)
     {
         if (mdata_map_next_restock_date == 0)
         {
@@ -5418,12 +5395,8 @@ void map_proc_regen_and_update()
         }
         else
         {
-            renewmulti = (game_data.date.hour + game_data.date.day * 24
-                          + game_data.date.month * 24 * 30
-                          + game_data.date.year * 24 * 30 * 12
-                          - mdata_map_next_restock_date)
-                    / 24
-                + 1;
+            renewmulti =
+                (game_data.date.hours() - mdata_map_next_restock_date) / 24 + 1;
         }
         if (adata(16, gdata_current_map) == mdata_t::MapId::ranch)
         {
@@ -5528,9 +5501,7 @@ void map_proc_regen_and_update()
                 }
             }
         }
-        mdata_map_next_restock_date = game_data.date.hour
-            + game_data.date.day * 24 + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12 + 24;
+        mdata_map_next_restock_date = game_data.date.hours() + 24;
     }
 }
 
@@ -9416,9 +9387,7 @@ void migrate_save_data(const fs::path& save_dir)
     }
     if (gdata_departure_date == 0)
     {
-        gdata_departure_date = game_data.date.hour + game_data.date.day * 24
-            + game_data.date.month * 24 * 30
-            + game_data.date.year * 24 * 30 * 12;
+        gdata_departure_date = game_data.date.hours();
     }
     for (int i = 0; i < 20; ++i)
     {
@@ -12273,18 +12242,12 @@ int pick_up_item()
                 {
                     if (inv[ti].param3 > 0)
                     {
-                        inv[ti].param3 += game_data.date.hour
-                            + game_data.date.day * 24
-                            + game_data.date.month * 24 * 30
-                            + game_data.date.year * 24 * 30 * 12;
+                        inv[ti].param3 += game_data.date.hours();
                     }
                 }
                 else if (inv[ti].param3 != 0 && inv[ti].material == 35)
                 {
-                    inv[ti].param3 = game_data.date.hour
-                        + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12
+                    inv[ti].param3 = game_data.date.hours()
                         + the_item_db[inv[ti].id]->expiration_date;
                     if (inv[ti].param2 != 0)
                     {
@@ -12296,10 +12259,7 @@ int pick_up_item()
             {
                 if (inv[ti].param3 > 0)
                 {
-                    inv[ti].param3 = inv[ti].param3
-                        - (game_data.date.hour + game_data.date.day * 24
-                           + game_data.date.month * 24 * 30
-                           + game_data.date.year * 24 * 30 * 12);
+                    inv[ti].param3 = inv[ti].param3 - game_data.date.hours();
                 }
             }
         }

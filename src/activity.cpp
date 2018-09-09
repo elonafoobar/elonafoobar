@@ -263,10 +263,7 @@ void continuous_action_perform()
                 {
                     continue;
                 }
-                if (game_data.date.hour + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12
-                    >= audience.time_interest_revive)
+                if (game_data.date.hours() >= audience.time_interest_revive)
                 {
                     audience.interest = 100;
                 }
@@ -323,10 +320,8 @@ void continuous_action_perform()
                 if (cc == 0)
                 {
                     cdata[tc].interest -= rnd(15);
-                    cdata[tc].time_interest_revive = game_data.date.hour
-                        + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12 + 12;
+                    cdata[tc].time_interest_revive =
+                        game_data.date.hours() + 12;
                 }
                 if (cdata[tc].interest <= 0)
                 {
@@ -985,18 +980,15 @@ void continuous_action_others()
             if (game_data.weather == 0 || game_data.weather == 3)
             {
                 if (gdata_time_when_textbook_becomes_available
-                    > game_data.date.hour + game_data.date.day * 24
-                        + game_data.date.month * 24 * 30
-                        + game_data.date.year * 24 * 30 * 12)
+                    > game_data.date.hours())
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.bored"));
                     cdata[cc].continuous_action.finish();
                     return;
                 }
             }
-            gdata_time_when_textbook_becomes_available = game_data.date.hour
-                + game_data.date.day * 24 + game_data.date.month * 24 * 30
-                + game_data.date.year * 24 * 30 * 12 + 48;
+            gdata_time_when_textbook_becomes_available =
+                game_data.date.hours() + 48;
             if (inv[ci].id == 563)
             {
                 txt(i18n::s.get(
