@@ -757,8 +757,8 @@ TurnResult turn_begin()
         }
     }
 
-    gdata_second += turncost / 5 + 1;
-    if (gdata_second >= 60)
+    game_data.date.second += turncost / 5 + 1;
+    if (game_data.date.second >= 60)
     {
         ++game_data.play_turns;
         cc = 0;
@@ -770,10 +770,10 @@ TurnResult turn_begin()
         {
             auto_identify();
         }
-        gdata_minute += gdata_second / 60;
+        game_data.date.minute += game_data.date.second / 60;
         if (gdata_left_minutes_of_executing_quest > 0)
         {
-            gdata_left_minutes_of_executing_quest -= gdata_second / 60;
+            gdata_left_minutes_of_executing_quest -= game_data.date.second / 60;
             if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
@@ -788,11 +788,11 @@ TurnResult turn_begin()
                 event_add(14);
             }
         }
-        gdata_second = gdata_second % 60;
-        if (gdata_minute >= 60)
+        game_data.date.second = game_data.date.second % 60;
+        if (game_data.date.minute >= 60)
         {
-            gdata_hour += gdata_minute / 60;
-            gdata_minute = gdata_minute % 60;
+            game_data.date.hour += game_data.date.minute / 60;
+            game_data.date.minute = game_data.date.minute % 60;
             weather_changes();
         }
     }
@@ -1606,7 +1606,7 @@ label_2747:
         if (getkey(snail::Key::f6))
         {
             dbg_skipevent = 1;
-            ++gdata_hour;
+            ++game_data.date.hour;
             weather_changes();
             dbg_skipevent = 0;
             mode = 0;

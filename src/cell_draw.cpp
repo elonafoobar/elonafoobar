@@ -801,7 +801,7 @@ bool hp_bar_visible(const Character& chara)
 
 bool is_night()
 {
-    return gdata_hour > 17 || gdata_hour < 6;
+    return game_data.date.hour > 17 || game_data.date.hour < 6;
 }
 
 

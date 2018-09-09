@@ -11,7 +11,6 @@ GameData game_data;
 FoobarData foobar_data;
 
 #define GDATA_PACK(x, ident) gdata(x) = ident;
-
 #define GDATA_UNPACK(x, ident) ident = gdata(x);
 
 #define SERIALIZE_ALL() \
@@ -24,7 +23,12 @@ FoobarData foobar_data;
     SERIALIZE(6, pc_y_in_world_map); \
     SERIALIZE(7, play_days); \
     SERIALIZE(8, random_seed); \
-\
+    SERIALIZE(10, date.year); \
+    SERIALIZE(11, date.month); \
+    SERIALIZE(12, date.day); \
+    SERIALIZE(13, date.hour); \
+    SERIALIZE(14, date.minute); \
+    SERIALIZE(15, date.second); \
     SERIALIZE(16, next_inventory_serial_id); \
     SERIALIZE(17, weather); \
     SERIALIZE(18, hours_until_weather_changes); \

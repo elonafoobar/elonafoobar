@@ -131,9 +131,9 @@ int magic()
                     if (efstatus == CurseState::blessed)
                     {
                         cdata[tc].birth_year += rnd(3) + 1;
-                        if (cdata[tc].birth_year + 12 > gdata_year)
+                        if (cdata[tc].birth_year + 12 > game_data.date.year)
                         {
-                            cdata[tc].birth_year = gdata_year - 12;
+                            cdata[tc].birth_year = game_data.date.year - 12;
                         }
                         if (is_in_fov(cdata[tc]))
                         {

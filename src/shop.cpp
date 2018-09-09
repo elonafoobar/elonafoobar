@@ -40,8 +40,9 @@ void shop_refresh_on_talk()
         shop_refresh();
     }
     else if (
-        gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12
+        game_data.date.hour + game_data.date.day * 24
+            + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12
         >= cdata[tc].time_to_restore)
     {
         shop_refresh();
@@ -699,14 +700,16 @@ void shop_refresh()
     }
     if (Config::instance().restock_interval)
     {
-        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
+        cdata[tc].time_to_restore = game_data.date.hour
+            + game_data.date.day * 24 + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12
             + 24 * Config::instance().restock_interval;
     }
     else
     {
-        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 - 1;
+        cdata[tc].time_to_restore = game_data.date.hour
+            + game_data.date.day * 24 + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 - 1;
     }
 }
 
@@ -847,8 +850,8 @@ void calc_trade_goods_price()
         trate(7) = 70;
     }
     randomize(
-        (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-         + gdata_year * 24 * 30 * 12)
+        (game_data.date.hour + game_data.date.day * 24
+         + game_data.date.month * 24 * 30 + game_data.date.year * 24 * 30 * 12)
         / 100);
     for (int cnt = 0; cnt < 10; ++cnt)
     {

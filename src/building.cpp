@@ -485,7 +485,7 @@ void prompt_hiring()
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        randomize(gdata_day + cnt);
+        randomize(game_data.date.day + cnt);
         if (rnd(2))
         {
             continue;
@@ -499,7 +499,7 @@ void prompt_hiring()
             hire = rnd(isethire.size());
         }
         dbid = isethire(hire);
-        randomize(gdata_day + cnt);
+        randomize(game_data.date.day + cnt);
         flt(20);
         int stat = chara_create(-1, dbid, -3, 0);
         if (stat == 0)

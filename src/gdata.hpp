@@ -3,13 +3,6 @@
 #include "version.hpp"
 
 
-#define gdata_year gdata(10)
-#define gdata_month gdata(11)
-#define gdata_day gdata(12)
-#define gdata_hour gdata(13)
-#define gdata_minute gdata(14)
-#define gdata_second gdata(15)
-
 #define gdata_previous_map gdata(19)
 #define gdata_current_map gdata(20)
 #define gdata_current_dungeon_level gdata(22)
@@ -123,6 +116,16 @@ namespace elona
 template <typename T>
 struct elona_vector1;
 
+struct Date
+{
+    int year;
+    int month;
+    int day;
+    int hour;
+    int minute;
+    int second;
+};
+
 /**
  * Global game data that is serialized. Replaces gdata.
  */
@@ -137,12 +140,7 @@ struct GameData
     int pc_y_in_world_map;
     int play_days;
     int random_seed;
-    // int year;
-    // int month;
-    // int day;
-    // int hour;
-    // int minute;
-    // int second;
+    Date date;
     int next_inventory_serial_id;
     int weather;
     int hours_until_weather_changes;

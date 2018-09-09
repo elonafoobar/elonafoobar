@@ -1449,20 +1449,23 @@ label_0313_internal:
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
     if (ibit(7, prm_518) == 1
-        && gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12
+        && game_data.date.hour + game_data.date.day * 24
+                + game_data.date.month * 24 * 30
+                + game_data.date.year * 24 * 30 * 12
             < inv[prm_518].count)
     {
         s_ += lang(
             u8"("s
                 + (inv[prm_518].count
-                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                      + gdata_year * 24 * 30 * 12))
+                   - (game_data.date.hour + game_data.date.day * 24
+                      + game_data.date.month * 24 * 30
+                      + game_data.date.year * 24 * 30 * 12))
                 + u8"時間)"s,
             u8"(Next: "s
                 + (inv[prm_518].count
-                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                      + gdata_year * 24 * 30 * 12))
+                   - (game_data.date.hour + game_data.date.day * 24
+                      + game_data.date.month * 24 * 30
+                      + game_data.date.year * 24 * 30 * 12))
                 + u8"h.)"s);
     }
     if (inv[prm_518].id == 555 && inv[prm_518].count != 0)

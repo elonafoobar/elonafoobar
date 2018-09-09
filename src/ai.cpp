@@ -728,7 +728,7 @@ label_2692_internal:
         if (mdata_map_type == mdata_t::MapType::town
             || mdata_map_type == mdata_t::MapType::guild)
         {
-            if (gdata_hour >= 22 || gdata_hour < 7)
+            if (game_data.date.hour >= 22 || game_data.date.hour < 7)
             {
                 if (!cdata[cc].continuous_action)
                 {

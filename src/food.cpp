@@ -389,8 +389,9 @@ void make_dish(int ci, int type)
     inv[ci].param2 = type;
     if (inv[ci].material == 35 && inv[ci].param3 >= 0)
     {
-        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 72;
+        inv[ci].param3 = game_data.date.hour + game_data.date.day * 24
+            + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 + 72;
     }
 }
 

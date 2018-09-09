@@ -348,9 +348,9 @@ bool grant_special_wishing(const std::string& wish)
     {
         txt(i18n::s.get("core.locale.wish.wish_youth"));
         cdata.player().birth_year += 20;
-        if (cdata.player().birth_year + 12 > gdata_year)
+        if (cdata.player().birth_year + 12 > game_data.date.year)
         {
-            cdata.player().birth_year = gdata_year - 12;
+            cdata.player().birth_year = game_data.date.year - 12;
         }
     }
     else if (match_special_wish(

@@ -263,8 +263,9 @@ void continuous_action_perform()
                 {
                     continue;
                 }
-                if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                        + gdata_year * 24 * 30 * 12
+                if (game_data.date.hour + game_data.date.day * 24
+                        + game_data.date.month * 24 * 30
+                        + game_data.date.year * 24 * 30 * 12
                     >= audience.time_interest_revive)
                 {
                     audience.interest = 100;
@@ -322,9 +323,10 @@ void continuous_action_perform()
                 if (cc == 0)
                 {
                     cdata[tc].interest -= rnd(15);
-                    cdata[tc].time_interest_revive = gdata_hour + gdata_day * 24
-                        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-                        + 12;
+                    cdata[tc].time_interest_revive = game_data.date.hour
+                        + game_data.date.day * 24
+                        + game_data.date.month * 24 * 30
+                        + game_data.date.year * 24 * 30 * 12 + 12;
                 }
                 if (cdata[tc].interest <= 0)
                 {
@@ -982,18 +984,19 @@ void continuous_action_others()
         {
             if (game_data.weather == 0 || game_data.weather == 3)
             {
-                if (gdata_time_when_textbook_becomes_available > gdata_hour
-                        + gdata_day * 24 + gdata_month * 24 * 30
-                        + gdata_year * 24 * 30 * 12)
+                if (gdata_time_when_textbook_becomes_available
+                    > game_data.date.hour + game_data.date.day * 24
+                        + game_data.date.month * 24 * 30
+                        + game_data.date.year * 24 * 30 * 12)
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.bored"));
                     cdata[cc].continuous_action.finish();
                     return;
                 }
             }
-            gdata_time_when_textbook_becomes_available = gdata_hour
-                + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12 + 48;
+            gdata_time_when_textbook_becomes_available = game_data.date.hour
+                + game_data.date.day * 24 + game_data.date.month * 24 * 30
+                + game_data.date.year * 24 * 30 * 12 + 48;
             if (inv[ci].id == 563)
             {
                 txt(i18n::s.get(
@@ -1077,7 +1080,7 @@ void continuous_action_others()
                         || mdata_map_type == mdata_t::MapType::guild)
                     {
                         p = 5;
-                        gdata_minute += 30;
+                        game_data.date.minute += 30;
                     }
                 }
             }
@@ -1126,7 +1129,7 @@ void continuous_action_others()
                 }
             }
             i = sdata(300, 0) * 5 + sdata(12, 0) + 25;
-            if (gdata_hour >= 19 || gdata_hour < 7)
+            if (game_data.date.hour >= 19 || game_data.date.hour < 7)
             {
                 i = i * 15 / 10;
             }

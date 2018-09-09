@@ -380,7 +380,7 @@ int calc_rate_to_pierce(int id)
 
 std::string calcage(int cc)
 {
-    int n = gdata_year - cdata[cc].birth_year;
+    int n = game_data.date.year - cdata[cc].birth_year;
     return n >= 0 ? std::to_string(n)
                   : i18n::s.get("core.locale.chara.age_unknown");
 }

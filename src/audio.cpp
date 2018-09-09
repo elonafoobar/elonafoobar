@@ -66,7 +66,7 @@ SharedId get_default_music()
             "core.music:core.mcDungeon4",
             "core.music:core.mcDungeon5",
             "core.music:core.mcDungeon6"};
-        music_id = choices[gdata_hour % 6];
+        music_id = choices[game_data.date.hour % 6];
     }
     if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon
         || adata(16, gdata_current_map) == mdata_t::MapId::the_void)
@@ -145,7 +145,7 @@ SharedId get_default_music()
             "core.music:core.mcField1",
             "core.music:core.mcField2",
             "core.music:core.mcField3"};
-        music_id = choices[gdata_day % 3];
+        music_id = choices[game_data.date.day % 3];
     }
 
     return SharedId(*music_id);

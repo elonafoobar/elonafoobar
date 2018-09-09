@@ -259,8 +259,9 @@ TalkResult talk_arena_master(int chatval_)
     randomize(adata(26, gdata_current_map));
     if (chatval_ == 21)
     {
-        if (adata(26, gdata_current_map) > gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+        if (adata(26, gdata_current_map) > game_data.date.hour
+                + game_data.date.day * 24 + game_data.date.month * 24 * 30
+                + game_data.date.year * 24 * 30 * 12)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -308,8 +309,9 @@ TalkResult talk_arena_master(int chatval_)
     }
     else
     {
-        if (adata(27, gdata_current_map) > gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+        if (adata(27, gdata_current_map) > game_data.date.hour
+                + game_data.date.day * 24 + game_data.date.month * 24 * 30
+                + game_data.date.year * 24 * 30 * 12)
         {
             buff = i18n::s.get(
                 "core.locale.talk.npc.arena_master.enter.game_is_over",
@@ -341,13 +343,15 @@ TalkResult talk_arena_master(int chatval_)
     }
     if (arenaop == 0)
     {
-        adata(26, gdata_current_map) = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        adata(26, gdata_current_map) = game_data.date.hour
+            + game_data.date.day * 24 + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 + 24;
     }
     if (arenaop == 1)
     {
-        adata(27, gdata_current_map) = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24;
+        adata(27, gdata_current_map) = game_data.date.hour
+            + game_data.date.day * 24 + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 + 24;
     }
     gdata_executing_immediate_quest_type = 1;
     gdata(71) = 1;
@@ -1007,8 +1011,9 @@ TalkResult talk_adventurer_hire()
         cdata.player().gold -= calchireadv(tc);
         cdata[tc].relationship = 10;
         cdata[tc].is_contracting() = true;
-        cdata[tc].period_of_contract = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
+        cdata[tc].period_of_contract = game_data.date.hour
+            + game_data.date.day * 24 + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 + 168;
         ++cdata[tc].hire_count;
         snd(64);
         txtef(5);
@@ -1819,8 +1824,10 @@ TalkResult talk_npc()
                         }
                     }
                     cdata[tc].interest -= rnd(30);
-                    cdata[tc].time_interest_revive = gdata_hour + gdata_day * 24
-                        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 8;
+                    cdata[tc].time_interest_revive = game_data.date.hour
+                        + game_data.date.day * 24
+                        + game_data.date.month * 24 * 30
+                        + game_data.date.year * 24 * 30 * 12 + 8;
                 }
             }
         }

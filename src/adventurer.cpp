@@ -123,8 +123,9 @@ void addnews2(const std::string& prm_401, int prm_402)
 void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 {
     addnews2(
-        prm_403 + u8" "s + gdata_year + u8"/"s + gdata_month + u8"/"s
-        + gdata_day + u8" h"s + gdata_hour + ""s + u8" "s + prm_404);
+        prm_403 + u8" "s + game_data.date.year + u8"/"s + game_data.date.month
+        + u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s
+        + u8" "s + prm_404);
     return;
 }
 
@@ -192,8 +193,9 @@ void adventurer_update()
         cc = rc;
         if (cdata[rc].period_of_contract != 0)
         {
-            if (cdata[rc].period_of_contract < gdata_hour + gdata_day * 24
-                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+            if (cdata[rc].period_of_contract < game_data.date.hour
+                    + game_data.date.day * 24 + game_data.date.month * 24 * 30
+                    + game_data.date.year * 24 * 30 * 12)
             {
                 cdata[rc].period_of_contract = 0;
                 cdata[rc].is_contracting() = false;
@@ -211,8 +213,9 @@ void adventurer_update()
             }
             if (cdata[rc].state() == Character::State::adventurer_dead)
             {
-                if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                        + gdata_year * 24 * 30 * 12
+                if (game_data.date.hour + game_data.date.day * 24
+                        + game_data.date.month * 24 * 30
+                        + game_data.date.year * 24 * 30 * 12
                     >= cdata[rc].time_to_revive)
                 {
                     if (rnd(3) == 0)

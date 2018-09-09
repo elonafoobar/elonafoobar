@@ -1570,8 +1570,9 @@ TurnResult do_use_command()
 
     if (ibit(7, ci) == 1)
     {
-        if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12
+        if (game_data.date.hour + game_data.date.day * 24
+                + game_data.date.month * 24 * 30
+                + game_data.date.year * 24 * 30 * 12
             < inv[ci].count)
         {
             txt(i18n::s.get(
@@ -1581,8 +1582,9 @@ TurnResult do_use_command()
             return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
-        inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + inv[ci].param3;
+        inv[ci].count = game_data.date.hour + game_data.date.day * 24
+            + game_data.date.month * 24 * 30
+            + game_data.date.year * 24 * 30 * 12 + inv[ci].param3;
     }
     if (ibit(4, ci) == 1)
     {

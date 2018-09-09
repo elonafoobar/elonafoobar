@@ -4541,7 +4541,7 @@ void _strange_scientist_pick_reward()
         {
             continue;
         }
-        randomize(gdata_day + cnt);
+        randomize(game_data.date.day + cnt);
         f = 0;
         if (itemmemory(0, cnt))
         {
