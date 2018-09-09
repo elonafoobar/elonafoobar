@@ -1115,10 +1115,13 @@ bool enchantment_add(
 
     if (!force)
     {
-        if (!check_enchantment_filters(
-                category, type >= 10000 ? type / 10000 : type))
+        const auto type_ = type >= 10000 ? type / 10000 : type;
+        if (encref(3, type_) != 0)
         {
-            return false;
+            if (!check_enchantment_filters(category, type_))
+            {
+                return false;
+            }
         }
         else if (category == 25000 && !not_halve)
         {
