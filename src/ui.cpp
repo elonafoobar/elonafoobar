@@ -883,7 +883,7 @@ void render_status_ailments()
         {0, 80, 80});
 
     y = render_one_status_ailment(
-        gdata_continuous_active_hours,
+        game_data.continuous_active_hours,
         x,
         y,
         [](auto hours) { return hours >= 15; },

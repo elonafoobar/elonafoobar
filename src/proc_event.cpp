@@ -334,7 +334,7 @@ void proc_event()
         {
             txt(i18n::s.get("core.locale.event.death_penalty_not_applied"));
         }
-        if (gdata_ether_disease_stage >= 20000)
+        if (game_data.ether_disease_stage >= 20000)
         {
             modify_ether_disease_stage(-2000);
         }

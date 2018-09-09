@@ -1700,7 +1700,7 @@ void _miral_upgrade_cargo_limit()
         cnvweight(calccargoupdate())));
     snd(58);
     inv[ci].modify_number((-calccargoupdatecost()));
-    gdata_current_cart_limit += calccargoupdate();
+    game_data.current_cart_limit += calccargoupdate();
     refresh_burden_state();
 }
 
@@ -3963,7 +3963,7 @@ TalkResult talk_unique_abyss()
                 ELONA_TALK_SCENE_CUT();
                 return TalkResult::talk_unique;
             }
-            if (gdata_left_bill <= 4)
+            if (game_data.left_bill <= 4)
             {
                 listmax = 0;
                 buff = i18n::s.get(

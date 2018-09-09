@@ -748,7 +748,7 @@ void show_home_value()
     s(1) = i18n::s.get("core.locale.building.home.rank.type.deco");
     s(2) = i18n::s.get("core.locale.building.home.rank.type.heir");
     s(3) = i18n::s.get("core.locale.building.home.rank.type.total");
-    p(0) = gdata_basic_point_of_home_rank;
+    p(0) = game_data.basic_point_of_home_rank;
     p(1) = gdata(77);
     p(2) = gdata(78);
     p(3) = (p + p(1) + p(2)) / 3;
@@ -1381,8 +1381,8 @@ void calc_home_rank()
     {
         gdata(78) = 10000;
     }
-    rankcur =
-        10000 - (gdata_basic_point_of_home_rank + gdata(77) + gdata(78)) / 3;
+    rankcur = 10000
+        - (game_data.basic_point_of_home_rank + gdata(77) + gdata(78)) / 3;
     if (rankcur < 100)
     {
         rankcur = 100;

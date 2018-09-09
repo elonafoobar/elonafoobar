@@ -46,6 +46,7 @@ FoobarData foobar_data;
     SERIALIZE(37, torch); \
     SERIALIZE(38, angband_flag); \
     SERIALIZE(39, number_of_learned_skills_by_trainer); \
+\
     SERIALIZE(63, is_returning_or_escaping); \
     SERIALIZE(64, destination_map); \
     SERIALIZE(65, destination_dungeon_level); \
@@ -55,7 +56,27 @@ FoobarData foobar_data;
     SERIALIZE(69, previous_y); \
     SERIALIZE(70, executing_immediate_quest_type); \
     SERIALIZE(72, executing_immediate_quest); \
-    SERIALIZE(75, number_of_existing_quests);
+    SERIALIZE(75, number_of_existing_quests); \
+    SERIALIZE(76, basic_point_of_home_rank); \
+    SERIALIZE(80, cargo_weight); \
+    SERIALIZE(81, initial_cart_limit); \
+    SERIALIZE(82, current_cart_limit); \
+    SERIALIZE(83, protects_from_bad_weather); \
+    SERIALIZE(84, left_minutes_of_executing_quest); \
+    SERIALIZE(85, ether_disease_stage); \
+    SERIALIZE(88, time_when_textbook_becomes_available); \
+    SERIALIZE(90, continuous_active_hours); \
+    SERIALIZE(92, sleep_experience); \
+    SERIALIZE(93, acquirable_feat_count); \
+    SERIALIZE(95, wish_count); \
+    SERIALIZE(96, version); \
+    SERIALIZE(97, rights_to_succeed_to); \
+    SERIALIZE(99, next_voting_time); \
+    SERIALIZE(170, cost_to_hire); \
+    SERIALIZE(179, left_bill); \
+    SERIALIZE(180, distance_between_town); \
+    SERIALIZE(181, departure_date); \
+    SERIALIZE(182, left_town_map);
 
 #define SERIALIZE GDATA_PACK
 void GameData::pack_to(elona_vector1<int>& gdata)

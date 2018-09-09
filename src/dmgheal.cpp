@@ -978,7 +978,7 @@ int damage_hp(
             attacker->experience += gained_exp;
             if (attacker_is_player)
             {
-                gdata_sleep_experience += gained_exp;
+                game_data.sleep_experience += gained_exp;
             }
             attacker->hate = 0;
             if (attacker->index < 16)

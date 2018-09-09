@@ -774,7 +774,7 @@ void trait_load_desc()
     int featrq = 0;
 
     listmax = 0;
-    if (tc == 0 && gdata_acquirable_feat_count > 0)
+    if (tc == 0 && game_data.acquirable_feat_count > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
@@ -796,7 +796,7 @@ void trait_load_desc()
         {
             if (traitref == 0)
             {
-                if (gdata_acquirable_feat_count > 0)
+                if (game_data.acquirable_feat_count > 0)
                 {
                     list(0, listmax) = cnt;
                     list(1, listmax) = cnt + 1;

@@ -1915,7 +1915,7 @@ TalkResult talk_npc()
                         i18n::s.get("core.locale.talk.npc.ally.choices.ask_for_"
                                     "marriage"));
                 }
-                else if (gdata_continuous_active_hours >= 15)
+                else if (game_data.continuous_active_hours >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
                         39,

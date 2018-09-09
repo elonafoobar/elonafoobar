@@ -920,7 +920,7 @@ void initialize_debug_globals()
     {
         gdata(120 + cnt) = 5000;
     }
-    gdata_version = 1220;
+    game_data.version = 1220;
     gdata(41) = 424;
     gdata(42) = 300;
     gdata(43) = 631;
@@ -955,9 +955,9 @@ void initialize_debug_globals()
     gdata_has_not_been_to_vernis = 1;
     area_data[7].outer_map = 4;
     gdata(850) = area_data[game_data.current_map].outer_map;
-    gdata_acquirable_feat_count = 2;
+    game_data.acquirable_feat_count = 2;
     gdata_save_count_of_little_sister = 1000;
-    gdata_rights_to_succeed_to = 1000;
+    game_data.rights_to_succeed_to = 1000;
     game_data.home_scale = 0;
     gdata_number_of_waiting_guests = 2;
     game_data.charge_power = 1000;
@@ -1233,7 +1233,7 @@ void initialize_world()
     game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
     game_data.current_dungeon_level = 1;
     game_data.entrance_type = 4;
-    gdata_version = 1220;
+    game_data.version = 1220;
     game_data.home_scale = 0;
     initialize_adata();
     game_data.weather = 3;

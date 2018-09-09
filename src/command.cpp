@@ -1603,7 +1603,7 @@ TurnResult do_use_command()
     }
     if (item_data->subcategory == 60004)
     {
-        if (gdata_continuous_active_hours < 15)
+        if (game_data.continuous_active_hours < 15)
         {
             txt(i18n::s.get("core.locale.action.use.not_sleepy"));
             update_screen();
@@ -2369,7 +2369,7 @@ TurnResult do_use_command()
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
         inv[ci].modify_number(-1);
-        ++gdata_acquirable_feat_count;
+        ++game_data.acquirable_feat_count;
         txt(i18n::s.get(
             "core.locale.action.use.secret_experience.kumiromi.use.dialog"));
         txtef(5);
@@ -2718,7 +2718,7 @@ TurnResult do_open_command()
         {
             txt(i18n::s.get(
                 "core.locale.ui.inv.take.can_claim_more",
-                gdata_rights_to_succeed_to));
+                game_data.rights_to_succeed_to));
             invctrl(1) = 1;
         }
         if (invfile == 6 || invcontainer(1) == 641)

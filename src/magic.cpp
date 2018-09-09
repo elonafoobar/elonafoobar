@@ -3376,12 +3376,12 @@ label_2181_internal:
         }
         snd(24);
         p = rnd((efp + 1)) / 100 + 1;
-        gdata_rights_to_succeed_to += p;
+        game_data.rights_to_succeed_to += p;
         txtef(5);
         txt(i18n::s.get("core.locale.magic.deed_of_inheritance.claim", p(0)));
         txt(i18n::s.get(
             "core.locale.magic.deed_of_inheritance.can_now_inherit",
-            gdata_rights_to_succeed_to));
+            game_data.rights_to_succeed_to));
         break;
     case 1124:
     case 1125:

@@ -3496,17 +3496,17 @@ label_1744_internal:
         || game_data.current_map == mdata_t::MapId::your_home
         || mdata_map_type == mdata_t::MapType::guild)
     {
-        if (gdata_distance_between_town >= 16)
+        if (game_data.distance_between_town >= 16)
         {
-            p = game_data.date.hours() - gdata_departure_date;
+            p = game_data.date.hours() - game_data.departure_date;
             txt(i18n::s.get(
                 "core.locale.map.since_leaving.time_passed",
                 p / 24,
                 p % 24,
-                mapname(gdata_left_town_map),
-                cnvdate(gdata_departure_date, false)));
+                mapname(game_data.left_town_map),
+                cnvdate(game_data.departure_date, false)));
             p = 0;
-            exp = cdata.player().level * gdata_distance_between_town
+            exp = cdata.player().level * game_data.distance_between_town
                     * sdata(182, 0) / 100
                 + 1;
             for (int cnt = 0; cnt < 16; ++cnt)
@@ -3526,21 +3526,21 @@ label_1744_internal:
             {
                 txt(i18n::s.get(
                     "core.locale.map.since_leaving.walked.you",
-                    gdata_distance_between_town));
+                    game_data.distance_between_town));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.locale.map.since_leaving.walked.you_and_allies",
-                    gdata_distance_between_town));
+                    game_data.distance_between_town));
             }
             chara_gain_skill_exp(
                 cdata.player(),
                 182,
-                25 + gdata_distance_between_town * 2 / 3,
+                25 + game_data.distance_between_town * 2 / 3,
                 0,
                 1000);
-            gdata_distance_between_town = 0;
+            game_data.distance_between_town = 0;
         }
     }
     if (game_data.current_map == mdata_t::MapId::quest)
@@ -3550,7 +3550,7 @@ label_1744_internal:
             txtef(9);
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.party",
-                gdata_left_minutes_of_executing_quest,
+                game_data.left_minutes_of_executing_quest,
                 qdata(12, game_data.executing_immediate_quest)));
         }
         if (game_data.executing_immediate_quest_type == 1006)
@@ -3564,7 +3564,7 @@ label_1744_internal:
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.harvest",
                 cnvweight(qdata(12, game_data.executing_immediate_quest)),
-                gdata_left_minutes_of_executing_quest));
+                game_data.left_minutes_of_executing_quest));
         }
         if (game_data.executing_immediate_quest_type == 1008)
         {
@@ -3572,7 +3572,7 @@ label_1744_internal:
             txt(i18n::s.get(
                 "core.locale.map.quest.on_enter.conquer",
                 chara_refstr(qdata(12, game_data.executing_immediate_quest), 2),
-                gdata_left_minutes_of_executing_quest));
+                game_data.left_minutes_of_executing_quest));
         }
     }
 

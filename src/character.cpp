@@ -1120,8 +1120,8 @@ void initialize_character()
     cdata[rc].sp = cdata[rc].max_sp;
     if (rc == 0)
     {
-        gdata_initial_cart_limit = 80000;
-        gdata_current_cart_limit = gdata_initial_cart_limit;
+        game_data.initial_cart_limit = 80000;
+        game_data.current_cart_limit = game_data.initial_cart_limit;
     }
     if (cdata[rc].has_lay_hand())
     {
@@ -1198,7 +1198,7 @@ void chara_refresh(int cc)
         game_data.seven_league_boot_effect = 0;
         gdata_ether_disease_speed = 0;
         game_data.protects_from_etherwind = 0;
-        gdata_protects_from_bad_weather = 0;
+        game_data.protects_from_bad_weather = 0;
         gdata(89) = 70;
         gdata_catches_god_signal = 0;
         gdata_reveals_religion = 0;
@@ -1485,7 +1485,7 @@ void chara_refresh(int cc)
                     }
                     if (rp2 == 31)
                     {
-                        gdata_protects_from_bad_weather = 1;
+                        game_data.protects_from_bad_weather = 1;
                         continue;
                     }
                 }

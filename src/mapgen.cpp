@@ -2288,7 +2288,7 @@ void initialize_random_nefia_rdtype6()
 
 int initialize_quest_map_crop()
 {
-    gdata_left_minutes_of_executing_quest = 120;
+    game_data.left_minutes_of_executing_quest = 120;
     gdata(87) = 9999;
     mdata_map_indoors_flag = 2;
     mdata_map_tileset = 4;
@@ -2724,7 +2724,7 @@ int initialize_random_nefia_rdtype3()
 int initialize_quest_map_party()
 {
     int roomdiff = 0;
-    gdata_left_minutes_of_executing_quest = 60;
+    game_data.left_minutes_of_executing_quest = 60;
     gdata(87) = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
@@ -3059,7 +3059,7 @@ void initialize_quest_map_town()
     mdata_map_user_map_flag = 0;
     if (game_data.executing_immediate_quest_type == 1008)
     {
-        gdata_left_minutes_of_executing_quest = 720;
+        game_data.left_minutes_of_executing_quest = 720;
         gdata(87) = 9999;
         flt();
         initlv = qdata(5, game_data.executing_immediate_quest);
@@ -3813,33 +3813,33 @@ void initialize_home_mdata()
     if (game_data.home_scale == 0)
     {
         mdata_map_max_item_count = 100;
-        gdata_basic_point_of_home_rank = 1000;
+        game_data.basic_point_of_home_rank = 1000;
     }
     if (game_data.home_scale == 1)
     {
         mdata_map_max_item_count = 150;
-        gdata_basic_point_of_home_rank = 3000;
+        game_data.basic_point_of_home_rank = 3000;
     }
     if (game_data.home_scale == 2)
     {
         mdata_map_max_item_count = 200;
-        gdata_basic_point_of_home_rank = 5000;
+        game_data.basic_point_of_home_rank = 5000;
     }
     if (game_data.home_scale == 3)
     {
         mdata_map_max_item_count = 300;
-        gdata_basic_point_of_home_rank = 7000;
+        game_data.basic_point_of_home_rank = 7000;
     }
     if (game_data.home_scale == 4)
     {
         mdata_map_max_item_count = 350;
-        gdata_basic_point_of_home_rank = 8000;
+        game_data.basic_point_of_home_rank = 8000;
         mdata_map_tileset = 8;
     }
     if (game_data.home_scale == 5)
     {
         mdata_map_max_item_count = 400;
-        gdata_basic_point_of_home_rank = 10000;
+        game_data.basic_point_of_home_rank = 10000;
     }
 }
 

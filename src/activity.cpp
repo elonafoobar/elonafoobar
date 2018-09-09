@@ -974,7 +974,7 @@ void continuous_action_others()
         {
             if (game_data.weather == 0 || game_data.weather == 3)
             {
-                if (gdata_time_when_textbook_becomes_available
+                if (game_data.time_when_textbook_becomes_available
                     > game_data.date.hours())
                 {
                     txt(i18n::s.get("core.locale.activity.study.start.bored"));
@@ -982,7 +982,7 @@ void continuous_action_others()
                     return;
                 }
             }
-            gdata_time_when_textbook_becomes_available =
+            game_data.time_when_textbook_becomes_available =
                 game_data.date.hours() + 48;
             if (inv[ci].id == 563)
             {

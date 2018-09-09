@@ -1201,7 +1201,7 @@ void quest_all_targets_killed()
     }
     if (game_data.executing_immediate_quest_type == 1008)
     {
-        gdata_left_minutes_of_executing_quest = 0;
+        game_data.left_minutes_of_executing_quest = 0;
         qdata(8, game_data.executing_immediate_quest) = 3;
         txtef(2);
         txt(i18n::s.get("core.locale.quest.conquer.complete"));

@@ -2,26 +2,6 @@
 
 #include "version.hpp"
 
-#define gdata_basic_point_of_home_rank gdata(76)
-#define gdata_cargo_weight gdata(80)
-#define gdata_initial_cart_limit gdata(81)
-#define gdata_current_cart_limit gdata(82)
-#define gdata_protects_from_bad_weather gdata(83)
-#define gdata_left_minutes_of_executing_quest gdata(84)
-#define gdata_ether_disease_stage gdata(85)
-#define gdata_time_when_textbook_becomes_available gdata(88)
-#define gdata_continuous_active_hours gdata(90)
-#define gdata_sleep_experience gdata(92)
-#define gdata_acquirable_feat_count gdata(93)
-#define gdata_wish_count gdata(95)
-#define gdata_version gdata(96)
-#define gdata_rights_to_succeed_to gdata(97)
-#define gdata_next_voting_time gdata(99)
-#define gdata_cost_to_hire gdata(170)
-#define gdata_left_bill gdata(179)
-#define gdata_distance_between_town gdata(180)
-#define gdata_departure_date gdata(181)
-#define gdata_left_town_map gdata(182)
 #define gdata_mount gdata(183)
 #define gdata_catches_god_signal gdata(185)
 #define gdata_reveals_religion gdata(187)
@@ -150,6 +130,26 @@ struct GameData
     int executing_immediate_quest_type;
     int executing_immediate_quest;
     int number_of_existing_quests;
+    int basic_point_of_home_rank;
+    int cargo_weight;
+    int initial_cart_limit;
+    int current_cart_limit;
+    int protects_from_bad_weather;
+    int left_minutes_of_executing_quest;
+    int ether_disease_stage;
+    int time_when_textbook_becomes_available;
+    int continuous_active_hours;
+    int sleep_experience;
+    int acquirable_feat_count;
+    int wish_count;
+    int version;
+    int rights_to_succeed_to;
+    int next_voting_time;
+    int cost_to_hire;
+    int left_bill;
+    int distance_between_town;
+    int departure_date;
+    int left_town_map;
 
     /**
      * Moves this struct's fields into `gdata` so they can be serialized,

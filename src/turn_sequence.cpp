@@ -772,20 +772,21 @@ TurnResult turn_begin()
             auto_identify();
         }
         game_data.date.minute += game_data.date.second / 60;
-        if (gdata_left_minutes_of_executing_quest > 0)
+        if (game_data.left_minutes_of_executing_quest > 0)
         {
-            gdata_left_minutes_of_executing_quest -= game_data.date.second / 60;
-            if (gdata(87) > gdata_left_minutes_of_executing_quest / 10)
+            game_data.left_minutes_of_executing_quest -=
+                game_data.date.second / 60;
+            if (gdata(87) > game_data.left_minutes_of_executing_quest / 10)
             {
                 txtef(9);
                 txt(i18n::s.get(
                     "core.locale.quest.minutes_left",
-                    (gdata_left_minutes_of_executing_quest + 1)));
-                gdata(87) = gdata_left_minutes_of_executing_quest / 10;
+                    (game_data.left_minutes_of_executing_quest + 1)));
+                gdata(87) = game_data.left_minutes_of_executing_quest / 10;
             }
-            if (gdata_left_minutes_of_executing_quest <= 0)
+            if (game_data.left_minutes_of_executing_quest <= 0)
             {
-                gdata_left_minutes_of_executing_quest = 0;
+                game_data.left_minutes_of_executing_quest = 0;
                 event_add(14);
             }
         }
@@ -1262,7 +1263,7 @@ TurnResult pc_turn(bool advance_time)
         {
             map(cdata.player().position.x, cdata.player().position.y, 1) = 1;
         }
-        if (gdata_ether_disease_stage >= 20000)
+        if (game_data.ether_disease_stage >= 20000)
         {
             damage_hp(cdata.player(), 999999, -14);
         }

@@ -1108,7 +1108,7 @@ void calccosthire()
                25,
                200)
         / 100;
-    gdata_cost_to_hire = cost;
+    game_data.cost_to_hire = cost;
 }
 
 
@@ -1211,7 +1211,8 @@ int calccargoupdate()
 
 int calccargoupdatecost()
 {
-    return (gdata_current_cart_limit - gdata_initial_cart_limit) / 10000 + 1;
+    return (game_data.current_cart_limit - game_data.initial_cart_limit) / 10000
+        + 1;
 }
 
 
