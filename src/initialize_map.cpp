@@ -49,11 +49,11 @@ label_17401:
     {
         gdata_current_dungeon_level = adata(17, gdata_current_map);
     }
-    if (gdata_deepest_dungeon_level < gdata_current_dungeon_level)
+    if (game_data.deepest_dungeon_level < gdata_current_dungeon_level)
     {
         if (gdata_current_map != mdata_t::MapId::shelter_)
         {
-            gdata_deepest_dungeon_level = gdata_current_dungeon_level;
+            game_data.deepest_dungeon_level = gdata_current_dungeon_level;
         }
     }
     if (adata(6, gdata_current_map) < gdata_current_dungeon_level)
@@ -188,7 +188,7 @@ label_1741_internal:
     if (mapupdate)
     {
         randomize(
-            gdata_random_seed + gdata_current_map * 1000
+            game_data.random_seed + gdata_current_map * 1000
             + gdata_current_dungeon_level);
     }
     if (gdata_current_map == mdata_t::MapId::your_home)
@@ -921,15 +921,15 @@ label_1741_internal:
     }
     if (gdata_current_map == mdata_t::MapId::your_home)
     {
-        map_initcustom(u8"home"s + gdata_home_scale);
+        map_initcustom(u8"home"s + game_data.home_scale);
         mdata_map_bgm = 68;
-        gdata_entrance_type = 4;
+        game_data.entrance_type = 4;
         map_placeplayer();
         mdata_map_user_map_flag = 0;
         mdata_map_tileset = 3;
         if (gdata_current_dungeon_level == 1)
         {
-            if (gdata_home_scale == 0)
+            if (game_data.home_scale == 0)
             {
                 mdata_map_play_campfire_sound = 1;
                 flt();
@@ -976,7 +976,7 @@ label_1741_internal:
                     cnt.initial_position.y = mdata_map_height / 2;
                 }
             }
-            if (gdata_home_scale == 5)
+            if (game_data.home_scale == 5)
             {
                 flt();
                 chara_create(-1, 1, 31, 20);
@@ -1500,7 +1500,7 @@ label_1741_internal:
             mdata_map_should_regenerate = 1;
             mdatan(0) = i18n::s.get("core.locale.map.unique.the_sewer.name");
             quest_place_target();
-            gdata_entrance_type = 1;
+            game_data.entrance_type = 1;
             map_placeplayer();
         }
     }
@@ -1628,7 +1628,7 @@ label_1741_internal:
             mdata_map_refresh_type = 0;
             mdatan(0) = i18n::s.get("core.locale.map.unique.battle_field.name");
             quest_place_target();
-            gdata_entrance_type = 8;
+            game_data.entrance_type = 8;
             map_placeplayer();
             listmax = 0;
             for (auto&& cnt : cdata.others())
@@ -1952,7 +1952,7 @@ label_1741_internal:
             mdata_map_should_regenerate = 1;
             mdata_map_refresh_type = 0;
             mdatan(0) = i18n::s.get("core.locale.map.unique.doom_ground.name");
-            gdata_entrance_type = 4;
+            game_data.entrance_type = 4;
             gdata_duration_of_kamikaze_attack = 0;
             map_placeplayer();
             for (int cnt = 0; cnt < 10; ++cnt)
@@ -2125,7 +2125,7 @@ label_1741_internal:
             mdata_map_should_regenerate = 1;
             mdatan(0) = i18n::s.get("core.locale.map.unique.test_site.name");
             quest_place_target();
-            gdata_entrance_type = 7;
+            game_data.entrance_type = 7;
             mapstartx = 6;
             mapstarty = 27;
             map_placeplayer();
@@ -2347,7 +2347,7 @@ label_1741_internal:
             for (int cnt = 0, cnt_end = (2 + p); cnt < cnt_end; ++cnt)
             {
                 flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
-                if (gdata_weather == 1)
+                if (game_data.weather == 1)
                 {
                     if ((33 > gdata(62) || gdata(62) >= 66) && rnd(3) == 0)
                     {
@@ -2983,15 +2983,15 @@ label_1744_internal:
             mode = 2;
             gdata_current_map = 7;
             gdata_current_dungeon_level = 1;
-            gdata_pc_x_in_world_map = adata(1, 7);
-            gdata_pc_y_in_world_map = adata(2, 7);
+            game_data.pc_x_in_world_map = adata(1, 7);
+            game_data.pc_y_in_world_map = adata(2, 7);
             gdata_previous_map = 2;
             levelexitby = 4;
             goto label_17401;
         }
     }
     map_proc_regen_and_update();
-    gdata_crowd_density = 0;
+    game_data.crowd_density = 0;
     for (auto&& cnt : cdata.all())
     {
         cnt.turn_cost = 0;

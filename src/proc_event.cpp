@@ -827,7 +827,7 @@ void proc_event()
     case 18:
         if (mdata_map_type == mdata_t::MapType::world_map)
             break;
-        gdata_weather = 1;
+        game_data.weather = 1;
         sound_play_environmental();
         txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();

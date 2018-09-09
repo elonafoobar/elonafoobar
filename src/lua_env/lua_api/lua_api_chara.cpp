@@ -31,7 +31,7 @@ bool Chara::is_ally(LuaCharacterHandle handle)
 
 int Chara::count()
 {
-    return gdata_crowd_density;
+    return game_data.crowd_density;
 }
 
 bool Chara::flag(LuaCharacterHandle handle, const EnumString& flag_name)

@@ -51,7 +51,7 @@ void set_item_info()
             // The choice can't be completely random - it has to be the
             // same as all other items of this type. So, base it off the
             // random seed of the current save data.
-            int p = (data.id % gdata_random_seed) % 6;
+            int p = (data.id % game_data.random_seed) % 6;
             iknownnameref(data.id) =
                 i18n::_(u8"ui", u8"random_" + data.originalnameref2, u8"_"s + p)
                 + i18n::space_if_needed()

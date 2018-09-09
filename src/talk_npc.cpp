@@ -1272,8 +1272,8 @@ TalkResult talk_caravan_master_hire()
     levelexitby = 4;
     gdata(79) = 1;
     gdata(850) = adata(30, chatval_);
-    gdata_pc_x_in_world_map = adata(1, chatval_);
-    gdata_pc_y_in_world_map = adata(2, chatval_);
+    game_data.pc_x_in_world_map = adata(1, chatval_);
+    game_data.pc_y_in_world_map = adata(2, chatval_);
     fixtransfermap = 1;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -1945,7 +1945,8 @@ TalkResult talk_npc()
             13,
             i18n::s.get("core.locale.talk.npc.innkeeper.choices.eat") + u8" ("s
                 + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
-        if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
+        if (game_data.weather == 1 || game_data.weather == 4
+            || game_data.weather == 2)
         {
             ELONA_APPEND_RESPONSE(
                 43,

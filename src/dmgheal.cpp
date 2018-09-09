@@ -953,7 +953,7 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            ++gdata_death_count;
+            ++game_data.death_count;
         }
         if (victim.index == gdata(94))
         {

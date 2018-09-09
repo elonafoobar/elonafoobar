@@ -343,8 +343,8 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 641)
     {
-        ++gdata_next_inventory_serial_id;
-        inv[ci].count = gdata_next_inventory_serial_id;
+        ++game_data.next_inventory_serial_id;
+        inv[ci].count = game_data.next_inventory_serial_id;
     }
 
     if (inv[ci].id == 510)

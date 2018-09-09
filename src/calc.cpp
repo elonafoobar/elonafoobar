@@ -859,7 +859,8 @@ int calcitemvalue(int ci, int situation)
         else
         {
             ret = cdata.player().level / 5
-                    * ((gdata_random_seed + ci * 31) % cdata.player().level + 4)
+                    * ((game_data.random_seed + ci * 31) % cdata.player().level
+                       + 4)
                 + 10;
         }
     }
@@ -1113,7 +1114,7 @@ void calccosthire()
 
 int calccostbuilding()
 {
-    int cost = gdata_home_scale * gdata_home_scale * 200;
+    int cost = game_data.home_scale * game_data.home_scale * 200;
 
     for (int cnt = 300; cnt < 450; ++cnt)
     {
@@ -1480,9 +1481,9 @@ int calcspellcoststock(int id, int cc)
 int calcscore()
 {
     int score = cdata.player().level * cdata.player().level
-        + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
-        + gdata_kill_count;
-    if (gdata_death_count > 1)
+        + game_data.deepest_dungeon_level * game_data.deepest_dungeon_level
+        + game_data.kill_count;
+    if (game_data.death_count > 1)
     {
         score = score / 10 + 1;
     }
@@ -1566,7 +1567,7 @@ int generate_color(ColorIndex index, int id)
         // The choice can't be completely random - it has to be the
         // same as all other items of this type. So, base it off the
         // random seed of the current save data.
-        color = _randcolor((id + gdata_random_seed) % 6);
+        color = _randcolor((id + game_data.random_seed) % 6);
     }
     if (index == ColorIndex::random_any)
     {

@@ -723,7 +723,8 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (game_data.crowd_density + 100
+                        >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
@@ -3431,15 +3432,15 @@ label_2181_internal:
         }
         if (efid == 630)
         {
-            if (gdata_charge_power < 10)
+            if (game_data.charge_power < 10)
             {
                 txt(i18n::s.get(
                     "core.locale.magic.fill_charge.more_power_needed"));
                 break;
             }
-            gdata_charge_power -= 10;
+            game_data.charge_power -= 10;
             txt(i18n::s.get(
-                "core.locale.magic.fill_charge.spend", gdata_charge_power));
+                "core.locale.magic.fill_charge.spend", game_data.charge_power));
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3565,12 +3566,12 @@ label_2181_internal:
                 }
                 animeload(8, cc);
                 p = p * inv[ci].count;
-                gdata_charge_power += p;
+                game_data.charge_power += p;
                 txt(i18n::s.get(
                     "core.locale.magic.draw_charge",
                     inv[ci],
                     p(0),
-                    gdata_charge_power));
+                    game_data.charge_power));
                 inv[ci].remove();
                 refresh_burden_state();
             }

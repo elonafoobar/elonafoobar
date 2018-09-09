@@ -3,30 +3,17 @@
 #include "version.hpp"
 
 
-#define gdata_death_count gdata(0)
-#define gdata_deepest_dungeon_level gdata(1)
-#define gdata_kill_count gdata(2)
-#define gdata_crowd_density gdata(3)
-#define gdata_play_turns gdata(4)
-#define gdata_pc_x_in_world_map gdata(5)
-#define gdata_pc_y_in_world_map gdata(6)
-#define gdata_play_days gdata(7)
-#define gdata_random_seed gdata(8)
 #define gdata_year gdata(10)
 #define gdata_month gdata(11)
 #define gdata_day gdata(12)
 #define gdata_hour gdata(13)
 #define gdata_minute gdata(14)
 #define gdata_second gdata(15)
-#define gdata_next_inventory_serial_id gdata(16)
-#define gdata_weather gdata(17)
-#define gdata_hours_until_weather_changes gdata(18)
+
 #define gdata_previous_map gdata(19)
 #define gdata_current_map gdata(20)
 #define gdata_current_dungeon_level gdata(22)
-#define gdata_home_scale gdata(24)
-#define gdata_charge_power gdata(25)
-#define gdata_entrance_type gdata(26)
+
 #define gdata_next_shelter_serial_id gdata(27)
 #define gdata_seven_league_boot_effect gdata(28)
 #define gdata_protects_from_etherwind gdata(29)
@@ -133,6 +120,53 @@
 namespace elona
 {
 
+template <typename T>
+struct elona_vector1;
+
+/**
+ * Global game data that is serialized. Replaces gdata.
+ */
+struct GameData
+{
+    int death_count;
+    int deepest_dungeon_level;
+    int kill_count;
+    int crowd_density;
+    int play_turns;
+    int pc_x_in_world_map;
+    int pc_y_in_world_map;
+    int play_days;
+    int random_seed;
+    // int year;
+    // int month;
+    // int day;
+    // int hour;
+    // int minute;
+    // int second;
+    int next_inventory_serial_id;
+    int weather;
+    int hours_until_weather_changes;
+    // int previous_map;
+    // int current_map;
+    // int current_dungeon_level;
+    int home_scale;
+    int charge_power;
+    int entrance_type;
+
+    /**
+     * Moves this struct's fields into `gdata` so they can be serialized, for
+     * compatibility. To be called before serializing `gdata`.
+     */
+    void pack_to(elona_vector1<int>&);
+
+    /**
+     * Moves `gdata` fields into this struct. To be called after deserializing
+     * `gdata`.
+     */
+    void unpack_from(elona_vector1<int>&);
+};
+
+extern GameData game_data;
 
 struct FoobarData
 {

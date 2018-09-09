@@ -385,8 +385,8 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     }
     if (prm_937 == 6)
     {
-        x_at_m167 = gdata_pc_x_in_world_map + rnd((prm_936 / 5 + 1));
-        y_at_m167 = gdata_pc_y_in_world_map + rnd((prm_936 / 5 + 1));
+        x_at_m167 = game_data.pc_x_in_world_map + rnd((prm_936 / 5 + 1));
+        y_at_m167 = game_data.pc_y_in_world_map + rnd((prm_936 / 5 + 1));
     }
     if (prm_937 == 7)
     {
@@ -484,7 +484,7 @@ void map_placeplayer()
                 continue;
             }
         }
-        map_placecharaonentrance(cnt, gdata_entrance_type);
+        map_placecharaonentrance(cnt, game_data.entrance_type);
     }
     return;
 }
@@ -2370,7 +2370,7 @@ int initialize_quest_map_crop()
             }
         }
     }
-    gdata_entrance_type = 7;
+    game_data.entrance_type = 7;
     mapstartx = rnd(mdata_map_width / 3) + mdata_map_width / 3;
     mapstarty = rnd(mdata_map_height / 3) + mdata_map_height / 3;
     map_placeplayer();
@@ -2954,7 +2954,7 @@ int initialize_quest_map_party()
             cdata[rc].gold = cdata[rc].level * (20 + rnd(20));
         }
     }
-    gdata_entrance_type = 7;
+    game_data.entrance_type = 7;
     mapstartx = rnd(mdata_map_width / 3) + mdata_map_width / 3;
     mapstarty = rnd(mdata_map_height / 3) + mdata_map_height / 3;
     map_placeplayer();
@@ -3058,7 +3058,7 @@ void initialize_quest_map_town()
     map_initcustom(mapfile(gdata_previous_map2));
     mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
     randomize();
-    gdata_entrance_type = 5;
+    game_data.entrance_type = 5;
     map_placeplayer();
     mdata_map_user_map_flag = 0;
     if (gdata_executing_immediate_quest_type == 1008)
@@ -3820,33 +3820,33 @@ void map_tileset(int prm_933)
 
 void initialize_home_mdata()
 {
-    if (gdata_home_scale == 0)
+    if (game_data.home_scale == 0)
     {
         mdata_map_max_item_count = 100;
         gdata_basic_point_of_home_rank = 1000;
     }
-    if (gdata_home_scale == 1)
+    if (game_data.home_scale == 1)
     {
         mdata_map_max_item_count = 150;
         gdata_basic_point_of_home_rank = 3000;
     }
-    if (gdata_home_scale == 2)
+    if (game_data.home_scale == 2)
     {
         mdata_map_max_item_count = 200;
         gdata_basic_point_of_home_rank = 5000;
     }
-    if (gdata_home_scale == 3)
+    if (game_data.home_scale == 3)
     {
         mdata_map_max_item_count = 300;
         gdata_basic_point_of_home_rank = 7000;
     }
-    if (gdata_home_scale == 4)
+    if (game_data.home_scale == 4)
     {
         mdata_map_max_item_count = 350;
         gdata_basic_point_of_home_rank = 8000;
         mdata_map_tileset = 8;
     }
-    if (gdata_home_scale == 5)
+    if (game_data.home_scale == 5)
     {
         mdata_map_max_item_count = 400;
         gdata_basic_point_of_home_rank = 10000;

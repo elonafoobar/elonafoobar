@@ -196,7 +196,7 @@ void render_weather_effect_snow()
         pos(particle.x, particle.y);
         gcopy(3, particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == Position{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
             particle.x = rnd(windoww);
             particle.y = -rnd(windowh / 2);
@@ -235,7 +235,7 @@ void render_weather_effect_etherwind()
         pos(particle.x, particle.y);
         gcopy(3, 16 + particle.x % 2 * 8, 600 + i % 6 * 8, 8, 8);
 
-        if (particle == Position{0, 0} || weatherbk != gdata_weather)
+        if (particle == Position{0, 0} || weatherbk != game_data.weather)
         {
             particle.x = rnd(windoww);
             particle.y = windowh - inf_verh - 8 - rnd(100);
@@ -261,7 +261,7 @@ void render_weather_effect()
     if (mdata_map_indoors_flag != 2)
         return;
 
-    switch (gdata_weather)
+    switch (game_data.weather)
     {
     case 3: render_weather_effect_rain(); break;
     case 4: render_weather_effect_hard_rain(); break;
@@ -270,7 +270,7 @@ void render_weather_effect()
     default: break;
     }
 
-    weatherbk = gdata_weather;
+    weatherbk = game_data.weather;
     gmode(2);
 }
 
@@ -561,7 +561,7 @@ void render_clock()
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     bmes(
         i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
-            + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
+            + i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
