@@ -244,7 +244,7 @@ locale {
 
         income {
             sent_to_your_house = "${_1}goldが給料として振り込まれた。"
-            sent_to_your_house2 = "${_1}goldと{_2}個のアイテムが給料として振り込まれた。"
+            sent_to_your_house2 = "${_1}goldと${_2}個のアイテムが給料として振り込まれた。"
         }
 
         tax {
