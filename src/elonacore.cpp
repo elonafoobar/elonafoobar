@@ -13223,7 +13223,7 @@ void sense_map_feats_on_move()
             if (feat(1) == 32)
             {
                 txtef(5);
-                i18n::s.get("core.locale.action.move.twinkle");
+                txt(i18n::s.get("core.locale.action.move.twinkle"));
             }
             if (feat(1) == 15)
             {
@@ -14146,7 +14146,7 @@ label_22191_internal:
             {
                 if (inv[cw].quality == Quality::special)
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
                         + iknownnameref(inv[cw].id);
                 }
                 else if (inv[cw].subname >= 40000)
@@ -14157,7 +14157,7 @@ label_22191_internal:
                 }
                 else
                 {
-                    s(1) = i18n::s.get("core.locale.misc.wields_proudly")
+                    s(1) = i18n::s.get("core.locale.misc.wields_proudly.the")
                         + iknownnameref(inv[cw].id);
                 }
                 if (inv[cw].quality == Quality::godly)

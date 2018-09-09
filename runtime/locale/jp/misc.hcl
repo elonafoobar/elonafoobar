@@ -232,7 +232,7 @@ locale {
 
         living_weapon_taste_blood = "${itemname(_1)}は十分に血を味わった！"
         caught_by_assassins = "暗殺者につかまった。あなたはクライアントを守らなければならない。"
-        finished_eating = "${kare_wa(_1)}${itemname(_1, 1)}を食べ終えた。"
+        finished_eating = "${kare_wa(_1)}${itemname(_2, 1)}を食べ終えた。"
         spell_passes_through = "${name(_1)}は巻き込みを免れた。"
         shakes_head = "${name(_1)}は頭を振った。"
 
@@ -244,7 +244,7 @@ locale {
 
         income {
             sent_to_your_house = "${_1}goldが給料として振り込まれた。"
-            sent_to_your_house2 = "${_1}goldと{_2}個のアイテムが給料として振り込まれた。"
+            sent_to_your_house2 = "${_1}goldと${_2}個のアイテムが給料として振り込まれた。"
         }
 
         tax {
@@ -256,15 +256,6 @@ locale {
             left_bills = "税金を${_1}ヶ月分滞納している。"
             accused = "あなたは税金を${_1}ヶ月滞納した罪で訴えられた。"
             lose_fame = "名声値を${_1}失った。"
-
-            bill = "A bill has been sent to your house."
-            no_duty = "You don't have to pay tax until you hit level 6."
-            caution = "Caution! "
-            warning = "Warning!! "
-            have_to_go_embassy = "You have to go to the Embassy of Palmia and pay tax at once. "
-            left_bills = "You are in arrears with your tax for ${_1} month${s(_1)}."
-            accused = "You have been accused for being in arrears with your tax for${_1} months."
-            lose_fame = "You lose ${_1} fame."
         }
     }
 }

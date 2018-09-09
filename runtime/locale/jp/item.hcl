@@ -98,49 +98,49 @@ locale {
         }
 
         gift_rank {
-            _0 = "cheap"
-            _1 = "so so"
-            _2 = "exciting"
-            _3 = "expensive"
-            _4 = "hot and gorgeous"
-            _5 = "crazy epic"
+            _0 = "つまらない"
+            _1 = "普通の"
+            _2 = "ちょっとドキドキする"
+            _3 = "高価な"
+            _4 = "気絶しそうなほど素晴らしい"
+            _5 = "王様が羨むほどの"
         }
 
         kitty_bank_rank {
-            _0 = "(500 GP)"
-            _1 = "(2k GP)"
-            _2 = "(10K GP)"
-            _3 = "(50K GP)"
-            _4 = "(500K GP)"
-            _5 = "(5M GP)"
-            _6 = "(500M GP)"
+            _0 = "5百金貨"
+            _1 = "2千金貨"
+            _2 = "1万金貨"
+            _3 = "5万金貨"
+            _4 = "50万金貨"
+            _5 = "500万金貨"
+            _6 = "1億金貨"
         }
 
         bait_rank {
-            _0 = "water flea"
-            _1 = "grasshopper"
-            _2 = "ladybug"
-            _3 = "dragonfly"
-            _4 = "locust"
-            _5 = "beetle"
+            _0 = "ミジンコ"
+            _1 = "バッタ"
+            _2 = "テントウ"
+            _3 = "トンボ"
+            _4 = "セミ"
+            _5 = "ヘラクレス"
         }
 
         ancient_book_title {
-            _0 = "Voynich Manuscript"
-            _1 = "Dhol Chants"
-            _2 = "Ponape Scripture"
-            _3 = "Revelations of Glaaki"
-            _4 = "G'harne Fragments"
-            _5 = "Liber Damnatus"
-            _6 = "Book of Dzyan"
-            _7 = "Book of Eibon"
-            _8 = "Grand Grimoire"
-            _9 = "Celaeno Fragments"
-            _10 = "Necronomicon"
-            _11 = "The R'lyeh Text"
-            _12 = "Eltdown Shards"
-            _13 = "The Golden Bough"
-            _14 = "Apocalypse"
+            _0 = "ヴォイニッチ写本"
+            _1 = "ドール賛歌"
+            _2 = "ポナペ教教典"
+            _3 = "グラーキ黙示録"
+            _4 = "グ＝ハーン断章"
+            _5 = "断罪の書"
+            _6 = "ドジアンの書"
+            _7 = "エイボンの書"
+            _8 = "大いなる教書"
+            _9 = "セラエノ断章"
+            _10 = "ネクロノミコン"
+            _11 = "ルルイエ異本"
+            _12 = "エルトダウン・シャールズ"
+            _13 = "金枝篇"
+            _14 = "終焉の書"
         }
     }
 }
