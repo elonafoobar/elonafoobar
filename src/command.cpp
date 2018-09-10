@@ -1706,7 +1706,7 @@ TurnResult do_use_command()
                 {
                     txt(i18n::s.get(
                         "core.locale.action.use.living.becoming_a_threat"));
-                    if (enchantment_add(ci, 45, 50))
+                    if (!enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(i18n::s.get(
