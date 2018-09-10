@@ -18,6 +18,11 @@ namespace elona
 namespace i18n
 {
 
+namespace detail
+{
+std::unordered_map<std::string, sol::protected_function> functions;
+}
+
 i18n::Store s;
 
 void Store::init(const std::vector<Store::Location>& locations)
@@ -98,7 +103,7 @@ void Store::visit_list(
     const std::string& current_key,
     const std::string& hcl_file)
 {
-    std::vector<hil::Context> parsed;
+    std::vector<LocalizedText> parsed;
 
     for (const auto& item : list)
     {
@@ -117,7 +122,7 @@ void Store::visit_list(
         {
             throw I18NError(hcl_file, "HIL parse error: " + p.errorReason);
         }
-        parsed.push_back(std::move(p.context));
+        parsed.emplace_back(std::move(p.context));
     }
 
     list_storage.emplace(current_key, std::move(parsed));
@@ -142,189 +147,203 @@ void Store::visit(
     }
 }
 
-
-#define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value) \
-    if (func.name == func_name) \
-    { \
-        return return_value; \
-    }
-
-#define ELONA_DEFINE_I18N_BUILTIN_CHARA(func_name, func_ident) \
-    if (func.name == func_name) \
-    { \
-        int tc_bk = tc; \
-        tc = chara.index; \
-        std::string val; \
-        if (func.args.size() > 1) \
-            val = func_ident(func.args[1].as<int>()); \
-        else \
-            val = func_ident(); \
-        tc = tc_bk; \
-        return val; \
-    }
-
-#define UNKNOWN_FUNCTION(type) \
-    "<unknown function(" + func.name + ", " + type + ")>"
-
-std::string format_builtins_argless(const hil::FunctionCall& func)
+void register_function(
+    const std::string& name,
+    sol::protected_function function)
 {
-    ELONA_DEFINE_I18N_BUILTIN("you", name(0));
-
-    return UNKNOWN_FUNCTION("argless");
+    detail::functions[name] = std::move(function);
 }
 
-inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
+void clear_functions()
 {
-    bool bilingual = false;
-    if (func.args.size() > 1)
-    {
-        bilingual = func.args[1].as<bool>();
-    }
-    return he(chara_index, bilingual);
+    detail::functions.clear();
 }
 
-inline std::string builtin_his(const hil::FunctionCall& func, int chara_index)
-{
-    bool bilingual = false;
-    if (func.args.size() > 1)
-    {
-        bilingual = func.args[1].as<bool>();
-    }
-    return his(chara_index, bilingual);
-}
 
-inline std::string builtin_him(const hil::FunctionCall& func, int chara_index)
-{
-    bool bilingual = false;
-    if (func.args.size() > 1)
-    {
-        bilingual = func.args[1].as<bool>();
-    }
-    return him(chara_index, bilingual);
-}
-
-inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
-{
-    bool needs_e = false;
-    if (func.args.size() > 1)
-    {
-        needs_e = func.args[1].as<bool>();
-    }
-    return _s(chara_index, needs_e);
-}
-
-inline std::string builtin_itemname(
-    const hil::FunctionCall& func,
-    const Item& item)
-{
-    int number = item.number();
-    bool needs_article = true;
-    if (func.args.size() > 1)
-    {
-        number = func.args[1].as<int>();
-    }
-    if (func.args.size() > 2)
-    {
-        needs_article = func.args[2].as<bool>();
-    }
-    return itemname(item.index, number, needs_article ? 0 : 1);
-}
-
-std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
-{
-    ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, value ? 0 : 1));
-    ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
-
-    return UNKNOWN_FUNCTION("bool");
-}
-
-std::string format_builtins_string(
-    const hil::FunctionCall& func,
-    std::string value)
-{
-    ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
-    ELONA_DEFINE_I18N_BUILTIN("capitalize", cnven(value));
-
-    return UNKNOWN_FUNCTION("string");
-}
-
-std::string format_builtins_integer(const hil::FunctionCall& func, int value)
-{
-    // For plural
-    ELONA_DEFINE_I18N_BUILTIN("s", value == 1 ? u8""s : u8"s"s);
-    // For third person singular
-    ELONA_DEFINE_I18N_BUILTIN("s2", value == 1 ? u8"s"s : u8""s);
-    ELONA_DEFINE_I18N_BUILTIN("ordinal", cnvrank(value));
-
-    return UNKNOWN_FUNCTION("integer");
-}
-
-std::string format_builtins_character(
-    const hil::FunctionCall& func,
-    const Character& chara)
-{
-    ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("he", builtin_he(func, chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("his", builtin_his(func, chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("him", builtin_him(func, chara.index));
-
-    // English only
-    ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("does", does(chara.index == 0));
-    ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("his_owned", your(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("name_nojob", sncnv(cdatan(0, chara.index)));
-
-    // Japanese only
-    ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
-
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("yoro", _yoro);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("dozo", _dozo);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("thanks", _thanks);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("rob", _rob);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("ka", _ka);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("da", _da);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("nda", _nda);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("noka", _noka);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("kana", _kana);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("kimi", _kimi);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("ru", _ru);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("tanomu", _tanomu);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("ore", _ore);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("ga", _ga);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("dana", _dana);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("kure", _kure);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("daro", _daro);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("yo", _yo);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("aru", _aru);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("u", _u);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("na", _na);
-    ELONA_DEFINE_I18N_BUILTIN_CHARA("ta", _ta);
-
-    return UNKNOWN_FUNCTION("character");
-}
-
-std::string format_builtins_item(
-    const hil::FunctionCall& func,
-    const Item& item)
-{
-    ELONA_DEFINE_I18N_BUILTIN("itemname", builtin_itemname(func, item));
-    ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
-
-    // English only
-    ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number()));
-    ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number()));
-    ELONA_DEFINE_I18N_BUILTIN("does", does(item.number()));
-
-    return UNKNOWN_FUNCTION("item");
-}
-
-#undef ELONA_DEFINE_I18N_BUILTIN
-#undef ELONA_DEFINE_I18N_BUILTIN_CHARA
-#undef UNKNOWN_FUNCTION
+// #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value)    \
+//     if (func.name == func_name) \
+//     { \
+//         return return_value; \
+//     }
+//
+// #define ELONA_DEFINE_I18N_BUILTIN_CHARA(func_name, func_ident)        \
+//     if (func.name == func_name) \
+//     { \
+//         int tc_bk = tc; \
+//         tc = chara.index; \
+//         std::string val; \
+//         if (func.args.size() > 1) \
+//             val = func_ident(func.args[1].as<int>()); \
+//         else \
+//             val = func_ident(); \
+//         tc = tc_bk; \
+//         return val; \
+//     }
+//
+// #define UNKNOWN_FUNCTION(type)                                \
+//     "<unknown function(" + func.name + ", " + type + ")>"
+//
+// std::string format_builtins_argless(const hil::FunctionCall& func)
+// {
+//     ELONA_DEFINE_I18N_BUILTIN("you", name(0));
+//
+//     return UNKNOWN_FUNCTION("argless");
+// }
+//
+// inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
+// {
+//     bool bilingual = false;
+//     if (func.args.size() > 1)
+//     {
+//         bilingual = func.args[1].as<bool>();
+//     }
+//     return he(chara_index, bilingual);
+// }
+//
+// inline std::string builtin_his(const hil::FunctionCall& func, int
+// chara_index)
+// {
+//     bool bilingual = false;
+//     if (func.args.size() > 1)
+//     {
+//         bilingual = func.args[1].as<bool>();
+//     }
+//     return his(chara_index, bilingual);
+// }
+//
+// inline std::string builtin_him(const hil::FunctionCall& func, int
+// chara_index)
+// {
+//     bool bilingual = false;
+//     if (func.args.size() > 1)
+//     {
+//         bilingual = func.args[1].as<bool>();
+//     }
+//     return him(chara_index, bilingual);
+// }
+//
+// inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
+// {
+//     bool needs_e = false;
+//     if (func.args.size() > 1)
+//     {
+//         needs_e = func.args[1].as<bool>();
+//     }
+//     return _s(chara_index, needs_e);
+// }
+//
+// inline std::string builtin_itemname(
+//     const hil::FunctionCall& func,
+//     const Item& item)
+// {
+//     int number = item.number();
+//     bool needs_article = true;
+//     if (func.args.size() > 1)
+//     {
+//         number = func.args[1].as<int>();
+//     }
+//     if (func.args.size() > 2)
+//     {
+//         needs_article = func.args[2].as<bool>();
+//     }
+//     return itemname(item.index, number, needs_article ? 0 : 1);
+// }
+//
+// std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
+// {
+//     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, value ? 0 : 1));
+//     ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
+//
+//     return UNKNOWN_FUNCTION("bool");
+// }
+//
+// std::string format_builtins_string(
+//     const hil::FunctionCall& func,
+//     std::string value)
+// {
+//     ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
+//     ELONA_DEFINE_I18N_BUILTIN("capitalize", cnven(value));
+//
+//     return UNKNOWN_FUNCTION("string");
+// }
+//
+// std::string format_builtins_integer(const hil::FunctionCall& func, int value)
+// {
+//     // For plural
+//     ELONA_DEFINE_I18N_BUILTIN("s", value == 1 ? u8""s : u8"s"s);
+//     // For third person singular
+//     ELONA_DEFINE_I18N_BUILTIN("s2", value == 1 ? u8"s"s : u8""s);
+//     ELONA_DEFINE_I18N_BUILTIN("ordinal", cnvrank(value));
+//
+//     return UNKNOWN_FUNCTION("integer");
+// }
+//
+// std::string format_builtins_character(
+//     const hil::FunctionCall& func,
+//     const Character& chara)
+// {
+//     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("he", builtin_he(func, chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("his", builtin_his(func, chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("him", builtin_him(func, chara.index));
+//
+//     // English only
+//     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("does", does(chara.index == 0));
+//     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("his_owned", your(chara.index));
+//     ELONA_DEFINE_I18N_BUILTIN("name_nojob", sncnv(cdatan(0, chara.index)));
+//
+//     // Japanese only
+//     ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
+//
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("yoro", _yoro);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("dozo", _dozo);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("thanks", _thanks);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("rob", _rob);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("ka", _ka);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("da", _da);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("nda", _nda);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("noka", _noka);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("kana", _kana);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("kimi", _kimi);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("ru", _ru);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("tanomu", _tanomu);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("ore", _ore);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("ga", _ga);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("dana", _dana);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("kure", _kure);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("daro", _daro);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("yo", _yo);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("aru", _aru);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("u", _u);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("na", _na);
+//     ELONA_DEFINE_I18N_BUILTIN_CHARA("ta", _ta);
+//
+//     return UNKNOWN_FUNCTION("character");
+// }
+//
+// std::string format_builtins_item(
+//     const hil::FunctionCall& func,
+//     const Item& item)
+// {
+//     ELONA_DEFINE_I18N_BUILTIN("itemname", builtin_itemname(func, item));
+//     ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
+//
+//     // English only
+//     ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number()));
+//     ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number()));
+//     ELONA_DEFINE_I18N_BUILTIN("does", does(item.number()));
+//
+//     return UNKNOWN_FUNCTION("item");
+// }
+//
+// #undef ELONA_DEFINE_I18N_BUILTIN
+// #undef ELONA_DEFINE_I18N_BUILTIN_CHARA
+// #undef UNKNOWN_FUNCTION
 
 
 void load(const std::string& language)
