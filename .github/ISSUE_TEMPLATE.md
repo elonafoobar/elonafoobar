@@ -25,7 +25,7 @@ optional
 # Environment
 
 * OS version:
-* Elona Foobar verision:
+* Elona foobar verision:
 
 
 # Details
