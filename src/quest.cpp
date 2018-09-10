@@ -340,16 +340,16 @@ void quest_set_data(int val0)
     if (val0 == 1)
     {
         buff = i18n::s.get(
-                   "core.locale.quest.giver.have_something_to_ask", cdata[cc])
+                   "core.locale.quest.giver.have_something_to_ask", cdata[tc])
             + buff;
         if (qdata(9, rq) != -1)
         {
             buff += i18n::s.get(
                 "core.locale.quest.giver.days_to_perform",
                 qdata(9, rq),
-                cdata[cc]);
+                cdata[tc]);
         }
-        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cdata[cc]);
+        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cdata[tc]);
     }
     if (val0 == 2)
     {
@@ -393,20 +393,20 @@ void quest_set_data(int val0)
     if (val0 == 3)
     {
         buff = i18n::s.get(
-            "core.locale.quest.giver.complete.done_well", cdata[cc]);
+            "core.locale.quest.giver.complete.done_well", cdata[tc]);
         if (elona::stoi(s(5)) != 0)
         {
             txt(i18n::s.get(
                 "core.locale.quest.giver.complete.take_reward",
                 s(5),
-                cdata[cc]));
+                cdata[tc]));
         }
         if (qdata(3, rq) == 1006)
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
                 buff += i18n::s.get(
-                    "core.locale.quest.giver.complete.extra_coins", cdata[cc]);
+                    "core.locale.quest.giver.complete.extra_coins", cdata[tc]);
             }
         }
         if (qdata(3, rq) == 1009)
@@ -415,7 +415,7 @@ void quest_set_data(int val0)
             {
                 buff += i18n::s.get(
                     "core.locale.quest.giver.complete.music_tickets",
-                    cdata[cc]);
+                    cdata[tc]);
             }
         }
     }
