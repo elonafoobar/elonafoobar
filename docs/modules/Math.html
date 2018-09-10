@@ -5,7 +5,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Debug module</title>
+    <title>Math module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../uikit.min.css" type="text/css" />
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
@@ -44,7 +44,7 @@
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
-    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.html"><span class="module-name-item">Event</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
@@ -56,7 +56,7 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
-    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
@@ -101,7 +101,7 @@
     <!-- list of items in a module -->
     <ul class="uk-nav nav nav-module-contents">
     <li class="nav-item">
-    <h4 class="uk-panel-title">Contents of <strong>Debug</strong></h4>
+    <h4 class="uk-panel-title">Contents of <strong>Math</strong></h4>
     <ul class="nav">
     <li class="nav-item"><a href="#Functions"><span class="fragment-hashtag">#</span> Functions</a></li>
     </ul>
@@ -125,9 +125,11 @@
 
     <!-- module content header start -->
 
-    <h2><span class="body-module-name"><strong><em>Debug</em></strong></span> module</h2>
-    <p>Functions for debugging scripts.</p>
-    <p> These should be left out when making releases of mods.</p>
+    <h2><span class="body-module-name"><strong><em>Math</em></strong></span> module</h2>
+    <p>Math utility functions.</p>
+    <p>
+
+</p>
 
 
     <!-- module info start -->
@@ -135,7 +137,7 @@
 
     <!-- module usage start -->
     <h3>Usage</h3>
-    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Debug = Elona.<span class="global">require</span>(<span class="string">"Debug"</span>)</code></pre>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Math = Elona.<span class="global">require</span>(<span class="string">"Math"</span>)</code></pre>
     <!-- module usage end -->
 
     <!-- module content header end -->
@@ -148,20 +150,16 @@
     </thead>
     <tbody>
     <tr>
-    <td class="name"><a href="#log">log (message)</a></td>
-    <td class="summary">Logs a message to log.txt.</td>
+    <td class="name"><a href="#max">max (a, b)</a></td>
+    <td class="summary">Retrieves the maximum of two numbers.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#report_error">report_error (message)</a></td>
-    <td class="summary">Reports an error to the game console and log file.</td>
+    <td class="name"><a href="#min">min (a, b)</a></td>
+    <td class="summary">Retrieves the minimum of two numbers.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#dump_characters">dump_characters ()</a></td>
-    <td class="summary">Dumps all characters to the log.</td>
-    </tr>
-    <tr>
-    <td class="name"><a href="#dump_items">dump_items ()</a></td>
-    <td class="summary">Dumps all items to the log.</td>
+    <td class="name"><a href="#clamp">clamp (n, min, max)</a></td>
+    <td class="summary">Clamps a number between two numbers.</td>
     </tr>
     </tbody>
     </table>
@@ -175,14 +173,14 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#log" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="log">log (message)</span>
+    <a href="#max" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="max">max (a, b)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Logs a message to log.txt.</p>
+    <p class="section-item-summary">Retrieves the maximum of two numbers.</p>
     <p class="section-item-description">
 
 </p>
@@ -198,13 +196,33 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>a</em></strong>
 
     <strong> : </strong>
 
-    (<span class="types"><span class="type">string</span></span>)
+    (<span class="types"><span class="type">num</span></span>)
 
-     the message to log
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>b</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
 
     </li>
 
@@ -214,6 +232,13 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">num</span></span>)
+    <span class="return-text">the maximum of a and b</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -227,14 +252,14 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#report_error" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="report_error">report_error (message)</span>
+    <a href="#min" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="min">min (a, b)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Reports an error to the game console and log file.</p>
+    <p class="section-item-summary">Retrieves the minimum of two numbers.</p>
     <p class="section-item-description">
 
 </p>
@@ -250,13 +275,33 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>a</em></strong>
 
     <strong> : </strong>
 
-    (<span class="types"><span class="type">string</span></span>)
+    (<span class="types"><span class="type">num</span></span>)
 
-     the error message to report
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>b</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
 
     </li>
 
@@ -266,6 +311,13 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">num</span></span>)
+    <span class="return-text">the minimum of a and b</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -279,51 +331,90 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#dump_characters" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_characters">dump_characters ()</span>
+    <a href="#clamp" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="clamp">clamp (n, min, max)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Dumps all characters to the log.</p>
+    <p class="section-item-summary">Clamps a number between two numbers.</p>
     <p class="section-item-description">
 
 </p>
 
     <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>n</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>min</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>max</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+
+
+
+
+    </li>
+
+
+    </ul>
+
     <!-- parameters end -->
 
     <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
-    <!-- usage end -->
-
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#dump_items" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_items">dump_items ()</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Dumps all items to the log.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <!-- parameters end -->
-
-    <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">num</span></span>)
+    <span class="return-text">a number between min and max</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 

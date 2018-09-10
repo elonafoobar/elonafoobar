@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -43,6 +43,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item active"><div class="nav-item-block-active block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -50,6 +52,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
@@ -57,13 +60,18 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -82,6 +90,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
@@ -115,7 +124,7 @@
 <h1>Lua API</h1>
 
 
-<p>Welcome traveler! This is the documentation for the ElonaFoobar mod API.</p>
+<p>Welcome traveler! This is the documentation for the Elona foobar mod API.</p>
 
 
 
@@ -194,24 +203,24 @@
 
 <pre><code> local function run_life()
     if not Map.is_overworld() then
-       local grid = Store.grid
+       local grid = Store.map_local.grid
        if grid == nil then
-          Store.grid = create_life_grid()
-          grid = Store.grid
+          Store.map_local.grid = create_life_grid()
+          grid = Store.map_local.grid
        end
        for y = 1, Map.width() do
           for x = 1, Map.height() do
              local tile
-             if Store.grid[x][y] == 1 and Map.can_access(x, y) then
-                tile = Map.generate_tile(Enums.TileKind.Wall)
+             if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
+                tile = Map.generate_tile("Wall")
              else
-                tile = Map.generate_tile(Enums.TileKind.Room)
+                tile = Map.generate_tile("Room")
              end
              Map.set_tile(x, y, tile)
              Map.set_tile_memory(x, y, tile)
           end
        end
-       Store.grid = evolve(grid)
+       Store.map_local.grid = evolve(grid)
     end
  end
 </code></pre>
@@ -231,15 +240,21 @@
 
 
 
-<pre><code>       local grid = Store.grid
+<pre><code>       local grid = Store.map_local.grid
        if grid == nil then
-          Store.grid = create_life_grid()
-          grid = Store.grid
+          Store.map_local.grid = create_life_grid()
+          grid = Store.map_local.grid
        end
 </code></pre>
 
 
-<p>The table <code>Store</code> is for keeping any global data we need inside our script. In this case, we store the state of our life grid. This state will be preserved between subsequent calls to <code>run_life</code>. We also check if the store doesn't have our grid and create it if so.</p>
+<p>The table <code>Store</code> is for keeping any data we need inside our script.
+- <code>Store.map_local</code> holds data that is only relevant to the current map. When the map is changed, it is cleared.
+- <code>Store.global</code> holds data that persists throughout the entire game session.</p>
+
+
+
+<p>In this case, we store the state of our life grid in <code>map_local</code>. This state will be preserved between subsequent calls to <code>run_life</code> and will be cleaned up when the map is exited. We also check if the store doesn't have our grid and create it if so.</p>
 
 
 
@@ -256,7 +271,7 @@
 
 
 <pre><code>             local tile
-             if Store.grid[x][y] == 1 and Map.can_access(x, y) then
+             if Store.map_local.grid[x][y] == 1 and Map.can_access(x, y) then
                 tile = Map.generate_tile(Enums.TileKind.Wall)
              else
                 tile = Map.generate_tile(Enums.TileKind.Room)
@@ -270,11 +285,11 @@
 
 
 
-<p>We also use the enum type <code>TileKind</code> here. Some functions take enums to denote one of several different states an object can be in, like the curse state of an object (<code>Blessed</code>, <code>None</code>, <code>Cursed</code>, or <code>Doomed</code>). These will typically be found inside the <code>Enum</code> module.</p>
+<p>We also use the enum type <code>TileKind</code> here. Some functions take enums to denote one of several different states an object can be in, like the curse state of an object (<code>Blessed</code>, <code>None</code>, <code>Cursed</code>, or <code>Doomed</code>). These will typically be found inside the <code>Enum</code> module. You also can pass the name of the enum itself without using the <code>Enums</code> table (like <code>Map.generate_tile("Wall")</code>), to avoid having to <code>require</code> <code>Enums</code> all the time.</p>
 
 
 
-<pre><code>       Store.grid = evolve(grid)
+<pre><code>       Store.map_local.grid = evolve(grid)
 </code></pre>
 
 
@@ -330,7 +345,7 @@
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>

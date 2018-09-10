@@ -5,7 +5,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Debug module</title>
+    <title>Input module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../uikit.min.css" type="text/css" />
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
@@ -44,14 +44,14 @@
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
-    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.html"><span class="module-name-item">Event</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
-    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
@@ -101,7 +101,7 @@
     <!-- list of items in a module -->
     <ul class="uk-nav nav nav-module-contents">
     <li class="nav-item">
-    <h4 class="uk-panel-title">Contents of <strong>Debug</strong></h4>
+    <h4 class="uk-panel-title">Contents of <strong>Input</strong></h4>
     <ul class="nav">
     <li class="nav-item"><a href="#Functions"><span class="fragment-hashtag">#</span> Functions</a></li>
     </ul>
@@ -125,9 +125,11 @@
 
     <!-- module content header start -->
 
-    <h2><span class="body-module-name"><strong><em>Debug</em></strong></span> module</h2>
-    <p>Functions for debugging scripts.</p>
-    <p> These should be left out when making releases of mods.</p>
+    <h2><span class="body-module-name"><strong><em>Input</em></strong></span> module</h2>
+    <p>Functions for prompting the player for input.</p>
+    <p>
+
+</p>
 
 
     <!-- module info start -->
@@ -135,7 +137,7 @@
 
     <!-- module usage start -->
     <h3>Usage</h3>
-    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Debug = Elona.<span class="global">require</span>(<span class="string">"Debug"</span>)</code></pre>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Input = Elona.<span class="global">require</span>(<span class="string">"Input"</span>)</code></pre>
     <!-- module usage end -->
 
     <!-- module content header end -->
@@ -148,20 +150,20 @@
     </thead>
     <tbody>
     <tr>
-    <td class="name"><a href="#log">log (message)</a></td>
-    <td class="summary">Logs a message to log.txt.</td>
+    <td class="name"><a href="#yes_or_no">yes_or_no (message)</a></td>
+    <td class="summary">Prompts the player to select "yes" or "no".</td>
     </tr>
     <tr>
-    <td class="name"><a href="#report_error">report_error (message)</a></td>
-    <td class="summary">Reports an error to the game console and log file.</td>
+    <td class="name"><a href="#prompt_choice">prompt_choice (...)</a></td>
+    <td class="summary">Prompts the player to select from a list of choices.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#dump_characters">dump_characters ()</a></td>
-    <td class="summary">Dumps all characters to the log.</td>
+    <td class="name"><a href="#prompt_number">prompt_number (message, max[, index])</a></td>
+    <td class="summary">Prompts the player to choose a number.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#dump_items">dump_items ()</a></td>
-    <td class="summary">Dumps all items to the log.</td>
+    <td class="name"><a href="#prompt_text">prompt_text (message, is_cancelable)</a></td>
+    <td class="summary">Prompts the player to enter text.</td>
     </tr>
     </tbody>
     </table>
@@ -175,14 +177,14 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#log" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="log">log (message)</span>
+    <a href="#yes_or_no" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="yes_or_no">yes_or_no (message)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Logs a message to log.txt.</p>
+    <p class="section-item-summary">Prompts the player to select "yes" or "no".</p>
     <p class="section-item-description">
 
 </p>
@@ -204,7 +206,7 @@
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the message to log
+     a message to display
 
     </li>
 
@@ -214,6 +216,13 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">bool</span></span>)
+    <span class="return-text">true if "yes" was selected.</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -221,20 +230,211 @@
     <!-- see also end -->
 
     <!-- usage start -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> result = Input.yes_no(<span class="string">"Yes or no?"</span>)
+
+<span class="keyword">if</span> result <span class="keyword">then</span>
+   GUI.txt(<span class="string">"You chose yes. "</span>)
+<span class="keyword">else</span>
+   GUI.txt(<span class="string">"You chose no. "</span>)
+<span class="keyword">end</span></code></pre>
     <!-- usage end -->
 
     </dd>
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#report_error" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="report_error">report_error (message)</span>
+    <a href="#prompt_choice" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="prompt_choice">prompt_choice (...)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Reports an error to the game console and log file.</p>
+    <p class="section-item-summary">Prompts the player to select from a list of choices.</p>
+    <p class="section-item-description"> Raises an
+ error if no arguments are provided.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>...</em></strong>
+
+
+
+
+
+
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">num</span></span>)
+    <span class="return-text">the index of the item chosen, starting from 1</span>
+    </li>
+    </ul>
+    <h5>Or</h5>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    <span class="return-text">if canceled</span>
+    </li>
+    </ul>
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code>GUI.txt(<span class="string">"Which? "</span>)
+<span class="keyword">local</span> choices = {<span class="string">"First"</span>, <span class="string">"Second"</span>, <span class="string">"Third"</span>}
+<span class="keyword">local</span> result = Input.prompt_choice(<span class="global">table</span>.unpack(choices))
+
+<span class="keyword">if</span> result <span class="keyword">then</span>
+   GUI.txt(<span class="string">"You chose \""</span> .. choices[result] .. <span class="string">"\". "</span>)
+<span class="keyword">else</span>
+   GUI.txt(<span class="string">"Never mind. "</span>)
+<span class="keyword">end</span></code></pre>
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#prompt_number" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="prompt_number">prompt_number (message, max[, index])</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Prompts the player to choose a number.</p>
+    <p class="section-item-description"> Raises an error if
+ <code>max</code> is less than 0.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>message</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     a message to display
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>max</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the maximum number choosable
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>index</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the starting index
+
+    (<em>optional</em>)
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">num</span></span>)
+    <span class="return-text">the number chosen</span>
+    </li>
+    </ul>
+    <h5>Or</h5>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    <span class="return-text">if canceled, or max &lt; 0</span>
+    </li>
+    </ul>
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> result = Input.prompt_number(<span class="string">"Which character to spawn? "</span>, <span class="number">353</span>)
+<span class="keyword">if</span> result <span class="keyword">then</span>
+   <span class="keyword">local</span> chara = Chara.create(<span class="number">25</span>, <span class="number">25</span>, result)
+   <span class="keyword">if</span> chara <span class="keyword">then</span>
+      GUI.txt(<span class="string">"Spawned "</span> .. chara.name .. <span class="string">". "</span>)
+   <span class="keyword">end</span>
+<span class="keyword">else</span>
+   GUI.txt(<span class="string">"Never mind."</span>)
+<span class="keyword">end</span></code></pre>
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#prompt_text" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="prompt_text">prompt_text (message, is_cancelable)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Prompts the player to enter text.</p>
     <p class="section-item-description">
 
 </p>
@@ -256,7 +456,23 @@
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the error message to report
+     a message to display
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>is_cancelable</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">bool</span></span>)
+
+     whether or not the dialog can be canceled
 
     </li>
 
@@ -266,6 +482,17 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the text that was input</span>
+    </li>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    <span class="return-text">if canceled</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -273,64 +500,14 @@
     <!-- see also end -->
 
     <!-- usage start -->
-    <!-- usage end -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> result = Input.prompt_text(<span class="string">"What text?"</span>, <span class="keyword">true</span>)
 
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#dump_characters" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_characters">dump_characters ()</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Dumps all characters to the log.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <!-- parameters end -->
-
-    <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
-    <!-- usage end -->
-
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#dump_items" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_items">dump_items ()</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Dumps all items to the log.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <!-- parameters end -->
-
-    <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
+<span class="keyword">if</span> result <span class="keyword">then</span>
+   GUI.txt(<span class="string">"You typed \""</span> .. result .. <span class="string">"\". "</span>)
+<span class="keyword">else</span>
+   GUI.txt(<span class="string">"Never mind. "</span>)
+<span class="keyword">end</span></code></pre>
     <!-- usage end -->
 
     </dd>
