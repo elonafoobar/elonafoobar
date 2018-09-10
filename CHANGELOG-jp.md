@@ -25,6 +25,7 @@
 - omake EN、omake overhaul EN、omake overhaul EN hackの翻訳を移植。これらを主に翻訳されたDoorknob氏に感謝申し上げます
 - 設定ファイルをJSONからHCL形式に変更
   - ほとんどすべての設定がゲーム内から変えられるようになっています。おそらく直接触る必要はないでしょう
+- 分針を左上の時計に追加
 
 ### Fixed
 
