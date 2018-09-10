@@ -1570,9 +1570,7 @@ TurnResult do_use_command()
 
     if (ibit(7, ci) == 1)
     {
-        if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12
-            < inv[ci].count)
+        if (game_data.date.hours() < inv[ci].count)
         {
             txt(i18n::s.get(
                 "core.locale.action.use.useable_again_at",
@@ -1581,8 +1579,7 @@ TurnResult do_use_command()
             return TurnResult::pc_turn_user_error;
         }
         item_separate(ci);
-        inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + inv[ci].param3;
+        inv[ci].count = game_data.date.hours() + inv[ci].param3;
     }
     if (ibit(4, ci) == 1)
     {

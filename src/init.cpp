@@ -166,11 +166,11 @@ void load_character_sprite()
 
 void start_elona()
 {
-    gdata_year = 517;
-    gdata_month = 8;
-    gdata_day = 12;
-    gdata_hour = 16;
-    gdata_minute = 10;
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 16;
+    game_data.date.minute = 10;
     quickpage = 1;
     if (Config::instance().noadebug)
     {
@@ -942,11 +942,11 @@ void initialize_debug_globals()
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    gdata_year = 517;
-    gdata_month = 12;
-    gdata_day = 30;
-    gdata_hour = 1;
-    gdata_minute = 10;
+    game_data.date.year = 517;
+    game_data.date.month = 12;
+    game_data.date.day = 30;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
     gdata_played_scene = 50;
     gdata_has_not_been_to_vernis = 1;
     adata(30, 7) = 4;
@@ -1216,11 +1216,11 @@ void initialize_noa_items()
 
 void initialize_world()
 {
-    gdata_year = 517;
-    gdata_month = 8;
-    gdata_day = 12;
-    gdata_hour = 1;
-    gdata_minute = 10;
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 1;
+    game_data.date.minute = 10;
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     gdata_previous_map = -1;

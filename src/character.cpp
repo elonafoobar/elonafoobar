@@ -397,8 +397,7 @@ void failed_to_place_character(Character& cc)
     if (cc.character_role == 13)
     {
         cc.set_state(Character::State::adventurer_dead);
-        cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
+        cc.time_to_revive = game_data.date.hours() + 24 + rnd(12);
     }
 }
 

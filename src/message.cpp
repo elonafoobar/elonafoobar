@@ -292,7 +292,8 @@ void txt_conv()
             }
             if (Config::instance().msgaddtime)
             {
-                msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
+                msgtemp(0) =
+                    u8"["s + game_data.date.minute + u8"] " + msgtemp(0);
             }
             else
             {

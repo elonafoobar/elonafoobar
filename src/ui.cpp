@@ -547,7 +547,7 @@ void render_clock()
         "clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
-        gdata_hour * 30 + gdata_minute / 2);
+        game_data.date.hour * 30 + game_data.date.minute / 2);
     // Long hand
     draw_rotated(
         "clock_hand",
@@ -555,12 +555,13 @@ void render_clock()
         inf_clockarrowy,
         info.width / 2,
         info.height,
-        gdata_minute * 6);
+        game_data.date.minute * 6);
 
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
-    mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
+    mes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s
+        + game_data.date.day);
     bmes(
-        i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
+        i18n::_(u8"ui", u8"time", u8"_"s + game_data.date.hour / 4) + u8" "s
             + i18n::_(u8"ui", u8"weather", u8"_"s + game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
@@ -1386,7 +1387,7 @@ void render_autoturn_animation()
     font(13 - en * 2, snail::Font::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     gmode(2);
-    draw_rotated("hourglass", sx + 18, sy + 12, gdata_minute / 4 * 24);
+    draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
     if (cdata.player().continuous_action.type
             == ContinuousAction::Type::dig_ground

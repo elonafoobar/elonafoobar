@@ -199,7 +199,7 @@ void proc_event()
         break;
     case 29:
     {
-        randomize(gdata_year + gdata_current_dungeon_level);
+        randomize(game_data.date.year + gdata_current_dungeon_level);
         int c = choice(std::initializer_list<int>{
             300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
             145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
@@ -392,7 +392,8 @@ void proc_event()
             flt(0, Quality::good);
             for (int i = 0; i < 1; ++i)
             {
-                if (gdata_last_month_when_trainer_visited != gdata_month
+                if (gdata_last_month_when_trainer_visited
+                        != game_data.date.month
                     || rnd(5) == 0)
                 {
                     if (rnd(3))

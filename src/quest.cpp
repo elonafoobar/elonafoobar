@@ -497,8 +497,7 @@ void quest_refresh_list()
         rc = qdata(0, cnt);
         if (qdata(8, cnt) == 0)
         {
-            if (qdata(2, cnt) < gdata_hour + gdata_day * 24
-                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
+            if (qdata(2, cnt) < game_data.date.hours())
             {
                 rq = cnt;
                 quest_generate();
@@ -520,9 +519,7 @@ int quest_generate()
     qdata(3, rq) = 0;
     qdata(14, rq) = 0;
     qdata(8, rq) = 0;
-    qdata(2, rq) = (rnd(3) + 1) * 24
-        + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-           + gdata_year * 24 * 30 * 12);
+    qdata(2, rq) = (rnd(3) + 1) * 24 + game_data.date.hours();
     qdata(7, rq) = 0;
     if (rnd(3) == 0)
     {
@@ -604,9 +601,7 @@ int quest_generate()
                 break;
             }
             qdata(12, rq) = cdata.tmp().id;
-            qdata(2, rq) = (rnd(6) + 2) * 24
-                + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                   + gdata_year * 24 * 30 * 12);
+            qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
             qdata(7, rq) = 0;
             qdata(3, rq) = 1010;
             qdata(14, rq) = 1;
@@ -640,9 +635,7 @@ int quest_generate()
                 break;
             }
             qdata(12, rq) = cdata.tmp().id;
-            qdata(2, rq) = (rnd(6) + 2) * 24
-                + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                   + gdata_year * 24 * 30 * 12);
+            qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
             qdata(7, rq) = 0;
             qdata(3, rq) = 1008;
             qdata(14, rq) = 8;
@@ -655,9 +648,7 @@ int quest_generate()
     }
     if (rnd(11) == 0)
     {
-        qdata(2, rq) = (rnd(6) + 2) * 24
-            + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-               + gdata_year * 24 * 30 * 12);
+        qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
         qdata(3, rq) = 1007;
         qdata(14, rq) = 6;
         qdata(4, rq) = rnd(3);
@@ -725,9 +716,7 @@ int quest_generate()
             rnd(sdata(183, 0) + 10),
             int(1.5 * std::sqrt(sdata(183, 0))) + 1,
             cdata.player().fame / 1000 + 10);
-        qdata(2, rq) = (rnd(6) + 2) * 24
-            + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-               + gdata_year * 24 * 30 * 12);
+        qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
         qdata(7, rq) = 0;
         qdata(3, rq) = 1009;
         qdata(14, rq) = 7;
@@ -747,9 +736,7 @@ int quest_generate()
                 + 1,
             1,
             50);
-        qdata(2, rq) = (rnd(6) + 2) * 24
-            + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-               + gdata_year * 24 * 30 * 12);
+        qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
         qdata(3, rq) = 1006;
         qdata(14, rq) = 5;
         qdata(4, rq) = 0;
@@ -768,9 +755,7 @@ int quest_generate()
             1,
             80);
         qdata(5, rq) = roundmargin(qdata(5, rq), cdata.player().level);
-        qdata(2, rq) = (rnd(6) + 2) * 24
-            + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-               + gdata_year * 24 * 30 * 12);
+        qdata(2, rq) = (rnd(6) + 2) * 24 + game_data.date.hours();
         qdata(7, rq) = 0;
         qdata(3, rq) = 1001;
         qdata(14, rq) = 1;

@@ -2787,9 +2787,7 @@ label_1742_internal:
     }
     if (mdata_map_refresh_type == 1)
     {
-        if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12
-            >= mdata_map_next_regenerate_date)
+        if (game_data.date.hours() >= mdata_map_next_regenerate_date)
         {
             if (mdata_map_should_regenerate == 0)
             {
@@ -2823,7 +2821,7 @@ label_1742_internal:
                         }
                         if (gdata_current_map == mdata_t::MapId::noyel)
                         {
-                            if (gdata_month == 12)
+                            if (game_data.date.month == 12)
                             {
                                 if (adata(29, gdata_current_map) == 0)
                                 {
@@ -2868,9 +2866,7 @@ label_1742_internal:
             }
             if (cdata[rc].state() == Character::State::villager_dead)
             {
-                if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                        + gdata_year * 24 * 30 * 12
-                    >= cdata[rc].time_to_revive)
+                if (game_data.date.hours() >= cdata[rc].time_to_revive)
                 {
                     revive_player();
                 }
@@ -2927,7 +2923,7 @@ label_1742_internal:
                     || mdata_map_type == mdata_t::MapType::guild)
                 {
                     cdata[rc].sleep = 0;
-                    if (gdata_hour >= 22 || gdata_hour < 7)
+                    if (game_data.date.hour >= 22 || game_data.date.hour < 7)
                     {
                         if (rnd(6) == 0)
                         {
@@ -3261,7 +3257,7 @@ label_1744_internal:
             sceneid = 100;
             do_play_scene();
             gdata_main_quest_flag = 200;
-            gdata_year += 3;
+            game_data.date.year += 3;
         }
     }
     if (adata(16, gdata_current_map) == mdata_t::MapId::random_dungeon)
@@ -3471,8 +3467,7 @@ label_1744_internal:
     {
         if (gdata_distance_between_town >= 16)
         {
-            p = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                + gdata_year * 24 * 30 * 12 - gdata_departure_date;
+            p = game_data.date.hours() - gdata_departure_date;
             txt(i18n::s.get(
                 "core.locale.map.since_leaving.time_passed",
                 p / 24,

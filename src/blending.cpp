@@ -65,7 +65,7 @@ label_19341_internal:
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
-            ++gdata_hour;
+            ++game_data.date.hour;
             weather_changes();
             render_hud();
             if (cnt % 5 == 0)
@@ -75,7 +75,7 @@ label_19341_internal:
             }
             redraw();
             await(Config::instance().animewait * 5);
-            gdata_minute = 0;
+            game_data.date.minute = 0;
             cc = 0;
             --cdata[cc].continuous_action.turn;
             if (cdata[cc].continuous_action.turn <= 0)

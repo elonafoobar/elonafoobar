@@ -906,15 +906,12 @@ int damage_hp(
         else if (victim.character_role == 13)
         {
             victim.set_state(Character::State::adventurer_dead);
-            victim.time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
-                + rnd(12);
+            victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
         }
         else
         {
             victim.set_state(Character::State::villager_dead);
-            victim.time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
+            victim.time_to_revive = game_data.date.hours() + 48;
         }
         if (victim.index != 0)
         {
