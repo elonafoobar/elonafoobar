@@ -72,16 +72,16 @@ locale {
 
         item_on_the_ground_get_broiled = "${itemname(_1)} on the ground get${_s(_1)} perfectly broiled."
         someones_item_get_broiled = "${name(_2)}${his_owned(_2)} ${itemname(_1, 0, false)} get${_s(_1)} perfectly broiled."
-        fireproof_blanket_protects_item = "${itemname(_1, 1)} protects {name(_2)}{his_owned(_2)} stuff from fire."
+        fireproof_blanket_protects_item = "${itemname(_1, 1)} protects ${name(_2)}${his_owned(_2)} stuff from fire."
         fireproof_blanket_turns_to_dust = "${itemname(_1, 1)} turns to dust."
-        item_someone_equips_turns_to_dust = "${itemname(_1, _2)} ${name(_3)} equip${s(_3)} turn${s2(_2)} to dust."
-        someones_item_turns_to_dust = "${name(_3)}${his_owned(_3)} ${itemname(_1, _2, false)} turn${s2(_2)} to dust."
-        item_on_the_ground_turns_to_dust = "${itemname(_1, _2)} on the ground turn${s2(_2)} to dust."
+        item_someone_equips_turns_to_dust = "${_1} ${name(_3)} equip${s(_3)} turn${s2(_2)} to dust."
+        someones_item_turns_to_dust = "${name(_3)}${his_owned(_3)} ${_1} turn${s2(_2)} to dust."
+        item_on_the_ground_turns_to_dust = "${_1} on the ground turn${s2(_2)} to dust."
 
-        coldproof_blanket_protects_item = "${itemname(_1, 1)} protects {name(_2)}{his_owned(_2)} stuff from cold."
+        coldproof_blanket_protects_item = "${itemname(_1, 1)} protects ${name(_2)}${his_owned(_2)} stuff from cold."
         coldproof_blanket_is_broken_to_pieces = "${itemname(_1, 1)} is broken to pieces."
-        someones_item_breaks_to_pieces = "${name(_3)}${his_owned(_3)} ${itemname(_1, _2, false)} break${s2(_2)} to pieces."
-        item_on_the_ground_breaks_to_pieces = "${itemname(_1, _2)} on the ground break${s2(_2)} to pieces."
+        someones_item_breaks_to_pieces = "${name(_3)}${his_owned(_3)} ${_1} break${s2(_2)} to pieces."
+        item_on_the_ground_breaks_to_pieces = "${_1} on the ground break${s2(_2)} to pieces."
 
         items_are_destroyed = "Too many item data! Some items in this area are destroyed."
 
