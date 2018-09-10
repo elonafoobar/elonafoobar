@@ -118,6 +118,50 @@ void prepare_house_board_tiles()
 
 
 
+int calc_heirloom_value(Item& heirloom)
+{
+    const auto category = the_item_db[heirloom.id]->category;
+
+    auto value = heirloom.value;
+    switch (category)
+    {
+    case 60000: return value / 20;
+    case 80000: return value / 10;
+    case 77000: return value / 10;
+    default: return value / 1000;
+    }
+}
+
+
+
+constexpr size_t heirloom_list_size = 10;
+using ItemAndValue = std::pair<int, int>;
+
+void add_heirloom_if_valuable_enough(
+    std::vector<ItemAndValue>& heirlooms,
+    Item& heirloom)
+{
+    const auto category = the_item_db[heirloom.id]->category;
+    if (category == 60000)
+    {
+        gdata(77) += clamp(heirloom.value / 50, 50, 500);
+    }
+
+    const auto value = calc_heirloom_value(heirloom);
+    if (heirlooms.back().second < value)
+    {
+        heirlooms.back() = {heirloom.index, value};
+        // Sort by value in descending order. The first item is the most
+        // valuable one.
+        std::sort(
+            std::begin(heirlooms),
+            std::end(heirlooms),
+            [](const auto& a, const auto& b) { return a.second > b.second; });
+    }
+}
+
+
+
 } // namespace
 
 
@@ -683,7 +727,8 @@ void show_home_value()
     key_list = key_cancel;
 
     s(0) = i18n::s.get("core.locale.building.home.rank.title");
-    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key");
+    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key")
+        + i18n::s.get("core.locale.ui.hint.close");
     windowshadow = 1;
     display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
     display_topic(
@@ -1292,48 +1337,6 @@ void update_museum()
 }
 
 
-void calc_hairloom_value(int val0)
-{
-    int category = the_item_db[inv[val0].id]->category;
-    if (category == 60000)
-    {
-        gdata(77) += clamp(inv[val0].value / 50, 50, 500);
-    }
-    p = inv[val0].value;
-    for (int cnt = 0; cnt < 1; ++cnt)
-    {
-        if (category == 60000)
-        {
-            p /= 20;
-            break;
-        }
-        if (category == 80000)
-        {
-            p /= 10;
-            break;
-        }
-        if (category == 77000)
-        {
-            p /= 10;
-            break;
-        }
-        p /= 1000;
-    }
-    int n = 0;
-    if (p > list(1, n))
-    {
-        list(0, n) = val0;
-        list(1, n) = p;
-        for (int cnt = 0; cnt < 10; ++cnt)
-        {
-            if (list(1, cnt) < list(1, n))
-            {
-                n = cnt;
-            }
-        }
-    }
-    return;
-}
 
 void calc_home_rank()
 {
@@ -1345,11 +1348,8 @@ void calc_home_rank()
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        list(0, cnt) = 0;
-        list(1, cnt) = 0;
-    }
+
+    std::vector<ItemAndValue> heirlooms{heirloom_list_size};
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number() == 0)
@@ -1361,8 +1361,17 @@ void calc_home_rank()
         {
             continue;
         }
-        calc_hairloom_value(cnt);
+
+        add_heirloom_if_valuable_enough(heirlooms, inv[cnt]);
     }
+    size_t i{};
+    for (const auto& heirloom : heirlooms)
+    {
+        list(0, static_cast<int>(i)) = heirloom.first;
+        list(1, static_cast<int>(i)) = heirloom.second;
+        ++i;
+    }
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (list(0, cnt) != 0)
