@@ -18,20 +18,35 @@ elona_vector2<int> encref;
 
 
 
+// Check up to 2 filters.
+// No filter: Always returns `true`.
+// 1 filter: Returns if `category` matches with the filter.
+// 2 filters: Returns if `category` matches with either of them.
 bool check_enchantment_filters(int category, int type)
 {
-    constexpr auto max_enchantment_filters = 2;
+    const auto filter1 = encref(3, type);
 
-    for (int i = 0; i < max_enchantment_filters; ++i)
+    if (filter1 == 0)
     {
-        const auto filter = encref(3 + i, type);
-        if (filter == 0 || enchantment_filter(category, filter))
-        {
-            return true;
-        }
+        return true; // No filter.
     }
 
-    return false;
+    const auto match_filter1 = enchantment_filter(category, filter1);
+    if (match_filter1)
+    {
+        return true;
+    }
+
+    const auto filter2 = encref(4, type);
+    if (filter2 == 0)
+    {
+        return false;
+    }
+    else
+    {
+        const auto match_filter2 = enchantment_filter(category, filter2);
+        return match_filter2;
+    }
 }
 
 
@@ -954,19 +969,9 @@ int enchantment_generate(int prm_451)
                 continue;
             }
         }
-        if (encref(3, cnt) != 0)
+        if (!check_enchantment_filters(reftype, cnt))
         {
-            if (enchantment_filter(reftype, encref(3, cnt)) == 0)
-            {
-                if (encref(4, cnt) == 0)
-                {
-                    continue;
-                }
-                else if (enchantment_filter(reftype, encref(4, cnt)) == 0)
-                {
-                    continue;
-                }
-            }
+            continue;
         }
         sum_at_m47 += encref(2, cnt);
         enclist(0, max_at_m47) = cnt;
@@ -1110,10 +1115,13 @@ bool enchantment_add(
 
     if (!force)
     {
-        if (!check_enchantment_filters(
-                category, type >= 10000 ? type / 10000 : type))
+        const auto type_ = type >= 10000 ? type / 10000 : type;
+        if (encref(3, type_) != 0)
         {
-            return false;
+            if (!check_enchantment_filters(category, type_))
+            {
+                return false;
+            }
         }
         else if (category == 25000 && !not_halve)
         {
