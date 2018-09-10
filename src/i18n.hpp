@@ -134,6 +134,16 @@ inline bool ident_eq(std::string ident, int count)
 }
 
 
+/**
+ * NOTE: When using functions in inline HCL, only the first argument position
+ * can have a substituted argument. For example, itemname(_1, 1) is valid, but
+ * itemname(_1, _2) is not. This is because the formatting uses a variadic
+ * parameter and each function has to be evaluated when looking at an individual
+ * argument that is in the function's first argument position.
+ *
+ * This could be fixed by defining all the functions in Lua instead.
+ */
+
 std::string format_builtins_argless(const hil::FunctionCall&);
 std::string format_builtins_bool(const hil::FunctionCall&, bool);
 std::string format_builtins_string(const hil::FunctionCall&, std::string);

@@ -1775,7 +1775,7 @@ bool item_fire(int owner, int ci)
                     txtef(8);
                     txt(i18n::s.get(
                         "core.locale.item.item_someone_equips_turns_to_dust",
-                        inv[ci_],
+                        itemname(inv[ci_].index, p_),
                         p_,
                         cdata[owner]));
                 }
@@ -1790,7 +1790,7 @@ bool item_fire(int owner, int ci)
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.item.someones_item_turns_to_dust",
-                    inv[ci_],
+                    itemname(inv[ci_].index, p_, 1),
                     p_,
                     cdata[owner]));
             }
@@ -1800,7 +1800,7 @@ bool item_fire(int owner, int ci)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.item.item_on_the_ground_turns_to_dust",
-                inv[ci_],
+                itemname(inv[ci_].index, p_),
                 p_));
         }
         inv[ci_].modify_number(-p_);
@@ -1956,7 +1956,7 @@ bool item_cold(int owner, int ci)
                 txtef(8);
                 txt(i18n::s.get(
                     "core.locale.item.someones_item_breaks_to_pieces",
-                    inv[ci_],
+                    itemname(inv[ci_].index, p_, 1),
                     p_,
                     cdata[owner]));
             }
@@ -1966,7 +1966,7 @@ bool item_cold(int owner, int ci)
             txtef(8);
             txt(i18n::s.get(
                 "core.locale.item.item_on_the_ground_breaks_to_pieces",
-                inv[ci_],
+                itemname(inv[ci_].index, p_),
                 p_));
         }
         inv[ci_].modify_number(-p_);
