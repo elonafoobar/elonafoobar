@@ -5,7 +5,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Debug module</title>
+    <title>Registry module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../uikit.min.css" type="text/css" />
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
@@ -44,7 +44,7 @@
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
-    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.html"><span class="module-name-item">Event</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
@@ -59,7 +59,7 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
-    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
@@ -101,7 +101,7 @@
     <!-- list of items in a module -->
     <ul class="uk-nav nav nav-module-contents">
     <li class="nav-item">
-    <h4 class="uk-panel-title">Contents of <strong>Debug</strong></h4>
+    <h4 class="uk-panel-title">Contents of <strong>Registry</strong></h4>
     <ul class="nav">
     <li class="nav-item"><a href="#Functions"><span class="fragment-hashtag">#</span> Functions</a></li>
     </ul>
@@ -125,9 +125,12 @@
 
     <!-- module content header start -->
 
-    <h2><span class="body-module-name"><strong><em>Debug</em></strong></span> module</h2>
-    <p>Functions for debugging scripts.</p>
-    <p> These should be left out when making releases of mods.</p>
+    <h2><span class="body-module-name"><strong><em>Registry</em></strong></span> module</h2>
+    <p>Functions for working with the data registry.</p>
+    <p> The registry is set
+ of immutable Lua tables for storing semi-structured data, like
+ character or item definitions. It can be expanded by modders to
+ contain new data types.</p>
 
 
     <!-- module info start -->
@@ -135,7 +138,7 @@
 
     <!-- module usage start -->
     <h3>Usage</h3>
-    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Debug = Elona.<span class="global">require</span>(<span class="string">"Debug"</span>)</code></pre>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Registry = Elona.<span class="global">require</span>(<span class="string">"Registry"</span>)</code></pre>
     <!-- module usage end -->
 
     <!-- module content header end -->
@@ -148,20 +151,8 @@
     </thead>
     <tbody>
     <tr>
-    <td class="name"><a href="#log">log (message)</a></td>
-    <td class="summary">Logs a message to log.txt.</td>
-    </tr>
-    <tr>
-    <td class="name"><a href="#report_error">report_error (message)</a></td>
-    <td class="summary">Reports an error to the game console and log file.</td>
-    </tr>
-    <tr>
-    <td class="name"><a href="#dump_characters">dump_characters ()</a></td>
-    <td class="summary">Dumps all characters to the log.</td>
-    </tr>
-    <tr>
-    <td class="name"><a href="#dump_items">dump_items ()</a></td>
-    <td class="summary">Dumps all items to the log.</td>
+    <td class="name"><a href="#get_table">get_table (mod_name, datatype_name)</a></td>
+    <td class="summary">Gets the root table for a datatype, if it exists.</td>
     </tr>
     </tbody>
     </table>
@@ -175,14 +166,14 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#log" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="log">log (message)</span>
+    <a href="#get_table" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get_table">get_table (mod_name, datatype_name)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Logs a message to log.txt.</p>
+    <p class="section-item-summary">Gets the root table for a datatype, if it exists.</p>
     <p class="section-item-description">
 
 </p>
@@ -198,51 +189,15 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>mod_name</em></strong>
 
     <strong> : </strong>
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the message to log
+     name of the mod where the data type is declared
 
     </li>
-
-
-    </ul>
-
-    <!-- parameters end -->
-
-    <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
-    <!-- usage end -->
-
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#report_error" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="report_error">report_error (message)</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Reports an error to the game console and log file.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <strong>Parameters:</strong>
-
-    <ul>
 
 
 
@@ -250,13 +205,13 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>datatype_name</em></strong>
 
     <strong> : </strong>
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the error message to report
+     name of the datatype
 
     </li>
 
@@ -266,64 +221,19 @@
     <!-- parameters end -->
 
     <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
-    <!-- usage end -->
-
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#dump_characters" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_characters">dump_characters ()</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Dumps all characters to the log.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <!-- parameters end -->
-
-    <!-- returns start -->
-    <!-- returns end -->
-
-
-    <!-- see also start -->
-    <!-- see also end -->
-
-    <!-- usage start -->
-    <!-- usage end -->
-
-    </dd>
-    <dt>
-    <div class="divider divider-custom"></div>
-    <div class="block section-item-header">
-    <a href="#dump_items" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_items">dump_items ()</span>
-    </div>
-    </dt>
-    <dd>
-    <div class="section-item-body">
-
-    <p class="section-item-summary">Dumps all items to the log.</p>
-    <p class="section-item-description">
-
-</p>
-
-    <!-- parameters start -->
-    <!-- parameters end -->
-
-    <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.5.html">table</a></span>)
+    <span class="return-text">the registry table containing data definitions</span>
+    </li>
+    </ul>
+    <h5>Or</h5>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    </li>
+    </ul>
     <!-- returns end -->
 
 

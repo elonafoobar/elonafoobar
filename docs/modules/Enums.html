@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -42,6 +42,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
@@ -49,13 +50,18 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -75,6 +81,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -82,6 +90,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
@@ -118,9 +127,10 @@
 
     <h2><span class="body-module-name"><strong><em>Enums</em></strong></span> module</h2>
     <p>Enumerations for various data types.</p>
-    <p>
-
-</p>
+    <p> All enum variants take the
+ name of the variant as a string for its value. This means that
+ anywhere an enum value is required, you can pass a string with its
+ name instead of using the <code>Enums</code> table.</p>
 
 
     <!-- module info start -->
@@ -128,7 +138,9 @@
 
     <!-- module usage start -->
     <h3>Usage</h3>
-    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Enums = Elona.<span class="global">require</span>(<span class="string">"Enums"</span>)</code></pre>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Enums = Elona.<span class="global">require</span>(<span class="string">"Enums"</span>)
+Chara.player():apply_ailment(Enums.StatusAilment.Blinded, <span class="number">100</span>)
+Chara.player():apply_ailment(<span class="string">"Blinded"</span>, <span class="number">100</span>)</code></pre>
     <!-- module usage end -->
 
     <!-- module content header end -->
@@ -154,7 +166,7 @@
     </tr>
     <tr>
     <td class="name"><a href="#TileKind">TileKind</a></td>
-    <td class="summary">A type of tile to be used with <code>Map.generate_tile</code>.</td>
+    <td class="summary">A kind of tile to be used with <code>Map.generate_tile</code>.</td>
     </tr>
     <tr>
     <td class="name"><a href="#DamageSource">DamageSource</a></td>
@@ -163,6 +175,18 @@
     <tr>
     <td class="name"><a href="#CharaFlag">CharaFlag</a></td>
     <td class="summary">A flag that can be set on a character.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#Gender">Gender</a></td>
+    <td class="summary">Possible genders of a character.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#Relation">Relation</a></td>
+    <td class="summary">Relationship of a character to the player.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#Color">Color</a></td>
+    <td class="summary">A set of colors.</td>
     </tr>
     </tbody>
     </table>
@@ -643,7 +667,7 @@ item.curse_state = Enums.CurseState.Blessed</code></pre>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">A type of tile to be used with <code>Map.generate_tile</code>.</p>
+    <p class="section-item-summary">A kind of tile to be used with <code>Map.generate_tile</code>.</p>
     <p class="section-item-description">
 
 </p>
@@ -2301,6 +2325,674 @@ item.curse_state = Enums.CurseState.Blessed</code></pre>
     <!-- usage end -->
 
     </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#Gender" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="Gender">Gender</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Possible genders of a character.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Enum Values:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Random</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Gender">Enums.Gender</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Male</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Gender">Enums.Gender</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Female</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Gender">Enums.Gender</a></span>)
+
+
+
+
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#Relation" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="Relation">Relation</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Relationship of a character to the player.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Enum Values:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Aggressive</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Relation">Enums.Relation</a></span>)
+
+     Will attack the player on sight.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Nonaggressive</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Relation">Enums.Relation</a></span>)
+
+     Will not attack the player, but the player will attack if the character is moved into.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Unconcerned</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Relation">Enums.Relation</a></span>)
+
+     The player will switch places with the character when moved into. Examples are human NPCs in dungeons that attack monsters.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Neutral</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Relation">Enums.Relation</a></span>)
+
+     Behaves like NPCs in towns.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Friend</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Relation">Enums.Relation</a></span>)
+
+     Attacks and is attacked by enemies of the player. Examples are quest escorts and hired adventurers.
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#Color" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="Color">Color</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">A set of colors.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Enum Values:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>None</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>White</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Green</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Red</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Blue</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Orange</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Yellow</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Grey</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Purple</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Cyan</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightRed</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>Gold</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>White2</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightBrown</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>DarkGreen</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightGrey</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>PaleRed</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightBlue</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightPurple</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>LightGreen</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>YellowGreen</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+
+
+
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>RandomFurniture</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+     When used with characters/items, picks a random color from a specific subset of colors.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>RandomSeeded</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+     When used with characters/items, applies a color that is random per-save but the same for all items of the same type. Examples are potions, rods and scrolls.
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>RandomAny</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="../modules/Enums.html#Color">Enums.Color</a></span>)
+
+     When used with characters/items, picks a random color from the first 21 colors.
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
     </dl>
 
     <!-- section end -->
@@ -2316,7 +3008,7 @@ item.curse_state = Enums.CurseState.Blessed</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>

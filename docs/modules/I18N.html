@@ -5,7 +5,7 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Debug module</title>
+    <title>I18N module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../uikit.min.css" type="text/css" />
     <link rel="stylesheet" href="../ldoc.css" type="text/css" />
@@ -44,13 +44,13 @@
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
-    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.html"><span class="module-name-item">Event</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
-    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item active"><div class="nav-item-block-active block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a><i class="icon icon-arrow-left icon-arrow-left-custom"></i></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
@@ -101,7 +101,7 @@
     <!-- list of items in a module -->
     <ul class="uk-nav nav nav-module-contents">
     <li class="nav-item">
-    <h4 class="uk-panel-title">Contents of <strong>Debug</strong></h4>
+    <h4 class="uk-panel-title">Contents of <strong>I18N</strong></h4>
     <ul class="nav">
     <li class="nav-item"><a href="#Functions"><span class="fragment-hashtag">#</span> Functions</a></li>
     </ul>
@@ -125,9 +125,9 @@
 
     <!-- module content header start -->
 
-    <h2><span class="body-module-name"><strong><em>Debug</em></strong></span> module</h2>
-    <p>Functions for debugging scripts.</p>
-    <p> These should be left out when making releases of mods.</p>
+    <h2><span class="body-module-name"><strong><em>I18N</em></strong></span> module</h2>
+    <p>Functions for localization.</p>
+    <p> See the I18N section for more information.</p>
 
 
     <!-- module info start -->
@@ -135,7 +135,7 @@
 
     <!-- module usage start -->
     <h3>Usage</h3>
-    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> Debug = Elona.<span class="global">require</span>(<span class="string">"Debug"</span>)</code></pre>
+    <pre class="code" data-lang="Lua"><code><span class="keyword">local</span> I18N = Elona.<span class="global">require</span>(<span class="string">"I18N"</span>)</code></pre>
     <!-- module usage end -->
 
     <!-- module content header end -->
@@ -148,20 +148,26 @@
     </thead>
     <tbody>
     <tr>
-    <td class="name"><a href="#log">log (message)</a></td>
-    <td class="summary">Logs a message to log.txt.</td>
+    <td class="name"><a href="#get">get (key)</a></td>
+    <td class="summary">Gets a localized string and optionally formats it with arguments.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#report_error">report_error (message)</a></td>
-    <td class="summary">Reports an error to the game console and log file.</td>
+    <td class="name"><a href="#get_optional">get_optional (key)</a></td>
+    <td class="summary">Gets a localized string and optionally formats it with arguments.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#dump_characters">dump_characters ()</a></td>
-    <td class="summary">Dumps all characters to the log.</td>
+    <td class="name"><a href="#get_enum">get_enum (key, index)</a></td>
+    <td class="summary">Gets a localized string from an enum-style localization object.</td>
     </tr>
     <tr>
-    <td class="name"><a href="#dump_items">dump_items ()</a></td>
-    <td class="summary">Dumps all items to the log.</td>
+    <td class="name"><a href="#get_enum_property">get_enum_property (key_base, key_property, index)</a></td>
+    <td class="summary">Gets a localized string from an enum-style localization object
+ where the enum's children are themselves objects.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#get_enum_property_optional">get_enum_property_optional (key_base, key_property, index)</a></td>
+    <td class="summary">Gets a localized string from an enum-style localization object
+ where the enum's children are themselves objects.</td>
     </tr>
     </tbody>
     </table>
@@ -175,17 +181,16 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#log" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="log">log (message)</span>
+    <a href="#get" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get">get (key)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Logs a message to log.txt.</p>
-    <p class="section-item-description">
-
-</p>
+    <p class="section-item-summary">Gets a localized string and optionally formats it with arguments.</p>
+    <p class="section-item-description"> This will return a string with a warning if the localization
+ string doesn't exist.</p>
 
     <!-- parameters start -->
     <strong>Parameters:</strong>
@@ -198,13 +203,13 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>key</em></strong>
 
     <strong> : </strong>
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the message to log
+     the ID of the localization string
 
     </li>
 
@@ -214,6 +219,13 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the formatted string</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -221,23 +233,23 @@
     <!-- see also end -->
 
     <!-- usage start -->
+    <strong>Usage:</strong>
+    <pre class="code" data-lang="Lua"><code>I18N.get(<span class="string">"core.locale.map.you_see"</span>, <span class="string">"Vernis"</span>)</code></pre>
     <!-- usage end -->
 
     </dd>
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#report_error" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="report_error">report_error (message)</span>
+    <a href="#get_optional" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get_optional">get_optional (key)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Reports an error to the game console and log file.</p>
-    <p class="section-item-description">
-
-</p>
+    <p class="section-item-summary">Gets a localized string and optionally formats it with arguments.</p>
+    <p class="section-item-description"> This will return nil if the localization string doesn't exist.</p>
 
     <!-- parameters start -->
     <strong>Parameters:</strong>
@@ -250,13 +262,13 @@
 
     <li class="section-subitem-li">
 
-    <strong><em>message</em></strong>
+    <strong><em>key</em></strong>
 
     <strong> : </strong>
 
     (<span class="types"><span class="type">string</span></span>)
 
-     the error message to report
+     the ID of the localization string
 
     </li>
 
@@ -266,6 +278,19 @@
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the formatted string</span>
+    </li>
+    </ul>
+    <h5>Or</h5>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -279,22 +304,67 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#dump_characters" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_characters">dump_characters ()</span>
+    <a href="#get_enum" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get_enum">get_enum (key, index)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Dumps all characters to the log.</p>
-    <p class="section-item-description">
-
-</p>
+    <p class="section-item-summary">Gets a localized string from an enum-style localization object.</p>
+    <p class="section-item-description"> This will return a string with a warning if the localization
+ string doesn't exist.</p>
 
     <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>key</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the ID of the localization string
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>index</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the index into the enum
+
+    </li>
+
+
+    </ul>
+
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the formatted string</span>
+    </li>
+    </ul>
     <!-- returns end -->
 
 
@@ -308,22 +378,181 @@
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
-    <a href="#dump_items" class="fragment-hashtag">#</a>
-    <span class="section-item-title" id="dump_items">dump_items ()</span>
+    <a href="#get_enum_property" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get_enum_property">get_enum_property (key_base, key_property, index)</span>
     </div>
     </dt>
     <dd>
     <div class="section-item-body">
 
-    <p class="section-item-summary">Dumps all items to the log.</p>
-    <p class="section-item-description">
-
-</p>
+    <p class="section-item-summary">Gets a localized string from an enum-style localization object
+ where the enum's children are themselves objects.</p>
+    <p class="section-item-description"> This will return
+ a string with a warning if the localization string doesn't exist.</p>
 
     <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>key_base</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the base ID of the localization string
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>key_property</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the property of the enum object to get
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>index</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the index into the enum
+
+    </li>
+
+
+    </ul>
+
     <!-- parameters end -->
 
     <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the formatted string</span>
+    </li>
+    </ul>
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#get_enum_property_optional" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="get_enum_property_optional">get_enum_property_optional (key_base, key_property, index)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Gets a localized string from an enum-style localization object
+ where the enum's children are themselves objects.</p>
+    <p class="section-item-description"> This will return
+ nil if the localization string doesn't exist.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>key_base</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the base ID of the localization string
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>key_property</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">string</span></span>)
+
+     the property of the enum object to get
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>index</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">num</span></span>)
+
+     the index into the enum
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <strong>Returns:</strong>
+    <ul>
+    <li>
+    (<span class="types"><span class="type">string</span></span>)
+    <span class="return-text">the formatted string</span>
+    </li>
+    </ul>
+    <h5>Or</h5>
+    <ul>
+    <li>
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.1.html">nil</a></span>)
+    </li>
+    </ul>
     <!-- returns end -->
 
 

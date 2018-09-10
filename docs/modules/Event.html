@@ -30,10 +30,10 @@
     <a href="../index.html"><h1 style="padding-top: 8px">Lua API</h1></a>
 
     <!-- project description -->
-    <p class="project-desc">ElonaFoobar Mod API</p>
+    <p class="project-desc">Elona foobar Mod API</p>
 
     <!-- project full description -->
-    <span>  Core API for modding ElonaFoobar</span>
+    <span>  Core API for modding Elona foobar</span>
     </div>
 
 
@@ -42,6 +42,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Modules</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Animation.html"><span class="module-name-item">Animation</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Chara.html"><span class="module-name-item">Chara</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Debug.html"><span class="module-name-item">Debug</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Enums.html"><span class="module-name-item">Enums</span></a></div></li>
@@ -49,13 +50,18 @@
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Event.EventKind.html"><span class="module-name-item">Event.EventKind</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/FOV.html"><span class="module-name-item">FOV</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/GUI.html"><span class="module-name-item">GUI</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/I18N.html"><span class="module-name-item">I18N</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Input.html"><span class="module-name-item">Input</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Item.html"><span class="module-name-item">Item</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Iter.html"><span class="module-name-item">Iter</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Magic.html"><span class="module-name-item">Magic</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Map.html"><span class="module-name-item">Map</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Math.html"><span class="module-name-item">Math</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Pos.html"><span class="module-name-item">Pos</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Rand.html"><span class="module-name-item">Rand</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Registry.html"><span class="module-name-item">Registry</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Skill.html"><span class="module-name-item">Skill</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/Trait.html"><span class="module-name-item">Trait</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../modules/World.html"><span class="module-name-item">World</span></a></div></li>
     </ul>
     </li>
@@ -75,6 +81,8 @@
     <h2 class="uk-panel-title">Topics</h2>
     <ul class="nav">
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/readme.md.html"><span class="module-name-item">readme.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n.md.html"><span class="module-name-item">i18n.md</span></a></div></li>
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../topics/i18n_functions.md.html"><span class="module-name-item">i18n_functions.md</span></a></div></li>
     </ul>
     </li>
     </ul>
@@ -82,6 +90,7 @@
     <li class="nav-item">
     <h2 class="uk-panel-title">Examples</h2>
     <ul class="nav">
+    <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     <li class="nav-item"><div class="nav-item-block-inactive block"><a href="../examples/life.lua.html"><span class="module-name-item">life.lua</span></a></div></li>
     </ul>
     </li>
@@ -147,6 +156,21 @@
     <tr>
     <td class="name"><a href="#register">register (event_id, handler)</a></td>
     <td class="summary">Registers a new event handler.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#unregister">unregister (event_id, handler)</a></td>
+    <td class="summary">Unregisters an event handler that was previously registered with
+ <code>Event.register</code>.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#clear">clear (event_id)</a></td>
+    <td class="summary">Clears all event handlers that were registered for the given event
+ kind from the current mod.</td>
+    </tr>
+    <tr>
+    <td class="name"><a href="#clear">clear ()</a></td>
+    <td class="summary">Clears all event handlers that were registered from the current
+ mod.</td>
     </tr>
     <tr>
     <td class="name"><a href="#trigger">trigger (event, data)</a></td>
@@ -245,6 +269,160 @@ Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)</code></pre>
     <dt>
     <div class="divider divider-custom"></div>
     <div class="block section-item-header">
+    <a href="#unregister" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="unregister">unregister (event_id, handler)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Unregisters an event handler that was previously registered with
+ <code>Event.register</code>.</p>
+    <p class="section-item-description"> This has no effect if the handler was
+ not already registered. <b>Note</b>: If the handler was registered
+ multiple times, only one of the registrations will be removed. In
+ this case, call <code>Event.unregister</code> multiple times to
+ remove any extra registrations.</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>event_id</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">Event.EventKind</span></span>)
+
+     the event kind to unregister
+
+    </li>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>handler</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><a class="type" href="https://www.lua.org/pil/2.6.html">function</a></span>)
+
+     the previously registered handler
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#clear" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="clear">clear (event_id)</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Clears all event handlers that were registered for the given event
+ kind from the current mod.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <strong>Parameters:</strong>
+
+    <ul>
+
+
+
+
+
+    <li class="section-subitem-li">
+
+    <strong><em>event_id</em></strong>
+
+    <strong> : </strong>
+
+    (<span class="types"><span class="type">Event.EventKind</span></span>)
+
+     the event kind to clear handlers for
+
+    </li>
+
+
+    </ul>
+
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
+    <a href="#clear" class="fragment-hashtag">#</a>
+    <span class="section-item-title" id="clear">clear ()</span>
+    </div>
+    </dt>
+    <dd>
+    <div class="section-item-body">
+
+    <p class="section-item-summary">Clears all event handlers that were registered from the current
+ mod.</p>
+    <p class="section-item-description">
+
+</p>
+
+    <!-- parameters start -->
+    <!-- parameters end -->
+
+    <!-- returns start -->
+    <!-- returns end -->
+
+
+    <!-- see also start -->
+    <!-- see also end -->
+
+    <!-- usage start -->
+    <!-- usage end -->
+
+    </dd>
+    <dt>
+    <div class="divider divider-custom"></div>
+    <div class="block section-item-header">
     <a href="#trigger" class="fragment-hashtag">#</a>
     <span class="section-item-title" id="trigger">trigger (event, data)</span>
     </div>
@@ -253,7 +431,7 @@ Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)</code></pre>
     <div class="section-item-body">
 
     <p class="section-item-summary">Triggers an event from a Lua script.</p>
-    <p class="section-item-description"> WARNING: This does not currently stop recursion!</p>
+    <p class="section-item-description"> WARNING: This does not currently prevent infinite recursion!</p>
 
     <!-- parameters start -->
     <strong>Parameters:</strong>
@@ -323,7 +501,7 @@ Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)</code></pre>
     <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
     </div>
     <div class="content-footer column col-9 col-sm-12">
-    <i>Last updated 2018-06-10 11:00:06 UTC</i>
+    <i>Last updated 2018-09-10 14:50:37 UTC</i>
     </div>
     </div>
     </div>
