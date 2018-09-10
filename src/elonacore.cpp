@@ -15357,7 +15357,7 @@ label_2684_internal:
             dx = 0;
         }
         pos(windoww / 2, y + 4);
-        gmode(6, 70);
+        gmode(2, 95);
         gcopy_c(3, 456, 144, 344, 72, dx, 72);
     }
     x = 40;
